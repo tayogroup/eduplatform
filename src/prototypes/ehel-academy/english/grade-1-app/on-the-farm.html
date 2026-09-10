@@ -2551,7 +2551,7 @@
     ],
     "fluency": [
       {
-        "ask": "Which sentence uses the pattern \"This is a / an ___.\"?",
+        "ask": "Which sentence uses the pattern “This is a / an ___.”?",
         "opts": [
           {
             "t": "This is a cow.",
@@ -2573,7 +2573,7 @@
         "why": "Name one farm animal. Say 'a' before most words, but 'an' before a vowel sound: a cow, an ox."
       },
       {
-        "ask": "Which sentence uses the pattern \"The ___ says ___.\"?",
+        "ask": "Which sentence uses the pattern “The ___ says ___.”?",
         "opts": [
           {
             "t": "The goat is running.",
@@ -2595,7 +2595,7 @@
         "why": "Name the animal first, then copy the sound it makes. Make the sound nice and big!"
       },
       {
-        "ask": "Which sentence uses the pattern \"The ___ is ___ing.\"?",
+        "ask": "Which sentence uses the pattern “The ___ is ___ing.”?",
         "opts": [
           {
             "t": "It has horns.",
@@ -2617,7 +2617,7 @@
         "why": "Watch one animal and describe what it is doing now. Add -ing to the action word."
       },
       {
-        "ask": "Which sentence uses the pattern \"It has ___.\"?",
+        "ask": "Which sentence uses the pattern “It has ___.”?",
         "opts": [
           {
             "t": "First we milk the cow, then we clean the shed.",
@@ -2639,7 +2639,7 @@
         "why": "Tell us the parts an animal has, like horns, wings or wool. Say 'It has' and add the part."
       },
       {
-        "ask": "Which sentence uses the pattern \"First ___, then ___.\"?",
+        "ask": "Which sentence uses the pattern “First ___, then ___.”?",
         "opts": [
           {
             "t": "First we feed the hens, then we collect the eggs.",
@@ -2661,7 +2661,7 @@
         "why": "Say which farm job happens first, then say what happens next. Order words keep the story clear."
       },
       {
-        "ask": "Which sentence uses the pattern \"I can see a / an ___.\"?",
+        "ask": "Which sentence uses the pattern “I can see a / an ___.”?",
         "opts": [
           {
             "t": "This is a cow.",
@@ -6339,6 +6339,28 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }
   }
+  /* RESUME ON REOPEN. The stored record already knew which steps were
+     done and where the learner was; until this hook every reopened
+     lesson drew an empty dot rail and step 1. Called once, after the
+     progress document hydrates, and only if the learner has not already
+     moved off step 1 on their own - hydrate is asynchronous and a child
+     who tapped Next is not to be yanked back. show() is looked up by
+     name at call time, so every wrapper the build or the pipeline puts
+     around it (the header bar\x27s percentage, a step\x27s arrival line)
+     runs exactly as it does for a tap on a dot. */
+  window.__ehelRestore = function (doneIdx, resumeIdx) {
+    /* read BEFORE the ticks land: the record\x27s own step 1 must not
+       count as the learner having touched it (measured: it did, and the
+       page stayed on step 1 with the dots restored) */
+    const untouched = cur === 0 && !done[0];
+    let changed = false;
+    for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
+    if (changed) paintDots();
+    const target = Number.isInteger(resumeIdx) && resumeIdx > 0 && resumeIdx < slides.length
+      ? resumeIdx : done.findIndex((d, i) => !d && i < done.length - 1);
+    if (untouched && target > 0) show(target, false);
+    else if (changed) show(cur, false);
+  };
   $("next").addEventListener("click", () => show(cur + 1, true));
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
@@ -9660,6 +9682,11 @@
      it. */
   let baseAttempted = {};
   let baseKnown = [];
+  /* step-NN -> the slide's 0-based index; anything else -> -1 */
+  const indexOf = (id) => {
+    const m = /^step-(\d{2})$/.exec(String(id || ""));
+    return m ? Number(m[1]) - 1 : -1;
+  };
   (async () => {
     try {
       const doc = await ws.hydrate();
@@ -9667,8 +9694,22 @@
       if (!u) return;
       if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
       if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+      /* RESUME. The sections the record says are done are done - seeded into
+         doneIds too, so unit.completed still fires on the day the LAST step
+         is finished even if the first seven were finished last week - and
+         the deck is told to tick them and open where the learner was. Without
+         this a child who closed the tab reopened to an empty dot rail and
+         step 1, while the school's record said otherwise; measured on the
+         Science build on 2026-09-10, and true of every build this tool wires. */
+      const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
+      for (const i of doneIdx) doneIds.add(sectionId(i));
+      const resumeIdx = indexOf(u.resume);
+      if (window.__ehelRestore && (doneIdx.length || resumeIdx > 0)) {
+        try { window.__ehelRestore(doneIdx, resumeIdx); } catch (_) { /* never break the lesson */ }
+      }
     } catch (_) { /* never break the lesson */ }
   })();
+
 
   function report(i) {
     lastAt = i;

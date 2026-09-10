@@ -392,6 +392,12 @@ def norm(text: str) -> str:
     """Whitespace collapsed, for the same reason script_of() collapses it: a
     reflow changes the file and changes nothing a listener could hear."""
     out = re.sub(r"\s+", " ", text or "").strip()
+    # A quote glyph is silent too. The Grade 1 straight double-quotes were
+    # curled on 2026-09-10 (repair-english-g1-straight-quotes.py) in 38
+    # dialogue sentences that carry recordings, and a listener cannot tell
+    # "Come, Amal," from “Come, Amal,” - so the two must compare equal here or
+    # this file reports 38 clips stale that say exactly what they said.
+    out = out.replace("“", '"').replace("”", '"').replace("‘", "'").replace("’", "'")
     return british(out) if IGNORE_RESPELLING else out
 
 

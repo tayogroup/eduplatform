@@ -24,7 +24,7 @@ LESSON = {
              {"items": [
                  {"pic": "⚽", "label": "ball", "sub": "rolls", "say": "A ball rolls along the ground, turning over and over."},
                  {"pic": "\U0001F3A0", "label": "swing", "sub": "swings", "say": "A swing swings backwards and forwards."},
-                 {"pic": "\U0001FA80", "label": "top", "sub": "spins", "say": "A spinning top spins round and round on one point."},
+                 {"pic": "\U0001F300", "label": "spinning top", "sub": "spins", "say": "A spinning top spins round and round on one point."},
                  {"pic": "\U0001F40C", "label": "snail", "sub": "slides", "say": "A snail slides slowly along on its foot."},
                  {"pic": "\U0001FA81", "label": "kite", "sub": "flies", "say": "A kite flies up when the wind pushes it."},
                  {"pic": "\U0001F3C0", "label": "basketball", "sub": "bounces", "say": "A basketball bounces up when it hits the ground."},
@@ -179,7 +179,7 @@ LESSON = {
                  q("Which of these sinks in water?", "\U0001F30A", "a stone", ["an apple", "a leaf", "a wooden log"], "A stone sank straight to the bottom of the tank."),
                  q("Which of these floats?", "\U0001F30A", "an apple", ["a coin", "a brick", "a key"], "The apple floated on top of the water."),
                  q("A ball rolls towards you. You put your hand in front. What happens?", "✋", "it stops", ["it goes faster", "it floats", "it spins"], "A push back against a moving thing stops it."),
-                 q("How does a spinning top move?", "\U0001FA80", "it spins round and round", ["it slides", "it bounces", "it flies"], "A top spins."),
+                 q("How does a spinning top move?", "\U0001F300", "it spins round and round", ["it slides", "it bounces", "it flies"], "A top spins."),
              ]},
              "That is the whole lesson finished. You know pushes, pulls, floating and sinking."),
     ],

@@ -309,8 +309,12 @@
      enough (a second pot, a second cup). Nothing here invents a hue.
      ================================================================== */
 
-  /* a stage that fills the slide - #stageN is a flex ITEM, so a child's
-     width:100% resolves against a box shrunk to one card without this */
+  /* a stage that fills the slide - #stageN is a flex ITEM of a centred
+     column, so it sizes to its content's MAX-CONTENT width and a child's
+     width:100% resolves against that. A six-bin grid therefore measured
+     960px wide on a 375px phone and ran 131px off the right edge. Pin the
+     item itself to the slide's width; the grid then wraps as designed. */
+  .stage > [id^="stage"] { width: 100%; max-width: 100%; min-width: 0; }
   .stagewide { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .lead { max-width: 34ch; text-align: center; font-size: clamp(19px, 3.6vw, 24px); font-weight: 700;
     font-family: "Inter", "Segoe UI", sans-serif; }
@@ -345,7 +349,9 @@
   .sortnow .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 24px; }
   .sortnow.shake { animation: shake 360ms ease; }
   @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-9px); } 75% { transform: translateX(9px); } }
-  .bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; max-width: 680px; }
+  .bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; width: 100%; max-width: 680px; }
+  .figure [data-part]:focus-visible { outline: none; }
+  .figure [data-part]:focus-visible .outline { stroke: var(--teal); stroke-width: 5; }
   .bin { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 10px 12px; min-height: 130px;
     border-radius: 20px; border: 4px solid var(--line); background: var(--card); color: var(--ink);
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; transition: transform 120ms ease; }
@@ -892,8 +898,8 @@
               "say": "A swing swings backwards and forwards."
             },
             {
-              "pic": "🪀",
-              "label": "top",
+              "pic": "🌀",
+              "label": "spinning top",
               "sub": "spins",
               "say": "A spinning top spins round and round on one point."
             },
@@ -1487,7 +1493,7 @@
             },
             {
               "ask": "How does a spinning top move?",
-              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🪀</div>",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🌀</div>",
               "opts": [
                 {
                   "t": "it spins round and round",
@@ -2562,32 +2568,32 @@
       '<svg viewBox="0 0 320 360" role="img" aria-label="A flowering plant in the ground">' +
       '<rect x="0" y="250" width="320" height="110" fill="#6B4A2B"/>' +
       '<rect x="0" y="238" width="320" height="16" fill="#3E8E4A"/>' +
-      '<g data-part="roots"><path d="M160 252 q-8 30 -40 48 M160 252 q10 34 46 50 M160 252 q-2 40 -12 70 M160 256 q20 26 12 60" fill="none" stroke="#E9D9B8" stroke-width="7" stroke-linecap="round"/>' +
+      '<g data-part="roots" tabindex="0" role="button" aria-label="roots"><path d="M160 252 q-8 30 -40 48 M160 252 q10 34 46 50 M160 252 q-2 40 -12 70 M160 256 q20 26 12 60" fill="none" stroke="#E9D9B8" stroke-width="7" stroke-linecap="round"/>' +
       '<path class="outline" d="M110 250 h100 v72 h-100z" rx="12"/></g>' +
-      '<g data-part="stem"><rect x="153" y="118" width="14" height="136" rx="7" fill="#2F8F45"/><rect class="outline" x="146" y="112" width="28" height="146" rx="12"/></g>' +
-      '<g data-part="leaves"><path d="M158 200 q-70 -40 -78 -90 q60 6 78 90z" fill="#4CB65C"/><path d="M162 170 q70 -34 80 -80 q-62 4 -80 80z" fill="#4CB65C"/>' +
+      '<g data-part="stem" tabindex="0" role="button" aria-label="stem"><rect x="153" y="118" width="14" height="136" rx="7" fill="#2F8F45"/><rect class="outline" x="146" y="112" width="28" height="146" rx="12"/></g>' +
+      '<g data-part="leaves" tabindex="0" role="button" aria-label="leaves"><path d="M158 200 q-70 -40 -78 -90 q60 6 78 90z" fill="#4CB65C"/><path d="M162 170 q70 -34 80 -80 q-62 4 -80 80z" fill="#4CB65C"/>' +
       '<path d="M158 200 q-40 -40 -60 -70" fill="none" stroke="#2F8F45" stroke-width="3"/><path d="M162 170 q40 -34 60 -58" fill="none" stroke="#2F8F45" stroke-width="3"/>' +
       '<path class="outline" d="M74 100 h174 v106 h-174z"/></g>' +
-      '<g data-part="flower"><g fill="#F2A7C4">' +
+      '<g data-part="flower" tabindex="0" role="button" aria-label="flower"><g fill="#F2A7C4">' +
       '<ellipse cx="160" cy="60" rx="20" ry="30"/><ellipse cx="160" cy="130" rx="20" ry="30"/><ellipse cx="125" cy="95" rx="30" ry="20"/><ellipse cx="195" cy="95" rx="30" ry="20"/>' +
       '<ellipse cx="135" cy="70" rx="24" ry="24"/><ellipse cx="185" cy="70" rx="24" ry="24"/><ellipse cx="135" cy="120" rx="24" ry="24"/><ellipse cx="185" cy="120" rx="24" ry="24"/></g>' +
       '<circle cx="160" cy="95" r="22" fill="#F4C95D"/><circle class="outline" cx="160" cy="95" r="70"/></g>' +
       "</svg>"),
     body: () => (
       '<svg viewBox="0 0 260 400" role="img" aria-label="A child standing">' +
-      '<g data-part="head"><circle cx="130" cy="62" r="46" fill="#C68642"/><circle class="outline" cx="130" cy="62" r="52"/></g>' +
+      '<g data-part="head" tabindex="0" role="button" aria-label="head"><circle cx="130" cy="62" r="46" fill="#C68642"/><circle class="outline" cx="130" cy="62" r="52"/></g>' +
       '<path d="M84 50 q46 -40 92 0 q-4 -30 -46 -34 q-42 4 -46 34z" fill="#2B1B10"/>' +
-      '<g data-part="eyes"><circle cx="113" cy="62" r="6" fill="#fff"/><circle cx="147" cy="62" r="6" fill="#fff"/><circle cx="114" cy="63" r="3" fill="#1B1B1B"/><circle cx="148" cy="63" r="3" fill="#1B1B1B"/><rect class="outline" x="100" y="50" width="60" height="24" rx="12"/></g>' +
-      '<g data-part="ears"><ellipse cx="84" cy="66" rx="7" ry="11" fill="#B5763A"/><ellipse cx="176" cy="66" rx="7" ry="11" fill="#B5763A"/><path class="outline" d="M72 50 h24 v32 h-24z M164 50 h24 v32 h-24z"/></g>' +
-      '<g data-part="nose"><path d="M130 66 l-6 14 h12z" fill="#A9642E"/><circle class="outline" cx="130" cy="74" r="12"/></g>' +
-      '<g data-part="mouth"><path d="M114 90 q16 14 32 0" fill="none" stroke="#7A2E2E" stroke-width="4" stroke-linecap="round"/><rect class="outline" x="106" y="80" width="48" height="22" rx="11"/></g>' +
+      '<g data-part="eyes" tabindex="0" role="button" aria-label="eyes"><circle cx="113" cy="62" r="6" fill="#fff"/><circle cx="147" cy="62" r="6" fill="#fff"/><circle cx="114" cy="63" r="3" fill="#1B1B1B"/><circle cx="148" cy="63" r="3" fill="#1B1B1B"/><rect class="outline" x="100" y="50" width="60" height="24" rx="12"/></g>' +
+      '<g data-part="ears" tabindex="0" role="button" aria-label="ears"><ellipse cx="84" cy="66" rx="7" ry="11" fill="#B5763A"/><ellipse cx="176" cy="66" rx="7" ry="11" fill="#B5763A"/><path class="outline" d="M72 50 h24 v32 h-24z M164 50 h24 v32 h-24z"/></g>' +
+      '<g data-part="nose" tabindex="0" role="button" aria-label="nose"><path d="M130 66 l-6 14 h12z" fill="#A9642E"/><circle class="outline" cx="130" cy="74" r="12"/></g>' +
+      '<g data-part="mouth" tabindex="0" role="button" aria-label="mouth"><path d="M114 90 q16 14 32 0" fill="none" stroke="#7A2E2E" stroke-width="4" stroke-linecap="round"/><rect class="outline" x="106" y="80" width="48" height="22" rx="11"/></g>' +
       '<rect x="120" y="106" width="20" height="14" fill="#C68642"/>' +
-      '<g data-part="tummy"><rect x="82" y="118" width="96" height="112" rx="26" fill="#35BFB2"/><rect class="outline" x="76" y="112" width="108" height="124" rx="30"/></g>' +
-      '<g data-part="arms"><path d="M84 132 q-40 30 -36 96" fill="none" stroke="#C68642" stroke-width="22" stroke-linecap="round"/><path d="M176 132 q40 30 36 96" fill="none" stroke="#C68642" stroke-width="22" stroke-linecap="round"/>' +
+      '<g data-part="tummy" tabindex="0" role="button" aria-label="tummy"><rect x="82" y="118" width="96" height="112" rx="26" fill="#35BFB2"/><rect class="outline" x="76" y="112" width="108" height="124" rx="30"/></g>' +
+      '<g data-part="arms" tabindex="0" role="button" aria-label="arms"><path d="M84 132 q-40 30 -36 96" fill="none" stroke="#C68642" stroke-width="22" stroke-linecap="round"/><path d="M176 132 q40 30 36 96" fill="none" stroke="#C68642" stroke-width="22" stroke-linecap="round"/>' +
       '<path class="outline" d="M30 120 h56 v100 h-56z M174 120 h56 v100 h-56z"/></g>' +
-      '<g data-part="hands"><circle cx="48" cy="238" r="15" fill="#C68642"/><circle cx="212" cy="238" r="15" fill="#C68642"/><path class="outline" d="M28 218 h40 v40 h-40z M192 218 h40 v40 h-40z"/></g>' +
-      '<g data-part="legs"><rect x="94" y="228" width="30" height="110" rx="14" fill="#2B5673"/><rect x="136" y="228" width="30" height="110" rx="14" fill="#2B5673"/><rect class="outline" x="88" y="230" width="84" height="106" rx="16"/></g>' +
-      '<g data-part="feet"><rect x="86" y="332" width="44" height="22" rx="10" fill="#F4C95D"/><rect x="130" y="332" width="44" height="22" rx="10" fill="#F4C95D"/><rect class="outline" x="80" y="326" width="100" height="34" rx="14"/></g>' +
+      '<g data-part="hands" tabindex="0" role="button" aria-label="hands"><circle cx="48" cy="238" r="15" fill="#C68642"/><circle cx="212" cy="238" r="15" fill="#C68642"/><path class="outline" d="M28 218 h40 v40 h-40z M192 218 h40 v40 h-40z"/></g>' +
+      '<g data-part="legs" tabindex="0" role="button" aria-label="legs"><rect x="94" y="228" width="30" height="110" rx="14" fill="#2B5673"/><rect x="136" y="228" width="30" height="110" rx="14" fill="#2B5673"/><rect class="outline" x="88" y="230" width="84" height="106" rx="16"/></g>' +
+      '<g data-part="feet" tabindex="0" role="button" aria-label="feet"><rect x="86" y="332" width="44" height="22" rx="10" fill="#F4C95D"/><rect x="130" y="332" width="44" height="22" rx="10" fill="#F4C95D"/><rect class="outline" x="80" y="326" width="100" height="34" rx="14"/></g>' +
       "</svg>"),
   };
 
@@ -2639,10 +2645,10 @@
     sky: (s) => {
       const stars = '<g fill="#fff"><circle cx="40" cy="40" r="2.5"/><circle cx="90" cy="90" r="1.8"/><circle cx="150" cy="30" r="2"/><circle cx="210" cy="70" r="2.6"/><circle cx="270" cy="40" r="1.8"/><circle cx="240" cy="130" r="2"/><circle cx="60" cy="140" r="1.6"/><circle cx="120" cy="150" r="2.2"/><circle cx="290" cy="110" r="1.6"/><circle cx="180" cy="120" r="1.4"/></g>';
       const ground = '<rect x="0" y="200" width="320" height="60" fill="' + (s === 0 ? "#173B2A" : "#3E8E4A") + '"/>';
-      if (s === 0) return '<svg viewBox="0 0 320 260"><rect width="320" height="200" fill="#0B1D2C"/>' + stars + ground + "</svg>";
-      if (s === 1) return '<svg viewBox="0 0 320 260"><rect width="320" height="200" fill="#F0A56B"/><circle cx="160" cy="200" r="46" fill="#F4C95D"/>' + ground + "</svg>";
-      if (s === 2) return '<svg viewBox="0 0 320 260"><rect width="320" height="200" fill="#BFE3F5"/><circle cx="250" cy="60" r="36" fill="#F4C95D"/>' + ground + "</svg>";
-      return '<svg viewBox="0 0 320 260"><rect width="320" height="260" fill="#0B1D2C"/>' + stars +
+      if (s === 0) return '<svg viewBox="0 0 320 260" role="img" aria-label="The night sky, full of stars"><rect width="320" height="200" fill="#0B1D2C"/>' + stars + ground + "</svg>";
+      if (s === 1) return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun rising"><rect width="320" height="200" fill="#F0A56B"/><circle cx="160" cy="200" r="46" fill="#F4C95D"/>' + ground + "</svg>";
+      if (s === 2) return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun high in a blue sky"><rect width="320" height="200" fill="#BFE3F5"/><circle cx="250" cy="60" r="36" fill="#F4C95D"/>' + ground + "</svg>";
+      return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun drawn as a star among stars"><rect width="320" height="260" fill="#0B1D2C"/>' + stars +
         '<g stroke="#F4C95D" stroke-width="6" stroke-linecap="round">' + [0, 45, 90, 135, 180, 225, 270, 315].map((a) => '<line x1="160" y1="130" x2="160" y2="30" transform="rotate(' + a + ' 160 130)"/>').join("") + "</g>" +
         '<circle cx="160" cy="130" r="58" fill="#F4C95D"/><text x="160" y="240" text-anchor="middle" fill="#fff" font-size="18" font-family="Inter, sans-serif" font-weight="800">The Sun is a star</text></svg>';
     },
@@ -2669,7 +2675,7 @@
       '<text x="' + x + '" y="272" text-anchor="middle" font-size="15" font-family="Inter, sans-serif" font-weight="800" fill="#fff">' + esc(label) + "</text></g>";
   }
   function twoPots(box, a, b, day, opts) {
-    box.innerHTML = '<svg viewBox="0 0 320 290"><rect width="320" height="290" fill="' + (opts.dark ? "#3A5C74" : "#BFE3F5") + '"/>' +
+    box.innerHTML = '<svg viewBox="0 0 320 290" role="img" aria-label="Two plants in pots, ' + esc(opts.labelA) + ' and ' + esc(opts.labelB) + '"><rect width="320" height="290" fill="' + (opts.dark ? "#3A5C74" : "#BFE3F5") + '"/>' +
       (opts.sun ? '<circle cx="280" cy="40" r="24" fill="#F4C95D"/>' : "") +
       '<rect x="0" y="250" width="320" height="40" fill="#8B5A2B"/>' +
       potSvg(90, a, opts.labelA, opts.darkA) + potSvg(230, b, opts.labelB, opts.darkB) +
@@ -2713,7 +2719,7 @@
       draw(box, x, label) {
         let marks = "";
         for (let i = 0; i <= 10; i++) marks += '<line x1="' + (30 + i * 26) + '" y1="196" x2="' + (30 + i * 26) + '" y2="210" stroke="#fff" stroke-width="2"/><text x="' + (30 + i * 26) + '" y="228" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">' + i + "</text>";
-        box.innerHTML = '<svg viewBox="0 0 320 240"><rect width="320" height="240" fill="#3E8E4A"/><rect x="0" y="180" width="320" height="60" fill="#8B5A2B"/>' +
+        box.innerHTML = '<svg viewBox="0 0 320 240" role="img" aria-label="A ball on a track marked in steps"><rect width="320" height="240" fill="#3E8E4A"/><rect x="0" y="180" width="320" height="60" fill="#8B5A2B"/>' +
           '<rect x="20" y="196" width="280" height="4" fill="#fff"/>' + marks +
           '<text x="12" y="30" font-size="16" font-family="Inter, sans-serif" font-weight="800" fill="#fff">' + esc(label || "") + "</text>" +
           '<text x="' + (30 + x * 26) + '" y="176" text-anchor="middle" font-size="44" style="transition: x 900ms ease-out">⚽</text>' +
@@ -2742,7 +2748,7 @@
     },
     /* a tank of water; act(item) drops it in and it floats or sinks */
     floatSink: {
-      init(box) { box.innerHTML = '<svg viewBox="0 0 320 260"><rect width="320" height="260" fill="#DDEFF7"/><rect x="30" y="60" width="260" height="180" rx="10" fill="#7FC4EA" opacity="0.85"/><rect x="30" y="60" width="260" height="180" rx="10" fill="none" stroke="#2B5673" stroke-width="5"/><text id="' + "fsitem" + '" x="160" y="40" text-anchor="middle" font-size="44" style="transition: y 1100ms ease-in"></text></svg>'; },
+      init(box) { box.innerHTML = '<svg viewBox="0 0 320 260" role="img" aria-label="A tank of water"><rect width="320" height="260" fill="#DDEFF7"/><rect x="30" y="60" width="260" height="180" rx="10" fill="#7FC4EA" opacity="0.85"/><rect x="30" y="60" width="260" height="180" rx="10" fill="none" stroke="#2B5673" stroke-width="5"/><text id="' + "fsitem" + '" x="160" y="40" text-anchor="middle" font-size="44" style="transition: y 1100ms ease-in"></text></svg>'; },
       act(box, item, api) {
         const t = box.querySelector("text");
         t.textContent = item.pic; t.setAttribute("y", 40);
@@ -2762,7 +2768,7 @@
     },
     /* a magnet approaches an item; a magnetic one jumps to it */
     magnet: {
-      init(box) { box.innerHTML = '<svg viewBox="0 0 320 200"><rect width="320" height="200" fill="#DDEFF7"/><rect x="0" y="150" width="320" height="50" fill="#C9B79C"/><g id="mg" style="transition: transform 900ms ease-in-out"><text x="30" y="118" font-size="60">\u{1F9F2}</text></g><text id="mi" x="230" y="140" text-anchor="middle" font-size="48" style="transition: transform 400ms ease-in"></text></svg>'; },
+      init(box) { box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A magnet and a thing to test"><rect width="320" height="200" fill="#DDEFF7"/><rect x="0" y="150" width="320" height="50" fill="#C9B79C"/><g id="mg" style="transition: transform 900ms ease-in-out"><text x="30" y="118" font-size="60">\u{1F9F2}</text></g><text id="mi" x="230" y="140" text-anchor="middle" font-size="48" style="transition: transform 400ms ease-in"></text></svg>'; },
       act(box, item, api) {
         const mg = box.querySelector("#mg"), it = box.querySelector("#mi");
         it.textContent = item.pic; it.style.transform = ""; mg.style.transform = "";
@@ -2781,7 +2787,7 @@
     /* a bell, and a child who walks away from it one step at a time */
     soundFar: {
       draw(box, steps) {
-        box.innerHTML = '<svg viewBox="0 0 320 200"><rect width="320" height="200" fill="#BFE3F5"/><rect x="0" y="150" width="320" height="50" fill="#3E8E4A"/>' +
+        box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A bell, and a child ' + (steps === 0 ? "next to it" : steps + " steps away") + '"><rect width="320" height="200" fill="#BFE3F5"/><rect x="0" y="150" width="320" height="50" fill="#3E8E4A"/>' +
           '<text x="22" y="140" font-size="52">\u{1F514}</text>' +
           Array.from({ length: 7 }, (_, i) => '<line x1="' + (80 + i * 34) + '" y1="150" x2="' + (80 + i * 34) + '" y2="160" stroke="#fff" stroke-width="2"/>').join("") +
           '<text x="' + (66 + steps * 34) + '" y="140" font-size="48" style="transition: x 400ms ease">\u{1F9D2}</text>' +
@@ -2877,7 +2883,7 @@
     sunShade: {
       draw(box, hour, a, b) {
         const therm = (x, v, col) => '<rect x="' + (x - 6) + '" y="60" width="12" height="90" rx="6" fill="#fff"/><rect x="' + (x - 4) + '" y="' + (148 - v) + '" width="8" height="' + v + '" rx="4" fill="' + col + '"/><circle cx="' + x + '" cy="152" r="10" fill="' + col + '"/>';
-        box.innerHTML = '<svg viewBox="0 0 320 240"><rect width="320" height="240" fill="#BFE3F5"/><circle cx="60" cy="40" r="26" fill="#F4C95D"/>' +
+        box.innerHTML = '<svg viewBox="0 0 320 240" role="img" aria-label="Two cups of water with thermometers, one in the sun and one in the shade"><rect width="320" height="240" fill="#BFE3F5"/><circle cx="60" cy="40" r="26" fill="#F4C95D"/>' +
           '<rect x="0" y="190" width="320" height="50" fill="#3E8E4A"/>' +
           '<rect x="190" y="40" width="20" height="150" fill="#6B4A2B"/><circle cx="200" cy="60" r="60" fill="#2F8F45"/><ellipse cx="240" cy="192" rx="80" ry="10" fill="#0B1D2C" opacity="0.35"/>' +
           '<text x="60" y="190" text-anchor="middle" font-size="44">\u{1F964}</text><text x="250" y="190" text-anchor="middle" font-size="44">\u{1F964}</text>' +
@@ -3234,6 +3240,12 @@
       paintList();
       sayHere(o.finish, plain(o.ask.replace("%s", p.label)));
     }
+    /* a keyboard user tabs between the parts and presses Enter or Space */
+    fig.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const g = e.target.closest("[data-part]"); if (!g) return;
+      e.preventDefault(); g.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
     fig.addEventListener("click", (e) => {
       const g = e.target.closest("[data-part]"); if (!g || lock) return;
       const p = order[i], hit = g.dataset.part === p.id;

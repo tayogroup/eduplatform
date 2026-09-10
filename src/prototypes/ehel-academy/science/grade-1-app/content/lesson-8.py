@@ -155,13 +155,13 @@ LESSON = {
              "Long ago people thought different things about the Earth and the Sun. Tap each picture.",
              explain(
                  ["What people know changes as they find out more.", "Some ideas from long ago turned out to be wrong."],
-                 ["Long ago many people thought the Earth was flat, like a plate.", "Now we have photographs from space showing it is round.",
+                 ["Long ago some people thought the Earth was flat, like a plate.", "Now we have photographs from space showing it is round.",
                   "Long ago people thought the Sun went round the Earth.", "Now we know Earth goes round the Sun.",
                   "People who study the sky are called astronomers. Science is their job."],
                  [],
                  ["Tap each picture and hear how thinking changed."]),
              {"items": [
-                 {"pic": "\U0001F30D", "label": "flat or round?", "say": "Long ago many people thought the Earth was flat, like a plate. Now we have photographs from space, and it is round like a ball."},
+                 {"pic": "\U0001F30D", "label": "flat or round?", "say": "Long ago some people thought the Earth was flat, like a plate. Now we have photographs from space, and it is round like a ball."},
                  {"pic": "☀️", "label": "who goes round whom?", "say": "Long ago people thought the Sun went round the Earth. Now we know the Earth goes round the Sun, once a year."},
                  {"pic": "\U0001F52D", "label": "astronomer", "say": "An astronomer studies the stars and planets through a telescope. Finding out about the sky is their job."},
                  {"pic": "\U0001F468‍\U0001F680", "label": "astronaut", "say": "An astronaut flies into space and sees with their own eyes that Earth is a round blue planet."},

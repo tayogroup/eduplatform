@@ -116,7 +116,7 @@ LESSON = {
              {"items": [
                  {"pic": "\U0001F941", "label": "drum", "sound": "drum", "say": "Hit the drum with the stick, gently. Never bang it next to somebody's ear."},
                  {"pic": "\U0001F3B5", "label": "whistle", "sound": "whistle", "say": "Blow the whistle outside, and never right next to a friend."},
-                 {"pic": "\U0001FA87", "label": "shaker", "sound": "shake", "say": "Hold the shaker by the handle and shake it. Do not throw it."},
+                 {"pic": "\U0001F96B", "label": "shaker tin", "sound": "shake", "say": "Hold the shaker tin with both hands and shake it. Do not throw it."},
                  {"pic": "\U0001F514", "label": "bell", "sound": "bell", "say": "Ring the bell once and listen. Keep it away from ears."},
                  {"pic": "\U0001F442", "label": "your ears", "say": "If a sound hurts your ears, cover them and move away. Ears do not grow back."},
              ], "need": 5,

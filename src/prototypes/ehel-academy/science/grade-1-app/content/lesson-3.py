@@ -197,7 +197,7 @@ LESSON = {
                  {"pic": "\U0001F453", "label": "glasses", "say": "Glasses bend the light before it reaches the eyes, so blurry things look sharp. They help the sense of sight."},
                  {"pic": "\U0001F9BB", "label": "hearing aid", "say": "A hearing aid makes sounds louder before they reach the ear. It helps the sense of hearing."},
                  {"pic": "\U0001F526", "label": "torch", "say": "A torch makes light. Eyes need light to see, so a torch helps you see in the dark."},
-                 {"pic": "\U0001F9F4", "label": "sun cream", "say": "Sun cream sits on the skin and stops the sun burning it. It protects the sense of touch."},
+                 {"pic": "\U0001F9F4", "label": "sun cream", "say": "Sun cream sits on the skin and stops the sun burning it. It protects your skin, the part you touch with."},
              ], "need": 4,
               "then": {"ask": "Nora cannot read the board clearly. What helps her eyes?",
                        "opts": [opt("glasses", True), opt("a hearing aid", False), opt("sun cream", False)],

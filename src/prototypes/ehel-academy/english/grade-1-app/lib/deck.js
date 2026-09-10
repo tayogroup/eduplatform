@@ -138,7 +138,27 @@
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
+          /* SOME OF THESE QUESTIONS MAY NOT BE MARKED, and the step says which.
+             The unit quizzes are authored as multiple choice, with their own
+             options and a key: a tap there is a mark, and it is reported as
+             one. The STORY questions are not. They are authored as oral
+             questions - a child says the answer and a grown-up judges it -
+             and the builder turns them into taps by borrowing the OTHER
+             questions' answers about the same story as the wrong options. So
+             a reading's six questions rotate one small pool between them, and
+             a child who has answered two knows the third by elimination.
+             Measured on the deployed Unit 4, which nothing was added to:
+             three consecutive questions offered the same three options.
+
+             The child still sees "You got 4 of 6" - that is their own feedback
+             and it is honest about the taps they made. What changes is what
+             leaves the page: participation, not a mark, on the channel the
+             gateway keeps out of the gradebook (externallib_progress.php ::
+             sanitise_attempted, "a count, never a percentage"). Reporting it
+             as a score would put a comprehension percentage in front of a
+             family that measures elimination. */
+          if (o.attemptOnly) reportAttempt(o.finish, o.items.length, o.items.length, "questions");
+          else reportScore(o.finish, right, o.items.length);
           finish(o.finish, o.done);
         } else draw();
       }, 2700);

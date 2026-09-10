@@ -873,6 +873,7 @@
   .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
   .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
   .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
   .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
   .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
   .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
@@ -944,7 +945,7 @@
 <a class="skip" href="#deck">Skip to the lesson</a>
 
 <header class="eh-bar1">
-  <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></a>
+  <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
     <span class="eh-progtext">Lesson progress</span>
@@ -6469,7 +6470,27 @@
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
+          /* SOME OF THESE QUESTIONS MAY NOT BE MARKED, and the step says which.
+             The unit quizzes are authored as multiple choice, with their own
+             options and a key: a tap there is a mark, and it is reported as
+             one. The STORY questions are not. They are authored as oral
+             questions - a child says the answer and a grown-up judges it -
+             and the builder turns them into taps by borrowing the OTHER
+             questions' answers about the same story as the wrong options. So
+             a reading's six questions rotate one small pool between them, and
+             a child who has answered two knows the third by elimination.
+             Measured on the deployed Unit 4, which nothing was added to:
+             three consecutive questions offered the same three options.
+
+             The child still sees "You got 4 of 6" - that is their own feedback
+             and it is honest about the taps they made. What changes is what
+             leaves the page: participation, not a mark, on the channel the
+             gateway keeps out of the gradebook (externallib_progress.php ::
+             sanitise_attempted, "a count, never a percentage"). Reporting it
+             as a score would put a comprehension percentage in front of a
+             family that measures elimination. */
+          if (o.attemptOnly) reportAttempt(o.finish, o.items.length, o.items.length, "questions");
+          else reportScore(o.finish, right, o.items.length);
           finish(o.finish, o.done);
         } else draw();
       }, 2700);
@@ -9426,7 +9447,7 @@
     done: "That is the Game Zone played." });
   unitReadings({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15", pick: "pick15" }, items: LESSON.reads, finish: 14,
     done: "You read the whole story." });
-  sequence({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, items: LESSON.questions, finish: 15,
+  sequence({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, items: LESSON.questions, finish: 15, attemptOnly: true,
     label: "Question", done: "You remembered the story well." });
   activityList({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17", acts: "acts17" }, items: LESSON.activities, finish: 16,
     done: "That is this unit's jobs done." });

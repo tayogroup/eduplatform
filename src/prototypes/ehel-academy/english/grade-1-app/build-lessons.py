@@ -1968,7 +1968,12 @@ def bootstrap(slides, data):
             out.append('  unitReadings({ el: %s, items: LESSON.reads, finish: %d,\n'
                        '    done: "You read the whole story." });' % (el, i))
         elif k == "questions":
-            out.append('  sequence({ el: %s, items: LESSON.questions, finish: %d,\n'
+            # attemptOnly: the story questions are authored ORAL and their
+            # wrong options are borrowed from the other questions about the
+            # same story, so the tally measures elimination rather than
+            # comprehension. Reported as participation, never as a mark -
+            # see the note at the report in the deck's sequence().
+            out.append('  sequence({ el: %s, items: LESSON.questions, finish: %d, attemptOnly: true,\n'
                        '    label: "Question", done: "You remembered the story well." });' % (el, i))
         elif k == "sayit":
             out.append('  sayOutLoud({ el: %s, items: LESSON.sayit, finish: %d,\n'

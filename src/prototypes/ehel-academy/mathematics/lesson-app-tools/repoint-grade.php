@@ -129,6 +129,7 @@ $SUBJECTS = [
             1 => ['ehel-gp-g01', RP_HOST . 'Ehel%20Primary/app/global-perspectives/grade-1-v2/index.html'],
             2 => ['ehel-gp-g02', RP_HOST . 'Ehel%20Primary/app/global-perspectives/grade-2-v2/index.html'],
             3 => ['ehel-gp-g03', RP_HOST . 'Ehel%20Primary/app/global-perspectives/grade-3-v2/index.html'],
+            4 => ['ehel-gp-g04', RP_HOST . 'Ehel%20Primary/app/global-perspectives/grade-4-v2/index.html'],
         ],
     ],
 ];

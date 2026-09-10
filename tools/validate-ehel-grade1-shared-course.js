@@ -15,11 +15,38 @@ let readyDictionaryAudio = 0;
 let pendingDictionaryAudio = 0;
 let pendingLessonAudio = 0;
 
+// THE ENTRY-POINT CONTRACT IS CHECKED FIRST, ON PURPOSE. Everything below
+// this line has been throwing since e762554a5 (2026-09-03) removed Unit 0 from
+// the manifest, and it now also disagrees with content authored on 2026-09-10
+// (comprehension and quiz counts both moved). None of that was noticed because
+// this file is wired into no npm script and runs only when somebody types its
+// name. Re-baselining those counts is a separate job and not one to do
+// silently, so the entry assertions sit ABOVE them rather than behind a throw
+// that never lets them run.
+//
+// The per-grade entry was RETIRED as a door into the shared shell on
+// 2026-09-10, on the owner's instruction: it forwards to the standalone
+// grade-1-v2 build instead of loading ../shared/grade-redirect.js. Asserted
+// both ways round so the file cannot quietly become a second front end again
+// for content the standalone build already serves. The shell still RENDERS
+// Grade 1 - 472 indexed tutoring topics land on eleven of its sections - so
+// the course-ui check further down is deliberately unchanged; it is only this
+// door that closed.
+// COMMENTS STRIPPED FIRST, and the negative asserted on the ATTRIBUTE rather
+// than the bare path. The first version of these two lines read the raw file
+// and failed on the real stub, because that stub's own comment explains what
+// it stopped loading and names ../shared/grade-redirect.js while doing so. A
+// substring check cannot tell an explanation from an instruction; only the
+// markup says what the browser will fetch.
+const indexMarkup = indexSource.replace(/<!--[\s\S]*?-->/g, "");
+if (!indexMarkup.includes('data-grade="1"') || !indexMarkup.includes('"../grade-1-v2/index.html"')) throw new Error("Grade 1's entry no longer forwards to the standalone grade-1-v2 build.");
+if (/src\s*=\s*["'][^"']*grade-redirect\.js/.test(indexMarkup)) throw new Error("Grade 1's entry is loading the shared grade redirect again - it was retired as a door into the shell.");
+
 if (manifest.units.length !== 11) throw new Error(`Expected Pre-Unit 0, Units 1-9 and Unit 10 capstone; found ${manifest.units.length} modules.`);
 if (manifest.units[0].number !== 0 || manifest.units[10].number !== 10) throw new Error("Grade 1 module order is invalid.");
 if (masterIds.size !== dictionary.entries.length || dictionary.entryCount !== dictionary.entries.length) throw new Error("Grade 1 dictionary IDs or entry count are invalid.");
 if (/speechSynthesis|SpeechSynthesisUtterance/.test(uiSource)) throw new Error("Browser-generated publishing voice remains in the Grade 1 UI.");
-if (!uiSource.includes("master-dictionary.grade${gradeNumber}.json") || !indexSource.includes('data-grade="1"') || !indexSource.includes("../shared/grade-redirect.js")) throw new Error("Grade 1 is not connected to the shared English UI.");
+if (!uiSource.includes("master-dictionary.grade${gradeNumber}.json")) throw new Error("Grade 1 is not connected to the shared English UI.");
 
 for (const module of manifest.units) {
   const runtime = JSON.parse(fs.readFileSync(path.join(dataDir, "units", `unit-${module.number}.json`), "utf8"));

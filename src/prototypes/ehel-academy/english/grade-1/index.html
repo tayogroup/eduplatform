@@ -1,5 +1,54 @@
 <!doctype html>
 <html lang="en" data-grade="1">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Opening Grade 1 English</title></head>
-<body><p>Opening the shared English course...</p><script type="module" src="../shared/grade-redirect.js"></script></body>
+<body><p>Opening Grade 1 English...</p>
+<!--
+  RETIRED AS A DOOR INTO THE SHARED SHELL, 2026-09-10, on the owner's
+  instruction. Grade 1 English is served by the standalone build at
+  ../grade-1-v2/, and this entry now forwards there instead of loading
+  ../shared/grade-redirect.js into the shared course.
+
+  Course LAUNCHES already bypassed this file: the Moodle override
+  local_prequran/ehel_app_url_overrides sends ehel-eng-g01 straight to
+  app/english/grade-1-v2/index.html. This closes the other door - a bookmark,
+  an old link, or anyone typing the per-grade path - so one body of content is
+  no longer reachable through two front-ends.
+
+  WHAT IS DELIBERATELY *NOT* RETIRED, because both are load-bearing:
+
+  - ./data/ and ./media/ beside this file. The standalone build resolves its
+    video lesson and one glossary through them - ../grade-1/media/unit-N/
+    teacher-lecture.*.mp4, its poster and captions, and
+    ../grade-1/data/sentence-glossary.json - so this directory is a live
+    dependency of the NEW front end, not a leftover of the old one.
+  - The shell's ability to render Grade 1 at all. 472 Grade 1 topics are
+    indexed for tutoring and land on eleven shell sections (activities,
+    ebooks, grammar, writing, speaking, reading, comprehension, dictionary,
+    quiz, games, glossary); the standalone build implements none of those
+    section routes. Tutoring reaches them through the SUBJECT entry with
+    ?grade=1, never through this file - placementLocation() rewrites the
+    query on location.href - so retiring this door leaves them untouched.
+    Withdrawing Grade 1 from the shell itself is a separate decision, and it
+    needs somewhere for those 472 topics to go first.
+
+  INLINE, and the filename form on purpose. Inline because the shared
+  grade-redirect.js carries a Grade-1-only special case (it defaults this
+  grade to the withdrawn unit 0) that this page must no longer take, and
+  because one fewer request is one fewer thing to fail. "../grade-1-v2/
+  index.html" rather than "../grade-1-v2/" because the two are different
+  objects at the edge and only the filename form sits on the short cache
+  tier - the directory form pinned itself to a months-old release once
+  already, and six purges did not shift it.
+
+  Everything on the incoming URL is carried across untouched: a launch token,
+  studentid, unit and the hash all have to survive or progress stops being
+  recorded for the learner who followed the old link.
+-->
+<script>
+  var to = new URL("../grade-1-v2/index.html", location.href);
+  to.search = location.search;
+  to.hash = location.hash;
+  location.replace(to.href);
+</script>
+</body>
 </html>

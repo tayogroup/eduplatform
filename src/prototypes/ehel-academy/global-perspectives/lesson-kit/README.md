@@ -108,7 +108,8 @@ rebuilt through the changed kit and re-driven to 100%): `observe` (kind of
 its own, `observeCount`) draws a scene of glyphs and the child taps every
 one of a kind, recording the count in a table as it goes (3Rc.01); `pictogram`
 with `fromObserve: true` reads its rows off that step, with `display:
-"ruler"` and a `unit` for measurements, and its questions gain `more` {a, b},
+"ruler"` and a `unit` for measurements (and an optional `tool`, "rain gauge",
+for the caption, which says "ruler" otherwise), and its questions gain `more` {a, b},
 `total` and `difference` {a, b} beside most/least/count, all computed
 (3Ad.01); `organiser` with `venn: true` draws three bins as two circles and
 an overlap (3Rf.01); `text` with `then` asks one closing question after the
@@ -169,8 +170,10 @@ the build rather than the page.
   `gp.js`. So the safety proof for a kit change is not a byte-identical
   rebuild of the live grade: it is that grade rebuilt through the new kit and
   driven to 100% again in the browser before the new grade is. Grade 1 was
-  re-driven that way when Stage 2's machines went in, and Grades 1 and 2
-  when Stage 3's did.
+  re-driven that way when Stage 2's machines went in, Grades 1 and 2
+  when Stage 3's did, and Grades 1 to 3 when Grade 4's one-word `tool`
+  caption went in (Grade 4 added NO machines: Stages 3 and 4 share one
+  objective set, so its depth is in the content).
 - **A Stage 3+ lesson must author its `changed` pairs.** The shell's
   look-back at Stage 3 asks how an idea changed, and there is no honest way
   to derive a before-and-after from the about lines, so `lookback_step`

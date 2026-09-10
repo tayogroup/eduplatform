@@ -4524,7 +4524,7 @@
     const body = o.display === "ruler"
       ? '<div class="picto bars ruler"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
         '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="barwrap"><span class="bar" style="width:' + Math.round(r.value / most * 100) + '%" aria-hidden="true"></span><span class="ticks" aria-hidden="true">' + Array.from({ length: 5 }, (_, t) => "<i></i>").join("") + "</span></span><b class=\"pcount\">" + r.value + " " + esc(unit) + "</b></div>").join("") +
-        '<p class="sub">Measured with a ruler, in ' + esc(unit || "units") + ".</p></div>"
+        '<p class="sub">Measured with a ' + esc(o.tool || "ruler") + ', in ' + esc(unit || "units") + ".</p></div>"
       : o.display === "table"
       ? '<table class="rec small"><thead><tr><th>' + esc((o.columns || ["Answer", "How many"])[0]) + "</th><th>" + esc((o.columns || ["Answer", "How many"])[1]) + "</th></tr></thead><tbody>" +
         o.rows.map((r) => '<tr><td><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span></td><td><span class="cell filled">' + r.value + "</span></td></tr>").join("") + "</tbody></table><p class=\"sub\">A table: the number says how many.</p>"

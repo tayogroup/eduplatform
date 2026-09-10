@@ -1,5 +1,15 @@
 # Going live: what is done, and what has to be done on the Moodle box
 
+**DONE, 2026-09-10 16:16 server time.** The owner ran the three steps below in
+cPanel Terminal: both plugin files matched their md5s and were moved into
+place; `catalog_source_url` moved from `catalog-5a4d81d7ed.json` to
+`catalog-d2cbee310b.json` and the sync task created the category and the
+course (`EHEL-ART-G01`, course id 83, 8 grade items among the 457 ensured);
+the override was applied and read back with all 13 intact. The staged qa
+folder has been deleted from the zone. What remains is enrolment: a learner in
+`EHEL-ART-G01` (manual, or the Stage 1 pilot cohort once rostered) launches
+straight into the build.
+
 Art & Design is the first subject with no shell app behind it, so going live
 touches four places, and only two of them can be reached from this machine.
 This is the state on 2026-09-10 and the exact steps for the other two.

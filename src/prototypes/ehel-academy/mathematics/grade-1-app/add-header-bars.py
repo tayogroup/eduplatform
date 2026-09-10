@@ -24,6 +24,19 @@ import re, io, os, sys
 SP = os.path.dirname(os.path.abspath(__file__))
 V2 = os.path.join(SP, "g1v2")
 
+# This tool was NOT idempotent until 2026-09-10, and the shared version it was
+# superseded by has carried this guard all along. Without it a second run does
+# not re-paint the header: it APPENDS a whole second one, so the page ends up
+# with two .eh-bar1 headers, two .eh-bar2 navs, two brands and a duplicated CSS
+# block -- and with the crest change of the same day, the two disagree, the old
+# bar showing the placeholder and the new one the real crest. That is not a
+# hypothetical; it happened to all seven g1v2 pages the day the crest landed.
+#
+# It matters more here than in the shared tool, because this one takes no
+# --app and always writes the SAME seven files in ../g1v2, so every run after
+# the first is a repeat run by construction.
+MARK = "eh-bar1"
+
 LESSONS = [
     ("counting-to-twenty.html", "Counting to Twenty"),
     ("adding-and-taking-away.html", "Adding and Taking Away"),
@@ -197,6 +210,10 @@ for fname, title in LESSONS:
     p = os.path.join(V2, fname)
     s = io.open(p, encoding="utf-8").read()
     orig = s
+
+    if MARK in s:
+        print("  skip %-30s already has the bars" % fname)
+        continue
 
     # 1 the heading. The composer's regex could not span the <em>, so three
     #   lessons still show another lesson's name to the child.

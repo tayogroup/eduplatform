@@ -45,7 +45,7 @@ CONTENT = os.path.join(APP, "content")
 
 # minutes a six-year-old spends on a step of each kind, including listening
 MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2,
-           "askq": 4, "source": 3, "survey": 5, "pictogram": 3, "organiser": 3,
+           "askq": 4, "source": 3, "text": 3, "survey": 5, "pictogram": 3, "organiser": 3,
            "know": 3, "answer": 3, "listen": 4, "consequence": 3, "solve": 4,
            "sources": 4, "opinion": 3, "team": 5, "contrib": 3, "lookback": 3,
            "questions": 3, "quiz": 4,
@@ -56,6 +56,7 @@ MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2,
 TOGETHER = {
     "askq": "Pick a topic (pets, the park, dinner). Take turns asking a question about it that starts with What, Where, Who, When, Why or How. Count how many different questions you can ask.",
     "source": "Look at one photo or picture book page together. Ask: what does this picture tell us? Find three things in it and say a fact about each.",
+    "text": "Read a short page of a non-fiction book together. Ask a question, and let the child find the ONE sentence that answers it and read it out.",
     "survey": "Ask everyone at home one question with a few answers (how do you get to work or school?). Draw one small picture per person in a row for each answer.",
     "pictogram": "Look at the picture rows you made. Ask: which row is the longest? How many chose this? Did anyone choose that?",
     "organiser": "Draw two big circles or two columns on paper and sort what you found out into them, one fact at a time, saying why each goes where it goes.",
@@ -290,10 +291,17 @@ def keys_for(s):
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
             "<li>%s <span class=\"key\">&rarr; <b>%s %s</b></span></li>" % (text(rd["want"]), text(rd["word"]), text(ends[rd["end"]])) for rd in d["rounds"])))
     elif k == "source":
-        spots = {sp["id"]: sp["fact"] for sp in d["spots"]}
-        keyed = next(o for o in d["then"]["opts"] if o.get("spot"))
-        out.append("<li><b>%s</b> <span class=\"key\">find: %s. Then: %s &rarr; <b>%s</b></span></li>" % (
-            text(s["title"]), text("; ".join(spots.values())), text(plain(d["then"]["ask"])), text(keyed["t"])))
+        spots = {sp["id"]: sp for sp in d["spots"]}
+        bits = ["find: " + "; ".join(sp["fact"] for sp in d["spots"])]
+        for rd in d.get("rounds") or []:
+            bits.append("%s &rarr; <b>%s</b>" % (text(plain(rd["ask"])), text(spots[rd["spot"]]["label"])))
+        if d.get("then"):
+            keyed = next(o for o in d["then"]["opts"] if o.get("spot"))
+            bits.append("%s &rarr; <b>%s</b>" % (text(plain(d["then"]["ask"])), text(keyed["t"])))
+        out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), ". ".join(bits)))
+    elif k == "text":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(rd["ask"])), text(d["lines"][rd["line"]])) for rd in d["rounds"])))
     elif k == "survey":
         names = {x["id"]: x["t"] for x in d["options"]}
         rows = survey_counts(d["people"], d["options"])
@@ -326,9 +334,9 @@ def keys_for(s):
     elif k == "sources":
         items = []
         for rd in d["rounds"]:
-            sid = relevant_sources(rd["sources"], rd["tag"])[0]
-            src = next(x for x in rd["sources"] if x["id"] == sid)
-            items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b>, %s</span></li>" % (text(rd["topic"]), text(src["label"]), text(ok_text(rd["reasons"]))))
+            sids = relevant_sources(rd["sources"], rd["tag"])
+            labels = ", ".join(x["label"] for x in rd["sources"] if x["id"] in sids)
+            items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b>, %s</span></li>" % (text(rd["topic"]), text(labels), text(ok_text(rd["reasons"]))))
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(items)))
     elif k == "opinion":
         out.append("<li><b>%s</b> <span class=\"key\">no key: any opinion is right. The REASON must be about the topic - %s</span></li>" % (
@@ -339,8 +347,10 @@ def keys_for(s):
             if rd["kind"] == "share":
                 good = next(o for o in rd["opts"] if share_outcome(rd["you"], o["give"], rd["need"]) == "both")
                 items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b> (then you both have enough)</span></li>" % (text(rd["ask"]), text(good["t"])))
-            elif rd["kind"] == "work":
+            elif rd["kind"] in ("work", "idea"):
                 items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(rd["situation"]), text(next(o["t"] for o in rd["opts"] if o.get("good")))))
+            elif rd["kind"] == "task":
+                items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(rd["job"]), text(" &rarr; ".join(st["t"] for st in rd["steps"]))))
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(items)))
     elif k == "contrib":
         out.append("<li><b>%s</b> <span class=\"key\">reads the team step's own record - what the child chose IS the key. If the team step was skipped: %s</span></li>" % (
@@ -404,8 +414,10 @@ def fill_for_hub(steps, modules_all):
                 if rd["kind"] == "share":
                     good = next(o for o in rd["opts"] if share_outcome(rd["you"], o["give"], rd["need"]) == "both")
                     fb.append({"who": "you", "text": rd.get("log") or good["t"]})
-                elif rd["kind"] == "work":
+                elif rd["kind"] in ("work", "idea"):
                     fb.append({"who": "you", "text": rd.get("log") or next(o["t"] for o in rd["opts"] if o.get("good"))})
+                elif rd["kind"] == "task":
+                    fb.append({"who": "you", "text": rd.get("log") or ("You " + rd["job"][:1].lower() + rd["job"][1:])})
                 else:
                     fb.append({"who": rd["who"], "text": rd.get("log") or (names[rd["who"]] + " " + rd["did"])})
             d["fallback"] = fb

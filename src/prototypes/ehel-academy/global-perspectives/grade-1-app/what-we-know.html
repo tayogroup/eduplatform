@@ -527,6 +527,18 @@
   .opt.on .radio { border-color: var(--gold); background: var(--gold); box-shadow: inset 0 0 0 3px var(--card); }
   .opt:disabled { opacity: 0.5; cursor: default; }
 
+  /* a text source: each sentence is a button; a bar chart beside the pictogram */
+  .textsrc { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px; border: 3px solid var(--line); background: #FFFDF6; color: #142B3E; text-align: left; }
+  .textsrc .phase { margin: 0 0 2px; }
+  .sline { width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid transparent; background: transparent; color: #142B3E;
+    font: inherit; font-size: 19px; line-height: 1.45; text-align: left; }
+  .sline:hover, .sline:focus-visible { border-color: var(--teal); background: rgba(53,191,178,0.12); outline: none; }
+  .sline.right { border-color: var(--good); background: var(--good-soft); color: #06231F; }
+  .sline.wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake 360ms ease; }
+  .sline:disabled { cursor: default; }
+  .barwrap { display: block; height: 22px; border-radius: 8px; background: rgba(0,0,0,0.2); overflow: hidden; }
+  .bar { display: block; height: 100%; background: var(--teal); border-radius: 8px; transition: width 400ms ease; }
+
   /* the record of who did what, and the look back */
   .logcard { font-size: 15px; }
   .cardsgrid.wide { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
@@ -4308,25 +4320,52 @@
      us, keyed by a spot in the picture rather than by a flag. */
   function pictureSource(o) {
     const el = o.el, found = new Set(), need = Math.min(o.need || o.spots.length, o.spots.length);
-    let asked = false, active = null;
+    const rounds = o.rounds || [];
+    let phase = "find", active = null, r = 0, right = 0, missed = false, lock = false;
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><div class="sim picbox">' + sceneSvg(o.scene, o.spots, found, active) + "</div>" +
-        '<p class="sub">' + esc(o.caption || "Tap the things in the picture to find out what it tells us.") + "</p></div>";
-      $(el.score).textContent = found.size + " of " + need + " found";
+        '<p class="sub">' + esc(phase === "locate" ? "Tap the part of the picture that tells us." : (o.caption || "Tap the things in the picture to find out what it tells us.")) + "</p></div>";
+      $(el.score).textContent = phase === "locate" ? "Find it: " + (r + 1) + " of " + rounds.length : found.size + " of " + need + " found";
+    }
+    /* Stage 2: after the picture has been explored, LOCATE the part that
+       answers a question (2Ri.01) - the spot is the key, computed by the
+       builder and the gate against the picture's own spots */
+    function locate() {
+      phase = "locate"; lock = false; missed = false; active = null; draw();
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.ask).innerHTML = "<b>" + esc(rounds[r].ask) + "</b> Tap the part of the picture that tells us.";
+      sayHere(o.finish, rounds[r].ask + " Tap the part of the picture that tells us.");
+    }
+    function closing() {
+      phase = "done"; active = null; draw(); $(el.fb).textContent = "";
+      if (o.then) askOnce(o, o.then, (ok) => { reportScore(o.finish, right + (ok ? 1 : 0), rounds.length + 1); endStep(o); }, (c) => !!c.spot);
+      else { reportScore(o.finish, right, rounds.length); endStep(o, "You found the part of the picture that answers " + rounds.length + " questions. " + o.done); }
     }
     $(el.stage).addEventListener("click", (e) => {
-      const g = e.target.closest("[data-spot]"); if (!g || asked) return;
+      const g = e.target.closest("[data-spot]"); if (!g || lock || phase === "done") return;
       const sp = o.spots.find((s) => s.id === g.dataset.spot);
+      if (phase === "locate") {
+        const rd = rounds[r];
+        if (sp.id === rd.spot) {
+          lock = true; if (!missed) right++; active = sp.id; SOUND.play("ding", 0.4); draw();
+          const line = cheer() + " " + sp.label + ": " + sp.fact + " " + rd.why;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          r++;
+          setTimeout(() => { if (r >= rounds.length) closing(); else locate(); }, 3400);
+        } else {
+          missed = true; SOUND.play("error", 0.3);
+          const line = "That is " + sp.label + ". It tells us: " + sp.fact + " Look for the part that tells us " + lower1(noDot(rd.about || rd.ask)) + ".";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        }
+        return;
+      }
       found.add(sp.id); active = sp.id; SOUND.play("pop", 0.35); draw();
       $(el.fb).className = "fb"; $(el.fb).innerHTML = "<b>" + esc(sp.label) + "</b> — " + esc(sp.fact);
       say(sp.label + ". " + sp.fact);
       reportAttempt(o.finish, found.size, o.spots.length, "things");
-      if (found.size >= need && !asked) {
-        asked = true;
-        setTimeout(() => {
-          active = null; draw(); $(el.fb).textContent = "";
-          askOnce(o, o.then, (ok) => { reportScore(o.finish, ok ? 1 : 0, 1); endStep(o); }, (c) => !!c.spot);
-        }, 2600);
+      if (found.size >= need && phase === "find") {
+        phase = "wait"; lock = true;
+        setTimeout(() => { lock = false; if (rounds.length) locate(); else closing(); }, 2600);
       }
     });
     $(el.stage).addEventListener("keydown", (e) => {
@@ -4410,9 +4449,20 @@
   function pictogramRead(o) {
     const el = o.el;
     let i = 0, right = 0, lock = false;
-    $(el.stage).innerHTML = '<div class="stagewide"><div class="picto"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
-      '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="pictocells">' + '<span class="pcell" aria-hidden="true">' + small(r.pic) + "</span>".repeat(r.value) + '</span><b class="pcount">' + r.value + "</b></div>").join("") +
-      '<p class="sub">Each picture is one person.</p></div></div>';
+    /* the same rows drawn three ways (2Ad.01: graphical and numerical data
+       can show information): a pictogram, a bar chart, or a table of numbers */
+    const most = Math.max(1, ...o.rows.map((r) => r.value));
+    const body = o.display === "table"
+      ? '<table class="rec small"><thead><tr><th>' + esc((o.columns || ["Answer", "How many"])[0]) + "</th><th>" + esc((o.columns || ["Answer", "How many"])[1]) + "</th></tr></thead><tbody>" +
+        o.rows.map((r) => '<tr><td><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span></td><td><span class="cell filled">' + r.value + "</span></td></tr>").join("") + "</tbody></table><p class=\"sub\">A table: the number says how many.</p>"
+      : o.display === "bars"
+        ? '<div class="picto bars"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
+          '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="barwrap"><span class="bar" style="width:' + Math.round(r.value / most * 100) + '%" aria-hidden="true"></span></span><b class="pcount">' + r.value + "</b></div>").join("") +
+          '<p class="sub">A bar chart: the longer the bar, the more people.</p></div>'
+        : '<div class="picto"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
+          '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="pictocells">' + '<span class="pcell" aria-hidden="true">' + small(r.pic) + "</span>".repeat(r.value) + '</span><b class="pcount">' + r.value + "</b></div>").join("") +
+          '<p class="sub">Each picture is one person.</p></div>';
+    $(el.stage).innerHTML = '<div class="stagewide">' + body + "</div>";
     function draw() {
       lock = false;
       const it = o.items[i];
@@ -4420,8 +4470,9 @@
       $(el.ch).className = "choices stack";
       $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
-      $(el.score).textContent = "Look at the pictogram: question " + (i + 1) + " of " + o.items.length;
-      sayHere(o.finish, plain(it.ask) + " Look at the pictogram.");
+      const what = o.display === "table" ? "table" : o.display === "bars" ? "bar chart" : "pictogram";
+      $(el.score).textContent = "Look at the " + what + ": question " + (i + 1) + " of " + o.items.length;
+      sayHere(o.finish, plain(it.ask) + " Look at the " + what + ".");
     }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
@@ -4429,12 +4480,12 @@
       const it = o.items[i], ok = b.dataset.ok === "1";
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
-      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Count the pictures again. ") + it.why; say($(el.fb).textContent);
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look again. ") + it.why; say($(el.fb).textContent);
       i++;
       setTimeout(() => {
         if (i >= o.items.length) {
           reportScore(o.finish, right, o.items.length);
-          endStep(o, "You answered " + right + " of " + o.items.length + " from the pictogram. " + o.done);
+          endStep(o, "You answered " + right + " of " + o.items.length + " from the " + (o.display === "table" ? "table" : o.display === "bars" ? "bar chart" : "pictogram") + ". " + o.done);
         } else draw();
       }, 2700);
     });
@@ -4455,11 +4506,22 @@
     const el = o.el, cards = shuffle(o.cards.map((c, k) => Object.assign({ k }, c)));
     const onBoard = [], need = Math.min(o.need || 2, o.cards.filter((c) => c.about === o.tag).length);
     let phase = "pick", missed = 0, right = 0;
+    const talk = o.mode === "talk";
     function draw() {
-      $(el.stage).innerHTML = '<div class="stagewide"><div class="board"><p class="phase">What we know about <b>' + esc(o.topic) + "</b> " + small(o.topicPic || "") + "</p>" +
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="board"><p class="phase">' + (talk ? "My talk about" : "What we know about") + ' <b>' + esc(o.topic) + "</b> " + small(o.topicPic || "") + "</p>" +
         '<ul class="boardlist" id="' + el.stage + 'b">' + (onBoard.length ? onBoard.map((k) => '<li><button type="button" class="boardfact" data-b="' + k + '"><span class="cpic" aria-hidden="true">' + small(o.cards[k].pic) + "</span>" + esc(o.cards[k].t) + "</button></li>").join("") : '<li class="hint">Nothing on the board yet.</li>') + "</ul></div>" +
-        (phase === "pick" ? '<div class="cardsgrid">' + cards.filter((c) => !onBoard.includes(c.k)).map((c) => '<button type="button" class="tapcard" data-k="' + c.k + '"><span class="cpic" aria-hidden="true">' + small(c.pic) + "</span>" + esc(c.t) + "</button>").join("") + "</div>" : "") + "</div>";
-      $(el.score).textContent = phase === "pick" ? onBoard.length + " of " + need + " on the board" : "Tap a fact on the board to say it";
+        (phase === "pick" ? '<div class="cardsgrid">' + cards.filter((c) => !onBoard.includes(c.k)).map((c) => '<button type="button" class="tapcard" data-k="' + c.k + '"><span class="cpic" aria-hidden="true">' + small(c.pic) + "</span>" + esc(c.t) + "</button>").join("") + "</div>" : "") +
+        (phase === "say" && talk ? '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'talk">\u{1F5E3}\ufe0f Give my talk</button></div>' : "") + "</div>";
+      $(el.score).textContent = phase === "pick" ? onBoard.length + " of " + need + (talk ? " things to say" : " on the board") : talk ? "Press Give my talk" : "Tap a fact on the board to say it";
+      const tb = $(el.stage + "talk");
+      if (tb) tb.addEventListener("click", () => {
+        if (phase !== "say") return;
+        phase = "done"; SOUND.play("tada", 0.4);
+        const said = onBoard.map((k) => noDot(o.cards[k].say)).join(". ") + ".";
+        sayLine(el, "Your talk about <b>" + esc(o.topic) + "</b>: " + esc(said), "Your talk about " + o.topic + ". " + said);
+        reportScore(o.finish, right, need + missed);
+        setTimeout(() => endStep(o, "You gave a talk about " + o.topic + ", and everything in it was about " + o.topic + ". " + o.done), 4200);
+      });
     }
     $(el.stage).addEventListener("click", (e) => {
       const fact = e.target.closest(".boardfact");
@@ -4483,11 +4545,15 @@
         reportAttempt(o.finish, onBoard.length, need, "facts");
         if (onBoard.length >= need) {
           phase = "say";
-          setTimeout(() => { draw(); $(el.ask).innerHTML = "Now say one out loud. <b>Tap a fact on the board.</b>"; $(el.fb).textContent = ""; sayHere(o.finish, "Now say one out loud. Tap a fact on the board."); }, 2600);
+          setTimeout(() => {
+            draw(); $(el.fb).textContent = "";
+            if (talk) { $(el.ask).innerHTML = "Your talk is ready. <b>Press Give my talk</b> to hear it."; sayHere(o.finish, "Your talk is ready. Press Give my talk to hear it."); }
+            else { $(el.ask).innerHTML = "Now say one out loud. <b>Tap a fact on the board.</b>"; sayHere(o.finish, "Now say one out loud. Tap a fact on the board."); }
+          }, 2600);
         }
       } else {
         missed++; b.classList.add("wrong"); SOUND.play("error", 0.3);
-        const line = "That is about " + (c.aboutLabel || "something else") + ", not " + o.topic + ". Only things about " + o.topic + " go on the board.";
+        const line = "That is about " + (c.aboutLabel || "something else") + ", not " + o.topic + ". " + (talk ? "A talk about " + o.topic + " only says things about " + o.topic + "." : "Only things about " + o.topic + " go on the board.");
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         setTimeout(() => b.classList.remove("wrong"), 700);
       }
@@ -4603,31 +4669,42 @@
      says what that source IS about. Then the child says WHY. */
   function pickSource(o) {
     const el = o.el, rounds = o.rounds;
-    let r = 0, phase = "pick", lock = false, missed = false, score = 0;
+    let r = 0, phase = "pick", lock = false, missed = false, score = 0, picked = new Set(), order = [];
+    const wanted = (rd) => rd.sources.filter((s) => (s.about || []).includes(rd.tag)).length;
     function draw() {
       const rd = rounds[r];
       $(el.stage).innerHTML = '<div class="stagewide"><div class="wantcard"><span class="cpic" aria-hidden="true">' + small(rd.pic) + '</span><div><p class="phase">Find out about</p><b>' + esc(rd.topic) + "</b></div></div>" +
-        '<div class="cardsgrid shelfgrid">' + shuffle(rd.sources).map((s) => '<button type="button" class="tapcard" data-s="' + esc(s.id) + '"' + (phase !== "pick" ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(s.pic) + "</span>" + esc(s.label) + "</button>").join("") + "</div></div>";
-      $(el.score).textContent = "Topic " + (r + 1) + " of " + rounds.length;
+        '<div class="cardsgrid shelfgrid">' + order.map((s) => '<button type="button" class="tapcard' + (picked.has(s.id) ? " heard" : "") + '" data-s="' + esc(s.id) + '"' + (phase !== "pick" || picked.has(s.id) ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(s.pic) + "</span>" + esc(s.label) + "</button>").join("") + "</div></div>";
+      $(el.score).textContent = "Topic " + (r + 1) + " of " + rounds.length + (rounds[r].multi ? " · " + picked.size + " of " + wanted(rounds[r]) + " found" : "");
     }
     function start() {
-      phase = "pick"; lock = false; missed = false;
+      const rd = rounds[r];
+      phase = "pick"; lock = false; missed = false; picked = new Set(); order = shuffle(rd.sources);
       $(el.ch).innerHTML = ""; $(el.ch).className = "choices"; $(el.fb).textContent = ""; $(el.fb).className = "fb";
       draw();
-      $(el.ask).innerHTML = "We want to find out about <b>" + esc(rounds[r].topic) + "</b>. Which one would help? Tap it.";
-      sayHere(o.finish, "We want to find out about " + rounds[r].topic + ". Which one would help? Tap it.");
+      /* Stage 2 (2Es.01): SUGGEST the sources - more than one would help, and
+         the child finds all of them before saying why */
+      $(el.ask).innerHTML = "We want to find out about <b>" + esc(rd.topic) + "</b>. " + (rd.multi ? "Which ones would help? Tap <b>every</b> one that would." : "Which one would help? Tap it.");
+      sayHere(o.finish, "We want to find out about " + rd.topic + ". " + (rd.multi ? "Which ones would help? Tap every one that would." : "Which one would help? Tap it."));
     }
     $(el.stage).addEventListener("click", (e) => {
       const b = e.target.closest("[data-s]"); if (!b || lock || phase !== "pick") return;
       const rd = rounds[r], s = rd.sources.find((x) => x.id === b.dataset.s);
       if ((s.about || []).includes(rd.tag)) {
+        picked.add(s.id);
+        if (rd.multi && picked.size < wanted(rd)) {
+          SOUND.play("pop", 0.35); draw();
+          const line = cheer() + " " + s.say + " Is there another?";
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          return;
+        }
         lock = true; if (!missed) score++;
-        b.classList.add("heard", "now"); SOUND.play("ding", 0.4);
-        const line = cheer() + " " + s.say;
+        draw(); SOUND.play("ding", 0.4);
+        const line = cheer() + " " + s.say + (rd.multi ? " That is all of them." : "");
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         setTimeout(() => {
           phase = "why"; $(el.fb).textContent = "";
-          askOnce(o, { ask: "Why is <b>" + esc(s.label) + "</b> a good one for " + esc(rd.topic) + "?", opts: rd.reasons, why: rd.why }, (ok) => {
+          askOnce(o, { ask: "Why " + (rd.multi ? "are those good ones" : "is <b>" + esc(s.label) + "</b> a good one") + " for " + esc(rd.topic) + "?", opts: rd.reasons, why: rd.why }, (ok) => {
             if (ok) score++;
             r++;
             if (r >= rounds.length) { reportScore(o.finish, score, rounds.length * 2); endStep(o, "You chose a source for " + rounds.length + " topics and said why. " + o.done); }
@@ -4651,16 +4728,18 @@
      is the child hearing themselves state an opinion. */
   function opinion(o) {
     const el = o.el, rounds = o.rounds;
-    let r = 0, stance = null, said = 0, lock = false;
+    let r = 0, stance = null, said = 0, lock = false, given = [];
+    const needR = Math.max(1, Number(o.reasonsNeeded) || 1);
     function draw() {
       const rd = rounds[r];
       $(el.stage).innerHTML = '<div class="stagewide"><div class="wantcard"><span class="cpic" aria-hidden="true">' + small(rd.pic) + '</span><div><p class="phase">What do you think about</p><b>' + esc(rd.topic) + "?</b></div></div>" +
-        '<div class="qline" aria-live="polite">' + (stance ? '<span class="chip qword">' + esc(stance.t) + "</span>" : '<span class="hint">I think…</span>') + " " + '<span class="hint">because…</span></div></div>';
-      $(el.score).textContent = "Topic " + (r + 1) + " of " + rounds.length;
+        '<div class="qline" aria-live="polite">' + (stance ? '<span class="chip qword">' + esc(stance.t) + "</span>" : '<span class="hint">I think…</span>') + " " +
+        (given.length ? given.map((g) => '<span class="chip qend">' + esc(g) + "</span>").join(" ") : "") + (given.length < needR ? '<span class="hint">because…</span>' : "") + "</div></div>";
+      $(el.score).textContent = "Topic " + (r + 1) + " of " + rounds.length + (needR > 1 ? " · " + given.length + " of " + needR + " reasons" : "");
     }
     function start() {
       const rd = rounds[r];
-      stance = null; lock = false;
+      stance = null; lock = false; given = [];
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
       draw();
       $(el.ask).innerHTML = esc(rd.ask || "What do you think about " + rd.topic + "?") + " <b>Tap what YOU think.</b> There is no wrong answer.";
@@ -4670,10 +4749,10 @@
     }
     function reasons() {
       const rd = rounds[r];
-      $(el.ask).innerHTML = "You think: <b>" + esc(stance.t) + "</b>. Now say <b>why</b>. Pick a reason that is about " + esc(rd.topic) + ".";
+      $(el.ask).innerHTML = "You think: <b>" + esc(stance.t) + "</b>. Now say <b>why</b>. Pick " + (needR > 1 ? needR + " reasons that are" : "a reason that is") + " about " + esc(rd.topic) + ".";
       $(el.ch).className = "choices stack";
       $(el.ch).innerHTML = shuffle(rd.reasons).map((x, k) => '<button type="button" class="choice text" data-about="' + esc(x.about) + '">' + esc(x.t) + "</button>").join("");
-      sayHere(o.finish, "You think: " + stance.t + ". Now say why. Pick a reason that is about " + rd.topic + ".");
+      sayHere(o.finish, "You think: " + stance.t + ". Now say why. Pick " + (needR > 1 ? needR + " reasons that are" : "a reason that is") + " about " + rd.topic + ".");
     }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
@@ -4684,12 +4763,13 @@
         reasons(); return;
       }
       if (b.dataset.about === rd.tag) {
+        given.push(b.textContent); b.classList.add("right"); b.disabled = true;
+        if (given.length < needR) { SOUND.play("pop", 0.35); draw(); const l = cheer() + " That reason is about " + rd.topic + ". Now another one."; $(el.fb).className = "fb good"; $(el.fb).textContent = l; say(l); return; }
         lock = true; said++;
-        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
-        SOUND.play("tada", 0.4);
-        const sentence = stance.t + ", " + b.textContent + ".";
-        $(el.stage).querySelector(".qline").innerHTML = '<span class="chip qword">' + esc(stance.t) + '</span> <span class="chip qend">' + esc(b.textContent) + "</span>";
-        sayLine(el, "You said: <b>" + esc(sentence) + "</b> That is an opinion with a reason.", "You said: " + sentence + " That is an opinion with a reason.");
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; });
+        SOUND.play("tada", 0.4); draw();
+        const sentence = stance.t + ", " + given.join(", and ") + ".";
+        sayLine(el, "You said: <b>" + esc(sentence) + "</b> That is an opinion with " + (needR > 1 ? "reasons" : "a reason") + ".", "You said: " + sentence + " That is an opinion with " + (needR > 1 ? "reasons" : "a reason") + ".");
         reportAttempt(o.finish, said, rounds.length, "opinions");
         r++;
         setTimeout(() => {
@@ -4727,12 +4807,15 @@
     const log = [];
     const logs = window.__gpTeamLogs = window.__gpTeamLogs || {};
     logs[o.finish] = log;
-    let r = 0, grown = 0, lock = false, missed = false, score = 0;
+    let r = 0, grown = 0, lock = false, missed = false, score = 0, taskDone = [], taskOrder = [];
     const friend = (id) => friends.find((f) => f.id === id) || { name: id, pic: "\u{1F9D2}" };
     function draw() {
       const rd = rounds[r], f = rd ? friend(rd.who) : null;
+      const task = rd && rd.kind === "task" ? rd : null;
       $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">Together: <b>' + esc(o.goal) + "</b></p>" +
         '<div class="sim teamscene">' + SCENES[o.scene](grown) + "</div>" +
+        (task ? '<p class="phase">Your job: ' + esc(task.job) + "</p>" + '<div class="orderrow">' + (taskDone.length ? taskDone.map((k, p) => '<span class="ordered"><b>' + (p + 1) + "</b>" + small(task.steps[k].pic) + " " + esc(task.steps[k].t) + "</span>").join('<span class="arrow" aria-hidden="true">&rarr;</span>') : '<span class="sub">Tap what you do first</span>') + "</div>" +
+          '<div class="cardsgrid">' + taskOrder.filter((k) => !taskDone.includes(k)).map((k) => '<button type="button" class="tapcard" data-task="' + k + '"><span class="cpic" aria-hidden="true">' + small(task.steps[k].pic) + "</span>" + esc(task.steps[k].t) + "</button>").join("") + "</div>" : "") +
         '<div class="teamrow">' + friends.map((x) => '<span class="mate' + (f && f.id === x.id ? " now" : "") + '"><span class="cpic" aria-hidden="true">' + small(x.pic) + "</span>" + esc(x.name) + "</span>").join("") + '<span class="mate you"><span class="cpic" aria-hidden="true">\u{1F9D2}</span>You</span></div>' +
         (rd && rd.kind === "friend" ? '<div class="person"><span class="ppic" aria-hidden="true">' + small(f.pic) + '</span><div><b>' + esc(f.name) + '</b><p class="pbubble">' + esc(rd.did) + "</p></div></div>" +
           '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'ok">' + esc(rd.button || "Thanks, " + f.name + "! ▶") + "</button></div>" : "") + "</div>";
@@ -4753,11 +4836,20 @@
         $(el.ch).className = "choices stack";
         $(el.ch).innerHTML = shuffle(rd.opts).map((x) => '<button type="button" class="choice text" data-give="' + x.give + '">' + esc(x.t) + "</button>").join("");
         sayHere(o.finish, rd.ask + " What do you do?");
-      } else if (rd.kind === "work") {
-        $(el.ask).innerHTML = "<b>" + esc(rd.situation) + "</b> What do you say?";
+      } else if (rd.kind === "work" || rd.kind === "idea") {
+        /* an IDEA round is Stage 2's contribution (2Fc.01): the team is stuck
+           and the child suggests what to do, rather than what to say */
+        const q = rd.kind === "idea" ? "What do you suggest?" : "What do you say?";
+        $(el.ask).innerHTML = "<b>" + esc(rd.situation) + "</b> " + q;
         $(el.ch).className = "choices stack";
         $(el.ch).innerHTML = shuffle(rd.opts).map((x, k) => '<button type="button" class="choice text" data-good="' + (x.good ? 1 : 0) + '" data-k="' + rd.opts.indexOf(x) + '">' + esc(x.t) + "</button>").join("");
-        sayHere(o.finish, rd.situation + " What do you say?");
+        sayHere(o.finish, rd.situation + " " + q);
+      } else if (rd.kind === "task") {
+        /* a TASK round is Stage 2's cooperation (2Cc.01): the child carries
+           out their own job, in order, and the shared outcome moves on */
+        taskDone = []; taskOrder = shuffle(rd.steps.map((_, k) => k)); draw();
+        $(el.ask).innerHTML = "<b>" + esc(f.name) + "</b> is waiting. Your job: <b>" + esc(rd.job) + "</b>. Tap the steps in order.";
+        sayHere(o.finish, f.name + " is waiting. Your job: " + rd.job + ". Tap the steps in order.");
       } else {
         $(el.ask).innerHTML = "<b>" + esc(f.name) + "</b> did something for the team. Read it, then press the button.";
         sayHere(o.finish, f.name + " " + rd.did);
@@ -4767,6 +4859,7 @@
       r++;
       setTimeout(() => {
         if (r >= rounds.length) { reportScore(o.finish, score, rounds.filter((x) => x.kind !== "friend").length); endStep(o, "The team finished: " + o.goal + ". " + o.done); }
+        else if (rounds[r].kind === "task") { start(); }
         else start();
       }, 3400);
     }
@@ -4777,6 +4870,24 @@
       grow(f.name + " helped: " + rd.did + " That is teamwork.");
       next();
     }
+    $(el.stage).addEventListener("click", (e) => {
+      const tb = e.target.closest("[data-task]"); if (!tb || lock) return;
+      const rd = rounds[r], f = friend(rd.who), k = Number(tb.dataset.task);
+      if (k === taskDone.length) {
+        taskDone.push(k); SOUND.play("pop", 0.35); draw();
+        $(el.fb).className = "fb good"; $(el.fb).textContent = "Step " + taskDone.length + ": " + rd.steps[k].t + "."; say(rd.steps[k].t);
+        if (taskDone.length === rd.steps.length) {
+          lock = true; if (!missed) score++;
+          log.push({ who: "you", text: rd.log || ("You " + lower1(rd.job)), pic: rd.pic || "\u{1F6E0}\ufe0f" });
+          setTimeout(() => { grow(cheer() + " Your job is done: " + rd.job + ". " + f.name + " can carry on now. " + (rd.why || "")); next(); }, 1200);
+        }
+      } else {
+        missed = true; tb.classList.add("wrong"); SOUND.play("error", 0.3);
+        const line = k < taskDone.length ? "You have done that one." : "Not yet. Something comes before " + rd.steps[k].t + ".";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => tb.classList.remove("wrong"), 700);
+      }
+    });
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       const rd = rounds[r], f = friend(rd.who);
@@ -4796,17 +4907,17 @@
               : f.name + " has " + theirs + " " + rd.resource.label + ". " + f.name + " needs " + need + ". " + f.name + " is stuck. Try again.";
           $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         }
-      } else if (rd.kind === "work") {
+      } else if (rd.kind === "work" || rd.kind === "idea") {
         const opt = rd.opts[Number(b.dataset.k)];
         if (opt.good) {
           lock = true; if (!missed) score++;
           $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
-          log.push({ who: "you", text: rd.log || opt.log || opt.t, pic: rd.pic || "\u{1F91D}" });
+          log.push({ who: "you", text: rd.log || opt.log || opt.t, pic: rd.pic || (rd.kind === "idea" ? "\u{1F4A1}" : "\u{1F91D}") });
           grow(cheer() + " " + rd.why);
           next();
         } else {
           missed = true; b.classList.add("wrong"); b.disabled = true; SOUND.play("error", 0.3);
-          const line = opt.why || "That would not help " + f.name + ", and the job would stop. What would help?";
+          const line = opt.why || (rd.kind === "idea" ? "That idea would not get the team unstuck. What would?" : "That would not help " + f.name + ", and the job would stop. What would help?");
           $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         }
       }
@@ -4829,9 +4940,10 @@
     const foundMine = new Set();
     let phase = "mine", fi = 0, right = 0, missed = 0, lock = false;
     const name = (who) => who === "you" ? "you" : (o.friends.find((f) => f.id === who) || { name: who }).name;
+    const ideas = o.what === "idea";
     function draw() {
       const target = phase === "friend" ? friendsIn[fi] : null;
-      $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (phase === "mine" ? "What did YOU do to help?" : phase === "friend" ? "What did " + esc(target.name) + " do to help?" : "Who did what") + "</p>" +
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (phase === "mine" ? (ideas ? "Which ideas were YOURS?" : "What did YOU do to help?") : phase === "friend" ? (ideas ? "Which idea was " + esc(target.name) + "'s?" : "What did " + esc(target.name) + " do to help?") : "Who did what") + "</p>" +
         '<div class="cardsgrid">' + cards.map((c) => '<button type="button" class="tapcard logcard' + (foundMine.has(c.k) ? " heard" : "") + (c.done ? " tried" : "") + '" data-k="' + c.k + '"' + (lock || c.done || (phase === "mine" && foundMine.has(c.k)) ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(c.pic) + "</span>" + esc(c.text) + "</button>").join("") + "</div></div>";
       $(el.score).textContent = phase === "mine" ? foundMine.size + " of " + mine + " things you did" : phase === "friend" ? "Friend " + (fi + 1) + " of " + friendsIn.length : "";
     }
@@ -4847,7 +4959,7 @@
             lock = true;
             setTimeout(() => {
               lock = false;
-              if (friendsIn.length) { phase = "friend"; draw(); $(el.ask).innerHTML = "Now: what did <b>" + esc(friendsIn[0].name) + "</b> do to help the team? Tap it."; sayHere(o.finish, "Now: what did " + friendsIn[0].name + " do to help the team? Tap it."); }
+              if (friendsIn.length) { phase = "friend"; draw(); $(el.ask).innerHTML = "Now: " + (ideas ? "which idea was <b>" + esc(friendsIn[0].name) + "'s</b>?" : "what did <b>" + esc(friendsIn[0].name) + "</b> do to help the team?") + " Tap it."; sayHere(o.finish, "Now: " + (ideas ? "which idea was " + friendsIn[0].name + "'s?" : "what did " + friendsIn[0].name + " do to help the team?") + " Tap it."); }
               else finishUp();
             }, 2400);
           }
@@ -4867,7 +4979,7 @@
           setTimeout(() => {
             lock = false;
             if (fi >= friendsIn.length) finishUp();
-            else { draw(); $(el.ask).innerHTML = "And what did <b>" + esc(friendsIn[fi].name) + "</b> do?"; sayHere(o.finish, "And what did " + friendsIn[fi].name + " do?"); }
+            else { draw(); $(el.ask).innerHTML = (ideas ? "And which idea was <b>" + esc(friendsIn[fi].name) + "'s</b>?" : "And what did <b>" + esc(friendsIn[fi].name) + "</b> do?"); sayHere(o.finish, ideas ? "And which idea was " + friendsIn[fi].name + "'s?" : "And what did " + friendsIn[fi].name + " do?"); }
           }, 2600);
         } else {
           missed++; b.classList.add("wrong"); SOUND.play("error", 0.3);
@@ -4904,15 +5016,16 @@
         $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">I learned that…</p><div class="cardsgrid wide">' + pool.map((c) => '<button type="button" class="tapcard learncard' + (got.has(c.k) ? " heard" : "") + '" data-k="' + c.k + '"' + (got.has(c.k) || lock ? " disabled" : "") + '>' + (c.lesson ? '<small>Lesson ' + c.lesson + "</small>" : "") + esc(lower1(c.t)) + "</button>").join("") + "</div></div>";
         $(el.score).textContent = got.size + " of " + pick + " things learned";
       } else if (phase === "liked") {
-        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">I liked…</p><div class="cardsgrid">' + o.liked.map((c, k) => '<button type="button" class="tapcard likecard' + (liked === k ? " now" : "") + '" data-l="' + k + '"><span class="cpic" aria-hidden="true">' + small(c.icon) + "</span>" + esc(c.title) + (c.lesson ? "<small>Lesson " + c.lesson + "</small>" : "") + "</button>").join("") + "</div></div>";
-        $(el.score).textContent = "Tap the part you liked best";
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (o.mode === "helped" ? "The part that helped me learn most was…" : "I liked…") + '</p><div class="cardsgrid">' + o.liked.map((c, k) => '<button type="button" class="tapcard likecard' + (liked === k ? " now" : "") + '" data-l="' + k + '"><span class="cpic" aria-hidden="true">' + small(c.icon) + "</span>" + esc(c.title) + (c.lesson ? "<small>Lesson " + c.lesson + "</small>" : "") + "</button>").join("") + "</div></div>";
+        $(el.score).textContent = o.mode === "helped" ? "Tap the part that helped you learn most" : "Tap the part you liked best";
       }
     }
     function becauses() {
-      $(el.ask).innerHTML = "You liked <b>" + esc(o.liked[liked].title) + "</b>. Why? Tap a reason.";
+      const lead = o.mode === "helped" ? "The part that helped you learn most was <b>" + esc(o.liked[liked].title) + "</b>. Why did it help? Tap a reason." : "You liked <b>" + esc(o.liked[liked].title) + "</b>. Why? Tap a reason.";
+      $(el.ask).innerHTML = lead;
       $(el.ch).className = "choices stack";
       $(el.ch).innerHTML = shuffle(o.becauses).map((t) => '<button type="button" class="choice text" data-why="' + esc(t) + '">' + esc(t) + "</button>").join("");
-      sayHere(o.finish, "You liked " + o.liked[liked].title + ". Why? Tap a reason.");
+      sayHere(o.finish, plain(lead));
     }
     $(el.stage).addEventListener("click", (e) => {
       const lc = e.target.closest(".learncard");
@@ -4925,7 +5038,7 @@
           reportAttempt(o.finish, got.size, pick, "things learned");
           if (got.size >= pick) {
             lock = true;
-            setTimeout(() => { lock = false; phase = "liked"; draw(); $(el.fb).textContent = ""; $(el.ask).innerHTML = "Now: which part did you <b>like</b> best? Tap it."; sayHere(o.finish, "Now: which part did you like best? Tap it."); }, 2600);
+            setTimeout(() => { lock = false; phase = "liked"; draw(); $(el.fb).textContent = ""; const q = o.mode === "helped" ? "Now: which part <b>helped you learn</b> most? Tap it." : "Now: which part did you <b>like</b> best? Tap it."; $(el.ask).innerHTML = q; sayHere(o.finish, plain(q)); }, 2600);
           }
         } else {
           missed++; lc.classList.add("wrong"); SOUND.play("error", 0.3);
@@ -4945,7 +5058,7 @@
       const b = e.target.closest(".choice"); if (!b || phase !== "liked" || liked === null) return;
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
       SOUND.play("tada", 0.4);
-      const sentence = "I liked " + o.liked[liked].title + ", " + b.dataset.why + ".";
+      const sentence = (o.mode === "helped" ? "The part that helped me learn most was " : "I liked ") + o.liked[liked].title + ", " + b.dataset.why + ".";
       sayLine(el, "You said: <b>" + esc(sentence) + "</b>", "You said: " + sentence);
       reportScore(o.finish, pick, pick + missed);
       setTimeout(() => endStep(o), 3200);
@@ -5068,6 +5181,51 @@
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
       }
     });
+    start();
+  }
+
+
+  /* ---- locate information in a short text (2Ri.01) ----------------------
+     A few sentences a child can read, each a button. The question asks
+     which sentence tells us something; the child taps it. The skill is
+     finding the ONE sentence that answers, not remembering the text. */
+  function textSource(o) {
+    const el = o.el, lines = o.lines, rounds = o.rounds;
+    let r = 0, right = 0, missed = false, lock = false;
+    function draw(hit) {
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="textsrc"><p class="phase">' + esc(o.title || "Read it") + "</p>" +
+        lines.map((t, k) => '<button type="button" class="sline' + (hit === k ? " right" : "") + '" data-k="' + k + '"' + (lock ? " disabled" : "") + ">" + esc(t) + "</button>").join("") +
+        '</div><div class="bigbtns"><button type="button" class="big small ghost" id="' + el.stage + 'read">\u{1F50A} Read it to me</button></div></div>';
+      $(el.score).textContent = "Question " + (Math.min(r + 1, rounds.length)) + " of " + rounds.length;
+      $(el.stage + "read").addEventListener("click", () => say(lines.join(" ")));
+    }
+    function start() {
+      lock = false; missed = false; draw(-1);
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.ask).innerHTML = "<b>" + esc(rounds[r].ask) + "</b> Tap the sentence that tells us.";
+      sayHere(o.finish, rounds[r].ask + " Tap the sentence that tells us.");
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".sline"); if (!b || lock) return;
+      const rd = rounds[r], k = Number(b.dataset.k);
+      if (k === rd.line) {
+        lock = true; if (!missed) right++;
+        SOUND.play("ding", 0.4); draw(k);
+        const line = cheer() + " " + lines[k] + " " + rd.why;
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        r++;
+        setTimeout(() => {
+          if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "You found the sentence that answers " + rounds.length + " questions. " + o.done); }
+          else start();
+        }, 3400);
+      } else {
+        missed = true; b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const line = "That sentence says: " + lines[k] + " It does not tell us " + lower1(noDot(rd.about || rd.ask)) + ". Look again.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    ONSHOW[o.finish] = (function () { let said = false; return () => { if (said) return; said = true; afterVoice(() => sayHere(o.finish, lines.join(" ") + " " + rounds[0].ask + " Tap the sentence that tells us.")); }; })();
     start();
   }
 

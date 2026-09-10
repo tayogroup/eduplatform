@@ -47,8 +47,22 @@ from _kit import explain, step
 # steps that teach nothing and therefore name no objective
 META_KINDS = {"world", "resources"}
 
-# the look-back's own codes: the two Reflection objectives every lesson reaches
-LOOKBACK_CODES = ["1Fv.01", "1Fl.01"]
+# the look-back's own codes: the two Reflection objectives every lesson reaches,
+# at the app's stage (1Fv.01/1Fl.01 for Stage 1, 2Fv.01/2Fl.01 for Stage 2 ...)
+def lookback_codes(stage):
+    return ["%dFv.01" % int(stage), "%dFl.01" % int(stage)]
+
+
+# At Stage 1 the second half is "something liked in a particular activity"
+# (1Fl.01); at Stage 2 it is "a particular activity that supported learning"
+# (2Fl.01), so the page asks which part HELPED rather than which part was liked.
+DEFAULT_HELPED = [
+    "because I had to try it myself",
+    "because I could see it happen",
+    "because we talked about it",
+    "because I did it with a friend",
+    "because I got to choose",
+]
 
 # things a child did NOT learn today, for the look-back's distractors, when
 # the lesson does not write its own
@@ -138,13 +152,27 @@ def games_pack(n, lesson):
 # ----------------------------------------------------------------------
 # the look-back, derived from the lesson's own about lines and step titles
 # ----------------------------------------------------------------------
-def lookback_step(lesson, core):
+def lookback_step(lesson, core, cfg):
+    stage = int(cfg.get("stage") or 1)
+    helped = stage >= 2
     lb = lesson.get("lookback") or {}
     not_learned = list(lb.get("not") or DEFAULT_NOT_LEARNED)
-    becauses = list(lb.get("becauses") or DEFAULT_BECAUSES)
+    becauses = list(lb.get("becauses") or (DEFAULT_HELPED if helped else DEFAULT_BECAUSES))
     learned = list(lesson.get("about") or [])
     liked = [{"title": plain(s["title"]), "icon": s["icon"]} for s in core if s["kind"] not in ("quiz",)]
-    return step("lookback", "Look back", "\U0001FA9E", "I looked back", LOOKBACK_CODES,
+    if helped:
+        return step("lookback", "Look back", "\U0001FA9E", "I looked back", lookback_codes(stage),
+                    "What did you learn today, and which part helped you learn it? Tap to say it.",
+                    explain(
+                        ["Looking back is a skill too.", "At the end of an activity you say what you learned, and which part helped you learn it."],
+                        ["First: I learned that. Tap two things you really did learn today.",
+                         "Then: the part that helped me learn most. Tap it, and say why it helped."],
+                        ["Children tap the part that was most fun.", "Fun is fine, but this asks which part HELPED you learn."],
+                        ["Tap the first thing you learned."]),
+                    {"scope": "lesson", "mode": "helped", "learned": learned, "not": not_learned, "liked": liked, "becauses": becauses,
+                     "pick": min(2, len(learned))},
+                    "You looked back at what you learned and what helped you learn it. That is reflecting.")
+    return step("lookback", "Look back", "\U0001FA9E", "I looked back", lookback_codes(stage),
                 "What did you learn today, and what did you like? Tap to say it.",
                 explain(
                     ["Looking back is a skill too.", "At the end of an activity you say what you learned, and what you liked."],
@@ -272,7 +300,7 @@ def expand(n, lesson, code_text, finder, cfg):
     else:
         content, quiz = core, []
     own_lookback = any(s["kind"] == "lookback" for s in core)
-    look = [] if own_lookback else [lookback_step(lesson, content)]
+    look = [] if own_lookback else [lookback_step(lesson, content, cfg)]
     steps = [overview, lec, wds] + content + look + [gz, hm] + quiz + [world, res]
     steps = [s for s in steps if s is not None]
     overview["data"]["counts"]["steps"] = len(steps)

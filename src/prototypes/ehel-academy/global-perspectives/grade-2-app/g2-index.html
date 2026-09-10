@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 2 Global Perspectives</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     THE BASE - lifted verbatim from the Grade 1 Mathematics standalone
+     build (mathematics/grade-1-app/g1v2), because these two are meant to
+     be one product. Everything above the ENGLISH heading further down is
+     that build's design system unchanged: the same tokens, the same deck,
+     the same gold action colour, the same voice bar.
+
+     The light palette is declared first and then overridden by the Wehel
+     block below, exactly as it is there. It is kept rather than deleted
+     so a token the override forgets still resolves to something legible
+     instead of to nothing.
+     ================================================================== */
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  /* THE SKIP LINK. Off-screen until it is focused, then a real button in the
+     top-left corner. It is not `display: none` and not `visibility: hidden` -
+     either of those would take it out of the tab order and there would be
+     nothing to focus. Moving it off-screen keeps it reachable by Tab while
+     leaving the page looking untouched.
+
+     z-index clears the two app bars, which are sticky at 40. A skip link that
+     appears UNDER the chrome it exists to skip is a skip link nobody can see
+     they have focused.
+
+     THE FILL IS --ink, NOT --teal, and that is a contrast decision rather than
+     a style one. This build is a single dark theme - the Wehel block below
+     redefines every token from bare :root, so the light palette above it never
+     renders and only the dark values matter. There --teal is #35BFB2, and the
+     obvious teal-pill-with-white-text measures 2.3:1 on it. The link renders
+     at 18px bold, which is below the 18.66px that would let it count as large
+     text, so it needs 4.5:1 and not 3:1 - it fails twice over. --ink and
+     --ground are the pair that is guaranteed to oppose each other whatever the
+     palette does, and here they give a white pill with #142B3E text at 14.5:1
+     (measured, not derived). Teal stays as the ring, which is the same 4px the
+     buttons already focus with, so the link still reads as part of this
+     product. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 100; }
+  .skip:focus {
+    left: 8px; top: 8px; padding: 12px 18px; border-radius: 12px;
+    background: var(--ink); color: var(--ground); font-weight: 700; text-decoration: none;
+    box-shadow: var(--shadow); outline: 4px solid var(--teal); outline-offset: 2px;
+  }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  /* THE DOT IS NOT THE TARGET ANY MORE. There are 23 of these — one per step —
+     and each used to BE a 16px button with a 6px gap, so the tap area was 16px
+     across with centres 22px apart. WCAG 2.5.8 asks for 24x24, and its spacing
+     exception wants 24px between centres, so this failed on both counts in an
+     app whose users are five and six years old.
+
+     The button is now a 28px target with the dot drawn inside it by ::before,
+     which buys the tap area without turning the rail into a row of fat circles:
+     the dot a child SEES is the same 16px it always was. gap goes to 0 because
+     the spacing now lives in the button's own box — leaving the 6px there would
+     push the centres to 34px and cost a row on a phone for nothing.
+
+     Every state moved to ::before with it. Leaving `background` on the button
+     would paint the whole 28px square, which is what makes this look like a
+     grid of blocks rather than a row of dots — check the dark-theme block
+     further down if you change either one. */
+  .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+  /* Growing the target costs rows, and on a phone the rail is capped at 45% of
+     380px — six per row, five rows, 140px of dots above the lesson. Letting it
+     take the full width below the title puts thirteen on a row and two rows on
+     the screen, which is shorter than the 16px version ever was. The cap is
+     what needs lifting, not the target size. */
+  @media (max-width: 560px) {
+    .hero { flex-wrap: wrap; }
+    .dots { max-width: 100%; width: 100%; justify-content: flex-start; }
+  }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  /* The deck carries tabindex="-1" so the skip link can move focus into it.
+     That makes it focusable, and a browser that rings a programmatically
+     focused container would draw a 4px outline around the whole lesson. The
+     ring is kept for :focus-visible, which is what a genuine keyboard focus
+     would match, and dropped for the skip link's own arrival. */
+  .deck:focus { outline: none; }
+  .deck:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; }
+  .choice.small { min-width: 80px; height: 64px; font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { border-radius: 18px; border: 3px solid var(--line); background: var(--card); padding: 14px 10px; text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .sticker .ic { display: block; font-size: 38px; line-height: 1.2; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker:not(.got) .ic { filter: grayscale(1); opacity: 0.35; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px 0; }
+  .foot .mid { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to the
+     viewer's setting. The selector list carries the same specificity as
+     the light block above and comes later, so it wins in both light and
+     dark. The palette is Ehel Academy's own - gold #f4c95d is the action
+     colour, teal #0f766e and coral #c2482c lifted to the same hues at a
+     lightness that is legible on a dark ground.
+
+     Copied from the Grade 1 Mathematics build. Do not re-solve it here:
+     the two builds are meant to be indistinguishable in colour.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  /* ::before, matching the block above — the button itself stays transparent
+     so the 28px tap area never paints. */
+  .dots button::before { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--teal); border-color: var(--teal); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* the fixed ground, painted by a pseudo-element rather than
+     background-attachment, which iOS Safari does not honour */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+  .deck { background: rgba(20, 43, 62, 0.88); }
+
+  /* ---- the voice bar: the speaker reads the step, Explain walks
+          through the idea behind it ---- */
+  .say button.explain {
+    flex: 0 0 auto;
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+  @media (max-width: 420px) {
+    .say button.explain .explain-t { display: none; }
+    .say button.explain { width: 44px; height: 44px; padding: 0; justify-content: center; font-size: 18px; }
+  }
+
+  /* ---- the hub ---- */
+  .hubhead { padding: 26px 4px 18px; }
+  .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
+  .hubhead h1 em { font-style: normal; color: var(--teal); }
+  .hubhead p { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; gap: 10px; padding: 20px;
+    border-radius: 22px; border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88);
+    box-shadow: var(--shadow); color: var(--ink); text-decoration: none; }
+  a.card:hover, a.card:focus-visible { border-color: var(--teal); }
+  .card h2 { font-size: 25px; }
+  .card p { color: var(--muted); font-size: 16.5px; }
+  .cardno { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .cardfoot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .meta { color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .go { flex: 0 0 auto; border-radius: 999px; background: var(--gold); color: var(--accent-ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; padding: 9px 20px; }
+  .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .card.locked { opacity: 0.62; }
+  .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 62ch; }
+  .strands, .grownups { padding: 30px 4px 0; }
+  .strands h2, .grownups h2 { font-size: 26px; margin-bottom: 10px; }
+  .strand { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: baseline; padding: 10px 14px;
+    border-radius: 14px; border: 1px solid var(--line); background: var(--card); margin-bottom: 8px; font-size: 16px; }
+  .strand b { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  @media (max-width: 560px) { .strand { grid-template-columns: 1fr; gap: 2px; } }
+  .grownups > p { color: var(--muted); font-size: 16px; max-width: 64ch; margin-bottom: 14px; }
+  .gu { border: 1px solid var(--line); border-radius: 16px; background: var(--card); margin-bottom: 10px; }
+  .gu summary { cursor: pointer; padding: 14px 16px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .gu summary small { color: var(--muted); font-weight: 700; font-size: 13.5px; margin-left: 8px; }
+  .gu .body { padding: 0 16px 16px; font-size: 15.5px; display: flex; flex-direction: column; gap: 10px; }
+  .gu h3 { font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .07em; margin: 8px 0 2px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .gu ul, .gu ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .gu code { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px; color: var(--teal); }
+  .gu .key { color: var(--muted); }
+  .gu .key b { color: var(--ink); }
+  @media print {
+    .eh-bar1, .cards, .strands, .hubhead p { display: none; }
+    body::before { display: none; } html, body { background: #fff; }
+    .gu { break-inside: avoid; border-color: #999; } .gu summary { list-style: none; }
+    .gu .body { display: flex !important; } details:not([open]) .body { display: flex !important; }
+  }
+
+  /* ---- the header bar, the same one the lesson pages carry ---- */
+  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
+  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: #06231F; font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: #06231F; font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
+  @media (max-width: 720px) { .eh-progtext, .eh-brandtext { display: none; } .eh-picker { max-width: 130px; } }
+</style>
+
+<header class="eh-bar1">
+  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <div class="eh-brand"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Global Perspectives</i></span></div>
+  <div class="eh-prog" id="ehProg">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Course progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="" selected>Jump to a lesson…</option><option value="sharp-questions.html">Sharp Questions</option><option value="interview-and-record.html">Interview and Record</option><option value="who-knows-what.html">Who Knows What</option><option value="me-and-others.html">Me and Others</option><option value="sources-and-reasons.html">Sources and Reasons</option><option value="our-teams-ideas.html">Our Team's Ideas</option><option value="talk-it-through.html">Talk It Through</option><option value="look-back.html">Look Back</option></select>
+  </div>
+</header>
+
+<div class="wrap">
+  <header class="hubhead">
+    <p class="eyebrow">Ehel Academy &middot; Global Perspectives</p>
+    <h1>Grade 2 <em>Global Perspectives</em></h1>
+    <p>Eight lessons, in the order they are meant to be done. Every one is about finding things out and talking about them: a question to build, a classmate to ask, a picture to read, a problem to solve, a garden to plant together. About 345 minutes in all, one lesson a week.</p>
+  </header>
+
+  <main class="cards">
+      <a class="card" href="sharp-questions.html?from=gp2">
+        <span class="cardno">Lesson 1</span>
+        <h2>Sharp Questions</h2>
+        <p>Our playground is crowded at playtime. Ask questions that are focused on that problem, then find the exact part of a picture and the exact sentence of a text that answers each one.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 45 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="interview-and-record.html?from=gp2">
+        <span class="cardno">Lesson 2</span>
+        <h2>Interview and Record</h2>
+        <p>Interview six classmates twice: once to find information, once to find opinions. Record what you find as a pictogram, a bar chart and a table, and see that all three show the same thing.</p>
+        <span class="cardfoot"><span class="meta">17 steps &middot; about 50 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="who-knows-what.html?from=gp2">
+        <span class="cardno">Lesson 3</span>
+        <h2>Who Knows What</h2>
+        <p>Different people know different things about our town. Work out who would know what, then give a short talk about the town where everything you say is about it.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="me-and-others.html?from=gp2">
+        <span class="cardno">Lesson 4</span>
+        <h2>Me and Others</h2>
+        <p>What you do reaches other people. Predict what your action does to a classmate, watch it happen, then suggest something YOU could do about a problem of your own.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="sources-and-reasons.html?from=gp2">
+        <span class="cardno">Lesson 5</span>
+        <h2>Sources and Reasons</h2>
+        <p>More than one source can help with a topic. Suggest every source that would help find out about recycling, animals and the sea, say why, then say what you think with two reasons.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="our-teams-ideas.html?from=gp2">
+        <span class="cardno">Lesson 6</span>
+        <h2>Our Team's Ideas</h2>
+        <p>Plant the school vegetable patch and paint the assembly backdrop with a team. Do your own job, suggest an idea when the team is stuck, and then say which idea was yours and which was a friend's.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 50 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="talk-it-through.html?from=gp2">
+        <span class="cardno">Lesson 7</span>
+        <h2>Talk It Through</h2>
+        <p>Listen to classmates who have moved to a new place and ask each one a relevant question, give a talk about our school for a new pupil, ask Leo focused questions, and answer his.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 45 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="look-back.html?from=gp2">
+        <span class="cardno">Lesson 8</span>
+        <h2>Look Back</h2>
+        <p>Seven lessons of finding out, thinking, choosing, working together and talking. Look back over all of them: what did you learn, and which activity helped you learn it?</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 35 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+  </main>
+
+  <section class="strands">
+    <h2>What Stage 2 Global Perspectives covers</h2>
+    <div class="strand"><b>Research</b><span>Asking focused questions about the thing we want to find out; finding the part of a picture or a text that tells us; interviewing classmates to find information and opinions; and recording what we found in pictograms, tables and charts.</span></div>
+    <div class="strand"><b>Analysis</b><span>Knowing that different people know different things about a topic; seeing that pictures, bars and numbers can all show information; thinking about what our actions do to OTHER people; and suggesting something we could do about a problem of our own.</span></div>
+    <div class="strand"><b>Evaluation</b><span>Suggesting the sources that would help with a topic, and saying why; and saying what we think about a topic with reasons.</span></div>
+    <div class="strand"><b>Reflection</b><span>Saying which IDEA was ours and which was a friend's when a team finished a job; saying what we learned in an activity; and saying which part helped us learn.</span></div>
+    <div class="strand"><b>Collaboration</b><span>Carrying out our own job so the team's work gets done; and working positively with others towards something we all made.</span></div>
+    <div class="strand"><b>Communication</b><span>Giving a short talk about a topic where everything said is about it; and listening to others, then asking a simple, relevant question about what they said.</span></div>
+  </section>
+
+  <section class="grownups" id="grown-ups">
+    <h2>For teachers and parents</h2>
+    <p>What each lesson teaches, in Cambridge's own words; the talk-together version of each activity to do at home; and the answer keys. Where a step has no key, because the child's own opinion or own reflection is the answer, it says so. Open a lesson to read it, or print this page for the lot.</p>
+    <details class="gu"><summary>Lesson 1: Sharp Questions<small>16 steps &middot; about 45 minutes &middot; 4 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Global Perspectives 0838, Stage 2)</h3><ul><li><code>2Rq.01</code> Ask focused questions about a given topic</li><li><code>2Ri.01</code> Locate relevant information in sources provided</li><li><code>2Fv.01</code> Talk about what has been learned during an activity</li><li><code>2Fl.01</code> Talk about a particular activity that supported learning</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Big words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>A wide question, a sharp question <span class="key">&middot; The class has a problem to find out about. Press Next and hear two kinds of question.</span></li><li>What makes a question focused? <span class="key">&middot; A focused question has three things. Tap each one.</span></li><li>Build a focused question <span class="key">&middot; The card says exactly what we want to find out about the crowded playground. Build the question, then press Ask it .</span></li><li>Focused, or wide? <span class="key">&middot; Our problem is the crowded playground. Is this question focused on it, or wide?</span></li><li>Find it in the picture <span class="key">&middot; This is our playground at playtime. Look at everything first. Then find the part of the picture that answers each question.</span></li><li>Find it in the text <span class="key">&middot; Teacher Yasmin wrote down the playground rules. Read them, then find the sentence that answers each question.</span></li><li>Sharp questions and where to find the answers <span class="key">&middot; Think about focused questions and finding answers. Tap the answer.</span></li><li>Look back <span class="key">&middot; What did you learn today, and which part helped you learn it? Tap to say it.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Find out at home <span class="key">&middot; Finding out does not stop at school. Do one of these with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where these skills are used out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it together, for real</h3><ul><li><b>Build a focused question.</b> Pick a topic (pets, the park, dinner). Take turns asking a question about it that starts with What, Where, Who, When, Why or How. Count how many different questions you can ask.</li><li><b>Find it in the picture.</b> Look at one photo or picture book page together. Ask: what does this picture tell us? Find three things in it and say a fact about each.</li><li><b>Find it in the text.</b> Read a short page of a non-fiction book together. Ask a question, and let the child find the ONE sentence that answers it and read it out.</li><li><b>Look back.</b> At the end of the day ask: what did you learn today? What did you like best, and why?</li><li><b>Sharp questions at home.</b> You need: A grown-up and a small problem at home. Pick a problem: the toys are everywhere, or breakfast takes too long. Ask three questions that are focused on that problem. Your grown-up says wide or focused for each one. Look for: Could each focused question be answered by looking, counting or asking?</li><li><b>Find it in the picture.</b> You need: A busy picture in a book, and a grown-up. Your grown-up asks a question about the picture. Point to the exact part of the picture that answers it. Swap over and ask them one. Look for: Was the answer in one part of the picture, or the whole picture?</li><li><b>Find it in the text.</b> You need: A leaflet, a menu or a notice, and a grown-up. Your grown-up asks a question the text can answer. Find the one sentence that answers it and read it out. Ask them a question back. Look for: Did you need to read all of it, or just find the right sentence?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>What makes a question focused?</b> <span class="key">Which question is focused on the crowding problem? &rarr; <b>Which part of the playground has the most children?</b></span></li><li><b>Build a focused question</b><ul><li>the place the footballers play <span class="key">&rarr; <b>Where do the footballers play?</b></span></li><li>the time the playground is fullest <span class="key">&rarr; <b>When is the playground fullest?</b></span></li><li>the number of children in the sandpit <span class="key">&rarr; <b>How many children are in the sandpit?</b></span></li><li>the people who sit on the bench <span class="key">&rarr; <b>Who sits on the bench?</b></span></li><li>the reason the corner gets so crowded <span class="key">&rarr; <b>Why does the corner get so crowded?</b></span></li><li>the games we could play in the quiet corner <span class="key">&rarr; <b>What could we play in the quiet corner?</b></span></li></ul></li><li><b>Focused, or wide?</b> <span class="key"><b>Focused on the problem</b>: Which part of the playground is fullest?, How much space does the football take?, When is the playground quietest?; <b>Wide</b>: What is a playground?, What colour is the slide?, Is the moon far away?</span></li><li><b>Find it in the picture</b> <span class="key">find: The football takes up the whole middle of the playground.; Twelve children are waiting for one slide.; Only two children are in the sandpit.; The corner by the bench is empty. Nobody plays there.; Two teachers sit on the bench and watch.. Where do the footballers play? &rarr; <b>the football game</b>. Which part of the playground is fullest? &rarr; <b>the crowd by the slide</b>. Which part is empty? &rarr; <b>the quiet corner</b>. How many children are in the sandpit? &rarr; <b>the sandpit</b></span></li><li><b>Find it in the text</b><ol><li>When is the field open? <span class="key">&rarr; <b>The field is open when the grass is dry.</b></span></li><li>Where may football be played? <span class="key">&rarr; <b>Football may only be played in the middle of the playground.</b></span></li><li>Who may use the quiet corner? <span class="key">&rarr; <b>Year 1 and Year 2 may use the sandpit and the quiet corner.</b></span></li><li>What time does playtime start? <span class="key">&rarr; <b>Playtime is from half past ten until eleven o'clock.</b></span></li></ol></li><li><b>Sharp questions and where to find the answers</b><ol><li>Our problem is the crowded playground. Which question is focused on it? <span class="key">&rarr; <b>Which part of the playground is fullest?</b></span></li><li>Where in the picture did we find where the footballers play? <span class="key">&rarr; <b>in the middle, where the ball is</b></span></li><li>Which rule told us when the field is open? <span class="key">&rarr; <b>The field is open when the grass is dry.</b></span></li><li>A question you can answer by counting is… <span class="key">&rarr; <b>How many children are in the sandpit?</b></span></li></ol></li><li><b>Look back</b> <span class="key">no key for what was liked. Things learned today: <b>Say what makes a question focused: about the topic, about the problem, and findable.; Build a focused question about a problem.; Find the part of a picture that answers a question.; Find the sentence in a text that answers a question.</b>; not today: how to ride a bike; the names of the planets; how to bake bread</span></li><li><b>Show what you know</b><ol><li>What is a focused question? <span class="key">&rarr; <b>a question about the exact problem, that you can find out</b></span></li><li>Sami asked: what is a playground? Why was that wide? <span class="key">&rarr; <b>it was not about the crowding</b></span></li><li>Which question word asks for a NUMBER? <span class="key">&rarr; <b>How many</b></span></li><li>We wanted to know where the footballers play. Which part of the picture told us? <span class="key">&rarr; <b>the football in the middle</b></span></li><li>Which part of the playground was EMPTY? <span class="key">&rarr; <b>the quiet corner</b></span></li><li>Who may use the quiet corner, according to the rules? <span class="key">&rarr; <b>Year 1 and Year 2</b></span></li><li>When you read a text to answer a question, you look for… <span class="key">&rarr; <b>the sentence that answers it</b></span></li><li>Which of these is a focused question about our crowded playground? <span class="key">&rarr; <b>When is the playground quietest?</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 2: Interview and Record<small>17 steps &middot; about 50 minutes &middot; 5 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Global Perspectives 0838, Stage 2)</h3><ul><li><code>2Rc.01</code> Conduct simple investigations, using interviews or questionnaires to find information and opinions</li><li><code>2Rf.01</code> Record findings from research in pictograms, simple tables or graphic organisers</li><li><code>2Ad.01</code> Recognise that graphical and numerical data can show information about a topic</li><li><code>2Fv.01</code> Talk about what has been learned during an activity</li><li><code>2Fl.01</code> Talk about a particular activity that supported learning</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Big words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Information and opinions <span class="key">&middot; An interview can find out two kinds of thing. Press Next and hear both.</span></li><li>Interview: what do you play? <span class="key">&middot; Interview each classmate. Ask, listen, and record the answer in the pictogram.</span></li><li>The same findings as a bar chart <span class="key">&middot; Here is what you found, drawn as bars. A longer bar means more people. Look, then tap.</span></li><li>Interview: should playtime be longer? <span class="key">&middot; This interview finds opinions. Ask each classmate what they think, and record it.</span></li><li>The same findings as a table <span class="key">&middot; Here are the opinions as a table of numbers. Look at the numbers, then tap.</span></li><li>Information or opinion? <span class="key">&middot; Record our findings on a chart with two sides: information, and opinions.</span></li><li>Three ways to show findings <span class="key">&middot; Pictures, bars, numbers. Tap each one to hear what it shows.</span></li><li>Interviews and findings <span class="key">&middot; Think about the two interviews and the three charts. Tap the answer.</span></li><li>Look back <span class="key">&middot; What did you learn today, and which part helped you learn it? Tap to say it.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Find out at home <span class="key">&middot; Finding out does not stop at school. Do one of these with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where these skills are used out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it together, for real</h3><ul><li><b>Interview: what do you play?.</b> Ask everyone at home one question with a few answers (how do you get to work or school?). Draw one small picture per person in a row for each answer.</li><li><b>The same findings as a bar chart.</b> Look at the picture rows you made. Ask: which row is the longest? How many chose this? Did anyone choose that?</li><li><b>Information or opinion?.</b> Draw two big circles or two columns on paper and sort what you found out into them, one fact at a time, saying why each goes where it goes.</li><li><b>Look back.</b> At the end of the day ask: what did you learn today? What did you like best, and why?</li><li><b>Interview your family.</b> You need: Paper, a pencil, everyone at home. Ask everyone one information question: what do you eat for breakfast? Ask everyone one opinion question: should we have pancakes on Sunday? Record both. Put a tick per person for each answer. Look for: Which question found information? Which found opinions?</li><li><b>Three ways to show it.</b> You need: Paper and crayons, and your breakfast findings. Draw your findings as a pictogram: one picture per person. Draw them again as bars. Write them as a table of numbers. Look for: Do all three show the same thing? Which was quickest to read?</li><li><b>Count the cars three ways.</b> You need: A window onto a road, and five minutes. Make a mark for each car, bus and bike that passes. Draw the marks as bars. Write the numbers in a table. Look for: Which went past most? Could you tell from the bars before you counted?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Interview: what do you play?</b> <span class="key">Amal: <b>Football</b>; Sami: <b>Tag</b>; Nora: <b>Skipping</b>; Omar: <b>Football</b>; Hana: <b>Skipping</b>; Tariq: <b>Football</b>. Pictogram: Football <b>3</b>; Skipping <b>2</b>; Tag <b>1</b>; Quiet games <b>0</b></span></li><li><b>The same findings as a bar chart</b><ol><li>Which game has the LONGEST bar? <span class="key">&rarr; <b>Football</b></span></li><li>How many children play skipping? <span class="key">&rarr; <b>2</b></span></li><li>Does anyone play quiet games? <span class="key">&rarr; <b>No</b></span></li><li>Which game has the SHORTEST bar? <span class="key">&rarr; <b>Quiet games</b></span></li></ol></li><li><b>Interview: should playtime be longer?</b> <span class="key">Amal: <b>Yes</b>; Sami: <b>Yes</b>; Nora: <b>No</b>; Omar: <b>Yes</b>; Hana: <b>Not sure</b>; Tariq: <b>Yes</b>. Pictogram: Yes <b>4</b>; No <b>1</b>; Not sure <b>1</b></span></li><li><b>The same findings as a table</b><ol><li>Which opinion has the BIGGEST number? <span class="key">&rarr; <b>Yes</b></span></li><li>How many children said no? <span class="key">&rarr; <b>1</b></span></li><li>Did anyone say not sure? <span class="key">&rarr; <b>Yes</b></span></li><li>How many children said yes? <span class="key">&rarr; <b>4</b></span></li></ol></li><li><b>Information or opinion?</b> <span class="key"><b>Information</b>: Three children play football, Two children play skipping, Nobody plays quiet games; <b>Opinion</b>: Sami thinks playtime should be longer, Nora thinks lessons are better than playtime, Hana is not sure about longer playtime</span></li><li><b>Three ways to show findings</b> <span class="key">Three children play football. Which of these can show that? &rarr; <b>A pictogram, a bar chart AND a table</b></span></li><li><b>Interviews and findings</b><ol><li>What do you play at playtime? Tag. Is that information or an opinion? <span class="key">&rarr; <b>information</b></span></li><li>Should playtime be longer? Yes! Information or opinion? <span class="key">&rarr; <b>an opinion</b></span></li><li>In a bar chart, a LONGER bar means… <span class="key">&rarr; <b>more people gave that answer</b></span></li><li>In a table, how do you find how many? <span class="key">&rarr; <b>read the number</b></span></li></ol></li><li><b>Look back</b> <span class="key">no key for what was liked. Things learned today: <b>Interview classmates to find information and opinions.; Record findings in a pictogram, a bar chart and a table.; Say that pictures, bars and numbers can all show the same information.; Tell information from an opinion, and record both.</b>; not today: how to swim; the names of the planets; how to tie a shoelace</span></li><li><b>Show what you know</b><ol><li>What is an interview? <span class="key">&rarr; <b>asking someone questions and recording the answers</b></span></li><li>Which is an OPINION? <span class="key">&rarr; <b>Sami thinks playtime should be longer</b></span></li><li>Which game did most of the class play? <span class="key">&rarr; <b>football</b></span></li><li>How many children said playtime should be longer? <span class="key">&rarr; <b>4</b></span></li><li>A bar chart, a pictogram and a table can all… <span class="key">&rarr; <b>show the same information</b></span></li><li>In a pictogram, one picture is… <span class="key">&rarr; <b>one person</b></span></li><li>Nobody plays quiet games. Where does that go on our chart? <span class="key">&rarr; <b>information</b></span></li><li>Hana said she was not sure. Should we record that? <span class="key">&rarr; <b>yes, not sure is still her opinion</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 3: Who Knows What<small>15 steps &middot; about 40 minutes &middot; 4 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Global Perspectives 0838, Stage 2)</h3><ul><li><code>2Ap.01</code> Recognise that different people know different things about a topic</li><li><code>2Mi.01</code> Talk about a given topic, giving relevant information</li><li><code>2Fv.01</code> Talk about what has been learned during an activity</li><li><code>2Fl.01</code> Talk about a particular activity that supported learning</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Big words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Nobody knows everything <span class="key">&middot; The class is finding out about our town. Press Next and see who knows what.</span></li><li>Who would know? <span class="key">&middot; Teacher Yasmin has a question about the town. Who would know the answer? Tap the person.</span></li><li>People in our town <span class="key">&middot; Six people who know six different things about our town. Tap each one.</span></li><li>My talk about our town <span class="key">&middot; Give a short talk about our town. Tap four things to say. Everything in your talk has to be ABOUT the town.</span></li><li>Who would know that? <span class="key">&middot; Here are things somebody in the town knows. Who knows it?</span></li><li>Knowing and talking <span class="key">&middot; Think about who knows what, and your talk. Tap the answer.</span></li><li>Look back <span class="key">&middot; What did you learn today, and which part helped you learn it? Tap to say it.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Find out at home <span class="key">&middot; Finding out does not stop at school. Do one of these with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where these skills are used out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it together, for real</h3><ul><li><b>Who would know?.</b> Ask the child a question and listen for whether the answer is ABOUT the question. Swap: they ask, you answer with something off the point, and they catch you.</li><li><b>My talk about our town.</b> Name a topic and take turns saying one thing you already know about it. Stop and laugh when somebody says something that is about a different topic.</li><li><b>Look back.</b> At the end of the day ask: what did you learn today? What did you like best, and why?</li><li><b>Who knows what at home?.</b> You need: Everyone at home. Think of three questions: how does the washing machine work, what is for dinner, where is the nearest bus stop. For each one, say who at home would know best. Ask them and see if you were right. Look for: Did the same person know all three?</li><li><b>A talk about our street.</b> You need: A grown-up to listen. Give a talk about your street: four sentences. Your grown-up puts a hand up if a sentence is not about the street. Try again until all four are about the street. Look for: Which sentence was hardest to keep on the topic?</li><li><b>Ask a person who knows.</b> You need: A walk with a grown-up. On a walk, find a person doing a job: a shopkeeper, a driver, a gardener. With your grown-up, ask them one question about their job. Tell somebody at home what you found out. Look for: Could anybody else have answered that question as well?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Who would know?</b><ol><li>How is bread made? <span class="key">&rarr; <b>The baker</b></span></li><li>Which bus goes to the market? <span class="key">&rarr; <b>The bus driver</b></span></li><li>When does the library open? <span class="key">&rarr; <b>The librarian</b></span></li><li>What should I do about a sore throat? <span class="key">&rarr; <b>The doctor</b></span></li><li>When are the strawberries ready to pick? <span class="key">&rarr; <b>The farmer</b></span></li></ol></li><li><b>People in our town</b> <span class="key">Who would know where the ducks nest in the park? &rarr; <b>The park keeper</b></span></li><li><b>My talk about our town</b> <span class="key">about our town: <b>Our town has a market on Saturdays, The bus goes from the school to the market, The library is next to the park, The baker opens at seven in the morning, There are ducks on the park pond</b>; not about it: My cat is called Tiger, Lions live in Africa, I like ice cream</span></li><li><b>Who would know that?</b> <span class="key"><b>The baker</b>: how much flour goes in a loaf, what time the buns come out of the oven; <b>The bus driver</b>: which bus stop is nearest the school, how much a bus ticket costs; <b>The park keeper</b>: how old the big oak tree is, where the ducks nest</span></li><li><b>Knowing and talking</b><ol><li>Does the baker know where the buses go? <span class="key">&rarr; <b>No, that is the bus driver's job</b></span></li><li>You want to know when the library opens. Who do you ask? <span class="key">&rarr; <b>the librarian</b></span></li><li>Which sentence belongs in a talk about our town? <span class="key">&rarr; <b>The library is next to the park.</b></span></li><li>Why do we ask different people about different things? <span class="key">&rarr; <b>because each person knows their own part</b></span></li></ol></li><li><b>Look back</b> <span class="key">no key for what was liked. Things learned today: <b>Say that different people know different things about a topic.; Work out who would know the answer to a question.; Give a short talk about a topic where everything you say is about it.; Match things known to the people whose job it is to know them.</b>; not today: how to bake bread; how to swim; the names of the planets</span></li><li><b>Show what you know</b><ol><li>Who knows how bread is made? <span class="key">&rarr; <b>the baker</b></span></li><li>Who knows which bus goes to the market? <span class="key">&rarr; <b>the bus driver</b></span></li><li>Do different people know different things about a topic? <span class="key">&rarr; <b>Yes, each knows their own part</b></span></li><li>Who would know where the ducks nest? <span class="key">&rarr; <b>the park keeper</b></span></li><li>A talk about our town should say… <span class="key">&rarr; <b>only things about the town</b></span></li><li>Which sentence does NOT belong in a talk about our town? <span class="key">&rarr; <b>My cat is called Tiger.</b></span></li><li>When are the strawberries ready? Who knows? <span class="key">&rarr; <b>the farmer</b></span></li><li>Nobody knows everything. So to find out, you… <span class="key">&rarr; <b>ask the person whose job it is</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 4: Me and Others<small>15 steps &middot; about 40 minutes &middot; 4 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Global Perspectives 0838, Stage 2)</h3><ul><li><code>2Ac.01</code> Talk about simple, personal consequences of own actions on others</li><li><code>2As.01</code> Suggest a personal action that could make a positive difference to an issue affecting self</li><li><code>2Fv.01</code> Talk about what has been learned during an activity</li><li><code>2Fl.01</code> Talk about a particular activity that supported learning</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Big words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>What I do reaches you <span class="key">&middot; Last year you learned what happens to YOU. Now: what happens to OTHERS. Press Next .</span></li><li>What happens to them? <span class="key">&middot; You do something. Predict what happens to the OTHER person, then see.</span></li><li>Helps others, or hurts others? <span class="key">&middot; Think about what it does to OTHER people. Does it help them, or hurt them?</span></li><li>Something I could do <span class="key">&middot; Here is a problem YOU have. Suggest something you could do about it yourself. Tap one and see what happens.</span></li><li>My action, my difference <span class="key">&middot; An action of your own can make a difference. Tap each one.</span></li><li>Others, and my own actions <span class="key">&middot; Think about consequences for others, and your own actions. Tap the answer.</span></li><li>Look back <span class="key">&middot; What did you learn today, and which part helped you learn it? Tap to say it.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Find out at home <span class="key">&middot; Finding out does not stop at school. Do one of these with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where these skills are used out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it together, for real</h3><ul><li><b>What happens to them?.</b> Talk about a small choice and what happens next: if you leave your coat, if you go to bed late, if you share your snack. What happens to YOU?</li><li><b>Something I could do.</b> Name a small problem at home (toys everywhere, a thirsty plant) and offer three things you could do. Which one actually fixes it? Try it.</li><li><b>Look back.</b> At the end of the day ask: what did you learn today? What did you like best, and why?</li><li><b>Who does it reach?.</b> You need: Everyone at home, for one evening. When you do something, say out loud who it reaches: I put my shoes away, so nobody trips. Catch one thing that reached somebody in a bad way, and one in a good way. Tell everyone at dinner. Look for: Did anything you did today reach somebody you did not see?</li><li><b>My own problem, my own action.</b> You need: A grown-up and a small problem of yours. Name a small problem you have: losing socks, forgetting your water bottle. Suggest three actions YOU could take. Not ones for your grown-up. Pick one and do it for a week. Look for: Did your action make a difference?</li><li><b>Help spotting.</b> You need: A grown-up and a walk to the shops. Spot three things people do that help others: holding a door, moving aside, tidying. Spot one thing that hurts others. Say what each one did to the other people. Look for: Which helpful thing was the smallest? Did it still matter?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>What happens to them?</b><ul><li>You leave your bag in the middle of the classroom floor. <span class="key">&rarr; <b>They trip over it</b></span></li><li>You share your glue when Tariq's runs out. <span class="key">&rarr; <b>He can finish his model</b></span></li><li>You talk loudly while Amal is reading to the class. <span class="key">&rarr; <b>Nobody can hear her and she feels upset</b></span></li><li>You put the pencils back in the pot after art. <span class="key">&rarr; <b>They find the pencils ready to use</b></span></li><li>You push in front of Sami in the lunch line. <span class="key">&rarr; <b>He waits longer and feels it is unfair</b></span></li></ul></li><li><b>Helps others, or hurts others?</b> <span class="key"><b>Helps others</b>: holding the door open, letting Nora go first, wiping up your spill; <b>Hurts others</b>: leaving crumbs on the table, shouting across the room, taking all the crayons</span></li><li><b>Something I could do</b><ul><li>I keep forgetting my reading book <span class="key">&rarr; <b>I could put it in my bag the night before</b></span></li><li>I am always last to be ready for PE <span class="key">&rarr; <b>I could practise my laces at home every day</b></span></li><li>I never have a pencil when I need one <span class="key">&rarr; <b>I could keep two pencils in a pencil case with my name on</b></span></li><li>I get tired and grumpy after lunch <span class="key">&rarr; <b>I could go to bed earlier</b></span></li></ul></li><li><b>My action, my difference</b> <span class="key">Which of these is an action YOU can take yourself? &rarr; <b>Pack my bag at night</b></span></li><li><b>Others, and my own actions</b><ol><li>You leave your bag on the floor. What happens to the next person? <span class="key">&rarr; <b>they trip over it</b></span></li><li>You share your glue with Tariq. What happens to Tariq? <span class="key">&rarr; <b>he can finish his model</b></span></li><li>I keep forgetting my reading book. Which action is MINE to take? <span class="key">&rarr; <b>pack it the night before</b></span></li><li>Why think about others before you act? <span class="key">&rarr; <b>because what you do reaches them</b></span></li></ol></li><li><b>Look back</b> <span class="key">no key for what was liked. Things learned today: <b>Say what an action of yours does to another person.; Predict what will happen to somebody else before you act.; Tell an action that helps others from one that hurts them.; Suggest an action of your own that would fix a problem of your own.</b>; not today: how to swim; how to bake bread; the names of the planets</span></li><li><b>Show what you know</b><ol><li>Omar talked during the story. What happened to NORA? <span class="key">&rarr; <b>she could not hear the story</b></span></li><li>You talk loudly while Amal reads. What happens to Amal? <span class="key">&rarr; <b>nobody can hear her and she feels upset</b></span></li><li>Which action HELPS other people? <span class="key">&rarr; <b>holding the door open</b></span></li><li>I am always last for PE. Which action is MINE? <span class="key">&rarr; <b>practise my laces at home</b></span></li><li>What is a personal action? <span class="key">&rarr; <b>something you can do yourself</b></span></li><li>I get grumpy after lunch. Which action fixes it? <span class="key">&rarr; <b>go to bed earlier</b></span></li><li>You put the pencils back in the pot. Who does that reach? <span class="key">&rarr; <b>the next class</b></span></li><li>Before you do something in class, what can you ask? <span class="key">&rarr; <b>what will this do to the person next to me?</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 5: Sources and Reasons<small>15 steps &middot; about 40 minutes &middot; 4 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Global Perspectives 0838, Stage 2)</h3><ul><li><code>2Es.01</code> Suggest sources which might be relevant to a topic, explaining reasons for relevance</li><li><code>2Ea.01</code> Express an opinion about a given topic, giving reasons for opinion</li><li><code>2Fv.01</code> Talk about what has been learned during an activity</li><li><code>2Fl.01</code> Talk about a particular activity that supported learning</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Big words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>More than one source <span class="key">&middot; Last year you picked ONE source. This year you suggest ALL the ones that would help. Press Next .</span></li><li>Kinds of sources <span class="key">&middot; Six kinds of source. Tap each one to hear when it helps.</span></li><li>Suggest the sources <span class="key">&middot; We want to find out about a topic. Tap EVERY source that would help. Then say why.</span></li><li>What do you think, and why? <span class="key">&middot; What do YOU think about sharing our planet? Say what you think, then give TWO reasons that are about it.</span></li><li>Would it help with our topic? <span class="key">&middot; Our topic is animals in danger . Would this source help, or not?</span></li><li>Sources and opinions <span class="key">&middot; Think about suggesting sources and giving reasons. Tap the answer.</span></li><li>Look back <span class="key">&middot; What did you learn today, and which part helped you learn it? Tap to say it.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Find out at home <span class="key">&middot; Finding out does not stop at school. Do one of these with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where these skills are used out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it together, for real</h3><ul><li><b>Suggest the sources.</b> Put a book, a photo, a map and an object on the table. Name a topic and ask which one would help you find out about it, and why.</li><li><b>What do you think, and why?.</b> Ask: what do you think about ___? Listen for an opinion AND a reason, and make sure the reason is about the topic.</li><li><b>Look back.</b> At the end of the day ask: what did you learn today? What did you like best, and why?</li><li><b>Suggest the sources.</b> You need: A grown-up and a topic. Pick a topic: where our water comes from, or what the birds in the garden eat. Suggest three sources that would help: a book, a person, a real thing. Say why each one would help. Look for: Could you find all three sources at home or nearby?</li><li><b>Two reasons.</b> You need: Everyone at dinner. Ask: what do you think about having a pet? Everyone gives their opinion and TWO reasons. Check every reason is about pets. Look for: Did anybody give a reason that was about something else?</li><li><b>Look in the real thing.</b> You need: The recycling bin at home, and a grown-up. Look in the recycling bin together. Say what goes in it and what does not. Ask your grown-up where the lorry takes it. Look for: Was the bin a better source than a book for what YOUR family recycles?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Kinds of sources</b> <span class="key">You want to know what lives in the sea. Which TWO would help? &rarr; <b>A book about the sea and a film about turtles</b></span></li><li><b>Suggest the sources</b><ul><li>what happens to our recycling <span class="key">&rarr; <b>a book about recycling, the recycling bin itself, the caretaker who empties the bins</b>, because each one tells us something about recycling</span></li><li>which animals live in the sea <span class="key">&rarr; <b>a book about the sea, a film about turtles, a visit to the aquarium</b>, because each one shows animals that live in the sea</span></li><li>why the beach has litter on it <span class="key">&rarr; <b>a photo of the beach, the person who cleans the beach</b>, because they show or know about the litter on the beach</span></li></ul></li><li><b>What do you think, and why?</b> <span class="key">no key: any opinion is right. The REASON must be about the topic - recycling at school: because it saves paper and trees, because it keeps rubbish out of the sea, because the bins are sometimes confusing, because it takes time at the end of the day; keeping animals in a zoo: because a zoo keeps rare animals safe, because animals need space to run, because we can learn about animals there, because a cage is not a home; litter on the beach: because litter hurts the sea animals, because a clean beach is nicer to play on, because bins fill up on a hot day, because people forget their bags</span></li><li><b>Would it help with our topic?</b> <span class="key"><b>Would help</b>: a book about endangered animals, a film about tigers in the wild, the zoo keeper, the zoo's website, with a grown-up; <b>Would not</b>: a bus timetable, a cookbook</span></li><li><b>Sources and opinions</b><ol><li>We want to know what happens to our recycling. How many of these help: a book about recycling, the bin, the caretaker? <span class="key">&rarr; <b>all three</b></span></li><li>Why does the caretaker help with recycling? <span class="key">&rarr; <b>because the caretaker knows where the recycling goes</b></span></li><li>I think we should recycle more, because…? Which reason is ABOUT recycling? <span class="key">&rarr; <b>it keeps rubbish out of the sea</b></span></li><li>How many reasons should an opinion have at Stage 2? <span class="key">&rarr; <b>two, both about the topic</b></span></li></ol></li><li><b>Look back</b> <span class="key">no key for what was liked. Things learned today: <b>Suggest every source that would help with a topic.; Say why each source helps.; Say what you think about a topic.; Give two reasons for your opinion that are about the topic.</b>; not today: how to ride a bike; the names of the planets; how to swim</span></li><li><b>Show what you know</b><ol><li>What does it mean to SUGGEST sources? <span class="key">&rarr; <b>name all the sources that would help</b></span></li><li>Which source would NOT help with the sea? <span class="key">&rarr; <b>the bakery</b></span></li><li>Why does a photo of the beach help with beach litter? <span class="key">&rarr; <b>because it shows the litter and where it is</b></span></li><li>I think zoos are good because a zoo keeps rare animals safe, and…? Which is a second reason ABOUT zoos? <span class="key">&rarr; <b>because we can learn about animals there</b></span></li><li>An opinion is… <span class="key">&rarr; <b>what you think, with reasons</b></span></li><li>Which is a source for finding out about the sea? <span class="key">&rarr; <b>a visit to the aquarium</b></span></li><li>A website can be a source if… <span class="key">&rarr; <b>a grown-up helps you use it</b></span></li><li>Sami suggests looking in the recycling bin. Why is that a good source? <span class="key">&rarr; <b>because it shows what goes in it</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 6: Our Team's Ideas<small>16 steps &middot; about 50 minutes &middot; 6 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Global Perspectives 0838, Stage 2)</h3><ul><li><code>2Ct.01</code> Work positively with others, contributing to a shared outcome</li><li><code>2Cc.01</code> Carry out a task in order to contribute to a shared outcome</li><li><code>2Fc.01</code> Identify personal contribution in the form of an idea intended to help achieve a shared outcome</li><li><code>2Ft.01</code> Identify an idea that someone else contributed to achieve a shared outcome</li><li><code>2Fv.01</code> Talk about what has been learned during an activity</li><li><code>2Fl.01</code> Talk about a particular activity that supported learning</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Big words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>A job and an idea <span class="key">&middot; Last year the team shared things. This year each person does a JOB, and when the team gets stuck, somebody has an IDEA. Press Next .</span></li><li>Plant the vegetable patch <span class="key">&middot; You and three friends are planting the school vegetable patch. Do your job, help when things go wrong, and suggest an idea when the team is stuck.</span></li><li>Who did what in the patch? <span class="key">&middot; The patch is done. Which of these did YOU do or suggest? And what did each friend do?</span></li><li>A job or an idea? <span class="key">&middot; Some of these are jobs the team did. Some are ideas the team had. Which is it?</span></li><li>Paint the assembly backdrop <span class="key">&middot; A new team, a new job: the big painting behind our class assembly. This time the team keeps getting stuck, and it needs ideas.</span></li><li>Whose idea was it? <span class="key">&middot; The backdrop is done, and it took six ideas. Which ideas were YOURS? And which was each friend's?</span></li><li>Jobs, ideas and teams <span class="key">&middot; Think about the patch and the backdrop. Tap the answer.</span></li><li>Look back <span class="key">&middot; What did you learn today, and which part helped you learn it? Tap to say it.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Find out at home <span class="key">&middot; Finding out does not stop at school. Do one of these with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where these skills are used out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it together, for real</h3><ul><li><b>Plant the vegetable patch.</b> Do one small job together where you have to share something - the crayons, the sticky tape, the water. Talk about what happened when you shared.</li><li><b>Who did what in the patch?.</b> After doing a job together, ask: what did YOU do that helped? What did I do? One thing each.</li><li><b>Look back.</b> At the end of the day ask: what did you learn today? What did you like best, and why?</li><li><b>A job each.</b> You need: Everyone at home and a shared job: making dinner, or tidying a room. Give everyone a job. Say the steps of yours before you start. Do your job in order. When it is done, say what each person's job was. Look for: Did the job get done faster because everyone had a part?</li><li><b>Stuck! Ideas please.</b> You need: A grown-up and a pretend problem. Your grown-up says: we are stuck, the paint has run out. What is your idea? Suggest an idea that would get the team going again. Swap: you say a stuck, they suggest an idea. Look for: Which idea would really have worked?</li><li><b>Whose idea was it?.</b> You need: Everyone at dinner. Think of something your family did together this week. Say one idea somebody had that helped. Say whose idea it was. Look for: Was the best idea from the person you expected?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Plant the vegetable patch</b><ul><li>Plant your row of seeds <span class="key">&rarr; <b>Make a small hole &amp;rarr; Drop a seed in &amp;rarr; Cover it with soil</b></span></li><li>The birds keep landing and eating the seeds. The team is stuck. <span class="key">&rarr; <b>Let's make a scarecrow to keep the birds off.</b></span></li><li>Sami drops the seed packet and the seeds spill everywhere. <span class="key">&rarr; <b>Never mind, Sami. Let's pick them up together.</b></span></li><li>Nobody can remember which row is carrots and which is beans. The team is stuck. <span class="key">&rarr; <b>Let's put a label with a picture on each row.</b></span></li></ul></li><li><b>Who did what in the patch?</b> <span class="key">reads the team step's own record - what the child chose IS the key. If the team step was skipped: omar: Omar dug the rows.; you: You planted your row of seeds.; you: Let's make a scarecrow to keep the birds off.; nora: Nora watered every row.; you: Never mind, Sami. Let's pick them up together.; you: Let's put a label with a picture on each row.</span></li><li><b>A job or an idea?</b> <span class="key"><b>A job</b>: digging the rows, watering every row, planting the seeds; <b>An idea</b>: make a scarecrow to stop the birds, put a picture label on each row, paint the sky first so it dries</span></li><li><b>Paint the assembly backdrop</b><ul><li>The green paint is nearly gone, and the hills are only half done. The team is stuck. <span class="key">&rarr; <b>Let's mix the last green with white so it goes further.</b></span></li><li>Everyone wants to paint a house, but there is only room for two. The team is stuck. <span class="key">&rarr; <b>Let's paint two houses and take turns doing the windows and doors.</b></span></li><li>The backdrop looks empty at the top. The team wants something there but cannot agree. Stuck. <span class="key">&rarr; <b>Let's paint birds and a rainbow so the sky is not empty.</b></span></li></ul></li><li><b>Whose idea was it?</b> <span class="key">reads the team step's own record - what the child chose IS the key. If the team step was skipped: hana: Hana's idea: paint the sky first so it dries.; you: Let's mix the last green with white so it goes further.; tariq: Tariq's idea: a step stool to reach the top.; you: Let's paint two houses and take turns doing the windows and doors.; amal: Amal's idea: paint the people last, in front.; you: Let's paint birds and a rainbow so the sky is not empty.</span></li><li><b>Jobs, ideas and teams</b><ol><li>The birds were eating the seeds. Which idea got the team unstuck? <span class="key">&rarr; <b>make a scarecrow</b></span></li><li>Whose idea was it to paint the sky first? <span class="key">&rarr; <b>Hana's</b></span></li><li>What is a JOB in a team? <span class="key">&rarr; <b>something you do with your hands, like digging</b></span></li><li>The green paint was running out. Which idea helped? <span class="key">&rarr; <b>mix it with white so it goes further</b></span></li></ol></li><li><b>Look back</b> <span class="key">no key for what was liked. Things learned today: <b>Do your own job so the team's shared work gets done.; Work kindly with the team when something goes wrong.; Suggest an idea that gets the team unstuck.; Say which idea was yours and which idea was a friend's.</b>; not today: how to bake bread; the names of the planets; how to swim</span></li><li><b>Show what you know</b><ol><li>What does a team need to finish a shared job? <span class="key">&rarr; <b>everyone doing their job, and ideas when it gets stuck</b></span></li><li>Your job was to plant your row. What came FIRST? <span class="key">&rarr; <b>make a small hole</b></span></li><li>Nobody could remember which row was which. Which idea helped? <span class="key">&rarr; <b>a picture label on each row</b></span></li><li>Sami spilt the seeds. What keeps the team working? <span class="key">&rarr; <b>Never mind, let's pick them up together.</b></span></li><li>Which of these is an IDEA, not a job? <span class="key">&rarr; <b>make a scarecrow to stop the birds</b></span></li><li>Whose idea was the step stool? <span class="key">&rarr; <b>Tariq's</b></span></li><li>Everyone wanted to paint a house, but there was room for two. Which idea helped? <span class="key">&rarr; <b>two houses, and take turns on the windows and doors</b></span></li><li>Why say whose idea was whose? <span class="key">&rarr; <b>because a team finishes with ideas from lots of people</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 7: Talk It Through<small>16 steps &middot; about 45 minutes &middot; 5 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Global Perspectives 0838, Stage 2)</h3><ul><li><code>2Ml.01</code> Listen to others in class discussions and respond with simple and relevant questions</li><li><code>2Mi.01</code> Talk about a given topic, giving relevant information</li><li><code>2Rq.01</code> Ask focused questions about a given topic</li><li><code>2Fv.01</code> Talk about what has been learned during an activity</li><li><code>2Fl.01</code> Talk about a particular activity that supported learning</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Big words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>A new pupil <span class="key">&middot; Leo is joining our class from another town. Press Next and see how the class talks and listens.</span></li><li>Listen, then ask something relevant <span class="key">&middot; Three classmates have moved to a new place. Listen to each one, then ask a question about what they said.</span></li><li>My talk about our school, for Leo <span class="key">&middot; Leo does not know our school yet. Give him a talk about it: four things, all about our school.</span></li><li>Ask Leo a focused question <span class="key">&middot; You want to find out about Leo's old town. Build a focused question, then press Ask it .</span></li><li>Leo asks about our school <span class="key">&middot; Now Leo asks YOU about our school. Tap the answer that gives him the information he asked for.</span></li><li>Relevant, or not? <span class="key">&middot; Leo said: I moved here from a town by the sea, and I miss the waves. Is this question relevant to what he said?</span></li><li>Talking and listening <span class="key">&middot; Think about Leo, the talks and the questions. Tap the answer.</span></li><li>Look back <span class="key">&middot; What did you learn today, and which part helped you learn it? Tap to say it.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Find out at home <span class="key">&middot; Finding out does not stop at school. Do one of these with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where these skills are used out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it together, for real</h3><ul><li><b>Listen, then ask something relevant.</b> Talk for three sentences about your day. Then ask the child to ask you one question about what you said - not about something else.</li><li><b>My talk about our school, for Leo.</b> Name a topic and take turns saying one thing you already know about it. Stop and laugh when somebody says something that is about a different topic.</li><li><b>Ask Leo a focused question.</b> Pick a topic (pets, the park, dinner). Take turns asking a question about it that starts with What, Where, Who, When, Why or How. Count how many different questions you can ask.</li><li><b>Leo asks about our school.</b> Ask the child a question and listen for whether the answer is ABOUT the question. Swap: they ask, you answer with something off the point, and they catch you.</li><li><b>Look back.</b> At the end of the day ask: what did you learn today? What did you like best, and why?</li><li><b>Listen and ask.</b> You need: A grown-up and three sentences. Your grown-up talks for three sentences about a place they used to live. Ask one question that is about what they said. Then ask one that is NOT, and laugh about it. Look for: Could you tell the difference straight away?</li><li><b>A talk for somebody new.</b> You need: A grown-up to be the new person. Pretend your grown-up is new to your street. Give them a talk about the street: four things they need to know. They put a hand up if a sentence is not about the street. Look for: What did the new person most need to know?</li><li><b>Focused questions.</b> You need: A grown-up who has been somewhere you have not. Find out where they went. Ask five focused questions about it, with five different question words. Tell somebody else three things you found out. Look for: Which question found out the most?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Listen, then ask something relevant</b><ul><li>Hana says: We moved to a new flat last month. It is on the fifth floor, right at the top. There is a lift, but I like to race my sister up the stairs. <span class="key">&rarr; ask <b>Can you see far from your window on the fifth floor?</b></span></li><li>Omar says: My family moved here from a village in the hills. My old school had only twelve children in it. Here there are twelve children just in our row! <span class="key">&rarr; ask <b>What did you like best about your small school?</b></span></li><li>Leo, the new pupil says: I moved here from a town by the sea. Every Saturday we went to the beach, even when it was cold. I miss the sound of the waves at night. <span class="key">&rarr; ask <b>What did you do at the beach when it was cold?</b></span></li></ul></li><li><b>My talk about our school, for Leo</b> <span class="key">about our school: <b>Playtime is at half past ten, We have PE on Thursdays, so bring your kit, Teacher Yasmin reads a story every afternoon, The library is next to the hall, We line up by the blue door after playtime</b>; not about it: My cat is called Tiger, Lions live in Africa, I had toast for breakfast</span></li><li><b>Ask Leo a focused question</b><ul><li>the name of Leo's old school <span class="key">&rarr; <b>What was your old school called?</b></span></li><li>the place the beach was, near his house <span class="key">&rarr; <b>Where was the beach from your house?</b></span></li><li>the person who was his best friend <span class="key">&rarr; <b>Who was your best friend there?</b></span></li><li>the reason his family moved here <span class="key">&rarr; <b>Why did you move here?</b></span></li><li>the thing he misses most <span class="key">&rarr; <b>What do you miss most?</b></span></li></ul></li><li><b>Leo asks about our school</b><ol><li>Where do we line up after playtime? <span class="key">&rarr; <b>By the blue door, in two lines.</b></span></li><li>When is PE? <span class="key">&rarr; <b>On Thursdays, after lunch.</b></span></li><li>What happens in the afternoon? <span class="key">&rarr; <b>Teacher Yasmin reads us a story.</b></span></li><li>Who do I ask if I get lost? <span class="key">&rarr; <b>Any teacher, or me. I will show you.</b></span></li></ol></li><li><b>Relevant, or not?</b> <span class="key"><b>Relevant</b>: What was the sea like?, Did you go to the beach a lot?, Why do you miss the waves at night?; <b>Not relevant</b>: Do you like ice cream?, Can you play the guitar?, What is your cat called?</span></li><li><b>Talking and listening</b><ol><li>Hana said her flat is on the fifth floor. Which question is relevant? <span class="key">&rarr; <b>Can you see far from your window?</b></span></li><li>Which sentence belongs in a talk about our school for Leo? <span class="key">&rarr; <b>We have PE on Thursdays.</b></span></li><li>Leo asks where we line up. Which answer tells him? <span class="key">&rarr; <b>By the blue door.</b></span></li><li>You want to know WHY Leo's family moved. Which word? <span class="key">&rarr; <b>Why</b></span></li></ol></li><li><b>Look back</b> <span class="key">no key for what was liked. Things learned today: <b>Listen to a classmate and ask a question that is relevant to what they said.; Give a talk about a topic where everything you say is about it.; Build a focused question to find out about somebody.; Answer a question with the information that was asked for.</b>; not today: how to bake bread; how to ride a bike; the names of the planets</span></li><li><b>Show what you know</b><ol><li>What makes a question RELEVANT? <span class="key">&rarr; <b>it is about what the person said</b></span></li><li>Omar said his old school had twelve children. Which question is relevant? <span class="key">&rarr; <b>What did you like best about your small school?</b></span></li><li>Sami asked Leo if he likes ice cream. Why was that not relevant? <span class="key">&rarr; <b>Leo had not said anything about ice cream</b></span></li><li>A talk about our school for Leo should include… <span class="key">&rarr; <b>when playtime is and where we line up</b></span></li><li>Leo asks when PE is. Which answer? <span class="key">&rarr; <b>On Thursdays, after lunch.</b></span></li><li>You want to know the NAME of Leo's old school. Which question word? <span class="key">&rarr; <b>What</b></span></li><li>Leo misses the sound of the waves. Which question is about that? <span class="key">&rarr; <b>Why do you miss the waves at night?</b></span></li><li>Talking and listening go… <span class="key">&rarr; <b>both ways: you listen, then you tell</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 8: Look Back<small>14 steps &middot; about 35 minutes &middot; 4 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Global Perspectives 0838, Stage 2)</h3><ul><li><code>2Fv.01</code> Talk about what has been learned during an activity</li><li><code>2Fl.01</code> Talk about a particular activity that supported learning</li><li><code>2Mi.01</code> Talk about a given topic, giving relevant information</li><li><code>2Ap.01</code> Recognise that different people know different things about a topic</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Big words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Six skills, one year on <span class="key">&middot; You used all six skills again this year, and each one got sharper. Press Next .</span></li><li>Which skill grew? <span class="key">&middot; Tap each skill to hear how it grew this year.</span></li><li>What I learned, and what helped <span class="key">&middot; Look back over ALL the lessons. What did you learn? Tap three things. Then tap the lesson that helped you learn most, and say why.</span></li><li>My talk about finding things out <span class="key">&middot; Give a short talk about finding things out. Four things, all about finding out.</span></li><li>Who would know, and what did we learn? <span class="key">&middot; Teacher Yasmin asks about your learning, and about who knows what. Tap the answer that tells her what she asked.</span></li><li>Which skill was it? <span class="key">&middot; Here are things you did this year. Which skill was each one?</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Find out at home <span class="key">&middot; Finding out does not stop at school. Do one of these with a grown-up.</span></li><li>Show what you know <span class="key">&middot; The last quiz. Everything comes from the lessons you did. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where these skills are used out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it together, for real</h3><ul><li><b>What I learned, and what helped.</b> At the end of the day ask: what did you learn today? What did you like best, and why?</li><li><b>My talk about finding things out.</b> Name a topic and take turns saying one thing you already know about it. Stop and laugh when somebody says something that is about a different topic.</li><li><b>Who would know, and what did we learn?.</b> Ask the child a question and listen for whether the answer is ABOUT the question. Swap: they ask, you answer with something off the point, and they catch you.</li><li><b>Tell somebody what you learned.</b> You need: A grown-up. Tell your grown-up three things you learned in these lessons. Say which lesson helped you learn most, and why it helped. Ask them which activity helped THEM learn when they were at school. Look for: Was the lesson that helped most also the most fun?</li><li><b>A skill at home.</b> You need: Everyone at home, for one day. Pick one skill: focused questions, working together, or relevant questions. Use it at home today, on purpose. At bedtime, say how you used it. Look for: Which skill did you use without noticing?</li><li><b>My learning picture.</b> You need: Paper and crayons. Draw the activity that helped you learn most. Draw yourself doing the thing you learned. Show somebody and say: this helped me learn to… Look for: What would you like to find out about next year?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Which skill grew?</b> <span class="key">Suggesting every source that would help with a topic. Which skill is that? &rarr; <b>Choosing and saying why</b></span></li><li><b>What I learned, and what helped</b> <span class="key">no key for what was liked. Things learned today: <b>Say what makes a question focused: about the topic, about the problem, and findable.; Build a focused question about a problem.; Find the part of a picture that answers a question.; Find the sentence in a text that answers a question.; Interview classmates to find information and opinions.; Record findings in a pictogram, a bar chart and a table.; Say that pictures, bars and numbers can all show the same information.; Tell information from an opinion, and record both.; Say that different people know different things about a topic.; Work out who would know the answer to a question.; Give a short talk about a topic where everything you say is about it.; Match things known to the people whose job it is to know them.; Say what an action of yours does to another person.; Predict what will happen to somebody else before you act.; Tell an action that helps others from one that hurts them.; Suggest an action of your own that would fix a problem of your own.; Suggest every source that would help with a topic.; Say why each source helps.; Say what you think about a topic.; Give two reasons for your opinion that are about the topic.; Do your own job so the team's shared work gets done.; Work kindly with the team when something goes wrong.; Suggest an idea that gets the team unstuck.; Say which idea was yours and which idea was a friend's.; Listen to a classmate and ask a question that is relevant to what they said.; Give a talk about a topic where everything you say is about it.; Build a focused question to find out about somebody.; Answer a question with the information that was asked for.; Say how each of the six skills grew this year.; Say what you learned across all the lessons.; Say which lesson helped you learn most, and why.; Give a short talk about finding things out.</b>; not today: how to ride a bike; the names of all the planets; how to bake a cake; how to swim</span></li><li><b>My talk about finding things out</b> <span class="key">about finding things out: <b>A focused question is about the exact problem, A source answers a question in one part, not all of it, An interview finds information and opinions, Pictures, bars and numbers can all show the same findings, Different people know different things, so ask the right one</b>; not about it: Lions live in Africa, A bus has big wheels, Ice cream is cold</span></li><li><b>Who would know, and what did we learn?</b><ol><li>How did we find out what the class plays at playtime? <span class="key">&rarr; <b>We interviewed everyone and recorded it as bars.</b></span></li><li>Who would know when the strawberries are ready? <span class="key">&rarr; <b>The farmer, because the farmer grows them.</b></span></li><li>What got the team unstuck when the birds ate the seeds? <span class="key">&rarr; <b>An idea: make a scarecrow.</b></span></li><li>What makes a question relevant after listening? <span class="key">&rarr; <b>It is about what the person said.</b></span></li></ol></li><li><b>Which skill was it?</b> <span class="key"><b>Finding out</b>: interviewing classmates about playtime, finding the sentence in the rules that answers; <b>Working together</b>: suggesting a scarecrow when the team was stuck, planting my row of seeds for the patch; <b>Choosing and saying why</b>: suggesting three sources about recycling, giving two reasons for my opinion about zoos</span></li><li><b>Show what you know</b><ol><li>What is a focused question? <span class="key">&rarr; <b>one about the exact problem, that you can find out</b></span></li><li>Pictures, bars and numbers can all… <span class="key">&rarr; <b>show the same findings</b></span></li><li>Does the baker know where the buses go? <span class="key">&rarr; <b>No, different people know different things</b></span></li><li>Omar talked during the story. Who else did that reach? <span class="key">&rarr; <b>Nora, who could not hear it</b></span></li><li>How many reasons does a Stage 2 opinion have? <span class="key">&rarr; <b>two, both about the topic</b></span></li><li>What got the team unstuck when the paint ran out? <span class="key">&rarr; <b>an idea: mix it with white</b></span></li><li>What is looking back at Stage 2? <span class="key">&rarr; <b>saying what you learned and which activity helped</b></span></li><li>Which is a relevant question after Leo said he misses the waves? <span class="key">&rarr; <b>Why do you miss the waves at night?</b></span></li></ol></li></ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="hubfoot">Built to Cambridge Primary Global Perspectives 0838, Stage 2 &mdash; all 18 learning objectives across the six skills. The stickers are earned, not given.</p>
+</div>
+
+<script>
+/* ---- the header bar: how far through the course, and the way out ----
+   Everything here is answered by the launch URL and by the progress document
+   the LESSONS write. This page stores nothing of its own. */
+(function () {
+  var COURSE = "ehel-gp-g02";
+  var STEPS  = {"l01": 16, "l02": 17, "l03": 15, "l04": 15, "l05": 15, "l06": 16, "l07": 16, "l08": 14};     /* lesson id -> slides-1, the lesson's own denominator */
+  var FILES  = {"l01": "sharp-questions.html", "l02": "interview-and-record.html", "l03": "who-knows-what.html", "l04": "me-and-others.html", "l05": "sources-and-reasons.html", "l06": "our-teams-ideas.html", "l07": "talk-it-through.html", "l08": "look-back.html"};     /* lesson id -> the page that teaches it */
+  var q = new URLSearchParams(location.search);
+  var doc = null;
+  try {
+    doc = JSON.parse(localStorage.getItem(
+      "ehel-progress:" + COURSE + ":" + (q.get("studentid") || "local")) || "null");
+  } catch (e) { doc = null; }
+  var unitOf = function (u) { return (doc && doc.units && doc.units[u]) || null; };
+  var done = 0, total = 0;
+  Object.keys(STEPS).forEach(function (u) {
+    var s = unitOf(u);
+    total += STEPS[u];
+    done += Math.min((s && s.sectionsDone && s.sectionsDone.length) || 0, STEPS[u]);
+  });
+  var pct = total ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  var pctEl = document.getElementById("ehPct");
+  if (pctEl) pctEl.textContent = pct + "%";
+  var fill = document.getElementById("ehFill");
+  if (fill) fill.style.width = pct + "%";
+  var prog = document.getElementById("ehProg");
+  if (prog) prog.title = done + " of " + total + " steps done across the course";
+
+  /* the picker jumps to a lesson, carrying the launch parameters */
+  var picker = document.getElementById("ehPicker");
+  if (picker) picker.addEventListener("change", function () {
+    if (!picker.value) return;
+    var p = new URLSearchParams(location.search);
+    p.set("from", "gp2");
+    location.href = picker.value + "?" + p.toString();
+  });
+
+  /* THE WAY OUT, drawn only when the launch gave us one. */
+  var exit = q.get("exitUrl");
+  var back = document.getElementById("ehBack");
+  if (back && exit) { back.setAttribute("href", exit); back.hidden = false; }
+})();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>

@@ -227,6 +227,18 @@
   .opt.on .radio { border-color: var(--gold); background: var(--gold); box-shadow: inset 0 0 0 3px var(--card); }
   .opt:disabled { opacity: 0.5; cursor: default; }
 
+  /* a text source: each sentence is a button; a bar chart beside the pictogram */
+  .textsrc { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px; border: 3px solid var(--line); background: #FFFDF6; color: #142B3E; text-align: left; }
+  .textsrc .phase { margin: 0 0 2px; }
+  .sline { width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid transparent; background: transparent; color: #142B3E;
+    font: inherit; font-size: 19px; line-height: 1.45; text-align: left; }
+  .sline:hover, .sline:focus-visible { border-color: var(--teal); background: rgba(53,191,178,0.12); outline: none; }
+  .sline.right { border-color: var(--good); background: var(--good-soft); color: #06231F; }
+  .sline.wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake 360ms ease; }
+  .sline:disabled { cursor: default; }
+  .barwrap { display: block; height: 22px; border-radius: 8px; background: rgba(0,0,0,0.2); overflow: hidden; }
+  .bar { display: block; height: 100%; background: var(--teal); border-radius: 8px; transition: width 400ms ease; }
+
   /* the record of who did what, and the look back */
   .logcard { font-size: 15px; }
   .cardsgrid.wide { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }

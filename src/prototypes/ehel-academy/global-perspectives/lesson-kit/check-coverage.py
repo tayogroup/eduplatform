@@ -48,7 +48,6 @@ REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-global-perspectives-0838.json")
 HERE = os.path.abspath(sys.argv[sys.argv.index("--app") + 1] if "--app" in sys.argv else os.getcwd())
 LESSON_RE = re.compile(r"\n  const LESSON = (\{.*?\n  \});\n", re.S)
-LOOKBACK_CODES = {"1Fv.01", "1Fl.01"}
 
 
 def main():
@@ -62,6 +61,7 @@ def main():
     codes = {o["code"]: o for o in fw["objectivesByStage"].get(str(stage), [])}
     if not codes:
         print("  cannot run: the framework publishes no Stage %d" % stage); sys.exit(2)
+    LOOKBACK_CODES = {"%dFv.01" % stage, "%dFl.01" % stage}
     # per-lesson objective counts recorded in the config; may rise, may not fall.
     # A floor set at what you had before the last thing you added is a formality,
     # so record it AT the measured value and move it up when a lesson grows.
@@ -148,9 +148,20 @@ def main():
                     computed += 1
             elif kind == "source":
                 ids = {sp["id"] for sp in d["spots"]}
-                keyed = [o for o in d["then"]["opts"] if o.get("spot")]
-                if len(keyed) != 1 or keyed[0]["spot"] not in ids:
-                    fail(entry["file"], "step %d's question does not name exactly one spot in the picture" % k)
+                if d.get("then"):
+                    keyed = [o for o in d["then"]["opts"] if o.get("spot")]
+                    if len(keyed) != 1 or keyed[0]["spot"] not in ids:
+                        fail(entry["file"], "step %d's question does not name exactly one spot in the picture" % k)
+                for rd in d.get("rounds") or []:
+                    if rd.get("spot") not in ids:
+                        fail(entry["file"], "step %d locate round %r points at a spot that is not in the picture" % (k, rd.get("ask")))
+                if not d.get("then") and not d.get("rounds"):
+                    fail(entry["file"], "step %d asks nothing of its picture" % k)
+                computed += 1
+            elif kind == "text":
+                for rd in d["rounds"]:
+                    if not isinstance(rd.get("line"), int) or not 0 <= rd["line"] < len(d["lines"]):
+                        fail(entry["file"], "step %d %r points at a line that is not in the text" % (k, rd.get("ask")))
                 computed += 1
             elif kind == "know":
                 on = relevant(d["cards"], d["tag"])
@@ -179,13 +190,15 @@ def main():
                     computed += 1
             elif kind == "sources":
                 for rd in d["rounds"]:
-                    if len(relevant_sources(rd["sources"], rd["tag"])) != 1 or not one_key(rd["reasons"]):
-                        fail(entry["file"], "step %d topic %r: not exactly one source is about it, or the reason key is not single" % (k, rd["topic"]))
+                    rel = relevant_sources(rd["sources"], rd["tag"])
+                    fair = (2 <= len(rel) < len(rd["sources"])) if rd.get("multi") else (len(rel) == 1)
+                    if not fair or not one_key(rd["reasons"]):
+                        fail(entry["file"], "step %d topic %r: the relevant sources do not make a fair round, or the reason key is not single" % (k, rd["topic"]))
                     computed += 1
             elif kind == "opinion":
                 for rd in d["rounds"]:
                     rel = relevant(rd["reasons"], rd["tag"])
-                    if len(rel) < 2 or len(rel) == len(rd["reasons"]):
+                    if len(rel) < max(2, int(d.get("reasonsNeeded") or 1)) or len(rel) == len(rd["reasons"]):
                         fail(entry["file"], "step %d topic %r: the reasons do not make a fair round" % (k, rd["topic"]))
                     computed += 1
             elif kind == "team":
@@ -198,9 +211,13 @@ def main():
                         if outs.count("both") != 1:
                             fail(entry["file"], "step %d share round: not exactly one option lets both finish (%r)" % (k, outs))
                         computed += 1
-                    elif rd["kind"] == "work":
+                    elif rd["kind"] in ("work", "idea"):
                         if sum(1 for o in rd["opts"] if o.get("good")) != 1:
-                            fail(entry["file"], "step %d work round %r has no single positive response" % (k, rd["situation"]))
+                            fail(entry["file"], "step %d %s round %r has no single good option" % (k, rd["kind"], rd["situation"]))
+                    elif rd["kind"] == "task":
+                        ids = [st["id"] for st in rd.get("steps") or []]
+                        if len(ids) < 2 or len(set(ids)) != len(ids):
+                            fail(entry["file"], "step %d task round has no job of 2+ distinct steps" % k)
             elif kind == "contrib":
                 fb = d["fallback"]
                 fids = {f["id"] for f in d["friends"]}

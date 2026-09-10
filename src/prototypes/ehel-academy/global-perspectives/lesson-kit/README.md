@@ -84,7 +84,24 @@ and step titles; a lesson that authors its own gets no second.
 | `team` | `teamBuild` | shares by arithmetic, responds kindly, sees a friend's contribution; the garden or mural grows one stage per round played well; everything is logged (1Cc.01, 1Ct.01) |
 | `contrib` | `contributions` | reads that log: which of these did YOU do, and what did each friend do (1Fc.01, 1Ft.01) |
 | `lookback` | `lookBack` | "I learned that…" from the lesson's own about lines, "I liked…" from its own steps (1Fv.01, 1Fl.01) |
+| `text` | `textSource` | reads a few sentences, then taps the ONE sentence that answers each question; the line index is the key (2Ri.01) |
 | `questions` / `quiz` | `sequence` | the Mathematics build's own, with pictures |
+
+**Stage 2 modes on the same kinds** (all additive; a Stage 1 page is drawn
+exactly as before): `source` with `rounds` asks "which part of the picture
+tells us X?" after the free exploration, keyed by spot; `pictogram` with
+`display: "bars"` or `"table"` draws the same rows as a bar chart or a table
+of numbers (2Ad.01), keys still computed; `sources` rounds with `multi: true`
+want EVERY relevant source tapped before the reason (2Es.01); `opinion` with
+`reasonsNeeded: 2` collects two reasons on the topic (2Ea.01); `team` rounds
+of kind `idea` (the team is stuck, suggest what gets it moving) and `task`
+(carry out your own job's steps in order) beside `share`, `work` and
+`friend` (2Cc.01, 2Fc.01); `contrib` with `what: "idea"` asks whose IDEA
+was whose (2Ft.01); `know` with `mode: "talk"` ends with "Give my talk",
+which reads every board card as one talk (2Mi.01); and `lookback` with
+`mode: "helped"` — which `_shell.py` sets for every Stage 2+ lesson — asks
+which part HELPED rather than which was liked (2Fl.01). The look-back's codes
+follow the stage (`lookback_codes(stage)`).
 | `overview` … `resources` (shell) | as in Computing | the unit shell |
 
 Scenes: picture backgrounds `market`, `vet`, `park`, `kitchen`, `classroom`,
@@ -122,6 +139,11 @@ the build rather than the page.
 - **A share round has to make exactly one "both".** With `you: 3, need: 1`,
   giving 1 and giving 2 BOTH let both children finish, and the builder
   refuses. Pick `you` and `need` so one share is right.
+- **A kit change moves every page's bytes**, because each page embeds
+  `gp.js`. So the safety proof for a kit change is not a byte-identical
+  rebuild of the live grade: it is that grade rebuilt through the new kit and
+  driven to 100% again in the browser before the new grade is. Grade 1 was
+  re-driven that way when Stage 2's machines went in.
 - **Adding a grade** is a directory with `app.config.json` and `content/`, and
   the same pipeline (`../../mathematics/lesson-app-tools`) run in the same
   order as the Grade 1 README shows.

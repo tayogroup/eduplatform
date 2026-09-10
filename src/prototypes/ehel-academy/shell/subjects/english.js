@@ -356,11 +356,29 @@ const IS_TUTORING = LAUNCH_CLAIMS?.category === "tutoring" || routeParams.get("c
    left working. Withdrawing those as well needs somewhere for them to go
    first, which is a content job rather than a gate.
 
+   THE THIRD EXEMPTION IS THE PAPER DRAWER, and a gate found it rather than a
+   reading. check-print-sheets.mjs opens `english/index.html?grade=N&unit=M
+   #teacher` with no category and clicks the [data-print] sheets, so the first
+   version of this redirect took the whole Grade 1 half of that sweep away -
+   and with it the thing the sweep protects. These six routes are not the
+   unit's teaching and the standalone build serves none of them: the two
+   resources drawers, the printable cursive worksheet (handwriting, sentences,
+   spelling, punctuation and this unit's grammar exercises), the pen-path
+   animation, the whole-grade word list and the grade-level Study Plan. The
+   standalone build prints ONE sheet, the words on ruled lines, so redirecting
+   these would quietly narrow what a Grade 1 child can be given on paper.
+   Damage that lands on paper is the kind nothing reports back, which is why
+   the sweep gates a release at all.
+
    The whole URL is carried across - a launch token, studentid, unit and the
    hash - because a redirect that drops the token stops the school recording
    that child's work. location.replace, so the shell leaves no history entry to
    bounce back through. */
-if (gradeNumber === 1 && !isPrereqUnit && !IS_TUTORING) {
+const SHELL_ONLY_ROUTES = new Set([
+  "teacher", "student", "worksheet", "handwriting", "grade-dictionary", "year-plan",
+]);
+const requestedRoute = location.hash.slice(1).split("?")[0];
+if (gradeNumber === 1 && !isPrereqUnit && !IS_TUTORING && !SHELL_ONLY_ROUTES.has(requestedRoute)) {
   const toStandalone = new URL("./grade-1-v2/index.html", location.href);
   toStandalone.search = location.search;
   toStandalone.hash = location.hash;

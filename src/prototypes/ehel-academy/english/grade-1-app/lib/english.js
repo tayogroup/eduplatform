@@ -605,13 +605,32 @@
     if (!lec.video) return;
     $(el.stage).innerHTML =
       '<div class="lecture">' +
+      /* THE POSTER IS HELD BACK UNTIL THE STEP IS REACHED. Every slide is in
+         the DOM at once, so a `poster` attribute here is fetched the moment
+         the page loads - and this one is a 137KB photograph, a third of the
+         whole lesson's weight, for a step a child may never open. `preload`
+         does not cover it: it governs the video DATA, not the poster, so
+         "metadata" downloads the picture in full anyway. Measured cold on
+         the CDN: 423KB a lesson, of which the poster was 137KB.
+
+         It moves to data-poster and is promoted to the real attribute by the
+         ONSHOW hook below, which the deck fires when the step is shown. A
+         child who never opens the video lesson never pays for its picture. */
       '<video id="' + el.video + '" class="lecturevideo" controls preload="metadata"' +
-      (lec.poster ? ' poster="' + esc(lec.poster) + '"' : "") + ">" +
+      (lec.poster ? ' data-poster="' + esc(lec.poster) + '"' : "") + ">" +
       '<source src="' + esc(lec.video) + '" type="video/mp4">' +
       (lec.captions ? '<track kind="captions" srclang="en" label="English" src="' + esc(lec.captions) + '" default>' : "") +
       "</video></div>" +
       '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.next + '">I have watched it</button></div>';
     const video = $(el.video);
+    /* Promote data-poster to the real attribute when the child arrives at
+       this step - see the note on the markup above. Idempotent, and a no-op
+       on a unit whose manifest carries no poster. */
+    ONSHOW[o.finish] = () => {
+      if (video.dataset.poster && !video.getAttribute("poster")) {
+        video.setAttribute("poster", video.dataset.poster);
+      }
+    };
     /* Never autoplay. Every other step here plays its own recording when
        the child arrives, because those are two-second word clips; a lesson
        video starting itself is a room full of six-year-olds all playing

@@ -760,6 +760,26 @@ def sentence_pages(script, per_page=4, words_per_page=65):
     return pages or [[whole]]
 
 
+def authored_distractors(item, n):
+    """The item's own wrong options, where somebody wrote them.
+
+    PREFERRED OVER THE POOL BELOW, and the reason is what the pool does to a
+    story's questions. distractors() borrows the OTHER questions' answers
+    about the same reading, so a reading's six questions rotate one small set
+    between them: on the deployed Unit 4, three consecutive questions offered
+    the same three options, each correct in turn, and a child who had answered
+    two knew the third by elimination. Worse, the categories give it away -
+    "Who is in this story?" beside a place and a food is not a question about
+    the story at all.
+
+    An authored list is same-category and drawn from the story's own world, so
+    a wrong tap is a plausible reading of the story rather than a category
+    error. Where a question has none, the pool below still applies.
+    """
+    got = [str(x).strip() for x in (item.get("distractors") or []) if str(x).strip()]
+    return got[:n]
+
+
 def distractors(pool, right, n, key=lambda x: x):
     """n wrong options drawn from the unit's own material.
 
@@ -1095,12 +1115,17 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     if len(factual) >= 3:
         items = []
         for c in chosen:
-            wrong = distractors([x for x in factual if x is not c], c, 2,
-                                key=lambda x: x["correctAnswer"])
+            # authored wrong options first; the sibling-answer pool only fills
+            # what an author has not written - see authored_distractors()
+            wrong_text = authored_distractors(c, 2)
+            if len(wrong_text) < 2:
+                wrong_text += [x["correctAnswer"] for x in
+                               distractors([x for x in factual if x is not c], c,
+                                           2 - len(wrong_text), key=lambda x: x["correctAnswer"])]
             items.append({
                 "ask": c["question"],
                 "opts": [{"t": c["correctAnswer"], "ok": 1}] +
-                        [{"t": x["correctAnswer"], "ok": 0} for x in wrong],
+                        [{"t": t, "ok": 0} for t in wrong_text],
                 "why": c.get("explanation") or "",
                 "srcTitle": reading_title.get(c.get("readingId"), ""),
             })

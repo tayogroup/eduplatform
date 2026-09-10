@@ -156,7 +156,12 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 //   The ordering rule below is what decides this, and it turns on when the
 //   stamp goes LIVE rather than when it is committed. A stamp sitting in the
 //   repo pins nothing.
-const AUDIO_RELEASE = "20260903c";
+// 20260910a: the ten unit overviews and learning paths were rewritten to the
+// learner's reading level (FK 6.38 -> 2.58 and 9.48 -> 2.33), and the 22
+// overview clips that narrate them were re-recorded under their existing
+// filenames. Same URL, new bytes, so every learner who has already opened a
+// unit holds a recording of the old wording until this stamp goes live.
+const AUDIO_RELEASE = "20260910a";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.

@@ -200,7 +200,10 @@ def main() -> None:
         "objectivesByStage": by_stage,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    # newline="\n": the repo stores LF and .gitattributes normalises on commit,
+    # so a CRLF working copy is invisible to git status but is not what a tool
+    # that concatenates or hashes this file would read. Write what is committed.
+    args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
     print(f"Wrote {args.output}: {len(objectives)} objectives")
     print("  counts:", payload["counts"])

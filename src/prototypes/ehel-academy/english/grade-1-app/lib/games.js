@@ -30,6 +30,13 @@
      third of it under a slide heading.
      ================================================================== */
   function gameZone(o) {
+
+    /* ONLY THE STEP ON SCREEN MAY SPEAK. Same rule as the deck's finish()
+       and english.js's playHere(): the work runs, the voice asks first.
+       Covers two paths at once - a timer that fires after the child has
+       moved on, and the draw every renderer does at load while its slide
+       is still hidden. */
+    const sayHere = (m) => { if (cur === o.finish) say(m); };
     const el = o.el;
     const pack = o.pack || {};
     const games = pack.games || [];
@@ -158,7 +165,7 @@
           shuffle(round.choices).map((c) =>
             '<button type="button" class="choice" data-c="' + esc(c) + '">' + esc(c) + "</button>").join("") +
           "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
-        say(plain(round.prompt));
+        sayHere(plain(round.prompt));
         let lock = false;
         overlay.querySelector("#gameCh").addEventListener("click", (e) => {
           const b = e.target.closest(".choice"); if (!b || lock) return;
@@ -217,7 +224,7 @@
         /* `line` holds tile INDEXES, not letters, so a word with the same
            letter twice ("egg") does not disable both tiles on the first tap. */
         paint();
-        say(plain(round.clue || round.prompt));
+        sayHere(plain(round.clue || round.prompt));
       }
 
       function drawTokens(round) {
@@ -255,7 +262,7 @@
           });
         }
         paint();
-        say(plain(round.prompt));
+        sayHere(plain(round.prompt));
       }
 
       /* Reveal-and-match, the pack's own description ("Reveal tiles and
@@ -273,7 +280,7 @@
             '<span class="back" aria-hidden="true">?</span>' +
             '<span class="face">' + esc(t.text) + "</span></button>").join("") +
           "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
-        say(plain(round.prompt || "Tap two tiles that go together."));
+        sayHere(plain(round.prompt || "Tap two tiles that go together."));
         overlay.querySelector("#gameGrid").addEventListener("click", (e) => {
           const b = e.target.closest(".pairtile");
           if (!b || lock) return;
@@ -321,14 +328,14 @@
             '<p class="speech-note">This one is for doing out loud, with a grown-up if one is there. '
             + "There is nothing to check - press Done when you have had a go.</p>",
             '<button type="button" class="big small" id="gameSpokeDone">Done &#10003;</button>');
-          say(plain(round.target || round.prompt));
+          sayHere(plain(round.target || round.prompt));
           overlay.querySelector("#gameSpokeDone").addEventListener("click", () => { right++; nextRound(); });
           return;
         }
         frame(
           '<p class="gameprompt">' + esc(round.prompt) + "</p>" +
           '<div id="gameSpeak"></div>');
-        say(plain(round.prompt));
+        sayHere(plain(round.prompt));
         speakingPanel(overlay.querySelector("#gameSpeak"), {
           reference: round.reference,
           audio: "",

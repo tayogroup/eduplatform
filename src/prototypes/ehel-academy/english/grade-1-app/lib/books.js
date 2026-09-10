@@ -316,6 +316,13 @@
      count beside it still says how far through they are.
      ================================================================== */
   function bookQuestions(o) {
+
+    /* ONLY THE STEP ON SCREEN MAY SPEAK. Same rule as the deck's finish()
+       and english.js's playHere(): the work runs, the voice asks first.
+       Covers two paths at once - a timer that fires after the child has
+       moved on, and the draw every renderer does at load while its slide
+       is still hidden. */
+    const sayHere = (m) => { if (cur === o.finish) say(m); };
     const el = o.el;
     const books = o.books || [];
 
@@ -427,7 +434,7 @@
       /* The question read aloud, options included on a choice question -
          these are five- and six-year-olds, and not being able to read the
          question yet is the whole reason the section exists. */
-      say(q.kind === "choice" ? q.q + " Is it " + q.options.join(", or ") + "?" : q.q);
+      sayHere(q.kind === "choice" ? q.q + " Is it " + q.options.join(", or ") + "?" : q.q);
 
       if (allDone) {
         $(el.fb).className = "fb good";

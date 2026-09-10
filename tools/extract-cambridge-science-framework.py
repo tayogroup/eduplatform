@@ -10,6 +10,10 @@ Two PDFs, two different objective-code conventions:
 
     0846 Cambridge Primary Science (stages 1-6)      1Ep1, 1Bp1, 3Cc2
     0893 Cambridge Lower Secondary Science (7-9)     7TWSm.01, 7Bs.01, 8Pf.03
+    0097 Cambridge Primary Science (stages 1-6)      1TWSp.01, 1Bs.01, 1ESp.01
+         The 2020 replacement for 0846, on 0893's dotted code scheme. Stage 1
+         of it is what science/grade-1-app teaches; the 0846 file stays because
+         science/grade-*/data still declares it.
 
 Usage:
     python tools/extract-cambridge-science-framework.py \
@@ -27,7 +31,10 @@ from pathlib import Path
 import pypdf
 
 # Bullet glyphs Cambridge uses; the 0893 PDF mixes several.
-BULLET = re.compile(r"^\s*[•●▪·\-]\s*")
+# 0097 comes out of pypdf with the Symbol-font bullet U+F0B7 in front of every
+# objective; without it in this class the file extracts ZERO objectives and
+# the validator has to catch the empty framework.
+BULLET = re.compile(r"^\s*[•●▪·\-•]\s*")
 
 # 0846: "1Ep1 Try to answer questions..."  (no dot, no zero padding)
 CODE_0846 = re.compile(r"^(\d)([EBCP])([a-z]{1,2})(\d{1,2})\s+(.+)$")
@@ -104,13 +111,22 @@ def parse(lines: list[str], code_re: re.Pattern, dotted: bool) -> tuple[list[dic
             continue
         # Strand headings appear alone on a line.
         collapsed = re.sub(r"\s+", " ", bare)
-        if collapsed in ("Thinking and Working Scientifically", "Scientific enquiry", "Biology", "Chemistry", "Physics", "Earth and Space"):
+        if collapsed in ("Thinking and Working Scientifically", "Scientific enquiry", "Biology", "Chemistry", "Physics", "Earth and Space", "Science in Context"):
             strand = collapsed
-            sub_strand_label = None
+            # Science in Context has no sub-strand headings of its own - the
+            # strand heading IS the label its SIC codes sit under.
+            sub_strand_label = collapsed if collapsed == "Science in Context" else None
             continue
 
         body = BULLET.sub("", line).strip()
         match = code_re.match(body)
+        # 0097's front matter QUOTES two Stage 6 codes as bullets ("6Bs.03 Name
+        # the parts ... will not be assessed") eleven pages before the
+        # objectives begin. Read as objectives they duplicate the real ones and
+        # the second swallows a page of policy prose. Nothing is an objective
+        # until a "Stage N" heading has been seen.
+        if match and stage is None:
+            match = None
         if match:
             if dotted:
                 stage_digit, sub_code, number, text = match.groups()
@@ -198,16 +214,18 @@ def check(objectives: list[dict]) -> list[str]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pdf", type=Path, required=True)
-    parser.add_argument("--code", required=True, choices=["0846", "0893"])
+    parser.add_argument("--code", required=True, choices=["0846", "0893", "0097"])
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    dotted = args.code == "0893"
+    dotted = args.code in ("0893", "0097")
     lines = page_lines(args.pdf)
     objectives, sub_strands, warnings = parse(lines, CODE_0893 if dotted else CODE_0846, dotted)
 
     if args.code == "0846":
         framework, published, stages = "Cambridge Primary Science", "2018", [1, 2, 3, 4, 5, 6]
+    elif args.code == "0097":
+        framework, published, stages = "Cambridge Primary Science", "September 2020, version 3.0 February 2023", [1, 2, 3, 4, 5, 6]
     else:
         framework, published, stages = "Cambridge Lower Secondary Science", "September 2020 (first teaching September 2021)", [7, 8, 9]
 

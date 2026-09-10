@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 1 Science</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     THE BASE - lifted verbatim from the Grade 1 Mathematics standalone
+     build (mathematics/grade-1-app/g1v2), because these two are meant to
+     be one product. Everything above the ENGLISH heading further down is
+     that build's design system unchanged: the same tokens, the same deck,
+     the same gold action colour, the same voice bar.
+
+     The light palette is declared first and then overridden by the Wehel
+     block below, exactly as it is there. It is kept rather than deleted
+     so a token the override forgets still resolves to something legible
+     instead of to nothing.
+     ================================================================== */
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  /* THE SKIP LINK. Off-screen until it is focused, then a real button in the
+     top-left corner. It is not `display: none` and not `visibility: hidden` -
+     either of those would take it out of the tab order and there would be
+     nothing to focus. Moving it off-screen keeps it reachable by Tab while
+     leaving the page looking untouched.
+
+     z-index clears the two app bars, which are sticky at 40. A skip link that
+     appears UNDER the chrome it exists to skip is a skip link nobody can see
+     they have focused.
+
+     THE FILL IS --ink, NOT --teal, and that is a contrast decision rather than
+     a style one. This build is a single dark theme - the Wehel block below
+     redefines every token from bare :root, so the light palette above it never
+     renders and only the dark values matter. There --teal is #35BFB2, and the
+     obvious teal-pill-with-white-text measures 2.3:1 on it. The link renders
+     at 18px bold, which is below the 18.66px that would let it count as large
+     text, so it needs 4.5:1 and not 3:1 - it fails twice over. --ink and
+     --ground are the pair that is guaranteed to oppose each other whatever the
+     palette does, and here they give a white pill with #142B3E text at 14.5:1
+     (measured, not derived). Teal stays as the ring, which is the same 4px the
+     buttons already focus with, so the link still reads as part of this
+     product. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 100; }
+  .skip:focus {
+    left: 8px; top: 8px; padding: 12px 18px; border-radius: 12px;
+    background: var(--ink); color: var(--ground); font-weight: 700; text-decoration: none;
+    box-shadow: var(--shadow); outline: 4px solid var(--teal); outline-offset: 2px;
+  }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  /* THE DOT IS NOT THE TARGET ANY MORE. There are 23 of these — one per step —
+     and each used to BE a 16px button with a 6px gap, so the tap area was 16px
+     across with centres 22px apart. WCAG 2.5.8 asks for 24x24, and its spacing
+     exception wants 24px between centres, so this failed on both counts in an
+     app whose users are five and six years old.
+
+     The button is now a 28px target with the dot drawn inside it by ::before,
+     which buys the tap area without turning the rail into a row of fat circles:
+     the dot a child SEES is the same 16px it always was. gap goes to 0 because
+     the spacing now lives in the button's own box — leaving the 6px there would
+     push the centres to 34px and cost a row on a phone for nothing.
+
+     Every state moved to ::before with it. Leaving `background` on the button
+     would paint the whole 28px square, which is what makes this look like a
+     grid of blocks rather than a row of dots — check the dark-theme block
+     further down if you change either one. */
+  .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+  /* Growing the target costs rows, and on a phone the rail is capped at 45% of
+     380px — six per row, five rows, 140px of dots above the lesson. Letting it
+     take the full width below the title puts thirteen on a row and two rows on
+     the screen, which is shorter than the 16px version ever was. The cap is
+     what needs lifting, not the target size. */
+  @media (max-width: 560px) {
+    .hero { flex-wrap: wrap; }
+    .dots { max-width: 100%; width: 100%; justify-content: flex-start; }
+  }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  /* The deck carries tabindex="-1" so the skip link can move focus into it.
+     That makes it focusable, and a browser that rings a programmatically
+     focused container would draw a 4px outline around the whole lesson. The
+     ring is kept for :focus-visible, which is what a genuine keyboard focus
+     would match, and dropped for the skip link's own arrival. */
+  .deck:focus { outline: none; }
+  .deck:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; }
+  .choice.small { min-width: 80px; height: 64px; font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { border-radius: 18px; border: 3px solid var(--line); background: var(--card); padding: 14px 10px; text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .sticker .ic { display: block; font-size: 38px; line-height: 1.2; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker:not(.got) .ic { filter: grayscale(1); opacity: 0.35; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px 0; }
+  .foot .mid { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to the
+     viewer's setting. The selector list carries the same specificity as
+     the light block above and comes later, so it wins in both light and
+     dark. The palette is Ehel Academy's own - gold #f4c95d is the action
+     colour, teal #0f766e and coral #c2482c lifted to the same hues at a
+     lightness that is legible on a dark ground.
+
+     Copied from the Grade 1 Mathematics build. Do not re-solve it here:
+     the two builds are meant to be indistinguishable in colour.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  /* ::before, matching the block above — the button itself stays transparent
+     so the 28px tap area never paints. */
+  .dots button::before { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--teal); border-color: var(--teal); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* the fixed ground, painted by a pseudo-element rather than
+     background-attachment, which iOS Safari does not honour */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+  .deck { background: rgba(20, 43, 62, 0.88); }
+
+  /* ---- the voice bar: the speaker reads the step, Explain walks
+          through the idea behind it ---- */
+  .say button.explain {
+    flex: 0 0 auto;
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+  @media (max-width: 420px) {
+    .say button.explain .explain-t { display: none; }
+    .say button.explain { width: 44px; height: 44px; padding: 0; justify-content: center; font-size: 18px; }
+  }
+
+  /* ---- the hub ---- */
+  .hubhead { padding: 26px 4px 18px; }
+  .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
+  .hubhead h1 em { font-style: normal; color: var(--teal); }
+  .hubhead p { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; gap: 10px; padding: 20px;
+    border-radius: 22px; border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88);
+    box-shadow: var(--shadow); color: var(--ink); text-decoration: none; }
+  a.card:hover, a.card:focus-visible { border-color: var(--teal); }
+  .card h2 { font-size: 25px; }
+  .card p { color: var(--muted); font-size: 16.5px; }
+  .cardno { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .cardfoot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .meta { color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .go { flex: 0 0 auto; border-radius: 999px; background: var(--gold); color: var(--accent-ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; padding: 9px 20px; }
+  .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .card.locked { opacity: 0.62; }
+  .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 62ch; }
+  .strands { padding: 30px 4px 0; }
+  .strands h2 { font-size: 26px; margin-bottom: 10px; }
+  .strand { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: baseline; padding: 10px 14px;
+    border-radius: 14px; border: 1px solid var(--line); background: var(--card); margin-bottom: 8px; font-size: 16px; }
+  .strand b { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  @media (max-width: 560px) { .strand { grid-template-columns: 1fr; gap: 2px; } }
+
+  /* ---- the header bar, the same one the lesson pages carry ---- */
+  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
+  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: #06231F; font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: #06231F; font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
+  @media (max-width: 720px) { .eh-progtext, .eh-brandtext { display: none; } .eh-picker { max-width: 130px; } }
+</style>
+
+<header class="eh-bar1">
+  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <div class="eh-brand"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Science</i></span></div>
+  <div class="eh-prog" id="ehProg">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Course progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="" selected>Jump to a lesson…</option><option value="alive-or-never-alive.html">Alive or Never Alive</option><option value="parts-of-a-plant.html">Parts of a Plant</option><option value="my-body-and-my-senses.html">My Body and My Senses</option><option value="what-is-it-made-of.html">What Is It Made Of?</option><option value="pushes-pulls-and-floating.html">Pushes, Pulls and Floating</option><option value="sounds-near-and-far.html">Sounds Near and Far</option><option value="electricity-and-magnets.html">Electricity and Magnets</option><option value="our-earth-our-sun.html">Our Earth, Our Sun</option></select>
+  </div>
+</header>
+
+<div class="wrap">
+  <header class="hubhead">
+    <p class="eyebrow">Ehel Academy &middot; Science</p>
+    <h1>Grade 1 <em>Science</em></h1>
+    <p>Eight lessons, in the order they are meant to be done. Every one has a real experiment in it: predict, try it, say what happened.</p>
+  </header>
+
+  <main class="cards">
+      <a class="card" href="alive-or-never-alive.html?from=sci1">
+        <span class="cardno">Lesson 1</span>
+        <h2>Alive or Never Alive</h2>
+        <p>Sort the living things from the things that were never alive, find out what animals and plants need, and do your first real experiment.</p>
+        <span class="cardfoot"><span class="meta">10 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="parts-of-a-plant.html?from=sci1">
+        <span class="cardno">Lesson 2</span>
+        <h2>Parts of a Plant</h2>
+        <p>Watch a seed grow day by day, name the roots, stem, leaves and flower, and find out what happens to a plant kept in the dark.</p>
+        <span class="cardfoot"><span class="meta">11 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="my-body-and-my-senses.html?from=sci1">
+        <span class="cardno">Lesson 3</span>
+        <h2>My Body and My Senses</h2>
+        <p>Name the parts of your body, find out what each of your five senses can tell you, and measure your friends in hand spans.</p>
+        <span class="cardfoot"><span class="meta">12 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="what-is-it-made-of.html?from=sci1">
+        <span class="cardno">Lesson 4</span>
+        <h2>What Is It Made Of?</h2>
+        <p>Find out what everyday objects are made from, test materials to see how they behave, and squash, bend, twist and stretch them.</p>
+        <span class="cardfoot"><span class="meta">10 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="pushes-pulls-and-floating.html?from=sci1">
+        <span class="cardno">Lesson 5</span>
+        <h2>Pushes, Pulls and Floating</h2>
+        <p>See how things move, push a ball gently and hard, and drop eight things into a tank to find out which float and which sink.</p>
+        <span class="cardfoot"><span class="meta">9 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="sounds-near-and-far.html?from=sci1">
+        <span class="cardno">Lesson 6</span>
+        <h2>Sounds Near and Far</h2>
+        <p>Tap things to hear the sounds they make, find out what makes a sound, and walk away from a bell to hear it get quieter.</p>
+        <span class="cardfoot"><span class="meta">8 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="electricity-and-magnets.html?from=sci1">
+        <span class="cardno">Lesson 7</span>
+        <h2>Electricity and Magnets</h2>
+        <p>Find out which things need electricity to work, learn to stay safe around it, and test which things a magnet will stick to.</p>
+        <span class="cardfoot"><span class="meta">9 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="our-earth-our-sun.html?from=sci1">
+        <span class="cardno">Lesson 8</span>
+        <h2>Our Earth, Our Sun</h2>
+        <p>Zoom out from your house to the whole planet, catch a globe ten times to find out how much of Earth is water, dig into the ground, and test the heat of the Sun.</p>
+        <span class="cardfoot"><span class="meta">11 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+  </main>
+
+  <section class="strands">
+    <h2>What Stage 1 science covers</h2>
+    <div class="strand"><b>Thinking and Working Scientifically</b><span>Ask questions, predict, sort, use equipment safely, measure in hands and cubes, record in tables, say whether it matched.</span></div>
+    <div class="strand"><b>Biology</b><span>Living and never alive; what animals and plants need; parts of a plant; the body and the five senses; how people are alike and different.</span></div>
+    <div class="strand"><b>Chemistry</b><span>Wood, metal, plastic, glass, rock, paper and fabric; object versus material; properties; squashing, bending, twisting and stretching.</span></div>
+    <div class="strand"><b>Physics</b><span>How things move; pushes and pulls; floating and sinking; sources of sound and sound fading with distance; electricity and magnets.</span></div>
+    <div class="strand"><b>Earth and Space</b><span>Earth is our planet and mostly water; land is rock and soil; the Sun gives light and heat and is one of many stars.</span></div>
+    <div class="strand"><b>Science in Context</b><span>How thinking has changed, how everyday things work, who uses science at work, and how what we do affects the world.</span></div>
+  </section>
+
+  <p class="hubfoot">Built to Cambridge Primary Science 0097, Stage 1 &mdash; all 35 learning objectives, including Thinking and Working Scientifically and Science in Context. The stickers are earned, not given.</p>
+</div>
+
+<script>
+/* ---- the header bar: how far through the course, and the way out ----
+   Everything here is answered by the launch URL and by the progress document
+   the LESSONS write. This page stores nothing of its own. */
+(function () {
+  var COURSE = "ehel-sci-g01";
+  var STEPS  = {"l01": 10, "l02": 11, "l03": 12, "l04": 10, "l05": 9, "l06": 8, "l07": 9, "l08": 11};     /* lesson id -> slides-1, the lesson's own denominator */
+  var FILES  = {"l01": "alive-or-never-alive.html", "l02": "parts-of-a-plant.html", "l03": "my-body-and-my-senses.html", "l04": "what-is-it-made-of.html", "l05": "pushes-pulls-and-floating.html", "l06": "sounds-near-and-far.html", "l07": "electricity-and-magnets.html", "l08": "our-earth-our-sun.html"};     /* lesson id -> the page that teaches it */
+  var q = new URLSearchParams(location.search);
+  var doc = null;
+  try {
+    doc = JSON.parse(localStorage.getItem(
+      "ehel-progress:" + COURSE + ":" + (q.get("studentid") || "local")) || "null");
+  } catch (e) { doc = null; }
+  var unitOf = function (u) { return (doc && doc.units && doc.units[u]) || null; };
+  var done = 0, total = 0;
+  Object.keys(STEPS).forEach(function (u) {
+    var s = unitOf(u);
+    total += STEPS[u];
+    done += Math.min((s && s.sectionsDone && s.sectionsDone.length) || 0, STEPS[u]);
+  });
+  var pct = total ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  var pctEl = document.getElementById("ehPct");
+  if (pctEl) pctEl.textContent = pct + "%";
+  var fill = document.getElementById("ehFill");
+  if (fill) fill.style.width = pct + "%";
+  var prog = document.getElementById("ehProg");
+  if (prog) prog.title = done + " of " + total + " steps done across the course";
+
+  /* the picker jumps to a lesson, carrying the launch parameters */
+  var picker = document.getElementById("ehPicker");
+  if (picker) picker.addEventListener("change", function () {
+    var p = new URLSearchParams(location.search);
+    p.set("from", "sci1");
+    location.href = picker.value + "?" + p.toString();
+  });
+
+  /* THE WAY OUT, drawn only when the launch gave us one. */
+  var exit = q.get("exitUrl");
+  var back = document.getElementById("ehBack");
+  if (back && exit) { back.setAttribute("href", exit); back.hidden = false; }
+})();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>

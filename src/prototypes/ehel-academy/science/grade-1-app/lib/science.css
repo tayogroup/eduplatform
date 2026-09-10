@@ -1,0 +1,181 @@
+  /* ==================================================================
+     SCIENCE
+
+     Everything below is this build's own. The rule is the one the English
+     build set: a new control borrows an existing token rather than
+     introducing a colour. Gold is the action, teal is the voice and the
+     taught thing, coral is the thing being pointed at or pushed, good/bad
+     are the only verdicts, plum is a second series where one is not
+     enough (a second pot, a second cup). Nothing here invents a hue.
+     ================================================================== */
+
+  /* a stage that fills the slide - #stageN is a flex ITEM, so a child's
+     width:100% resolves against a box shrunk to one card without this */
+  .stagewide { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .lead { max-width: 34ch; text-align: center; font-size: clamp(19px, 3.6vw, 24px); font-weight: 700;
+    font-family: "Inter", "Segoe UI", sans-serif; }
+  .lead b { color: var(--teal); }
+  .sub { max-width: 40ch; text-align: center; color: var(--muted); font-size: 16.5px; }
+  .phase { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
+
+  /* ---- a picture: emoji at poster size, or an inline SVG ---- */
+  .pic { font-size: clamp(56px, 13vw, 96px); line-height: 1.1; }
+  .pic.mid { font-size: clamp(40px, 9vw, 64px); }
+  .pic svg { width: clamp(120px, 40vw, 220px); height: auto; display: block; }
+
+  /* ---- tap cards: hear it, see it, tick it ---- */
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px; width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; line-height: 1.2;
+    transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard .cpic svg { width: 64px; height: 64px; display: block; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .tapcard.now { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(244,201,93,0.25); }
+  .tapcard small { color: var(--muted); font-weight: 700; font-size: 12.5px; }
+
+  /* ---- sorting into bins ---- */
+  .sortnow { display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 150px;
+    padding: 12px 22px; border-radius: 22px; border: 3px dashed var(--gold); background: rgba(244,201,93,0.08); }
+  .sortnow .pic { font-size: clamp(56px, 12vw, 84px); }
+  .sortnow .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 24px; }
+  .sortnow.shake { animation: shake 360ms ease; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-9px); } 75% { transform: translateX(9px); } }
+  .bins { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; max-width: 680px; }
+  .bin { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 10px 12px; min-height: 130px;
+    border-radius: 20px; border: 4px solid var(--line); background: var(--card); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; transition: transform 120ms ease; }
+  .bin .bpic { font-size: 34px; line-height: 1.1; }
+  .bin:active { transform: scale(0.97); }
+  .bin.right { border-color: var(--good); background: var(--good-soft); }
+  .bin.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .bin .tray { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; min-height: 30px; font-size: 24px; }
+  .bin:disabled { cursor: default; }
+
+  /* ---- the experiment stage: a simulation in a box ---- */
+  .sim { position: relative; width: 100%; max-width: 560px; border-radius: 22px; border: 1px solid var(--line);
+    background: var(--cell); overflow: hidden; }
+  .sim svg { width: 100%; height: auto; display: block; }
+  .sim .tag { position: absolute; top: 10px; left: 12px; padding: 4px 10px; border-radius: 999px;
+    background: rgba(0,0,0,0.35); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; }
+  .simrow { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; }
+  .exp-what { width: 100%; max-width: 30em; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+
+  /* ---- predict for each thing, then try it ---- */
+  .peitem { display: flex; align-items: center; gap: 14px; padding: 10px 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); }
+  .peitem .pic { font-size: 48px; }
+  .peitem .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 22px; }
+  .pelist { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 560px; }
+  .pelist span { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px;
+    border: 2px solid var(--line); font-size: 15px; font-weight: 700; color: var(--muted); }
+  .pelist span.hit { border-color: var(--good); color: var(--good); }
+  .pelist span.miss { border-color: var(--accent); color: var(--accent); }
+
+  /* ---- a simple table the child fills in ---- */
+  .rec { width: 100%; max-width: 560px; border-collapse: separate; border-spacing: 0 8px; }
+  .rec th { text-align: left; color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 0 12px; }
+  .rec td { padding: 0; }
+  .rec .rowlab { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px 0 0 14px;
+    background: var(--card); border: 2px solid var(--line); border-right: 0; font-weight: 700; font-size: 18px; min-height: 64px; }
+  .rec .rowlab .pic { font-size: 30px; }
+  .rec .cell { width: 100%; min-height: 64px; padding: 8px 12px; border-radius: 0 14px 14px 0; border: 2px solid var(--line);
+    background: var(--card); color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; text-align: left; }
+  .rec .cell.now { border-color: var(--gold); color: var(--ink); }
+  .rec .cell.filled { color: var(--ink); }
+  .rec .cell.right { border-color: var(--good); background: var(--good-soft); }
+  .rec .cell.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .rec .cell:disabled { cursor: default; }
+  .tallymarks { font-family: "Inter", "Segoe UI", sans-serif; letter-spacing: 2px; }
+
+  /* ---- measuring in hands, cubes and steps ---- */
+  .measure { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .mtrack { position: relative; width: 100%; height: 84px; border-radius: 16px; background: var(--card); border: 2px solid var(--line); overflow: hidden; }
+  .mtrack .obj { position: absolute; left: 12px; top: 12px; height: 26px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; padding: 0 10px;
+    color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 14px; white-space: nowrap; }
+  .mtrack .unit { position: absolute; top: 44px; height: 30px; display: grid; place-items: center; font-size: 24px;
+    animation: pop 220ms ease; }
+  .mtrack .unit b { position: absolute; bottom: -2px; right: 0; font-size: 11px; color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; }
+  @keyframes pop { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .mcount { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(28px, 6vw, 40px); color: var(--teal); }
+
+  /* ---- a figure with parts to tap ---- */
+  .figure { width: 100%; max-width: 420px; }
+  .figure svg { width: 100%; height: auto; display: block; }
+  .figure [data-part] { cursor: pointer; transition: filter 140ms ease; }
+  .figure [data-part]:hover { filter: brightness(1.15); }
+  .figure [data-part].found { filter: drop-shadow(0 0 6px var(--good)); }
+  .figure [data-part].found .outline { stroke: var(--good); stroke-width: 4; }
+  .figure .outline { fill: none; stroke: transparent; stroke-width: 3; }
+  .figure [data-part].ping .outline { stroke: var(--gold); stroke-width: 5; }
+  .partlist { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .partlist span { padding: 5px 12px; border-radius: 999px; border: 2px solid var(--line); font-weight: 700; font-size: 15px; color: var(--muted); }
+  .partlist span.found { border-color: var(--good); color: var(--good); }
+  .partlist span.now { border-color: var(--gold); color: var(--ink); }
+
+  /* ---- a demonstration: press to see the next thing ---- */
+  .frame { width: 100%; max-width: 560px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .framepic { min-height: 140px; display: grid; place-items: center; }
+  .framecap { max-width: 32ch; text-align: center; font-size: clamp(19px, 3.6vw, 24px); font-weight: 700;
+    font-family: "Inter", "Segoe UI", sans-serif; }
+  .framecap b { color: var(--teal); }
+  .pips { display: flex; gap: 6px; }
+  .pips i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .pips i.on { background: var(--gold); width: 22px; border-radius: 6px; }
+  .pips i.done { background: var(--good); }
+
+  /* ---- the material tester ---- */
+  .tester { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .matrow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .mat { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 12px; border-radius: 14px;
+    border: 3px solid var(--line); background: var(--card); color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 14px; }
+  .mat .cpic { font-size: 30px; }
+  .mat.now { border-color: var(--gold); }
+  .mat.done { border-color: var(--good); }
+  .tests { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; min-height: 40px; }
+  .badge { padding: 6px 14px; border-radius: 999px; background: var(--teal-soft); border: 2px solid var(--teal); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; animation: pop 220ms ease; }
+
+  /* ---- loudness, distance, thermometers ---- */
+  .meter { width: 100%; max-width: 420px; height: 26px; border-radius: 999px; background: var(--card); border: 2px solid var(--line); overflow: hidden; }
+  .meter i { display: block; height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); transition: width 300ms ease; }
+  .meterlab { display: flex; justify-content: space-between; width: 100%; max-width: 420px; color: var(--muted); font-size: 13px; font-weight: 700; }
+
+  /* ---- the switch ---- */
+  .switch { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; }
+  .switch i { width: 40px; height: 22px; border-radius: 999px; background: var(--line); position: relative; transition: background 160ms ease; }
+  .switch i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left 160ms ease; }
+  .switch.on { border-color: var(--gold); }
+  .switch.on i { background: var(--good); }
+  .switch.on i::after { left: 21px; }
+
+  /* ---- asking a question ---- */
+  .qlist { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 30em; }
+  .qbtn { padding: 12px 16px; border-radius: 16px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    text-align: left; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 19px; }
+  .qbtn.picked { border-color: var(--teal); background: var(--teal-soft); }
+  .qbtn:disabled { cursor: default; }
+
+  .choice.text { min-width: 0; width: 100%; max-width: 30em; height: auto; min-height: 62px;
+    padding: 14px 18px; font-size: 20px; line-height: 1.35; text-align: left; }
+  .choice.pic { flex-direction: column; height: auto; min-height: 100px; padding: 10px 16px; font-size: 18px; gap: 2px; display: inline-flex; align-items: center; }
+  .choice.pic .cpic { font-size: 40px; line-height: 1.1; }
+  .choices.stack { flex-direction: column; align-items: stretch; width: 100%; }
+  .askpic { font-size: clamp(64px, 15vw, 110px); line-height: 1.1; }
+  .askpic svg { width: clamp(140px, 44vw, 240px); height: auto; display: block; }
+
+  .reviewnote { color: var(--muted); font-size: 13.5px; text-align: center; margin: 0; font-style: italic; }
+  .safety { display: flex; align-items: flex-start; gap: 10px; max-width: 34em; padding: 12px 16px; border-radius: 16px;
+    border: 1px solid var(--accent); background: var(--accent-soft); font-size: 16.5px; }
+  .safety b { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sortnow.shake, .mtrack .unit, .badge { animation: none; }
+  }

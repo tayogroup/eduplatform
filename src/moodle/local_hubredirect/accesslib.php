@@ -3030,6 +3030,187 @@ CSS;
 }
 
 /**
+ * The consumer landing page's institution/community-hub branch, in the same
+ * visual language as the dashboards -- asked for directly ("design after
+ * student dashboard", 2026-09-10) rather than inferred from the family of
+ * pages this session has already reskinned.
+ *
+ * SCOPED TO THE INSTITUTION BRANCH ONLY. consumer_landing.php renders one of
+ * two structurally different pages from one file, gated on
+ * `$isinstitution`: a "community hub" (`.pqhclh-*` classes -- nav, hero,
+ * course/policy/audience cards, an announcements-and-calendar sidebar,
+ * footer) for institution consumers, or a plainer hero-plus-service-cards
+ * page (`.pqhcl-*`, one letter shorter) for marketplace/generic consumers.
+ * `ehel-k12` -- the consumer named in the request -- is an institution
+ * consumer (confirmed against its own login page, which is branded
+ * "INSTITUTION WORKSPACE"), so this covers `.pqhclh-*` only. The other
+ * branch is a different product context -- independent teachers and the
+ * families finding them, not a school's own families -- and nothing asked
+ * for it to match; touching it would be an unrequested scope increase, the
+ * same call this session already made once for the group board's own
+ * unrelated `.pqlgb-shell .pqh-appbar` line.
+ *
+ * THE TOKEN RE-POINT HAPPENS TWICE ON THIS PAGE, and that is deliberate
+ * rather than redundant. pqh_ehel_tokens_css() re-points the SHARED
+ * --op- and --pqh- token families every skin in this family re-points -- but this
+ * page never uses either family; it is written entirely against its OWN
+ * local custom properties, declared once on .pqhclh-shell itself
+ * (--ink, --ink-soft, --sky, --tint, --paper, --font-serif, ...). So the
+ * shared re-point buys this page nothing on its own, and a second one,
+ * scoped to .pqhclh-shell's own tokens, is what actually turns the page
+ * dark by construction -- same principle as the shared one, one layer
+ * further down, because this is the one page in the family that brought
+ * its own token system instead of using the shell's.
+ *
+ * ONE TOKEN FLIPS MEANING AND CANNOT BE LEFT TO THE BLIND SUBSTITUTION:
+ * --ink is read as text colour almost everywhere on the page (safe to
+ * repoint straight to --ea-ink) but as a BACKGROUND exactly once, on
+ * today's calendar cell (`.pqhclh-cal-day--today{background:var(--ink)}`).
+ * A light-theme "ink" is the darkest thing on the page and doubles as a
+ * strong solid fill; --ea-ink is white, so the blind repoint would have
+ * painted today's cell white-on-white. Given its own explicit override
+ * below, not left to the substitution that works everywhere else on this
+ * token.
+ *
+ * PRIMARY BUTTONS MOVE FROM THIS PAGE'S BLUE TO THIS SYSTEM'S GOLD, not
+ * because gold is what --sky repoints to but because this system reserves
+ * gold for exactly one meaning ("exactly one gold pill that means GO",
+ * pqh_ehel_academy_css()'s own docblock) and every other page in the family
+ * keeps that meaning. Ghost/ghost ("Upcoming Events", nav links) stay the
+ * translucent-outline treatment already established for a secondary action.
+ *
+ * @param string $scope the page's shell class, with its leading dot
+ * @param string $bodyclass the page's body class, so the ground reaches the
+ *                          overscroll area behind the shell ('' to skip)
+ */
+function pqh_ehel_consumer_landing_css(string $scope, string $bodyclass = ''): string {
+    // Three icons for the hero stat row, one per position -- the row is a
+    // fixed three-item literal in the page's own PHP (open courses, upcoming
+    // events, announcements), never generated, so position is exactly as
+    // stable here as it is on the group board's own totals row.
+    $pqhclhiconbook = pqh_ehel_icon_data_uri('#35BFB2', '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>');
+    $pqhclhiconcalendar = pqh_ehel_icon_data_uri('#6FB6E8', '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>');
+    $pqhclhiconbell = pqh_ehel_icon_data_uri('#F4C95D', '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>');
+
+    $css = pqh_ehel_tokens_css($scope, $bodyclass) . "\n\n" . <<<CSS
+/* ---- this page's OWN token system, re-pointed -----------------------------
+   .pqhclh-shell declares its own --ink/--sky/--tint/--font-* rather than
+   using the shell's --op- and --pqh- ones (see the docblock above for why this
+   needs its own re-point at all). Every rule below is still written in
+   these names -- the point of re-pointing first is that most of the page
+   goes dark from this one rule, before a single component below it runs. */
+{$scope}{--white:var(--ea-ink);--paper:transparent;--tint:var(--ea-cell-2);--ink:var(--ea-ink);--ink-soft:var(--ea-body);--sky:var(--ea-teal);--sky-deep:var(--ea-teal);--sky-glow:var(--ea-gold);--night:var(--ea-ground-a);--ice:var(--ea-cell-2);--ice-soft:var(--ea-line-soft);--line:var(--ea-line);--font-display:var(--ea-display);--font-serif:var(--ea-display);--font-mono:var(--ea-display)}
+
+/* ---- the nav --------------------------------------------------------------
+   Already dark in the source (--sky-deep background, before this repoint
+   existed) -- restated in solid tokens instead of left to the repoint alone,
+   because --sky-deep now resolves to --ea-teal and a teal bar under white
+   text reads as a giant call-to-action rather than a nav. Matches the
+   app bar treatment the dashboards use for the same reason: a translucent
+   dark bar over the ground, not a solid brand colour. */
+{$scope}{$scope} .pqhclh-nav{background:rgba(11,29,44,.82);border-bottom:1px solid var(--ea-line);box-shadow:none;backdrop-filter:blur(10px)}
+{$scope}{$scope} .pqhclh-nav .pqhclh-brand-name{color:var(--ea-ink)}
+{$scope}{$scope} .pqhclh-nav .pqhclh-navlink{color:var(--ea-body)}
+{$scope}{$scope} .pqhclh-nav .pqhclh-navlink:hover{color:var(--ea-ink)}
+
+/* ---- buttons ---------------------------------------------------------------
+   Gold for the one primary action per view, matching every other page in
+   this family ("exactly one gold pill that means GO") -- this page's own
+   button variants already separate primary from secondary
+   (--ghost/--light), so the mapping is direct rather than a new convention. */
+{$scope}{$scope} .pqhclh-btn--primary{background:var(--ea-gold);color:var(--ea-gold-ink)!important;box-shadow:0 4px 0 var(--ea-gold-press)}
+{$scope}{$scope} .pqhclh-btn--primary:hover{filter:brightness(1.06)}
+{$scope}{$scope} .pqhclh-btn--ghost{background:rgba(255,255,255,.06);color:var(--ea-ink)!important;border-color:var(--ea-line)}
+{$scope}{$scope} .pqhclh-btn--ghost:hover{background:var(--ea-cell)}
+{$scope}{$scope} .pqhclh-btn--light{background:var(--ea-ink);color:var(--ea-ground-a)!important}
+{$scope}{$scope} .pqhclh-btn--light:hover{filter:brightness(.94)}
+
+/* ---- the emergency banner --------------------------------------------------
+   Kept a strong solid red -- an emergency notice earns the one place on this
+   page that is allowed to look alarming rather than on-brand, and that was
+   already true of the light design. Only the exact shade moves, to sit
+   comfortably next to this page's own coral rather than clashing with it. */
+{$scope}{$scope} .pqhclh-banner{background:#5A1F1F;color:#fff}
+
+/* ---- the hero: the same identity band every other page in this family
+   wears, restated here because .pqhclh-hero is not one of the class names
+   pqh_ehel_academy_css() already reaches (that function matches
+   .pqh-hero/.pqhsd-pagehead literally, not by pattern) -- see that
+   function's own docblock for where the gradient, the scrim maths and the
+   45%-black figure come from. This hero carries no <h1> in the institution
+   branch (the page's own choice, unchanged here): eyebrow, tagline, actions
+   and the stat row sit directly on the band. */
+{$scope}{$scope} .pqhclh-hero{position:relative;background:linear-gradient(120deg,var(--ea-teal) 0%,#1E4A63 52%,var(--ea-plum) 100%);border-radius:24px;margin-top:18px;overflow:hidden}
+{$scope}{$scope} .pqhclh-hero::before{content:"";position:absolute;inset:0;background:rgba(4,14,22,.45);pointer-events:none}
+{$scope}{$scope} .pqhclh-hero .pqhclh-wrap{position:relative}
+/* rgba(255,255,255,.90), not --ea-teal-ink or a plain --ea-ink white: this is
+   pqh_ehel_academy_css()'s own .pqh-hero .pqh-kicker value, verbatim, for the
+   same reason it exists there -- a teal eyebrow on this gradient's OWN teal
+   end is close to unreadable, and that function's contrast figures (5.1:1 or
+   better against all three stops) were computed against exactly this value,
+   not derived fresh here. */
+{$scope}{$scope} .pqhclh-hero .pqhclh-eyebrow{color:rgba(255,255,255,.90)}
+{$scope}{$scope} .pqhclh-hero .pqhclh-sub{color:#fff}
+/* No panel behind the stat row -- the identity card this mirrors
+   (.pqhsd-quickstats) has none either, sitting straight on the band. This
+   is not a bare colour choice: .pqhclh-stat already carries its OWN
+   background(rgba(255,255,255,.7)) from the light design, a LITERAL, not a
+   token, so the re-point above cannot reach it -- left alone, a 70%-opaque
+   white panel sits on top of the gradient, and white text on it measured
+   1.56:1, found by the sweep rather than by re-reading this rule (which,
+   read alone, looks like exactly the calibrated scrim tone). border-color
+   is cleared for the same reason: var(--line) IS a token and would already
+   go dark on its own, but a visible hairline round a now-invisible panel
+   reads as a stray box. */
+{$scope}{$scope} .pqhclh-stat{background:transparent;border-color:transparent}
+{$scope}{$scope} .pqhclh-stat b{color:#fff}
+{$scope}{$scope} .pqhclh-stat span{color:rgba(255,255,255,.85)}
+
+/* ---- the hero stat row: icon-led, matching the dashboards' KPI tiles ------
+   No markup change -- the three <div class="pqhclh-stat"> already carry a
+   bare <b> then <span>, the same shape the group board's totals row uses,
+   so the same ::before-icon-by-CSS-Grid technique applies unchanged.
+   Position is stable: courses, events, announcements is a fixed three-item
+   literal in the page's own PHP, never reordered per consumer. */
+{$scope}{$scope} .pqhclh-stat{display:grid;grid-template-columns:40px 1fr;column-gap:12px;align-items:center}
+{$scope}{$scope} .pqhclh-stat::before{content:"";grid-row:1/3;grid-column:1;width:40px;height:40px;border-radius:50%;background-color:rgba(255,255,255,.12);background-repeat:no-repeat;background-position:center;background-size:19px 19px}
+{$scope}{$scope} .pqhclh-stat b{grid-column:2;grid-row:1;margin:0}
+{$scope}{$scope} .pqhclh-stat span{grid-column:2;grid-row:2;margin:0}
+{$scope}{$scope} .pqhclh-stat:nth-child(1)::before{background-image:{$pqhclhiconbook}}
+{$scope}{$scope} .pqhclh-stat:nth-child(2)::before{background-image:{$pqhclhiconcalendar}}
+{$scope}{$scope} .pqhclh-stat:nth-child(3)::before{background-image:{$pqhclhiconbell}}
+
+/* ---- cards, sections, sidebar ---------------------------------------------
+   One surface for everything already shaped like a card by this page's own
+   naming (.pqhclh-card, .pqhclh-side-card, .pqhclh-stat) -- the same
+   :not([class*="__"]) BEM-child guard the dashboards use, kept here even
+   though this page has no BEM children today, so a future one added to
+   match the family's own convention is excluded by construction rather
+   than by luck. */
+{$scope} [class*="-card"]:not([class*="__"]){background:var(--ea-card);border-color:var(--ea-line);box-shadow:0 2px 10px rgba(0,0,0,.18)}
+{$scope}{$scope} .pqhclh-card:hover{border-color:var(--ea-teal-line);box-shadow:0 18px 44px rgba(0,0,0,.28)}
+{$scope}{$scope} .pqhclh-empty{background:transparent;border-color:var(--ea-line)}
+{$scope}{$scope} .pqhclh-empty a{color:var(--ea-teal)}
+{$scope}{$scope} .pqhclh-badge{background:var(--ea-teal-soft);color:var(--ea-teal)}
+
+/* ---- the calendar ----------------------------------------------------------
+   --ink's one BACKGROUND use on this whole page (see this function's own
+   docblock) -- an explicit override rather than trusting the token repoint,
+   which would otherwise paint today white-on-white. Teal is "today" the same
+   way it is every other "this one matters right now" mark in the family. */
+{$scope}{$scope} .pqhclh-cal-day--today{background:var(--ea-teal);color:var(--ea-teal-ink)}
+{$scope}{$scope} .pqhclh-cal-day--today.pqhclh-cal-day--event::after{background:var(--ea-teal-ink)}
+
+/* No footer rules: .pqhclh-footer's whole rule set is already written in
+   var(--ink)/var(--ink-soft)/var(--line), so the top-level token repoint
+   above carries it dark for free -- restating it here would just be the
+   same value twice. */
+CSS;
+
+    return "@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap');\n"
+        . pqh_css_force_and_specify($css);
+}
+/**
  * Standard application shell markup: nav rail, blue app bar, and the
  * expandable-rail script. Echo directly after the page's <main> opens.
  */

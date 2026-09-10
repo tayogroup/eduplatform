@@ -467,6 +467,12 @@ body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!importan
 @media(max-width:680px){.pqhclh-title{font-size:1.9rem}.pqhclh-sub{font-size:1rem}.pqhclh-stats{grid-template-columns:1fr}.pqhclh-footer-grid{grid-template-columns:1fr}}
 </style>
 <style><?php echo pqh_openproject_skin_css('pqhcl', 'pqh-consumer-landing-page'); ?></style>
+<?php // Institution branch only: .pqhclh-shell is never on <main> unless
+      // $isinstitution, so this is inert (matches nothing) on the other
+      // branch rather than needing its own condition. Emitted last, after
+      // both stylesheets above, to win the same way every other Ehel-skinned
+      // page in this family does. ?>
+<style><?php echo pqh_ehel_consumer_landing_css('.pqhclh-shell', 'pqh-consumer-landing-page'); ?></style>
 <main class="pqhcl-shell<?php echo $isinstitution ? ' pqhclh-shell' : ''; ?>" style="--pqh-primary: <?php echo s($primarycolor); ?>; --pqh-accent: <?php echo s($accentcolor); ?>; --pqh-hero-image: url('<?php echo s($heroimage); ?>');">
   <?php if ($isinstitution): ?>
   <nav class="pqhclh-nav">

@@ -212,14 +212,26 @@ course does not declare.
   are the topic's own words. Every line is read aloud, so the level is a
   ceiling, not a gate. No US spellings; no quiz stem repeated anywhere.
 
-## Not deployed, not routed
+## Deployed 2026-09-10; not routed
 
-`deploy.mjs --app .` plans 20 files (fourteen lessons, the hub, the five
-platform modules) for `Ehel Primary/app/computing/grade-3-v2/`; nothing has
-been uploaded. Routing `ehel-comp-g03` here needs a Grade 3 row in
+Uploaded on the owner's instruction to
+`https://ehelacademy.b-cdn.net/Ehel%20Primary/app/computing/grade-3-v2/` —
+all 20 files (fourteen lessons, the hub, the five platform modules) PUT 201,
+verified on storage by read-back, and fresh off the edge against the plan's
+hashes; the tree matched HEAD (`f22b12bd7`) for the build and the kit before
+the upload. Then the live hub and three lessons were booted in real Chromium
+from the CDN with the five platform modules resolving: 0 console errors, 0
+failed requests, and three of the new renderers driven to a tick on the
+shipped bytes — all three tidy rounds of Lesson 5, both parallel rounds with
+the static tree in Lesson 6, and all four cipher messages in Lesson 12.
+
+**Nothing routes a learner to it.** `ehel-comp-g03` still launches wherever
+`local_prequran/ehel_app_url_overrides` points it, so these bytes are
+reachable by URL and live to nobody until the map is changed. Routing needs a
+`3 => ['ehel-comp-g03', …/grade-3-v2/index.html]` row in
 `lesson-app-tools/repoint-grade.php`'s computing targets, staged on the
 quraanacademy zone and run by the operator from the docroot, as Grades 1 and
-2 had. Both, and redeploying Grades 1 and 2 on this kit, are owner decisions.
+2 had. That, and redeploying Grades 1 and 2 on this kit, are owner decisions.
 
 ## What was deliberately not done
 

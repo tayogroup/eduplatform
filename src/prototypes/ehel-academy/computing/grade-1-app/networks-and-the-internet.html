@@ -769,6 +769,91 @@
   .gloxq { width: 100%; padding: 13px 16px; border-radius: 14px; border: 3px solid var(--teal); background: var(--card); color: var(--ink); font-family: inherit; font-size: 19px; margin-bottom: 12px; }
   .gloxmore { color: var(--muted); font-size: 14px; text-align: center; }
 
+  /* ==================================================================
+     STAGE 3 additions - same tokens, no new hue.
+     ================================================================== */
+  /* a step cut out of an algorithm; a run folded into a repeat */
+  .algostep.cut { text-decoration: line-through; opacity: 0.45; }
+  .algo li.fold { border-color: var(--accent); background: rgba(233,116,79,0.12); }
+  .algo.inner { margin-top: 6px; padding-left: 26px; }
+  .algo.small li { font-size: 15px; padding: 6px 8px; }
+  /* the input-output machine */
+  .machine2 { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; max-width: 420px; padding: 12px;
+    border-radius: 18px; border: 3px solid var(--teal); background: var(--card); }
+  .slot { display: flex; align-items: center; gap: 10px; }
+  .slotlab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12px; letter-spacing: .1em; color: var(--muted); }
+  .slotval { min-width: 56px; padding: 6px 12px; border-radius: 12px; border: 2px solid var(--line); font-weight: 800; font-size: 20px; text-align: center; }
+  .slot.out .slotval { border-color: var(--gold); }
+  /* chips: an input, a value, a field, a format */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 2px solid var(--line); background: var(--card); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; }
+  .chip.on { border-color: var(--gold); background: rgba(244,201,93,0.15); }
+  .chip.tried { border-color: var(--teal); opacity: 0.7; }
+  .chip:disabled { opacity: 0.5; }
+  /* objects that run at once; a mark on the stage; a number inside a block */
+  .objtabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .objtab { padding: 8px 14px; border-radius: 14px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; }
+  .objtab.on { border-color: var(--gold); }
+  .objtab.static { border-style: dashed; }
+  .sprite { z-index: 1; }
+  .sprite.static { filter: saturate(0.8); }
+  .mark { position: absolute; bottom: 30px; width: 64px; height: 64px; display: grid; place-items: center; font-size: 44px; z-index: 0; }
+  .numchip { margin-left: 6px; padding: 2px 8px; border-radius: 8px; border: 2px solid rgba(0,0,0,0.25); background: #fff; color: #06231F;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; cursor: pointer; }
+  /* Bitsy, the device */
+  .board { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px; border-radius: 18px; background: #0B1D2C;
+    border: 3px solid var(--line); width: 100%; max-width: 360px; }
+  .ledgrid { display: grid; grid-template-columns: repeat(5, 22px); gap: 5px; }
+  .led { width: 22px; height: 22px; border-radius: 5px; background: #1B3A52; }
+  .led.on { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+  .boardparts { display: flex; gap: 16px; font-size: 28px; }
+  .bpart { opacity: 0.35; }
+  .bpart.on { opacity: 1; animation: spinit 800ms linear infinite; }
+  @keyframes spinit { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+  .inputs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  /* three views of one table */
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .tab { padding: 8px 14px; border-radius: 12px; border: 2px solid var(--line); background: var(--card); color: var(--muted);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; }
+  .tab.on { color: var(--ink); border-color: var(--gold); }
+  .tab.seen::after { content: " \2713"; color: var(--good); }
+  .gval { font-weight: 800; }
+  .gbar { display: block; width: 100%; border-radius: 4px 4px 0 0; background: var(--teal); }
+  /* the spreadsheet */
+  .sheetwrap { width: 100%; overflow-x: auto; }
+  .sheet { border-collapse: collapse; margin: 0 auto; }
+  .sheet th { padding: 4px 6px; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; text-align: center; }
+  .sheet td { padding: 2px; }
+  .colhead { padding: 6px 14px; border-radius: 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink); font-weight: 800; }
+  .colhead.on { border-color: var(--gold); }
+  .cellbtn { min-width: 84px; height: 44px; padding: 4px 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 700; font-size: 16px; text-align: left; }
+  .cellbtn.on { border-color: var(--gold); }
+  .cellbtn.f-number, .cellbtn.f-currency { text-align: right; font-variant-numeric: tabular-nums; }
+  .cellbtn.f-date { color: var(--teal); }
+  /* the filter */
+  .filterrow { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 100%; }
+  .rec tr.hit .rowlab, .rec tr.hit .cell { border-color: var(--good); background: var(--good-soft); }
+  .rec tr.miss { opacity: 0.35; }
+  /* the cipher */
+  .alpha { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; max-width: 560px; }
+  .al { display: flex; flex-direction: column; align-items: center; width: 34px; padding: 3px 0; border-radius: 8px; border: 1px solid var(--line); background: var(--card); line-height: 1.1; }
+  .al b { font-size: 16px; }
+  .al small { font-size: 11px; color: var(--muted); }
+  .coderow { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .codecell { display: flex; flex-direction: column; align-items: center; min-width: 40px; padding: 6px 4px; border-radius: 10px; border: 2px solid var(--line);
+    font-weight: 800; font-size: 20px; background: var(--card); }
+  .codecell small { font-size: 14px; color: var(--muted); }
+  .codecell.done { border-color: var(--good); }
+  .codecell.done small { color: var(--good); }
+  .codecell.now { border-color: var(--gold); }
+  .keys { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 560px; }
+  .key { width: 38px; height: 40px; border-radius: 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink); font-weight: 800; font-size: 16px; }
+  .key.num { width: 42px; }
+  .key.wrong { border-color: var(--bad); animation: shake 360ms ease; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -4395,11 +4480,11 @@
     const b = BLOCKS[id] || { label: id, icon: "?", cat: "control" };
     return '<span class="block ' + b.cat + (extra || "") + '"><span class="bicon" aria-hidden="true">' + b.icon + "</span>" + esc(b.label) + "</span>";
   }
-  function blockBtn(id, attr) {
+  function blockBtn(id, attr, extra) {
     const b = BLOCKS[id] || { label: id, icon: "?", cat: "control" };
-    return '<button type="button" class="block ' + b.cat + '" ' + (attr || "") + '><span class="bicon" aria-hidden="true">' + b.icon + "</span>" + esc(b.label) + "</button>";
+    return '<button type="button" class="block ' + b.cat + (extra ? " " + extra : "") + '" ' + (attr || "") + '><span class="bicon" aria-hidden="true">' + b.icon + "</span>" + esc(b.label) + "</button>";
   }
-  function spriteStage(box, sprites) {
+  function spriteStage(box, sprites, opts) {
     /* One stage, one or more sprites. Stage 1 gives one; Stage 2's "plan the
        instructions for objects" gives two, side by side, and a program runs on
        the one the round names. Each sprite keeps its own position, size and
@@ -4412,14 +4497,25 @@
       return '<div class="sprite" id="' + box.id + 'sp' + k + '" style="left:calc(50% - 32px + ' + off + 'px)">' + esc(s) + "</div>" +
         '<div class="bubble" id="' + box.id + 'bb' + k + '" style="left:calc(50% + ' + off + 'px)" hidden></div>';
     }).join("");
+    const start = (opts && opts.start) || {};
     const st = sprites.map(() => ({ x: 0, scale: 1, spin: 0, hidden: false }));
     const sp = (k) => $(box.id + "sp" + k), bb = (k) => $(box.id + "bb" + k);
+    /* Stage 3: a marker on the ground at square x (the flower the cat must reach) */
+    function mark(x, glyph) {
+      const m = document.createElement("div");
+      m.className = "mark"; m.setAttribute("aria-hidden", "true"); m.textContent = glyph;
+      m.style.left = "calc(50% - 32px + " + (x * 64) + "px)";
+      box.appendChild(m);
+    }
     function paint(k, jump) {
       const s = st[k];
       sp(k).style.transform = "translateX(" + (s.x * 64) + "px) translateY(" + (jump ? -70 : 0) + "px) rotate(" + s.spin + "deg) scale(" + s.scale + ")";
       sp(k).style.opacity = s.hidden ? "0.15" : "1";
     }
-    function reset() { st.forEach((s, k) => { s.x = 0; s.scale = 1; s.spin = 0; s.hidden = false; bb(k).hidden = true; paint(k, false); }); }
+    /* reset returns every sprite to its START state - the origin unless the
+       round says the sprite was left somewhere else (3P.02: the point of a
+       go-home block at the top of a program) */
+    function reset() { st.forEach((s, k) => { s.x = start.x || 0; s.scale = start.scale || 1; s.spin = start.spin || 0; s.hidden = false; bb(k).hidden = true; paint(k, false); }); }
     function active(k) { sprites.forEach((_, j) => sp(j).classList.toggle("active", n > 1 && j === k)); }
     /* run one block on sprite k; resolves when its move is over */
     function run(id, k) {
@@ -4441,7 +4537,7 @@
       });
     }
     reset();
-    return { run, reset, active, state: st };
+    return { run, reset, active, mark, state: st };
   }
   /* THE REPEAT BLOCK (2P.03). A repeat block repeats the block AFTER it that
      many times; a repeat with nothing after it, or another repeat after it,
@@ -5033,7 +5129,7 @@
      ================================================================== */
 
   const scriptHtml = (ids, now, tappable) => '<div class="script">' + (ids.length ? ids.map((id, k) =>
-    tappable ? blockBtn(id, 'data-k="' + k + '"' + (k === now ? ' class="block ' + (BLOCKS[id] || {}).cat + ' now"' : "")) : blockHtml(id, k === now ? " now" : "")).join("")
+    tappable ? blockBtn(id, 'data-k="' + k + '"', k === now ? "now" : "") : blockHtml(id, k === now ? " now" : "")).join("")
     : '<span class="hint">Tap the blocks below to build the program</span>') + "</div>";
 
   /* ---- recreate an algorithm as a program, then run it (1P.02, 1P.05;
@@ -5067,7 +5163,7 @@
         (given ? "" : '<div class="palette">' + (o.blocks || Object.keys(BLOCKS)).map((id) => blockBtn(id, 'data-add="' + id + '"' + (running ? " disabled" : ""))).join("") + "</div>") +
         '<div class="bigbtns">' + (given ? "" : '<button type="button" class="big small ghost" id="' + el.stage + 'clear"' + (running || !script.length ? " disabled" : "") + ">Clear</button>") +
         '<button type="button" class="big small teal" id="' + el.stage + 'run"' + (running || !script.length || (given && !predicted) ? " disabled" : "") + '>&#9654; Run</button></div></div>';
-      sprite = spriteStage($(el.stage + "sp"), sprites);
+      sprite = spriteStage($(el.stage + "sp"), sprites, { start: rd.start });
       sprite.active(rd.object || 0);
       $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length;
       const clear = $(el.stage + "clear"), run = $(el.stage + "run");
@@ -5086,8 +5182,8 @@
         sayHere(o.finish, plain(rd.predict.ask));
       } else {
         const lead = sprites.length > 1 ? "Build the " + who() + "'s program: " : "Build this algorithm as a program: ";
-        $(el.ask).innerHTML = lead + "<b>" + esc(rd.algorithm.join(", ")) + "</b>." + (rd.mustRepeat ? " Use a <b>repeat</b> block." : "") + " Then press Run.";
-        sayHere(o.finish, lead + rd.algorithm.join(". ") + "." + (rd.mustRepeat ? " Use a repeat block." : "") + " Then press Run.");
+        $(el.ask).innerHTML = lead + "<b>" + esc(rd.algorithm.join(", ")) + "</b>." + (rd.mustRepeat ? " Use a <b>repeat</b> block." : "") + (rd.mustReset ? " The " + esc(who()) + " is not at the start: put a <b>go home</b> block first." : "") + " Then press Run.";
+        sayHere(o.finish, lead + rd.algorithm.join(". ") + "." + (rd.mustRepeat ? " Use a repeat block." : "") + (rd.mustReset ? " The " + who() + " is not at the start. Put a go home block first." : "") + " Then press Run.");
       }
     }
     function runIt() {
@@ -5118,6 +5214,13 @@
       }
       const want = expandProgram(rd.expect);
       const same = did.length === want.length && did.every((id, j) => id === want[j]);
+      if (rd.mustReset && script[0] !== "home") {
+        /* 3P.02: without the reset the moves may be right and the place wrong */
+        firstRun = false; SOUND.play("error", 0.3);
+        const line = "The " + who() + " started where the last program left it, so it ended in the wrong place. A program that resets its objects first - a go home block at the top - starts from the same place every time. Put go home first and run again.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        return;
+      }
       if (same && rd.mustRepeat && !usesRepeat(script)) {
         firstRun = false; SOUND.play("click", 0.3);
         const line = "It did the right thing, but the algorithm asked you to use a repeat block. Build it again with a repeat block.";
@@ -6147,6 +6250,905 @@
     });
     ONSHOW[o.finish] = (function () { let said = false; return () => { if (said) return; said = true; t0 = 0; }; })();
     draw();
+  }
+
+  /* ==================================================================
+     STAGE 3 - concise algorithms, the steps that repeat, what a change
+     does, machines with an input and an output, tidy programs, objects
+     that run at the same time, numbers inside blocks, a physical device,
+     three views of one table, a spreadsheet, a filter, a cipher.
+
+     The rule is unchanged: the child drives a machine that only does what
+     it is told, and every key the kit can compute it computes. The
+     functions in the first block are mirrored, name for name, in
+     _rules.py, so the builder and the gate check the same arithmetic the
+     page runs.
+     ================================================================== */
+
+  /* rules mirrored in _rules.py */
+  function ruleOutput(rule, x) {
+    const parts = String(rule).split(":"), name = parts[0], k = Number(parts[1] || 0);
+    if (name === "letters") return String(String(x).length);
+    const n = Number(x);
+    if (!Number.isFinite(n)) return null;
+    if (name === "double") return String(n * 2);
+    if (name === "half") return n % 2 === 0 ? String(n / 2) : null;
+    if (name === "add") return String(n + k);
+    if (name === "minus") return String(n - k);
+    if (name === "times") return String(n * k);
+    return null;
+  }
+  function walkEnd(program) {
+    let x = 0;
+    program.forEach((b) => { if (b.id === "right") x += Number(b.n); else if (b.id === "left") x -= Number(b.n); });
+    return x;
+  }
+  const codeWord = (word) => String(word).toLowerCase().split("").filter((c) => c >= "a" && c <= "z").map((c) => c.charCodeAt(0) - 96);
+  const decodeCode = (nums) => nums.map((n) => String.fromCharCode(96 + Number(n))).join("");
+  function rowMatches(row, spec) {
+    const v = row[spec.field], op = spec.op || "eq";
+    if (op === "gt") return Number(v) > Number(spec.value);
+    if (op === "lt") return Number(v) < Number(spec.value);
+    if (op === "ne") return String(v) !== String(spec.value);
+    return String(v) === String(spec.value);
+  }
+  const sameEffect = (a, b) => {
+    const ea = expandProgram(a).filter((x) => x !== "wait"), eb = expandProgram(b).filter((x) => x !== "wait");
+    return ea.length === eb.length && ea.every((x, i) => x === eb[i]);
+  };
+  const ALPHA = "abcdefghijklmnopqrstuvwxyz".split("");
+
+  /* paint a scene one step at a time, on a timer, into a box */
+  function paintScene(box, scene, ids, ms, then) {
+    let k = 0;
+    box.hidden = false;
+    const tick = () => {
+      box.innerHTML = SCENES[scene](ids.slice(0, k));
+      if (k < ids.length) { k++; SOUND.play("pop", 0.25); setTimeout(tick, ms || 520); }
+      else if (then) then();
+    };
+    tick();
+  }
+
+  /* ---- an efficient algorithm is concise (3CT.02; 3CT.01 as editing) --
+     The algorithm does its task, but with steps it does not need: a step
+     done twice, a step that does nothing for this task. The child taps
+     each wasteful step out. When only the needed steps are left the scene
+     runs them, so the shorter algorithm is SEEN to do the same job. */
+  function trimSteps(o) {
+    const el = o.el, steps = o.steps, cut = new Set();
+    const wasteful = steps.map((s, k) => (s.waste ? k : -1)).filter((k) => k >= 0);
+    let wrong = 0, lock = false;
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(o.task) + '</b>. ' + steps.length + ' steps.</p><ol class="algo tappable">' + steps.map((s, k) =>
+        '<li><button type="button" class="algostep' + (cut.has(k) ? " cut" : "") + '" data-k="' + k + '"' + (cut.has(k) || lock ? " disabled" : "") + '><span class="apic" aria-hidden="true">' + small(s.pic) + "</span>" + esc(s.label) + "</button></li>").join("") +
+        '</ol><div class="sim scenebox" id="' + el.stage + 'sc" hidden></div></div>';
+      $(el.score).textContent = (steps.length - cut.size) + " steps left" + (cut.size ? " · " + cut.size + " cut" : "") + " · " + (wasteful.length - cut.size) + " more to find";
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".algostep"); if (!b || lock) return;
+      const k = Number(b.dataset.k), s = steps[k];
+      if (s.waste) {
+        cut.add(k); SOUND.play("click", 0.4);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + s.waste; say(cheer() + " " + s.waste);
+        draw();
+        if (cut.size >= wasteful.length) {
+          lock = true; draw();
+          const kept = steps.filter((_, j) => !cut.has(j)).map((x) => x.id);
+          setTimeout(() => {
+            $(el.fb).className = "fb"; $(el.fb).textContent = "Now watch the short algorithm do the whole task.";
+            say("Now watch the short algorithm do the whole task.");
+            paintScene($(el.stage + "sc"), o.scene, kept, 560, () => {
+              SOUND.play("tada", 0.5);
+              const line = steps.length + " steps became " + kept.length + ", and the task still got done. " + o.done;
+              reportScore(o.finish, Math.max(0, wasteful.length - wrong), wasteful.length);
+              endStep(o, line);
+            });
+          }, 2200);
+        }
+      } else {
+        wrong++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const line = "That step is needed. " + (s.need || "Without it the task is not done.");
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    draw();
+  }
+
+  /* ---- the steps that repeat inside an everyday task (3CT.03) ----------
+     A task written out long-hand: some run of steps happens again and
+     again, back to back. The child taps every step of the FIRST time it
+     happens; the page folds all the repeats into one "repeat N times"
+     block, and then asks how many times. */
+  function loopSpot(o) {
+    const el = o.el, steps = o.steps, run = o.run, got = new Set();
+    const first = new Set(Array.from({ length: run.length }, (_, j) => run.start + j));
+    let wrong = 0, folded = false, lock = false;
+    function draw() {
+      let html;
+      if (!folded) html = '<ol class="algo tappable">' + steps.map((s, k) =>
+        '<li><button type="button" class="algostep' + (got.has(k) ? " lit" : "") + '" data-k="' + k + '"' + (got.has(k) || lock ? " disabled" : "") + '><span class="apic" aria-hidden="true">' + small(s.pic) + "</span>" + esc(s.label) + "</button></li>").join("") + "</ol>";
+      else {
+        const before = steps.slice(0, run.start), seg = steps.slice(run.start, run.start + run.length), after = steps.slice(run.start + run.length * run.times);
+        html = '<ol class="algo">' + before.map((s) => '<li><span class="apic" aria-hidden="true">' + small(s.pic) + "</span>" + esc(s.label) + "</li>").join("") +
+          '<li class="fold"><b>repeat ' + run.times + ' times:</b><ol class="algo inner">' + seg.map((s) => '<li><span class="apic" aria-hidden="true">' + small(s.pic) + "</span>" + esc(s.label) + "</li>").join("") + "</ol></li>" +
+          after.map((s) => '<li><span class="apic" aria-hidden="true">' + small(s.pic) + "</span>" + esc(s.label) + "</li>").join("") + "</ol>";
+      }
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(o.task) + '</b>. ' + (folded ? (before_len() + 1 + (steps.length - run.start - run.length * run.times)) + " steps written with a repeat." : steps.length + " steps written out long.") + "</p>" + html + "</div>";
+      $(el.score).textContent = folded ? "" : got.size + " of " + run.length + " repeating steps tapped";
+    }
+    const before_len = () => run.start;
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".algostep"); if (!b || lock || folded) return;
+      const k = Number(b.dataset.k);
+      if (first.has(k)) {
+        got.add(k); SOUND.play("click", 0.4); draw();
+        $(el.fb).className = "fb good"; $(el.fb).textContent = steps[k].label + " happens " + run.times + " times."; say(steps[k].label + " happens " + run.times + " times.");
+        if (got.size >= first.size) {
+          lock = true;
+          setTimeout(() => {
+            folded = true; draw(); SOUND.play("tada", 0.5);
+            const words = steps.slice(run.start, run.start + run.length).map((s) => s.label).join(", ");
+            const line = "Those steps repeat " + run.times + " times, so we can write them once: repeat " + run.times + " times, " + words + ".";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+            setTimeout(() => { $(el.fb).textContent = ""; askOnce(o, o.then, (ok) => { reportScore(o.finish, (ok ? 1 : 0) + Math.max(0, run.length - wrong), run.length + 1); endStep(o); }); }, 3600);
+          }, 1800);
+        }
+      } else {
+        wrong++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const later = k >= run.start + run.length && k < run.start + run.length * run.times;
+        const line = later ? "That is " + steps[k].label + " happening AGAIN. Tap the first time it happens." : steps[k].label + " happens once. Which steps happen again and again?";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    draw();
+  }
+
+  /* ---- predict what a change to an algorithm will do (3CT.05) ---------
+     Each round proposes ONE change to the same algorithm - swap two
+     steps, take one out, put one in, replace one - and asks what will
+     happen. The child answers, THEN the change is applied and the scene
+     paints the changed algorithm, so the prediction meets the outcome. */
+  function applyChange(steps, ch) {
+    const out = steps.slice();
+    if (ch.kind === "swap") { const t = out[ch.a]; out[ch.a] = out[ch.b]; out[ch.b] = t; }
+    else if (ch.kind === "remove") out.splice(ch.at, 1);
+    else if (ch.kind === "insert") out.splice(ch.at, 0, ch.step);
+    else if (ch.kind === "replace") out[ch.at] = ch.step;
+    return out;
+  }
+  function changeWords(steps, ch) {
+    const L = (k) => '"' + steps[k].label + '"';
+    if (ch.kind === "swap") return "swap step " + (ch.a + 1) + " (" + L(ch.a) + ") with step " + (ch.b + 1) + " (" + L(ch.b) + ")";
+    if (ch.kind === "remove") return "take out step " + (ch.at + 1) + " (" + L(ch.at) + ")";
+    if (ch.kind === "insert") return 'put "' + ch.step.label + '" in as step ' + (ch.at + 1);
+    return "change step " + (ch.at + 1) + " (" + L(ch.at) + ') to "' + ch.step.label + '"';
+  }
+  function whatIf(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, score = 0;
+    function draw(steps, changed) {
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">' + (changed ? "The changed algorithm:" : "The algorithm:") + "</p><div class=\"algo2\">" + algoList(steps, -1) +
+        '<div class="sim scenebox" id="' + el.stage + 'sc"' + (changed ? "" : " hidden") + "></div></div></div>";
+      $(el.score).textContent = "Change " + (r + 1) + " of " + rounds.length;
+    }
+    function start() {
+      const rd = rounds[r];
+      draw(o.steps, false);
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      const spec = { ask: "What if we <b>" + esc(changeWords(o.steps, rd.change)) + "</b>? " + rd.ask, opts: rd.opts, why: rd.why };
+      askOnce(o, spec, (ok) => {
+        if (ok) score++;
+        const changed = applyChange(o.steps, rd.change);
+        draw(changed, true);
+        $(el.ask).innerHTML = "Now watch the change happen.";
+        say("Now watch the change happen.");
+        paintScene($(el.stage + "sc"), o.scene, changed.map((s) => s.id), 520, () => {
+          r++;
+          setTimeout(() => {
+            if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You predicted " + score + " of " + rounds.length + " changes before they happened. " + o.done); }
+            else start();
+          }, 1800);
+        });
+      });
+    }
+    start();
+  }
+
+  /* ---- a machine with an input and an output (3CT.07, 3CT.08) ---------
+     First the child puts the machine's steps in order (an algorithm that
+     produces an output FROM an input). Then feeds it inputs and watches
+     the steps light up and the output come out. Then one question about
+     an input it has not tried; the key is computed by ruleOutput. */
+  function inOut(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, score = 0;
+    function machineHtml(rd, order, lit, input, output) {
+      return '<div class="machine2"><div class="slot in"><span class="slotlab">INPUT</span><span class="slotval">' + (input == null ? "?" : esc(input)) + "</span></div>" +
+        '<ol class="algo small">' + order.map((k, j) => '<li class="' + (lit === j ? "now" : lit > j ? "done" : "") + '">' + esc(rd.steps[k]) + "</li>").join("") + "</ol>" +
+        '<div class="slot out"><span class="slotlab">OUTPUT</span><span class="slotval">' + (output == null ? "?" : esc(output)) + "</span></div></div>";
+    }
+    function build() {
+      const rd = rounds[r], placed = [];
+      const pool = shuffle(rd.steps.map((_, k) => k));
+      let wrong = 0;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = ""; $(el.ch).className = "choices";
+      function draw() {
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="goal"><b>' + esc(rd.name) + "</b></p>" + machineHtml(rd, placed, -1, null, null) +
+          '<p class="sub">Tap the steps in order to build the machine.</p><div class="cardsgrid">' + pool.filter((k) => !placed.includes(k)).map((k) => '<button type="button" class="tapcard" data-k="' + k + '">' + esc(rd.steps[k]) + "</button>").join("") + "</div></div>";
+        $(el.score).textContent = "Machine " + (r + 1) + " of " + rounds.length + " · " + placed.length + " of " + rd.steps.length + " steps";
+      }
+      $(el.ask).innerHTML = "Build <b>" + esc(rd.name) + "</b>: tap its steps in order. Then feed it inputs.";
+      sayHere(o.finish, "Build " + rd.name + ". Tap its steps in order. Then feed it inputs.");
+      const handler = (e) => {
+        const b = e.target.closest(".tapcard[data-k]"); if (!b) return;
+        const k = Number(b.dataset.k);
+        if (k === placed.length) {
+          placed.push(k); SOUND.play("pop", 0.35); draw();
+          if (placed.length === rd.steps.length) {
+            $(el.stage).removeEventListener("click", handler);
+            if (!wrong) score++;
+            const line = cheer() + " The machine is built. Now give it an input.";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+            setTimeout(feed, 2000);
+          }
+        } else {
+          wrong++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+          const line = k < placed.length ? "That step is already in." : "Not yet. Something comes before that.";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          setTimeout(() => b.classList.remove("wrong"), 700);
+        }
+      };
+      $(el.stage).addEventListener("click", handler);
+      draw();
+    }
+    function feed() {
+      const rd = rounds[r], tried = new Set(), order = rd.steps.map((_, k) => k);
+      let lock = false;
+      function draw(lit, input, output) {
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="goal"><b>' + esc(rd.name) + "</b></p>" + machineHtml(rd, order, lit, input, output) +
+          '<div class="chips">' + rd.inputs.map((x) => '<button type="button" class="chip' + (tried.has(String(x)) ? " tried" : "") + '" data-in="' + esc(x) + '"' + (lock ? " disabled" : "") + ">" + esc(x) + "</button>").join("") + "</div></div>";
+        $(el.score).textContent = "Machine " + (r + 1) + " of " + rounds.length + " · " + tried.size + " of " + rd.inputs.length + " inputs tried";
+      }
+      $(el.ask).innerHTML = "Tap an input and watch what comes out.";
+      sayHere(o.finish, "Tap an input and watch what comes out.");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      const handler = (e) => {
+        const b = e.target.closest(".chip[data-in]"); if (!b || lock) return;
+        lock = true;
+        const x = b.dataset.in, out = ruleOutput(rd.rule, x);
+        let j = 0;
+        const step = () => {
+          draw(j, x, j >= rd.steps.length ? out : null);
+          if (j < rd.steps.length) { SOUND.play("click", 0.3); j++; setTimeout(step, 520); }
+          else {
+            SOUND.play("ding", 0.4); tried.add(String(x)); lock = false; draw(rd.steps.length, x, out);
+            const line = "Input " + x + ". Output " + out + ".";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+            reportAttempt(o.finish, tried.size, rd.inputs.length, "inputs");
+            if (tried.size >= rd.inputs.length) {
+              $(el.stage).removeEventListener("click", handler);
+              setTimeout(() => {
+                $(el.fb).textContent = "";
+                askOnce(o, { ask: rd.then.ask, opts: rd.then.opts, why: rd.then.why }, (ok) => {
+                  if (ok) score++;
+                  r++;
+                  if (r >= rounds.length) { reportScore(o.finish, score, rounds.length * 2); endStep(o, "You built " + rounds.length + " machines and worked out their outputs. " + o.done); }
+                  else build();
+                });
+              }, 2200);
+            }
+          }
+        };
+        step();
+      };
+      $(el.stage).addEventListener("click", handler);
+      draw(-1, null, null);
+    }
+    build();
+  }
+
+  /* ---- tidy a program: take out what does nothing, fold what repeats
+     (3P.01). The program works, but it is long: a wait block that does
+     nothing, the same block three times in a row. The child taps a block
+     and chooses to delete it or fold the run into a repeat block, then
+     presses Run: the cat must do exactly what it did before, in fewer
+     blocks. sameEffect() decides, mirrored in _rules.py. */
+  function tidyProgram(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, script = [], picked = -1, running = false, score = 0, firstRun = true, sprite = null;
+    const round = () => rounds[r];
+    const runOf = (k) => { let n = 1; while (script[k + n] === script[k]) n++; return n; };
+    function draw(now) {
+      const rd = round();
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">It should: <b>' + esc(rd.goal) + "</b>. It does, in " + script.length + " blocks. Make it shorter.</p>" +
+        '<div class="spritestage" id="' + el.stage + 'sp"></div>' +
+        '<div class="script">' + script.map((id, k) => blockBtn(id, 'data-k="' + k + '"' + (running ? " disabled" : ""), k === picked || k === now ? "now" : "")).join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.stage + 'undo"' + (running ? " disabled" : "") + '>Start again</button><button type="button" class="big small teal" id="' + el.stage + 'run"' + (running ? " disabled" : "") + ">&#9654; Run</button></div></div>";
+      sprite = spriteStage($(el.stage + "sp"), o.sprite || "\u{1F431}");
+      $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length + " · " + script.length + " blocks (was " + rd.program.length + ")";
+      $(el.stage + "run").addEventListener("click", runIt);
+      $(el.stage + "undo").addEventListener("click", () => { script = rd.program.slice(); picked = -1; menu(); draw(-1); });
+    }
+    function menu() {
+      $(el.ch).className = "choices";
+      if (picked < 0) { $(el.ch).innerHTML = ""; return; }
+      const n = runOf(picked), id = script[picked];
+      $(el.ch).innerHTML = '<button type="button" class="choice text" data-do="delete">Delete this ' + esc((BLOCKS[id] || {}).label || id) + " block</button>" +
+        (n >= 2 && n <= 4 && !REPEAT[id] ? '<button type="button" class="choice text" data-do="fold">Fold these ' + n + " into a repeat block</button>" : "") +
+        '<button type="button" class="choice text ghost" data-do="cancel">Leave it</button>';
+    }
+    function start() {
+      script = round().program.slice(); picked = -1; running = false; firstRun = true;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; menu(); draw(-1);
+      $(el.ask).innerHTML = "Tap a block to delete it or fold a run of the same block into a <b>repeat</b>. Then press <b>Run</b>.";
+      sayHere(o.finish, "It should " + round().goal + ". It does, but it is long. Tap a block to delete it, or fold a run of the same block into a repeat. Then press Run.");
+    }
+    function runIt() {
+      if (running || !script.length) return;
+      running = true; picked = -1; menu(); sprite.reset(); draw(-1);
+      const moves = expandProgram(script);
+      const owner = []; for (let i = 0, m = 0; i < script.length; i++) { const n = REPEAT[script[i]]; if (n) { const next = script[i + 1]; if (next && !REPEAT[next]) { for (let j = 0; j < n; j++) owner[m++] = i; i++; } } else owner[m++] = i; }
+      let i = 0;
+      const step = () => {
+        if (i >= moves.length) return finished();
+        draw(owner[i]);
+        sprite.run(moves[i]).then(() => { i++; step(); });
+      };
+      setTimeout(step, 300);
+    }
+    function finished() {
+      const rd = round();
+      running = false; draw(-1);
+      const same = sameEffect(script, rd.program), short = script.length <= rd.expect.length;
+      if (same && short) {
+        if (firstRun) score++;
+        SOUND.play("tada", 0.5);
+        const line = cheer() + " " + rd.program.length + " blocks became " + script.length + ", and the cat did exactly the same thing: " + runWords(expandProgram(script).filter((x) => x !== "wait")) + ".";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
+        r++;
+        setTimeout(() => {
+          if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You made " + rounds.length + " programs shorter without changing what they do. " + o.done); }
+          else start();
+        }, 3400);
+      } else if (same) {
+        firstRun = false; SOUND.play("click", 0.3);
+        const line = "It still does the same thing, but " + script.length + " blocks can be fewer. It can be done in " + rd.expect.length + ". Look for a block that does nothing, or a run of the same block.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      } else {
+        firstRun = false; SOUND.play("error", 0.3);
+        const line = "Now it does something different: " + runWords(expandProgram(script).filter((x) => x !== "wait")) + ". A tidy program must do the SAME thing. Press Start again.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      if (running) return;
+      const b = e.target.closest(".script [data-k]"); if (!b) return;
+      picked = Number(b.dataset.k); SOUND.play("click", 0.3); menu(); draw(-1);
+      $(el.fb).className = "fb"; $(el.fb).textContent = "Block " + (picked + 1) + ": " + ((BLOCKS[script[picked]] || {}).label || script[picked]) + ". What shall we do with it?";
+    });
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-do]"); if (!b || running || picked < 0) return;
+      const what = b.dataset.do;
+      if (what === "delete") { const id = script[picked]; script.splice(picked, 1); SOUND.play("pop", 0.3); $(el.fb).className = "fb"; $(el.fb).textContent = "Deleted " + ((BLOCKS[id] || {}).label || id) + ". " + script.length + " blocks now. Run it to test."; say($(el.fb).textContent); }
+      else if (what === "fold") { const n = runOf(picked), id = script[picked]; script.splice(picked, n, "repeat" + n, id); SOUND.play("whoosh", 0.4); $(el.fb).className = "fb"; $(el.fb).textContent = n + " " + ((BLOCKS[id] || {}).label || id) + " blocks folded into repeat " + n + " times. Run it to test."; say($(el.fb).textContent); }
+      picked = -1; menu(); draw(-1);
+    });
+    start();
+  }
+
+  /* ---- more than one algorithm running at the same time (3P.03), with
+     more than one object, one of them static (3P.04). Every object has
+     its own script; the child builds each one (tabs), then presses Run
+     and all of them run AT ONCE - the cat's first block and the dog's
+     first block in the same beat. A static object (a tree, a sun) gets
+     look blocks only: it can say and grow, it cannot move. */
+  function parallelProgram(o) {
+    const el = o.el, rounds = o.rounds, sprites = o.sprites, names = o.spriteNames, statics = new Set(o.static || []);
+    let r = 0, scripts = [], active = 0, running = false, firstRun = true, score = 0, sprite = null;
+    const round = () => rounds[r];
+    const palette = (k) => statics.has(k) ? (o.staticBlocks || ["say", "grow", "shrink", "hide", "wait"]) : (o.blocks || Object.keys(BLOCKS));
+    function draw(nows) {
+      const rd = round();
+      $(el.stage).innerHTML = '<div class="stagewide">' +
+        '<div class="spritestage" id="' + el.stage + 'sp"></div>' +
+        '<div class="objtabs">' + sprites.map((s, k) => '<button type="button" class="objtab' + (k === active ? " on" : "") + (statics.has(k) ? " static" : "") + '" data-obj="' + k + '"' + (running ? " disabled" : "") + '><span aria-hidden="true">' + esc(s) + "</span> " + esc(names[k]) + (statics.has(k) ? " (static)" : "") + "</button>").join("") + "</div>" +
+        '<p class="goal">The <b>' + esc(names[active]) + "</b>'s algorithm: <b>" + esc(rd.scripts[active].algorithm.join(", ")) + "</b></p>" +
+        scriptHtml(scripts[active], nows ? nows[active] : -1, !running) +
+        '<div class="palette">' + palette(active).map((id) => blockBtn(id, 'data-add="' + id + '"' + (running ? " disabled" : ""))).join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.stage + 'clear"' + (running || !scripts[active].length ? " disabled" : "") + '>Clear</button>' +
+        '<button type="button" class="big small teal" id="' + el.stage + 'run"' + (running || scripts.every((s) => !s.length) ? " disabled" : "") + ">&#9654; Run all at once</button></div></div>";
+      sprite = spriteStage($(el.stage + "sp"), sprites);
+      sprites.forEach((_, k) => { if (statics.has(k)) $(el.stage + "spsp" + k).classList.add("static"); });
+      $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length + " · " + sprites.map((s, k) => names[k] + " " + scripts[k].length).join(" · ");
+      $(el.stage + "clear").addEventListener("click", () => { scripts[active] = []; draw(); });
+      $(el.stage + "run").addEventListener("click", runIt);
+    }
+    function start() {
+      scripts = sprites.map(() => []); active = 0; running = false; firstRun = true;
+      $(el.ch).innerHTML = ""; $(el.ch).className = "choices"; $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      draw();
+      $(el.ask).innerHTML = "Build a program for <b>each</b> object (tap its tab), then press <b>Run all at once</b>.";
+      sayHere(o.finish, "Build a program for each object. Tap an object's tab to see its algorithm. Then press Run all at once.");
+    }
+    function runIt() {
+      if (running) return;
+      running = true; sprite.reset();
+      const moves = scripts.map((s) => expandProgram(s)), longest = Math.max.apply(null, moves.map((m) => m.length));
+      const owners = scripts.map((s) => { const own = []; for (let i = 0, m = 0; i < s.length; i++) { const n = REPEAT[s[i]]; if (n) { const next = s[i + 1]; if (next && !REPEAT[next]) { for (let j = 0; j < n; j++) own[m++] = i; i++; } } else own[m++] = i; } return own; });
+      let i = 0;
+      const beat = () => {
+        if (i >= longest) return finished();
+        draw(owners.map((own, k) => (i < moves[k].length ? own[i] : -1)));
+        Promise.all(moves.map((m, k) => (i < m.length ? sprite.run(m[i], k) : wait(720)))).then(() => { i++; beat(); });
+      };
+      draw(); setTimeout(beat, 300);
+    }
+    function finished() {
+      const rd = round();
+      running = false; draw();
+      const ok = sprites.map((_, k) => { const did = expandProgram(scripts[k]), want = expandProgram(rd.scripts[k].expect); return did.length === want.length && did.every((x, j) => x === want[j]); });
+      if (ok.every(Boolean)) {
+        if (firstRun) score++;
+        SOUND.play("tada", 0.5);
+        const line = cheer() + " " + sprites.map((_, k) => "The " + names[k] + " " + (expandProgram(scripts[k]).length ? runWords(expandProgram(scripts[k])) : "stayed still")).join(", while ") + " - all at the same time.";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
+        r++;
+        setTimeout(() => {
+          if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You ran " + sprites.length + " programs at once, " + rounds.length + " times. " + o.done); }
+          else start();
+        }, 3600);
+      } else {
+        firstRun = false; SOUND.play("error", 0.3);
+        const bad = sprites.map((_, k) => k).filter((k) => !ok[k]);
+        const line = "Not yet. " + bad.map((k) => "The " + names[k] + "'s algorithm says " + rd.scripts[k].algorithm.join(", ").toLowerCase() + (scripts[k].length ? ", but its program made it " + runWords(expandProgram(scripts[k])) : ", but it has no program")).join(". ") + ". Fix it and run again.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      if (running) return;
+      const tab = e.target.closest("[data-obj]");
+      if (tab) { active = Number(tab.dataset.obj); SOUND.play("click", 0.3); draw(); sprite.active(active); return; }
+      const add = e.target.closest("[data-add]");
+      if (add) { scripts[active].push(add.dataset.add); SOUND.play("click", 0.3); draw(); return; }
+      const placed = e.target.closest(".script [data-k]");
+      if (placed) { scripts[active].splice(Number(placed.dataset.k), 1); SOUND.play("pop", 0.3); draw(); }
+    });
+    start();
+  }
+
+  /* ---- change a number inside a block (3P.05) --------------------------
+     The program is given and cannot be re-ordered; each move block has a
+     NUMBER in it. The cat must stop exactly on the flower. Tap a number
+     to change it, run, read where the cat stopped, change again. The
+     end square is computed by walkEnd(), mirrored in _rules.py. */
+  function tweakProgram(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, program = [], running = false, firstRun = true, score = 0, sprite = null;
+    const round = () => rounds[r];
+    function draw(now) {
+      const rd = round();
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">We want: <b>' + esc(rd.goal) + "</b></p>" +
+        '<div class="spritestage" id="' + el.stage + 'sp"></div>' +
+        '<div class="script">' + program.map((b, k) => '<span class="block ' + (BLOCKS[b.id] || {}).cat + (k === now ? " now" : "") + '"><span class="bicon" aria-hidden="true">' + (BLOCKS[b.id] || {}).icon + "</span>" + esc((BLOCKS[b.id] || {}).label) +
+          (b.id === "jump" ? "" : ' <button type="button" class="numchip" data-k="' + k + '" aria-label="' + esc((BLOCKS[b.id] || {}).label) + " " + b.n + ' squares; tap to change"' + (running ? " disabled" : "") + ">&times; " + b.n + "</button>") + "</span>").join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'run"' + (running ? " disabled" : "") + ">&#9654; Run</button></div></div>";
+      sprite = spriteStage($(el.stage + "sp"), o.sprite || "\u{1F431}");
+      sprite.mark(rd.target, rd.targetPic || "\u{1F33C}");
+      $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length + " · the flower is " + rd.target + " squares along";
+      $(el.stage + "run").addEventListener("click", runIt);
+    }
+    function start() {
+      program = round().program.map((b) => Object.assign({}, b)); running = false; firstRun = true;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      draw(-1);
+      $(el.ask).innerHTML = "Tap a <b>number</b> to change it. Make the cat stop on the flower, then press <b>Run</b>.";
+      sayHere(o.finish, "We want the cat to " + round().goal + ". Tap a number in a block to change it, then press Run.");
+    }
+    function runIt() {
+      if (running) return;
+      running = true; sprite.reset(); draw(-1);
+      const moves = [], owner = [];
+      program.forEach((b, k) => { const n = b.id === "jump" ? 1 : Number(b.n); for (let j = 0; j < n; j++) { moves.push(b.id); owner.push(k); } });
+      let i = 0;
+      const step = () => {
+        if (i >= moves.length) return finished();
+        draw(owner[i]);
+        sprite.run(moves[i]).then(() => { i++; step(); });
+      };
+      setTimeout(step, 300);
+    }
+    function finished() {
+      const rd = round(), end = walkEnd(program);
+      running = false; draw(-1);
+      if (end === rd.target) {
+        if (firstRun) score++;
+        SOUND.play("tada", 0.5);
+        const line = cheer() + " The cat stopped right on the flower, " + rd.target + " squares along. Changing a number inside a block changed what the program did.";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
+        r++;
+        setTimeout(() => {
+          if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You changed the numbers in " + rounds.length + " programs to hit the target. " + o.done); }
+          else start();
+        }, 3400);
+      } else {
+        firstRun = false; SOUND.play("error", 0.3);
+        const line = "The cat stopped " + end + " squares along. The flower is at " + rd.target + ". " + (end < rd.target ? "It needs to go further: make a number bigger." : "It went too far: make a number smaller.") + " Then run again.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".numchip"); if (!b || running) return;
+      const k = Number(b.dataset.k);
+      program[k].n = (Number(program[k].n) % 4) + 1; SOUND.play("click", 0.3); draw(-1);
+      $(el.fb).className = "fb"; $(el.fb).textContent = (BLOCKS[program[k].id] || {}).label + " is now " + program[k].n + ". Run it to see.";
+    });
+    start();
+  }
+
+  /* ---- a physical computing device (3P.06, 3P.10, 3CS.05) ---------------
+     Bitsy: a small board with a 5-by-5 light grid, a speaker, a motor and
+     a bell, and three INPUTS on it - button A, a shake, a clap. A program
+     starts with a "when ..." hat block naming its input, then output
+     blocks. The child builds it, then presses the input on the board:
+     only the input the hat names makes the outputs happen. */
+  const DEVICE_BLOCKS = {
+    whenA: { label: "when button A is pressed", icon: "\u{1F170}️", cat: "hat", input: "A" },
+    whenShake: { label: "when it is shaken", icon: "\u{1FAE8}", cat: "hat", input: "shake" },
+    whenClap: { label: "when it hears a clap", icon: "\u{1F44F}", cat: "hat", input: "clap" },
+    heart: { label: "show a heart", icon: "❤️", cat: "out" },
+    smile: { label: "show a smile", icon: "\u{1F642}", cat: "out" },
+    light: { label: "all lights on", icon: "\u{1F4A1}", cat: "out" },
+    dark: { label: "all lights off", icon: "⬛", cat: "out" },
+    beep: { label: "beep", icon: "\u{1F50A}", cat: "out" },
+    motor: { label: "turn the motor", icon: "⚙️", cat: "out" },
+    bell: { label: "ring the bell", icon: "\u{1F514}", cat: "out" },
+  };
+  const LED = {
+    heart: ["01010", "11111", "11111", "01110", "00100"],
+    smile: ["00000", "01010", "00000", "10001", "01110"],
+    light: ["11111", "11111", "11111", "11111", "11111"],
+    dark: ["00000", "00000", "00000", "00000", "00000"],
+  };
+  const devBlock = (id, attr) => { const b = DEVICE_BLOCKS[id]; return '<button type="button" class="block ' + (b.cat === "hat" ? "control" : "look") + '" ' + (attr || "") + '><span class="bicon" aria-hidden="true">' + b.icon + "</span>" + esc(b.label) + "</button>"; };
+  function deviceProgram(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, script = [], running = false, firstRun = true, score = 0, leds = LED.dark, motorOn = false, bellOn = false;
+    const round = () => rounds[r];
+    const hatOf = (s) => (s.length && DEVICE_BLOCKS[s[0]] && DEVICE_BLOCKS[s[0]].cat === "hat" ? DEVICE_BLOCKS[s[0]].input : null);
+    function board() {
+      return '<div class="board"><div class="ledgrid" role="img" aria-label="Bitsy\'s lights">' + leds.map((row) => row.split("").map((c) => '<i class="led' + (c === "1" ? " on" : "") + '"></i>').join("")).join("") + "</div>" +
+        '<div class="boardparts"><span class="bpart' + (motorOn ? " on" : "") + '" aria-hidden="true">⚙️</span><span class="bpart' + (bellOn ? " on" : "") + '" aria-hidden="true">\u{1F514}</span></div>' +
+        '<div class="inputs"><button type="button" class="big small" data-in="A"' + (running ? " disabled" : "") + '>\u{1F170}️ Press A</button><button type="button" class="big small" data-in="shake"' + (running ? " disabled" : "") + '>\u{1FAE8} Shake it</button><button type="button" class="big small" data-in="clap"' + (running ? " disabled" : "") + '>\u{1F44F} Clap</button></div></div>';
+    }
+    function draw(now) {
+      const rd = round();
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The algorithm: <b>' + esc(rd.algorithm.join(", ")) + "</b></p>" + board() +
+        '<div class="script">' + (script.length ? script.map((id, k) => devBlock(id, 'data-k="' + k + '"' + (running ? " disabled" : ""), k === now)).join("") : '<span class="hint">Start with a "when" block, then the outputs</span>') + "</div>" +
+        '<div class="palette">' + (o.blocks || Object.keys(DEVICE_BLOCKS)).map((id) => devBlock(id, 'data-add="' + id + '"' + (running ? " disabled" : ""))).join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.stage + 'clear"' + (running || !script.length ? " disabled" : "") + ">Clear</button></div></div>";
+      if (now >= 0) { const b = $(el.stage).querySelectorAll(".script .block")[now]; if (b) b.classList.add("now"); }
+      $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length;
+      $(el.stage + "clear").addEventListener("click", () => { script = []; draw(-1); });
+    }
+    function start() {
+      script = []; running = false; firstRun = true; leds = LED.dark; motorOn = false; bellOn = false;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      draw(-1);
+      $(el.ask).innerHTML = "Build the program: a <b>when</b> block first, then the outputs. Then press that input on the board.";
+      sayHere(o.finish, "Build the program. A when block first, then the outputs. Then press that input on the board to run it.");
+    }
+    function trigger(input) {
+      if (running) return;
+      const hat = hatOf(script);
+      if (!script.length) { const line = "There is no program yet. Build it first."; $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); return; }
+      if (!hat) { const line = "The program has no when block, so nothing can start it. Put a when block first."; $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); SOUND.play("error", 0.3); firstRun = false; return; }
+      if (hat !== input) { const line = "Nothing happened. The program is waiting for " + DEVICE_BLOCKS[script[0]].label.replace("when ", "") + ", not that."; $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); SOUND.play("click", 0.3); return; }
+      running = true; leds = LED.dark; motorOn = false; bellOn = false; draw(0);
+      let i = 1;
+      const step = () => {
+        if (i >= script.length) return finished();
+        const id = script[i];
+        if (LED[id]) leds = LED[id];
+        if (id === "beep") SOUND.play("beep", 0.5);
+        if (id === "motor") { motorOn = true; SOUND.play("robot", 0.4); }
+        if (id === "bell") { bellOn = true; SOUND.play("bell", 0.5); }
+        draw(i); i++;
+        setTimeout(step, 800);
+      };
+      SOUND.play("click", 0.3); setTimeout(step, 400);
+    }
+    function finished() {
+      const rd = round();
+      running = false; draw(-1);
+      const same = script.length === rd.expect.length && script.every((id, k) => id === rd.expect[k]);
+      if (same) {
+        if (firstRun) score++;
+        SOUND.play("tada", 0.5);
+        const line = cheer() + " " + DEVICE_BLOCKS[script[0]].label.replace(/^when /, "When ") + ", Bitsy did: " + script.slice(1).map((id) => DEVICE_BLOCKS[id].label).join(", ") + ". An input made an output.";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
+        r++;
+        setTimeout(() => {
+          if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You programmed Bitsy " + rounds.length + " times: an input in, outputs out. " + o.done); }
+          else start();
+        }, 3400);
+      } else {
+        firstRun = false; SOUND.play("error", 0.3);
+        const line = "Bitsy did " + script.slice(1).map((id) => DEVICE_BLOCKS[id].label).join(", ") + ". The algorithm says " + rd.algorithm.join(", ").toLowerCase() + ". Change the blocks and try the input again.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      if (running) return;
+      const inp = e.target.closest("[data-in]"); if (inp) { trigger(inp.dataset.in); return; }
+      const add = e.target.closest("[data-add]");
+      if (add) {
+        const id = add.dataset.add;
+        if (DEVICE_BLOCKS[id].cat === "hat" && script.length) { const line = "A when block goes first, before the outputs. Clear and start with it."; $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); SOUND.play("error", 0.3); return; }
+        script.push(id); SOUND.play("click", 0.3); draw(-1); return;
+      }
+      const placed = e.target.closest(".script [data-k]");
+      if (placed) { script.splice(Number(placed.dataset.k), 1); SOUND.play("pop", 0.3); draw(-1); }
+    });
+    start();
+  }
+
+  /* ---- three views of the same data (3MD.02) -----------------------------
+     A table, a bar chart and a pictogram of ONE set of counts. The child
+     opens each view, then answers questions the data can answer (keys
+     computed by table_answer in the builder and the gate), and one
+     question about which view showed it best. */
+  function dataViews(o) {
+    const el = o.el, cols = o.columns, seen = new Set(), maxV = Math.max.apply(null, cols.map((c) => c.value));
+    let view = "table", qi = 0, right = 0, phase = "look";
+    function viewHtml() {
+      if (view === "table") return '<table class="rec small tally"><caption>' + esc(o.title) + "</caption><thead><tr><th>" + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
+        cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + "</span></td></tr>").join("") + "</tbody></table>";
+      if (view === "bar") return '<div class="graph" role="img" aria-label="A bar chart: ' + esc(cols.map((c) => c.label + " " + c.value).join(", ")) + '">' + cols.map((c) =>
+        '<div class="gcol"><span class="gval">' + c.value + '</span><div class="gstack" style="height:' + (maxV * 22 + 6) + 'px"><i class="gbar" style="height:' + (c.value * 22) + 'px"></i></div><span class="glab">' + small(c.pic) + "<br>" + esc(c.label) + "</span></div>").join("") + "</div>";
+      return '<table class="rec small tally picto2"><caption>' + esc(o.title) + " (one picture = one)</caption><tbody>" +
+        cols.map((c) => '<tr><td><span class="rowlab">' + esc(c.label) + '</span></td><td><span class="cell filled"><span class="picto" aria-hidden="true">' + small(c.pic).repeat(c.value) + "</span></span></td></tr>").join("") + "</tbody></table>";
+    }
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="tabs">' + [["table", "Table"], ["bar", "Bar chart"], ["picto", "Pictogram"]].map(([id, lab]) =>
+        '<button type="button" class="tab' + (view === id ? " on" : "") + (seen.has(id) ? " seen" : "") + '" data-view="' + id + '">' + lab + "</button>").join("") + "</div>" + viewHtml() + "</div>";
+      $(el.score).textContent = phase === "look" ? seen.size + " of 3 views seen" : "Question " + (qi + 1) + " of " + o.questions.length;
+    }
+    function ask() {
+      phase = "ask"; draw();
+      const q = o.questions[qi];
+      askOnce(o, { ask: q.ask + " <span class=\"dim\">(use any view)</span>", opts: q.opts, why: q.why }, (ok) => {
+        if (ok) right++;
+        qi++;
+        if (qi < o.questions.length) ask();
+        else {
+          reportScore(o.finish, right, o.questions.length);
+          endStep(o, "You read the same data three ways and answered " + right + " of " + o.questions.length + ". " + o.done);
+        }
+      });
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const t = e.target.closest("[data-view]"); if (!t) return;
+      view = t.dataset.view; seen.add(view); SOUND.play("click", 0.3); draw();
+      if (phase === "look") {
+        const line = { table: "The table: every count as a number.", bar: "The bar chart: the tallest bar is the biggest count, at a glance.", picto: "The pictogram: one picture for each one, so you can count them." }[view];
+        $(el.fb).className = "fb"; $(el.fb).textContent = line; say(line);
+        reportAttempt(o.finish, seen.size, 3, "views");
+        if (seen.size >= 3) setTimeout(() => { $(el.fb).textContent = ""; ask(); }, 2400);
+      }
+    });
+    draw();
+    ONSHOW[o.finish] = (function () { let said = false; return () => { if (said) return; said = true; afterVoice(() => sayHere(o.finish, "Open all three views: the table, the bar chart and the pictogram.")); }; })();
+  }
+
+  /* ---- a spreadsheet: rows, columns, cells (3MD.04), formats (3MD.05) --
+     A small grid with lettered columns and numbered rows. Tasks: tap the
+     cell that holds a thing; put a value into a named cell; format a
+     column or a cell as text, number, date or currency, and see the
+     display change. Nothing here is typed: values come from chips. */
+  const FORMATS = { text: "Text", number: "Number", date: "Date", currency: "Currency" };
+  function fmtValue(v, f) {
+    if (v == null || v === "") return "";
+    if (f === "currency" && Number.isFinite(Number(v))) return "£" + Number(v).toFixed(2);
+    if (f === "date") return "\u{1F4C5} " + esc(v);
+    return esc(v);
+  }
+  function spreadsheet(o) {
+    const el = o.el, cols = o.cols, nrows = o.rows, tasks = o.tasks;
+    const cells = Object.assign({}, o.cells), formats = Object.assign({}, o.formats || {});
+    let t = 0, right = 0, picked = null, lock = false, wrongHere = false;
+    const fmtOf = (name) => formats[name] || formats[name.replace(/\d+$/, "")] || "text";
+    function draw() {
+      let html = '<div class="sheetwrap"><table class="sheet" role="grid" aria-label="A spreadsheet"><thead><tr><th></th>' + cols.map((c) => '<th><button type="button" class="colhead' + (picked === c ? " on" : "") + '" data-col="' + c + '">' + c + "</button></th>").join("") + "</tr></thead><tbody>";
+      for (let rI = 1; rI <= nrows; rI++) {
+        html += "<tr><th>" + rI + "</th>" + cols.map((c) => { const name = c + rI, f = fmtOf(name); return '<td><button type="button" class="cellbtn f-' + f + (picked === name ? " on" : "") + '" data-cell="' + name + '" aria-label="cell ' + name + '">' + fmtValue(cells[name], f) + "</button></td>"; }).join("") + "</tr>";
+      }
+      $(el.stage).innerHTML = '<div class="stagewide">' + html + "</tbody></table></div></div>";
+      $(el.score).textContent = t < tasks.length ? "Task " + (t + 1) + " of " + tasks.length : "";
+    }
+    function chips() {
+      const task = tasks[t];
+      $(el.ch).className = "choices";
+      if (task.kind === "enter" && picked === task.cell) $(el.ch).innerHTML = '<span class="dim">Put in:</span>' + shuffle(task.values).map((v) => '<button type="button" class="chip" data-val="' + esc(v) + '">' + esc(v) + "</button>").join("");
+      else if (task.kind === "format" && picked === task.target) $(el.ch).innerHTML = '<span class="dim">Format as:</span>' + Object.keys(FORMATS).map((f) => '<button type="button" class="chip" data-fmt="' + f + '">' + FORMATS[f] + "</button>").join("");
+      else $(el.ch).innerHTML = "";
+    }
+    function ask() {
+      const task = tasks[t];
+      picked = null; lock = false; wrongHere = false; draw(); chips();
+      $(el.ask).innerHTML = task.ask;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      sayHere(o.finish, plain(task.ask));
+    }
+    function good(line) {
+      lock = true; if (!wrongHere) right++;
+      SOUND.play("ding", 0.4); draw(); chips();
+      $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + line; say(cheer() + " " + line);
+      t++;
+      setTimeout(() => {
+        if (t >= tasks.length) { reportScore(o.finish, right, tasks.length); endStep(o, "You found, filled and formatted cells in a spreadsheet. " + o.done); }
+        else ask();
+      }, 2800);
+    }
+    function bad(line) { wrongHere = true; SOUND.play("error", 0.3); $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); }
+    $(el.stage).addEventListener("click", (e) => {
+      if (lock || t >= tasks.length) return;
+      const task = tasks[t];
+      const cb = e.target.closest("[data-cell]"), ch = e.target.closest("[data-col]");
+      const name = cb ? cb.dataset.cell : ch ? ch.dataset.col : null; if (!name) return;
+      SOUND.play("click", 0.3);
+      if (task.kind === "find") {
+        if (cb && String(cells[name]) === String(task.value)) { picked = name; good("Cell " + name + " holds " + task.value + ": column " + name[0] + ", row " + name.slice(1) + "."); }
+        else if (cb) bad("Cell " + name + " holds " + (cells[name] == null || cells[name] === "" ? "nothing" : cells[name]) + ". Find " + task.value + ".");
+        else bad("That is a whole column. Tap one cell.");
+        return;
+      }
+      if (task.kind === "enter") {
+        if (cb && name === task.cell) { picked = name; draw(); chips(); $(el.fb).className = "fb"; $(el.fb).textContent = "Cell " + name + " picked. Now choose what to put in it."; say($(el.fb).textContent); }
+        else bad((cb ? "That is cell " + name : "That is a whole column") + ". We want cell " + task.cell + ": column " + task.cell[0] + ", row " + task.cell.slice(1) + ".");
+        return;
+      }
+      if (task.kind === "format") {
+        if (name === task.target) { picked = name; draw(); chips(); $(el.fb).className = "fb"; $(el.fb).textContent = (ch ? "Column " : "Cell ") + name + " picked. Now choose a format."; say($(el.fb).textContent); }
+        else bad("Not that one. " + (task.target.length === 1 ? "Tap the letter at the top of column " + task.target + "." : "Tap cell " + task.target + "."));
+      }
+    });
+    $(el.ch).addEventListener("click", (e) => {
+      if (lock || t >= tasks.length) return;
+      const task = tasks[t], v = e.target.closest("[data-val]"), f = e.target.closest("[data-fmt]");
+      if (v && task.kind === "enter") {
+        if (v.dataset.val === String(task.value)) { cells[task.cell] = task.value; good(task.value + " is in cell " + task.cell + "."); }
+        else bad("We want " + task.value + " in " + task.cell + ", not " + v.dataset.val + ".");
+      } else if (f && task.kind === "format") {
+        if (f.dataset.fmt === task.format) { formats[task.target] = task.format; good((task.target.length === 1 ? "Column " : "Cell ") + task.target + " is now " + FORMATS[task.format].toLowerCase() + ". " + (task.why || "")); }
+        else bad(FORMATS[f.dataset.fmt] + " is not the right format for " + (task.reason || "this") + ". " + (task.hint || ""));
+      }
+    });
+    ask();
+  }
+
+  /* ---- select data by its characteristics (3MD.06) ---------------------
+     A table of children with a few facts each. The child builds a filter
+     from chips - which fact, is / is more than / is less than, which value
+     - presses Filter and sees the matching rows light up, then answers
+     how many. The count is computed by rowMatches, mirrored in _rules.py. */
+  function dataFilter(o) {
+    const el = o.el, rows = o.rows, fields = o.fields, tasks = o.tasks;
+    let t = 0, right = 0, sel = { field: null, op: "eq", value: null }, matched = null, lock = false, wrongHere = false;
+    const fieldOf = (id) => fields.find((f) => f.id === id);
+    const OPS = { eq: "is", ne: "is not", gt: "is more than", lt: "is less than" };
+    function draw() {
+      const f = sel.field && fieldOf(sel.field);
+      $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small tally"><thead><tr><th>who</th>' + fields.map((x) => "<th>" + esc(x.label) + "</th>").join("") + "</tr></thead><tbody>" +
+        rows.map((rw, k) => '<tr class="' + (matched ? (matched.has(k) ? "hit" : "miss") : "") + '"><td><span class="rowlab">' + small(rw.pic) + " " + esc(rw.name) + "</span></td>" + fields.map((x) => '<td><span class="cell filled">' + esc(rw[x.id]) + "</span></td>").join("") + "</tr>").join("") + "</tbody></table>" +
+        '<div class="filterrow"><div class="chips">' + fields.map((x) => '<button type="button" class="chip' + (sel.field === x.id ? " on" : "") + '" data-field="' + x.id + '"' + (lock ? " disabled" : "") + ">" + esc(x.label) + "</button>").join("") + "</div>" +
+        (f ? '<div class="chips">' + (f.numeric ? ["eq", "gt", "lt"] : ["eq", "ne"]).map((op) => '<button type="button" class="chip' + (sel.op === op ? " on" : "") + '" data-op="' + op + '"' + (lock ? " disabled" : "") + ">" + OPS[op] + "</button>").join("") + "</div>" +
+          '<div class="chips">' + f.values.map((v) => '<button type="button" class="chip' + (String(sel.value) === String(v) ? " on" : "") + '" data-value="' + esc(v) + '"' + (lock ? " disabled" : "") + ">" + esc(v) + "</button>").join("") + "</div>" : "") +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'go"' + (lock || !sel.field || sel.value == null ? " disabled" : "") + ">Filter</button></div></div></div>";
+      $(el.score).textContent = t < tasks.length ? "Question " + (t + 1) + " of " + tasks.length + (matched ? " · " + matched.size + " of " + rows.length + " rows match" : "") : "";
+      $(el.stage + "go").addEventListener("click", run);
+    }
+    function ask() {
+      const task = tasks[t];
+      sel = { field: null, op: "eq", value: null }; matched = null; lock = false; wrongHere = false; draw();
+      $(el.ask).innerHTML = task.ask + " Build the filter, then press <b>Filter</b>.";
+      $(el.ch).innerHTML = ""; $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      sayHere(o.finish, plain(task.ask) + " Build the filter, then press Filter.");
+    }
+    function run() {
+      if (lock || !sel.field || sel.value == null) return;
+      const task = tasks[t];
+      const mine = new Set(rows.map((rw, k) => (rowMatches(rw, sel) ? k : -1)).filter((k) => k >= 0));
+      const want = new Set(rows.map((rw, k) => (rowMatches(rw, task.spec) ? k : -1)).filter((k) => k >= 0));
+      matched = mine; SOUND.play("whoosh", 0.4); draw();
+      const same = mine.size === want.size && [...mine].every((k) => want.has(k));
+      if (same) {
+        lock = true; if (!wrongHere) right++; draw();
+        const names = [...mine].map((k) => rows[k].name);
+        const line = cheer() + " " + fieldOf(sel.field).label + " " + OPS[sel.op] + " " + sel.value + " picks out " + (names.length ? names.join(", ") : "nobody") + ".";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => {
+          $(el.fb).textContent = "";
+          askOnce(o, task.then, (ok) => {
+            if (ok) right++;
+            t++;
+            if (t >= tasks.length) { reportScore(o.finish, right, tasks.length * 2); endStep(o, "You filtered the data " + tasks.length + " times and read off the answers. " + o.done); }
+            else ask();
+          });
+        }, 2600);
+      } else {
+        wrongHere = true; SOUND.play("error", 0.3);
+        const line = "That filter picks out " + mine.size + " row" + (mine.size === 1 ? "" : "s") + ". Read the question again: which fact, and which value?";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      if (lock) return;
+      const f = e.target.closest("[data-field]"), op = e.target.closest("[data-op]"), v = e.target.closest("[data-value]");
+      if (f) { sel = { field: f.dataset.field, op: "eq", value: null }; matched = null; SOUND.play("click", 0.3); draw(); }
+      else if (op) { sel.op = op.dataset.op; matched = null; SOUND.play("click", 0.3); draw(); }
+      else if (v) { sel.value = v.dataset.value; matched = null; SOUND.play("click", 0.3); draw(); }
+    });
+    ask();
+  }
+
+  /* ---- a simple cipher: 1 = a, 2 = b (3DC.04, 3DC.05) -------------------
+     The alphabet strip with its numbers stays on screen. A decode round
+     shows numbers and the child taps the letters; an encode round shows a
+     word and the child taps the numbers. codeWord / decodeCode decide,
+     mirrored in _rules.py. */
+  function cipher(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, got = [], right = 0, wrongHere = false, lock = false;
+    const strip = () => '<div class="alpha" aria-label="The code: 1 is a, 2 is b, and so on">' + ALPHA.map((c, k) => '<span class="al"><b>' + c + "</b><small>" + (k + 1) + "</small></span>").join("") + "</div>";
+    function draw() {
+      const rd = rounds[r], decode = rd.kind === "decode";
+      const target = decode ? rd.code : codeWord(rd.word);
+      const shown = decode ? rd.code.map((n, k) => '<span class="codecell' + (k < got.length ? " done" : k === got.length ? " now" : "") + '">' + n + "<small>" + (k < got.length ? got[k] : "?") + "</small></span>").join("")
+        : rd.word.split("").map((c, k) => '<span class="codecell' + (k < got.length ? " done" : k === got.length ? " now" : "") + '">' + c + "<small>" + (k < got.length ? got[k] : "?") + "</small></span>").join("");
+      $(el.stage).innerHTML = '<div class="stagewide">' + strip() + '<p class="goal">' + (decode ? "Decode this message:" : "Write <b>" + esc(rd.word) + "</b> in code:") + '</p><div class="coderow">' + shown + "</div>" +
+        '<div class="keys">' + (decode ? ALPHA.map((c) => '<button type="button" class="key" data-key="' + c + '"' + (lock ? " disabled" : "") + ">" + c + "</button>").join("")
+          : Array.from({ length: 26 }, (_, k) => '<button type="button" class="key num" data-key="' + (k + 1) + '"' + (lock ? " disabled" : "") + ">" + (k + 1) + "</button>").join("")) + "</div></div>";
+      $(el.score).textContent = "Message " + (r + 1) + " of " + rounds.length + " · " + got.length + " of " + target.length;
+    }
+    function start() {
+      got = []; wrongHere = false; lock = false; draw();
+      const rd = rounds[r];
+      $(el.ask).innerHTML = rd.kind === "decode" ? "Each number is a letter: 1 is a, 2 is b. Tap the letters to decode <b>" + esc(rd.code.join(" ")) + "</b>." : "Each letter is a number: a is 1, b is 2. Tap the numbers to write <b>" + esc(rd.word) + "</b> in code.";
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      sayHere(o.finish, plain($(el.ask).innerHTML));
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const k = e.target.closest(".key"); if (!k || lock) return;
+      const rd = rounds[r], decode = rd.kind === "decode";
+      const target = decode ? decodeCode(rd.code).split("") : codeWord(rd.word).map(String);
+      const v = k.dataset.key;
+      if (v === target[got.length]) {
+        got.push(v); SOUND.play("click", 0.35); draw();
+        if (got.length >= target.length) {
+          lock = true; if (!wrongHere) right++; SOUND.play("tada", 0.5); draw();
+          const line = decode ? cheer() + " " + rd.code.join(" ") + " says " + decodeCode(rd.code).toUpperCase() + "." + (rd.why ? " " + rd.why : "") : cheer() + " " + rd.word + " in code is " + codeWord(rd.word).join(" ") + "." + (rd.why ? " " + rd.why : "");
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          r++;
+          setTimeout(() => {
+            if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "You wrote and decoded " + rounds.length + " secret messages. " + o.done); }
+            else start();
+          }, 3200);
+        }
+      } else {
+        wrongHere = true; k.classList.add("wrong"); SOUND.play("error", 0.3);
+        const line = decode ? "Look at the strip: " + rd.code[got.length] + " is the letter " + target[got.length] + "." : "Look at the strip: " + rd.word[got.length] + " is number " + target[got.length] + ".";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => k.classList.remove("wrong"), 700);
+      }
+    });
+    start();
   }
 
   /* ==================================================================

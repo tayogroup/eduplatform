@@ -33,7 +33,8 @@ import sys
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, KIT)
-from _rules import REPEATS, run_robot, sum_answer, table_answer  # noqa: E402
+from _rules import (REPEATS, code_word, decode_code, filter_rows, repeat_run, rule_output,  # noqa: E402
+                    run_robot, same_effect, sheet_cells, sum_answer, table_answer, walk_end)
 
 REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-computing-0059.json")
@@ -162,6 +163,74 @@ def main():
                 ids = [p["id"] for p in d["parts"]]
                 if len(set(ids)) != len(ids):
                     fail(entry["file"], "step %d labels the same part twice" % k)
+            elif kind == "trim":
+                kept = [st["id"] for st in d["steps"] if not st.get("waste")]
+                if kept != list(d["expect"]) or not any(st.get("waste") for st in d["steps"]):
+                    fail(entry["file"], "step %d trims to %r, not the expected %r" % (k, kept, d["expect"]))
+                computed += 1
+            elif kind == "loopspot":
+                rn = d["run"]
+                keyed = next((o["t"] for o in d["then"]["opts"] if o.get("ok")), None)
+                if not repeat_run([st["id"] for st in d["steps"]], rn["start"], rn["length"], rn["times"]) or keyed != str(rn["times"]) or not one_key(d["then"]["opts"]):
+                    fail(entry["file"], "step %d: the run does not repeat %r times as keyed %r" % (k, rn["times"], keyed))
+                computed += 1
+            elif kind == "whatif":
+                for rd in d["rounds"]:
+                    if not one_key(rd["opts"]):
+                        fail(entry["file"], "step %d change %r does not have exactly one key" % (k, rd["ask"]))
+            elif kind == "inout":
+                for rd in d["rounds"]:
+                    want = rule_output(rd["rule"], rd["then"]["input"])
+                    keyed = next((o["t"] for o in rd["then"]["opts"] if o.get("ok")), None)
+                    if want is None or keyed != want or not one_key(rd["then"]["opts"]):
+                        fail(entry["file"], "step %d machine %r: input %r gives %r but is keyed %r" % (k, rd["name"], rd["then"]["input"], want, keyed))
+                    computed += 1
+            elif kind == "tidy":
+                for rd in d["rounds"]:
+                    if not same_effect(rd["program"], rd["expect"]) or len(rd["expect"]) >= len(rd["program"]):
+                        fail(entry["file"], "step %d tidy %r: the tidy program is not the same job in fewer blocks" % (k, rd["goal"]))
+                    computed += 1
+            elif kind == "parallel":
+                for rd in d["rounds"]:
+                    if len(rd["scripts"]) != len(d["sprites"]) or any(not sc.get("expect") for sc in rd["scripts"]):
+                        fail(entry["file"], "step %d: a round does not give every object a program" % k)
+            elif kind == "tweak":
+                for rd in d["rounds"]:
+                    if walk_end(rd["expect"]) != rd["target"] or walk_end(rd["program"]) == rd["target"]:
+                        fail(entry["file"], "step %d %r: the numbers do not end on the target %r" % (k, rd["goal"], rd["target"]))
+                    computed += 1
+            elif kind == "device":
+                for rd in d["rounds"]:
+                    if not rd["expect"] or not rd["expect"][0].startswith("when") or any(b.startswith("when") for b in rd["expect"][1:]):
+                        fail(entry["file"], "step %d %r: one when block first, then outputs" % (k, rd.get("algorithm")))
+            elif kind == "views":
+                for qn in d["questions"]:
+                    want = table_answer(d["columns"], qn["check"])
+                    keyed = next((o["t"] for o in qn["opts"] if o.get("ok")), None)
+                    if want is None or keyed != want or not one_key(qn["opts"]):
+                        fail(entry["file"], "step %d %r is keyed %r but the data says %r" % (k, qn["ask"], keyed, want))
+                    computed += 1
+            elif kind == "sheet":
+                for i, t in enumerate(d["tasks"]):
+                    if t["kind"] == "find":
+                        state = sheet_cells(d["cols"], d["rows"], d.get("cells") or {}, d["tasks"][:i])
+                        hits = [n for n, v in state.items() if str(v) == str(t["value"])]
+                        if len(hits) != 1:
+                            fail(entry["file"], "step %d task %d: %r is in %d cells" % (k, i + 1, t["value"], len(hits)))
+                        computed += 1
+            elif kind == "filter":
+                for t in d["tasks"]:
+                    want = str(len(filter_rows(d["rows"], t["spec"])))
+                    keyed = next((o["t"] for o in t["then"]["opts"] if o.get("ok")), None)
+                    if keyed != want or not one_key(t["then"]["opts"]):
+                        fail(entry["file"], "step %d %r is keyed %r but the filter finds %s" % (k, t["ask"], keyed, want))
+                    computed += 1
+            elif kind == "cipher":
+                for rd in d["rounds"]:
+                    ok = decode_code(rd["code"]) == rd["answer"] if rd["kind"] == "decode" else code_word(rd["word"]) == list(rd["answer"])
+                    if not ok:
+                        fail(entry["file"], "step %d: a %s round's answer does not match the code" % (k, rd["kind"]))
+                    computed += 1
             elif kind == "robot":
                 for lv in d["levels"]:
                     if lv.get("predict"):
@@ -210,7 +279,7 @@ def main():
     if bad:
         print("  %d finding(s)\n" % len(bad)); sys.exit(1)
     print("  all %d Stage %d objectives are reached, every key is single, every sort bin exists,\n"
-          "  and %d keys were re-computed from the shipped data (Robo's routes, table answers, fixes)\n" % (len(codes), stage, computed))
+          "  and %d keys were re-computed from the shipped data (Robo's routes, table answers, fixes, machines, ciphers, filters)\n" % (len(codes), stage, computed))
     sys.exit(0)
 
 

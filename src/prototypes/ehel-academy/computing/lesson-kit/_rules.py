@@ -105,3 +105,104 @@ def sum_answer(expr):
         return None
     a, op, b = int(m.group(1)), m.group(2), int(m.group(3))
     return str(a + b if op == "+" else a - b)
+
+
+# ----------------------------------------------------------------------
+# Stage 3: more things computed rather than trusted. Each mirrors a function
+# of the same name (camelCased) in lib/computing.js; the builder and the gate
+# use these, the page uses those, and a content module's authored key must
+# agree with the computation or the page is not built.
+# ----------------------------------------------------------------------
+
+def rule_output(rule, x):
+    """The output of an input-output machine (3CT.07, 3CT.08) for input x.
+
+    rule: "double" | "half" | "add:N" | "minus:N" | "times:N" | "letters"
+    (letters counts the letters of a word). Returns a string, the way a child
+    reads it off the machine, or None for a rule the kit does not know."""
+    name, _, arg = str(rule).partition(":")
+    if name == "letters":
+        return str(len(str(x)))
+    try:
+        n = int(x)
+        k = int(arg or 0)
+    except ValueError:
+        return None
+    if name == "double":
+        return str(n * 2)
+    if name == "half":
+        return str(n // 2) if n % 2 == 0 else None
+    if name == "add":
+        return str(n + k)
+    if name == "minus":
+        return str(n - k)
+    if name == "times":
+        return str(n * k)
+    return None
+
+
+def walk_end(program):
+    """Where a numbered-block program leaves the sprite (3P.05): each block is
+    {"id": "right"|"left"|"jump", "n": count}; right and left move n squares."""
+    x = 0
+    for b in program:
+        if b["id"] == "right":
+            x += int(b["n"])
+        elif b["id"] == "left":
+            x -= int(b["n"])
+    return x
+
+
+def code_word(word):
+    """1 = a, 2 = b ... 26 = z (3DC.05)."""
+    return [ord(c) - 96 for c in str(word).lower() if "a" <= c <= "z"]
+
+
+def decode_code(nums):
+    return "".join(chr(96 + int(n)) for n in nums if 1 <= int(n) <= 26)
+
+
+def row_matches(row, spec):
+    """One row against a filter (3MD.06): {"field", "op": eq|ne|gt|lt, "value"}."""
+    v = row.get(spec["field"])
+    op = spec.get("op", "eq")
+    if op == "gt":
+        return float(v) > float(spec["value"])
+    if op == "lt":
+        return float(v) < float(spec["value"])
+    if op == "ne":
+        return str(v) != str(spec["value"])
+    return str(v) == str(spec["value"])
+
+
+def filter_rows(rows, spec):
+    return [r for r in rows if row_matches(r, spec)]
+
+
+def same_effect(a, b):
+    """Two block programs do the same thing when their expansions agree once
+    the do-nothing `wait` blocks are dropped (3P.01: concise programs)."""
+    ea = [x for x in expand_program(a) if x != "wait"]
+    eb = [x for x in expand_program(b) if x != "wait"]
+    return ea == eb
+
+
+def repeat_run(ids, start, length, times):
+    """True if ids[start:start+length] is followed by itself times-1 more
+    times, back to back (3CT.03: the steps that repeat in an everyday task)."""
+    if length < 1 or times < 2 or start < 0 or start + length * times > len(ids):
+        return False
+    seg = ids[start:start + length]
+    return all(ids[start + k * length:start + (k + 1) * length] == seg for k in range(times))
+
+
+def sheet_cells(cols, rows, cells, tasks):
+    """The state of a spreadsheet (3MD.04) after the tasks up to here have
+    been done: `cells` is the authored start, an `enter` task writes a value.
+    Returns {cellname: value}; used to prove a `find` task has one answer."""
+    state = dict(cells)
+    for t in tasks:
+        if t["kind"] == "enter":
+            state[t["cell"]] = t["value"]
+    return state
+

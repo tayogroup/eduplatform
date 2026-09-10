@@ -91,6 +91,10 @@ KINDS = {
     "network": "networkBuild", "offline": "offlineTest", "io": "inputOutput", "apps": "appScreen",
     # Stage 2
     "precise": "preciseDraw", "chart": "blockGraph", "survey": "surveyDesign", "label": "labelParts", "race": "race",
+    # Stage 3
+    "trim": "trimSteps", "loopspot": "loopSpot", "whatif": "whatIf", "inout": "inOut", "tidy": "tidyProgram",
+    "parallel": "parallelProgram", "tweak": "tweakProgram", "device": "deviceProgram",
+    "views": "dataViews", "sheet": "spreadsheet", "filter": "dataFilter", "cipher": "cipher",
     "questions": "sequence", "quiz": "sequence",
     # the unit shell, drawn around every lesson by _shell.py
     "overview": "unitOverview", "lecture": "lecture", "words": "computingWords",
@@ -100,7 +104,10 @@ KINDS = {
 # Robo's rules, the table arithmetic, the repeat block and the race sums live
 # in _rules.py, shared with the gate, so the builder and check-coverage.py
 # cannot disagree about any of them.
-from _rules import DIRS, REPEATS, expand_program, run_robot, sum_answer, table_answer  # noqa: E402
+from _rules import (DIRS, REPEATS, code_word, decode_code, expand_program, filter_rows, repeat_run,  # noqa: E402
+                    rule_output, run_robot, same_effect, sheet_cells, sum_answer, table_answer, walk_end)
+
+FORMATS = ("text", "number", "date", "currency")   # mirrored in FORMATS in lib/computing.js
 
 
 def read(name):
@@ -508,6 +515,197 @@ def check_step(n, k, s, codes, libs):
                 sys.exit("REFUSED: %s: %r opens screen %r; lib/computing.js has %s" % (where, a["label"], a["screen"], sorted(apps)))
         if d.get("then"):
             one_ok(d["then"]["opts"], where + " question")
+    elif kind == "trim":
+        scene_ok(d["scene"])
+        if not d.get("task"):
+            sys.exit("REFUSED: %s names no task" % where)
+        waste = [st for st in d["steps"] if st.get("waste")]
+        kept = [st for st in d["steps"] if not st.get("waste")]
+        if len(waste) < 1 or len(kept) < 2:
+            sys.exit("REFUSED: %s needs at least one wasteful step and two needed ones" % where)
+        if [st["id"] for st in kept] != list(d["expect"]):
+            sys.exit("REFUSED: %s: the steps left after trimming are %r, but expect is %r" % (where, [st["id"] for st in kept], d["expect"]))
+    elif kind == "loopspot":
+        ids = [st["id"] for st in d["steps"]]
+        run = d["run"]
+        if not d.get("task"):
+            sys.exit("REFUSED: %s names no task" % where)
+        if not repeat_run(ids, run["start"], run["length"], run["times"]):
+            sys.exit("REFUSED: %s: steps %d-%d do not repeat %d times back to back" % (where, run["start"] + 1, run["start"] + run["length"], run["times"]))
+        one_ok(d["then"]["opts"], where + " question")
+        keyed = next(o["t"] for o in d["then"]["opts"] if o["ok"])
+        if keyed != str(run["times"]) or not d["then"].get("why"):
+            sys.exit("REFUSED: %s: the question must be keyed %r (how many times), with a why" % (where, str(run["times"])))
+    elif kind == "whatif":
+        scene_ok(d["scene"])
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s proposes fewer than 2 changes" % where)
+        n_steps = len(d["steps"])
+        for rd in d["rounds"]:
+            ch = rd["change"]
+            if ch["kind"] not in ("swap", "remove", "insert", "replace"):
+                sys.exit("REFUSED: %s change kind %r" % (where, ch["kind"]))
+            if ch["kind"] == "swap" and not (0 <= ch["a"] < n_steps and 0 <= ch["b"] < n_steps and ch["a"] != ch["b"]):
+                sys.exit("REFUSED: %s swaps %r and %r of %d steps" % (where, ch.get("a"), ch.get("b"), n_steps))
+            if ch["kind"] in ("remove", "replace") and not 0 <= ch["at"] < n_steps:
+                sys.exit("REFUSED: %s changes step %r of %d" % (where, ch.get("at"), n_steps))
+            if ch["kind"] == "insert" and not 0 <= ch["at"] <= n_steps:
+                sys.exit("REFUSED: %s inserts at %r of %d" % (where, ch.get("at"), n_steps))
+            if ch["kind"] in ("insert", "replace") and not (ch.get("step") and ch["step"].get("id") and ch["step"].get("label")):
+                sys.exit("REFUSED: %s: an insert or replace needs a step (use s())" % where)
+            one_ok(rd["opts"], where + " %r" % rd["ask"])
+            if not rd.get("why"):
+                sys.exit("REFUSED: %s %r has no why" % (where, rd["ask"]))
+    elif kind == "inout":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 machines" % where)
+        for rd in d["rounds"]:
+            if not rd.get("name") or len(rd.get("steps") or []) < 3 or len(rd.get("inputs") or []) < 2:
+                sys.exit("REFUSED: %s machine %r needs a name, 3+ steps and 2+ inputs" % (where, rd.get("name")))
+            for x in rd["inputs"]:
+                if rule_output(rd["rule"], x) is None:
+                    sys.exit("REFUSED: %s machine %r: rule %r cannot take input %r" % (where, rd["name"], rd["rule"], x))
+            one_ok(rd["then"]["opts"], where + " %r question" % rd["name"])
+            want = rule_output(rd["rule"], rd["then"]["input"])
+            keyed = next(o["t"] for o in rd["then"]["opts"] if o["ok"])
+            if want is None or keyed != want or not rd["then"].get("why"):
+                sys.exit("REFUSED: %s machine %r: input %r gives %r, but the question is keyed %r" % (where, rd["name"], rd["then"]["input"], want, keyed))
+    elif kind == "tidy":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s tidies fewer than 2 programs" % where)
+        for rd in d["rounds"]:
+            blocks_ok(rd["program"], "program"); blocks_ok(rd["expect"], "tidy program")
+            if not rd.get("goal"):
+                sys.exit("REFUSED: %s round needs a goal" % where)
+            if not same_effect(rd["program"], rd["expect"]):
+                sys.exit("REFUSED: %s round %r: the tidy program does not do what the long one does" % (where, rd["goal"]))
+            if len(rd["expect"]) >= len(rd["program"]) or "wait" in rd["expect"]:
+                sys.exit("REFUSED: %s round %r: the tidy program must be shorter and carry no wait block" % (where, rd["goal"]))
+    elif kind == "parallel":
+        n = len(d["sprites"])
+        if n < 2 or len(d.get("spriteNames") or []) != n:
+            sys.exit("REFUSED: %s needs 2+ sprites with names" % where)
+        statics = set(d.get("static") or [])
+        if any(not 0 <= k < n for k in statics):
+            sys.exit("REFUSED: %s: a static index is off the sprite list" % where)
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 rounds" % where)
+        for rd in d["rounds"]:
+            if len(rd["scripts"]) != n:
+                sys.exit("REFUSED: %s round has %d scripts for %d objects" % (where, len(rd["scripts"]), n))
+            for k, sc in enumerate(rd["scripts"]):
+                blocks_ok(sc["expect"], "script %d" % k)
+                if not sc.get("algorithm") or not expand_program(sc["expect"]):
+                    sys.exit("REFUSED: %s round: object %d needs an algorithm and a program that does something" % (where, k))
+                if k in statics and any(libs["block_cats"].get(b) == "move" for b in sc["expect"]):
+                    sys.exit("REFUSED: %s round: object %d is static but its program moves" % (where, k))
+    elif kind == "tweak":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 programs" % where)
+        for rd in d["rounds"]:
+            for lst in (rd["program"], rd["expect"]):
+                for b in lst:
+                    if b["id"] not in ("right", "left", "jump") or not 1 <= int(b["n"]) <= 4:
+                        sys.exit("REFUSED: %s round %r: block %r must be right/left/jump with n 1-4" % (where, rd.get("goal"), b))
+            if [b["id"] for b in rd["program"]] != [b["id"] for b in rd["expect"]]:
+                sys.exit("REFUSED: %s round %r: only the numbers may change between program and expect" % (where, rd.get("goal")))
+            if not -3 <= int(rd["target"]) <= 3 or not rd.get("goal"):
+                sys.exit("REFUSED: %s round needs a goal and a target within -3..3" % where)
+            if walk_end(rd["expect"]) != rd["target"]:
+                sys.exit("REFUSED: %s round %r: the expected numbers end at %d, not the target %d" % (where, rd["goal"], walk_end(rd["expect"]), rd["target"]))
+            if walk_end(rd["program"]) == rd["target"]:
+                sys.exit("REFUSED: %s round %r: the given numbers already hit the target" % (where, rd["goal"]))
+    elif kind == "device":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 programs" % where)
+        pal = d.get("blocks") or sorted(libs["device_blocks"])
+        for b in pal:
+            if b not in libs["device_blocks"]:
+                sys.exit("REFUSED: %s palette block %r is not in DEVICE_BLOCKS (%s)" % (where, b, sorted(libs["device_blocks"])))
+        for rd in d["rounds"]:
+            ex = rd["expect"]
+            if not ex or ex[0] not in libs["device_hats"]:
+                sys.exit("REFUSED: %s round %r must start with a when block" % (where, rd.get("algorithm")))
+            if any(b in libs["device_hats"] for b in ex[1:]) or len(ex) < 2:
+                sys.exit("REFUSED: %s round %r: one when block first, then outputs" % (where, rd.get("algorithm")))
+            for b in ex:
+                if b not in pal:
+                    sys.exit("REFUSED: %s round expects %r, which is not in the palette" % (where, b))
+            if len(rd["algorithm"]) != len(ex):
+                sys.exit("REFUSED: %s round %r: %d words but %d blocks" % (where, rd["algorithm"], len(rd["algorithm"]), len(ex)))
+    elif kind == "views":
+        if len(d["columns"]) < 2 or not d.get("title"):
+            sys.exit("REFUSED: %s needs a title and 2+ columns" % where)
+        for c in d["columns"]:
+            if not isinstance(c["value"], int) or not 1 <= c["value"] <= 10:
+                sys.exit("REFUSED: %s column %r has value %r; keep it a whole number 1-10" % (where, c["label"], c["value"]))
+        if len(d["questions"]) < 2:
+            sys.exit("REFUSED: %s asks fewer than 2 questions" % where)
+        for qn in d["questions"]:
+            one_ok(qn["opts"], where + " %r" % qn["ask"])
+            want = table_answer(d["columns"], qn["check"])
+            keyed = next(o["t"] for o in qn["opts"] if o["ok"])
+            if want is None or keyed != want or not qn.get("why"):
+                sys.exit("REFUSED: %s %r is keyed %r but the data says %r" % (where, qn["ask"], keyed, want))
+    elif kind == "sheet":
+        cols, nrows = list(d["cols"]), int(d["rows"])
+        if len(cols) < 2 or nrows < 2 or any(not (len(c) == 1 and c.isalpha() and c.isupper()) for c in cols):
+            sys.exit("REFUSED: %s needs 2+ single-letter columns and 2+ rows" % where)
+        names = {c + str(r) for c in cols for r in range(1, nrows + 1)}
+        for name in d.get("cells") or {}:
+            if name not in names:
+                sys.exit("REFUSED: %s: cell %r is off the grid" % (where, name))
+        if len(d["tasks"]) < 3 or {t["kind"] for t in d["tasks"]} != {"find", "enter", "format"}:
+            sys.exit("REFUSED: %s needs 3+ tasks and all three kinds: find, enter, format" % where)
+        for i, t in enumerate(d["tasks"]):
+            state = sheet_cells(cols, nrows, d.get("cells") or {}, d["tasks"][:i])
+            if not t.get("ask"):
+                sys.exit("REFUSED: %s task %d has no ask" % (where, i + 1))
+            if t["kind"] == "find":
+                hits = [n for n, v in state.items() if str(v) == str(t["value"])]
+                if len(hits) != 1:
+                    sys.exit("REFUSED: %s task %d: %r is in %d cells, not exactly one" % (where, i + 1, t["value"], len(hits)))
+            elif t["kind"] == "enter":
+                if t["cell"] not in names or len(t.get("values") or []) < 2 or str(t["value"]) not in [str(v) for v in t["values"]]:
+                    sys.exit("REFUSED: %s task %d: needs a grid cell and 2+ values including the one to enter" % (where, i + 1))
+            elif t["kind"] == "format":
+                if t["target"] not in names and t["target"] not in cols:
+                    sys.exit("REFUSED: %s task %d: format target %r is neither a column nor a cell" % (where, i + 1, t["target"]))
+                if t["format"] not in FORMATS:
+                    sys.exit("REFUSED: %s task %d: format %r is not one of %s" % (where, i + 1, t["format"], FORMATS))
+            else:
+                sys.exit("REFUSED: %s task %d has kind %r" % (where, i + 1, t["kind"]))
+    elif kind == "filter":
+        if len(d["rows"]) < 4 or len(d["fields"]) < 2 or len(d["tasks"]) < 2:
+            sys.exit("REFUSED: %s needs 4+ rows, 2+ fields and 2+ tasks" % where)
+        fields = {f["id"]: f for f in d["fields"]}
+        for rw in d["rows"]:
+            if not rw.get("name") or not rw.get("pic"):
+                sys.exit("REFUSED: %s: every row needs a name and a pic" % where)
+            for fid, f in fields.items():
+                if rw.get(fid) not in f["values"]:
+                    sys.exit("REFUSED: %s: %s has %s %r, not one of %s" % (where, rw["name"], fid, rw.get(fid), f["values"]))
+        for t in d["tasks"]:
+            sp = t["spec"]
+            if sp["field"] not in fields or sp["value"] not in fields[sp["field"]]["values"]:
+                sys.exit("REFUSED: %s task %r filters %r for %r" % (where, t["ask"], sp.get("field"), sp.get("value")))
+            if sp.get("op", "eq") not in ("eq", "ne", "gt", "lt") or (sp.get("op") in ("gt", "lt") and not fields[sp["field"]].get("numeric")):
+                sys.exit("REFUSED: %s task %r: op %r is not allowed on %r" % (where, t["ask"], sp.get("op"), sp["field"]))
+            one_ok(t["then"]["opts"], where + " %r question" % t["ask"])
+            want = str(len(filter_rows(d["rows"], sp)))
+            keyed = next(o["t"] for o in t["then"]["opts"] if o["ok"])
+            if keyed != want or not t["then"].get("why"):
+                sys.exit("REFUSED: %s task %r is keyed %r but the filter finds %s rows" % (where, t["ask"], keyed, want))
+    elif kind == "cipher":
+        if len(d["rounds"]) < 3 or {rd["kind"] for rd in d["rounds"]} != {"decode", "encode"}:
+            sys.exit("REFUSED: %s needs 3+ messages, some to decode and some to encode" % where)
+        for rd in d["rounds"]:
+            if rd["kind"] == "decode":
+                if not rd["code"] or any(not 1 <= int(n) <= 26 for n in rd["code"]) or decode_code(rd["code"]) != rd["answer"]:
+                    sys.exit("REFUSED: %s: %r decodes to %r, not %r" % (where, rd["code"], decode_code(rd["code"]), rd["answer"]))
+            else:
+                if not rd["word"].isalpha() or code_word(rd["word"]) != list(rd["answer"]):
+                    sys.exit("REFUSED: %s: %r encodes to %r, not %r" % (where, rd["word"], code_word(rd["word"]), rd["answer"]))
     elif kind == "overview":
         if len(d["about"]) < 3:
             sys.exit("REFUSED: %s says fewer than 3 things the lesson is about" % where)
@@ -748,6 +946,7 @@ def main():
         "sounds": js_keys(computing, "BANK", indent="    "),
         "drawings": js_keys(computing, "DRAWINGS"),
         "figures": js_keys(computing, "FIGURES"),
+        "device_blocks": js_keys(computing, "DEVICE_BLOCKS"),
     }
     if not all(libs.values()):
         sys.exit("REFUSED: lib/computing.js read as having no scenes, blocks, apps, sounds, drawings or figures - the parser is broken")
@@ -757,6 +956,15 @@ def main():
     drawings_src, figures_src = js_block(computing, "DRAWINGS"), js_block(computing, "FIGURES")
     libs["drawing_ids"] = {name: set(re.findall(r'has\("([a-z0-9-]+)"\)', js_entry(drawings_src, name))) for name in libs["drawings"]}
     libs["figure_parts"] = {name: set(re.findall(r'data-part="([a-z0-9-]+)"', js_entry(figures_src, name))) for name in libs["figures"]}
+    # Stage 3: which device blocks are "when" hats, and each sprite block's
+    # category (a static object may not carry a move block)
+    libs["device_hats"] = set(re.findall(r'^    (\w+): \{ label: "[^"]*", icon: "[^"]*", cat: "hat"', js_block(computing, "DEVICE_BLOCKS"), re.M))
+    libs["block_cats"] = dict(re.findall(r'^    (\w+): \{ label: "[^"]*", icon: "[^"]*", cat: "(\w+)"', js_block(computing, "BLOCKS"), re.M))
+    if not libs["device_hats"] or not libs["block_cats"]:
+        sys.exit("REFUSED: lib/computing.js read as having no device hats or no block categories - the parser is broken")
+    js_formats = tuple(re.findall(r'^  const FORMATS = \{ (.*?) \};', computing, re.M)[0].replace(":", " ").split())[::2] if re.search(r'^  const FORMATS = \{', computing, re.M) else ()
+    if tuple(f for f in js_formats) != FORMATS:
+        sys.exit("REFUSED: the cell formats in lib/computing.js are %r but the builder knows %r" % (js_formats, FORMATS))
     # the repeat counts in the JS BLOCKS table must be the ones _rules.py
     # unrolls with, or the page and the gate would disagree about what a
     # program does
@@ -767,8 +975,8 @@ def main():
     voice = read("voice.js")
     deck = read("deck.js")
 
-    print("\n  Building %s Computing lessons  (0059 Stage %d: %d objectives; %d scenes, %d blocks, %d apps, %d sounds, %d drawings, %d figures)\n"
-          % (GRADE_LABEL, STAGE, len(codes), len(libs["scenes"]), len(libs["blocks"]), len(libs["apps"]), len(libs["sounds"]), len(libs["drawings"]), len(libs["figures"])))
+    print("\n  Building %s Computing lessons  (0059 Stage %d: %d objectives; %d scenes, %d blocks, %d device blocks, %d apps, %d sounds, %d drawings, %d figures)\n"
+          % (GRADE_LABEL, STAGE, len(codes), len(libs["scenes"]), len(libs["blocks"]), len(libs["device_blocks"]), len(libs["apps"]), len(libs["sounds"]), len(libs["drawings"]), len(libs["figures"])))
     covered = set()
     everything = load_lessons([])
     finder = finder_words(everything)

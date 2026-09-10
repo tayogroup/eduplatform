@@ -1,6 +1,6 @@
 # The Computing lesson kit — one generator for every grade
 
-The standalone Computing builds (`../grade-1-app`, `../grade-2-app`) are self-contained HTML
+The standalone Computing builds (`../grade-1-app`, `../grade-2-app`, `../grade-3-app`) are self-contained HTML
 pages in the design of the Grade 1 Mathematics, English and Science standalone
 builds, bypassing `shell/course-app.js`. Everything that draws a page lives
 here; each grade directory holds only `app.config.json` and
@@ -20,7 +20,7 @@ subject's own. If the Mathematics engine changes, re-copy `voice.js` and
 | `build-lessons.py --app <dir>` | writes `<slug>.html` per lesson from the content; refuses a bad objective code, a quiz with no single key, a sort into a missing bin, a Robo solution that misses, a table key the rows disagree with, a debug fix that does not make the expected program (every fix of a multi-bug round), a race keyed to the wrong sum, a chart keyed against its own columns, a `mustRepeat` round whose expected program has no repeat, a precise option no drawing has, a label part no figure has, and a survey where every way works |
 | `build-hub.py --app <dir>` | writes the hub: cards with step counts and time estimates, the strands panel, the printable teachers-and-parents section with the unplugged version of every activity and the answer keys |
 | `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single, and Robo's routes / table answers / fixes / race sums / chart keys RE-COMPUTED from the shipped data |
-| `_rules.py` | the things the kit computes rather than trusts — Robo's Bee-Bot rules, the table arithmetic, the repeat expansion (`REPEATS`, `expand_program`; the builder refuses to run if `computing.js` disagrees about what `repeat2`/`3`/`4` mean) and the race sums — imported by the builder AND the gate so they cannot disagree |
+| `_rules.py` | the things the kit computes rather than trusts — Robo's Bee-Bot rules, the table arithmetic, the repeat expansion (`REPEATS`, `expand_program`; the builder refuses to run if `computing.js` disagrees about what `repeat2`/`3`/`4` mean), the race sums, and at Stage 3 the machine rules (`rule_output`), the numbered walk (`walk_end`), the 1 = a code (`code_word`, `decode_code`), the row filter (`filter_rows`), tidy-program equivalence (`same_effect`), the repeated run (`repeat_run`) and the spreadsheet state (`sheet_cells`) — each mirrored name for name in `computing.js`; imported by the builder AND the gate so they cannot disagree |
 | `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `s()`, `choice()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in |
 | `_shell.py` | the unit shell: the seven steps drawn AROUND every lesson (overview, lecture, words, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree |
 | `lib/lesson.css` | the Mathematics design system, verbatim via the Science kit's copy |
@@ -45,7 +45,7 @@ codes the builder accepts and which the gate demands.
 | `bugs` | `bugHunt` | finds the one wrong step, chooses the fix (or, on a `swap` round, the page moves the too-early step), watches the fixed algorithm run (1CT.02) |
 | `remix` | `remix` | changes or adds a step to make a named outcome; the scene redraws (1CT.07) |
 | `robot` | `robotGrid` | builds a program of forward / backwards / left / right and presses Go; `predict` levels ask where Robo stops first (1CT.03, 1P.03) |
-| `program` | `blockProgram` | rebuilds an algorithm as blocks and runs it; `given` rounds predict before Run (1P.02, 1P.03, 1P.05); at Stage 2 the palette carries `repeat2`/`3`/`4` (a repeat repeats the NEXT block), a `mustRepeat` round refuses a program with no repeat block, and a round with `sprites` + `object` plans one object of several (2P.02–04, 2P.06) |
+| `program` | `blockProgram` | rebuilds an algorithm as blocks and runs it; `given` rounds predict before Run (1P.02, 1P.03, 1P.05); at Stage 2 the palette carries `repeat2`/`3`/`4` (a repeat repeats the NEXT block), a `mustRepeat` round refuses a program with no repeat block, and a round with `sprites` + `object` plans one object of several (2P.02–04, 2P.06); at Stage 3 a round with `start` leaves the sprite where a previous program put it and `mustReset` requires a `home` block first (3P.02) |
 | `debug` | `debugProgram` | runs a buggy program, taps the bug, picks the fix, runs again (1P.04–07); a round with `bugs` (a list) and `fixes` keyed by bug has more than one bug, and a `partner` adds an Ask button whose hint points at the block still wrong (2P.05, 2P.07) |
 | `form` | `dataForm` | records six people's answers on a form; the table fills itself (1MD.03) |
 | `table` | `dataTable` | answers questions from a table that stays on screen; keys computed (1MD.04) |
@@ -60,6 +60,18 @@ codes the builder accepts and which the gate demands.
 | `survey` | `surveyDesign` | chooses, for a stated purpose, which ways of collecting the data would work and which would not, collects it from the people, then answers (2MD.03) |
 | `label` | `labelParts` | taps the named part on a drawn laptop or tablet (`FIGURES`), hearing what each does (2CS.01, 2CS.02) |
 | `race` | `race` | races the computer at sums against a stopwatch, then says what the computer cannot do (2CS.04) |
+| `trim` | `trimSteps` | taps the wasteful steps out of an algorithm (done twice, undone, or for another task), then watches the concise one still do the job (3CT.02) |
+| `loopspot` | `loopSpot` | taps the run of steps that repeats inside an everyday task; the page folds every repeat into one `repeat N times` (3CT.03) |
+| `whatif` | `whatIf` | predicts what one change to an algorithm will do - swap, remove, insert, replace - then watches the changed algorithm paint the scene (3CT.05) |
+| `inout` | `inOut` | orders the steps of a machine, feeds it inputs, reads the outputs, then works out an untried one; keys computed by `rule_output` (3CT.07, 3CT.08) |
+| `tidy` | `tidyProgram` | deletes unused blocks and folds runs into a repeat, then runs to prove the program still does the same thing in fewer blocks; `same_effect` decides (3P.01) |
+| `parallel` | `parallelProgram` | builds a script per object and runs them all at once; a `static` object has look blocks only (3P.03, 3P.04) |
+| `tweak` | `tweakProgram` | changes the number inside a move block until the cat stops on the flower; `walk_end` decides (3P.05) |
+| `device` | `deviceProgram` | builds a program for Bitsy - a `when` hat block naming the input, then outputs - and presses that input on the board (3P.06, 3P.10, 3CS.05) |
+| `views` | `dataViews` | opens the same counts as a table, a bar chart and a pictogram, then answers questions keyed by `table_answer` (3MD.02) |
+| `sheet` | `spreadsheet` | finds cells by name, puts values in, formats a column or cell as text, number, date or currency (3MD.04, 3MD.05) |
+| `filter` | `dataFilter` | builds a filter from chips - field, is / is more than / is less than, value - and counts the rows it selects; `filter_rows` decides (3MD.06) |
+| `cipher` | `cipher` | decodes numbers into letters and writes words as numbers with the 1 = a code; `code_word` decides (3DC.04, 3DC.05) |
 | `questions` / `quiz` | `sequence` | the Mathematics build's own, with pictures |
 | `overview` … `resources` (shell) | as in Science | the unit shell |
 
@@ -71,9 +83,13 @@ reading in the dark) and `internet` (numeric states). Blocks: `right`, `left`,
 `jump`, `spin`, `say`, `grow`, `shrink`, `hide`, `home`, `wait`, and the
 control blocks `repeat2`, `repeat3`, `repeat4`. Drawings (`precise`): `house`,
 `boat`, each with its silly wrong parts. Figures (`label`): `laptop`, `tablet`.
-Mini-apps: `paint`, `game`, `write`, `video`, `call`, `search`. The builder
-reads all of these out of `computing.js` by name, so a scene, block, drawing or
-figure written into a content module that does not exist fails the build
+Mini-apps: `paint`, `game`, `write`, `video`, `call`, `search`. Bitsy's
+blocks (`device`): the hats `whenA`, `whenShake`, `whenClap` and the outputs
+`heart`, `smile`, `light`, `dark`, `beep`, `motor`, `bell` (`DEVICE_BLOCKS`).
+Cell formats (`sheet`): `text`, `number`, `date`, `currency` (`FORMATS`, held
+equal between the JS and the builder). The builder reads all of these out of
+`computing.js` by name, so a scene, block, drawing, figure, device block or
+format written into a content module that does not exist fails the build
 rather than the page.
 
 ## Rules that cost something to learn
@@ -108,5 +124,12 @@ rather than the page.
   and the same pipeline (`../../mathematics/lesson-app-tools`) run in the
   same order as the Grade 1 README shows. Grade 2 was added that way on
   2026-09-10, and adding it extended the kit (five step kinds, two scenes,
-  the repeat blocks, two drawings, two figures); Grade 1 was rebuilt on the
-  extended kit and its `LESSON` data came out identical, page for page.
+  the repeat blocks, two drawings, two figures); Grade 3 the same day added
+  twelve more kinds, Bitsy's blocks, the cell formats and seven computed
+  rules. Each time, the earlier grades were rebuilt on the extended kit and
+  their `LESSON` data came out identical, page for page - that rebuild is
+  the proof a kit change is safe, and it is not optional.
+- **`blockBtn`'s third argument is the extra class.** It used to be passed
+  as a second `class="…"` inside the attribute string, which the parser
+  ignores, so the running block was never highlighted at Stages 1 and 2
+  either. Pass `"now"` as the third argument.

@@ -50,6 +50,9 @@ MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2,
            "network": 3, "offline": 4, "io": 3, "apps": 4,
            # Stage 2
            "precise": 4, "chart": 3, "survey": 4, "label": 3, "race": 3,
+           # Stage 3
+           "trim": 3, "loopspot": 3, "whatif": 4, "inout": 5, "tidy": 5, "parallel": 6, "tweak": 4, "device": 5,
+           "views": 4, "sheet": 5, "filter": 5, "cipher": 5,
            "questions": 3, "quiz": 4,
            # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
            "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
@@ -76,6 +79,19 @@ UNPLUGGED = {
     "survey": "Plan a survey with a purpose (what to cook on Friday). Try collecting the answers by shouting, then by ticking a paper tally, then by a form if there is a tablet. Which way gave you data you could count?",
     "label": "Find the parts on a real laptop or tablet together: the screen, the keyboard, the touchpad, the camera, the speaker, the charging port. Say what each one does.",
     "race": "Race a calculator or a phone at five sums. Then find three jobs the calculator cannot do at all.",
+    # Stage 3
+    "trim": "Write the steps of a job on cards, and slip in two cards that do nothing for it or say the same thing twice. Can the child find and remove them, and does the job still get done?",
+    "loopspot": "Write out a job with a part that happens again and again (brush, rinse, brush, rinse). Ask which cards you could write once with 'repeat 3 times' in front.",
+    "whatif": "Before changing one step of a recipe or a routine, say out loud what will happen. Then change it and see.",
+    "inout": "Play the machine: the grown-up is a machine with a rule (double it, add 3). The child gives an input, the grown-up gives the output, and the child works out the rule.",
+    "tidy": "Lay out a long program of cards with a card that does nothing and the same card three times. Make it shorter without changing what it does.",
+    "parallel": "Two people, two card programs, one clap per step: both act out their programs at the same time. What happens when one finishes first?",
+    "tweak": "Lay out 'forward 2, forward 1' in cards on a floor grid. Change ONLY the numbers to land a toy on a target square.",
+    "device": "Find a thing at home that turns an input into an output: a doorbell, a light switch, a kettle. Say what goes in and what comes out.",
+    "views": "Count something at home, then show it three ways: a list of numbers, a bar of bricks, a row of pictures. Which way shows the biggest at a glance?",
+    "sheet": "Draw a grid with lettered columns and numbered rows. Call out cells (B3!) and put things in them. Then mark one column as money and write the numbers with pounds.",
+    "filter": "Lay out toy cards with a few facts each (colour, size, legs). Pick a rule (legs more than 2) and pull out only the cards that match.",
+    "cipher": "Write a message with 1 = a, 2 = b. Give it to someone with the key and see if they can read it. Then try without the key.",
 }
 
 
@@ -307,6 +323,47 @@ def keys_for(s):
     elif k == "race":
         out.append("<li><b>%s</b> <span class=\"key\">%s; %s &rarr; <b>%s</b></span></li>" % (text(s["title"]), text("; ".join("%s = %s" % (rd["ask"], rd["answer"]) for rd in d["rounds"])),
                                                                                                  text(plain(d["then"]["ask"])), text(ok_text(d["then"]["opts"]))))
+    elif k == "trim":
+        out.append("<li><b>%s</b> <span class=\"key\">cut: %s; keep: %s</span></li>" % (text(s["title"]), text(", ".join(st["label"] for st in d["steps"] if st.get("waste"))),
+                                                                                       text(" &rarr; ".join(st["label"] for st in d["steps"] if not st.get("waste")))))
+    elif k == "loopspot":
+        rn = d["run"]
+        out.append("<li><b>%s</b> <span class=\"key\">repeat %d times: %s; %s &rarr; <b>%s</b></span></li>" % (text(s["title"]), rn["times"],
+                                                                                                          text(", ".join(st["label"] for st in d["steps"][rn["start"]:rn["start"] + rn["length"]])),
+                                                                                                          text(plain(d["then"]["ask"])), text(ok_text(d["then"]["opts"]))))
+    elif k == "whatif":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(rd["ask"])), text(ok_text(rd["opts"]))) for rd in d["rounds"])))
+    elif k == "inout":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">rule %s; input %s &rarr; <b>%s</b></span></li>" % (text(rd["name"]), text(rd["rule"]), text(rd["then"]["input"]), text(ok_text(rd["then"]["opts"]))) for rd in d["rounds"])))
+    elif k == "tidy":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">%s &rarr; <b>%s</b></span></li>" % (text(rd["goal"]), text(", ".join(rd["program"])), text(", ".join(rd["expect"]))) for rd in d["rounds"])))
+    elif k == "parallel":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s</li>" % "; ".join("%s: <b>%s</b>" % (text(d["spriteNames"][j]), text(", ".join(sc["expect"]))) for j, sc in enumerate(rd["scripts"])) for rd in d["rounds"])))
+    elif k == "tweak":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(rd["goal"]), text(", ".join("%s x%d" % (b["id"], b["n"]) for b in rd["expect"]))) for rd in d["rounds"])))
+    elif k == "device":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; blocks <b>%s</b></span></li>" % (text(", ".join(rd["algorithm"])), text(", ".join(rd["expect"]))) for rd in d["rounds"])))
+    elif k == "views":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(qn["ask"])), text(ok_text(qn["opts"]))) for qn in d["questions"])))
+    elif k == "sheet":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(t["ask"])), text(
+                ("the cell holding %s" % t["value"]) if t["kind"] == "find" else ("%s in %s" % (t["value"], t["cell"])) if t["kind"] == "enter" else ("%s as %s" % (t["target"], t["format"])))) for t in d["tasks"])))
+    elif k == "filter":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">%s %s %s; %s &rarr; <b>%s</b></span></li>" % (text(plain(t["ask"])), text(t["spec"]["field"]), text(t["spec"].get("op", "eq")), text(t["spec"]["value"]),
+                                                                                    text(plain(t["then"]["ask"])), text(ok_text(t["then"]["opts"]))) for t in d["tasks"])))
+    elif k == "cipher":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(" ".join(str(n) for n in rd["code"]) if rd["kind"] == "decode" else rd["word"]),
+                                                                        text(rd["answer"] if rd["kind"] == "decode" else " ".join(str(n) for n in rd["answer"]))) for rd in d["rounds"])))
     elif k == "bugs":
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
             "<li>%s <span class=\"key\">the bug is step %d, <b>%s</b>; %s</span></li>" % (

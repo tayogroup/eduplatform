@@ -102,6 +102,32 @@ which reads every board card as one talk (2Mi.01); and `lookback` with
 `mode: "helped"` — which `_shell.py` sets for every Stage 2+ lesson — asks
 which part HELPED rather than which was liked (2Fl.01). The look-back's codes
 follow the stage (`lookback_codes(stage)`).
+
+**Stage 3 modes on the same kinds** (additive again; Grades 1 and 2 were
+rebuilt through the changed kit and re-driven to 100%): `observe` (kind of
+its own, `observeCount`) draws a scene of glyphs and the child taps every
+one of a kind, recording the count in a table as it goes (3Rc.01); `pictogram`
+with `fromObserve: true` reads its rows off that step, with `display:
+"ruler"` and a `unit` for measurements, and its questions gain `more` {a, b},
+`total` and `difference` {a, b} beside most/least/count, all computed
+(3Ad.01); `organiser` with `venn: true` draws three bins as two circles and
+an overlap (3Rf.01); `text` with `then` asks one closing question after the
+lines, for the author's viewpoint (3Es.01); `consequence` rounds with `cause`
+ask WHY before the prediction (3Ac.01); `team` rounds of kind `allocate`
+list the jobs and the members with their skills, and each job must fit
+exactly ONE member (`_rules.allocations`, 3Cc.01); `strengths` (kind of its
+own, `strengthsLimits`) reads the team step's log of what the child did and
+which rounds took two goes, asks for the strengths, then the limitations —
+or, when every round went right first time, what could still be better —
+then one question about what working together made possible (3Fc.01,
+3Ft.01); `know` with `mode: "structured"` and `slots` (start, middle, end)
+accepts only the card whose `part` matches the slot it is on, and refuses a
+topic card in the wrong part (3Mi.01); `listen` responses are ideas as well
+as questions (3Ml.01); and `lookback` with `mode: "changed"` — which
+`_shell.py` sets for every Stage 3+ lesson, and REFUSES without a lesson's
+own `LESSON["lookback"]["changed"]` of two or more {before, after} pairs —
+asks how one idea changed (before, then after) and which KIND of activity
+helped, the kinds derived from the lesson's step kinds (3Fv.01, 3Fl.01).
 | `overview` … `resources` (shell) | as in Computing | the unit shell |
 
 Scenes: picture backgrounds `market`, `vet`, `park`, `kitchen`, `classroom`,
@@ -143,7 +169,17 @@ the build rather than the page.
   `gp.js`. So the safety proof for a kit change is not a byte-identical
   rebuild of the live grade: it is that grade rebuilt through the new kit and
   driven to 100% again in the browser before the new grade is. Grade 1 was
-  re-driven that way when Stage 2's machines went in.
+  re-driven that way when Stage 2's machines went in, and Grades 1 and 2
+  when Stage 3's did.
+- **A Stage 3+ lesson must author its `changed` pairs.** The shell's
+  look-back at Stage 3 asks how an idea changed, and there is no honest way
+  to derive a before-and-after from the about lines, so `lookback_step`
+  refuses a lesson without `LESSON["lookback"]["changed"]` (two or more
+  pairs). The `liked` half is derived, as activity TYPES, from the kinds of
+  step the lesson actually has (`TYPE_OF`).
+- **An allocate round's tasks must each fit exactly one member**, by skill
+  string. Two members sharing the needed skill, or none having it, is refused
+  by the builder and failed by the gate.
 - **Adding a grade** is a directory with `app.config.json` and `content/`, and
   the same pipeline (`../../mathematics/lesson-app-tools`) run in the same
   order as the Grade 1 README shows.

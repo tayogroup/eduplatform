@@ -476,6 +476,13 @@
   .tray.chart { display: flex; flex-direction: column; gap: 4px; align-items: stretch; text-align: left; font-size: 14px; }
   .tray.chart .chip.small { justify-content: flex-start; font-weight: 700; }
 
+  /* a three-bin organiser drawn as a Venn diagram: only A, both, only B */
+  .bins.venn { grid-template-columns: 1fr 1fr 1fr; }
+  .bins.venn .bin { border-radius: 50% / 28%; }
+  .bins.venn .bin:nth-child(2) { border-color: var(--gold); background: rgba(244,201,93,0.08); }
+  .bins.venn .bin:nth-child(1) { border-color: var(--teal); }
+  .bins.venn .bin:nth-child(3) { border-color: var(--plum); }
+
   /* the board of what we know */
   .board { width: 100%; max-width: 560px; padding: 12px 14px; border-radius: 18px; border: 3px solid var(--teal); background: var(--card); text-align: left; }
   .board .phase { margin: 0 0 6px; font-size: 14px; text-transform: none; letter-spacing: 0; }
@@ -538,6 +545,29 @@
   .sline:disabled { cursor: default; }
   .barwrap { display: block; height: 22px; border-radius: 8px; background: rgba(0,0,0,0.2); overflow: hidden; }
   .bar { display: block; height: 100%; background: var(--teal); border-radius: 8px; transition: width 400ms ease; }
+
+  /* a scene to observe: a grid of glyph buttons; a ruler behind a bar */
+  .scene { display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 6px; width: 100%; max-width: 560px; padding: 10px; border-radius: 18px; border: 1px solid var(--line); background: var(--cell); }
+  .glyph { height: 56px; border-radius: 12px; border: 2px solid transparent; background: var(--card); font-size: 32px; line-height: 1; }
+  .glyph:active { transform: scale(0.94); }
+  .glyph.got { border-color: var(--good); background: var(--good-soft); opacity: 0.7; }
+  .glyph.wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake 360ms ease; }
+  .glyph:disabled { cursor: default; }
+  .pictorow.now { border-color: var(--gold); }
+  .picto.ruler .barwrap { position: relative; }
+  .picto.ruler .ticks { position: absolute; inset: 0; display: flex; justify-content: space-between; pointer-events: none; }
+  .picto.ruler .ticks i { width: 2px; height: 100%; background: rgba(255,255,255,0.35); }
+
+  /* the team giving out its jobs; the structured talk's slots */
+  .alloc { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 10px; }
+  .teamrow.members .mate { flex-direction: column; padding: 8px 14px; cursor: pointer; }
+  .teamrow.members .mate small { color: var(--muted); font-size: 11.5px; font-weight: 700; }
+  .teamrow.members .mate.wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake 360ms ease; }
+  .slots { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .slotrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 12px; border: 2px dashed var(--line); font-size: 15.5px; }
+  .slotrow b { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  .slotrow.now { border-color: var(--gold); border-style: solid; }
+  .slotrow.filled { border-color: var(--good); border-style: solid; background: var(--good-soft); }
 
   /* the record of who did what, and the look back */
   .logcard { font-size: 15px; }
@@ -4379,7 +4409,7 @@
       const it = items[i];
       $(el.stage).innerHTML = '<div class="stagewide">' + (o.chart ? '<p class="phase">' + esc(o.title) + "</p>" : "") +
         '<div class="sortnow" id="' + el.stage + 'now">' + picHtml(it.pic) + '<span class="lab">' + esc(it.label) + "</span></div>" +
-        '<div class="bins' + (o.chart ? " chartcols" : "") + '">' + o.bins.map((b) => '<button type="button" class="bin" data-b="' + b.id + '"><span class="bpic" aria-hidden="true">' + small(b.pic) + "</span>" + esc(b.label) + tray(b) + "</button>").join("") + "</div></div>";
+        '<div class="bins' + (o.chart ? " chartcols" : "") + (o.venn ? " venn" : "") + '">' + o.bins.map((b) => '<button type="button" class="bin" data-b="' + b.id + '"><span class="bpic" aria-hidden="true">' + small(b.pic) + "</span>" + esc(b.label) + tray(b) + "</button>").join("") + "</div></div>";
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
       $(el.score).textContent = "Thing " + (i + 1) + " of " + items.length;
       sayHere(o.finish, it.label + ". " + (o.ask || "Which bin?"));
@@ -4676,7 +4706,12 @@
     /* the same rows drawn three ways (2Ad.01: graphical and numerical data
        can show information): a pictogram, a bar chart, or a table of numbers */
     const most = Math.max(1, ...o.rows.map((r) => r.value));
-    const body = o.display === "table"
+    const unit = o.unit || "";
+    const body = o.display === "ruler"
+      ? '<div class="picto bars ruler"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
+        '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="barwrap"><span class="bar" style="width:' + Math.round(r.value / most * 100) + '%" aria-hidden="true"></span><span class="ticks" aria-hidden="true">' + Array.from({ length: 5 }, (_, t) => "<i></i>").join("") + "</span></span><b class=\"pcount\">" + r.value + " " + esc(unit) + "</b></div>").join("") +
+        '<p class="sub">Measured with a ruler, in ' + esc(unit || "units") + ".</p></div>"
+      : o.display === "table"
       ? '<table class="rec small"><thead><tr><th>' + esc((o.columns || ["Answer", "How many"])[0]) + "</th><th>" + esc((o.columns || ["Answer", "How many"])[1]) + "</th></tr></thead><tbody>" +
         o.rows.map((r) => '<tr><td><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span></td><td><span class="cell filled">' + r.value + "</span></td></tr>").join("") + "</tbody></table><p class=\"sub\">A table: the number says how many.</p>"
       : o.display === "bars"
@@ -4694,7 +4729,7 @@
       $(el.ch).className = "choices stack";
       $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
-      const what = o.display === "table" ? "table" : o.display === "bars" ? "bar chart" : "pictogram";
+      const what = o.display === "table" ? "table" : o.display === "bars" ? "bar chart" : o.display === "ruler" ? "measurements" : "pictogram";
       $(el.score).textContent = "Look at the " + what + ": question " + (i + 1) + " of " + o.items.length;
       sayHere(o.finish, plain(it.ask) + " Look at the " + what + ".");
     }
@@ -4709,7 +4744,7 @@
       setTimeout(() => {
         if (i >= o.items.length) {
           reportScore(o.finish, right, o.items.length);
-          endStep(o, "You answered " + right + " of " + o.items.length + " from the " + (o.display === "table" ? "table" : o.display === "bars" ? "bar chart" : "pictogram") + ". " + o.done);
+          endStep(o, "You answered " + right + " of " + o.items.length + " from the " + (o.display === "table" ? "table" : o.display === "bars" ? "bar chart" : o.display === "ruler" ? "measurements" : "pictogram") + ". " + o.done);
         } else draw();
       }, 2700);
     });
@@ -4730,10 +4765,13 @@
     const el = o.el, cards = shuffle(o.cards.map((c, k) => Object.assign({ k }, c)));
     const onBoard = [], need = Math.min(o.need || 2, o.cards.filter((c) => c.about === o.tag).length);
     let phase = "pick", missed = 0, right = 0;
-    const talk = o.mode === "talk";
+    const talk = o.mode === "talk" || o.mode === "structured", structured = o.mode === "structured";
+    const slots = o.slots || [];
+    const slotOf = () => slots[onBoard.length];
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><div class="board"><p class="phase">' + (talk ? "My talk about" : "What we know about") + ' <b>' + esc(o.topic) + "</b> " + small(o.topicPic || "") + "</p>" +
-        '<ul class="boardlist" id="' + el.stage + 'b">' + (onBoard.length ? onBoard.map((k) => '<li><button type="button" class="boardfact" data-b="' + k + '"><span class="cpic" aria-hidden="true">' + small(o.cards[k].pic) + "</span>" + esc(o.cards[k].t) + "</button></li>").join("") : '<li class="hint">Nothing on the board yet.</li>') + "</ul></div>" +
+        (structured ? '<ol class="slots">' + slots.map((sl, k) => '<li class="slotrow' + (k < onBoard.length ? " filled" : k === onBoard.length && phase === "pick" ? " now" : "") + '"><b>' + esc(sl.label) + "</b> " + (k < onBoard.length ? '<span class="chip small">' + esc(o.cards[onBoard[k]].t) + "</span>" : '<span class="hint">' + esc(sl.hint) + "</span>") + "</li>").join("") + "</ol>"
+          : '<ul class="boardlist" id="' + el.stage + 'b">' + (onBoard.length ? onBoard.map((k) => '<li><button type="button" class="boardfact" data-b="' + k + '"><span class="cpic" aria-hidden="true">' + small(o.cards[k].pic) + "</span>" + esc(o.cards[k].t) + "</button></li>").join("") : '<li class="hint">Nothing on the board yet.</li>') + "</ul>") + "</div>" +
         (phase === "pick" ? '<div class="cardsgrid">' + cards.filter((c) => !onBoard.includes(c.k)).map((c) => '<button type="button" class="tapcard" data-k="' + c.k + '"><span class="cpic" aria-hidden="true">' + small(c.pic) + "</span>" + esc(c.t) + "</button>").join("") + "</div>" : "") +
         (phase === "say" && talk ? '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'talk">\u{1F5E3}\ufe0f Give my talk</button></div>' : "") + "</div>";
       $(el.score).textContent = phase === "pick" ? onBoard.length + " of " + need + (talk ? " things to say" : " on the board") : talk ? "Press Give my talk" : "Tap a fact on the board to say it";
@@ -4762,9 +4800,20 @@
          (only the shuffled copies do), and pushing c.k put undefined on the
          board - found by the driver, not by eye */
       const kk = Number(b.dataset.k), c = o.cards[kk];
+      if (structured && c.about === o.tag && c.part !== slotOf().id) {
+        /* about the topic, but the wrong PART of the talk: a talk has a
+           structure, and the child is building it in order (3Mi.01) */
+        missed++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const want = slots.find((sl) => sl.id === c.part);
+        const line = "That belongs in the " + (want ? want.label.toLowerCase() : "another part") + " of the talk. We are on the " + slotOf().label.toLowerCase() + ": " + slotOf().hint.toLowerCase() + ".";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+        return;
+      }
       if (c.about === o.tag) {
         onBoard.push(kk); right++; SOUND.play("pop", 0.35); draw();
-        const line = "I know that " + lower1(noDot(c.say)) + ".";
+        /* a structured talk names the PART just filled; a board says "I know that" */
+        const line = structured ? slots[onBoard.length - 1].label + ": " + noDot(c.say) + "." : "I know that " + lower1(noDot(c.say)) + ".";
         $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + line; say(cheer() + " " + line);
         reportAttempt(o.finish, onBoard.length, need, "facts");
         if (onBoard.length >= need) {
@@ -4802,15 +4851,27 @@
       $(el.score).textContent = "Situation " + (r + 1) + " of " + rounds.length;
       const sb = $(el.stage + "see"); if (sb) sb.addEventListener("click", reveal);
     }
-    function start() {
+    function predictPhase() {
       const rd = rounds[r];
       phase = "predict"; picked = null; lock = false;
-      $(el.fb).textContent = ""; $(el.fb).className = "fb";
-      draw();
       $(el.ask).innerHTML = "<b>" + esc(rd.situation) + "</b> " + rd.predict.ask;
       $(el.ch).className = "choices stack";
       $(el.ch).innerHTML = shuffle(rd.predict.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
       sayHere(o.finish, rd.situation + " " + plain(rd.predict.ask));
+    }
+    function start() {
+      const rd = rounds[r];
+      picked = null; lock = false;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      phase = rd.cause ? "cause" : "predict"; draw();
+      /* Stage 3 (3Ac.01): the CAUSE first - why did you do it? - then the
+         consequence for somebody else */
+      if (rd.cause) {
+        $(el.ask).innerHTML = "<b>" + esc(rd.situation) + "</b> " + rd.cause.ask;
+        askOnce(o, rd.cause, (ok) => { if (ok) right++; predictPhase(); });
+        return;
+      }
+      predictPhase();
     }
     function reveal() {
       if (lock) return;
@@ -4821,7 +4882,7 @@
       $(el.fb).className = "fb " + (picked.ok ? "good" : "bad"); $(el.fb).textContent = line; say(line);
       r++;
       setTimeout(() => {
-        if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "You thought about " + rounds.length + " things you might do, and what would happen to you. " + o.done); }
+        if (r >= rounds.length) { reportScore(o.finish, right, rounds.reduce((n, x) => n + (x.cause ? 2 : 1), 0)); endStep(o, "You thought about " + rounds.length + " things you might do, and what would happen next. " + o.done); }
         else start();
       }, 4200);
     }
@@ -4956,7 +5017,9 @@
     const needR = Math.max(1, Number(o.reasonsNeeded) || 1);
     function draw() {
       const rd = rounds[r];
-      $(el.stage).innerHTML = '<div class="stagewide"><div class="wantcard"><span class="cpic" aria-hidden="true">' + small(rd.pic) + '</span><div><p class="phase">What do you think about</p><b>' + esc(rd.topic) + "?</b></div></div>" +
+      $(el.stage).innerHTML = '<div class="stagewide">' +
+        (rd.view ? '<div class="person"><span class="ppic" aria-hidden="true">' + small(rd.view.pic) + '</span><div><b>' + esc(rd.view.name) + ' thinks:</b><p class="pbubble">“' + esc(rd.view.says) + "”</p></div></div>" : "") +
+        '<div class="wantcard"><span class="cpic" aria-hidden="true">' + small(rd.pic) + '</span><div><p class="phase">' + (rd.view ? "What do you think about that?" : "What do you think about") + '</p><b>' + esc(rd.topic) + (rd.view ? "" : "?") + "</b></div></div>" +
         '<div class="qline" aria-live="polite">' + (stance ? '<span class="chip qword">' + esc(stance.t) + "</span>" : '<span class="hint">I think…</span>') + " " +
         (given.length ? given.map((g) => '<span class="chip qend">' + esc(g) + "</span>").join(" ") : "") + (given.length < needR ? '<span class="hint">because…</span>' : "") + "</div></div>";
       $(el.score).textContent = "Topic " + (r + 1) + " of " + rounds.length + (needR > 1 ? " · " + given.length + " of " + needR + " reasons" : "");
@@ -5031,13 +5094,16 @@
     const log = [];
     const logs = window.__gpTeamLogs = window.__gpTeamLogs || {};
     logs[o.finish] = log;
-    let r = 0, grown = 0, lock = false, missed = false, score = 0, taskDone = [], taskOrder = [];
+    let r = 0, grown = 0, lock = false, missed = false, score = 0, taskDone = [], taskOrder = [], given = {}, ti = 0;
     const friend = (id) => friends.find((f) => f.id === id) || { name: id, pic: "\u{1F9D2}" };
     function draw() {
       const rd = rounds[r], f = rd ? friend(rd.who) : null;
       const task = rd && rd.kind === "task" ? rd : null;
+      const alloc = rd && rd.kind === "allocate" ? rd : null;
       $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">Together: <b>' + esc(o.goal) + "</b></p>" +
         '<div class="sim teamscene">' + SCENES[o.scene](grown) + "</div>" +
+        (alloc ? '<div class="alloc"><ol class="algo">' + alloc.tasks.map((t, k) => '<li class="' + (given[t.id] ? "done" : k === ti ? "now" : "") + '"><span class="apic" aria-hidden="true">' + small(t.pic) + "</span>" + esc(t.t) + (given[t.id] ? ' <span class="chip small">' + esc(given[t.id]) + "</span>" : "") + "</li>").join("") + "</ol>" +
+          '<div class="teamrow members">' + alloc.members.map((m) => '<button type="button" class="mate" data-m="' + esc(m.id) + '"' + (ti >= alloc.tasks.length ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(m.pic) + "</span>" + esc(m.name) + "<small>" + esc((m.skills || []).join(", ")) + "</small></button>").join("") + "</div></div>" : "") +
         (task ? '<p class="phase">Your job: ' + esc(task.job) + "</p>" + '<div class="orderrow">' + (taskDone.length ? taskDone.map((k, p) => '<span class="ordered"><b>' + (p + 1) + "</b>" + small(task.steps[k].pic) + " " + esc(task.steps[k].t) + "</span>").join('<span class="arrow" aria-hidden="true">&rarr;</span>') : '<span class="sub">Tap what you do first</span>') + "</div>" +
           '<div class="cardsgrid">' + taskOrder.filter((k) => !taskDone.includes(k)).map((k) => '<button type="button" class="tapcard" data-task="' + k + '"><span class="cpic" aria-hidden="true">' + small(task.steps[k].pic) + "</span>" + esc(task.steps[k].t) + "</button>").join("") + "</div>" : "") +
         '<div class="teamrow">' + friends.map((x) => '<span class="mate' + (f && f.id === x.id ? " now" : "") + '"><span class="cpic" aria-hidden="true">' + small(x.pic) + "</span>" + esc(x.name) + "</span>").join("") + '<span class="mate you"><span class="cpic" aria-hidden="true">\u{1F9D2}</span>You</span></div>' +
@@ -5068,6 +5134,12 @@
         $(el.ch).className = "choices stack";
         $(el.ch).innerHTML = shuffle(rd.opts).map((x, k) => '<button type="button" class="choice text" data-good="' + (x.good ? 1 : 0) + '" data-k="' + rd.opts.indexOf(x) + '">' + esc(x.t) + "</button>").join("");
         sayHere(o.finish, rd.situation + " " + q);
+      } else if (rd.kind === "allocate") {
+        /* an ALLOCATE round is Stage 3's cooperation (3Cc.01): the team gives
+           out its jobs, and each job goes to the member who can do it */
+        given = {}; ti = 0; draw();
+        $(el.ask).innerHTML = "The team has jobs to give out. <b>" + esc(rd.tasks[0].t) + "</b>: who should do it? Tap the person.";
+        sayHere(o.finish, "The team has jobs to give out. " + rd.tasks[0].t + ": who should do it? Tap the person.");
       } else if (rd.kind === "task") {
         /* a TASK round is Stage 2's cooperation (2Cc.01): the child carries
            out their own job, in order, and the shared outcome moves on */
@@ -5083,7 +5155,7 @@
       r++;
       setTimeout(() => {
         if (r >= rounds.length) { reportScore(o.finish, score, rounds.filter((x) => x.kind !== "friend").length); endStep(o, "The team finished: " + o.goal + ". " + o.done); }
-        else if (rounds[r].kind === "task") { start(); }
+        else if (rounds[r].kind === "task" || rounds[r].kind === "allocate") { start(); }
         else start();
       }, 3400);
     }
@@ -5095,6 +5167,26 @@
       next();
     }
     $(el.stage).addEventListener("click", (e) => {
+      const mb = e.target.closest("[data-m]");
+      if (mb && !lock && rounds[r] && rounds[r].kind === "allocate") {
+        const rd = rounds[r], t = rd.tasks[ti], m = rd.members.find((x) => x.id === mb.dataset.m);
+        if ((m.skills || []).includes(t.needs)) {
+          given[t.id] = m.name; ti++; SOUND.play("pop", 0.35); draw();
+          const line = cheer() + " " + t.t + " goes to " + m.name + ", who is good at " + t.needs + ".";
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          if (ti >= rd.tasks.length) {
+            lock = true; if (!missed) score++;
+            log.push({ who: "you", text: rd.log || "You gave every job to the right person.", pic: rd.pic || "\u{1F4CB}", missed: missed });
+            setTimeout(() => { grow("Every job has the right person. " + (rd.why || "That is how a team gets a big job done.")); next(); }, 1400);
+          } else { $(el.ask).innerHTML = "<b>" + esc(rd.tasks[ti].t) + "</b>: who should do it?"; sayHere(o.finish, rd.tasks[ti].t + ": who should do it?"); }
+        } else {
+          missed = true; mb.classList.add("wrong"); SOUND.play("error", 0.3);
+          const line = m.name + " is good at " + (m.skills || []).join(" and ") + ", not " + t.needs + ". Who is good at " + t.needs + "?";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          setTimeout(() => mb.classList.remove("wrong"), 700);
+        }
+        return;
+      }
       const tb = e.target.closest("[data-task]"); if (!tb || lock) return;
       const rd = rounds[r], f = friend(rd.who), k = Number(tb.dataset.task);
       if (k === taskDone.length) {
@@ -5102,7 +5194,7 @@
         $(el.fb).className = "fb good"; $(el.fb).textContent = "Step " + taskDone.length + ": " + rd.steps[k].t + "."; say(rd.steps[k].t);
         if (taskDone.length === rd.steps.length) {
           lock = true; if (!missed) score++;
-          log.push({ who: "you", text: rd.log || ("You " + lower1(rd.job)), pic: rd.pic || "\u{1F6E0}\ufe0f" });
+          log.push({ who: "you", text: rd.log || ("You " + lower1(rd.job)), pic: rd.pic || "\u{1F6E0}\ufe0f", missed: missed });
           setTimeout(() => { grow(cheer() + " Your job is done: " + rd.job + ". " + f.name + " can carry on now. " + (rd.why || "")); next(); }, 1200);
         }
       } else {
@@ -5121,7 +5213,7 @@
         if (both) {
           lock = true; if (!missed) score++;
           $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
-          log.push({ who: "you", text: rd.log || b.textContent, pic: rd.resource.pic });
+          log.push({ who: "you", text: rd.log || b.textContent, pic: rd.resource.pic, missed: missed });
           grow(cheer() + " You keep " + mine + " " + rd.resource.label + " and " + f.name + " has " + theirs + ". You both have enough. " + rd.why);
           next();
         } else {
@@ -5136,7 +5228,7 @@
         if (opt.good) {
           lock = true; if (!missed) score++;
           $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
-          log.push({ who: "you", text: rd.log || opt.log || opt.t, pic: rd.pic || (rd.kind === "idea" ? "\u{1F4A1}" : "\u{1F91D}") });
+          log.push({ who: "you", text: rd.log || opt.log || opt.t, pic: rd.pic || (rd.kind === "idea" ? "\u{1F4A1}" : "\u{1F91D}"), missed: missed });
           grow(cheer() + " " + rd.why);
           next();
         } else {
@@ -5234,18 +5326,26 @@
     const pool = shuffle(learned.map((x, k) => ({ t: x.t, lesson: x.lesson, ok: true, k })).concat(o.not.map((t, k) => ({ t, ok: false, k: 1000 + k }))));
     const pick = Math.min(o.pick || 2, learned.length);
     const got = new Set();
-    let phase = "learned", liked = null, missed = 0, lock = false;
+    const changed = o.changed || [];
+    let phase = "learned", liked = null, missed = 0, lock = false, before = null;
     function draw() {
+      if (phase === "changed") {
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (before === null ? "Before this lesson, I thought…" : "Now I think…") + '</p><div class="cardsgrid wide">' +
+          (before === null ? changed.map((c, k) => '<button type="button" class="tapcard learncard" data-before="' + k + '">' + esc(c.before) + "</button>").join("")
+            : shuffle(changed.map((c, k) => k)).map((k) => '<button type="button" class="tapcard learncard" data-after="' + k + '">' + esc(changed[k].after) + "</button>").join("")) + "</div></div>";
+        $(el.score).textContent = before === null ? "Pick how one of your ideas changed" : "Now pick what you think now";
+        return;
+      }
       if (phase === "learned") {
         $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">I learned that…</p><div class="cardsgrid wide">' + pool.map((c) => '<button type="button" class="tapcard learncard' + (got.has(c.k) ? " heard" : "") + '" data-k="' + c.k + '"' + (got.has(c.k) || lock ? " disabled" : "") + '>' + (c.lesson ? '<small>Lesson ' + c.lesson + "</small>" : "") + esc(lower1(c.t)) + "</button>").join("") + "</div></div>";
         $(el.score).textContent = got.size + " of " + pick + " things learned";
       } else if (phase === "liked") {
-        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (o.mode === "helped" ? "The part that helped me learn most was…" : "I liked…") + '</p><div class="cardsgrid">' + o.liked.map((c, k) => '<button type="button" class="tapcard likecard' + (liked === k ? " now" : "") + '" data-l="' + k + '"><span class="cpic" aria-hidden="true">' + small(c.icon) + "</span>" + esc(c.title) + (c.lesson ? "<small>Lesson " + c.lesson + "</small>" : "") + "</button>").join("") + "</div></div>";
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (o.mode === "changed" ? "The kind of activity that helped me learn most was…" : o.mode === "helped" ? "The part that helped me learn most was…" : "I liked…") + '</p><div class="cardsgrid">' + o.liked.map((c, k) => '<button type="button" class="tapcard likecard' + (liked === k ? " now" : "") + '" data-l="' + k + '"><span class="cpic" aria-hidden="true">' + small(c.icon) + "</span>" + esc(c.title) + (c.lesson ? "<small>Lesson " + c.lesson + "</small>" : "") + "</button>").join("") + "</div></div>";
         $(el.score).textContent = o.mode === "helped" ? "Tap the part that helped you learn most" : "Tap the part you liked best";
       }
     }
     function becauses() {
-      const lead = o.mode === "helped" ? "The part that helped you learn most was <b>" + esc(o.liked[liked].title) + "</b>. Why did it help? Tap a reason." : "You liked <b>" + esc(o.liked[liked].title) + "</b>. Why? Tap a reason.";
+      const lead = o.mode === "changed" ? "The kind of activity that helped you learn most was <b>" + esc(o.liked[liked].title) + "</b>. Why did it help? Tap a reason." : o.mode === "helped" ? "The part that helped you learn most was <b>" + esc(o.liked[liked].title) + "</b>. Why did it help? Tap a reason." : "You liked <b>" + esc(o.liked[liked].title) + "</b>. Why? Tap a reason.";
       $(el.ask).innerHTML = lead;
       $(el.ch).className = "choices stack";
       $(el.ch).innerHTML = shuffle(o.becauses).map((t) => '<button type="button" class="choice text" data-why="' + esc(t) + '">' + esc(t) + "</button>").join("");
@@ -5262,13 +5362,41 @@
           reportAttempt(o.finish, got.size, pick, "things learned");
           if (got.size >= pick) {
             lock = true;
-            setTimeout(() => { lock = false; phase = "liked"; draw(); $(el.fb).textContent = ""; const q = o.mode === "helped" ? "Now: which part <b>helped you learn</b> most? Tap it." : "Now: which part did you <b>like</b> best? Tap it."; $(el.ask).innerHTML = q; sayHere(o.finish, plain(q)); }, 2600);
+            setTimeout(() => {
+              lock = false; $(el.fb).textContent = "";
+              if (o.mode === "changed") { phase = "changed"; before = null; draw(); const q = "Now: how did one of your ideas <b>change</b>? Tap what you thought before."; $(el.ask).innerHTML = q; sayHere(o.finish, plain(q)); return; }
+              phase = "liked"; draw(); const q = o.mode === "helped" ? "Now: which part <b>helped you learn</b> most? Tap it." : "Now: which part did you <b>like</b> best? Tap it."; $(el.ask).innerHTML = q; sayHere(o.finish, plain(q));
+            }, 2600);
           }
         } else {
           missed++; lc.classList.add("wrong"); SOUND.play("error", 0.3);
           const line = "We did not do that today. Tap something you really did learn in this lesson.";
           $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
           setTimeout(() => lc.classList.remove("wrong"), 700);
+        }
+        return;
+      }
+      const bc = e.target.closest("[data-before]");
+      if (bc && phase === "changed" && before === null) {
+        before = Number(bc.dataset.before); SOUND.play("click", 0.3); draw();
+        const q = "You thought: " + changed[before].before + " What do you think <b>now</b>? Tap it.";
+        $(el.ask).innerHTML = q; sayHere(o.finish, plain(q));
+        return;
+      }
+      const ac = e.target.closest("[data-after]");
+      if (ac && phase === "changed" && before !== null) {
+        const k = Number(ac.dataset.after);
+        if (k === before) {
+          SOUND.play("tada", 0.4);
+          const sentence = "Before, I thought " + lower1(noDot(changed[k].before)) + ". Now I think " + lower1(noDot(changed[k].after)) + ".";
+          sayLine(el, "You said: <b>" + esc(sentence) + "</b> That is an idea that changed.", "You said: " + sentence + " That is an idea that changed.");
+          lock = true;
+          setTimeout(() => { lock = false; phase = "liked"; draw(); $(el.fb).textContent = ""; const q = "Last: which <b>kind of activity</b> helped you learn most? Tap it."; $(el.ask).innerHTML = q; sayHere(o.finish, plain(q)); }, 3600);
+        } else {
+          missed++; ac.classList.add("wrong"); SOUND.play("error", 0.3);
+          const line = "That is a different idea. You thought: " + changed[before].before + " What did that change into?";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          setTimeout(() => ac.classList.remove("wrong"), 700);
         }
         return;
       }
@@ -5282,7 +5410,7 @@
       const b = e.target.closest(".choice"); if (!b || phase !== "liked" || liked === null) return;
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
       SOUND.play("tada", 0.4);
-      const sentence = (o.mode === "helped" ? "The part that helped me learn most was " : "I liked ") + o.liked[liked].title + ", " + b.dataset.why + ".";
+      const sentence = (o.mode === "changed" ? "The kind of activity that helped me learn most was " : o.mode === "helped" ? "The part that helped me learn most was " : "I liked ") + o.liked[liked].title + ", " + b.dataset.why + ".";
       sayLine(el, "You said: <b>" + esc(sentence) + "</b>", "You said: " + sentence);
       reportScore(o.finish, pick, pick + missed);
       setTimeout(() => endStep(o), 3200);
@@ -5439,7 +5567,10 @@
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         r++;
         setTimeout(() => {
-          if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "You found the sentence that answers " + rounds.length + " questions. " + o.done); }
+          if (r >= rounds.length) {
+            if (o.then) { lock = true; draw(-1); $(el.fb).textContent = ""; askOnce(o, o.then, (ok) => { reportScore(o.finish, right + (ok ? 1 : 0), rounds.length + 1); endStep(o); }); }
+            else { reportScore(o.finish, right, rounds.length); endStep(o, "You found the sentence that answers " + rounds.length + " questions. " + o.done); }
+          }
           else start();
         }, 3400);
       } else {
@@ -5451,6 +5582,124 @@
     });
     ONSHOW[o.finish] = (function () { let said = false; return () => { if (said) return; said = true; afterVoice(() => sayHere(o.finish, lines.join(" ") + " " + rounds[0].ask + " Tap the sentence that tells us.")); }; })();
     start();
+  }
+
+
+  /* ---- observe and count (3Rc.01) ---------------------------------------
+     A scene full of things. Each round names one KIND to count; the child
+     taps every one of that kind, and each tap is one more in the row. A
+     tap on the wrong kind says what it is. The table fills from what was
+     tapped, and the count is computed from the scene by the builder and
+     the gate, never authored. */
+  function observeCount(o) {
+    const el = o.el, scene = o.scene, rounds = o.rounds;
+    const counts = {}; rounds.forEach((r) => { counts[r.kind] = 0; });
+    const tapped = new Set();
+    let r = 0, missed = 0, right = 0, lock = false;
+    function tableHtml() {
+      return '<div class="picto"><p class="pictotitle">' + esc(o.title) + "</p>" + rounds.map((x, k) =>
+        '<div class="pictorow' + (k === r ? " now" : "") + '"><span class="rowlab">' + small(x.pic) + " " + esc(x.label) + '</span><span class="pictocells">' + '<span class="pcell" aria-hidden="true">' + small(x.pic) + "</span>".repeat(counts[x.kind]) + '</span><b class="pcount">' + counts[x.kind] + "</b></div>").join("") + "</div>";
+    }
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="scene" id="' + el.stage + 'sc">' + scene.map((it, k) =>
+        '<button type="button" class="glyph' + (tapped.has(k) ? " got" : "") + '" data-k="' + k + '" aria-label="' + esc(it.label) + '"' + (tapped.has(k) || lock || r >= rounds.length ? " disabled" : "") + ">" + small(it.pic) + "</button>").join("") + "</div>" + tableHtml() + "</div>";
+      $(el.score).textContent = r < rounds.length ? "Counting " + rounds[r].label.toLowerCase() + ": " + counts[rounds[r].kind] + " so far" : "";
+    }
+    function start() {
+      lock = false; draw();
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.ask).innerHTML = esc(rounds[r].ask || "Count the " + rounds[r].label.toLowerCase() + ". Tap each one.");
+      sayHere(o.finish, rounds[r].ask || "Count the " + rounds[r].label.toLowerCase() + ". Tap each one.");
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".glyph"); if (!b || lock || r >= rounds.length) return;
+      const k = Number(b.dataset.k), it = scene[k], rd = rounds[r];
+      if (it.kind === rd.kind) {
+        tapped.add(k); counts[rd.kind]++; SOUND.play("pop", 0.35); draw();
+        const left = scene.filter((x, j) => x.kind === rd.kind && !tapped.has(j)).length;
+        $(el.fb).className = "fb good"; $(el.fb).textContent = counts[rd.kind] + (left ? "" : ". That is all of them.");
+        say(String(counts[rd.kind]) + (left ? "" : ". That is all of them. " + rd.label + ": " + counts[rd.kind] + "."));
+        if (!left) {
+          lock = true; right++;
+          r++;
+          setTimeout(() => {
+            if (r >= rounds.length) { reportScore(o.finish, right, right + missed); endStep(o, "You observed and counted " + rounds.length + " kinds of thing, and recorded every count. " + o.done); }
+            else start();
+          }, 2600);
+        }
+      } else {
+        missed++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const line = "That is " + it.label + ", not " + rd.label.toLowerCase().replace(/s$/, "") + ". Count only the " + rd.label.toLowerCase() + ".";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    start();
+  }
+
+  /* ---- strengths and limitations of my own teamwork (3Fc.01) -----------
+     Reads the team step's log of what THIS child did, with a flag for
+     every round that took more than one go. What went right first time is
+     a strength; what took two goes is a limitation - both from the child's
+     own play, not from an authored claim. A child who got everything first
+     time is told so and picks something they could still do better. Then
+     one question about what working together made possible (3Ft.01). */
+  function strengthsLimits(o) {
+    const el = o.el;
+    const played = (window.__gpTeamLogs || {})[o.teamStep];
+    const log = (played && played.length ? played : o.fallback).filter((x) => x.who === "you");
+    const strengths = log.filter((x) => !x.missed), limits = log.filter((x) => x.missed);
+    const found = new Set();
+    let phase = "strong", right = 0, missed = 0, lock = false;
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (phase === "strong" ? "What did you do WELL, first time?" : phase === "limit" ? "What took you more than one go?" : phase === "pick" ? "What could you do better next time?" : "Your teamwork") + "</p>" +
+        (phase === "pick" ? '<div class="cardsgrid wide">' + o.limits.map((t, k) => '<button type="button" class="tapcard learncard" data-lim="' + k + '">' + esc(t) + "</button>").join("") + "</div>"
+          : '<div class="cardsgrid">' + log.map((x, k) => '<button type="button" class="tapcard logcard' + (found.has(k) ? " heard" : "") + '" data-k="' + k + '"' + (found.has(k) || lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(x.pic) + "</span>" + esc(x.text) + (found.has(k) ? "<small>" + (x.missed ? "took two goes" : "first time") + "</small>" : "") + "</button>").join("") + "</div>") + "</div>";
+      $(el.score).textContent = phase === "strong" ? found.size + " of " + strengths.length + " strengths" : phase === "limit" ? "Find " + limits.length : "";
+    }
+    function toLimits() {
+      if (limits.length) {
+        phase = "limit"; draw();
+        $(el.ask).innerHTML = "Now the honest part. Which of these took you <b>more than one go</b>? Tap it.";
+        sayHere(o.finish, "Now the honest part. Which of these took you more than one go? Tap it.");
+      } else {
+        phase = "pick"; draw();
+        $(el.ask).innerHTML = "You got <b>every one first time</b>. Even so, a good team member can always do better. What could you do better next time? Tap one.";
+        sayHere(o.finish, "You got every one first time. Even so, a good team member can always do better. What could you do better next time? Tap one.");
+      }
+    }
+    function finishUp(line) {
+      if (o.then) { $(el.fb).textContent = ""; askOnce(o, o.then, (ok) => { reportScore(o.finish, right + (ok ? 1 : 0), right + missed + 1); endStep(o); }); }
+      else { reportScore(o.finish, right, right + missed); endStep(o, line); }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const lb = e.target.closest("[data-lim]");
+      if (lb && phase === "pick") {
+        phase = "done"; SOUND.play("tada", 0.4);
+        sayLine(el, "You said: <b>next time I could " + esc(lower1(noDot(o.limits[Number(lb.dataset.lim)]))) + ".</b> Knowing that is a strength too.", "You said: next time I could " + lower1(noDot(o.limits[Number(lb.dataset.lim)])) + ". Knowing that is a strength too.");
+        setTimeout(() => finishUp("You looked at what you did well and what you could do better. " + o.done), 3200);
+        return;
+      }
+      const b = e.target.closest(".logcard"); if (!b || lock || phase === "pick" || phase === "done") return;
+      const k = Number(b.dataset.k), x = log[k];
+      const want = phase === "strong" ? !x.missed : x.missed;
+      if (want) {
+        found.add(k); right++; SOUND.play("pop", 0.35); draw();
+        const line = phase === "strong" ? cheer() + " " + x.text + " First time. That is a strength." : "Yes. " + x.text + " That took two goes. Knowing it is how you get better.";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        const done = phase === "strong" ? strengths.every((s) => found.has(log.indexOf(s))) : limits.every((s) => found.has(log.indexOf(s)));
+        if (done) {
+          lock = true;
+          setTimeout(() => { lock = false; if (phase === "strong") toLimits(); else { phase = "done"; draw(); finishUp("You said what you did well, and what took more than one go. " + o.done); } }, 2600);
+        }
+      } else {
+        missed++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const line = phase === "strong" ? "That one took you more than one go. Look for what you got right first time." : "That one you got first time. Look for the one that took two goes.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    draw();
   }
 
   /* ==================================================================

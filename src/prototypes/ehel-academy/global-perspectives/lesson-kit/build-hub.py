@@ -31,7 +31,7 @@ import os
 import re
 import sys
 
-from _rules import survey_counts, pictogram_answer, relevant, relevant_sources, solutions, share_outcome
+from _rules import survey_counts, observe_counts, pictogram_answer, relevant, relevant_sources, solutions, share_outcome, allocations
 from _shell import expand, finder_words
 
 KIT = os.path.dirname(os.path.abspath(__file__))
@@ -45,7 +45,7 @@ CONTENT = os.path.join(APP, "content")
 
 # minutes a six-year-old spends on a step of each kind, including listening
 MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2,
-           "askq": 4, "source": 3, "text": 3, "survey": 5, "pictogram": 3, "organiser": 3,
+           "askq": 4, "source": 3, "text": 3, "survey": 5, "observe": 4, "pictogram": 3, "organiser": 3, "strengths": 3,
            "know": 3, "answer": 3, "listen": 4, "consequence": 3, "solve": 4,
            "sources": 4, "opinion": 3, "team": 5, "contrib": 3, "lookback": 3,
            "questions": 3, "quiz": 4,
@@ -57,6 +57,8 @@ TOGETHER = {
     "askq": "Pick a topic (pets, the park, dinner). Take turns asking a question about it that starts with What, Where, Who, When, Why or How. Count how many different questions you can ask.",
     "source": "Look at one photo or picture book page together. Ask: what does this picture tell us? Find three things in it and say a fact about each.",
     "text": "Read a short page of a non-fiction book together. Ask a question, and let the child find the ONE sentence that answers it and read it out.",
+    "observe": "Stand at a window or a gate for five minutes and count one kind of thing - red cars, people with dogs, buses. Make a mark for each. Then count a second kind and compare.",
+    "strengths": "After a job done together, ask: what did you do well? What would you do differently next time? One of each, honestly.",
     "survey": "Ask everyone at home one question with a few answers (how do you get to work or school?). Draw one small picture per person in a row for each answer.",
     "pictogram": "Look at the picture rows you made. Ask: which row is the longest? How many chose this? Did anyone choose that?",
     "organiser": "Draw two big circles or two columns on paper and sort what you found out into them, one fact at a time, saying why each goes where it goes.",
@@ -300,8 +302,16 @@ def keys_for(s):
             bits.append("%s &rarr; <b>%s</b>" % (text(plain(d["then"]["ask"])), text(keyed["t"])))
         out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), ". ".join(bits)))
     elif k == "text":
-        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
-            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(rd["ask"])), text(d["lines"][rd["line"]])) for rd in d["rounds"])))
+        items = ["<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(rd["ask"])), text(d["lines"][rd["line"]])) for rd in d["rounds"]]
+        if d.get("then"):
+            items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(d["then"]["ask"])), text(ok_text(d["then"]["opts"]))))
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(items)))
+    elif k == "observe":
+        rows = observe_counts(d["scene"], d["rounds"])
+        out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), "; ".join("%s <b>%d</b>" % (text(r["label"]), r["value"]) for r in rows)))
+    elif k == "strengths":
+        out.append("<li><b>%s</b> <span class=\"key\">reads the team step's own record: what the child got right first time is a strength, what took more than one go is a limitation%s</span></li>" % (
+            text(s["title"]), (". Then: %s &rarr; <b>%s</b>" % (text(plain(d["then"]["ask"])), text(ok_text(d["then"]["opts"])))) if d.get("then") else ""))
     elif k == "survey":
         names = {x["id"]: x["t"] for x in d["options"]}
         rows = survey_counts(d["people"], d["options"])
@@ -351,6 +361,10 @@ def keys_for(s):
                 items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(rd["situation"]), text(next(o["t"] for o in rd["opts"] if o.get("good")))))
             elif rd["kind"] == "task":
                 items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(rd["job"]), text(" &rarr; ".join(st["t"] for st in rd["steps"]))))
+            elif rd["kind"] == "allocate":
+                names = {m["id"]: m["name"] for m in rd["members"]}
+                who = allocations(rd["tasks"], rd["members"])
+                items.append("<li>give out the jobs <span class=\"key\">&rarr; %s</span></li>" % "; ".join("%s: <b>%s</b>" % (text(t["t"]), text(names[who[t["id"]][0]])) for t in rd["tasks"]))
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(items)))
     elif k == "contrib":
         out.append("<li><b>%s</b> <span class=\"key\">reads the team step's own record - what the child chose IS the key. If the team step was skipped: %s</span></li>" % (
@@ -403,6 +417,11 @@ def fill_for_hub(steps, modules_all):
     record from its team step, the course look-back from every lesson."""
     for k, s in enumerate(steps):
         d = s["data"]
+        if s["kind"] == "pictogram" and d.get("fromObserve") and not d.get("rows"):
+            ob = [x for x in steps[:k] if x["kind"] == "observe"][-1]["data"]
+            d["rows"] = observe_counts(ob["scene"], ob["rounds"])
+        if s["kind"] == "strengths" and not d.get("fallback"):
+            d["fallback"] = [{"who": "you", "text": "what you did", "missed": False}]
         if s["kind"] == "pictogram" and d.get("fromSurvey") and not d.get("rows"):
             sv = [x for x in steps[:k] if x["kind"] == "survey"][-1]["data"]
             d["rows"] = survey_counts(sv["people"], sv["options"])
@@ -418,6 +437,8 @@ def fill_for_hub(steps, modules_all):
                     fb.append({"who": "you", "text": rd.get("log") or next(o["t"] for o in rd["opts"] if o.get("good"))})
                 elif rd["kind"] == "task":
                     fb.append({"who": "you", "text": rd.get("log") or ("You " + rd["job"][:1].lower() + rd["job"][1:])})
+                elif rd["kind"] == "allocate":
+                    fb.append({"who": "you", "text": rd.get("log") or "You gave every job to the right person."})
                 else:
                     fb.append({"who": rd["who"], "text": rd.get("log") or (names[rd["who"]] + " " + rd["did"])})
             d["fallback"] = fb

@@ -53,6 +53,30 @@ def lookback_codes(stage):
     return ["%dFv.01" % int(stage), "%dFl.01" % int(stage)]
 
 
+# At Stage 3 the look-back asks how ideas CHANGED (3Fv.01) and which TYPE of
+# activity helped (3Fl.01), so the "helped" cards are types derived from the
+# lesson's own step kinds rather than its step titles.
+TYPE_OF = {
+    "askq": ("building questions", "❓"), "source": ("reading a picture", "\U0001F5BC\ufe0f"), "text": ("reading a text", "\U0001F4C4"),
+    "survey": ("interviewing classmates", "\U0001F399\ufe0f"), "observe": ("observing and counting", "\U0001F440"),
+    "pictogram": ("reading a chart", "\U0001F4CA"), "organiser": ("recording on a chart", "\U0001F4CB"),
+    "know": ("giving a talk", "\U0001F5E3\ufe0f"), "answer": ("answering questions", "\U0001F4AC"),
+    "listen": ("listening and asking", "\U0001F442"), "consequence": ("thinking about what happens next", "➡\ufe0f"),
+    "solve": ("choosing actions", "\U0001F527"), "sources": ("choosing sources", "\U0001F4DA"),
+    "opinion": ("giving my opinion", "\U0001F4AD"), "team": ("a team job", "\U0001F91D"),
+    "contrib": ("looking back at the team", "\U0001F64B"), "strengths": ("looking at what I did well", "\U0001F4AA"),
+    "sort": ("sorting things", "\U0001F5C2\ufe0f"), "explore": ("tapping and listening", "\U0001F50D"),
+    "context": ("tapping and listening", "\U0001F50D"), "demo": ("watching a demonstration", "\U0001F3AC"),
+    "questions": ("practice questions", "✅"), "order": ("putting things in order", "\U0001F522"),
+}
+DEFAULT_TYPE_BECAUSES = [
+    "because I had to do it myself",
+    "because I could see the answer happen",
+    "because I heard other people's ideas",
+    "because I had to think before I tapped",
+    "because we did it as a team",
+]
+
 # At Stage 1 the second half is "something liked in a particular activity"
 # (1Fl.01); at Stage 2 it is "a particular activity that supported learning"
 # (2Fl.01), so the page asks which part HELPED rather than which part was liked.
@@ -160,6 +184,27 @@ def lookback_step(lesson, core, cfg):
     becauses = list(lb.get("becauses") or (DEFAULT_HELPED if helped else DEFAULT_BECAUSES))
     learned = list(lesson.get("about") or [])
     liked = [{"title": plain(s["title"]), "icon": s["icon"]} for s in core if s["kind"] not in ("quiz",)]
+    if stage >= 3:
+        changed = list(lb.get("changed") or [])
+        if len(changed) < 2:
+            raise SystemExit("REFUSED: lesson %r is at Stage 3+, so its LESSON[\"lookback\"][\"changed\"] must hold 2+ {before, after} pairs (3Fv.01)" % lesson["title"])
+        seen, types = set(), []
+        for s in core:
+            t = TYPE_OF.get(s["kind"])
+            if t and t[0] not in seen:
+                seen.add(t[0]); types.append({"title": t[0], "icon": t[1]})
+        return step("lookback", "Look back", "\U0001FA9E", "I looked back", lookback_codes(stage),
+                    "What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.",
+                    explain(
+                        ["Looking back at Stage 3 has three parts.", "What you learned, how your ideas changed, and which KIND of activity helped."],
+                        ["First: I learned that. Tap two things you really did learn today.",
+                         "Then: before I thought, now I think. Pick how one of your ideas changed.",
+                         "Then: which kind of activity helped you learn most, and why."],
+                        ["Children say their ideas did not change.", "If you learned something, an idea moved. Find it."],
+                        ["Tap the first thing you learned."]),
+                    {"scope": "lesson", "mode": "changed", "learned": learned, "not": not_learned, "changed": changed,
+                     "liked": types, "becauses": list(lb.get("becauses") or DEFAULT_TYPE_BECAUSES), "pick": min(2, len(learned))},
+                    "You looked back: what you learned, how your ideas changed, and what kind of activity helped. That is reflecting.")
     if helped:
         return step("lookback", "Look back", "\U0001FA9E", "I looked back", lookback_codes(stage),
                     "What did you learn today, and which part helped you learn it? Tap to say it.",

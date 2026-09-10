@@ -38,9 +38,28 @@ def survey_counts(people, options):
     return [{"label": o["t"], "pic": o["pic"], "value": counts[o["id"]]} for o in options]
 
 
+def observe_counts(scene, rounds):
+    """The table an observation makes: how many things of each kind are in the scene."""
+    return [{"label": r["label"], "pic": r["pic"], "value": sum(1 for it in scene if it["kind"] == r["kind"])} for r in rounds]
+
+
 def pictogram_answer(rows, check):
-    """The one answer a pictogram question has, or None if it has no single one."""
+    """The one answer a pictogram question has, or None if it has no single one.
+
+    Stage 3 (3Ad.01, draw simple conclusions) adds three: `more` (is a more
+    than b? Yes/No, a tie refused), `total` (all the rows added up) and
+    `difference` (how many more a has than b)."""
     kind = check.get("kind")
+    if kind == "total":
+        return str(sum(r["value"] for r in rows))
+    if kind in ("more", "difference"):
+        a = next((r for r in rows if r["label"] == check.get("a")), None)
+        b = next((r for r in rows if r["label"] == check.get("b")), None)
+        if a is None or b is None or a is b:
+            return None
+        if kind == "more":
+            return None if a["value"] == b["value"] else ("Yes" if a["value"] > b["value"] else "No")
+        return str(abs(a["value"] - b["value"]))
     if kind in ("most", "least"):
         pick = max if kind == "most" else min
         best = pick(r["value"] for r in rows)
@@ -73,6 +92,11 @@ def relevant_sources(sources, topic):
 def solutions(actions, needs):
     """Ids of the actions whose effect is what the issue needs."""
     return [a["id"] for a in actions if a.get("effect") == needs]
+
+
+def allocations(tasks, members):
+    """For each task, the ids of the members whose skills include what it needs."""
+    return {t["id"]: [m["id"] for m in members if t["needs"] in (m.get("skills") or [])] for t in tasks}
 
 
 def share_outcome(you, give, need):

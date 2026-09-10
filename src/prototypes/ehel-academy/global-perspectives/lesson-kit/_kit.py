@@ -80,9 +80,28 @@ def q(ask, pic, right, wrongs, why):
 
 # ---- the people, sources and tagged options the GP steps are written in --
 
-def person(id_, name, pic):
-    """A classmate or family member: an id, a name and an emoji."""
-    return {"id": id_, "name": name, "pic": pic}
+def person(id_, name, pic, skills=None):
+    """A classmate or family member: an id, a name and an emoji - and, for a
+    team that allocates tasks (3Cc.01), the things they are good at."""
+    out = {"id": id_, "name": name, "pic": pic}
+    if skills:
+        out["skills"] = list(skills)
+    return out
+
+
+def glyph(pic, kind, label):
+    """One thing in a scene to observe and count (3Rc.01)."""
+    return {"pic": pic, "kind": kind, "label": label}
+
+
+def slot(id_, label, hint):
+    """One part of a structured talk: start, middle, end (3Mi.01)."""
+    return {"id": id_, "label": label, "hint": hint}
+
+
+def task(id_, t, pic, needs):
+    """A job a team has to give to somebody: what it needs is a skill (3Cc.01)."""
+    return {"id": id_, "t": t, "pic": pic, "needs": needs}
 
 
 def tagged(t, about, pic=""):

@@ -87,13 +87,13 @@ KINDS = {
     "demo": "demo",
     # research
     "askq": "questionBuilder", "source": "pictureSource", "text": "textSource", "survey": "survey",
-    "pictogram": "pictogramRead", "organiser": "organiser",
+    "pictogram": "pictogramRead", "organiser": "organiser", "observe": "observeCount",
     # analysis
     "know": "knowBoard", "consequence": "consequences", "solve": "solveIt",
     # evaluation
     "sources": "pickSource", "opinion": "opinion",
     # collaboration and reflection
-    "team": "teamBuild", "contrib": "contributions", "lookback": "lookBack",
+    "team": "teamBuild", "contrib": "contributions", "strengths": "strengthsLimits", "lookback": "lookBack",
     # communication
     "answer": "relevantAnswer", "listen": "listenAsk",
     "questions": "sequence", "quiz": "sequence",
@@ -104,8 +104,8 @@ KINDS = {
 
 # The relationships the subject is about live in _rules.py, shared with the
 # gate, so the builder and check-coverage.py cannot disagree about any of them.
-from _rules import (survey_counts, pictogram_answer, relevant, relevant_sources,  # noqa: E402
-                    solutions, share_outcome, question_fits)
+from _rules import (survey_counts, observe_counts, pictogram_answer, relevant, relevant_sources,  # noqa: E402
+                    solutions, share_outcome, question_fits, allocations)
 
 
 def read(name):
@@ -173,6 +173,20 @@ def fill_derived(n, lesson, steps, everything):
     step, a course-wide look-back from every lesson's about lines."""
     for k, s in enumerate(steps):
         d = s["data"]
+        if s["kind"] == "pictogram" and d.get("fromObserve"):
+            prev = [x for x in steps[:k] if x["kind"] == "observe"]
+            if not prev:
+                sys.exit("REFUSED: lesson %d step %d (%s) reads its rows from an observation, and no observe step comes before it" % (n, k + 1, s["title"]))
+            ob = prev[-1]["data"]
+            d["rows"] = observe_counts(ob["scene"], ob["rounds"])
+            d.setdefault("title", ob["title"])
+            d.setdefault("columns", ob.get("columns") or ["What we saw", "How many"])
+        if s["kind"] == "strengths":
+            prev = [x for x in steps[:k] if x["kind"] == "team"]
+            if not prev:
+                sys.exit("REFUSED: lesson %d step %d (%s) looks at strengths, and no team step comes before it" % (n, k + 1, s["title"]))
+            d["fallback"] = [dict(x, missed=False) for x in team_log(prev[-1]["data"]) if x["who"] == "you"]
+            d["teamStep"] = steps.index(prev[-1])
         if s["kind"] == "pictogram" and d.get("fromSurvey"):
             prev = [x for x in steps[:k] if x["kind"] == "survey"]
             if not prev:
@@ -212,6 +226,8 @@ def team_log(d):
             out.append({"who": "you", "text": rd.get("log") or good["t"], "pic": rd.get("pic", "\U0001F4A1")})
         elif rd["kind"] == "task":
             out.append({"who": "you", "text": rd.get("log") or ("You " + lower_first(rd["job"])), "pic": rd.get("pic", "\U0001F6E0\ufe0f")})
+        elif rd["kind"] == "allocate":
+            out.append({"who": "you", "text": rd.get("log") or "You gave every job to the right person.", "pic": rd.get("pic", "\U0001F4CB")})
         else:
             out.append({"who": rd["who"], "text": rd.get("log") or (names[rd["who"]] + " " + rd["did"]), "pic": rd.get("pic", "\U0001F64C")})
     return out
@@ -336,9 +352,33 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
                 sys.exit("REFUSED: %s question: exactly one option must name a spot in the picture (has %d)" % (where, len(keyed)))
             if len(t["opts"]) < 2 or not t.get("why"):
                 sys.exit("REFUSED: %s question needs 2+ options and a why" % where)
+    elif kind == "observe":
+        kinds = [r["kind"] for r in d["rounds"]]
+        if len(d["scene"]) < 6 or len(kinds) < 2 or len(set(kinds)) != len(kinds):
+            sys.exit("REFUSED: %s needs 6+ things in the scene and 2+ distinct kinds to count" % where)
+        for r in d["rounds"]:
+            if not any(it["kind"] == r["kind"] for it in d["scene"]):
+                sys.exit("REFUSED: %s counts %r, and the scene has none" % (where, r["kind"]))
+            if not (r.get("label") and r.get("pic")):
+                sys.exit("REFUSED: %s round %r needs a label and a pic" % (where, r["kind"]))
+        if not d.get("title"):
+            sys.exit("REFUSED: %s has no title" % where)
+    elif kind == "strengths":
+        if len(d.get("limits") or []) < 2:
+            sys.exit("REFUSED: %s needs 2+ things the child could do better next time" % where)
+        if d.get("then"):
+            one_ok(d["then"]["opts"], where + " question")
+            if not d["then"].get("why"):
+                sys.exit("REFUSED: %s question has no why" % where)
+        if not d.get("fallback"):
+            sys.exit("REFUSED: %s has nothing the child did in its team step" % where)
     elif kind == "text":
         if len(d["lines"]) < 3 or len(d["rounds"]) < 2:
             sys.exit("REFUSED: %s needs 3+ lines and 2+ questions" % where)
+        if d.get("then"):
+            one_ok(d["then"]["opts"], where + " closing question")
+            if not d["then"].get("why"):
+                sys.exit("REFUSED: %s closing question has no why" % where)
         for rd in d["rounds"]:
             if not isinstance(rd.get("line"), int) or not 0 <= rd["line"] < len(d["lines"]):
                 sys.exit("REFUSED: %s round %r points at line %r, of %d" % (where, rd.get("ask"), rd.get("line"), len(d["lines"])))
@@ -375,8 +415,19 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
             sys.exit("REFUSED: %s needs 4+ cards, 2+ about %r and at least one about something else" % (where, d["tag"]))
         if d.get("need", 2) > len(on):
             sys.exit("REFUSED: %s asks for %d things known and only %d cards are about the topic" % (where, d["need"], len(on)))
-        if d.get("mode") not in (None, "talk"):
+        if d.get("mode") not in (None, "talk", "structured"):
             sys.exit("REFUSED: %s has an unknown mode %r" % (where, d["mode"]))
+        if d.get("mode") == "structured":
+            slots = d.get("slots") or []
+            if len(slots) < 2:
+                sys.exit("REFUSED: %s structured talk needs 2+ slots" % where)
+            for sl in slots:
+                if not any(c.get("about") == d["tag"] and c.get("part") == sl["id"] for c in d["cards"]):
+                    sys.exit("REFUSED: %s structured talk has no card about %r for the %r slot" % (where, d["tag"], sl["id"]))
+            for c in d["cards"]:
+                if c.get("about") == d["tag"] and c.get("part") not in {sl["id"] for sl in slots}:
+                    sys.exit("REFUSED: %s card %r is about the topic but names no slot" % (where, c["t"]))
+            d["need"] = len(slots)
         for c in d["cards"]:
             if not c.get("say"):
                 sys.exit("REFUSED: %s card %r says nothing" % (where, c["t"]))
@@ -405,6 +456,8 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
             sys.exit("REFUSED: %s has fewer than 3 situations" % where)
         for rd in d["rounds"]:
             one_ok(rd["predict"]["opts"], where + " %r" % rd["situation"])
+            if rd.get("cause"):
+                one_ok(rd["cause"]["opts"], where + " cause of %r" % rd["situation"])
             if not (rd.get("result") and rd["result"].get("say") and rd.get("why")):
                 sys.exit("REFUSED: %s %r needs a result with something to say, and a why" % (where, rd["situation"]))
     elif kind == "solve":
@@ -454,10 +507,10 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
         if len(fids) < 2 or len(d["rounds"]) < 3:
             sys.exit("REFUSED: %s needs 2+ friends and 3+ rounds" % where)
         kinds = {rd["kind"] for rd in d["rounds"]}
-        if "friend" not in kinds or not (kinds & {"share", "work", "idea", "task"}):
-            sys.exit("REFUSED: %s needs a friend round and at least one share, work, idea or task round (has %s)" % (where, sorted(kinds)))
-        if not kinds <= {"share", "work", "idea", "task", "friend"}:
-            sys.exit("REFUSED: %s has an unknown round kind (%s)" % (where, sorted(kinds - {"share", "work", "idea", "task", "friend"})))
+        if "friend" not in kinds or not (kinds & {"share", "work", "idea", "task", "allocate"}):
+            sys.exit("REFUSED: %s needs a friend round and at least one share, work, idea, task or allocate round (has %s)" % (where, sorted(kinds)))
+        if not kinds <= {"share", "work", "idea", "task", "allocate", "friend"}:
+            sys.exit("REFUSED: %s has an unknown round kind (%s)" % (where, sorted(kinds - {"share", "work", "idea", "task", "allocate", "friend"})))
         for rd in d["rounds"]:
             if rd["who"] not in fids:
                 sys.exit("REFUSED: %s round is about %r, not a friend" % (where, rd["who"]))
@@ -479,6 +532,13 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
                 ids = [st["id"] for st in rd.get("steps") or []]
                 if len(ids) < 2 or len(set(ids)) != len(ids) or not rd.get("job"):
                     sys.exit("REFUSED: %s task round needs a job and 2+ steps with distinct ids" % where)
+            elif rd["kind"] == "allocate":
+                members = rd.get("members") or []
+                if len(rd.get("tasks") or []) < 2 or len(members) < 2:
+                    sys.exit("REFUSED: %s allocate round needs 2+ tasks and 2+ members" % where)
+                for tid, who in allocations(rd["tasks"], members).items():
+                    if len(who) != 1:
+                        sys.exit("REFUSED: %s allocate round: task %r fits %d members, must fit exactly one" % (where, tid, len(who)))
             else:
                 if not rd.get("did"):
                     sys.exit("REFUSED: %s friend round says nothing the friend did" % where)
@@ -492,6 +552,8 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
                 sys.exit("REFUSED: %s records an action by %r, not a friend" % (where, x["who"]))
     elif kind == "lookback":
         learned = d["learned"]
+        if d.get("mode") == "changed" and len(d.get("changed") or []) < 2:
+            sys.exit("REFUSED: %s needs 2+ before/after pairs" % where)
         texts = {(x["t"] if isinstance(x, dict) else x) for x in learned}
         if not learned or len(d["not"]) < 2 or len(d["liked"]) < 2 or len(d["becauses"]) < 3:
             sys.exit("REFUSED: %s needs things learned, 2+ things not learned, 2+ things to like and 3+ reasons" % where)

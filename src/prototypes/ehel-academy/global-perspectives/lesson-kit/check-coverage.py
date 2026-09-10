@@ -41,8 +41,8 @@ import sys
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, KIT)
-from _rules import (survey_counts, pictogram_answer, relevant, relevant_sources,  # noqa: E402
-                    solutions, share_outcome, question_fits)
+from _rules import (survey_counts, observe_counts, pictogram_answer, relevant, relevant_sources,  # noqa: E402
+                    solutions, share_outcome, question_fits, allocations)
 
 REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-global-perspectives-0838.json")
@@ -107,6 +107,7 @@ def main():
         except ValueError as e:
             fail(entry["file"], "LESSON block is not JSON: %s" % e); continue
         last_survey = None
+        last_observe = None
         for k, st in enumerate(data["steps"], 1):
             d = st["data"]
             kind = st["kind"]
@@ -127,8 +128,24 @@ def main():
                 for p in d["people"]:
                     if p["answer"] not in ids:
                         fail(entry["file"], "step %d: %s answers %r, not an option" % (k, p["name"], p["answer"]))
+            elif kind == "observe":
+                last_observe = d
+                if not all(any(it["kind"] == r["kind"] for it in d["scene"]) for r in d["rounds"]):
+                    fail(entry["file"], "step %d counts a kind the scene does not hold" % k)
+                computed += 1
+            elif kind == "strengths":
+                if not d.get("fallback") or len(d.get("limits") or []) < 2:
+                    fail(entry["file"], "step %d has no record of the child's own actions, or too few limits" % k)
+                if d.get("then") and not one_key(d["then"]["opts"]):
+                    fail(entry["file"], "step %d's question does not have exactly one key" % k)
             elif kind == "pictogram":
                 rows = d.get("rows") or []
+                if d.get("fromObserve"):
+                    if last_observe is None:
+                        fail(entry["file"], "step %d reads an observation that is not there" % k)
+                    elif rows != observe_counts(last_observe["scene"], last_observe["rounds"]):
+                        fail(entry["file"], "step %d: the chart does not match what was observed" % k)
+                    computed += 1
                 if d.get("fromSurvey"):
                     if last_survey is None:
                         fail(entry["file"], "step %d reads a survey that is not there" % k)
@@ -162,11 +179,17 @@ def main():
                 for rd in d["rounds"]:
                     if not isinstance(rd.get("line"), int) or not 0 <= rd["line"] < len(d["lines"]):
                         fail(entry["file"], "step %d %r points at a line that is not in the text" % (k, rd.get("ask")))
+                if d.get("then") and not one_key(d["then"]["opts"]):
+                    fail(entry["file"], "step %d's closing question does not have exactly one key" % k)
                 computed += 1
             elif kind == "know":
                 on = relevant(d["cards"], d["tag"])
                 if len(on) < 2 or len(on) == len(d["cards"]) or d.get("need", 2) > len(on):
                     fail(entry["file"], "step %d: the cards about %r do not make a fair round" % (k, d["tag"]))
+                if d.get("mode") == "structured":
+                    for sl in d.get("slots") or []:
+                        if not any(c.get("about") == d["tag"] and c.get("part") == sl["id"] for c in d["cards"]):
+                            fail(entry["file"], "step %d: no card for the %r slot of the talk" % (k, sl["id"]))
                 computed += 1
             elif kind == "answer":
                 for rd in d["rounds"]:
@@ -180,8 +203,8 @@ def main():
                     computed += 1
             elif kind == "consequence":
                 for rd in d["rounds"]:
-                    if not one_key(rd["predict"]["opts"]):
-                        fail(entry["file"], "step %d %r has no single prediction key" % (k, rd["situation"]))
+                    if not one_key(rd["predict"]["opts"]) or (rd.get("cause") and not one_key(rd["cause"]["opts"])):
+                        fail(entry["file"], "step %d %r has no single prediction (or cause) key" % (k, rd["situation"]))
             elif kind == "solve":
                 for rd in d["rounds"]:
                     fixes = solutions(rd["actions"], rd["needs"])
@@ -218,6 +241,10 @@ def main():
                         ids = [st["id"] for st in rd.get("steps") or []]
                         if len(ids) < 2 or len(set(ids)) != len(ids):
                             fail(entry["file"], "step %d task round has no job of 2+ distinct steps" % k)
+                    elif rd["kind"] == "allocate":
+                        if any(len(w) != 1 for w in allocations(rd["tasks"], rd["members"]).values()):
+                            fail(entry["file"], "step %d allocate round: a task does not fit exactly one member" % k)
+                        computed += 1
             elif kind == "contrib":
                 fb = d["fallback"]
                 fids = {f["id"] for f in d["friends"]}
@@ -227,6 +254,8 @@ def main():
                 texts = {(x["t"] if isinstance(x, dict) else x) for x in d["learned"]}
                 if any(x in texts for x in d["not"]) or not d["learned"] or set(st["objectives"]) != LOOKBACK_CODES:
                     fail(entry["file"], "step %d's look-back mixes learned and not-learned, or carries the wrong codes" % k)
+                if d.get("mode") == "changed" and len(d.get("changed") or []) < 2:
+                    fail(entry["file"], "step %d's look-back asks how ideas changed and offers fewer than 2 pairs" % k)
                 computed += 1
             for spec in (d.get("then"),) if kind in ("explore", "context") else ():
                 if spec and not one_key(spec["opts"]):

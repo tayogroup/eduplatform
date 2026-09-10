@@ -36,7 +36,7 @@ const CURRICULUM_DIR = path.join(ROOT, "src", "curriculum");
 const files = args.length
   ? args
   : (fs.existsSync(CURRICULUM_DIR)
-    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science|global-perspectives|mathematics|computing)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
+    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science|global-perspectives|mathematics|computing|art-and-design)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
     : []);
 if (!files.length) {
   console.error(`usage: node tools/validate-curriculum-framework.mjs [--quiet] [<framework.json> ...]\n(no framework files found in ${CURRICULUM_DIR})`);
@@ -65,7 +65,12 @@ if (!files.length) {
 // P, MD, DC, CS - so 1CT.05 and 3DC.04 are well-formed. CT, MD, DC and CS are
 // uppercase pairs and cannot collide with Science's "Cs"/"Cp" (a lowercase
 // tail); bare P already matched via the single-letter class.
-const CODE_RE = /^([1-9])((?:SL|SIC|TWS|TWM|ES|CT|MD|DC|CS|R|W|[EBCPAFMNGS])[a-z]?)\.?(\d{1,2})$/;
+// Art & Design 0067 has no sub-strands either: E, M, R and TWA are the strands,
+// and Cambridge prints them with no stage digit (the same ten objectives run
+// Stage 1 to 6), so the extractor prefixes the stage - 1TWA.03. TWA joins the
+// multi-letter alternatives ahead of the single-letter class for the same reason
+// SIC does; E, M and R were already well-formed.
+const CODE_RE = /^([1-9])((?:SL|SIC|TWS|TWM|TWA|ES|CT|MD|DC|CS|R|W|[EBCPAFMNGS])[a-z]?)\.?(\d{1,2})$/;
 // Page furniture that has been observed glued onto objective text, plus the
 // headings that sit between sections in the source PDFs. Any of these inside an
 // objective means the parser ran past the end of the bullet.
@@ -105,7 +110,7 @@ function validate(file) {
   }
   // The unit validator resolves a framework by filename from the unit's declared
   // code, so a filename that disagrees with curriculumCode loads the wrong file.
-  const fileCode = /cambridge-(?:english|science|global-perspectives|mathematics|computing)-(\d+)\.json$/.exec(path.basename(file))?.[1];
+  const fileCode = /cambridge-(?:english|science|global-perspectives|mathematics|computing|art-and-design)-(\d+)\.json$/.exec(path.basename(file))?.[1];
   if (fileCode) F(String(fw.curriculumCode) === fileCode, "metadata: curriculumCode ≠ filename", `${fw.curriculumCode} vs ${fileCode}`);
   if (!isBlank(fw.source)) F(!PLACEHOLDER.test(fw.source), "metadata: source looks like a placeholder", fw.source);
 

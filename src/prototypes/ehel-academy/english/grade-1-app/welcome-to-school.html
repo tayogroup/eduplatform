@@ -2146,7 +2146,7 @@
             "ok": 0
           }
         ],
-        "why": "Book and bag both start with /b/. Pen starts with /p/, cup with /k/ and mat with /m/."
+        "why": "Book and bag both start with the b sound. Pen starts with the p sound, cup with the c sound and mat with the m sound."
       },
       {
         "ask": "What do you say to your teacher when you arrive at school in the morning?",
@@ -2373,72 +2373,6 @@
         "why": "Books go back on the shelf. That is how we look after our school things."
       },
       {
-        "ask": "Which word names something you find in your classroom?",
-        "opts": [
-          {
-            "t": "cloud",
-            "ok": 0
-          },
-          {
-            "t": "river",
-            "ok": 0
-          },
-          {
-            "t": "whiteboard",
-            "ok": 1
-          },
-          {
-            "t": "camel",
-            "ok": 0
-          }
-        ],
-        "why": "A whiteboard is in the classroom. A camel, a river and a cloud are all found outside."
-      },
-      {
-        "ask": "Which sentence tells something you are able to do?",
-        "opts": [
-          {
-            "t": "My name is Maya.",
-            "ok": 0
-          },
-          {
-            "t": "This is a book.",
-            "ok": 0
-          },
-          {
-            "t": "I can read.",
-            "ok": 1
-          },
-          {
-            "t": "It is a pen.",
-            "ok": 0
-          }
-        ],
-        "why": "The word can tells what you are able to do. The other sentences only name things or a person."
-      },
-      {
-        "ask": "Where should you put your book when the lesson has finished?",
-        "opts": [
-          {
-            "t": "out of the window",
-            "ok": 0
-          },
-          {
-            "t": "on the floor",
-            "ok": 0
-          },
-          {
-            "t": "in the bin",
-            "ok": 0
-          },
-          {
-            "t": "on the shelf",
-            "ok": 1
-          }
-        ],
-        "why": "Books go back on the shelf. That is how we look after our school things."
-      },
-      {
         "ask": "What is the name of the boy who smiles at Amal?",
         "opts": [
           {
@@ -2473,6 +2407,60 @@
           }
         ],
         "why": "At the door Amal says, 'I am six years old.'"
+      },
+      {
+        "ask": "Amal spoke softly. Does softly mean loudly or quietly?",
+        "opts": [
+          {
+            "t": "I can ___.",
+            "ok": 0
+          },
+          {
+            "t": "Quietly",
+            "ok": 1
+          },
+          {
+            "t": "A green crayon",
+            "ok": 0
+          }
+        ],
+        "why": "Amal says her name softly at the door, in a small quiet voice."
+      },
+      {
+        "ask": "What green thing did Amal find in the treasure hunt?",
+        "opts": [
+          {
+            "t": "A green crayon",
+            "ok": 1
+          },
+          {
+            "t": "Happy",
+            "ok": 0
+          },
+          {
+            "t": "Adam",
+            "ok": 0
+          }
+        ],
+        "why": "The teacher says 'Find something green!' and Amal finds a green crayon."
+      },
+      {
+        "ask": "How did Amal feel when Adam asked to be her friend?",
+        "opts": [
+          {
+            "t": "My name is ___.",
+            "ok": 0
+          },
+          {
+            "t": "Six years old",
+            "ok": 0
+          },
+          {
+            "t": "Happy",
+            "ok": 1
+          }
+        ],
+        "why": "Amal says 'Yes!' to Adam and the story says she was happy now."
       }
     ],
     "activities": [
@@ -3020,7 +3008,7 @@
           "description": "Choose the form that makes the unit language accurate.",
           "rounds": [
             {
-              "prompt": "Which word names something you find in your classroom?",
+              "prompt": "Which word names a thing you find in your classroom?",
               "choices": [
                 "cloud",
                 "river",
@@ -3061,7 +3049,7 @@
                 "pen"
               ],
               "answer": "bag",
-              "explanation": "Book and bag both start with /b/. Pen starts with /p/, cup with /k/ and mat with /m/."
+              "explanation": "Book and bag both start with the b sound. Pen starts with the p sound, cup with the c sound and mat with the m sound."
             },
             {
               "prompt": "What do you say to your teacher when you arrive at school in the morning?",
@@ -3305,10 +3293,10 @@
                 "My name is Sami."
               ],
               "answer": "This is a pencil.",
-              "explanation": "He is showing a pencil, so he names that thing. The other sentences do not describe what he is holding."
+              "explanation": "He is showing a pencil, so he names that thing. The other ones do not say what he is holding."
             },
             {
-              "prompt": "Which sentence tells something you are able to do?",
+              "prompt": "Which sentence tells what you are able to do?",
               "choices": [
                 "My name is Maya.",
                 "This is a book.",
@@ -3316,10 +3304,10 @@
                 "It is a pen."
               ],
               "answer": "I can read.",
-              "explanation": "The word can tells what you are able to do. The other sentences only name things or a person."
+              "explanation": "The word can tells what you are able to do. The other ones only name things or a person."
             },
             {
-              "prompt": "Where should you put your book when the lesson has finished?",
+              "prompt": "Where should you put your book when the lesson is over?",
               "choices": [
                 "out of the window",
                 "on the floor",
@@ -3330,7 +3318,7 @@
               "explanation": "Books go back on the shelf. That is how we look after our school things."
             },
             {
-              "prompt": "Which word names something you find in your classroom?",
+              "prompt": "Which word names a thing you find in your classroom?",
               "choices": [
                 "cloud",
                 "river",
@@ -3582,7 +3570,7 @@
           "description": "Finish with a mixed challenge across the whole unit.",
           "rounds": [
             {
-              "prompt": "Which sentence tells something you are able to do?",
+              "prompt": "Which sentence tells what you are able to do?",
               "choices": [
                 "My name is Maya.",
                 "This is a book.",
@@ -3590,10 +3578,10 @@
                 "It is a pen."
               ],
               "answer": "I can read.",
-              "explanation": "The word can tells what you are able to do. The other sentences only name things or a person."
+              "explanation": "The word can tells what you are able to do. The other ones only name things or a person."
             },
             {
-              "prompt": "Where should you put your book when the lesson has finished?",
+              "prompt": "Where should you put your book when the lesson is over?",
               "choices": [
                 "out of the window",
                 "on the floor",

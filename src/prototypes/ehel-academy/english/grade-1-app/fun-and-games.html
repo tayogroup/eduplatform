@@ -2259,73 +2259,7 @@
             "ok": 1
           }
         ],
-        "why": "Hop and top both end with the /op/ sound. Hat, hen and sun end in different sounds."
-      },
-      {
-        "ask": "Which word is an action word, something you do?",
-        "opts": [
-          {
-            "t": "rain",
-            "ok": 0
-          },
-          {
-            "t": "table",
-            "ok": 0
-          },
-          {
-            "t": "jump",
-            "ok": 1
-          },
-          {
-            "t": "shoe",
-            "ok": 0
-          }
-        ],
-        "why": "Jump is something your body does. A table, rain and a shoe are naming words, not actions."
-      },
-      {
-        "ask": "Which action do you do by putting your two hands together?",
-        "opts": [
-          {
-            "t": "jump",
-            "ok": 0
-          },
-          {
-            "t": "blink",
-            "ok": 0
-          },
-          {
-            "t": "run",
-            "ok": 0
-          },
-          {
-            "t": "clap",
-            "ok": 1
-          }
-        ],
-        "why": "Clapping uses two hands. You run and jump with your legs and blink with your eyes."
-      },
-      {
-        "ask": "Which word completes the instruction: Touch your ___.",
-        "opts": [
-          {
-            "t": "blue",
-            "ok": 0
-          },
-          {
-            "t": "nose",
-            "ok": 1
-          },
-          {
-            "t": "jump",
-            "ok": 0
-          },
-          {
-            "t": "fast",
-            "ok": 0
-          }
-        ],
-        "why": "You can touch a body part like your nose. Jump is an action, fast tells speed and blue is a colour."
+        "why": "Hop and top both end with the same sound: op. Hat, hen and sun end in other sounds."
       },
       {
         "ask": "What colour was Amal's big ball?",
@@ -2362,6 +2296,60 @@
           }
         ],
         "why": "The first line says it was a sunny day in the town of Hargeisa."
+      },
+      {
+        "ask": "What happened to the ball after Leo threw it?",
+        "opts": [
+          {
+            "t": "Can you ___?",
+            "ok": 0
+          },
+          {
+            "t": "It went up into a big tree",
+            "ok": 1
+          },
+          {
+            "t": "Sad, because the story says Leo looked sad",
+            "ok": 0
+          }
+        ],
+        "why": "Leo threw the ball, it went up, up, up, and landed on a branch."
+      },
+      {
+        "ask": "How did Leo feel when he asked to play? How do you know?",
+        "opts": [
+          {
+            "t": "Sad, because the story says Leo looked sad",
+            "ok": 1
+          },
+          {
+            "t": "Because he was tall and could shake the branch",
+            "ok": 0
+          },
+          {
+            "t": "Red",
+            "ok": 0
+          }
+        ],
+        "why": "Leo asks 'Can I play too?' and the story says he looked sad."
+      },
+      {
+        "ask": "Why could Adam get the ball down when the children could not?",
+        "opts": [
+          {
+            "t": "The ball is on the ___.",
+            "ok": 0
+          },
+          {
+            "t": "Hargeisa",
+            "ok": 0
+          },
+          {
+            "t": "Because he was tall and could shake the branch",
+            "ok": 1
+          }
+        ],
+        "why": "The story says Adam was tall, and he shook the branch until the ball fell."
       }
     ],
     "activities": [
@@ -2900,7 +2888,7 @@
           "description": "Choose the form that makes the unit language accurate.",
           "rounds": [
             {
-              "prompt": "Which word is an action word, something you do?",
+              "prompt": "Which word is an action word, a thing you do?",
               "choices": [
                 "rain",
                 "table",
@@ -2908,10 +2896,10 @@
                 "shoe"
               ],
               "answer": "jump",
-              "explanation": "Jump is something your body does. A table, rain and a shoe are naming words, not actions."
+              "explanation": "Jump is a thing your body does. A table, rain and a shoe are naming words, not actions."
             },
             {
-              "prompt": "Which action do you do by putting your two hands together?",
+              "prompt": "Which action do you do when your two hands meet?",
               "choices": [
                 "jump",
                 "blink",
@@ -2930,7 +2918,7 @@
                 "write"
               ],
               "answer": "bounce",
-              "explanation": "Going down and up again is called bouncing. Sleeping, eating and writing are not ball movements."
+              "explanation": "Going down and up again is called bouncing. Sleeping, eating and writing are not ways a ball moves."
             },
             {
               "prompt": "Sami throws a ball to Maya. What should Maya do with her hands?",
@@ -2952,7 +2940,7 @@
                 "look"
               ],
               "answer": "run",
-              "explanation": "Running is fast leg movement. Sitting is still, and looking and listening use your eyes and ears."
+              "explanation": "Running is your legs moving fast. Sitting is still. Looking uses your eyes and hearing uses your ears."
             },
             {
               "prompt": "Which one is a question?",
@@ -2963,7 +2951,7 @@
                 "Can you catch the ball?"
               ],
               "answer": "Can you catch the ball?",
-              "explanation": "Only this one asks something and ends with a question mark. The others are telling sentences."
+              "explanation": "Only this one asks a question and ends with a question mark. The others just tell us things."
             }
           ]
         },
@@ -3163,7 +3151,7 @@
                 "Can you catch the ball?"
               ],
               "answer": "Can you catch the ball?",
-              "explanation": "Only this one asks something and ends with a question mark. The others are telling sentences."
+              "explanation": "Only this one asks a question and ends with a question mark. The others just tell us things."
             },
             {
               "prompt": "The ball is under the table. Which word tells you where the ball is?",
@@ -3174,10 +3162,10 @@
                 "table"
               ],
               "answer": "under",
-              "explanation": "Under is the position word. Ball and table are naming words and red is a colour."
+              "explanation": "Under is the word that tells where. Ball and table are naming words and red is a colour."
             },
             {
-              "prompt": "Which word completes the instruction: Touch your ___.",
+              "prompt": "Which word fills the gap: Touch your ___.",
               "choices": [
                 "blue",
                 "nose",
@@ -3196,7 +3184,7 @@
                 "I always win."
               ],
               "answer": "It is your turn.",
-              "explanation": "Sharing turns is kind and fair. The other sentences would leave a friend out."
+              "explanation": "Sharing turns is kind and fair. The other ones would leave a friend out."
             },
             {
               "prompt": "Which word rhymes with hop?",
@@ -3207,10 +3195,10 @@
                 "top"
               ],
               "answer": "top",
-              "explanation": "Hop and top both end with the /op/ sound. Hat, hen and sun end in different sounds."
+              "explanation": "Hop and top both end with the same sound: op. Hat, hen and sun end in other sounds."
             },
             {
-              "prompt": "Which word is an action word, something you do?",
+              "prompt": "Which word is an action word, a thing you do?",
               "choices": [
                 "rain",
                 "table",
@@ -3218,7 +3206,7 @@
                 "shoe"
               ],
               "answer": "jump",
-              "explanation": "Jump is something your body does. A table, rain and a shoe are naming words, not actions."
+              "explanation": "Jump is a thing your body does. A table, rain and a shoe are naming words, not actions."
             }
           ]
         },
@@ -3465,7 +3453,7 @@
                 "I always win."
               ],
               "answer": "It is your turn.",
-              "explanation": "Sharing turns is kind and fair. The other sentences would leave a friend out."
+              "explanation": "Sharing turns is kind and fair. The other ones would leave a friend out."
             },
             {
               "prompt": "Which word rhymes with hop?",
@@ -3476,7 +3464,7 @@
                 "top"
               ],
               "answer": "top",
-              "explanation": "Hop and top both end with the /op/ sound. Hat, hen and sun end in different sounds."
+              "explanation": "Hop and top both end with the same sound: op. Hat, hen and sun end in other sounds."
             },
             {
               "prompt": "Which word means: To move your legs very fast, faster than walking.",

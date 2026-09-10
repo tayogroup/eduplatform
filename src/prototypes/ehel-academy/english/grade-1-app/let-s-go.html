@@ -2343,50 +2343,6 @@
         "why": "After we are we use the -ing word walking to show it is going on now."
       },
       {
-        "ask": "Which word tells you that something moves very quickly?",
-        "opts": [
-          {
-            "t": "heavy",
-            "ok": 0
-          },
-          {
-            "t": "fast",
-            "ok": 1
-          },
-          {
-            "t": "slow",
-            "ok": 0
-          },
-          {
-            "t": "quiet",
-            "ok": 0
-          }
-        ],
-        "why": "Fast means quick. Slow is the opposite, heavy tells weight and quiet tells sound."
-      },
-      {
-        "ask": "Which word completes the sentence: We are ___ to the market.",
-        "opts": [
-          {
-            "t": "walker",
-            "ok": 0
-          },
-          {
-            "t": "walked",
-            "ok": 0
-          },
-          {
-            "t": "walk",
-            "ok": 0
-          },
-          {
-            "t": "walking",
-            "ok": 1
-          }
-        ],
-        "why": "After we are we use the -ing word walking to show it is happening now."
-      },
-      {
         "ask": "What two colours was the big bus?",
         "opts": [
           {
@@ -2439,6 +2395,42 @@
           }
         ],
         "why": "Mum says, 'First we walk. Then we go by bus.'"
+      },
+      {
+        "ask": "Who was riding a bicycle and waved at Amal?",
+        "opts": [
+          {
+            "t": "Adam",
+            "ok": 1
+          },
+          {
+            "t": "She called out to her, and Amal ran and hugged her",
+            "ok": 0
+          },
+          {
+            "t": "Yellow and red",
+            "ok": 0
+          }
+        ],
+        "why": "Amal sees a boy on a bicycle who waves, and his name was Adam."
+      },
+      {
+        "ask": "How do we know Grandma was glad to see Amal?",
+        "opts": [
+          {
+            "t": "I go by ___. (for example: I go by bus.)",
+            "ok": 0
+          },
+          {
+            "t": "By the window",
+            "ok": 0
+          },
+          {
+            "t": "She called out to her, and Amal ran and hugged her",
+            "ok": 1
+          }
+        ],
+        "why": "Grandma calls, 'Amal! You came to see me!' and Amal gives her a big hug."
       }
     ],
     "activities": [
@@ -2994,7 +2986,7 @@
                 "cloud"
               ],
               "answer": "bus",
-              "explanation": "You can travel in a bus. A window, an apple and a cloud do not take you anywhere."
+              "explanation": "You can travel in a bus. A window, an apple and a cloud do not take you on a trip."
             },
             {
               "prompt": "Which one travels on water?",
@@ -3049,7 +3041,7 @@
                 "I go by bus."
               ],
               "answer": "I go by bus.",
-              "explanation": "We say I go by bus for one bus. The other sentences have the words in the wrong order or the wrong form."
+              "explanation": "We say I go by bus for one bus. The other ones have the words in the wrong order or the wrong form."
             }
           ]
         },
@@ -3249,7 +3241,7 @@
                 "I go by bus."
               ],
               "answer": "I go by bus.",
-              "explanation": "We say I go by bus for one bus. The other sentences have the words in the wrong order or the wrong form."
+              "explanation": "We say I go by bus for one bus. The other ones have the words in the wrong order or the wrong form."
             },
             {
               "prompt": "Which sentence tells where a car goes?",
@@ -3263,7 +3255,7 @@
               "explanation": "Cars drive on roads. The sea is for boats. The sky is for planes. The rails are for trains."
             },
             {
-              "prompt": "Which word tells you that something moves very quickly?",
+              "prompt": "Which word tells you that a thing moves very quickly?",
               "choices": [
                 "heavy",
                 "fast",
@@ -3271,7 +3263,7 @@
                 "quiet"
               ],
               "answer": "fast",
-              "explanation": "Fast means quick. Slow is the opposite, heavy tells weight and quiet tells sound."
+              "explanation": "Fast means quick. Slow is not fast at all, heavy tells weight and quiet tells sound."
             },
             {
               "prompt": "What should you do before you cross the road?",
@@ -3282,10 +3274,10 @@
                 "Play on the road."
               ],
               "answer": "Stop, look and listen.",
-              "explanation": "Stopping, looking and listening keeps you safe. The other choices are all dangerous."
+              "explanation": "Stop, look and listen keeps you safe. The other choices could hurt you."
             },
             {
-              "prompt": "Which word completes the sentence: We are ___ to the market.",
+              "prompt": "Which word fills the gap: We are ___ to the market.",
               "choices": [
                 "walker",
                 "walked",
@@ -3293,7 +3285,7 @@
                 "walking"
               ],
               "answer": "walking",
-              "explanation": "After we are we use the -ing word walking to show it is happening now."
+              "explanation": "After we are we use the -ing word walking to show it is going on now."
             },
             {
               "prompt": "Which word names a way to travel?",
@@ -3304,7 +3296,7 @@
                 "cloud"
               ],
               "answer": "bus",
-              "explanation": "You can travel in a bus. A window, an apple and a cloud do not take you anywhere."
+              "explanation": "You can travel in a bus. A window, an apple and a cloud do not take you on a trip."
             }
           ]
         },
@@ -3432,26 +3424,27 @@
             {
               "prompt": "Build the complete model sentence.",
               "tokens": [
-                "clouds.",
+                "track.",
                 "the",
-                "above",
-                "flies",
-                "plane",
+                "along",
+                "fast",
+                "goes",
+                "train",
                 "The"
               ],
-              "answer": "The plane flies above the clouds."
+              "answer": "The train goes fast along the track."
             },
             {
               "prompt": "Build the complete model sentence.",
               "tokens": [
-                "seat.",
-                "your",
-                "on",
-                "down",
-                "sit",
-                "Please"
+                "bus.",
+                "by",
+                "town",
+                "to",
+                "travel",
+                "We"
               ],
-              "answer": "Please sit down on your seat."
+              "answer": "We travel to town by bus."
             }
           ]
         },
@@ -3489,8 +3482,8 @@
             },
             {
               "prompt": "Speaking 6 - My confident turn",
-              "target": "Please sit down on your seat.",
-              "reference": ""
+              "target": "We travel to town by bus.",
+              "reference": "We travel to town by bus."
             }
           ]
         },
@@ -3549,10 +3542,10 @@
                 "Play on the road."
               ],
               "answer": "Stop, look and listen.",
-              "explanation": "Stopping, looking and listening keeps you safe. The other choices are all dangerous."
+              "explanation": "Stop, look and listen keeps you safe. The other choices could hurt you."
             },
             {
-              "prompt": "Which word completes the sentence: We are ___ to the market.",
+              "prompt": "Which word fills the gap: We are ___ to the market.",
               "choices": [
                 "walker",
                 "walked",
@@ -3560,7 +3553,7 @@
                 "walking"
               ],
               "answer": "walking",
-              "explanation": "After we are we use the -ing word walking to show it is happening now."
+              "explanation": "After we are we use the -ing word walking to show it is going on now."
             },
             {
               "prompt": "Which word means: This word means belonging to a boy or a man.",
@@ -3637,53 +3630,52 @@
             {
               "prompt": "Put this unit sentence in order.",
               "tokens": [
-                "bus.",
+                "window.",
                 "the",
-                "on",
-                "ding",
+                "by",
+                "swish",
                 "a",
                 "heard",
                 "I"
               ],
-              "answer": "I heard a ding on the bus."
+              "answer": "I heard a swish by the window."
             },
             {
               "prompt": "Put this unit sentence in order.",
               "tokens": [
-                "short.",
-                "is",
-                "market",
+                "bus.",
                 "the",
-                "to",
-                "walk",
+                "for",
+                "quietly",
+                "waited",
+                "Amal"
+              ],
+              "answer": "Amal waited quietly for the bus."
+            },
+            {
+              "prompt": "Put this unit sentence in order.",
+              "tokens": [
+                "bell.",
+                "silver",
+                "a",
+                "has",
+                "bicycle",
                 "My"
               ],
-              "answer": "My walk to the market is short."
+              "answer": "My bicycle has a silver bell."
             },
             {
               "prompt": "Put this unit sentence in order.",
               "tokens": [
-                "side.",
+                "tree.",
+                "the",
                 "to",
-                "side",
-                "from",
-                "move",
-                "wipers",
-                "The"
-              ],
-              "answer": "The wipers move from side to side."
-            },
-            {
-              "prompt": "Put this unit sentence in order.",
-              "tokens": [
-                "us.",
-                "above",
-                "fast",
+                "up",
                 "flies",
-                "helicopter",
+                "bird",
                 "The"
               ],
-              "answer": "The helicopter flies fast above us."
+              "answer": "The bird flies up to the tree."
             }
           ]
         },

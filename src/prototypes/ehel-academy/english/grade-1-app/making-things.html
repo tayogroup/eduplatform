@@ -2314,72 +2314,6 @@
         "why": "Wearing means it is on you. Making, cutting and painting are things you do before it is done."
       },
       {
-        "ask": "Which of these words tells you the colour of something?",
-        "opts": [
-          {
-            "t": "green",
-            "ok": 1
-          },
-          {
-            "t": "cut",
-            "ok": 0
-          },
-          {
-            "t": "round",
-            "ok": 0
-          },
-          {
-            "t": "paper",
-            "ok": 0
-          }
-        ],
-        "why": "Green is a colour. Round tells a shape, paper is a thing and cut is an action."
-      },
-      {
-        "ask": "Sami has made a red square. Which sentence describes it?",
-        "opts": [
-          {
-            "t": "It is a green triangle.",
-            "ok": 0
-          },
-          {
-            "t": "It is a blue square.",
-            "ok": 0
-          },
-          {
-            "t": "It is a red square.",
-            "ok": 1
-          },
-          {
-            "t": "It is a red circle.",
-            "ok": 0
-          }
-        ],
-        "why": "The colour and the shape must both match, so only this sentence is true."
-      },
-      {
-        "ask": "Which thing do you use to stick two pieces of paper together?",
-        "opts": [
-          {
-            "t": "glue",
-            "ok": 1
-          },
-          {
-            "t": "rubber",
-            "ok": 0
-          },
-          {
-            "t": "scissors",
-            "ok": 0
-          },
-          {
-            "t": "pencil",
-            "ok": 0
-          }
-        ],
-        "why": "Glue sticks things. Scissors cut them apart, a pencil writes and a rubber takes writing away."
-      },
-      {
         "ask": "What are Amal and Grandma making under the big tree?",
         "opts": [
           {
@@ -2414,6 +2348,60 @@
           }
         ],
         "why": "Adam says, 'I cut a red circle and a blue square.'"
+      },
+      {
+        "ask": "Grandma said Amal was patient. What did Amal do slowly?",
+        "opts": [
+          {
+            "t": "I am wearing ___.",
+            "ok": 0
+          },
+          {
+            "t": "She wove the mat slowly and carefully, without rushing",
+            "ok": 1
+          },
+          {
+            "t": "Pleased and proud, because she smiled a big smile",
+            "ok": 0
+          }
+        ],
+        "why": "The second time Amal weaves slow and careful, and does not rush."
+      },
+      {
+        "ask": "How did Grandma feel about the finished mat? How do you know?",
+        "opts": [
+          {
+            "t": "Pleased and proud, because she smiled a big smile",
+            "ok": 1
+          },
+          {
+            "t": "To show her that trying again makes work better",
+            "ok": 0
+          },
+          {
+            "t": "A mat, from soft grass",
+            "ok": 0
+          }
+        ],
+        "why": "Grandma smiles a big smile and says, 'You did it, Amal! You were patient.'"
+      },
+      {
+        "ask": "Why did Adam tell Amal about his own first picture?",
+        "opts": [
+          {
+            "t": "I am cutting ___.",
+            "ok": 0
+          },
+          {
+            "t": "A circle",
+            "ok": 0
+          },
+          {
+            "t": "To show her that trying again makes work better",
+            "ok": 1
+          }
+        ],
+        "why": "Adam says his first picture was not good either, and he tried again and again."
       }
     ],
     "activities": [
@@ -2969,7 +2957,7 @@
                 "soft"
               ],
               "answer": "circle",
-              "explanation": "A circle is a shape. Yellow is a colour. Glue is a thing we use. Soft tells how something feels."
+              "explanation": "A circle is a shape. Yellow is a colour. Glue is a thing we use. Soft tells how a thing feels."
             },
             {
               "prompt": "Which shape has three sides?",
@@ -3005,7 +2993,7 @@
               "explanation": "A circle is round and has no corners. The other three shapes all have corners."
             },
             {
-              "prompt": "Which of these words tells you the colour of something?",
+              "prompt": "Which of these words tells you the colour of a thing?",
               "choices": [
                 "green",
                 "cut",
@@ -3024,7 +3012,7 @@
                 "black"
               ],
               "answer": "orange",
-              "explanation": "Red and yellow together make orange. Blue and yellow would make green."
+              "explanation": "Red mixed with yellow makes orange. Blue and yellow would make green."
             }
           ]
         },
@@ -3224,10 +3212,10 @@
                 "black"
               ],
               "answer": "orange",
-              "explanation": "Red and yellow together make orange. Blue and yellow would make green."
+              "explanation": "Red mixed with yellow makes orange. Blue and yellow would make green."
             },
             {
-              "prompt": "Sami has made a red square. Which sentence describes it?",
+              "prompt": "Sami has made a red square. Which sentence tells about it?",
               "choices": [
                 "It is a green triangle.",
                 "It is a blue square.",
@@ -3249,7 +3237,7 @@
               "explanation": "Scissors cut. Glue sticks, a crayon colours and a ruler helps draw straight lines."
             },
             {
-              "prompt": "Which thing do you use to stick two pieces of paper together?",
+              "prompt": "Which thing do you use to stick one piece of paper to another?",
               "choices": [
                 "glue",
                 "rubber",
@@ -3268,7 +3256,7 @@
                 "I am painting a blue hat."
               ],
               "answer": "I am wearing a blue hat.",
-              "explanation": "Wearing means it is on you. Making, cutting and painting are things you do before it is finished."
+              "explanation": "Wearing means it is on you. Making, cutting and painting are things you do before it is done."
             },
             {
               "prompt": "Which word names a shape?",
@@ -3279,7 +3267,7 @@
                 "soft"
               ],
               "answer": "circle",
-              "explanation": "A circle is a shape. Yellow is a colour. Glue is a thing we use. Soft tells how something feels."
+              "explanation": "A circle is a shape. Yellow is a colour. Glue is a thing we use. Soft tells how a thing feels."
             }
           ]
         },
@@ -3518,7 +3506,7 @@
           "description": "Finish with a mixed challenge across the whole unit.",
           "rounds": [
             {
-              "prompt": "Which thing do you use to stick two pieces of paper together?",
+              "prompt": "Which thing do you use to stick one piece of paper to another?",
               "choices": [
                 "glue",
                 "rubber",
@@ -3537,7 +3525,7 @@
                 "I am painting a blue hat."
               ],
               "answer": "I am wearing a blue hat.",
-              "explanation": "Wearing means it is on you. Making, cutting and painting are things you do before it is finished."
+              "explanation": "Wearing means it is on you. Making, cutting and painting are things you do before it is done."
             },
             {
               "prompt": "Which word means: The colour of a tomato, a strawberry or a fire engine.",

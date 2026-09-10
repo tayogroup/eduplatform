@@ -179,6 +179,13 @@ reading.
   storage read-back and edge hashes clean, and the live hub and two lessons
   booted in real Chromium with 0 console errors and 0 failed requests (the
   toast demo ticked, Robo's level 1 was solved). Live is the committed tree.
+  **And again after the kit was extended for Grade 3** (owner's instruction,
+  the same day): rebuilt with `LESSON` data byte-identical, re-driven to
+  100%, uploaded — 14 files PUT, storage read-back and edge hashes clean
+  (the first run's read-back timed out on the storage endpoint after one
+  file, so the upload was run again and verified in full) — and booted live
+  with 0 errors, the toast demo ticked and Robo's level 1 solved. The one
+  visible change is that the block being run is now highlighted.
 
 ## Progress: `l01`..`l08`, and why not `u01`
 

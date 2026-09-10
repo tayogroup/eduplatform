@@ -233,6 +233,15 @@ Grade 1's rebuilt pages were redeployed the same day on the owner's
 instruction (14 files, storage read-back and edge hashes clean), so both
 grades' live pages are the committed tree on the same kit.
 
+**Redeployed again after the kit was extended for Grade 3** (owner's
+instruction, the same day): rebuilt with `LESSON` data byte-identical,
+re-driven to 100%, uploaded — 16 files PUT, storage read-back and edge
+hashes clean — and booted live from the CDN with 0 errors: all four debug
+rounds of Lesson 5 and all six laptop parts of Lesson 10 driven to a tick on
+the shipped bytes. The one visible change is that the block being run is
+now highlighted (`blockBtn` took its `now` class as a second `class`
+attribute before, which the parser ignores).
+
 ## What was deliberately not done
 
 Recorded narration; reusing the Word-pack course's text; anything at Stage 3;

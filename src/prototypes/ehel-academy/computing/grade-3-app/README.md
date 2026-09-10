@@ -59,8 +59,9 @@ pipeline and both gates green, and the `LESSON` data block of all eighteen
 pages byte-identical to the committed ones (the pages differ from HEAD only by
 the inlined kit). Then every step of every Grade 1 and Grade 2 lesson was
 driven again in the browser — see Verification. Their rebuilt pages are
-committed with this build; **their live pages are the previous kit**, and
-redeploying them is an owner decision, not part of this work.
+committed with this build and were redeployed on the owner's instruction
+the same day (14 and 16 files, storage read-back and edge hashes clean, live
+boots with 0 errors), so all three grades' live pages are this kit.
 
 One pre-existing defect was fixed in passing, because the new renderers
 needed the same code: `blockBtn` used to receive the running block's `now`

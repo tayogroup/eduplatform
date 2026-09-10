@@ -101,7 +101,14 @@
      grid of blocks rather than a row of dots — check the dark-theme block
      further down if you change either one. */
   .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
-  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  /* 44px TOUCH TARGET, 16px DOT. The two numbers are different things and
+     only one of them is the accessibility requirement: WCAG 2.5.5 asks for a
+     44px TARGET, not a 44px mark, so the button grows and the circle inside
+     it does not. A 44px dot would be a row of buttons the size of the text
+     beside them; a 44px target with a 16px dot is the same rail a child
+     already recognises, with a hit area their finger can actually land on.
+     Was 28px, which cleared WCAG 2.5.8's 24px minimum but not this one. */
+  .dots button { width: 44px; height: 44px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
   .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
   .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
   .dots button.done::before { background: var(--good); border-color: var(--good); }
@@ -2293,6 +2300,28 @@
         "why": "We say it is for the weather. The other ones have the words muddled up."
       },
       {
+        "ask": "No rain has come and the well is low. What is the kind thing to do?",
+        "opts": [
+          {
+            "t": "Share the water and use only a little",
+            "ok": 1
+          },
+          {
+            "t": "Take a lot before it is gone",
+            "ok": 0
+          },
+          {
+            "t": "Pour some water away",
+            "ok": 0
+          },
+          {
+            "t": "Wash your hands ten times",
+            "ok": 0
+          }
+        ],
+        "why": "The whole village shared and nobody wasted a drop, so there was enough for everyone."
+      },
+      {
         "ask": "Who walked to the well with Amal every morning?",
         "opts": [
           {
@@ -2363,24 +2392,6 @@
           }
         ],
         "why": "Amal shouts, 'Rain! It is raining!' and the children dance outside."
-      },
-      {
-        "ask": "Why did the whole village share the water?",
-        "opts": [
-          {
-            "t": "It is rainy.",
-            "ok": 0
-          },
-          {
-            "t": "An empty pot",
-            "ok": 0
-          },
-          {
-            "t": "Because the well was getting low",
-            "ok": 1
-          }
-        ],
-        "why": "Adam says the well is getting low, so everyone shares and is careful."
       }
     ],
     "activities": [

@@ -101,7 +101,14 @@
      grid of blocks rather than a row of dots — check the dark-theme block
      further down if you change either one. */
   .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
-  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  /* 44px TOUCH TARGET, 16px DOT. The two numbers are different things and
+     only one of them is the accessibility requirement: WCAG 2.5.5 asks for a
+     44px TARGET, not a 44px mark, so the button grows and the circle inside
+     it does not. A 44px dot would be a row of buttons the size of the text
+     beside them; a 44px target with a 16px dot is the same rail a child
+     already recognises, with a hit area their finger can actually land on.
+     Was 28px, which cleared WCAG 2.5.8's 24px minimum but not this one. */
+  .dots button { width: 44px; height: 44px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
   .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
   .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
   .dots button.done::before { background: var(--good); border-color: var(--good); }
@@ -2287,6 +2294,28 @@
         "why": "Hop and top both end with the same sound: op. Hat, hen and sun end in other sounds."
       },
       {
+        "ask": "The ball is high in the tree. Who can reach it best?",
+        "opts": [
+          {
+            "t": "Adam, because he is tall",
+            "ok": 1
+          },
+          {
+            "t": "Leo, because he is small",
+            "ok": 0
+          },
+          {
+            "t": "Samira, because she is kind",
+            "ok": 0
+          },
+          {
+            "t": "Nobody can reach it",
+            "ok": 0
+          }
+        ],
+        "why": "You need to be tall to reach something high up. Being small or being kind does not help you reach."
+      },
+      {
         "ask": "What colour was Amal's big ball?",
         "opts": [
           {
@@ -2357,24 +2386,6 @@
           }
         ],
         "why": "Leo asks 'Can I play too?' and the story says he looked sad."
-      },
-      {
-        "ask": "Why could Adam get the ball down when the children could not?",
-        "opts": [
-          {
-            "t": "The ball is on the ___.",
-            "ok": 0
-          },
-          {
-            "t": "Hargeisa",
-            "ok": 0
-          },
-          {
-            "t": "Because he was tall and could shake the branch",
-            "ok": 1
-          }
-        ],
-        "why": "The story says Adam was tall, and he shook the branch until the ball fell."
       }
     ],
     "activities": [

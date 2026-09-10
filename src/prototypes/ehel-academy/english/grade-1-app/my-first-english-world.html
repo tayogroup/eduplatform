@@ -101,7 +101,14 @@
      grid of blocks rather than a row of dots — check the dark-theme block
      further down if you change either one. */
   .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
-  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  /* 44px TOUCH TARGET, 16px DOT. The two numbers are different things and
+     only one of them is the accessibility requirement: WCAG 2.5.5 asks for a
+     44px TARGET, not a 44px mark, so the button grows and the circle inside
+     it does not. A 44px dot would be a row of buttons the size of the text
+     beside them; a 44px target with a 16px dot is the same rail a child
+     already recognises, with a hit area their finger can actually land on.
+     Was 28px, which cleared WCAG 2.5.8's 24px minimum but not this one. */
+  .dots button { width: 44px; height: 44px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
   .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
   .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
   .dots button.done::before { background: var(--good); border-color: var(--good); }
@@ -2106,6 +2113,28 @@
         "why": "Doing it again and checking helps you share your best work. The other choices would spoil it."
       },
       {
+        "ask": "You are making your book. Which page comes first?",
+        "opts": [
+          {
+            "t": "The page with your name on it",
+            "ok": 1
+          },
+          {
+            "t": "The page about the weather",
+            "ok": 0
+          },
+          {
+            "t": "The page about your next goal",
+            "ok": 0
+          },
+          {
+            "t": "The page about a place you know",
+            "ok": 0
+          }
+        ],
+        "why": "Page 1 is the cover and it has your name on it. Your next goal goes on the last page."
+      },
+      {
         "ask": "Where did Amal find her letters and family pictures?",
         "opts": [
           {
@@ -2176,24 +2205,6 @@
           }
         ],
         "why": "The steps say to practise a one-minute show-and-tell."
-      },
-      {
-        "ask": "What two things do you add to your book pages?",
-        "opts": [
-          {
-            "t": "One minute",
-            "ok": 0
-          },
-          {
-            "t": "In her learning folder",
-            "ok": 0
-          },
-          {
-            "t": "Labels and short patterns",
-            "ok": 1
-          }
-        ],
-        "why": "The steps say, 'Add labels and short patterns.'"
       }
     ],
     "activities": [

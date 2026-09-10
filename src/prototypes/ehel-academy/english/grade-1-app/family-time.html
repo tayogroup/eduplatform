@@ -101,7 +101,14 @@
      grid of blocks rather than a row of dots — check the dark-theme block
      further down if you change either one. */
   .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
-  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  /* 44px TOUCH TARGET, 16px DOT. The two numbers are different things and
+     only one of them is the accessibility requirement: WCAG 2.5.5 asks for a
+     44px TARGET, not a 44px mark, so the button grows and the circle inside
+     it does not. A 44px dot would be a row of buttons the size of the text
+     beside them; a 44px target with a 16px dot is the same rail a child
+     already recognises, with a hit area their finger can actually land on.
+     Was 28px, which cleared WCAG 2.5.8's 24px minimum but not this one. */
+  .dots button { width: 44px; height: 44px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
   .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
   .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
   .dots button.done::before { background: var(--good); border-color: var(--good); }
@@ -2533,6 +2540,28 @@
         "why": "Sister and sun both start with the s sound. Mat, dog and pen start with the m, d and p sounds."
       },
       {
+        "ask": "Grandma gives one bowl to each person. There are five people. How many bowls does she need?",
+        "opts": [
+          {
+            "t": "Five",
+            "ok": 1
+          },
+          {
+            "t": "One",
+            "ok": 0
+          },
+          {
+            "t": "Two",
+            "ok": 0
+          },
+          {
+            "t": "Ten",
+            "ok": 0
+          }
+        ],
+        "why": "One bowl for each person. Five people need five bowls."
+      },
+      {
         "ask": "What is the name of Amal's baby brother?",
         "opts": [
           {
@@ -2603,24 +2632,6 @@
           }
         ],
         "why": "The story says they ate the sweet mango and the soft banana."
-      },
-      {
-        "ask": "Why did everyone laugh at baby Idris?",
-        "opts": [
-          {
-            "t": "She is my ___.",
-            "ok": 0
-          },
-          {
-            "t": "She laid the table with five bowls",
-            "ok": 0
-          },
-          {
-            "t": "Because his cereal went on his nose",
-            "ok": 1
-          }
-        ],
-        "why": "Some of Idris's cereal went on his nose, and everyone began to laugh."
       }
     ],
     "activities": [

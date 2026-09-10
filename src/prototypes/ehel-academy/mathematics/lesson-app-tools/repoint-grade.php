@@ -112,6 +112,7 @@ $SUBJECTS = [
         'entry' => RP_HOST . 'Ehel%20Primary/app/global-perspectives/index.html',
         'targets' => [
             1 => ['ehel-gp-g01', RP_HOST . 'Ehel%20Primary/app/global-perspectives/grade-1-v2/index.html'],
+            2 => ['ehel-gp-g02', RP_HOST . 'Ehel%20Primary/app/global-perspectives/grade-2-v2/index.html'],
         ],
     ],
 ];

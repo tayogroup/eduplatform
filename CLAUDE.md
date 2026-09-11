@@ -891,10 +891,55 @@ Four things that are not obvious:
   for the new 510 words (a water tap beside "tap" = touch, a teddy bear beside
   "play", a flag beside "country" were live defects of the shared map).
 
-**Not done, and each needs the owner:** narration (Level 1 dry run: 2,364
-clips, ~174k characters, paid), the content upload (replaces Level 1 at once
-for every learner mid-course), and the Moodle catalogue sync of the new unit
-titles. Nothing about the rebuild has been deployed.
+### The standalone lesson build (2026-09-12)
+
+```bash
+cd intensive-english/lesson-kit
+python build-lessons.py --app ../level-1-app    # one page per unit
+python build-hub.py     --app ../level-1-app    # the hub, after the lessons
+```
+
+Owner: use the design regular English uses. So Intensive English has its own
+kit, like every other subject (`science/lesson-kit`, `computing/lesson-kit`,
+…): 20 self-contained pages under `level-1-app/`, live at
+`app/intensive-english/level-1-v2/`, built from the course data that already
+exists. `lib/lesson.css`, `voice.js` and `deck.js` are lifted verbatim;
+`lib/intensive.css` and `lib/intensive.js` are the kit's own.
+
+- **No reward furniture: the learners are adults.** The last slide is the
+  unit's can-do list, rated by the learner, and its assignment. The lifted deck
+  calls `paintStickers()` there, so the kit defines it as that summary.
+- **Three opt-ins were added to the shared pipeline**, each leaving every other
+  app byte-identical: a lesson entry may carry its own `unit` (`_app.py` —
+  these units are numbered from ZERO, so position + 1 reported the wrong unit),
+  `"stickers": false` (`check-lessons.py`), and `"brandLine"`
+  (`add-header-bars.py` — the bar said "Primary Intensive English").
+- **THE UNIT PROBLEM does not apply here.** These lessons ARE the shell
+  course's units, 1:1, so the pages report `u00..u19`, the ids the shell
+  already writes, and the gradebook sees the right unit.
+- **Audio is resolved at run time**, never baked in: the page computes cyrb53
+  of the text it is about to speak, exactly as the shell does.
+- **Routing is a server step.** `repoint-grade.php --subject intensive-english
+  --grade 1` (report; `--apply` writes) from the docroot. Until then the course
+  still opens the shell app.
+- Two defects found by opening the page rather than reading the diff: `.stage`
+  and `.wordcard` already exist in the lifted design system (the hub's cards
+  came out in one 343px column), and a `display` rule beats the `hidden`
+  attribute (the quiz showed "Try again" before question one).
+
+**Shipped on the owner's go-ahead, 2026-09-11/12:** narration (2,364 clips,
+174,388 characters, recorded in six parallel `--only` runs after one sequential
+run proved too slow), the media and content uploads, app **v422** for the shell
+course, and the standalone build above. Verified from storage by hash and in a
+browser on the live pages.
+
+**Still needs a person, and neither is an engineering step:** an administrator
+must point Moodle's `local_prequran/catalog_source_url` at
+`catalog-36265fe0a1.json` and run the catalogue sync (the unit titles changed),
+and run `repoint-grade.php --subject intensive-english --grade 1 --apply` if
+the standalone build is to be what learners open. Note the catalogue also lists
+**Art & Design Stage 3**, committed by another session and not deployed when
+this was written — worth checking before that sync runs.
 
 ## The Ehel Academy shell keeps TWO progress stores per learner, and only one drives the UI
 

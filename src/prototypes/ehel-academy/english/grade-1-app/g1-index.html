@@ -753,49 +753,53 @@
   .term li .when { display: block; color: var(--muted); font-weight: 400; font-size: 12.5px; }
   @media (max-width: 560px) { .term li { grid-template-columns: 1fr; gap: 2px; } }
 
-  /* ---- the header bar, the same one the lesson pages carry ---- */
-  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
-    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
-  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
+  /* ---- the header bar: the SHARED rules, then only what the hub adds ----
+     The rules below are add-header-bars.py's own CSS, read out of that file at build
+     time. The hub used to carry a copy of these rules, and the copy drifted:
+     the shared tool's contrast fix of 2026-09-10 (--muted to --ink on the
+     progress label, 4.04:1 to 9.72:1) never reached the hub, and the Grade 1
+     validation of 2026-09-11 found the live hub failing AA (areas 14 and 15).
+     One source now, so a fix to the bar reaches the hub on its next build. */
+
+  /* ---- the two header bars, modelled on the English shell ---- */
+  .eh-bar1, .eh-bar2 { position: sticky; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); }
+  .eh-bar1 { top: 0; padding: 8px 16px; }
+  .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
+  .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
   .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
   .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
   .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
   .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
   .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
     border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
   .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
-  /* --ink, not --muted: measured 4.04:1 on the --cell pill, under the 4.5:1 AA
-     needs for 13.5px text. The shared add-header-bars.py made this same change
-     on 2026-09-10 and the hub never received it, because the hub carries its
-     own copy of these rules - which is why they are named as a copy here. */
+  /* --ink, not --muted. At 13.5px this is normal text and needs 4.5:1; on the
+     English Grade 1 palette --muted measured 4.04:1 on the --cell pill behind
+     it and failed. A fixed colour cannot fix that here - the five apps that
+     render this bar carry four different --muted values (#566669, #6B7F82,
+     #93AABE, #A4B7C8), so each would need its own answer.
+
+     --ink is the one that holds for all of them by construction: it is each
+     palette's own text colour against --card and --cell, which is what
+     .eh-brand and .eh-picker in this same bar already depend on. It also ends
+     an inconsistency rather than making one - this label was the ONLY text in
+     either bar not already drawn in --ink or --teal. */
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
   .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
-  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
-    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700;
-    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
-  .eh-bar1 .hubhead-spacer { display: none; }
-  @media (max-width: 720px) {
-    .eh-progtext, .eh-brandtext { display: none; }
-    .eh-picker { max-width: 130px; }
-  }
-
-  /* the crest replaces the drawn shield: square, so a square box */
-  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
-  /* the second bar is the YEAR; it yields space before the unit bar does */
-  .eh-year .eh-pct { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
-  .eh-year { max-width: 300px; }
-  @media (max-width: 900px) { .eh-year .eh-track, .eh-year .eh-progtext { display: none; }
-    .eh-year { flex: 0 0 auto; max-width: none; padding: 5px 6px; } }
-  @media (max-width: 620px) { .eh-year { display: none; } }
-
-  /* the focus chip: emitted empty and hidden, painted by shared/seb-session.js.
-     A PILL with a word, not a bare dot - the dot-only version measured perfectly
-     and could not be found on the page, and colour alone says nothing to anyone
-     who cannot separate red from green. */
+  .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+    color: var(--ink); font-size: 17px; cursor: pointer; }
+  /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
+     writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
+     file owns the thresholds. A page without focus mode never shows it at all.
+     It is a PILL with a label, not a bare dot: the dot-only version measured
+     perfectly and could not be found on the page, and colour alone says nothing
+     to anyone who cannot separate red from green. */
   .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
     border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
     font-size: 12.5px; font-weight: 800; }
@@ -806,11 +810,51 @@
   .eh-focus b { font-weight: 800; }
   @media (max-width: 620px) { .eh-focus b { display: none; }
     .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
+  .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
+    cursor: pointer; text-decoration: none; }
+  .eh-round.back { padding: 9px 13px; }
+  .eh-section { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; }
+  .eh-b2right { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
+  .eh-pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 15px; cursor: pointer; }
+  .eh-steps { position: sticky; top: 104px; z-index: 39; background: var(--card); border-bottom: 1px solid var(--line);
+    max-height: 55vh; overflow-y: auto; padding: 8px; }
+  .eh-steps button { display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
+    background: none; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--ink); }
+  .eh-steps button:hover { background: var(--cell); }
+  .eh-steps button.now { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 700; }
+  .eh-steps button.done::after { content: " \2713"; color: var(--good); font-weight: 700; }
+  .eh-steps button.now.done::after { color: var(--teal-ink, #06231F); }
+  .hero .eyebrow { display: none; }   /* the brand bar says Primary Mathematics now */
+  @media (max-width: 720px) {
+    .eh-progtext, .eh-brandtext { display: none; }
+    .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
+    .eh-picker { max-width: 130px; }
+  }
+
+  /* what only the hub has: no second bar, a Back link that must not shrink,
+     the spacer, and the year bar beside the unit bar */
+  .eh-round { flex: 0 0 auto; }
+  .eh-bar1 .hubhead-spacer { display: none; }
+  @media (max-width: 720px) {
+    .eh-progtext, .eh-brandtext { display: none; }
+    .eh-picker { max-width: 130px; }
+  }
+  /* the second bar is the YEAR; it yields space before the unit bar does */
+  .eh-year .eh-pct { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
+  .eh-year { max-width: 300px; }
+  @media (max-width: 900px) { .eh-year .eh-track, .eh-year .eh-progtext { display: none; }
+    .eh-year { flex: 0 0 auto; max-width: none; padding: 5px 6px; } }
+  @media (max-width: 620px) { .eh-year { display: none; } }
 </style>
 
 <script type="module">import "./seb-session.js";</script>
 <header class="eh-bar1">
-  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <a class="eh-round back" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
   <div class="eh-brand"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></div>
   <div class="eh-prog" id="ehProg">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -840,61 +884,61 @@
         <span class="cardno">Unit 1</span>
         <h2>Welcome to School</h2>
         <p>You will learn the words for things in your classroom.</p>
-        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 98 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="family-time.html?from=eng1">
         <span class="cardno">Unit 2</span>
         <h2>Family Time</h2>
         <p>In this unit you will learn the words for the people in your family.</p>
-        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 98 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="fun-and-games.html?from=eng1">
         <span class="cardno">Unit 3</span>
         <h2>Fun and Games</h2>
         <p>In this unit you will learn the words for games and play.</p>
-        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 98 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="making-things.html?from=eng1">
         <span class="cardno">Unit 4</span>
         <h2>Making Things</h2>
         <p>In this unit you will learn the words for shapes, colours and clothes.</p>
-        <span class="cardfoot"><span class="meta">21 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">21 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 98 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="on-the-farm.html?from=eng1">
         <span class="cardno">Unit 5</span>
         <h2>On the Farm</h2>
         <p>In this unit you will learn about the farm.</p>
-        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 95 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="my-five-senses.html?from=eng1">
         <span class="cardno">Unit 6</span>
         <h2>My Five Senses</h2>
         <p>In this unit you will learn about your five senses.</p>
-        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 95 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="let-s-go.html?from=eng1">
         <span class="cardno">Unit 7</span>
         <h2>Let's Go!</h2>
         <p>In this unit you will learn how we travel and get around.</p>
-        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 96 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="wonderful-water.html?from=eng1">
         <span class="cardno">Unit 8</span>
         <h2>Wonderful Water</h2>
         <p>In this unit you will learn about water.</p>
-        <span class="cardfoot"><span class="meta">21 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">21 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 93 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="city-places.html?from=eng1">
         <span class="cardno">Unit 9</span>
         <h2>City Places</h2>
         <p>In this unit you will learn the words for places in a town.</p>
-        <span class="cardfoot"><span class="meta">21 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">21 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 94 min</span></span><span class="go">Start</span></span>
       </a>
       <a class="card" href="my-first-english-world.html?from=eng1">
         <span class="cardno">Unit 10</span>
         <h2>My First English World</h2>
         <p>You will choose your favourite work for a picture-and-word portfolio.</p>
-        <span class="cardfoot"><span class="meta">20 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">20 steps &middot; stickers &middot; <span title="Estimated from the unit's content, not yet timed with learners">about 97 min</span></span><span class="go">Start</span></span>
       </a>
   </main>
 
@@ -931,7 +975,7 @@
    the LESSONS write. This page stores nothing of its own. */
 (function () {
   var COURSE = "ehel-eng-g01";
-  var STEPS  = {"u01": 22, "u02": 22, "u03": 22, "u04": 21, "u05": 22, "u06": 22, "u07": 22, "u08": 21, "u09": 21, "u10": 19};     /* unit id -> slides-1, the lesson's own denominator */
+  var STEPS  = {"u01": 22, "u02": 22, "u03": 22, "u04": 21, "u05": 22, "u06": 22, "u07": 22, "u08": 21, "u09": 21, "u10": 20};     /* unit id -> slides-1, the lesson's own denominator */
   var FILES  = {"u01": "welcome-to-school.html", "u02": "family-time.html", "u03": "fun-and-games.html", "u04": "making-things.html", "u05": "on-the-farm.html", "u06": "my-five-senses.html", "u07": "let-s-go.html", "u08": "wonderful-water.html", "u09": "city-places.html", "u10": "my-first-english-world.html"};     /* unit id -> the page that teaches it */
   var q = new URLSearchParams(location.search);
   var id = function (n) { return "u" + (n < 10 ? "0" : "") + n; };

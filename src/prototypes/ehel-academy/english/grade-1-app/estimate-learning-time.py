@@ -22,11 +22,39 @@ learner working with support, and each carries the reasoning for its number.
 
     python estimate-learning-time.py --dry     # report, write nothing
     python estimate-learning-time.py           # write learningTime into each unit
+    python estimate-learning-time.py --grade 3 --dry   # another grade
+
+ONE RATE MOVES WITH THE GRADE: reading speed (READING_WPM below). Everything
+else is a count of what a unit contains times a per-item rate, and those rates
+describe the kind of work (a spoken answer, a written sentence) more than the
+reader. Reading does not: a Stage 3 reader following a narrated line moves
+faster than a Stage 1 one, and the Grade 3 readings are 12,205 words against
+Grade 1's 4,334, so carrying 60 words a minute up the grades would roughly
+double the reading estimate at Grade 3 for no reason but the table. The
+per-grade figures sit below published oral-reading norms for first-language
+readers at the same age (roughly 60 / 100 / 110 words a minute at the end of
+Years 1-3) because these learners are reading an additional language with
+support. They are the provisional judgement the rest of this table is, and
+belong to the same reviewer.
 """
 import io, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-UNITS = os.path.join(HERE, "..", "grade-1", "data", "units")
+
+
+def grade_arg(argv):
+    if "--grade" in argv:
+        i = argv.index("--grade")
+        if i + 1 >= len(argv) or not argv[i + 1].isdigit():
+            sys.exit("REFUSED: --grade needs a number")
+        return int(argv[i + 1])
+    return 1
+
+
+GRADE = grade_arg(sys.argv[1:])
+UNITS = os.path.join(HERE, "..", "grade-%d" % GRADE, "data", "units")
+# supported reading speed for this grade, words a minute - see the docstring
+READING_WPM = {1: 60, 2: 75, 3: 90, 4: 100}
 
 # seconds per item -- see the note above before changing one
 RATES = {
@@ -58,13 +86,20 @@ def count_words(text):
 def estimate(unit):
     """Seconds per section, from what the unit actually contains."""
     sec = {}
+    # THE TAUGHT WORDS ONLY. "Words from our stories" is the story glossary -
+    # looked up while reading, never walked as a step (the shell's own
+    # taughtGroups() leaves it out) - and counting it put Grade 3's vocabulary
+    # at 84 minutes a unit for a learner who meets about 30 Core words. Grade
+    # 1's stored estimates predate this line and count it; re-running Grade 1
+    # would lower its vocabulary figure.
     sec["vocabulary"] = sum(
         len(g.get("vocabularyIds") or []) for g in unit.get("vocabularyGroups") or []
+        if g.get("title") != "Words from our stories"
     ) * RATES["vocabulary_word"]
     reading = 0
     for r in unit.get("readings") or []:
         w = count_words(r.get("passageScript"))
-        reading += RATES["reading_setup"] + round(w * 60 / RATES["reading_wpm"])
+        reading += RATES["reading_setup"] + round(w * 60 / READING_WPM.get(GRADE, RATES["reading_wpm"]))
     sec["readings"] = reading
     sec["comprehension"] = len(unit.get("comprehension") or []) * RATES["comprehension_q"]
     sec["quiz"] = len(unit.get("quizzes") or []) * RATES["quiz_q"]
@@ -83,7 +118,8 @@ def block(unit):
     return {
         "status": "provisional",
         "basis": "arithmetic from the unit's own counts using the rate table in "
-                 "grade-1-app/estimate-learning-time.py; not observed timings",
+                 "grade-1-app/estimate-learning-time.py; not observed timings"
+                 + ("" if GRADE == 1 else "; reading at %d words a minute" % READING_WPM.get(GRADE, RATES["reading_wpm"])),
         "generatedFrom": "content",
         "sectionMinutes": {k: max(1, round(v / 60)) for k, v in sorted(sec.items()) if v},
         "selfPacedMinutes": round(total / 60),
@@ -93,7 +129,11 @@ def block(unit):
 
 
 def main():
-    flags = [a for a in sys.argv[1:] if a.startswith("--")]
+    argv = list(sys.argv[1:])
+    if "--grade" in argv:
+        i = argv.index("--grade")
+        del argv[i:i + 2]
+    flags = [a for a in argv if a.startswith("--")]
     for f in flags:
         if f != "--dry":
             print("unknown argument %s" % f)

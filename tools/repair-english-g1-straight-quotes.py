@@ -25,6 +25,11 @@ that a listener could not tell apart.
 
     python tools/repair-english-g1-straight-quotes.py          # dry run
     python tools/repair-english-g1-straight-quotes.py --write
+    python tools/repair-english-g1-straight-quotes.py --grade 3 --write
+
+--grade N (2026-09-11) points the same repair at another grade. Nothing about
+the rule is grade-specific; the Grade 2 and 3 builds met the same finding
+(32 strings at Grade 3, the Grade 2 fluency questions).
 
 Idempotent: a second run reports nothing to do.
 """
@@ -34,7 +39,17 @@ import os
 import re
 import sys
 
-BASE = os.path.join('src', 'prototypes', 'ehel-academy', 'english', 'grade-1', 'data')
+def _grade(argv):
+    if '--grade' in argv:
+        i = argv.index('--grade')
+        if i + 1 >= len(argv) or not argv[i + 1].isdigit():
+            sys.exit('REFUSED: --grade needs a number')
+        return int(argv[i + 1])
+    return 1
+
+
+GRADE = _grade(sys.argv[1:])
+BASE = os.path.join('src', 'prototypes', 'ehel-academy', 'english', 'grade-%d' % GRADE, 'data')
 UNITS = os.path.join(BASE, 'units')
 
 OPEN, CLOSE = '“', '”'
@@ -103,7 +118,11 @@ def walk(node, path, adult, hits, refused):
 
 def main():
     write = '--write' in sys.argv
-    for arg in sys.argv[1:]:
+    argv = list(sys.argv[1:])
+    if '--grade' in argv:
+        i = argv.index('--grade')
+        del argv[i:i + 2]
+    for arg in argv:
         if arg != '--write':
             sys.exit('REFUSED: unrecognised argument %r. Use --write, or no argument for a dry run.' % arg)
 
@@ -133,7 +152,7 @@ def main():
     if refused_all:
         sys.exit('REFUSED: quotes do not pair in %d string(s): %s' % (len(refused_all), '; '.join(refused_all)))
 
-    print('\n  Grade 1 straight quotes  (%s)' % ('WRITING' if write else 'dry run - add --write'))
+    print('\n  Grade %d straight quotes  (%s)' % (GRADE, 'WRITING' if write else 'dry run - add --write'))
     print('    strings rewritten : %d   (%d quote marks, %d pairs)' % (total_strings, total_quotes, total_quotes // 2))
     for f, c in sorted(by_field.items(), key=lambda kv: -kv[1]):
         print('      %-40s %d' % (f, c))

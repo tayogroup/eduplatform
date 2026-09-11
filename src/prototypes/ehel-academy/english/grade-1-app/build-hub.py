@@ -40,6 +40,24 @@ OUT, DATA = _lessons.OUT, _lessons.DATA
 GRADE_LABEL = _lessons.GRADE_LABEL
 
 
+def shared_bar_css():
+    """The CSS literal out of mathematics/lesson-app-tools/add-header-bars.py.
+
+    READ, NOT IMPORTED: that tool runs its main() at import and would patch
+    the lesson pages of whatever app sys.argv names. ast finds the one
+    assignment and evaluates only the string, so nothing in it executes."""
+    import ast
+    path = os.path.join(ACADEMY, "mathematics", "lesson-app-tools", "add-header-bars.py")
+    tree = ast.parse(io.open(path, encoding="utf-8").read())
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(getattr(t, "id", None) == "CSS" for t in node.targets):
+            css = ast.literal_eval(node.value)
+            if ".eh-bar1" not in css or ".eh-progtext" not in css:
+                sys.exit("REFUSED: add-header-bars.py's CSS no longer holds the bar rules")
+            return css.rstrip("\n") + "\n"
+    sys.exit("REFUSED: no CSS = ... in add-header-bars.py; the hub cannot draw its bar")
+
+
 def blurb(unit_json):
     t = (unit_json.get("unit", {}).get("unitOverview") or "").strip()
     t = re.sub(r"\s+", " ", t)
@@ -114,64 +132,33 @@ PAGE = """<!doctype html>
   .term li .when { display: block; color: var(--muted); font-weight: 400; font-size: 12.5px; }
   @media (max-width: 560px) { .term li { grid-template-columns: 1fr; gap: 2px; } }
 
-  /* ---- the header bar, the same one the lesson pages carry ---- */
-  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
-    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
-  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
-  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
-  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
-  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
-  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
-  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
-    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
-  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
-  /* --ink, not --muted: measured 4.04:1 on the --cell pill, under the 4.5:1 AA
-     needs for 13.5px text. The shared add-header-bars.py made this same change
-     on 2026-09-10 and the hub never received it, because the hub carries its
-     own copy of these rules - which is why they are named as a copy here. */
-  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
-  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
-  .eh-track i { display: block; height: 100%%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
-  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
-    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
-  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
-    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700;
-    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
+  /* ---- the header bar: the SHARED rules, then only what the hub adds ----
+     The rules below are add-header-bars.py's own CSS, read out of that file at build
+     time. The hub used to carry a copy of these rules, and the copy drifted:
+     the shared tool's contrast fix of 2026-09-10 (--muted to --ink on the
+     progress label, 4.04:1 to 9.72:1) never reached the hub, and the Grade 1
+     validation of 2026-09-11 found the live hub failing AA (areas 14 and 15).
+     One source now, so a fix to the bar reaches the hub on its next build. */
+%(barcss)s
+  /* what only the hub has: no second bar, a Back link that must not shrink,
+     the spacer, and the year bar beside the unit bar */
+  .eh-round { flex: 0 0 auto; }
   .eh-bar1 .hubhead-spacer { display: none; }
   @media (max-width: 720px) {
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-picker { max-width: 130px; }
   }
-
-  /* the crest replaces the drawn shield: square, so a square box */
-  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
   /* the second bar is the YEAR; it yields space before the unit bar does */
   .eh-year .eh-pct { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
   .eh-year { max-width: 300px; }
   @media (max-width: 900px) { .eh-year .eh-track, .eh-year .eh-progtext { display: none; }
     .eh-year { flex: 0 0 auto; max-width: none; padding: 5px 6px; } }
   @media (max-width: 620px) { .eh-year { display: none; } }
-
-  /* the focus chip: emitted empty and hidden, painted by shared/seb-session.js.
-     A PILL with a word, not a bare dot - the dot-only version measured perfectly
-     and could not be found on the page, and colour alone says nothing to anyone
-     who cannot separate red from green. */
-  .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
-    border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
-    font-size: 12.5px; font-weight: 800; }
-  .eh-focus i { width: 9px; height: 9px; border-radius: 999px; background: currentColor; display: block; }
-  .eh-focus.is-ok { background: var(--good, #3E9C63); color: var(--good-ink, #06231F); }
-  .eh-focus.is-warn { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
-  .eh-focus.is-bad { background: var(--bad, #D7584B); color: var(--bad-ink, #2A0A07); }
-  .eh-focus b { font-weight: 800; }
-  @media (max-width: 620px) { .eh-focus b { display: none; }
-    .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
 </style>
 
 <script type="module">import "./seb-session.js";</script>
 <header class="eh-bar1">
-  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <a class="eh-round back" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
   <div class="eh-brand"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></div>
   <div class="eh-prog" id="ehProg">
     <span class="eh-pct" id="ehPct">0%%</span>
@@ -213,8 +200,8 @@ PAGE = """<!doctype html>
    the LESSONS write. This page stores nothing of its own. */
 (function () {
   var COURSE = "%(courseKey)s";
-  var STEPS  = {"u01": 22, "u02": 22, "u03": 22, "u04": 21, "u05": 22, "u06": 22, "u07": 22, "u08": 21, "u09": 21, "u10": 19};     /* unit id -> slides-1, the lesson's own denominator */
-  var FILES  = {"u01": "welcome-to-school.html", "u02": "family-time.html", "u03": "fun-and-games.html", "u04": "making-things.html", "u05": "on-the-farm.html", "u06": "my-five-senses.html", "u07": "let-s-go.html", "u08": "wonderful-water.html", "u09": "city-places.html", "u10": "my-first-english-world.html"};     /* unit id -> the page that teaches it */
+  var STEPS  = %(stepsmap)s;     /* unit id -> slides-1, the lesson's own denominator */
+  var FILES  = %(filesmap)s;     /* unit id -> the page that teaches it */
   var q = new URLSearchParams(location.search);
   var id = function (n) { return "u" + (n < 10 ? "0" : "") + n; };
   var N = Object.keys(FILES).length;
@@ -305,6 +292,7 @@ def main():
 
     cards = ""
     live = 0
+    steps_map, files_map = {}, {}
     for u in manifest["units"]:
         unit = json.load(io.open(os.path.join(DATA, "units", "unit-%d.json" % u["number"]), encoding="utf-8"))
         f = slug(u["title"])
@@ -313,7 +301,24 @@ def main():
             live += 1
             page = io.open(os.path.join(OUT, f), encoding="utf-8").read()
             steps = len(re.findall(r'<section class="slide"', page)) - 1
+            # the header script's two maps, from the page itself. They were
+            # typed into PAGE as Grade 1's (welcome-to-school.html, 22 steps),
+            # so every other grade's hub - the live Grade 2 one included - could
+            # not select its current unit in the picker and divided its
+            # progress by Grade 1's step counts. Found building Grade 3.
+            uid = "%s%02d" % (cfg.get("progressUnitPrefix") or "u", u["number"])
+            steps_map[uid] = steps
+            files_map[uid] = f
             meta = "%d steps &middot; stickers" % steps
+            # The unit's own learning-time estimate, on the card a parent
+            # plans from - the Grade 1 validation (area 17) found it held as
+            # data and shown nowhere; Science's hub already shows its figure.
+            # "about", and a title naming it provisional, because nobody has
+            # been timed doing these units yet.
+            lt = unit.get("learningTime") or {}
+            if lt.get("selfPacedMinutes"):
+                meta += (' &middot; <span title="Estimated from the unit\'s content, '
+                         'not yet timed with learners">about %d min</span>' % lt["selfPacedMinutes"])
             cta = '<span class="go">Start</span>'
             tag, href, cls = "a", ' href="%s?from=%s"' % (f, cfg["fromParam"]), ""
         else:
@@ -355,6 +360,8 @@ def main():
 
     io.open(os.path.join(OUT, cfg["hub"]), "w", encoding="utf-8", newline="").write(
         PAGE % {"css": css, "cards": cards, "gradeLabel": GRADE_LABEL,
+                "barcss": shared_bar_css(),
+                "stepsmap": json.dumps(steps_map), "filesmap": json.dumps(files_map),
                 "courseKey": cfg["courseKey"],
                 # the unit picker: this grade's lessons, in order, from the
                 # same config the cards and FILES come from - it used to be a

@@ -215,6 +215,11 @@ SENTENCES_SHOWN = 3
 # 2 authors up to 27 words in one group (Unit 9) and two topic groups per
 # unit - merged into one step that was 32 words on a single slide in Unit 8.
 WORDS_PER_STEP = 14
+# The fewest words a "Meet the words" step walks on its own. A smaller group
+# joins its neighbour: Grade 3 authors five one-word topic groups (Unit 1's
+# "Words: how we feel and how we treat people" is one word) and Grade 2 two
+# more, each of which drew a step a child finishes in one tap.
+WORDS_MIN_STEP = 4
 
 # The order a learner walks a unit. Owner, 2026-09-08, matching the shell
 # course's own Grades 1-4 arrangement: the picture books LEAD the reading,
@@ -595,6 +600,14 @@ def practice_examples(grammar_item):
     text = grammar_item.get("practice") or ""
     if ":" not in text:
         return []
+    # A WORKSHEET, not a line of spoken examples. Grade 3 writes practice as
+    # pipe-separated items with an answer key ("... | Answer key: plays,
+    # studies, rises, go, helps."), and one title ("Simple Present Tense")
+    # got past the label test below, so Unit 4's "Let us talk" offered the
+    # answer key as a sentence to say. None of Grade 1's sixty practice lines
+    # has any of these marks (measured), so its rounds are unchanged.
+    if "|" in text or re.search(r"answer key|check yourself|open-ended", text, re.I):
+        return []
     tail = text.split(":", 1)[1].strip()
     out = []
     for p in [x.strip() for x in re.split(r"(?<=[.!?])\s+", tail) if x.strip()]:
@@ -660,8 +673,9 @@ def talk_items_from_rules(unit):
     why = {n: e for n, _, e in pools}
     bases = [n for n, _, _ in pools]
     rounds = []
+    tool = fluency_tool()
     for i, b in enumerate(bases):
-        answer = pool[b][0]
+        answer = tool.pick_answer(b, pool[b])
         others = [x for x in bases if x != b]
         cands = []
         for step in range(6):
@@ -669,7 +683,7 @@ def talk_items_from_rules(unit):
                 ex = pool[o]
                 if step < len(ex):
                     pick = ex[(i + step) % len(ex)]
-                    if pick not in cands and pick != answer:
+                    if pick not in cands and pick != answer and tool.fair_distractor(pick, b):
                         cands.append(pick)
         if len(cands) < 2:
             continue
@@ -971,6 +985,14 @@ def distractors(pool, right, n, key=lambda x: x):
 # ----------------------------------------------------------------------
 # the slides
 # ----------------------------------------------------------------------
+def join_titles(a, b):
+    """"Words: time and family" + "Words: how we feel" ->
+    "Words: time and family \u00b7 how we feel"."""
+    if a.startswith("Words: ") and b.startswith("Words: "):
+        b = b[len("Words: "):]
+    return a + " \u00b7 " + b
+
+
 def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, book_questions,
                  talk_rounds, plan):
     """Return (slides, stickers, data) for one unit.
@@ -1162,6 +1184,28 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
         # duplicated rather than two different things to do with the same
         # words.
         topic_groups = [dict(groups["phonics"], title="Meet the words")]
+    # A group smaller than WORDS_MIN_STEP joins the next group (the previous
+    # one, if it is last); the titles are joined without repeating "Words: ".
+    folded = []
+    pending_small = None
+    for g in topic_groups:
+        g = {"title": g["title"], "words": list(g["words"])}
+        if pending_small:
+            g = {"title": join_titles(pending_small["title"], g["title"]),
+                 "words": pending_small["words"] + [w for w in g["words"] if w not in pending_small["words"]]}
+            pending_small = None
+        if len(g["words"]) < WORDS_MIN_STEP and len(topic_groups) > 1:
+            pending_small = g
+            continue
+        folded.append(g)
+    if pending_small:
+        if folded:
+            last = folded.pop()
+            folded.append({"title": join_titles(last["title"], pending_small["title"]),
+                           "words": last["words"] + [w for w in pending_small["words"] if w not in last["words"]]})
+        else:
+            folded.append(pending_small)
+    topic_groups = folded
     parts = []
     for g in topic_groups:
         ws = list(g["words"])
@@ -1280,6 +1324,15 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
 
     factual = [c for c in unit["comprehension"] if is_factual(c)]
 
+    # The neighbouring units' factual answers, nearest first - drawn on only
+    # where this unit's own pool is too small to keep neighbours apart (below).
+    neighbour_answers = []
+    here = unit["unit"]["unitNo"]
+    for other in (here + 1, here - 1, here + 2, here - 2):
+        path = os.path.join(DATA, "units", "unit-%d.json" % other)
+        if other >= 1 and os.path.isfile(path):
+            neighbour_answers += [c for c in load_json(path).get("comprehension") or [] if is_factual(c)]
+
     # SORTED BY THE STORY THEY ARE ABOUT, in the unit's own reading order
     # (owner, 2026-09-10), so the first story's questions come first. The
     # authored comprehension already happens to be grouped that way, so today
@@ -1330,13 +1383,39 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
 
     if len(factual) >= 3:
         items = []
-        for c in chosen:
+        for k, c in enumerate(chosen):
             # authored wrong options first; the sibling-answer pool only fills
             # what an author has not written - see authored_distractors()
             wrong_text = authored_distractors(c, 2)
             if len(wrong_text) < 2:
+                # NO AUTHORED OPTIONS (every Grade 2 and 3 question): the pool
+                # is the unit's other answers, and taken in list order it is
+                # the defect authored_distractors() describes - neighbouring
+                # questions offering one small set, each right in turn, so a
+                # child who answered two knows the third by elimination (Grade
+                # 2's Unit 1 opened with two questions on the SAME three
+                # options). So: answers to questions NOT shown in this step
+                # first, never the answer of the question just before or just
+                # after, and the pool rotated by position so no two
+                # neighbours draw the same pair.
+                near = {chosen[j]["correctAnswer"] for j in (k - 1, k + 1) if 0 <= j < len(chosen)}
+                unseen = [x for x in factual if x not in chosen]
+                seen = [x for x in chosen if x is not c]
+                pool = [x for x in unseen + seen if x["correctAnswer"] not in near]
+                if pool:
+                    r = k % len(pool)
+                    pool = pool[r:] + pool[:r]
+                # A unit with too few answers of its own (Grade 3's Units 4, 9
+                # and 10 have three, for three questions) cannot avoid sharing
+                # however it rotates, so it borrows the neighbouring units'
+                # answers ahead of its own near ones. A borrowed answer is from
+                # another story - a plainer wrong option - which is the price of
+                # a question that cannot be answered by elimination.
+                if len(pool) < 4:
+                    pool += neighbour_answers
+                pool += [x for x in seen if x["correctAnswer"] in near]
                 wrong_text += [x["correctAnswer"] for x in
-                               distractors([x for x in factual if x is not c], c,
+                               distractors([x for x in pool if x is not c], c,
                                            2 - len(wrong_text), key=lambda x: x["correctAnswer"])]
             items.append({
                 "ask": c["question"],

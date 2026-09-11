@@ -54,8 +54,23 @@ differs: **Let us talk** and **Fluency Practice** draw on `ruleAndExamples`
 authors each pattern as a pair of items) where Grade 1's come from the
 `practice` line — one parse, in `tools/author-ehel-english-g1-fluency.py`,
 which the builder imports. A "Meet the words" step is one topic group, split
-into equal parts above `WORDS_PER_STEP` (14, Grade 1's largest); Grade 2's
-two groups per unit are two steps or more, never merged.
+into equal parts above `WORDS_PER_STEP` (14, Grade 1's largest); a group under
+`WORDS_MIN_STEP` (4) joins its neighbour, titles joined.
+
+Rules added while building Grade 3 (2026-09-11), each answering a finding of
+the Grade 1 validation or the Grade 2 build, and each leaving Grade 1's ten
+lesson pages byte-identical:
+
+- **Story questions without authored wrong options** draw them from answers
+  not shown in the step, never a neighbouring question's answer, rotated by
+  position. Grade 2's live pages had 19 neighbouring questions on one option
+  set and 39 wrong options that were a neighbour's answer; rebuilt, 0 and 0.
+- **The hub's header bar is the shared tool's CSS**, read out of
+  `add-header-bars.py` with `ast` (that tool runs on import), plus the hub's
+  own additions. The copy it replaces is how the hub missed the 10 September
+  contrast fix.
+- **Hub cards show the unit's learning-time estimate** ("about N min") where
+  the unit carries one.
 
 ```bash
 

@@ -135,39 +135,130 @@ RULE_TALK = re.compile(
     r"add|the rest|match|count|choose|pick|plan|open with|name the|give every|"
     r"stays the same|for everyone|the same for|all use)\b|-(?:ing|ed|er|s|es)\b", re.I)
 RULE_INSTRUCTION = re.compile(
-    r"^(Use|Write|Rewrite|Choose|Pick|Plan|Count|Match|Name|Add|Finish|Begin|Start|Take|Open with)\b")
+    r"^(Use|Write|Rewrite|Choose|Pick|Plan|Count|Match|Name|Add|Finish|Begin|Start|Take|Open with|Put|Always|Remember|Say|Ask|Change|Drop|Make)\b")
+
+
+QUOTED = re.compile(r"[\u201c\"]([^\u201d\"]{3,160}?)[\u201d\"]")
+FORMULA = re.compile(r"\+|\s/\s|\u2192|\.\.\.|\u2026|___")
+
+
+def _is_list(p):
+    """"I, you, we, they." - three or more one-word items and nothing else."""
+    parts = [x.strip(" .") for x in p.split(",")]
+    return len(parts) >= 3 and all(len(x.split()) <= 2 for x in parts)
+
+
+def _sayable(p, quoted):
+    if not re.match(r"^[A-Z]", p) or FORMULA.search(p) or ":" in p:
+        return False
+    if re.search(r"(?<![\w.])\d+\.", p) or not 2 <= len(p.split()) <= 12:
+        return False
+    if _is_list(p):
+        return False
+    # A sentence a rule QUOTES is an example by construction - "I count the
+    # shells." is an example even though "count" is a word the rules use to
+    # talk about themselves - so the two metalanguage tests apply only to
+    # unquoted lines.
+    if not quoted and (RULE_TALK.search(p) or RULE_INSTRUCTION.match(p)):
+        return False
+    return True
 
 
 def rule_sentences(grammar_item):
-    """Grade 2: the example sentences a rule holds up, labels and commentary
-    stripped. "Near and one: This seed is very small." -> "This seed is very
-    small."; "The word will never changes." -> dropped; "This is Leo. He
-    likes football." -> "He likes football." (a bare three-word intro beside
-    a longer sentence is the name, not the pattern); "How do you spell ...?"
-    -> dropped (a frame with dots is not a sentence to say)."""
+    """The example sentences a rule holds up, labels and commentary stripped.
+
+    Two shapes, both measured. Grade 2 writes most examples as bare lines -
+    "Near and one: This seed is very small." -> "This seed is very small." -
+    and Grade 3 puts them in speech marks inside a line of explanation:
+    "I am + verb-ing: \u201cI am learning English.\u201d" -> "I am learning
+    English." So a line with quoted sentences contributes exactly those; a
+    line without quotes contributes its own sentences, minus commentary
+    ("The word will never changes."), formulas ("Subject + can + see +
+    object"), slash lists ("Go. / Stop.") and word lists ("I, you, we, they.").
+    A bare three-word intro beside a longer sentence ("This is Leo. He likes
+    football.") is the name, not the pattern, and is dropped.
+    """
     out = []
+
+    def add(p, quoted):
+        p = p.strip().strip("\u2018\u2019'").strip()
+        if not p or not re.search(r"[A-Za-z]", p):
+            return
+        p = p if p.endswith((".", "!", "?")) else p + "."
+        if _sayable(p, quoted) and p not in out:
+            out.append(p)
+
     for line in (grammar_item.get("ruleAndExamples") or "").split("\n"):
         line = line.strip()
-        m = re.match(r"^[^:\u201c\u201d\"]{1,45}:\s*(.+)$", line)
+        quoted = QUOTED.findall(line)
+        if quoted:
+            for q in quoted:
+                q = q.strip()
+                if not q.endswith((".", "!", "?")):
+                    continue        # a quoted word or phrase, not a sentence
+                for p in re.split(r"(?<=[.!?])\s+", q):
+                    add(p, True)
+            continue
+        m = re.match(r"^[^:]{1,45}:\s*(.+)$", line)
         if m:
             line = m.group(1)
-        if any(c in line for c in "\u201c\u201d\"\u2026\u2014:") or "..." in line:
-            continue
-        parts = [p.strip().strip("\u2018\u2019'").strip() for p in re.split(r"(?<=[.!?])\s+", line)]
+        parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+", line)]
         parts = [p for p in parts if p and re.search(r"[A-Za-z]", p)]
         if len(parts) > 1:
             parts = [p for p in parts if len(p.split()) > 3]
         for p in parts:
-            p = p if p.endswith((".", "!", "?")) else p + "."
-            if not re.match(r"^[A-Z]", p) or "___" in p or "\u2192" in p:
-                continue
-            if re.search(r"(?<![\w.])\d+\.", p) or not 2 <= len(p.split()) <= 12:
-                continue
-            if RULE_TALK.search(p) or RULE_INSTRUCTION.match(p):
-                continue
-            if p not in out:
-                out.append(p)
+            add(p, False)
     return out
+
+
+# Words that, named in a pattern's title, are the thing the pattern is about:
+# "Using because for Explanations", "The Word 'Could'", "Future with 'Will'".
+FUNCTION_WORDS = {"because", "so", "and", "but", "or", "when", "since", "as", "from",
+                  "can", "could", "will", "would", "should", "must", "might", "got",
+                  "this", "that", "these", "those", "there", "like", "likes", "than",
+                  "first", "next", "then", "finally", "please", "don't", "not"}
+
+
+def concept_keys(name):
+    """(key words, is a question pattern) for a pattern's name."""
+    low = name.lower()
+    quoted = re.findall(r"[\u2018\u201c'\"]([^\u2019\u201d'\"]+)[\u2019\u201d'\"]", name)
+    keys = {w for q in quoted for w in re.findall(r"[a-z']+", q.lower())}
+    # a function word is the pattern's subject only where the title writes it
+    # in lowercase ("Using because for Explanations", "The Conjunction and");
+    # capitalised, it is joining two terms ("Likes and Dislikes")
+    keys |= {w for w in re.findall(r"\b[a-z][a-z']*", name) if w in FUNCTION_WORDS}
+    return keys, "question" in low
+
+
+def shows(sentence, name):
+    """Whether a sentence visibly shows the pattern its name names - its key
+    word, or a question mark for a question pattern. None when the name
+    names nothing checkable ("Present Continuous"), so callers fall back."""
+    keys, question = concept_keys(name)
+    if not keys and not question:
+        return None
+    low = sentence.lower()
+    if question and sentence.rstrip().endswith("?"):
+        return True
+    return any(re.search(r"\b%s\b" % re.escape(k), low) for k in keys)
+
+
+def pick_answer(name, sentences):
+    """The first example that shows the pattern, else the first example.
+    Grade 3's "Using because for Explanations" quotes a BEFORE and an AFTER -
+    "I like the officer." then "I like the officer because he helps people."
+    - and taking the first made the answer the one sentence without because."""
+    for s in sentences:
+        if shows(s, name):
+            return s
+    return sentences[0]
+
+
+def fair_distractor(sentence, name):
+    """A wrong option must not also show the asked pattern: "What do you
+    like?" offered under "Asking Questions" is a second right answer."""
+    return shows(sentence, name) is not True
 
 
 def concept_pools(unit):
@@ -207,7 +298,7 @@ def grammar_review_items_from_rules(unit, count_start=1):
     bases = [n for n, _, _ in pools]
     items = []
     for i, b in enumerate(bases):
-        answer = pool[b][0]
+        answer = pick_answer(b, pool[b])
         others = [x for x in bases if x != b]
         cands = []
         for step in range(8):
@@ -215,7 +306,7 @@ def grammar_review_items_from_rules(unit, count_start=1):
                 ex = pool[o]
                 if step < len(ex):
                     pick = ex[(i + step) % len(ex)]
-                    if pick not in cands and pick != answer:
+                    if pick not in cands and pick != answer and fair_distractor(pick, b):
                         cands.append(pick)
         if len(cands) < 3:
             continue
@@ -223,7 +314,11 @@ def grammar_review_items_from_rules(unit, count_start=1):
         items.append({
             "sequence": count_start + len(items),
             "practiceType": "Fluency - grammar review",
-            "question": 'Which sentence uses the pattern "%s"?' % b,
+            # curly, because this course teaches what a speech mark looks
+            # like (Grade 1 validation, areas 4 and 19; the Grade 1 path above
+            # writes straight ones and repair-english-g1-straight-quotes.py
+            # turned them after the fact)
+            "question": "Which sentence uses the pattern \u201c%s\u201d?" % b,
             "options": " | ".join(place_answer(answer, distractors, i)),
             "correctAnswer": answer,
             "explanation": expl[b] or ('That sentence follows "%s".' % b),
@@ -308,6 +403,20 @@ def word_review_items(unit, links_by_word, count_start=1, want=9):
         meaning = (link.get("childMeaning") or "").strip()
         if not word or not meaning:
             continue
+        # A meaning that NAMES ITS OWN ANSWER is not a question: "Fun means
+        # enjoying yourself." -> fun. Measured 2026-09-11: 45 of the 90 word
+        # questions in Grade 1's live bank are that shape, and Grade 2 and 3
+        # write childMeanings the same way ("To move means to go from one place
+        # to another."). Skipping them thinned Grade 2 units to nine questions,
+        # so the word is blanked instead and the question asks for the gap:
+        # "Which word fills the gap: ___ means enjoying yourself." The
+        # explanation keeps the meaning whole.
+        own = re.compile(r"\b%s(?:s|es|d|ed|ing)?\b" % re.escape(word), re.I)
+        stem = "Which word means: %s"
+        shown = meaning
+        if own.search(meaning):
+            shown = own.sub("___", meaning)
+            stem = "Which word fills the gap: %s"
         pool = [w for w in all_words if w and w.lower() != word.lower()]
         # stable, deterministic distractor pick: nearest three OTHER words by
         # list position, wrapping - avoids any randomness so re-runs agree
@@ -324,7 +433,7 @@ def word_review_items(unit, links_by_word, count_start=1, want=9):
         items.append({
             "sequence": count_start + len(items),
             "practiceType": "Fluency - word review",
-            "question": "Which word means: %s" % meaning,
+            "question": stem % shown,
             "options": " | ".join(place_answer(word, distractors, len(items) + 2)),
             "correctAnswer": word,
             "explanation": "%s: %s" % (word, meaning),

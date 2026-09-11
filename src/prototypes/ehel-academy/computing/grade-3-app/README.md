@@ -309,9 +309,8 @@ two label styles were 11 and 12 px; eight pictures needed 2020 or 2021 devices, 
 20 places, and the kit drew "Shake it" with a 2022 face. The controls, the labels
 and the shake face are fixed in the shared kit, so Grade 4's pages change too; the
 kit README records the size rule for Stage 3 controls and an Emoji 12.0 (2019)
-ceiling for pictures. All in `282c40c60`, committed and **not deployed**: the live
-Grade 3 pages carry the errors above until Grade 3 is redeployed. Nothing added a
-step or moved one, so records already made stay true.
+ceiling for pictures. All in `282c40c60`, deployed the same day (see below).
+Nothing added a step or moved one, so records already made stay true.
 
 Left open, all content work or human checks: categorical data is named by 3MD.02
 and 3MD.03 but never recorded or charted (the lessons use one discrete data set,
@@ -321,3 +320,13 @@ seed, getting dressed, the jam sandwich twice, a debug goal; tea, bedtime); a
 teacher's read of the content and the 144 keys; a listen to the cipher lesson's
 letter names ("a is 1"); a screen-reader walk-through; children watched; and the
 owner's decisions on score-gated completion and the Computing world placeholder.
+
+## Redeployed 2026-09-11 with the Grade 3 validation fixes
+
+On the owner's instruction ("deploy"): the pages of `282c40c60`, 20 files uploaded,
+all verified on storage, every page byte-identical to HEAD, every edge path fresh.
+All fourteen lessons were then played to the end on the live pages in Chromium: 0
+console errors, every step stored and every lesson recorded complete, nothing
+ticked on a fresh open, and a reload after moving to step 4 opens step 4. Lesson
+12's first attempt could not resolve the CDN's host name from this machine; the
+re-run passed. Grade 4 was redeployed straight after, for the shared kit changes.

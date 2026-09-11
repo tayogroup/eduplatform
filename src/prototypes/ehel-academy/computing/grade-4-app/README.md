@@ -294,3 +294,19 @@ every page byte-identical to HEAD, every edge path fresh. Lesson 1 was then
 played to the end on the live pages in Chromium: 0 console errors, every step
 stored and the lesson recorded complete, nothing ticked on a fresh open, and a
 reload after moving to step 4 opens step 4.
+
+## Redeployed 2026-09-11 with the Grade 3 validation's kit fixes
+
+On the owner's instruction, straight after Grade 3: the pages of `282c40c60`, which
+reach Grade 4 only through the shared kit. The Stage 3 controls it shares (the
+cipher keys, which Caesar and Pigpen use, the column letters, the choice chips
+and the loop's number chip) are 44 px on a phone and their labels 13 px, and the
+shake sensor in lesson 7 and Bitsy's shake input are drawn with a vibrating phone
+instead of an Emoji 15.0 face that older tablets show as a box. Lesson data
+otherwise unchanged. 20 files uploaded, all verified on storage, every page
+byte-identical to HEAD, every edge path fresh. All fourteen lessons were then
+played to the end on the live pages in Chromium: 0 console errors, every step
+stored and every lesson recorded complete, nothing ticked on a fresh open, and a
+reload after moving to step 4 opens step 4. Five Emoji 13.0 (2020) pictures
+remain in Grade 4's own content (a lift, bubble tea, a bucket, a toothbrush, a
+pot plant), for its own validation.

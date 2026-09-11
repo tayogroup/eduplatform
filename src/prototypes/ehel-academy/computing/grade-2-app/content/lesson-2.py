@@ -36,7 +36,7 @@ LESSON = {
                  ["Children stop reading after the first two steps.", "The last step changes the answer as much as the first."],
                  ["Finger on the first step, then the next, then tap."]),
              {"label": "Question", "items": [
-                 q("<ol><li>Start with 5 counters.</li><li>Take 2 away.</li><li>Add 4.</li></ol>How many counters at the end?", "\U0001F7E2", "7", ["3", "9", "5"], "Five, take two is three, add four is seven."),
+                 q("<ol><li>Start with 5 counters.</li><li>Take 2 away.</li><li>Add 4.</li></ol>How many counters at the end?", "\U0001F535", "7", ["3", "9", "5"], "Five, take two is three, add four is seven."),
                  q("<ol><li>Stand facing the door.</li><li>Turn right.</li><li>Turn right.</li><li>Turn right.</li><li>Turn right.</li></ol>Which way are you facing?", "\U0001F6AA", "the door", ["the window", "the wall", "the floor"], "Four right turns is a whole circle. You face the door again."),
                  q("<ol><li>Draw a big circle.</li><li>Draw a small circle inside it.</li><li>Colour the small circle red.</li></ol>What have you drawn?", "\U0001F3AF", "a target with a red middle", ["a red square", "a face", "two red circles"], "A circle inside a circle, red in the middle: a target."),
                  q("<ol><li>Say hop.</li><li>Say hop.</li><li>Say hop.</li><li>Say stop.</li></ol>What is the LAST word you say?", "\U0001F5E3️", "stop", ["hop", "go", "nothing"], "The last step says stop."),

@@ -456,6 +456,16 @@ async function driveStep(page, n, st, log) {
     }
     return;
   }
+  if (k === "branchbuild") {
+    for (const rd of d.rounds) {
+      if (rd.questions) { await click(page, `${S(n)} [data-q="${rd.questions.indexOf(rd.question)}"]`); await sleep(500); }
+      for (const z of ["before", "yes", "no", "after"]) {
+        for (const st of rd[z] || []) { await click(page, `${S(n)} [data-pick="${st.id}"]`); await sleep(120); await click(page, `${S(n)} [data-zone="${z}"]`); await sleep(160); }
+      }
+      await click(page, S(n, "test")); await sleep(4700);
+    }
+    return;
+  }
   if (k === "loopbuild") {
     for (const rd of d.rounds) {
       for (const id of rd.expect.body) { await click(page, `${S(n)} [data-add="${id}"]`); await sleep(150); }

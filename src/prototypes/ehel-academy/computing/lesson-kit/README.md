@@ -78,6 +78,7 @@ codes the builder accepts and which the gate demands.
 | `subroutine` | `subRoutine` | follows a main algorithm that calls named sub-routines (`{kind: "call", sub}`): taps the call, then every step of the sub-routine, then carries on after the call; `sub_expand` decides (4CT.08) |
 | `branch` | `branchAlgo` | picks one of two inputs and follows only the branch it takes (`before`, `yes`, `no`, `after`), then the other input; both inputs must run and the arms must differ; `branch_run` decides (4CT.09) |
 | `loopbuild` | `loopBuild` | builds an algorithm with a repeat: taps steps from a pool into the loop body, sets the count with a number chip, runs it; the pool must hold a step the loop does not use; `expand_loop` decides (4CT.10) |
+| `branchbuild` | `branchBuild` | WRITES an algorithm with a branch: chooses the question that decides it (when the round offers `questions`), puts every step `before`, in the `yes` or `no` branch, or `after`, then tests it with both inputs; a misplaced step shows up as the wrong output for one input, is named with what the test showed, and goes back to be placed again. Every step has its own id, both branches hold a step, and one step sits outside them; `word` labels the fork (default `IF`); `branch_home` decides (4CT.09) |
 | `comment` | `commentBlocks` | matches one comment to each block of a program, then answers why comments help (4P.01) |
 | `inputprog` | `inputProgram` | builds a different script for each input (tabs), then presses each input and watches only its script run; two inputs may not produce the same output (4P.05) |
 | `plan` | `planObjects` | plans each object of a program by answering what its input is and what its output is (4P.06) |
@@ -199,6 +200,16 @@ rather than the page.
   `drive-lessons.mjs --record` after any change to the deck, the shell or a
   step that finishes without a tap. It is how the shell-tick defect above was
   proved fixed, and it would have caught it on the first day.
+- **A stopped drive leaves its server holding the port, and the next
+  `--record` run dies before it plays anything.** The plain drive serves the
+  source tree on 4330 and `--record` serves a copy of the deployed layout on
+  4331; kill a run part-way and that listener can outlive it. The next run
+  then throws `EADDRINUSE` and exits 1 having printed no lesson at all -
+  which is not the same thing as a lesson failing, and reads the same in a
+  log if you only look at the exit code. Read the stage's own output, and
+  pass `--port` when a run has been interrupted (2026-09-12: five record
+  stages in a row failed that way, on a listener left by a run stopped
+  thirty minutes earlier).
 - **The recap and the warm-up live on the overview, never as new steps.** A
   new step shifts every stored section id after it, so a learner's saved
   record would tick the wrong dots. The warm-up is never marked: a wrong
@@ -233,14 +244,32 @@ rather than the page.
   A number chip is 44 px inside a 44 px block by pulling its margins in, so
   the block does not grow. A new control class gets `min-height: 44px` the
   day it is written.
-- **Pictures are Emoji 12.0 (2019) or older.** A tablet that has not had a
+- **Pictures are Emoji 11.0 (2018) or older.** A tablet that has not had a
   system update since then draws a newer one as an empty box, and an empty
   box beside "shake it" teaches nothing. The kit's shake input was 🫨
   (Emoji 15.0, 2022) and Grade 3 carried eight 2020-21 pictures (a lift, a
   mirror, a bucket, a toothbrush, a pot plant, a slide, a wheel, bubble
   tea); those were replaced on 2026-09-11, and Grade 4's five (the same
   lift, bubble tea, bucket, toothbrush and pot plant) in its own validation
-  the same day. Check a new picture's Emoji version before using it.
+  the same day. The floor dropped to 2018 on 2026-09-12, because the reports
+  kept asking for the remaining 2019 glyphs (nine in Grade 1, seven in Grade
+  2, ten in Grade 3, five in Grade 4) to be checked on the school's oldest
+  tablets, and a picture nobody has to check is better than a check nobody
+  can do here. **`check-coverage.py` enforces it**: it reads every pictograph
+  out of the built pages and fails on one a 2018 tablet cannot draw, naming
+  the glyph and its Emoji version (mutation-tested: a 2019 brown square
+  planted in one label turns the gate red).
+- **Where the colour IS the content, the picture is DRAWN, not typed.**
+  `_kit.swatch` returns a small inline SVG - a brick, a square, a disc, two
+  discs, soil, butter - and the page paints any pic that starts with `<svg`
+  as it stands (`small()`, `picHtml()`), at the size its own CSS rule gives
+  it. That is how the tower bricks keep the scene's own colours, and how a
+  traffic light shows red AND amber as two lamps where the 2019 orange
+  circle showed one. **Two places take emoji only**: a question's `pic` and
+  a sort item's `pic`, because `_shell.py` carries both into the derived
+  games as TEXT (it drops a pic that starts with `<`). And a picture must
+  never be the icon of the bin its item sorts into - that hands the child
+  the answer.
 - **The teachers' page picks a step's unplugged version by what the step
   teaches, not only by its kind.** `build-hub.py` chose the "Do it
   unplugged" line from the step kind alone, so Grade 4's Caesar step

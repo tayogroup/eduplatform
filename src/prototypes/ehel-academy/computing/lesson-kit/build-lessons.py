@@ -96,7 +96,7 @@ KINDS = {
     "parallel": "parallelProgram", "tweak": "tweakProgram", "device": "deviceProgram",
     "views": "dataViews", "sheet": "spreadsheet", "filter": "dataFilter", "cipher": "cipher",
     # Stage 4
-    "loopalgo": "loopAlgo", "compare": "compareAlgos", "subroutine": "subRoutine", "branch": "branchAlgo", "loopbuild": "loopBuild",
+    "loopalgo": "loopAlgo", "compare": "compareAlgos", "subroutine": "subRoutine", "branch": "branchAlgo", "loopbuild": "loopBuild", "branchbuild": "branchBuild",
     "comment": "commentBlocks", "inputprog": "inputProgram", "plan": "planObjects", "parttest": "partTest",
     "datasort": "dataSort", "tableparts": "tableParts",
     "questions": "sequence", "quiz": "sequence",
@@ -108,7 +108,7 @@ KINDS = {
 # Robo's rules, the table arithmetic, the repeat block and the race sums live
 # in _rules.py, shared with the gate, so the builder and check-coverage.py
 # cannot disagree about any of them.
-from _rules import (DIRS, REPEATS, best_algo, branch_run, caesar_shift, code_word, decode_code, expand_loop,  # noqa: E402
+from _rules import (DIRS, REPEATS, best_algo, branch_home, branch_run, caesar_shift, code_word, decode_code, expand_loop,  # noqa: E402
                     expand_program, filter_rows, flatten_algo, pigpen_index, repeat_run, rule_output, run_robot,
                     same_effect, sheet_cells, sort_rows, sub_expand, sum_answer, table_answer, walk_end)
 
@@ -802,6 +802,24 @@ def check_step(n, k, s, codes, libs):
                     sys.exit("REFUSED: %s round %r runs nothing for input %r" % (where, rd["task"], inp["id"]))
             if [st["id"] for st in rd["yes"]] == [st["id"] for st in rd["no"]]:
                 sys.exit("REFUSED: %s round %r: both branches do the same thing" % (where, rd["task"]))
+    elif kind == "branchbuild":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 rounds" % where)
+        if "word" in d and not (isinstance(d["word"], str) and 0 < len(d["word"]) <= 8):
+            sys.exit("REFUSED: %s word must be a short label, like IF" % where)
+        for rd in d["rounds"]:
+            if len(rd.get("inputs") or []) != 2 or not rd.get("question") or not rd.get("task"):
+                sys.exit("REFUSED: %s round needs a task, a question and exactly 2 inputs" % where)
+            if not rd.get("yes") or not rd.get("no") or not (rd.get("before") or rd.get("after")):
+                sys.exit("REFUSED: %s round %r needs both branches and a step outside them" % (where, rd["task"]))
+            ids = [st["id"] for z in ("before", "yes", "no", "after") for st in rd.get(z, [])]
+            if len(branch_home(rd)) != len(ids):
+                sys.exit("REFUSED: %s round %r: every step needs its own id and one place" % (where, rd["task"]))
+            if not 4 <= len(ids) <= 8:
+                sys.exit("REFUSED: %s round %r: 4 to 8 steps to place" % (where, rd["task"]))
+            qs = rd.get("questions")
+            if qs is not None and (not 2 <= len(qs) <= 4 or qs.count(rd["question"]) != 1 or len(set(qs)) != len(qs)):
+                sys.exit("REFUSED: %s round %r: the questions must hold the right one once, 2 to 4 in all" % (where, rd["task"]))
     elif kind == "loopbuild":
         if len(d["rounds"]) < 2:
             sys.exit("REFUSED: %s has fewer than 2 rounds" % where)

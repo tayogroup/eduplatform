@@ -7,7 +7,7 @@ tasks, such as drawing a picture or building a brick tower; 2CT.01 follow and
 understand linear algorithms; 2CT.04 identify the steps NEEDED to undertake a
 task.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch
 
 LESSON = {
     "slug": "precise-instructions",
@@ -26,7 +26,7 @@ LESSON = {
                  {"pic": "\U0001F916\U0001F58D️", "cap": "We want Robo to draw a <b>house</b>.", "say": "We want Robo to draw a house. Robo only does what it is told."},
                  {"scene": {"id": "dress", "state": []}, "cap": "We say: <b>draw a shape</b>.", "say": "We say: draw a shape."},
                  {"pic": "〽️", "cap": "Robo draws... a squiggle. A shape is ANY shape.", "say": "Robo draws a squiggle. A shape is any shape. Robo did exactly what we said.", "sound": "error"},
-                 {"pic": "\U0001F7E7", "cap": "We say: <b>draw a big square in the middle</b>. That is precise.", "say": "We try again. Draw a big square in the middle. That is precise: it says what, how big, and where.", "sound": "click"},
+                 {"pic": swatch("square", "#E9744F"), "cap": "We say: <b>draw a big square in the middle</b>. That is precise.", "say": "We try again. Draw a big square in the middle. That is precise: it says what, how big, and where.", "sound": "click"},
                  {"pic": "\U0001F3E0", "cap": "Precise instructions, one after another, and Robo draws the house.", "say": "Precise instructions, one after another, and Robo draws the house. An algorithm is a precise set of instructions.", "sound": "tada"},
              ]},
              "An algorithm is precise. It says exactly what to do, with nothing to guess."),

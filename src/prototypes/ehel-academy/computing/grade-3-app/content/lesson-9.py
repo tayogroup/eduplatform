@@ -27,7 +27,7 @@ LESSON = {
                  ["Tap all five."]),
              {"items": [
                  {"pic": "\U0001F36A", "label": "which snack should the tuck shop sell?", "say": "Which snack should the tuck shop sell? Ask every child, count the answers, sell the most popular. Data solves it."},
-                 {"pic": "\U0001FA91", "label": "how many chairs for the concert?", "say": "How many chairs for the concert? Count the parents who say they are coming. Data solves it."},
+                 {"pic": "\U0001F4BA", "label": "how many chairs for the concert?", "say": "How many chairs for the concert? Count the parents who say they are coming. Data solves it."},
                  {"pic": "\U0001F938", "label": "when is the playground busiest?", "say": "When is the playground busiest? Count the children at each break for a week. Data solves it."},
                  {"pic": "\U0001F4DA", "label": "which books should the library buy?", "say": "Which books should the library buy? Look at which ones are borrowed most. Data solves it."},
                  {"pic": "\U0001F68C", "label": "does the bus need to be bigger?", "say": "Does the school bus need to be bigger? Count how many children ride it each day. Data solves it."},
@@ -170,7 +170,7 @@ LESSON = {
                  q("You tap each child's answer into a form on a tablet. You are...", "\U0001F4F1", "recording data on a computing device", ["playing a game", "sending an email", "making a mistake"], "The tablet is a computing device, and the form records each answer."),
                  q("Which view shows the biggest at a glance?", "\U0001F4CA", "the bar chart", ["the table", "the alphabet", "the calendar"], "Tallest bar, biggest count."),
                  q("Which view gives the exact number for every row?", "\U0001F4CB", "the table", ["the bar chart", "the pictogram", "a photo"], "Tables hold exact numbers."),
-                 q("How many chairs for the concert? The data to collect is...", "\U0001FA91", "how many parents are coming", ["the colour of the chairs", "the songs", "the weather"], "Count what the problem needs."),
+                 q("How many chairs for the concert? The data to collect is...", "\U0001F4BA", "how many parents are coming", ["the colour of the chairs", "the songs", "the weather"], "Count what the problem needs."),
              ]},
              "That is the whole lesson finished. You know which problems data solves, how to record it, and three ways to show it."),
     ],

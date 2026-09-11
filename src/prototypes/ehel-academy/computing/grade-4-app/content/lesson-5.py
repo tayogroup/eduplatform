@@ -187,3 +187,10 @@ LESSON["home"] = [
           "Cross out any note that only repeats the step."],
          "A good comment says why."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you followed and wrote algorithms that give different outputs for different inputs, and built algorithms with a repeat loop in them."
+LESSON["warmup"] = [
+    q("You write a note on your drawing: 'the red square is the door'. Who is the note for?", "\U0001F4DD", "anyone who looks at the drawing later, even you", ["nobody", "the pencil", "the paper"], "A note that says what a part is for helps the next reader. In a program it is called a comment."),
+    q("Robo must go forward 5 squares. With a repeat block and a move forward block, which number goes in the repeat?", "\U0001F501", "5", ["1", "4", "10"], "The number in the repeat says how many times the block after it happens."),
+]

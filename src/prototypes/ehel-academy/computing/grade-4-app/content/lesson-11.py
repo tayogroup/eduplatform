@@ -181,3 +181,10 @@ LESSON["home"] = [
           "Never type a password on a page that says Not secure."],
          "The padlock means encrypted."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you saw clients ask and servers serve, told the World Wide Web from the internet it runs on, and weighed wi-fi against an ethernet cable."
+LESSON["warmup"] = [
+    q("The card machine in a shop loses its network. What might the shop have to do?", "\U0001F4B3", "take cash until the network is back", ["close for ever", "give everything away", "nothing: cards still work"], "Card payments need the network; cash does not."),
+    q("Why do you whisper a secret instead of shouting it across the playground?", "\U0001F92B", "so only the person it is for can hear it", ["so everyone hears it", "whispering is louder", "secrets must be shouted"], "Keeping a message to the person it is for is what encryption does for data."),
+]

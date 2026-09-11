@@ -261,6 +261,13 @@ def branch_run(rd, input_id):
     return [st["id"] for st in rd.get("before", [])] + [st["id"] for st in branch] + [st["id"] for st in rd.get("after", [])]
 
 
+def branch_home(rd):
+    """Where each step of a branch-writing round belongs (4CT.09): before
+    the question, in the branch for the first input ('yes') or the second
+    ('no'), or after. The page checks the child's placement against it."""
+    return {st["id"]: z for z in ("before", "yes", "no", "after") for st in rd.get(z, [])}
+
+
 def best_algo(algos, check):
     """Which of several algorithms for one task is best for a computable
     purpose (4CT.04): the fewest steps, or the fastest by its minutes. None

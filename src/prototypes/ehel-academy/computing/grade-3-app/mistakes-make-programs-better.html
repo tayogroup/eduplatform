@@ -916,6 +916,12 @@
   .loopbox2 > b { display: block; margin-bottom: 4px; }
   .loopbox2 .algo li.dim { border-style: dashed; color: var(--muted); font-weight: 600; }
   .algostep small { color: var(--muted); font-weight: 600; font-size: 12px; }
+  /* writing an algorithm with a branch */
+  .branch.build .zonebox { padding: 10px 12px; border-radius: 16px; border: 2px dashed var(--teal); background: rgba(53,191,178,0.06); }
+  .branch.build .zonebox > b { display: block; margin-bottom: 6px; }
+  .branch.build .algo li.dim { border-style: dashed; color: var(--muted); font-weight: 600; }
+  .zonebtn { margin-top: 6px; min-height: 44px; padding: 8px 14px; border-radius: 12px; border: 2px dashed var(--teal); background: var(--card); color: var(--ink); font: inherit; font-weight: 800; cursor: pointer; }
+  .zonebtn:disabled { opacity: 0.45; cursor: default; }
   /* comments on code */
   .commented { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 560px; }
   .crow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -8010,6 +8016,124 @@
       const add = e.target.closest("[data-add]"); if (add) { body.push(add.dataset.add); SOUND.play("click", 0.3); draw(); return; }
       const rm = e.target.closest("[data-rm]"); if (rm) { body.splice(Number(rm.dataset.rm), 1); SOUND.play("pop", 0.3); draw(); }
     });
+    start();
+  }
+
+  /* ---- write an algorithm with a branch in it (4CT.09) ------------------
+     The follow machine above reads an algorithm that forks on its input;
+     this one has the child DEVELOP it. First the question that decides the
+     middle (when the round offers a choice of questions), then every step
+     put where it belongs: first, in one answer's branch or the other's, or
+     after. Test it runs the child's own algorithm with both inputs, so a
+     misplaced step shows up as the wrong output for one input; the page
+     names it, says what the test showed, and hands it back to be placed
+     again. branch_home in _rules.py is the key the gate checks. */
+  function branchBuild(o) {
+    const el = o.el, rounds = o.rounds, word = o.word || "IF", ZONES = ["before", "yes", "no", "after"];
+    let r = 0, score = 0;
+    function start() {
+      const rd = rounds[r], all = [], home = {};
+      ZONES.forEach((z) => (rd[z] || []).forEach((st) => { all.push(st); home[st.id] = z; }));
+      const stepOf = (id) => all.find((st) => st.id === id);
+      const inputOf = (z) => rd.inputs[z === "no" ? 1 : 0];
+      const pool = shuffle(all.map((st) => st.id));
+      const placed = { before: [], yes: [], no: [], after: [] };
+      const qs = rd.questions ? shuffle(rd.questions.map((t, k) => ({ t: t, k: k }))) : null;
+      let asked = !qs, picked = null, lock = false, firstTest = true;
+      const where = (id) => ZONES.find((z) => placed[z].indexOf(id) >= 0);
+      const free = () => pool.filter((id) => !where(id));
+      function zone(z, cls) {
+        const rows = placed[z].map((id) => '<li><button type="button" class="algostep" data-rm="' + esc(id) + '"' + (lock ? " disabled" : "") + '><span class="apic" aria-hidden="true">' + small(stepOf(id).pic) + "</span>" + esc(stepOf(id).label) + " <small>(tap to take out)</small></button></li>").join("");
+        /* four buttons all named "Put it here" tell a screen-reader user nothing;
+           each says where here is */
+        const where = z === "before" ? "first, every time" : z === "after" ? "after the branch, every time" : "in the branch for " + inputOf(z).label;
+        return '<ol class="algo' + (cls || "") + '">' + (rows || '<li class="dim">nothing here yet</li>') + "</ol>" +
+          '<button type="button" class="zonebtn" data-zone="' + z + '" aria-label="Put it ' + esc(where) + '"' + (picked && !lock ? "" : " disabled") + ">Put it here</button>";
+      }
+      function draw() {
+        const head = '<p class="goal">The task: <b>' + esc(rd.task) + "</b></p>";
+        if (!asked) {
+          $(el.stage).innerHTML = '<div class="stagewide">' + head + '<div class="chips">' + qs.map((x) => '<button type="button" class="chip" data-q="' + x.k + '">' + esc(x.t) + "</button>").join("") + "</div></div>";
+          $(el.score).textContent = "Algorithm " + (r + 1) + " of " + rounds.length + " · choose the question";
+          return;
+        }
+        const left = free();
+        $(el.stage).innerHTML = '<div class="stagewide">' + head + '<div class="branch build">' +
+          '<div class="zonebox"><b>First, every time:</b>' + zone("before") + "</div>" +
+          '<div class="ifbox"><b>' + esc(word) + " " + esc(rd.question) + '</b><div class="arms">' +
+          ["yes", "no"].map((z) => '<div class="arm on"><i>' + esc(inputOf(z).label) + ":</i>" + zone(z, " small") + "</div>").join("") + "</div></div>" +
+          '<div class="zonebox"><b>Then, every time:</b>' + zone("after") + "</div></div>" +
+          (left.length ? '<div class="cardsgrid">' + left.map((id) => '<button type="button" class="tapcard' + (picked === id ? " now" : "") + '" data-pick="' + esc(id) + '" aria-pressed="' + (picked === id) + '"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(stepOf(id).pic) + "</span>" + esc(stepOf(id).label) + "</button>").join("") + "</div>" : "") +
+          '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'test"' + (lock || left.length ? " disabled" : "") + ">&#9654; Test it</button></div></div>";
+        $(el.score).textContent = "Algorithm " + (r + 1) + " of " + rounds.length + " · " + (all.length - left.length) + " of " + all.length + " steps placed";
+      }
+      function refocus(e, sel) {
+        /* a keyboard press (detail 0) keeps the child's place after the redraw */
+        if (e && e.detail === 0) { const f = $(el.stage).querySelector(sel); if (f) f.focus(); }
+      }
+      function advice(id) {
+        const h = home[id], z = where(id), label = stepOf(id).label;
+        if (h === "before" || h === "after") {
+          if (z === "yes" || z === "no") return "With the input " + inputOf(z === "yes" ? "no" : "yes").label + ", your algorithm never did " + label + ". It happens every time, so it goes outside the branches, " + (h === "before" ? "first." : "after them.");
+          return h === "before" ? label + " ran after the branch, but it has to happen first, before the question." : label + " ran first, but it belongs after the branch.";
+        }
+        const other = h === "yes" ? "no" : "yes";
+        if (z === other) return "With the input " + inputOf(h).label + ", your algorithm never did " + label + ", and with " + inputOf(other).label + " it did. It belongs in the branch for " + inputOf(h).label + ".";
+        return "With the input " + inputOf(other).label + ", your algorithm did " + label + " too. It happens only for " + inputOf(h).label + ", so it goes in that branch.";
+      }
+      function next() {
+        $(el.stage).removeEventListener("click", handler);
+        r++;
+        if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You wrote " + rounds.length + " algorithms that give different outputs for different inputs. " + o.done); }
+        else start();
+      }
+      function test() {
+        if (lock || free().length) return;
+        const wrong = all.map((st) => st.id).filter((id) => where(id) !== home[id]);
+        const out = ["yes", "no"].map((z) => "With the input " + inputOf(z).label + ", the output is: " + placed.before.concat(placed[z], placed.after).map((id) => stepOf(id).label).join(", ") + ".");
+        if (!wrong.length) {
+          lock = true; draw(); if (firstTest) score++; SOUND.play("tada", 0.5);
+          const line = cheer() + " " + out.join(" ") + " One algorithm, and the input decides the output.";
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          setTimeout(next, 4200);
+          return;
+        }
+        firstTest = false; SOUND.play("error", 0.3);
+        const line = "Not yet. " + advice(wrong[0]) + (wrong.length > 1 ? " " + (wrong.length - 1) + " more step" + (wrong.length > 2 ? "s were" : " was") + " in the wrong place too." : "") + " They are back in the pile: put them where they belong and test again.";
+        wrong.forEach((id) => { const z = where(id); placed[z].splice(placed[z].indexOf(id), 1); });
+        draw(); $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+      const handler = (e) => {
+        if (lock) return;
+        const qb = e.target.closest("[data-q]");
+        if (qb && !asked) {
+          const t = rd.questions[Number(qb.dataset.q)];
+          if (t === rd.question) {
+            asked = true; SOUND.play("ding", 0.4); draw(); refocus(e, "[data-pick]");
+            $(el.ask).innerHTML = "Tap a step, then <b>Put it here</b> where it belongs. When every step is placed, press <b>Test it</b>.";
+            const line = cheer() + " The answer to " + rd.question + " decides the middle. Now write the algorithm: tap a step, then Put it here where it belongs, and Test it.";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          } else {
+            qb.classList.add("wrong"); qb.disabled = true; SOUND.play("error", 0.3);
+            const line = "The answer to " + t + " would not change any step of " + rd.task + ". Which question would?";
+            $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          }
+          return;
+        }
+        const pk = e.target.closest("[data-pick]");
+        if (pk) { picked = picked === pk.dataset.pick ? null : pk.dataset.pick; SOUND.play("click", 0.3); draw(); refocus(e, picked ? ".zonebtn" : "[data-pick]"); return; }
+        const zb = e.target.closest("[data-zone]");
+        if (zb && picked) { placed[zb.dataset.zone].push(picked); picked = null; SOUND.play("pop", 0.4); $(el.fb).className = "fb"; $(el.fb).textContent = ""; draw(); refocus(e, free().length ? "[data-pick]" : "#" + el.stage + "test"); return; }
+        const rm = e.target.closest("[data-rm]");
+        if (rm) { const id = rm.dataset.rm, z = where(id); placed[z].splice(placed[z].indexOf(id), 1); SOUND.play("pop", 0.3); draw(); refocus(e, "[data-pick]"); return; }
+        if (e.target.closest("#" + el.stage + "test")) test();
+      };
+      $(el.stage).addEventListener("click", handler);
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      $(el.ask).innerHTML = asked ? "Tap a step, then <b>Put it here</b> where it belongs. When every step is placed, press <b>Test it</b>." : "First choose the <b>question</b> this algorithm needs to ask.";
+      sayHere(o.finish, "The task: " + rd.task + ". " + (asked ? "Tap a step, then Put it here where it belongs. When every step is placed, press Test it." : "First choose the question this algorithm needs to ask."));
+      draw();
+    }
     start();
   }
 

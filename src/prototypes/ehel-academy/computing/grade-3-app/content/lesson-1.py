@@ -5,7 +5,7 @@
 correct linear algorithms; 3CT.04 logical thinking is used in the creation of
 algorithms.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch
 
 LESSON = {
     "slug": "follow-edit-correct",
@@ -99,16 +99,16 @@ LESSON = {
                   "To make it taller, add a brick. To make it shorter, take one away."],
                  ["Children edit two steps when one would do.", "Find the one step that decides the thing you want to change."],
                  ["Tap the step to change, choose what it becomes, watch the new tower."]),
-             {"scene": "tower", "steps": [s("big", "Put down the big brick", "\U0001F7E7"), s("middle", "Add the middle brick", "\U0001F7E9"), s("small", "Add the small brick", "\U0001F7E8"), s("flag", "Put the flag on top", "\U0001F6A9")],
+             {"scene": "tower", "steps": [s("big", "Put down the big brick", swatch("brick", "#E9744F")), s("middle", "Add the middle brick", swatch("brick", "#35BFB2")), s("small", "Add the small brick", swatch("brick", "#F4C95D")), s("flag", "Put the flag on top", "\U0001F6A9")],
               "rounds": [
                   {"kind": "change", "target": "a tower with a red top brick", "change": "small",
-                   "opts": [choice("red", "Add the red brick", True, "\U0001F7E5"), choice("blue", "Add the blue brick", False, "\U0001F7E6"), choice("flag", "Put the flag on top", False, "\U0001F6A9")],
+                   "opts": [choice("red", "Add the red brick", True, swatch("brick", "#E9744F")), choice("blue", "Add the blue brick", False, swatch("brick", "#6E9DE8")), choice("flag", "Put the flag on top", False, "\U0001F6A9")],
                    "why": "The small brick is the top brick, so that is the step to change.", "result": "A red brick on top."},
                   {"kind": "add", "target": "a taller tower",
-                   "opts": [choice("purple", "Add the purple brick", True, "\U0001F7EA"), choice("flag", "Put another flag on top", False, "\U0001F6A9")],
+                   "opts": [choice("purple", "Add the purple brick", True, swatch("brick", "#B78BD1")), choice("flag", "Put another flag on top", False, "\U0001F6A9")],
                    "why": "One more brick makes it taller.", "result": "The tower is one brick taller."},
                   {"kind": "change", "target": "a tower that starts on a blue brick", "change": "big",
-                   "opts": [choice("blue", "Put down the blue brick", True, "\U0001F7E6"), choice("red", "Add the red brick", False, "\U0001F7E5"), choice("small", "Add the small brick", False, "\U0001F7E8")],
+                   "opts": [choice("blue", "Put down the blue brick", True, swatch("brick", "#6E9DE8")), choice("red", "Add the red brick", False, swatch("brick", "#E9744F")), choice("small", "Add the small brick", False, swatch("brick", "#F4C95D"))],
                    "why": "The first step decides the bottom brick.", "result": "A blue brick at the bottom."},
               ]},
              "You edited the algorithm three times, and got three different towers."),
@@ -158,7 +158,7 @@ LESSON = {
              {"items": [
                  q("Robo does exactly the steps written down, in order. Robo is...", "\U0001F916", "following the algorithm", ["editing the algorithm", "correcting the algorithm", "ignoring the algorithm"], "Doing the steps as written is following."),
                  q("The kite algorithm said 'cut the paper into tiny pieces'. Changing it to 'glue paper over the sticks' is...", "\U0001F4C4", "correcting", ["following", "editing for fun", "repeating"], "The step was wrong; fixing it is correcting."),
-                 q("Changing the small top brick to a red brick because you want a red top is...", "\U0001F7E5", "editing", ["correcting", "following", "a bug"], "Nothing was wrong; the change was wanted. That is editing."),
+                 q("Changing the small top brick to a red brick because you want a red top is...", "\U0001F9F1", "editing", ["correcting", "following", "a bug"], "Nothing was wrong; the change was wanted. That is editing."),
                  q("Which is a linear algorithm?", "\U0001F4CF", "banana, strawberries, milk, lid, blend, pour", ["do any of these in any order", "blend, then whichever you like", "a circle of steps that never ends"], "One step after another, in order, with an end."),
                  q("Why is pouring the LAST step of the smoothie?", "\U0001F964", "you pour what the blender has made smooth", ["glasses are small", "the blender is tired", "no reason"], "Logical thinking: a step uses what the steps before it made."),
                  q("Understanding an algorithm means...", "\U0001F4A1", "knowing why each step is where it is", ["doing it fast", "memorising it", "never changing it"], "Understanding is knowing the reasons."),

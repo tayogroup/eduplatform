@@ -97,7 +97,7 @@ LESSON = {
                   {"pic": "\U0001F6B2", "label": "a bicycle", "bin": "no", "why": "You decide everything."},
                   {"pic": "\U0001F4A1", "label": "a lamp that comes on at dusk by itself", "bin": "cs", "why": "A light sensor decides."},
                   {"pic": "\U0001F58D️", "label": "a pencil", "bin": "no", "why": "Nothing senses or decides."},
-                  {"pic": "\U0001F9CA", "label": "a fridge keeping itself cold", "bin": "cs", "why": "Too warm, the motor runs; cold enough, it stops."},
+                  {"pic": "\u2744\uFE0F", "label": "a fridge keeping itself cold", "bin": "cs", "why": "Too warm, the motor runs; cold enough, it stops."},
                   {"pic": "\U0001F4FB", "label": "a radio you switch on by hand", "bin": "no", "why": "A person decides every time."},
               ]},
              "A sensor and a program decide: a control system."),
@@ -171,4 +171,11 @@ LESSON["home"] = [
           "Switch the torch on, then off: when it goes dark, they run the loop until you say Stop.",
           "Now write a repeat 3 times program and test that too."],
          "A forever loop needs a Stop."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you gave a sprite a different script for each input, planned an object by naming its input and its output, and tested a program part by part to find a bug."
+LESSON["warmup"] = [
+    q("A heater switches itself on when the room gets cold. What tells it the room is cold?", "\U0001F321\uFE0F", "a temperature sensor", ["a light sensor", "a clock", "a loudspeaker"], "A temperature sensor measures how warm or cold it is."),
+    q("Street lights come on by themselves at dusk. Which sensor are they using?", "\U0001F306", "a light sensor", ["a sound sensor", "a temperature sensor", "none: someone switches each one on"], "A light sensor measures how bright it is; when it gets dark, the lights come on."),
 ]

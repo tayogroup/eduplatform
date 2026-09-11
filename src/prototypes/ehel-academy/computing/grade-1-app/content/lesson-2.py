@@ -6,7 +6,7 @@ important; 1CT.02 identify single errors in algorithms for everyday tasks;
 1CT.07 suggest ways an algorithm can be changed to affect the outcome; with
 1CT.01 and 1CT.04.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch
 
 LESSON = {
     "slug": "order-matters",
@@ -39,7 +39,7 @@ LESSON = {
                  ["Tap the steps in the order the algorithm shows."]),
              {"scene": "sandwich", "steps": [
                  s("bread", "Put a slice of bread on the plate", "\U0001F35E", "Bread on the plate."),
-                 s("butter", "Spread the butter", "\U0001F9C8", "Butter on the bread."),
+                 s("butter", "Spread the butter", swatch("butter"), "Butter on the bread."),
                  s("jam", "Spread the jam", "\U0001F353", "Jam on top of the butter."),
                  s("top", "Put the top slice on", "\U0001F96A", "Top slice on. A jam sandwich."),
              ]},
@@ -57,15 +57,15 @@ LESSON = {
                  {"goal": "Make a jam sandwich",
                   "steps": [s("bread", "Put bread on the plate", "\U0001F35E"), s("milk", "Pour milk on the bread", "\U0001F95B"), s("jam", "Spread the jam", "\U0001F353"), s("top", "Put the top slice on", "\U0001F96A")],
                   "wrong": 1, "why": "Milk on the bread does not belong in a jam sandwich. That step is the bug.",
-                  "fix": {"opts": [choice("butter", "Spread the butter", True, "\U0001F9C8"), choice("ketchup", "Squirt ketchup on it", False, "\U0001F345"), choice("eat", "Eat the bread now", False, "\U0001F60B")],
+                  "fix": {"opts": [choice("butter", "Spread the butter", True, swatch("butter")), choice("ketchup", "Squirt ketchup on it", False, "\U0001F345"), choice("eat", "Eat the bread now", False, "\U0001F60B")],
                           "why": "Butter goes on the bread before the jam."},
                   "done": "Bread, butter, jam, top. Fixed."},
                  {"goal": "Make a jam sandwich",
-                  "steps": [s("bread", "Put bread on the plate", "\U0001F35E"), s("butter", "Spread the butter", "\U0001F9C8"), s("top", "Put the top slice on", "\U0001F96A"), s("jam", "Spread the jam", "\U0001F353")],
+                  "steps": [s("bread", "Put bread on the plate", "\U0001F35E"), s("butter", "Spread the butter", swatch("butter")), s("top", "Put the top slice on", "\U0001F96A"), s("jam", "Spread the jam", "\U0001F353")],
                   "wrong": 2, "swap": True, "why": "The top slice is too early. The jam has to go on before the top.",
                   "done": "Bread, butter, jam, then the top. The jam is inside now."},
                  {"goal": "Make a jam sandwich",
-                  "steps": [s("bread", "Put bread on the plate", "\U0001F35E"), s("butter", "Spread the butter", "\U0001F9C8"), s("jam", "Spread the jam", "\U0001F353"), s("eat", "Throw it in the bin", "\U0001F5D1️")],
+                  "steps": [s("bread", "Put bread on the plate", "\U0001F35E"), s("butter", "Spread the butter", swatch("butter")), s("jam", "Spread the jam", "\U0001F353"), s("eat", "Throw it in the bin", "\U0001F5D1️")],
                   "wrong": 3, "why": "Throwing it in the bin does not make a sandwich. That step is the bug.",
                   "fix": {"opts": [choice("top", "Put the top slice on", True, "\U0001F96A"), choice("milk", "Pour milk on it", False, "\U0001F95B"), choice("bread", "Put another plate under it", False, "\U0001F37D️")],
                           "why": "The top slice finishes the sandwich."},
@@ -82,7 +82,7 @@ LESSON = {
                  ["Children change the wrong step.", "Ask: which step decides what kind of sandwich it is? Change THAT one."],
                  ["Tap the step to change, then pick the new step."]),
              {"scene": "sandwich",
-              "steps": [s("bread", "Put bread on the plate", "\U0001F35E"), s("butter", "Spread the butter", "\U0001F9C8"), s("jam", "Spread the jam", "\U0001F353"), s("top", "Put the top slice on", "\U0001F96A")],
+              "steps": [s("bread", "Put bread on the plate", "\U0001F35E"), s("butter", "Spread the butter", swatch("butter")), s("jam", "Spread the jam", "\U0001F353"), s("top", "Put the top slice on", "\U0001F96A")],
               "rounds": [
                   {"kind": "change", "target": "a cheese sandwich", "change": "jam",
                    "opts": [choice("cheese", "Put cheese on", True, "\U0001F9C0"), choice("water", "Pour water on", False, "\U0001F4A7"), choice("sock", "Put a sock on", False, "\U0001F9E6")],
@@ -123,8 +123,8 @@ LESSON = {
               "items": [
                   {"pic": "\U0001F9E6➡️\U0001F45F", "label": "socks, then shoes", "bin": "fine", "why": "Socks first, then shoes over them. That works."},
                   {"pic": "\U0001F45F➡️\U0001F9E6", "label": "shoes, then socks", "bin": "bug", "why": "Shoes first puts the socks on the outside. The order is the bug."},
-                  {"pic": "\U0001F9C3➡️\U0001F444", "label": "pour the juice, then drink it", "bin": "fine", "why": "Pour, then drink. That works."},
-                  {"pic": "\U0001F444➡️\U0001F9C3", "label": "drink the juice, then pour it", "bin": "bug", "why": "There is nothing to drink until you pour. The order is the bug."},
+                  {"pic": "\U0001F964➡️\U0001F444", "label": "pour the juice, then drink it", "bin": "fine", "why": "Pour, then drink. That works."},
+                  {"pic": "\U0001F444➡️\U0001F964", "label": "drink the juice, then pour it", "bin": "bug", "why": "There is nothing to drink until you pour. The order is the bug."},
                   {"pic": "\U0001F9B7➡️\U0001F4A7", "label": "brush your teeth, then rinse", "bin": "fine", "why": "Brush, then rinse. That works."},
                   {"pic": "\U0001F9E5➡️\U0001F6B6", "label": "put on your coat, then go outside", "bin": "fine", "why": "Coat first, then out. That works."},
                   {"pic": "\U0001F35E➡️\U0001F6C1", "label": "put bread on the plate, then wash it in the bath", "bin": "bug", "why": "Washing the bread in the bath does not belong. That step is the bug."},
@@ -161,7 +161,7 @@ LESSON = {
                  q("To turn a jam sandwich into a cheese sandwich, which step do you change?", "\U0001F9C0", "spread the jam", ["put bread on the plate", "put the top slice on", "none of them"], "The filling step decides what kind of sandwich it is."),
                  q("We add 'cut it in half' to the end of the sandwich algorithm. What do we get?", "\U0001F52A", "two halves", ["no sandwich", "a bigger sandwich", "a cheese sandwich"], "Adding a step changes the outcome: two halves."),
                  q("Crossing the road: which comes FIRST?", "\U0001F6D1", "stop", ["walk", "listen", "run"], "Stop, look, listen, then walk."),
-                 q("Drink the juice, then pour it. Fine or a bug?", "\U0001F9C3", "a bug: the order is wrong", ["fine", "a bug: juice is wrong", "there is no such thing"], "There is nothing to drink until you pour. The order is the bug."),
+                 q("Drink the juice, then pour it. Fine or a bug?", "\U0001F964", "a bug: the order is wrong", ["fine", "a bug: juice is wrong", "there is no such thing"], "There is nothing to drink until you pour. The order is the bug."),
                  q("If you change one step in an algorithm, what happens to the outcome?", "\U0001F504", "it changes", ["it stays exactly the same", "the algorithm breaks", "nothing happens"], "Change a step, change the outcome. That is how you make something new."),
              ]},
              "That is the whole lesson finished. You know that order matters and how to find a bug."),

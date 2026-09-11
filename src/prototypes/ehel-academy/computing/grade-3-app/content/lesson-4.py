@@ -47,7 +47,7 @@ LESSON = {
                   {"pic": "\U0001F964", "label": "pour a little squash into the cup", "bin": "step", "why": "Something you do. A step."},
                   {"pic": "\U0001F6B0", "label": "fill the cup with water", "bin": "step", "why": "Something you do. A step."},
                   {"pic": "\U0001F944", "label": "stir it", "bin": "step", "why": "A step."},
-                  {"pic": "\U0001F9C3", "label": "a cup of squash, ready to drink", "bin": "out", "why": "The result. Output."},
+                  {"pic": "\U0001F379", "label": "a cup of squash, ready to drink", "bin": "out", "why": "The result. Output."},
                   {"pic": "\U0001F522", "label": "the two numbers you want to add", "bin": "in", "why": "For adding, the numbers are the input."},
                   {"pic": "7️⃣", "label": "the answer, 7", "bin": "out", "why": "The result of the adding. Output."},
               ]},
@@ -111,7 +111,7 @@ LESSON = {
              explain(["No new ideas here."], ["Think about inputs, machines and outputs."], [], ["Read, look, tap."]),
              {"items": [
                  q("What is the input to a recipe?", "\U0001F373", "the ingredients", ["the oven timer", "the finished cake", "the plate"], "The ingredients are what the recipe works on."),
-                 q("In 'make a cup of squash', which is the OUTPUT?", "\U0001F9C3", "the cup of squash, ready to drink", ["the bottle", "stir it", "the tap"], "The output is the result."),
+                 q("In 'make a cup of squash', which is the OUTPUT?", "\U0001F379", "the cup of squash, ready to drink", ["the bottle", "stir it", "the tap"], "The output is the result."),
                  q("The add-3 machine gets 20. What comes out?", "➕", "23", ["20", "3", "60"], "20 plus 3."),
                  q("The letter counter gets 'dog'. What comes out?", "\U0001F524", "3", ["dog", "1", "4"], "d-o-g: three letters."),
                  q("An algorithm that produces an output from an input has...", "⚙️", "an input, steps in order, and an output", ["only an output", "no steps", "a random answer"], "In, steps, out."),

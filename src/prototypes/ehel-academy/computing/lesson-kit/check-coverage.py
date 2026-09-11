@@ -33,7 +33,7 @@ import sys
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, KIT)
-from _rules import (REPEATS, best_algo, branch_run, caesar_shift, code_word, decode_code, expand_loop,  # noqa: E402
+from _rules import (REPEATS, best_algo, branch_home, branch_run, caesar_shift, code_word, decode_code, expand_loop,  # noqa: E402
                     filter_rows, flatten_algo, repeat_run, rule_output, run_robot, same_effect, sheet_cells,
                     sort_rows, sub_expand, sum_answer, table_answer, walk_end)
 
@@ -41,6 +41,49 @@ REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-computing-0059.json")
 HERE = os.path.abspath(sys.argv[sys.argv.index("--app") + 1] if "--app" in sys.argv else os.getcwd())
 LESSON_RE = re.compile(r"\n  const LESSON = (\{.*?\n  \});\n", re.S)
+
+
+# ---- how new a picture is ---------------------------------------------------
+# A tablet that has had no system update since 2018 draws a newer emoji as an
+# empty box, and an empty box beside "shake it" teaches nothing (kit README).
+# The two blocks where every post-2018 emoji lives, plus the later additions in
+# the older blocks; anything outside these is Emoji 11.0 (2018) or older.
+def _rng(a, b):
+    return set(range(a, b + 1))
+
+
+PICTURE_AGE = {}
+for _ver, _cps in (
+    ("12.0", _rng(0x1F90D, 0x1F90F) | {0x1F93F, 0x1F971, 0x1F97B} | _rng(0x1F9A5, 0x1F9AA) | _rng(0x1F9AE, 0x1F9AF)
+             | _rng(0x1F9BA, 0x1F9BF) | _rng(0x1F9C3, 0x1F9CA) | _rng(0x1F9CD, 0x1F9CF) | _rng(0x1FA70, 0x1FA73)
+             | _rng(0x1FA78, 0x1FA7A) | _rng(0x1FA80, 0x1FA82) | _rng(0x1FA90, 0x1FA95) | {0x1F6D5, 0x1F6FA} | _rng(0x1F7E0, 0x1F7EB)),
+    ("13.0", {0x1F90C, 0x1F972, 0x1F977, 0x1F978, 0x1F9A3, 0x1F9A4, 0x1F9AB, 0x1F9AC, 0x1F9AD, 0x1F9CB, 0x1FA74}
+             | _rng(0x1FA83, 0x1FA86) | _rng(0x1FA96, 0x1FAA8) | _rng(0x1FAB0, 0x1FAB6) | _rng(0x1FAC0, 0x1FAC2)
+             | _rng(0x1FAD0, 0x1FAD6) | {0x1F6D6, 0x1F6D7, 0x1F6FB, 0x1F6FC}),
+    ("14.0", {0x1F979, 0x1F9CC} | _rng(0x1FA7B, 0x1FA7C) | _rng(0x1FAA9, 0x1FAAC) | _rng(0x1FAB7, 0x1FABA)
+             | _rng(0x1FAC3, 0x1FAC5) | _rng(0x1FAD7, 0x1FAD9) | _rng(0x1FAE0, 0x1FAE7) | _rng(0x1FAF0, 0x1FAF6)
+             | {0x1F6DD, 0x1F6DE, 0x1F6DF, 0x1F7F0}),
+    ("15.0", _rng(0x1FA75, 0x1FA77) | _rng(0x1FA87, 0x1FA88) | _rng(0x1FAAD, 0x1FAAF) | _rng(0x1FABB, 0x1FABD)
+             | {0x1FABF, 0x1FACE, 0x1FACF, 0x1FADA, 0x1FADB, 0x1FAE8, 0x1FAF7, 0x1FAF8, 0x1F6DC}),
+    ("16.0", {0x1FA89, 0x1FA8F, 0x1FABE, 0x1FAC6, 0x1FADC, 0x1FADF, 0x1FAE9}),
+):
+    for _cp in _cps:
+        PICTURE_AGE[_cp] = _ver
+
+PICTOGRAPH_RE = re.compile("[\U0001F000-\U0001FAFF\u2600-\u27BF\u2B00-\u2BFF\u2190-\u21FF\u2300-\u23FF]")
+ESCAPED_RE = re.compile(r"\\U([0-9a-fA-F]{8})|\\u([0-9a-fA-F]{4})")
+
+
+def too_new(text):
+    r"""The pictographs in this page that need a font newer than 2018, once the
+    page's own \Uxxxxxxxx escapes are read as the characters they stand for."""
+    text = ESCAPED_RE.sub(lambda m: chr(int(m.group(1) or m.group(2), 16)), text)
+    out = {}
+    for ch in PICTOGRAPH_RE.findall(text):
+        ver = PICTURE_AGE.get(ord(ch))
+        if ver:
+            out[ch] = ver
+    return out
 
 
 def main():
@@ -265,6 +308,13 @@ def main():
                 for rd in d["rounds"]:
                     if [st["id"] for st in rd["yes"]] == [st["id"] for st in rd["no"]] or any(not branch_run(rd, inp["id"]) for inp in rd["inputs"]):
                         fail(entry["file"], "step %d round %r: the branches do not differ, or one runs nothing" % (k, rd["task"]))
+            elif kind == "branchbuild":
+                for rd in d["rounds"]:
+                    ids = [st["id"] for z in ("before", "yes", "no", "after") for st in rd.get(z, [])]
+                    qs = rd.get("questions")
+                    if len(branch_home(rd)) != len(ids) or not rd["yes"] or not rd["no"] or (qs is not None and qs.count(rd["question"]) != 1):
+                        fail(entry["file"], "step %d round %r: a step in two places, an empty branch, or the question missing from the choices" % (k, rd["task"]))
+                    computed += 1
             elif kind == "loopbuild":
                 for rd in d["rounds"]:
                     pool = {st["id"] for st in rd["pool"]}
@@ -336,6 +386,11 @@ def main():
             for spec in (d.get("then"),) if kind in ("explore", "context", "sorter", "apps") else ():
                 if spec and not one_key(spec["opts"]):
                     fail(entry["file"], "step %d's question does not have exactly one key" % k)
+        late = too_new(s)
+        if late:
+            fail(entry["file"], "%d picture(s) need a font newer than 2018: %s"
+                 % (len(late), ", ".join("%s (Emoji %s)" % (ch, v) for ch, v in sorted(late.items(), key=lambda x: x[1]))))
+
         if not bad or not bad[-1].startswith(entry["file"] + ":"):
             print("  ok   %-32s %2d objectives" % (entry["file"], len(mine)))
 

@@ -163,7 +163,7 @@ LESSON["words"] = [
          ["Build the program.", "Press Run to run the program."]),
     word("repeat", "\U0001F501", "A block that repeats the block after it a number of times.",
          ["Repeat 3 times, jump.", "Use a repeat block."]),
-    word("block", "\U0001F7E6", "One instruction in a program.",
+    word("block", "\U0001F9E9", "One instruction in a program.",
          ["The jump block.", "Three blocks, three moves."]),
     word("run", "▶️", "To make the computer do the program.",
          ["Run it and watch.", "Run the program again."]),

@@ -6,7 +6,7 @@ correct algorithms that use repetition, including indefinite (forever) loops;
 4CT.02 the same for iteration, including count-controlled loops; 4CT.03
 repetition makes algorithms more concise.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch
 
 LESSON = {
     "slug": "loops-in-algorithms",
@@ -42,7 +42,7 @@ LESSON = {
                              {"kind": "repeat", "times": 4, "body": [s("top", "Brush the top teeth", "\U0001F9B7"), s("bottom", "Brush the bottom teeth", "\U0001F9B7")]},
                              s("rinse", "Rinse", "\U0001F4A7")]},
                  {"mode": "follow", "task": "run the traffic lights",
-                  "blocks": [{"kind": "forever", "body": [s("red", "Red", "\U0001F534"), s("redamber", "Red and amber", "\U0001F7E0"), s("green", "Green", "\U0001F7E2"), s("amber", "Amber", "\U0001F7E1")]}]},
+                  "blocks": [{"kind": "forever", "body": [s("red", "Red", swatch("disc", "#D93F3F")), s("redamber", "Red and amber", swatch("discs", "#D93F3F", "#F2A93B")), s("green", "Green", swatch("disc", "#3FB06B")), s("amber", "Amber", swatch("disc", "#F2A93B"))]}]},
                  {"mode": "follow", "task": "water three plants",
                   "blocks": [s("can", "Get the watering can", "\U0001F6BF"),
                              {"kind": "repeat", "times": 3, "body": [s("fill", "Fill the can", "\U0001F4A7"), s("pour", "Pour on a plant", "\U0001F331"), s("walk", "Walk to the next plant", "\U0001F6B6")]},
@@ -72,9 +72,9 @@ LESSON = {
                   "wrong": [1, 2], "why": "A hat on every plate. Four hats. Nobody can eat.",
                   "fix": {"opts": [choice("knife", "Knife on the right", True, "\U0001F52A"), choice("wipe", "Wipe the table", False, "\U0001F9FD"), choice("plate", "Another plate", False, "\U0001F37D️")], "why": "Knife on the right. Four proper places."}},
                  {"mode": "fix", "task": "run the traffic lights",
-                  "blocks": [{"kind": "forever", "body": [s("red", "Red", "\U0001F534"), s("greenamber", "Green and amber together", "\U0001F7E2\U0001F7E1"), s("green", "Green", "\U0001F7E2"), s("amber", "Amber", "\U0001F7E1")]}],
+                  "blocks": [{"kind": "forever", "body": [s("red", "Red", swatch("disc", "#D93F3F")), s("greenamber", "Green and amber together", swatch("discs", "#3FB06B", "#F2A93B")), s("green", "Green", swatch("disc", "#3FB06B")), s("amber", "Amber", swatch("disc", "#F2A93B"))]}],
                   "wrong": [0, 1], "why": "Green and amber together is not a real signal. Drivers would not know whether to go.",
-                  "fix": {"opts": [choice("redamber", "Red and amber", True, "\U0001F7E0"), choice("blue", "Blue", False, "\U0001F535"), choice("off", "All off", False, "⚫")], "why": "Red and amber comes after red. Now the loop is right every time round, forever."}},
+                  "fix": {"opts": [choice("redamber", "Red and amber", True, swatch("discs", "#D93F3F", "#F2A93B")), choice("blue", "Blue", False, swatch("disc", "#6E9DE8")), choice("off", "All off", False, swatch("disc", "#3B3F45"))], "why": "Red and amber comes after red. Now the loop is right every time round, forever."}},
              ]},
              "One fix inside the loop fixes every turn."),
 
@@ -188,4 +188,10 @@ LESSON["home"] = [
           "For each one, say what stops it.",
           "Find three things that run a counted number of times: a microwave for 2 minutes, a washing machine's three rinses."],
          "Forever loops are everywhere, and each has a stop."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["warmup"] = [
+    q("You do this 4 times: clap, clap, clap, stamp. How many claps is that?", "\U0001F44F", "12", ["3", "4", "7"], "3 claps each time, and 4 times round: 3 times 4 is 12."),
+    q("A fan spins round and round. What makes it stop?", "\U0001F300", "someone switches it off", ["it stops by itself after 10 turns", "it gets tired", "it runs out of turns"], "It has no count: it goes round until something stops it."),
 ]

@@ -7,7 +7,7 @@ everyday tasks; 1CT.04 suggest sets of ordered instructions for simple tasks;
 1CT.06 the order matters; with 1P.01, that a computer follows algorithms too,
 written as code.
 """
-from _kit import explain, step, opt, q, s, part, word, home
+from _kit import explain, step, opt, q, s, part, word, home, swatch
 
 LESSON = {
     "slug": "what-is-an-algorithm",
@@ -28,7 +28,7 @@ LESSON = {
                  {"pic": "\U0001F35E➡️\U0001F50C", "cap": "Step 2: <b>put</b> it in the toaster.", "say": "Step two. Put it in the toaster.", "sound": "click"},
                  {"pic": "\U0001F447", "cap": "Step 3: <b>push</b> the lever down.", "say": "Step three. Push the lever down.", "sound": "thud"},
                  {"pic": "⏳", "cap": "Step 4: <b>wait</b> for it to pop up.", "say": "Step four. Wait for it to pop up.", "sound": "pop"},
-                 {"pic": "\U0001F9C8", "cap": "Step 5: <b>spread</b> the butter.", "say": "Step five. Spread the butter.", "sound": "click"},
+                 {"pic": swatch("butter"), "cap": "Step 5: <b>spread</b> the butter.", "say": "Step five. Spread the butter.", "sound": "click"},
                  {"pic": "\U0001F35E✨", "cap": "Toast! Those five steps are an <b>algorithm</b>.", "say": "Toast! Those five steps, in that order, are an algorithm. An algorithm is a set of steps to do a job.", "sound": "tada"},
              ]},
              "An algorithm is a set of steps to do a job. Robo followed one."),
@@ -95,7 +95,7 @@ LESSON = {
                  ["Tap the four steps in order and watch the plant grow."]),
              {"scene": "plant", "items": [
                  {"id": "pot", "pic": "\U0001F3FA", "label": "get a pot", "say": "First, get a pot."},
-                 {"id": "soil", "pic": "\U0001F7EB", "label": "put soil in it", "say": "Put soil in the pot."},
+                 {"id": "soil", "pic": swatch("soil"), "label": "put soil in it", "say": "Put soil in the pot."},
                  {"id": "seed", "pic": "\U0001F330", "label": "plant the seed", "say": "Plant the seed in the soil."},
                  {"id": "water", "pic": "\U0001F4A7", "label": "water it", "say": "Water it. Now it can grow."},
              ]},
@@ -109,9 +109,9 @@ LESSON = {
                  ["Children start with the flag because it is the best bit.", "A flag with nothing under it is on the floor."],
                  ["Tap the bricks in order, bottom to top."]),
              {"scene": "tower", "items": [
-                 {"id": "big", "pic": "\U0001F7E7", "label": "the big brick", "say": "The big brick goes down first."},
-                 {"id": "middle", "pic": "\U0001F7E9", "label": "the middle brick", "say": "The middle brick goes on top of it."},
-                 {"id": "small", "pic": "\U0001F7E8", "label": "the small brick", "say": "The small brick goes on top of that."},
+                 {"id": "big", "pic": swatch("brick", "#E9744F"), "label": "the big brick", "say": "The big brick goes down first."},
+                 {"id": "middle", "pic": swatch("brick", "#35BFB2"), "label": "the middle brick", "say": "The middle brick goes on top of it."},
+                 {"id": "small", "pic": swatch("brick", "#F4C95D"), "label": "the small brick", "say": "The small brick goes on top of that."},
                  {"id": "flag", "pic": "\U0001F6A9", "label": "the flag", "say": "The flag goes on last, at the very top."},
              ]},
              "Big, middle, small, flag. An algorithm for a tower."),

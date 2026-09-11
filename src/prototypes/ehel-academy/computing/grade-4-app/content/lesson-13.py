@@ -208,3 +208,10 @@ LESSON["home"] = [
           "What happens when it updates? That is systems software changing underneath."],
          "Apps on top, systems underneath."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you wrote and read messages in the Caesar and Pigpen ciphers, and saw that the key is what makes a cipher work and what makes it fail."
+LESSON["warmup"] = [
+    q("Which usually takes up more space on a tablet: a photo or a short note?", "\U0001F4F7", "the photo", ["the note", "they are always the same size", "neither takes any space"], "A picture holds far more data than a few words of text."),
+    q("A weather station records the temperature every hour all night, with nobody there. What is recording it?", "\U0001F4C8", "a data logger with a temperature sensor", ["a person with a pencil", "the moon", "a printer"], "A data logger records a sensor's readings by itself, over time."),
+]

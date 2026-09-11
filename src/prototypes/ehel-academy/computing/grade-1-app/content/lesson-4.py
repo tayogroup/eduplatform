@@ -180,7 +180,7 @@ LESSON["words"] = [
          ["Blocks are code.", "We wrote the algorithm as code."]),
     word("program", "▶️", "Code that a computer runs.",
          ["Press Run to run the program.", "A game is a program."]),
-    word("block", "\U0001F7E6", "One instruction in our code.",
+    word("block", "\U0001F9E9", "One instruction in our code.",
          ["Tap the jump block.", "Three blocks, three instructions."]),
     word("run", "\U0001F3C3", "To make the computer do the program.",
          ["Run the program and watch.", "The cat runs the blocks in order."]),

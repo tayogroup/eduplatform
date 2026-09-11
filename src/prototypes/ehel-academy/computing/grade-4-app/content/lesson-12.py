@@ -165,3 +165,10 @@ LESSON["home"] = [
           "Can anyone at home read it without the poster?"],
          "The grid is the key."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you worked out what stops working when a network fails, and found where encryption keeps data safe while it travels."
+LESSON["warmup"] = [
+    q("In the code where 1 is A and 2 is B, what does 3 stand for?", "\U0001F522", "C", ["D", "Z", "B"], "Count along the alphabet: 1 A, 2 B, 3 C."),
+    q("Which letter comes 3 after D in the alphabet?", "\u27A1\uFE0F", "G", ["E", "F", "H"], "D, then E, F, G: three along."),
+]

@@ -120,7 +120,7 @@ LESSON = {
                   {"pic": "\U0001F4F6", "label": "four bars on the phone", "bin": "yes", "why": "Bars mean the network is there."},
                   {"pic": "\U0001F4F5", "label": "no bars and 'No service'", "bin": "no", "why": "No bars: no network."},
                   {"pic": "✈️", "label": "aeroplane mode is switched on", "bin": "no", "why": "Aeroplane mode switches the network off on purpose."},
-                  {"pic": "\U0001F7E2", "label": "the cable is in and the router's light is green", "bin": "yes", "why": "A green light means connected."},
+                  {"pic": "\U0001F50C", "label": "the cable is in and the router's light is green", "bin": "yes", "why": "A green light means connected."},
                   {"pic": "⏳", "label": "the page keeps spinning and never loads", "bin": "no", "why": "A spinner that never stops usually means the network is not reaching the device."},
                   {"pic": "\U0001F4F6", "label": "one bar on the phone", "bin": "yes", "why": "One bar is weak, but the network is there."},
                   {"pic": "⚫", "label": "the router's lights are all off", "bin": "no", "why": "A router with no lights is off, and so is the network."},

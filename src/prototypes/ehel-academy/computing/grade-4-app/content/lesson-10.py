@@ -205,3 +205,10 @@ LESSON["home"] = [
           "Stand behind a thick wall with a phone. Does the wi-fi get weaker?"],
          "Cable for speed and safety; wi-fi to move."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you found the records, fields and data in a table, chose a data type for each field, sorted a table and used a filter to answer a question."
+LESSON["warmup"] = [
+    q("You open a website. Where do its page and pictures come from?", "\U0001F310", "a computer far away that stores them and sends them", ["your screen makes them up", "the keyboard", "the mouse"], "Websites are stored on computers far away that send them when you ask."),
+    q("Which connects a laptop to a network with no wire?", "\U0001F4F6", "wi-fi", ["a USB stick", "a power cable", "a keyboard"], "Wi-fi joins a network through the air."),
+]

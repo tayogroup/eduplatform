@@ -616,6 +616,12 @@
   .loopbox2 > b { display: block; margin-bottom: 4px; }
   .loopbox2 .algo li.dim { border-style: dashed; color: var(--muted); font-weight: 600; }
   .algostep small { color: var(--muted); font-weight: 600; font-size: 12px; }
+  /* writing an algorithm with a branch */
+  .branch.build .zonebox { padding: 10px 12px; border-radius: 16px; border: 2px dashed var(--teal); background: rgba(53,191,178,0.06); }
+  .branch.build .zonebox > b { display: block; margin-bottom: 6px; }
+  .branch.build .algo li.dim { border-style: dashed; color: var(--muted); font-weight: 600; }
+  .zonebtn { margin-top: 6px; min-height: 44px; padding: 8px 14px; border-radius: 12px; border: 2px dashed var(--teal); background: var(--card); color: var(--ink); font: inherit; font-weight: 800; cursor: pointer; }
+  .zonebtn:disabled { opacity: 0.45; cursor: default; }
   /* comments on code */
   .commented { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 560px; }
   .crow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }

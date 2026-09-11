@@ -206,3 +206,10 @@ LESSON["home"] = [
           "Answer one question with a filter: who is taller than 150 cm?"],
          "Sorting changes the order; a filter picks records."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you compared a paper database with a digital one, collected data with a form, and told raw data from the information it becomes."
+LESSON["warmup"] = [
+    q("A class list is in alphabetical order. Who comes first: Zara or Amal?", "\U0001F524", "Amal", ["Zara", "they come together", "neither"], "In alphabetical order, names that start with A come first."),
+    q("A table of pets shows only the dogs after you choose 'dog'. What did you use?", "\U0001F415", "a filter", ["a sort", "a password", "a delete key"], "A filter hides the rows that do not match."),
+]

@@ -916,6 +916,12 @@
   .loopbox2 > b { display: block; margin-bottom: 4px; }
   .loopbox2 .algo li.dim { border-style: dashed; color: var(--muted); font-weight: 600; }
   .algostep small { color: var(--muted); font-weight: 600; font-size: 12px; }
+  /* writing an algorithm with a branch */
+  .branch.build .zonebox { padding: 10px 12px; border-radius: 16px; border: 2px dashed var(--teal); background: rgba(53,191,178,0.06); }
+  .branch.build .zonebox > b { display: block; margin-bottom: 6px; }
+  .branch.build .algo li.dim { border-style: dashed; color: var(--muted); font-weight: 600; }
+  .zonebtn { margin-top: 6px; min-height: 44px; padding: 8px 14px; border-radius: 12px; border: 2px dashed var(--teal); background: var(--card); color: var(--ink); font: inherit; font-weight: 800; cursor: pointer; }
+  .zonebtn:disabled { opacity: 0.45; cursor: default; }
   /* comments on code */
   .commented { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 560px; }
   .crow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -1246,9 +1252,9 @@
         <p class="score" id="score5"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CT.10 4CT.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Developing an algorithm with repetition means spotting what repeats, putting it in a loop, and setting the count.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Water 3 plants: repeat 3 times, fill the can, pour on a plant, walk to the next. Then put the can away.</s><s>The page unrolls your loop and checks it does the whole task, not more and not less.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put &#39;get the can&#39; inside the loop.</s><s>You get the can once. Only what happens for every plant goes in the loop.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap steps into the box, set the count, run.</s></mstts:express-as>' data-say="The task needs the same steps done several times. Put those steps in the repeat box, set how many times, and run it.">
-      <div class="slide-head"><span class="n">6</span><h2>Build an algorithm with a repeat</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">The task needs the same steps done several times. Put those steps in the repeat box, set how many times, and run it.</span></div>
+    <section class="slide" data-objectives="4CT.09" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Writing an algorithm with a branch: decide what happens every time, and what happens only for one answer to the question.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Borrowing a book: look on the shelf first, every time. On the shelf: take it to the desk and scan your card. Not there: ask for it to be saved. Then say thank you, every time.</s><s>Test it with both answers. One algorithm, two inputs, two different outputs.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put a step that happens for both answers inside one branch.</s><s>If it happens whatever the answer, it goes outside the branches: first, or after.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Choose the question, then tap a step and tap Put it here. Then Test it.</s></mstts:express-as>' data-say="Now you write one. Choose the question the algorithm must ask, put every step where it belongs, then test it with both inputs.">
+      <div class="slide-head"><span class="n">6</span><h2>Write the branch</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Now you write one. Choose the question the algorithm must ask, put every step where it belongs, then test it with both inputs.</span></div>
       <div class="stage">
         <div id="stage6"></div>
         <div class="choices" id="ch6"></div>
@@ -1256,9 +1262,9 @@
         <p class="score" id="score6"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CT.10" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Inside the loop: anything that happens for every plant.</s><s>Outside: anything that happens once, before or after.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read, decide, tap.</s></mstts:express-as>' data-say="For &#39;water all the plants in the garden&#39;, does this step go INSIDE the repeat loop or OUTSIDE it?">
-      <div class="slide-head"><span class="n">7</span><h2>In the loop, or outside it?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">For 'water all the plants in the garden', does this step go INSIDE the repeat loop or OUTSIDE it?</span></div>
+    <section class="slide" data-objectives="4CT.10 4CT.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Developing an algorithm with repetition means spotting what repeats, putting it in a loop, and setting the count.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Water 3 plants: repeat 3 times, fill the can, pour on a plant, walk to the next. Then put the can away.</s><s>The page unrolls your loop and checks it does the whole task, not more and not less.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put &#39;get the can&#39; inside the loop.</s><s>You get the can once. Only what happens for every plant goes in the loop.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap steps into the box, set the count, run.</s></mstts:express-as>' data-say="The task needs the same steps done several times. Put those steps in the repeat box, set how many times, and run it.">
+      <div class="slide-head"><span class="n">7</span><h2>Build an algorithm with a repeat</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">The task needs the same steps done several times. Put those steps in the repeat box, set how many times, and run it.</span></div>
       <div class="stage">
         <div id="stage7"></div>
         <div class="choices" id="ch7"></div>
@@ -1266,9 +1272,9 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CT.09 4CT.10" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Branches and loops you build.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read, think, tap.</s></mstts:express-as>' data-say="Three quick questions.">
-      <div class="slide-head"><span class="n">8</span><h2>Check: inputs and loops</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Three quick questions.</span></div>
+    <section class="slide" data-objectives="4CT.10" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Inside the loop: anything that happens for every plant.</s><s>Outside: anything that happens once, before or after.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read, decide, tap.</s></mstts:express-as>' data-say="For &#39;water all the plants in the garden&#39;, does this step go INSIDE the repeat loop or OUTSIDE it?">
+      <div class="slide-head"><span class="n">8</span><h2>In the loop, or outside it?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">For 'water all the plants in the garden', does this step go INSIDE the repeat loop or OUTSIDE it?</span></div>
       <div class="stage">
         <div id="stage8"></div>
         <div class="choices" id="ch8"></div>
@@ -1276,9 +1282,9 @@
         <p class="score" id="score8"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CT.09 4CT.10 4CT.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
-      <div class="slide-head"><span class="n">9</span><h2>Games</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Choose a game to play. Nothing here is new.</span></div>
+    <section class="slide" data-objectives="4CT.09 4CT.10" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Branches and loops you build.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read, think, tap.</s></mstts:express-as>' data-say="Three quick questions.">
+      <div class="slide-head"><span class="n">9</span><h2>Check: inputs and loops</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Three quick questions.</span></div>
       <div class="stage">
         <div id="stage9"></div>
         <div class="choices" id="ch9"></div>
@@ -1286,9 +1292,9 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CT.09 4CT.10 4CT.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, away from any screen.</s><s>Computer scientists call that unplugged, and it is real computing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who follows your steps EXACTLY, silly mistakes and all, is the best computer you have.</s><s>That is the whole point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.">
-      <div class="slide-head"><span class="n">10</span><h2>Unplugged at home</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></div>
+    <section class="slide" data-objectives="4CT.09 4CT.10 4CT.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
+      <div class="slide-head"><span class="n">10</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Choose a game to play. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage10"></div>
         <div class="choices" id="ch10"></div>
@@ -1296,9 +1302,9 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CT.05 4CT.09 4CT.10" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Branches, inputs, outputs, and loops you build.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read, look, tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">11</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Time to show what you know. Tap the answer.</span></div>
+    <section class="slide" data-objectives="4CT.09 4CT.10 4CT.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, away from any screen.</s><s>Computer scientists call that unplugged, and it is real computing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who follows your steps EXACTLY, silly mistakes and all, is the best computer you have.</s><s>That is the whole point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.">
+      <div class="slide-head"><span class="n">11</span><h2>Unplugged at home</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></div>
       <div class="stage">
         <div id="stage11"></div>
         <div class="choices" id="ch11"></div>
@@ -1306,9 +1312,9 @@
         <p class="score" id="score11"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
-      <div class="slide-head"><span class="n">12</span><h2>Computing world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Where this computing is out in the real world. This part is still being built.</span></div>
+    <section class="slide" data-objectives="4CT.05 4CT.09 4CT.10" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Branches, inputs, outputs, and loops you build.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read, look, tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">12</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Time to show what you know. Tap the answer.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
@@ -1316,14 +1322,24 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
-      <div class="slide-head"><span class="n">13</span><h2>Student resources</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
+      <div class="slide-head"><span class="n">13</span><h2>Computing world</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Where this computing is out in the real world. This part is still being built.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
         <p class="fb" id="fb13" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score13"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
+      <div class="slide-head"><span class="n">14</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+      <div class="stage">
+        <div id="stage14"></div>
+        <div class="choices" id="ch14"></div>
+        <p class="fb" id="fb14" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score14"></p>
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1386,16 +1402,65 @@
         "data": {
           "about": [
             "Follow an algorithm with an IF branch and say how the input picks the output.",
-            "Show that one algorithm gives different outputs for different inputs.",
+            "Write an algorithm whose output depends on its input, and test it with both inputs.",
             "Build an algorithm with a repeat loop for a task that repeats.",
             "Decide which steps go inside a loop and which stay outside."
           ],
           "counts": {
-            "steps": 13,
+            "steps": 14,
             "words": 5,
             "games": 4,
             "home": 2
-          }
+          },
+          "recap": "Last time you broke a big task into sub-routines, wrote a main algorithm that calls them in order, and followed an algorithm into a sub-routine and back.",
+          "warmup": [
+            {
+              "ask": "When the bell rings you line up; when it is quiet you keep working. The bell rings. What do you do?",
+              "pic": "🏫",
+              "opts": [
+                {
+                  "t": "line up",
+                  "ok": true
+                },
+                {
+                  "t": "keep working",
+                  "ok": false
+                },
+                {
+                  "t": "go home",
+                  "ok": false
+                },
+                {
+                  "t": "sing a song",
+                  "ok": false
+                }
+              ],
+              "why": "What you hear decides what you do: one input, one output."
+            },
+            {
+              "ask": "At a crossing the red person means stop. The green person means...",
+              "pic": "🚶",
+              "opts": [
+                {
+                  "t": "cross, with care",
+                  "ok": true
+                },
+                {
+                  "t": "stop",
+                  "ok": false
+                },
+                {
+                  "t": "turn round",
+                  "ok": false
+                },
+                {
+                  "t": "run as fast as you can",
+                  "ok": false
+                }
+              ],
+              "why": "What the light shows decides what you do."
+            }
+          ]
         }
       },
       {
@@ -1417,6 +1482,11 @@
               "pic": "📤",
               "title": "Inputs decide outputs",
               "say": "The same algorithm gives a different output for a different input. Raining in, umbrella out. Sunny in, sunglasses out. A quiz program does the same: right answer in, a tick and a point; wrong answer in, a cross and a hint."
+            },
+            {
+              "pic": "✍️",
+              "title": "Writing a branch",
+              "say": "To write an algorithm with a branch, first choose the question that decides it. Steps that happen whatever the answer go outside the branches, first or after; steps for one answer go in that answer's branch. Then test it with both answers: a step that turns up for the wrong answer is in the wrong place."
             },
             {
               "pic": "🔁",
@@ -1681,6 +1751,195 @@
                   "label": "Go to the next question",
                   "pic": "➡️",
                   "say": "Go to the next question."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "kind": "branchbuild",
+        "title": "Write the branch",
+        "objectives": [
+          "4CT.09"
+        ],
+        "data": {
+          "word": "IF",
+          "rounds": [
+            {
+              "task": "borrow a library book",
+              "question": "is the book on the shelf?",
+              "questions": [
+                "is the book on the shelf?",
+                "is it raining?",
+                "is the book red?"
+              ],
+              "inputs": [
+                {
+                  "id": "yes",
+                  "label": "Yes, it is on the shelf",
+                  "pic": "📚"
+                },
+                {
+                  "id": "no",
+                  "label": "No, someone has it",
+                  "pic": "🚫"
+                }
+              ],
+              "before": [
+                {
+                  "id": "look",
+                  "label": "Look on the shelf for the book",
+                  "pic": "🔍",
+                  "say": "Look on the shelf for the book."
+                }
+              ],
+              "yes": [
+                {
+                  "id": "desk",
+                  "label": "Take it to the desk",
+                  "pic": "📖",
+                  "say": "Take it to the desk."
+                },
+                {
+                  "id": "card",
+                  "label": "Scan your library card",
+                  "pic": "📇",
+                  "say": "Scan your library card."
+                }
+              ],
+              "no": [
+                {
+                  "id": "save",
+                  "label": "Ask for it to be saved for you",
+                  "pic": "📝",
+                  "say": "Ask for it to be saved for you."
+                }
+              ],
+              "after": [
+                {
+                  "id": "thanks",
+                  "label": "Say thank you to the librarian",
+                  "pic": "🙂",
+                  "say": "Say thank you to the librarian."
+                }
+              ]
+            },
+            {
+              "task": "go to lunch",
+              "question": "have you brought a packed lunch?",
+              "questions": [
+                "have you brought a packed lunch?",
+                "is it Friday?",
+                "are your shoes tied?"
+              ],
+              "inputs": [
+                {
+                  "id": "yes",
+                  "label": "Yes, a packed lunch",
+                  "pic": "🥪"
+                },
+                {
+                  "id": "no",
+                  "label": "No, a school dinner",
+                  "pic": "🍛"
+                }
+              ],
+              "before": [
+                {
+                  "id": "line",
+                  "label": "Line up at the hall door",
+                  "pic": "🚶",
+                  "say": "Line up at the hall door."
+                }
+              ],
+              "yes": [
+                {
+                  "id": "box",
+                  "label": "Get your lunch box",
+                  "pic": "🍱",
+                  "say": "Get your lunch box."
+                }
+              ],
+              "no": [
+                {
+                  "id": "queue",
+                  "label": "Queue at the serving hatch",
+                  "pic": "👥",
+                  "say": "Queue at the serving hatch."
+                },
+                {
+                  "id": "tray",
+                  "label": "Take a tray and cutlery",
+                  "pic": "🍴",
+                  "say": "Take a tray and cutlery."
+                }
+              ],
+              "after": [
+                {
+                  "id": "eat",
+                  "label": "Sit down and eat",
+                  "pic": "😋",
+                  "say": "Sit down and eat."
+                }
+              ]
+            },
+            {
+              "task": "the player reaches a locked door in a game",
+              "question": "has the player got the key?",
+              "questions": [
+                "has the player got the key?",
+                "is the door green?",
+                "is the music on?"
+              ],
+              "inputs": [
+                {
+                  "id": "yes",
+                  "label": "Yes, the key is found",
+                  "pic": "🔑"
+                },
+                {
+                  "id": "no",
+                  "label": "No key yet",
+                  "pic": "❌"
+                }
+              ],
+              "before": [
+                {
+                  "id": "walk",
+                  "label": "Walk up to the door",
+                  "pic": "🚶",
+                  "say": "Walk up to the door."
+                }
+              ],
+              "yes": [
+                {
+                  "id": "open",
+                  "label": "Open the door",
+                  "pic": "🚪",
+                  "say": "Open the door."
+                },
+                {
+                  "id": "level",
+                  "label": "Go through to the next level",
+                  "pic": "⭐",
+                  "say": "Go through to the next level."
+                }
+              ],
+              "no": [
+                {
+                  "id": "find",
+                  "label": "Show the message 'Find the key!'",
+                  "pic": "💬",
+                  "say": "Show the message 'Find the key!'."
+                }
+              ],
+              "after": [
+                {
+                  "id": "save",
+                  "label": "Save the game",
+                  "pic": "💾",
+                  "say": "Save the game."
                 }
               ]
             }
@@ -2348,6 +2607,29 @@
                 }
               ],
               "why": "Inputs decide outputs."
+            },
+            {
+              "ask": "You write a branch for borrowing a book. 'Say thank you' happens whatever the answer. Where does it go?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🙂</div>",
+              "opts": [
+                {
+                  "t": "outside the branches, after them",
+                  "ok": true
+                },
+                {
+                  "t": "only in the on-the-shelf branch",
+                  "ok": false
+                },
+                {
+                  "t": "only in the someone-has-it branch",
+                  "ok": false
+                },
+                {
+                  "t": "in both branches",
+                  "ok": false
+                }
+              ],
+              "why": "A step that happens for every answer goes outside the branches."
             }
           ]
         }
@@ -3382,7 +3664,7 @@
           "hub": "g4-index.html",
           "gradeLabel": "Grade 4",
           "lessonNo": 4,
-          "homeStep": 9
+          "homeStep": 10
         }
       }
     ]
@@ -7992,6 +8274,124 @@
     start();
   }
 
+  /* ---- write an algorithm with a branch in it (4CT.09) ------------------
+     The follow machine above reads an algorithm that forks on its input;
+     this one has the child DEVELOP it. First the question that decides the
+     middle (when the round offers a choice of questions), then every step
+     put where it belongs: first, in one answer's branch or the other's, or
+     after. Test it runs the child's own algorithm with both inputs, so a
+     misplaced step shows up as the wrong output for one input; the page
+     names it, says what the test showed, and hands it back to be placed
+     again. branch_home in _rules.py is the key the gate checks. */
+  function branchBuild(o) {
+    const el = o.el, rounds = o.rounds, word = o.word || "IF", ZONES = ["before", "yes", "no", "after"];
+    let r = 0, score = 0;
+    function start() {
+      const rd = rounds[r], all = [], home = {};
+      ZONES.forEach((z) => (rd[z] || []).forEach((st) => { all.push(st); home[st.id] = z; }));
+      const stepOf = (id) => all.find((st) => st.id === id);
+      const inputOf = (z) => rd.inputs[z === "no" ? 1 : 0];
+      const pool = shuffle(all.map((st) => st.id));
+      const placed = { before: [], yes: [], no: [], after: [] };
+      const qs = rd.questions ? shuffle(rd.questions.map((t, k) => ({ t: t, k: k }))) : null;
+      let asked = !qs, picked = null, lock = false, firstTest = true;
+      const where = (id) => ZONES.find((z) => placed[z].indexOf(id) >= 0);
+      const free = () => pool.filter((id) => !where(id));
+      function zone(z, cls) {
+        const rows = placed[z].map((id) => '<li><button type="button" class="algostep" data-rm="' + esc(id) + '"' + (lock ? " disabled" : "") + '><span class="apic" aria-hidden="true">' + small(stepOf(id).pic) + "</span>" + esc(stepOf(id).label) + " <small>(tap to take out)</small></button></li>").join("");
+        /* four buttons all named "Put it here" tell a screen-reader user nothing;
+           each says where here is */
+        const where = z === "before" ? "first, every time" : z === "after" ? "after the branch, every time" : "in the branch for " + inputOf(z).label;
+        return '<ol class="algo' + (cls || "") + '">' + (rows || '<li class="dim">nothing here yet</li>') + "</ol>" +
+          '<button type="button" class="zonebtn" data-zone="' + z + '" aria-label="Put it ' + esc(where) + '"' + (picked && !lock ? "" : " disabled") + ">Put it here</button>";
+      }
+      function draw() {
+        const head = '<p class="goal">The task: <b>' + esc(rd.task) + "</b></p>";
+        if (!asked) {
+          $(el.stage).innerHTML = '<div class="stagewide">' + head + '<div class="chips">' + qs.map((x) => '<button type="button" class="chip" data-q="' + x.k + '">' + esc(x.t) + "</button>").join("") + "</div></div>";
+          $(el.score).textContent = "Algorithm " + (r + 1) + " of " + rounds.length + " · choose the question";
+          return;
+        }
+        const left = free();
+        $(el.stage).innerHTML = '<div class="stagewide">' + head + '<div class="branch build">' +
+          '<div class="zonebox"><b>First, every time:</b>' + zone("before") + "</div>" +
+          '<div class="ifbox"><b>' + esc(word) + " " + esc(rd.question) + '</b><div class="arms">' +
+          ["yes", "no"].map((z) => '<div class="arm on"><i>' + esc(inputOf(z).label) + ":</i>" + zone(z, " small") + "</div>").join("") + "</div></div>" +
+          '<div class="zonebox"><b>Then, every time:</b>' + zone("after") + "</div></div>" +
+          (left.length ? '<div class="cardsgrid">' + left.map((id) => '<button type="button" class="tapcard' + (picked === id ? " now" : "") + '" data-pick="' + esc(id) + '" aria-pressed="' + (picked === id) + '"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(stepOf(id).pic) + "</span>" + esc(stepOf(id).label) + "</button>").join("") + "</div>" : "") +
+          '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'test"' + (lock || left.length ? " disabled" : "") + ">&#9654; Test it</button></div></div>";
+        $(el.score).textContent = "Algorithm " + (r + 1) + " of " + rounds.length + " · " + (all.length - left.length) + " of " + all.length + " steps placed";
+      }
+      function refocus(e, sel) {
+        /* a keyboard press (detail 0) keeps the child's place after the redraw */
+        if (e && e.detail === 0) { const f = $(el.stage).querySelector(sel); if (f) f.focus(); }
+      }
+      function advice(id) {
+        const h = home[id], z = where(id), label = stepOf(id).label;
+        if (h === "before" || h === "after") {
+          if (z === "yes" || z === "no") return "With the input " + inputOf(z === "yes" ? "no" : "yes").label + ", your algorithm never did " + label + ". It happens every time, so it goes outside the branches, " + (h === "before" ? "first." : "after them.");
+          return h === "before" ? label + " ran after the branch, but it has to happen first, before the question." : label + " ran first, but it belongs after the branch.";
+        }
+        const other = h === "yes" ? "no" : "yes";
+        if (z === other) return "With the input " + inputOf(h).label + ", your algorithm never did " + label + ", and with " + inputOf(other).label + " it did. It belongs in the branch for " + inputOf(h).label + ".";
+        return "With the input " + inputOf(other).label + ", your algorithm did " + label + " too. It happens only for " + inputOf(h).label + ", so it goes in that branch.";
+      }
+      function next() {
+        $(el.stage).removeEventListener("click", handler);
+        r++;
+        if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You wrote " + rounds.length + " algorithms that give different outputs for different inputs. " + o.done); }
+        else start();
+      }
+      function test() {
+        if (lock || free().length) return;
+        const wrong = all.map((st) => st.id).filter((id) => where(id) !== home[id]);
+        const out = ["yes", "no"].map((z) => "With the input " + inputOf(z).label + ", the output is: " + placed.before.concat(placed[z], placed.after).map((id) => stepOf(id).label).join(", ") + ".");
+        if (!wrong.length) {
+          lock = true; draw(); if (firstTest) score++; SOUND.play("tada", 0.5);
+          const line = cheer() + " " + out.join(" ") + " One algorithm, and the input decides the output.";
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          setTimeout(next, 4200);
+          return;
+        }
+        firstTest = false; SOUND.play("error", 0.3);
+        const line = "Not yet. " + advice(wrong[0]) + (wrong.length > 1 ? " " + (wrong.length - 1) + " more step" + (wrong.length > 2 ? "s were" : " was") + " in the wrong place too." : "") + " They are back in the pile: put them where they belong and test again.";
+        wrong.forEach((id) => { const z = where(id); placed[z].splice(placed[z].indexOf(id), 1); });
+        draw(); $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+      const handler = (e) => {
+        if (lock) return;
+        const qb = e.target.closest("[data-q]");
+        if (qb && !asked) {
+          const t = rd.questions[Number(qb.dataset.q)];
+          if (t === rd.question) {
+            asked = true; SOUND.play("ding", 0.4); draw(); refocus(e, "[data-pick]");
+            $(el.ask).innerHTML = "Tap a step, then <b>Put it here</b> where it belongs. When every step is placed, press <b>Test it</b>.";
+            const line = cheer() + " The answer to " + rd.question + " decides the middle. Now write the algorithm: tap a step, then Put it here where it belongs, and Test it.";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          } else {
+            qb.classList.add("wrong"); qb.disabled = true; SOUND.play("error", 0.3);
+            const line = "The answer to " + t + " would not change any step of " + rd.task + ". Which question would?";
+            $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          }
+          return;
+        }
+        const pk = e.target.closest("[data-pick]");
+        if (pk) { picked = picked === pk.dataset.pick ? null : pk.dataset.pick; SOUND.play("click", 0.3); draw(); refocus(e, picked ? ".zonebtn" : "[data-pick]"); return; }
+        const zb = e.target.closest("[data-zone]");
+        if (zb && picked) { placed[zb.dataset.zone].push(picked); picked = null; SOUND.play("pop", 0.4); $(el.fb).className = "fb"; $(el.fb).textContent = ""; draw(); refocus(e, free().length ? "[data-pick]" : "#" + el.stage + "test"); return; }
+        const rm = e.target.closest("[data-rm]");
+        if (rm) { const id = rm.dataset.rm, z = where(id); placed[z].splice(placed[z].indexOf(id), 1); SOUND.play("pop", 0.3); draw(); refocus(e, "[data-pick]"); return; }
+        if (e.target.closest("#" + el.stage + "test")) test();
+      };
+      $(el.stage).addEventListener("click", handler);
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      $(el.ask).innerHTML = asked ? "Tap a step, then <b>Put it here</b> where it belongs. When every step is placed, press <b>Test it</b>." : "First choose the <b>question</b> this algorithm needs to ask.";
+      sayHere(o.finish, "The task: " + rd.task + ". " + (asked ? "Tap a step, then Put it here where it belongs. When every step is placed, press Test it." : "First choose the question this algorithm needs to ask."));
+      draw();
+    }
+    start();
+  }
+
   /* ---- comments on blocks of code (4P.01) --------------------------------
      A program and a set of comments. The child puts each comment on the
      block it explains; the page shows them beside the code, then asks why
@@ -8844,21 +9244,22 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🔀", "If thinker"], ["🔀", "Branch follower"], ["🔁", "Loop builder"], ["🗂️", "Loop placer"], ["📝", "Branch checker"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🔀", "If thinker"], ["🔀", "Branch follower"], ["🔀", "Branch writer"], ["🔁", "Loop builder"], ["🗂️", "Loop placer"], ["📝", "Branch checker"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 4 parts. Now do it yourself." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   tapCards(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "The input decides the branch." }, LESSON.steps[3].data));
   branchAlgo(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "One algorithm, two inputs, two outputs." }, LESSON.steps[4].data));
-  loopBuild(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Three algorithms with a repeat, built and checked." }, LESSON.steps[5].data));
-  sortBins(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "Every-time steps go inside; once steps stay outside." }, LESSON.steps[6].data));
-  sequence(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "If, loop, output." }, LESSON.steps[7].data));
-  gameZone(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[8].data));
-  homeProjects(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[9].data));
-  sequence(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "That is the whole lesson finished. You follow a branch and build a loop." }, LESSON.steps[10].data));
-  computingWorld(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "Computing world is on its way." }, LESSON.steps[11].data));
-  resources(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Your resources are always here." }, LESSON.steps[12].data));
+  branchBuild(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Three algorithms written, each giving a different output for each input." }, LESSON.steps[5].data));
+  loopBuild(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "Three algorithms with a repeat, built and checked." }, LESSON.steps[6].data));
+  sortBins(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "Every-time steps go inside; once steps stay outside." }, LESSON.steps[7].data));
+  sequence(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "If, loop, output." }, LESSON.steps[8].data));
+  gameZone(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[9].data));
+  homeProjects(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[10].data));
+  sequence(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "That is the whole lesson finished. You follow a branch, write one, and build a loop." }, LESSON.steps[11].data));
+  computingWorld(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Computing world is on its way." }, LESSON.steps[12].data));
+  resources(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Your resources are always here." }, LESSON.steps[13].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

@@ -54,7 +54,7 @@ MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2,
            "trim": 3, "loopspot": 3, "whatif": 4, "inout": 5, "tidy": 5, "parallel": 6, "tweak": 4, "device": 5,
            "views": 4, "sheet": 5, "filter": 5, "cipher": 5,
            # Stage 4
-           "loopalgo": 5, "compare": 4, "subroutine": 4, "branch": 4, "loopbuild": 4,
+           "loopalgo": 5, "compare": 4, "subroutine": 4, "branch": 4, "loopbuild": 4, "branchbuild": 5,
            "comment": 3, "inputprog": 5, "plan": 3, "parttest": 6, "datasort": 4, "tableparts": 3,
            "questions": 3, "quiz": 4,
            # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
@@ -101,6 +101,7 @@ UNPLUGGED = {
     "subroutine": "Write 'getting ready' as a main list that says 'do WASH', 'do DRESS', 'do BAG', and each of those as its own little list. Follow the main list, jumping into each little list and back.",
     "branch": "Make an 'if it is raining' routine: the same start and end, a different middle. Roll a dice for the weather and follow the branch it gives you.",
     "loopbuild": "Water the plants or lay the table, and write it as 'repeat N times' plus the steps in the box. Unroll it: how many steps is that really?",
+    "branchbuild": "Write your own routine on cards with a question in the middle: what happens first every time, a different middle for each answer, and what happens after. Hand someone an answer card and see if they get the right output.",
     "comment": "Take a card program and write a short comment on each card saying what it is FOR. Give it to someone who has never seen it. Can they explain it back?",
     "inputprog": "Two inputs, two outputs: agree that a clap makes your partner jump and a tap on the shoulder makes them spin. Give the inputs in a random order.",
     "plan": "Before building anything, plan each object on paper: what starts it (input) and what it does (output).",
@@ -372,6 +373,13 @@ def keys_for(s):
     elif k == "branch":
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
             "<li>%s <span class=\"key\">%s: %s; %s: %s</span></li>" % (text(rd["task"]), text(rd["inputs"][0]["label"]), text(", ".join(st["label"] for st in rd["yes"])), text(rd["inputs"][1]["label"]), text(", ".join(st["label"] for st in rd["no"]))) for rd in d["rounds"])))
+    elif k == "branchbuild":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">asks %s; first: %s; %s: %s; %s: %s; then: %s</span></li>" % (
+                text(rd["task"]), text(rd["question"]), text(", ".join(st["label"] for st in rd.get("before", [])) or "nothing"),
+                text(rd["inputs"][0]["label"]), text(", ".join(st["label"] for st in rd["yes"])),
+                text(rd["inputs"][1]["label"]), text(", ".join(st["label"] for st in rd["no"])),
+                text(", ".join(st["label"] for st in rd.get("after", [])) or "nothing")) for rd in d["rounds"])))
     elif k == "loopbuild":
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
             "<li>%s <span class=\"key\">repeat %d times: %s</span></li>" % (text(rd["task"]), rd["expect"]["times"], text(", ".join(next(st["label"] for st in rd["pool"] if st["id"] == b) for b in rd["expect"]["body"]))) for rd in d["rounds"])))

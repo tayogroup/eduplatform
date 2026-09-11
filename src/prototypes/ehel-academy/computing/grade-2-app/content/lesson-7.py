@@ -118,7 +118,7 @@ LESSON = {
               "bins": [{"id": "count", "label": "A count", "pic": "\U0001F522"}, {"id": "measure", "label": "A measurement", "pic": "\U0001F4CF"}, {"id": "cat", "label": "A category", "pic": "\U0001F3F7️"}],
               "items": [
                   {"pic": "\U0001F436", "label": "the number of pets you have", "bin": "count", "why": "How many. A count."},
-                  {"pic": "\U0001F9CD", "label": "how tall you are", "bin": "measure", "why": "How much, measured. A measurement."},
+                  {"pic": "\U0001F992", "label": "how tall you are", "bin": "measure", "why": "How much, measured. A measurement."},
                   {"pic": "\U0001F34E", "label": "your favourite fruit", "bin": "cat", "why": "One choice from a list. A category."},
                   {"pic": "\U0001F441️", "label": "your eye colour", "bin": "cat", "why": "Brown, blue, green: a category."},
                   {"pic": "\U0001F463", "label": "how many steps to the gate", "bin": "count", "why": "How many. A count."},
@@ -155,7 +155,7 @@ LESSON = {
                  ["Press Next and see what happens to each."]),
              {"frames": [
                  {"pic": "\U0001F4C4\U0001F4BB", "cap": "The fruit table: on paper, and on the computer.", "say": "The fruit table, written on paper, and typed into the computer. The same data twice."},
-                 {"pic": "\U0001F9C3\U0001F4C4", "cap": "Juice spills. The paper table is <b>gone</b>.", "say": "Juice spills across the desk. The paper table is soaked and the writing has run. It is gone.", "sound": "splash"},
+                 {"pic": "\U0001F964\U0001F4C4", "cap": "Juice spills. The paper table is <b>gone</b>.", "say": "Juice spills across the desk. The paper table is soaked and the writing has run. It is gone.", "sound": "splash"},
                  {"pic": "\U0001F4BB✅", "cap": "The computer table is <b>still there</b>.", "say": "The computer table is still there, exactly as it was.", "sound": "ding"},
                  {"pic": "\U0001F4CB\U0001F4CB", "cap": "Another class wants it: <b>copied</b> in a blink.", "say": "Another class wants the same table. Copied in a blink, no writing it out again.", "sound": "click"},
                  {"pic": "\U0001F4E4\U0001F475\U0001F3FE", "cap": "Grandma wants to see it: <b>sent</b> in a second.", "say": "Grandma wants to see it. Sent in a second, across the world.", "sound": "send"},

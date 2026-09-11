@@ -11,7 +11,7 @@ from _kit import explain, step, opt, q, s, part, word, home
 LESSON = {
     "slug": "inputs-decide-outputs",
     "title": "Inputs Decide Outputs",
-    "blurb": "Follow an algorithm with an IF in it and see one input take one branch and another input take the other, then build algorithms of your own with a repeat loop in them.",
+    "blurb": "Follow an algorithm with an IF in it and see one input take one branch and another input take the other, then write your own, and build algorithms with a repeat loop in them.",
     "steps": [
         step("context", "If this, then that", "\U0001F500", "If thinker", ["4CT.09"],
              "An algorithm can have a fork in it: IF something is true, do these steps; otherwise do those. The input decides. Tap each one.",
@@ -55,6 +55,39 @@ LESSON = {
                   "after": [s("next", "Go to the next question", "➡️")]},
              ]},
              "One algorithm, two inputs, two outputs."),
+
+        step("branchbuild", "Write the branch", "\U0001F500", "Branch writer", ["4CT.09"],
+             "Now you write one. Choose the question the algorithm must ask, put every step where it belongs, then test it with both inputs.",
+             explain(
+                 ["Writing an algorithm with a branch: decide what happens every time, and what happens only for one answer to the question."],
+                 ["Borrowing a book: look on the shelf first, every time. On the shelf: take it to the desk and scan your card. Not there: ask for it to be saved. Then say thank you, every time.",
+                  "Test it with both answers. One algorithm, two inputs, two different outputs."],
+                 ["Children put a step that happens for both answers inside one branch.", "If it happens whatever the answer, it goes outside the branches: first, or after."],
+                 ["Choose the question, then tap a step and tap Put it here. Then Test it."]),
+             {"word": "IF", "rounds": [
+                 {"task": "borrow a library book", "question": "is the book on the shelf?",
+                  "questions": ["is the book on the shelf?", "is it raining?", "is the book red?"],
+                  "inputs": [{"id": "yes", "label": "Yes, it is on the shelf", "pic": "\U0001F4DA"}, {"id": "no", "label": "No, someone has it", "pic": "\U0001F6AB"}],
+                  "before": [s("look", "Look on the shelf for the book", "\U0001F50D")],
+                  "yes": [s("desk", "Take it to the desk", "\U0001F4D6"), s("card", "Scan your library card", "\U0001F4C7")],
+                  "no": [s("save", "Ask for it to be saved for you", "\U0001F4DD")],
+                  "after": [s("thanks", "Say thank you to the librarian", "\U0001F642")]},
+                 {"task": "go to lunch", "question": "have you brought a packed lunch?",
+                  "questions": ["have you brought a packed lunch?", "is it Friday?", "are your shoes tied?"],
+                  "inputs": [{"id": "yes", "label": "Yes, a packed lunch", "pic": "\U0001F96A"}, {"id": "no", "label": "No, a school dinner", "pic": "\U0001F35B"}],
+                  "before": [s("line", "Line up at the hall door", "\U0001F6B6")],
+                  "yes": [s("box", "Get your lunch box", "\U0001F371")],
+                  "no": [s("queue", "Queue at the serving hatch", "\U0001F465"), s("tray", "Take a tray and cutlery", "\U0001F374")],
+                  "after": [s("eat", "Sit down and eat", "\U0001F60B")]},
+                 {"task": "the player reaches a locked door in a game", "question": "has the player got the key?",
+                  "questions": ["has the player got the key?", "is the door green?", "is the music on?"],
+                  "inputs": [{"id": "yes", "label": "Yes, the key is found", "pic": "\U0001F511"}, {"id": "no", "label": "No key yet", "pic": "\u274C"}],
+                  "before": [s("walk", "Walk up to the door", "\U0001F6B6")],
+                  "yes": [s("open", "Open the door", "\U0001F6AA"), s("level", "Go through to the next level", "\u2B50")],
+                  "no": [s("find", "Show the message 'Find the key!'", "\U0001F4AC")],
+                  "after": [s("save", "Save the game", "\U0001F4BE")]},
+             ]},
+             "Three algorithms written, each giving a different output for each input."),
 
         step("loopbuild", "Build an algorithm with a repeat", "\U0001F501", "Loop builder", ["4CT.10", "4CT.05"],
              "The task needs the same steps done several times. Put those steps in the repeat box, set how many times, and run it.",
@@ -120,15 +153,16 @@ LESSON = {
                  q("Repeat 5 times: pour, cook, plate. Then serve. How many steps unrolled?", "\U0001F95E", "16", ["4", "5", "15"], "Fifteen in the loop, plus serve."),
                  q("Which belongs OUTSIDE the pancake loop?", "\U0001F963", "mix the batter", ["pour batter in the pan", "cook and flip", "put it on the plate"], "Mixing happens once."),
                  q("Same algorithm, two inputs. The outputs are...", "\U0001F4E4", "different, because the branch is different", ["always the same", "both branches", "an error"], "Inputs decide outputs."),
+                 q("You write a branch for borrowing a book. 'Say thank you' happens whatever the answer. Where does it go?", "\U0001F642", "outside the branches, after them", ["only in the on-the-shelf branch", "only in the someone-has-it branch", "in both branches"], "A step that happens for every answer goes outside the branches."),
              ]},
-             "That is the whole lesson finished. You follow a branch and build a loop."),
+             "That is the whole lesson finished. You follow a branch, write one, and build a loop."),
     ],
 }
 
 
 LESSON["about"] = [
     "Follow an algorithm with an IF branch and say how the input picks the output.",
-    "Show that one algorithm gives different outputs for different inputs.",
+    "Write an algorithm whose output depends on its input, and test it with both inputs.",
     "Build an algorithm with a repeat loop for a task that repeats.",
     "Decide which steps go inside a loop and which stay outside.",
 ]
@@ -138,6 +172,8 @@ LESSON["lecture"] = [
          "An algorithm can fork: IF it is raining, put on a raincoat and take an umbrella; otherwise sunglasses and a hat. The steps before and after are the same for everyone; the middle depends on the input. Only one branch runs."),
     part("\U0001F4E4", "Inputs decide outputs",
          "The same algorithm gives a different output for a different input. Raining in, umbrella out. Sunny in, sunglasses out. A quiz program does the same: right answer in, a tick and a point; wrong answer in, a cross and a hint."),
+    part("\u270D\uFE0F", "Writing a branch",
+         "To write an algorithm with a branch, first choose the question that decides it. Steps that happen whatever the answer go outside the branches, first or after; steps for one answer go in that answer's branch. Then test it with both answers: a step that turns up for the wrong answer is in the wrong place."),
     part("\U0001F501", "Building a loop",
          "When a task does the same steps for every plant, or every place, or every pancake, those steps go inside a repeat loop with a count. Fill, pour, walk, repeat 3 times. What happens only once - getting the can, putting it away - stays outside."),
     part("\U0001F52E", "Checking it",
@@ -168,4 +204,11 @@ LESSON["home"] = [
           "Write the repeating steps once in a 'repeat N times' box; write the once-only steps outside it.",
           "Unroll it out loud. Does it do exactly the job?"],
          "Every-time steps inside, once steps outside."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you broke a big task into sub-routines, wrote a main algorithm that calls them in order, and followed an algorithm into a sub-routine and back."
+LESSON["warmup"] = [
+    q("When the bell rings you line up; when it is quiet you keep working. The bell rings. What do you do?", "\U0001F3EB", "line up", ["keep working", "go home", "sing a song"], "What you hear decides what you do: one input, one output."),
+    q("At a crossing the red person means stop. The green person means...", "\U0001F6B6", "cross, with care", ["stop", "turn round", "run as fast as you can"], "What the light shows decides what you do."),
 ]

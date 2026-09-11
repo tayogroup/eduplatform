@@ -67,7 +67,7 @@ LESSON = {
                   {"change": {"kind": "remove", "at": 1}, "ask": "What will the smoothie be like?",
                    "opts": [opt("A banana smoothie with no strawberries", True), opt("No smoothie at all", False), opt("A strawberry smoothie with no banana", False)],
                    "why": "Only the strawberry step went. Banana, milk, lid, blend and pour still happen."},
-                  {"change": {"kind": "insert", "at": 2, "step": {"id": "ice", "label": "Add some ice", "pic": "\U0001F9CA"}}, "ask": "What will the smoothie be like?",
+                  {"change": {"kind": "insert", "at": 2, "step": {"id": "ice", "label": "Add some ice", "pic": "\u2744\uFE0F"}}, "ask": "What will the smoothie be like?",
                    "opts": [opt("A cold smoothie, with the ice blended in", True), opt("A smoothie with no fruit", False), opt("Two glasses of milk", False)],
                    "why": "The ice goes in before the lid and the blending, so it is blended with everything else."},
                   {"change": {"kind": "replace", "at": 0, "step": {"id": "mango", "label": "Put a mango in the blender", "pic": "\U0001F96D"}}, "ask": "What will the smoothie be like?",

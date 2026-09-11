@@ -158,3 +158,10 @@ LESSON["home"] = [
           "Say which is best when you are in a hurry, and which when you must not miss anything."],
          "The purpose picks the algorithm."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you followed algorithms round a repeat loop and a forever loop, corrected a wrong step inside a loop, and saw how a loop makes an algorithm shorter."
+LESSON["warmup"] = [
+    q("Robo moves forward 2 squares, then does the same again. How many squares has it gone?", "\U0001F916", "4", ["2", "3", "6"], "2 squares, two times over: 4 squares."),
+    q("A party is tomorrow. An invitation by post takes 3 days; a message takes a minute. Which way suits the purpose?", "\u2709\uFE0F", "the message", ["the post", "neither", "they are just as good"], "It must arrive before tomorrow, so the quick way suits the purpose."),
+]

@@ -85,7 +85,7 @@ LESSON = {
                  ["Children think a robot builds the whole car alone.", "A line of robots each does one step, and people check, program and fix them."],
                  ["Tap what comes first."]),
              {"items": [
-                 s("weld", "Robots weld the metal body together", "\U0001F9BE"),
+                 s("weld", "Robots weld the metal body together", "\U0001F525"),
                  s("paint", "A robot paints the body", "\U0001F3A8"),
                  s("engine", "A robot lifts the engine in", "⚙️"),
                  s("doors", "Robots fit the doors", "\U0001F6AA"),
@@ -139,7 +139,7 @@ LESSON = {
              {"items": [
                  q("Which machine is controlled by a program?", "\U0001F9FA", "a washing machine", ["a bicycle", "a broom", "scissors"], "A program runs the cycle."),
                  q("A smart bulb is an Internet of Things device because...", "\U0001F4A1", "it has a computer inside that connects to the internet", ["it is bright", "it is round", "it is new"], "Thing plus computer plus internet."),
-                 q("Why does a factory use a robot to weld?", "\U0001F9BE", "it is exact and can repeat the same weld all day", ["robots are cheap toys", "people cannot weld", "it is fun"], "Exact and repeated: a robot's job."),
+                 q("Why does a factory use a robot to weld?", "\U0001F3ED", "it is exact and can repeat the same weld all day", ["robots are cheap toys", "people cannot weld", "it is fun"], "Exact and repeated: a robot's job."),
              ]},
              "Controlled, connected, manufacturing."),
 

@@ -154,7 +154,7 @@ LESSON = {
                  ["Children think robots all look like people.", "Most look like arms, boxes or cars. It is what is INSIDE and what it DOES that makes it a robot."],
                  ["Tap each one and hear its job and where it works."]),
              {"items": [
-                 {"pic": "\U0001F9BE", "label": "a factory robot arm", "say": "A robot arm in a factory. It is programmed to weld and lift, and it builds cars all day."},
+                 {"pic": "\U0001F3ED", "label": "a factory robot arm", "say": "A robot arm in a factory. It is programmed to weld and lift, and it builds cars all day."},
                  {"pic": "\U0001F916", "label": "a robot vacuum", "say": "A robot vacuum at home. Its program steers it round the floor and back to its charger."},
                  {"pic": "\U0001F699", "label": "a Mars rover", "say": "A rover on Mars. Programmed to drive, take pictures and dig, millions of miles away from anyone."},
                  {"pic": "\U0001F3E5", "label": "a hospital delivery robot", "say": "A delivery robot in a hospital, carrying medicines along the corridors to the right ward."},
@@ -177,7 +177,7 @@ LESSON = {
              {"ask": "Robot, or not?",
               "bins": [{"id": "robot", "label": "A robot", "pic": "\U0001F916"}, {"id": "not", "label": "Not a robot", "pic": "\U0001F6AB"}],
               "items": [
-                  {"pic": "\U0001F9BE", "label": "a factory robot arm", "bin": "robot", "why": "A computer inside programs how it moves and builds. A robot."},
+                  {"pic": "\U0001F3ED", "label": "a factory robot arm", "bin": "robot", "why": "A computer inside programs how it moves and builds. A robot."},
                   {"pic": "\U0001F9F8", "label": "a teddy bear", "bin": "not", "why": "Soft and cuddly, but nothing inside moves it. Not a robot."},
                   {"pic": "\U0001F916", "label": "a robot vacuum", "bin": "robot", "why": "Its computer steers it round the floor. A robot."},
                   {"pic": "\U0001F35E", "label": "a toaster", "bin": "not", "why": "A toaster warms bread, but it does not move about. Not a robot."},

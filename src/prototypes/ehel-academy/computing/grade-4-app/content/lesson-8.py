@@ -205,3 +205,10 @@ LESSON["home"] = [
           "Now imagine typing 'red' into a search. Which is faster? Which works in a power cut?"],
          "Paper and digital, each with strengths."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you programmed Bitsy from its temperature and light sensors, put a repeat loop and a forever loop into a device program, and spotted control systems around you."
+LESSON["warmup"] = [
+    q("A school keeps every child's name and class on cards in a box. Where else could it keep them?", "\U0001F5C2\uFE0F", "in a database on a computer", ["in a song", "on the ceiling", "nowhere else"], "The same records can be kept on paper or in a digital database."),
+    q("A form asks 'How do you get to school?' and gives boxes to tick. Why boxes?", "\U0001F4CB", "so every answer is given the same way and is quick to count", ["to make the form longer", "so nobody can answer", "because boxes look nice"], "Tick boxes keep answers tidy and quick to count."),
+]

@@ -17,7 +17,8 @@ LESSON = {
         step("demo", "Same job, fewer blocks", "\U0001F9F9", "Tidy watcher", ["3P.01"],
              "A program can be long and untidy, or short and clear, and do the SAME thing. Press <b>Next</b>.",
              explain(
-                 ["A tidy program has no block that does nothing, and no block written three times when a repeat would do."],
+                 ["A tidy program has no block that does nothing, and no block written three times when a repeat would do.",
+                  "Here the repeat block repeats the one block after it. In many other apps several blocks go inside a repeat, and it repeats them all."],
                  ["Jump, jump, jump, wait, say hello: five blocks.", "Repeat 3 times jump, say hello: three blocks. The cat does exactly the same."],
                  ["Children think shorter means it does less.", "It does the same. It is just easier to read and easier to change."],
                  ["Press Next."]),
@@ -138,7 +139,7 @@ LESSON["about"] = [
 
 LESSON["lecture"] = [
     part("\U0001F9F9", "Tidy programs",
-         "A tidy program has no block that does nothing and no block written three times when a repeat would do. Delete the unused wait; fold jump, jump, jump into repeat 3 times, jump. The cat does the same thing in fewer blocks, and the program is easier to read and to change."),
+         "A tidy program has no block that does nothing and no block written three times when a repeat would do. Delete the unused wait; fold jump, jump, jump into repeat 3 times, jump. The cat does the same thing in fewer blocks, and the program is easier to read and to change. Here the repeat block repeats the one block after it; in many other apps several blocks go inside a repeat, and it repeats them all."),
     part("\U0001F3E0", "Reset first",
          "A program that ran before can leave the cat somewhere else, bigger, or spun round. If the next program starts from there, it ends in the wrong place even though its moves are right. A go home block at the top puts the cat back to its original state first. That is called initialisation."),
     part("\U0001F522", "Change the number",

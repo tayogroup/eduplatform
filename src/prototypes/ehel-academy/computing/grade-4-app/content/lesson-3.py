@@ -178,3 +178,10 @@ LESSON["home"] = [
           "Which routines changed? (Both.)"],
          "One copy, many calls."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you predicted where a looped program leaves Robo, folded repeated steps into a loop, and compared three algorithms to pick the best one for each purpose."
+LESSON["warmup"] = [
+    q("A recipe card says 'make the sauce', and the sauce steps are on a card of their own. Why keep them apart?", "\U0001F35D", "so any recipe that needs sauce can use the same card", ["so nobody finds them", "to make the recipe longer", "because sauce is not cooking"], "Steps with their own name can be used again wherever they are needed."),
+    q("A dance repeats one part, 'spin and clap', four times. The dance card could...", "\U0001F483", "give that part a name, write it once, and say its name each time", ["write the part out four times", "leave that part out", "be danced faster"], "Name a part once, then call it by its name wherever it comes."),
+]

@@ -109,10 +109,10 @@ LESSON = {
                  ["Tap each one and say: story, or real?"]),
              {"items": [
                  {"pic": "\U0001F916\U0001F3A9", "label": "a robot butler that laughs at your jokes", "sub": "story", "say": "A robot butler that laughs at your jokes because it finds them funny. A story robot. A real robot can say a joke it was given, but nothing is funny to it."},
-                 {"pic": "\U0001F9BE", "label": "a factory arm that welds cars", "sub": "real", "say": "A factory arm. Real. It welds the same joint ten thousand times a day, exactly the same each time."},
+                 {"pic": "\U0001F697", "label": "a factory arm that welds cars", "sub": "real", "say": "A factory arm. Real. It welds the same joint ten thousand times a day, exactly the same each time."},
                  {"pic": "\U0001F97A", "label": "a robot that has feelings", "sub": "story", "say": "A robot that feels sad or happy. A story robot. A real robot has sensors, not feelings."},
                  {"pic": "\U0001F916", "label": "a robot vacuum", "sub": "real", "say": "A robot vacuum. Real. A simple one's program says: forward until a bump, turn, forward again."},
-                 {"pic": "\U0001F9BF", "label": "a giant robot that fights", "sub": "story", "say": "A giant fighting robot. A story robot, in films and games."},
+                 {"pic": "\U0001F94A", "label": "a giant robot that fights", "sub": "story", "say": "A giant fighting robot. A story robot, in films and games."},
                  {"pic": "\U0001F699", "label": "a rover on Mars", "sub": "real", "say": "A rover on Mars. Real. Programmed to drive, dig and take pictures, millions of miles away."},
              ], "need": 6,
               "then": {"ask": "Which is a REAL robot with a real-world job?",
@@ -130,7 +130,7 @@ LESSON = {
              {"ask": "Story robot, or real robot?",
               "bins": [{"id": "story", "label": "In a story", "pic": "\U0001F4D6"}, {"id": "real", "label": "Real, with a job", "pic": "\U0001F3ED"}],
               "items": [
-                  {"pic": "\U0001F9BE", "label": "an arm that paints cars in a factory", "bin": "real", "why": "A real robot with one exact job."},
+                  {"pic": "\U0001F3A8", "label": "an arm that paints cars in a factory", "bin": "real", "why": "A real robot with one exact job."},
                   {"pic": "\U0001F916\U0001F4AD", "label": "a robot friend who understands your feelings", "bin": "story", "why": "Understanding feelings is a story."},
                   {"pic": "\U0001F4E6", "label": "a warehouse robot that fetches parcels", "bin": "real", "why": "Real, programmed to fetch from shelves."},
                   {"pic": "\U0001F680", "label": "a robot that flies through space and talks to aliens", "bin": "story", "why": "A story."},

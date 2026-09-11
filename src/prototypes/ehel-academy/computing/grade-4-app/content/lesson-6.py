@@ -193,3 +193,10 @@ LESSON["home"] = [
           "When a part goes wrong, fix only that part and test it again."],
          "One part at a time finds the bug."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you built programs with a repeat block, folded a long program into a short one that does the same thing, and wrote comments that say what each block is for."
+LESSON["warmup"] = [
+    q("A torch will not light. What is the best way to find the problem?", "\U0001F526", "check one part at a time: the batteries, then the bulb, then the switch", ["throw it away", "shake it harder", "check nothing and hope"], "Testing one part at a time shows exactly which part is broken."),
+    q("A doorbell: what goes in, and what comes out?", "\U0001F514", "a press on the button goes in; a ding-dong comes out", ["a ding-dong goes in; a press comes out", "the door goes in; the house comes out", "nothing goes in"], "Press in, sound out: every object has an input and an output."),
+]

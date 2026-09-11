@@ -22,7 +22,7 @@ LESSON = {
                  ["Tap each pair and hear which one is concise."]),
              {"items": [
                  {"pic": "\U0001F6AA", "label": "open the door, open the door, walk in", "say": "Open the door, open the door, walk in. The door is already open after step one. Step two is waste."},
-                 {"pic": "\U0001F9C3", "label": "get a cup, wave at the cat, pour the juice", "say": "Get a cup, wave at the cat, pour the juice. Waving at the cat does nothing for the juice. Cut it, and the juice still gets poured."},
+                 {"pic": "\U0001F964", "label": "get a cup, wave at the cat, pour the juice", "say": "Get a cup, wave at the cat, pour the juice. Waving at the cat does nothing for the juice. Cut it, and the juice still gets poured."},
                  {"pic": "\U0001F9F9", "label": "sweep, sweep, sweep, sweep the same clean spot", "say": "Sweeping a spot that is already clean is waste. Once is enough."},
                  {"pic": "\U0001F4A1", "label": "switch the light on, switch it off, switch it on again", "say": "Light on, light off, light on. Two of those steps undo each other. Just switch it on."},
                  {"pic": "\u2705", "label": "get a glass, fill it with water, drink it", "say": "Get a glass, fill it, drink it. Three steps and every one does something. That algorithm is already concise."},

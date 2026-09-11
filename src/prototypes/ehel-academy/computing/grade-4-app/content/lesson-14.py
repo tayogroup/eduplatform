@@ -48,7 +48,7 @@ LESSON = {
                   {"pic": "\U0001F4A7", "label": "a program that waters a field when the soil is dry", "bin": "farm", "why": "Soil sensors and water."},
                   {"pic": "\U0001F512", "label": "encryption that protects money as it moves", "bin": "bank", "why": "Money must travel safely."},
                   {"pic": "\U0001F3C3", "label": "the code that makes a character jump when you press A", "bin": "games", "why": "A game reacting to input."},
-                  {"pic": "\U0001FA7A", "label": "software that spots a broken bone in an X-ray", "bin": "health", "why": "Helping doctors see."},
+                  {"pic": "\U0001F9B4", "label": "software that spots a broken bone in an X-ray", "bin": "health", "why": "Helping doctors see."},
                   {"pic": "\U0001F69C", "label": "a tractor that steers itself along straight rows", "bin": "farm", "why": "A control system on a farm."},
                   {"pic": "\U0001F4B3", "label": "the check that spots a stolen card being used", "bin": "bank", "why": "Protecting accounts."},
                   {"pic": "\U0001F3AD", "label": "the program that makes the enemy in a game hide and chase", "bin": "games", "why": "Game behaviour."},
@@ -69,7 +69,7 @@ LESSON = {
                  {"pic": "\U0001F686", "label": "a driverless train", "sub": "public transport", "say": "A driverless train. The airport shuttle and some city metros have no driver: a control system runs, stops and opens the doors."},
                  {"pic": "\U0001F68C", "label": "a self-driving shuttle bus", "sub": "public transport", "say": "A self-driving shuttle bus. Cameras and sensors see the road; a program steers slowly along a fixed route."},
                  {"pic": "\U0001F48A", "label": "a hospital delivery robot", "sub": "health care", "say": "A hospital robot. It carries medicines and clean sheets from the store to the ward, calling the lift by itself."},
-                 {"pic": "\U0001FA7A", "label": "a surgical robot", "sub": "health care", "say": "A surgical robot. A surgeon controls arms that hold tiny instruments steadier than any hand, through a cut the size of a keyhole."},
+                 {"pic": "\U0001F52C", "label": "a surgical robot", "sub": "health care", "say": "A surgical robot. A surgeon controls arms that hold tiny instruments steadier than any hand, through a cut the size of a keyhole."},
              ], "need": 6,
               "then": {"ask": "What makes all of these robots?",
                        "opts": [opt("A program controls the machine, using sensors to see and motors to act", True), opt("They look like people", False), opt("They are all on wheels", False)],
@@ -90,7 +90,7 @@ LESSON = {
                   {"pic": "\U0001F686", "label": "a train with no driver runs between airport terminals", "bin": "trans", "why": "Moving people."},
                   {"pic": "\U0001F48A", "label": "a robot carries medicines to the ward", "bin": "health", "why": "In a hospital."},
                   {"pic": "\U0001F681", "label": "a drone flies a parcel to an island", "bin": "del", "why": "Bringing things."},
-                  {"pic": "\U0001FA7A", "label": "robot arms help a surgeon operate", "bin": "health", "why": "In an operating theatre."},
+                  {"pic": "\U0001F52C", "label": "robot arms help a surgeon operate", "bin": "health", "why": "In an operating theatre."},
                   {"pic": "\U0001F68C", "label": "a self-driving shuttle carries passengers round a park", "bin": "trans", "why": "Moving people."},
                   {"pic": "\U0001F9F9", "label": "a robot disinfects a hospital room with light", "bin": "health", "why": "Keeping patients safe."},
                   {"pic": "\U0001F3EC", "label": "a warehouse robot fetches your order for posting", "bin": "del", "why": "Part of getting things to you."},
@@ -133,7 +133,7 @@ LESSON = {
                  q("In a hospital a computer scientist might build...", "\U0001F3E5", "the system that keeps patient records safe and finds them fast", ["the beds", "the meals", "the uniforms"], "Records, safe and fast."),
                  q("In a bank a computer scientist designs...", "\U0001F3E6", "the encryption and checks that keep money safe", ["the building", "the coins", "the queue"], "Money moves as data."),
                  q("A service robot is...", "\U0001F916", "a machine a program controls, doing a job for people", ["a person in a costume", "any machine with wheels", "a toy"], "Program-controlled, serving."),
-                 q("Which robot works in health care?", "\U0001FA7A", "a surgical robot holding instruments steady", ["a delivery drone", "a driverless train", "a warehouse robot"], "In the operating theatre."),
+                 q("Which robot works in health care?", "\U0001F3E5", "a surgical robot holding instruments steady", ["a delivery drone", "a driverless train", "a warehouse robot"], "In the operating theatre."),
                  q("A delivery robot crosses when the light is green because...", "\U0001F6A6", "its sensors saw green and its program decided to go", ["someone pushed it", "it always crosses", "the light pushed it"], "Sense, decide, act."),
                  q("The three parts of a robot's control system are...", "\U0001F39B️", "sensors, a program that decides, and outputs like motors", ["a screen, a mouse and a keyboard", "wheels, a lid and a box", "a driver, a map and a horn"], "Sense, decide, act."),
              ]},
@@ -186,4 +186,11 @@ LESSON["home"] = [
           "Draw the robot. Label its sensors, the decisions its program makes, and its outputs.",
           "What should it do if a child steps in front of it?"],
          "Sense, decide, act, safely."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you told application software from systems software, watched input devices record data and output devices communicate information, and put files in order of size."
+LESSON["warmup"] = [
+    q("Who uses computers to forecast tomorrow's weather?", "\u26C5", "scientists at a weather centre", ["a baker", "a hairdresser", "a bus driver"], "Weather scientists run programs on huge amounts of data to make a forecast."),
+    q("A robot carries meals round a hospital by itself. What stops it bumping into people?", "\U0001F916", "sensors that notice what is in front of it", ["a louder horn and nothing else", "a new coat of paint", "a longer battery and nothing else"], "Sensors let it notice people and stop or go round them: sense, decide, act."),
 ]

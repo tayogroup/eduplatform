@@ -96,7 +96,7 @@ LESSON = {
                   "wrong": 2, "swap": True, "why": "Rinse is too early. Rinsing before rubbing washes the soap away before it has done anything.",
                   "done": "Rub first, then rinse. The right order."},
                  {"goal": "Wash your hands",
-                  "steps": [s("tap", "Turn the tap on", "\U0001F6B0"), s("fridge", "Put your hands in the fridge", "\U0001F9CA"), s("rub", "Rub your hands together", "\U0001F450"), s("rinse", "Rinse under the water", "\U0001F4A7"), s("dry", "Dry them on the towel", "\U0001F9FB")],
+                  "steps": [s("tap", "Turn the tap on", "\U0001F6B0"), s("fridge", "Put your hands in the fridge", "\u2744\uFE0F"), s("rub", "Rub your hands together", "\U0001F450"), s("rinse", "Rinse under the water", "\U0001F4A7"), s("dry", "Dry them on the towel", "\U0001F9FB")],
                   "wrong": 1, "why": "The fridge does not belong in washing your hands. That step is the bug.",
                   "fix": {"opts": [choice("soap", "Put soap on your hands", True, "\U0001F9FC"), choice("dry", "Dry them on the towel", False, "\U0001F9FB"), choice("eat", "Eat a biscuit", False, "\U0001F36A")],
                           "why": "Soap is the step that was missing, before the rubbing."},

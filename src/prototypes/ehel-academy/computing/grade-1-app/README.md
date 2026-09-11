@@ -249,3 +249,23 @@ Grade 4 deploy: 14 files PUT 201, all verified on storage by read-back, every
 edge path fresh, and the live bundle booted from the CDN in real Chromium with
 0 console errors, 0 failed requests and a real step driven to a tick. Live
 bytes are byte-identical to HEAD and carry the Stage 4 kit markers.
+
+## Validated 2026-09-11
+
+Against the owner's 27-area framework (OneDrive: `computing-grades validation.docx`);
+the full report is [VALIDATION.md](VALIDATION.md), and the Word copy sits beside the
+other validation reports as `computing-grade-1-v2 validation report.docx`. Average
+4.1 / 5.
+
+**The "100% in the browser" above was true of the page and false of the school's
+record.** The lesson overview and the Computing world placeholder ticked themselves
+while the deck painted, before the progress module existed, so a lesson finished to
+100% was stored as 14 of 16 steps and never recorded complete, a reopened lesson
+always opened at step 1, and a fresh lesson opened at 13% - measured on the live
+bundle. Every earlier drive missed it because the local server does not serve the
+progress module. Fixed in the kit (`ONLEAVE` beside `ONSHOW`, see the kit README),
+verified on a local copy of the deployed layout, and committed with eight content
+corrections, three contrast fixes and three emoji replacements as `04a1ff89f`.
+**Not deployed**: until Grades 1 to 4 are redeployed, their live pages keep the
+defect.
+

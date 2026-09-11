@@ -189,3 +189,10 @@ LESSON["home"] = [
           "Try building all eight cards first, then testing once. Which was faster to fix?"],
          "The bug is always in the newest cards."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you predicted outputs, found and fixed bugs in everyday algorithms, and told a precise instruction from a vague one."
+LESSON["warmup"] = [
+    q("Jump, jump, jump. What is a shorter way to say it?", "\U0001F501", "jump three times", ["jump", "stop", "jump once, then stop"], "Saying 'three times' repeats the jump. That is what a repeat block does."),
+    q("You press Run. What does the computer do?", "▶️", "it follows the program's blocks, one at a time", ["it guesses", "it switches off", "it makes up its own blocks"], "Run tells the computer to follow the program, block by block."),
+]

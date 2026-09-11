@@ -175,3 +175,10 @@ LESSON["home"] = [
           "Run it and check."],
          "Move your finger one square for every forward. A turn only spins."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you debugged programs with two bugs, ran them again after every fix, and asked a friend when you were stuck."
+LESSON["warmup"] = [
+    q("A floor robot moves forward. How far does it go each time?", "\U0001F41D", "one square", ["across the whole room", "it jumps", "it does not move"], "A floor robot moves one square for every forward press."),
+    q("A robot turns left, then goes forward. Where does it end up?", "↩️", "one square to its left", ["one square straight ahead", "one square behind it", "where it started"], "The turn spins it to face left, then forward moves it one square that way."),
+]

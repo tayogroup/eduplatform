@@ -69,6 +69,22 @@ LESSON = {
                        "why": "The form recorded each answer and counted them as they came in."}},
              "A purpose, a question, a form: eight answers, counted."),
 
+        step("questions", "Which device way fits the job?", "\U0001F4F1", "Device picker", ["2MD.03"],
+             "There is more than one way to collect data with a device. Which way fits this job? Tap the answer.",
+             explain(
+                 ["Devices can collect data in different ways: a form, a tally app, a camera, a voice recording.", "The best way depends on the purpose: who you are asking, and where."],
+                 ["Cars going past the gate cannot fill in a form: tap a tally app as each one passes.", "Five classes can each fill in the same form, and it counts itself.",
+                  "Birds at the feeder at dawn: a camera that takes a photo when one lands."],
+                 ["Children choose the form every time.", "A form needs someone to fill it in. Cars and birds cannot."],
+                 ["Read the purpose, picture the job, then tap."]),
+             {"label": "Question", "items": [
+                 q("We want the colour of every car that passes the school gate for an hour. Which device way works best?", "\U0001F697", "a tally app: tap the colour as each car passes", ["a form each driver fills in", "one photo of the road", "asking the cars"], "Drivers cannot stop to fill in a form. A tally app counts each car as it goes by."),
+                 q("We want every child in five classes to choose their favourite fruit. Which device way works best?", "\U0001F34E", "a form on each class's tablet that counts itself", ["one child with a tally app in the playground", "a voice note from every child to listen to later", "guessing"], "Every class can answer the same form, and the computer adds them all up."),
+                 q("We want to know which birds visit the feeder all week, even at dawn. Which device way works best?", "\U0001F426", "a camera that takes a photo when a bird lands", ["a form the birds fill in", "a tally app in your bag", "watching all week without sleeping"], "The camera watches all day and all night, and the photos show which bird came."),
+                 q("Some children cannot read yet. How can they answer 'which colour do you like best?' on a tablet?", "\U0001F3A8", "a form with a coloured picture on every button", ["a form with long words only", "a form in a language nobody reads", "no form at all"], "A picture on every button means you can answer before you can read the words."),
+             ]},
+             "The purpose picks the device way: a tally app for cars, a form for classes, a camera for birds."),
+
         step("sort", "Statistical, or not?", "\U0001F5C2️", "Question sorter", ["2MD.05"],
              "Some questions give data we can count or measure. Some give opinions and stories. Which is this?",
              explain(
@@ -224,4 +240,11 @@ LESSON["home"] = [
           "Ask three people each question.",
           "Which answers were easiest to write in a table?"],
          "Counts, measurements and categories all fit in a table."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you drove a floor robot to the shop, home and school, and predicted where a program would leave it."
+LESSON["warmup"] = [
+    q("We want to know which colour most children like. What should we do?", "\U0001F3A8", "ask everyone and count the answers", ["guess", "ask the paint", "pick our own favourite"], "Data is what people actually say. Counting it gives the answer."),
+    q("Which question gives an answer you can count?", "\U0001F522", "how many pencils are in your pencil case?", ["what is your favourite dream?", "tell me a story", "why is the sky nice?"], "'How many' gives a number you can count."),
 ]

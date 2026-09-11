@@ -133,6 +133,28 @@ LESSON = {
              ]},
              "Input: information in. Output: information out. That is the difference."),
 
+        step("sort", "Which way does the information go?", "\U0001F500", "Direction detective", ["2CS.03"],
+             "Something is happening with a computer. Is information going IN to it, or coming OUT of it? Tap the bin.",
+             explain(
+                 ["Input and output are about the direction the information goes.", "Into the computer: an input device. Out to you: an output device."],
+                 ["You say 'play my song': your voice goes IN through the microphone.", "The song plays: sound comes OUT of the speaker.",
+                  "The scanner reads the price: IN. The screen shows the price: OUT."],
+                 ["Children sort by the object, not by what it is doing.", "Ask: is the information going in, or coming out?"],
+                 ["Read what is happening, then tap the bin."]),
+             {"ask": "Information in, or information out?",
+              "bins": [{"id": "in", "label": "Information in", "pic": "⬇️"}, {"id": "out", "label": "Information out", "pic": "⬆️"}],
+              "items": [
+                  {"pic": "\U0001F3A4", "label": "you say 'play my song' to the tablet", "bin": "in", "why": "Your voice goes in, through the microphone."},
+                  {"pic": "\U0001F50A", "label": "the tablet plays your song out loud", "bin": "out", "why": "The sound comes out, through the speaker."},
+                  {"pic": "\U0001F6D2", "label": "the shop's scanner reads the price on the milk", "bin": "in", "why": "The scanner puts the price into the till."},
+                  {"pic": "\U0001F5A5\uFE0F", "label": "the till's screen shows how much to pay", "bin": "out", "why": "The screen shows it to you. Out."},
+                  {"pic": "\U0001F3AE", "label": "you press jump on the game controller", "bin": "in", "why": "Your press goes into the game."},
+                  {"pic": "\U0001F5A8\uFE0F", "label": "the printer prints your drawing", "bin": "out", "why": "The drawing comes out on paper."},
+                  {"pic": "\U0001F4F7", "label": "you take a photo of the cat with the tablet", "bin": "in", "why": "The camera puts the picture in."},
+                  {"pic": "\U0001F6A6", "label": "the traffic light turns green", "bin": "out", "why": "A computer switches the green light on to tell drivers to go."},
+              ]},
+             "Information in, information out: the direction is the difference."),
+
         step("race", "You against the computer", "\U0001F3C1", "Sum racer", ["2CS.04"],
              "Five sums. The stopwatch starts when you tap. The computer's time is next to yours.",
              explain(
@@ -152,6 +174,28 @@ LESSON = {
                        "opts": [opt("Comforting a sad friend", True), opt("Adding a hundred numbers", False), opt("Sorting a thousand names", False)],
                        "why": "Sums and sorting are the computer's. Kindness is yours."}},
              "The computer wins the sums. You win the kindness."),
+
+        step("sort", "Computer job, or people job?", "\U0001F9EE", "Job sorter", ["2CS.04"],
+             "Some jobs a computer does better than a person. Some a person does better. Which is this?",
+             explain(
+                 ["A computer is better at jobs that need speed, a huge memory, or the same thing done again and again without mistakes."],
+                 ["Adding up two hundred prices: a computer, in a blink.", "Finding one name among a million: a computer.",
+                  "Choosing a present Grandma will love: a person. Being fair when two friends want the same toy: a person."],
+                 ["Children think a computer is better at everything because it is fast.", "Fast is not the same as kind or fair. Those jobs are ours."],
+                 ["Ask: does it need speed and memory, or care and kindness? Then tap."]),
+             {"ask": "Computer job, or people job?",
+              "bins": [{"id": "pc", "label": "A computer does it better", "pic": "\U0001F4BB"}, {"id": "person", "label": "A person does it better", "pic": "\U0001F9D1"}],
+              "items": [
+                  {"pic": "\U0001F6D2", "label": "adding up the prices of 200 things in a trolley", "bin": "pc", "why": "Fast and exact, every time."},
+                  {"pic": "\U0001F50E", "label": "finding one name among a million names", "bin": "pc", "why": "A computer searches a million names in a blink."},
+                  {"pic": "\U0001F697", "label": "counting every car on a road, all day and all night", "bin": "pc", "why": "A computer never gets tired or bored."},
+                  {"pic": "\U0001F4DA", "label": "remembering every book in the library and where it is", "bin": "pc", "why": "A computer's memory holds every book at once."},
+                  {"pic": "\U0001F917", "label": "giving a hug to a friend who fell over", "bin": "person", "why": "Caring for a friend is a person's job."},
+                  {"pic": "\U0001F381", "label": "choosing a present Grandma will love", "bin": "person", "why": "Knowing what someone loves takes a person."},
+                  {"pic": "\U0001F91D", "label": "being fair when two friends want the same toy", "bin": "person", "why": "Being fair and kind takes a person."},
+                  {"pic": "\U0001F46B", "label": "asking a lonely child to join your game", "bin": "person", "why": "Noticing someone is lonely, and caring, is a person's job."},
+              ]},
+             "Speed and memory: the computer. Care, fairness and kindness: people."),
 
         step("ask", "Which device for the job?", "\U0001F4F1", "Device chooser", ["2CS.05"],
              "People choose a device to suit where they are and what they are doing. Which device fits?",
@@ -176,6 +220,21 @@ LESSON = {
                   {"ask": "Editing a film with a big screen, at a desk.", "pic": "\U0001F3AC", "answer": "desktop", "result": "A big screen and a big computer for a big job.", "why": "Heavy work at one desk: the desktop."},
               ]},
              "The place and the purpose choose the device."),
+
+        step("questions", "Why that device?", "\U0001F914", "Device detective", ["2CS.05"],
+             "People choose a device because of where they are and what it is for. Why this one? Tap the answer.",
+             explain(
+                 ["Two things choose a device: WHERE you will use it, and WHAT it is for."],
+                 ["A nurse walks from bed to bed: something light that goes with her.", "An architect draws a whole building: a big screen at one desk."],
+                 ["Children think the newest or biggest device is always best.", "The best device is the one that fits the place and the job."],
+                 ["Think where they are and what they need, then tap."]),
+             {"label": "Question", "items": [
+                 q("A nurse carries a tablet from bed to bed. Why a tablet?", "\U0001F3E5", "it is light and goes where she goes", ["it has the biggest screen", "it never needs charging", "it can make tea"], "She moves all day, so the device has to move with her."),
+                 q("An architect draws a whole building on a desktop computer with a very big screen. Why a desktop?", "\U0001F4D0", "a big drawing needs a big screen, and she works at one desk", ["it fits in her pocket", "it works on a bus", "it is the smallest computer"], "A big job at one desk: a big screen that never needs to move."),
+                 q("A taxi driver finds the way with a phone on the dashboard. Why a phone?", "\U0001F695", "it is small, goes in the car and knows where it is", ["it has a big keyboard", "it has to stay on a desk", "it prints maps"], "In a moving car you need something small that knows where you are."),
+                 q("A shop has a computer fixed to the counter to take the money. Why fixed there?", "\U0001F3EA", "the selling always happens at that counter", ["so it can go for a walk", "because it is a toy", "so nobody can see it"], "The job happens in one place, so the device can stay there."),
+             ]},
+             "Where you are and what it is for: those choose the device."),
 
         step("explore", "Robots in stories, robots at work", "\U0001F916", "Robot comparer", ["2CS.06"],
              "Robots in stories and robots in the real world are not the same. Tap each one.",
@@ -296,4 +355,11 @@ LESSON["home"] = [
           "For each one, say where it lives and what it is for.",
           "Why is that device in that place?"],
          "The place and the purpose choose the device."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you joined devices into a network, told wired from wireless, and decided what to share and what to keep private."
+LESSON["warmup"] = [
+    q("Is a game something you can touch?", "\U0001F3AE", "no, a game is a program", ["yes, you can hold it", "only the big ones", "only on Fridays"], "A game is software: a program. You can touch the tablet it runs on."),
+    q("Robots in films often have feelings. Do real robots?", "\U0001F916", "no, they follow a program", ["yes, always", "only at night", "only the big ones"], "A real robot has sensors and a program, not feelings."),
 ]

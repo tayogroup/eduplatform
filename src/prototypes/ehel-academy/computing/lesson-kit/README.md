@@ -190,9 +190,9 @@ rather than the page.
   warm-up of more than 3 questions or without single keys and reasons; the
   gate re-checks them on the built page. A new TEACHING step does shift the
   ids, and sometimes an objective needs one: three were added to Grade 1
-  lessons 6 to 8 on 2026-09-11, and a record made on those lessons before
-  that redeploy reads one step out from the inserted step on. Say so with the
-  release.
+  lessons 6 to 8 on 2026-09-11, and four to Grade 2 lessons 7 and 10 the
+  same day. A record made on those lessons before the redeploy reads a step
+  or more out from the inserted steps on. Say so with the release.
 - **A game's question is the step's own question.** The Sort race asked
   `Where does <label> go?`, which is broken English whenever a label is not
   a thing ("Where does how many children chose apple? go?", answered "Yes, it

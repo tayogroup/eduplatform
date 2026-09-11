@@ -37,14 +37,14 @@ LESSON = {
                  ["Children fix one bug and press Next without running.", "A fix you have not tested is a guess."],
                  ["Run, find, fix, run again. Ask a friend if you are stuck."]),
              {"sprite": "\U0001F436", "rounds": [
-                 {"goal": "jump twice, then say hello", "program": ["jump", "spin", "say"], "bug": 1, "expect": ["jump", "jump", "say"],
-                  "why": "The second block spins. We wanted a second jump.",
-                  "fix": {"opts": [choice("jump", "jump", True), choice("grow", "grow", False), choice("left", "move left", False)], "why": "Jump, jump, say hello. Fixed."},
+                 {"goal": "grow, then jump twice", "program": ["grow", "spin", "jump"], "bug": 1, "expect": ["grow", "jump", "jump"],
+                  "why": "The second block spins. We wanted a jump.",
+                  "fix": {"opts": [choice("jump", "jump", True), choice("shrink", "shrink", False), choice("left", "move left", False)], "why": "Grow, jump, jump. Fixed."},
                   "partner": {"name": "Amal", "pic": "\U0001F467\U0001F3FE", "hint": "Watch the second block. It spins, and we wanted a jump."}},
-                 {"goal": "move right twice, then jump", "program": ["right", "left", "spin"], "bugs": [1, 2], "expect": ["right", "right", "jump"],
-                  "whys": {"1": "The second block goes left. We wanted a second move right.", "2": "The last block spins. We wanted a jump."},
-                  "fixes": {"1": {"opts": [choice("right", "move right", True), choice("hide", "hide", False), choice("shrink", "shrink", False)], "why": "Move right, move right. Now run it again."},
-                            "2": {"opts": [choice("jump", "jump", True), choice("say", "say hello", False), choice("grow", "grow", False)], "why": "And a jump at the end."}},
+                 {"goal": "move left twice, then say hello", "program": ["left", "right", "spin"], "bugs": [1, 2], "expect": ["left", "left", "say"],
+                  "whys": {"1": "The second block goes right. We wanted a second move left.", "2": "The last block spins. We wanted say hello."},
+                  "fixes": {"1": {"opts": [choice("left", "move left", True), choice("hide", "hide", False), choice("shrink", "shrink", False)], "why": "Move left, move left. Now run it again."},
+                            "2": {"opts": [choice("say", "say hello", True), choice("jump", "jump", False), choice("grow", "grow", False)], "why": "And hello at the end."}},
                   "partner": {"name": "Sami", "pic": "\U0001F466\U0001F3FE", "hint": "I think there is more than one bug. Fix one, run it, and look again."}},
                  {"goal": "say hello, grow, then spin twice", "program": ["say", "shrink", "repeat2", "jump"], "bugs": [1, 3], "expect": ["say", "grow", "repeat2", "spin"],
                   "whys": {"1": "The second block shrinks. We wanted grow.", "3": "The repeat block repeats a jump. We wanted it to repeat a spin."},
@@ -123,7 +123,7 @@ LESSON = {
              {"items": [
                  q("You fixed one bug. What must you do next?", "▶️", "run the program again", ["press Next", "fix another block without looking", "close the program"], "Only running it shows whether the fix worked and whether another bug is left."),
                  q("A program can have...", "\U0001F41B\U0001F41B", "more than one bug", ["only one bug", "no bugs, ever", "bugs only on Mondays"], "Programs can have two bugs, or more."),
-                 q("After one fix the dog moves right twice but spins instead of jumping. What does that tell you?", "\U0001F436", "there is another bug", ["the program is finished", "the dog is broken", "the first fix was wrong"], "Better but not right means another bug is still there."),
+                 q("After one fix the dog moves left twice but spins instead of saying hello. What does that tell you?", "\U0001F436", "there is another bug", ["the program is finished", "the dog is broken", "the first fix was wrong"], "Better but not right means another bug is still there."),
                  q("You cannot see the bug. What is a good thing to do?", "\U0001F465", "ask a friend to look", ["hide the program", "give up", "delete everything"], "Fresh eyes find what tired eyes miss."),
                  q("Explaining each block out loud helps you...", "\U0001F5E3️", "hear the block that is wrong", ["run faster", "make the cat bigger", "add more blocks"], "You hear 'spin' when the goal says 'jump'."),
                  q("Which is the BAD debugging habit?", "\U0001F6AB", "changing three blocks at once without running", ["running after every fix", "asking a friend", "explaining out loud"], "If it still fails you cannot tell which change was wrong."),
@@ -186,4 +186,11 @@ LESSON["home"] = [
           "Swap. Find the bug in the other person's program.",
           "Say what it should be."],
          "Fresh eyes find bugs faster than the eyes that wrote them."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you planned the blocks for each object in a program, then built and tested each one."
+LESSON["warmup"] = [
+    q("You are stuck on a hard puzzle. Who could help?", "\U0001F91D", "a friend, who sees it with fresh eyes", ["nobody, ever", "the puzzle", "a sleeping cat"], "A friend sees what you have stopped seeing."),
+    q("When a program does not do what we wanted, it has...", "\U0001F41B", "a bug", ["a sticker", "a song", "a nap"], "A mistake in a program is called a bug."),
 ]

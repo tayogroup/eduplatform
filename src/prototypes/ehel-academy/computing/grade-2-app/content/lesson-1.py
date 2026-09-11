@@ -104,22 +104,22 @@ LESSON = {
              ]},
              "Every step, in order, and the lights go off last."),
 
-        step("order", "Only the steps you need: make toast", "\U0001F35E", "Step picker", ["2CT.04", "2CT.03"],
-             "Some of these steps are NOT part of making toast. Tap only the ones you need, in order.",
+        step("order", "Only the steps you need: take a photo", "\U0001F4F7", "Step picker", ["2CT.04", "2CT.03"],
+             "Some of these steps are NOT part of taking a photo. Tap only the ones you need, in order.",
              explain(
                  ["To write an algorithm, first work out which steps the task needs.", "Then put those steps in order, and leave the rest out."],
-                 ["Making toast needs bread, the toaster, the lever, a wait, and butter.", "It does not need a coat, a song, or a watered plant."],
+                 ["Taking a photo needs the tablet switched on, the camera, pointing, the button, and a look at the photo.", "It does not need a coat, a song, or a watered plant."],
                  ["Children add steps because they are fun.", "A step the task does not need is a step that does not belong."],
                  ["Tap the needed steps in order. Skip the rest."]),
              {"items": [
-                 {"id": "bread", "pic": "\U0001F35E", "label": "take a slice of bread", "say": "First, take a slice of bread."},
-                 {"id": "toaster", "pic": "\U0001F50C", "label": "put it in the toaster", "say": "Put it in the toaster."},
-                 {"id": "lever", "pic": "\U0001F447", "label": "push the lever down", "say": "Push the lever down."},
-                 {"id": "wait", "pic": "⏳", "label": "wait for it to pop up", "say": "Wait for it to pop up."},
-                 {"id": "butter", "pic": "\U0001F9C8", "label": "spread the butter", "say": "Spread the butter. Toast."},
+                 {"id": "on", "pic": "\U0001F4F1", "label": "switch the tablet on", "say": "First, switch the tablet on."},
+                 {"id": "camera", "pic": "\U0001F4F7", "label": "open the camera", "say": "Open the camera."},
+                 {"id": "point", "pic": "\U0001F431", "label": "point it at the cat", "say": "Point it at the cat."},
+                 {"id": "snap", "pic": "\U0001F4F8", "label": "tap the round button", "say": "Tap the round button. Click!"},
+                 {"id": "look", "pic": "\U0001F5BC\uFE0F", "label": "look at your photo", "say": "Look at your photo. There is the cat."},
              ], "extras": [
-                 {"pic": "\U0001F9E5", "label": "put on your coat", "why": "A coat has nothing to do with toast."},
-                 {"pic": "\U0001F3B5", "label": "sing a song", "why": "Singing does not make toast."},
+                 {"pic": "\U0001F9E5", "label": "put on your coat", "why": "A coat has nothing to do with taking a photo."},
+                 {"pic": "\U0001F3B5", "label": "sing a song", "why": "Singing does not take a photo."},
                  {"pic": "\U0001F331", "label": "water the plant", "why": "The plant is not part of this task."},
              ]},
              "Five needed steps, in order, and three left out. That is writing an algorithm."),
@@ -162,7 +162,7 @@ LESSON = {
              "Time to show what you know. Tap the answer.",
              explain(
                  ["No new ideas here.", "Every question uses something you have already done in this lesson."],
-                 ["Think about Robo's drawings, the tea, bedtime and the toast."],
+                 ["Think about Robo's drawings, the tea, bedtime and the photo."],
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
@@ -171,7 +171,7 @@ LESSON = {
                  q("Which instruction would draw a roof where a roof belongs?", "\U0001F3E0", "draw a triangle on top of the square", ["draw a roof somewhere", "draw a triangle", "make it look nice"], "On top of the square says exactly where."),
                  q("A linear algorithm is...", "➡️", "a straight line of steps, one after another", ["a circle", "a picture", "a list with no order"], "Linear means one step, then the next, in a line."),
                  q("Making a cup of tea: what comes FIRST?", "☕", "get a cup", ["pour the water", "stir", "add milk"], "The cup first, or the water is a puddle."),
-                 q("Which step is NOT needed for making toast?", "\U0001F35E", "put on your coat", ["push the lever down", "take a slice of bread", "spread the butter"], "A coat has nothing to do with toast."),
+                 q("Which step is NOT needed for taking a photo?", "\U0001F4F7", "put on your coat", ["open the camera", "point it at the cat", "tap the round button"], "A coat has nothing to do with taking a photo."),
                  q("Before you write an algorithm, you should...", "\U0001F914", "work out which steps the task needs", ["add as many steps as you can", "guess", "draw a picture of a cat"], "First find the needed steps, then put them in order."),
                  q("Which is the precise instruction?", "\U0001F9F1", "put the blue brick on top of the red brick", ["put a brick somewhere", "add some bricks", "make it taller"], "Which brick and exactly where."),
              ]},
@@ -194,8 +194,8 @@ LESSON["lecture"] = [
          "A precise instruction says what to draw, how big, and where. A triangle on top of the square. A small door at the bottom. The sun in the top right of the sky. Nothing is left for Robo to guess."),
     part("☕", "A linear algorithm",
          "Get a cup. Put in a tea bag. Pour the hot water. Add milk. Stir. One step after another, in a straight line: that is a linear algorithm, and you follow it exactly as it is written."),
-    part("\U0001F35E", "Only the steps you need",
-         "Before you write an algorithm, work out which steps the task needs. Toast needs bread, the toaster, the lever, a wait and butter. It does not need a coat or a song. Leave those out."),
+    part("\U0001F4F7", "Only the steps you need",
+         "Before you write an algorithm, work out which steps the task needs. A photo needs the tablet switched on, the camera, pointing, the button and a look. It does not need a coat or a song. Leave those out."),
     part("\U0001F9F1", "Building and drawing",
          "The same rule builds a tower or draws a picture: precise steps, in the right order, and nothing that does not belong. Put the blue brick on top of the red brick is precise. Add a brick is not."),
 ]
@@ -206,13 +206,13 @@ LESSON["words"] = [
     word("instruction", "\U0001F4E2", "One step that tells you exactly what to do.",
          ["The first instruction is: get a cup.", "Give Robo an instruction."]),
     word("algorithm", "\U0001F4DD", "A precise set of instructions to do a job.",
-         ["The tea algorithm has five steps.", "Write an algorithm for toast."]),
+         ["The tea algorithm has five steps.", "Write an algorithm for taking a photo."]),
     word("linear", "➡️", "In a straight line, one step after another.",
          ["A linear algorithm has no jumping about.", "Follow it in a line."]),
     word("vague", "\U0001F32B️", "Not clear; leaving things to guess.",
          ["'Draw a shape' is vague.", "A vague instruction confuses Robo."]),
     word("needed", "✅", "Something the task cannot be done without.",
-         ["Bread is needed for toast.", "A coat is not needed."]),
+         ["The camera is needed for a photo.", "A coat is not needed."]),
 ]
 
 LESSON["home"] = [
@@ -231,4 +231,10 @@ LESSON["home"] = [
           "Give it to a grown-up to cross out the ones that do not belong.",
           "Swap over."],
          "A step the task does not need is a step that should not be there."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["warmup"] = [
+    q("A friend says 'meet me somewhere'. What is wrong with that?", "\U0001F5FA\uFE0F", "you do not know where to go", ["nothing, it is clear", "it is too loud", "it is too short"], "Somewhere could be anywhere. A good instruction says exactly where."),
+    q("To wash your face, which step do you NOT need?", "\U0001F9FC", "tie your shoelaces", ["wet the cloth", "wipe your face", "dry it with a towel"], "Shoelaces have nothing to do with washing your face."),
 ]

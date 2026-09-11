@@ -203,3 +203,10 @@ LESSON["home"] = [
           "Find one decision the shop made because of its data."],
          "Every shop is a data detective."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you collected the class's answers with a form and sorted the questions that give data you can count."
+LESSON["warmup"] = [
+    q("Which is quicker to read: a list of numbers, or a picture of them?", "\U0001F5BC\uFE0F", "a picture, like a graph", ["a list, always", "they are the same", "neither"], "A graph shows the answer at a glance."),
+    q("The class has 10 juice cartons but 12 children. What does the data tell us?", "\U0001F964", "we need 2 more cartons", ["we have too many", "nothing at all", "juice is orange"], "The numbers show the problem, and the answer: two more."),
+]

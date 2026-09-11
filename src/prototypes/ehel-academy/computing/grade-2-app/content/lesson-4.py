@@ -174,3 +174,10 @@ LESSON["home"] = [
           "Fix anything that went wrong and run it again."],
          "Plan, build, test, fix. Every time."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you built programs from algorithms, used the repeat block, and tested them as you went."
+LESSON["warmup"] = [
+    q("A game has a cat and a dog. Must they both do the same thing?", "\U0001F431", "no, each can have its own plan", ["yes, always", "only the dog can move", "only on Mondays"], "Each object in a program can have its own instructions."),
+    q("Before you build something, it helps to...", "\U0001F4DD", "make a plan", ["start without thinking", "close your eyes", "build it twice"], "A plan says what you will build before you build it."),
+]

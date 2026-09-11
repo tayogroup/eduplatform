@@ -1275,9 +1275,9 @@
         <p class="score" id="score8"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="2CT.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Understanding an algorithm means knowing what each step does AND why it comes where it does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Bread, butter, cheese, top slice, then cut it in half.</s><s>You cannot cut a sandwich that has no top yet.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the steps in the order the algorithm shows.</s></mstts:express-as>' data-say="Five steps this time, including cutting it in half. Tap the step that comes next.">
-      <div class="slide-head"><span class="n">9</span><h2>Follow it exactly: a cheese sandwich</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Five steps this time, including cutting it in half. Tap the step that comes next.</span></div>
+    <section class="slide" data-objectives="2CT.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Understanding an algorithm means knowing what each step does AND why it comes where it does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The tin is opened, the food goes in the bowl, the bowl goes on the floor, then you call the cat.</s><s>You cannot spoon food out of a tin that is still closed.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the steps in the order the algorithm shows.</s></mstts:express-as>' data-say="Four steps. Tap the step the algorithm says next and watch the bowl.">
+      <div class="slide-head"><span class="n">9</span><h2>Follow it exactly: feed the cat</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Four steps. Tap the step the algorithm says next and watch the bowl.</span></div>
       <div class="stage">
         <div id="stage9"></div>
         <div class="choices" id="ch9"></div>
@@ -1406,7 +1406,56 @@
             "words": 6,
             "games": 4,
             "home": 3
-          }
+          },
+          "recap": "Last time you gave Robo precise instructions, followed long algorithms and left out the steps a task did not need.",
+          "warmup": [
+            {
+              "ask": "You have 2 stickers and get 3 more. How many do you have now?",
+              "pic": "🌟",
+              "opts": [
+                {
+                  "t": "5",
+                  "ok": true
+                },
+                {
+                  "t": "2",
+                  "ok": false
+                },
+                {
+                  "t": "3",
+                  "ok": false
+                },
+                {
+                  "t": "23",
+                  "ok": false
+                }
+              ],
+              "why": "Two, then three more, is five. Following each step tells you the answer."
+            },
+            {
+              "ask": "A washing-up algorithm says: dry the plate, then wash it. What is that?",
+              "pic": "🍽️",
+              "opts": [
+                {
+                  "t": "a bug: a step in the wrong place",
+                  "ok": true
+                },
+                {
+                  "t": "the right order",
+                  "ok": false
+                },
+                {
+                  "t": "a picture",
+                  "ok": false
+                },
+                {
+                  "t": "a song",
+                  "ok": false
+                }
+              ],
+              "why": "You wash first, then dry. A right step in the wrong place is a bug."
+            }
+          ]
         }
       },
       {
@@ -1443,7 +1492,7 @@
             {
               "pic": "➡️",
               "title": "Linear algorithms",
-              "say": "A linear algorithm is a straight line of steps: bread, butter, cheese, top, cut. Understanding it means knowing what each step does and why it comes where it does. You cannot cut a sandwich with no top."
+              "say": "A linear algorithm is a straight line of steps: open the tin, food in the bowl, bowl on the floor, call the cat. Understanding it means knowing what each step does and why it comes where it does. You cannot spoon food out of a closed tin."
             }
           ]
         }
@@ -2026,42 +2075,36 @@
       },
       {
         "kind": "follow",
-        "title": "Follow it exactly: a cheese sandwich",
+        "title": "Follow it exactly: feed the cat",
         "objectives": [
           "2CT.01"
         ],
         "data": {
-          "scene": "sandwich",
+          "scene": "catfeed",
           "steps": [
             {
-              "id": "bread",
-              "label": "Put a slice of bread on the plate",
-              "pic": "🍞",
-              "say": "Bread on the plate."
+              "id": "tin",
+              "label": "A grown-up opens the tin",
+              "pic": "🥫",
+              "say": "The tin is open."
             },
             {
-              "id": "butter",
-              "label": "Spread the butter",
-              "pic": "🧈",
-              "say": "Butter on."
+              "id": "food",
+              "label": "Spoon the food into the bowl",
+              "pic": "🥄",
+              "say": "Food in the bowl."
             },
             {
-              "id": "cheese",
-              "label": "Put the cheese on",
-              "pic": "🧀",
-              "say": "Cheese on the butter."
+              "id": "floor",
+              "label": "Put the bowl on the floor",
+              "pic": "⬇️",
+              "say": "Bowl on the floor."
             },
             {
-              "id": "top",
-              "label": "Put the top slice on",
-              "pic": "🥪",
-              "say": "Top slice on."
-            },
-            {
-              "id": "cut",
-              "label": "Cut it in half",
-              "pic": "🔪",
-              "say": "Cut in half. Two halves."
+              "id": "call",
+              "label": "Call the cat",
+              "pic": "🐱",
+              "say": "Here, kitty! The cat comes to eat."
             }
           ]
         }
@@ -2630,7 +2673,7 @@
               "meaning": "A precise set of instructions to do a job.",
               "uses": [
                 "The tea algorithm has five steps.",
-                "Write an algorithm for toast."
+                "Write an algorithm for taking a photo."
               ],
               "lesson": 1,
               "title": "Precise Instructions",
@@ -2989,7 +3032,7 @@
               "pic": "✅",
               "meaning": "Something the task cannot be done without.",
               "uses": [
-                "Bread is needed for toast.",
+                "The camera is needed for a photo.",
                 "A coat is not needed."
               ],
               "lesson": 1,
@@ -8795,7 +8838,7 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🔮", "Output predictor"], ["🧮", "Output detective"], ["☕", "Tea debugger"], ["🛏️", "Bedtime debugger"], ["🗂️", "Precise or vague"], ["🧀", "Exact follower"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🔮", "Output predictor"], ["🧮", "Output detective"], ["☕", "Tea debugger"], ["🛏️", "Bedtime debugger"], ["🗂️", "Precise or vague"], ["🐱", "Exact follower"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
   lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
@@ -8805,7 +8848,7 @@
   bugHunt(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Three bugs found, three bugs corrected." }, LESSON.steps[5].data));
   bugHunt(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "You found the bug and corrected it, both ways round." }, LESSON.steps[6].data));
   sortBins(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "Precise leaves nothing to guess. Vague leaves everything." }, LESSON.steps[7].data));
-  followSteps(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Followed exactly, in a straight line, to two halves." }, LESSON.steps[8].data));
+  followSteps(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Followed exactly, in a straight line, to a happy cat." }, LESSON.steps[8].data));
   gameZone(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[9].data));
   homeProjects(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[10].data));
   sequence(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "That is the whole lesson finished. You can predict outputs and correct bugs." }, LESSON.steps[11].data));

@@ -266,3 +266,10 @@ LESSON["home"] = [
           "Which would you keep private?"],
          "A group message goes to the whole group."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you turned a table into a block graph and used data to solve the crowded playground problem."
+LESSON["warmup"] = [
+    q("Which of these can connect to the internet?", "\U0001F4F6", "a tablet", ["a pencil", "a cushion", "a spoon"], "A tablet has a computer inside, so it can connect."),
+    q("A tablet shows no wi-fi bars. What does that usually mean?", "\U0001F4F5", "it is not connected to a network", ["it is fully charged", "it is very happy", "it is switched off"], "No bars usually means no network is reaching it."),
+]

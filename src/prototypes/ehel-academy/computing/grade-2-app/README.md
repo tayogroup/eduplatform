@@ -62,7 +62,7 @@ live pages are this kit too.
 
 ## What a lesson is
 
-Ten lessons, organised by the framework's five strands, 13 to 18 steps each
+Ten lessons, organised by the framework's five strands, 13 to 21 steps each
 including the seven of the unit shell:
 
 | lesson | steps | objectives | the machine the child drives |
@@ -73,10 +73,10 @@ including the seven of the unit shell:
 | 4 Objects and Plans | 13 | 4 | plans the program for the cat and then the dog on one stage; plan, build, test in order |
 | 5 Debugging Together | 13 | 3 | a program with TWO bugs; asks a partner for the hint; runs again after every fix |
 | 6 Bee-Bot Journeys | 13 | 3 | drives Robo across a 5×5 grid to a destination; predicts where a program stops |
-| 7 Collecting Data | 14 | 4 | designs a survey for a purpose — which ways of collecting would work?; sorts statistical questions from the rest |
+| 7 Collecting Data | 15 | 4 | designs a survey for a purpose — which ways of collecting would work?; picks the device way for four purposes; sorts statistical questions from the rest |
 | 8 Presenting Data | 14 | 3 | builds two block graphs column by column; reads a table; every key computed |
 | 9 Connected Devices | 16 | 5 | wires a home network and sends a photo to the printer; wired against wireless; reads the network's own signs; shares and keeps private |
-| 10 Hardware, Software and Robots | 18 | 6 | taps the parts of a laptop and a tablet by name; inputs and outputs; races the computer at sums; the device for the place; story robots against working ones |
+| 10 Hardware, Software and Robots | 21 | 6 | taps the parts of a laptop and a tablet by name; inputs and outputs, then which way the information goes in eight real situations; races the computer at sums, then sorts computer jobs from people jobs; the device for the place, and why; story robots against working ones |
 
 The computing-shaped machines only do what they are told, as in Grade 1, and
 the Stage 2 ones add:

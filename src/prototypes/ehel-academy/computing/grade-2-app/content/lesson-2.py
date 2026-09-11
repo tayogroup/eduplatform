@@ -114,21 +114,20 @@ LESSON = {
               ]},
              "Precise leaves nothing to guess. Vague leaves everything."),
 
-        step("follow", "Follow it exactly: a cheese sandwich", "\U0001F9C0", "Exact follower", ["2CT.01"],
-             "Five steps this time, including cutting it in half. Tap the step that comes next.",
+        step("follow", "Follow it exactly: feed the cat", "\U0001F431", "Exact follower", ["2CT.01"],
+             "Four steps. Tap the step the algorithm says next and watch the bowl.",
              explain(
                  ["Understanding an algorithm means knowing what each step does AND why it comes where it does."],
-                 ["Bread, butter, cheese, top slice, then cut it in half.", "You cannot cut a sandwich that has no top yet."],
+                 ["The tin is opened, the food goes in the bowl, the bowl goes on the floor, then you call the cat.", "You cannot spoon food out of a tin that is still closed."],
                  [],
                  ["Tap the steps in the order the algorithm shows."]),
-             {"scene": "sandwich", "steps": [
-                 s("bread", "Put a slice of bread on the plate", "\U0001F35E", "Bread on the plate."),
-                 s("butter", "Spread the butter", "\U0001F9C8", "Butter on."),
-                 s("cheese", "Put the cheese on", "\U0001F9C0", "Cheese on the butter."),
-                 s("top", "Put the top slice on", "\U0001F96A", "Top slice on."),
-                 s("cut", "Cut it in half", "\U0001F52A", "Cut in half. Two halves."),
+             {"scene": "catfeed", "steps": [
+                 s("tin", "A grown-up opens the tin", "\U0001F96B", "The tin is open."),
+                 s("food", "Spoon the food into the bowl", "\U0001F944", "Food in the bowl."),
+                 s("floor", "Put the bowl on the floor", "⬇️", "Bowl on the floor."),
+                 s("call", "Call the cat", "\U0001F431", "Here, kitty! The cat comes to eat."),
              ]},
-             "Followed exactly, in a straight line, to two halves."),
+             "Followed exactly, in a straight line, to a happy cat."),
 
         step("quiz", "Show what you know", "⭐", "Star computer scientist", ["2CT.02", "2CT.05", "2CT.01", "2CT.03"],
              "Time to show what you know. Tap the answer.",
@@ -169,7 +168,7 @@ LESSON["lecture"] = [
     part("\U0001F3AF", "Precise, not vague",
          "Turn left at the shop is precise. Go somewhere is vague. A precise instruction leaves nothing to guess. Robo can follow a precise one. A vague one makes Robo guess, and Robo guesses badly."),
     part("➡️", "Linear algorithms",
-         "A linear algorithm is a straight line of steps: bread, butter, cheese, top, cut. Understanding it means knowing what each step does and why it comes where it does. You cannot cut a sandwich with no top."),
+         "A linear algorithm is a straight line of steps: open the tin, food in the bowl, bowl on the floor, call the cat. Understanding it means knowing what each step does and why it comes where it does. You cannot spoon food out of a closed tin."),
 ]
 
 LESSON["words"] = [
@@ -203,4 +202,11 @@ LESSON["home"] = [
           "Say which ones are precise and which are vague.",
           "Make a vague one precise."],
          "'Tidy up a bit' becomes 'put the books on the shelf'."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you gave Robo precise instructions, followed long algorithms and left out the steps a task did not need."
+LESSON["warmup"] = [
+    q("You have 2 stickers and get 3 more. How many do you have now?", "\U0001F31F", "5", ["2", "3", "23"], "Two, then three more, is five. Following each step tells you the answer."),
+    q("A washing-up algorithm says: dry the plate, then wash it. What is that?", "\U0001F37D\uFE0F", "a bug: a step in the wrong place", ["the right order", "a picture", "a song"], "You wash first, then dry. A right step in the wrong place is a bug."),
 ]

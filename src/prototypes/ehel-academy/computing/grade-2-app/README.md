@@ -295,7 +295,8 @@ a "Last time" recap on lessons 2 to 10 and an unmarked two-question warm-up on a
 ten; and new tasks where Grade 1 repeated: taking a photo instead of the toast,
 feeding the cat instead of the sandwich, and two debug rounds with new goals. Lessons
 7 and 10 gain steps in the middle, so records made there before the redeploy read
-a step or more out. Not deployed. Left: the human checks and the owner's decisions.
+a step or more out. Deployed the same day (see below). Left: the human checks and the
+owner's decisions.
 
 ## Redeployed 2026-09-11 with the Grade 2 validation fixes
 
@@ -306,3 +307,12 @@ errors, every step stored and every lesson recorded complete, nothing ticked on 
 fresh open, and a reload after moving to step 4 opens step 4. Grades 1, 3 and 4
 were not redeployed: their pages changed only in the laptop and tablet drawing
 code, which none of them draws.
+
+## Redeployed 2026-09-11 with the remaining fixes
+
+On the owner's instruction: the pages of `6f2f7c6f2`, 16 files uploaded, all verified
+on storage, every page byte-identical to HEAD, every edge path fresh. All ten
+lessons were then played to the end on the live pages in Chromium, lessons 7 and 10
+with their new steps: 0 console errors, every step stored and every lesson recorded
+complete, nothing ticked on a fresh open, and a reload after moving to step 4 opens
+step 4.

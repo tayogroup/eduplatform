@@ -20,7 +20,11 @@
   })();
 </script>
 <title>Shapes and Sizes</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
@@ -599,10 +603,12 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
     <!-- 1  1Gg.01  Flat shapes -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A flat shape is one you could draw on paper.</s><s>It has sides and it has corners.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take the square.</s><s>Press count the sides and watch each one light up as we say it.</s><s>One, two, three, four.</s><s>Four sides.</s><s>And look where two sides meet, at each corner.</s><s>Four of those as well.</s><s>A triangle lights up three sides and three corners.</s><s>A circle has one edge that curves all the way round, and no corners at all.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count a corner twice, or start counting again where they began and get one too many.</s><s>It is easy to lose your place going round a shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start at one corner and remember it.</s><s>Go round once.</s><s>Stop when you are back where you started.</s></mstts:express-as>' data-say="Here is a flat shape. Press count the sides and I will count them with you. Then press next shape.">
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Flat shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">This is a flat shape. Press <b>Count the sides</b>, then <b>Next shape</b>.</span></div>
       <div class="stage">
@@ -649,7 +655,7 @@
       <div class="slide-head"><span class="n">5</span><h2>Turn it round</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Press <b>Turn it</b>. Does the shape look <b>the same</b> after the turn, or <b>different</b>?</span></div>
       <div class="stage">
-        <div class="shapebox"><svg id="sv5" viewBox="0 0 200 200" role="img" aria-label="A shape that turns"></svg></div>
+        <div class="shapebox"><svg id="sv5" viewBox="-20 -20 240 240" role="img" aria-label="A shape that turns"></svg></div>
         <div class="bigbtns"><button type="button" class="big teal" id="turn5">Turn it</button></div>
         <div class="choices" id="ch5"></div>
         <p class="fb" id="fb5" role="status" aria-live="polite"></p>
@@ -699,6 +705,86 @@
       <div class="choices" id="ch10"></div>
       <p class="fb" id="fb10" role="status" aria-live="polite"></p>
       <p class="score" id="sc10"></p>
+    </section>
+<!-- 11  1Gg.03  Faces and edges -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A face is a side of a solid shape, and an edge is where two faces meet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A cube has six flat faces, like a dice.</s><s>A sphere has one curved face and no edges at all, like a ball.</s><s>A cylinder has two flat circles and one curved face, like a tin.</s><s>A cone has one flat circle, one curved face, and one edge where they meet.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children only count the faces they can see in the picture.</s><s>A solid shape has faces at the back and underneath too.</s><s>Imagine picking it up and turning it round.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So hold the shape in your mind, turn it round, and count every face.</s></mstts:express-as>' data-say="Look at each solid shape. Think about its faces and its edges, then tap the answer.">
+      <div class="slide-head"><span class="n">11</span><h2>Faces and edges</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss11say">Look at the solid shape. Think about its <b>faces</b> and <b>edges</b>, flat or curved. Tap the answer.</span></div>
+      <div class="stage" id="ss11st"></div>
+      <div class="choices" id="ss11ch"></div>
+      <p class="fb" id="ss11fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss11nx" hidden>Next question</button></div>
+      <p class="score" id="ss11sc"></p>
+    </section>
+<!-- 12  1Gg.06  Flat shape, solid shape -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every solid shape is made of faces, and a face is a flat shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Draw round one face of a cube and you draw a square.</s><s>The square is flat, and the cube is solid.</s><s>A circle is flat, like a drawing of a ball.</s><s>A sphere is solid, like the ball itself.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children call a cube a square, because its faces are squares.</s><s>A square is only one face.</s><s>The whole cube, which you can hold, is a solid shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask yourself: could I pick it up? If you could, it is solid.</s></mstts:express-as>' data-say="A flat shape lies on paper. A solid shape can be picked up and held. Tap the answer.">
+      <div class="slide-head"><span class="n">12</span><h2>Flat shape, solid shape</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss12say">A <b>flat</b> shape is drawn on paper. A <b>solid</b> shape can be picked up. Tap the answer.</span></div>
+      <div class="stage" id="ss12st"></div>
+      <div class="choices" id="ss12ch"></div>
+      <p class="fb" id="ss12fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss12nx" hidden>Next question</button></div>
+      <p class="score" id="ss12sc"></p>
+    </section>
+<!-- 13  1Gg.07  Will it look the same? -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some shapes look exactly the same after you turn them, and some do not.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A quarter turn is like the hand of a clock moving from twelve to three.</s><s>A square looks the same after a quarter turn, because all its sides are the same length.</s><s>A circle looks the same however far you turn it.</s><s>A rectangle stands up on its end, so it looks different, until it has turned half way round.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think every shape changes when it turns, or that every shape stays the same.</s><s>It depends on the shape.</s><s>Picture it turning in your head, and look at where its corners go.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So turn each shape in your mind, and ask: would I notice that it had moved?</s></mstts:express-as>' data-say="Imagine each shape turning. Which one would look exactly the same after the turn?">
+      <div class="slide-head"><span class="n">13</span><h2>Will it look the same?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss13say">Imagine each shape making a <b>turn</b>. Does it look <b>the same</b> afterwards?</span></div>
+      <div class="stage" id="ss13st"></div>
+      <div class="choices" id="ss13ch"></div>
+      <p class="fb" id="ss13fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss13nx" hidden>Next question</button></div>
+      <p class="score" id="ss13sc"></p>
+    </section>
+<!-- 14  1Gg.02  Longer or shorter? -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To compare two lengths, start them at the same place.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Line two pencils up at one end.</s><s>The one that reaches further at the other end is longer, and the other one is shorter.</s><s>For trees and people we say tall, taller and tallest.</s><s>For a rope or a worm we can say thin, thinner and thinnest.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children look at only one end, or they choose the one that looks biggest overall.</s><s>A thick worm is not a long worm.</s><s>Check that the ends line up, then look at the other end.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So line them up, look along to the far end, and then choose your word.</s></mstts:express-as>' data-say="Compare them. Which is longer, taller or thinner? Tap the answer.">
+      <div class="slide-head"><span class="n">14</span><h2>Longer or shorter?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss14say">Compare them carefully: <b>longer</b>, <b>shorter</b>, <b>taller</b>, <b>thinner</b>. Tap the answer.</span></div>
+      <div class="stage" id="ss14st"></div>
+      <div class="choices" id="ss14ch"></div>
+      <p class="fb" id="ss14fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss14nx" hidden>Next question</button></div>
+      <p class="score" id="ss14sc"></p>
+    </section>
+<!-- 15  1Gg.04  Heavier or lighter? -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>On a balance, the heavier side always goes down.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The lighter side goes up.</s><s>If both sides weigh the same, the balance stays level.</s><s>Big things are not always heavy.</s><s>A big balloon is lighter than a small stone.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the bigger thing must be the heavier thing.</s><s>Size can trick you.</s><s>Look at which side goes down, or think about lifting it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So picture lifting each one in your hands, and feel which one pulls down more.</s></mstts:express-as>' data-say="Heavy, light, more and less. Think about how heavy each thing is, then tap the answer.">
+      <div class="slide-head"><span class="n">15</span><h2>Heavier or lighter?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss15say">Think about how <b>heavy</b> each thing is. Tap the answer.</span></div>
+      <div class="stage" id="ss15st"></div>
+      <div class="choices" id="ss15ch"></div>
+      <p class="fb" id="ss15fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss15nx" hidden>Next question</button></div>
+      <p class="score" id="ss15sc"></p>
+    </section>
+<!-- 16  1Gg.05  Pour and fill -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Capacity is how much something can hold.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A bucket holds more than a cup, because it is bigger inside.</s><s>When a container has no room left, it is full.</s><s>When there is nothing in it, it is empty.</s><s>Pour water from one jug into another, and the first one has less while the second has more.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children look only at how tall a container is.</s><s>A tall thin glass can hold less than a wide bowl.</s><s>Think about how much space there is inside.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So picture pouring the water, and watch where it goes.</s></mstts:express-as>' data-say="Full, empty, more and less. Think about how much water each one holds, then tap the answer.">
+      <div class="slide-head"><span class="n">16</span><h2>Pour and fill</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss16say">Think about how much each one <b>holds</b>: <b>full</b>, <b>empty</b>, <b>more</b> or <b>less</b>.</span></div>
+      <div class="stage" id="ss16st"></div>
+      <div class="choices" id="ss16ch"></div>
+      <p class="fb" id="ss16fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss16nx" hidden>Next question</button></div>
+      <p class="score" id="ss16sc"></p>
+    </section>
+<!-- 17  1Gg.08  Read the numbers -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A measuring tool has a scale of numbers, and the numbers tell you how much.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>On a ruler, start at zero and see which number the end reaches.</s><s>On a thermometer, the red line climbs higher, to bigger numbers, when it is hotter.</s><s>On a measuring jug, more water reaches a bigger number.</s><s>On scales, the pointer turns round to a bigger number for something heavier.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start measuring from the end of the ruler instead of from zero.</s><s>Line the thing up with zero first.</s><s>Then read the number at the other end.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find zero, find where it stops, and read the number there.</s></mstts:express-as>' data-say="Every measuring tool has numbers on it. Read the numbers, then tap the answer.">
+      <div class="slide-head"><span class="n">17</span><h2>Read the numbers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss17say">A ruler, scales, a jug and a thermometer all have a scale of <b>numbers</b>. Read them.</span></div>
+      <div class="stage" id="ss17st"></div>
+      <div class="choices" id="ss17ch"></div>
+      <p class="fb" id="ss17fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss17nx" hidden>Next question</button></div>
+      <p class="score" id="ss17sc"></p>
+    </section>
+<!-- 18  1Gp.01  Between, above, behind -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Position words say where something is, and direction words say which way it is going.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Between means in the middle of two things.</s><s>Above means higher up, and below means lower down.</s><s>Behind means at the back, where it can be hidden.</s><s>Towards means going closer, and away means going further off.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children mix up words that come in pairs, like above and below, or towards and away.</s><s>Each word has a partner that means the opposite.</s><s>Say both words, then decide which one fits.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So point at the thing, look at what is next to it, and choose your word.</s></mstts:express-as>' data-say="Look at the picture. Tap the words that say where it is, or which way it is going.">
+      <div class="slide-head"><span class="n">18</span><h2>Between, above, behind</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss18say">Tap the words that say <b>where</b> it is, or <b>which way</b> it is going: between, above, behind, towards.</span></div>
+      <div class="stage" id="ss18st"></div>
+      <div class="choices" id="ss18ch"></div>
+      <p class="fb" id="ss18fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss18nx" hidden>Next question</button></div>
+      <p class="score" id="ss18sc"></p>
     </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows a shape, count the sides or ask whether you could hold it.</s><s>If it asks about size, compare the two things.</s><s>If it shows a clock, find the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
@@ -828,6 +914,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1119,6 +1207,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1565,7 +1654,163 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see add-warmup.py. NOT a step: no sticker, no dot, no score. */
+  const WARM = [{ q: "Last lesson, you found patterns. Warm up: which shape has 3 sides?", opts: ["triangle", "square", "circle"], a: "triangle", why: "A triangle has 3 straight sides. Today you will look at shapes and sizes." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+
+  /* ==== ehel-second-steps: the runner - see grade-1-app/add-second-steps.py ====
+     Seventeen objectives rested on one slide each. Each now has a second step,
+     after the lesson's own steps and before the check. One question after
+     another, like sequence() in Shapes and Sizes, except that the child moves on
+     with a button: say() stops whatever is playing, so a timer that draws the
+     next question cuts the explanation off, and these explain every answer.
+     o.flash (ms) shows the picture behind a Look! button, for seeing how many
+     without counting. Takes ELEMENTS, so each step's own block names its slide. */
+  function secondStep(o) {
+    const el = o.el, items = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    let i = 0, right = 0, lock = true;
+    function options() {
+      el.ch.innerHTML = shuffle(items[i].opts).map((c) => '<button type="button" class="choice' +
+        (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      lock = false;
+    }
+    function draw() {
+      const it = items[i];
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      if (o.flash) {
+        el.stage.innerHTML = '<div class="ss-flash" style="visibility:hidden">' + it.pic + "</div>" +
+          '<div class="bigbtns"><button type="button" class="big teal ss-look">Look!</button></div>';
+        el.ch.innerHTML = "";
+      } else {
+        el.stage.innerHTML = it.pic || "";
+        options();
+      }
+      say(words(it.ask));
+    }
+    el.stage.addEventListener("click", (e) => {
+      const b = e.target.closest(".ss-look"); if (!b) return;
+      const pic = el.stage.querySelector(".ss-flash");
+      b.parentElement.remove();
+      pic.style.visibility = "visible";
+      setTimeout(() => { pic.style.visibility = "hidden"; options(); }, o.flash);
+    });
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = items[i], ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (ok) right++; else b.classList.add("wrong");
+      const pic = el.stage.querySelector(".ss-flash"); if (pic) pic.style.visibility = "visible";
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      i++;
+      if (i < items.length) el.next.hidden = false;
+      else { el.score.textContent = "You got " + right + " of " + items.length + ". " + o.done; finish(o.finish); }
+      say(msg);
+    });
+    el.next.addEventListener("click", () => { if (i < items.length) draw(); });
+    draw();
+  }
+  /* the second steps' pictures, in this lesson's own classes */
+  const ssSolid = (k) => '<svg viewBox="0 0 200 200" class="solid" role="img" aria-label="A ' + k + '">' + solidSvg(k) + "</svg>";
+  const ssFlat = (i) => '<svg viewBox="0 0 200 200" role="img" aria-label="A ' + FLAT[i].name + '">' + flatSvg(FLAT[i], "b") + "</svg>";
+  const ssPoly = (pts) => '<svg viewBox="0 0 200 200" role="img" aria-label="A flat shape">' + poly(pts, "b") + "</svg>";
+  const ssBox = (svg) => '<div class="shapebox">' + svg + "</div>";
+  const SS_ARROW = [[100, 20], [150, 90], [122, 90], [122, 178], [78, 178], [78, 90], [50, 90]];
+  const SS_CROSS = [[76, 24], [124, 24], [124, 76], [176, 76], [176, 124], [124, 124], [124, 176], [76, 176], [76, 124], [24, 124], [24, 76], [76, 76]];
+  const SS_HOUSE = [[100, 26], [168, 90], [168, 172], [32, 172], [32, 90]];
+  function ssRow(cells, w) {
+    return '<div class="ss-row">' + cells.map((c) => '<div class="ss-cell"><div class="ss-art"' + (w ? ' style="width:' + w + 'px"' : "") + ">" +
+      c[0] + '</div><div class="ss-lab">' + c[1] + "</div></div>").join("") + "</div>";
+  }
+  function ssStack(cells) {
+    return '<div class="ss-stack">' + cells.map((c) => '<div class="ss-srow"><span class="ss-lab">' + c[1] + "</span>" + c[0] + "</div>").join("") + "</div>";
+  }
+  const ssPencil = (len, col) => '<svg viewBox="0 0 150 30" role="img" aria-label="A pencil"><rect x="2" y="7" width="' + (len - 16) +
+    '" height="16" rx="3" fill="var(--' + col + ')"></rect><polygon points="' + (len - 14) + ",7 " + (len + 2) + ",15 " + (len - 14) +
+    ',23" fill="var(--gold)"></polygon></svg>';
+  function ssRuler(n) {
+    let t = "";
+    for (let i = 0; i <= 10; i++) {
+      const x = (16 + i * 16.8).toFixed(1);
+      t += '<line x1="' + x + '" y1="34" x2="' + x + '" y2="' + (i % 5 === 0 ? 50 : 44) + '" stroke="var(--gold-ink)" stroke-width="2"></line>' +
+        '<text x="' + x + '" y="63" font-size="11" text-anchor="middle" font-family="Inter" fill="var(--gold-ink)">' + i + "</text>";
+    }
+    const end = (16 + n * 16.8).toFixed(1);
+    return '<svg viewBox="0 0 200 74" role="img" aria-label="A ruler with a ribbon on it">' +
+      '<rect x="4" y="30" width="192" height="40" rx="6" fill="var(--gold)" stroke="var(--ink)" stroke-width="2"></rect>' + t +
+      '<rect x="16" y="10" width="' + (n * 16.8).toFixed(1) + '" height="14" rx="3" fill="var(--accent)"></rect>' +
+      '<line x1="' + end + '" y1="10" x2="' + end + '" y2="34" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 3"></line></svg>';
+  }
+  function ssThermo(v) {
+    let t = "";
+    for (let k = 0; k <= 5; k++) {
+      const y = 110 - k * 18;
+      t += '<line x1="52" y1="' + y + '" x2="62" y2="' + y + '" stroke="var(--ink)" stroke-width="2"></line>' +
+        '<text x="66" y="' + (y + 4) + '" font-size="11" font-family="Inter" fill="var(--ink)">' + k * 10 + "</text>";
+    }
+    const top = 110 - (v / 10) * 18;
+    return '<svg viewBox="0 0 100 150" role="img" aria-label="A thermometer">' +
+      '<rect x="36" y="12" width="16" height="112" rx="8" fill="var(--cell)" stroke="var(--ink)" stroke-width="3"></rect>' +
+      '<rect x="39" y="' + top + '" width="10" height="' + (124 - top) + '" fill="var(--bad)"></rect>' +
+      '<circle cx="44" cy="128" r="14" fill="var(--bad)" stroke="var(--ink)" stroke-width="3"></circle>' + t + "</svg>";
+  }
+  function ssDial(n) {
+    let t = "";
+    for (let i = 0; i <= 5; i++) {
+      const a = Math.PI * (1 + i / 5);
+      t += '<text x="' + (60 + 34 * Math.cos(a)).toFixed(1) + '" y="' + (66 + 34 * Math.sin(a)).toFixed(1) +
+        '" font-size="11" text-anchor="middle" font-family="Inter" fill="var(--ink)">' + i + "</text>";
+    }
+    const a = Math.PI * (1 + n / 5);
+    return '<svg viewBox="0 -12 120 122" role="img" aria-label="Kitchen scales with a parcel">' +
+      '<rect x="14" y="66" width="92" height="34" rx="8" fill="var(--muted)" stroke="var(--ink)" stroke-width="3"></rect>' +
+      '<circle cx="60" cy="62" r="44" fill="var(--card)" stroke="var(--ink)" stroke-width="3"></circle>' + t +
+      '<line x1="60" y1="62" x2="' + (60 + 26 * Math.cos(a)).toFixed(1) + '" y2="' + (62 + 26 * Math.sin(a)).toFixed(1) +
+      '" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"></line>' +
+      '<circle cx="60" cy="62" r="5" fill="var(--ink)"></circle><rect x="30" y="14" width="60" height="8" rx="4" fill="var(--teal)"></rect>' +
+      '<text x="60" y="12" font-size="20" text-anchor="middle">📦</text></svg>';
+  }
+  function ssMJug(lv) {
+    let t = "";
+    for (let i = 1; i <= 4; i++) {
+      const y = 120 - i * 22;
+      t += '<line x1="66" y1="' + y + '" x2="84" y2="' + y + '" stroke="var(--ink)" stroke-width="2"></line>' +
+        '<text x="90" y="' + (y + 4) + '" font-size="12" font-family="Inter" fill="var(--ink)">' + i + "</text>";
+    }
+    const top = 120 - lv * 22;
+    return '<svg viewBox="0 0 110 132" role="img" aria-label="A measuring jug">' +
+      '<rect x="18" y="' + top + '" width="66" height="' + (126 - top) + '" fill="var(--teal)" opacity="0.85"></rect>' +
+      '<path d="M18,14 L18,126 L84,126 L84,14" fill="none" stroke="var(--ink)" stroke-width="4"></path>' + t + "</svg>";
+  }
+  const ssShelf = (a, b) => '<div class="picwrap" style="max-width:260px"><svg viewBox="0 0 200 170" role="img" aria-label="Two shelves">' +
+    '<rect x="20" y="10" width="160" height="150" rx="6" fill="none" stroke="var(--line)" stroke-width="4"></rect>' +
+    '<line x1="20" y1="85" x2="180" y2="85" stroke="var(--ink)" stroke-width="5"></line>' +
+    '<line x1="20" y1="158" x2="180" y2="158" stroke="var(--ink)" stroke-width="5"></line>' +
+    '<text x="100" y="78" font-size="48" text-anchor="middle">' + a + "</text>" +
+    '<text x="100" y="151" font-size="48" text-anchor="middle">' + b + "</text></svg></div>";
 
   /* ---- one question after another: the shape six of these steps share ---- */
   function sequence(o) {
@@ -1840,8 +2085,13 @@
   let t5 = 0, ang5 = 0, phase5 = "turn", lock5 = false;
   function paint5(anim) {
     const T = TURNS[t5];
-    const body = T.circle ? '<circle class="flat b" cx="100" cy="100" r="76"></circle><circle cx="140" cy="70" r="12" fill="#fff"></circle>' : poly(T.pts, "b");
-    $("sv5").innerHTML = '<g id="g5" style="transform-origin:100px 100px; transition:' + (anim ? "transform 700ms ease" : "none") + '; transform:rotate(' + ang5 + 'deg)">' + body + "</g>";
+    /* ehel-fix-turn-and-tree: NO MARK ON THE SHAPE. The circle carried a white dot
+       that turned with it, so after the quarter turn the picture had changed
+       while the key says it "looks the same". The arrow OUTSIDE the shape
+       shows the turn without changing what turned. See fix-turn-and-tree.py */
+    const body = T.circle ? '<circle class="flat b" cx="100" cy="100" r="76"></circle>' : poly(T.pts, "b");
+    $("sv5").innerHTML = '<g id="g5" style="transform-origin:100px 100px; transition:' + (anim ? "transform 700ms ease" : "none") + '; transform:rotate(' + ang5 + 'deg)">' + body + "</g>" +
+      (ang5 ? '<g class="turn-mark"><path d="M100,-6 A106,106 0 0 1 206,100" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="round"></path><polygon points="194,92 218,92 206,114" fill="var(--gold)"></polygon></g>' : "");
   }
   function round5() {
     ang5 = 0; phase5 = "turn"; lock5 = false;
@@ -1891,6 +2141,9 @@
   function ribbon(len, col) {
     return '<svg viewBox="0 0 140 40"><rect x="4" y="12" width="' + (len * 1.28) + '" height="16" rx="8" fill="var(--' + col + ')"></rect></svg>';
   }
+  /* ehel-fix-turn-and-tree: the crown is 40 tall and the trunk runs down to the ground
+     at y 96, so h must be above 42 - below that the trunk's height goes
+     negative and the crown sinks under the ground. */
   function tree(h, col) {
     const top = 96 - h;
     return '<svg viewBox="0 0 60 100"><rect x="25" y="' + (top + 26) + '" width="10" height="' + (70 - top) + '" fill="#8B5A2B"></rect>' +
@@ -1916,9 +2169,9 @@
         ask: "Tap the trees in order: <b>shortest</b> first, <b>tallest</b> last.",
         tell: "Short, taller, tallest:",
         cards: [
-          { v: 3, n: "the tallest tree", h: tree(70, "good") + '<span class="cap">tallest</span>' },
-          { v: 1, n: "the short tree", h: tree(24, "good") + '<span class="cap">short</span>' },
-          { v: 2, n: "the taller tree", h: tree(46, "good") + '<span class="cap">taller</span>' },
+          { v: 3, n: "the tallest tree", h: tree(82, "good") + '<span class="cap">tallest</span>' },
+          { v: 1, n: "the short tree", h: tree(48, "good") + '<span class="cap">short</span>' },
+          { v: 2, n: "the taller tree", h: tree(64, "good") + '<span class="cap">taller</span>' },
         ],
       },
       {
@@ -2147,6 +2400,19 @@
   });
 
   /* ---- check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11). Below it the child sees the score, how many they need, and a
+     button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
     { q: "How many <b>sides</b> does a triangle have?", pic: '<div class="shapebox" style="max-width:150px"><svg viewBox="0 0 200 200">' + flatSvg(FLAT[1], "b") + "</svg></div>", opts: ["3", "4", "5"], a: "3", why: "A triangle has 3 straight sides and 3 corners." },
     { q: "Which shape has <b>no corners</b>?", pic: "", opts: ["circle", "square", "hexagon"], a: "circle", why: "A circle curves all the way round, so it has no corners." },
@@ -2189,11 +2455,218 @@
         $("fbck").className = "fb good";
         $("fbck").textContent = "You got " + rightc + " out of " + CHECK.length + "!";
         say("You got " + rightc + " out of " + CHECK.length + "!");
-        finish(10, "Well done!");
+        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(18, "Well done!");
+        else retryCheck($("fbck"), $("chck"), rightc, CHECK.length, function () { qc = 0; rightc = 0; askCheck(); });
       } else askCheck();
     }, 2800);
   });
   askCheck();
+
+  /* ---- 11: faces and edges - a second step for 1Gg.03 ---- */
+  secondStep({
+    el: { say: $("ss11say"), stage: $("ss11st"), ch: $("ss11ch"), fb: $("ss11fb"), score: $("ss11sc"), next: $("ss11nx") },
+    label: "Shape",
+    items: [
+      { ask: "How many <b>faces</b> does a cube have?", pic: ssBox(ssSolid("cube")),
+        opts: [{ t: "6", ok: true }, { t: "3", ok: false }, { t: "4", ok: false }],
+        why: "A cube has 6 faces: top, bottom, front, back and two sides. The picture only shows 3 of them." },
+      { ask: "Which shape has <b>no</b> edges?", pic: ssRow([[ssSolid("sphere"), "sphere"], [ssSolid("cube"), "cube"], [ssSolid("cone"), "cone"]]),
+        opts: [{ t: "sphere", ok: true }, { t: "cube", ok: false }, { t: "cone", ok: false }],
+        why: "A sphere is round all over, so it has no edges at all. A cube has 12 edges and a cone has 1." },
+      { ask: "How many <b>flat</b> faces does a cylinder have?", pic: ssBox(ssSolid("cylinder")),
+        opts: [{ t: "2", ok: true }, { t: "1", ok: false }, { t: "3", ok: false }],
+        why: "A cylinder has 2 flat circles, one at each end, and 1 curved face around the middle, like a tin." },
+      { ask: "How many <b>edges</b> does a cone have?", pic: ssBox(ssSolid("cone")),
+        opts: [{ t: "1", ok: true }, { t: "0", ok: false }, { t: "2", ok: false }],
+        why: "A cone has 1 edge, where its flat circle meets its curved face." },
+      { ask: "Which shape has <b>only flat</b> faces?", pic: ssRow([[ssSolid("cuboid"), "cuboid"], [ssSolid("sphere"), "sphere"], [ssSolid("cylinder"), "cylinder"]]),
+        opts: [{ t: "cuboid", ok: true }, { t: "sphere", ok: false }, { t: "cylinder", ok: false }],
+        why: "A cuboid is like a box: all 6 of its faces are flat. A sphere and a cylinder each have a curved face." },
+      { ask: "How many <b>faces</b> does a pyramid have?", pic: ssBox(ssSolid("pyramid")),
+        opts: [{ t: "5", ok: true }, { t: "4", ok: false }, { t: "8", ok: false }],
+        why: "This pyramid has a square underneath and 4 triangles, so 5 faces. 8 is how many edges it has." },
+    ],
+    finish: 10,
+    done: "You can describe solid shapes by their faces and edges.",
+  });
+
+  /* ---- 12: flat shape, solid shape - a second step for 1Gg.06 ---- */
+  secondStep({
+    el: { say: $("ss12say"), stage: $("ss12st"), ch: $("ss12ch"), fb: $("ss12fb"), score: $("ss12sc"), next: $("ss12nx") },
+    label: "Question",
+    items: [
+      { ask: "Which one is <b>flat</b>?", pic: ssRow([[ssFlat(2), "A"], [ssSolid("cube"), "B"]]),
+        opts: [{ t: "A, the square", ok: true }, { t: "B, the cube", ok: false }],
+        why: "The square is flat: it is only a drawing on paper. The cube is solid: you can pick it up." },
+      { ask: "Which one is <b>solid</b>?", pic: ssRow([[ssFlat(0), "A"], [ssSolid("sphere"), "B"]]),
+        opts: [{ t: "B, the sphere", ok: true }, { t: "A, the circle", ok: false }],
+        why: "The sphere is solid, like a ball. The circle is flat, like a drawing of a ball." },
+      { ask: "Draw round one face of a cube. What shape have you drawn?", pic: ssBox(ssSolid("cube")),
+        opts: [{ t: "a square", ok: true }, { t: "a cube", ok: false }, { t: "a circle", ok: false }],
+        why: "Every face of a cube is a square. Your drawing is flat, so it is a square, not a cube." },
+      { ask: "Which of these is a <b>solid</b> shape?", pic: "",
+        opts: [{ t: "a cylinder", ok: true }, { t: "a rectangle", ok: false }, { t: "a triangle", ok: false }],
+        why: "A cylinder is solid, like a tin. A rectangle and a triangle are flat." },
+      { ask: "Draw round the flat end of a cylinder. What shape have you drawn?", pic: ssBox(ssSolid("cylinder")),
+        opts: [{ t: "a circle", ok: true }, { t: "a square", ok: false }, { t: "a cylinder", ok: false }],
+        why: "Each end of a cylinder is a flat circle, so your drawing is a circle." },
+      { ask: "A football is…", pic: '<div class="ss-emo">⚽</div>',
+        opts: [{ t: "a solid shape, a sphere", ok: true }, { t: "a flat shape, a circle", ok: false }],
+        why: "You can hold a football, and it is round all over. It is a sphere, which is a solid shape." },
+    ],
+    finish: 11,
+    done: "You can tell a flat shape from a solid one.",
+  });
+
+  /* ---- 13: will it look the same - a second step for 1Gg.07 ---- */
+  secondStep({
+    el: { say: $("ss13say"), stage: $("ss13st"), ch: $("ss13ch"), fb: $("ss13fb"), score: $("ss13sc"), next: $("ss13nx") },
+    label: "Question",
+    items: [
+      { ask: "Which shape looks <b>the same</b> after a quarter turn?", pic: ssRow([[ssFlat(2), "A"], [ssFlat(3), "B"], [ssPoly(SS_ARROW), "C"]]),
+        opts: [{ t: "A", ok: true }, { t: "B", ok: false }, { t: "C", ok: false }],
+        why: "Shape A is a square. All its sides are the same length, so after a quarter turn it looks just the same." },
+      { ask: "Which shape looks the same <b>however</b> you turn it?", pic: ssRow([[ssFlat(1), "A"], [ssFlat(3), "B"], [ssFlat(0), "C"]]),
+        opts: [{ t: "C", ok: true }, { t: "A", ok: false }, { t: "B", ok: false }],
+        why: "Shape C is a circle. It is round all the way, so it looks the same whichever way it turns." },
+      { ask: "Which of these looks <b>the same</b> after a quarter turn?", pic: ssRow([[ssPoly(SS_HOUSE), "A"], [ssPoly(SS_CROSS), "B"], [ssFlat(1), "C"]]),
+        opts: [{ t: "B", ok: true }, { t: "A", ok: false }, { t: "C", ok: false }],
+        why: "Shape B has 4 arms, all the same length. A quarter turn moves each arm to where the next one was, so it looks the same." },
+      { ask: "Which shape looks <b>different</b> after a quarter turn?", pic: ssRow([[ssFlat(1), "A"], [ssFlat(0), "B"], [ssFlat(2), "C"]]),
+        opts: [{ t: "A", ok: true }, { t: "B", ok: false }, { t: "C", ok: false }],
+        why: "Shape A is a triangle. It points up before the turn and to the side after it, so it looks different." },
+      { ask: "A rectangle looks different after a quarter turn. What about after a <b>half</b> turn?", pic: ssBox(ssFlat(3)),
+        opts: [{ t: "It looks the same", ok: true }, { t: "It looks different", ok: false }],
+        why: "After a half turn the rectangle is lying down again, with its long side at the bottom. It looks the same." },
+    ],
+    finish: 12,
+    done: "You can tell when a shape looks the same as it turns.",
+  });
+
+  /* ---- 14: longer or shorter - a second step for 1Gg.02 ---- */
+  secondStep({
+    el: { say: $("ss14say"), stage: $("ss14st"), ch: $("ss14ch"), fb: $("ss14fb"), score: $("ss14sc"), next: $("ss14nx") },
+    label: "Question",
+    items: [
+      { ask: "Which pencil is <b>longer</b>?", pic: ssStack([[ssPencil(140, "accent"), "A"], [ssPencil(84, "teal"), "B"]]),
+        opts: [{ t: "A", ok: true }, { t: "B", ok: false }],
+        why: "The pencils start at the same place, and pencil A reaches further. A is longer." },
+      { ask: "Which tree is the <b>tallest</b>?", pic: ssRow([[tree(62, "good"), "A"], [tree(80, "good"), "B"], [tree(48, "good"), "C"]], 70),
+        opts: [{ t: "B", ok: true }, { t: "A", ok: false }, { t: "C", ok: false }],
+        why: "The trees stand on the same ground, and tree B reaches highest. B is the tallest and C is the shortest." },
+      { ask: "Which worm is the <b>thinnest</b>?", pic: ssRow([[worm(20, "plum"), "A"], [worm(6, "plum"), "B"], [worm(32, "plum"), "C"]]),
+        opts: [{ t: "B", ok: true }, { t: "A", ok: false }, { t: "C", ok: false }],
+        why: "Worm B is the thinnest: it is the narrowest from side to side. Worm C is the thickest." },
+      { ask: "Which sentence is true?", pic: ssStack([[ribbon(40, "plum"), "A"], [ribbon(96, "gold"), "B"]]),
+        opts: [{ t: "Ribbon A is shorter than ribbon B", ok: true }, { t: "Ribbon A is longer than ribbon B", ok: false }],
+        why: "Both ribbons start at the same place, and ribbon A stops first. A is shorter, and B is longer." },
+      { ask: "Which ribbon is the <b>shortest</b>?", pic: ssStack([[ribbon(70, "teal"), "A"], [ribbon(100, "accent"), "B"], [ribbon(38, "gold"), "C"]]),
+        opts: [{ t: "C", ok: true }, { t: "A", ok: false }, { t: "B", ok: false }],
+        why: "Ribbon C stops soonest, so C is the shortest. B is the longest." },
+    ],
+    finish: 13,
+    done: "You can compare lengths with long, short, tall and thin.",
+  });
+
+  /* ---- 15: heavier or lighter - a second step for 1Gg.04 ---- */
+  secondStep({
+    el: { say: $("ss15say"), stage: $("ss15st"), ch: $("ss15ch"), fb: $("ss15fb"), score: $("ss15sc"), next: $("ss15nx") },
+    label: "Question",
+    items: [
+      { ask: "The balloon is bigger. Which one is <b>heavier</b>?", pic: balance(-1, "🎈", "🪨"),
+        opts: [{ t: "🪨 the stone", ok: true }, { t: "🎈 the balloon", ok: false }],
+        why: "The stone's side went down, so the stone is heavier. Bigger does not always mean heavier." },
+      { ask: "Which one is <b>lighter</b>?", pic: balance(1, "🍍", "🍋"),
+        opts: [{ t: "🍋 the lemon", ok: true }, { t: "🍍 the pineapple", ok: false }],
+        why: "The lemon's side went up, so the lemon is lighter." },
+      { ask: "You put 3 books on one side of a balance and 1 book on the other. Which side goes <b>down</b>?", pic: '<div class="ss-emo sm">📕📕📕 ⚖️ 📕</div>',
+        opts: [{ t: "the side with 3 books", ok: true }, { t: "the side with 1 book", ok: false }, { t: "neither side", ok: false }],
+        why: "3 books are heavier than 1 book. More mass on that side pulls it down." },
+      { ask: "One brick goes on each side of a balance. What does the balance do?", pic: '<div class="ss-emo sm">🧱 ⚖️ 🧱</div>',
+        opts: [{ t: "It stays level", ok: true }, { t: "The left side goes down", ok: false }, { t: "The right side goes down", ok: false }],
+        why: "The two bricks weigh the same, so neither side goes down. The balance stays level." },
+      { ask: "Which is <b>heavier</b>: a bucket full of water, or the same bucket empty?", pic: "",
+        opts: [{ t: "the full bucket", ok: true }, { t: "the empty bucket", ok: false }],
+        why: "The water has mass too, so the full bucket is heavier than the empty one." },
+    ],
+    finish: 14,
+    done: "You can say heavier, lighter, more and less.",
+  });
+
+  /* ---- 16: pour and fill - a second step for 1Gg.05 ---- */
+  secondStep({
+    el: { say: $("ss16say"), stage: $("ss16st"), ch: $("ss16ch"), fb: $("ss16fb"), score: $("ss16sc"), next: $("ss16nx") },
+    label: "Question",
+    items: [
+      { ask: "When both are full, which one holds <b>more</b> water?", pic: '<div class="ss-emo">🪣 &nbsp; ☕</div>',
+        opts: [{ t: "the bucket", ok: true }, { t: "the cup", ok: false }],
+        why: "A bucket is much bigger inside than a cup, so when both are full the bucket holds more." },
+      { ask: "A cup is full of juice. You drink it all. Now the cup is…", pic: "",
+        opts: [{ t: "empty", ok: true }, { t: "full", ok: false }, { t: "half full", ok: false }],
+        why: "All the juice is gone and nothing is left in the cup, so it is empty." },
+      { ask: "Which jug has the <b>most</b> water?", pic: jugRow([[0.3, "A"], [0.6, "B"], [0.9, "C"]]),
+        opts: [{ t: "C", ok: true }, { t: "A", ok: false }, { t: "B", ok: false }],
+        why: "The jugs are the same size, and the water in jug C comes up highest. C has the most." },
+      { ask: "You pour a full jug into an empty jug the same size. What happens?", pic: "",
+        opts: [{ t: "The first jug is empty and the second is full", ok: true }, { t: "Both jugs are full", ok: false }, { t: "Both jugs are empty", ok: false }],
+        why: "The water moves across. The jug that was full is now empty, and the one that was empty is now full." },
+      { ask: "Which jug holds <b>more</b>?", pic: jugRow([[0.5, "A"], [0.5, "B"]]),
+        opts: [{ t: "They hold the same", ok: true }, { t: "A", ok: false }, { t: "B", ok: false }],
+        why: "The water is at the same height in two jugs of the same size, so they hold the same amount." },
+    ],
+    finish: 15,
+    done: "You can say full, empty, more and less.",
+  });
+
+  /* ---- 17: read the numbers - a second step for 1Gg.08 ---- */
+  secondStep({
+    el: { say: $("ss17say"), stage: $("ss17st"), ch: $("ss17ch"), fb: $("ss17fb"), score: $("ss17sc"), next: $("ss17nx") },
+    label: "Question",
+    items: [
+      { ask: "The ribbon starts at 0. Which number does it reach?", pic: '<div class="picwrap" style="max-width:420px">' + ssRuler(6) + "</div>",
+        opts: [{ t: "6", ok: true }, { t: "5", ok: false }, { t: "7", ok: false }],
+        why: "The ribbon starts at 0 and stops at 6, so it is 6 long on this ruler." },
+      { ask: "Which thermometer shows it is <b>hotter</b>?", pic: ssRow([[ssThermo(40), "A"], [ssThermo(10), "B"]], 116),
+        opts: [{ t: "A", ok: true }, { t: "B", ok: false }],
+        why: "The red line on A goes up to 40, much higher than the 10 on B. Higher numbers mean hotter." },
+      { ask: "Which parcel is <b>heavier</b>?", pic: ssRow([[ssDial(2), "A"], [ssDial(4), "B"]], 130),
+        opts: [{ t: "B", ok: true }, { t: "A", ok: false }],
+        why: "The pointer on scales B turns round to 4, and on scales A only to 2. 4 is more, so parcel B is heavier." },
+      { ask: "The water is at the 2 line. You pour in more water. Now the water reaches…", pic: '<div style="width:130px">' + ssMJug(2) + "</div>",
+        opts: [{ t: "a bigger number", ok: true }, { t: "a smaller number", ok: false }, { t: "the same number", ok: false }],
+        why: "More water fills the jug higher up, so it reaches a bigger number on the scale." },
+      { ask: "To find out how <b>tall</b> you are, which tool do you use?", pic: "",
+        opts: [{ t: "a tape measure", ok: true }, { t: "a thermometer", ok: false }, { t: "scales", ok: false }],
+        why: "A tape measure has numbers along it, and it measures length, like how tall you are." },
+    ],
+    finish: 16,
+    done: "You can read the numbers on measuring tools.",
+  });
+
+  /* ---- 18: between, above, behind - a second step for 1Gp.01 ---- */
+  secondStep({
+    el: { say: $("ss18say"), stage: $("ss18st"), ch: $("ss18ch"), fb: $("ss18fb"), score: $("ss18sc"), next: $("ss18nx") },
+    label: "Question",
+    items: [
+      { ask: "Which animal is <b>between</b> the cat and the rabbit?", pic: '<div class="ss-emo">🐱 🐶 🐰</div>',
+        opts: [{ t: "🐶 the dog", ok: true }, { t: "🐱 the cat", ok: false }, { t: "🐰 the rabbit", ok: false }],
+        why: "The dog is in the middle, with the cat on one side and the rabbit on the other. The dog is between them." },
+      { ask: "What is <b>above</b> the ball?", pic: ssShelf("🧸", "⚽"),
+        opts: [{ t: "🧸 the teddy", ok: true }, { t: "the floor", ok: false }],
+        why: "The teddy is on the top shelf, higher up than the ball. The teddy is above the ball, and the floor is below it." },
+      { ask: "Where is the ball?", pic: scene("behind"),
+        opts: [{ t: "behind the box", ok: true }, { t: "on the box", ok: false }, { t: "in front of the box", ok: false }],
+        why: "The box is in front and covers part of the ball, so the ball is behind the box." },
+      { ask: "Is the child walking <b>towards</b> the house, or <b>away</b> from it?", pic: '<div class="ss-emo">🧒 ➡️ 🏠</div>',
+        opts: [{ t: "towards the house", ok: true }, { t: "away from the house", ok: false }],
+        why: "The arrow goes from the child to the house, so the child is getting closer. That is towards the house." },
+      { ask: "Point <b>down</b>. What are you pointing at?", pic: "",
+        opts: [{ t: "the floor", ok: true }, { t: "the sky", ok: false }],
+        why: "Down is towards the floor. Up is towards the sky." },
+    ],
+    finish: 17,
+    done: "You can say where things are and which way they go.",
+  });
 
   /* ---- stickers ---- */
   const STICKERS = [
@@ -2207,14 +2680,23 @@
     ["🥛", "Full and empty"],
     ["🧰", "The right tool"],
     ["🧭", "Where it is"],
+    ["🎲", "Faces and edges"],
+    ["✏️", "Flat shape, solid shape"],
+    ["🌀", "Will it look the same?"],
+    ["🐍", "Longer or shorter"],
+    ["🎈", "Heavier or lighter"],
+    ["💧", "Pour and fill"],
+    ["🌡️", "Read the numbers"],
+    ["🐶", "Between, above, behind"],
     ["✅", "Show what I know"],
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
       (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
-    const got = done.slice(0, 11).filter(Boolean).length;
-    $("fbstick").className = "fb " + (got === 15 ? "good" : "");
-    $("fbstick").textContent = got === 15 ? "All 15 stickers! You are a shape star." : got + " of 15 stickers so far.";
+    /* ehel-second-steps: counted from STICKERS. It said "of 15", the total of the page this lesson was cut from */
+    const all = STICKERS.length, got = done.slice(0, all).filter(Boolean).length;
+    $("fbstick").className = "fb " + (got === all ? "good" : "");
+    $("fbstick").textContent = got === all ? "All " + all + " stickers! You are a shape star." : got + " of " + all + " stickers so far.";
   }
   $("restart").addEventListener("click", () => location.reload());
 
@@ -2620,3 +3102,77 @@
     if (added) report(lastAt);
   };
 </script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
+</script>
+
+<style>/* ehel-warmup - see add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>
+
+<style>/* ehel-second-steps - see add-second-steps.py */
+  .ss-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: flex-end; }
+  .ss-cell { display: grid; justify-items: center; gap: 6px; }
+  .ss-art { width: 104px; }
+  .ss-art svg { width: 100%; height: auto; display: block; }
+  .ss-lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--ink); }
+  .ss-emo { font-size: clamp(40px, 9vw, 60px); line-height: 1.2; text-align: center; }
+  .ss-emo.sm { font-size: clamp(28px, 6vw, 40px); }
+  .ss-flash { display: grid; place-items: center; min-height: 150px; }
+  .ss-stack { display: grid; gap: 12px; width: min(92%, 380px); }
+  .ss-srow { display: grid; grid-template-columns: 32px 1fr; align-items: center; gap: 10px; }
+  .ss-srow svg { width: 100%; height: auto; display: block; }
+</style>

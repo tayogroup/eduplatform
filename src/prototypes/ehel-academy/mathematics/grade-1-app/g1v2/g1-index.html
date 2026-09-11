@@ -3,7 +3,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grade 1 Mathematics</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   /* ==================================================================
      Grade 1 Mathematics - the way in.
@@ -187,6 +191,30 @@
 .dots button::after {
   content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
 }
+
+/* ==== build-grownup-section.py ==== */
+/* The adult's half of the hub. Collapsed by default: a child arriving at the
+   hub should meet seven lessons, not seven answer keys. */
+.grownup { margin: 26px 0 10px; }
+.grownup h3 { font-size: 20px; margin: 0 0 6px; }
+.grownup > p { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0 0 14px; }
+details.gu {
+  border: 2px solid var(--line); border-radius: 14px; background: var(--card);
+  padding: 10px 14px; margin: 0 0 10px;
+}
+details.gu > summary { cursor: pointer; font-size: 16px; }
+details.gu .gu-meta { color: var(--muted); font-weight: 600; font-size: 14px; }
+details.gu h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--muted); margin: 14px 0 6px; }
+details.gu ul { margin: 0; padding-left: 20px; }
+details.gu li { font-size: 15px; line-height: 1.5; margin: 0 0 4px; }
+details.gu .gu-home { font-size: 15px; line-height: 1.5; margin: 0; }
+@media print {
+  details.gu { break-inside: avoid; }
+  details.gu > summary { list-style: none; }
+  details.gu[open] > summary::marker { content: ""; }
+}
+/* ==== end build-grownup-section.py ==== */
 </style>
 
 <div class="wrap">
@@ -194,7 +222,7 @@
   <header>
     <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
     <h1>Grade 1 <em>Mathematics</em></h1>
-    <p class="lede">Seven lessons, in the order they are meant to be done. Start at the top &mdash; each one gets you ready for the next. About 190 minutes in all, one lesson a week.</p>
+    <p class="lede">Seven lessons, in the order they are meant to be done. Start at the top &mdash; each one gets you ready for the next. About 240 minutes in all, one lesson a week.</p>
   </header>
 
   <div class="grid" id="lessons" role="main">
@@ -207,7 +235,7 @@
       <span class="strand">Number</span>
       <h2>Counting to Twenty</h2>
       <p class="covers">Count to 20 and know what the numbers mean: read them, write them, count in twos and tens, put them in order, compare them, say which is odd and which is even, and estimate before you count.</p>
-      <span class="foot"><span class="steps">16 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">20 steps &middot; about 50 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-number" href="adding-and-taking-away.html?from=g1">
@@ -219,7 +247,7 @@
       <span class="strand">Number</span>
       <h2>Adding and Taking Away</h2>
       <p class="covers">Add by counting on and by putting two groups together, take away, find how many more, make ten, learn your doubles, and pay with coins.</p>
-      <span class="foot"><span class="steps">8 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-frac" href="halves-and-wholes.html?from=g1">
@@ -255,7 +283,7 @@
       <span class="strand">Shape and measure</span>
       <h2>Shapes and Sizes</h2>
       <p class="covers">Name flat and solid shapes and sort them by their sides, faces and edges, turn a shape round, compare length, weight and how much a jug holds, pick the right measuring tool, and say where something is.</p>
-      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">18 steps &middot; about 50 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-time" href="days-months-and-clocks.html?from=g1">
@@ -267,7 +295,7 @@
       <span class="strand">Time</span>
       <h2>Days, Months and Clocks</h2>
       <p class="covers">Say the days of the week and the months of the year in order, work out which things take longer, and read the clock at o'clock and half past.</p>
-      <span class="foot"><span class="steps">4 steps &middot; about 10 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">6 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-data" href="asking-and-sorting.html?from=g1">
@@ -287,9 +315,9 @@
   <!-- GROWNUP:START  built by build-grownup-section.py -->
   <section class="grownup" id="grownups">
     <h3>For teachers and parents</h3>
-    <p>What each lesson teaches, in Cambridge's own words; what every step asks the child to do; and the answer keys for the end-of-lesson check. Open a lesson to work through it, or print this page for the lot. The minutes are an estimate of about two and a half minutes a step, not yet timed against a real class, so treat them as a guide to the length of a sitting rather than a plan.</p>
+    <p>What each lesson teaches, in Cambridge's own words; what every step asks the child to do; the answer keys for the end-of-lesson check; and one thing to try at home with things you already have. Open a lesson to work through it, or print this page for the lot. The minutes are an estimate of about two and a half minutes a step, not yet timed against a real class, so treat them as a guide to the length of a sitting rather than a plan.</p>
     <details class="gu">
-      <summary><b>Lesson 1: Counting to Twenty</b> <span class="gu-meta">16 steps &middot; about 40 min &middot; 10 objectives &middot; 15 check questions</span></summary>
+      <summary><b>Lesson 1: Counting to Twenty</b> <span class="gu-meta">20 steps &middot; about 50 min &middot; 10 objectives &middot; 15 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
       <ul>
         <li><b>1Nc.01</b> Count objects from 0 to 20, recognising conservation of number and one-to-one correspondence.</li>
@@ -321,6 +349,10 @@
         <li><b>First, second, third</b> &middot; Ten runners in a race. The one nearest the flag is first. Press next runner: first, second, third.</li>
         <li><b>Guess, then count</b> &middot; Do not count yet! How many stars do you think there are? Tap your guess.</li>
         <li><b>Estimate to 20</b> &middot; How many apples? Slide your guess on the number line and lock it. Then tap each apple to count it into the frames.</li>
+        <li><b>Patterns you know</b> &middot; Press look. The picture shows for a moment. Then tap how many you saw, without counting.</li>
+        <li><b>Zero means empty</b> &middot; Zero means none at all. Look at each picture and tap the answer.</li>
+        <li><b>Every other number</b> &middot; Count, and say every other number. The numbers you land on are all even, or all odd.</li>
+        <li><b>Places in a line</b> &middot; Count from the front of the line: first, second, third. Tap the answer.</li>
       </ul>
       <h4>Check answers</h4>
       <ul>
@@ -330,7 +362,7 @@
         <li>Which digits do you press to write fourteen? <b>1 then 4</b></li>
         <li>There are no apples left on the plate. Which number is that? <b>0</b></li>
         <li>Which is more, 9 or 6? <b>9</b></li>
-        <li>How many counters? <b>14</b></li>
+        <li>And how many counters now? <b>14</b></li>
         <li>Which number comes just after 16? <b>17</b></li>
         <li>2, 4, 6, 8, ? <b>10</b></li>
         <li>17 is 1 ten and ? ones <b>7</b></li>
@@ -340,9 +372,11 @@
         <li>In the line A, B, C, D, who is 3rd? <b>C</b></li>
         <li>20, 19, 18, 17, ? <b>16</b></li>
       </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Gather up to 20 small things, such as beans or bottle tops. Ask your child to guess how many, then count them by touching each one once. Then put them in pairs: if every one has a partner the number is even, and if one is left alone it is odd.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 2: Adding and Taking Away</b> <span class="gu-meta">8 steps &middot; about 20 min &middot; 6 objectives &middot; 11 check questions</span></summary>
+      <summary><b>Lesson 2: Adding and Taking Away</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 6 objectives &middot; 11 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
       <ul>
         <li><b>1Ni.02</b> Understand addition as: counting on combining two sets.</li>
@@ -362,6 +396,9 @@
         <li><b>Doubles</b> &middot; A ladybird has the same spots on both sides. Double means the same again.</li>
         <li><b>Doubles to 20</b> &middot; Tap a double to see it in the frames. Double seven is fourteen: that is ten and four.</li>
         <li><b>Money to 20</b> &middot; Coins! Tap coins from the purse to pay the price. Watch the total.</li>
+        <li><b>Counting on</b> &middot; Put the bigger number in your head, then count on. Tap the answer.</li>
+        <li><b>Pairs that make 10</b> &middot; Ten is a full frame. How many more make ten? Look at the empty spaces.</li>
+        <li><b>Know your coins</b> &middot; Look at the coins. The number on each coin says how many shillings it is worth. Tap the answer.</li>
       </ul>
       <h4>Check answers</h4>
       <ul>
@@ -377,6 +414,8 @@
         <li>6 + 7 = ? (double 6 and 1 more) <b>13</b></li>
         <li>10 sh + 5 sh + 2 sh = ? <b>17 sh</b></li>
       </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Put 10 beans on the table and hide some under a cup. Ask how many are hidden: if 6 are showing, 4 are hidden, because 6 and 4 make 10. For doubles, put the same number in each hand and ask how many there are altogether.</p>
     </details>
     <details class="gu">
       <summary><b>Lesson 3: Halves and Wholes</b> <span class="gu-meta">8 steps &middot; about 20 min &middot; 4 objectives &middot; 10 check questions</span></summary>
@@ -411,6 +450,8 @@
         <li>How many halves make one whole? <b>2</b></li>
         <li>How many halves make 3 wholes? <b>6</b></li>
       </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">At snack time, cut a piece of fruit or bread into two parts and ask whether they are the same size: only two equal parts are halves. Then share 6 beans fairly between two people, so each person has half.</p>
     </details>
     <details class="gu">
       <summary><b>Lesson 4: What Comes Next</b> <span class="gu-meta">14 steps &middot; about 40 min &middot; 2 objectives &middot; 15 check questions</span></summary>
@@ -454,9 +495,11 @@
         <li>?, 8, 10, 12, 14 <b>6</b></li>
         <li>Which shape is missing in the middle? <b>teal square</b></li>
       </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Make a pattern with things to hand, such as spoon, cup, spoon, cup, and ask what comes next. Then ask your child to make a pattern for you to carry on, and to point to the part that repeats.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 5: Shapes and Sizes</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 9 objectives &middot; 13 check questions</span></summary>
+      <summary><b>Lesson 5: Shapes and Sizes</b> <span class="gu-meta">18 steps &middot; about 50 min &middot; 9 objectives &middot; 13 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
       <ul>
         <li><b>1Gg.01</b> Identify, describe and sort 2D shapes by their characteristics or properties, including reference to number of sides and whether the sides are curved or straight.</li>
@@ -481,6 +524,14 @@
         <li><b>Full and empty</b> &middot; These jugs hold water. Full, empty, more or less. Tap the answer.</li>
         <li><b>Which tool measures it?</b> &middot; Every measuring tool has numbers on it. Which one would you use for this job? Tap it.</li>
         <li><b>Where is it?</b> &middot; Where is the ball? Look at the box, then tap the word that says where the ball is.</li>
+        <li><b>Faces and edges</b> &middot; Look at each solid shape. Think about its faces and its edges, then tap the answer.</li>
+        <li><b>Flat shape, solid shape</b> &middot; A flat shape lies on paper. A solid shape can be picked up and held. Tap the answer.</li>
+        <li><b>Will it look the same?</b> &middot; Imagine each shape turning. Which one would look exactly the same after the turn?</li>
+        <li><b>Longer or shorter?</b> &middot; Compare them. Which is longer, taller or thinner? Tap the answer.</li>
+        <li><b>Heavier or lighter?</b> &middot; Heavy, light, more and less. Think about how heavy each thing is, then tap the answer.</li>
+        <li><b>Pour and fill</b> &middot; Full, empty, more and less. Think about how much water each one holds, then tap the answer.</li>
+        <li><b>Read the numbers</b> &middot; Every measuring tool has numbers on it. Read the numbers, then tap the answer.</li>
+        <li><b>Between, above, behind</b> &middot; Look at the picture. Tap the words that say where it is, or which way it is going.</li>
       </ul>
       <h4>Check answers</h4>
       <ul>
@@ -498,9 +549,11 @@
         <li>Which tool would you use to see how hot the water is? <b>a thermometer</b></li>
         <li>The cat is below the table. So the cat is… <b>under the table</b></li>
       </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Go on a shape hunt at home: find something round, something with four straight sides, and something shaped like a box. Then compare two objects and ask which is longer, which is heavier, and which holds more water.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 6: Days, Months and Clocks</b> <span class="gu-meta">4 steps &middot; about 10 min &middot; 3 objectives &middot; 5 check questions</span></summary>
+      <summary><b>Lesson 6: Days, Months and Clocks</b> <span class="gu-meta">6 steps &middot; about 20 min &middot; 3 objectives &middot; 5 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
       <ul>
         <li><b>1Gt.01</b> Use familiar language to describe units of time.</li>
@@ -513,6 +566,8 @@
         <li><b>Months of the year</b> &middot; Twelve months make a year. One month is missing. Tap the one that belongs in the gap.</li>
         <li><b>Short times and long times</b> &middot; A second is very short. A year is very long. Tap them in order, from the shortest to the longest.</li>
         <li><b>Telling the time</b> &middot; A clock. The short hand tells the hour. When the long hand points to twelve, it is something o'clock. Press next hour.</li>
+        <li><b>How long does it take?</b> &middot; Seconds, minutes, hours, days, weeks, months and years. Think about how long each thing takes, then tap the answer.</li>
+        <li><b>Find the clock</b> &middot; Read each clock. The short hand tells the hour, and the long hand says o'clock or half past. Tap the answer.</li>
       </ul>
       <h4>Check answers</h4>
       <ul>
@@ -522,6 +577,8 @@
         <li>The long hand is on 12 and the short hand is on 3. What time is it? <b>3 o'clock</b></li>
         <li>The long hand is on 6 and the short hand is just past 4. What time is it? <b>half past 4</b></li>
       </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Each morning, say the day of the week together and ask what day comes next. Look at a clock with hands, or draw one, and ask where the short hand and the long hand point at an o'clock time and at half past.</p>
     </details>
     <details class="gu">
       <summary><b>Lesson 7: Asking and Sorting</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 3 objectives &middot; 16 check questions</span></summary>
@@ -564,6 +621,8 @@
         <li>We asked our class. Does the graph tell us about the whole school? <b>no, only the class we asked</b></li>
         <li>Which word means the smallest number in a graph? <b>least</b></li>
       </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Ask everyone at home one question, such as their favourite fruit, and record the answers together as a list or with tally marks. Then sort some clothes or toys into two groups, such as red and not red, and count each group.</p>
     </details>
   </section>
   <!-- GROWNUP:END -->

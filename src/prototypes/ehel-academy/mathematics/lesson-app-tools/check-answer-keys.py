@@ -461,6 +461,16 @@ SOLIDS = {                       # faces, edges, corners
     "cube": (6, 12, 8), "cuboid": (6, 12, 8), "sphere": (1, 0, 0),
     "cylinder": (3, 2, 0), "cone": (2, 1, 1), "pyramid": (5, 8, 5),
 }
+# how many of those faces are FLAT, for the solids with a curved one; every
+# other solid here is flat all over
+FLAT_FACES = {"sphere": 0, "cylinder": 2, "cone": 1}
+ORDWORD = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth",
+           6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "tenth"}
+
+
+def ordinal(n):
+    """8 -> '8th', 22 -> '22nd'"""
+    return "%d%s" % (n, "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th"))
 TOOL_FOR = {"long": "ruler", "tall": "ruler", "wide": "ruler", "high": "ruler",
             "heavy": "scales", "hot": "thermometer", "cold": "thermometer",
             "much milk": "jug", "much water": "jug", "much juice": "jug"}
@@ -1524,11 +1534,19 @@ def stage34_shape(low, opts):
                 pass                                          # the aside confirms it
             return v if v != 99 else None
     # a solid named by more than one word
-    m = re.search(r"how many (?:flat )?(faces|edges|corners|vertices) does an? ([\w -]+?) have", low)
+    # "FLAT FACES" IS NOT "FACES" FOR A CURVED SOLID. The optional "flat " used
+    # to be matched and then thrown away, which is right for "How many flat
+    # faces does a cube have?" - every face of a cube is flat - and wrong for a
+    # cylinder: it answered 3 against a correct key of 2 (Grade 1's second step
+    # for 1Gg.03), and the check reported the KEY wrong.
+    m = re.search(r"how many (flat |curved )?(faces|edges|corners|vertices) does an? ([\w -]+?) have", low)
     if m:
-        want = m.group(1).replace("vertices", "corners")
+        want = m.group(2).replace("vertices", "corners")
         for name, (f, e, c) in SOLIDS.items():
-            if re.search(r"\b" + name + r"\b", m.group(2)):
+            if re.search(r"\b" + name + r"\b", m.group(3)):
+                if m.group(1) and want == "faces":
+                    flat = FLAT_FACES.get(name, f)
+                    return flat if m.group(1) == "flat " else f - flat
                 return {"faces": f, "edges": e, "corners": c}[want]
     if re.search(r"two circular faces and a curved surface", low):
         hit = [o for o in opts if re.search(r"\bcylinder\b", str(norm(o)))]
@@ -2529,6 +2547,14 @@ def expected(q, opts, item, js=""):
             if re.search(r"\bempty\b", low):
                 hit = [l for v, l in vals if v <= 0.001]
                 return hit[0] if len(hit) == 1 else None
+            # TWO EQUAL FILLS HOLD THE SAME. max() of two tied (fill, label)
+            # pairs breaks the tie on the LABEL, so jugRow([[0.5, "A"], [0.5,
+            # "B"]]) "held more" in jug B and a correct "They hold the same"
+            # was reported wrong. A tie answers with the option that says so.
+            if re.search(r"holds (?:more|less)|which jug is fuller", low) and len(vals) == 2 \
+                    and vals[0][0] == vals[1][0]:
+                hit = [o for o in opts if re.search(r"\bsame\b", str(norm(o)))]
+                return hit[0] if len(hit) == 1 else None
             if re.search(r"holds more|which jug is fuller", low):
                 return max(vals)[1] if len(vals) == 2 else None
             if re.search(r"holds less", low):
@@ -2601,7 +2627,15 @@ def expected(q, opts, item, js=""):
     got = stage3_runtime(low, t, opts)
     if got is not None:
         return got
-    if picn is not None and re.search(r"^how many\b", low) and not nums(t):
+    # A LEADING CONNECTIVE IS STILL THE SAME QUESTION. The duplicate-stem fix in
+    # bf63e7c30 made Counting to Twenty's second counter question "And how many
+    # counters now?", which a bare ^how many cannot read - so a CONTENT fix cut
+    # this checker's coverage from 126 to 125 and nothing reported the drop. It
+    # is the only question in any build that opens this way (measured
+    # 2026-09-11), and the rule still needs a numeric pic: and no number in the
+    # question text, so allowing one connective widens it by exactly that case.
+    if picn is not None and re.search(r"^(?:and |so |now |then )?how many\b", low) \
+            and not nums(t):
         return picn                                   # "How many counters?" + pic: N
     if re.search(r"\bno .* left\b|are none left", low) and re.search(r"which number", low):
         return 0
@@ -2613,7 +2647,11 @@ def expected(q, opts, item, js=""):
     m = re.search(r"(\d+) \w+ (?:are|is)\b.*?\ball \1\b.*?\bhow many (?:are )?left", low)
     if m:
         return 0
-    m = re.search(r"which word says (\d+)", low)
+    # AN ORDINAL IS A PLACE. "Which word says 10th?" read the 10 and dropped the
+    # "th", answering "ten" against a correct "tenth".
+    m = re.search(r"which word says (\d+)(st|nd|rd|th)?\b", low)
+    if m and m.group(2):
+        return ORDWORD.get(int(m.group(1)))
     if m:
         n = int(m.group(1))
         for w, v in WORD.items():
@@ -2790,9 +2828,12 @@ def expected(q, opts, item, js=""):
         if int(m.group(1)) != int(m.group(3)):
             hit = [o for o in opts if re.search(r"\bmore\b", norm(o)) and big in norm(o)]
             return hit[0] if len(hit) == 1 else None
-    m = re.search(r"comes just after\s+(\d+)", low)
+    # "Which place comes just after 7th?" was answered 8 - a number, against
+    # options written 8th, 6th and 9th - so a correct key was reported wrong
+    # with an answer that was not one of the options. The place stays a place.
+    m = re.search(r"comes just after\s+(\d+)(st|nd|rd|th)?\b", low)
     if m:
-        return int(m.group(1)) + 1
+        return ordinal(int(m.group(1)) + 1) if m.group(2) else int(m.group(1)) + 1
     m = re.search(r"(\d+) is 1 ten and \? ones", low)
     if m:
         return int(m.group(1)) - 10

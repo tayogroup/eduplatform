@@ -34,7 +34,7 @@ import path from "node:path";
 import vm from "node:vm";
 
 const argv = process.argv.slice(2);
-const FLAGS = ["--app", "--samples", "--out"];
+const FLAGS = ["--app", "--samples", "--out", "--seed"];
 const val = (f, d) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : d);
 // REFUSE AN UNRECOGNISED ARGUMENT rather than falling back to the default set.
 // A typo would otherwise emit a different build's questions under the name of
@@ -56,6 +56,33 @@ const SRC = path.resolve(process.cwd(), val("--app", "."));
 const SAMPLES = Number(val("--samples", 25));
 const OUT = val("--out", null);
 
+/* A FIXED SEED BY DEFAULT, so the same tree gives the same questions.
+ *
+ * This first shipped drawing from Math.random, and its count moved every run:
+ * 784 verified, then 782, from an unchanged tree - which is fine for exploring
+ * and useless as a gate, because a number that wobbles on its own cannot tell
+ * you when something changed. The draws are now seeded, so a run is a function
+ * of the tree and the seed, and two runs on one tree emit byte-identical JSON.
+ *
+ * The cost is stated rather than hidden: a fixed seed samples the SAME
+ * instances every time and never explores new ones. Pass a different --seed to
+ * look further; a defect found that way is reproducible by quoting the seed.
+ */
+const SEED_ARG = val("--seed", "1");
+if (!/^\d+$/.test(SEED_ARG)) {
+  console.error("--seed takes a non-negative integer, got: " + SEED_ARG);
+  process.exit(2);
+}
+const SEED = Number(SEED_ARG) >>> 0;
+
+// one seed per (lesson, block), mixed from the run seed, so two lessons whose
+// generators have the same shape do not draw the same numbers in lockstep
+function blockSeed(file, index) {
+  let h = (SEED ^ 0x9e3779b9) >>> 0;
+  for (const ch of file + "#" + index) h = Math.imul(h ^ ch.charCodeAt(0), 0x01000193) >>> 0;
+  return h;
+}
+
 // MIRROR check-answer-keys.py's fallback rather than refusing. A build with no
 // app.config.json is a real thing to point at - ../grade-1-app, the superseded
 // five-lesson build - and the checker reads it by listing .html files. Refusing
@@ -75,8 +102,18 @@ if (fs.existsSync(cfgPath)) {
 const cfg = { lessons: lessons.map((f) => ({ file: f })) };
 
 // the helpers every generator in these builds uses. Identical in all eight
-// Grade 3 lessons; `two` is a zero-pad for clock faces.
-const PRELUDE = `
+// Grade 3 lessons; `two` is a zero-pad for clock faces. Math.random is replaced
+// INSIDE the vm context by a seeded mulberry32 before rnd is defined, so every
+// draw a generator makes - through rnd or directly - comes from the seed.
+const prelude = (seed) => `
+  Math.random = (function (a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  })(${seed});
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const two = (n) => (n < 10 ? "0" : "") + n;
 `;
@@ -151,13 +188,13 @@ for (const lesson of cfg.lessons) {
   files++;
 
   const consts = topLevelConsts(js).filter((c) => c.name !== "QS");
-  for (const block of blocks) {
+  for (const [bi, block] of blocks.entries()) {
     let arr;
     const needed = consts
       .filter((c) => new RegExp("\\b" + c.name + "\\b").test(block))
       .map((c) => c.text).join("\n");
     try {
-      arr = vm.runInNewContext(PRELUDE + needed + "\n(" + block + ")",
+      arr = vm.runInNewContext(prelude(blockSeed(lesson.file, bi)) + needed + "\n(" + block + ")",
                                Object.create(null), { timeout: 5000 });
     } catch (e) {
       console.error("  FAILED to evaluate a QS block in " + lesson.file + ": " + e.message);
@@ -213,7 +250,7 @@ if (!gens) {
 const text = JSON.stringify(out, null, 1);
 if (OUT) fs.writeFileSync(OUT, text);
 else process.stdout.write(text + "\n");
-console.error("\n  " + files + " lesson(s), " + gens + " generator(s) -> " + out.length +
+console.error("\n  seed " + SEED + ": " + files + " lesson(s), " + gens + " generator(s) -> " + out.length +
               " distinct question(s)" +
               (dropped ? ", " + dropped + " draw(s) dropped for repeated options" : "") +
               (failed ? ", " + failed + " FAILED" : ""));

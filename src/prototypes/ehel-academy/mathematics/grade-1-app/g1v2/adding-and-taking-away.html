@@ -20,7 +20,11 @@
   })();
 </script>
 <title>Adding and Taking Away</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
@@ -754,9 +758,11 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
     <!-- 1  1Ni.02, 1Ni.05  Adding -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Adding is putting two groups together and finding how many there are altogether.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Three counters here and two counters there.</s><s>Push them together into one group.</s><s>Now count the whole lot.</s><s>One, two, three, four, five.</s><s>Three and two make five.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count one group and forget to carry on into the other, so they answer with just one part.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So push the groups together first, then count every counter in the new group.</s></mstts:express-as>' data-say="Put the two groups together. How many altogether? Tap the answer.">
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Adding</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Put the two groups together. How many <b>altogether</b>? Tap the answer.</span></div>
       <div class="stage">
@@ -859,6 +865,36 @@
         <div class="bigbtns"><button type="button" class="big small teal" id="next25" hidden>Next</button></div>
         <p class="fb" id="score25" style="font-size:18px;color:var(--muted)"></p>
       </div>
+    </section>
+<!-- 9  1Ni.02  Counting on -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You do not have to count everything from one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Put the first number in your head.</s><s>Say it, then count on the rest, one at a time.</s><s>Six in your head, then count on three: seven, eight, nine.</s><s>Nine altogether.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start again from one and count every counter, and they lose their place.</s><s>Start from the number you already know, and it is much quicker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the bigger number first, then count on with your fingers.</s></mstts:express-as>' data-say="Put the bigger number in your head, then count on. Tap the answer.">
+      <div class="slide-head"><span class="n">9</span><h2>Counting on</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss9say">Put the first number in your head, then <b>count on</b>. How many <b>altogether</b>?</span></div>
+      <div class="stage" id="ss9st"></div>
+      <div class="choices" id="ss9ch"></div>
+      <p class="fb" id="ss9fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss9nx" hidden>Next question</button></div>
+      <p class="fb" id="ss9sc" style="font-size:18px;color:var(--muted)"></p>
+    </section>
+<!-- 10  1Ni.04  Pairs that make 10 -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Numbers come in pairs that make ten, and it helps to know them by heart.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A ten frame shows them.</s><s>Seven counters leave three empty spaces, so seven and three make ten.</s><s>One and nine, two and eight, three and seven, four and six, five and five.</s><s>And ten and zero.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count the counters that are there, when the question asks about the spaces.</s><s>Count the empty spaces instead.</s><s>They are the number you need to make ten.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the gaps, and say the pair out loud: seven and three make ten.</s></mstts:express-as>' data-say="Ten is a full frame. How many more make ten? Look at the empty spaces.">
+      <div class="slide-head"><span class="n">10</span><h2>Pairs that make 10</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss10say">How many more <b>make 10</b>? Look at the empty spaces.</span></div>
+      <div class="stage" id="ss10st"></div>
+      <div class="choices" id="ss10ch"></div>
+      <p class="fb" id="ss10fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss10nx" hidden>Next question</button></div>
+      <p class="fb" id="ss10sc" style="font-size:18px;color:var(--muted)"></p>
+    </section>
+<!-- 11  1Nm.01  Know your coins -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Our money is counted in shillings, and we write sh for short.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Each coin has a number on it.</s><s>The number tells you how many shillings the coin is worth.</s><s>A ten shilling coin is worth ten, even though it is only one coin.</s><s>Two five shilling coins are worth the same as one ten.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think more coins always means more money.</s><s>It does not.</s><s>One ten shilling coin is worth more than three two shilling coins, because ten is more than six.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read the number on each coin, and add them up before you decide.</s></mstts:express-as>' data-say="Look at the coins. The number on each coin says how many shillings it is worth. Tap the answer.">
+      <div class="slide-head"><span class="n">11</span><h2>Know your coins</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss11say">Look at the coins. The number on a <b>coin</b> says how many shillings it is worth.</span></div>
+      <div class="stage" id="ss11st"></div>
+      <div class="choices" id="ss11ch"></div>
+      <p class="fb" id="ss11fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss11nx" hidden>Next question</button></div>
+      <p class="fb" id="ss11sc" style="font-size:18px;color:var(--muted)"></p>
     </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows counters, count them.</s><s>If it asks which is bigger, use the number line.</s><s>If it shows a clock, look at the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
@@ -990,6 +1026,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1281,6 +1319,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1724,7 +1763,106 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see add-warmup.py. NOT a step: no sticker, no dot, no score. */
+  const WARM = [{ q: "Last lesson, you counted to 20. Warm up: you have 3 apples and get 1 more. How many apples now?", opts: [4, 3, 5], a: 4, why: "3 and 1 more make 4. Today you will add and take away." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+
+  /* ==== ehel-second-steps: the runner - see grade-1-app/add-second-steps.py ====
+     Seventeen objectives rested on one slide each. Each now has a second step,
+     after the lesson's own steps and before the check. One question after
+     another, like sequence() in Shapes and Sizes, except that the child moves on
+     with a button: say() stops whatever is playing, so a timer that draws the
+     next question cuts the explanation off, and these explain every answer.
+     o.flash (ms) shows the picture behind a Look! button, for seeing how many
+     without counting. Takes ELEMENTS, so each step's own block names its slide. */
+  function secondStep(o) {
+    const el = o.el, items = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    let i = 0, right = 0, lock = true;
+    function options() {
+      el.ch.innerHTML = shuffle(items[i].opts).map((c) => '<button type="button" class="choice' +
+        (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      lock = false;
+    }
+    function draw() {
+      const it = items[i];
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      if (o.flash) {
+        el.stage.innerHTML = '<div class="ss-flash" style="visibility:hidden">' + it.pic + "</div>" +
+          '<div class="bigbtns"><button type="button" class="big teal ss-look">Look!</button></div>';
+        el.ch.innerHTML = "";
+      } else {
+        el.stage.innerHTML = it.pic || "";
+        options();
+      }
+      say(words(it.ask));
+    }
+    el.stage.addEventListener("click", (e) => {
+      const b = e.target.closest(".ss-look"); if (!b) return;
+      const pic = el.stage.querySelector(".ss-flash");
+      b.parentElement.remove();
+      pic.style.visibility = "visible";
+      setTimeout(() => { pic.style.visibility = "hidden"; options(); }, o.flash);
+    });
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = items[i], ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (ok) right++; else b.classList.add("wrong");
+      const pic = el.stage.querySelector(".ss-flash"); if (pic) pic.style.visibility = "visible";
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      i++;
+      if (i < items.length) el.next.hidden = false;
+      else { el.score.textContent = "You got " + right + " of " + items.length + ". " + o.done; finish(o.finish); }
+      say(msg);
+    });
+    el.next.addEventListener("click", () => { if (i < items.length) draw(); });
+    draw();
+  }
+  /* the second steps' pictures, in this lesson's own classes */
+  const SS_PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
+  const ssDice = (n) => '<div class="dice">' + Array.from({ length: 9 }, (_, i) => '<i class="' + (SS_PIPS[n].includes(i) ? "on" : "") + '"></i>').join("") + "</div>";
+  const ssDomino = (a, b) => '<div class="ss-domino" role="img" aria-label="A domino">' + ssDice(a) + ssDice(b) + "</div>";
+  const ssFrames = (n) => '<div class="frames"><div class="tenframe">' + frameHtml(Math.min(10, n)) + "</div>" +
+    (n > 10 ? '<div class="tenframe">' + frameHtml(n - 10, "b") + "</div>" : "") + "</div>";
+  function ssTrack(from, to, a, b) {
+    let h = "";
+    for (let n = from; n <= to; n++) h += '<b class="' + (a.includes(n) ? "a" : b.includes(n) ? "b" : "") + '">' + n + "</b>";
+    return '<div class="ss-track" role="img" aria-label="The numbers ' + from + " to " + to + '">' + h + "</div>";
+  }
+  const ssLine = (list) => '<div class="queue"><div class="flag"></div>' + list.map((e) => '<span class="ss-who">' + e + "</span>").join("") + "</div>";
+  const SS_SHELF = [["teal", 80], ["accent", 96], ["gold", 70], ["plum", 88], ["teal", 100], ["accent", 76], ["gold", 92], ["plum", 84]];
+  const ssBooks = (letters) => '<div class="ss-books" role="img" aria-label="Books on a shelf">' + letters.split("").map((L, i) =>
+    '<span class="ss-book" style="height:' + SS_SHELF[i % 8][1] + "px;background:var(--" + SS_SHELF[i % 8][0] + ')">' + L + "</span>").join("") + "</div>";
+  const ssBaskets = (list, emo) => '<div class="ss-row">' + list.map((c) => '<div class="ss-cell"><div class="ss-box">' +
+    (c[0] ? emo.repeat(c[0]) : "&nbsp;") + '</div><div class="ss-lab">' + c[1] + "</div></div>").join("") + "</div>";
+  const ssBag = (n, more) => '<div class="ss-row"><div class="ss-cell"><div class="ss-bag">' + n + '</div><div class="ss-lab">in the bag</div></div>' +
+    '<div class="ss-cell"><div class="ss-emo sm">' + more + '</div><div class="ss-lab">on the table</div></div></div>';
+  const ssCoins = (list) => '<div class="coins">' + list.map((v) => '<span class="coin c' + v + ' still">' + v + "</span>").join("") + "</div>";
+  const ssWho = (list) => '<div class="ss-row">' + list.map((w) => '<div class="ss-cell">' + ssCoins(w[1]) + '<div class="ss-lab">' + w[0] + "</div></div>").join("") + "</div>";
 
   /* ---- shared drawing ---- */
   function frameHtml(n, cls, tap) {
@@ -2073,18 +2211,31 @@
   roundMoney();
 
   /* ---- 27: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11). Below it the child sees the score, how many they need, and a
+     button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "6 + 4 = ?", pic: null, opts: [10, 9, 11], a: 10, say: "six add four" },
-    { q: "8 red and 5 blue. How many more red than blue?", pic: null, opts: [3, 13, 8], a: 3, say: "Eight red and five blue. How many more red than blue?" },
-    { q: "10 − 3 = ?", pic: null, opts: [7, 6, 8], a: 7, say: "ten take away three" },
-    { q: "4 and ? make 10", pic: null, opts: [6, 5, 7], a: 6, say: "four and what make ten?" },
-    { q: "Double 5 is ?", pic: null, opts: [10, 8, 12], a: 10, say: "What is double five?" },
-    { q: "8 + 5 = ?", pic: null, opts: [13, 12, 14], a: 13, say: "eight add five" },
-    { q: "14 − 6 = ?", pic: null, opts: [8, 7, 9], a: 8, say: "fourteen take away six" },
-    { q: "6 and ? make 10", pic: null, opts: [4, 3, 5], a: 4, say: "six and what make ten?" },
-    { q: "Double 8 is ?", pic: null, opts: [16, 15, 18], a: 16, say: "What is double eight?" },
-    { q: "6 + 7 = ? (double 6 and 1 more)", pic: null, opts: [13, 12, 14], a: 13, say: "six add seven. Use double six and one more." },
-    { q: "10 sh + 5 sh + 2 sh = ?", pic: null, opts: ["17 sh", "15 sh", "18 sh"], a: "17 sh", say: "ten shillings and five shillings and two shillings. How much?" },
+    { q: "6 + 4 = ?", pic: null, opts: [10, 9, 11], a: 10, say: "six add four", why: "Start at 6 and count on 4: 7, 8, 9, 10." },
+    { q: "8 red and 5 blue. How many more red than blue?", pic: null, opts: [3, 13, 8], a: 3, say: "Eight red and five blue. How many more red than blue?", why: "Count on from 5 to 8: 6, 7, 8. That is 3 more." },
+    { q: "10 − 3 = ?", pic: null, opts: [7, 6, 8], a: 7, say: "ten take away three", why: "Start at 10 and count back 3: 9, 8, 7." },
+    { q: "4 and ? make 10", pic: null, opts: [6, 5, 7], a: 6, say: "four and what make ten?", why: "Count on from 4 up to 10: that is 6 more. 4 and 6 make 10." },
+    { q: "Double 5 is ?", pic: null, opts: [10, 8, 12], a: 10, say: "What is double five?", why: "Double 5 means 5 and 5 more. That makes 10." },
+    { q: "8 + 5 = ?", pic: null, opts: [13, 12, 14], a: 13, say: "eight add five", why: "Go through 10: 8 and 2 make 10, then 3 more make 13." },
+    { q: "14 − 6 = ?", pic: null, opts: [8, 7, 9], a: 8, say: "fourteen take away six", why: "Go through 10: take 4 to get to 10, then take 2 more to get to 8." },
+    { q: "6 and ? make 10", pic: null, opts: [4, 3, 5], a: 4, say: "six and what make ten?", why: "Count on from 6 up to 10: that is 4 more. 6 and 4 make 10." },
+    { q: "Double 8 is ?", pic: null, opts: [16, 15, 18], a: 16, say: "What is double eight?", why: "Double 8 means 8 and 8 more. That makes 16." },
+    { q: "6 + 7 = ? (double 6 and 1 more)", pic: null, opts: [13, 12, 14], a: 13, say: "six add seven. Use double six and one more.", why: "Double 6 is 12. Seven is one more than six, so add 1 to get 13." },
+    { q: "10 sh + 5 sh + 2 sh = ?", pic: null, opts: ["17 sh", "15 sh", "18 sh"], a: "17 sh", say: "ten shillings and five shillings and two shillings. How much?", why: "10 and 5 make 15, and 2 more make 17 shillings." },
   ];
   let c12 = 0, right12 = 0, lock12 = false;
   function round12() {
@@ -2093,7 +2244,8 @@
       $("q12").textContent = ""; $("pic12").innerHTML = ""; $("ch12").innerHTML = "";
       $("fb12").className = "fb good"; $("fb12").innerHTML = "You got <b>" + right12 + "</b> out of " + CHECK.length + "!";
       $("score12").textContent = right12 === CHECK.length ? "Every single one!" : right12 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Try the steps again, then come back.";
-      finish(8, "You got " + right12 + " out of " + CHECK.length + "."); return;
+      if (right12 >= Math.ceil(CHECK.length * 0.75)) { finish(11, "You got " + right12 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb12"), $("ch12"), right12, CHECK.length, function () { c12 = 0; right12 = 0; round12(); }); return;
     }
     const q = CHECK[c12];
     $("score12").textContent = "Question " + (c12 + 1) + " of " + CHECK.length;
@@ -2107,11 +2259,89 @@
     const q = CHECK[c12], ok = String(b.dataset.v) === String(q.a);
     $("ch12").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right12++;
-    $("fb12").className = "fb " + (ok ? "good" : "bad"); $("fb12").textContent = ok ? cheer() : "It is " + q.a + ".";
-    say(ok ? cheer() : "It is " + q.a);
-    c12++; setTimeout(round12, 1300);
+    $("fb12").className = "fb " + (ok ? "good" : "bad"); $("fb12").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || "");
+    say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c12++; setTimeout(round12, 2800);
   });
   round12();
+
+  /* ---- 9: counting on - a second step for 1Ni.02 ---- */
+  secondStep({
+    el: { say: $("ss9say"), stage: $("ss9st"), ch: $("ss9ch"), fb: $("ss9fb"), score: $("ss9sc"), next: $("ss9nx") },
+    label: "Question",
+    items: [
+      { ask: "Start at 6 and count on 3. Where do you land?", pic: ssTrack(2, 12, [6], []),
+        opts: [{ t: "9", ok: true }, { t: "8", ok: false }, { t: "10", ok: false }],
+        why: "Say 6 in your head, then count on: 7, 8, 9. You land on 9." },
+      { ask: "8 sweets are in the bag and 2 more are on the table. How many altogether?", pic: ssBag(8, "🍬🍬"),
+        opts: [{ t: "10", ok: true }, { t: "9", ok: false }, { t: "11", ok: false }],
+        why: "Start at 8 and count on the 2: 9, 10. 8 and 2 make 10 altogether." },
+      { ask: "To work out 3 + 9, which way is quicker?", pic: "",
+        opts: [{ t: "Start at 9 and count on 3", ok: true }, { t: "Start at 3 and count on 9", ok: false }],
+        why: "Start with the bigger number, 9, then count on just 3: 10, 11, 12. So 3 + 9 = 12." },
+      { ask: "One plate has 4 mangoes and one has 5. Put them together. How many mangoes?", pic: '<div class="ss-emo sm">🥭🥭🥭🥭 &nbsp; 🥭🥭🥭🥭🥭</div>',
+        opts: [{ t: "9", ok: true }, { t: "8", ok: false }, { t: "10", ok: false }],
+        why: "Put the two plates together and count on from 5: 6, 7, 8, 9. 4 and 5 make 9." },
+      { ask: "Start at 12 and count on 4. Where do you land?", pic: ssTrack(10, 20, [12], []),
+        opts: [{ t: "16", ok: true }, { t: "15", ok: false }, { t: "17", ok: false }],
+        why: "Say 12, then count on: 13, 14, 15, 16. You land on 16." },
+    ],
+    finish: 8,
+    done: "You can count on to add.",
+  });
+
+  /* ---- 10: pairs that make 10 - a second step for 1Ni.04 ---- */
+  secondStep({
+    el: { say: $("ss10say"), stage: $("ss10st"), ch: $("ss10ch"), fb: $("ss10fb"), score: $("ss10sc"), next: $("ss10nx") },
+    label: "Question",
+    items: [
+      { ask: "How many more counters make 10?", pic: ssFrames(7),
+        opts: [{ t: "3", ok: true }, { t: "7", ok: false }, { t: "4", ok: false }],
+        why: "There are 7 counters and 3 empty spaces. 7 and 3 make 10." },
+      { ask: "6 and ? make 10", pic: "",
+        opts: [{ t: "4", ok: true }, { t: "3", ok: false }, { t: "5", ok: false }],
+        why: "Count on from 6 to 10: 7, 8, 9, 10. That is 4 more, so 6 and 4 make 10." },
+      { ask: "Which pair makes 10?", pic: "",
+        opts: [{ t: "8 and 2", ok: true }, { t: "8 and 3", ok: false }, { t: "5 and 4", ok: false }],
+        why: "8 and 2 make 10. 8 and 3 make 11, and 5 and 4 make 9." },
+      { ask: "There are 10 children. 9 are sitting down. How many are standing up?", pic: "",
+        opts: [{ t: "1", ok: true }, { t: "9", ok: false }, { t: "10", ok: false }],
+        why: "9 and 1 make 10, so 1 child is standing up." },
+      { ask: "How many more counters fill the frame?", pic: ssFrames(5),
+        opts: [{ t: "5", ok: true }, { t: "4", ok: false }, { t: "6", ok: false }],
+        why: "5 and 5 make 10: two full rows." },
+      { ask: "The frame is full. 10 and ? make 10", pic: ssFrames(10),
+        opts: [{ t: "0", ok: true }, { t: "1", ok: false }, { t: "10", ok: false }],
+        why: "The frame is already full, so nothing more is needed. 10 and 0 make 10." },
+    ],
+    finish: 9,
+    done: "You know the pairs that make 10.",
+  });
+
+  /* ---- 11: know your coins - a second step for 1Nm.01 ---- */
+  secondStep({
+    el: { say: $("ss11say"), stage: $("ss11st"), ch: $("ss11ch"), fb: $("ss11fb"), score: $("ss11sc"), next: $("ss11nx") },
+    label: "Question",
+    items: [
+      { ask: "Which coin is worth the <b>most</b>?", pic: ssCoins([2, 10, 5]),
+        opts: [{ t: "10 sh", ok: true }, { t: "5 sh", ok: false }, { t: "2 sh", ok: false }],
+        why: "The 10 shilling coin is worth the most. 10 is more than 5, and more than 2." },
+      { ask: "Which coin is worth the <b>least</b>?", pic: ssCoins([5, 1, 2]),
+        opts: [{ t: "1 sh", ok: true }, { t: "2 sh", ok: false }, { t: "5 sh", ok: false }],
+        why: "The 1 shilling coin is worth the least, because 1 is the smallest number." },
+      { ask: "Two 5 sh coins are worth the same as…", pic: ssCoins([5, 5]),
+        opts: [{ t: "one 10 sh coin", ok: true }, { t: "one 5 sh coin", ok: false }, { t: "one 2 sh coin", ok: false }],
+        why: "5 and 5 make 10, so two 5 shilling coins are worth the same as one 10 shilling coin." },
+      { ask: "Hodan has one 10 sh coin. Ali has three 2 sh coins. Who has <b>more money</b>?", pic: ssWho([["Hodan", [10]], ["Ali", [2, 2, 2]]]),
+        opts: [{ t: "Hodan", ok: true }, { t: "Ali", ok: false }],
+        why: "Ali has more coins, but 2 and 2 and 2 make only 6 sh. Hodan has 10 sh, and 10 is more than 6." },
+      { ask: "A pencil costs 6 sh. Which coins pay <b>exactly</b> 6 sh?", pic: '<div class="pricetag"><small>a pencil</small> 6 sh</div>',
+        opts: [{ t: "5 sh and 1 sh", ok: true }, { t: "5 sh and 2 sh", ok: false }, { t: "2 sh and 2 sh", ok: false }],
+        why: "5 and 1 make 6. 5 and 2 make 7, and 2 and 2 make only 4." },
+    ],
+    finish: 10,
+    done: "You know your coins and what they are worth.",
+  });
 
   /* ---- 13: stickers ---- */
   const STICKERS = [
@@ -2123,12 +2353,16 @@
     ["🐞", "Doubles"],
     ["🦋", "Doubles to 20"],
     ["🪙", "Money to 20"],
+    ["🦘", "I can count on"],
+    ["🤝", "Pairs that make 10"],
+    ["💰", "I know my coins"],
     ["✅", "Show what I know"],
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
-    const got = done.slice(0, 9).filter(Boolean).length;
-    $("fb13").className = "fb " + (got === 30 ? "good" : ""); $("fb13").textContent = got === 30 ? "All 30 stickers! You are a number star." : got + " of 30 stickers so far.";
+    /* ehel-second-steps: counted from STICKERS. It said "of 30", the total of the page this lesson was cut from */
+    const all = STICKERS.length, got = done.slice(0, all).filter(Boolean).length;
+    $("fb13").className = "fb " + (got === all ? "good" : ""); $("fb13").textContent = got === all ? "All " + all + " stickers! You are a number star." : got + " of " + all + " stickers so far.";
   }
   $("restart").addEventListener("click", () => location.reload());
 
@@ -2534,3 +2768,101 @@
     if (added) report(lastAt);
   };
 </script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
+</script>
+
+<style>/* ehel-warmup - see add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>
+
+<style>/* ehel-second-steps - see add-second-steps.py */
+  .ss-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: flex-end; }
+  .ss-cell { display: grid; justify-items: center; gap: 6px; }
+  .ss-art { width: 104px; }
+  .ss-art svg { width: 100%; height: auto; display: block; }
+  .ss-lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--ink); }
+  .ss-emo { font-size: clamp(40px, 9vw, 60px); line-height: 1.2; text-align: center; }
+  .ss-emo.sm { font-size: clamp(28px, 6vw, 40px); }
+  .ss-flash { display: grid; place-items: center; min-height: 150px; }
+  /* this stylesheet sets .choice to a fixed 78px at 34px type, for numbers */
+  .choice.ss-w { height: auto; min-height: 64px; padding: 10px 16px; font-size: 22px; line-height: 1.25; }
+  .ss-domino { display: flex; border: 5px solid var(--ink); border-radius: 18px; overflow: hidden; background: var(--card); }
+  .ss-domino .dice { border: 0; border-radius: 0; grid-template-columns: repeat(3, 24px); grid-template-rows: repeat(3, 24px); gap: 6px; padding: 12px; }
+  .ss-domino .dice + .dice { border-left: 4px solid var(--ink); }
+  .ss-domino .dice i { width: 24px; height: 24px; }
+  .ss-track { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; max-width: 560px; }
+  .ss-track b { width: 38px; height: 40px; display: grid; place-items: center; border-radius: 10px; border: 2px solid var(--line);
+    background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-size: 18px; color: var(--ink); }
+  .ss-track b.a { background: var(--teal); border-color: var(--teal); color: #06231F; }
+  .ss-track b.b { background: var(--accent); border-color: var(--accent); color: #2A1F05; }
+  .ss-who { font-size: 40px; line-height: 1; }
+  .ss-books { display: flex; gap: 5px; align-items: flex-end; padding: 0 10px; border-bottom: 6px solid var(--line); }
+  .ss-book { width: 34px; border-radius: 5px 5px 2px 2px; display: grid; align-items: end; justify-items: center; padding-bottom: 8px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; color: #06231F; }
+  .ss-box { min-width: 96px; min-height: 64px; padding: 8px 10px; border: 4px solid var(--gold); border-radius: 0 0 22px 22px;
+    display: grid; place-items: center; font-size: 26px; }
+  .ss-bag { width: 96px; height: 96px; border-radius: 22px 22px 34px 34px; background: var(--plum); color: #241733; display: grid;
+    place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 40px; }
+  /* a phone: an 11-number track, the animal line and the shelf each stay on ONE row -
+     a track that wraps after 8 splits the very row "every other number" is read along */
+  @media (max-width: 480px) {
+    .ss-track { gap: 3px; }
+    .ss-track b { width: 24px; height: 32px; font-size: 13px; border-radius: 7px; }
+    .ss-who { font-size: 30px; }
+    .ss-book { width: 28px; font-size: 16px; }
+  }
+</style>

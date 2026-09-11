@@ -97,10 +97,20 @@ def slides_of(src):
         body = src[gt + 1:close]
         h2 = re.search(r"<h2[^>]*>(.*?)</h2>", body, re.S)
         n = re.search(r'<span class="n">(.*?)</span>', body, re.S)
+        # THE WARM-UP IS NOT THE STEP. Grade 1 puts a warm-up question at the head
+        # of step 1 (grade-1-app/add-warmup.py) - inside the slide, so it shows on
+        # opening and hides on moving on, but it is a diagnostic, not the step's
+        # teaching. Its one id, ehWarm, is left out here so its right/wrong buttons
+        # are not credited to the step below it: when they were, Shapes and Sizes'
+        # step 1 - "Flat shapes", a recorded exploration step that genuinely cannot
+        # disagree - read as judging, and the exemption was reported stale. The gate
+        # suggested deleting it, which would have claimed the step judges. It does
+        # not; the warm-up above it does. A no-op for every build without one.
+        ids = sorted(set(re.findall(r'id="([A-Za-z0-9_-]+)"', body)) - {"ehWarm"})
         out.append(dict(
             n=re.sub(r"<[^>]*>", "", n.group(1)).strip() if n else "",
             title=re.sub(r"<[^>]*>", "", h2.group(1)).strip() if h2 else "",
-            ids=sorted(set(re.findall(r'id="([A-Za-z0-9_-]+)"', body))),
+            ids=ids,
         ))
     return out
 

@@ -17,13 +17,39 @@ for f in FILES:
     slides = re.findall(r'<section[^>]*class="[^"]*slide[^"]*"[^>]*>(.*?)</section>', s, re.S)
     js = " ".join(re.findall(r"<script[^>]*>(.*?)</script>", s, re.S))
 
-    # 1 syntax
+    # 1 syntax - parsed the way a browser runs the scripts. The CLASSIC ones share
+    # one global scope, so they are joined and parsed together: a `const` declared
+    # in two of them is a real error in a browser too. Each MODULE has its own
+    # scope, so each is parsed alone, as a module (.mjs - `node --check` on a .js
+    # file reads CommonJS and misses real errors in module syntax).
+    #
+    # Until 2026-09-11 every block was joined into ONE module, so the first two
+    # module scripts both declaring `const q` - legal in a browser - made all
+    # seven lessons read PARSE FAIL, before and after every change. A column
+    # that is always red reports nothing, and it was ignored as noise.
+    #
     # the OS temp dir, not beside the script: written next to it, this scratch
     # file gets swept into the next commit (it was, once)
-    tmp = os.path.join(tempfile.gettempdir(), "_ehel_g1_syn.mjs")
-    io.open(tmp, "w", encoding="utf-8").write(js)
-    r = subprocess.run(["node", "--check", tmp], capture_output=True, text=True)
-    syn = "ok" if r.returncode == 0 else "PARSE FAIL"
+    classic, modules = [], []
+    for attrs, body in re.findall(r"<script([^>]*)>(.*?)</script>", s, re.S):
+        if not body.strip():
+            continue                                      # an external src="" script
+        t = re.search(r"""\btype\s*=\s*["']?([^"'\s>]+)""", attrs)
+        kind = t.group(1).lower() if t else "text/javascript"
+        if kind == "module":
+            modules.append(body)
+        elif kind in ("text/javascript", "application/javascript"):
+            classic.append(body)
+    syn_fail = []
+    for n, (code, ext) in enumerate([("\n;\n".join(classic), ".js")] + [(m, ".mjs") for m in modules]):
+        tmp = os.path.join(tempfile.gettempdir(), "_ehel_g1_syn%d%s" % (n, ext))
+        io.open(tmp, "w", encoding="utf-8").write(code)
+        r = subprocess.run(["node", "--check", tmp], capture_output=True, text=True)
+        if r.returncode:
+            err = [l for l in r.stderr.splitlines() if "Error" in l]
+            syn_fail.append("%s %s" % ("classic scripts" if n == 0 else "module %d" % n,
+                                       err[0].strip() if err else "exit %d" % r.returncode))
+    syn = "ok" if not syn_fail else "PARSE FAIL (%s)" % "; ".join(syn_fail)[:120]
 
     # 2 badges run 1..n with no gaps
     badges = [int(x) for x in re.findall(r'<span class="n">(\d+)</span>', s)]

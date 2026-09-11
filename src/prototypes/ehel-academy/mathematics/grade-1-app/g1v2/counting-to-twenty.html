@@ -20,7 +20,11 @@
   })();
 </script>
 <title>Counting to Twenty</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
@@ -754,9 +758,11 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
     <!-- 1  1Nc.01  Count to 10 -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting is saying one number for each thing, and never saying two numbers for the same thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the plus.</s><s>One counter appears, and we say one.</s><s>Press again.</s><s>Two.</s><s>Each press puts exactly one counter in a hole and we say exactly one number.</s><s>When the frame is full we have said ten.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children rush and say numbers faster than the counters appear, so the last number they say is not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press once, say one number, then wait.</s><s>Let your voice keep up with your finger.</s></mstts:express-as>' data-say="Press the plus to put a counter in the frame. Count out loud with me.">
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Count to 10</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Press <b>+</b> to put a counter in the frame. Count out loud with me.</span></div>
       <div class="stage">
@@ -959,6 +965,46 @@
         <p class="fb" id="scoree" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 17  1Nc.02  Patterns you know -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some patterns you see so often that you know them straight away.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Five fingers on one hand.</s><s>Five dots in a row, and more underneath.</s><s>A domino with a four and a two.</s><s>Look for the parts you know, then put them together: four and two make six, without counting one at a time.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children try to count every dot, one by one, and the picture hides before they finish.</s><s>You do not need to.</s><s>Find a part you already know, like five, and add on the rest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press look, find the parts you know, and tap your answer.</s></mstts:express-as>' data-say="Press look. The picture shows for a moment. Then tap how many you saw, without counting.">
+      <div class="slide-head"><span class="n">17</span><h2>Patterns you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss17say">Press <b>Look!</b> The picture shows for a moment. Say how many straight away, without counting.</span></div>
+      <div class="stage" id="ss17st"></div>
+      <div class="choices" id="ss17ch"></div>
+      <p class="fb" id="ss17fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss17nx" hidden>Next question</button></div>
+      <p class="fb" id="ss17sc" style="font-size:18px;color:var(--muted)"></p>
+    </section>
+<!-- 18  1Np.01  Zero means empty -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Zero is the number for none at all.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>An empty plate has zero mangoes.</s><s>An empty ten frame has zero counters.</s><s>If you have three sweets and eat all three, you have zero left.</s><s>We write zero like this: 0.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children sometimes think zero is not a number, because there is nothing to count.</s><s>It is a number.</s><s>It is the number that says none, and it comes just before one when you count.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So when you see nothing there, say zero, and tap 0.</s></mstts:express-as>' data-say="Zero means none at all. Look at each picture and tap the answer.">
+      <div class="slide-head"><span class="n">18</span><h2>Zero means empty</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss18say"><b>Zero</b> means none at all. Tap the answer.</span></div>
+      <div class="stage" id="ss18st"></div>
+      <div class="choices" id="ss18ch"></div>
+      <p class="fb" id="ss18fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss18nx" hidden>Next question</button></div>
+      <p class="fb" id="ss18sc" style="font-size:18px;color:var(--muted)"></p>
+    </section>
+<!-- 19  1Nc.05  Every other number -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When you count, odd and even numbers take turns.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Start at zero and say every other number: zero, two, four, six, eight.</s><s>Those are the even numbers.</s><s>Start at one instead: one, three, five, seven, nine.</s><s>Those are the odd numbers.</s><s>Even, odd, even, odd, all the way to twenty.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a big number must be even, or that odd means strange.</s><s>Neither is true.</s><s>Twenty is even and nineteen is odd, because they take turns, just like the small ones.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So hop along the numbers, jumping over every other one, and see where you land.</s></mstts:express-as>' data-say="Count, and say every other number. The numbers you land on are all even, or all odd.">
+      <div class="slide-head"><span class="n">19</span><h2>Every other number</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss19say">Say <b>every other number</b> as you count. Tap the answer.</span></div>
+      <div class="stage" id="ss19st"></div>
+      <div class="choices" id="ss19ch"></div>
+      <p class="fb" id="ss19fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss19nx" hidden>Next question</button></div>
+      <p class="fb" id="ss19sc" style="font-size:18px;color:var(--muted)"></p>
+    </section>
+<!-- 20  1Np.04  Places in a line -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>First, second and third tell you a place in a line, not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Always start counting at the front.</s><s>The one at the front is first, then second, then third, then fourth, fifth, sixth, seventh, eighth, ninth, and tenth.</s><s>When we write them short, first is 1st, second is 2nd and third is 3rd.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start counting from the wrong end, or they count the flag as first.</s><s>The flag is not in the line.</s><s>Start with the one standing right behind it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So point at the front one and say first, then keep going until you reach the one you want.</s></mstts:express-as>' data-say="Count from the front of the line: first, second, third. Tap the answer.">
+      <div class="slide-head"><span class="n">20</span><h2>Places in a line</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss20say">Count from the front: <b>1st</b>, <b>2nd</b>, <b>3rd</b>, all the way to <b>10th</b>. Tap the answer.</span></div>
+      <div class="stage" id="ss20st"></div>
+      <div class="choices" id="ss20ch"></div>
+      <p class="fb" id="ss20fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss20nx" hidden>Next question</button></div>
+      <p class="fb" id="ss20sc" style="font-size:18px;color:var(--muted)"></p>
+    </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows counters, count them.</s><s>If it asks which is bigger, use the number line.</s><s>If it shows a clock, look at the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Tap the answer.</span></div>
@@ -1089,6 +1135,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1380,6 +1428,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1823,7 +1872,106 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see add-warmup.py. NOT a step: no sticker, no dot, no score. */
+  const WARM = [{ q: "Let's warm up. How many fingers are on one hand?", opts: [5, 4, 10], a: 5, why: "One hand has 5 fingers. Count them: 1, 2, 3, 4, 5." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+
+  /* ==== ehel-second-steps: the runner - see grade-1-app/add-second-steps.py ====
+     Seventeen objectives rested on one slide each. Each now has a second step,
+     after the lesson's own steps and before the check. One question after
+     another, like sequence() in Shapes and Sizes, except that the child moves on
+     with a button: say() stops whatever is playing, so a timer that draws the
+     next question cuts the explanation off, and these explain every answer.
+     o.flash (ms) shows the picture behind a Look! button, for seeing how many
+     without counting. Takes ELEMENTS, so each step's own block names its slide. */
+  function secondStep(o) {
+    const el = o.el, items = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    let i = 0, right = 0, lock = true;
+    function options() {
+      el.ch.innerHTML = shuffle(items[i].opts).map((c) => '<button type="button" class="choice' +
+        (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      lock = false;
+    }
+    function draw() {
+      const it = items[i];
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      if (o.flash) {
+        el.stage.innerHTML = '<div class="ss-flash" style="visibility:hidden">' + it.pic + "</div>" +
+          '<div class="bigbtns"><button type="button" class="big teal ss-look">Look!</button></div>';
+        el.ch.innerHTML = "";
+      } else {
+        el.stage.innerHTML = it.pic || "";
+        options();
+      }
+      say(words(it.ask));
+    }
+    el.stage.addEventListener("click", (e) => {
+      const b = e.target.closest(".ss-look"); if (!b) return;
+      const pic = el.stage.querySelector(".ss-flash");
+      b.parentElement.remove();
+      pic.style.visibility = "visible";
+      setTimeout(() => { pic.style.visibility = "hidden"; options(); }, o.flash);
+    });
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = items[i], ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (ok) right++; else b.classList.add("wrong");
+      const pic = el.stage.querySelector(".ss-flash"); if (pic) pic.style.visibility = "visible";
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      i++;
+      if (i < items.length) el.next.hidden = false;
+      else { el.score.textContent = "You got " + right + " of " + items.length + ". " + o.done; finish(o.finish); }
+      say(msg);
+    });
+    el.next.addEventListener("click", () => { if (i < items.length) draw(); });
+    draw();
+  }
+  /* the second steps' pictures, in this lesson's own classes */
+  const SS_PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
+  const ssDice = (n) => '<div class="dice">' + Array.from({ length: 9 }, (_, i) => '<i class="' + (SS_PIPS[n].includes(i) ? "on" : "") + '"></i>').join("") + "</div>";
+  const ssDomino = (a, b) => '<div class="ss-domino" role="img" aria-label="A domino">' + ssDice(a) + ssDice(b) + "</div>";
+  const ssFrames = (n) => '<div class="frames"><div class="tenframe">' + frameHtml(Math.min(10, n)) + "</div>" +
+    (n > 10 ? '<div class="tenframe">' + frameHtml(n - 10, "b") + "</div>" : "") + "</div>";
+  function ssTrack(from, to, a, b) {
+    let h = "";
+    for (let n = from; n <= to; n++) h += '<b class="' + (a.includes(n) ? "a" : b.includes(n) ? "b" : "") + '">' + n + "</b>";
+    return '<div class="ss-track" role="img" aria-label="The numbers ' + from + " to " + to + '">' + h + "</div>";
+  }
+  const ssLine = (list) => '<div class="queue"><div class="flag"></div>' + list.map((e) => '<span class="ss-who">' + e + "</span>").join("") + "</div>";
+  const SS_SHELF = [["teal", 80], ["accent", 96], ["gold", 70], ["plum", 88], ["teal", 100], ["accent", 76], ["gold", 92], ["plum", 84]];
+  const ssBooks = (letters) => '<div class="ss-books" role="img" aria-label="Books on a shelf">' + letters.split("").map((L, i) =>
+    '<span class="ss-book" style="height:' + SS_SHELF[i % 8][1] + "px;background:var(--" + SS_SHELF[i % 8][0] + ')">' + L + "</span>").join("") + "</div>";
+  const ssBaskets = (list, emo) => '<div class="ss-row">' + list.map((c) => '<div class="ss-cell"><div class="ss-box">' +
+    (c[0] ? emo.repeat(c[0]) : "&nbsp;") + '</div><div class="ss-lab">' + c[1] + "</div></div>").join("") + "</div>";
+  const ssBag = (n, more) => '<div class="ss-row"><div class="ss-cell"><div class="ss-bag">' + n + '</div><div class="ss-lab">in the bag</div></div>' +
+    '<div class="ss-cell"><div class="ss-emo sm">' + more + '</div><div class="ss-lab">on the table</div></div></div>';
+  const ssCoins = (list) => '<div class="coins">' + list.map((v) => '<span class="coin c' + v + ' still">' + v + "</span>").join("") + "</div>";
+  const ssWho = (list) => '<div class="ss-row">' + list.map((w) => '<div class="ss-cell">' + ssCoins(w[1]) + '<div class="ss-lab">' + w[0] + "</div></div>").join("") + "</div>";
 
   /* ---- shared drawing ---- */
   function frameHtml(n, cls, tap) {
@@ -2525,22 +2673,35 @@
   newApples();
 
   /* ---- 27: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11). Below it the child sees the score, how many they need, and a
+     button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "How many counters?", pic: 7, opts: [7, 6, 8], a: 7, say: "How many counters?" },
-    { q: "A dice shows ⚄. How many dots, without counting?", pic: null, opts: [5, 4, 6], a: 5, say: "A dice shows five dots. How many dots?" },
-    { q: "Which word says 13?", pic: null, opts: ["thirteen", "thirty", "three"], a: "thirteen", say: "Which word says thirteen?" },
-    { q: "Which digits do you press to write fourteen?", pic: null, opts: ["1 then 4", "4 then 1", "1 then 40"], a: "1 then 4", say: "Which digits do you press to write fourteen?" },
-    { q: "There are no apples left on the plate. Which number is that?", pic: null, opts: [0, 1, 10], a: 0, say: "There are no apples left. Which number is that?" },
-    { q: "Which is more, 9 or 6?", pic: null, opts: [9, 6], a: 9, say: "Which is more, nine or six?" },
-    { q: "And how many counters now?", pic: 14, opts: [14, 13, 15], a: 14, say: "And how many counters now?" },
-    { q: "Which number comes just after 16?", pic: null, opts: [17, 15, 18], a: 17, say: "Which number comes just after sixteen?" },
-    { q: "2, 4, 6, 8, ?", pic: null, opts: [10, 9, 12], a: 10, say: "two, four, six, eight, what comes next?" },
-    { q: "17 is 1 ten and ? ones", pic: 17, opts: [7, 17, 6], a: 7, say: "seventeen is one ten and how many ones?" },
-    { q: "Count on in tens: 0, 10, ?", pic: null, opts: [20, 11, 15], a: 20, say: "count on in tens. zero, ten, what comes next?" },
-    { q: "Which is more, 14 or 17?", pic: null, opts: [17, 14], a: 17, say: "Which is more, fourteen or seventeen?" },
-    { q: "Is 15 odd or even?", pic: 15, opts: ["odd", "even"], a: "odd", say: "Is fifteen odd or even?" },
-    { q: "In the line A, B, C, D, who is 3rd?", pic: null, opts: ["C", "B", "D"], a: "C", say: "In the line A, B, C, D, who is third?" },
-    { q: "20, 19, 18, 17, ?", pic: null, opts: [16, 15, 18], a: 16, say: "twenty, nineteen, eighteen, seventeen, what comes next?" },
+    { q: "How many counters?", pic: 7, opts: [7, 6, 8], a: 7, say: "How many counters?", why: "Touch each counter once as you count. The last number you say is how many." },
+    { q: "A dice shows ⚄. How many dots, without counting?", pic: null, opts: [5, 4, 6], a: 5, say: "A dice shows five dots. How many dots?", why: "That pattern is always 5: one dot in each corner and one in the middle." },
+    { q: "Which word says 13?", pic: null, opts: ["thirteen", "thirty", "three"], a: "thirteen", say: "Which word says thirteen?", why: "Thirteen is 13. Thirty is 30, and three is 3." },
+    { q: "Which digits do you press to write fourteen?", pic: null, opts: ["1 then 4", "4 then 1", "1 then 40"], a: "1 then 4", say: "Which digits do you press to write fourteen?", why: "Fourteen is 1 ten and 4 ones, so you write 1 and then 4." },
+    { q: "There are no apples left on the plate. Which number is that?", pic: null, opts: [0, 1, 10], a: 0, say: "There are no apples left. Which number is that?", why: "None left is zero, and we write zero as 0." },
+    { q: "Which is more, 9 or 6?", pic: null, opts: [9, 6], a: 9, say: "Which is more, nine or six?", why: "When you count, 9 comes after 6, so 9 is more." },
+    { q: "And how many counters now?", pic: 14, opts: [14, 13, 15], a: 14, say: "And how many counters now?", why: "One full frame is 10. The 4 in the next frame make 14." },
+    { q: "Which number comes just after 16?", pic: null, opts: [17, 15, 18], a: 17, say: "Which number comes just after sixteen?", why: "Count on one from 16: sixteen, seventeen." },
+    { q: "2, 4, 6, 8, ?", pic: null, opts: [10, 9, 12], a: 10, say: "two, four, six, eight, what comes next?", why: "Counting in twos, each number is 2 more. 8 and 2 more is 10." },
+    { q: "17 is 1 ten and ? ones", pic: 17, opts: [7, 17, 6], a: 7, say: "seventeen is one ten and how many ones?", why: "One full frame is the ten. The 7 counters left over are the ones." },
+    { q: "Count on in tens: 0, 10, ?", pic: null, opts: [20, 11, 15], a: 20, say: "count on in tens. zero, ten, what comes next?", why: "Counting in tens, each number is 10 more. 10 and 10 more is 20." },
+    { q: "Which is more, 14 or 17?", pic: null, opts: [17, 14], a: 17, say: "Which is more, fourteen or seventeen?", why: "When you count, 17 comes after 14, so 17 is more." },
+    { q: "Is 15 odd or even?", pic: 15, opts: ["odd", "even"], a: "odd", say: "Is fifteen odd or even?", why: "Put 15 counters in pairs and one is left alone, so 15 is odd." },
+    { q: "In the line A, B, C, D, who is 3rd?", pic: null, opts: ["C", "B", "D"], a: "C", say: "In the line A, B, C, D, who is third?", why: "Count from the front: A is 1st, B is 2nd and C is 3rd." },
+    { q: "20, 19, 18, 17, ?", pic: null, opts: [16, 15, 18], a: 16, say: "twenty, nineteen, eighteen, seventeen, what comes next?", why: "Counting back, each number is 1 less. One less than 17 is 16." },
   ];
   let c12 = 0, right12 = 0, lock12 = false;
   function round12() {
@@ -2549,7 +2710,8 @@
       $("q12").textContent = ""; $("pic12").innerHTML = ""; $("ch12").innerHTML = "";
       $("fb12").className = "fb good"; $("fb12").innerHTML = "You got <b>" + right12 + "</b> out of " + CHECK.length + "!";
       $("score12").textContent = right12 === CHECK.length ? "Every single one!" : right12 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Try the steps again, then come back.";
-      finish(16, "You got " + right12 + " out of " + CHECK.length + "."); return;
+      if (right12 >= Math.ceil(CHECK.length * 0.75)) { finish(20, "You got " + right12 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb12"), $("ch12"), right12, CHECK.length, function () { c12 = 0; right12 = 0; round12(); }); return;
     }
     const q = CHECK[c12];
     $("score12").textContent = "Question " + (c12 + 1) + " of " + CHECK.length;
@@ -2563,11 +2725,118 @@
     const q = CHECK[c12], ok = String(b.dataset.v) === String(q.a);
     $("ch12").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right12++;
-    $("fb12").className = "fb " + (ok ? "good" : "bad"); $("fb12").textContent = ok ? cheer() : "It is " + q.a + ".";
-    say(ok ? cheer() : "It is " + q.a);
-    c12++; setTimeout(round12, 1300);
+    $("fb12").className = "fb " + (ok ? "good" : "bad"); $("fb12").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || "");
+    say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c12++; setTimeout(round12, 2800);
   });
   round12();
+
+  /* ---- 17: patterns you know - a second step for 1Nc.02 ---- */
+  secondStep({
+    el: { say: $("ss17say"), stage: $("ss17st"), ch: $("ss17ch"), fb: $("ss17fb"), score: $("ss17sc"), next: $("ss17nx") },
+    label: "Pattern",
+    flash: 1500,
+    items: [
+      { ask: "How many dots on the domino?", pic: ssDomino(4, 2),
+        opts: [{ t: "6", ok: true }, { t: "5", ok: false }, { t: "7", ok: false }],
+        why: "4 and 2 make 6. You know the 4 and the 2 without counting them." },
+      { ask: "How many counters in the frame?", pic: ssFrames(8),
+        opts: [{ t: "8", ok: true }, { t: "7", ok: false }, { t: "9", ok: false }],
+        why: "A full row is 5, and 3 more make 8." },
+      { ask: "How many fingers are up?", pic: '<div class="ss-emo">🖐️ ✌️</div>',
+        opts: [{ t: "7", ok: true }, { t: "6", ok: false }, { t: "8", ok: false }],
+        why: "One whole hand is 5 fingers. 5 and 2 more make 7." },
+      { ask: "How many dots on this domino?", pic: ssDomino(5, 4),
+        opts: [{ t: "9", ok: true }, { t: "8", ok: false }, { t: "10", ok: false }],
+        why: "5 and 4 make 9. The 5 is the pattern with one dot in the middle." },
+      { ask: "How many counters now?", pic: ssFrames(10),
+        opts: [{ t: "10", ok: true }, { t: "9", ok: false }, { t: "11", ok: false }],
+        why: "Both rows are full, and a full ten frame is always 10." },
+    ],
+    finish: 16,
+    done: "You can see how many without counting.",
+  });
+
+  /* ---- 18: zero means empty - a second step for 1Np.01 ---- */
+  secondStep({
+    el: { say: $("ss18say"), stage: $("ss18st"), ch: $("ss18ch"), fb: $("ss18fb"), score: $("ss18sc"), next: $("ss18nx") },
+    label: "Question",
+    items: [
+      { ask: "How many counters are in the frame?", pic: ssFrames(0),
+        opts: [{ t: "0", ok: true }, { t: "1", ok: false }, { t: "10", ok: false }],
+        why: "The frame is empty. No counters at all is 0." },
+      { ask: "Asha has 3 sweets. She eats all 3. How many are left?", pic: '<div class="ss-emo">🍬🍬🍬</div>',
+        opts: [{ t: "0", ok: true }, { t: "3", ok: false }, { t: "1", ok: false }],
+        why: "3 take away 3 leaves none, and none is 0." },
+      { ask: "Which basket has <b>zero</b> apples?", pic: ssBaskets([[2, "A"], [0, "B"], [1, "C"]], "🍎"),
+        opts: [{ t: "B", ok: true }, { t: "A", ok: false }, { t: "C", ok: false }],
+        why: "Basket B has no apples in it at all, so it has zero apples." },
+      { ask: "Count back: 3, 2, 1, and then?", pic: ssTrack(0, 5, [3, 2, 1], []),
+        opts: [{ t: "0", ok: true }, { t: "4", ok: false }, { t: "10", ok: false }],
+        why: "After 1 comes 0 when you count back. Zero comes just before 1." },
+      { ask: "Which is <b>fewer</b>: 0 bananas or 1 banana?", pic: "",
+        opts: [{ t: "0 bananas", ok: true }, { t: "1 banana", ok: false }],
+        why: "0 is fewer than 1. You cannot have fewer than none." },
+    ],
+    finish: 17,
+    done: "Zero means none at all.",
+  });
+
+  /* ---- 19: every other number - a second step for 1Nc.05 ---- */
+  secondStep({
+    el: { say: $("ss19say"), stage: $("ss19st"), ch: $("ss19ch"), fb: $("ss19fb"), score: $("ss19sc"), next: $("ss19nx") },
+    label: "Question",
+    items: [
+      { ask: "Start at 0 and say every other number: 0, 2, 4, 6, 8. What comes next?", pic: ssTrack(0, 10, [0, 2, 4, 6, 8], []),
+        opts: [{ t: "10", ok: true }, { t: "9", ok: false }, { t: "12", ok: false }],
+        why: "Jump over 9 and land on 10. Every other number from 0 is even: 0, 2, 4, 6, 8, 10." },
+      { ask: "Start at 1 and say every other number: 1, 3, 5, 7. What comes next?", pic: ssTrack(1, 11, [], [1, 3, 5, 7]),
+        opts: [{ t: "9", ok: true }, { t: "8", ok: false }, { t: "11", ok: false }],
+        why: "Jump over 8 and land on 9. Every other number from 1 is odd: 1, 3, 5, 7, 9." },
+      { ask: "The coloured numbers are every other number, starting at 10. Is 17 coloured?", pic: ssTrack(10, 20, [10, 12, 14, 16, 18, 20], []),
+        opts: [{ t: "No, 17 is odd", ok: true }, { t: "Yes, 17 is even", ok: false }],
+        why: "Every other number goes 16, then 18, and jumps over 17. So 17 is not coloured: 17 is odd." },
+      { ask: "Which of these numbers is <b>odd</b>?", pic: "",
+        opts: [{ t: "13", ok: true }, { t: "12", ok: false }, { t: "18", ok: false }],
+        why: "Say every other number from 1: 1, 3, 5, 7, 9, 11, 13. 13 is odd. 12 and 18 are even." },
+      { ask: "Which of these numbers is <b>even</b>?", pic: "",
+        opts: [{ t: "20", ok: true }, { t: "15", ok: false }, { t: "7", ok: false }],
+        why: "Say every other number from 0 and you reach 20: 16, 18, 20. 20 is even." },
+      { ask: "Odd and even take turns. 6 is even, so 7 is…", pic: "",
+        opts: [{ t: "odd", ok: true }, { t: "even", ok: false }],
+        why: "They take turns: even, odd, even, odd. After even 6 comes odd 7." },
+    ],
+    finish: 18,
+    done: "Odd and even numbers take turns when you count.",
+  });
+
+  /* ---- 20: places in a line - a second step for 1Np.04 ---- */
+  secondStep({
+    el: { say: $("ss20say"), stage: $("ss20st"), ch: $("ss20ch"), fb: $("ss20fb"), score: $("ss20sc"), next: $("ss20nx") },
+    label: "Question",
+    items: [
+      { ask: "The animals line up behind the flag. Which animal is <b>3rd</b>?", pic: ssLine(["🐘", "🦒", "🦓", "🦁", "🐒"]),
+        opts: [{ t: "🦓 zebra", ok: true }, { t: "🦒 giraffe", ok: false }, { t: "🦁 lion", ok: false }],
+        why: "Count from the flag: the elephant is 1st, the giraffe is 2nd and the zebra is 3rd." },
+      { ask: "Which place is the <b>lion</b> in?", pic: ssLine(["🐘", "🦒", "🦓", "🦁", "🐒"]),
+        opts: [{ t: "4th", ok: true }, { t: "3rd", ok: false }, { t: "5th", ok: false }],
+        why: "Count from the flag: elephant 1st, giraffe 2nd, zebra 3rd, lion 4th." },
+      { ask: "Which book is <b>6th</b> from the left?", pic: ssBooks("ABCDEFGH"),
+        opts: [{ t: "F", ok: true }, { t: "E", ok: false }, { t: "G", ok: false }],
+        why: "Count from the left: A is 1st, B 2nd, C 3rd, D 4th, E 5th and F is 6th." },
+      { ask: "In a race, which runner wins?", pic: "",
+        opts: [{ t: "the one who comes 1st", ok: true }, { t: "the one who comes 5th", ok: false }, { t: "the one who comes 10th", ok: false }],
+        why: "1st means first over the line, so the runner who comes 1st wins the race." },
+      { ask: "Which place comes just after <b>7th</b>?", pic: "",
+        opts: [{ t: "8th", ok: true }, { t: "6th", ok: false }, { t: "9th", ok: false }],
+        why: "Places go in counting order, so after 7th comes 8th." },
+      { ask: "Which word says <b>10th</b>?", pic: "",
+        opts: [{ t: "tenth", ok: true }, { t: "ten", ok: false }, { t: "tent", ok: false }],
+        why: "10th is said tenth. Ten is the number 10, and a tent is something you sleep in." },
+    ],
+    finish: 19,
+    done: "You can say places in a line, from 1st to 10th.",
+  });
 
   /* ---- 13: stickers ---- */
   const STICKERS = [
@@ -2587,12 +2856,17 @@
     ["🏁", "First, second, third"],
     ["🌟", "Guess, then count"],
     ["🍎", "Estimate to 20"],
+    ["🎲", "Patterns I know"],
+    ["🧺", "Zero means empty"],
+    ["🐸", "Every other number"],
+    ["🦓", "Places in a line"],
     ["✅", "Show what I know"],
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
-    const got = done.slice(0, 17).filter(Boolean).length;
-    $("fb13").className = "fb " + (got === 30 ? "good" : ""); $("fb13").textContent = got === 30 ? "All 30 stickers! You are a number star." : got + " of 30 stickers so far.";
+    /* ehel-second-steps: counted from STICKERS. It said "of 30", the total of the page this lesson was cut from */
+    const all = STICKERS.length, got = done.slice(0, all).filter(Boolean).length;
+    $("fb13").className = "fb " + (got === all ? "good" : ""); $("fb13").textContent = got === all ? "All " + all + " stickers! You are a number star." : got + " of " + all + " stickers so far.";
   }
   $("restart").addEventListener("click", () => location.reload());
 
@@ -2998,3 +3272,101 @@
     if (added) report(lastAt);
   };
 </script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
+</script>
+
+<style>/* ehel-warmup - see add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>
+
+<style>/* ehel-second-steps - see add-second-steps.py */
+  .ss-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: flex-end; }
+  .ss-cell { display: grid; justify-items: center; gap: 6px; }
+  .ss-art { width: 104px; }
+  .ss-art svg { width: 100%; height: auto; display: block; }
+  .ss-lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--ink); }
+  .ss-emo { font-size: clamp(40px, 9vw, 60px); line-height: 1.2; text-align: center; }
+  .ss-emo.sm { font-size: clamp(28px, 6vw, 40px); }
+  .ss-flash { display: grid; place-items: center; min-height: 150px; }
+  /* this stylesheet sets .choice to a fixed 78px at 34px type, for numbers */
+  .choice.ss-w { height: auto; min-height: 64px; padding: 10px 16px; font-size: 22px; line-height: 1.25; }
+  .ss-domino { display: flex; border: 5px solid var(--ink); border-radius: 18px; overflow: hidden; background: var(--card); }
+  .ss-domino .dice { border: 0; border-radius: 0; grid-template-columns: repeat(3, 24px); grid-template-rows: repeat(3, 24px); gap: 6px; padding: 12px; }
+  .ss-domino .dice + .dice { border-left: 4px solid var(--ink); }
+  .ss-domino .dice i { width: 24px; height: 24px; }
+  .ss-track { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; max-width: 560px; }
+  .ss-track b { width: 38px; height: 40px; display: grid; place-items: center; border-radius: 10px; border: 2px solid var(--line);
+    background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-size: 18px; color: var(--ink); }
+  .ss-track b.a { background: var(--teal); border-color: var(--teal); color: #06231F; }
+  .ss-track b.b { background: var(--accent); border-color: var(--accent); color: #2A1F05; }
+  .ss-who { font-size: 40px; line-height: 1; }
+  .ss-books { display: flex; gap: 5px; align-items: flex-end; padding: 0 10px; border-bottom: 6px solid var(--line); }
+  .ss-book { width: 34px; border-radius: 5px 5px 2px 2px; display: grid; align-items: end; justify-items: center; padding-bottom: 8px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; color: #06231F; }
+  .ss-box { min-width: 96px; min-height: 64px; padding: 8px 10px; border: 4px solid var(--gold); border-radius: 0 0 22px 22px;
+    display: grid; place-items: center; font-size: 26px; }
+  .ss-bag { width: 96px; height: 96px; border-radius: 22px 22px 34px 34px; background: var(--plum); color: #241733; display: grid;
+    place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 40px; }
+  /* a phone: an 11-number track, the animal line and the shelf each stay on ONE row -
+     a track that wraps after 8 splits the very row "every other number" is read along */
+  @media (max-width: 480px) {
+    .ss-track { gap: 3px; }
+    .ss-track b { width: 24px; height: 32px; font-size: 13px; border-radius: 7px; }
+    .ss-who { font-size: 30px; }
+    .ss-book { width: 28px; font-size: 16px; }
+  }
+</style>

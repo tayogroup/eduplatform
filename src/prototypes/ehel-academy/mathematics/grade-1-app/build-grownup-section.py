@@ -211,6 +211,15 @@ def main():
             for _k, t, say in steps)
         ans = "".join(
             '\n        <li>%s <b>%s</b></li>' % (esc(q), esc(a)) for q, a in keys)
+        # ONE THING TO DO AT HOME, read from app.config.json :: lessons[].atHome.
+        # It is the one part of this page that is AUTHORED rather than read from
+        # the lesson - nothing in a lesson is an activity for a kitchen table - so
+        # it lives in the build's own config beside the lesson it belongs to, and
+        # this tool still types nothing. Added 2026-09-11, the gap the validation
+        # named in area 24 ("Science has one; Maths has no experiment to borrow").
+        # A lesson without one gets no heading, never an empty one.
+        home = ('\n      <h4>Try at home</h4>\n      <p class="gu-home">%s</p>'
+                % esc(l["atHome"])) if l.get("atHome") else ""
         blocks.append(
             '\n    <details class="gu">'
             '\n      <summary><b>Lesson %d: %s</b> <span class="gu-meta">%d steps '
@@ -220,16 +229,17 @@ def main():
             '\n      <h4>The steps</h4>'
             '\n      <ul>%s\n      </ul>'
             '\n      <h4>Check answers</h4>'
-            '\n      <ul>%s\n      </ul>'
+            '\n      <ul>%s\n      </ul>%s'
             '\n    </details>'
-            % (n, esc(l["title"]), len(steps), mins, len(uniq), len(keys), obj, stp, ans))
+            % (n, esc(l["title"]), len(steps), mins, len(uniq), len(keys), obj, stp, ans, home))
 
     section = (
         START +
         '\n  <section class="grownup" id="grownups">'
         '\n    <h3>For teachers and parents</h3>'
         '\n    <p>What each lesson teaches, in Cambridge\'s own words; what every step asks '
-        'the child to do; and the answer keys for the end-of-lesson check. Open a lesson to '
+        'the child to do; the answer keys for the end-of-lesson check; and one thing to try '
+        'at home with things you already have. Open a lesson to '
         'work through it, or print this page for the lot. The minutes are an estimate of '
         'about two and a half minutes a step, not yet timed against a real class, so treat '
         'them as a guide to the length of a sitting rather than a plan.</p>'
@@ -254,13 +264,36 @@ def main():
         changed.append("teachers-and-parents section (new)")
 
     # ---- the total, in the intro, beside the lesson count
-    tot_old = re.search(r"(each one gets you ready for the next\.)(\s*</p>)", hub)
+    # REPLACED, NOT ONLY INSERTED. The pattern used to require the </p> straight
+    # after "...ready for the next.", so once the sentence below had been put there
+    # it stood between the two and the pattern never matched again: the total
+    # froze at the minutes of the day it was first written, and said "About 190
+    # minutes" over cards adding up to 240 once the second steps landed.
     tot_new = " About %d minutes in all, one lesson a week." % total
-    if tot_old and tot_new not in hub:
-        hub = hub[:tot_old.end(1)] + tot_new + hub[tot_old.end(1):]
+    tot_old = re.search(r"(each one gets you ready for the next\.)"
+                        r"( About \d+ minutes in all, one lesson a week\.)?(\s*</p>)", hub)
+    if tot_old and tot_old.group(2) != tot_new:
+        hub = hub[:tot_old.end(1)] + tot_new + hub[tot_old.start(3):]
         changed.append("total minutes in the intro")
 
-    if CSS_MARK not in hub:
+    # THE STYLES NEVER LANDED, and a test on the wrong string is why. This used to
+    # read `if CSS_MARK not in hub` with CSS_MARK = "build-grownup-section.py" -
+    # and the section inserted a few lines above opens with the comment "built by
+    # build-grownup-section.py". So the section went in first, put the mark in the
+    # hub, and the style block was skipped on every run, including the first:
+    # found 2026-09-11, when a new rule for "Try at home" refused to appear, with
+    # 0 `details.gu` rules in the repo hub AND the live one. The panels still
+    # opened and closed - <details> does that natively - but with none of their
+    # styling. Now the block is found by its OWN start and end comments, which
+    # appear nowhere else, and it is REPLACED on every run like the section, so a
+    # style change reaches a hub that already has the old one.
+    if CSS_START in hub:
+        i = hub.index(CSS_START)
+        j = hub.index(CSS_END, i) + len(CSS_END)
+        if hub[i:j] != CSS.strip():
+            hub = hub[:i] + CSS.strip() + hub[j:]
+            changed.append("styles")
+    else:
         i = hub.rindex("</style>")
         hub = hub[:i] + CSS + hub[i:]
         changed.append("styles")
@@ -279,7 +312,8 @@ def main():
     return 0
 
 
-CSS_MARK = "build-grownup-section.py"
+CSS_START = "/* ==== build-grownup-section.py ==== */"
+CSS_END = "/* ==== end build-grownup-section.py ==== */"
 CSS = """
 /* ==== build-grownup-section.py ==== */
 /* The adult's half of the hub. Collapsed by default: a child arriving at the
@@ -297,11 +331,13 @@ details.gu h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .04e
   color: var(--muted); margin: 14px 0 6px; }
 details.gu ul { margin: 0; padding-left: 20px; }
 details.gu li { font-size: 15px; line-height: 1.5; margin: 0 0 4px; }
+details.gu .gu-home { font-size: 15px; line-height: 1.5; margin: 0; }
 @media print {
   details.gu { break-inside: avoid; }
   details.gu > summary { list-style: none; }
   details.gu[open] > summary::marker { content: ""; }
 }
+/* ==== end build-grownup-section.py ==== */
 """
 
 sys.exit(main())

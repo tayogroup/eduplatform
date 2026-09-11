@@ -433,7 +433,7 @@
       <div class="slide-head"><span class="n">5</span><h2>Turn it round</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Press <b>Turn it</b>. Does the shape look <b>the same</b> after the turn, or <b>different</b>?</span></div>
       <div class="stage">
-        <div class="shapebox"><svg id="sv5" viewBox="0 0 200 200" role="img" aria-label="A shape that turns"></svg></div>
+        <div class="shapebox"><svg id="sv5" viewBox="-20 -20 240 240" role="img" aria-label="A shape that turns"></svg></div>
         <div class="bigbtns"><button type="button" class="big teal" id="turn5">Turn it</button></div>
         <div class="choices" id="ch5"></div>
         <p class="fb" id="fb5"></p>
@@ -1645,8 +1645,13 @@
   let t5 = 0, ang5 = 0, phase5 = "turn", lock5 = false;
   function paint5(anim) {
     const T = TURNS[t5];
-    const body = T.circle ? '<circle class="flat b" cx="100" cy="100" r="76"></circle><circle cx="140" cy="70" r="12" fill="#fff"></circle>' : poly(T.pts, "b");
-    $("sv5").innerHTML = '<g id="g5" style="transform-origin:100px 100px; transition:' + (anim ? "transform 700ms ease" : "none") + '; transform:rotate(' + ang5 + 'deg)">' + body + "</g>";
+    /* ehel-fix-turn-and-tree: NO MARK ON THE SHAPE. The circle carried a white dot
+       that turned with it, so after the quarter turn the picture had changed
+       while the key says it "looks the same". The arrow OUTSIDE the shape
+       shows the turn without changing what turned. See fix-turn-and-tree.py */
+    const body = T.circle ? '<circle class="flat b" cx="100" cy="100" r="76"></circle>' : poly(T.pts, "b");
+    $("sv5").innerHTML = '<g id="g5" style="transform-origin:100px 100px; transition:' + (anim ? "transform 700ms ease" : "none") + '; transform:rotate(' + ang5 + 'deg)">' + body + "</g>" +
+      (ang5 ? '<g class="turn-mark"><path d="M100,-6 A106,106 0 0 1 206,100" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="round"></path><polygon points="194,92 218,92 206,114" fill="var(--gold)"></polygon></g>' : "");
   }
   function round5() {
     ang5 = 0; phase5 = "turn"; lock5 = false;
@@ -1696,6 +1701,9 @@
   function ribbon(len, col) {
     return '<svg viewBox="0 0 140 40"><rect x="4" y="12" width="' + (len * 1.28) + '" height="16" rx="8" fill="var(--' + col + ')"></rect></svg>';
   }
+  /* ehel-fix-turn-and-tree: the crown is 40 tall and the trunk runs down to the ground
+     at y 96, so h must be above 42 - below that the trunk's height goes
+     negative and the crown sinks under the ground. */
   function tree(h, col) {
     const top = 96 - h;
     return '<svg viewBox="0 0 60 100"><rect x="25" y="' + (top + 26) + '" width="10" height="' + (70 - top) + '" fill="#8B5A2B"></rect>' +
@@ -1721,9 +1729,9 @@
         ask: "Tap the trees in order: <b>shortest</b> first, <b>tallest</b> last.",
         tell: "Short, taller, tallest:",
         cards: [
-          { v: 3, n: "the tallest tree", h: tree(70, "good") + '<span class="cap">tallest</span>' },
-          { v: 1, n: "the short tree", h: tree(24, "good") + '<span class="cap">short</span>' },
-          { v: 2, n: "the taller tree", h: tree(46, "good") + '<span class="cap">taller</span>' },
+          { v: 3, n: "the tallest tree", h: tree(82, "good") + '<span class="cap">tallest</span>' },
+          { v: 1, n: "the short tree", h: tree(48, "good") + '<span class="cap">short</span>' },
+          { v: 2, n: "the taller tree", h: tree(64, "good") + '<span class="cap">taller</span>' },
         ],
       },
       {

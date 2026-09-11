@@ -12,7 +12,7 @@ learners. The CDN was the only copy.
 
 | | |
 | --- | --- |
-| `g1v2/` (7 lessons + `g1-index.html`) | the **live** seven-lesson course - what the launch override points Grade 1 at, and byte-identical to `app/mathematics/grade-1-v2` |
+| `g1v2/` (7 lessons + `g1-index.html`) | the **live** seven-lesson course - what the launch override points Grade 1 at, deployed to `app/mathematics/grade-1-v2`. The repo runs ahead of the CDN between deploys, so compare storage before assuming the two match |
 | `*.html` (5 lessons + `g1-index.html`) | the superseded five-lesson course, kept as the rollback build. **No longer byte-identical to `app/mathematics/grade-1-preview`** - see below |
 
 The five sit in the root rather than a subfolder because they are
@@ -53,43 +53,104 @@ or one line changed by hand; a rollback before then serves the old contrast.
 
 ## The tools
 
+**The committed `g1v2/` is the source.** Change it by writing a guarded patcher
+and running it over the committed files - every step below is one - and commit
+the patcher with its output. Do not re-derive to make a change: see below for
+what a re-derive changes on its own.
+
 ```bash
-# build, in this order - the patchers are NOT idempotent and each assumes the last
-python compose-lessons.py        # derive g1v2/ from the five originals
-python build-hub.py              # rebuild g1v2/g1-index.html (7 cards, carries launch params)
-python add-header-bars.py        # the two header bars + fix the <h1>s
-python add-platform-controls.py  # Class chat, Hand up, Join class, Wehel
-python keep-launch-params.py     # carry pwsToken/pwsEndpoint across every in-app link
-python preload-platform.py       # modulepreload + preconnect, so the controls are not late
+# the build, in the order it was applied. rebuild-g1v2.py IS this list, runnable:
+# it re-derives into a temporary copy, never writes g1v2/, and reports the difference.
+python compose-lessons.py                  # five of the seven lessons, from the five-lesson build
+cp halves-and-wholes.html asking-and-sorting.html g1v2/   # the two it leaves "unchanged" - never written down until 2026-09-11
+python build-hub.py                        # g1v2/g1-index.html
+python add-header-bars.py                  # the two header bars + fix the <h1>s
+python add-platform-controls.py            # Class chat, Hand up, Join class, Wehel
+python keep-launch-params.py               # carry pwsToken/pwsEndpoint across every in-app link
+python preload-platform.py                 # modulepreload + preconnect, so the controls are not late
+(cd g1v2 && python ../align-g1v2-to-template.py)       # opens its pages by bare name: run it from g1v2/
+python ../lesson-app-tools/apply-wehel-panel-theme.py g1v2/<the seven lessons>
+python ../lesson-app-tools/apply-wehel-prompts.py     g1v2/<the seven lessons>
+python silence-load-narration.py                      g1v2/<the seven lessons>
+python ../lesson-app-tools/add-page-doctype-lang.py   g1v2/<the seven lessons> g1v2/g1-index.html
+python ../lesson-app-tools/wire-progress.py --app g1v2          # report progress to the school
+python fix-review-findings.py --write
+python ../lesson-app-tools/wire-accessibility.py --app g1v2 --write
+python annotate-objectives.py --write                  # the Cambridge codes into each step's comment
+python ../lesson-app-tools/wire-quiet-notice.py --app g1v2 --write   # say so when no voice plays
+python ../lesson-app-tools/self-host-fonts.py --app g1v2 --write     # no request to Google
+python gate-and-explain-check.py --write               # 75% to complete; every check answer explained
+python add-warmup.py --write                           # a recap and one question at the top of step 1
+python add-second-steps.py --write                     # a second step for 17 single-slide objectives
+python fix-turn-and-tree.py --write                    # the turning circle's dot, the short tree
+python build-grownup-section.py --write                # the parents' section, cards and minutes on the hub
+
+python rebuild-g1v2.py                     # run all of the above in a temp copy and compare
 
 # check
-python check-lessons.py              # structure: badges, finish(), stickers, dangling ids
-python check-stage1-coverage.py      # slide titles vs the 36 Stage 1 objectives (cheap)
-python validate-against-framework.py # the real one: clause by clause, live pages, PDF at run time
-python check-answer-keys.py          # every check answer that can be computed
-node   run-lessons.mjs               # execute each lesson against its original as control
+python check-lessons.py                    # script syntax, badges, finish(), stickers, dangling ids
+python check-stage1-coverage.py            # slide titles vs the 36 Stage 1 objectives (cheap)
+python validate-against-framework.py --local   # clause by clause, per slide (no --local: the live pages)
+python ../lesson-app-tools/check-lessons.py        --app g1v2
+python ../lesson-app-tools/check-judging.py        --app g1v2   # every teaching step can disagree
+python ../lesson-app-tools/check-answer-keys.py    --app g1v2   # every key a rule can compute
+python ../lesson-app-tools/audit-stage-coverage.py --app g1v2   # the codes written on the pages
+python ../lesson-app-tools/mutate-answer-keys.py   --app grade-1-app/g1v2   # the key checker, watched failing
+node   run-lessons.mjs                     # NOT WORKING - see below
 
 # ship
 node   deploy.mjs                # plan; --upload sends the 8 pages + 3 shell modules
 python fix-coverage-gaps.py      # the two curriculum fixes already applied to the live five
 ```
 
-Every patcher after `compose-lessons.py` edits the files in place and assumes
-the previous step ran, so a re-derive means running the whole build list in
-order from a clean `g1v2/`. Each one is guarded - it skips a file it has already
-touched - so a second run is safe but does nothing.
+**The fonts are not in any upload.** Since `self-host-fonts.py` the pages load
+Atkinson Hyperlegible from `../../shared/fonts/`, i.e. `app/shared/fonts/` on the
+CDN, and `deploy.mjs` sends only the pages and the shell modules. The two
+`AtkinsonHyperlegible-normal-*.woff2` files must be on storage BEFORE the pages
+that name them - and do not fetch a font URL through the edge to see whether it
+is there: a miss is cached, and the key in `.env` cannot purge it.
+
+**What a re-derive changes.** Run for real on 2026-09-11, `rebuild-g1v2.py`
+brings the hub back byte-identical and every lesson back different in four
+known ways - none of which is work being lost:
+
+1. Two CSS blocks (the template alignment and fix-review-findings) sit in a
+   different place, because the five-lesson build already carries the alignment
+   block and the composer brings it in early. The computed colours were compared
+   in all seven lessons and are identical.
+2. The crest: `add-header-bars.py` now draws the logo image, while the committed
+   build still has the older inline SVG.
+3. The resume hook: `wire-progress.py` now records whether the child has really
+   started, while the committed build still reads `done[0]`. No Grade 1 lesson
+   marks a step done at load, so the older hook resumes correctly here today.
+4. Three comments edited in the committed build alone (two in Halves and Wholes,
+   one in Shapes and Sizes).
+
+2 and 3 are the thing to know about this toolchain: **a guarded patcher applies
+once.** Improving a tool afterwards does not reach a build it has already
+patched, and nothing reports that the build is behind its own tools.
+
+**`run-lessons.mjs` has not been a working check since 2026-09-07.** It runs
+each page's scripts as classic JavaScript, and the lessons have carried
+`type="module"` scripts since the platform controls arrived, so all seven fail
+with "Cannot use import statement outside a module" - a failure of the harness,
+not of the lessons. `check-lessons.py` failed the same way, for the same
+reason, until 2026-09-11.
 
 ## What the checks do and do not establish
 
-`validate-against-framework.py` reports **36/36** against the live pages, and
-`check-answer-keys.py` computes **23** of the 75 check answers and finds them
-right. Both are mutation-tested; a gate nobody has watched fail is not known to
-work.
+`validate-against-framework.py` reports **36/36** (measured 2026-09-11, repo
+copies), per slide, with one clause marked `OK*` as taught only ALOUD: 1Nc.01's
+conservation of number is in the Explain script of Counting's steps 3 and 10,
+and never on the screen or in an activity. The shared `check-answer-keys.py`
+reads **239** questions across the seven lessons, verifies **139** and finds
+none wrong. Both are mutation-tested; a gate nobody has watched fail is not
+known to work.
 
 Neither says the teaching is good. Coverage means every objective has a home,
 not that the explanation is correct, well pitched, or free of error.
 
-**52 of the 75 check questions cannot be verified by any tool.** "Which shape
+**100 of the 239 questions cannot be verified by any tool.** "Which shape
 has no corners?" has no computable answer, so those are reported as unchecked
 rather than counted as passes — coverage that cannot be falsified is not
 evidence. A wrong key among them reaches a child in silence. That needs a human
@@ -102,6 +163,19 @@ string literals only, because a lesson's CHECK array belonged to no slide, and
 because unplaceable JS blocks were silently dropped. Under-reporting is the
 failure that looks responsible. The number is worth exactly what the mutation
 test behind it is worth.
+
+**A fourth OVER-reported, and every earlier 36/36 was measured through it.** Until
+2026-09-11 the validator linked no activity block to its slide: it read each
+slide's element ids after stripping the markup out of it, so all 96 blocks fell
+back to "every slide in the lesson", and the per-slide check was a per-lesson
+check. A CSS comment in a notice's styling - "squeezed to 187 px wide" - was
+satisfying 1Nc.01's conservation clause. It also read the tail of each slide's
+Explain script as visible text, because the slide tag was cut at the first `>`
+inside its SSML. Both are fixed, and the fix was watched failing: a clause
+planted in another slide's activity now reads PART, and one planted only in an
+Explain script reads `OK*`; the old reading called both OK. Re-measured with
+both fixed, the verdict held - every objective still has a home - and the only
+change is the one clause now shown as spoken-only.
 
 ## Things that will bite
 

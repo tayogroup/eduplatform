@@ -20,7 +20,11 @@
   })();
 </script>
 <title>What Comes Next</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
@@ -628,9 +632,11 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
     <!-- 1  1Nc.06  What comes next? -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A pattern is something that happens again and again in the same order.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the beads.</s><s>Red, blue, red, blue, red.</s><s>Say it out loud with me and listen to your own voice.</s><s>Red, blue, red, blue, red.</s><s>Your voice wants to say blue next, and it is right.</s><s>The next bead is blue.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children look at the very last bead and pick a different colour, as if the pattern were taking turns.</s><s>It is not taking turns.</s><s>It is repeating.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the beads out loud from the start.</s><s>Let your voice run on past the end.</s><s>Whatever it wants to say next, tap that.</s></mstts:express-as>' data-say="A pattern repeats. Say the pattern out loud, then tap the bead that comes next.">
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>What comes next?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">A pattern <b>repeats</b>. Say it out loud, then tap the bead that comes <b>next</b>.</span></div>
       <div class="stage">
@@ -924,6 +930,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1215,6 +1223,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1653,6 +1662,25 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see add-warmup.py. NOT a step: no sticker, no dot, no score. */
+  const WARM = [{ q: "Last lesson, you found halves. Warm up: red, blue, red, blue. What comes next?", opts: ["red", "blue", "green"], a: "red", why: "Red and blue take turns, so red comes next. Today you will find patterns." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
 
   /* ---- beads ---- */
@@ -2181,27 +2209,41 @@
   round9();
 
   /* ---- 10: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11). Below it the child sees the score, how many they need, and a
+     button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "What comes next?", beads: [{ c: "orange", s: "circle" }, { c: "teal", s: "circle" }, { c: "orange", s: "circle" }, { c: "teal", s: "circle" }, { c: "orange", s: "circle" }], opts: ["teal", "orange", "purple"], a: "teal", say: "orange, teal, orange, teal, orange. What comes next?" },
-    { q: "How many beads repeat?", beads: [{ c: "purple", s: "square" }, { c: "gold", s: "square" }, { c: "gold", s: "square" }, { c: "purple", s: "square" }, { c: "gold", s: "square" }, { c: "gold", s: "square" }], opts: [3, 2, 4], a: 3, say: "purple, gold, gold, purple, gold, gold. How many beads repeat?" },
-    { q: "2, 4, 6, ?", opts: [8, 7, 9], a: 8, say: "two, four, six, what comes next?" },
-    { q: "10, 9, 8, ?", opts: [7, 6, 11], a: 7, say: "ten, nine, eight, what comes next?" },
-    { q: "What is missing: 13, 14, ?, 16", opts: [15, 17, 12], a: 15, say: "thirteen, fourteen, something, sixteen. What is missing?" },
-    { q: "3 + 4 = ?", opts: [7, 6, 8], a: 7, say: "three add four?" },
-    { q: "9 − 5 = ?", opts: [4, 3, 5], a: 4, say: "nine take away five?" },
-    { q: "4 + 5 = ?", opts: [9, 8, 10], a: 9, say: "four add five?" },
-    { q: "12 − 4 = ?", opts: [8, 7, 9], a: 8, say: "twelve take away four?" },
-    { q: "The machine does +2. 6 goes in. What comes out?", opts: [8, 4, 7], a: 8, say: "The machine does add two. Six goes in. What comes out?" },
-    { q: "12, 14, 16, ?", opts: [18, 17, 20], a: 18, say: "twelve, fourteen, sixteen, what comes next?" },
-    { q: "Pattern 1 has 2 squares, pattern 2 has 4, pattern 3 has 6. How many in pattern 4?", opts: [8, 7, 10], a: 8, say: "Pattern one has two squares, pattern two has four, pattern three has six. How many squares in pattern four?" },
-    { q: "3, 8, 3, 8, 3, ?", opts: [8, 3, 13], a: 8, say: "three, eight, three, eight, three, what comes next?" },
-    { q: "?, 8, 10, 12, 14", opts: [6, 7, 4], a: 6, say: "something, eight, ten, twelve, fourteen. Which number is missing at the start?" },
-    { q: "Which shape is missing in the middle?", beads: [{ c: "orange", s: "circle" }, { c: "teal", s: "square" }, { c: "orange", s: "circle" }, null, { c: "orange", s: "circle" }, { c: "teal", s: "square" }], opts: ["teal square", "orange circle", "gold circle"], a: "teal square", say: "orange circle, teal square, orange circle, something, orange circle, teal square. Which shape is missing in the middle?" },
+    { q: "What comes next?", beads: [{ c: "orange", s: "circle" }, { c: "teal", s: "circle" }, { c: "orange", s: "circle" }, { c: "teal", s: "circle" }, { c: "orange", s: "circle" }], opts: ["teal", "orange", "purple"], a: "teal", say: "orange, teal, orange, teal, orange. What comes next?", why: "The colours take turns: orange, then teal. After orange comes teal." },
+    { q: "How many beads repeat?", beads: [{ c: "purple", s: "square" }, { c: "gold", s: "square" }, { c: "gold", s: "square" }, { c: "purple", s: "square" }, { c: "gold", s: "square" }, { c: "gold", s: "square" }], opts: [3, 2, 4], a: 3, say: "purple, gold, gold, purple, gold, gold. How many beads repeat?", why: "Purple, gold, gold is the part that repeats. That is 3 beads." },
+    { q: "2, 4, 6, ?", opts: [8, 7, 9], a: 8, say: "two, four, six, what comes next?", why: "Each number is 2 more. 6 and 2 more is 8." },
+    { q: "10, 9, 8, ?", opts: [7, 6, 11], a: 7, say: "ten, nine, eight, what comes next?", why: "Each number is 1 less. One less than 8 is 7." },
+    { q: "What is missing: 13, 14, ?, 16", opts: [15, 17, 12], a: 15, say: "thirteen, fourteen, something, sixteen. What is missing?", why: "The numbers go up by 1. After 14 comes 15, and then 16." },
+    { q: "3 + 4 = ?", opts: [7, 6, 8], a: 7, say: "three add four?", why: "Start at 4 and count on 3: 5, 6, 7." },
+    { q: "9 − 5 = ?", opts: [4, 3, 5], a: 4, say: "nine take away five?", why: "Start at 9 and count back 5: 8, 7, 6, 5, 4." },
+    { q: "4 + 5 = ?", opts: [9, 8, 10], a: 9, say: "four add five?", why: "Start at 5 and count on 4: 6, 7, 8, 9." },
+    { q: "12 − 4 = ?", opts: [8, 7, 9], a: 8, say: "twelve take away four?", why: "Go through 10: take 2 to get to 10, then take 2 more to get to 8." },
+    { q: "The machine does +2. 6 goes in. What comes out?", opts: [8, 4, 7], a: 8, say: "The machine does add two. Six goes in. What comes out?", why: "The machine adds 2. 6 and 2 more is 8." },
+    { q: "12, 14, 16, ?", opts: [18, 17, 20], a: 18, say: "twelve, fourteen, sixteen, what comes next?", why: "Each number is 2 more. 16 and 2 more is 18." },
+    { q: "Pattern 1 has 2 squares, pattern 2 has 4, pattern 3 has 6. How many in pattern 4?", opts: [8, 7, 10], a: 8, say: "Pattern one has two squares, pattern two has four, pattern three has six. How many squares in pattern four?", why: "Each pattern has 2 more squares than the one before. 6 and 2 more is 8." },
+    { q: "3, 8, 3, 8, 3, ?", opts: [8, 3, 13], a: 8, say: "three, eight, three, eight, three, what comes next?", why: "3 and 8 take turns. After 3 comes 8." },
+    { q: "?, 8, 10, 12, 14", opts: [6, 7, 4], a: 6, say: "something, eight, ten, twelve, fourteen. Which number is missing at the start?", why: "The numbers go up by 2. The number before 8 is 2 less, which is 6." },
+    { q: "Which shape is missing in the middle?", beads: [{ c: "orange", s: "circle" }, { c: "teal", s: "square" }, { c: "orange", s: "circle" }, null, { c: "orange", s: "circle" }, { c: "teal", s: "square" }], opts: ["teal square", "orange circle", "gold circle"], a: "teal square", say: "orange circle, teal square, orange circle, something, orange circle, teal square. Which shape is missing in the middle?", why: "An orange circle and a teal square take turns. After an orange circle comes a teal square." },
   ];
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("pic10").innerHTML = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("sc10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Try the steps again, then come back."; finish(14, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("pic10").innerHTML = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("sc10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Try the steps again, then come back."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(14, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("sc10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length;
     $("q10").textContent = q.q; $("say10").textContent = q.q;
     // a null bead in the list is a hole in the middle of the row
@@ -2214,9 +2256,9 @@
     const q = CHECK[c10], ok = String(b.dataset.v) === String(q.a);
     $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right10++;
-    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + ".";
-    say(ok ? cheer() : "It is " + q.a);
-    c10++; setTimeout(round10, 1300);
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || "");
+    say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c10++; setTimeout(round10, 2800);
   });
   round10();
 
@@ -2647,3 +2689,63 @@
     if (added) report(lastAt);
   };
 </script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
+</script>
+
+<style>/* ehel-warmup - see add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>

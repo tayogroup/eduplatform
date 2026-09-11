@@ -14,7 +14,7 @@ question that genuinely cannot be answered.
 Each case re-binds one key to a DIFFERENT REAL OPTION on the same item and
 requires the tool to report it WRONG. Run it after touching any rule.
 
-    python lesson-app-tools/mutate-answer-keys.py              # all 157
+    python lesson-app-tools/mutate-answer-keys.py              # all 184
     python lesson-app-tools/mutate-answer-keys.py --app grade-2-app
     python lesson-app-tools/mutate-answer-keys.py --list
 
@@ -195,10 +195,12 @@ CASES = [
      '12 shared between 3 is ? each',
      'opts: [4, 3, 6], a: 4',
      'opts: [4, 3, 6], a: 3'),
-    ('grade-2-app', 'tens-and-ones.html',
-     'A quarter of 12 is ?',
-     'opts: [3, 4, 6], a: 3',
-     'opts: [3, 4, 6], a: 4'),
+    # 'A quarter of 12 is ?' was here. fb8c16f5c (2026-09-10) took the fractions
+    # and money steps out of Tens and Ones - Grade 2 has a fractions lesson and a
+    # money lesson of its own - and the question went with them, so this case
+    # could no longer be placed and turned every run red with a SKIP. Deleted,
+    # not re-pointed: the quarter-of rule it exercised is still mutation-tested
+    # by Grade 4's 'What is a quarter of 24?' below.
     ('grade-2-app', 'tens-and-ones.html',
      'One more than 59 is ?',
      'opts: [60, 58, 69], a: 60',
@@ -771,10 +773,74 @@ CASES = [
      'Look back at the fruit graph',
      '{ t: "Mango was chosen most often", ok: true },\n          { t: "Everybody likes mango", ok: false }',
      '{ t: "Mango was chosen most often", ok: false },\n          { t: "Everybody likes mango", ok: true }'),
+    # The question a content fix made unreadable. Rewording the duplicated stem
+    # to "And how many counters now?" pushed it past a ^how many anchor, and the
+    # checker lost it without a word; this case fails if the rule stops reading
+    # it again. The key literal is taken with its closing bracket so it cannot
+    # match the `pic: 14` two fields earlier.
+    ('grade-1-app/g1v2', 'counting-to-twenty.html',
+     'And how many counters now?',
+     '15], a: 14',
+     '15], a: 13'),
     ('grade-1-app/g1v2', 'asking-and-sorting.html',
      'Can it tell us what the whole school likes best?',
      '{ t: "No, we only asked our class", ok: true }, { t: "Yes, it is the same everywhere", ok: false }',
      '{ t: "No, we only asked our class", ok: false }, { t: "Yes, it is the same everywhere", ok: true }'),
+    # ---- Grade 1's second steps (grade-1-app/add-second-steps.py, 2026-09-11) ----
+    # Every one of their questions the tool can verify, re-bound. The first four
+    # are also the proof of the four rules those questions CORRECTED: each of
+    # them used to report its key wrong (an ordinal read as a number twice, a
+    # curved solid's "flat faces" read as all its faces, a tie between two jugs
+    # broken on the label), so a re-binding that lands on the old wrong answer -
+    # 3 flat faces, jug A - is the case the old rule would have passed.
+    ('grade-1-app/g1v2', 'counting-to-twenty.html',
+     'Which place comes just after <b>7th</b>',
+     '{ t: "8th", ok: true }, { t: "6th", ok: false }, { t: "9th", ok: false }',
+     '{ t: "8th", ok: false }, { t: "6th", ok: false }, { t: "9th", ok: true }'),
+    ('grade-1-app/g1v2', 'counting-to-twenty.html',
+     'Which word says <b>10th</b>',
+     '{ t: "tenth", ok: true }, { t: "ten", ok: false }',
+     '{ t: "tenth", ok: false }, { t: "ten", ok: true }'),
+    ('grade-1-app/g1v2', 'shapes-and-sizes.html',
+     'How many <b>flat</b> faces does a cylinder have',
+     '{ t: "2", ok: true }, { t: "1", ok: false }, { t: "3", ok: false }',
+     '{ t: "2", ok: false }, { t: "1", ok: false }, { t: "3", ok: true }'),
+    ('grade-1-app/g1v2', 'shapes-and-sizes.html',
+     'pic: jugRow([[0.5, "A"], [0.5, "B"]])',
+     '{ t: "They hold the same", ok: true }, { t: "A", ok: false }',
+     '{ t: "They hold the same", ok: false }, { t: "A", ok: true }'),
+    ('grade-1-app/g1v2', 'adding-and-taking-away.html',
+     '6 and ? make 10',
+     '{ t: "4", ok: true }, { t: "3", ok: false }',
+     '{ t: "4", ok: false }, { t: "3", ok: true }'),
+    ('grade-1-app/g1v2', 'adding-and-taking-away.html',
+     'The frame is full. 10 and ? make 10',
+     '{ t: "0", ok: true }, { t: "1", ok: false }',
+     '{ t: "0", ok: false }, { t: "1", ok: true }'),
+    ('grade-1-app/g1v2', 'shapes-and-sizes.html',
+     'How many <b>faces</b> does a cube have',
+     '{ t: "6", ok: true }, { t: "3", ok: false }',
+     '{ t: "6", ok: false }, { t: "3", ok: true }'),
+    ('grade-1-app/g1v2', 'shapes-and-sizes.html',
+     'How many <b>edges</b> does a cone have',
+     '{ t: "1", ok: true }, { t: "0", ok: false }',
+     '{ t: "1", ok: false }, { t: "0", ok: true }'),
+    ('grade-1-app/g1v2', 'shapes-and-sizes.html',
+     'How many <b>faces</b> does a pyramid have',
+     '{ t: "5", ok: true }, { t: "4", ok: false }, { t: "8", ok: false }',
+     '{ t: "5", ok: false }, { t: "4", ok: false }, { t: "8", ok: true }'),
+    ('grade-1-app/g1v2', 'shapes-and-sizes.html',
+     'The balloon is bigger',
+     'pic: balance(-1, "🎈", "🪨")',
+     'pic: balance(1, "🎈", "🪨")'),
+    ('grade-1-app/g1v2', 'shapes-and-sizes.html',
+     'pic: balance(1, "🍍", "🍋")',
+     'pic: balance(1, "🍍", "🍋")',
+     'pic: balance(-1, "🍍", "🍋")'),
+    ('grade-1-app/g1v2', 'days-months-and-clocks.html',
+     'Which is <b>longer</b>: a month or a week',
+     '{ t: "a month", ok: true }, { t: "a week", ok: false }',
+     '{ t: "a month", ok: false }, { t: "a week", ok: true }'),
 ]
 
 

@@ -20,7 +20,11 @@
   })();
 </script>
 <title>Days, Months and Clocks</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
@@ -599,10 +603,12 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
     <!-- 1  1Gt.02  Days of the week -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The days of the week always come round in the same order, and that order never changes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.</s><s>Seven of them.</s><s>Say them out loud with me, and after Sunday it starts at Monday again, round and round.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start at whatever day it is today.</s><s>The list on this screen always starts at Monday, whatever day it happens to be outside.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the whole seven out loud from Monday, then tap them in that order.</s></mstts:express-as>' data-say="Seven days make a week. Tap the days in order, starting with Monday.">
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Days of the week</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the days in order, starting with <b>Monday</b>.</span></div>
       <div class="stage" id="stage11"></div>
@@ -640,6 +646,26 @@
         <p class="fb" id="fbtime" role="status" aria-live="polite"></p>
         <p class="score" id="scoretime"></p>
       </div>
+    </section>
+<!-- 5  1Gt.01  How long does it take? -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>We use different words for short times and long times.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A blink takes less than a second.</s><s>Eating a banana takes a few minutes.</s><s>A night of sleep lasts many hours.</s><s>A school holiday lasts weeks, and there are twelve months in a year.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think something that feels long must take a long time, like waiting for a treat.</s><s>Waiting can feel long even when it is only a few minutes.</s><s>Think about the clock, not the feeling.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So picture doing the thing, and ask: is that seconds, minutes, hours, days, or longer?</s></mstts:express-as>' data-say="Seconds, minutes, hours, days, weeks, months and years. Think about how long each thing takes, then tap the answer.">
+      <div class="slide-head"><span class="n">5</span><h2>How long does it take?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss5say">Think about how long each thing takes: a <b>second</b>, a <b>minute</b>, an <b>hour</b>, a <b>day</b>, a <b>week</b> or a <b>year</b>.</span></div>
+      <div class="stage" id="ss5st"></div>
+      <div class="choices" id="ss5ch"></div>
+      <p class="fb" id="ss5fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss5nx" hidden>Next question</button></div>
+      <p class="score" id="ss5sc"></p>
+    </section>
+<!-- 6  1Gt.03  Find the clock -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every clock tells the time the same way, with its two hands.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The long hand pointing straight up to twelve means o clock.</s><s>The long hand pointing straight down to six means half past.</s><s>The short hand tells you which hour.</s><s>At half past, the short hand sits halfway between two numbers.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children read the long hand as the hour, because it is the bigger hand.</s><s>The long hand only says o clock or half past.</s><s>It is the short hand that tells you the hour.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the long hand first, to see o clock or half past, and then read the short hand.</s></mstts:express-as>' data-say="Read each clock. The short hand tells the hour, and the long hand says o'clock or half past. Tap the answer.">
+      <div class="slide-head"><span class="n">6</span><h2>Find the clock</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss6say">Read each clock. The <b>long</b> hand says <b>o'clock</b> or <b>half past</b>, and the <b>short</b> hand tells the hour.</span></div>
+      <div class="stage" id="ss6st"></div>
+      <div class="choices" id="ss6ch"></div>
+      <p class="fb" id="ss6fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="ss6nx" hidden>Next question</button></div>
+      <p class="score" id="ss6sc"></p>
     </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows a shape, count the sides or ask whether you could hold it.</s><s>If it asks about size, compare the two things.</s><s>If it shows a clock, find the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
@@ -769,6 +795,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1060,6 +1088,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1506,7 +1535,104 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see add-warmup.py. NOT a step: no sticker, no dot, no score. */
+  const WARM = [{ q: "Last lesson, you looked at shapes and sizes. Warm up: how many days are in a week?", opts: [7, 5, 12], a: 7, why: "There are 7 days in a week. Today you will learn the days, the months and the clock." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+
+  /* ==== ehel-second-steps: the runner - see grade-1-app/add-second-steps.py ====
+     Seventeen objectives rested on one slide each. Each now has a second step,
+     after the lesson's own steps and before the check. One question after
+     another, like sequence() in Shapes and Sizes, except that the child moves on
+     with a button: say() stops whatever is playing, so a timer that draws the
+     next question cuts the explanation off, and these explain every answer.
+     o.flash (ms) shows the picture behind a Look! button, for seeing how many
+     without counting. Takes ELEMENTS, so each step's own block names its slide. */
+  function secondStep(o) {
+    const el = o.el, items = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    let i = 0, right = 0, lock = true;
+    function options() {
+      el.ch.innerHTML = shuffle(items[i].opts).map((c) => '<button type="button" class="choice' +
+        (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      lock = false;
+    }
+    function draw() {
+      const it = items[i];
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      if (o.flash) {
+        el.stage.innerHTML = '<div class="ss-flash" style="visibility:hidden">' + it.pic + "</div>" +
+          '<div class="bigbtns"><button type="button" class="big teal ss-look">Look!</button></div>';
+        el.ch.innerHTML = "";
+      } else {
+        el.stage.innerHTML = it.pic || "";
+        options();
+      }
+      say(words(it.ask));
+    }
+    el.stage.addEventListener("click", (e) => {
+      const b = e.target.closest(".ss-look"); if (!b) return;
+      const pic = el.stage.querySelector(".ss-flash");
+      b.parentElement.remove();
+      pic.style.visibility = "visible";
+      setTimeout(() => { pic.style.visibility = "hidden"; options(); }, o.flash);
+    });
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = items[i], ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (ok) right++; else b.classList.add("wrong");
+      const pic = el.stage.querySelector(".ss-flash"); if (pic) pic.style.visibility = "visible";
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      i++;
+      if (i < items.length) el.next.hidden = false;
+      else { el.score.textContent = "You got " + right + " of " + items.length + ". " + o.done; finish(o.finish); }
+      say(msg);
+    });
+    el.next.addEventListener("click", () => { if (i < items.length) draw(); });
+    draw();
+  }
+  /* the second steps' pictures, in this lesson's own classes */
+  function ssRow(cells, w) {
+    return '<div class="ss-row">' + cells.map((c) => '<div class="ss-cell"><div class="ss-art"' + (w ? ' style="width:' + w + 'px"' : "") + ">" +
+      c[0] + '</div><div class="ss-lab">' + c[1] + "</div></div>").join("") + "</div>";
+  }
+  function ssClock(h, half) {
+    const at = (deg, len) => [(110 + len * Math.sin(deg * Math.PI / 180)).toFixed(1), (110 - len * Math.cos(deg * Math.PI / 180)).toFixed(1)];
+    let s = '<circle class="face" cx="110" cy="110" r="96"></circle>';
+    for (let i = 1; i <= 12; i++) {
+      const p = at(i * 30, 86), q = at(i * 30, 96), n = at(i * 30, 68);
+      s += '<line class="tick big" x1="' + p[0] + '" y1="' + p[1] + '" x2="' + q[0] + '" y2="' + q[1] + '"></line>' +
+        '<text class="num" x="' + n[0] + '" y="' + n[1] + '">' + i + "</text>";
+    }
+    const hr = at((h % 12) * 30 + (half ? 15 : 0), 48), mn = at(half ? 180 : 0, 76);
+    s += '<line class="hour" x1="110" y1="110" x2="' + hr[0] + '" y2="' + hr[1] + '"></line>' +
+      '<line class="minute" x1="110" y1="110" x2="' + mn[0] + '" y2="' + mn[1] + '"></line>' +
+      '<circle class="hub" cx="110" cy="110" r="6"></circle>';
+    return '<svg class="clock big-clock" viewBox="0 0 220 220" role="img" aria-label="A clock">' + s + "</svg>";
+  }
 
   /* ---- one question after another: the shape six of these steps share ---- */
   function sequence(o) {
@@ -1896,6 +2022,19 @@
   paintHours();
 
   /* ---- check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11). Below it the child sees the score, how many they need, and a
+     button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
     { q: "Which day comes <b>after</b> Sunday?", pic: "", opts: ["Monday", "Saturday", "Friday"], a: "Monday", why: "Sunday is the last day of the week, and then it starts again with Monday." },
     { q: "How many <b>months</b> are there in a year?", pic: "", opts: ["12", "7", "10"], a: "12", why: "There are 12 months, from January to December." },
@@ -1930,11 +2069,62 @@
         $("fbck").className = "fb good";
         $("fbck").textContent = "You got " + rightc + " out of " + CHECK.length + "!";
         say("You got " + rightc + " out of " + CHECK.length + "!");
-        finish(4, "Well done!");
+        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(6, "Well done!");
+        else retryCheck($("fbck"), $("chck"), rightc, CHECK.length, function () { qc = 0; rightc = 0; askCheck(); });
       } else askCheck();
     }, 2800);
   });
   askCheck();
+
+  /* ---- 5: how long does it take - a second step for 1Gt.01 ---- */
+  secondStep({
+    el: { say: $("ss5say"), stage: $("ss5st"), ch: $("ss5ch"), fb: $("ss5fb"), score: $("ss5sc"), next: $("ss5nx") },
+    label: "Question",
+    items: [
+      { ask: "Which takes <b>longer</b>?", pic: '<div class="ss-emo">😴 &nbsp; 🍌</div>',
+        opts: [{ t: "a night of sleep", ok: true }, { t: "eating a banana", ok: false }],
+        why: "A night of sleep lasts many hours. Eating a banana takes only a few minutes." },
+      { ask: "Which is the <b>shortest</b> time?", pic: "",
+        opts: [{ t: "a blink of your eye", ok: true }, { t: "a football match", ok: false }, { t: "a day at school", ok: false }],
+        why: "A blink is over in less than a second. A football match lasts more than an hour, and a school day lasts many hours." },
+      { ask: "About how long is a <b>school holiday</b>?", pic: "",
+        opts: [{ t: "a few weeks", ok: true }, { t: "a few seconds", ok: false }, { t: "a few minutes", ok: false }],
+        why: "A school holiday lasts for weeks. Seconds and minutes are far too short." },
+      { ask: "Which is <b>longer</b>: a month or a week?", pic: "",
+        opts: [{ t: "a month", ok: true }, { t: "a week", ok: false }],
+        why: "A month is about 4 weeks, so a month is longer than a week." },
+      { ask: "From one birthday to your next birthday is…", pic: '<div class="ss-emo">🎂</div>',
+        opts: [{ t: "a year", ok: true }, { t: "a week", ok: false }, { t: "a day", ok: false }],
+        why: "Your birthday comes round once a year, so from one birthday to the next is a whole year: 12 months." },
+    ],
+    finish: 4,
+    done: "You can talk about short times and long times.",
+  });
+
+  /* ---- 6: find the clock - a second step for 1Gt.03 ---- */
+  secondStep({
+    el: { say: $("ss6say"), stage: $("ss6st"), ch: $("ss6ch"), fb: $("ss6fb"), score: $("ss6sc"), next: $("ss6nx") },
+    label: "Clock",
+    items: [
+      { ask: "Which clock shows <b>4 o'clock</b>?", pic: ssRow([[ssClock(4, true), "A"], [ssClock(4, false), "B"], [ssClock(5, false), "C"]], 124),
+        opts: [{ t: "B", ok: true }, { t: "A", ok: false }, { t: "C", ok: false }],
+        why: "On clock B the long hand points to 12 and the short hand points to 4. That is 4 o'clock." },
+      { ask: "Which clock shows <b>half past 2</b>?", pic: ssRow([[ssClock(2, false), "A"], [ssClock(3, true), "B"], [ssClock(2, true), "C"]], 124),
+        opts: [{ t: "C", ok: true }, { t: "A", ok: false }, { t: "B", ok: false }],
+        why: "On clock C the long hand points to 6, so it is half past, and the short hand is just past 2." },
+      { ask: "At <b>half past</b>, where does the long hand point?", pic: "",
+        opts: [{ t: "to 6", ok: true }, { t: "to 12", ok: false }, { t: "to 3", ok: false }],
+        why: "Half past means halfway round, so the long hand points straight down to 6." },
+      { ask: "At <b>o'clock</b>, where does the long hand point?", pic: "",
+        opts: [{ t: "to 12", ok: true }, { t: "to 6", ok: false }, { t: "to 1", ok: false }],
+        why: "At o'clock the long hand points straight up to 12." },
+      { ask: "School starts at <b>8 o'clock</b>. Where does the short hand point?", pic: "",
+        opts: [{ t: "to 8", ok: true }, { t: "to 12", ok: false }, { t: "to 6", ok: false }],
+        why: "At 8 o'clock the short hand points to 8, and the long hand points to 12." },
+    ],
+    finish: 5,
+    done: "You can find o'clock and half past on a clock.",
+  });
 
   /* ---- stickers ---- */
   const STICKERS = [
@@ -1942,14 +2132,17 @@
     ["🗓️", "Months of the year"],
     ["⏳", "Short and long times"],
     ["⏰", "Telling the time"],
+    ["⏱️", "How long it takes"],
+    ["🕞", "Find the clock"],
     ["✅", "Show what I know"],
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
       (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
-    const got = done.slice(0, 5).filter(Boolean).length;
-    $("fbstick").className = "fb " + (got === 15 ? "good" : "");
-    $("fbstick").textContent = got === 15 ? "All 15 stickers! You are a shape star." : got + " of 15 stickers so far.";
+    /* ehel-second-steps: counted from STICKERS. It said "of 15" and "a shape star", from the page this lesson was cut from */
+    const all = STICKERS.length, got = done.slice(0, all).filter(Boolean).length;
+    $("fbstick").className = "fb " + (got === all ? "good" : "");
+    $("fbstick").textContent = got === all ? "All " + all + " stickers! You are a time star." : got + " of " + all + " stickers so far.";
   }
   $("restart").addEventListener("click", () => location.reload());
 
@@ -2355,3 +2548,75 @@
     if (added) report(lastAt);
   };
 </script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
+</script>
+
+<style>/* ehel-warmup - see add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>
+
+<style>/* ehel-second-steps - see add-second-steps.py */
+  .ss-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: flex-end; }
+  .ss-cell { display: grid; justify-items: center; gap: 6px; }
+  .ss-art { width: 104px; }
+  .ss-art svg { width: 100%; height: auto; display: block; }
+  .ss-lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--ink); }
+  .ss-emo { font-size: clamp(40px, 9vw, 60px); line-height: 1.2; text-align: center; }
+  .ss-emo.sm { font-size: clamp(28px, 6vw, 40px); }
+  .ss-flash { display: grid; place-items: center; min-height: 150px; }
+  .ss-art .big-clock .num { font-size: 22px; }
+</style>

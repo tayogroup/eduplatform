@@ -278,3 +278,46 @@ every page byte-identical to HEAD, every edge path fresh. Lesson 1 was then
 played to the end on the live pages in Chromium: 0 console errors, every step
 stored and the lesson recorded complete, nothing ticked on a fresh open, and a
 reload after moving to step 4 opens step 4.
+
+## Validated 2026-09-11
+
+Against the owner's 27-area framework (OneDrive: `computing-grades validation.docx`);
+the full report is [VALIDATION.md](VALIDATION.md), and the Word copy sits beside the
+other validation reports as `computing-grade-3-v2 validation report.docx`. Average
+4.1 / 5.
+
+Before anything changed, all fourteen lessons were played to the end on the live
+pages with the stored record: every step stored, every lesson recorded complete,
+nothing ticked on a fresh open, and a reload after moving to step 4 opens step 4.
+
+Reading every learner-facing line found eleven kinds of error. The ones a child
+would carry away: toast before butter "because butter melts on hot toast" (a reason
+that does not explain the order, in a quiz key too), a cereal step, "Boil the
+milk", marked as one nobody needs, a doorbell counted among machines with a
+computer inside when lesson 14 teaches that an old doorbell has none, a laptop's
+network cable called "a cable to the wall socket", which reads as the charger, an
+objective code ("3MD.03") in a child's feedback, and "Count the feet" as the way to
+order size-1 shoes. Four home projects changed for safety: a child changing the
+inputs of a kettle and a toaster with no grown-up named, a grown-up following the
+child's toast algorithm "silly mistakes and all", and a recipe to change and a hunt
+along the street, neither naming a grown-up.
+
+Measuring the built pages found what the earlier reviews had not measured: the
+Stage 3 machines. 64 controls were under 44 px on a phone (the cipher keys, the
+spreadsheet's column letters and choice chips, the number chips inside blocks) and
+two label styles were 11 and 12 px; eight pictures needed 2020 or 2021 devices, in
+20 places, and the kit drew "Shake it" with a 2022 face. The controls, the labels
+and the shake face are fixed in the shared kit, so Grade 4's pages change too; the
+kit README records the size rule for Stage 3 controls and an Emoji 12.0 (2019)
+ceiling for pictures. All in `282c40c60`, committed and **not deployed**: the live
+Grade 3 pages carry the errors above until Grade 3 is redeployed. Nothing added a
+step or moved one, so records already made stay true.
+
+Left open, all content work or human checks: categorical data is named by 3MD.02
+and 3MD.03 but never recorded or charted (the lessons use one discrete data set,
+how many pets); no lesson has a recap or a warm-up (Grades 1 and 2 have both);
+seven activities repeat Grades 1 and 2 almost word for word (handwashing, planting a
+seed, getting dressed, the jam sandwich twice, a debug goal; tea, bedtime); a
+teacher's read of the content and the 144 keys; a listen to the cipher lesson's
+letter names ("a is 1"); a screen-reader walk-through; children watched; and the
+owner's decisions on score-gated completion and the Computing world placeholder.

@@ -6,11 +6,11 @@ Against the 27-area framework in *science-grade-1-v2 validation.docx*. The Word 
 
 ## Summary
 
-First validation of Grade 4 Science, built but not yet shipped to learners. The software is sound: all 63 Stage 4 objectives are reached, every step of all thirteen lessons completes in a browser, and nothing overflows at phone width. An independent review found 134 points: 26 facts, 34 pictures, 20 consistency points, 17 capitalised words, 10 safety points, 9 inclusion points, 6 keys and 6 tags. It also found six kit simulations that showed untrue results, the worst being a day-and-night globe that put 'you' on the dark side at midday and a mirror that broke the law of reflection. All of it is fixed, and a second, independent review of the fixed text found 22 smaller points, also fixed. Grade 4 now has what Grades 1 to 3 have: two sittings of about 20 minutes, a warm-up and a 'Last time' recap on every overview, and a reasoning question in every quiz. The fixes are committed as f19a1506d and pushed. Grade 4 is not deployed or routed; that waits on the owner. Average 4.3 out of 5. What remains needs people: a teacher's read, a screen-reader session, the school's devices, and children timed and watched.
+First validation of Grade 4 Science, built but not yet shipped to learners. The software is sound: all 63 Stage 4 objectives are reached, every step of all thirteen lessons completes in a browser, and nothing overflows at phone width. An independent review found 134 points: 26 facts, 34 pictures, 20 consistency points, 17 capitalised words, 10 safety points, 9 inclusion points, 6 keys and 6 tags. It also found six kit simulations that showed untrue results, the worst being a day-and-night globe that put 'you' on the dark side at midday and a mirror that broke the law of reflection. All of it is fixed, and a second, independent review of the fixed text found 22 smaller points, also fixed. Grade 4 now has what Grades 1 to 3 have: two sittings of about 20 minutes, a warm-up and a 'Last time' recap on every overview, and a reasoning question in every quiz. The fixes are committed as f19a1506d, pushed, and deployed to the CDN on 2026-09-11, with every page checked at the edge. Grade 4 is not yet routed, so no learner reaches it until the owner routes it. Average 4.3 out of 5. What remains needs people: a teacher's read, a screen-reader session, the school's devices, and children timed and watched.
 
 Average score **4.3 / 5** across 27 areas. Lowest score 4, in 18 areas. No High-priority finding remains.
 
-Change status at 2026-09-11: 16 areas need no change or are done in the committed build, 7 have their fix built with a person's check still open, and 4 are open. Grade 4 is not shipped, so none of this is on learners' screens. In the table, green means done or no change needed, amber means the fix is built and a person still has to check it, and red means open.
+Change status at 2026-09-11: 16 areas need no change or are done in the committed build, 7 have their fix built with a person's check still open, and 4 are open. Grade 4 is deployed but not yet routed, so no learner reaches it yet. In the table, green means done or no change needed, amber means the fix is built and a person still has to check it, and red means open.
 
 ## How this was checked
 
@@ -43,7 +43,7 @@ Change status at 2026-09-11: 16 areas need no change or are done in the committe
 | 19 | Language and Reading Level | 4 | All 17 capitalised words and the kit's are gone, and British spelling is clean. Language fixes include 'shellfish', 'degrees Celsius', and a question stem that now asks a question. Not yet proofread by a person. | A human proofread. | Low | Fix committed f19a1506d; human proofread open | Pending owner |
 | 20 | Cultural Relevance and Safeguarding | 4 | 10 safety points from the first review and 2 from the second are fixed. Examples: never join the two battery ends; cover a bare wire only in your cell circuit, and a damaged mains lead is for a grown-up; goggles for the kitchen volcano; never look straight at the Sun at the shadow stick; a grown-up at ponds, beaches and street walks; look, do not touch, under stones; wash your hands after bones and minibeasts; eat the chocolate only if a grown-up says so. | A teacher's read of the 39 home projects. | Medium | Fix committed f19a1506d; teacher read open | Pass with note |
 | 21 | Technical Quality and Compatibility | 4 | Gates green on all four grades, including the header-bar check. A transient Windows write error recurred often during these rebuilds; retries cleared it and the gates confirm every page. Zero overflow at 375 px on every step. Not yet opened on the school's devices. | Open two lessons on the school's own devices. | Medium | Open: device test not started | Pass with note |
-| 22 | Learner Progress and Completion | 4 | Progress is written under ehel-sci-g04 with the resume guard on every page, and completion reaches 100% in all thirteen lessons. Grade 4 is not shipped, so no learner has a saved place yet. | Before shipping: route it and watch the first stored record. | Low | No change needed | Pass |
+| 22 | Learner Progress and Completion | 4 | Progress is written under ehel-sci-g04 with the resume guard on every page, and completion reaches 100% in all thirteen lessons. Grade 4 is not routed yet, so no learner has a saved place. | When it is routed: watch the first stored record. | Low | No change needed | Pass |
 | 23 | Motivation and Engagement | 4 | Games in every lesson, stickers, ten experiments, shorter sittings with a 'Halfway there!' card, and a warm-up with nothing to lose. | None. | - | No change needed | Pass |
 | 24 | Teacher and Parent Support | 5 | The grown-ups section on the hub for all thirteen lessons and three home projects per lesson, now safe, followable, and with alternatives for things a family may not have. Student resources included. | None. | - | Done: committed f19a1506d | Pass |
 | 25 | Religious Neutrality and Sensitivity | 5 | No religious references in the thirteen modules. | None. | - | No change needed | Pass |
@@ -54,7 +54,7 @@ Change status at 2026-09-11: 16 areas need no change or are done in the committe
 
 - High: none remaining.
 - Medium: a teacher's read of the thirteen modules, 117 quiz keys and 39 home projects (1, 4, 10, 20); a screen-reader session (15); two lessons on the school's devices (18, 21); two or three children watched and timed (13, 17, 27).
-- Low: more reasoning items in a later revision (11); a human proofread (19); note the three highest-reading lessons (6). Before shipping: route Grade 4 and watch the first stored record (22).
+- Low: more reasoning items in a later revision (11); a human proofread (19); note the three highest-reading lessons (6). When Grade 4 is routed: watch the first stored record (22).
 
 ## Findings in brief
 
@@ -65,7 +65,7 @@ Change status at 2026-09-11: 16 areas need no change or are done in the committe
 
 ## Verdict
 
-Grade 4 is at the same standard as Grades 1 to 3 in the committed build, after two independent reviews and their fixes. It is ready to ship when the owner decides; the remaining checks need people.
+Grade 4 is at the same standard as Grades 1 to 3 in the committed build, after two independent reviews and their fixes. It is deployed and ready to route when the owner decides. The remaining checks need people.
 
 ## Appendix A: the first review's findings, in full
 

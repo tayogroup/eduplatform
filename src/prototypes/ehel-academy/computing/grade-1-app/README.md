@@ -321,7 +321,7 @@ played to the end on the live pages in Chromium: 0 console errors, every step st
 and every lesson recorded complete, nothing ticked on a fresh open, and a reload
 after moving to step 4 opens step 4.
 
-## The open items, 2026-09-12 (not deployed)
+## The open items, 2026-09-12
 
 Grade 1 needed no content change. Its nine pictures from 2019 are replaced: the code
 block is a puzzle piece, the juice a cup, the factory arm a factory, the ice a
@@ -345,4 +345,13 @@ failure, no control under 44 px, the focus ring 4 px (the things the probe repor
 
 Verified: both gates green (28/28, 16 keys), every inline script parses, all eight
 lessons played to 100% with nothing wider than 375 px, and lesson 1 again on the
-deployed layout with the stored record and resume. **Not deployed.**
+deployed layout with the stored record and resume. Deployed the same day (below).
+
+## Redeployed 2026-09-12 with the open items
+
+On the owner's instruction ("deploy All four grades"): the pages of `6728927a0`. 14
+files uploaded, all verified on storage, every page byte-identical to HEAD, every
+edge path fresh. All eight lessons were then played to the end on the live pages in
+Chromium with the stored record: 0 console errors, every step stored and every
+lesson recorded complete, nothing ticked on a fresh open, and a reload after moving
+to step 4 opens step 4.

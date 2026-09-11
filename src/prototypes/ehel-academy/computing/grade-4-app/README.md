@@ -366,7 +366,7 @@ on a fresh open, and a reload after moving to step 4 opens step 4. The eighteen
 corrections the validation made are live; nothing added a step or moved one, so
 records made before stay true.
 
-## The open items, 2026-09-12 (not deployed)
+## The open items, 2026-09-12
 
 - **Lesson 4 has the child write an algorithm whose output depends on its input**
   (4CT.09, the activity the validation asked for). *Write the branch* is its third
@@ -415,4 +415,15 @@ Verified: both gates green (39/39, 44 keys), every inline script parses, all fou
 lessons played to 100% with nothing wider than 375 px and again on the deployed
 layout with the stored record and resume; the mutation harness caught 23 of 23, three
 of them written for the new machine (a step in two places, an empty branch, a
-question the round never offers). **Not deployed.**
+question the round never offers). Deployed the same day (below).
+
+## Redeployed 2026-09-12 with the open items
+
+On the owner's instruction ("deploy All four grades"): the pages of `6728927a0`. 20
+files uploaded, all verified on storage, every page byte-identical to HEAD, every
+edge path fresh. All fourteen lessons were then played to the end on the live pages
+in Chromium with the stored record: 0 console errors, every step stored and every
+lesson recorded complete, nothing ticked on a fresh open, and a reload after moving
+to step 4 opens step 4. Lesson 4's new writing step is its third, so a record made
+on that lesson before today reads one step out from its sixth step on; how many such
+records exist is on the platform and cannot be read from here.

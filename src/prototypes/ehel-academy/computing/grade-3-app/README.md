@@ -379,7 +379,7 @@ were made on lesson 9 before today, and so read two steps out from step 8 on, is
 the platform and cannot be read from here. The letter names have still not been
 listened to.
 
-## The open items, 2026-09-12 (not deployed)
+## The open items, 2026-09-12
 
 - **The repeat-block sentence** the validation left open (area 7). Where the program
   repeat block first appears, in lesson 5's demonstration, the explainer and the
@@ -415,4 +415,13 @@ failure, no control under 44 px, the focus ring 4 px.
 
 Verified: both gates green (36/36, 42 keys), every inline script parses, all fourteen
 lessons played to 100% with nothing wider than 375 px, lessons 1 and 5 again on the
-deployed layout with the stored record and resume. **Not deployed.**
+deployed layout with the stored record and resume. Deployed the same day (below).
+
+## Redeployed 2026-09-12 with the open items
+
+On the owner's instruction ("deploy All four grades"): the pages of `6728927a0`. 20
+files uploaded, all verified on storage, every page byte-identical to HEAD, every
+edge path fresh. All fourteen lessons were then played to the end on the live pages
+in Chromium with the stored record: 0 console errors, every step stored and every
+lesson recorded complete, nothing ticked on a fresh open, and a reload after moving
+to step 4 opens step 4.

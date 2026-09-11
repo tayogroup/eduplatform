@@ -383,7 +383,7 @@ lists both lessons. How many records were made on the old lesson 10 before today
 and so read its later steps against the new lesson's shell (above), is on the
 platform and cannot be read from here.
 
-## The open items, 2026-09-12 (not deployed)
+## The open items, 2026-09-12
 
 Grade 2 needed no content change. Its seven pictures from 2019 are replaced: GO is
 the play triangle, the code block a puzzle piece, the counters a blue circle, the
@@ -408,4 +408,13 @@ failure, no control under 44 px, the focus ring 4 px (the things the probe repor
 
 Verified: both gates green (31/31, 22 keys), every inline script parses, all eleven
 lessons played to 100% with nothing wider than 375 px, and lesson 1 again on the
-deployed layout with the stored record and resume. **Not deployed.**
+deployed layout with the stored record and resume. Deployed the same day (below).
+
+## Redeployed 2026-09-12 with the open items
+
+On the owner's instruction ("deploy All four grades"): the pages of `6728927a0`. 17
+files uploaded, all verified on storage, every page byte-identical to HEAD, every
+edge path fresh. All eleven lessons were then played to the end on the live pages in
+Chromium with the stored record: 0 console errors, every step stored and every
+lesson recorded complete, nothing ticked on a fresh open, and a reload after moving
+to step 4 opens step 4.

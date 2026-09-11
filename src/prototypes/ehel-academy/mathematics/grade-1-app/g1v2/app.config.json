@@ -12,6 +12,8 @@
   "backLabel": "Grade 1 Maths",
   "hub": "g1-index.html",
   "remote": "Ehel Primary/app/mathematics/grade-1-v2",
+  "_extraPages": "lesson-search.json is the lesson-content search index, derived from these pages by ../../lesson-app-tools/build-lesson-search.py and fetched by the hub and every lesson page. It is listed here because extraPages is what deploy.mjs uploads beside the lessons; without it the field would ship and answer nothing.",
+  "extraPages": ["lesson-search.json"],
   "explorationSteps": [
     "halves-and-wholes.html#4",
     "what-comes-next.html#6",

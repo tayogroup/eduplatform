@@ -4067,10 +4067,19 @@
      the learner actually arrives; sayHere() refuses to speak for a slide
      that is not the one showing (the deck's own finish() keeps the same
      rule). show() is wrapped, not edited: it is lifted verbatim and the
-     shared pipeline patches it by matching its exact text. */
-  const ONSHOW = [];
+     shared pipeline patches it by matching its exact text.
+
+     ONLEAVE is the same idea for the step being LEFT, and it runs BEFORE
+     the deck moves: a step that finishes as the learner leaves it then
+     reports while it is still their position, and the new step's own
+     position report - made by show() itself - lands last and wins. The
+     lesson overview needs it; see unitOverview. */
+  const ONSHOW = [], ONLEAVE = [];
   const showWithoutHooks = show;
   show = function (i, speak) {
+    const to = Math.max(0, Math.min(slides.length - 1, i));
+    const g = to !== cur ? ONLEAVE[cur] : null;
+    if (g) { try { g(); } catch (_) { /* a step must never break the deck */ } }
     showWithoutHooks(i, speak);
     const f = ONSHOW[cur];
     if (f) { try { f(); } catch (_) { /* a step must never break the deck */ } }
@@ -5777,7 +5786,15 @@
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
-    finish(o.finish, o.done);
+    /* ON LEAVING, never while drawing. The deck draws every step at page
+       load, before the progress module exists - a module script runs only
+       after the page is parsed - so a finish() here reached the dots and
+       never the record: a lesson finished to the last sticker was stored
+       13 of 15 steps (this one and Our world) and never complete (measured
+       on the live Grade 1 page, 2026-09-11). Not "on arrival" either: the
+       page arrives on this step during the load. Silent, because the next
+       slide's own instruction is speaking. */
+    ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
@@ -5963,7 +5980,9 @@
       '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
       '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
     $(el.score).textContent = "coming soon";
-    finish(o.finish, o.done);
+    /* on arrival, never while drawing - see unitOverview. Silent: the
+       slide's own instruction is speaking. */
+    ONSHOW[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */

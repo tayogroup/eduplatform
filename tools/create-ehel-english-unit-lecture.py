@@ -331,11 +331,31 @@ def speakable_letter_ranges(text: str) -> str:
     return _LETTER_CHAIN_RE.sub(repl, text)
 
 
+# A SUFFIX written as notation - "(-er than)", "verbs ending in -ed", "the
+# -ing form" - is read by the voice as a syllable of the next or last word.
+# Found 2026-09-11 in the first Grade 2 lectures, checked with Whisper "small"
+# on the clip rather than trusted to the base model: "Comparing Two Things
+# (-er than)" came out "comparing two things, earthen", "-ed" as "id", and
+# "-ing" as "I-ing". Candidates were rendered and transcribed before choosing:
+# quoted ("er") gave "air" and "Ng"; dashed (e-r) was turned into "e to r" by
+# speakable_letter_ranges below; spaced capitals gave "E-R", "E-D", "I-N-G"
+# exactly. So a hyphen that opens a word of one to four lowercase letters, and
+# does not follow a letter or digit (so "twenty-one" and "A-Z" never match), is
+# SENT as its letters in capitals - the slide keeps "-er". Lecture-only, like
+# speakable_letter_ranges; the clip pipeline (tools/lib/ehel-tts.js) has no
+# such rule and has not been checked for this.
+_SUFFIX_RE = re.compile(r"(?<![A-Za-z0-9])-([a-z]{1,4})\b")
+
+
+def speakable_suffixes(text: str) -> str:
+    return _SUFFIX_RE.sub(lambda m: " ".join(m.group(1).upper()), text)
+
+
 def create_audio(text: str, output: Path) -> None:
     key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
     if not key:
         raise SystemExit("ELEVENLABS_API_KEY is not configured.")
-    text = speakable_letter_ranges(speakable_blanks(text))
+    text = speakable_letter_ranges(speakable_suffixes(speakable_blanks(text)))
     request = urllib.request.Request(
         f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}?output_format=mp3_44100_128",
         data=json.dumps({
@@ -388,7 +408,12 @@ def render_slide(slide: dict, index: int, total: int, background: Image.Image) -
         y += 56
     y += 18
     body_font = font(25)
-    for bullet in slide["bullets"][:5]:
+    # SIX, not five: the words slide narrates six words (dictionaryLinks[:6])
+    # and drew five, so the sixth was spoken over a slide that did not show it
+    # - every grade's lecture carries that ("week" in Grade 2 Unit 1, found
+    # 2026-09-11 on the contact sheet). No other slide has more than four
+    # bullets, and six one-word lines end near y=551, clear of the footer.
+    for bullet in slide["bullets"][:6]:
         bullet_lines = wrap(draw, clean(bullet, 170), body_font, 620)
         draw.ellipse((60, y + 9, 72, y + 21), fill="#f2c94c")
         for line_index, line in enumerate(bullet_lines[:3]):

@@ -47,9 +47,8 @@ strand mapped onto a role another strand holds is MERGED, not overwritten.
 next build — the Maths builds copied a stylesheet per grade and the copies
 drifted.
 
-One step Grade 2 does not build: **Video lesson** — its `lecture-media.json`
-carries no video, and the shell course shows "Video pending" for the same
-reason. Two steps read Grade 2's grammar differently because its shape
+Grade 2's Video lesson step exists since 2026-09-11, when its unit lessons
+were rendered (see `../grade-2-app/README.md`). Two steps read Grade 2's grammar differently because its shape
 differs: **Let us talk** and **Fluency Practice** draw on `ruleAndExamples`
 (the rule's own held-up sentences, pooled by `conceptId` because Grade 2
 authors each pattern as a pair of items) where Grade 1's come from the

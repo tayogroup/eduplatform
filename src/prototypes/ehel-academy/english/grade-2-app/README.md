@@ -41,9 +41,17 @@ node   $T/deploy.mjs                --app ../grade-2-app    # plan; --upload wri
   words draw the step. Two topic groups are tiny by authoring — Unit 2's
   second holds one word (child), Unit 4's first two (air, fire) — and draw
   a one- or two-word step rather than being folded under another title.
-- **No Video lesson.** `lecture-media.json` carries `lectureVersion` only;
-  the shell course shows "Video pending" for Grade 2 too. Built only where a
-  video exists.
+- **Video lesson, Units 1-9** (2026-09-11). Grade 2 had only one-minute
+  "vocabulary group" intros in `english/lecture-media/`, narrating the word
+  lists the Core words rebalance replaced ("70 vocabulary cards in 6 learning
+  groups"). Its unit lessons were rendered then by
+  `tools/create-ehel-english-unit-lecture.py --grade 2 --unit N`, the
+  generator behind Grades 1 and 3-8, into `english/grade-2/media/unit-N/`,
+  content-hashed by `version-lecture-video.js` / `version-lecture-captions.js`
+  and declared in `lecture-media.json`, which overrides the unit JSON's old
+  `visual` paths in the shell as well. `lectureVersion` stays
+  `g2-uN-teacher-lecture-v1`, so a shell learner who ticked the old intro is
+  not re-locked. Unit 10 is the capstone and has none, as in every grade.
 - **Let us talk and Fluency Practice read `ruleAndExamples`.** Grade 2's
   grammar `practice` is a worksheet ("Write he or she in each gap. 1. ...
   Check yourself: 1. He 2. She") under a label ("He and She: Choose the

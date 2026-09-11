@@ -129,4 +129,6 @@ as ready and all-wrong as not ready, with eight review links into Grade 2.
 
 ## Going live
 
-Not done. See [GO-LIVE.md](GO-LIVE.md) for the three steps.
+LIVE and routed, 2026-09-12: course `ehel-art-g03` (Moodle id 85),
+app at `app/art-and-design/grade-3-v2/`. See [GO-LIVE.md](GO-LIVE.md) for what
+was run and what is still open (enrolment).

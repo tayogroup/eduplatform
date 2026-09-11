@@ -1,46 +1,48 @@
 # Going live: Grade 2 Art & Design
 
-**Not done.** Grade 2 is built, gated, driven and committed; nothing of it is
-on the CDN and no Moodle course exists for it. Grade 1 went live through four
-parts (see [`../grade-1-app/GO-LIVE.md`](../grade-1-app/GO-LIVE.md)); one of
-them, the `art` slug in `pqpg_ehel_subject_map()`, is already on the box and
-covers every Art & Design grade, so Grade 2 needs three.
+**DONE, 2026-09-12.** Grade 2 is live and routed: course `ehel-art-g02`
+(Moodle id 84, visible), override pointing at
+`app/art-and-design/grade-2-v2/index.html`, applied and read back clean.
 
-## 1. The app, from this machine — media first, then the pages
+What was run, in this order:
 
-```bash
-cd src/prototypes/ehel-academy/art-and-design/grade-2-app
-node ../lesson-kit/deploy-media.mjs --app . --upload
-node ../../mathematics/lesson-app-tools/deploy.mjs --app . --upload
-```
+1. **The app, from this machine** - media before pages, each read back from
+   storage (never through the edge):
 
-Media first because a page asks only for clips its index lists, and a miss on
-a path that does not exist yet is cached at the edge. The pages include
-`starting-check.html` (`extraPages`). Its review links go to
-`../grade-1-v2/`, which is live.
+   ```bash
+   cd src/prototypes/ehel-academy/art-and-design/grade-2-app
+   node ../lesson-kit/deploy-media.mjs --app . --upload    # 2,373 media files
+   node ../../mathematics/lesson-app-tools/deploy.mjs --app . --upload   # 15 files
+   ```
 
-## 2. The course — the catalogue
+2. **The course.** `catalog_source_url` was still on `catalog-d2cbee310b.json`,
+   which predates this build, so the nightly sync could never have created the
+   course. A freshly GENERATED catalogue would also have carried another
+   session's Intensive English Level 1 unit renames, whose content is not
+   deployed - so the published catalogue is the in-use one with these two Art
+   courses inserted and every other course and category byte-identical
+   (verified, not assumed): `catalog-b8da71b83f.json`. The operator set
+   `catalog_source_url` to it and ran the catalogue sync task (`local_prequran \ task \ catalog_sync`)
+   ("2 courses created/updated, 475 grade items ensured"). The next
+   generator-published catalogue supersedes it and carries these courses
+   anyway, because they come from this build's own `app.config.json`.
 
-`tools/generate-ehel-catalog.js` already reads every
-`art-and-design/grade-N-app/app.config.json`, so a regenerated catalogue
-carries `ehel-art-g02` with eight units (the lessons). Regenerate it from a
-clean tree (it reads every subject, so another session's unfinished content
-would ride along), publish it with `upload-app-to-bunny.js catalog`, point
-`local_prequran/catalog_source_url` at the new file and run the sync task: it
-creates `EHEL-ART-G02`. Regenerate `cohorts.json` in the same change if the
-Stage 2 pilot cohort should carry it.
+3. **The route**, staged under `Ehel Primary/qa/` with a fresh name, fetched
+   on the box to a temporary name, hash-checked, then run from the docroot:
 
-## 3. The route — on the box
+   ```bash
+   php <staged>.php --subject art-and-design --grade 2          # report
+   php <staged>.php --subject art-and-design --grade 2 --apply  # write
+   ```
 
-`repoint-grade.php` has the Grade 2 row (`ehel-art-g02` to
-`app/art-and-design/grade-2-v2/index.html`). Stage it the usual way (a fresh
-filename under `Ehel Primary/qa/`, fetched with a hash check), then in the
-docroot:
+   Both copies of every staged script were deleted afterwards, this side and
+   the box's.
 
-```bash
-php <staged-repoint-script>.php --subject art-and-design --grade 2          # report
-php <staged-repoint-script>.php --subject art-and-design --grade 2 --apply  # write
-```
+Verified on the LIVE pages, not just the files: the hub answers, a lesson
+loads with no page errors, fetches its narration index (so the recorded voice
+resolves rather than falling back to the paid runtime voice), and records
+progress with the corrected timing - nothing while the page draws, the
+overview on leaving it, Our world on arrival.
 
-Only after step 2: with no course `ehel-art-g02`, the override points a key
-nothing launches.
+Still open, and not an engineering step: **enrolment**. The Art pilot cohort
+roster is empty, as it was for Grade 1.

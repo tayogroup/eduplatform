@@ -114,5 +114,6 @@ device under load, not the page.
 
 ## Going live
 
-Not done. This build is gated, not deployed and not routed; see
-[GO-LIVE.md](GO-LIVE.md) for the three steps.
+LIVE and routed, 2026-09-12: course `ehel-art-g02` (Moodle id 84),
+app at `app/art-and-design/grade-2-v2/`. See [GO-LIVE.md](GO-LIVE.md) for what
+was run and what is still open (enrolment).

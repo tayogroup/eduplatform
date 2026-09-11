@@ -85,16 +85,25 @@ change.
   the answer itself, so the app shows the completed example. The shell course
   already draws both.
 
-## State at the build (2026-09-11)
+## State (2026-09-12)
 
-- Ten lessons and the hub build; `check-lessons.py` passes. 22-24 steps per
+- Ten lessons and the hub build; `check-lessons.py` passes. 23-24 steps per
   unit; Unit 10 has no lecture, as in every grade.
-- Every one of the 1,748 audio files the pages reference exists. The staleness
-  check finds 7 Grade 5 vocabulary clips older than their text (story-glossary
-  words such as *anxiety*, *unique*); none is played by this app, only by the
-  shell course. The 1,018 word-meaning clips marked "Not yet generated" are
-  likewise shell-only.
-- Cambridge Stage 5 (0058): the units claim 87 of 92 objectives; unclaimed are
-  5SLp.04, 5Ww.03, 5Ww.06, 5Ww.07 and 5Ww.08.
-- Not deployed and not routed. `repoint-grade.php` has no English Grade 5
-  target yet.
+- **Deployed** to `app/english/grade-5-v2/`, and the live pages are
+  byte-identical to the built ones. `repoint-grade.php` carries the Grade 5
+  English target (`ehel-eng-g05`), so the routing is one operator run away -
+  and `local_hubredirect/standalone_lessons.json` must name this build before
+  that run, or a routed learner's percentage is counted against the shell
+  course's eighteen units.
+- The content review of the whole grade is applied (62 edits,
+  `tools/repair-english-g5-review-20260911.py`; write-up in
+  `docs/english-g5-content-review-20260911.md`), Unit 9's lemur and gibbons are
+  now a golden monkey and colobus monkeys, and every unit carries a
+  learning-time estimate.
+- Audio: every clip the pages reference exists, the staleness check's 29 stale
+  clips are re-recorded under `audioRevision: "rv"`, and all 1,018 word-meaning
+  clips are generated. The integrity check reports 0 problems.
+- Cambridge Stage 5 (0058): 92 of 92 objectives claimed. The four grammar rules
+  and one speaking task that closed the last five are authored, flagged "Needs
+  curriculum review", and deliberately **not recorded** - the app speaks their
+  text until a reviewer approves them.

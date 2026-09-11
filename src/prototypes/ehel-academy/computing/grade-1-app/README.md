@@ -291,3 +291,15 @@ moving to step 4 opens step 4. Before, the same live pages stored 14 of 16
 steps and reopened at step 1. The check reads the browser's own store; a real
 launch writes the same events to the school's server and was not observed from
 here. Grades 2 to 4 were redeployed with it.
+
+## Redeployed 2026-09-11 with the Grade 3 validation's kit fixes
+
+On the owner's instruction ("redeploy"), after Grades 3 and 4: the pages of
+`282c40c60`. They change Grade 1 only in the shared kit's code for the Stage 3
+controls and the shake picture, none of which Grade 1 draws, so its lesson data
+and what a learner sees are unchanged; the redeploy makes the live pages equal
+HEAD again. 14 files uploaded, all verified on storage, every page
+byte-identical to HEAD, every edge path fresh. All eight lessons were then played to
+the end on the live pages in Chromium: 0 console errors, every step stored and
+every lesson recorded complete, nothing ticked on a fresh open, and a reload after
+moving to step 4 opens step 4.

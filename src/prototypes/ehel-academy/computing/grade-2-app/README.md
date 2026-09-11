@@ -316,3 +316,15 @@ lessons were then played to the end on the live pages in Chromium, lessons 7 and
 with their new steps: 0 console errors, every step stored and every lesson recorded
 complete, nothing ticked on a fresh open, and a reload after moving to step 4 opens
 step 4.
+
+## Redeployed 2026-09-11 with the Grade 3 validation's kit fixes
+
+On the owner's instruction ("redeploy"), after Grades 3 and 4: the pages of
+`282c40c60`. They change Grade 2 only in the shared kit's code for the Stage 3
+controls and the shake picture, none of which Grade 2 draws, so its lesson data
+and what a learner sees are unchanged; the redeploy makes the live pages equal
+HEAD again. 16 files uploaded, all verified on storage, every page
+byte-identical to HEAD, every edge path fresh. All ten lessons were then played to
+the end on the live pages in Chromium: 0 console errors, every step stored and
+every lesson recorded complete, nothing ticked on a fresh open, and a reload after
+moving to step 4 opens step 4.

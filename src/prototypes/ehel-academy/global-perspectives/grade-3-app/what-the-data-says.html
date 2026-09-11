@@ -4140,9 +4140,22 @@
      rule). show() is wrapped, not edited: it is lifted verbatim and the
      shared pipeline patches it by matching its exact text. */
   const ONSHOW = [];
+  /* ONLEAVE: a step that ticks itself off does so when the learner moves ON
+     from it (or, for Our world, on arrival), never while the page is being
+     drawn. Drawing happens before the platform's progress module loads - a
+     module script runs after the page is parsed - so a tick made then
+     reached the dots and never the school's record. Two things followed,
+     both measured on the live Grade 1 pages by the 2026-09-11 validation: a
+     lesson finished to the last sticker was never reported complete, because
+     two of its steps were never reported at all; and a reopened lesson never
+     jumped back to where the learner was, because the restore hook reads
+     "step 1 is already done" as "the learner has already started". */
+  const ONLEAVE = [];
   const showWithoutHooks = show;
   show = function (i, speak) {
+    const was = cur;
     showWithoutHooks(i, speak);
+    if (was !== cur && ONLEAVE[was]) { const g = ONLEAVE[was]; ONLEAVE[was] = null; try { g(); } catch (_) { /* a step must never break the deck */ } }
     const f = ONSHOW[cur];
     if (f) { try { f(); } catch (_) { /* a step must never break the deck */ } }
   };
@@ -4521,6 +4534,12 @@
      question aloud. A question that the ending allows but that asks
      about something else is answered as a GOOD question aimed at the
      wrong thing, not as wrong - it is a question, which is the skill. */
+  /* what each question word asks for, used when a child builds a real
+     question with the wrong word: "Where asks for a place" teaches; the
+     ending's topic ("rabbits eating") is the same for every word that fits it
+     and would tell the child nothing. */
+  const WORD_ASKS = { "What": "a thing", "Where": "a place", "Who": "a person", "When": "a time", "Why": "a reason",
+    "How": "the way something is done", "How much": "an amount", "How many": "a number", "How far": "a distance" };
   function questionBuilder(o) {
     const el = o.el, rounds = o.rounds, ends = shuffle(o.ends);
     let r = 0, word = null, end = null, lock = false, missed = false, score = 0;
@@ -4556,7 +4575,8 @@
         }, 3600);
       } else if (fits) {
         missed = true; SOUND.play("pop", 0.3);
-        const line = "That is a good question: " + question + " But it asks about " + (e.asks || "something else") + ". You want to know " + lower1(noDot(rd.want)) + ". Try again.";
+        const but = word !== rd.word && WORD_ASKS[word] ? word + " asks for " + WORD_ASKS[word] : "it asks about " + (e.asks || "something else");
+        const line = "That is a good question: " + question + " But " + but + ". You want to know " + lower1(noDot(rd.want)) + ". Try again.";
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
       } else {
         missed = true; SOUND.play("error", 0.3);
@@ -5716,8 +5736,9 @@
      and what they carry; these only draw. Lifted from the Computing kit
      with the subject's words changed and nothing else.
 
-     Three of them tick themselves off - the overview and Our world on
-     arrival, the drawer on first opening - for the reason the English
+     Three of them tick themselves off - the overview when the learner
+     moves on from it, Our world on arrival, the drawer on first opening,
+     and never while the page is drawing (see ONLEAVE) - for the reason the English
      build's plan step records: a page you have to finish before the
      lesson will open is a lock on the front door. Everything else is
      earned.
@@ -5742,7 +5763,8 @@
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
-    finish(o.finish, o.done);
+    /* ticks when the learner moves on - see ONLEAVE */
+    ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
@@ -5887,7 +5909,9 @@
       '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
       '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
     $(el.score).textContent = "coming soon";
-    finish(o.finish, o.done);
+    /* ticks on arrival, never while drawing - see ONLEAVE. Silent, because a
+       resume can land here and a resume is not a moment to talk. */
+    ONSHOW[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */

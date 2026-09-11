@@ -210,6 +210,18 @@ mapping is one function in `wire-progress.py` and a curriculum decision.
   sentence; Flesch-Kincaid grade 1.7 to 4.0. Every line is read aloud by the
   voice engine, so the level is a ceiling, not a gate. No US spellings.
 
+## Validation on 2026-09-11
+
+Scored against the owner's 27-area framework in [VALIDATION.md](VALIDATION.md)
+(the Word copy sits beside the framework in OneDrive). Two findings mattered
+most and both are fixed in the build: the overview and Our world ticked
+themselves before the progress module loaded, so no lesson was ever reported
+complete (measured live: 14 of 16 steps saved at 100% on screen) and a
+reopened lesson lost the child's place; and a content read found 21
+problems, including 'I am telling the teacher' marked wrong and question
+builders that rejected real questions. 68 content edits and two kit changes;
+not yet committed or deployed.
+
 ## What was deliberately not done
 
 Deploying; routing a learner; recorded narration; reusing the Word-pack

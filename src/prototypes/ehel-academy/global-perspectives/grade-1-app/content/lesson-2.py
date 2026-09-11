@@ -113,7 +113,7 @@ LESSON = {
                  ["Children put a bike on the foot side because you push with your feet.", "A bike has wheels. Wheels side."],
                  ["Read each one, tap the side."]),
              {"title": "How we get to school", "ask": "On foot, or on wheels?",
-              "bins": [{"id": "foot", "label": "On foot", "pic": "\U0001F9B6"}, {"id": "wheels", "label": "On wheels", "pic": "\U0001F6DE"}],
+              "bins": [{"id": "foot", "label": "On foot", "pic": "\U0001F9B6"}, {"id": "wheels", "label": "On wheels", "pic": "\U0001F6B2"}],
               "items": [
                   {"pic": "\U0001F467\U0001F3FE", "label": "Amal walks", "bin": "foot", "why": "Walking is on foot."},
                   {"pic": "\U0001F68C", "label": "Sami's bus", "bin": "wheels", "why": "A bus has wheels."},

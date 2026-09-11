@@ -37,7 +37,7 @@ LESSON = {
              explain(
                  ["Before you do something, you can think: what will happen to me?"],
                  ["It is raining and you leave your coat at home.", "What happens to you? You get wet and cold.",
-                  "You share your crayons. What happens to you? Your friend shares back."],
+                  "You share your crayons. What happens? Your friend is happy, and you draw together."],
                  ["Children only think about the bad ones.", "Sharing has a consequence too, and it is a nice one."],
                  ["Read what happens, tap what you think, then press See what happens."]),
              {"rounds": [
@@ -54,9 +54,9 @@ LESSON = {
                   "result": {"pic": "\U0001F971", "say": "You were so tired at school that you could not listen.", "sound": "thud"},
                   "why": "Less sleep tonight means a tired you tomorrow."},
                  {"situation": "You share your crayons with Nora.", "pic": "\U0001F58D️",
-                  "predict": {"ask": "What will happen?", "opts": [opt("Nora smiles and shares her stickers with me", True), opt("Nora runs away", False), opt("My crayons disappear", False)]},
-                  "result": {"pic": "\U0001F60A", "say": "Nora smiled and shared her stickers with you.", "sound": "ding"},
-                  "why": "Sharing has a consequence too: a happy friend who shares back."},
+                  "predict": {"ask": "What will happen?", "opts": [opt("Nora is happy, and we draw together", True), opt("Nora runs away", False), opt("My crayons disappear", False)]},
+                  "result": {"pic": "\U0001F60A", "say": "Nora smiled, and you drew together.", "sound": "ding"},
+                  "why": "Sharing has a consequence too: a happy friend to draw with."},
                  {"situation": "You leave your toys all over the stairs.", "pic": "\U0001F9F8",
                   "predict": {"ask": "What will happen to you?", "opts": [opt("I will trip over them in the dark", True), opt("The toys will tidy themselves", False), opt("I will get more toys", False)]},
                   "result": {"pic": "\U0001F915", "say": "You tripped over your own teddy on the stairs. Ouch.", "sound": "thud"},
@@ -78,7 +78,7 @@ LESSON = {
                   {"pic": "\U0001F6A6", "label": "running into the road", "bin": "bad", "why": "You could get hurt. Not good for you."},
                   {"pic": "\U0001F9E2", "label": "wearing a hat in the hot sun", "bin": "good", "why": "Your head stays cool and safe. Good for you."},
                   {"pic": "\U0001F371", "label": "forgetting your lunch", "bin": "bad", "why": "You will be hungry all afternoon."},
-                  {"pic": "\U0001F91D", "label": "sharing with a friend", "bin": "good", "why": "You get a happy friend who shares back."},
+                  {"pic": "\U0001F91D", "label": "sharing with a friend", "bin": "good", "why": "Your friend is happy, and you play together."},
                   {"pic": "\U0001F6B7", "label": "pushing in the line", "bin": "bad", "why": "People get cross with you, and you might get sent to the back."},
               ]},
              "You can tell a good next thing from a bad one before it happens."),
@@ -113,12 +113,12 @@ LESSON = {
                  {"issue": {"title": "The tap is dripping and wasting water", "pic": "\U0001F4A7", "say": "Drip, drip, drip, all day. What could we do?", "fixed": "The dripping has stopped!"},
                   "needs": "off",
                   "actions": [
-                      action("tight", "Turn the tap off tightly", "\U0001F6B0", "off", "You turned it off properly. The dripping stopped."),
+                      action("tight", "Turn it off properly, and tell a grown-up if it still drips", "\U0001F6B0", "off", "You turned it off properly and told a grown-up. The dripping stopped."),
                       action("bucket", "Put a bucket under it and leave it", "\U0001FAA3", "nothing", "The bucket filled up, and then it dripped over the top. Water is still being wasted."),
                       action("more", "Turn the tap on more", "\U0001F30A", "worse", "Now it is not dripping. It is pouring. That is even more water wasted."),
                       action("nobody", "Say nothing and walk away", "\U0001F6B6", "nothing", "You walked away. Drip, drip, drip. Nothing changed."),
                   ],
-                  "why": "A dripping tap needs turning off. That stopped the waste."},
+                  "why": "Turn it off properly, and tell a grown-up if it still drips. That stopped the waste."},
                  {"issue": {"title": "Sami has no crayons and cannot draw", "pic": "\U0001F622", "say": "Everyone else is drawing. What could we do?", "fixed": "Sami is drawing with a big smile!"},
                   "needs": "share",
                   "actions": [
@@ -176,9 +176,9 @@ LESSON = {
              {"items": [
                  q("Sami left the tap on and ran off. What happened next?", "\U0001F6B0", "the sink overflowed and the floor got wet", ["the tap turned itself off", "the sink got smaller", "nothing"], "A tap left on keeps running until the water goes over the top."),
                  q("You stay up very late. What happens to you tomorrow?", "\U0001F319", "you are tired at school", ["you are taller", "you are full of energy", "you get a prize"], "Less sleep means a tired you."),
-                 q("You share your crayons with Nora. What happens?", "\U0001F58D️", "Nora is happy and shares back", ["Nora runs away", "the crayons vanish", "you get told off"], "Sharing has a happy consequence."),
+                 q("You share your crayons with Nora. What happens?", "\U0001F58D️", "Nora is happy, and you draw together", ["Nora runs away", "the crayons vanish", "you get told off"], "Sharing has a happy consequence."),
                  q("Which of these is GOOD for you?", "\U0001F60A", "wearing a hat in the hot sun", ["running into the road", "forgetting your lunch", "pushing in the line"], "A hat keeps your head cool and safe."),
-                 q("The tap is dripping. Which action fixes it?", "\U0001F4A7", "turn it off tightly", ["turn it on more", "walk away", "put a bucket under it and leave it"], "Turning it off properly stops the waste."),
+                 q("The tap is dripping. Which action fixes it?", "\U0001F4A7", "turn it off properly, and tell a grown-up if it still drips", ["turn it on more", "walk away", "put a bucket under it and leave it"], "Turning it off properly stops the waste, and a grown-up can fix a tap that still drips."),
                  q("Sami has no crayons. Which action fixes it?", "\U0001F622", "share some of yours", ["hide yours", "draw his picture for him", "tell him drawing is boring"], "Sami needed crayons, so sharing fixed it."),
                  q("What is water for?", "\U0001F4A7", "drinking, washing, cooking and plants", ["only for swimming", "nothing much", "only for cars"], "Water is for so many things, which is why we should not waste it."),
                  q("Before you do something, what can you think?", "\U0001F914", "what will happen to me next?", ["what is for lunch?", "nothing", "what colour is it?"], "Thinking about the next thing is thinking ahead."),
@@ -199,13 +199,13 @@ LESSON["lecture"] = [
     part("\U0001F6B0", "Sami's tap",
          "Sami turned the tap on and ran off to play. The sink filled up and went over the top. Now Sami has a wet floor to mop. That is what happened next."),
     part("➡️", "Consequences",
-         "What happens next because of what you do is called a consequence. Leave your coat at home in the rain, and you get wet. Share your crayons, and your friend smiles and shares back. Good ones and bad ones."),
+         "What happens next because of what you do is called a consequence. Leave your coat at home in the rain, and you get wet. Share your crayons, and your friend smiles and you draw together. Good ones and bad ones."),
     part("\U0001F52E", "Think ahead",
          "Before you do something, you can ask: what will happen to me? If I stay up late, I will be tired. If I leave my toys on the stairs, I will trip over them. Thinking ahead is a skill."),
     part("\U0001F527", "Fixing a problem",
          "A problem needs an action that really fixes it. Droopy plants need water, not a song. Litter needs picking up, not kicking into a corner. Choose the action that fixes it."),
     part("\U0001F4A7", "Water",
-         "Water is for drinking, washing, cooking, plants and animals. Water that runs down the drain is gone. So turn the tap off, and there is enough for everything."),
+         "Water is for drinking, washing, cooking, plants and animals. Water that runs down the drain is gone. So turn the tap off, and there is more left for everything else."),
 ]
 
 LESSON["words"] = [

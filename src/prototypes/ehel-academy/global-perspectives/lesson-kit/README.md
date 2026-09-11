@@ -156,6 +156,16 @@ the build rather than the page.
   the second one's empty array overwrote the first's at load, so the garden's
   reflection would have read the mural's log. Two team steps per page are
   normal here (Lesson 6 has a garden and a mural).
+- **A step that ticks itself must not tick while the page is drawing.**
+  The deck draws every slide at load, and the platform's progress module is a
+  module script, which runs only after the page is parsed. So the overview and
+  Our world, which used to call `finish()` from their renderers, ticked their
+  dots and were never reported: no lesson could ever be recorded complete, and
+  the restore hook read "step 1 is done" as "the learner has started" and never
+  jumped back to where a child left off. Both were measured on the live Grade 1
+  pages by the 2026-09-11 validation. The overview now ticks when the learner
+  moves on from it (`ONLEAVE`), Our world on arrival (`ONSHOW`). Any new
+  self-ticking step goes through one of those two, never the renderer body.
 - **The button's index, not the card's.** `knowBoard` shuffles copies of the
   cards and tags each copy with `k`; the click handler must take the index
   from the button's `data-k`, because the ORIGINAL card carries no `k`. The

@@ -90,6 +90,9 @@ python rebuild-g1v2.py                     # run all of the above in a temp copy
 # check
 python check-lessons.py                    # script syntax, badges, finish(), stickers, dangling ids
 python check-stage1-coverage.py            # slide titles vs the 36 Stage 1 objectives (cheap)
+python review-stage-boundary.py            # a REVIEW, not a gate: depth per objective and possible Stage 2 content;
+                                           # its hits are raw - on 2026-09-11 all 12 were comments, code, or the
+                                           # ordinal word list, which is never used past tenth. Read them.
 python validate-against-framework.py --local   # clause by clause, per slide (no --local: the live pages)
 python ../lesson-app-tools/check-lessons.py        --app g1v2
 python ../lesson-app-tools/check-judging.py        --app g1v2   # every teaching step can disagree

@@ -24,6 +24,41 @@ This build only ever READS the course, at build time.
 python build-lessons.py            # every unit named in app.config.json
 python build-lessons.py 1          # just unit 1
 python build-hub.py                # the hub, after the lessons
+```
+
+**One builder, every grade.** The two builders read the GRADE they are
+building out of the target app's `app.config.json` — `--app <dir>`, default
+this directory. `../grade-2-app/` holds only its config and its generated
+pages; it is built with
+
+```bash
+python build-lessons.py --app ../grade-2-app
+python build-hub.py     --app ../grade-2-app
+# then the same pipeline below, with --app ../grade-2-app
+```
+
+The config names the grade (so `english/grade-N/data`, the grade's dictionary
+and media prefix follow), the labels, the course key, and `strandRoles`: which
+of that grade's Core-words strands feeds which step. Grade 1 is phonics →
+sounds, topic → new words, sight → everyday words; Grade 2 is spelling →
+sounds, both topic groups merged → new words, joining → everyday words. A
+strand mapped onto a role another strand holds is MERGED, not overwritten.
+`lib/` is shared, so a fix to the deck or the voice reaches every grade on its
+next build — the Maths builds copied a stylesheet per grade and the copies
+drifted.
+
+One step Grade 2 does not build: **Video lesson** — its `lecture-media.json`
+carries no video, and the shell course shows "Video pending" for the same
+reason. Two steps read Grade 2's grammar differently because its shape
+differs: **Let us talk** and **Fluency Practice** draw on `ruleAndExamples`
+(the rule's own held-up sentences, pooled by `conceptId` because Grade 2
+authors each pattern as a pair of items) where Grade 1's come from the
+`practice` line — one parse, in `tools/author-ehel-english-g1-fluency.py`,
+which the builder imports. A "Meet the words" step is one topic group, split
+into equal parts above `WORDS_PER_STEP` (14, Grade 1's largest); Grade 2's
+two groups per unit are two steps or more, never merged.
+
+```bash
 
 T=../../mathematics/lesson-app-tools
 python $T/wire-navigation.py        --app .    # hub links, a way back, launch params

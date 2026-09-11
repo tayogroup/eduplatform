@@ -1110,7 +1110,7 @@
      ------------------------------------------------------------------ */
   function selfCheck(o) {
     const el = o.el;
-    const KEY = "ehel-eng-g1-u" + (o.unit || 1) + "-self-v1";
+    const KEY = "ehel-eng-g" + (LESSON.grade || 1) + "-u" + (o.unit || 1) + "-self-v1";
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (_) { saved = {}; }
     function store() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (_) { /* private mode */ } }

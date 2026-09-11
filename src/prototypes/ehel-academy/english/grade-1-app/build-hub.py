@@ -22,7 +22,6 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ACADEMY = os.path.abspath(os.path.join(HERE, "..", ".."))
-DATA = os.path.join(ACADEMY, "english", "grade-1", "data")
 LIB = os.path.join(HERE, "lib")
 
 # What each unit is about, in a sentence a six-year-old's grown-up can read at
@@ -31,10 +30,14 @@ LIB = os.path.join(HERE, "lib")
 # The year's schedule comes from build-lessons.py :: unit_schedule(), which
 # asks shell/study-plan.js - the school's real 2026-27 calendar and the one
 # place it is defined. The hub does not re-derive it and does not keep a copy.
+# build-lessons.py resolves --app from sys.argv on import, so the two builders
+# always describe the same app: OUT, DATA and the labels come from it.
 _spec = importlib.util.spec_from_file_location(
-    "ehel_g1_lessons", os.path.join(HERE, "build-lessons.py"))
+    "ehel_english_lessons", os.path.join(HERE, "build-lessons.py"))
 _lessons = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_lessons)
+OUT, DATA = _lessons.OUT, _lessons.DATA
+GRADE_LABEL = _lessons.GRADE_LABEL
 
 
 def blurb(unit_json):
@@ -72,7 +75,7 @@ PAGE = """<!doctype html>
 <html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grade 1 English</title>
+<title>%(gradeLabel)s English</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
 %(css)s
@@ -182,14 +185,14 @@ PAGE = """<!doctype html>
   </div>
   <div class="eh-b1right">
     <span id="ehFocus" hidden></span>
-    <select class="eh-picker" id="ehPicker" aria-label="Choose a unit"><option value="welcome-to-school.html">Welcome to School</option><option value="family-time.html">Family Time</option><option value="fun-and-games.html">Fun and Games</option><option value="making-things.html">Making Things</option><option value="on-the-farm.html">On the Farm</option><option value="my-five-senses.html">My Five Senses</option><option value="let-s-go.html">Let's Go!</option><option value="wonderful-water.html">Wonderful Water</option><option value="city-places.html">City Places</option><option value="my-first-english-world.html">My First English World</option></select>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a unit">%(picker)s</select>
   </div>
 </header>
 
 <div class="wrap">
   <header class="hubhead">
     <p class="eyebrow">Ehel Academy &middot; English</p>
-    <h1>Grade 1 <em>English</em></h1>
+    <h1>%(gradeLabel)s <em>English</em></h1>
     <p>Ten units, in the order they are meant to be done. Start at the top &mdash; each one gets you ready for the next.</p>
   </header>
 
@@ -201,7 +204,7 @@ PAGE = """<!doctype html>
     <p class="yearnote">%(yearnote)s</p>
 %(terms)s  </section>
 
-  <p class="hubfoot">Every word, story and recording here is the Grade 1 English course content, shown a different way.</p>
+  <p class="hubfoot">Every word, story and recording here is the %(gradeLabel)s English course content, shown a different way.</p>
 </div>
 
 <script>
@@ -209,7 +212,7 @@ PAGE = """<!doctype html>
    Everything here is answered by the launch URL and by the progress document
    the LESSONS write. This page stores nothing of its own. */
 (function () {
-  var COURSE = "ehel-eng-g01";
+  var COURSE = "%(courseKey)s";
   var STEPS  = {"u01": 22, "u02": 22, "u03": 22, "u04": 21, "u05": 22, "u06": 22, "u07": 22, "u08": 21, "u09": 21, "u10": 19};     /* unit id -> slides-1, the lesson's own denominator */
   var FILES  = {"u01": "welcome-to-school.html", "u02": "family-time.html", "u03": "fun-and-games.html", "u04": "making-things.html", "u05": "on-the-farm.html", "u06": "my-five-senses.html", "u07": "let-s-go.html", "u08": "wonderful-water.html", "u09": "city-places.html", "u10": "my-first-english-world.html"};     /* unit id -> the page that teaches it */
   var q = new URLSearchParams(location.search);
@@ -293,7 +296,7 @@ PAGE = """<!doctype html>
 
 def main():
     manifest = json.load(io.open(os.path.join(DATA, "course-manifest.json"), encoding="utf-8"))
-    cfg = json.load(io.open(os.path.join(HERE, "app.config.json"), encoding="utf-8"))
+    cfg = _lessons.CFG
     built = {l["file"]: l for l in cfg["lessons"]}
 
     def slug(t):
@@ -305,10 +308,10 @@ def main():
     for u in manifest["units"]:
         unit = json.load(io.open(os.path.join(DATA, "units", "unit-%d.json" % u["number"]), encoding="utf-8"))
         f = slug(u["title"])
-        here = os.path.isfile(os.path.join(HERE, f))
+        here = os.path.isfile(os.path.join(OUT, f))
         if here and f in built:
             live += 1
-            page = io.open(os.path.join(HERE, f), encoding="utf-8").read()
+            page = io.open(os.path.join(OUT, f), encoding="utf-8").read()
             steps = len(re.findall(r'<section class="slide"', page)) - 1
             meta = "%d steps &middot; stickers" % steps
             cta = '<span class="go">Start</span>'
@@ -350,8 +353,15 @@ def main():
                        % (term_no, _lessons.text(rows[0][1]["termDates"]), len(rows),
                           "" if len(rows) == 1 else "s", items))
 
-    io.open(os.path.join(HERE, cfg["hub"]), "w", encoding="utf-8", newline="").write(
-        PAGE % {"css": css, "cards": cards,
+    io.open(os.path.join(OUT, cfg["hub"]), "w", encoding="utf-8", newline="").write(
+        PAGE % {"css": css, "cards": cards, "gradeLabel": GRADE_LABEL,
+                "courseKey": cfg["courseKey"],
+                # the unit picker: this grade's lessons, in order, from the
+                # same config the cards and FILES come from - it used to be a
+                # typed list of Grade 1's titles, which Grade 2's hub inherited
+                "picker": "".join('<option value="%s">%s</option>'
+                                  % (_lessons.attr(l["file"]), _lessons.text(l["title"]))
+                                  for l in cfg["lessons"]),
                 "yearnote": year_note, "terms": terms_html})
     print("\n  ok   %s  -  %d of %d units live\n" % (cfg["hub"], live, len(manifest["units"])))
 

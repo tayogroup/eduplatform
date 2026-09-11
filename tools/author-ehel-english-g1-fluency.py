@@ -44,6 +44,18 @@ Usage:
     python tools/author-ehel-english-g1-fluency.py            # all 10 units
     python tools/author-ehel-english-g1-fluency.py 1          # just unit 1
     python tools/author-ehel-english-g1-fluency.py 1 --dry    # print, don't write
+    python tools/author-ehel-english-g1-fluency.py --grade 2  # Grade 2 (2026-09-11)
+
+GRADE 2 (2026-09-11). Same two templates, same stamps, one difference forced
+by the content: Grade 2's `grammar[].practice` is a worksheet ("Write he or
+she in each gap. 1. ... Check yourself: 1. He 2. She") rather than spoken
+examples, so its grammar review draws its sentences from `ruleAndExamples`
+instead - the rule's own held-up examples, "This is Leo. He likes football."
+- and names the pattern by the title before its colon ("He and She"), because
+Grade 2 authors each pattern as a PAIR of items and a question per item
+would offer the pair's other example as a distractor: a second right answer.
+Grade 1's path is byte-for-byte what it was; the Grade 2 path is chosen by
+--grade, not by sniffing the shape, so neither can drift into the other.
 """
 import io
 import json
@@ -53,10 +65,25 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, ".."))
-DATA = os.path.join(REPO, "src", "prototypes", "ehel-academy", "english", "grade-1", "data")
 
-ORIGIN = "AI-authored fluency review (2026-09-07), pending curriculum review"
+
+def grade_arg(argv):
+    if "--grade" in argv:
+        i = argv.index("--grade")
+        if i + 1 >= len(argv) or not argv[i + 1].isdigit():
+            sys.exit("REFUSED: --grade needs a number")
+        return int(argv[i + 1])
+    return 1
+
+
+GRADE = grade_arg(sys.argv[1:])
+DATA = os.path.join(REPO, "src", "prototypes", "ehel-academy", "english", "grade-%d" % GRADE, "data")
+
+ORIGIN = {1: "AI-authored fluency review (2026-09-07), pending curriculum review",
+          2: "AI-authored fluency review (2026-09-11), pending curriculum review"}.get(
+    GRADE, "AI-authored fluency review, pending curriculum review")
 REVIEW_STATUS = "Needs curriculum review"
+STORY_GLOSSARY_GROUP = "Words from our stories"   # shell/subjects/english.js's own name for the untaught group
 
 
 def load(path):
@@ -93,6 +120,116 @@ def practice_sentences(grammar_item):
             p += "."
         out.append(p)
     return out
+
+
+# Sentences in a Grade 2 rule that are ABOUT the rule rather than examples of
+# it ("The word will never changes.", "Count the creatures before you choose
+# the verb.", "Use like with I, you, we and they.") - metalanguage a child is
+# not meant to say. Two tests: the words a rule uses to talk about itself,
+# and the instruction verbs its commentary opens with. THE ONE DEFINITION:
+# the standalone builder's Let us talk imports this module and reads
+# concept_pools() below rather than keeping a copy.
+RULE_TALK = re.compile(
+    r"\b(verbs?|words?|nouns?|pronouns?|question mark|silent e|vowels?|consonants?|"
+    r"spellings?|sentences?|phrase|helping|then|becomes|gives|we (?:write|say|use)|"
+    r"add|the rest|match|count|choose|pick|plan|open with|name the|give every|"
+    r"stays the same|for everyone|the same for|all use)\b|-(?:ing|ed|er|s|es)\b", re.I)
+RULE_INSTRUCTION = re.compile(
+    r"^(Use|Write|Rewrite|Choose|Pick|Plan|Count|Match|Name|Add|Finish|Begin|Start|Take|Open with)\b")
+
+
+def rule_sentences(grammar_item):
+    """Grade 2: the example sentences a rule holds up, labels and commentary
+    stripped. "Near and one: This seed is very small." -> "This seed is very
+    small."; "The word will never changes." -> dropped; "This is Leo. He
+    likes football." -> "He likes football." (a bare three-word intro beside
+    a longer sentence is the name, not the pattern); "How do you spell ...?"
+    -> dropped (a frame with dots is not a sentence to say)."""
+    out = []
+    for line in (grammar_item.get("ruleAndExamples") or "").split("\n"):
+        line = line.strip()
+        m = re.match(r"^[^:\u201c\u201d\"]{1,45}:\s*(.+)$", line)
+        if m:
+            line = m.group(1)
+        if any(c in line for c in "\u201c\u201d\"\u2026\u2014:") or "..." in line:
+            continue
+        parts = [p.strip().strip("\u2018\u2019'").strip() for p in re.split(r"(?<=[.!?])\s+", line)]
+        parts = [p for p in parts if p and re.search(r"[A-Za-z]", p)]
+        if len(parts) > 1:
+            parts = [p for p in parts if len(p.split()) > 3]
+        for p in parts:
+            p = p if p.endswith((".", "!", "?")) else p + "."
+            if not re.match(r"^[A-Z]", p) or "___" in p or "\u2192" in p:
+                continue
+            if re.search(r"(?<![\w.])\d+\.", p) or not 2 <= len(p.split()) <= 12:
+                continue
+            if RULE_TALK.search(p) or RULE_INSTRUCTION.match(p):
+                continue
+            if p not in out:
+                out.append(p)
+    return out
+
+
+def concept_pools(unit):
+    """[(name, sentences, explanation)] - one entry per grammar CONCEPT.
+
+    Grade 2 authors its grammar in pairs ("He and She: Choose the Pronoun",
+    "He and She: Introduce a Person") that teach one pattern twice, sharing a
+    `conceptId`; Unit 2 puts four items under one. Pooled by that id, so a
+    question about the pattern never offers the pair's other example as a
+    wrong answer. The name is the first item's title before its colon, with
+    any bracketed gloss and quotes removed. Entries with no usable sentence
+    are left out.
+    """
+    order, pool, name, expl = [], {}, {}, {}
+    for i, g in enumerate(unit.get("grammar") or []):
+        cid = g.get("conceptId") or ("item-%d" % i)
+        if cid not in pool:
+            order.append(cid)
+            pool[cid] = []
+            base = re.sub(r"\s*\(.*?\)", "", (g.get("title") or "").split(":")[0])
+            name[cid] = re.sub(r"[\u201c\u201d\"]", "", base).strip()
+            expl[cid] = (g.get("explanation") or "").strip()
+        for sent in rule_sentences(g):
+            if sent not in pool[cid]:
+                pool[cid].append(sent)
+    return [(name[c], pool[c], expl[c]) for c in order if pool[c] and name[c]]
+
+
+def grammar_review_items_from_rules(unit, count_start=1):
+    """Grade 2's grammar review: one question per CONCEPT (concept_pools),
+    the answer that concept's first rule example, the distractors rule
+    examples of the unit's other concepts - rotated by question index
+    exactly as grammar_review_items() rotates."""
+    pools = concept_pools(unit)
+    pool = {n: s for n, s, _ in pools}
+    expl = {n: e for n, _, e in pools}
+    bases = [n for n, _, _ in pools]
+    items = []
+    for i, b in enumerate(bases):
+        answer = pool[b][0]
+        others = [x for x in bases if x != b]
+        cands = []
+        for step in range(8):
+            for o in others:
+                ex = pool[o]
+                if step < len(ex):
+                    pick = ex[(i + step) % len(ex)]
+                    if pick not in cands and pick != answer:
+                        cands.append(pick)
+        if len(cands) < 3:
+            continue
+        distractors = cands[:3]
+        items.append({
+            "sequence": count_start + len(items),
+            "practiceType": "Fluency - grammar review",
+            "question": 'Which sentence uses the pattern "%s"?' % b,
+            "options": " | ".join(place_answer(answer, distractors, i)),
+            "correctAnswer": answer,
+            "explanation": expl[b] or ('That sentence follows "%s".' % b),
+            "reviewOf": "grammar",
+        })
+    return items
 
 
 def grammar_review_items(unit, count_start=1):
@@ -151,7 +288,10 @@ def word_review_items(unit, links_by_word, count_start=1, want=9):
     taught strand groups so review touches phonics, topic and sight words
     alike rather than clustering on whichever group is listed first."""
     groups = unit["vocabularyGroups"]
-    core_group_ids = {g["id"] for g in groups if g["title"] == "Core words"}
+    # the taught groups are every group but the story glossary - Grade 1's
+    # one "Core words" group, Grade 2's four strand groups - the same split
+    # the shell's taughtGroups() makes
+    core_group_ids = {g["id"] for g in groups if g["title"] != STORY_GLOSSARY_GROUP}
     # the unit's own strand sub-groups (core-words.json) aren't loaded here;
     # spread by simple round-robin across the ORDER words appear in
     # dictionaryLinks, which already groups phonics/topic/sight contiguously
@@ -215,7 +355,7 @@ def build_fluency(unit_no, unit):
     unit_id = unit["unit"]["unitId"]
     outcome_id = unit["outcomes"][0]["outcomeId"] if unit.get("outcomes") else None
 
-    grammar_items = grammar_review_items(unit)
+    grammar_items = grammar_review_items(unit) if GRADE == 1 else grammar_review_items_from_rules(unit)
     words_needed = 15 - len(grammar_items)
     word_items = word_review_items(unit, None, count_start=len(grammar_items) + 1, want=max(9, words_needed))
 
@@ -235,11 +375,14 @@ def build_fluency(unit_no, unit):
 def main():
     args = sys.argv[1:]
     dry = "--dry" in args
+    if "--grade" in args:
+        i = args.index("--grade")
+        args = args[:i] + args[i + 2:]
     wanted = [int(a) for a in args if a.isdigit()]
     manifest = load(os.path.join(DATA, "course-manifest.json"))
     units = wanted or [u["number"] for u in manifest["units"]]
 
-    print("\n  Authoring Grade 1 English fluency review%s\n" % (" (dry run)" if dry else ""))
+    print("\n  Authoring Grade %d English fluency review%s\n" % (GRADE, " (dry run)" if dry else ""))
     for n in units:
         path = os.path.join(DATA, "units", "unit-%d.json" % n)
         unit = load(path)
@@ -257,4 +400,5 @@ def main():
     print()
 
 
-main()
+if __name__ == "__main__":
+    main()

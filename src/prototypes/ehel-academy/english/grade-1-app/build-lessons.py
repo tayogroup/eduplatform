@@ -20,6 +20,16 @@ content change; check-lessons.py cannot see staleness and does not claim to.
 
     python build-lessons.py            # every unit named in app.config.json
     python build-lessons.py 1          # just unit 1
+    python build-lessons.py --app ../grade-2-app     # another grade's app
+
+ONE BUILDER, EVERY GRADE. The builder lives here and reads the GRADE it is
+building out of the target app's app.config.json: which course directory
+(english/grade-N/data), which dictionary, which media prefix, which labels,
+which course key - and which of that grade's Core-words strands feeds which
+step (`strandRoles`, below). The pages are written into the target app's own
+directory; lib/ is shared, so a fix to the deck or the voice reaches every
+grade on its next build. It is NOT forked per grade: the Maths builds copied
+a stylesheet per grade and the copies drifted within a week.
 
 Run the shared pipeline afterwards, in this order (see
 mathematics/lesson-app-tools/README.md - each step assumes the last):
@@ -46,9 +56,45 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ACADEMY = os.path.abspath(os.path.join(HERE, "..", ".."))
-DATA = os.path.join(ACADEMY, "english", "grade-1", "data")
 SHELL = os.path.join(ACADEMY, "shell", "subjects")
 LIB = os.path.join(HERE, "lib")
+
+
+def app_root(argv):
+    """The app being built: --app <dir>, else this directory (Grade 1)."""
+    if "--app" in argv:
+        i = argv.index("--app")
+        if i + 1 >= len(argv):
+            sys.exit("REFUSED: --app needs a directory")
+        return os.path.abspath(argv[i + 1])
+    return HERE
+
+
+OUT = app_root(sys.argv[1:])
+_cfg_path = os.path.join(OUT, "app.config.json")
+if not os.path.isfile(_cfg_path):
+    sys.exit("REFUSED: no app.config.json in %s" % OUT)
+CFG = json.load(io.open(_cfg_path, encoding="utf-8"))
+if CFG.get("subject") != "english" or not isinstance(CFG.get("grade"), int):
+    sys.exit("REFUSED: %s is not an English grade app (subject/grade)" % _cfg_path)
+GRADE = CFG["grade"]
+GRADE_LABEL = CFG.get("gradeLabel") or ("Grade %d" % GRADE)
+COURSE_DIR = "grade-%d" % GRADE                     # english/grade-N, beside the apps
+DATA = os.path.join(ACADEMY, "english", COURSE_DIR, "data")
+if not os.path.isdir(DATA):
+    sys.exit("REFUSED: no course data at %s" % DATA)
+
+# WHICH CORE-WORDS STRAND FEEDS WHICH STEP. The steps are named for what a
+# child does (hear the sounds, meet the new words, know the everyday words);
+# the strands are named for how each grade's word list was authored, and the
+# names differ by grade: Grade 1 has phonics / topic / sight, Grade 2 has
+# spelling / joining and TWO topic groups per unit. A strand mapped to a role
+# another strand already holds is MERGED into it - the words appended, the
+# titles joined - rather than overwriting it, which is what a dict keyed on
+# strand did silently. Unmapped strands keep their own name, so a grade that
+# adds a strand no step reads simply does not draw it, the way Grade 1 units
+# without a "sight" group draw no everyday-words step.
+STRAND_ROLES = CFG.get("strandRoles") or {"phonics": "phonics", "topic": "topic", "sight": "sight"}
 
 
 # ----------------------------------------------------------------------
@@ -89,8 +135,8 @@ def word_pictures(words):
         'import { wordPicture } from "file:///%s";\n'
         'const ws = JSON.parse(process.argv[1]);\n'
         'const out = {};\n'
-        'for (const w of ws) { const p = wordPicture(w, 1); if (p) out[w] = p; }\n'
-        'process.stdout.write(JSON.stringify(out));\n' % src
+        'for (const w of ws) { const p = wordPicture(w, %d); if (p) out[w] = p; }\n'
+        'process.stdout.write(JSON.stringify(out));\n' % (src, GRADE)
     )
     r = subprocess.run(
         ["node", "--input-type=module", "-e", script, "--", json.dumps(sorted(set(words)))],
@@ -130,7 +176,7 @@ def glossary_pictures():
 
 
 def dictionary_index():
-    d = load_json(os.path.join(DATA, "master-dictionary.grade1.json"))
+    d = load_json(os.path.join(DATA, "master-dictionary.grade%d.json" % GRADE))
     by_word = {}
     for e in d["entries"]:
         key = str(e.get("displayWord") or e.get("lemma") or "").strip().lower()
@@ -162,6 +208,13 @@ QUIZ_PER_CHECK = 10
 QUIZ_SKILLS_MID = ("vocabulary", "meaning in context")
 
 SENTENCES_SHOWN = 3
+
+# The most words one "Meet the words" step walks. Grade 1's largest topic
+# group is 14 (Unit 2), the size the owner walked through and accepted; a
+# group longer than this is split into equal parts, each its own step. Grade
+# 2 authors up to 27 words in one group (Unit 9) and two topic groups per
+# unit - merged into one step that was 32 words on a single slide in Unit 8.
+WORDS_PER_STEP = 14
 
 # The order a learner walks a unit. Owner, 2026-09-08, matching the shell
 # course's own Grades 1-4 arrangement: the picture books LEAD the reading,
@@ -432,7 +485,7 @@ def lecture_media():
 
 
 def lecture_asset(rel):
-    return "../grade-1/" + str(rel).replace("./", "", 1) if rel else ""
+    return "../%s/" % COURSE_DIR + str(rel).replace("./", "", 1) if rel else ""
 
 
 def load_games_meta(unit_no):
@@ -468,6 +521,18 @@ def talk_items(unit):
         mine = per_item[i]
         title = (g.get("title") or "").strip().rstrip(".")
         if not mine or not title:
+            continue
+        # The framing sentence takes the title as an INSTRUCTION ("Your friend
+        # wants you to introduce yourself by name"). Grade 1 titles are
+        # written that way; Grade 2's are labels - "Asking Questions: Build
+        # the Question", "Past Simple (verbs ending in -ed)" - and read into
+        # the frame they are nonsense. A colon or a bracket is the label's
+        # own signature, so such a title is refused rather than spoken.
+        # Grade 1 has one, Unit 9's "Road words: Stop and Go", whose round
+        # read "Your friend wants you to road words: Stop and Go" - refused
+        # too, so that grade builds 60 rounds rather than the 61 the example
+        # filter alone leaves.
+        if ":" in title or "(" in title:
             continue
         answer = mine[0]
         distractors = []
@@ -505,7 +570,27 @@ def practice_examples(grammar_item):
     """The real example sentences inside a grammar item's `practice` line.
 
     Same parse the fluency author uses (tools/author-ehel-english-g1-fluency.py):
-    "<instruction>: <ex1>. <ex2>. <ex3>." across all 10 units.
+    "<instruction>: <ex1>. <ex2>. <ex3>." across all 10 Grade 1 units.
+
+    ONLY SENTENCES A CHILD COULD SAY. That shape is Grade 1's: its practice
+    lines are "Name three things: This is a pen. This is an apple." Grade 2's
+    are worksheets - "Write he or she in each gap.\n1. This is my brother.
+    ____ likes running. ... Check yourself: 1. He 2. She" - and the split
+    after the first colon handed the answer KEY back as spoken examples ("He
+    2.", "like 4."), which the talk step then asked a child to say to Azure.
+    So a candidate has to look like speech: begins with a capital (or an
+    opening quote), ends in . ! or ?, two to twelve words, and carries no
+    blank, no numbered-item marker and no arrow.
+
+    Measured on Grade 1: 64 rounds before, 61 after, and the three it drops
+    were defects the old parse let through - two lists ("a window, a book, a
+    friend.") and a frame with a blank in it ("Once upon a time there was a /
+    an ___.") that the round asked a child to say aloud to the pronunciation
+    check. On Grade 2 it passes only what really is a sentence (Unit 1's
+    "How do you spell your name?"), and talk_items() then refuses the title
+    those hang under - so the Grade 1 route yields nothing there and
+    talk_items_from_rules() builds the step from the rule examples instead,
+    rather than a "Let us talk" made of worksheet fragments.
     """
     text = grammar_item.get("practice") or ""
     if ":" not in text:
@@ -515,8 +600,88 @@ def practice_examples(grammar_item):
     for p in [x.strip() for x in re.split(r"(?<=[.!?])\s+", tail) if x.strip()]:
         if not re.search(r"[A-Za-z]", p):
             continue
-        out.append(p if p.endswith((".", "!", "?")) else p + ".")
+        p = p if p.endswith((".", "!", "?")) else p + "."
+        if not speakable_example(p):
+            continue
+        out.append(p)
     return out
+
+
+def speakable_example(p):
+    if not re.match(r'^["\u201c\u2018\']?[A-Z]', p):
+        return False
+    if "___" in p or "\u2192" in p or re.search(r"(?<![\w.])\d+\.", p):
+        return False
+    return 2 <= len(p.split()) <= 12
+
+
+_FLUENCY_TOOL = None
+
+
+def fluency_tool():
+    """tools/author-ehel-english-g1-fluency.py, the ONE definition of which
+    sentences a Grade 2 grammar rule holds up (rule_sentences) and how its
+    paired items pool into concepts (concept_pools). The fluency section and
+    Let us talk are built from the same reading of the same field; a second
+    copy here would drift from it the first time either was tuned."""
+    global _FLUENCY_TOOL
+    if _FLUENCY_TOOL is None:
+        import importlib.util
+        path = os.path.join(ACADEMY, "..", "..", "..", "tools", "author-ehel-english-g1-fluency.py")
+        spec = importlib.util.spec_from_file_location("ehel_english_fluency", os.path.abspath(path))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        _FLUENCY_TOOL = mod
+    return _FLUENCY_TOOL
+
+
+def talk_items_from_rules(unit):
+    """"Let us talk" where the grammar practice is a worksheet (Grade 2).
+
+    talk_items() above needs a practice line of spoken examples under a
+    title written as an instruction, and Grade 2 has neither. What it does
+    have is `ruleAndExamples`, whose examples are real sentences of the
+    pattern - "This is Leo. He likes football." - and a title that NAMES the
+    pattern ("He and She: Choose the Pronoun"). So the round asks for the
+    pattern by name and offers one sentence that shows it against sentences
+    that show the unit's OTHER patterns; the child taps it and then says it,
+    the same shape as the Grade 1 round.
+
+    ONE ROUND PER CONCEPT, not per grammar item. Grade 2 authors its grammar
+    in pairs ("He and She: Choose the Pronoun", "He and She: Introduce a
+    Person") that teach one pattern twice under one conceptId; a round per
+    item would offer the pair's other example as a distractor - a second
+    correct answer. The pooling and the sentence parse are the fluency
+    tool's (fluency_tool().concept_pools), so this step and the Fluency
+    section read the rule the same way.
+    """
+    pools = fluency_tool().concept_pools(unit)
+    pool = {n: s for n, s, _ in pools}
+    why = {n: e for n, _, e in pools}
+    bases = [n for n, _, _ in pools]
+    rounds = []
+    for i, b in enumerate(bases):
+        answer = pool[b][0]
+        others = [x for x in bases if x != b]
+        cands = []
+        for step in range(6):
+            for o in others:
+                ex = pool[o]
+                if step < len(ex):
+                    pick = ex[(i + step) % len(ex)]
+                    if pick not in cands and pick != answer:
+                        cands.append(pick)
+        if len(cands) < 2:
+            continue
+        opts = cands[:2]
+        opts.insert(i % 3, answer)
+        rounds.append({
+            "ask": "Your friend asks how to use \u201c%s\u201d. Which sentence shows it?" % b,
+            "opts": [{"t": o, "ok": 1 if o == answer else 0} for o in opts],
+            "why": why[b] or ("You would say: %s" % answer),
+            "reference": answer,
+        })
+    return rounds
 
 
 # A speaking game round is only offered to the pronunciation check if it is a
@@ -611,16 +776,19 @@ def load_games(unit_no):
 
 
 def unit_dictionary_links(unit):
-    """word (lowercase) -> its dictionaryLinks entry, Core words group only.
+    """word (lowercase) -> its dictionaryLinks entry, taught groups only.
 
-    A unit's dictionaryLinks carries two groups - "Core words" (the taught
-    40) and "Words from our stories" (background vocabulary the unit reads
-    but does not teach) - found by TITLE rather than a hardcoded id, because
-    the id itself is per-unit ("g1-u1-core", "g1-u2-core", ...). Restricting
-    to the taught group is what the shell's own linkedWords()/wordsFor() do.
+    A unit's dictionaryLinks carries the TAUGHT groups (Grade 1: one, titled
+    "Core words"; Grade 2: four, one per strand) and one glossary group,
+    "Words from our stories" - background vocabulary the unit reads but does
+    not teach. The split is the shell's own (STORY_GLOSSARY_GROUP in
+    english.js: every group but the glossary is taught), matched by TITLE
+    rather than by id because the ids are per-unit ("g1-u1-core",
+    "g2-u1-core-spelling", ...). Restricting to the taught groups is what the
+    shell's own linkedWords()/wordsFor() do.
     """
     core_group_ids = {g["id"] for g in unit.get("vocabularyGroups", [])
-                       if g.get("title") == "Core words"}
+                       if g.get("title") != "Words from our stories"}
     by_word = {}
     for link in unit.get("dictionaryLinks", []):
         if link.get("groupId") not in core_group_ids:
@@ -814,7 +982,24 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     """
     slides, stickers, data = [], [], {}
 
-    groups = {g["strand"]: g for g in cw_unit["groups"]}
+    # Every group this unit authors, by the ROLE its strand plays here. A
+    # role can hold several groups (Grade 2's two topic groups); the sounds
+    # and everyday-words steps take the role's groups merged into one, and
+    # "Meet the words" draws one step per group - see it below.
+    by_role = {}
+    for g in cw_unit["groups"]:
+        by_role.setdefault(STRAND_ROLES.get(g["strand"], g["strand"]), []).append(g)
+
+    def merged(role):
+        gs = by_role.get(role) or []
+        if not gs:
+            return None
+        words = []
+        for g in gs:
+            words += [w for w in g["words"] if w not in words]
+        return {"strand": role, "title": gs[0]["title"], "words": words}
+
+    groups = {role: merged(role) for role in by_role}
     all_words = [w for g in cw_unit["groups"] for w in g["words"]]
     links = unit_dictionary_links(unit)
 
@@ -857,7 +1042,14 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
         return kind
 
     def emit_in_order():
-        for kind in STEP_ORDER:
+        # "newwords-2" follows "newwords": a kind repeated with a numeric
+        # suffix sits where STEP_ORDER places its base, in suffix order
+        ordered = []
+        for base in STEP_ORDER:
+            ordered.append(base)
+            ordered += sorted((k for k in pending if re.match(re.escape(base) + r"-\d+$", k)),
+                              key=lambda k: int(k.rsplit("-", 1)[1]))
+        for kind in ordered:
             spec = pending.get(kind)
             if not spec:
                 continue
@@ -878,7 +1070,7 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 "say": spec["say"], "note": spec["note"],
             })
             stickers.append([spec["icon"], spec["sticker"]])
-        missing = [k for k in pending if k not in STEP_ORDER]
+        missing = [k for k in pending if re.sub(r"-\d+$", "", k) not in STEP_ORDER]
         if missing:
             sys.exit("REFUSED: these steps were built but STEP_ORDER does not place them, "
                      "so they would silently vanish from the lesson: " + ", ".join(missing))
@@ -928,7 +1120,11 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 ["video", "next"])
 
     # ---- 1  the sounds this unit teaches -----------------------------
-    if groups.get("phonics") and len(groups["phonics"]["words"]) >= 4:
+    # THREE is the floor, not four: an item is the word heard plus two
+    # wrong words from the same group, so three words is the smallest group
+    # that makes one. Four left Grade 2's Unit 10 (three spelling words) and
+    # Grade 1's Unit 10 (three everyday words) without the step.
+    if groups.get("phonics") and len(groups["phonics"]["words"]) >= 3:
         words = [word_obj(w) for w in groups["phonics"]["words"]]
         heard = [w for w in words if w["audio"]][:6]
         items = []
@@ -951,17 +1147,37 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                     ["replay"])
 
     # ---- 2  the unit's new words, one at a time ----------------------
-    topic = groups.get("topic") or groups.get("phonics")
-    if topic:
-        # A unit missing a "topic" strand (7 and 9) falls back to the SAME
-        # words the Sounds step already drew from "phonics" - reusing that
-        # group's own title too gave the deck two steps in a row both
-        # headed "Phonics: th and ng", reading as one step duplicated
-        # rather than two different things to do with the same words.
-        newwords_title = topic["title"] if groups.get("topic") else "Meet the words"
-        words = [word_obj(w) for w in topic["words"]]
-        data["newwords"] = words
-        i = add("newwords", newwords_title, "\U0001F4D6", "I met the new words",
+    #         ONE STEP PER TOPIC GROUP, and a group longer than WORDS_PER_STEP
+    #         is split into equal parts, each a step of its own ("Words: food,
+    #         drink and nature (1 of 2)"). The content's own division comes
+    #         first - each group keeps its own title - then the size cap.
+    #         Grade 1 has one topic group per unit of at most 14 words, so it
+    #         draws exactly the one step it always drew.
+    topic_groups = list(by_role.get("topic") or [])
+    if not topic_groups and groups.get("phonics"):
+        # A unit missing a "topic" strand (Grade 1's 7 and 9) falls back to
+        # the SAME words the Sounds step already drew from "phonics" -
+        # reusing that group's own title too gave the deck two steps in a
+        # row both headed "Phonics: th and ng", reading as one step
+        # duplicated rather than two different things to do with the same
+        # words.
+        topic_groups = [dict(groups["phonics"], title="Meet the words")]
+    parts = []
+    for g in topic_groups:
+        ws = list(g["words"])
+        n_parts = max(1, -(-len(ws) // WORDS_PER_STEP))
+        size = -(-len(ws) // n_parts)
+        for p in range(n_parts):
+            chunk = ws[p * size:(p + 1) * size]
+            if chunk:
+                parts.append((g["title"] + (" (%d of %d)" % (p + 1, n_parts) if n_parts > 1 else ""), chunk))
+    for idx, (title, chunk) in enumerate(parts):
+        # a second and later step of the same kind is "newwords-2", "-3"...:
+        # emit_in_order() places them straight after the first, bootstrap()
+        # reads LESSON[kind], and the sticker is the same one each time
+        kind = "newwords" if idx == 0 else "newwords-%d" % (idx + 1)
+        data[kind] = [word_obj(w) for w in chunk]
+        i = add(kind, title, "\U0001F4D6", "I met the new words",
                 "Say this word out loud.",
                 explain(
                     ["These are the new words for this unit."],
@@ -999,7 +1215,7 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 ())
 
     # ---- 4  the words we see everywhere ------------------------------
-    if groups.get("sight") and len(groups["sight"]["words"]) >= 4:
+    if groups.get("sight") and len(groups["sight"]["words"]) >= 3:
         words = [word_obj(w) for w in groups["sight"]["words"]]
         heard = [w for w in words if w["audio"]][:6]
         items = []
@@ -1719,7 +1935,7 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
             # rather than being animated as something it is not.
             # build_slides has the unit JSON rather than the number.
             "unit": unit["unit"]["unitNo"],
-            "grade": 1,
+            "grade": GRADE,
             # The Word finder's pictures. The glossary is fetched at runtime
             # (hundreds of KB); this is 6.1 KB and cannot be fetched, because
             # wordPicture() is a shell function and there is no shell here.
@@ -1863,7 +2079,7 @@ PAGE = """<!doctype html>
 <div class="wrap">
   <header class="hero">
     <div>
-      <p class="eyebrow">Ehel Academy &middot; Grade 1 English &middot; Unit %(unit)d</p>
+      <p class="eyebrow">Ehel Academy &middot; %(gradeLabel)s English &middot; Unit %(unit)d</p>
       <h1>%(h1)s</h1>
     </div>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
@@ -1899,10 +2115,10 @@ PAGE = """<!doctype html>
   window.__ehelPainting = true;
 
   /* ==================================================================
-     %(title)s - Grade 1 English, Unit %(unit)d.
+     %(title)s - %(gradeLabel)s English, Unit %(unit)d.
 
      GENERATED by english/grade-1-app/build-lessons.py from
-     english/grade-1/data. Do not hand-edit: the next build overwrites it,
+     english/%(courseDir)s/data. Do not hand-edit: the next build overwrites it,
      and the fix for anything wrong on this page is either in the course
      content or in the builder.
      ================================================================== */
@@ -1980,11 +2196,11 @@ def bootstrap(slides, data):
                        '    ask: "Which word did you hear?", label: "Word",\n'
                        '    done: "You know these words by their sound now." });'
                        % (el, "sounds" if k == "sounds" else "sight", i))
-        elif k == "newwords":
-            out.append('  wordWalk({ el: %s, items: LESSON.newwords, finish: %d,\n'
+        elif k == "newwords" or k.startswith("newwords-"):
+            out.append('  wordWalk({ el: %s, items: LESSON[%s], finish: %d,\n'
                        '    ask: "Say this word out loud.", label: "Word",\n'
                        '    done: "Now you have met them, you will see them all through the unit." });'
-                       % (el, i))
+                       % (el, json.dumps(k), i))
         elif k == "match":
             out.append('  pictureMatch({ el: %s, items: LESSON.match, finish: %d,\n'
                        '    ask: "Which word is this?", label: "Picture",\n'
@@ -2067,7 +2283,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
     games_meta = load_games_meta(unit_no)
     # unitEbooks(): shell/subjects/english.js's own filter, matched exactly -
     # grades.includes(1) and (no units list, or units includes this one).
-    shelf = [b for b in ebooks if 1 in b.get("grades", [])
+    shelf = [b for b in ebooks if GRADE in b.get("grades", [])
              and (not b.get("units") or unit_no in b["units"])]
     shelf_ids = {b["id"] for b in shelf}
 
@@ -2076,7 +2292,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
     # question about a book the child was never given is unanswerable - and
     # a `picture` question needs every one of its three candidate pages to
     # be a book on the shelf, not just the right one.
-    qset = next((s for s in book_sets if s.get("grade") == 1 and s.get("unit") == unit_no), None)
+    qset = next((s for s in book_sets if s.get("grade") == GRADE and s.get("unit") == unit_no), None)
     book_questions = []
     for q in (qset or {}).get("questions") or []:
         if q.get("kind") == "picture":
@@ -2097,7 +2313,9 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
             "slides": lec.get("lectureSlides") or [],
         }
 
-    talk_rounds = talk_items(unit)
+    # the Grade 1 shape first (spoken examples under an instruction title),
+    # then the rule examples where that yields nothing - see both functions
+    talk_rounds = talk_items(unit) or talk_items_from_rules(unit)
 
     # The schedule for THIS unit, plus the day lines, which need the step
     # titles - so it is finished after build_slides() below has named them.
@@ -2107,6 +2325,8 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
                                           shelf, lecture, book_questions, talk_rounds, sched)
     data = {k: v for k, v in data.items() if not k.endswith("_slide")}
     data["audioRelease"] = release
+    data["grade"] = GRADE
+    data["gradeLabel"] = GRADE_LABEL
     data["unitNo"] = unit_no
     data["unitTitle"] = entry["title"]
 
@@ -2126,6 +2346,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
 
     page = PAGE % {
         "title": title, "unit": unit_no, "h1": h1, "css": css,
+        "gradeLabel": GRADE_LABEL, "courseDir": COURSE_DIR,
         "slides": body,
         "data": json.dumps(data, ensure_ascii=False, indent=2).replace("\n", "\n  "),
         "voice": voice, "deck": deck, "english": english, "books": books_js,
@@ -2135,7 +2356,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
         "bootstrap": bootstrap(slides, data),
     }
     name = slugify(title) + ".html"
-    io.open(os.path.join(HERE, name), "w", encoding="utf-8", newline="").write(page)
+    io.open(os.path.join(OUT, name), "w", encoding="utf-8", newline="").write(page)
     print("  ok   %-30s unit %-2d  %d steps + stickers  %6d bytes"
           % (name, unit_no, len(slides), len(page)))
     return name, title
@@ -2161,7 +2382,7 @@ def main():
     lectures = lecture_media()
 
     units = wanted or [u["number"] for u in manifest["units"]]
-    print("\n  Building Grade 1 English lessons  (audio stamp %s)\n" % release)
+    print("\n  Building %s English lessons -> %s  (audio stamp %s)\n" % (GRADE_LABEL, OUT, release))
     schedule = unit_schedule(manifest)
     built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, games_js, speech_js,
                    resources_js, ebooks,
@@ -2169,4 +2390,5 @@ def main():
     print("\n  %d page(s). Now run the shared pipeline - see the docstring.\n" % len(built))
 
 
-main()
+if __name__ == "__main__":
+    main()

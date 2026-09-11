@@ -5642,6 +5642,8 @@
       }
     },
     "audioRelease": "20260910a",
+    "grade": 1,
+    "gradeLabel": "Grade 1",
     "unitNo": 5,
     "unitTitle": "On the Farm"
   };
@@ -7717,7 +7719,7 @@
      ------------------------------------------------------------------ */
   function selfCheck(o) {
     const el = o.el;
-    const KEY = "ehel-eng-g1-u" + (o.unit || 1) + "-self-v1";
+    const KEY = "ehel-eng-g" + (LESSON.grade || 1) + "-u" + (o.unit || 1) + "-self-v1";
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (_) { saved = {}; }
     function store() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (_) { /* private mode */ } }
@@ -9202,14 +9204,15 @@
        ships on the content tier already, so it is fetched when the drawer is
        opened - and the two trees are laid out differently, which is the same
        dev/production split clip() makes for audio one file up. */
+    const GRADE = LESSON.grade || 1;
     const GLOSSARY_URL = DEV
-      ? "../grade-1/data/sentence-glossary.json"
-      : "../../../content/english/g01/sentence-glossary.json";
+      ? "../grade-" + GRADE + "/data/sentence-glossary.json"
+      : "../../../content/english/g" + String(GRADE).padStart(2, "0") + "/sentence-glossary.json";
     let glossary = null;
 
     const CARDS = [
       { id: "words", icon: "\u{1F524}", title: "Core words", blurb: "Every new word in this unit, what it means, and a voice to listen to." },
-      { id: "glossary", icon: "\u{1F50E}", title: "Word finder", blurb: "Look up any word Grade 1 teaches, from any unit." },
+      { id: "glossary", icon: "\u{1F50E}", title: "Word finder", blurb: "Look up any word " + (LESSON.gradeLabel || "Grade 1") + " teaches, from any unit." },
       { id: "plan", icon: "\u{1F4C5}", title: "The plan for this unit", blurb: "Which weeks this unit runs, and what to do each day." },
       { id: "gradeplan", icon: "\u{1F5FA}", title: "The whole year", blurb: "All ten units and where each one falls in the terms." },
       { id: "write", icon: "\u{270D}", title: "How to write it", blurb: "Watch the pen write each word, and see where to start." },
@@ -9560,7 +9563,7 @@
   hearAndTap({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4", replay: "replay4" }, items: LESSON.sounds, finish: 3,
     ask: "Which word did you hear?", label: "Word",
     done: "You know these words by their sound now." });
-  wordWalk({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5", replay: "replay5", next: "next5", hearSent: "hearSent5", nextSent: "nextSent5" }, items: LESSON.newwords, finish: 4,
+  wordWalk({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5", replay: "replay5", next: "next5", hearSent: "hearSent5", nextSent: "nextSent5" }, items: LESSON["newwords"], finish: 4,
     ask: "Say this word out loud.", label: "Word",
     done: "Now you have met them, you will see them all through the unit." });
   pictureMatch({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, items: LESSON.match, finish: 5,

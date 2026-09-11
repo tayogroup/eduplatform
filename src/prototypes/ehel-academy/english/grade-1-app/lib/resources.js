@@ -28,14 +28,15 @@
        ships on the content tier already, so it is fetched when the drawer is
        opened - and the two trees are laid out differently, which is the same
        dev/production split clip() makes for audio one file up. */
+    const GRADE = LESSON.grade || 1;
     const GLOSSARY_URL = DEV
-      ? "../grade-1/data/sentence-glossary.json"
-      : "../../../content/english/g01/sentence-glossary.json";
+      ? "../grade-" + GRADE + "/data/sentence-glossary.json"
+      : "../../../content/english/g" + String(GRADE).padStart(2, "0") + "/sentence-glossary.json";
     let glossary = null;
 
     const CARDS = [
       { id: "words", icon: "\u{1F524}", title: "Core words", blurb: "Every new word in this unit, what it means, and a voice to listen to." },
-      { id: "glossary", icon: "\u{1F50E}", title: "Word finder", blurb: "Look up any word Grade 1 teaches, from any unit." },
+      { id: "glossary", icon: "\u{1F50E}", title: "Word finder", blurb: "Look up any word " + (LESSON.gradeLabel || "Grade 1") + " teaches, from any unit." },
       { id: "plan", icon: "\u{1F4C5}", title: "The plan for this unit", blurb: "Which weeks this unit runs, and what to do each day." },
       { id: "gradeplan", icon: "\u{1F5FA}", title: "The whole year", blurb: "All ten units and where each one falls in the terms." },
       { id: "write", icon: "\u{270D}", title: "How to write it", blurb: "Watch the pen write each word, and see where to start." },

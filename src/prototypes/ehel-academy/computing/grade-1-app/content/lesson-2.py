@@ -221,3 +221,10 @@ LESSON["home"] = [
           "Swap: they hide a bug for you."],
          "A bug can be a wrong step OR a right step in the wrong place."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you found out that an algorithm is a set of steps to do a job, and you followed some."
+LESSON["warmup"] = [
+    q("You pour the milk before you get the bowl. What happens?", "\U0001F95B", "the milk goes on the table", ["a perfect breakfast", "the bowl fills itself", "nothing at all"], "Steps in the wrong order give a silly result."),
+    q("Which is the right order for washing your hands?", "\U0001F9FC", "wet, soap, rub, rinse, dry", ["dry, rinse, soap, wet", "rub, dry, wet, soap", "soap, dry, rinse, wet"], "Wet, soap, rub, rinse, dry. The order matters."),
+]

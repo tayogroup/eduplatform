@@ -209,3 +209,10 @@ LESSON["home"] = [
           "Find one thing with no computer inside."],
          "A microwave counts down. A toaster with a dial might not have a computer at all."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you gave Robo instructions: forward, backwards, turn left and turn right."
+LESSON["warmup"] = [
+    q("How does a computer know what to do?", "\U0001F4BB", "someone writes the steps for it", ["it guesses", "it reads your mind", "it asks the cat"], "People write the steps for a computer, as code."),
+    q("Steps written for a computer to run are called...", "\U0001F9E9", "a program", ["a picture", "a song", "a sandwich"], "Steps written for a computer are a program."),
+]

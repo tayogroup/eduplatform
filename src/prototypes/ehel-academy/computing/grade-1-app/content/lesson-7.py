@@ -92,6 +92,28 @@ LESSON = {
              ]},
              "The internet is many computers, connected, all around the world."),
 
+        step("sort", "Joined to the internet, or not?", "\U0001F310", "Internet spotter", ["1DC.02", "1DC.04"],
+             "The internet is many computers, joined together all around the world. Is this one joined to it right now?",
+             explain(
+                 ["A computer is part of the internet while it is connected to it, with a wire or with no wire."],
+                 ["A laptop in a school in Kenya, sending an email: joined.", "A phone in Japan on a video call: joined.",
+                  "A book of stories: not a computer, so it cannot join."],
+                 ["Children think every computer is always on the internet.", "Only while it is connected. A tablet on a plane with no wi-fi is not joined."],
+                 ["Read, decide, tap."]),
+             {"ask": "Joined to the internet, or not?",
+              "bins": [{"id": "on", "label": "Joined", "pic": "\U0001F310"}, {"id": "off", "label": "Not joined", "pic": "\U0001F6AB"}],
+              "items": [
+                  {"pic": "\U0001F4BB", "label": "a laptop in a school in Kenya, sending an email", "bin": "on", "why": "The email travels across the internet, so the laptop is joined."},
+                  {"pic": "\U0001F4DA", "label": "a book of stories", "bin": "off", "why": "A book is not a computer. It cannot join the internet."},
+                  {"pic": "\U0001F4F1", "label": "a phone in Japan, on a video call to Brazil", "bin": "on", "why": "A call across the world is the internet at work."},
+                  {"pic": "✈️", "label": "a tablet on a plane with no wi-fi", "bin": "off", "why": "No connection, so right now it is not joined."},
+                  {"pic": "\U0001F5C4️", "label": "a computer far away that keeps the videos you watch", "bin": "on", "why": "It is one of the many computers the internet joins together."},
+                  {"pic": "\U0001F9F8", "label": "a teddy bear", "bin": "off", "why": "A teddy bear has no computer inside."},
+                  {"pic": "\U0001F4FA", "label": "a smart TV playing a film from the internet", "bin": "on", "why": "The film comes across the internet, so the TV is joined."},
+                  {"pic": "\U0001F526", "label": "a torch", "bin": "off", "why": "A torch has no computer and no connection."},
+              ]},
+             "Computers all round the world, joined together: that is the internet."),
+
         step("offline", "When the internet is off", "\U0001F4F4", "Offline tester", ["1DC.04"],
              "Sometimes the internet is not there. Switch it OFF, predict what still works, and try each app.",
              explain(
@@ -222,4 +244,11 @@ LESSON["home"] = [
           "Try a video, a saved game, the camera, a message.",
           "Say which worked and which did not, then switch it back on."],
          "The things that needed other computers stopped. The rest carried on."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you collected data on a form and read the answers in a table."
+LESSON["warmup"] = [
+    q("How can a message get to Grandma far away?", "\U0001F48C", "it travels through the internet", ["it walks there", "it hides in a sock", "it cannot get there"], "Messages travel between computers through the internet."),
+    q("Which of these connects with a wire?", "\U0001F50C", "a printer with a cable", ["a phone on wi-fi", "a smart watch", "a tablet on wi-fi"], "Some devices connect with a wire and some with no wire."),
 ]

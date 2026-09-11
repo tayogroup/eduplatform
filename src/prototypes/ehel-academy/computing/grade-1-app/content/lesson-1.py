@@ -225,3 +225,9 @@ LESSON["home"] = [
           "Number the pictures 1, 2, 3, 4."],
          "Could somebody follow your pictures without asking you anything?"),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["warmup"] = [
+    q("What do you think an algorithm is?", "\U0001F9E9", "a set of steps to do a job", ["a kind of animal", "a colour", "a song"], "An algorithm is a set of steps to do a job."),
+    q("To make toast, what do you do first?", "\U0001F35E", "take a slice of bread", ["spread the butter", "eat it", "wait for it to pop up"], "The bread comes first. Every job has a first step."),
+]

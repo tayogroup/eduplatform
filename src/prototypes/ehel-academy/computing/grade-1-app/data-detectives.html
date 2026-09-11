@@ -487,7 +487,9 @@
   .script { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; min-height: 56px; width: 100%; max-width: 560px;
     padding: 8px; border-radius: 16px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
   .palette { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; width: 100%; max-width: 560px; }
-  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; border: 0; color: #06231F;
+  /* min-height 44px on every control below: they measured 40 to 43 px at phone width,
+     above the 24 px minimum and under the 44 px five-year-olds need (validation 2026-09-11) */
+  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; min-height: 44px; border-radius: 10px; border: 0; color: #06231F;
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; box-shadow: 0 3px 0 rgba(0,0,0,0.25); }
   .block .bicon { font-size: 18px; }
   .block.move { background: var(--teal); }
@@ -519,7 +521,7 @@
   .person .ppic { font-size: 44px; line-height: 1; }
   .person b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; }
   .pbubble { margin: 2px 0 0; padding: 6px 10px; border-radius: 12px; background: var(--teal-soft); font-size: 16px; font-style: italic; }
-  .wifi { padding: 8px 14px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
+  .wifi { padding: 8px 14px; min-height: 44px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
   .wifi.on { border-color: var(--good); color: var(--good); }
   .appgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
@@ -750,10 +752,19 @@
   .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
   .act-lead { margin: 0; font-size: 18px; font-weight: 700; }
   .act-mat, .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
-  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; font-size: 13px; }
   .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
-  button.hear { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
-  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  button.hear { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
+  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; min-height: 44px; }
+
+  /* ---- the overview's recap and warm-up (validation 2026-09-11) ---- */
+  .ovw-recap { margin: 0 0 12px; padding: 10px 14px; border-radius: 14px; border-left: 4px solid var(--teal); background: rgba(53,191,178,0.10); font-size: 17px; }
+  .ovw-recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .warmup { margin-top: 16px; padding: 14px 16px; border-radius: 18px; border: 3px dashed var(--line); }
+  .warm-h { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; }
+  .warm-h span { font-weight: 600; font-size: 13px; color: #A8BDCD; margin-left: 6px; }
+  .warm-q { margin: 0 0 10px; font-size: 18px; }
+  .warm-done { margin: 0; font-size: 17px; }
   .act.did .tick { border-color: var(--good); color: var(--good); }
 
   /* ---- the resources drawer ---- */
@@ -1274,9 +1285,9 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1MD.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computers are very good at sorting and organising data, and very fast.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A hundred books by hand takes all afternoon.</s><s>A computer with the list of titles sorts them in a blink.</s><s>And it can sort them again a different way, just as fast.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and compare.</s></mstts:express-as>' data-say="A hundred library books need sorting. Press Next .">
-      <div class="slide-head"><span class="n">10</span><h2>By hand, or by computer?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">A hundred library books need sorting. Press <b>Next</b>.</span></div>
+    <section class="slide" data-objectives="1MD.03 1MD.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A form can ask the same question every day and keep every answer.</s><s>The weather each day is data.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Monday was sunny: tap sunny, then press Submit.</s><s>By Friday, the table shows how many sunny days there were.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children tap the weather outside their own window.</s><s>Record what the day says it was.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Listen to each day, tap, submit.</s></mstts:express-as>' data-say="Record the weather on the form, one day at a time. Tap what the weather was, then press Submit .">
+      <div class="slide-head"><span class="n">10</span><h2>Record the weather for a week</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Record the weather on the form, one day at a time. Tap what the weather was, then press <b>Submit</b>.</span></div>
       <div class="stage">
         <div id="stage10"></div>
         <div class="choices" id="ch10"></div>
@@ -1284,9 +1295,9 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1MD.01 1MD.03 1MD.04 1MD.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
-      <div class="slide-head"><span class="n">11</span><h2>Games</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Choose a game to play. Nothing here is new.</span></div>
+    <section class="slide" data-objectives="1MD.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computers are very good at sorting and organising data, and very fast.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A hundred books by hand takes all afternoon.</s><s>A computer with the list of titles sorts them in a blink.</s><s>And it can sort them again a different way, just as fast.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and compare.</s></mstts:express-as>' data-say="A hundred library books need sorting. Press Next .">
+      <div class="slide-head"><span class="n">11</span><h2>By hand, or by computer?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">A hundred library books need sorting. Press <b>Next</b>.</span></div>
       <div class="stage">
         <div id="stage11"></div>
         <div class="choices" id="ch11"></div>
@@ -1294,9 +1305,9 @@
         <p class="score" id="score11"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1MD.01 1MD.03 1MD.04 1MD.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, away from any screen.</s><s>Computer scientists call that unplugged, and it is real computing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who follows your steps EXACTLY, silly mistakes and all, is the best computer you have.</s><s>That is the whole point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.">
-      <div class="slide-head"><span class="n">12</span><h2>Unplugged at home</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></div>
+    <section class="slide" data-objectives="1MD.01 1MD.03 1MD.04 1MD.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
+      <div class="slide-head"><span class="n">12</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Choose a game to play. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
@@ -1304,9 +1315,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1MD.01 1MD.02 1MD.03 1MD.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Think about data, the form, the table and the sorting machine.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">13</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Time to show what you know. Tap the answer.</span></div>
+    <section class="slide" data-objectives="1MD.01 1MD.03 1MD.04 1MD.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, away from any screen.</s><s>Computer scientists call that unplugged, and it is real computing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who follows your steps EXACTLY, silly mistakes and all, is the best computer you have.</s><s>That is the whole point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.">
+      <div class="slide-head"><span class="n">13</span><h2>Unplugged at home</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -1314,9 +1325,9 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
-      <div class="slide-head"><span class="n">14</span><h2>Computing world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Where this computing is out in the real world. This part is still being built.</span></div>
+    <section class="slide" data-objectives="1MD.01 1MD.02 1MD.03 1MD.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Think about data, the form, the table and the sorting machine.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">14</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Time to show what you know. Tap the answer.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
@@ -1324,14 +1335,24 @@
         <p class="score" id="score14"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
-      <div class="slide-head"><span class="n">15</span><h2>Student resources</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
+      <div class="slide-head"><span class="n">15</span><h2>Computing world</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Where this computing is out in the real world. This part is still being built.</span></div>
       <div class="stage">
         <div id="stage15"></div>
         <div class="choices" id="ch15"></div>
         <p class="fb" id="fb15" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score15"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
+      <div class="slide-head"><span class="n">16</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+      <div class="stage">
+        <div id="stage16"></div>
+        <div class="choices" id="ch16"></div>
+        <p class="fb" id="fb16" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score16"></p>
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1401,11 +1422,60 @@
             "Say how a computer helps to sort and organise data."
           ],
           "counts": {
-            "steps": 15,
+            "steps": 16,
             "words": 7,
             "games": 4,
             "home": 3
-          }
+          },
+          "recap": "Last time you ran programs, found the block that was the bug, fixed it and tested it again.",
+          "warmup": [
+            {
+              "ask": "Which of these is data?",
+              "pic": "📊",
+              "opts": [
+                {
+                  "t": "how many children like apples",
+                  "ok": true
+                },
+                {
+                  "t": "a hug",
+                  "ok": false
+                },
+                {
+                  "t": "a dream",
+                  "ok": false
+                },
+                {
+                  "t": "a sneeze",
+                  "ok": false
+                }
+              ],
+              "why": "Data is facts and numbers we collect."
+            },
+            {
+              "ask": "Six friends choose a favourite fruit. How can we find out which fruit is the favourite?",
+              "pic": "🍎",
+              "opts": [
+                {
+                  "t": "count their answers",
+                  "ok": true
+                },
+                {
+                  "t": "guess",
+                  "ok": false
+                },
+                {
+                  "t": "ask the fruit",
+                  "ok": false
+                },
+                {
+                  "t": "pick the red one",
+                  "ok": false
+                }
+              ],
+              "why": "Counting the answers tells us which fruit most friends chose."
+            }
+          ]
         }
       },
       {
@@ -2059,6 +2129,70 @@
         }
       },
       {
+        "kind": "form",
+        "title": "Record the weather for a week",
+        "objectives": [
+          "1MD.03",
+          "1MD.01"
+        ],
+        "data": {
+          "question": "What was the weather today?",
+          "columns": [
+            "Weather",
+            "Days"
+          ],
+          "options": [
+            {
+              "id": "sun",
+              "t": "sunny",
+              "pic": "☀️"
+            },
+            {
+              "id": "rain",
+              "t": "rainy",
+              "pic": "🌧️"
+            },
+            {
+              "id": "cloud",
+              "t": "cloudy",
+              "pic": "☁️"
+            }
+          ],
+          "people": [
+            {
+              "name": "Monday",
+              "pic": "📅",
+              "say": "Monday was sunny all day.",
+              "answer": "sun"
+            },
+            {
+              "name": "Tuesday",
+              "pic": "📅",
+              "say": "On Tuesday it rained.",
+              "answer": "rain"
+            },
+            {
+              "name": "Wednesday",
+              "pic": "📅",
+              "say": "Wednesday was cloudy.",
+              "answer": "cloud"
+            },
+            {
+              "name": "Thursday",
+              "pic": "📅",
+              "say": "Thursday was sunny again.",
+              "answer": "sun"
+            },
+            {
+              "name": "Friday",
+              "pic": "📅",
+              "say": "Friday was sunny too.",
+              "answer": "sun"
+            }
+          ]
+        }
+      },
+      {
         "kind": "demo",
         "title": "By hand, or by computer?",
         "objectives": [
@@ -2212,7 +2346,7 @@
               "skill": "Sorting",
               "rounds": [
                 {
-                  "prompt": "Where does how many children chose apple? go? 🍎",
+                  "prompt": "🍎 “how many children chose apple?” Can the fruit table answer it?",
                   "choices": [
                     "Yes, it is in the table",
                     "No, the table does not know"
@@ -2221,7 +2355,7 @@
                   "explanation": "The apple row says 2. The table knows."
                 },
                 {
-                  "prompt": "Where does what is Amal's favourite song? go? 🎵",
+                  "prompt": "🎵 “what is Amal's favourite song?” Can the fruit table answer it?",
                   "choices": [
                     "Yes, it is in the table",
                     "No, the table does not know"
@@ -2230,7 +2364,7 @@
                   "explanation": "We asked about fruit, not songs. The table does not know."
                 },
                 {
-                  "prompt": "Where does which fruit did most children choose? go? 🏆",
+                  "prompt": "🏆 “which fruit did most children choose?” Can the fruit table answer it?",
                   "choices": [
                     "Yes, it is in the table",
                     "No, the table does not know"
@@ -2239,7 +2373,7 @@
                   "explanation": "Compare the rows: banana. The table knows."
                 },
                 {
-                  "prompt": "Where does how tall is Sami? go? 📏",
+                  "prompt": "📏 “how tall is Sami?” Can the fruit table answer it?",
                   "choices": [
                     "Yes, it is in the table",
                     "No, the table does not know"
@@ -2248,7 +2382,7 @@
                   "explanation": "Height was never recorded. The table does not know."
                 },
                 {
-                  "prompt": "Where does did anyone choose orange? go? 🍊",
+                  "prompt": "🍊 “did anyone choose orange?” Can the fruit table answer it?",
                   "choices": [
                     "Yes, it is in the table",
                     "No, the table does not know"
@@ -2257,7 +2391,7 @@
                   "explanation": "The orange row says 0. The table knows: nobody."
                 },
                 {
-                  "prompt": "Where does what did Nora eat for breakfast? go? 🥞",
+                  "prompt": "🥞 “what did Nora eat for breakfast?” Can the fruit table answer it?",
                   "choices": [
                     "Yes, it is in the table",
                     "No, the table does not know"
@@ -3396,7 +3530,7 @@
           "hub": "g1-index.html",
           "gradeLabel": "Grade 1",
           "lessonNo": 6,
-          "homeStep": 11
+          "homeStep": 12
         }
       }
     ]
@@ -5761,8 +5895,11 @@
     const linked = new Set();
     let picked = null, phase = "connect", task = 0, lock = false, sending = null;
     const at = (id) => devs.find((d) => d.id === id);
+    /* Tall enough for the lowest label: Grade 2's watch sits at y 190, and
+       at 220 its label fell outside the drawing and was clipped. */
+    const H = Math.max(220, Math.max(...devs.map((d) => d.y)) + 58);
     function svg() {
-      let g = '<rect width="320" height="220" fill="#0E2434" rx="18"/>';
+      let g = '<rect width="320" height="' + H + '" fill="#0E2434" rx="18"/>';
       devs.forEach((d) => {
         if (d.id === hub.id || !linked.has(d.id)) return;
         g += '<line x1="' + d.x + '" y1="' + d.y + '" x2="' + hub.x + '" y2="' + hub.y + '" stroke="' + (d.wired ? "#F4C95D" : "#35BFB2") + '" stroke-width="4"' + (d.wired ? "" : ' stroke-dasharray="6 7"') + '/>';
@@ -5772,10 +5909,10 @@
         const on = picked === d.id;
         g += '<g class="dev" data-dev="' + d.id + '" tabindex="0" role="button" aria-label="' + esc(d.label) + (linked.has(d.id) ? ", connected" : "") + '" transform="translate(' + d.x + ' ' + d.y + ')">' +
           '<circle r="26" fill="' + (on ? "#F4C95D" : linked.has(d.id) || d.id === hub.id ? "#143A4A" : "#1B3A52") + '" stroke="' + (on ? "#F4C95D" : linked.has(d.id) ? "#35BFB2" : "#2B5673") + '" stroke-width="3"/>' +
-          T(0, 11, 28, d.pic) + '<text y="44" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
+          T(0, 11, 28, d.pic) + '<text y="46" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
       });
       if (sending) g += '<g transform="translate(' + sending[0] + ' ' + sending[1] + ')">' + T(0, 10, 26, sending[2]) + "</g>";
-      return '<svg viewBox="0 0 320 220" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
+      return '<svg viewBox="0 0 320 ' + H + '" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
     }
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><div class="sim netbox" id="' + el.stage + 'net">' + svg() + "</div></div>";
@@ -8204,16 +8341,54 @@
     if (c.words) bits.push(c.words + " computing words");
     if (c.games) bits.push(c.games + " games");
     if (c.home) bits.push(c.home + " things to do at home");
+    const warm = o.warmup || [];
     $(el.stage).className = "stagewide";
     $(el.stage).innerHTML =
       '<div class="ovw">' +
+      /* LAST TIME. One line from the lesson before, so a lesson does not
+         start cold (validation 2026-09-11, area 9). Optional per lesson. */
+      (o.recap ? '<p class="ovw-recap"><b>Last time</b>' + esc(o.recap) + "</p>" : "") +
       (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
       '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
       '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
-      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div>' +
+      (warm.length ? '<div class="warmup" id="' + el.stage + 'w"></div>' : "") + "</div>";
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
-      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+      say((o.recap ? "Last time. " + o.recap + " " : "") + "By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    /* WHAT DO YOU ALREADY KNOW? A short warm-up before any teaching
+       (validation 2026-09-11, area 11). It is never marked: a wrong guess is
+       not shown red, it is told the answer kindly, and what is reported is
+       participation - how many were answered - never a score, because a
+       mark before the lesson would read as a mark on the lesson. Skipping
+       it with Next is allowed; the step still ticks on leaving. */
+    if (warm.length) {
+      const box = $(el.stage + "w");
+      let q = 0, answered = 0, lock = false;
+      const paintQ = () => {
+        const it = warm[q];
+        box.innerHTML = '<h4 class="warm-h">Before you start: what do you already know? <span>' + (q + 1) + " of " + warm.length + "</span></h4>" +
+          '<p class="warm-q">' + (it.pic ? '<span class="cpic" aria-hidden="true">' + small(it.pic) + "</span> " : "") + it.ask + "</p>" +
+          '<div class="choices stack">' + shuffle(it.opts).map((op) => '<button type="button" class="choice text" data-ok="' + (op.ok ? 1 : 0) + '">' + op.t + "</button>").join("") + "</div>";
+        lock = false;
+      };
+      box.addEventListener("click", (e) => {
+        const b = e.target.closest(".choice"); if (!b || lock) return;
+        lock = true; answered++;
+        const it = warm[q], ok = b.dataset.ok === "1";
+        box.querySelectorAll(".choice").forEach((x) => { x.disabled = true; if (x.dataset.ok === "1") x.classList.add("right"); });
+        const line = ok ? "You knew it! " + it.why : "Good guess. " + it.why + " You will find out more in this lesson.";
+        $(el.fb).className = "fb" + (ok ? " good" : ""); $(el.fb).textContent = line; sayHere(o.finish, line);
+        SOUND.play(ok ? "ding" : "pop", 0.3);
+        setTimeout(() => {
+          q++;
+          if (q < warm.length) { paintQ(); return; }
+          box.innerHTML = '<p class="warm-done">Warm-up done: ' + answered + " of " + warm.length + " answered. Now press Next and start the lesson.</p>";
+          reportAttempt(o.finish, answered, warm.length, "warm-up questions");
+        }, 2400);
+      });
+      paintQ();
+    }
     /* NOT AT DRAW, AND NOT ON ARRIVAL. Every step draws at page load,
        before the reporting module exists, so a finish() here ticked this
        step where nothing could report it: the school's record never held
@@ -8673,7 +8848,7 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["📊", "Data spotter"], ["📱", "Question asker"], ["📝", "Form filler"], ["📊", "Table reader"], ["⚙️", "Sorting machine"], ["🗂️", "Table judge"], ["📚", "Blink sorter"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["📊", "Data spotter"], ["📱", "Question asker"], ["📝", "Form filler"], ["📊", "Table reader"], ["⚙️", "Sorting machine"], ["🗂️", "Table judge"], ["🌦️", "Weather recorder"], ["📚", "Blink sorter"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
   lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
@@ -8684,12 +8859,13 @@
   dataTable(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "Most, fewest, how many, did anyone. The table answered them all." }, LESSON.steps[6].data));
   sortMachine(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "A computer sorts and organises data, and it can do it more than one way." }, LESSON.steps[7].data));
   sortBins(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "A table answers questions about the data in it, and nothing else." }, LESSON.steps[8].data));
-  demo(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "By hand, all afternoon. By computer, a blink." }, LESSON.steps[9].data));
-  gameZone(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[10].data));
-  homeProjects(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[11].data));
-  sequence(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "That is the whole lesson finished. You are a data detective." }, LESSON.steps[12].data));
-  computingWorld(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Computing world is on its way." }, LESSON.steps[13].data));
-  resources(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Your resources are always here." }, LESSON.steps[14].data));
+  dataForm(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "Five days recorded on the form, and the table counted them: three sunny days." }, LESSON.steps[9].data));
+  demo(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "By hand, all afternoon. By computer, a blink." }, LESSON.steps[10].data));
+  gameZone(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[11].data));
+  homeProjects(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[12].data));
+  sequence(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "That is the whole lesson finished. You are a data detective." }, LESSON.steps[13].data));
+  computingWorld(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Computing world is on its way." }, LESSON.steps[14].data));
+  resources(Object.assign({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, finish: 15, done: "Your resources are always here." }, LESSON.steps[15].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

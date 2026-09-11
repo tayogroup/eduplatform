@@ -160,6 +160,24 @@ LESSON = {
               ]},
              "A table answers questions about the data in it, and nothing else."),
 
+        step("form", "Record the weather for a week", "\U0001F326️", "Weather recorder", ["1MD.03", "1MD.01"],
+             "Record the weather on the form, one day at a time. Tap what the weather was, then press <b>Submit</b>.",
+             explain(
+                 ["A form can ask the same question every day and keep every answer.", "The weather each day is data."],
+                 ["Monday was sunny: tap sunny, then press Submit.", "By Friday, the table shows how many sunny days there were."],
+                 ["Children tap the weather outside their own window.", "Record what the day says it was."],
+                 ["Listen to each day, tap, submit."]),
+             {"question": "What was the weather today?", "columns": ["Weather", "Days"],
+              "options": [{"id": "sun", "t": "sunny", "pic": "☀️"}, {"id": "rain", "t": "rainy", "pic": "\U0001F327️"}, {"id": "cloud", "t": "cloudy", "pic": "☁️"}],
+              "people": [
+                  {"name": "Monday", "pic": "\U0001F4C5", "say": "Monday was sunny all day.", "answer": "sun"},
+                  {"name": "Tuesday", "pic": "\U0001F4C5", "say": "On Tuesday it rained.", "answer": "rain"},
+                  {"name": "Wednesday", "pic": "\U0001F4C5", "say": "Wednesday was cloudy.", "answer": "cloud"},
+                  {"name": "Thursday", "pic": "\U0001F4C5", "say": "Thursday was sunny again.", "answer": "sun"},
+                  {"name": "Friday", "pic": "\U0001F4C5", "say": "Friday was sunny too.", "answer": "sun"},
+              ]},
+             "Five days recorded on the form, and the table counted them: three sunny days."),
+
         step("demo", "By hand, or by computer?", "\U0001F4DA", "Blink sorter", ["1MD.02"],
              "A hundred library books need sorting. Press <b>Next</b>.",
              explain(
@@ -252,4 +270,11 @@ LESSON["home"] = [
           "With your grown-up, ask each one using the right app.",
           "Ask a question about your own family. Can the phone answer it?"],
          "The phone did not know your family's favourite fruit. Only your table did."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you ran programs, found the block that was the bug, fixed it and tested it again."
+LESSON["warmup"] = [
+    q("Which of these is data?", "\U0001F4CA", "how many children like apples", ["a hug", "a dream", "a sneeze"], "Data is facts and numbers we collect."),
+    q("Six friends choose a favourite fruit. How can we find out which fruit is the favourite?", "\U0001F34E", "count their answers", ["guess", "ask the fruit", "pick the red one"], "Counting the answers tells us which fruit most friends chose."),
 ]

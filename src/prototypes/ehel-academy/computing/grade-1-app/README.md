@@ -52,7 +52,7 @@ rule as English and Science.
 
 ## What a lesson is
 
-Eight lessons, organised by the framework's five strands, 14 to 16 steps each
+Eight lessons, organised by the framework's five strands, 14 to 17 steps each
 plus the sticker shelf (7 to 9 of the lesson's own, plus the seven of the unit
 shell):
 
@@ -63,9 +63,9 @@ shell):
 | 3 Forward, Back, Left, Right | 14 | 4 | drives Robo across a grid; predicts where a program stops |
 | 4 Algorithm to Program | 14 | 6 | rebuilds algorithms as blocks and runs them; predicts a given program |
 | 5 Bugs and Debugging | 15 | 6 | runs buggy programs, finds the block, fixes it, runs again |
-| 6 Data Detectives | 15 | 4 | asks the right app; fills a form; reads the table; the sorting machine |
-| 7 Networks and the Internet | 15 | 4 | wires and un-wires a network; sends things across it; switches the internet off |
-| 8 Computers Everywhere | 16 | 6 | six programs on one tablet; inputs and outputs; hidden computers; robots |
+| 6 Data Detectives | 16 | 4 | asks the right app; fills a form; records a week of weather; reads the table; the sorting machine |
+| 7 Networks and the Internet | 16 | 4 | wires and un-wires a network; sends things across it; spots what is joined to the internet; switches it off |
+| 8 Computers Everywhere | 17 | 6 | six programs on one tablet; picks the program for a job; inputs and outputs; hidden computers; robots |
 
 Eighteen step kinds, one renderer each in `lib/computing.js` — the kit README
 has the table. The computing-shaped ones are the machines that only do what

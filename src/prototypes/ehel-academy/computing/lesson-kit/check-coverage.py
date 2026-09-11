@@ -101,6 +101,10 @@ def main():
         for k, st in enumerate(data["steps"], 1):
             d = st["data"]
             kind = st["kind"]
+            if kind == "overview":
+                for it in d.get("warmup") or []:
+                    if not one_key(it["opts"]) or not it.get("why"):
+                        fail(entry["file"], "step %d warm-up %r does not have exactly one key and a reason" % (k, it["ask"]))
             if kind in ("quiz", "questions"):
                 for it in d["items"]:
                     if not one_key(it["opts"]):

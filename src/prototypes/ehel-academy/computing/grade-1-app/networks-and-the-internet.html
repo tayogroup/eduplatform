@@ -487,7 +487,9 @@
   .script { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; min-height: 56px; width: 100%; max-width: 560px;
     padding: 8px; border-radius: 16px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
   .palette { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; width: 100%; max-width: 560px; }
-  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; border: 0; color: #06231F;
+  /* min-height 44px on every control below: they measured 40 to 43 px at phone width,
+     above the 24 px minimum and under the 44 px five-year-olds need (validation 2026-09-11) */
+  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; min-height: 44px; border-radius: 10px; border: 0; color: #06231F;
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; box-shadow: 0 3px 0 rgba(0,0,0,0.25); }
   .block .bicon { font-size: 18px; }
   .block.move { background: var(--teal); }
@@ -519,7 +521,7 @@
   .person .ppic { font-size: 44px; line-height: 1; }
   .person b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; }
   .pbubble { margin: 2px 0 0; padding: 6px 10px; border-radius: 12px; background: var(--teal-soft); font-size: 16px; font-style: italic; }
-  .wifi { padding: 8px 14px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
+  .wifi { padding: 8px 14px; min-height: 44px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
   .wifi.on { border-color: var(--good); color: var(--good); }
   .appgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
@@ -750,10 +752,19 @@
   .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
   .act-lead { margin: 0; font-size: 18px; font-weight: 700; }
   .act-mat, .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
-  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; font-size: 13px; }
   .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
-  button.hear { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
-  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  button.hear { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
+  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; min-height: 44px; }
+
+  /* ---- the overview's recap and warm-up (validation 2026-09-11) ---- */
+  .ovw-recap { margin: 0 0 12px; padding: 10px 14px; border-radius: 14px; border-left: 4px solid var(--teal); background: rgba(53,191,178,0.10); font-size: 17px; }
+  .ovw-recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .warmup { margin-top: 16px; padding: 14px 16px; border-radius: 18px; border: 3px dashed var(--line); }
+  .warm-h { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; }
+  .warm-h span { font-weight: 600; font-size: 13px; color: #A8BDCD; margin-left: 6px; }
+  .warm-q { margin: 0 0 10px; font-size: 18px; }
+  .warm-done { margin: 0; font-size: 17px; }
   .act.did .tick { border-color: var(--good); color: var(--good); }
 
   /* ---- the resources drawer ---- */
@@ -1254,9 +1265,9 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sometimes the internet is not available.</s><s>On a plane, in a tunnel, when the router breaks, when a storm brings a line down.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Some apps need the internet: a video online, a video call, sending a message.</s><s>Some do not: drawing, a game already on the tablet, photos you took.</s><s>Switch the internet off and see which is which.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think nothing works without the internet.</s><s>Lots does. Only the things that need OTHER computers stop.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Switch it off, predict, try it.</s></mstts:express-as>' data-say="Sometimes the internet is not there. Switch it OFF, predict what still works, and try each app.">
-      <div class="slide-head"><span class="n">8</span><h2>When the internet is off</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Sometimes the internet is not there. Switch it OFF, predict what still works, and try each app.</span></div>
+    <section class="slide" data-objectives="1DC.02 1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A computer is part of the internet while it is connected to it, with a wire or with no wire.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A laptop in a school in Kenya, sending an email: joined.</s><s>A phone in Japan on a video call: joined.</s><s>A book of stories: not a computer, so it cannot join.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think every computer is always on the internet.</s><s>Only while it is connected. A tablet on a plane with no wi-fi is not joined.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read, decide, tap.</s></mstts:express-as>' data-say="The internet is many computers, joined together all around the world. Is this one joined to it right now?">
+      <div class="slide-head"><span class="n">8</span><h2>Joined to the internet, or not?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">The internet is many computers, joined together all around the world. Is this one joined to it right now?</span></div>
       <div class="stage">
         <div id="stage8"></div>
         <div class="choices" id="ch8"></div>
@@ -1264,9 +1275,9 @@
         <p class="score" id="score8"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1DC.02 1DC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The internet reaches you through a chain of connections, some with wires and some without.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A router in your home.</s><s>Cables under the street, and even under the sea.</s><s>Phone masts, for phones with no wire.</s><s>Satellites in space, for places with no cables.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each one and follow the chain.</s></mstts:express-as>' data-say="How does the internet reach your house? Tap each part.">
-      <div class="slide-head"><span class="n">9</span><h2>Where the internet comes into your home</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">How does the internet reach your house? Tap each part.</span></div>
+    <section class="slide" data-objectives="1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sometimes the internet is not available.</s><s>On a plane, in a tunnel, when the router breaks, when a storm brings a line down.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Some apps need the internet: a video online, a video call, sending a message.</s><s>Some do not: drawing, a game already on the tablet, photos you took.</s><s>Switch the internet off and see which is which.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think nothing works without the internet.</s><s>Lots does. Only the things that need OTHER computers stop.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Switch it off, predict, try it.</s></mstts:express-as>' data-say="Sometimes the internet is not there. Switch it OFF, predict what still works, and try each app.">
+      <div class="slide-head"><span class="n">9</span><h2>When the internet is off</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Sometimes the internet is not there. Switch it OFF, predict what still works, and try each app.</span></div>
       <div class="stage">
         <div id="stage9"></div>
         <div class="choices" id="ch9"></div>
@@ -1274,9 +1285,9 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1DC.04 1DC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When something online stops working, the internet is often not available at that moment.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A spinning circle usually means the tablet is waiting for the internet.</s><s>&#39;No connection&#39; means it cannot reach the internet.</s><s>If a cable comes out, a wired connection stops until it is back in.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read what happened, then tap the most likely reason.</s></mstts:express-as>' data-say="Something is not working. What is most likely? Tap the answer.">
-      <div class="slide-head"><span class="n">10</span><h2>What could be wrong?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Something is not working. What is most likely? Tap the answer.</span></div>
+    <section class="slide" data-objectives="1DC.02 1DC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The internet reaches you through a chain of connections, some with wires and some without.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A router in your home.</s><s>Cables under the street, and even under the sea.</s><s>Phone masts, for phones with no wire.</s><s>Satellites in space, for places with no cables.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each one and follow the chain.</s></mstts:express-as>' data-say="How does the internet reach your house? Tap each part.">
+      <div class="slide-head"><span class="n">10</span><h2>Where the internet comes into your home</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">How does the internet reach your house? Tap each part.</span></div>
       <div class="stage">
         <div id="stage10"></div>
         <div class="choices" id="ch10"></div>
@@ -1284,9 +1295,9 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1DC.01 1DC.03 1DC.02 1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
-      <div class="slide-head"><span class="n">11</span><h2>Games</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Choose a game to play. Nothing here is new.</span></div>
+    <section class="slide" data-objectives="1DC.04 1DC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When something online stops working, the internet is often not available at that moment.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A spinning circle usually means the tablet is waiting for the internet.</s><s>&#39;No connection&#39; means it cannot reach the internet.</s><s>If a cable comes out, a wired connection stops until it is back in.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read what happened, then tap the most likely reason.</s></mstts:express-as>' data-say="Something is not working. What is most likely? Tap the answer.">
+      <div class="slide-head"><span class="n">11</span><h2>What could be wrong?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Something is not working. What is most likely? Tap the answer.</span></div>
       <div class="stage">
         <div id="stage11"></div>
         <div class="choices" id="ch11"></div>
@@ -1294,9 +1305,9 @@
         <p class="score" id="score11"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1DC.01 1DC.03 1DC.02 1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, away from any screen.</s><s>Computer scientists call that unplugged, and it is real computing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who follows your steps EXACTLY, silly mistakes and all, is the best computer you have.</s><s>That is the whole point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.">
-      <div class="slide-head"><span class="n">12</span><h2>Unplugged at home</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></div>
+    <section class="slide" data-objectives="1DC.01 1DC.03 1DC.02 1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
+      <div class="slide-head"><span class="n">12</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Choose a game to play. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
@@ -1304,9 +1315,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1DC.01 1DC.02 1DC.03 1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Think about the network you built, wires and no wires, the world, and the internet being off.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">13</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Time to show what you know. Tap the answer.</span></div>
+    <section class="slide" data-objectives="1DC.01 1DC.03 1DC.02 1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, away from any screen.</s><s>Computer scientists call that unplugged, and it is real computing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who follows your steps EXACTLY, silly mistakes and all, is the best computer you have.</s><s>That is the whole point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.">
+      <div class="slide-head"><span class="n">13</span><h2>Unplugged at home</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -1314,9 +1325,9 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
-      <div class="slide-head"><span class="n">14</span><h2>Computing world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Where this computing is out in the real world. This part is still being built.</span></div>
+    <section class="slide" data-objectives="1DC.01 1DC.02 1DC.03 1DC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Think about the network you built, wires and no wires, the world, and the internet being off.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">14</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Time to show what you know. Tap the answer.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
@@ -1324,14 +1335,24 @@
         <p class="score" id="score14"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
-      <div class="slide-head"><span class="n">15</span><h2>Student resources</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
+      <div class="slide-head"><span class="n">15</span><h2>Computing world</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Where this computing is out in the real world. This part is still being built.</span></div>
       <div class="stage">
         <div id="stage15"></div>
         <div class="choices" id="ch15"></div>
         <p class="fb" id="fb15" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score15"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
+      <div class="slide-head"><span class="n">16</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+      <div class="stage">
+        <div id="stage16"></div>
+        <div class="choices" id="ch16"></div>
+        <p class="fb" id="fb16" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score16"></p>
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1401,11 +1422,60 @@
             "Say what still works when the internet is not available."
           ],
           "counts": {
-            "steps": 15,
+            "steps": 16,
             "words": 8,
-            "games": 4,
+            "games": 5,
             "home": 3
-          }
+          },
+          "recap": "Last time you collected data on a form and read the answers in a table.",
+          "warmup": [
+            {
+              "ask": "How can a message get to Grandma far away?",
+              "pic": "💌",
+              "opts": [
+                {
+                  "t": "it travels through the internet",
+                  "ok": true
+                },
+                {
+                  "t": "it walks there",
+                  "ok": false
+                },
+                {
+                  "t": "it hides in a sock",
+                  "ok": false
+                },
+                {
+                  "t": "it cannot get there",
+                  "ok": false
+                }
+              ],
+              "why": "Messages travel between computers through the internet."
+            },
+            {
+              "ask": "Which of these connects with a wire?",
+              "pic": "🔌",
+              "opts": [
+                {
+                  "t": "a printer with a cable",
+                  "ok": true
+                },
+                {
+                  "t": "a phone on wi-fi",
+                  "ok": false
+                },
+                {
+                  "t": "a smart watch",
+                  "ok": false
+                },
+                {
+                  "t": "a tablet on wi-fi",
+                  "ok": false
+                }
+              ],
+              "why": "Some devices connect with a wire and some with no wire."
+            }
+          ]
         }
       },
       {
@@ -1778,6 +1848,79 @@
         }
       },
       {
+        "kind": "sort",
+        "title": "Joined to the internet, or not?",
+        "objectives": [
+          "1DC.02",
+          "1DC.04"
+        ],
+        "data": {
+          "ask": "Joined to the internet, or not?",
+          "bins": [
+            {
+              "id": "on",
+              "label": "Joined",
+              "pic": "🌐"
+            },
+            {
+              "id": "off",
+              "label": "Not joined",
+              "pic": "🚫"
+            }
+          ],
+          "items": [
+            {
+              "pic": "💻",
+              "label": "a laptop in a school in Kenya, sending an email",
+              "bin": "on",
+              "why": "The email travels across the internet, so the laptop is joined."
+            },
+            {
+              "pic": "📚",
+              "label": "a book of stories",
+              "bin": "off",
+              "why": "A book is not a computer. It cannot join the internet."
+            },
+            {
+              "pic": "📱",
+              "label": "a phone in Japan, on a video call to Brazil",
+              "bin": "on",
+              "why": "A call across the world is the internet at work."
+            },
+            {
+              "pic": "✈️",
+              "label": "a tablet on a plane with no wi-fi",
+              "bin": "off",
+              "why": "No connection, so right now it is not joined."
+            },
+            {
+              "pic": "🗄️",
+              "label": "a computer far away that keeps the videos you watch",
+              "bin": "on",
+              "why": "It is one of the many computers the internet joins together."
+            },
+            {
+              "pic": "🧸",
+              "label": "a teddy bear",
+              "bin": "off",
+              "why": "A teddy bear has no computer inside."
+            },
+            {
+              "pic": "📺",
+              "label": "a smart TV playing a film from the internet",
+              "bin": "on",
+              "why": "The film comes across the internet, so the TV is joined."
+            },
+            {
+              "pic": "🔦",
+              "label": "a torch",
+              "bin": "off",
+              "why": "A torch has no computer and no connection."
+            }
+          ]
+        }
+      },
+      {
         "kind": "offline",
         "title": "When the internet is off",
         "objectives": [
@@ -2063,7 +2206,7 @@
               "skill": "Sorting",
               "rounds": [
                 {
-                  "prompt": "Where does a desktop computer with a cable into the wall go? 🖥️",
+                  "prompt": "🖥️ “a desktop computer with a cable into the wall” Wire, or no wire?",
                   "choices": [
                     "Wired",
                     "Wireless"
@@ -2072,7 +2215,7 @@
                   "explanation": "A cable carries its connection. Wired."
                 },
                 {
-                  "prompt": "Where does a tablet on wi-fi go? 📱",
+                  "prompt": "📱 “a tablet on wi-fi” Wire, or no wire?",
                   "choices": [
                     "Wired",
                     "Wireless"
@@ -2081,7 +2224,7 @@
                   "explanation": "No cable. It connects through the air. Wireless."
                 },
                 {
-                  "prompt": "Where does a printer with a cable to the router go? 🖨️",
+                  "prompt": "🖨️ “a printer with a cable to the router” Wire, or no wire?",
                   "choices": [
                     "Wired",
                     "Wireless"
@@ -2090,7 +2233,7 @@
                   "explanation": "The cable connects it. Wired."
                 },
                 {
-                  "prompt": "Where does a mobile phone go? 📲",
+                  "prompt": "📲 “a mobile phone” Wire, or no wire?",
                   "choices": [
                     "Wired",
                     "Wireless"
@@ -2099,7 +2242,7 @@
                   "explanation": "A phone connects with no wire. Wireless."
                 },
                 {
-                  "prompt": "Where does headphones with a cable go? 🎧",
+                  "prompt": "🎧 “headphones with a cable” Wire, or no wire?",
                   "choices": [
                     "Wired",
                     "Wireless"
@@ -2108,7 +2251,7 @@
                   "explanation": "The sound comes down the cable. Wired."
                 },
                 {
-                  "prompt": "Where does a laptop on wi-fi go? 💻",
+                  "prompt": "💻 “a laptop on wi-fi” Wire, or no wire?",
                   "choices": [
                     "Wired",
                     "Wireless"
@@ -2117,7 +2260,7 @@
                   "explanation": "No cable to the router. Wireless."
                 },
                 {
-                  "prompt": "Where does a games controller with a cable go? 🎮",
+                  "prompt": "🎮 “a games controller with a cable” Wire, or no wire?",
                   "choices": [
                     "Wired",
                     "Wireless"
@@ -2126,13 +2269,93 @@
                   "explanation": "The cable carries its connection. Wired."
                 },
                 {
-                  "prompt": "Where does a smart watch go? ⌚",
+                  "prompt": "⌚ “a smart watch” Wire, or no wire?",
                   "choices": [
                     "Wired",
                     "Wireless"
                   ],
                   "answer": "Wireless",
                   "explanation": "A watch has no cable. Wireless."
+                }
+              ]
+            },
+            {
+              "id": "l7-sort-2",
+              "type": "choice",
+              "title": "Sort race: Joined to the internet, or not?",
+              "skill": "Sorting",
+              "rounds": [
+                {
+                  "prompt": "💻 “a laptop in a school in Kenya, sending an email” Joined to the internet, or not?",
+                  "choices": [
+                    "Joined",
+                    "Not joined"
+                  ],
+                  "answer": "Joined",
+                  "explanation": "The email travels across the internet, so the laptop is joined."
+                },
+                {
+                  "prompt": "📚 “a book of stories” Joined to the internet, or not?",
+                  "choices": [
+                    "Joined",
+                    "Not joined"
+                  ],
+                  "answer": "Not joined",
+                  "explanation": "A book is not a computer. It cannot join the internet."
+                },
+                {
+                  "prompt": "📱 “a phone in Japan, on a video call to Brazil” Joined to the internet, or not?",
+                  "choices": [
+                    "Joined",
+                    "Not joined"
+                  ],
+                  "answer": "Joined",
+                  "explanation": "A call across the world is the internet at work."
+                },
+                {
+                  "prompt": "✈️ “a tablet on a plane with no wi-fi” Joined to the internet, or not?",
+                  "choices": [
+                    "Joined",
+                    "Not joined"
+                  ],
+                  "answer": "Not joined",
+                  "explanation": "No connection, so right now it is not joined."
+                },
+                {
+                  "prompt": "🗄️ “a computer far away that keeps the videos you watch” Joined to the internet, or not?",
+                  "choices": [
+                    "Joined",
+                    "Not joined"
+                  ],
+                  "answer": "Joined",
+                  "explanation": "It is one of the many computers the internet joins together."
+                },
+                {
+                  "prompt": "🧸 “a teddy bear” Joined to the internet, or not?",
+                  "choices": [
+                    "Joined",
+                    "Not joined"
+                  ],
+                  "answer": "Not joined",
+                  "explanation": "A teddy bear has no computer inside."
+                },
+                {
+                  "prompt": "📺 “a smart TV playing a film from the internet” Joined to the internet, or not?",
+                  "choices": [
+                    "Joined",
+                    "Not joined"
+                  ],
+                  "answer": "Joined",
+                  "explanation": "The film comes across the internet, so the TV is joined."
+                },
+                {
+                  "prompt": "🔦 “a torch” Joined to the internet, or not?",
+                  "choices": [
+                    "Joined",
+                    "Not joined"
+                  ],
+                  "answer": "Not joined",
+                  "explanation": "A torch has no computer and no connection."
                 }
               ]
             },
@@ -3274,7 +3497,7 @@
           "hub": "g1-index.html",
           "gradeLabel": "Grade 1",
           "lessonNo": 7,
-          "homeStep": 11
+          "homeStep": 12
         }
       }
     ]
@@ -5639,8 +5862,11 @@
     const linked = new Set();
     let picked = null, phase = "connect", task = 0, lock = false, sending = null;
     const at = (id) => devs.find((d) => d.id === id);
+    /* Tall enough for the lowest label: Grade 2's watch sits at y 190, and
+       at 220 its label fell outside the drawing and was clipped. */
+    const H = Math.max(220, Math.max(...devs.map((d) => d.y)) + 58);
     function svg() {
-      let g = '<rect width="320" height="220" fill="#0E2434" rx="18"/>';
+      let g = '<rect width="320" height="' + H + '" fill="#0E2434" rx="18"/>';
       devs.forEach((d) => {
         if (d.id === hub.id || !linked.has(d.id)) return;
         g += '<line x1="' + d.x + '" y1="' + d.y + '" x2="' + hub.x + '" y2="' + hub.y + '" stroke="' + (d.wired ? "#F4C95D" : "#35BFB2") + '" stroke-width="4"' + (d.wired ? "" : ' stroke-dasharray="6 7"') + '/>';
@@ -5650,10 +5876,10 @@
         const on = picked === d.id;
         g += '<g class="dev" data-dev="' + d.id + '" tabindex="0" role="button" aria-label="' + esc(d.label) + (linked.has(d.id) ? ", connected" : "") + '" transform="translate(' + d.x + ' ' + d.y + ')">' +
           '<circle r="26" fill="' + (on ? "#F4C95D" : linked.has(d.id) || d.id === hub.id ? "#143A4A" : "#1B3A52") + '" stroke="' + (on ? "#F4C95D" : linked.has(d.id) ? "#35BFB2" : "#2B5673") + '" stroke-width="3"/>' +
-          T(0, 11, 28, d.pic) + '<text y="44" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
+          T(0, 11, 28, d.pic) + '<text y="46" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
       });
       if (sending) g += '<g transform="translate(' + sending[0] + ' ' + sending[1] + ')">' + T(0, 10, 26, sending[2]) + "</g>";
-      return '<svg viewBox="0 0 320 220" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
+      return '<svg viewBox="0 0 320 ' + H + '" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
     }
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><div class="sim netbox" id="' + el.stage + 'net">' + svg() + "</div></div>";
@@ -8082,16 +8308,54 @@
     if (c.words) bits.push(c.words + " computing words");
     if (c.games) bits.push(c.games + " games");
     if (c.home) bits.push(c.home + " things to do at home");
+    const warm = o.warmup || [];
     $(el.stage).className = "stagewide";
     $(el.stage).innerHTML =
       '<div class="ovw">' +
+      /* LAST TIME. One line from the lesson before, so a lesson does not
+         start cold (validation 2026-09-11, area 9). Optional per lesson. */
+      (o.recap ? '<p class="ovw-recap"><b>Last time</b>' + esc(o.recap) + "</p>" : "") +
       (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
       '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
       '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
-      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div>' +
+      (warm.length ? '<div class="warmup" id="' + el.stage + 'w"></div>' : "") + "</div>";
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
-      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+      say((o.recap ? "Last time. " + o.recap + " " : "") + "By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    /* WHAT DO YOU ALREADY KNOW? A short warm-up before any teaching
+       (validation 2026-09-11, area 11). It is never marked: a wrong guess is
+       not shown red, it is told the answer kindly, and what is reported is
+       participation - how many were answered - never a score, because a
+       mark before the lesson would read as a mark on the lesson. Skipping
+       it with Next is allowed; the step still ticks on leaving. */
+    if (warm.length) {
+      const box = $(el.stage + "w");
+      let q = 0, answered = 0, lock = false;
+      const paintQ = () => {
+        const it = warm[q];
+        box.innerHTML = '<h4 class="warm-h">Before you start: what do you already know? <span>' + (q + 1) + " of " + warm.length + "</span></h4>" +
+          '<p class="warm-q">' + (it.pic ? '<span class="cpic" aria-hidden="true">' + small(it.pic) + "</span> " : "") + it.ask + "</p>" +
+          '<div class="choices stack">' + shuffle(it.opts).map((op) => '<button type="button" class="choice text" data-ok="' + (op.ok ? 1 : 0) + '">' + op.t + "</button>").join("") + "</div>";
+        lock = false;
+      };
+      box.addEventListener("click", (e) => {
+        const b = e.target.closest(".choice"); if (!b || lock) return;
+        lock = true; answered++;
+        const it = warm[q], ok = b.dataset.ok === "1";
+        box.querySelectorAll(".choice").forEach((x) => { x.disabled = true; if (x.dataset.ok === "1") x.classList.add("right"); });
+        const line = ok ? "You knew it! " + it.why : "Good guess. " + it.why + " You will find out more in this lesson.";
+        $(el.fb).className = "fb" + (ok ? " good" : ""); $(el.fb).textContent = line; sayHere(o.finish, line);
+        SOUND.play(ok ? "ding" : "pop", 0.3);
+        setTimeout(() => {
+          q++;
+          if (q < warm.length) { paintQ(); return; }
+          box.innerHTML = '<p class="warm-done">Warm-up done: ' + answered + " of " + warm.length + " answered. Now press Next and start the lesson.</p>";
+          reportAttempt(o.finish, answered, warm.length, "warm-up questions");
+        }, 2400);
+      });
+      paintQ();
+    }
     /* NOT AT DRAW, AND NOT ON ARRIVAL. Every step draws at page load,
        before the reporting module exists, so a finish() here ticked this
        step where nothing could report it: the school's record never held
@@ -8551,7 +8815,7 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["💻", "Network maker"], ["📡", "Network builder"], ["🗂️", "Wire spotter"], ["🌍", "World network"], ["📴", "Offline tester"], ["🏠", "Internet tracer"], ["🤔", "Internet detective"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["💻", "Network maker"], ["📡", "Network builder"], ["🗂️", "Wire spotter"], ["🌍", "World network"], ["🌐", "Internet spotter"], ["📴", "Offline tester"], ["🏠", "Internet tracer"], ["🤔", "Internet detective"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
   lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
@@ -8560,14 +8824,15 @@
   networkBuild(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Five devices, one router, one network. And things went across it." }, LESSON.steps[4].data));
   sortBins(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Some devices connect with a wire, and some with none." }, LESSON.steps[5].data));
   demo(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "The internet is many computers, connected, all around the world." }, LESSON.steps[6].data));
-  offlineTest(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "Some things need the internet and some do not. Now you know which." }, LESSON.steps[7].data));
-  tapCards(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Routers, cables, masts and satellites join your home to the world." }, LESSON.steps[8].data));
-  sequence(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "When the internet is not there, the things that need it stop, and the rest carry on." }, LESSON.steps[9].data));
-  gameZone(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[10].data));
-  homeProjects(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[11].data));
-  sequence(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "That is the whole lesson finished. You know what a network is, and what the internet is." }, LESSON.steps[12].data));
-  computingWorld(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Computing world is on its way." }, LESSON.steps[13].data));
-  resources(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Your resources are always here." }, LESSON.steps[14].data));
+  sortBins(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "Computers all round the world, joined together: that is the internet." }, LESSON.steps[7].data));
+  offlineTest(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Some things need the internet and some do not. Now you know which." }, LESSON.steps[8].data));
+  tapCards(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "Routers, cables, masts and satellites join your home to the world." }, LESSON.steps[9].data));
+  sequence(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "When the internet is not there, the things that need it stop, and the rest carry on." }, LESSON.steps[10].data));
+  gameZone(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[11].data));
+  homeProjects(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[12].data));
+  sequence(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "That is the whole lesson finished. You know what a network is, and what the internet is." }, LESSON.steps[13].data));
+  computingWorld(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Computing world is on its way." }, LESSON.steps[14].data));
+  resources(Object.assign({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, finish: 15, done: "Your resources are always here." }, LESSON.steps[15].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

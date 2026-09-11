@@ -201,3 +201,10 @@ LESSON["home"] = [
           "Write the program: F for forward, L and R for the turns."],
          "Give it to a grown-up. Can they follow it to the treasure without asking you anything?"),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you saw that the order of the steps matters, and you found and fixed bugs in algorithms."
+LESSON["warmup"] = [
+    q("Which of these words tells you which way to go?", "\U0001F9ED", "left", ["banana", "happy", "blue"], "Left, right, forward and backwards tell you which way to go."),
+    q("Walking forward means walking...", "\U0001F6B6", "the way you are facing", ["backwards", "round in a circle", "nowhere"], "Forward is the way you are facing."),
+]

@@ -1418,8 +1418,11 @@
     const linked = new Set();
     let picked = null, phase = "connect", task = 0, lock = false, sending = null;
     const at = (id) => devs.find((d) => d.id === id);
+    /* Tall enough for the lowest label: Grade 2's watch sits at y 190, and
+       at 220 its label fell outside the drawing and was clipped. */
+    const H = Math.max(220, Math.max(...devs.map((d) => d.y)) + 58);
     function svg() {
-      let g = '<rect width="320" height="220" fill="#0E2434" rx="18"/>';
+      let g = '<rect width="320" height="' + H + '" fill="#0E2434" rx="18"/>';
       devs.forEach((d) => {
         if (d.id === hub.id || !linked.has(d.id)) return;
         g += '<line x1="' + d.x + '" y1="' + d.y + '" x2="' + hub.x + '" y2="' + hub.y + '" stroke="' + (d.wired ? "#F4C95D" : "#35BFB2") + '" stroke-width="4"' + (d.wired ? "" : ' stroke-dasharray="6 7"') + '/>';
@@ -1429,10 +1432,10 @@
         const on = picked === d.id;
         g += '<g class="dev" data-dev="' + d.id + '" tabindex="0" role="button" aria-label="' + esc(d.label) + (linked.has(d.id) ? ", connected" : "") + '" transform="translate(' + d.x + ' ' + d.y + ')">' +
           '<circle r="26" fill="' + (on ? "#F4C95D" : linked.has(d.id) || d.id === hub.id ? "#143A4A" : "#1B3A52") + '" stroke="' + (on ? "#F4C95D" : linked.has(d.id) ? "#35BFB2" : "#2B5673") + '" stroke-width="3"/>' +
-          T(0, 11, 28, d.pic) + '<text y="44" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
+          T(0, 11, 28, d.pic) + '<text y="46" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
       });
       if (sending) g += '<g transform="translate(' + sending[0] + ' ' + sending[1] + ')">' + T(0, 10, 26, sending[2]) + "</g>";
-      return '<svg viewBox="0 0 320 220" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
+      return '<svg viewBox="0 0 320 ' + H + '" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
     }
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><div class="sim netbox" id="' + el.stage + 'net">' + svg() + "</div></div>";
@@ -3861,16 +3864,54 @@
     if (c.words) bits.push(c.words + " computing words");
     if (c.games) bits.push(c.games + " games");
     if (c.home) bits.push(c.home + " things to do at home");
+    const warm = o.warmup || [];
     $(el.stage).className = "stagewide";
     $(el.stage).innerHTML =
       '<div class="ovw">' +
+      /* LAST TIME. One line from the lesson before, so a lesson does not
+         start cold (validation 2026-09-11, area 9). Optional per lesson. */
+      (o.recap ? '<p class="ovw-recap"><b>Last time</b>' + esc(o.recap) + "</p>" : "") +
       (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
       '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
       '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
-      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div>' +
+      (warm.length ? '<div class="warmup" id="' + el.stage + 'w"></div>' : "") + "</div>";
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
-      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+      say((o.recap ? "Last time. " + o.recap + " " : "") + "By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    /* WHAT DO YOU ALREADY KNOW? A short warm-up before any teaching
+       (validation 2026-09-11, area 11). It is never marked: a wrong guess is
+       not shown red, it is told the answer kindly, and what is reported is
+       participation - how many were answered - never a score, because a
+       mark before the lesson would read as a mark on the lesson. Skipping
+       it with Next is allowed; the step still ticks on leaving. */
+    if (warm.length) {
+      const box = $(el.stage + "w");
+      let q = 0, answered = 0, lock = false;
+      const paintQ = () => {
+        const it = warm[q];
+        box.innerHTML = '<h4 class="warm-h">Before you start: what do you already know? <span>' + (q + 1) + " of " + warm.length + "</span></h4>" +
+          '<p class="warm-q">' + (it.pic ? '<span class="cpic" aria-hidden="true">' + small(it.pic) + "</span> " : "") + it.ask + "</p>" +
+          '<div class="choices stack">' + shuffle(it.opts).map((op) => '<button type="button" class="choice text" data-ok="' + (op.ok ? 1 : 0) + '">' + op.t + "</button>").join("") + "</div>";
+        lock = false;
+      };
+      box.addEventListener("click", (e) => {
+        const b = e.target.closest(".choice"); if (!b || lock) return;
+        lock = true; answered++;
+        const it = warm[q], ok = b.dataset.ok === "1";
+        box.querySelectorAll(".choice").forEach((x) => { x.disabled = true; if (x.dataset.ok === "1") x.classList.add("right"); });
+        const line = ok ? "You knew it! " + it.why : "Good guess. " + it.why + " You will find out more in this lesson.";
+        $(el.fb).className = "fb" + (ok ? " good" : ""); $(el.fb).textContent = line; sayHere(o.finish, line);
+        SOUND.play(ok ? "ding" : "pop", 0.3);
+        setTimeout(() => {
+          q++;
+          if (q < warm.length) { paintQ(); return; }
+          box.innerHTML = '<p class="warm-done">Warm-up done: ' + answered + " of " + warm.length + " answered. Now press Next and start the lesson.</p>";
+          reportAttempt(o.finish, answered, warm.length, "warm-up questions");
+        }, 2400);
+      });
+      paintQ();
+    }
     /* NOT AT DRAW, AND NOT ON ARRIVAL. Every step draws at page load,
        before the reporting module exists, so a finish() here ticked this
        step where nothing could report it: the school's record never held

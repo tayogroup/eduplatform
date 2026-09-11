@@ -232,3 +232,10 @@ LESSON["home"] = [
           "Swap over."],
          "Finding the bug means saying WHAT is wrong, not just that something is."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you turned algorithms into programs made of blocks, and ran them to see what the cat did."
+LESSON["warmup"] = [
+    q("What do you think a bug in a program is?", "\U0001F41B", "a mistake in the program", ["an insect on the screen", "a very fast program", "a new game"], "A bug is a mistake in a program."),
+    q("The cat was meant to jump, but it spun round. What went wrong?", "\U0001F431", "the program had the wrong block", ["the cat was tired", "the screen was dirty", "nothing went wrong"], "A wrong block makes the wrong thing happen."),
+]

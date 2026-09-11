@@ -22,7 +22,8 @@ subject's own. If the Mathematics engine changes, re-copy `voice.js` and
 | `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single, and Robo's routes / table answers / fixes / race sums / chart keys RE-COMPUTED from the shipped data |
 | `_rules.py` | the things the kit computes rather than trusts — Robo's Bee-Bot rules, the table arithmetic, the repeat expansion (`REPEATS`, `expand_program`; the builder refuses to run if `computing.js` disagrees about what `repeat2`/`3`/`4` mean), the race sums, and at Stage 3 the machine rules (`rule_output`), the numbered walk (`walk_end`), the 1 = a code (`code_word`, `decode_code`), the row filter (`filter_rows`), tidy-program equivalence (`same_effect`), the repeated run (`repeat_run`) and the spreadsheet state (`sheet_cells`), and at Stage 4 the loop unroll (`expand_loop`), the loop-algorithm walk (`flatten_algo`, forever loops go round `FOREVER_CYCLES` = 2 then stop), the sub-routine walk (`sub_expand`), the branch (`branch_run`), the best algorithm for a purpose (`best_algo`), the sort (`sort_rows`), the Caesar shift (`caesar_shift`) and the Pigpen grid (`pigpen_index`) — each mirrored name for name in `computing.js`; imported by the builder AND the gate so they cannot disagree |
 | `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `s()`, `choice()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in |
-| `_shell.py` | the unit shell: the seven steps drawn AROUND every lesson (overview, lecture, words, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree |
+| `_shell.py` | the unit shell: the seven steps drawn AROUND every lesson (overview, lecture, words, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree. A lesson's optional `LESSON["recap"]` (one line from the lesson before) and `LESSON["warmup"]` (1 to 3 `q()` items) ride on the overview |
+| `drive-lessons.mjs --app <dir>` | plays every step of every lesson to the end in Chromium from the page's own data and sweeps every step at 375 px; exit 0 only when every lesson ends at 100% with no errors. `--record` does the same on a copy of the DEPLOYED layout at the depth it is served from (`app/computing/<dir>/` under the config's `remote`: the hub as `index.html`, the five platform modules beside the pages, imports flattened, as `deploy.mjs` writes them, and the header crest at `app/shared/`) and then requires every step in the stored record, `completed` set, nothing ticked on a fresh open, and a reload after moving to step 4 to open step 4. `--only N` for one lesson |
 | `lib/lesson.css` | the Mathematics design system, verbatim via the Science kit's copy |
 | `lib/computing.css` | this kit's own styles; no new hue |
 | `lib/voice.js`, `lib/deck.js` | lifted verbatim (the deck **unwired** — see the Grade 1 README) |
@@ -174,6 +175,34 @@ rather than the page.
   leaves it (its arrival IS page load, so arrival is no cure), and
   Computing world ticks on arrival. Anything else that must tick without a
   tap goes through one of those two, never through a bare `finish()`.
+- **The plain drive cannot see the school's record; `--record` can.** The
+  source tree has no platform modules (they 404 by design), so a drive there
+  proves the dots tick and nothing about what reaches the school. Run
+  `drive-lessons.mjs --record` after any change to the deck, the shell or a
+  step that finishes without a tap. It is how the shell-tick defect above was
+  proved fixed, and it would have caught it on the first day.
+- **The recap and the warm-up live on the overview, never as new steps.** A
+  new step shifts every stored section id after it, so a learner's saved
+  record would tick the wrong dots. The warm-up is never marked: a wrong
+  guess is told the answer kindly, not shown red, and what is reported is
+  participation (`reportAttempt`, "warm-up questions"), never a score, because
+  a mark before the lesson would read as a mark on it. The builder refuses a
+  warm-up of more than 3 questions or without single keys and reasons; the
+  gate re-checks them on the built page. A new TEACHING step does shift the
+  ids, and sometimes an objective needs one: three were added to Grade 1
+  lessons 6 to 8 on 2026-09-11, and a record made on those lessons before
+  that redeploy reads one step out from the inserted step on. Say so with the
+  release.
+- **A game's question is the step's own question.** The Sort race asked
+  `Where does <label> go?`, which is broken English whenever a label is not
+  a thing ("Where does how many children chose apple? go?", answered "Yes, it
+  is in the table"). It now shows the item in quotes and asks the sort step's
+  `ask`, which was written for those items and those bins. A template that
+  wraps authored text must read correctly for every label it can be given.
+- **Controls are 44 px tall; labels at least 13 px.** The blocks, the wifi
+  toggle and the home cards' buttons measured 40 to 43 px at phone width and
+  two label styles 11 to 11.5 px (validation, 2026-09-11). The network map's
+  labels are 13 units and the drawing is as tall as its lowest label needs.
 - **`blockBtn`'s third argument is the extra class.** It used to be passed
   as a second `class="…"` inside the attribute string, which the parser
   ignores, so the running block was never highlighted at Stages 1 and 2

@@ -487,7 +487,9 @@
   .script { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; min-height: 56px; width: 100%; max-width: 560px;
     padding: 8px; border-radius: 16px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
   .palette { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; width: 100%; max-width: 560px; }
-  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; border: 0; color: #06231F;
+  /* min-height 44px on every control below: they measured 40 to 43 px at phone width,
+     above the 24 px minimum and under the 44 px five-year-olds need (validation 2026-09-11) */
+  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; min-height: 44px; border-radius: 10px; border: 0; color: #06231F;
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; box-shadow: 0 3px 0 rgba(0,0,0,0.25); }
   .block .bicon { font-size: 18px; }
   .block.move { background: var(--teal); }
@@ -519,7 +521,7 @@
   .person .ppic { font-size: 44px; line-height: 1; }
   .person b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; }
   .pbubble { margin: 2px 0 0; padding: 6px 10px; border-radius: 12px; background: var(--teal-soft); font-size: 16px; font-style: italic; }
-  .wifi { padding: 8px 14px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
+  .wifi { padding: 8px 14px; min-height: 44px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
   .wifi.on { border-color: var(--good); color: var(--good); }
   .appgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
@@ -750,10 +752,19 @@
   .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
   .act-lead { margin: 0; font-size: 18px; font-weight: 700; }
   .act-mat, .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
-  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; font-size: 13px; }
   .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
-  button.hear { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
-  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  button.hear { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
+  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; min-height: 44px; }
+
+  /* ---- the overview's recap and warm-up (validation 2026-09-11) ---- */
+  .ovw-recap { margin: 0 0 12px; padding: 10px 14px; border-radius: 14px; border-left: 4px solid var(--teal); background: rgba(53,191,178,0.10); font-size: 17px; }
+  .ovw-recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .warmup { margin-top: 16px; padding: 14px 16px; border-radius: 18px; border: 3px dashed var(--line); }
+  .warm-h { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; }
+  .warm-h span { font-weight: 600; font-size: 13px; color: #A8BDCD; margin-left: 6px; }
+  .warm-q { margin: 0 0 10px; font-size: 18px; }
+  .warm-done { margin: 0; font-size: 17px; }
   .act.did .tick { border-color: var(--good); color: var(--good); }
 
   /* ---- the resources drawer ---- */
@@ -1395,7 +1406,56 @@
             "words": 8,
             "games": 4,
             "home": 3
-          }
+          },
+          "recap": "Last time you saw that the order of the steps matters, and you found and fixed bugs in algorithms.",
+          "warmup": [
+            {
+              "ask": "Which of these words tells you which way to go?",
+              "pic": "🧭",
+              "opts": [
+                {
+                  "t": "left",
+                  "ok": true
+                },
+                {
+                  "t": "banana",
+                  "ok": false
+                },
+                {
+                  "t": "happy",
+                  "ok": false
+                },
+                {
+                  "t": "blue",
+                  "ok": false
+                }
+              ],
+              "why": "Left, right, forward and backwards tell you which way to go."
+            },
+            {
+              "ask": "Walking forward means walking...",
+              "pic": "🚶",
+              "opts": [
+                {
+                  "t": "the way you are facing",
+                  "ok": true
+                },
+                {
+                  "t": "backwards",
+                  "ok": false
+                },
+                {
+                  "t": "round in a circle",
+                  "ok": false
+                },
+                {
+                  "t": "nowhere",
+                  "ok": false
+                }
+              ],
+              "why": "Forward is the way you are facing."
+            }
+          ]
         }
       },
       {
@@ -2025,7 +2085,7 @@
               "skill": "Sorting",
               "rounds": [
                 {
-                  "prompt": "Where does an arrow curling left go? ↺",
+                  "prompt": "↺ “an arrow curling left” Left, or right?",
                   "choices": [
                     "Turn left",
                     "Turn right"
@@ -2034,7 +2094,7 @@
                   "explanation": "That arrow curls to the left."
                 },
                 {
-                  "prompt": "Where does an arrow curling right go? ↻",
+                  "prompt": "↻ “an arrow curling right” Left, or right?",
                   "choices": [
                     "Turn left",
                     "Turn right"
@@ -2043,7 +2103,7 @@
                   "explanation": "That arrow curls to the right."
                 },
                 {
-                  "prompt": "Where does an arrow pointing left go? ⬅️",
+                  "prompt": "⬅️ “an arrow pointing left” Left, or right?",
                   "choices": [
                     "Turn left",
                     "Turn right"
@@ -2052,7 +2112,7 @@
                   "explanation": "It points left, so you turn left to face it."
                 },
                 {
-                  "prompt": "Where does an arrow pointing right go? ➡️",
+                  "prompt": "➡️ “an arrow pointing right” Left, or right?",
                   "choices": [
                     "Turn left",
                     "Turn right"
@@ -2061,7 +2121,7 @@
                   "explanation": "It points right, so you turn right to face it."
                 },
                 {
-                  "prompt": "Where does a road that bends left go? ↰",
+                  "prompt": "↰ “a road that bends left” Left, or right?",
                   "choices": [
                     "Turn left",
                     "Turn right"
@@ -2070,7 +2130,7 @@
                   "explanation": "The road bends to the left."
                 },
                 {
-                  "prompt": "Where does a road that bends right go? ↱",
+                  "prompt": "↱ “a road that bends right” Left, or right?",
                   "choices": [
                     "Turn left",
                     "Turn right"
@@ -5582,8 +5642,11 @@
     const linked = new Set();
     let picked = null, phase = "connect", task = 0, lock = false, sending = null;
     const at = (id) => devs.find((d) => d.id === id);
+    /* Tall enough for the lowest label: Grade 2's watch sits at y 190, and
+       at 220 its label fell outside the drawing and was clipped. */
+    const H = Math.max(220, Math.max(...devs.map((d) => d.y)) + 58);
     function svg() {
-      let g = '<rect width="320" height="220" fill="#0E2434" rx="18"/>';
+      let g = '<rect width="320" height="' + H + '" fill="#0E2434" rx="18"/>';
       devs.forEach((d) => {
         if (d.id === hub.id || !linked.has(d.id)) return;
         g += '<line x1="' + d.x + '" y1="' + d.y + '" x2="' + hub.x + '" y2="' + hub.y + '" stroke="' + (d.wired ? "#F4C95D" : "#35BFB2") + '" stroke-width="4"' + (d.wired ? "" : ' stroke-dasharray="6 7"') + '/>';
@@ -5593,10 +5656,10 @@
         const on = picked === d.id;
         g += '<g class="dev" data-dev="' + d.id + '" tabindex="0" role="button" aria-label="' + esc(d.label) + (linked.has(d.id) ? ", connected" : "") + '" transform="translate(' + d.x + ' ' + d.y + ')">' +
           '<circle r="26" fill="' + (on ? "#F4C95D" : linked.has(d.id) || d.id === hub.id ? "#143A4A" : "#1B3A52") + '" stroke="' + (on ? "#F4C95D" : linked.has(d.id) ? "#35BFB2" : "#2B5673") + '" stroke-width="3"/>' +
-          T(0, 11, 28, d.pic) + '<text y="44" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
+          T(0, 11, 28, d.pic) + '<text y="46" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
       });
       if (sending) g += '<g transform="translate(' + sending[0] + ' ' + sending[1] + ')">' + T(0, 10, 26, sending[2]) + "</g>";
-      return '<svg viewBox="0 0 320 220" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
+      return '<svg viewBox="0 0 320 ' + H + '" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
     }
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><div class="sim netbox" id="' + el.stage + 'net">' + svg() + "</div></div>";
@@ -8025,16 +8088,54 @@
     if (c.words) bits.push(c.words + " computing words");
     if (c.games) bits.push(c.games + " games");
     if (c.home) bits.push(c.home + " things to do at home");
+    const warm = o.warmup || [];
     $(el.stage).className = "stagewide";
     $(el.stage).innerHTML =
       '<div class="ovw">' +
+      /* LAST TIME. One line from the lesson before, so a lesson does not
+         start cold (validation 2026-09-11, area 9). Optional per lesson. */
+      (o.recap ? '<p class="ovw-recap"><b>Last time</b>' + esc(o.recap) + "</p>" : "") +
       (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
       '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
       '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
-      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div>' +
+      (warm.length ? '<div class="warmup" id="' + el.stage + 'w"></div>' : "") + "</div>";
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
-      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+      say((o.recap ? "Last time. " + o.recap + " " : "") + "By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    /* WHAT DO YOU ALREADY KNOW? A short warm-up before any teaching
+       (validation 2026-09-11, area 11). It is never marked: a wrong guess is
+       not shown red, it is told the answer kindly, and what is reported is
+       participation - how many were answered - never a score, because a
+       mark before the lesson would read as a mark on the lesson. Skipping
+       it with Next is allowed; the step still ticks on leaving. */
+    if (warm.length) {
+      const box = $(el.stage + "w");
+      let q = 0, answered = 0, lock = false;
+      const paintQ = () => {
+        const it = warm[q];
+        box.innerHTML = '<h4 class="warm-h">Before you start: what do you already know? <span>' + (q + 1) + " of " + warm.length + "</span></h4>" +
+          '<p class="warm-q">' + (it.pic ? '<span class="cpic" aria-hidden="true">' + small(it.pic) + "</span> " : "") + it.ask + "</p>" +
+          '<div class="choices stack">' + shuffle(it.opts).map((op) => '<button type="button" class="choice text" data-ok="' + (op.ok ? 1 : 0) + '">' + op.t + "</button>").join("") + "</div>";
+        lock = false;
+      };
+      box.addEventListener("click", (e) => {
+        const b = e.target.closest(".choice"); if (!b || lock) return;
+        lock = true; answered++;
+        const it = warm[q], ok = b.dataset.ok === "1";
+        box.querySelectorAll(".choice").forEach((x) => { x.disabled = true; if (x.dataset.ok === "1") x.classList.add("right"); });
+        const line = ok ? "You knew it! " + it.why : "Good guess. " + it.why + " You will find out more in this lesson.";
+        $(el.fb).className = "fb" + (ok ? " good" : ""); $(el.fb).textContent = line; sayHere(o.finish, line);
+        SOUND.play(ok ? "ding" : "pop", 0.3);
+        setTimeout(() => {
+          q++;
+          if (q < warm.length) { paintQ(); return; }
+          box.innerHTML = '<p class="warm-done">Warm-up done: ' + answered + " of " + warm.length + " answered. Now press Next and start the lesson.</p>";
+          reportAttempt(o.finish, answered, warm.length, "warm-up questions");
+        }, 2400);
+      });
+      paintQ();
+    }
     /* NOT AT DRAW, AND NOT ON ARRIVAL. Every step draws at page load,
        before the reporting module exists, so a finish() here ticked this
        step where nothing could report it: the school's record never held

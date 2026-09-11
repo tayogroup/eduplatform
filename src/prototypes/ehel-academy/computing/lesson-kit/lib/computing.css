@@ -187,7 +187,9 @@
   .script { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; min-height: 56px; width: 100%; max-width: 560px;
     padding: 8px; border-radius: 16px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
   .palette { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; width: 100%; max-width: 560px; }
-  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; border: 0; color: #06231F;
+  /* min-height 44px on every control below: they measured 40 to 43 px at phone width,
+     above the 24 px minimum and under the 44 px five-year-olds need (validation 2026-09-11) */
+  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; min-height: 44px; border-radius: 10px; border: 0; color: #06231F;
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; box-shadow: 0 3px 0 rgba(0,0,0,0.25); }
   .block .bicon { font-size: 18px; }
   .block.move { background: var(--teal); }
@@ -219,7 +221,7 @@
   .person .ppic { font-size: 44px; line-height: 1; }
   .person b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; }
   .pbubble { margin: 2px 0 0; padding: 6px 10px; border-radius: 12px; background: var(--teal-soft); font-size: 16px; font-style: italic; }
-  .wifi { padding: 8px 14px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
+  .wifi { padding: 8px 14px; min-height: 44px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
   .wifi.on { border-color: var(--good); color: var(--good); }
   .appgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
@@ -450,10 +452,19 @@
   .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
   .act-lead { margin: 0; font-size: 18px; font-weight: 700; }
   .act-mat, .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
-  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; font-size: 13px; }
   .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
-  button.hear { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
-  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  button.hear { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
+  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; min-height: 44px; }
+
+  /* ---- the overview's recap and warm-up (validation 2026-09-11) ---- */
+  .ovw-recap { margin: 0 0 12px; padding: 10px 14px; border-radius: 14px; border-left: 4px solid var(--teal); background: rgba(53,191,178,0.10); font-size: 17px; }
+  .ovw-recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .warmup { margin-top: 16px; padding: 14px 16px; border-radius: 18px; border: 3px dashed var(--line); }
+  .warm-h { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; }
+  .warm-h span { font-weight: 600; font-size: 13px; color: #A8BDCD; margin-left: 6px; }
+  .warm-q { margin: 0 0 10px; font-size: 18px; }
+  .warm-done { margin: 0; font-size: 17px; }
   .act.did .tick { border-color: var(--good); color: var(--good); }
 
   /* ---- the resources drawer ---- */

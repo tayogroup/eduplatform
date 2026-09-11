@@ -907,6 +907,15 @@ def check_step(n, k, s, codes, libs):
     elif kind == "overview":
         if len(d["about"]) < 3:
             sys.exit("REFUSED: %s says fewer than 3 things the lesson is about" % where)
+        if "recap" in d and (not isinstance(d["recap"], str) or not 3 <= len(d["recap"].split()) <= 40):
+            sys.exit("REFUSED: %s: a recap is one line of 3 to 40 words" % where)
+        warm = d.get("warmup") or []
+        if "warmup" in d and not 1 <= len(warm) <= 3:
+            sys.exit("REFUSED: %s: a warm-up is 1 to 3 questions" % where)
+        for it in warm:
+            one_ok(it["opts"], where + " warm-up %r" % it["ask"])
+            if not it.get("why"):
+                sys.exit("REFUSED: %s warm-up %r has no reason" % (where, it["ask"]))
     elif kind == "lecture":
         if len(d["parts"]) < 3:
             sys.exit("REFUSED: %s has fewer than 3 parts" % where)

@@ -57,6 +57,27 @@ LESSON = {
                        "why": "One computer, many programs: games, drawing, writing, videos, calls, search."}},
              "Six programs on one computer. A computer can run many."),
 
+        step("sort", "Which program would you open?", "\U0001F4F1", "Program picker", ["1CS.02", "1CS.01"],
+             "One tablet runs many programs. Which program would you open to do this job?",
+             explain(
+                 ["Each program on a computer does a different job."],
+                 ["To draw a picture, open Paint.", "To write a story, open Writing.", "To play, open a game.", "To watch a film, open Videos."],
+                 ["Children think you need a different tablet for each job.", "The same tablet runs them all. You just open a different program."],
+                 ["Read the job, then tap the program."]),
+             {"ask": "Which program?",
+              "bins": [{"id": "paint", "label": "Paint", "pic": "\U0001F3A8"}, {"id": "write", "label": "Writing", "pic": "✏️"}, {"id": "game", "label": "A game", "pic": "⚽"}, {"id": "video", "label": "Videos", "pic": "\U0001F3AC"}],
+              "items": [
+                  {"pic": "\U0001F308", "label": "draw a rainbow", "bin": "paint", "why": "Drawing is Paint's job."},
+                  {"pic": "✉️", "label": "type a letter to Grandma", "bin": "write", "why": "Typing words is the Writing program's job."},
+                  {"pic": "\U0001F3C6", "label": "try to beat your best score", "bin": "game", "why": "A score to beat: that is a game."},
+                  {"pic": "\U0001F981", "label": "watch a film about lions", "bin": "video", "why": "Watching a film is the job of Videos."},
+                  {"pic": "\U0001F58D️", "label": "colour in a picture of a cat", "bin": "paint", "why": "Colouring in is Paint's job."},
+                  {"pic": "\U0001F4DD", "label": "write your name and your age", "bin": "write", "why": "Writing words: the Writing program."},
+                  {"pic": "\U0001F9E9", "label": "play a puzzle", "bin": "game", "why": "A puzzle you play is a game."},
+                  {"pic": "\U0001F4FA", "label": "watch a cartoon", "bin": "video", "why": "Videos plays films and cartoons."},
+              ]},
+             "Four programs, one tablet, and a job for each."),
+
         step("io", "In and out", "\U0001F500", "In and out", ["1CS.03", "1CS.04"],
              "Information goes INTO a computer and comes OUT of it. Tap each device to see which way it goes.",
              explain(
@@ -263,4 +284,11 @@ LESSON["home"] = [
           "Say what its computer tells it to do, step by step.",
           "Draw something that moves but is NOT a robot."],
          "A bicycle moves because you pedal it. A robot moves because its program says so."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you built a network and found out that the internet is many computers joined around the world."
+LESSON["warmup"] = [
+    q("What makes a robot move and do its job?", "\U0001F916", "a computer inside it, following a program", ["a battery all on its own", "magic", "a person hiding inside"], "A computer inside tells a robot what to do."),
+    q("A keyboard puts letters into a computer. A screen shows things...", "\U0001F5A5️", "out of the computer", ["into the computer", "under the computer", "nowhere"], "Information goes in through a keyboard and comes out on a screen."),
 ]

@@ -135,7 +135,7 @@ def lesson_module(n):
 
 
 def minutes_of(lesson):
-    return int(5 * round(sum(MINUTES.get(s["kind"], 2) for s in lesson["steps"]) / 5.0))
+    return int(5 * round(sum(MINUTES.get(s["kind"], 2) + 0.5 * len((s.get("data") or {}).get("warmup") or []) for s in lesson["steps"]) / 5.0))
 
 
 CARD = """      <%(tag)s class="card%(cls)s"%(href)s>
@@ -311,6 +311,9 @@ def keys_for(s):
     d = s["data"]
     k, out = s["kind"], []
     ok_text = lambda opts: next(o["t"] for o in opts if o["ok"])   # noqa: E731
+    if k == "overview" and d.get("warmup"):
+        out.append("<li><b>Warm-up: what do you already know?</b> (not marked)<ol>%s</ol></li>" % "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(it["ask"])), text(ok_text(it["opts"]))) for it in d["warmup"]))
     if k in ("quiz", "questions"):
         out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
             "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(it["ask"])), text(ok_text(it["opts"]))) for it in d["items"])))

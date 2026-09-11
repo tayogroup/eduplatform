@@ -74,11 +74,17 @@ def games_pack(n, lesson):
                           "title": "Quick quiz: " + plain(s["title"]), "skill": "Remembering",
                           "rounds": rounds[:8]})
 
-    # Sort race: where does each thing go?
+    # Sort race: the sort step's own question, asked of each thing in turn.
+    # It used to be "Where does <label> go?", which is broken English whenever
+    # a label is not a thing - "Where does how many children chose apple? go?",
+    # answered "Yes, it is in the table" (Grade 1 lesson 6, found by the
+    # 2026-09-11 proofread; Grades 2 to 4 had the same shape). The step's `ask`
+    # was written for exactly these items and these bins, so it fits them all.
     for k, s in enumerate([s for s in lesson["steps"] if s["kind"] == "sort"]):
         d = s["data"]
         bins = {b["id"]: b["label"] for b in d["bins"]}
-        rounds = [{"prompt": "Where does " + it["label"] + " go? " + (it.get("pic", "") if not str(it.get("pic", "")).startswith("<") else ""),
+        pic = lambda it: it.get("pic", "") if not str(it.get("pic", "")).startswith("<") else ""
+        rounds = [{"prompt": (pic(it) + " “" + it["label"] + "” " + plain(d.get("ask") or "Where does it go?")).strip(),
                    "choices": [bins[b] for b in bins], "answer": bins[it["bin"]],
                    "explanation": it.get("why") or bins[it["bin"]]} for it in d["items"]]
         if len(rounds) >= 3:
@@ -223,6 +229,13 @@ def expand(n, lesson, code_text, finder, cfg):
     steps = [overview, lec, wds] + content + [gz, hm] + quiz + [world, res]
     steps = [s for s in steps if s is not None]
     overview["data"]["counts"]["steps"] = len(steps)
+    # The recap and the warm-up ride on the overview so no step number moves
+    # (a new step would shift every stored section id after it). Added only
+    # when a lesson has them, so a grade without them builds byte-identically.
+    if lesson.get("recap"):
+        overview["data"]["recap"] = lesson["recap"]
+    if lesson.get("warmup"):
+        overview["data"]["warmup"] = lesson["warmup"]
     res["data"]["homeStep"] = steps.index(hm)
     return steps
 

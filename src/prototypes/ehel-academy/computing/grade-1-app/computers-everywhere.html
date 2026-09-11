@@ -487,7 +487,9 @@
   .script { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; min-height: 56px; width: 100%; max-width: 560px;
     padding: 8px; border-radius: 16px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
   .palette { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; width: 100%; max-width: 560px; }
-  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; border: 0; color: #06231F;
+  /* min-height 44px on every control below: they measured 40 to 43 px at phone width,
+     above the 24 px minimum and under the 44 px five-year-olds need (validation 2026-09-11) */
+  .block { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; min-height: 44px; border-radius: 10px; border: 0; color: #06231F;
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; box-shadow: 0 3px 0 rgba(0,0,0,0.25); }
   .block .bicon { font-size: 18px; }
   .block.move { background: var(--teal); }
@@ -519,7 +521,7 @@
   .person .ppic { font-size: 44px; line-height: 1; }
   .person b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; }
   .pbubble { margin: 2px 0 0; padding: 6px 10px; border-radius: 12px; background: var(--teal-soft); font-size: 16px; font-style: italic; }
-  .wifi { padding: 8px 14px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
+  .wifi { padding: 8px 14px; min-height: 44px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink);
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
   .wifi.on { border-color: var(--good); color: var(--good); }
   .appgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
@@ -750,10 +752,19 @@
   .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
   .act-lead { margin: 0; font-size: 18px; font-weight: 700; }
   .act-mat, .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
-  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; font-size: 13px; }
   .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
-  button.hear { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
-  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  button.hear { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
+  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; min-height: 44px; }
+
+  /* ---- the overview's recap and warm-up (validation 2026-09-11) ---- */
+  .ovw-recap { margin: 0 0 12px; padding: 10px 14px; border-radius: 14px; border-left: 4px solid var(--teal); background: rgba(53,191,178,0.10); font-size: 17px; }
+  .ovw-recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .warmup { margin-top: 16px; padding: 14px 16px; border-radius: 18px; border: 3px dashed var(--line); }
+  .warm-h { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; }
+  .warm-h span { font-weight: 600; font-size: 13px; color: #A8BDCD; margin-left: 6px; }
+  .warm-q { margin: 0 0 10px; font-size: 18px; }
+  .warm-done { margin: 0; font-size: 17px; }
   .act.did .tick { border-color: var(--good); color: var(--good); }
 
   /* ---- the resources drawer ---- */
@@ -1234,9 +1245,9 @@
         <p class="score" id="score5"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.03 1CS.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A computer needs information put IN, and it gives information OUT.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A keyboard puts letters in.</s><s>A mouse puts your pointing in.</s><s>A microphone puts your voice in.</s><s>A camera puts a picture in.</s><s>A screen shows things out.</s><s>A speaker plays sound out.</s><s>A printer puts words out on paper.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a touchscreen is only for looking at.</s><s>It is both: you tap it, information goes in; it shows things, information comes out.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every device and watch the arrow.</s></mstts:express-as>' data-say="Information goes INTO a computer and comes OUT of it. Tap each device to see which way it goes.">
-      <div class="slide-head"><span class="n">6</span><h2>In and out</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Information goes INTO a computer and comes OUT of it. Tap each device to see which way it goes.</span></div>
+    <section class="slide" data-objectives="1CS.02 1CS.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Each program on a computer does a different job.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To draw a picture, open Paint.</s><s>To write a story, open Writing.</s><s>To play, open a game.</s><s>To watch a film, open Videos.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think you need a different tablet for each job.</s><s>The same tablet runs them all. You just open a different program.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the job, then tap the program.</s></mstts:express-as>' data-say="One tablet runs many programs. Which program would you open to do this job?">
+      <div class="slide-head"><span class="n">6</span><h2>Which program would you open?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">One tablet runs many programs. Which program would you open to do this job?</span></div>
       <div class="stage">
         <div id="stage6"></div>
         <div class="choices" id="ch6"></div>
@@ -1244,9 +1255,9 @@
         <p class="score" id="score6"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.03 1CS.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An input device sends information INTO the computer.</s><s>An output device brings information OUT of it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Keyboard, mouse, microphone, camera, buttons: in.</s><s>Screen, speaker, printer, lights: out.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children guess from where the device sits.</s><s>Ask: does the computer get something from it, or give something through it?</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask which way the information goes, then tap.</s></mstts:express-as>' data-say="Does information go IN through it, or come OUT of it? Tap the bin.">
-      <div class="slide-head"><span class="n">7</span><h2>Input, or output?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Does information go IN through it, or come OUT of it? Tap the bin.</span></div>
+    <section class="slide" data-objectives="1CS.03 1CS.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A computer needs information put IN, and it gives information OUT.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A keyboard puts letters in.</s><s>A mouse puts your pointing in.</s><s>A microphone puts your voice in.</s><s>A camera puts a picture in.</s><s>A screen shows things out.</s><s>A speaker plays sound out.</s><s>A printer puts words out on paper.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a touchscreen is only for looking at.</s><s>It is both: you tap it, information goes in; it shows things, information comes out.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every device and watch the arrow.</s></mstts:express-as>' data-say="Information goes INTO a computer and comes OUT of it. Tap each device to see which way it goes.">
+      <div class="slide-head"><span class="n">7</span><h2>In and out</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Information goes INTO a computer and comes OUT of it. Tap each device to see which way it goes.</span></div>
       <div class="stage">
         <div id="stage7"></div>
         <div class="choices" id="ch7"></div>
@@ -1254,9 +1265,9 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A computer does not have to look like a computer.</s><s>Many everyday machines have a small one hidden inside, controlling them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A washing machine, a microwave, traffic lights, a car, a digital watch, a TV: computers inside.</s><s>A wooden spoon, a bicycle, a book, a ball, a candle, scissors: no computer at all.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think anything with a plug has a computer.</s><s>Ask: does something inside DECIDE what it does? A candle decides nothing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask: is something inside controlling it?</s></mstts:express-as>' data-say="Lots of everyday things have a computer inside, controlling what they do. Does this one?">
-      <div class="slide-head"><span class="n">8</span><h2>Is there a computer inside?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Lots of everyday things have a computer inside, controlling what they do. Does this one?</span></div>
+    <section class="slide" data-objectives="1CS.03 1CS.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An input device sends information INTO the computer.</s><s>An output device brings information OUT of it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Keyboard, mouse, microphone, camera, buttons: in.</s><s>Screen, speaker, printer, lights: out.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children guess from where the device sits.</s><s>Ask: does the computer get something from it, or give something through it?</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask which way the information goes, then tap.</s></mstts:express-as>' data-say="Does information go IN through it, or come OUT of it? Tap the bin.">
+      <div class="slide-head"><span class="n">8</span><h2>Input, or output?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Does information go IN through it, or come OUT of it? Tap the bin.</span></div>
       <div class="stage">
         <div id="stage8"></div>
         <div class="choices" id="ch8"></div>
@@ -1264,9 +1275,9 @@
         <p class="score" id="score8"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A robot is a machine with a computer inside, programmed to move and do a job.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A factory robot arm builds cars.</s><s>A robot vacuum cleans the floor.</s><s>A rover drives about on Mars.</s><s>A delivery robot carries medicines round a hospital.</s><s>A warehouse robot fetches parcels.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think robots all look like people.</s><s>Most look like arms, boxes or cars. It is what is INSIDE and what it DOES that makes it a robot.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each one and hear its job and where it works.</s></mstts:express-as>' data-say="A robot is a machine with a computer inside that can be programmed to move and do jobs. Tap each robot.">
-      <div class="slide-head"><span class="n">9</span><h2>What is a robot?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">A robot is a machine with a computer inside that can be programmed to move and do jobs. Tap each robot.</span></div>
+    <section class="slide" data-objectives="1CS.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A computer does not have to look like a computer.</s><s>Many everyday machines have a small one hidden inside, controlling them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A washing machine, a microwave, traffic lights, a car, a digital watch, a TV: computers inside.</s><s>A wooden spoon, a bicycle, a book, a ball, a candle, scissors: no computer at all.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think anything with a plug has a computer.</s><s>Ask: does something inside DECIDE what it does? A candle decides nothing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask: is something inside controlling it?</s></mstts:express-as>' data-say="Lots of everyday things have a computer inside, controlling what they do. Does this one?">
+      <div class="slide-head"><span class="n">9</span><h2>Is there a computer inside?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Lots of everyday things have a computer inside, controlling what they do. Does this one?</span></div>
       <div class="stage">
         <div id="stage9"></div>
         <div class="choices" id="ch9"></div>
@@ -1274,9 +1285,9 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Robot or not: does it have a computer inside, and does it move to do a job?</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A robot arm, a robot vacuum, a rover, a delivery robot: robots.</s><s>A teddy bear, a toaster, a bicycle, a broom: not robots. Nothing inside decides how they move.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think anything that moves is a robot.</s><s>A bicycle moves because YOU pedal it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask: is a computer inside making it move and do a job?</s></mstts:express-as>' data-say="A robot moves and does a job because a computer inside tells it to. Is this a robot?">
-      <div class="slide-head"><span class="n">10</span><h2>Robot, or not?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">A robot moves and does a job because a computer inside tells it to. Is this a robot?</span></div>
+    <section class="slide" data-objectives="1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A robot is a machine with a computer inside, programmed to move and do a job.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A factory robot arm builds cars.</s><s>A robot vacuum cleans the floor.</s><s>A rover drives about on Mars.</s><s>A delivery robot carries medicines round a hospital.</s><s>A warehouse robot fetches parcels.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think robots all look like people.</s><s>Most look like arms, boxes or cars. It is what is INSIDE and what it DOES that makes it a robot.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each one and hear its job and where it works.</s></mstts:express-as>' data-say="A robot is a machine with a computer inside that can be programmed to move and do jobs. Tap each robot.">
+      <div class="slide-head"><span class="n">10</span><h2>What is a robot?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">A robot is a machine with a computer inside that can be programmed to move and do jobs. Tap each robot.</span></div>
       <div class="stage">
         <div id="stage10"></div>
         <div class="choices" id="ch10"></div>
@@ -1284,9 +1295,9 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.01 1CS.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Grown-ups use computer systems at work, often to control big machines.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A doctor&#39;s scanner is a computer that looks inside you.</s><s>A pilot&#39;s cockpit is full of computers helping to fly the plane.</s><s>A farmer&#39;s tractor has a computer that steers it straight.</s><s>A shop till is a computer that adds up the shopping.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each one and hear what the computer controls.</s></mstts:express-as>' data-say="People use computer systems in all sorts of jobs. Tap each one.">
-      <div class="slide-head"><span class="n">11</span><h2>Computers at work</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">People use computer systems in all sorts of jobs. Tap each one.</span></div>
+    <section class="slide" data-objectives="1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Robot or not: does it have a computer inside, and does it move to do a job?</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A robot arm, a robot vacuum, a rover, a delivery robot: robots.</s><s>A teddy bear, a toaster, a bicycle, a broom: not robots. Nothing inside decides how they move.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think anything that moves is a robot.</s><s>A bicycle moves because YOU pedal it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask: is a computer inside making it move and do a job?</s></mstts:express-as>' data-say="A robot moves and does a job because a computer inside tells it to. Is this a robot?">
+      <div class="slide-head"><span class="n">11</span><h2>Robot, or not?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">A robot moves and does a job because a computer inside tells it to. Is this a robot?</span></div>
       <div class="stage">
         <div id="stage11"></div>
         <div class="choices" id="ch11"></div>
@@ -1294,9 +1305,9 @@
         <p class="score" id="score11"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.01 1CS.02 1CS.03 1CS.04 1CS.05 1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
-      <div class="slide-head"><span class="n">12</span><h2>Games</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Choose a game to play. Nothing here is new.</span></div>
+    <section class="slide" data-objectives="1CS.01 1CS.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Grown-ups use computer systems at work, often to control big machines.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A doctor&#39;s scanner is a computer that looks inside you.</s><s>A pilot&#39;s cockpit is full of computers helping to fly the plane.</s><s>A farmer&#39;s tractor has a computer that steers it straight.</s><s>A shop till is a computer that adds up the shopping.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each one and hear what the computer controls.</s></mstts:express-as>' data-say="People use computer systems in all sorts of jobs. Tap each one.">
+      <div class="slide-head"><span class="n">12</span><h2>Computers at work</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">People use computer systems in all sorts of jobs. Tap each one.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
@@ -1304,9 +1315,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.01 1CS.02 1CS.03 1CS.04 1CS.05 1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, away from any screen.</s><s>Computer scientists call that unplugged, and it is real computing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who follows your steps EXACTLY, silly mistakes and all, is the best computer you have.</s><s>That is the whole point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.">
-      <div class="slide-head"><span class="n">13</span><h2>Unplugged at home</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></div>
+    <section class="slide" data-objectives="1CS.01 1CS.02 1CS.03 1CS.04 1CS.05 1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
+      <div class="slide-head"><span class="n">13</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Choose a game to play. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -1314,9 +1325,9 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1CS.01 1CS.02 1CS.03 1CS.04 1CS.05 1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Think about the five jobs, the six programs, in and out, hidden computers and robots.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">14</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Time to show what you know. Tap the answer.</span></div>
+    <section class="slide" data-objectives="1CS.01 1CS.02 1CS.03 1CS.04 1CS.05 1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, away from any screen.</s><s>Computer scientists call that unplugged, and it is real computing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who follows your steps EXACTLY, silly mistakes and all, is the best computer you have.</s><s>That is the whole point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.">
+      <div class="slide-head"><span class="n">14</span><h2>Unplugged at home</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
@@ -1324,9 +1335,9 @@
         <p class="score" id="score14"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
-      <div class="slide-head"><span class="n">15</span><h2>Computing world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Where this computing is out in the real world. This part is still being built.</span></div>
+    <section class="slide" data-objectives="1CS.01 1CS.02 1CS.03 1CS.04 1CS.05 1CS.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Think about the five jobs, the six programs, in and out, hidden computers and robots.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">15</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Time to show what you know. Tap the answer.</span></div>
       <div class="stage">
         <div id="stage15"></div>
         <div class="choices" id="ch15"></div>
@@ -1334,14 +1345,24 @@
         <p class="score" id="score15"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
-      <div class="slide-head"><span class="n">16</span><h2>Student resources</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
+      <div class="slide-head"><span class="n">16</span><h2>Computing world</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Where this computing is out in the real world. This part is still being built.</span></div>
       <div class="stage">
         <div id="stage16"></div>
         <div class="choices" id="ch16"></div>
         <p class="fb" id="fb16" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score16"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
+      <div class="slide-head"><span class="n">17</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask17">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+      <div class="stage">
+        <div id="stage17"></div>
+        <div class="choices" id="ch17"></div>
+        <p class="fb" id="fb17" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score17"></p>
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1415,11 +1436,60 @@
             "Spot the computers hiding inside everyday things, and say what a robot is."
           ],
           "counts": {
-            "steps": 16,
+            "steps": 17,
             "words": 8,
-            "games": 6,
+            "games": 7,
             "home": 3
-          }
+          },
+          "recap": "Last time you built a network and found out that the internet is many computers joined around the world.",
+          "warmup": [
+            {
+              "ask": "What makes a robot move and do its job?",
+              "pic": "🤖",
+              "opts": [
+                {
+                  "t": "a computer inside it, following a program",
+                  "ok": true
+                },
+                {
+                  "t": "a battery all on its own",
+                  "ok": false
+                },
+                {
+                  "t": "magic",
+                  "ok": false
+                },
+                {
+                  "t": "a person hiding inside",
+                  "ok": false
+                }
+              ],
+              "why": "A computer inside tells a robot what to do."
+            },
+            {
+              "ask": "A keyboard puts letters into a computer. A screen shows things...",
+              "pic": "🖥️",
+              "opts": [
+                {
+                  "t": "out of the computer",
+                  "ok": true
+                },
+                {
+                  "t": "into the computer",
+                  "ok": false
+                },
+                {
+                  "t": "under the computer",
+                  "ok": false
+                },
+                {
+                  "t": "nowhere",
+                  "ok": false
+                }
+              ],
+              "why": "Information goes in through a keyboard and comes out on a screen."
+            }
+          ]
         }
       },
       {
@@ -1681,6 +1751,89 @@
             ],
             "why": "One computer, many programs: games, drawing, writing, videos, calls, search."
           }
+        }
+      },
+      {
+        "kind": "sort",
+        "title": "Which program would you open?",
+        "objectives": [
+          "1CS.02",
+          "1CS.01"
+        ],
+        "data": {
+          "ask": "Which program?",
+          "bins": [
+            {
+              "id": "paint",
+              "label": "Paint",
+              "pic": "🎨"
+            },
+            {
+              "id": "write",
+              "label": "Writing",
+              "pic": "✏️"
+            },
+            {
+              "id": "game",
+              "label": "A game",
+              "pic": "⚽"
+            },
+            {
+              "id": "video",
+              "label": "Videos",
+              "pic": "🎬"
+            }
+          ],
+          "items": [
+            {
+              "pic": "🌈",
+              "label": "draw a rainbow",
+              "bin": "paint",
+              "why": "Drawing is Paint's job."
+            },
+            {
+              "pic": "✉️",
+              "label": "type a letter to Grandma",
+              "bin": "write",
+              "why": "Typing words is the Writing program's job."
+            },
+            {
+              "pic": "🏆",
+              "label": "try to beat your best score",
+              "bin": "game",
+              "why": "A score to beat: that is a game."
+            },
+            {
+              "pic": "🦁",
+              "label": "watch a film about lions",
+              "bin": "video",
+              "why": "Watching a film is the job of Videos."
+            },
+            {
+              "pic": "🖍️",
+              "label": "colour in a picture of a cat",
+              "bin": "paint",
+              "why": "Colouring in is Paint's job."
+            },
+            {
+              "pic": "📝",
+              "label": "write your name and your age",
+              "bin": "write",
+              "why": "Writing words: the Writing program."
+            },
+            {
+              "pic": "🧩",
+              "label": "play a puzzle",
+              "bin": "game",
+              "why": "A puzzle you play is a game."
+            },
+            {
+              "pic": "📺",
+              "label": "watch a cartoon",
+              "bin": "video",
+              "why": "Videos plays films and cartoons."
+            }
+          ]
         }
       },
       {
@@ -2232,11 +2385,107 @@
             {
               "id": "l8-sort-1",
               "type": "choice",
+              "title": "Sort race: Which program would you open?",
+              "skill": "Sorting",
+              "rounds": [
+                {
+                  "prompt": "🌈 “draw a rainbow” Which program?",
+                  "choices": [
+                    "Paint",
+                    "Writing",
+                    "A game",
+                    "Videos"
+                  ],
+                  "answer": "Paint",
+                  "explanation": "Drawing is Paint's job."
+                },
+                {
+                  "prompt": "✉️ “type a letter to Grandma” Which program?",
+                  "choices": [
+                    "Paint",
+                    "Writing",
+                    "A game",
+                    "Videos"
+                  ],
+                  "answer": "Writing",
+                  "explanation": "Typing words is the Writing program's job."
+                },
+                {
+                  "prompt": "🏆 “try to beat your best score” Which program?",
+                  "choices": [
+                    "Paint",
+                    "Writing",
+                    "A game",
+                    "Videos"
+                  ],
+                  "answer": "A game",
+                  "explanation": "A score to beat: that is a game."
+                },
+                {
+                  "prompt": "🦁 “watch a film about lions” Which program?",
+                  "choices": [
+                    "Paint",
+                    "Writing",
+                    "A game",
+                    "Videos"
+                  ],
+                  "answer": "Videos",
+                  "explanation": "Watching a film is the job of Videos."
+                },
+                {
+                  "prompt": "🖍️ “colour in a picture of a cat” Which program?",
+                  "choices": [
+                    "Paint",
+                    "Writing",
+                    "A game",
+                    "Videos"
+                  ],
+                  "answer": "Paint",
+                  "explanation": "Colouring in is Paint's job."
+                },
+                {
+                  "prompt": "📝 “write your name and your age” Which program?",
+                  "choices": [
+                    "Paint",
+                    "Writing",
+                    "A game",
+                    "Videos"
+                  ],
+                  "answer": "Writing",
+                  "explanation": "Writing words: the Writing program."
+                },
+                {
+                  "prompt": "🧩 “play a puzzle” Which program?",
+                  "choices": [
+                    "Paint",
+                    "Writing",
+                    "A game",
+                    "Videos"
+                  ],
+                  "answer": "A game",
+                  "explanation": "A puzzle you play is a game."
+                },
+                {
+                  "prompt": "📺 “watch a cartoon” Which program?",
+                  "choices": [
+                    "Paint",
+                    "Writing",
+                    "A game",
+                    "Videos"
+                  ],
+                  "answer": "Videos",
+                  "explanation": "Videos plays films and cartoons."
+                }
+              ]
+            },
+            {
+              "id": "l8-sort-2",
+              "type": "choice",
               "title": "Sort race: Input, or output?",
               "skill": "Sorting",
               "rounds": [
                 {
-                  "prompt": "Where does a keyboard go? ⌨️",
+                  "prompt": "⌨️ “a keyboard” Input, or output?",
                   "choices": [
                     "Input",
                     "Output"
@@ -2245,7 +2494,7 @@
                   "explanation": "Letters go in. Input."
                 },
                 {
-                  "prompt": "Where does a screen go? 🖥️",
+                  "prompt": "🖥️ “a screen” Input, or output?",
                   "choices": [
                     "Input",
                     "Output"
@@ -2254,7 +2503,7 @@
                   "explanation": "Pictures and words come out. Output."
                 },
                 {
-                  "prompt": "Where does a microphone go? 🎤",
+                  "prompt": "🎤 “a microphone” Input, or output?",
                   "choices": [
                     "Input",
                     "Output"
@@ -2263,7 +2512,7 @@
                   "explanation": "Your voice goes in. Input."
                 },
                 {
-                  "prompt": "Where does a speaker go? 🔊",
+                  "prompt": "🔊 “a speaker” Input, or output?",
                   "choices": [
                     "Input",
                     "Output"
@@ -2272,7 +2521,7 @@
                   "explanation": "Sound comes out. Output."
                 },
                 {
-                  "prompt": "Where does a camera go? 📷",
+                  "prompt": "📷 “a camera” Input, or output?",
                   "choices": [
                     "Input",
                     "Output"
@@ -2281,7 +2530,7 @@
                   "explanation": "A picture goes in. Input."
                 },
                 {
-                  "prompt": "Where does a printer go? 🖨️",
+                  "prompt": "🖨️ “a printer” Input, or output?",
                   "choices": [
                     "Input",
                     "Output"
@@ -2290,7 +2539,7 @@
                   "explanation": "Words come out on paper. Output."
                 },
                 {
-                  "prompt": "Where does the buttons on a games controller go? 🎮",
+                  "prompt": "🎮 “the buttons on a games controller” Input, or output?",
                   "choices": [
                     "Input",
                     "Output"
@@ -2299,7 +2548,7 @@
                   "explanation": "Your button presses go in. Input."
                 },
                 {
-                  "prompt": "Where does the lights on a robot go? 💡",
+                  "prompt": "💡 “the lights on a robot” Input, or output?",
                   "choices": [
                     "Input",
                     "Output"
@@ -2310,13 +2559,13 @@
               ]
             },
             {
-              "id": "l8-sort-2",
+              "id": "l8-sort-3",
               "type": "choice",
               "title": "Sort race: Is there a computer inside?",
               "skill": "Sorting",
               "rounds": [
                 {
-                  "prompt": "Where does a washing machine go? 🧺",
+                  "prompt": "🧺 “a washing machine” Is there a computer inside?",
                   "choices": [
                     "Computer inside",
                     "No computer"
@@ -2325,7 +2574,7 @@
                   "explanation": "A computer inside controls fill, wash, spin, drain."
                 },
                 {
-                  "prompt": "Where does a wooden spoon go? 🥄",
+                  "prompt": "🥄 “a wooden spoon” Is there a computer inside?",
                   "choices": [
                     "Computer inside",
                     "No computer"
@@ -2334,7 +2583,7 @@
                   "explanation": "A spoon has nothing inside. No computer."
                 },
                 {
-                  "prompt": "Where does traffic lights go? 🚦",
+                  "prompt": "🚦 “traffic lights” Is there a computer inside?",
                   "choices": [
                     "Computer inside",
                     "No computer"
@@ -2343,7 +2592,7 @@
                   "explanation": "A computer controls when each light changes."
                 },
                 {
-                  "prompt": "Where does a bicycle go? 🚲",
+                  "prompt": "🚲 “a bicycle” Is there a computer inside?",
                   "choices": [
                     "Computer inside",
                     "No computer"
@@ -2352,7 +2601,7 @@
                   "explanation": "You are the control. No computer."
                 },
                 {
-                  "prompt": "Where does a car go? 🚗",
+                  "prompt": "🚗 “a car” Is there a computer inside?",
                   "choices": [
                     "Computer inside",
                     "No computer"
@@ -2361,7 +2610,7 @@
                   "explanation": "A car has many computers inside, controlling the engine and more."
                 },
                 {
-                  "prompt": "Where does a book go? 📖",
+                  "prompt": "📖 “a book” Is there a computer inside?",
                   "choices": [
                     "Computer inside",
                     "No computer"
@@ -2370,7 +2619,7 @@
                   "explanation": "Paper and words. No computer."
                 },
                 {
-                  "prompt": "Where does a digital watch go? ⌚",
+                  "prompt": "⌚ “a digital watch” Is there a computer inside?",
                   "choices": [
                     "Computer inside",
                     "No computer"
@@ -2379,7 +2628,7 @@
                   "explanation": "A tiny computer counts the seconds."
                 },
                 {
-                  "prompt": "Where does a ball go? ⚽",
+                  "prompt": "⚽ “a ball” Is there a computer inside?",
                   "choices": [
                     "Computer inside",
                     "No computer"
@@ -2390,13 +2639,13 @@
               ]
             },
             {
-              "id": "l8-sort-3",
+              "id": "l8-sort-4",
               "type": "choice",
               "title": "Sort race: Robot, or not?",
               "skill": "Sorting",
               "rounds": [
                 {
-                  "prompt": "Where does a factory robot arm go? 🦾",
+                  "prompt": "🦾 “a factory robot arm” Robot, or not?",
                   "choices": [
                     "A robot",
                     "Not a robot"
@@ -2405,7 +2654,7 @@
                   "explanation": "A computer inside programs how it moves and builds. A robot."
                 },
                 {
-                  "prompt": "Where does a teddy bear go? 🧸",
+                  "prompt": "🧸 “a teddy bear” Robot, or not?",
                   "choices": [
                     "A robot",
                     "Not a robot"
@@ -2414,7 +2663,7 @@
                   "explanation": "Soft and cuddly, but nothing inside moves it. Not a robot."
                 },
                 {
-                  "prompt": "Where does a robot vacuum go? 🤖",
+                  "prompt": "🤖 “a robot vacuum” Robot, or not?",
                   "choices": [
                     "A robot",
                     "Not a robot"
@@ -2423,7 +2672,7 @@
                   "explanation": "Its computer steers it round the floor. A robot."
                 },
                 {
-                  "prompt": "Where does a toaster go? 🍞",
+                  "prompt": "🍞 “a toaster” Robot, or not?",
                   "choices": [
                     "A robot",
                     "Not a robot"
@@ -2432,7 +2681,7 @@
                   "explanation": "A toaster warms bread, but it does not move about. Not a robot."
                 },
                 {
-                  "prompt": "Where does a Mars rover go? 🚙",
+                  "prompt": "🚙 “a Mars rover” Robot, or not?",
                   "choices": [
                     "A robot",
                     "Not a robot"
@@ -2441,7 +2690,7 @@
                   "explanation": "Programmed to drive and dig on Mars. A robot."
                 },
                 {
-                  "prompt": "Where does a bicycle go? 🚲",
+                  "prompt": "🚲 “a bicycle” Robot, or not?",
                   "choices": [
                     "A robot",
                     "Not a robot"
@@ -2450,7 +2699,7 @@
                   "explanation": "It moves because you pedal. Not a robot."
                 },
                 {
-                  "prompt": "Where does a delivery robot go? 📦",
+                  "prompt": "📦 “a delivery robot” Robot, or not?",
                   "choices": [
                     "A robot",
                     "Not a robot"
@@ -2459,7 +2708,7 @@
                   "explanation": "Its computer takes it to the right place with the parcel. A robot."
                 },
                 {
-                  "prompt": "Where does a broom go? 🧹",
+                  "prompt": "🧹 “a broom” Robot, or not?",
                   "choices": [
                     "A robot",
                     "Not a robot"
@@ -3619,7 +3868,7 @@
           "hub": "g1-index.html",
           "gradeLabel": "Grade 1",
           "lessonNo": 8,
-          "homeStep": 12
+          "homeStep": 13
         }
       }
     ]
@@ -5984,8 +6233,11 @@
     const linked = new Set();
     let picked = null, phase = "connect", task = 0, lock = false, sending = null;
     const at = (id) => devs.find((d) => d.id === id);
+    /* Tall enough for the lowest label: Grade 2's watch sits at y 190, and
+       at 220 its label fell outside the drawing and was clipped. */
+    const H = Math.max(220, Math.max(...devs.map((d) => d.y)) + 58);
     function svg() {
-      let g = '<rect width="320" height="220" fill="#0E2434" rx="18"/>';
+      let g = '<rect width="320" height="' + H + '" fill="#0E2434" rx="18"/>';
       devs.forEach((d) => {
         if (d.id === hub.id || !linked.has(d.id)) return;
         g += '<line x1="' + d.x + '" y1="' + d.y + '" x2="' + hub.x + '" y2="' + hub.y + '" stroke="' + (d.wired ? "#F4C95D" : "#35BFB2") + '" stroke-width="4"' + (d.wired ? "" : ' stroke-dasharray="6 7"') + '/>';
@@ -5995,10 +6247,10 @@
         const on = picked === d.id;
         g += '<g class="dev" data-dev="' + d.id + '" tabindex="0" role="button" aria-label="' + esc(d.label) + (linked.has(d.id) ? ", connected" : "") + '" transform="translate(' + d.x + ' ' + d.y + ')">' +
           '<circle r="26" fill="' + (on ? "#F4C95D" : linked.has(d.id) || d.id === hub.id ? "#143A4A" : "#1B3A52") + '" stroke="' + (on ? "#F4C95D" : linked.has(d.id) ? "#35BFB2" : "#2B5673") + '" stroke-width="3"/>' +
-          T(0, 11, 28, d.pic) + '<text y="44" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
+          T(0, 11, 28, d.pic) + '<text y="46" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + esc(d.label) + "</text></g>";
       });
       if (sending) g += '<g transform="translate(' + sending[0] + ' ' + sending[1] + ')">' + T(0, 10, 26, sending[2]) + "</g>";
-      return '<svg viewBox="0 0 320 220" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
+      return '<svg viewBox="0 0 320 ' + H + '" class="netmap" role="img" aria-label="A network of ' + devs.length + ' devices">' + g + "</svg>";
     }
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><div class="sim netbox" id="' + el.stage + 'net">' + svg() + "</div></div>";
@@ -8427,16 +8679,54 @@
     if (c.words) bits.push(c.words + " computing words");
     if (c.games) bits.push(c.games + " games");
     if (c.home) bits.push(c.home + " things to do at home");
+    const warm = o.warmup || [];
     $(el.stage).className = "stagewide";
     $(el.stage).innerHTML =
       '<div class="ovw">' +
+      /* LAST TIME. One line from the lesson before, so a lesson does not
+         start cold (validation 2026-09-11, area 9). Optional per lesson. */
+      (o.recap ? '<p class="ovw-recap"><b>Last time</b>' + esc(o.recap) + "</p>" : "") +
       (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
       '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
       '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
-      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div>' +
+      (warm.length ? '<div class="warmup" id="' + el.stage + 'w"></div>' : "") + "</div>";
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
-      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+      say((o.recap ? "Last time. " + o.recap + " " : "") + "By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    /* WHAT DO YOU ALREADY KNOW? A short warm-up before any teaching
+       (validation 2026-09-11, area 11). It is never marked: a wrong guess is
+       not shown red, it is told the answer kindly, and what is reported is
+       participation - how many were answered - never a score, because a
+       mark before the lesson would read as a mark on the lesson. Skipping
+       it with Next is allowed; the step still ticks on leaving. */
+    if (warm.length) {
+      const box = $(el.stage + "w");
+      let q = 0, answered = 0, lock = false;
+      const paintQ = () => {
+        const it = warm[q];
+        box.innerHTML = '<h4 class="warm-h">Before you start: what do you already know? <span>' + (q + 1) + " of " + warm.length + "</span></h4>" +
+          '<p class="warm-q">' + (it.pic ? '<span class="cpic" aria-hidden="true">' + small(it.pic) + "</span> " : "") + it.ask + "</p>" +
+          '<div class="choices stack">' + shuffle(it.opts).map((op) => '<button type="button" class="choice text" data-ok="' + (op.ok ? 1 : 0) + '">' + op.t + "</button>").join("") + "</div>";
+        lock = false;
+      };
+      box.addEventListener("click", (e) => {
+        const b = e.target.closest(".choice"); if (!b || lock) return;
+        lock = true; answered++;
+        const it = warm[q], ok = b.dataset.ok === "1";
+        box.querySelectorAll(".choice").forEach((x) => { x.disabled = true; if (x.dataset.ok === "1") x.classList.add("right"); });
+        const line = ok ? "You knew it! " + it.why : "Good guess. " + it.why + " You will find out more in this lesson.";
+        $(el.fb).className = "fb" + (ok ? " good" : ""); $(el.fb).textContent = line; sayHere(o.finish, line);
+        SOUND.play(ok ? "ding" : "pop", 0.3);
+        setTimeout(() => {
+          q++;
+          if (q < warm.length) { paintQ(); return; }
+          box.innerHTML = '<p class="warm-done">Warm-up done: ' + answered + " of " + warm.length + " answered. Now press Next and start the lesson.</p>";
+          reportAttempt(o.finish, answered, warm.length, "warm-up questions");
+        }, 2400);
+      });
+      paintQ();
+    }
     /* NOT AT DRAW, AND NOT ON ARRIVAL. Every step draws at page load,
        before the reporting module exists, so a finish() here ticked this
        step where nothing could report it: the school's record never held
@@ -8896,24 +9186,25 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["💻", "Computer uses"], ["📱", "App opener"], ["🔀", "In and out"], ["🗂️", "Input or output"], ["🔍", "Hidden computers"], ["🤖", "Robot finder"], ["🗂️", "Robot judge"], ["👷", "Computers at work"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["💻", "Computer uses"], ["📱", "App opener"], ["📱", "Program picker"], ["🔀", "In and out"], ["🗂️", "Input or output"], ["🔍", "Hidden computers"], ["🤖", "Robot finder"], ["🗂️", "Robot judge"], ["👷", "Computers at work"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
   lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   tapCards(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Communication, entertainment, creativity, research, control. Five jobs for computers." }, LESSON.steps[3].data));
   appScreen(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Six programs on one computer. A computer can run many." }, LESSON.steps[4].data));
-  inputOutput(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Inputs put information in. Outputs give information out." }, LESSON.steps[5].data));
-  sortBins(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "In or out. Every device is one or the other, and a touchscreen is both." }, LESSON.steps[6].data));
-  sortBins(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "Computers hide inside washing machines, cars and watches, controlling what they do." }, LESSON.steps[7].data));
-  tapCards(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Robots work in factories, homes, hospitals, warehouses, under the sea and on Mars." }, LESSON.steps[8].data));
-  sortBins(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "A robot has a computer inside that makes it move and do a job." }, LESSON.steps[9].data));
-  tapCards(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "Doctors, pilots, farmers and shops all use computer systems." }, LESSON.steps[10].data));
-  gameZone(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[11].data));
-  homeProjects(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[12].data));
-  sequence(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "That is the whole lesson finished. You know what computers are for, and where they hide." }, LESSON.steps[13].data));
-  computingWorld(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Computing world is on its way." }, LESSON.steps[14].data));
-  resources(Object.assign({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, finish: 15, done: "Your resources are always here." }, LESSON.steps[15].data));
+  sortBins(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Four programs, one tablet, and a job for each." }, LESSON.steps[5].data));
+  inputOutput(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "Inputs put information in. Outputs give information out." }, LESSON.steps[6].data));
+  sortBins(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "In or out. Every device is one or the other, and a touchscreen is both." }, LESSON.steps[7].data));
+  sortBins(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Computers hide inside washing machines, cars and watches, controlling what they do." }, LESSON.steps[8].data));
+  tapCards(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "Robots work in factories, homes, hospitals, warehouses, under the sea and on Mars." }, LESSON.steps[9].data));
+  sortBins(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "A robot has a computer inside that makes it move and do a job." }, LESSON.steps[10].data));
+  tapCards(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "Doctors, pilots, farmers and shops all use computer systems." }, LESSON.steps[11].data));
+  gameZone(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[12].data));
+  homeProjects(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[13].data));
+  sequence(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "That is the whole lesson finished. You know what computers are for, and where they hide." }, LESSON.steps[14].data));
+  computingWorld(Object.assign({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, finish: 15, done: "Computing world is on its way." }, LESSON.steps[15].data));
+  resources(Object.assign({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17" }, finish: 16, done: "Your resources are always here." }, LESSON.steps[16].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

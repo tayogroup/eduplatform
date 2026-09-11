@@ -284,3 +284,13 @@ proves the map for that moment only. This run's map was intact: the 11 keys of
 the last Computing read-back were all still there, with Global Perspectives
 Grades 1 and 4 and Art & Design Grade 1 added by other sessions in between,
 and Mathematics Grades 3 and 4 and Science Grade 4 still absent as they were.
+
+## Redeployed 2026-09-11 with the validation fixes
+
+On the owner's instruction, with Grade 1: the kit's progress fix from the Grade 1
+validation (`04a1ff89f`), and the 44 px controls, the taller network map and the
+reworded Sort race (`ac37c2a2f`). 20 files uploaded, all verified on storage,
+every page byte-identical to HEAD, every edge path fresh. Lesson 1 was then
+played to the end on the live pages in Chromium: 0 console errors, every step
+stored and the lesson recorded complete, nothing ticked on a fresh open, and a
+reload after moving to step 4 opens step 4.

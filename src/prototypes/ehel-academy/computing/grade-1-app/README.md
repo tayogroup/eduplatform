@@ -266,8 +266,7 @@ bundle. Every earlier drive missed it because the local server does not serve th
 progress module. Fixed in the kit (`ONLEAVE` beside `ONSHOW`, see the kit README),
 verified on a local copy of the deployed layout, and committed with eight content
 corrections, three contrast fixes and three emoji replacements as `04a1ff89f`.
-**Not deployed**: until Grades 1 to 4 are redeployed, their live pages keep the
-defect.
+**Deployed 2026-09-11** with the remaining fixes below; see the last section.
 
 **The remaining fixes** (`ac37c2a2f`, the same day): three activities for the objectives
 that rested on one teaching step (lesson 6 records a week of weather on a form,
@@ -279,5 +278,16 @@ race question that read as broken English. The three new activities shift the
 step positions after them in lessons 6 to 8, so a record made there before the
 redeploy reads one step out. The browser driver is committed as
 `../lesson-kit/drive-lessons.mjs`, and its `--record` mode is what checks the
-school's record. Still not deployed.
+school's record. Deployed 2026-09-11.
 
+## Redeployed 2026-09-11 with the validation fixes
+
+On the owner's instruction, carrying both validation commits (`04a1ff89f`,
+`ac37c2a2f`): 14 files uploaded, all verified on storage, every page
+byte-identical to HEAD, every edge path fresh. Every lesson was then played to
+the end on the live pages in Chromium: 0 console errors, every step stored and
+the lesson recorded complete, nothing ticked on a fresh open, and a reload after
+moving to step 4 opens step 4. Before, the same live pages stored 14 of 16
+steps and reopened at step 1. The check reads the browser's own store; a real
+launch writes the same events to the school's server and was not observed from
+here. Grades 2 to 4 were redeployed with it.

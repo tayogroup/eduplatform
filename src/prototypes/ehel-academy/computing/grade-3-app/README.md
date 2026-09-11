@@ -268,3 +268,13 @@ Grade 4 deploy: 20 files PUT 201, all verified on storage by read-back, every
 edge path fresh, and the live bundle booted from the CDN in real Chromium with
 0 console errors, 0 failed requests and a real step driven to a tick. Live
 bytes are byte-identical to HEAD and carry the Stage 4 kit markers.
+
+## Redeployed 2026-09-11 with the validation fixes
+
+On the owner's instruction, with Grade 1: the kit's progress fix from the Grade 1
+validation (`04a1ff89f`), and the 44 px controls, the taller network map and the
+reworded Sort race (`ac37c2a2f`). 20 files uploaded, all verified on storage,
+every page byte-identical to HEAD, every edge path fresh. Lesson 1 was then
+played to the end on the live pages in Chromium: 0 console errors, every step
+stored and the lesson recorded complete, nothing ticked on a fresh open, and a
+reload after moving to step 4 opens step 4.

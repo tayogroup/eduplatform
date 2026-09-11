@@ -128,6 +128,58 @@ Mark checks (`CHECKS`): straight, wavy, zigzag, long, short, round, dots,
 thick, thin. Sounds (`BANK`): the Global Perspectives bank plus `dab`,
 `swish`, `squelch`, `stir`, `rustle`.
 
+## Recorded narration and the lecture video
+
+Since 2026-09-11 every lesson is heard in a RECORDED voice, and every lecture
+is a captioned video. Four tools, run in this order after the pages build:
+
+```bash
+K=../lesson-kit
+node $K/drive-lessons.mjs --app . --trace t.json      # every sentence the pages speak, Explain pressed on every step
+node $K/narrate.mjs       --app . --trace t.json --dry   # characters: ElevenLabs bills per character
+node $K/narrate.mjs       --app . --trace t.json         # record what is missing (never re-buys a clip)
+node $K/build-lectures.mjs --app .                    # one captioned mp4 per lesson, from those clips
+python $K/build-lessons.py --app . && …pipeline…      # the lecture step picks the video up
+node $K/check-narration.mjs --app . --trace t.json    # the gate
+node $K/deploy-media.mjs  --app . --upload            # media BEFORE the pages
+```
+
+- **One wrapper, no fork of voice.js.** Every spoken line goes through
+  `VOICE.speak` or `VOICE.follow`, so `lib/art.js` wraps those two and nothing
+  else. A line is split into sentences; each is looked up as
+  `media/tts/<cyrb53(sentence)>.mp3` in `media/tts/index.json`. If EVERY
+  sentence has a clip the clips play in order; if any is missing the whole line
+  goes to the engine as before — a sentence is never read by two voices.
+- **The same speaker either way.** Clips are ElevenLabs `XfNU2rGpBa01ckF309OY`,
+  the voice `quiz_tts.php` speaks at runtime, so a line composed at runtime
+  (a score, a child's own choice) and a recorded one sound like one person.
+  Offline, with no launch token, an unrecorded line falls to the browser voice.
+- **The text rules are defined once.** `speechText`, `sentencesOf` and
+  `cyrb53` sit between `NARRATION-TEXT` markers in `lib/art.js`; `narrate.mjs`,
+  `build-lectures.mjs` and `check-narration.mjs` lift them out of the file.
+  The gate holds `cyrb53` equal to `tools/lib/ehel-narration-hash.js`.
+- **What is recorded is measured, not guessed.** The driver's `--trace` records
+  every sentence the pages actually spoke in a full run with Explain pressed on
+  every step; `narrate.mjs` adds the sentences a correct run never reaches
+  (every `why`, `say`, `fact`, `done` in the data, and complete-sentence
+  literals in the scripts). `scripts.json` keeps hash → words for a human to
+  listen against. Capitals are sent lower-case ("what it IS like") so an
+  emphasis word is read, not spelled; the clip keeps the page's hash.
+- **The video IS the recording.** `build-lectures.mjs` holds each part's slide
+  (the lesson's palette, the part's picture, title and words) for exactly as
+  long as that part's recorded sentences last, joined with the page's own gap;
+  captions are one WebVTT cue per sentence, timed from the clips. It records
+  nothing — a missing sentence stops it and names the line.
+- **Media before pages, indexes last.** `deploy-media.mjs` uploads every clip,
+  video, caption and poster, reads them back from storage, and only then the
+  two `index.json` files — a page asks only for what its index lists, so it
+  can never request a path that is not there (an edge-cached 404 cannot be
+  purged with the key in `.env`). It never fetches through the edge.
+- **Chromium cannot play the videos, and that is not a defect.** Playwright's
+  Chromium ships without H.264/AAC; the driver presses *I watched it*. Playback
+  is checked in Microsoft Edge (`chromium.launch({ channel: "msedge" })`),
+  which is what learners' Chrome, Edge and Safari have.
+
 ## Rules that cost something to learn
 
 - **Nothing waits on `requestAnimationFrame`** — a hidden tab never paints,

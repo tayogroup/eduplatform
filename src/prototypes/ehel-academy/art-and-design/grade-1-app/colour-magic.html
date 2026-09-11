@@ -537,6 +537,13 @@
   .lec-h { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  /* the lecture video: the recorded lesson, captions on, the transcript below */
+  .lecvid { max-width: 42em; }
+  .lecturevideo { width: 100%; max-width: 720px; aspect-ratio: 16 / 9; border-radius: 18px; background: #000; border: 1px solid var(--line); }
+  .lecturevideo::cue { font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 1.05em; }
+  .lec-read { width: 100%; border: 1px solid var(--line); border-radius: 16px; background: var(--card); padding: 4px 14px; text-align: left; }
+  .lec-read summary { cursor: pointer; padding: 10px 2px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; color: var(--teal); }
+  .lec-read .lec { padding: 6px 0 14px; }
 
   /* ---- the words: a card opens a panel ---- */
   .cardsgrid.words { max-width: 720px; }
@@ -894,9 +901,9 @@
         <p class="score" id="score1"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1E.01 1E.02 1M.01 1R.02 1E.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson, told to you before you do it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to each part.</s><s>Look at the picture while you listen.</s><s>Press Next part to go on, and Listen again to hear it twice.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Listening is not the same as hearing.</s><s>Sit still, and actually listen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen.</s></mstts:express-as>' data-say="Listen to the lesson, one part at a time. Press Next part when you are ready.">
-      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Listen to the lesson, one part at a time. Press Next part when you are ready.</span></div>
+    <section class="slide" data-objectives="1E.01 1E.02 1M.01 1R.02 1E.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson, told to you before you do it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to each part.</s><s>Look at the picture while you listen.</s><s>Press Next part to go on, and Listen again to hear it twice.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Listening is not the same as hearing.</s><s>Sit still, and actually listen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen.</s></mstts:express-as>' data-say="Watch the lesson video, then press I watched it. You can read it part by part underneath instead.">
+      <div class="slide-head"><span class="n">2</span><h2>Lesson video</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Watch the lesson video, then press <b>I watched it</b>. You can read it part by part underneath instead.</span></div>
       <div class="stage">
         <div id="stage2"></div>
         <div class="choices" id="ch2"></div>
@@ -1115,7 +1122,7 @@
       },
       {
         "kind": "lecture",
-        "title": "Unit lecture",
+        "title": "Lesson video",
         "objectives": [
           "1E.01",
           "1E.02",
@@ -1150,7 +1157,11 @@
               "title": "Colour in a cloth",
               "say": "A weaver makes cloth in coloured stripes that come back again and again. Every colour was chosen on purpose. Cloth is art too."
             }
-          ]
+          ],
+          "video": "media/lecture/colour-magic.6c48ed9f.mp4",
+          "captions": "media/lecture/colour-magic.6c48ed9f.vtt",
+          "poster": "media/lecture/colour-magic.6c48ed9f.jpg",
+          "seconds": 59
         }
       },
       {
@@ -1786,7 +1797,7 @@
               "skill": "Sorting",
               "rounds": [
                 {
-                  "prompt": "Where does the sun go? ☀️",
+                  "prompt": "Where should the sun go? ☀️",
                   "choices": [
                     "Warm",
                     "Cool"
@@ -1795,7 +1806,7 @@
                   "explanation": "Yellow feels warm, like sunshine."
                 },
                 {
-                  "prompt": "Where does an ice cube go? 🧊",
+                  "prompt": "Where should an ice cube go? 🧊",
                   "choices": [
                     "Warm",
                     "Cool"
@@ -1804,7 +1815,7 @@
                   "explanation": "Pale blue feels cool, like ice."
                 },
                 {
-                  "prompt": "Where does a fire go? 🔥",
+                  "prompt": "Where should a fire go? 🔥",
                   "choices": [
                     "Warm",
                     "Cool"
@@ -1813,7 +1824,7 @@
                   "explanation": "Red and orange feel warm, like flames."
                 },
                 {
-                  "prompt": "Where does the sea go? 🌊",
+                  "prompt": "Where should the sea go? 🌊",
                   "choices": [
                     "Warm",
                     "Cool"
@@ -1822,7 +1833,7 @@
                   "explanation": "Blue feels cool, like deep water."
                 },
                 {
-                  "prompt": "Where does a pumpkin go? 🎃",
+                  "prompt": "Where should a pumpkin go? 🎃",
                   "choices": [
                     "Warm",
                     "Cool"
@@ -1831,7 +1842,7 @@
                   "explanation": "Orange feels warm."
                 },
                 {
-                  "prompt": "Where does blueberries go? 🫐",
+                  "prompt": "Where should blueberries go? 🫐",
                   "choices": [
                     "Warm",
                     "Cool"
@@ -1840,7 +1851,7 @@
                   "explanation": "Deep blue feels cool."
                 },
                 {
-                  "prompt": "Where does a tomato go? 🍅",
+                  "prompt": "Where should a tomato go? 🍅",
                   "choices": [
                     "Warm",
                     "Cool"
@@ -3746,11 +3757,15 @@
      name at call time, so every wrapper the build or the pipeline puts
      around it (the header bar\x27s percentage, a step\x27s arrival line)
      runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
   window.__ehelRestore = function (doneIdx, resumeIdx) {
-    /* read BEFORE the ticks land: the record\x27s own step 1 must not
-       count as the learner having touched it (measured: it did, and the
-       page stayed on step 1 with the dots restored) */
-    const untouched = cur === 0 && !done[0];
+    const untouched = cur === 0 && !ehelInteracted;
     let changed = false;
     for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
     if (changed) paintDots();
@@ -3937,6 +3952,112 @@
       if (!VOICE.speaking() || waited > 12000) { clearInterval(t); fn(); }
     }, 200);
   }
+  /* ==================================================================
+     RECORDED NARRATION
+
+     Every line this page speaks goes through VOICE.speak or VOICE.follow
+     (say() is one line in voice.js, the Explain button and the praise
+     banks call VOICE directly). So the recorded voice is ONE wrapper round
+     those two methods, here, and voice.js stays byte-identical to the
+     other kits' copy.
+
+     A line is split into sentences and each sentence is looked up by
+     cyrb53(sentence) in media/tts/index.json - the naming every other
+     subject's narration uses (tools/lib/ehel-narration-hash.js). If EVERY
+     sentence of the line has a clip, the clips play in order; if any does
+     not, the whole line goes to the voice engine exactly as before. All or
+     nothing, so a sentence is never read by two different voices. The
+     clips are the platform's own ElevenLabs voice (XfNU2rGpBa01ckF309OY,
+     the one quiz_tts.php speaks at runtime), so a line composed at runtime
+     and a recorded one are the same speaker.
+
+     The text functions sit between the two markers below and are the ONE
+     definition: lesson-kit/narrate.mjs lifts them out of this file to
+     decide what to record, and check-narration.mjs holds cyrb53 equal to
+     the shared one. Change a rule here and every hash moves with it.
+     ================================================================== */
+  /* NARRATION-TEXT-START */
+  const N_PICTO = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+  const N_ENT = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&nbsp;": " " };
+  /* the words of a line, SSML or not: a pause of 300ms or more stands for
+     the full stop it was written in place of, as on the platform path */
+  function speechText(x) {
+    let s = String(x == null ? "" : x);
+    s = s.replace(/<break[^>]*time="(\d+)ms"[^>]*\/?>/g, (m, ms) => (Number(ms) >= 300 ? "  " : " "));
+    s = s.replace(/<[^>]+>/g, " ");
+    s = s.replace(/&(amp|lt|gt|quot|#39|nbsp);/g, (m) => N_ENT[m]);
+    s = s.replace(N_PICTO, " ");
+    s = s.replace(/([^.!?…\s])\s*/g, "$1.").replace(//g, " ");
+    return s.replace(/\s+/g, " ").replace(/\s+([.,!?…])/g, "$1").trim();
+  }
+  function sentencesOf(x) {
+    const t = speechText(x);
+    if (!t) return [];
+    return (t.match(/[^.!?…]+(?:[.!?…]+["'”’)]*|$)/g) || [])
+      .map((u) => u.replace(/\s+/g, " ").trim()).filter((u) => /[A-Za-z0-9]/.test(u));
+  }
+  function cyrb53(str, seed = 0) {
+    let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+    for (let i = 0; i < str.length; i += 1) {
+      const ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+  }
+  /* NARRATION-TEXT-END */
+
+  const NARRATION = (function () {
+    const BASE = "media/tts/";
+    const el = typeof Audio === "function" ? new Audio() : null;
+    let have = null, queue = [], after = [], playing = false, token = 0, line = null;
+    const log = window.__artNarrationLog = window.__artNarrationLog || [];
+    try {
+      fetch(BASE + "index.json").then((r) => (r.ok ? r.json() : null))
+        .then((j) => { if (j && Array.isArray(j.clips)) have = new Set(j.clips); })
+        .catch(() => { /* no recordings: every line goes to the voice engine */ });
+    } catch (_) { /* no fetch: the same */ }
+    const ORIG = { speak: VOICE.speak, follow: VOICE.follow, stop: VOICE.stop, speaking: VOICE.speaking };
+    function clipsFor(x) {
+      const ss = sentencesOf(x);
+      const hs = ss.map((s) => cyrb53(s));
+      const ok = !!(have && el && hs.length && hs.every((h) => have.has(h)));
+      if (log.length < 4000) log.push({ s: ss, ok });
+      return ok ? hs : null;
+    }
+    function on(v) { playing = v; document.body.classList.toggle("voice-on", v); }
+    function halt() { token++; queue = []; try { el.pause(); el.removeAttribute("src"); } catch (_) { /* nothing */ } on(false); }
+    function run(t) {
+      if (t !== token) return;
+      const h = queue.shift();
+      if (!h) { on(false); const next = after.shift(); if (next) next(); return; }
+      el.src = BASE + h + ".mp3";
+      el.onended = () => setTimeout(() => run(t), 160);
+      el.onerror = () => run(t);   /* a clip that will not load must not wedge the rest */
+      const p = el.play();
+      /* a refused play (autoplay policy) hands the whole line to the engine */
+      if (p && p.catch) p.catch(() => { if (t === token && line != null) { const x = line; halt(); ORIG.speak(x); } });
+    }
+    VOICE.speak = function (x) {
+      const hs = clipsFor(x);
+      halt(); after = [];
+      if (!hs) { ORIG.speak(x); return; }
+      ORIG.stop(); line = x; queue = hs.slice(); on(true); run(token);
+    };
+    VOICE.follow = function (x) {
+      const hs = clipsFor(x);
+      if (playing) { if (hs) queue.push(...hs); else after.push(() => ORIG.follow(x)); return; }
+      if (hs && !ORIG.speaking()) { line = x; queue = hs.slice(); on(true); run(token); return; }
+      ORIG.follow(x);
+    };
+    VOICE.stop = function () { halt(); after = []; ORIG.stop(); };
+    VOICE.speaking = function () { return playing || ORIG.speaking(); };
+    return { ready: () => !!have, count: () => (have ? have.size : 0) };
+  })();
+  window.__artNarration = { sentencesOf, speechText, cyrb53, ready: () => NARRATION.ready(), count: () => NARRATION.count() };
+
   /* one multiple-choice question drawn into the slide's own choices row;
      `okOf` decides which option is right, so a renderer can key by a
      computed relationship rather than by a flag. */
@@ -5173,12 +5294,22 @@
   function lecture(o) {
     const el = o.el;
     const parts = o.parts || [];
-    let k = 0, furthest = 0;
+    let k = 0, furthest = 0, over = false;
     const id = el.stage + "l";
+    /* the part-by-part view: the whole step when there is no video, and the
+       transcript under the video when there is one */
+    const host = () => $(o.video ? id + "parts" : el.stage);
+    function done() {
+      if (over) return;
+      over = true;
+      $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+      reportAttempt(o.finish, parts.length, parts.length, "parts");
+      finish(o.finish, o.done);
+    }
     function paint() {
       const p = parts[k];
-      $(el.stage).className = "stagewide";
-      $(el.stage).innerHTML =
+      if (!o.video) $(el.stage).className = "stagewide";
+      host().innerHTML =
         '<div class="lec">' +
         '<p class="phase">Part ' + (k + 1) + " of " + parts.length + "</p>" +
         (p.scene ? '<div class="sim picbox">' + sceneSvgOf(p.scene) + "</div>" : picHtml(p.pic, "pic lecpic")) +
@@ -5189,25 +5320,56 @@
         (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : "") +
         '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? "Next part &#9654;" : "I heard it all &#10003;") + "</button>" +
         "</div>" +
-        '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>' +
+        (o.video ? "" : '<p class="lec-note">Read aloud by the lesson\'s voice.</p>') +
         "</div>";
       furthest = Math.max(furthest, k + 1);
-      reportAttempt(o.finish, furthest, parts.length, "parts");
-      $(el.score).textContent = furthest + " of " + parts.length + " parts heard";
+      if (!o.video) {
+        reportAttempt(o.finish, furthest, parts.length, "parts");
+        $(el.score).textContent = furthest + " of " + parts.length + " parts heard";
+      }
       $(id + "hear").addEventListener("click", () => say(p.title + ". " + p.say));
       if (k > 0) $(id + "back").addEventListener("click", () => { k--; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
       $(id + "next").addEventListener("click", () => {
         if (k + 1 < parts.length) { k++; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
-        else {
-          $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
-          reportAttempt(o.finish, parts.length, parts.length, "parts");
-          finish(o.finish, o.done);
-        }
+        else done();
       });
     }
     if (!parts.length) return;
+    if (!o.video) {
+      paint();
+      ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+      return;
+    }
+    /* THE VIDEO, in the English build's shape: captions on by default, and
+       the poster held back until the step is reached - every slide is in the
+       DOM at once, so a `poster` attribute here would be fetched on page
+       load for a step a child may never open. It rides data-poster and is
+       promoted by the ONSHOW hook. The video and its captions are the same
+       recorded sentences the Listen buttons below play. */
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="lec lecvid">' +
+      '<video id="' + id + 'v" class="lecturevideo" controls playsinline preload="metadata" data-poster="' + esc(o.poster || "") + '">' +
+      '<source src="' + esc(o.video) + '" type="video/mp4">' +
+      (o.captions ? '<track kind="captions" srclang="en" label="English" src="' + esc(o.captions) + '" default>' : "") +
+      "</video>" +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + id + 'watched">I watched it &#10003;</button></div>' +
+      '<details class="lec-read"><summary>Read it part by part instead</summary><div id="' + id + 'parts"></div></details>' +
+      "</div>";
+    const video = $(id + "v");
+    $(el.score).textContent = parts.length + " parts" + (o.seconds ? " · " + Math.max(1, Math.round(o.seconds / 60)) + " min" : "");
+    video.addEventListener("play", () => { try { VOICE.stop(); } catch (_) { /* nothing */ } });
+    video.addEventListener("timeupdate", () => {
+      if (!o.seconds) return;
+      const heard = Math.min(parts.length, Math.ceil(video.currentTime / o.seconds * parts.length));
+      if (heard > furthest) { furthest = heard; reportAttempt(o.finish, furthest, parts.length, "parts"); }
+    });
+    video.addEventListener("ended", done);
+    $(id + "watched").addEventListener("click", () => { try { video.pause(); } catch (_) { /* nothing */ } done(); });
     paint();
-    ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+    ONSHOW[o.finish] = () => {
+      if (video.dataset.poster && !video.getAttribute("poster")) video.setAttribute("poster", video.dataset.poster);
+    };
   }
 
   /* ---- the art words: hear each one, then show you know them ---- */

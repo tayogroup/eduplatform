@@ -202,6 +202,10 @@ def main():
                 if len(d.get("fallback") or []) < 2 or set(st["objectives"]) != JOURNAL_CODES or len(d.get("changes") or []) < 3:
                     fail(entry["file"], "step %d's journal has fewer than 2 things made, or the wrong codes, or too few changes" % k)
                 computed += 1
+            elif kind == "lecture":
+                for key in ("video", "captions", "poster"):
+                    if d.get(key) and not os.path.isfile(os.path.join(HERE, d[key])):
+                        fail(entry["file"], "step %d names %s %s, which is not beside the page" % (k, key, d[key]))
             elif kind == "source":
                 ids = {sp["id"] for sp in d["spots"]}
                 keyed = [o for o in (d.get("then") or {}).get("opts", []) if o.get("spot")]

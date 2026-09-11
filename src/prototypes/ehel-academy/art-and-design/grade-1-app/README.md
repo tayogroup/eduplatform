@@ -11,10 +11,11 @@ was built from is [PROMPT.md](PROMPT.md).
 
 **The content is Cambridge Primary Art & Design 0067, Stage 1 — all 10
 learning objectives, pitched at the framework's own Stages 1–2 progression
-text.** Art & Design is a NEW subject for the platform: there is no Word-pack
-course beside this, no `catalog.json` entry, no Moodle course and no
-`repoint-grade.php` row. `courseKey` is `ehel-art-g01` so the shared tools have
-a name to write progress under; nothing reads it yet.
+text.** Art & Design is a NEW subject for the platform, with no Word-pack
+course beside this: the catalogue's `ehel-art-g01` is generated from this
+build's own lesson list, and since 2026-09-10 it is Moodle course
+`EHEL-ART-G01` (id 83), routed here by `ehel_app_url_overrides` (see
+[GO-LIVE.md](GO-LIVE.md)).
 
 | | |
 | --- | --- |
@@ -49,7 +50,15 @@ python $T/add-header-bars.py        --app .
 python $T/check-lessons.py          --app .    # the shared gate
 python $K/check-coverage.py         --app .    # the curriculum gate
 node   $K/drive-lessons.mjs         --app .    # every step of every lesson, in Chromium; add --width 375
-node   $T/deploy.mjs                --app .    # plan only; --upload is an owner decision
+
+# recorded narration and the lecture videos (see the kit README)
+node   $K/drive-lessons.mjs  --app . --trace t.json   # what the pages actually say
+node   $K/narrate.mjs        --app . --trace t.json --dry   # characters first: ElevenLabs bills per character
+node   $K/narrate.mjs        --app . --trace t.json         # record only what is missing
+node   $K/build-lectures.mjs --app .                  # then rebuild the pages so the lecture step picks it up
+node   $K/check-narration.mjs --app . --trace t.json  # the narration gate
+node   $K/deploy-media.mjs   --app . --upload         # MEDIA FIRST
+node   $T/deploy.mjs                --app .    # then the pages; plan only without --upload
 ```
 
 `build-lessons.py` writes each page from scratch, so re-running it throws the
@@ -106,6 +115,25 @@ done on the screen rather than told:
   the child made — the mix, the marks, the pattern, the material, the fix —
   asks which they made first, and what they would change next time. The last is
   never marked. Lesson 8's journal reads every lesson's record.
+
+## Recorded narration and the lecture videos
+
+Every lesson is heard in a recorded voice, and every lecture is a captioned
+video (2026-09-11, fixing the validation report's multimedia finding).
+
+| | |
+| --- | --- |
+| clips | 2,214 sentences, `media/tts/<cyrb53>.mp3`, ElevenLabs `XfNU2rGpBa01ckF309OY` (the platform's own runtime voice) |
+| cost | 73,030 characters sent in three runs (71,276 + 1,665 top-up + 88) |
+| heard from recordings | 1,725 of 1,725 spoken lines in a full run with Explain pressed on every step (100%; gate floor 99%) |
+| lecture videos | 8, 55–63 s each, 897–1,020 KB, 21–29 WebVTT captions each, poster per lesson |
+
+The lecture step is now the video, with the part-by-part lesson kept
+underneath as its transcript ("Read it part by part instead"). A line the
+page composes that has no recording (a score, a wrong-path sentence nobody
+traced) goes to the voice engine whole, which on the platform is the same
+speaker. `media/tts/scripts.json` holds the words of every clip, for a person
+listening back.
 
 ## Coverage, and how it is held
 
@@ -168,6 +196,19 @@ authored, not computed. Nothing here has had a human reading.
 - **A reversal is an accumulated bend.** The first stroke judge counted a crest
   only when a single sample turned more than 8°, and a smooth wave never does,
   so no wavy line was ever wavy. Also found by the driver, on its first run.
+- **Media before pages.** `deploy-media.mjs` then `deploy.mjs`: a page asks
+  only for clips its index lists, and the index goes up last, after every clip
+  has read back identical from storage. Reversing the order is how a page
+  requests a path that does not exist yet, and that 404 is edge-cached.
+- **Wording changes re-record.** A clip is named for its exact sentence, so
+  editing a line leaves the old clip orphaned and the new one unrecorded until
+  `narrate.mjs` runs; `check-narration.mjs` fails on both. Prune orphans with
+  `--prune` only alongside `--trace` and the templates, or a clip reachable
+  only by a button the run never pressed goes with them (it happened: eight
+  lecture titles).
+- **Playwright's Chromium cannot play the videos** (no H.264/AAC), so the
+  driver presses *I watched it* and ignores the aborted request; playback is
+  checked in Edge.
 - **Two spots on one picture must not overlap** (34px glyphs, so keep centres
   60px apart): the mask's carved lines and its dots did, and a real click could
   not land on one of them.
@@ -232,13 +273,22 @@ the staged files and their hashes, are in [GO-LIVE.md](GO-LIVE.md).
   sentence; Flesch-Kincaid grade 2.1 to 3.8 (Lesson 8, which sums the year, is
   the highest). Every line is read aloud by the voice engine, so the level is a
   ceiling, not a gate. No US spellings.
-- `deploy.mjs --app .` plans 14 files to `app/art-and-design/grade-1-v2`
-  without uploading.
+- Narration and video, 2026-09-11: every lesson driven again at 1100px and
+  375px, still 100% with every sticker and no overflow; 1,725 of 1,725 spoken
+  lines played from recordings; the lecture videos played with captions in
+  Microsoft Edge 152, locally and live from the CDN. `check-narration.mjs`
+  mutation-tested thirteen ways (a missing, unlisted or truncated clip; words
+  that hash elsewhere or are absent; another voice; an empty index; a drifted
+  `cyrb53`; a caption file that is not WebVTT; a missing video; an unrecorded
+  lecture sentence; coverage under the floor; a trace with no floor) — thirteen
+  caught, thirteen distinct lines, every file restored byte-identical.
+- Deployed: 2,240 media files (78.7 MB) read back identical from storage, then
+  the 9 pages, then booted live.
 
 ## What was deliberately not done
 
-The Moodle-side steps (they need the box: see GO-LIVE.md); recorded
-narration (the voice engine speaks); anything at Stage 2; saving
+The Moodle-side steps (they need the box: see GO-LIVE.md); anything at Stage
+2; saving
 a child's drawing anywhere (the journal lives in the page and is gone on
 reload, which the journal's own wording allows for); a human reading of the
 content.

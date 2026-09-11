@@ -237,6 +237,13 @@
   .lec-h { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  /* the lecture video: the recorded lesson, captions on, the transcript below */
+  .lecvid { max-width: 42em; }
+  .lecturevideo { width: 100%; max-width: 720px; aspect-ratio: 16 / 9; border-radius: 18px; background: #000; border: 1px solid var(--line); }
+  .lecturevideo::cue { font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 1.05em; }
+  .lec-read { width: 100%; border: 1px solid var(--line); border-radius: 16px; background: var(--card); padding: 4px 14px; text-align: left; }
+  .lec-read summary { cursor: pointer; padding: 10px 2px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; color: var(--teal); }
+  .lec-read .lec { padding: 6px 0 14px; }
 
   /* ---- the words: a card opens a panel ---- */
   .cardsgrid.words { max-width: 720px; }

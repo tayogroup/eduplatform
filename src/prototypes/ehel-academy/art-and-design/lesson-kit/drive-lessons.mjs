@@ -31,6 +31,12 @@ const ONLY = arg("--only", null);
 const WIDTH = Number(arg("--width", "1100"));
 const PORT = Number(arg("--port", "4310"));
 const PAR = Number(arg("--parallel", "4"));
+/* --trace <file>: also press Explain on every step, and write every sentence
+   the page spoke (window.__artNarrationLog, recorded by lib/art.js) to <file>,
+   with how many spoken lines were fully covered by recorded clips. It is the
+   list narrate.mjs records from, and the measurement of how much of a lesson
+   is heard in the recorded voice. */
+const TRACE = arg("--trace", null);
 const HERE = path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
 const REPO = path.resolve(HERE, "../../../../..");
 const cfgPath = path.join(APP, "app.config.json");
@@ -84,7 +90,14 @@ const SHAPES = {
 const PLAY = {
   overview: async () => {},
   world: async () => {},
-  lecture: async (page, st, n, d) => { for (let k = 0; k < d.parts.length; k++) { await page.click("#stage" + n + "lnext"); await sleep(200); } },
+  /* with a video the child watches (or presses I watched it); the transcript
+     is behind a <details>, so it is opened and played through too, which is
+     what proves the recorded Listen lines play */
+  lecture: async (page, st, n, d) => {
+    if (d.video) { await page.click("#stage" + n + " .lec-read summary"); await sleep(200); }
+    for (let k = 0; k < d.parts.length; k++) { await page.click("#stage" + n + "lnext"); await sleep(200); }
+    if (d.video) { const w = page.locator("#stage" + n + "lwatched"); if (await w.count()) { await w.click(); await sleep(200); } }
+  },
   words: async (page, st, n, d) => {
     for (let k = 0; k < d.items.length; k++) { await page.click('#stage' + n + 'wg .wordcard[data-k="' + k + '"]'); await sleep(150); }
     await page.click("#stage" + n + "wgo"); await sleep(300);
@@ -214,7 +227,10 @@ async function drive(browser, file, base) {
   const errors = [];
   page.on("pageerror", (e) => errors.push("pageerror: " + e.message));
   page.on("console", (m) => { if (m.type() === "error" && !PLATFORM_404.test(m.text()) && !PLATFORM_404.test((m.location() || {}).url || "")) errors.push("console: " + m.text() + " @ " + ((m.location() || {}).url || "")); });
-  page.on("requestfailed", (r) => { if (!PLATFORM_404.test(r.url())) errors.push("request: " + r.url()); });
+  /* Playwright's Chromium ships without H.264/AAC, so it aborts the lecture
+     video's request; that is this browser, not the page (playback is checked
+     in Edge - see the kit README). Any other failed request is a finding. */
+  page.on("requestfailed", (r) => { if (PLATFORM_404.test(r.url())) return; if (/\/media\/lecture\/[^/]+\.mp4$/.test(r.url()) && /ABORTED/.test((r.failure() || {}).errorText || "")) return; /* a recorded clip cut off by the next line (a child moving on mid-sentence) is aborted by design */ if (/\/media\/tts\/[0-9a-f]+\.mp3$/.test(r.url()) && /ABORTED/.test((r.failure() || {}).errorText || "")) return; errors.push("request: " + r.url() + " " + ((r.failure() || {}).errorText || "")); });
   await page.goto(base + file + "?from=" + cfg.fromParam, { waitUntil: "load" });
   await sleep(600);
   const steps = data.steps;
@@ -231,6 +247,7 @@ async function drive(browser, file, base) {
       const wide = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
       if (wide) overflow.push(n);
     }
+    if (TRACE) { try { await page.click(".slide.active .explain", { timeout: 3000 }); await sleep(150); } catch (_) { /* a step with no Explain */ } }
     const play = PLAY[st.kind];
     if (!play) throw new Error("no player for kind " + st.kind);
     try { await play(page, st, n, st.data); }
@@ -241,9 +258,10 @@ async function drive(browser, file, base) {
   const shelf = (await page.textContent("#fbstick")).trim();
   const pct = (await page.textContent("#ehPct")).trim();
   const doneDots = await page.locator("#dots button.done").count();
+  const narration = TRACE ? await page.evaluate(() => window.__artNarrationLog || []) : [];
   await ctx.close();
   const ok = got === steps.length && /Every sticker/.test(shelf) && pct === "100%" && errors.length === 0 && overflow.length === 0;
-  return { file, ok, got, steps: steps.length, shelf, pct, doneDots, errors, overflow, secs: Math.round((Date.now() - t0) / 1000) };
+  return { file, ok, got, steps: steps.length, shelf, pct, doneDots, errors, overflow, narration, secs: Math.round((Date.now() - t0) / 1000) };
 }
 
 async function main() {
@@ -266,6 +284,17 @@ async function main() {
     if (!r.ok) bad++;
     console.log("  " + (r.ok ? "ok  " : "FAIL") + " " + r.file.padEnd(28) + (r.steps ? r.got + "/" + r.steps + " stickers  " + r.pct + "  " : "") + r.secs + "s" + (r.overflow && r.overflow.length ? "  overflow at steps " + r.overflow.join(",") : ""));
     for (const e of r.errors || []) console.log("       " + e);
+  }
+  if (TRACE) {
+    const sentences = new Set(); let calls = 0, covered = 0;
+    const byLesson = {};
+    for (const r of results) {
+      let c = 0, k = 0;
+      for (const e of r.narration || []) { calls++; c++; if (e.ok) { covered++; k++; } for (const x of e.s) sentences.add(x); }
+      byLesson[r.file] = { lines: c, recorded: k };
+    }
+    fs.writeFileSync(TRACE, JSON.stringify({ width: WIDTH, lines: calls, recorded: covered, byLesson, sentences: [...sentences].sort() }, null, 1) + "\n");
+    console.log("\n  narration: " + calls + " spoken lines, " + covered + " (" + (calls ? Math.round(covered * 100 / calls) : 0) + "%) fully recorded; " + sentences.size + " distinct sentences -> " + TRACE);
   }
   console.log(bad ? "\n  " + bad + " lesson(s) did not finish clean\n" : "\n  every lesson ended at 100% with every sticker, no console errors" + (WIDTH <= 480 ? ", no horizontal overflow" : "") + "\n");
   process.exitCode = bad ? 1 : 0;

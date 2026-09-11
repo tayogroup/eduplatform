@@ -186,14 +186,29 @@ def swatch_pic(hex_):
             'stroke="rgba(0,0,0,0.25)" stroke-width="2"/></svg>' % hex_)
 
 
+LECTURES = {}
+_lec = os.path.join(APP, "media", "lecture", "index.json")
+if os.path.isfile(_lec):
+    LECTURES = load_json(_lec)
+
+
 def fill_derived(n, lesson, steps, everything):
     """Fill the fields a step leaves to the builder, from the lesson's own
     data or from every lesson's, so a claim about the course is never typed
     twice: a tone ladder's order from its swatches' lightness, a journal's
     fallback from the lesson's own making steps, a course-wide journal from
     every lesson's."""
+    slug = lesson["slug"]
     for k, s in enumerate(steps):
         d = s["data"]
+        if s["kind"] == "lecture" and slug in LECTURES:
+            # the recorded lesson (build-lectures.mjs): the step becomes the
+            # video, and the parts stay underneath as its transcript
+            v = LECTURES[slug]
+            d.update({"video": v["video"], "captions": v["captions"], "poster": v["poster"], "seconds": v["seconds"]})
+            s["title"] = "Lesson video"
+            s["ask"] = "Watch the lesson video, then press <b>I watched it</b>. You can read it part by part underneath instead."
+            s["say"] = "Watch the lesson video, then press I watched it. You can read it part by part underneath instead."
         if s["kind"] == "tone":
             ids = tone_order(d["swatches"])
             if ids is None:
@@ -464,6 +479,9 @@ def check_step(n, k, s, codes, js, steps):
     elif kind == "lecture":
         if len(d["parts"]) < 3:
             sys.exit("REFUSED: %s has fewer than 3 parts" % where)
+        for key in ("video", "captions", "poster"):
+            if d.get(key) and not os.path.isfile(os.path.join(APP, d[key])):
+                sys.exit("REFUSED: %s names %s %s, which is not on disk" % (where, key, d[key]))
         for p in d["parts"]:
             if not ((p.get("pic") or p.get("scene")) and p.get("title") and p.get("say")):
                 sys.exit("REFUSED: %s has a part without a pic, a title and something to say" % where)

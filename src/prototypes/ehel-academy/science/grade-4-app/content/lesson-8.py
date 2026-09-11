@@ -77,7 +77,7 @@ LESSON = {
                  ["Tap until each bar is right.", "Then say the pattern."],
                  [],
                  ["Build the bars, then answer."]),
-             {"columns_label": "Bounce", "value_label": "Height in marks", "unit": "mark", "bar": True,
+             {"columns_label": "Bounce", "value_label": "Height in marks", "unit": "marks", "bar": True,
               "columns": [{"pic": "1️⃣", "label": "first", "value": 3}, {"pic": "2️⃣", "label": "second", "value": 2}, {"pic": "3️⃣", "label": "third", "value": 1}],
               "pattern": {"ask": "What is the pattern?",
                           "opts": [opt("Each bounce is lower than the one before, as energy is transferred away", True), opt("Each bounce is higher", False), opt("There is no pattern", False)],

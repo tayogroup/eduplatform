@@ -7,7 +7,7 @@ from a source is blocked; 3Ps.03 the size of a shadow depends on where the
 object and the light source are; with 3TWSp.03, 3TWSa.03, 3TWSc.01,
 3TWSp.01 and 3SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "light-and-shadows",
@@ -19,7 +19,7 @@ LESSON = {
              explain(
                  ["Light goes straight through some materials, gets partly through others, and is blocked by the rest."],
                  ["Glass: straight through. Transparent.", "Tracing paper: some gets through, blurred. Translucent.", "A book: none. Opaque."],
-                 ["Children think thin means see-through.", "A thin sheet of foil is opaque. It is the material, not the thickness."],
+                 ["Children think thin means see-through.", "Thin does not always mean see-through: thin foil is opaque."],
                  ["Predict for each one, then shine the torch."]),
              {"sim": "lightThrough", "ask": "Shine the torch at the %s. Will the light get through?", "tryLabel": "Shine the torch",
               "choices": [{"id": "through", "t": "all through", "pic": "☀️"}, {"id": "some", "t": "some through", "pic": "\U0001F324️"}, {"id": "blocked", "t": "blocked", "pic": "\U0001F311"}],
@@ -27,10 +27,10 @@ LESSON = {
                   {"pic": "\U0001FA9F", "label": "window glass", "answer": "through", "why": "Light goes straight through glass. Transparent."},
                   {"pic": "\U0001F4C4", "label": "tracing paper", "answer": "some", "why": "Some light gets through, but blurred. Translucent."},
                   {"pic": "\U0001F4D5", "label": "a book", "answer": "blocked", "why": "No light gets through a book. Opaque."},
-                  {"pic": "\U0001F9F4", "label": "a clear plastic bottle", "answer": "through", "why": "Clear plastic lets light straight through. Transparent."},
-                  {"pic": "\U0001F6BF", "label": "a frosted bathroom window", "answer": "some", "why": "Light gets through, but you cannot see shapes clearly. Translucent."},
+                  {"pic": icon("bottle"), "label": "a clear plastic bottle", "answer": "through", "why": "Clear plastic lets light straight through. Transparent."},
+                  {"pic": icon("window"), "label": "a frosted bathroom window", "answer": "some", "why": "Light gets through, but you cannot see shapes clearly. Translucent."},
                   {"pic": "\U0001F6AA", "label": "a wooden door", "answer": "blocked", "why": "Wood blocks light completely. Opaque."},
-                  {"pic": "\U0001F9F3", "label": "a thin plastic bag", "answer": "some", "why": "A milky plastic bag lets some light through, blurred. Translucent."},
+                  {"pic": icon("tissue"), "label": "a sheet of tissue paper", "answer": "some", "why": "Tissue paper lets some light through, blurred. Translucent."},
                   {"pic": "\U0001F9F1", "label": "a brick", "answer": "blocked", "why": "A brick blocks all the light. Opaque."},
               ]},
              "Transparent, translucent, opaque: all through, some through, none."),
@@ -43,17 +43,17 @@ LESSON = {
                  ["Children call tissue paper transparent.", "Hold it up. You see light, but not shapes. Translucent."],
                  ["Can you see clearly through it, a bit, or not at all?"]),
              {"ask": "Transparent, translucent or opaque?",
-              "bins": [{"id": "trans", "label": "Transparent", "pic": "\U0001FA9F"}, {"id": "lucent", "label": "Translucent", "pic": "\U0001F324️"}, {"id": "opaque", "label": "Opaque", "pic": "\U0001F311"}],
+              "bins": [{"id": "trans", "label": "Transparent", "pic": "\U0001F453"}, {"id": "lucent", "label": "Translucent", "pic": "\U0001F324️"}, {"id": "opaque", "label": "Opaque", "pic": "\U0001F311"}],
               "items": [
                   {"pic": "\U0001F4A7", "label": "clear water", "bin": "trans", "why": "You can see straight through clear water."},
                   {"pic": "\U0001F4C4", "label": "greaseproof paper", "bin": "lucent", "why": "Light gets through, blurred."},
                   {"pic": "\U0001F944", "label": "a metal spoon", "bin": "opaque", "why": "No light gets through metal."},
                   {"pic": "\U0001FA9F", "label": "a window", "bin": "trans", "why": "Window glass is transparent."},
                   {"pic": "\U0001F9F1", "label": "a brick wall", "bin": "opaque", "why": "A wall blocks all light."},
-                  {"pic": "\U0001F9FB", "label": "cling film", "bin": "trans", "why": "Clear film lets light straight through."},
-                  {"pic": "\U0001F9FB", "label": "a paper tissue", "bin": "lucent", "why": "Hold it to the light: glow, but no shapes."},
+                  {"pic": icon("clingfilm"), "label": "cling film", "bin": "trans", "why": "Clear film lets light straight through."},
+                  {"pic": icon("tissue"), "label": "a paper tissue", "bin": "lucent", "why": "Hold it to the light: glow, but no shapes."},
                   {"pic": "\U0001FAA8", "label": "a stone", "bin": "opaque", "why": "Stone blocks light completely."},
-                  {"pic": "\U0001F576️", "label": "dark sunglasses", "bin": "lucent", "why": "Some light gets through, dimmed."},
+                  {"pic": "\U0001F3EE", "label": "a paper lampshade", "bin": "lucent", "why": "It glows when the lamp is on, but you cannot see the bulb clearly through it."},
               ]},
              "Transparent, translucent, opaque."),
 
@@ -101,22 +101,33 @@ LESSON = {
              {"pic": "\U0001F526",
               "questions": ["Does the shadow get bigger if the torch moves further away?", "Does a translucent object make a fainter shadow than an opaque one?", "Does the shadow change shape if you turn the toy round?"],
               "findOut": {"ask": "You want to know if a translucent object makes a fainter shadow. How would you find out?",
-                          "opts": [opt("Shine the same torch at a book, then at tracing paper, from the same place, and compare the shadows", True), opt("Guess", False), opt("Look at the Sun", False)],
-                          "why": "Same torch, same place, only the object changes. A fair test that answers the question."}},
+                          "opts": [opt("Shine the same torch at a book, then at tracing paper, from the same place, and compare the shadows", True), opt("Guess", False), opt("Ask a friend", False)],
+                          "why": "Same torch, same place, only the object changes. A fair test that answers the question."},
+              "findOuts": [
+                  {"ask": "You want to know if the shadow changes when the torch moves further away. How would you find out?",
+                   "opts": [opt("Keep the toy and the wall still, move only the torch back, and look at the shadow each time", True), opt("Move the toy and the torch together", False), opt("Guess", False)],
+                   "why": "Change only where the torch is. Keep the toy and the wall where they are. That is a fair test."},
+                  {"ask": "You want to know if a translucent object makes a fainter shadow. How would you find out?",
+                   "opts": [opt("Shine the same torch at a book, then at tracing paper, from the same place, and compare the shadows", True), opt("Guess", False), opt("Ask a friend", False)],
+                   "why": "Same torch, same place, only the object changes. A fair test that answers the question."},
+                  {"ask": "You want to know if the shadow changes shape when you turn the toy round. How would you find out?",
+                   "opts": [opt("Keep the torch and the toy in the same place, turn only the toy, and draw round the shadow each time", True), opt("Move the torch nearer each time you turn the toy", False), opt("Ask a friend", False)],
+                   "why": "Change one thing, the way the toy faces, and keep the rest the same. Drawing round the shadow lets you compare the shapes."},
+              ]},
              "Ask, then test, changing only one thing."),
 
         step("context", "What people thought about light", "\U0001F4DC", "Light long ago", ["3SIC.01", "3Ps.02"],
              "Ideas about light have changed. Tap each one.",
              explain(
                  ["What people know changes when they test their ideas."],
-                 ["Long ago, some people thought eyes sent out beams to see things.", "Testing showed light comes FROM a source INTO the eye.",
+                 ["Long ago, some people thought eyes sent out beams to see things.", "Testing showed light comes from a source into the eye.",
                   "People used shadows to tell the time with sundials.", "Shadow puppets are thousands of years old."],
                  [],
                  ["Tap each one."]),
              {"items": [
                  {"pic": "\U0001F441️", "label": "beams from the eyes", "say": "Long ago, some people thought our eyes sent out beams that touched things so we could see them. It seemed sensible. It was wrong."},
                  {"pic": "\U0001F526", "label": "light into the eye", "say": "Testing showed the truth: light comes from a source, bounces off things, and goes into your eye. In a dark room, your eyes cannot see, however hard they look."},
-                 {"pic": "\U0001F55B", "label": "a sundial", "say": "Thousands of years ago people told the time with a sundial: a stick whose shadow swings round as the Sun crosses the sky."},
+                 {"pic": "\U0001F55B", "label": "a sundial", "say": "Thousands of years ago people told the time with a sundial: a stick whose shadow swings round as the Sun seems to cross the sky."},
                  {"pic": "\U0001F3AD", "label": "shadow puppets", "say": "Shadow puppets are opaque shapes held between a lamp and a screen. People have told stories with them for over two thousand years."},
              ], "need": 4,
               "then": {"ask": "Why can you not see in a completely dark room?",
@@ -150,12 +161,13 @@ LESSON = {
              {"items": [
                  q("Which material is transparent?", "\U0001FA9F", "window glass", ["a brick", "tracing paper", "a wooden door"], "All the light gets through."),
                  q("Which material is opaque?", "\U0001F311", "a metal spoon", ["clear water", "cling film"], "No light through metal."),
-                 q("A frosted bathroom window is...", "\U0001F6BF", "translucent", ["transparent", "opaque"], "Light, but no clear shapes."),
+                 q("A frosted bathroom window is...", icon("window"), "translucent", ["transparent", "opaque"], "Light, but no clear shapes."),
                  q("What two things do you need to make a shadow?", "\U0001F526", "a light source and something opaque to block it", ["two torches", "a mirror and water"], "Light, and something in its way."),
                  q("Torch off. What happens to the shadow?", "\U0001F311", "it disappears; no light, no shadow", ["it gets bigger", "it stays"], "A shadow is blocked light."),
                  q("The toy moves nearer the wall. The shadow...", "\U0001F9F8", "gets smaller", ["gets bigger", "stays the same"], "Less light blocked at the wall."),
                  q("What did some people long ago think about seeing?", "\U0001F441️", "that eyes sent out beams", ["that light comes from a source", "that shadows were alive"], "Testing showed it was wrong."),
                  q("Why is a shadow the same shape as the object?", "\U0001F464", "the object blocks the light in its own shape", ["the light copies it", "it is a reflection"], "Blocked in its own outline."),
+                 q("Why does a clear window make almost no shadow?", "\U0001FA9F", "light goes straight through it, so almost nothing is blocked", ["windows are too cold", "windows are too big"], "A shadow needs something that blocks the light. Transparent glass lets it through."),
              ]},
              "That is the whole lesson finished. You know how light and shadows work."),
     ],
@@ -166,6 +178,11 @@ LESSON["about"] = [
     "Say how a shadow is made.",
     "Predict and test what happens to a shadow when the object moves.",
     "Say how ideas about light have changed.",
+]
+
+LESSON["warmup"] = [
+    q("Which way does gravity pull things?", "⚽", "towards the centre of the Earth", ["up into the sky", "sideways"], "Gravity pulls everything towards the centre of the Earth."),
+    q("Which of these gives out its own light?", "\U0001F526", "a torch", ["a mirror", "a book"], "A torch makes its own light. A mirror only bounces light back."),
 ]
 
 LESSON["lecture"] = [
@@ -195,23 +212,23 @@ LESSON["words"] = [
     word("block", "\U0001F6D1", "To stop light getting through.",
          ["The book blocks the light.", "An opaque object blocks light completely."]),
     word("sundial", "\U0001F55B", "A clock that tells the time from the shadow of a stick in the Sun.",
-         ["People used a sundial long ago.", "The sundial's shadow moves as the Sun moves."]),
+         ["People used a sundial long ago.", "The sundial's shadow moves as the Sun seems to move."]),
 ]
 
 LESSON["home"] = [
-    home("Torch test", "A torch, a dark room, a tray of things: a glass, greaseproof paper, a book, a plastic bag, a spoon",
+    home("Torch test", "A torch, a dark room, a tray of things: a clear plastic cup, greaseproof paper, a book, a cloudy white plastic bag, a spoon, a piece of kitchen foil",
          ["Shine the torch through each thing at the wall.",
           "Say: all through, some through, or none.",
           "Sort them into three piles."],
-         "Transparent, translucent, opaque. Which pile is biggest?"),
+         "Transparent, translucent, opaque. Which pile is biggest? Is thin foil opaque?"),
     home("Shadow puppets", "A torch, a wall, your hands, a dark room",
          ["Make a rabbit or a dog with your hands between the torch and the wall.",
           "Move your hands nearer the torch. Then nearer the wall.",
           "Try a translucent thing, like a tissue, and see what shadow it makes."],
          "Nearer the torch, bigger. A translucent thing makes a faint grey shadow."),
     home("Make a sundial", "A stick or a pencil, a pot of soil or play dough, a sunny windowsill or garden, small stones",
-         ["Stand the stick up in the pot in the sun.",
+         ["Stand the stick up in the pot in the sun. Never look straight at the Sun.",
           "Every hour, put a stone at the tip of the shadow.",
           "Look at the curve of stones at the end of the day."],
-         "The shadow swings round as the Sun moves. That is how people told the time long ago."),
+         "The shadow swings round as the Sun seems to move across the sky. That is how people told the time long ago."),
 ]

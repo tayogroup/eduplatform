@@ -6,7 +6,7 @@ processes plants and animals share (nutrition, growth, movement,
 reproduction); 3TWSp.02 the five types of scientific enquiry; with
 3TWSp.01, 3TWSc.01 and 3SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "living-once-alive-never-alive",
@@ -19,7 +19,7 @@ LESSON = {
                  ["Plants and animals look very different, but they all do the same four things: they take in food, they grow, they move, and they make more of their own kind."],
                  ["Nutrition: a cat eats; a plant makes its food from sunlight.", "Growth: a kitten grows into a cat; a seedling grows into a tree.",
                   "Movement: a cat runs; a plant turns its leaves towards the light.", "Reproduction: cats have kittens; a plant makes seeds."],
-                 ["Children think plants do not move.", "They do, slowly: a sunflower turns to follow the Sun all day."],
+                 ["Children think plants do not move.", "They do, slowly: a young sunflower turns its head to follow the Sun across the sky."],
                  ["Tap all four and say which one a plant does too."]),
              {"items": [
                  {"pic": "\U0001F37D️", "label": "nutrition", "sub": "taking in food", "say": "Nutrition means taking in food. Animals eat. Plants make their own food from sunlight, water and air."},
@@ -27,7 +27,7 @@ LESSON = {
                  {"pic": "\U0001F3C3\U0001F3FE", "label": "movement", "sub": "moving by itself", "say": "Movement. A cat runs. A plant turns its leaves towards the light, slowly, all by itself."},
                  {"pic": "\U0001F423", "label": "reproduction", "sub": "making more", "say": "Reproduction means making more of your own kind. Hens lay eggs. Plants make seeds."},
              ], "need": 4,
-              "then": {"ask": "A sunflower turns its head to follow the Sun. Which life process is that?",
+              "then": {"ask": "A young sunflower turns its head to follow the Sun. Which life process is that?",
                        "opts": [opt("movement", True), opt("reproduction", False), opt("nutrition", False)],
                        "why": "Turning by itself is movement. Plants move too, just slowly."}},
              "Nutrition, growth, movement, reproduction. Plants and animals all do them."),
@@ -37,20 +37,20 @@ LESSON = {
              explain(
                  ["There are three groups, not two.", "A wooden chair is not alive, but the wood was once part of a living tree.", "A stone never was."],
                  ["A cat: living.", "A wooden chair: once alive, because it was a tree.", "A stone: never alive.",
-                  "A leather shoe: once alive, because leather is animal skin.", "A plastic cup: never alive. It was made in a factory."],
+                  "A leather shoe: once alive, because leather is animal skin.", "A plastic cup: never alive. Plastic is made from oil, which comes out of the ground. It never grew."],
                  ["Children put wood and paper with never alive.", "Ask: where did it come from? Wood and paper come from trees."],
                  ["Ask where it came from, then tap."]),
              {"ask": "Living, once alive, or never alive?",
-              "bins": [{"id": "living", "label": "Living", "pic": "\U0001F431"}, {"id": "once", "label": "Once alive", "pic": "\U0001FAB5"}, {"id": "never", "label": "Never alive", "pic": "\U0001FAA8"}],
+              "bins": [{"id": "living", "label": "Living", "pic": "\U0001F331"}, {"id": "once", "label": "Once alive", "pic": "\U0001FAB5"}, {"id": "never", "label": "Never alive", "pic": "\U0001F529"}],
               "items": [
                   {"pic": "\U0001F431", "label": "a cat", "bin": "living", "why": "A cat eats, grows, moves and can have kittens. Living."},
                   {"pic": "\U0001FA91", "label": "a wooden chair", "bin": "once", "why": "Wood comes from a tree, which was alive."},
                   {"pic": "\U0001FAA8", "label": "a stone", "bin": "never", "why": "A stone never ate, grew or moved by itself."},
                   {"pic": "\U0001F45E", "label": "a leather shoe", "bin": "once", "why": "Leather is the skin of an animal that was alive."},
-                  {"pic": "\U0001F964", "label": "a plastic cup", "bin": "never", "why": "Plastic is made in a factory. It was never alive."},
+                  {"pic": "\U0001F964", "label": "a plastic cup", "bin": "never", "why": "Plastic is made from oil, which comes out of the ground. It never grew."},
                   {"pic": "\U0001F333", "label": "an oak tree", "bin": "living", "why": "A tree takes in food, grows and makes acorns. Living."},
                   {"pic": "\U0001F4D6", "label": "a paper book", "bin": "once", "why": "Paper is made from mashed-up wood, from trees."},
-                  {"pic": "\U0001F9F4", "label": "a glass bottle", "bin": "never", "why": "Glass is made by melting sand. Never alive."},
+                  {"pic": icon("glass"), "label": "a drinking glass", "bin": "never", "why": "Glass is made by melting sand. Never alive."},
                   {"pic": "\U0001F9F6", "label": "a woollen jumper", "bin": "once", "why": "Wool grew on a living sheep."},
                   {"pic": "\U0001F344", "label": "a mushroom", "bin": "living", "why": "A mushroom grows, feeds and makes spores. It is living."},
               ]},
@@ -117,7 +117,7 @@ LESSON = {
              "The question tells you the enquiry."),
 
         step("ask", "Ask a question you can test", "❓", "Good questions", ["3TWSp.01", "3TWSp.02"],
-             "A scientist's question can be investigated. Pick a question about snails, then say how you would find out.",
+             "A scientist's question can be investigated. Pick a question about minibeasts, then say how you would find out.",
              explain(
                  ["A scientific question is one you can find an answer to by looking, testing, measuring or looking up."],
                  ["Do snails move faster on wet ground? You can test that.", "Which food do woodlice like best? You can test that too.", "Are snails nice? You cannot test that."],
@@ -127,7 +127,18 @@ LESSON = {
               "questions": ["Do snails move faster on wet ground or dry ground?", "Which food do woodlice like best?", "How many legs does a woodlouse have?"],
               "findOut": {"ask": "You want to know whether snails move faster on wet ground or dry. How would you find out?",
                           "opts": [opt("A fair test: same snail, same distance, wet then dry, and time it", True), opt("Guess", False), opt("Ask the snail", False)],
-                          "why": "Change one thing, the wetness, and keep everything else the same. That is a fair test, and it answers the question."}},
+                          "why": "Change one thing, the wetness, and keep everything else the same. That is a fair test, and it answers the question."},
+              "findOuts": [
+                  {"ask": "You want to know whether snails move faster on wet ground or dry. How would you find out?",
+                   "opts": [opt("A fair test: same snail, same distance, wet then dry, and time it", True), opt("Guess", False), opt("Ask the snail", False)],
+                   "why": "Change one thing, the wetness, and keep everything else the same. That is a fair test, and it answers the question."},
+                  {"ask": "You want to know which food woodlice like best. How would you find out?",
+                   "opts": [opt("Put small piles of different foods in a tray, add some woodlice, and count how many go to each food", True), opt("Guess", False), opt("Ask a friend which food they like", False)],
+                   "why": "Give the woodlice a choice and count where they go. Keep everything else the same, so only the food changes."},
+                  {"ask": "You want to know how many legs a woodlouse has. How would you find out?",
+                   "opts": [opt("Look closely with a magnifying glass and count, or look it up in a book", True), opt("Time it on wet ground", False), opt("Guess", False)],
+                   "why": "Observe closely and count, or do some research. A woodlouse has fourteen legs."},
+              ]},
              "A good question is one you can find out."),
 
         step("context", "Everyone uses science", "\U0001F468\U0001F3FE‍\U0001F33E", "Science at work", ["3SIC.03"],
@@ -138,7 +149,7 @@ LESSON = {
                  [],
                  ["Tap each one and say what science they use."]),
              {"items": [
-                 {"pic": "\U0001F469\U0001F3FE‍⚕️", "label": "vet", "say": "A vet knows what each animal needs to stay alive and healthy, and what to do when it is ill."},
+                 {"pic": "\U0001F415", "label": "vet", "say": "A vet knows what each animal needs to stay alive and healthy, and what to do when it is ill."},
                  {"pic": "\U0001F468\U0001F3FE‍\U0001F33E", "label": "farmer", "say": "A farmer knows what plants need to grow: water, light, warmth and good soil."},
                  {"pic": "\U0001F469\U0001F3FE‍⚕️", "label": "nurse", "say": "A nurse measures temperature and heartbeats, and knows what a healthy body does."},
                  {"pic": "\U0001F9D1\U0001F3FE‍\U0001F373", "label": "cook", "say": "A cook uses science every day: how heat changes food, and what keeps it safe to eat."},
@@ -156,7 +167,7 @@ LESSON = {
                  [],
                  ["Read the question, then tap."]),
              {"label": "Question", "items": [
-                 q("Which of these do plants AND animals do?", "\U0001F9EC", "grow", ["talk", "read", "drive"], "Growth is a life process every living thing shares."),
+                 q("Which of these do plants and animals both do?", "\U0001F9EC", "grow", ["talk", "read", "drive"], "Growth is a life process every living thing shares."),
                  q("A wooden spoon is...", "\U0001F944", "once alive", ["living", "never alive"], "Wood came from a living tree."),
                  q("A metal key is...", "\U0001F511", "never alive", ["living", "once alive"], "Metal comes from rock. It never lived."),
                  q("You want to know which paper towel soaks up the most water. Which enquiry?", "\U0001F4A7", "a fair test", ["research", "observing over time"], "Same amount of water, different towels: change one thing."),
@@ -173,13 +184,14 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("How many life processes did you learn?", "\U0001F9EC", "four: nutrition, growth, movement, reproduction", ["two: eating and sleeping", "one: breathing"], "Four, shared by plants and animals."),
-                 q("A leather belt is...", "\U0001F45E", "once alive", ["living", "never alive"], "Leather is animal skin."),
+                 q("A leather shoe is...", "\U0001F45E", "once alive", ["living", "never alive"], "Leather is animal skin."),
                  q("A mushroom is...", "\U0001F344", "living", ["once alive", "never alive"], "It grows, feeds and makes spores."),
-                 q("Which of these was NEVER alive?", "\U0001FAA8", "a glass bottle", ["a paper bag", "a cotton T-shirt", "a wooden pencil"], "Glass is melted sand. The others came from plants."),
+                 q("Which of these was never alive?", "\U0001FAA8", "a glass bottle", ["a paper bag", "a cotton T-shirt", "a wooden pencil"], "Glass is melted sand. The others came from plants."),
                  q("How does a plant move?", "\U0001F33B", "it turns its leaves and flowers towards the light", ["it walks", "it does not move at all"], "Slowly, but by itself."),
                  q("Drawing the Moon every night for a month is...", "\U0001F319", "observing over time", ["a fair test", "research"], "Watching the same thing change over time."),
                  q("Sorting leaves into groups by their shape is...", "\U0001F343", "identifying and classifying", ["pattern seeking", "a fair test"], "Putting things into groups by what they are like."),
                  q("Who uses science at work?", "\U0001F469\U0001F3FE‍⚕️", "vets, farmers, nurses and cooks", ["nobody", "only teachers"], "Everyone uses science. Many people use it all day."),
+                 q("You time a snail on wet ground, then on dry ground. Why use the same snail both times?", "\U0001F40C", "so only the ground changes, and the test is fair", ["so the snail does not get lonely", "because snails are slow"], "Change one thing only. A different snail might just be a faster snail."),
              ]},
              "That is the whole lesson finished. You know what makes something alive."),
     ],
@@ -190,6 +202,11 @@ LESSON["about"] = [
     "Sort things into living, once alive and never alive.",
     "Name the five types of scientific enquiry and match a question to one.",
     "Ask a question that can be investigated.",
+]
+
+LESSON["warmup"] = [
+    q("Which of these is a living thing?", "\U0001F331", "a seedling", ["a stone", "a spoon"], "A seedling grows, and one day it makes seeds of its own. It is alive."),
+    q("What does a plant need to grow well?", "\U0001F4A7", "water and light", ["sweets and toys", "only darkness"], "A plant needs water and light to grow."),
 ]
 
 LESSON["lecture"] = [
@@ -228,14 +245,15 @@ LESSON["home"] = [
           "For each one, ask: is it alive now? Did it come from something alive? Or neither?",
           "Draw three lists."],
          "Wooden spoons, paper, cotton cloths and leather were all once alive."),
-    home("Watch a bean over time", "A dried bean, a jar, wet kitchen paper, a notebook",
-         ["Put the bean between wet paper and the glass of the jar.",
+    home("Watch a bean over time", "A dried bean, a clear plastic cup, wet kitchen paper, a notebook",
+         ["Put the bean between the wet paper and the side of the cup, so you can see it.",
           "Every day, draw what you see and write the date.",
           "Keep going for two weeks."],
          "That is observing over time. Which day did the root appear? Which day the shoot?"),
     home("A fair test with paper towels", "Two different paper towels, a spoon, water, a tray",
-         ["Put a piece of each towel on the tray.",
+         ["Cut one piece of each towel. Make the two pieces the same size.",
+          "Put the two pieces on the tray.",
           "Put exactly one spoonful of water on each.",
           "Lift each towel and see how much water is left on the tray."],
-         "Change only the towel. Keep the water the same. That is what makes it fair."),
+         "Change only the towel. Keep the size and the water the same. That is what makes it fair."),
 ]

@@ -13,23 +13,25 @@ LESSON = {
     "title": "The Moon",
     "blurb": "See that the Earth, the Sun and the Moon are all spheres, watch the Moon change through a month, put its phases in order, build a model of the Moon going round the Earth, and find out what people used to think.",
     "steps": [
-        step("demo", "Three spheres", "\U0001F30D", "Three balls", ["3ESs.03", "3SIC.01"],
-             "The Earth, the Sun and the Moon are all shaped like balls. Press <b>Next</b>.",
+        step("demo", "Three spheres", "\U0001F30D", "Three balls", ["3ESs.03", "3SIC.01", "3TWSm.02"],
+             "The Earth, the Sun and the Moon are all shaped like balls. Press <b>Next</b>, then make a model now, with a grown-up: you need a lamp and a ball on a stick.",
              explain(
                  ["A sphere is a ball shape.", "The Earth, the Sun and the Moon are all roughly spheres."],
-                 ["The Earth looks flat from where you stand because it is so big.", "From space it is a blue ball.", "The Moon is a smaller grey ball.", "The Sun is a huge ball of hot, glowing gas."],
-                 ["Children think the Moon is a flat disc because it looks flat.", "It is a ball. The shadow across it curves, and that is a ball's shadow."],
-                 ["Press Next through all four."]),
+                 ["The Earth looks flat from where you stand because it is so big.", "From space it is a blue ball.", "The Moon is a smaller grey ball.", "The Sun is a huge ball of hot, glowing gas.", "Make a model now with a lamp and a ball on a stick: one half of the ball is lit, one half dark."],
+                 ["Children think the Moon is a flat disc because it looks flat.", "It is a ball. The line between its lit part and its dark part curves, as it does on a ball lit by a lamp."],
+                 ["Press Next through all six, and make the model with a grown-up as you go."]),
              {"frames": [
                  {"scene": {"id": "globe", "state": 0}, "cap": "The <b>Earth</b>: a sphere, seen from space.", "say": "The Earth is a sphere: a ball. It looks flat from where you stand because it is so big, but from space it is a round blue ball."},
-                 {"pic": "\U0001F315", "cap": "The <b>Moon</b>: a smaller sphere of rock.", "say": "The Moon is a sphere too, a smaller ball of grey rock. Look at the full Moon: the edge is a curve all the way round."},
+                 {"pic": "\U0001F315", "cap": "The <b>Moon</b>: a smaller sphere of rock.", "say": "The Moon is a sphere too, a smaller ball of grey rock. Look at a crescent Moon: the line between the lit part and the dark part is curved. Only a ball lit from one side looks like that."},
                  {"scene": {"id": "sky", "state": 3}, "cap": "The <b>Sun</b>: a huge sphere of hot, glowing gas.", "say": "The Sun is a sphere as well, a huge ball of hot, glowing gas, far bigger than the Earth. Never look straight at it."},
-                 {"pic": "\U0001F4DC", "cap": "Long ago, many people thought the Earth was <b>flat</b>. Ships, shadows and, later, photographs from space showed it is a sphere.", "say": "Long ago, many people thought the Earth was flat. Sailors noticed ships disappear bottom first over the horizon. The Earth's shadow on the Moon is always curved. And now we have photographs from space. The Earth is a sphere."},
+                 {"pic": "\U0001F4DC", "cap": "Long ago, many people thought the Earth was <b>flat</b>. Ships, shadows and, later, photographs from space showed it is a sphere.", "say": "Long ago, many people thought the Earth was flat. Sailors noticed ships disappear bottom first over the horizon. In an eclipse, the Earth's shadow on the Moon is always curved. And now we have photographs from space. The Earth is a sphere."},
+                 {"pic": "\U0001F4A1", "cap": "Make a <b>physical model</b> now, with a grown-up. Push a pencil into a small ball: a ball on a stick. The ball is the Moon. A grown-up sets up a lamp in a dark room: the Sun. Do not touch the bulb. One half of the ball is lit, the other half dark.", "say": "Now make a model you can hold, with a grown-up. Push a pencil into a small ball, so it is a ball on a stick. The ball is the Moon. A grown-up sets up a lamp in a dark room. The lamp is the Sun, and you do not touch the bulb. Look: one half of the ball is lit and the other half is dark, just like the real Moon."},
+                 {"pic": "\U0001F317", "cap": "Use the model: hold the stick so the ball is a little above your head, and turn slowly on the spot. You see a crescent, a half and a full ball of light. The ball <b>never changes shape</b>.", "say": "Use your model. Your head is the Earth. Hold the stick at arm's length, so the ball is a little above your head, and turn slowly on the spot. You see a thin crescent, then a half, then the whole lit face. The ball never changed shape. Only how much of its lit half you could see changed."},
              ]},
              "Earth, Sun and Moon: three spheres."),
 
         step("experiment", "The Moon through a month", "\U0001F319", "Moon watch", ["3ESs.01", "3TWSp.03", "3TWSa.03", "3TWSp.02"],
-             "Watch the Moon every three nights for a month. Predict what you will see.",
+             "Watch the Moon every few nights for a month. Predict what you will see.",
              explain(
                  ["The Moon looks different every night, and the changes repeat every month.", "That is observing over time."],
                  ["New Moon: dark.", "Crescent: a thin slice.", "Half Moon.", "Full Moon: the whole face lit.", "Then back down to new."],
@@ -37,7 +39,7 @@ LESSON = {
                  ["Predict, watch the month, say what happened, then conclude."]),
              {"sim": "moonPhases",
               "predict": {"ask": "Over a month, what will the Moon do?",
-                          "opts": [opt("Look bigger night by night, then smaller again", True), opt("Look exactly the same every night", False), opt("Disappear for good", False)]},
+                          "opts": [opt("More of it will look lit each night, then less", True), opt("Look exactly the same every night", False), opt("Disappear for good", False)]},
               "runAsk": "Press Three days later, eight times, and watch the Moon change.",
               "happened": {"ask": "What happened?",
                            "opts": [opt("More of it was lit each night until it was full, then less each night, back to new", True), opt("It stayed a full circle all month", False), opt("It changed colour", False)],
@@ -51,23 +53,23 @@ LESSON = {
              "Put the Moon's phases in order, starting from the new Moon.",
              explain(
                  ["The phases always come in the same order."],
-                 ["New Moon: dark.", "Crescent: a thin curve on the right.", "Half Moon: the right half lit.", "Full Moon: all lit."],
+                 ["New Moon: dark.", "Crescent: a thin lit curve.", "Half Moon: half of the face lit.", "Full Moon: all lit."],
                  ["Children put the full Moon first.", "Start from new, when it is dark, and watch it grow."],
                  ["Tap the new Moon first."]),
              {"items": [
                  {"pic": "\U0001F311", "label": "new Moon", "say": "New Moon. The side facing us is dark. You can hardly see it."},
-                 {"pic": "\U0001F312", "label": "crescent", "say": "A crescent: a thin lit curve on the right."},
-                 {"pic": "\U0001F313", "label": "half Moon", "say": "Half Moon: the right half is lit."},
+                 {"pic": "\U0001F312", "label": "crescent", "say": "A crescent: a thin lit curve."},
+                 {"pic": "\U0001F313", "label": "half Moon", "say": "Half Moon: half of the face is lit."},
                  {"pic": "\U0001F315", "label": "full Moon", "say": "Full Moon: the whole face is lit. Then it shrinks back to new."},
              ]},
              "New, crescent, half, full. Then back again."),
 
-        step("build", "Build a model: Earth and Moon", "\U0001F527", "Moon model", ["3ESs.02", "3TWSm.02", "3ESs.03"],
-             "Make a physical model. Tap the Earth, the Moon and the Moon's path, then make it move.",
+        step("build", "Build a model: Earth and Moon", "\U0001F527", "Moon model", ["3ESs.02", "3ESs.03", "3TWSm.03"],
+             "Build a model on the screen. Tap the Earth, the Moon and the Moon's path, then make it move.",
              explain(
                  ["The Moon goes round the Earth. The Earth spins.", "A model shows both clearly."],
                  ["Add the Earth.", "Add the Moon.", "Add the path the Moon follows.", "Turn one month: the Moon goes right round the Earth.", "Spin one day: the Earth turns once."],
-                 ["Children think the Moon goes round once a day.", "It takes about four weeks. The EARTH turns once a day."],
+                 ["Children think the Moon goes round once a day.", "It takes about four weeks. It is the Earth that turns once a day."],
                  ["Tap the three parts, then press both buttons."]),
              {"sim": "earthMoon",
               "parts": [
@@ -120,13 +122,14 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("Why does the Earth look flat from the ground?", "\U0001F5FA️", "because it is so big", ["because it is flat", "because of the clouds"], "A huge ball looks flat up close."),
-                 q("Put in order: full Moon, new Moon, crescent.", "\U0001F311", "new Moon, crescent, full Moon", ["full Moon, new Moon, crescent", "crescent, full Moon, new Moon"], "New, crescent, half, full."),
+                 q("Put in order, starting from the new Moon: full Moon, new Moon, crescent.", "\U0001F311", "new Moon, crescent, full Moon", ["full Moon, new Moon, crescent", "crescent, full Moon, new Moon"], "New, crescent, half, full."),
                  q("What lights the Moon?", "☀️", "the Sun", ["the Earth", "its own fire"], "The Moon shines back the Sun's light."),
                  q("How long does the Earth take to spin round once?", "\U0001F30D", "one day", ["one month", "one year"], "Once a day: that makes day and night."),
-                 q("What did you build?", "\U0001F527", "a physical model of the Earth and Moon", ["a real Moon", "a diagram of the Sun"], "A model you could make move."),
-                 q("How many times does the Earth spin while the Moon goes round once?", "\U0001F504", "about 28 times", ["once", "a hundred times"], "A day is one spin; a month is about 28 days."),
+                 q("What did you build on the screen?", "\U0001F527", "a model of the Earth and the Moon", ["a real Moon", "a diagram of the Sun"], "A model you could make move."),
+                 q("While the Moon goes round the Earth once, how often does the Earth spin?", "\U0001F504", "once every day, for about a month", ["only once", "once a year"], "A day is one spin, and the Moon takes about a month to go round."),
                  q("What did telescopes show about the Moon?", "\U0001F52D", "it is a rocky ball with mountains and craters", ["it is made of cheese", "it is flat"], "Better looking, better knowing."),
                  q("Which is the biggest?", "☀️", "the Sun", ["the Earth", "the Moon"], "The Sun is far bigger than the Earth."),
+                 q("In the lamp-and-ball model, why does the ball sometimes look like a crescent?", "\U0001F312", "you can see only a thin part of its lit half", ["the ball has shrunk", "the lamp is broken"], "The ball is always a ball. Where it is decides how much of the lit half you can see."),
              ]},
              "That is the whole lesson finished, and the whole of Grade 3 Science."),
     ],
@@ -136,7 +139,12 @@ LESSON["about"] = [
     "Say that the Earth, the Sun and the Moon are spheres.",
     "Describe how the Moon's appearance changes through a month, in order.",
     "Say how the Earth and the Moon move.",
-    "Build and use a physical model of the Earth and the Moon.",
+    "Make and use a lamp-and-ball model of the Moon, and build a model of the Earth and the Moon on the screen.",
+]
+
+LESSON["warmup"] = [
+    q("Where is a fossil found?", "\U0001F41F", "in rock", ["in a cloud", "in the sky"], "A fossil is a shape kept in rock for a very long time."),
+    q("When is the Moon easiest to see?", "\U0001F319", "at night", ["at lunchtime", "never"], "The Moon is easiest to see in the dark night sky."),
 ]
 
 LESSON["lecture"] = [
@@ -170,19 +178,19 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("Moon diary", "A clear night sky, a notebook, a pencil",
-         ["Every night you can see the Moon, draw its shape and write the date.",
-          "Keep going for four weeks.",
+    home("Moon diary", "A clear night sky, a grown-up, a notebook, a pencil",
+         ["With a grown-up, look at the Moon every night you can see it. Draw its shape and write the date.",
+          "Keep going for about a month.",
           "Look at the row of drawings."],
          "New, crescent, half, full, and back. Observing over time."),
-    home("A lamp and a ball", "A lamp in a dark room, a ball, you",
+    home("A lamp and a ball", "A lamp in a dark room, a ball on a stick, a grown-up to set up the lamp",
          ["Stand with the lamp on one side. The lamp is the Sun; the ball is the Moon; you are the Earth.",
-          "Hold the ball out and turn slowly on the spot.",
+          "Hold the ball a little above your head and turn slowly on the spot.",
           "Watch how much of the lit side of the ball you can see."],
          "The ball is always a ball. You see a crescent, a half, a full, just like the Moon."),
-    home("Ships and the horizon", "A beach or a big lake, a grown-up, a sunny day",
-         ["Watch a boat sail away.",
-          "See which part disappears first: the bottom or the top.",
-          "Say why."],
-         "The bottom goes first, because the Earth curves away. That is what sailors noticed long ago."),
+    home("Day and night with a lamp", "A lamp in a dark room, a ball or an orange, a small sticker, a grown-up to set up the lamp",
+         ["The lamp is the Sun and the ball is the Earth. Put the sticker on the ball: that is where you live.",
+          "Hold the ball near the lamp, without touching the bulb, and turn it slowly.",
+          "Watch the sticker move from the lit half into the dark half, and back."],
+         "Half the ball is always lit and half is dark. As the Earth spins, you go from day into night. That is a physical model."),
 ]

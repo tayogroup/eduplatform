@@ -6,25 +6,27 @@ differences between solids and liquids; 3TWSc.03 standard units and why
 they beat non-standard ones; 3TWSc.02 choose equipment; with 3TWSc.01,
 3TWSc.06, 3TWSp.03 and 3TWSa.03.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "solids-liquids-and-gases",
     "title": "Solids, Liquids and Gases",
     "blurb": "Sort materials into solids, liquids and gases, pour, tip and squash them to find how they differ, measure in centimetres and say why standard units win, and choose the right equipment for the job.",
     "steps": [
-        step("explore", "Three states", "\U0001F9CA", "Three states", ["3Cm.01"],
-             "Every material is a solid, a liquid or a gas. Tap each one.",
+        step("explore", "Three states", "\U0001F9CA", "Three states", ["3Cm.01", "3TWSc.04", "3TWSp.04"],
+             "Every material is a solid, a liquid or a gas. Tap each one, then tap the safety card.",
              explain(
                  ["A material is in one of three states: solid, liquid or gas."],
-                 ["A solid keeps its shape: wood, ice, a stone.", "A liquid flows and takes the shape of its container: water, milk, oil.", "A gas spreads out to fill any space: the air, steam, the gas in a balloon."],
+                 ["A solid keeps its shape: wood, ice, a stone.", "A liquid flows and takes the shape of its container: water, milk, oil.", "A gas spreads out to fill any space: the air, steam, the gas in a balloon.",
+                  "When you do the ice and water tests at home: a grown-up does anything hot while you stand well back, and you wipe up spills straight away."],
                  ["Children think gas is nothing.", "Air is a gas, and it is something. Feel it when you wave your hand."],
-                 ["Tap all three."]),
+                 ["Tap all four."]),
              {"items": [
                  {"pic": "\U0001F9CA", "label": "solid", "sub": "keeps its shape", "say": "A solid keeps its own shape. Ice, wood, a stone, a spoon. You can pick it up and it stays the shape it is."},
                  {"pic": "\U0001F4A7", "label": "liquid", "sub": "flows, takes the shape of its container", "say": "A liquid flows. Pour it into a cup and it is cup-shaped; pour it into a bowl and it is bowl-shaped. Water, milk, oil, honey."},
                  {"pic": "\U0001F4A8", "label": "gas", "sub": "spreads out to fill the space", "say": "A gas spreads out to fill every bit of space it can. The air around you, steam from a kettle, the gas inside a balloon."},
-             ], "need": 3,
+                 {"pic": "⚠️", "label": "stay safe", "sub": "when you do the ice test at home", "say": "When you do the ice and water tests at home, work safely. Steam from a kettle is very hot and can burn you, so a grown-up does anything hot while you stand well back. Spilt water makes the floor slippery, so wipe it up straight away."},
+             ], "need": 4,
               "then": {"ask": "You pour orange juice from a jug into a glass and it becomes glass-shaped. Which state is it?",
                        "opts": [opt("a liquid", True), opt("a solid", False), opt("a gas", False)],
                        "why": "It flows and takes the shape of its container: a liquid."}},
@@ -38,7 +40,7 @@ LESSON = {
                  ["Children call sand a liquid because it pours.", "Pick up one grain. It keeps its shape. Sand is lots of tiny solids."],
                  ["Keep its shape, flow, or spread out? Then tap."]),
              {"ask": "Solid, liquid or gas?",
-              "bins": [{"id": "solid", "label": "Solid", "pic": "\U0001F9CA"}, {"id": "liquid", "label": "Liquid", "pic": "\U0001F4A7"}, {"id": "gas", "label": "Gas", "pic": "\U0001F4A8"}],
+              "bins": [{"id": "solid", "label": "Solid", "pic": "\U0001F9F1"}, {"id": "liquid", "label": "Liquid", "pic": "\U0001F30A"}, {"id": "gas", "label": "Gas", "pic": "\U0001F32C️"}],
               "items": [
                   {"pic": "\U0001F9CA", "label": "ice", "bin": "solid", "why": "Ice keeps its shape. A solid."},
                   {"pic": "\U0001F4A7", "label": "water", "bin": "liquid", "why": "Water flows and takes the shape of the glass."},
@@ -49,7 +51,7 @@ LESSON = {
                   {"pic": "\U0001F3D6️", "label": "sand", "bin": "solid", "why": "Sand pours, but each grain keeps its shape. Lots of tiny solids."},
                   {"pic": "\U0001F36F", "label": "honey", "bin": "liquid", "why": "Honey flows slowly, but it flows. A liquid."},
                   {"pic": "\U0001FAA8", "label": "a stone", "bin": "solid", "why": "A stone keeps its shape."},
-                  {"pic": "\U0001F32B️", "label": "the air in the room", "bin": "gas", "why": "Air spreads out to fill the whole room. A gas."},
+                  {"pic": "\U0001F4A8", "label": "the air in the room", "bin": "gas", "why": "Air spreads out to fill the whole room. A gas."},
               ]},
              "Keeps its shape, flows, or spreads out: solid, liquid, gas."),
 
@@ -86,28 +88,28 @@ LESSON = {
                   {"id": "pour", "label": "Pour it", "pic": "\U0001F964", "anim": "translateY(10px)", "sound": "splash", "say": "Try to pour the %m. It %r."},
               ],
               "materials": [
-                  {"id": "block", "pic": "\U0001FAB5", "label": "wooden block", "props": {"tip": "keeps exactly the same shape", "squash": "does not press in at all", "pour": "will not pour; it is one solid piece"}},
-                  {"id": "water", "pic": "\U0001F4A7", "label": "water", "props": {"tip": "flows into the new shape", "squash": "cannot be squashed; it just moves out of the way", "pour": "pours easily"}},
+                  {"id": "block", "pic": "\U0001FAB5", "label": "wooden block", "animates": {"squash": False, "pour": False}, "props": {"tip": "keeps exactly the same shape", "squash": "does not press in at all", "pour": "will not pour; it is one solid piece"}},
+                  {"id": "water", "pic": "\U0001F4A7", "label": "water", "animates": {"squash": False}, "props": {"tip": "flows into the new shape", "squash": "cannot be squashed; it just moves out of the way", "pour": "pours easily"}},
                   {"id": "honey", "pic": "\U0001F36F", "label": "honey", "props": {"tip": "slowly flows into the new shape", "squash": "moves out of the way, slowly", "pour": "pours, slowly"}},
                   {"id": "sand", "pic": "\U0001F3D6️", "label": "sand", "props": {"tip": "pours, but every grain keeps its shape", "squash": "packs together; each grain stays a grain", "pour": "pours like a liquid, but it is lots of tiny solids"}},
-                  {"id": "sponge", "pic": "\U0001F9FD", "label": "sponge", "props": {"tip": "keeps its shape", "squash": "presses in, then springs back", "pour": "will not pour"}},
+                  {"id": "sponge", "pic": "\U0001F9FD", "label": "sponge", "animates": {"pour": False}, "props": {"tip": "keeps its shape", "squash": "presses in, then springs back", "pour": "will not pour"}},
               ]},
              "Solids keep their shape. Liquids flow. Sand is lots of tiny solids that pour."),
 
         step("measure", "Measure in centimetres", "\U0001F4CF", "Centimetres", ["3TWSc.03", "3TWSc.06"],
-             "How deep is the water in the <b>%s</b>? Count the centimetres.",
+             "How deep is <b>%s</b>? Count the centimetres.",
              explain(
                  ["Last year you measured in hands and cubes.", "Scientists measure in standard units: centimetres, litres, grams. A centimetre is the same size for everyone."],
                  ["Lay centimetres up the side of the glass and count.", "Then answer: why are centimetres better than hand spans?"],
                  ["Children think a hand span is fine.", "Your hand and my hand are different sizes, so our answers would not agree. Every centimetre is the same."],
                  ["Add a centimetre at a time and count."]),
-             {"ask": "How deep is the water in the %s? Add centimetres and count.",
+             {"ask": "How deep is %s? Add centimetres and count.", "dim": "deep",
               "unit": {"name": "centimetres", "singular": "centimetre", "pic": "\U0001F4CF", "button": "Add a centimetre"},
-              "objects": [{"pic": "\U0001F964", "label": "tall glass", "units": 8}, {"pic": "\U0001F963", "label": "wide bowl", "units": 3}],
+              "objects": [{"pic": icon("glass"), "label": "the water in the tall glass", "units": 8}, {"pic": "\U0001F963", "label": "the water in the wide bowl", "units": 3}],
               "compare": {"ask": "Why do scientists measure in centimetres instead of hand spans?",
                           "opts": [opt("Every centimetre is the same size, so anyone can check the result", True), opt("Centimetres are prettier", False), opt("Hands are too big", False)],
                           "why": "A standard unit is the same for everyone. Your hand span and mine are not, so results in hands cannot be compared."}},
-             "Eight centimetres, three centimetres. Standard units: the same for everyone."),
+             "Eight centimetres deep, three centimetres deep. Standard units: the same for everyone."),
 
         step("questions", "Choose the equipment", "\U0001F9F0", "Right tool", ["3TWSc.02", "3TWSc.03"],
              "Which piece of equipment does the job? Tap it.",
@@ -117,10 +119,10 @@ LESSON = {
                  ["Children reach for a ruler for everything.", "A ruler cannot tell you how much water is in a jug."],
                  ["Read what you need to measure, then tap the tool."]),
              {"label": "Question", "items": [
-                 q("You want to know how LONG a leaf is. Which equipment?", "\U0001F343", "a ruler, in centimetres", ["a measuring jug", "a thermometer", "scales"], "Length: a ruler."),
-                 q("You want to know how MUCH water is in a jug. Which equipment?", "\U0001F4A7", "a measuring jug, in millilitres", ["a ruler", "a hand lens"], "Liquid: a measuring jug."),
-                 q("You want to know how HOT the water is. Which equipment?", "\U0001F321️", "a thermometer, in degrees", ["scales", "a ruler"], "Temperature: a thermometer."),
-                 q("You want to know how HEAVY a stone is. Which equipment?", "\U0001FAA8", "scales, in grams", ["a measuring jug", "a hand lens"], "Mass: scales."),
+                 q("You want to know how long a leaf is. Which equipment?", "\U0001F343", "a ruler, in centimetres", ["a measuring jug", "a thermometer", "scales"], "Length: a ruler."),
+                 q("You want to know how much water is in a jug. Which equipment?", "\U0001F4A7", "a measuring jug, in millilitres", ["a ruler", "a hand lens"], "Liquid: a measuring jug."),
+                 q("You want to know how hot the water is. Which equipment?", "\U0001F321️", "a thermometer, in degrees", ["scales", "a ruler"], "Temperature: a thermometer."),
+                 q("You want to know how heavy a stone is. Which equipment?", "\U0001FAA8", "scales, in grams", ["a measuring jug", "a hand lens"], "Mass: scales."),
                  q("You want to see the grains of sand up close. Which equipment?", "\U0001F3D6️", "a hand lens", ["a thermometer", "scales"], "To see small things: a lens."),
              ]},
              "The right tool for the measurement, and a standard unit to measure in."),
@@ -141,6 +143,7 @@ LESSON = {
                  q("What is a standard unit?", "\U0001F4CF", "a unit that is the same size for everyone, like a centimetre", ["a unit you make up", "a big unit"], "Same for everyone."),
                  q("Why not measure in hand spans?", "✋", "everyone's hand is a different size, so results cannot be compared", ["hands are dirty", "you cannot count hands"], "Standard units can be compared."),
                  q("Which equipment measures how much liquid?", "\U0001F964", "a measuring jug", ["a ruler", "a thermometer"], "Millilitres in a jug."),
+                 q("You pour milk from a tall glass onto a flat plate. Why does its shape change?", "\U0001F95B", "milk is a liquid, so it takes the shape of its container", ["the plate squashes it", "milk is a solid"], "A liquid has no shape of its own. It flows into the shape of whatever holds it."),
              ]},
              "That is the whole lesson finished. You know your solids, liquids and gases."),
     ],
@@ -151,6 +154,11 @@ LESSON["about"] = [
     "Say how solids and liquids differ, from what you tested.",
     "Measure in centimetres and say why standard units beat hand spans.",
     "Choose the right equipment for a measurement.",
+]
+
+LESSON["warmup"] = [
+    q("In a food chain, what do we call a plant?", "\U0001F33F", "a producer", ["a consumer", "a hunter"], "A plant makes its own food, so it is a producer."),
+    q("What happens to an ice cube in a warm room?", "\U0001F9CA", "it melts into water", ["it grows bigger", "it turns into stone"], "Warmth melts ice into liquid water."),
 ]
 
 LESSON["lecture"] = [
@@ -184,19 +192,20 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("Three states in the kitchen", "A freezer, a kettle, a grown-up",
+    home("Three states in the kitchen", "Ice from a freezer if you have one (or from a shop), a kettle, a grown-up",
          ["Find water as a solid: an ice cube. Hold it and see it keep its shape.",
           "Find it as a liquid: pour it into two different-shaped glasses.",
-          "A grown-up boils the kettle. Watch the steam spread out and disappear."],
+          "A grown-up boils the kettle while you stand well back: steam burns. Just above the spout the steam is invisible. The white cloud higher up is tiny drops of water, and it spreads out and disappears."],
          "One material, three states."),
     home("Hand spans against a ruler", "A ruler or tape measure, three people, a table",
          ["Everyone measures the table in their own hand spans and writes the number down.",
           "Then measure it once with the ruler in centimetres.",
           "Compare the hand-span numbers."],
          "Different numbers for the same table. That is why scientists use standard units."),
-    home("Choose the tool", "A measuring jug, a ruler, kitchen scales, a thermometer if you have one",
+    home("Choose the tool", "A ruler, and a measuring jug, kitchen scales and a thermometer if you have them. A cup or a spoon will do instead of a jug.",
          ["Pick five things in the kitchen.",
           "For each one, decide what to measure: how long, how much, how heavy, how hot.",
-          "Pick the right tool and measure it, and say the unit."],
+          "Pick the right tool, measure it, and say the unit. Measure only cold or room-temperature things, never anything hot.",
+          "No measuring jug? Count cups or spoonfuls. They are not standard units, so say so."],
          "Did you say the unit every time? Centimetres, millilitres, grams, degrees."),
 ]

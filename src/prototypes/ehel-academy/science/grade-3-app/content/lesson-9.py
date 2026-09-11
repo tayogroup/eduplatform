@@ -19,7 +19,7 @@ LESSON = {
              explain(
                  ["A forcemeter is a spring with a hook and a scale.", "Hang something on it and gravity pulls the thing down, the spring stretches, and the scale reads the force in newtons."],
                  ["Hang the apple: about two newtons.", "Hang the shoe: three.", "Hang the big book: five."],
-                 ["Children think the forcemeter weighs the thing in grams.", "It measures the PULL on it, in newtons. The pull is gravity."],
+                 ["Children think the forcemeter weighs the thing in grams.", "It measures the pull on it, in newtons. The pull is gravity."],
                  ["Predict, hang all three, then conclude."]),
              {"sim": "forcemeter",
               "predict": {"ask": "Which will stretch the spring the most?",
@@ -34,17 +34,18 @@ LESSON = {
              "A forcemeter measures force in newtons. Gravity is the force pulling things down."),
 
         step("demo", "Which way is down?", "\U0001F30D", "Gravity", ["3Pf.02"],
-             "Press <b>Next</b> to drop a ball on both sides of the world.",
+             "Press <b>Next</b> to drop a ball on both sides of the world, then see which tool measures a pull.",
              explain(
                  ["Gravity is a pull towards the centre of the Earth.", "That is why down is a different direction in Australia from here, and it is still down."],
-                 ["Drop a ball here: it falls towards the ground.", "Drop a ball on the other side of the world: it falls towards the ground there.", "Both fall towards the centre of the Earth."],
-                 ["Children think people in Australia are upside down.", "Down means towards the centre. Everyone's feet point to the centre."],
-                 ["Press Next through all four."]),
+                 ["Drop a ball here: it falls towards the ground.", "Drop a ball on the other side of the world: it falls towards the ground there.", "Both fall towards the centre of the Earth.", "The tool that measures a pull is the forcemeter, not the ruler or the thermometer."],
+                 ["Children think people in Australia are upside down.", "Down means towards the centre. Wherever you stand, down points to the centre."],
+                 ["Press Next through all five."]),
              {"frames": [
                  {"pic": "⚽", "cap": "Drop a ball. It falls <b>down</b>. Gravity pulled it.", "say": "Let go of a ball and it falls down. Nobody pushed it. Gravity pulled it."},
-                 {"scene": {"id": "globe", "state": 0}, "cap": "Down means <b>towards the centre of the Earth</b>.", "say": "Down means towards the centre of the Earth. Gravity pulls everything towards the middle of the planet."},
-                 {"scene": {"id": "globe", "state": 180}, "cap": "On the other side of the world, a ball still falls towards the ground: towards the <b>centre</b>.", "say": "On the other side of the world, a ball still falls towards the ground. Towards the centre. Their down points the opposite way to ours, and it is still down."},
+                 {"scene": {"id": "gravity", "state": 0}, "cap": "A person stands on the Earth. Gravity pulls them <b>down</b>: towards the <b>centre</b> of the Earth.", "say": "Here is a person standing on the Earth. The red arrow shows which way gravity pulls them: down, towards the centre of the Earth. Gravity pulls everything towards the middle of the planet."},
+                 {"scene": {"id": "gravity", "state": 1}, "cap": "A person on the other side of the world. To us they look upside down, but their down points to the <b>centre</b> too.", "say": "Here is a person on the other side of the world. From here they look upside down, but they stand on the ground just as you do. Their down points to the centre of the Earth, like ours, and a ball they drop falls to their ground."},
                  {"pic": "\U0001F34E", "cap": "The bigger the pull, the more the forcemeter reads. Gravity pulls the book harder than the apple.", "say": "Gravity pulls everything, and it pulls heavier things harder. That is why the book stretched the forcemeter more than the apple."},
+                 {"pic": "\U0001F9F0", "cap": "Which tool measures a pull? The <b>forcemeter</b>. Not the ruler, the thermometer or the measuring jug. Hang the thing on the hook, wait until it stops bouncing, then read the newtons.", "say": "Which tool measures a pull? A ruler measures length, a thermometer measures how hot, a measuring jug measures liquid. The forcemeter measures a force. Hang the thing on its hook, wait until the spring stops bouncing, then read the number of newtons."},
              ]},
              "Gravity pulls everything towards the centre of the Earth."),
 
@@ -53,7 +54,7 @@ LESSON = {
              explain(
                  ["Friction is a force between two surfaces that rub. It makes moving harder.", "Rough surfaces make more friction than smooth ones."],
                  ["Same block, same push. Only the surface changes: a fair test.", "On ice it slides a long way.", "On carpet it stops fast."],
-                 ["Children think heavy things have more friction.", "Same block every time here. The surface is what changed."],
+                 ["Children think smooth surfaces have no friction.", "Even ice has a little friction: the block slows down and stops in the end."],
                  ["Predict, push on all three, say what happened, then conclude."]),
              {"sim": "friction",
               "predict": {"ask": "Where will the block slide <b>furthest</b>?",
@@ -89,7 +90,7 @@ LESSON = {
              explain(
                  ["A bar chart shows results as bars against a scale, so you can compare them at a glance."],
                  ["The scale up the side counts the marks.", "Tap until the ice bar reaches nine, the wood bar six, the carpet bar two.", "Then read the pattern: smoother surface, longer slide."],
-                 ["Children read the tallest bar as the most friction.", "The tallest bar is the LONGEST slide, which means the LEAST friction."],
+                 ["Children read the tallest bar as the most friction.", "The tallest bar is the longest slide, which means the least friction."],
                  ["Build the bars, then answer."]),
              {"columns_label": "Surface", "value_label": "Marks slid", "unit": "marks", "bar": True,
               "columns": [{"pic": "\U0001F9CA", "label": "ice", "value": 9}, {"pic": "\U0001FAB5", "label": "wood", "value": 6}, {"pic": "\U0001F9F6", "label": "carpet", "value": 2}],
@@ -116,18 +117,19 @@ LESSON = {
                        "why": "Rough surfaces make more friction, and friction is grip."}},
              "Brakes and soles want friction. Skates and hinges want less."),
 
-        step("questions", "Force check", "✅", "Force check", ["3Pf.01", "3Pf.02", "3Pf.03", "3Pf.04"],
+        step("questions", "Force check", "✅", "Force check", ["3Pf.01", "3Pf.02", "3Pf.03", "3Pf.04", "3TWSc.02"],
              "Tap the answer.",
              explain(
-                 ["Forcemeters, gravity, friction, and rough or smooth."],
+                 ["Forcemeters, gravity, friction, and rough or smooth.", "And choosing the right tool for the job."],
                  [],
                  [],
                  ["Read the question, then tap."]),
              {"label": "Question", "items": [
                  q("What does a forcemeter measure?", "\U0001F4CF", "force, in newtons", ["length, in centimetres", "temperature", "time"], "Force in newtons."),
                  q("Which way does gravity pull?", "\U0001F30D", "towards the centre of the Earth", ["up into the sky", "sideways"], "Down means towards the centre."),
+                 q("Which tool would you choose to measure how hard gravity pulls a bag?", "\U0001F6CD️", "a forcemeter", ["a ruler", "a thermometer", "a measuring jug"], "A forcemeter measures a pull, in newtons. A ruler measures length, a thermometer how hot, a jug how much liquid."),
                  q("What is friction?", "\U0001F9F6", "a force between surfaces that rub, which makes moving harder", ["a kind of magnet", "a pull from the Moon"], "Surfaces rubbing."),
-                 q("Which surface gives the MOST friction?", "\U0001F9F6", "rough carpet", ["smooth ice", "polished wood"], "Rough means more friction."),
+                 q("Which surface gives the most friction?", "\U0001F9F6", "rough carpet", ["smooth ice", "polished wood"], "Rough means more friction."),
                  q("The block slid furthest on the ice because...", "\U0001F9CA", "ice is smooth and gives little friction", ["ice is cold", "ice pushed it"], "Smooth surface, less friction."),
              ]},
              "You know your forces."),
@@ -148,6 +150,7 @@ LESSON = {
                  q("In the bar chart, which bar was tallest?", "\U0001F4CA", "ice, nine marks", ["carpet, two marks", "wood, six marks"], "The longest slide."),
                  q("What pattern did the bar chart show?", "\U0001F4C8", "smoother surface, longer slide", ["rougher surface, longer slide", "no pattern"], "Less friction, further."),
                  q("Why do bicycle brakes work?", "\U0001F6B2", "friction between the pads and the wheel slows it", ["gravity pulls the wheel", "magnets stop it"], "Friction slows movement."),
+                 q("You want to find out which shoe grips the floor best. Which is the fair test?", "\U0001F45F", "pull each shoe across the same floor with a forcemeter, changing only the shoe", ["pull one shoe on carpet and the other on ice", "guess by looking at the soles"], "Same floor, same forcemeter, and only the shoe changes. The shoe that needs the biggest pull grips best."),
              ]},
              "That is the whole lesson finished. You know gravity and friction."),
     ],
@@ -158,6 +161,11 @@ LESSON["about"] = [
     "Say which way gravity pulls.",
     "Test friction on three surfaces and say why the block stopped where it did.",
     "Draw a bar chart of the results and read the pattern.",
+]
+
+LESSON["warmup"] = [
+    q("Which tool separates iron filings from sand?", "\U0001F9F2", "a magnet", ["a filter", "a thermometer"], "Iron is magnetic and sand is not, so a magnet pulls the filings out."),
+    q("What makes a toy car start to move?", "\U0001F697", "a push or a pull", ["looking at it", "its colour"], "A push or a pull is a force, and a force can start something moving."),
 ]
 
 LESSON["lecture"] = [
@@ -179,7 +187,7 @@ LESSON["words"] = [
     word("newton", "\U0001F34E", "The unit a force is measured in.",
          ["The book pulled with five newtons.", "Gravity pulls the apple with two newtons."]),
     word("gravity", "\U0001F30D", "The force that pulls everything towards the centre of the Earth.",
-         ["Gravity pulled the ball down.", "Without gravity, things would float away."]),
+         ["Gravity pulled the ball down.", "Gravity keeps us on the ground."]),
     word("friction", "\U0001F9F6", "A force between two surfaces that rub together. It makes moving harder.",
          ["Friction stopped the block.", "Brakes use friction."]),
     word("surface", "\U0001FAB5", "The outside of something, the part that touches other things.",
@@ -198,12 +206,12 @@ LESSON["home"] = [
          "Tallest bar on the smoothest surface. That is the pattern."),
     home("Make a forcemeter", "A strong elastic band, a paperclip bent into a hook, a ruler, a bag",
          ["Hang the band from a hook or a door handle, with the paperclip at the bottom.",
-          "Hang the bag on the clip and put an apple in it. Measure how far the band stretches.",
-          "Add a second apple and measure again."],
+          "Keep your face away from the band. A grown-up hangs the bag on the clip and puts an apple in it. Measure how far the band stretches.",
+          "The grown-up adds a second apple. Measure again."],
          "Twice the pull, and the band stretches further. A real forcemeter works the same way."),
     home("Drop everything", "A ball, a scrunched paper, a coin, a feather, a grown-up",
          ["Hold each thing up and let go.",
           "Which way does each one go?",
           "Drop the ball and the coin together from the same height."],
-         "Everything falls DOWN, towards the centre of the Earth. The feather is slowed by the air."),
+         "Everything falls down, towards the centre of the Earth. The feather is slowed by the air."),
 ]

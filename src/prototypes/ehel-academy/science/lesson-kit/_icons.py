@@ -194,6 +194,55 @@ _BODIES = {
     "glass": (
         '<rect x="12" y="7" width="40" height="50" rx="2" fill="#CFE8F5" stroke="#8FB7CC" stroke-width="2.5"/>'
         '<path d="M18 21 L30 10 M18 34 L41 12 M30 50 L46 35" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'),
+    "tadpole": (
+        '<path d="M34 32 C44 22 50 42 61 30" stroke="#2B2B2B" stroke-width="5" fill="none" stroke-linecap="round"/>'
+        '<ellipse cx="22" cy="32" rx="15" ry="12" fill="#2B2B2B"/>'
+        '<circle cx="16" cy="28" r="2.4" fill="#fff"/>'),
+    "frogspawn": (
+        '<circle cx="20" cy="24" r="11" fill="#DDEFF7" stroke="#8FB7CC" stroke-width="1.5"/>'
+        '<circle cx="40" cy="20" r="11" fill="#DDEFF7" stroke="#8FB7CC" stroke-width="1.5"/>'
+        '<circle cx="31" cy="38" r="11" fill="#DDEFF7" stroke="#8FB7CC" stroke-width="1.5"/>'
+        '<circle cx="50" cy="40" r="10" fill="#DDEFF7" stroke="#8FB7CC" stroke-width="1.5"/>'
+        '<circle cx="14" cy="44" r="10" fill="#DDEFF7" stroke="#8FB7CC" stroke-width="1.5"/>'
+        '<circle cx="20" cy="24" r="3.5" fill="#1B1B1B"/><circle cx="40" cy="20" r="3.5" fill="#1B1B1B"/>'
+        '<circle cx="31" cy="38" r="3.5" fill="#1B1B1B"/><circle cx="50" cy="40" r="3.2" fill="#1B1B1B"/>'
+        '<circle cx="14" cy="44" r="3.2" fill="#1B1B1B"/>'),
+    "tadpolelegs": (
+        '<path d="M36 30 C46 20 52 40 62 28" stroke="#3A3A2A" stroke-width="5" fill="none" stroke-linecap="round"/>'
+        '<path d="M28 40 l6 10 l6 -1 M20 41 l-3 9 l-6 0" stroke="#3A3A2A" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+        '<ellipse cx="23" cy="31" rx="16" ry="12" fill="#3A3A2A"/>'
+        '<circle cx="16" cy="27" r="2.6" fill="#fff"/>'),
+    "froglet": (
+        '<path d="M37 30 C47 22 53 40 62 30" stroke="#4E6B2F" stroke-width="4" fill="none" stroke-linecap="round"/>'
+        '<path d="M29 40 l7 10 l7 -2 M20 41 l-4 10 l-7 -1" stroke="#4E6B2F" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+        '<ellipse cx="24" cy="31" rx="16" ry="12" fill="#5E7F38"/>'
+        '<circle cx="17" cy="26" r="3" fill="#fff"/><circle cx="17" cy="26" r="1.5" fill="#111"/>'),
+    "larva": (
+        '<path d="M13 23 l-4 -7 M20 22 l-2 -8 M27 22 l0 -8 M13 41 l-4 7 M20 42 l-2 8 M27 42 l0 8" stroke="#2E3440" stroke-width="2.2" stroke-linecap="round"/>'
+        '<path d="M8 32 C8 22 20 20 32 22 C47 24 60 28 60 32 C60 36 47 40 32 42 C20 44 8 42 8 32 Z" fill="#2E3440"/>'
+        '<path d="M22 22 V42 M32 22 V42 M42 25 V39 M51 27 V37" stroke="#4A5260" stroke-width="1.5"/>'
+        '<circle cx="27" cy="27" r="2.4" fill="#F08A24"/><circle cx="27" cy="37" r="2.4" fill="#F08A24"/><circle cx="37" cy="28" r="2" fill="#F08A24"/><circle cx="37" cy="36" r="2" fill="#F08A24"/>'
+        '<circle cx="9" cy="32" r="5.5" fill="#1B1B1B"/>'),
+    "sieve": (
+        '<path d="M44 28 H61" stroke="#56687A" stroke-width="4.5" stroke-linecap="round"/>'
+        '<path d="M6 28 A20 20 0 0 0 46 28 Z" fill="#DCE5EC" stroke="#56687A" stroke-width="2.5"/>'
+        '<path d="M11 34 H41 M15 40 H37 M20 45 H32 M14 28 V36 M20 28 V44 M26 28 V47 M32 28 V45 M38 28 V39" stroke="#56687A" stroke-width="1.2"/>'),
+    "clingfilm": (
+        '<path d="M26 34 H58 L54 57 H22 Z" fill="#E4F1F7" stroke="#8FB7CC" stroke-width="1.5" opacity=".85"/>'
+        '<rect x="6" y="21" width="42" height="13" rx="6" fill="#D8E6EE" stroke="#8FB7CC" stroke-width="2"/>'
+        '<ellipse cx="8" cy="27.5" rx="3" ry="6" fill="#B8CFDB"/>'
+        '<path d="M30 40 L44 52" stroke="#fff" stroke-width="2" stroke-linecap="round"/>'),
+    "tissue": (
+        '<rect x="8" y="30" width="48" height="25" rx="3" fill="#8FC9EA" stroke="#3B7FD1" stroke-width="2"/>'
+        '<ellipse cx="32" cy="30" rx="11" ry="3" fill="#3B7FD1"/>'
+        '<path d="M25 31 C20 15 30 8 34 15 C38 8 46 17 39 31 Z" fill="#fff" stroke="#B9C4CC" stroke-width="1.5"/>'),
+    "foil": (
+        '<path d="M8 14 L30 8 L56 16 L52 40 L58 54 L32 58 L8 52 L12 34 Z" fill="#C7CDD3" stroke="#8A9199" stroke-width="2" stroke-linejoin="round"/>'
+        '<path d="M18 20 L30 30 L44 22 M14 41 L28 36 L40 46 L50 38" stroke="#EEF1F4" stroke-width="2" fill="none"/>'),
+    "bottle": (
+        '<path d="M26 8 H38 V15 C38 19 46 21 46 29 V56 C46 59 44 60 42 60 H22 C20 60 18 59 18 56 V29 C18 21 26 19 26 15 Z" fill="#E6F4FA" stroke="#6FA8C7" stroke-width="2.5"/>'
+        '<rect x="24" y="3" width="16" height="7" rx="2" fill="#3B7FD1"/>'
+        '<path d="M24 31 V52" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'),
     "seal": (
         '<path d="M11 45 L2 38 L4 51 Z" fill="#6F7B87"/>'
         '<path d="M8 47 C8 35 24 26 40 28 C50 29 56 35 56 41 C56 47 50 49 44 47 L20 51 C12 53 8 51 8 47 Z" fill="#8E9AA6"/>'

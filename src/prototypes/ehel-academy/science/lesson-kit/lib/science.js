@@ -258,11 +258,13 @@
      experiment is over. api.controls is where a sim puts its own buttons,
      api.say speaks, api.tag sets the caption in the corner of the box.
      ================================================================== */
-  function potSvg(x, state, label, dark) {
-    /* state 0..4: 0 fresh, higher = worse (droop / pale). dark draws the cupboard */
+  function potSvg(x, state, label, dark, cold) {
+    /* state 0..4: 0 fresh, higher = worse (droop / pale). dark draws the cupboard;
+       cold draws frost, in the SAME light, so a warm-or-cold test changes one thing */
     const droop = state * 9, pale = state > 2 ? "#C9C46A" : state > 0 ? "#8FBF6C" : "#4CB65C";
     const leafA = 'M' + (x) + ' 150 q-40 -18 -46 -52 q36 4 46 52z', leafB = 'M' + (x) + ' 128 q40 -16 46 -46 q-36 2 -46 46z';
     return '<g>' + (dark ? '<rect x="' + (x - 78) + '" y="20" width="156" height="200" fill="#1B1B1B" opacity="0.72" rx="8"/>' : "") +
+      (cold ? '<rect x="' + (x - 78) + '" y="20" width="156" height="230" fill="#E6F4FF" opacity="0.55" rx="8"/><text x="' + (x - 58) + '" y="52" font-size="22">\u2744\ufe0f</text><text x="' + (x + 38) + '" y="80" font-size="18">\u2744\ufe0f</text>' : "") +
       '<path d="M' + (x - 44) + ' 190 h88 l-10 60 h-68z" fill="#C76B3B"/>' +
       '<rect x="' + (x - 48) + '" y="182" width="96" height="14" rx="4" fill="#A9552B"/>' +
       '<g transform="rotate(' + droop + ' ' + x + ' 190)"><rect x="' + (x - 5) + '" y="90" width="10" height="100" rx="5" fill="' + (state > 2 ? "#A9A05A" : "#2F8F45") + '"/>' +
@@ -274,7 +276,7 @@
     box.innerHTML = '<svg viewBox="0 0 320 290" role="img" aria-label="Two plants in pots, ' + esc(opts.labelA) + ' and ' + esc(opts.labelB) + '"><rect width="320" height="290" fill="' + (opts.dark ? "#3A5C74" : "#BFE3F5") + '"/>' +
       (opts.sun ? '<circle cx="280" cy="40" r="24" fill="#F4C95D"/>' : "") +
       '<rect x="0" y="250" width="320" height="40" fill="#8B5A2B"/>' +
-      potSvg(90, a, opts.labelA, opts.darkA) + potSvg(230, b, opts.labelB, opts.darkB) +
+      potSvg(90, a, opts.labelA, opts.darkA, opts.coldA) + potSvg(230, b, opts.labelB, opts.darkB, opts.coldB) +
       '<text x="12" y="28" font-size="16" font-family="Inter, sans-serif" font-weight="800" fill="#fff">Day ' + day + "</text></svg>";
   }
   const SIMS = {
@@ -669,7 +671,7 @@
         b.classList.add(ok ? "right" : "wrong");
         if (ok) score++;
         const line = truth
-          ? (ok ? "Yes! Your prediction was right. " : "Look back: your prediction WAS what happened. ") + "Well done."
+          ? (ok ? "Yes! Your prediction was right. " : "Look back: your prediction was right after all. ") + "Well done."
           : (ok ? "That is right, it did not match. " : "Look back: you predicted " + predicted.t + ", and something different happened. ") + "That is fine. Scientists learn most when they are surprised.";
         $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = line; say(line);
         /* Stage 3 adds a conclusion (3TWSa.03): what the result tells us
@@ -813,7 +815,7 @@
         say(String(n));
         if (n >= ob.units) {
           lock = true;
-          const line = ob.label[0].toUpperCase() + ob.label.slice(1) + " is " + ob.units + " " + o.unit.name + " long.";
+          const line = ob.label[0].toUpperCase() + ob.label.slice(1) + " is " + ob.units + " " + o.unit.name + " " + (o.dim || "long") + ".";
           $(el.fb).className = "fb good"; $(el.fb).textContent = line; setTimeout(() => say(line), 500);
           setTimeout(() => {
             $(el.fb).textContent = ""; k++; n = 0; lock = false;
@@ -955,7 +957,7 @@
   /* ---- ask a question, then say how to find out ----------------------- */
   function askQuestion(o) {
     const el = o.el;
-    let picked = false, lock = false;
+    let picked = false, lock = false, fo = o.findOut;
     $(el.stage).innerHTML = '<div class="stagewide">' + picHtml(o.pic, "askpic") + '<div class="qlist">' + o.questions.map((q, k) => '<button type="button" class="qbtn" data-k="' + k + '">' + esc(q) + "</button>").join("") + "</div></div>";
     $(el.score).textContent = "Pick a question you would like to ask";
     $(el.stage).addEventListener("click", (e) => {
@@ -966,9 +968,10 @@
       say("Good question! " + b.textContent + " Scientists start with a question. Now, how could we find out?");
       setTimeout(() => {
         $(el.fb).textContent = ""; $(el.fb).className = "fb";
-        $(el.ask).innerHTML = o.findOut.ask; $(el.score).textContent = "How could we find the answer?";
+        fo = (o.findOuts && o.findOuts[Number(b.dataset.k)]) || o.findOut;
+        $(el.ask).innerHTML = fo.ask; $(el.score).textContent = "How could we find the answer?";
         $(el.ch).classList.add("stack");
-        $(el.ch).innerHTML = shuffle(o.findOut.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+        $(el.ch).innerHTML = shuffle(fo.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
       }, 3200);
     });
     $(el.ch).addEventListener("click", (e) => {
@@ -977,7 +980,7 @@
       const ok = b.dataset.ok === "1";
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong");
-      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "") + o.findOut.why; say($(el.fb).textContent);
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "") + fo.why; say($(el.fb).textContent);
       reportScore(o.finish, ok ? 1 : 0, 1);
       setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 2600);
     });
@@ -1048,7 +1051,7 @@
         '<div class="graph' + (o.bar ? " bar" : "") + (o.dot ? " dot" : "") + '" role="img" aria-label="' + (o.dot ? "A dot plot" : o.bar ? "A bar chart" : "A block graph") + '">' +
         (o.bar ? '<div class="gaxis" aria-hidden="true" style="height:' + (maxV * 26 + 6) + 'px">' + Array.from({ length: maxV }, (_, i) => "<span>" + (maxV - i) + "</span>").join("") + "</div>" : "") + cols.map((c, k) =>
           '<div class="gcol"><div class="gstack" style="height:' + (maxV * 26 + 6) + 'px">' + Array.from({ length: count[k] }, () => '<i class="gblock"></i>').join("") + "</div>" +
-          '<button type="button" class="big small' + (count[k] >= c.value ? " ghost" : " teal") + '" data-k="' + k + '"' + (count[k] >= c.value ? " disabled" : "") + '>' + (o.dot ? "+ dot" : o.bar ? "+ 1" + (o.unit ? " " + esc(o.unit) : "") : "+ block") + '</button>' +
+          '<button type="button" class="big small' + (count[k] >= c.value ? " ghost" : " teal") + '" data-k="' + k + '"' + (count[k] >= c.value ? " disabled" : "") + '>' + (o.dot ? "+ dot" : o.bar ? "+ 1" + (o.unit ? " " + esc(o.unitOne || o.unit.replace(/s$/, "")) : "") : "+ block") + '</button>' +
           '<span class="glab">' + small(c.pic) + "<br>" + esc(c.label) + (count[k] >= c.value ? " &#10003;" : "") + "</span></div>").join("") + "</div></div>";
       const done = cols.filter((c, k) => count[k] >= c.value).length;
       $(el.score).textContent = done + " of " + cols.length + " columns built";
@@ -1347,14 +1350,14 @@
     '<path d="M130 20 q54 0 54 50 q0 40 -24 52 q46 10 56 60 v160 q0 40 -30 40 h-112 q-30 0 -30 -40 v-160 q10 -50 56 -60 q-24 -12 -24 -52 q0 -50 54 -50z" fill="#C68642" opacity="0.55"/>' +
     '<g data-part="brain" tabindex="0" role="button" aria-label="brain"><path d="M100 60 q0 -30 30 -30 q30 0 30 30 q4 22 -14 30 h-32 q-18 -8 -14 -30z" fill="#F2A7C4"/><path d="M110 50 q10 10 20 0 q10 10 20 0 M106 66 q12 8 24 0 q12 8 24 0" fill="none" stroke="#C86B95" stroke-width="3"/><circle class="outline" cx="130" cy="60" r="40"/></g>' +
     '<g data-part="lungs" tabindex="0" role="button" aria-label="lungs"><path d="M118 150 q-40 0 -44 60 q0 40 30 40 q14 0 14 -30z" fill="#F08A8A"/><path d="M142 150 q40 0 44 60 q0 40 -30 40 q-14 0 -14 -30z" fill="#F08A8A"/><rect x="126" y="130" width="8" height="40" rx="4" fill="#E9D9B8"/><rect class="outline" x="68" y="136" width="124" height="120" rx="30"/></g>' +
-    '<g data-part="heart" tabindex="0" role="button" aria-label="heart"><path d="M130 232 q-8 -20 -26 -18 q-18 4 -14 26 q6 22 40 42 q34 -20 40 -42 q4 -22 -14 -26 q-18 -2 -26 18z" fill="#D9473F"/><circle class="outline" cx="130" cy="246" r="36"/></g>' +
+    '<g data-part="heart" tabindex="0" role="button" aria-label="heart" transform="translate(0 -46)"><path d="M130 232 q-8 -20 -26 -18 q-18 4 -14 26 q6 22 40 42 q34 -20 40 -42 q4 -22 -14 -26 q-18 -2 -26 18z" fill="#D9473F"/><circle class="outline" cx="130" cy="246" r="36"/></g>' +
     '<g data-part="stomach" tabindex="0" role="button" aria-label="stomach"><path d="M150 290 q40 -6 46 30 q4 30 -30 36 q-30 4 -40 -20 q-8 -30 24 -46z" fill="#E9A05B"/><circle class="outline" cx="160" cy="320" r="40"/></g>' +
     '<g data-part="intestine" tabindex="0" role="button" aria-label="intestine"><path d="M80 320 q60 -10 60 20 q0 26 -50 20 q-30 0 -20 26 q10 20 60 12 q40 -6 50 16" fill="none" stroke="#E7B86B" stroke-width="16" stroke-linecap="round"/><rect class="outline" x="56" y="300" width="130" height="110" rx="30"/></g>' +
     "</svg>");
   FIGURES.insect = () => (
     '<svg viewBox="0 0 360 240" role="img" aria-label="A beetle seen from above: head, thorax, abdomen, six legs, wings and antennae">' +
-    '<g data-part="legs" tabindex="0" role="button" aria-label="legs"><g stroke="#3A2A1A" stroke-width="6" stroke-linecap="round" fill="none"><path d="M150 110 l-40 -40 l-10 -30 M160 128 l-50 10 l-30 30 M175 140 l-30 40 l-10 30 M210 110 l40 -40 l10 -30 M200 128 l50 10 l30 30 M185 140 l30 40 l10 30"/></g><path class="outline" d="M90 40 h180 v180 h-180z"/></g>' +
-    '<g data-part="wings" tabindex="0" role="button" aria-label="wings"><path d="M182 100 q70 -30 100 20 q-30 60 -100 30z" fill="#7BC47F" opacity="0.85"/><path d="M178 100 q-70 -30 -100 20 q30 60 100 30z" fill="#7BC47F" opacity="0.85"/><rect class="outline" x="70" y="80" width="220" height="80" rx="30"/></g>' +
+    '<g data-part="legs" tabindex="0" role="button" aria-label="legs"><g stroke="#3A2A1A" stroke-width="6" stroke-linecap="round" fill="none"><path d="M150 104 l-30 -34 l-10 -26 M170 99 l0 -40 l-8 -26 M190 104 l30 -34 l12 -26 M150 146 l-30 34 l-10 26 M170 151 l0 40 l-8 26 M190 146 l30 34 l12 26"/></g><path class="outline" d="M100 20 h140 v200 h-140z"/></g>' +
+    '<g data-part="wings" tabindex="0" role="button" aria-label="wings"><path d="M186 110 q40 -76 116 -52 q-36 44 -116 52z" fill="#7BC47F" opacity="0.85"/><path d="M186 140 q40 76 116 52 q-36 -44 -116 -52z" fill="#7BC47F" opacity="0.85"/><rect class="outline" x="180" y="46" width="130" height="158" rx="30"/></g>' +
     '<g data-part="abdomen" tabindex="0" role="button" aria-label="abdomen"><ellipse cx="240" cy="125" rx="52" ry="34" fill="#5B3A1E"/><path d="M200 125 h80 M214 108 v34 M232 104 v42 M250 106 v38" stroke="#3A2A1A" stroke-width="2"/><ellipse class="outline" cx="240" cy="125" rx="58" ry="40"/></g>' +
     '<g data-part="thorax" tabindex="0" role="button" aria-label="thorax"><ellipse cx="170" cy="125" rx="30" ry="28" fill="#7A4B22"/><ellipse class="outline" cx="170" cy="125" rx="36" ry="34"/></g>' +
     '<g data-part="head" tabindex="0" role="button" aria-label="head"><circle cx="122" cy="125" r="22" fill="#5B3A1E"/><circle cx="112" cy="118" r="4" fill="#fff"/><circle cx="112" cy="132" r="4" fill="#fff"/><circle class="outline" cx="122" cy="125" r="28"/></g>' +
@@ -1362,6 +1365,16 @@
     "</svg>");
 
   /* ---- Stage 3 scenes ------------------------------------------------ */
+  /* gravity: a child on the Earth, and an arrow from them to the CENTRE. State 0
+     the child stands on top; state 1 on the far side, upside down to us, and the
+     arrow still points to the centre. The rotating globe could not show this. */
+  SCENES.gravity = (s) => {
+    const child = '<g>' + glyphAt(160, 62, 46, "\u{1F9CD}") + '<path d="M160 66 V132" stroke="#D9473F" stroke-width="5"/><path d="M151 121 L160 137 L169 121" fill="none" stroke="#D9473F" stroke-width="4" stroke-linejoin="round"/></g>';
+    return '<svg viewBox="0 0 320 300" role="img" aria-label="' + (s ? "A child on the far side of the Earth; down still points to the centre" : "A child standing on the Earth; down points to the centre") + '">' +
+      '<rect width="320" height="300" fill="#0E2434"/><circle cx="160" cy="150" r="86" fill="#3B7FD1"/><path d="M110 110 q30 -30 60 -10 q20 30 -10 40 q-40 10 -50 -30z M180 170 q30 -10 40 20 q-20 30 -50 10z" fill="#4CAF50"/>' +
+      '<circle cx="160" cy="150" r="5" fill="#fff"/><text x="172" y="166" font-size="13" font-family="Inter, sans-serif" font-weight="800" fill="#fff">centre</text>' +
+      (s ? '<g transform="rotate(180 160 150)">' + child + "</g>" : child) + "</svg>";
+  };
   /* a fossil forming: 0 a fish alive in the sea, 1 it dies and sinks into the mud, 2 layers pile up and turn to rock, 3 the rock splits and shows its shape */
   SCENES.fossil = (s) => {
     const sea = '<rect width="320" height="' + (s < 2 ? 150 : 40) + '" fill="#3B7FD1"/>';
@@ -1376,15 +1389,17 @@
   /* ---- Stage 3 sims -------------------------------------------------- */
   /* a plant kept warm and a plant kept cold, day by day */
   SIMS.plantWarm = {
-    init(box) { twoPots(box, 0, 0, 1, { labelA: "warm room", labelB: "cold fridge", sun: true, darkB: true }); },
+    /* Both plants in the same light: the cold one is only COLD. It used to be drawn
+       in a dark cupboard, so the test changed two things at once. */
+    init(box) { twoPots(box, 0, 0, 1, { labelA: "warm place", labelB: "cold place", sun: true, coldB: true }); },
     run(box, api) {
       return new Promise((done) => {
         let day = 1;
         api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 'day">\u{1F321}️ Wait a day</button>';
         $(api.id + "day").addEventListener("click", () => {
-          day++; twoPots(box, 0, Math.min(4, day - 1), day, { labelA: "warm room", labelB: "cold fridge", sun: true, darkB: true }); SOUND.play("pop", 0.3);
-          api.say(day < 5 ? "Day " + day + ". " + (day === 2 ? "The warm plant looks fine. The cold plant has stopped growing." : day === 3 ? "The cold plant is drooping." : "The cold plant is pale and limp.")
-            : "Day five. The warm plant is healthy. The cold one is drooping and pale. Too cold, and a plant cannot stay healthy, even with water and light.");
+          day++; twoPots(box, 0, Math.min(4, day - 1), day, { labelA: "warm place", labelB: "cold place", sun: true, coldB: true }); SOUND.play("pop", 0.3);
+          api.say(day < 5 ? "Day " + day + ". " + (day === 2 ? "The warm plant looks fine. The cold plant has stopped growing." : day === 3 ? "The cold plant is drooping." : "The cold plant is limp, and its leaves are turning yellow.")
+            : "Day five. The warm plant is healthy. The cold one is drooping and yellow. Same water, same light, only colder: too cold, and a plant cannot stay healthy.");
           if (day >= 5) { api.controls.innerHTML = ""; done(); }
         });
       });
@@ -1392,9 +1407,13 @@
   };
 
   /* a forcemeter: hang things on the hook and read the newtons */
+  /* The pointer moves ONE tick (24 units) per newton, so it points at the number
+     it reads: it used to move 14 against ticks 24 apart, and "5 N" pointed near 3
+     (validation of Grade 3, 2026-09-11). The frame is tall enough that 5 N keeps
+     the hung object inside it. */
   function forcemeterSvg(n, pic, label) {
-    const stretch = n * 14;
-    return '<svg viewBox="0 0 320 300" role="img" aria-label="A forcemeter with a hook, reading ' + n + ' newtons"><rect width="320" height="300" fill="#DDEFF7"/>' +
+    const stretch = n * 24;
+    return '<svg viewBox="0 0 320 420" role="img" aria-label="A forcemeter with a hook, reading ' + n + ' newtons"><rect width="320" height="420" fill="#DDEFF7"/>' +
       '<rect x="120" y="10" width="80" height="150" rx="10" fill="#fff" stroke="#3A3A3A" stroke-width="3"/>' +
       [0, 1, 2, 3, 4, 5].map((k) => '<line x1="130" y1="' + (30 + k * 24) + '" x2="150" y2="' + (30 + k * 24) + '" stroke="#3A3A3A" stroke-width="2"/><text x="156" y="' + (35 + k * 24) + '" font-size="12" font-family="Inter, sans-serif" font-weight="700" fill="#3A3A3A">' + k + ' N</text>').join("") +
       '<rect x="142" y="26" width="8" height="' + (4 + stretch) + '" fill="#D9473F" style="transition: height 700ms ease"/>' +
@@ -1403,7 +1422,7 @@
       (pic ? '<text x="160" y="' + (250 + stretch) + '" font-size="44" text-anchor="middle" style="transition: all 700ms ease">' + pic + "</text>" : "") +
       '<text x="20" y="40" font-size="26" font-family="Inter, sans-serif" font-weight="800" fill="#1B1B1B">' + n + " N</text>" +
       (label ? '<text x="20" y="66" font-size="14" font-family="Inter, sans-serif" font-weight="700" fill="#3A3A3A">' + esc(label) + "</text>" : "") +
-      '<text x="240" y="280" font-size="12" font-family="Inter, sans-serif" fill="#3A3A3A">gravity pulls ↓</text></svg>';
+      '<text x="236" y="404" font-size="12" font-family="Inter, sans-serif" fill="#3A3A3A">gravity pulls ↓</text></svg>';
   }
   SIMS.forcemeter = {
     items: [{ id: "apple", pic: "\u{1F34E}", label: "an apple", n: 2 }, { id: "shoe", pic: "\u{1F45F}", label: "a shoe", n: 3 }, { id: "book", pic: "\u{1F4D5}", label: "a big book", n: 5 }],
@@ -1472,7 +1491,7 @@
         '<rect x="290" y="' + (100 - size) + '" width="20" height="' + (size * 2) + '" fill="#111" style="transition: all 600ms ease"/>' +
         '<text x="' + ox + '" y="118" font-size="44" text-anchor="middle" style="transition: all 600ms ease">\u{1F9F8}</text>' +
         '<text x="30" y="118" font-size="40" text-anchor="middle">\u{1F526}</text>' +
-        '<text x="12" y="28" font-size="14" font-family="Inter, sans-serif" font-weight="800" fill="#fff">' + ["toy near the wall: small shadow", "toy in the middle", "toy near the torch: BIG shadow"][pos] + "</text></svg>";
+        '<text x="12" y="28" font-size="14" font-family="Inter, sans-serif" font-weight="800" fill="#fff">' + ["toy near the wall: small shadow", "toy in the middle", "toy near the torch: big shadow"][pos] + "</text></svg>";
     },
     init(box) { SIMS.shadowSize.draw(box, 1); },
     run(box, api) {
@@ -1513,8 +1532,12 @@
   function magnetPair(gap, flipped) {
     const mag = (x, flip) => '<g transform="translate(' + x + ' 0)"><rect x="0" y="80" width="60" height="40" fill="' + (flip ? "#3B7FD1" : "#D9473F") + '"/><rect x="60" y="80" width="60" height="40" fill="' + (flip ? "#D9473F" : "#3B7FD1") + '"/><text x="30" y="108" text-anchor="middle" font-size="24" font-weight="800" font-family="Inter, sans-serif" fill="#fff">' + (flip ? "S" : "N") + '</text><text x="90" y="108" text-anchor="middle" font-size="24" font-weight="800" font-family="Inter, sans-serif" fill="#fff">' + (flip ? "N" : "S") + "</text></g>";
     return '<svg viewBox="0 0 320 200" role="img" aria-label="Two bar magnets"><rect width="320" height="200" fill="#DDEFF7"/>' +
-      '<g style="transition: transform 700ms ease" transform="translate(' + (-gap / 2) + ' 0)">' + mag(40, false) + "</g>" +
-      '<g style="transition: transform 700ms ease" transform="translate(' + (gap / 2) + ' 0)">' + mag(160, flipped) + "</g>" +
+      /* left magnet S|N, so its NORTH end faces the right one; the right one
+         starts S|N (south facing: attract) and flips to N|S (north facing:
+         repel). It used to draw S facing S after the flip while the voice
+         said "north faces north" (Grade 3 re-review, 2026-09-11). */
+      '<g style="transition: transform 700ms ease" transform="translate(' + (-gap / 2) + ' 0)">' + mag(40, true) + "</g>" +
+      '<g style="transition: transform 700ms ease" transform="translate(' + (gap / 2) + ' 0)">' + mag(160, !flipped) + "</g>" +
       '<text x="160" y="40" text-anchor="middle" font-size="14" font-family="Inter, sans-serif" font-weight="800" fill="#1B1B1B">' + (gap > 40 ? "far apart" : gap > 0 ? "close together" : "touching") + "</text></svg>";
   }
   SIMS.magnetPoles = {
@@ -1529,7 +1552,7 @@
             box.innerHTML = magnetPair(10, flipped);
             setTimeout(() => {
               if (!flipped) { attracted = true; box.innerHTML = magnetPair(0, flipped); SOUND.play("click", 0.6); api.say("North to south: they snap together. Unlike poles attract."); }
-              else { repelled = true; box.innerHTML = magnetPair(90, flipped); SOUND.play("pop", 0.5); api.say("North to north: they push apart. You cannot make them touch. Like poles repel."); }
+              else { repelled = true; box.innerHTML = magnetPair(90, flipped); SOUND.play("pop", 0.5); api.say("North to north: they push apart. You feel them push back, hard. Like poles repel."); }
               busy = false;
               if (attracted && repelled) setTimeout(() => { api.controls.innerHTML = ""; api.say("Every magnet has a north pole and a south pole. Unlike poles attract, like poles repel."); done(); }, 2600);
             }, 800);
@@ -1544,10 +1567,10 @@
   /* a mixture separated four ways */
   SIMS.separate = {
     stages: [
-      { id: "sieve", btn: "\u{1F373} Shake the sieve", pic: ICONS.rock + "\u{1F3D6}️", cap: "stones and sand", say: "The sand falls through the holes. The stones are too big and stay in the sieve. Separated by size." },
+      { id: "sieve", btn: ICONS.sieve + " Shake the sieve", pic: ICONS.sieve + ICONS.rock + "\u{1F3D6}️", cap: "stones and sand", say: "The sand falls through the holes. The stones are too big and stay in the sieve. Separated by size." },
       { id: "magnet", btn: "\u{1F9F2} Sweep the magnet", pic: "\u{1F9F2}\u{1F3D6}️", cap: "iron filings and sand", say: "The iron filings jump onto the magnet. The sand does not. Separated because only one of them is magnetic." },
       { id: "filter", btn: "\u{1F4A7} Pour through the filter", pic: "\u{1F4A7}\u{1F3D6}️", cap: "sand and water", say: "The water drips through the filter paper. The sand cannot get through and stays behind. Separated by size again, just a much smaller size." },
-      { id: "salt", btn: "\u{1F9C2} Stir the salt in, then taste", pic: "\u{1F9C2}\u{1F4A7}", cap: "salt and water", say: "The salt disappears. But taste the water: salty! The salt is still there, in tiny pieces too small to see. It dissolved. That is a mixture too." },
+      { id: "salt", btn: "\u{1F9C2} Stir the salt in", pic: "\u{1F9C2}\u{1F4A7}", cap: "salt and water", say: "The salt disappears. Only with a grown-up, taste one drop: salty! The salt is still there, in tiny pieces too small to see. It dissolved. That is a mixture too." },
     ],
     draw(box, k) {
       const s = SIMS.separate.stages[k] || SIMS.separate.stages[0];
@@ -1566,7 +1589,7 @@
             api.say(s.say);
             api.controls.innerHTML = "";
             k++;
-            setTimeout(() => { if (k >= SIMS.separate.stages.length) { api.say("Four mixtures, four ways to separate them. Every material kept its own properties inside the mixture, and that is what let you get it back out."); done(); } else paint(); }, 4200);
+            setTimeout(() => { if (k >= SIMS.separate.stages.length) { api.say("The sieve, the magnet and the filter each separated a mixture. The salt dissolved: you could not see it, but you could taste that it was still there. Every material kept its own properties inside the mixture."); done(); } else paint(); }, 4200);
           });
         };
         paint();
@@ -1613,7 +1636,7 @@
       const ell = '<ellipse cx="160" cy="100" rx="' + rx + '" ry="60" fill="' + (lit >= 0.5 ? "#F3EFE6" : "#1B2A3A") + '"/>';
       box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="The Moon, ' + SIMS.moonPhases.names[k] + '"><rect width="320" height="200" fill="#0B1D2C"/><g fill="#fff" opacity="0.7"><circle cx="30" cy="30" r="2"/><circle cx="280" cy="50" r="2"/><circle cx="60" cy="160" r="1.5"/><circle cx="290" cy="170" r="1.5"/></g>' +
         '<circle cx="160" cy="100" r="60" fill="#1B2A3A" stroke="#4A5A6A" stroke-width="2"/>' + (lit > 0 ? fillHalf + ell : "") +
-        '<text x="160" y="190" text-anchor="middle" fill="#fff" font-size="15" font-family="Inter, sans-serif" font-weight="800">day ' + (k * 3 + 1) + ": " + SIMS.moonPhases.names[k] + "</text></svg>";
+        '<text x="160" y="190" text-anchor="middle" fill="#fff" font-size="15" font-family="Inter, sans-serif" font-weight="800">day ' + [1, 5, 8, 12, 16, 19, 23, 27, 30][k] + ": " + SIMS.moonPhases.names[k] + "</text></svg>";
     },
     init(box) { SIMS.moonPhases.draw(box, 0); },
     run(box, api) {
@@ -1644,7 +1667,7 @@
     init(box) { this.state = { earth: false, moon: false, orbit: false, angle: 0, spin: 0, cap: "" }; box.innerHTML = earthMoonSvg(this.state); },
     add(box, part, api) {
       const s = this.state; s[part] = true; box.innerHTML = earthMoonSvg(s);
-      return { earth: "The Earth: a big ball, mostly water.", moon: "The Moon: a much smaller ball of rock.", orbit: "The path: the Moon goes round the Earth along it." }[part];
+      return { earth: "The Earth: a big ball of rock, mostly covered in water.", moon: "The Moon: a much smaller ball of rock.", orbit: "The path: the Moon goes round the Earth along it." }[part];
     },
     complete(box, api) {
       const s = this.state; let monthDone = false, dayDone = false;

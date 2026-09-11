@@ -7,12 +7,12 @@ physically separated; 3Cp.02 materials keep their properties in a mixture;
 solid from a liquid; 3Cc.01 a dissolved solid is still there; 3TWSp.04
 risks and staying safe; with 3TWSc.04, 3TWSc.06, 3TWSa.03 and 3TWSc.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "mixtures",
     "title": "Mixtures",
-    "blurb": "Mix sand and stones and see that each keeps its properties, separate four mixtures with a sieve, a magnet, a filter and a taste, find out where salt goes when it dissolves, and learn the safety rules for practical work.",
+    "blurb": "Mix sand and stones and see that each keeps its properties, separate three mixtures with a sieve, a magnet and a filter, find out where salt goes when it dissolves, and learn the safety rules for practical work.",
     "steps": [
         step("demo", "What a mixture is", "\U0001F963", "Mixtures", ["3Cm.02", "3Cp.02"],
              "Press <b>Next</b> to mix sand and stones, and look at what happens to each.",
@@ -26,21 +26,21 @@ LESSON = {
                  {"pic": "\U0001FAA8", "cap": "Stones: big, hard, and they do not pour.", "say": "Here are stones. Big and hard. They do not pour."},
                  {"pic": "\U0001F963", "cap": "Mix them. A <b>mixture</b> of sand and stones.", "say": "Mix them together in a bowl. Now you have a mixture of sand and stones."},
                  {"pic": "\U0001F50D", "cap": "Look closely: the sand is still fine, the stones are still big. Each <b>keeps its properties</b>.", "say": "Look closely. The sand is still fine. The stones are still big and hard. Mixing changed nothing about either material. Each one keeps its properties."},
-                 {"pic": "\U0001F373", "cap": "So they can be <b>separated</b>: a sieve lets the sand through and keeps the stones.", "say": "And because they kept their properties, you can separate them. A sieve lets the fine sand through and holds the big stones back."},
+                 {"pic": icon("sieve"), "cap": "So they can be <b>separated</b>: a sieve lets the sand through and keeps the stones.", "say": "And because they kept their properties, you can separate them. A sieve lets the fine sand through and holds the big stones back."},
              ]},
              "A mixture is materials mixed together. Each keeps its properties, so they can be separated."),
 
-        step("experiment", "Separate four mixtures", "\U0001F9EA", "Separator", ["3Cp.03", "3Cp.04", "3Cc.01", "3TWSp.03", "3TWSa.03"],
-             "Four mixtures, four ways to separate them. Predict first.",
+        step("experiment", "Four mixtures", "\U0001F9EA", "Separator", ["3Cp.03", "3Cp.04", "3Cc.01", "3TWSp.03", "3TWSa.03"],
+             "Four mixtures. A sieve, a magnet and a filter separate three of them. In the fourth, the salt dissolves. Predict first.",
              explain(
-                 ["Each mixture is separated using a property the two materials do NOT share."],
-                 ["Sand and stones: different sizes, so a sieve.", "Iron filings and sand: only one is magnetic, so a magnet.", "Sand and water: the sand cannot get through filter paper.", "Salt and water: the salt dissolves. It looks gone, but taste it."],
-                 ["Children think dissolved salt has disappeared.", "Taste the water. It is salty. The salt is still there, in pieces too small to see."],
+                 ["A mixture is separated using a property the two materials do not share."],
+                 ["Sand and stones: different sizes, so a sieve.", "Iron filings and sand: only one is magnetic, so a magnet.", "Sand and water: the sand cannot get through filter paper.", "Salt and water: the salt dissolves. It looks gone, but the water tastes salty. Taste only with a grown-up, and only kitchen salt in drinking water."],
+                 ["Children think dissolved salt has disappeared.", "With a grown-up, taste a drop of the water. It is salty. The salt is still there, in pieces too small to see."],
                  ["Predict, then press each button and watch."]),
              {"sim": "separate",
               "predict": {"ask": "You stir salt into water and it disappears. Is the salt still there?",
                           "opts": [opt("Yes, in pieces too small to see", True), opt("No, it has gone for ever", False), opt("It turned into water", False)]},
-              "runAsk": "Press each button. Sieve, magnet, filter, then stir and taste.",
+              "runAsk": "Press each button: sieve, magnet, filter, then stir the salt in. In real life, taste only with a grown-up, and only kitchen salt in drinking water.",
               "happened": {"ask": "What happened with the salt?",
                            "opts": [opt("It disappeared into the water, but the water tasted salty: it was still there", True), opt("It sank to the bottom", False), opt("The water went solid", False)],
                            "why": "Dissolving is mixing. The salt spread through the water in tiny pieces. The salty taste proves it is still there."},
@@ -53,20 +53,20 @@ LESSON = {
              "Sieve, magnet or filter? Tap the bin that would separate this mixture.",
              explain(
                  ["Ask which property is different: size, or being magnetic.", "Big and small: sieve.", "Magnetic and not: magnet.", "A solid in a liquid: filter."],
-                 ["Peas and flour: different sizes, sieve.", "Nails and sand: nails are magnetic, magnet.", "Muddy water: mud is a solid in water, filter."],
-                 ["Children reach for the magnet for any metal.", "Only iron and steel are magnetic. A copper coin is not."],
+                 ["Peas and flour: different sizes, sieve.", "Iron filings and sand: the same size, but only iron is magnetic, magnet.", "Muddy water: mud is a solid in water, filter."],
+                 ["Children reach for the magnet for any metal.", "Not every metal is magnetic. Iron and steel are; copper wire is not."],
                  ["Which property is different? Then tap."]),
              {"ask": "Sieve, magnet or filter?",
-              "bins": [{"id": "sieve", "label": "Sieve", "pic": "\U0001F373"}, {"id": "magnet", "label": "Magnet", "pic": "\U0001F9F2"}, {"id": "filter", "label": "Filter", "pic": "\U0001F4A7"}],
+              "bins": [{"id": "sieve", "label": "Sieve", "pic": icon("sieve")}, {"id": "magnet", "label": "Magnet", "pic": "\U0001F9F2"}, {"id": "filter", "label": "Filter", "pic": "\U0001F4C4"}],
               "items": [
                   {"pic": "\U0001FAA8", "label": "stones and sand", "bin": "sieve", "why": "Different sizes: the sand falls through, the stones stay."},
-                  {"pic": "\U0001F4CE", "label": "paperclips and rice", "bin": "magnet", "why": "Steel paperclips are magnetic; rice is not."},
+                  {"pic": "\U0001F4CE", "label": "steel paperclips and plastic paperclips of the same size", "bin": "magnet", "why": "The same size, so a sieve cannot do it. Steel paperclips are magnetic; plastic ones are not."},
                   {"pic": "\U0001F4A7", "label": "muddy water", "bin": "filter", "why": "A solid in a liquid: the filter paper holds the mud back."},
                   {"pic": "\U0001F7E2", "label": "peas and flour", "bin": "sieve", "why": "Flour falls through a sieve; peas do not."},
-                  {"pic": "\U0001F529", "label": "iron nails and sand", "bin": "magnet", "why": "Iron is magnetic. The nails jump to the magnet."},
+                  {"pic": "⚫", "label": "iron filings and sand", "bin": "magnet", "why": "Tiny grains, both of them, so a sieve cannot do it. Iron is magnetic: the filings jump to the magnet."},
                   {"pic": "\U0001F3D6️", "label": "sand and water", "bin": "filter", "why": "The sand stays in the filter; the water drips through clear."},
                   {"pic": "\U0001F35D", "label": "pasta and sugar", "bin": "sieve", "why": "Sugar grains fall through; pasta stays."},
-                  {"pic": "\U0001F4CD", "label": "steel pins and sawdust", "bin": "magnet", "why": "Steel is magnetic; sawdust is not."},
+                  {"pic": "\U0001F4CD", "label": "steel beads and glass beads of the same size", "bin": "magnet", "why": "The same size, so a sieve cannot do it. Steel is magnetic; glass is not."},
               ]},
              "Different size: sieve or filter. Magnetic or not: magnet."),
 
@@ -89,9 +89,9 @@ LESSON = {
              "Salt and sugar dissolve. Sand and pebbles do not. Dissolving is still mixing."),
 
         step("sort", "Safe, or risky?", "⚠️", "Safe scientist", ["3TWSp.04", "3TWSc.04"],
-             "Practical work has risks. Is this <b>safe</b>, or <b>risky</b>? Tap the bin.",
+             "You will do mixture tests at home. Before you start, spot the risks. Is this <b>safe</b>, or <b>risky</b>? Tap the bin.",
              explain(
-                 ["A risk is something that could hurt someone. Scientists spot risks first and stay safe."],
+                 ["A risk is something that could hurt someone. Scientists spot risks first and stay safe.", "Do this before your own mixture tests at home."],
                  ["Goggles on when pouring: safe.", "Tasting an unknown powder: risky. You only tasted the salt water because a grown-up said it was safe.",
                   "Wiping spills straight away: safe. A wet floor is a risk.", "Running with a tray of glass: risky."],
                  ["Children think risky means exciting.", "It means somebody could get hurt."],
@@ -135,13 +135,14 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("Which is a mixture?", "\U0001F963", "sand and stones in a bowl", ["a glass of pure water", "a wooden block"], "Two materials, mixed."),
-                 q("Why can a sieve separate peas from flour?", "\U0001F373", "they are different sizes", ["peas are magnetic", "flour is wet"], "The flour falls through the holes."),
-                 q("Why can a magnet separate nails from sand?", "\U0001F9F2", "the nails are magnetic and the sand is not", ["the nails are bigger", "sand is heavier"], "A property one has and the other lacks."),
+                 q("Why can a sieve separate peas from flour?", icon("sieve"), "they are different sizes", ["peas are magnetic", "flour is wet"], "The flour falls through the holes."),
+                 q("Why can a magnet separate iron filings from sand?", "\U0001F9F2", "the iron is magnetic and the sand is not", ["the filings are bigger", "sand is heavier"], "A property one has and the other lacks."),
                  q("Muddy water goes through filter paper. What comes out?", "\U0001F4A7", "clear water; the mud stays in the paper", ["mud", "nothing"], "The filter holds the solid back."),
-                 q("Which solid does NOT dissolve in water?", "\U0001FAA8", "sand", ["salt", "sugar"], "Sand sinks and stays."),
+                 q("Which solid does not dissolve in water?", "\U0001FAA8", "sand", ["salt", "sugar"], "Sand sinks and stays."),
                  q("How do you know dissolved salt is still there?", "\U0001F445", "the water tastes salty", ["you can see it", "you cannot know"], "The taste proves it."),
                  q("Which is a risk in practical work?", "⚠️", "running with a tray of glass", ["wearing goggles", "wiping up a spill"], "Trip, break, cut."),
                  q("What should you do before you smell a chemical?", "\U0001F443\U0001F3FE", "waft the smell towards you with your hand", ["sniff it up close", "taste it first"], "Waft, never sniff."),
+                 q("Why can a filter not take the salt back out of salt water?", "\U0001F9C2", "the dissolved salt is in pieces small enough to go through the paper", ["the salt is too heavy", "the salt has turned into water"], "Dissolved salt spreads out in pieces too small to see, so it goes through the filter with the water."),
              ]},
              "That is the whole lesson finished. You can separate a mixture and stay safe doing it."),
     ],
@@ -154,15 +155,20 @@ LESSON["about"] = [
     "Spot the risks in practical work and say how to stay safe.",
 ]
 
+LESSON["warmup"] = [
+    q("Is water a solid, a liquid or a gas?", "\U0001F4A7", "a liquid", ["a solid", "a gas"], "Water flows and takes the shape of its container: a liquid."),
+    q("Which tool measures how hot something is?", "\U0001F321\ufe0f", "a thermometer", ["a ruler", "a measuring jug"], "A thermometer measures temperature."),
+]
+
 LESSON["lecture"] = [
     part("\U0001F963", "A mixture",
          "Mix sand and stones in a bowl. That is a mixture: two materials together. Look closely. The sand is still sand and the stones are still stones. Mixing does not change them."),
-    part("\U0001F373", "Sieve and magnet",
+    part(icon("sieve"), "Sieve and magnet",
          "Because each material keeps its properties, you can get them apart. Sand and stones are different sizes, so a sieve separates them. Iron filings and sand: only the iron is magnetic, so a magnet pulls it out."),
     part("\U0001F4A7", "The filter",
          "Sand in water is a mixture too. Pour it through filter paper. The water drips through clear. The sand cannot get through the tiny holes and stays behind."),
     part("\U0001F9C2", "Dissolving",
-         "Stir salt into water and it disappears. But taste the water: salty. The salt is still there, in pieces far too small to see. Dissolving is a kind of mixing, not a vanishing."),
+         "Stir salt into water and it disappears. But taste a drop, with a grown-up: salty. The salt is still there, in pieces far too small to see. Dissolving is a kind of mixing, not a vanishing."),
     part("⚠️", "Risks",
          "Practical work has risks. Glass can break. Floors get wet. Powders can hurt. A scientist spots the risks first: goggles on, spills wiped, hair tied back, nothing tasted unless a grown-up says so."),
 ]
@@ -170,9 +176,9 @@ LESSON["lecture"] = [
 LESSON["words"] = [
     word("mixture", "\U0001F963", "Two or more materials mixed together that can be separated again.",
          ["Sand and stones make a mixture.", "Salt water is a mixture too."]),
-    word("separate", "\U0001F373", "To get the materials in a mixture apart.",
-         ["A sieve can separate sand from stones.", "We separated the nails with a magnet."]),
-    word("sieve", "\U0001F373", "A tool with holes that lets small things through and keeps big things back.",
+    word("separate", icon("sieve"), "To get the materials in a mixture apart.",
+         ["A sieve can separate sand from stones.", "We separated the iron filings with a magnet."]),
+    word("sieve", icon("sieve"), "A tool with holes that lets small things through and keeps big things back.",
          ["Shake the sieve and the flour falls through.", "A sieve separates by size."]),
     word("filter", "\U0001F4A7", "Paper or cloth with tiny holes that lets a liquid through and keeps a solid back.",
          ["Pour the muddy water through the filter.", "The sand stayed in the filter paper."]),
@@ -185,19 +191,19 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("Separate a mixture", "Dry sand or rice, a few pebbles, some steel paperclips, a sieve, a magnet, a tray",
-         ["Mix the sand, pebbles and paperclips on the tray.",
+    home("Separate a mixture", "Dry sand or flour, a few pebbles, some steel paperclips, a sieve, a magnet, a tray",
+         ["Mix the sand or flour, the pebbles and the paperclips on the tray.",
           "Use the magnet first. What jumps to it?",
           "Then tip the rest through the sieve."],
          "The magnet took the paperclips. The sieve kept the pebbles. Say which property each one used."),
-    home("The filter test", "A coffee filter or kitchen paper, a funnel or a cup with holes, muddy water, a jug",
+    home("The filter test", "A coffee filter or kitchen paper, a funnel or a plastic cup with holes (a grown-up makes the holes with a skewer), muddy water, a jug",
          ["Stir a spoon of soil into a jug of water.",
-          "Pour it slowly through the filter into a clean glass.",
+          "Pour it slowly through the filter into a clean plastic cup.",
           "Look at what dripped through and what stayed."],
          "Clearer water comes through. The soil stays. Do not drink it."),
-    home("Is the sugar still there?", "Two glasses of water, a spoon of sugar, a grown-up",
-         ["Stir the sugar into one glass until it disappears.",
-          "Taste both glasses (water and sugar are safe, a grown-up says so).",
-          "Leave the sugar water on a sunny windowsill for a few days."],
-         "The sweet taste proves the sugar is still there. When the water dries away, what is left in the glass?"),
+    home("Is the sugar still there?", "Two plastic cups of drinking water, a spoon of kitchen sugar, a saucer, a grown-up",
+         ["Stir the sugar into one cup until it disappears.",
+          "With a grown-up, taste a sip from each cup. Only taste because a grown-up says it is safe.",
+          "Pour a spoonful of the sugar water onto a saucer and leave it on a sunny windowsill for a few days."],
+         "The sweet taste proves the sugar is still there. When the water dries away, what is left on the saucer?"),
 ]

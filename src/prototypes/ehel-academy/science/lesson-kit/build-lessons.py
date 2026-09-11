@@ -288,6 +288,13 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
                     sys.exit("REFUSED: %s material %r has no result for test %r" % (where, m["label"], t))
     elif kind == "ask":
         one_ok(d["findOut"]["opts"], where + " find-out")
+        # optional: one follow-up per question, so the child is asked how to
+        # find out THEIR question (Grade 3 re-review, 2026-09-11)
+        if "findOuts" in d:
+            if len(d["findOuts"]) != len(d["questions"]):
+                sys.exit("REFUSED: %s has %d findOuts for %d questions" % (where, len(d["findOuts"]), len(d["questions"])))
+            for k, f in enumerate(d["findOuts"]):
+                one_ok(f["opts"], where + " find-out %d" % (k + 1))
         if len(d["questions"]) < 2:
             sys.exit("REFUSED: %s offers fewer than 2 questions" % where)
     elif kind == "order":

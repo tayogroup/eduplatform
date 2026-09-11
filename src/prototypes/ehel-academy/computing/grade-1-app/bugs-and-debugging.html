@@ -323,7 +323,11 @@
   .lead { max-width: 34ch; text-align: center; font-size: clamp(19px, 3.6vw, 24px); font-weight: 700;
     font-family: "Inter", "Segoe UI", sans-serif; }
   .lead b { color: var(--teal); }
-  .sub { max-width: 40ch; text-align: center; color: var(--muted); font-size: 16.5px; }
+  /* #A8BDCD, not var(--muted): the muted token is 4.04:1 on the --cell panels a
+     .sub sits on (the sorting machine's "12 things, all mixed up"), under the
+     4.5:1 normal text needs. The same blue-grey a shade lighter: 5.0:1 there,
+     6.1:1 on --card, 7.5:1 on --ground. The token itself stays Mathematics'. */
+  .sub { max-width: 40ch; text-align: center; color: #A8BDCD; font-size: 16.5px; }
   .phase { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
     font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
   .goal { margin: 0; max-width: 40ch; text-align: center; font-size: 18px; color: var(--muted); }
@@ -592,7 +596,8 @@
   .pscreen { min-height: 110px; padding: 12px; border-radius: 16px; background: #fff; color: #142B3E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
   .pscreen .cpic { font-size: 40px; }
   .pscreen p { margin: 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 17px; }
-  .pscreen p.dim { color: #6B7F82; font-weight: 400; }
+  /* 5.1:1 on the white phone screen; #6B7F82 was 4.21:1 (validation 2026-09-11) */
+  .pscreen p.dim { color: #5F7275; font-weight: 400; }
 
   /* ==================================================================
      STAGE 2 additions - same tokens, no new hue.
@@ -860,7 +865,10 @@
   /* loops in an algorithm; Robo's looped program */
   .algo li.loopbox { border-color: var(--accent); background: rgba(233,116,79,0.10); }
   .algo li.loopbox.now { box-shadow: 0 0 0 3px rgba(233,116,79,0.35); }
-  .algo li.loopbox > b { display: block; margin-bottom: 4px; color: var(--accent-ink); }
+  /* No colour of its own: --accent-ink is for text ON the accent, and this box is a
+     10% tint over the dark ground, so the label measured 1.29:1 - all but invisible
+     (validation 2026-09-11). It inherits the ink, 12.6:1, as Stage 3's fold label does. */
+  .algo li.loopbox > b { display: block; margin-bottom: 4px; }
   .algo li span.now { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 8px; }
   .loopchip { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; border: 2px dashed var(--accent); }
   .loopchip.now { background: rgba(233,116,79,0.12); }
@@ -1206,9 +1214,9 @@
         <p class="score" id="score3"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1P.04 1P.07" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A program can have a mistake in it.</s><s>A mistake in a program is called a bug.</s><s>Fixing bugs is called debugging.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Long ago, a computer was as big as a room.</s><s>One day it stopped working.</s><s>Inside, the programmers found a real insect stuck in the machine.</s><s>They called it a bug, and the name stuck.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a bug means the computer is broken.</s><s>Usually the computer is fine. The PROGRAM has a mistake in it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and meet the first bug.</s></mstts:express-as>' data-say="Where does the word bug come from? Press Next and find out.">
+    <section class="slide" data-objectives="1P.04 1P.07" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A program can have a mistake in it.</s><s>A mistake in a program is called a bug.</s><s>Fixing bugs is called debugging.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Long ago, a computer was as big as a room.</s><s>One day it stopped working.</s><s>Inside, the people working on it found a real insect stuck in the machine.</s><s>People already called a mistake in a machine a bug. Now they had found a real one, so they stuck it in their notebook.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a bug means the computer is broken.</s><s>Usually the computer is fine. The PROGRAM has a mistake in it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and meet the real bug.</s></mstts:express-as>' data-say="Why do we call a mistake a bug? Press Next and hear a true story.">
       <div class="slide-head"><span class="n">4</span><h2>The first bug</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Where does the word bug come from? Press <b>Next</b> and find out.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Why do we call a mistake a bug? Press <b>Next</b> and hear a true story.</span></div>
       <div class="stage">
         <div id="stage4"></div>
         <div class="choices" id="ch4"></div>
@@ -1420,7 +1428,7 @@
             {
               "pic": "🐛",
               "title": "The first bug",
-              "say": "Long ago a computer was as big as a room. One day it stopped working, and inside it the programmers found a real insect. They called it a bug. Ever since, a mistake in a program has been called a bug."
+              "say": "Long ago a computer was as big as a room. One day it stopped working, and inside it the people working on it found a real insect, a moth. People already called a mistake in a machine a bug, so now they had a real one! They stuck it in their notebook, and the story made the word famous. Today a mistake in a program is called a bug."
             },
             {
               "pic": "▶️",
@@ -1538,13 +1546,13 @@
             {
               "pic": "🐛",
               "cap": "Inside, they found a real <b>insect</b> stuck in the machine!",
-              "say": "Inside, the programmers found a real insect stuck in the machine. A moth. A bug!",
+              "say": "Inside, the people working on it found a real insect stuck in the machine. A moth. A real bug!",
               "sound": "pop"
             },
             {
               "pic": "📝🐛",
-              "cap": "Ever since, a mistake in a program is called a <b>bug</b>.",
-              "say": "Ever since then, a mistake in a program has been called a bug."
+              "cap": "People already called a mistake a <b>bug</b>. Now they had a real one! They stuck it in their notebook.",
+              "say": "People already called a mistake in a machine a bug. Now they had found a real one! They stuck the moth in their notebook, and the story made the word famous."
             },
             {
               "pic": "🔧",
@@ -2155,7 +2163,7 @@
             {
               "pic": "🚀",
               "label": "a rocket",
-              "say": "A rocket's programs are tested hundreds of times before launch, because a bug up there cannot be fixed later."
+              "say": "A rocket's programs are tested hundreds of times before launch, because a bug cannot be fixed while the rocket is flying."
             }
           ],
           "need": 4,
@@ -2589,27 +2597,27 @@
               "why": "Test again after every fix."
             },
             {
-              "ask": "Where did the word bug come from?",
+              "ask": "Inside an old computer, people once found...",
               "pic": "<div class=\"askpic\" aria-hidden=\"true\">🏢</div>",
               "opts": [
                 {
-                  "t": "a real insect found inside an old computer",
+                  "t": "a real insect, a moth",
                   "ok": true
                 },
                 {
-                  "t": "a bug-shaped button",
+                  "t": "a cat",
                   "ok": false
                 },
                 {
-                  "t": "a programmer called Bug",
+                  "t": "a flower",
                   "ok": false
                 },
                 {
-                  "t": "nobody knows",
+                  "t": "a sandwich",
                   "ok": false
                 }
               ],
-              "why": "A real insect was found stuck in a room-sized computer."
+              "why": "A real moth was stuck inside. People already called a mistake a bug, so now they had a real one!"
             },
             {
               "ask": "A program did exactly what we wanted. Does it have a bug?",
@@ -4254,11 +4262,15 @@
      name at call time, so every wrapper the build or the pipeline puts
      around it (the header bar\x27s percentage, a step\x27s arrival line)
      runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
   window.__ehelRestore = function (doneIdx, resumeIdx) {
-    /* read BEFORE the ticks land: the record\x27s own step 1 must not
-       count as the learner having touched it (measured: it did, and the
-       page stayed on step 1 with the dots restored) */
-    const untouched = cur === 0 && !done[0];
+    const untouched = cur === 0 && !ehelInteracted;
     let changed = false;
     for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
     if (changed) paintDots();
@@ -4418,10 +4430,19 @@
      the learner actually arrives; sayHere() refuses to speak for a slide
      that is not the one showing (the deck's own finish() keeps the same
      rule). show() is wrapped, not edited: it is lifted verbatim and the
-     shared pipeline patches it by matching its exact text. */
-  const ONSHOW = [];
+     shared pipeline patches it by matching its exact text.
+
+     ONLEAVE is the same idea for the step being LEFT, and it runs BEFORE
+     the deck moves: a step that finishes as the learner leaves it then
+     reports while it is still their position, and the new step's own
+     position report - made by show() itself - lands last and wins. The
+     lesson overview needs it; see unitOverview. */
+  const ONSHOW = [], ONLEAVE = [];
   const showWithoutHooks = show;
   show = function (i, speak) {
+    const to = Math.max(0, Math.min(slides.length - 1, i));
+    const g = to !== cur ? ONLEAVE[cur] : null;
+    if (g) { try { g(); } catch (_) { /* a step must never break the deck */ } }
     showWithoutHooks(i, speak);
     const f = ONSHOW[cur];
     if (f) { try { f(); } catch (_) { /* a step must never break the deck */ } }
@@ -8241,7 +8262,18 @@
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
-    finish(o.finish, o.done);
+    /* NOT AT DRAW, AND NOT ON ARRIVAL. Every step draws at page load,
+       before the reporting module exists, so a finish() here ticked this
+       step where nothing could report it: the school's record never held
+       step 1, a lesson finished to 100% on the page was stored as 14 of 16
+       and never complete, and the resume hook - which reads a finished
+       step 1 as "the learner has already started" - never took a reopened
+       lesson back to where it was left. All three measured on the live
+       Grade 1 bundle, 2026-09-11. Arrival is no cure for step 1, because
+       the deck's own first show(0) IS the arrival, still at load. So the
+       overview ticks when the learner leaves it, which is also the moment
+       they have seen it. */
+    ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
@@ -8386,7 +8418,11 @@
       '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
       '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
     $(el.score).textContent = "coming soon";
-    finish(o.finish, o.done);
+    /* On arrival, not at page load - see unitOverview. At draw time this
+       ticked the step before the child had seen it, where nothing could
+       report it: a fresh lesson opened at 13%, and the stored record was
+       one step short for ever. */
+    ONSHOW[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */

@@ -138,7 +138,7 @@ LESSON = {
                  [],
                  ["Read what happened, then tap the most likely reason."]),
              {"label": "Question", "items": [
-                 q("The video will not play and a little circle keeps spinning. What is most likely?", "⏳", "the internet is not available right now", ["the tablet is asleep", "the video is too long", "the screen is dirty"], "A spinning circle means waiting for the internet, and it is not there."),
+                 q("The video will not play and a little circle keeps spinning. What is most likely?", "⏳", "the internet is not available right now", ["the tablet is asleep", "the video is too long", "the screen is dirty"], "A spinning circle means the video is waiting for the internet. Most likely it is not reaching the tablet right now."),
                  q("The tablet says 'No connection'. What does that mean?", "\U0001F4F4", "it cannot reach the internet", ["the battery is flat", "the tablet is broken for ever", "somebody is calling"], "No connection means the internet is not available to this device."),
                  q("The cable to the computer came out. What happens to a wired connection?", "\U0001F50C", "it stops until the cable is plugged back in", ["nothing, it carries on", "the computer explodes", "it becomes wireless"], "A wired connection needs its wire."),
                  q("You are on a plane with no wi-fi. Which of these still works?", "✈️", "a game already on the tablet", ["a video call", "watching a video online", "sending a message"], "Things saved on the tablet work without the internet."),

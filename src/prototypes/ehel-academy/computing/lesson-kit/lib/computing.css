@@ -23,7 +23,11 @@
   .lead { max-width: 34ch; text-align: center; font-size: clamp(19px, 3.6vw, 24px); font-weight: 700;
     font-family: "Inter", "Segoe UI", sans-serif; }
   .lead b { color: var(--teal); }
-  .sub { max-width: 40ch; text-align: center; color: var(--muted); font-size: 16.5px; }
+  /* #A8BDCD, not var(--muted): the muted token is 4.04:1 on the --cell panels a
+     .sub sits on (the sorting machine's "12 things, all mixed up"), under the
+     4.5:1 normal text needs. The same blue-grey a shade lighter: 5.0:1 there,
+     6.1:1 on --card, 7.5:1 on --ground. The token itself stays Mathematics'. */
+  .sub { max-width: 40ch; text-align: center; color: #A8BDCD; font-size: 16.5px; }
   .phase { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
     font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
   .goal { margin: 0; max-width: 40ch; text-align: center; font-size: 18px; color: var(--muted); }
@@ -292,7 +296,8 @@
   .pscreen { min-height: 110px; padding: 12px; border-radius: 16px; background: #fff; color: #142B3E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
   .pscreen .cpic { font-size: 40px; }
   .pscreen p { margin: 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 17px; }
-  .pscreen p.dim { color: #6B7F82; font-weight: 400; }
+  /* 5.1:1 on the white phone screen; #6B7F82 was 4.21:1 (validation 2026-09-11) */
+  .pscreen p.dim { color: #5F7275; font-weight: 400; }
 
   /* ==================================================================
      STAGE 2 additions - same tokens, no new hue.
@@ -560,7 +565,10 @@
   /* loops in an algorithm; Robo's looped program */
   .algo li.loopbox { border-color: var(--accent); background: rgba(233,116,79,0.10); }
   .algo li.loopbox.now { box-shadow: 0 0 0 3px rgba(233,116,79,0.35); }
-  .algo li.loopbox > b { display: block; margin-bottom: 4px; color: var(--accent-ink); }
+  /* No colour of its own: --accent-ink is for text ON the accent, and this box is a
+     10% tint over the dark ground, so the label measured 1.29:1 - all but invisible
+     (validation 2026-09-11). It inherits the ink, 12.6:1, as Stage 3's fold label does. */
+  .algo li.loopbox > b { display: block; margin-bottom: 4px; }
   .algo li span.now { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 8px; }
   .loopchip { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; border: 2px dashed var(--accent); }
   .loopchip.now { background: rgba(233,116,79,0.12); }

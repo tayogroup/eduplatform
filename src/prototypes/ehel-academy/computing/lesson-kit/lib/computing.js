@@ -39,10 +39,19 @@
      the learner actually arrives; sayHere() refuses to speak for a slide
      that is not the one showing (the deck's own finish() keeps the same
      rule). show() is wrapped, not edited: it is lifted verbatim and the
-     shared pipeline patches it by matching its exact text. */
-  const ONSHOW = [];
+     shared pipeline patches it by matching its exact text.
+
+     ONLEAVE is the same idea for the step being LEFT, and it runs BEFORE
+     the deck moves: a step that finishes as the learner leaves it then
+     reports while it is still their position, and the new step's own
+     position report - made by show() itself - lands last and wins. The
+     lesson overview needs it; see unitOverview. */
+  const ONSHOW = [], ONLEAVE = [];
   const showWithoutHooks = show;
   show = function (i, speak) {
+    const to = Math.max(0, Math.min(slides.length - 1, i));
+    const g = to !== cur ? ONLEAVE[cur] : null;
+    if (g) { try { g(); } catch (_) { /* a step must never break the deck */ } }
     showWithoutHooks(i, speak);
     const f = ONSHOW[cur];
     if (f) { try { f(); } catch (_) { /* a step must never break the deck */ } }
@@ -3862,7 +3871,18 @@
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
-    finish(o.finish, o.done);
+    /* NOT AT DRAW, AND NOT ON ARRIVAL. Every step draws at page load,
+       before the reporting module exists, so a finish() here ticked this
+       step where nothing could report it: the school's record never held
+       step 1, a lesson finished to 100% on the page was stored as 14 of 16
+       and never complete, and the resume hook - which reads a finished
+       step 1 as "the learner has already started" - never took a reopened
+       lesson back to where it was left. All three measured on the live
+       Grade 1 bundle, 2026-09-11. Arrival is no cure for step 1, because
+       the deck's own first show(0) IS the arrival, still at load. So the
+       overview ticks when the learner leaves it, which is also the moment
+       they have seen it. */
+    ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
@@ -4007,7 +4027,11 @@
       '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
       '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
     $(el.score).textContent = "coming soon";
-    finish(o.finish, o.done);
+    /* On arrival, not at page load - see unitOverview. At draw time this
+       ticked the step before the child had seen it, where nothing could
+       report it: a fresh lesson opened at 13%, and the stored record was
+       one step short for ever. */
+    ONSHOW[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */

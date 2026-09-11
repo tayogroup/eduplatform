@@ -51,7 +51,7 @@ LESSON = {
                  ["Read the question, then tap the app that can answer it."]),
              {"ways": [
                  {"id": "weather", "label": "Weather app", "pic": "\U0001F326️", "wrong": "The weather app only knows about the weather."},
-                 {"id": "search", "label": "Search the web", "pic": "\U0001F50E", "wrong": "Searching the web finds facts everyone shares, not the weather or our class."},
+                 {"id": "search", "label": "Search the web", "pic": "\U0001F50E", "wrong": "Searching the web finds facts everyone shares. It knows nothing about our class, and the weather app is made for the weather."},
                  {"id": "map", "label": "Map app", "pic": "\U0001F5FA️", "wrong": "A map app answers where things are and which way to go."},
                  {"id": "table", "label": "Our class table", "pic": "\U0001F4CA", "wrong": "Our class table only knows what we recorded in it."},
              ],

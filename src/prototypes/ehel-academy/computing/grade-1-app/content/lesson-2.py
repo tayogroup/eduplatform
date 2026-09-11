@@ -125,7 +125,7 @@ LESSON = {
                   {"pic": "\U0001F45F➡️\U0001F9E6", "label": "shoes, then socks", "bin": "bug", "why": "Shoes first puts the socks on the outside. The order is the bug."},
                   {"pic": "\U0001F9C3➡️\U0001F444", "label": "pour the juice, then drink it", "bin": "fine", "why": "Pour, then drink. That works."},
                   {"pic": "\U0001F444➡️\U0001F9C3", "label": "drink the juice, then pour it", "bin": "bug", "why": "There is nothing to drink until you pour. The order is the bug."},
-                  {"pic": "\U0001FAA5➡️\U0001F4A7", "label": "brush your teeth, then rinse", "bin": "fine", "why": "Brush, then rinse. That works."},
+                  {"pic": "\U0001F9B7➡️\U0001F4A7", "label": "brush your teeth, then rinse", "bin": "fine", "why": "Brush, then rinse. That works."},
                   {"pic": "\U0001F9E5➡️\U0001F6B6", "label": "put on your coat, then go outside", "bin": "fine", "why": "Coat first, then out. That works."},
                   {"pic": "\U0001F35E➡️\U0001F6C1", "label": "put bread on the plate, then wash it in the bath", "bin": "bug", "why": "Washing the bread in the bath does not belong. That step is the bug."},
                   {"pic": "\U0001F6AA➡️\U0001F511", "label": "walk through the door, then unlock it", "bin": "bug", "why": "You cannot walk through a locked door. Unlock first. The order is the bug."},

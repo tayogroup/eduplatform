@@ -323,7 +323,11 @@
   .lead { max-width: 34ch; text-align: center; font-size: clamp(19px, 3.6vw, 24px); font-weight: 700;
     font-family: "Inter", "Segoe UI", sans-serif; }
   .lead b { color: var(--teal); }
-  .sub { max-width: 40ch; text-align: center; color: var(--muted); font-size: 16.5px; }
+  /* #A8BDCD, not var(--muted): the muted token is 4.04:1 on the --cell panels a
+     .sub sits on (the sorting machine's "12 things, all mixed up"), under the
+     4.5:1 normal text needs. The same blue-grey a shade lighter: 5.0:1 there,
+     6.1:1 on --card, 7.5:1 on --ground. The token itself stays Mathematics'. */
+  .sub { max-width: 40ch; text-align: center; color: #A8BDCD; font-size: 16.5px; }
   .phase { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
     font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
   .goal { margin: 0; max-width: 40ch; text-align: center; font-size: 18px; color: var(--muted); }
@@ -592,7 +596,8 @@
   .pscreen { min-height: 110px; padding: 12px; border-radius: 16px; background: #fff; color: #142B3E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
   .pscreen .cpic { font-size: 40px; }
   .pscreen p { margin: 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 17px; }
-  .pscreen p.dim { color: #6B7F82; font-weight: 400; }
+  /* 5.1:1 on the white phone screen; #6B7F82 was 4.21:1 (validation 2026-09-11) */
+  .pscreen p.dim { color: #5F7275; font-weight: 400; }
 
   /* ==================================================================
      STAGE 2 additions - same tokens, no new hue.
@@ -860,7 +865,10 @@
   /* loops in an algorithm; Robo's looped program */
   .algo li.loopbox { border-color: var(--accent); background: rgba(233,116,79,0.10); }
   .algo li.loopbox.now { box-shadow: 0 0 0 3px rgba(233,116,79,0.35); }
-  .algo li.loopbox > b { display: block; margin-bottom: 4px; color: var(--accent-ink); }
+  /* No colour of its own: --accent-ink is for text ON the accent, and this box is a
+     10% tint over the dark ground, so the label measured 1.29:1 - all but invisible
+     (validation 2026-09-11). It inherits the ink, 12.6:1, as Stage 3's fold label does. */
+  .algo li.loopbox > b { display: block; margin-bottom: 4px; }
   .algo li span.now { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 8px; }
   .loopchip { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; border: 2px dashed var(--accent); }
   .loopchip.now { background: rgba(233,116,79,0.12); }
@@ -4347,11 +4355,15 @@
      name at call time, so every wrapper the build or the pipeline puts
      around it (the header bar\x27s percentage, a step\x27s arrival line)
      runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
   window.__ehelRestore = function (doneIdx, resumeIdx) {
-    /* read BEFORE the ticks land: the record\x27s own step 1 must not
-       count as the learner having touched it (measured: it did, and the
-       page stayed on step 1 with the dots restored) */
-    const untouched = cur === 0 && !done[0];
+    const untouched = cur === 0 && !ehelInteracted;
     let changed = false;
     for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
     if (changed) paintDots();
@@ -4511,10 +4523,19 @@
      the learner actually arrives; sayHere() refuses to speak for a slide
      that is not the one showing (the deck's own finish() keeps the same
      rule). show() is wrapped, not edited: it is lifted verbatim and the
-     shared pipeline patches it by matching its exact text. */
-  const ONSHOW = [];
+     shared pipeline patches it by matching its exact text.
+
+     ONLEAVE is the same idea for the step being LEFT, and it runs BEFORE
+     the deck moves: a step that finishes as the learner leaves it then
+     reports while it is still their position, and the new step's own
+     position report - made by show() itself - lands last and wins. The
+     lesson overview needs it; see unitOverview. */
+  const ONSHOW = [], ONLEAVE = [];
   const showWithoutHooks = show;
   show = function (i, speak) {
+    const to = Math.max(0, Math.min(slides.length - 1, i));
+    const g = to !== cur ? ONLEAVE[cur] : null;
+    if (g) { try { g(); } catch (_) { /* a step must never break the deck */ } }
     showWithoutHooks(i, speak);
     const f = ONSHOW[cur];
     if (f) { try { f(); } catch (_) { /* a step must never break the deck */ } }
@@ -8334,7 +8355,18 @@
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
-    finish(o.finish, o.done);
+    /* NOT AT DRAW, AND NOT ON ARRIVAL. Every step draws at page load,
+       before the reporting module exists, so a finish() here ticked this
+       step where nothing could report it: the school's record never held
+       step 1, a lesson finished to 100% on the page was stored as 14 of 16
+       and never complete, and the resume hook - which reads a finished
+       step 1 as "the learner has already started" - never took a reopened
+       lesson back to where it was left. All three measured on the live
+       Grade 1 bundle, 2026-09-11. Arrival is no cure for step 1, because
+       the deck's own first show(0) IS the arrival, still at load. So the
+       overview ticks when the learner leaves it, which is also the moment
+       they have seen it. */
+    ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
@@ -8479,7 +8511,11 @@
       '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
       '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
     $(el.score).textContent = "coming soon";
-    finish(o.finish, o.done);
+    /* On arrival, not at page load - see unitOverview. At draw time this
+       ticked the step before the child had seen it, where nothing could
+       report it: a fresh lesson opened at 13%, and the stored record was
+       one step short for ever. */
+    ONSHOW[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */

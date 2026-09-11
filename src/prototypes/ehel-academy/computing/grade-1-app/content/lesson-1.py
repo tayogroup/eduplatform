@@ -44,7 +44,7 @@ LESSON = {
              {"items": [
                  {"pic": "\U0001F373", "label": "a recipe", "say": "A recipe is an algorithm. Crack the egg. Beat it. Cook it in the pan."},
                  {"pic": "\U0001F455", "label": "getting dressed", "say": "Getting dressed is an algorithm. Socks, then shoes, then coat."},
-                 {"pic": "\U0001FAA5", "label": "brushing teeth", "say": "Brushing your teeth is an algorithm. Paste on the brush. Brush. Rinse."},
+                 {"pic": "\U0001F9B7", "label": "brushing teeth", "say": "Brushing your teeth is an algorithm. Paste on the brush. Brush. Rinse."},
                  {"pic": "\U0001F483", "label": "a dance", "say": "A dance is an algorithm. Step, step, clap, turn. The same steps every time."},
                  {"pic": "\U0001F6B8", "label": "crossing the road", "say": "Crossing the road is an algorithm. Stop. Look. Listen. Walk."},
                  {"pic": "\U0001F9F1", "label": "building a tower", "say": "Building a tower is an algorithm. Big brick first, then the next, then the next."},
@@ -94,7 +94,7 @@ LESSON = {
                  ["Children want to water first because watering is fun.", "Water what? There is no seed yet."],
                  ["Tap the four steps in order and watch the plant grow."]),
              {"scene": "plant", "items": [
-                 {"id": "pot", "pic": "\U0001FAB4", "label": "get a pot", "say": "First, get a pot."},
+                 {"id": "pot", "pic": "\U0001F3FA", "label": "get a pot", "say": "First, get a pot."},
                  {"id": "soil", "pic": "\U0001F7EB", "label": "put soil in it", "say": "Put soil in the pot."},
                  {"id": "seed", "pic": "\U0001F330", "label": "plant the seed", "say": "Plant the seed in the soil."},
                  {"id": "water", "pic": "\U0001F4A7", "label": "water it", "say": "Water it. Now it can grow."},

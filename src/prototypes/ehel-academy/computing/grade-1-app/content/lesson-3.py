@@ -115,7 +115,7 @@ LESSON = {
              {"items": [
                  {"pic": "\U0001F697", "label": "a sat-nav", "say": "A sat-nav gives a driver directions: go forward, then turn left at the lights."},
                  {"pic": "\U0001F916", "label": "a warehouse robot", "say": "A warehouse robot follows a program along the floor: forward, forward, turn right, to the right shelf."},
-                 {"pic": "\U0001F5FA️", "label": "a treasure map", "say": "A treasure map is a program too: ten steps forward, turn right, dig."},
+                 {"pic": "\U0001F5FA️", "label": "a treasure map", "say": "A treasure map is an algorithm too: ten steps forward, turn right, dig."},
                  {"pic": "\U0001F483", "label": "a dance teacher", "say": "A dance teacher calls out directions: step left, step right, turn round."},
              ], "need": 4,
               "then": {"ask": "A sat-nav says: turn left. What does the driver do?",

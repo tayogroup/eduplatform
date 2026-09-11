@@ -159,7 +159,7 @@ LESSON = {
                   {"pic": "\U0001F9BE", "label": "a factory robot arm", "bin": "robot", "why": "A computer inside programs how it moves and builds. A robot."},
                   {"pic": "\U0001F9F8", "label": "a teddy bear", "bin": "not", "why": "Soft and cuddly, but nothing inside moves it. Not a robot."},
                   {"pic": "\U0001F916", "label": "a robot vacuum", "bin": "robot", "why": "Its computer steers it round the floor. A robot."},
-                  {"pic": "\U0001F35E", "label": "a toaster", "bin": "not", "why": "A toaster warms bread but does not move about or do a job on its own. Not a robot."},
+                  {"pic": "\U0001F35E", "label": "a toaster", "bin": "not", "why": "A toaster warms bread, but it does not move about. Not a robot."},
                   {"pic": "\U0001F699", "label": "a Mars rover", "bin": "robot", "why": "Programmed to drive and dig on Mars. A robot."},
                   {"pic": "\U0001F6B2", "label": "a bicycle", "bin": "not", "why": "It moves because you pedal. Not a robot."},
                   {"pic": "\U0001F4E6", "label": "a delivery robot", "bin": "robot", "why": "Its computer takes it to the right place with the parcel. A robot."},
@@ -176,7 +176,7 @@ LESSON = {
                  [],
                  ["Tap each one and hear what the computer controls."]),
              {"items": [
-                 {"pic": "\U0001FA7B", "label": "a doctor's scanner", "say": "A scanner in a hospital is a computer system. It takes pictures of the inside of your body and shows them to the doctor."},
+                 {"pic": "\U0001F3E5", "label": "a doctor's scanner", "say": "A scanner in a hospital is a computer system. It takes pictures of the inside of your body and shows them to the doctor."},
                  {"pic": "✈️", "label": "a pilot's cockpit", "say": "A pilot's cockpit is full of computers. They help fly the plane and keep it safe."},
                  {"pic": "\U0001F69C", "label": "a farmer's tractor", "say": "A modern tractor has a computer that steers it in a straight line across the field."},
                  {"pic": "\U0001F6D2", "label": "a shop till", "say": "A shop till is a computer. It reads each thing you buy and adds up the money."},

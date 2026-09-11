@@ -161,6 +161,19 @@ rather than the page.
   level has `before`/`loop`/`after` instead, and the first Grade 4 hub build
   fell over on it. It now prints `repeat N times (...)` and the square the
   unrolled program ends on.
+- **A shell step must not finish itself while the deck paints.** Every
+  renderer draws at page load, before the reporting module exists, so a
+  `finish()` at draw time ticks a step that nothing can report: the Grade 1
+  validation of 2026-09-11 found the overview and Computing world steps
+  finishing that way, so every lesson opened at 13%, the stored record
+  never held step 1 or the world step (16 of 16 on screen was 14 of 16 in
+  the record and `unit.completed` never fired), and the resume hook, which
+  reads a finished step 1 as "already started", never took a reopened
+  lesson back to where it was left. `ONLEAVE[i]` beside `ONSHOW[i]` runs
+  before the deck moves off step i: the overview ticks when the learner
+  leaves it (its arrival IS page load, so arrival is no cure), and
+  Computing world ticks on arrival. Anything else that must tick without a
+  tap goes through one of those two, never through a bare `finish()`.
 - **`blockBtn`'s third argument is the extra class.** It used to be passed
   as a second `class="…"` inside the attribute string, which the parser
   ignores, so the running block was never highlighted at Stages 1 and 2

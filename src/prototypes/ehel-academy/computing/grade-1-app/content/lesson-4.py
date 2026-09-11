@@ -18,13 +18,13 @@ LESSON = {
              "An algorithm is words. A computer needs code. Press <b>Next</b> to see how one becomes the other.",
              explain(
                  ["An algorithm can be written as code.", "Code is instructions in a form the computer understands.", "Code the computer runs is a program."],
-                 ["Our algorithm says: move right, jump, say hello.", "The computer cannot read our sentences.",
+                 ["Our algorithm says: move right, jump, say hello.", "The computer needs the steps written as code.",
                   "So we use blocks. One block is one instruction.", "Blocks in a row are a program. Press Run and the computer does it."],
-                 ["Children think the computer understands English.", "It understands its own code. We write the algorithm AS code."],
+                 ["Children think a computer just understands our sentences.", "Somebody always has to write the steps as code first. We write the algorithm AS code."],
                  ["Press Next and watch the words turn into blocks."]),
              {"frames": [
                  {"pic": "\U0001F4DD", "cap": "An <b>algorithm</b> in words: move right, jump, say hello.", "say": "Here is an algorithm in words. Move right. Jump. Say hello."},
-                 {"pic": "\U0001F4BB❓", "cap": "A computer cannot read our sentences.", "say": "A computer cannot read our sentences. It needs the steps in its own way.", "sound": "error"},
+                 {"pic": "\U0001F4BB❓", "cap": "A computer needs the steps written as <b>code</b>.", "say": "A computer needs the steps written in its own way, as code.", "sound": "error"},
                  {"pic": "\U0001F9E9", "cap": "So we use <b>blocks</b>. One block is one instruction. That is <b>code</b>.", "say": "So we use blocks. One block is one instruction. Blocks are code the computer understands.", "sound": "click"},
                  {"pic": "\U0001F9E9\U0001F9E9\U0001F9E9", "cap": "Blocks in a row are a <b>program</b>.", "say": "Blocks in a row are a program. The same steps as the algorithm, in code.", "sound": "click"},
                  {"pic": "▶️\U0001F431", "cap": "Press <b>Run</b>, and the computer does the steps.", "say": "Press Run, and the computer does the steps. Move right. Jump. Hello!", "sound": "tada"},
@@ -164,7 +164,7 @@ LESSON["about"] = [
 
 LESSON["lecture"] = [
     part("\U0001F4DD", "Words and code",
-         "An algorithm is steps in words: move right, jump, say hello. A computer cannot read our sentences. So we write the same steps as code, in a form the computer understands. Code the computer runs is a program."),
+         "An algorithm is steps in words: move right, jump, say hello. A computer needs the same steps written as code, in a form it understands. Code the computer runs is a program."),
     part("\U0001F9E9", "Blocks",
          "Our code is made of blocks. One block is one instruction: move right, jump, say hello, spin, grow, shrink. Put blocks in a row and you have a program. The computer does them in that order."),
     part("\U0001F3D7️", "Building a program",

@@ -4158,6 +4158,10 @@
     "red+yellow": "orange",
     "blue+yellow": "green",
     "black+white": "grey",
+    /* complementary pairs (Grade 3): opposites on the wheel cancel to brown */
+    "green+red": "brown",
+    "blue+orange": "brown",
+    "purple+yellow": "brown",
   };
   const TINT = { "red": "pink", "yellow": "light yellow", "blue": "light blue", "orange": "light orange", "purple": "light purple", "green": "light green", "white": "white", "black": "grey" };
   const SHADE = { "red": "dark red", "yellow": "dark yellow", "blue": "dark blue", "orange": "dark orange", "purple": "dark purple", "green": "dark green", "black": "black", "white": "grey" };
@@ -4294,6 +4298,176 @@
       '<rect width="320" height="240" fill="#F7F1E3"/><path d="M100 60 q60-30 120 0 q20 90-20 160 h-80 q-40-70-20-160z" fill="#B8703C"/><ellipse cx="160" cy="60" rx="60" ry="14" fill="#8B5A2B"/>' +
       (state === "cracked" ? '<path d="M150 90 l10 30 l-8 26 l14 30" fill="none" stroke="#3B2314" stroke-width="4"/>' : "") +
       '<g stroke="#5C3A1E" stroke-width="3" fill="none"><path d="M112 120 q48 16 96 0 M110 150 q50 16 100 0"/></g>' },
+
+    /* ---- added for Grade 2 (2026-09-11). Each is drawn IN THE MANNER of a
+       tradition and copies no real work; build-hub.py :: TRADITIONS says
+       which, for the grown-ups. ---- */
+    /* stamped cloth: the same stamps pressed again and again, in squares
+       ruled with a comb - the manner of adinkra cloth from Ghana */
+    adinkra: { label: "A cloth printed with stamps", draw: () => {
+      let g = '<rect width="320" height="240" fill="#E8D2A6"/>';
+      for (const x of [104, 212]) for (let k = 0; k < 4; k++) g += '<rect x="' + (x + k * 4) + '" y="0" width="2" height="240" fill="#3B2314"/>';
+      for (let k = 0; k < 4; k++) g += '<rect x="0" y="' + (116 + k * 4) + '" width="320" height="2" fill="#3B2314"/>';
+      const ring = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="15" fill="none" stroke="#2B1A10" stroke-width="5"/><circle cx="' + x + '" cy="' + y + '" r="5" fill="#2B1A10"/>';
+      const diamond = (x, y) => '<path d="M' + x + " " + (y - 17) + " l17 17 l-17 17 l-17-17z" + '" fill="#2B1A10"/><circle cx="' + x + '" cy="' + y + '" r="5" fill="#E8D2A6"/>';
+      const flower = (x, y) => '<g fill="#2B1A10">' + [[0, -11], [11, 0], [0, 11], [-11, 0], [0, 0]].map((d) => '<circle cx="' + (x + d[0]) + '" cy="' + (y + d[1]) + '" r="6"/>').join("") + "</g>";
+      const cells = [[0, 104, ring], [120, 212, diamond], [228, 320, flower]];
+      for (const [x0, x1, stamp] of cells) for (const [y0, y1] of [[0, 116], [132, 240]]) {
+        const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+        for (const dx of [-24, 24]) for (const dy of [-26, 26]) g += stamp(cx + dx, cy + dy);
+      }
+      return g;
+    } },
+    /* a weaving on a card loom: straight warp threads, and weft that goes
+       over one and under the next, in stripes */
+    loom: { label: "A weaving on a loom", draw: () => {
+      let g = '<rect width="320" height="240" fill="#C9A06B"/><rect x="40" y="10" width="240" height="220" rx="8" fill="#F7F1E3"/>';
+      const warps = []; for (let x = 60; x <= 260; x += 20) warps.push(x);
+      const stripes = ["#E0312B", "#E0312B", "#F6C700", "#F6C700", "#2D6CDF", "#2D6CDF"];
+      for (const x of warps) g += '<rect x="' + (x - 2) + '" y="16" width="4" height="208" fill="#FFFFFF" stroke="#B8A58A" stroke-width="1"/>';
+      for (let r = 0; r < 11; r++) {
+        const y = 60 + r * 15, col = stripes[r % stripes.length];
+        g += '<rect x="56" y="' + y + '" width="208" height="12" rx="4" fill="' + col + '"/>';
+        warps.forEach((x, c) => { if ((r + c) % 2) g += '<rect x="' + (x - 2) + '" y="' + (y - 1) + '" width="4" height="14" fill="#FFFFFF"/>'; });
+      }
+      return g + '<g fill="#8B5A2B">' + warps.map((x) => '<path d="M' + (x - 4) + ' 10 h8 l-4 7z"/><path d="M' + (x - 4) + ' 230 h8 l-4 -7z"/>').join("") + "</g>";
+    } },
+    /* a clay head from long ago: fired orange clay, rows of hair, eyes cut
+       as half-moons with holes - the manner of Nok terracotta from Nigeria */
+    terracotta: { label: "A clay head from long ago", draw: () =>
+      '<rect width="320" height="240" fill="#F3E6D2"/><rect x="0" y="206" width="320" height="34" fill="#D9C6A5"/>' +
+      '<path d="M112 196 q-18-60 -6-110 q12-50 54-58 q42 8 54 58 q12 50 -6 110 q-48 22 -96 0z" fill="#B5652B"/>' +
+      '<g fill="none" stroke="#7A3A1C" stroke-width="4" stroke-linecap="round"><path d="M120 76 q40-34 80 0"/><path d="M124 62 q36-30 72 0"/><path d="M132 48 q28-24 56 0"/><path d="M144 36 q16-12 32 0"/></g>' +
+      '<g fill="#7A3A1C"><path d="M120 108 q18-16 36 0 q-18 12 -36 0z"/><path d="M164 108 q18-16 36 0 q-18 12 -36 0z"/></g>' +
+      '<g fill="#2B1A10"><circle cx="138" cy="106" r="3.5"/><circle cx="182" cy="106" r="3.5"/><ellipse cx="160" cy="170" rx="14" ry="7"/></g>' +
+      '<path d="M160 116 v26 q-8 6 0 8 q8-2 0-8" fill="none" stroke="#7A3A1C" stroke-width="4" stroke-linecap="round"/>' +
+      '<g fill="#9A5122"><ellipse cx="104" cy="120" rx="8" ry="16"/><ellipse cx="216" cy="120" rx="8" ry="16"/></g>' },
+    /* a leaf to draw from life: a straight middle vein, little veins off it,
+       a jagged edge and a stalk */
+    leaf: { label: "A leaf, looked at closely", draw: () => {
+      const pts = [];
+      for (let k = 0; k <= 40; k++) {
+        const t = k / 40, a = t * Math.PI * 2, r = (k % 2 ? 0.9 : 1);
+        pts.push([160 + Math.cos(a) * 118 * r * 0.95, 116 + Math.sin(a) * 70 * r]);
+      }
+      return '<rect width="320" height="240" fill="#FFF8E7"/>' +
+        '<path d="M' + pts.map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L") + 'z" fill="#3FA34D" stroke="#1F5E2A" stroke-width="3" stroke-linejoin="miter" transform="rotate(-18 160 116)"/>' +
+        '<g stroke="#D6F0C8" stroke-width="3" stroke-linecap="round" fill="none" transform="rotate(-18 160 116)">' +
+        '<path d="M54 116 H252" stroke-width="5"/>' +
+        [88, 126, 164, 202].map((x) => '<path d="M' + x + " 116 l24 -40 M" + x + ' 116 l24 40"/>').join("") + "</g>" +
+        '<path d="M58 150 q-20 30 -34 70" fill="none" stroke="#1F5E2A" stroke-width="7" stroke-linecap="round"/>';
+    } },
+    /* a paper cut: red paper folded in half and cut, so both halves are the
+       same - the manner of Chinese paper cutting */
+    papercut: { label: "A paper cut, folded and cut", draw: () => {
+      const half =
+        '<path d="M160 22 q-70 6 -100 60 q-26 60 12 110 q34 34 88 34 z" fill="#C8102E"/>' +
+        '<g fill="#FFF4E0"><path d="M126 60 q-16 22 0 40 q16-18 0-40z"/><path d="M96 96 q-14 20 2 36 q14-18 -2-36z"/>' +
+        '<circle cx="136" cy="130" r="9"/><circle cx="104" cy="160" r="7"/><path d="M140 170 q-22 8 -26 26 q22-4 26-26z"/><circle cx="150" cy="96" r="5"/></g>';
+      return '<rect width="320" height="240" fill="#FFF4E0"/>' + half + '<g transform="translate(320 0) scale(-1 1)">' + half + "</g>" +
+        '<path d="M160 14 V234" stroke="#8A8F94" stroke-width="1.5" stroke-dasharray="5 5"/>';
+    } },
+    /* ---- added for Grade 3 (2026-09-11) ---- */
+    /* a street front to gather patterns from: bricks, an arched window,
+       railings and a tiled roof */
+    buildings: { label: "A building with patterns on it", draw: () => {
+      let g = '<rect width="320" height="240" fill="#F3E6D2"/>';
+      for (let r = 0; r < 9; r++) for (let c = -1; c < 9; c++) {
+        const x = c * 40 + (r % 2 ? 20 : 0), y = 44 + r * 18;
+        g += '<rect x="' + x + '" y="' + y + '" width="38" height="16" fill="#B5652B" stroke="#E8D2A6" stroke-width="2"/>';
+      }
+      for (let c = 0; c < 9; c++) g += '<path d="M' + (c * 40 - 4) + ' 44 q24 -26 48 0 z" fill="#7A3A1C" stroke="#5C2A12" stroke-width="2"/>';
+      g += '<path d="M120 190 v-86 a40 40 0 0 1 80 0 v86 z" fill="#9CC8F0" stroke="#F7F1E3" stroke-width="8"/>' +
+        '<path d="M160 64 v126 M120 124 h80" stroke="#F7F1E3" stroke-width="5"/>';
+      g += '<rect x="0" y="196" width="320" height="44" fill="#D9C6A5"/>';
+      for (let x = 8; x < 320; x += 16) g += '<path d="M' + x + ' 238 V204 M' + (x - 4) + ' 208 l4 -8 l4 8" stroke="#1B1B1B" stroke-width="3" fill="none"/>';
+      return g + '<path d="M0 214 H320" stroke="#1B1B1B" stroke-width="3"/>';
+    } },
+    /* a pencil drawing of an apple lit from the left: a highlight, a shadow
+       side and a cast shadow on the table */
+    stilllife: { label: "A pencil drawing of an apple, lit from one side", draw: () =>
+      '<defs><radialGradient id="appleTone" cx="0.32" cy="0.34" r="0.75"><stop offset="0" stop-color="#F2F2F2"/><stop offset="0.35" stop-color="#B8B8B8"/><stop offset="0.8" stop-color="#5E5E5E"/><stop offset="1" stop-color="#3A3A3A"/></radialGradient></defs>' +
+      '<rect width="320" height="240" fill="#FAFAF7"/><rect x="0" y="170" width="320" height="70" fill="#E6E6E1"/>' +
+      '<ellipse cx="200" cy="186" rx="86" ry="14" fill="#6B6B6B" opacity="0.55"/>' +
+      '<path d="M160 72 q-58 -8 -62 48 q-2 58 62 66 q64 -8 62 -66 q-4 -56 -62 -48z" fill="url(#appleTone)" stroke="#3A3A3A" stroke-width="2"/>' +
+      '<ellipse cx="136" cy="100" rx="12" ry="8" fill="#FFFFFF"/>' +
+      '<path d="M160 74 q2 -18 10 -26" stroke="#3A3A3A" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+      '<g stroke="#8A8A8A" stroke-width="2"><path d="M198 132 l14 -10 M200 144 l16 -12 M198 156 l18 -14 M194 166 l16 -12"/></g>' +
+      '<g fill="#F6C700" stroke="#C99700" stroke-width="2"><circle cx="30" cy="36" r="14"/></g>' +
+      '<g stroke="#C99700" stroke-width="3"><path d="M50 44 l18 8 M46 56 l16 14 M36 60 l8 18"/></g>' },
+    /* the colour wheel: three primaries with the secondaries between them */
+    colourwheel: { label: "A colour wheel", draw: () => {
+      const cols = [["#E0312B", "red"], ["#F28C28", "orange"], ["#F6C700", "yellow"], ["#3FA34D", "green"], ["#2D6CDF", "blue"], ["#7B3FA0", "purple"]];
+      let g = '<rect width="320" height="240" fill="#FAFAF7"/>';
+      cols.forEach(([c], k) => {
+        const a0 = (k * 60 - 120) * Math.PI / 180, a1 = ((k + 1) * 60 - 120) * Math.PI / 180, R = 100, cx = 160, cy = 120;
+        g += '<path d="M' + cx + " " + cy + " L" + (cx + R * Math.cos(a0)).toFixed(1) + " " + (cy + R * Math.sin(a0)).toFixed(1) +
+          " A" + R + " " + R + " 0 0 1 " + (cx + R * Math.cos(a1)).toFixed(1) + " " + (cy + R * Math.sin(a1)).toFixed(1) + 'z" fill="' + c + '" stroke="#FFFFFF" stroke-width="4"/>';
+      });
+      return g + '<circle cx="160" cy="120" r="26" fill="#FAFAF7"/>';
+    } },
+    /* a clay brick with a picture raised on it: a horse and cart, and a
+       border of pressed dots - the manner of Han dynasty pictorial bricks */
+    relief: { label: "A clay brick with a raised picture", draw: () => {
+      let g = '<rect width="320" height="240" fill="#EFE3CF"/><rect x="20" y="24" width="280" height="192" rx="6" fill="#A9552B"/>' +
+        '<rect x="34" y="38" width="252" height="164" rx="4" fill="#9A4A24"/>';
+      for (let x = 40; x <= 280; x += 16) g += '<circle cx="' + x + '" cy="31" r="3" fill="#6E3219"/><circle cx="' + x + '" cy="209" r="3" fill="#6E3219"/>';
+      const horse = 'M70 150 q6 -30 30 -34 l6 -16 l8 4 l-2 12 q30 2 44 16 l2 28 h-8 l-2 -20 l-30 4 l-2 20 h-8 l-2 -22 q-12 2 -18 12 l-2 14 h-8z';
+      const cart = 'M160 128 h70 v22 h-70z';
+      g += '<g transform="translate(4 4)" fill="#6E3219" opacity="0.7"><path d="' + horse + '"/><path d="' + cart + '"/><circle cx="210" cy="164" r="18"/></g>' +
+        '<g fill="#C8743F" stroke="#E09A62" stroke-width="2"><path d="' + horse + '"/><path d="' + cart + '"/><circle cx="210" cy="164" r="18"/></g>' +
+        '<path d="M210 146 v36 M192 164 h36" stroke="#9A4A24" stroke-width="3"/><path d="M150 134 l10 -2" stroke="#E09A62" stroke-width="3"/>' +
+        '<g fill="#C8743F" stroke="#E09A62" stroke-width="2"><circle cx="186" cy="112" r="8"/><path d="M178 122 h16 v10 h-16z"/></g>';
+      return g;
+    } },
+    /* a quilt of running stitches: rows of small stitches and a fish drawn in
+       stitches - the manner of kantha from Bengal */
+    kantha: { label: "A cloth stitched with running stitch", draw: () => {
+      let g = '<rect width="320" height="240" fill="#6E8F6A"/><rect x="14" y="12" width="292" height="216" rx="6" fill="#F4ECDD"/><rect x="10" y="8" width="292" height="216" rx="6" fill="#FBF6EA" stroke="#E8D9BD" stroke-width="2"/>';
+      let row = 0;
+      for (let y = 26; y < 220; y += 14) if (y < 70 || y > 176) g += '<path d="M22 ' + y + ' H292" stroke="' + (row++ % 2 ? "#2D6CDF" : "#C8102E") + '" stroke-width="3" stroke-dasharray="7 6"/>';
+      g += '<path d="M70 124 q60 -56 130 0 q-70 56 -130 0z M200 124 l40 -26 v52z" fill="none" stroke="#C8102E" stroke-width="3" stroke-dasharray="6 5"/>' +
+        '<circle cx="104" cy="118" r="5" fill="#2D6CDF"/>' +
+        '<path d="M120 110 q20 14 0 28 M140 108 q20 16 0 32 M160 110 q20 14 0 28" fill="none" stroke="#2D6CDF" stroke-width="3" stroke-dasharray="5 4"/>';
+      return g;
+    } },
+    /* a painted house wall: thick black outlines around bold coloured
+       shapes - the manner of Ndebele house painting from South Africa */
+    ndebele: { label: "A house wall painted with bold shapes", draw: () => {
+      let g = '<rect width="320" height="240" fill="#F7F1E3"/>';
+      const panel = (x, c) => '<rect x="' + x + '" y="30" width="60" height="150" fill="' + c + '" stroke="#1B1B1B" stroke-width="6"/>' +
+        '<path d="M' + (x + 10) + ' 150 l10 -20 l10 20 l10 -20 l10 20 l10 -20" fill="none" stroke="#1B1B1B" stroke-width="5"/>' +
+        '<path d="M' + (x + 30) + ' 50 l20 20 l-20 20 l-20 -20z" fill="#F7F1E3" stroke="#1B1B1B" stroke-width="5"/>';
+      g += panel(10, "#2D6CDF") + panel(250, "#3FA34D");
+      g += '<path d="M110 180 V70 h20 v-20 h60 v20 h20 v110z" fill="#F6C700" stroke="#1B1B1B" stroke-width="6"/>' +
+        '<rect x="136" y="96" width="48" height="84" fill="#E0312B" stroke="#1B1B1B" stroke-width="6"/>' +
+        '<path d="M78 30 v150 M242 30 v150" stroke="#1B1B1B" stroke-width="4"/>';
+      for (let x = 0; x < 320; x += 20) g += '<rect x="' + x + '" y="186" width="20" height="54" fill="' + (x % 40 ? "#1B1B1B" : "#F7F1E3") + '"/>';
+      return g;
+    } },
+    /* a night sky of swirling strokes, glowing stars and a tall dark tree -
+       the manner of Vincent van Gogh's painting of a starry night */
+    swirlnight: { label: "A painting of a swirling night sky", draw: () => {
+      let g = '<rect width="320" height="240" fill="#1B3A75"/>';
+      for (let k = 0; k < 7; k++) g += '<path d="M' + (20 + k * 40) + ' ' + (120 - (k % 2) * 16) + ' q20 -30 40 0 t40 0" fill="none" stroke="' + (k % 2 ? "#6E9DE8" : "#9CC8F0") + '" stroke-width="4" stroke-linecap="round"/>';
+      g += '<path d="M120 80 q30 -40 60 -10 q20 24 -6 34 q-20 6 -24 -10 q2 -14 16 -12" fill="none" stroke="#DCE9F8" stroke-width="5" stroke-linecap="round"/>';
+      for (const [x, y, r] of [[40, 40, 10], [230, 36, 9], [280, 90, 8], [90, 96, 7], [196, 108, 7]]) g += '<circle cx="' + x + '" cy="' + y + '" r="' + (r + 9) + '" fill="none" stroke="#F6C700" stroke-width="3" opacity="0.7"/><circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#FBE99A"/>';
+      g += '<path d="M270 30 a18 18 0 1 0 18 26 a14 14 0 1 1 -18 -26z" fill="#F6C700"/>';
+      g += '<path d="M0 200 q60 -30 120 -10 q60 -20 120 0 q40 -12 80 0 v50 h-320z" fill="#16304F"/>';
+      for (const x of [150, 180, 210, 240]) g += '<rect x="' + x + '" y="196" width="18" height="14" fill="#F3E6D2"/><path d="M' + (x - 2) + ' 196 l11 -8 l11 8z" fill="#5C3A1E"/>';
+      g += '<path d="M52 240 q-8 -80 8 -150 q10 40 8 70 q12 -30 10 -60 q14 50 4 140z" fill="#0B1D2C"/>';
+      return g;
+    } },
+    /* a huge curling wave with claw-like foam, little boats and a small
+       mountain far away - the manner of Katsushika Hokusai's woodblock print */
+    greatwave: { label: "A print of a great wave", draw: () =>
+      '<rect width="320" height="240" fill="#EDE1C8"/>' +
+      '<path d="M222 162 l30 -38 l30 38z" fill="#1B3A75"/><path d="M240 142 l12 -18 l12 18z" fill="#FFFFFF"/>' +
+      '<path d="M0 240 V150 q40 -120 150 -110 q40 6 50 36 q-30 -20 -56 0 q-40 34 -30 94 q20 -30 60 -10 q40 20 70 -10 q30 -30 76 -10 V240z" fill="#1B3A75"/>' +
+      '<path d="M0 240 V170 q36 -100 140 -104 q-40 20 -50 70 q-6 40 20 60 q-40 -10 -60 20z" fill="#2D6CDF" opacity="0.8"/>' +
+      '<g fill="#FFFFFF"><path d="M150 40 q30 -4 50 36 q-14 -6 -20 0 q-6 -10 -14 -6 q-4 -10 -12 -8 q-2 -12 -12 -14z"/>' +
+      '<circle cx="186" cy="62" r="4"/><circle cx="176" cy="54" r="4"/><circle cx="164" cy="48" r="4"/></g>' +
+      '<g fill="#F3E6D2" stroke="#5C3A1E" stroke-width="2"><path d="M40 196 q40 -14 80 0 l-8 8 h-64z"/><path d="M200 204 q34 -12 68 0 l-6 8 h-56z"/></g>' },
   };
   const sceneSvgOf = (name, state, extra) => {
     const sc = SCENES[name]; if (!sc) return "";
@@ -4652,6 +4826,10 @@
     chalk: { label: "Chalk", pic: "\u{1F9F1}", colour: "#C2417A", width: 7, cap: "butt", dashed: "3 3", sound: "rustle" },
     finger: { label: "Finger", pic: "\u{1F446}", colour: "#7B3FA0", width: 18, cap: "round", sound: "squelch" },
     crayon: { label: "Crayon", pic: "\u{1F58D}\u{FE0F}", colour: "#2D6CDF", width: 8, cap: "round", sound: "rustle" },
+    /* CHARCOAL (Grade 3): thick and dark, the tool a "thick" mark is
+       asked of in Light and Shade - so its width must clear the thick
+       threshold, the way the brush does */
+    charcoal: { label: "Charcoal", pic: "\u{2B1B}", colour: "#2B2B2B", width: 12, cap: "round", sound: "rustle" },
   };
   function strokeFeatures(pts, tool, session) {
     /* resample so a wobbling hand does not read as a hundred turns */
@@ -4964,7 +5142,8 @@
     }
     function checkOwn() {
       if (lock) return;
-      const p = patternPeriod(own, 3);
+      /* four, not three: Grade 2 teaches a four-print repeat (review, 2026-09-11) */
+      const p = patternPeriod(own, 4);
       if (p && p >= 2) {
         lock = true; SOUND.play("tada", 0.5); draw();
         const unit = own.slice(0, p).map((id) => tile(id).label).join(", ");
@@ -6048,7 +6227,7 @@
           '<span class="rc-bar" aria-hidden="true"><i style="width:' + s.percent + '%"></i></span><span class="rc-pct">' + s.score + " of " + s.total + "</span></div>").join("") + "</div>" +
         (review.length ? '<h3 class="rc-h">Do these with a grown-up close by</h3><ul class="rc-rev">' +
           review.flatMap((s) => s.remediation).filter((m, k, a) => a.findIndex((x) => x.unit === m.unit) === k)
-            .map((m) => lessons[m.unit] ? '<li><a href="' + esc(link(lessons[m.unit].file)) + '">Lesson ' + m.unit + ": " + esc(lessons[m.unit].title) + "</a></li>" : "").join("") + "</ul>" : "") +
+            .map((m) => { const l = lessons["g" + m.grade + "u" + m.unit] || lessons[m.unit]; return l ? '<li><a href="' + esc(link(l.file)) + '">' + (l.grade ? "Grade " + l.grade + ", " : "") + "Lesson " + m.unit + ": " + esc(l.title) + "</a></li>" : ""; }).join("") + "</ul>" : "") +
         '<div class="bigbtns">' + (first ? '<a class="big" href="' + esc(link(first.file)) + '">Start Lesson 1 &#9654;</a>' : "") +
         '<button type="button" class="big small ghost" id="' + el.stage + 'again">Try again</button></div></div>';
       $(el.stage + "again").addEventListener("click", intro);

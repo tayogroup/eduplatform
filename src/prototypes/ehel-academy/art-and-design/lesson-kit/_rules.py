@@ -49,6 +49,10 @@ MIX = {
     "red+yellow": "orange",
     "blue+yellow": "green",
     "black+white": "grey",
+    # complementary pairs (Grade 3): opposites on the wheel cancel to brown
+    "green+red": "brown",
+    "blue+orange": "brown",
+    "purple+yellow": "brown",
 }
 
 # what white and black do to a colour: a tint and a shade
@@ -115,7 +119,7 @@ def pattern_next(seq, k):
     return seq[k % p]
 
 
-def is_repeating(row, max_period=3):
+def is_repeating(row, max_period=4):
     """Whether a row the child built is a pattern: it repeats a unit of at
     most `max_period` tiles at least twice, and the unit is not one tile
     repeated (a row of the same tile is a line, not a pattern)."""

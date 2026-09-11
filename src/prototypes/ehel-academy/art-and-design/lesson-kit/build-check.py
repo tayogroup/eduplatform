@@ -71,9 +71,33 @@ def js_keys(src, name):
     return set(re.findall(r"\n\s+([a-z]+): ", body))
 
 
+def grade_lessons(grade):
+    """{unit: lesson} for a grade of this subject: this app's own list, or
+    a sibling grade's, read from ../grade-N-app/app.config.json."""
+    if int(grade) == int(CFG["grade"]):
+        return {n: l for n, l in enumerate(CFG["lessons"], 1)}, CFG
+    other = os.path.join(os.path.dirname(APP), "grade-%d-app" % int(grade), "app.config.json")
+    if not os.path.isfile(other):
+        return {}, None
+    oc = json.load(io.open(other, encoding="utf-8"))
+    return {n: l for n, l in enumerate(oc["lessons"], 1)}, oc
+
+
+def lesson_link(grade, unit):
+    """(href, title) for a remediation lesson: beside this page for this
+    grade, and in the sibling grade's own directory on the CDN otherwise
+    (../grade-1-v2/ - the last segment of that grade's `remote`)."""
+    ls, oc = grade_lessons(grade)
+    les = ls.get(unit)
+    if not les:
+        return None, None
+    if int(grade) == int(CFG["grade"]):
+        return les["file"], les["title"]
+    return "../" + oc["remote"].rstrip("/").split("/")[-1] + "/" + les["file"], les["title"]
+
+
 def check(exam, art):
     marks = js_keys(art, "CHECKS")
-    lessons = {n: l for n, l in enumerate(CFG["lessons"], 1)}
     secs = {s["sectionId"]: s for s in exam["sections"]}
     qs = exam["questions"]
     fail = []
@@ -92,11 +116,11 @@ def check(exam, art):
         if n != s["questionCount"]:
             fail.append("%s says %d questions and has %d" % (s["sectionId"], s["questionCount"], n))
         for m in s.get("remediation") or []:
-            les = lessons.get(m["unit"])
-            if m.get("grade") != CFG["grade"] or not les:
-                fail.append("%s sends the child to Grade %s Lesson %s, which this build does not have" % (s["sectionId"], m.get("grade"), m["unit"]))
-            elif les["title"] != m["title"]:
-                fail.append("%s calls Lesson %d %r; the lesson is %r" % (s["sectionId"], m["unit"], m["title"], les["title"]))
+            href, title = lesson_link(m.get("grade", CFG["grade"]), m["unit"])
+            if not href:
+                fail.append("%s sends the child to Grade %s Lesson %s, which does not exist" % (s["sectionId"], m.get("grade"), m["unit"]))
+            elif title != m["title"]:
+                fail.append("%s calls Grade %s Lesson %d %r; the lesson is %r" % (s["sectionId"], m.get("grade"), m["unit"], m["title"], title))
     b = exam["banding"]
     for k in ("ready", "readyWithReview", "notReady"):
         if not (b.get(k) or {}).get("label") or not b[k].get("message"):
@@ -233,6 +257,12 @@ def main():
     exam = json.load(io.open(DATA, encoding="utf-8"))
     check(exam, art)
     lessons = {n: {"file": l["file"], "title": l["title"]} for n, l in enumerate(CFG["lessons"], 1)}
+    # review lessons in an earlier grade, keyed g<grade>u<unit>
+    for s in exam["sections"]:
+        for m in s.get("remediation") or []:
+            if int(m.get("grade", CFG["grade"])) != int(CFG["grade"]):
+                href, title = lesson_link(m["grade"], m["unit"])
+                lessons["g%du%d" % (int(m["grade"]), m["unit"])] = {"file": href, "title": title, "grade": int(m["grade"])}
     ask = "Before Lesson 1: a short <b>starting check</b>. Tap the answer you think is right. It is never a fail."
     data = {"lessonNo": 0, "title": exam["title"], "objectives": [],
             "steps": [{"kind": "readiness", "title": exam["shortTitle"], "objectives": [],

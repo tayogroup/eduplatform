@@ -80,7 +80,13 @@ shipped bytes:
 in `lib/art.js`) so the mixer and the paint blob can draw the answer. The
 builder reads them out of the JS by regex and refuses to build if they differ
 from `_rules.py`'s; the gate reads them out of each shipped page and fails the
-same way. One table, held equal in three places by two checks.
+same way. One table, held equal in three places by two checks. The driver
+(`drive-lessons.mjs`) plays a mix round by computing its answer, and it READS
+`MIX`, `TINT` and `SHADE` out of `lib/art.js` rather than keeping a copy: it
+used to keep one, which never learned Grade 3's complementary mixes, so it
+tapped a colour no option carried and timed out on The Colour Wheel.
+Grade 3 added three rows to `MIX` (red+green, blue+orange, yellow+purple all
+make brown); nothing an earlier grade asks changes.
 
 **The stroke judge is the one thing computed on the page alone.** `CHECKS`
 in `lib/art.js` judges a real pointer stroke by its geometry — length,
@@ -126,7 +132,19 @@ work — `cave`, `basket`, `cloth`, `mask`, `tiles`, `dots` — never a copy of 
 named living artist; and children's paintings `sunpainting`, `seapainting`,
 `flowers`, `night`, plus three with a state a refinement changes: `portrait`
 (`flat` → `wool`), `housepainting` (`runny` → `fixed`), `claypot` (`cracked` →
-`smooth`). Tools (`TOOLS`): pencil, brush, sponge, chalk, finger, crayon.
+`smooth`). Added for Grade 2, each in the manner of a tradition and copying
+no real work: `adinkra` (stamped cloth, Ghana), `loom` (a card loom, warp and
+weft), `terracotta` (a clay head in the manner of Nok, Nigeria), `leaf` (a
+leaf to draw from life) and `papercut` (a folded paper cut in the manner of
+Chinese jianzhi); the four traditions have grown-up notes in `build-hub.py ::
+TRADITIONS`. Added for Grade 3: `buildings`, `stilllife`, `colourwheel`,
+`relief` (the manner of Han dynasty picture bricks), `kantha` (Bengal),
+`ndebele` (Ndebele house painting, South Africa), `swirlnight` (the manner of
+Vincent van Gogh's The Starry Night, 1889) and `greatwave` (the manner of
+Katsushika Hokusai's Under the Wave off Kanagawa, around 1831) - our own
+drawings in each manner, never copies; the five traditions and works carry
+grown-up notes. Tools (`TOOLS`): pencil, brush, sponge, chalk, finger, crayon,
+and charcoal (Grade 3; width 12, so it clears the `thick` check).
 Mark checks (`CHECKS`): straight, wavy, zigzag, long, short, round, dots,
 thick, thin. Sounds (`BANK`): the Global Perspectives bank plus `dab`,
 `swish`, `squelch`, `stir`, `rustle`.
@@ -250,8 +268,25 @@ node $K/deploy-media.mjs  --app . --upload            # media BEFORE the pages
 - **`build-lectures.mjs --only <slug>`** rebuilds one lesson's video and keeps
   the other entries of `media/lecture/index.json` untouched, so one lecture's
   wording change does not rename and re-upload the other seven.
+- **A child's own pattern may repeat every four.** The check was capped at
+  three while Grade 2 taught a four-print repeat, so a correct four-long
+  pattern was told it did not repeat (found by the Grade 2 content review,
+  2026-09-11). `patternPeriod(own, 4)` in the page and `is_repeating(...,
+  max_period=4)` in `_rules.py` move together. One shape repeated is still a
+  line, not a pattern, and a lesson must not say otherwise.
+- **A new grade reuses the last grade's clips.** Clips are named for their
+  exact words, so before recording a grade, copy in every clip the grade
+  before it already has for a sentence the new grade wants (Grade 2 took 446
+  from Grade 1): the same voice, and nothing is bought twice.
+- **A starting check can reach back a grade.** A grade's check tests the
+  grade before it, so its review lessons live in a sibling app:
+  `build-check.py` reads `../grade-N-app/app.config.json` for them and links
+  `../grade-N-v2/<file>`, the sibling directory on the CDN. The gate checks
+  their titles against that config and the driver accepts the sibling link.
 - **Adding a grade** is a directory with `app.config.json` and `content/`, and
   the same pipeline (`../../mathematics/lesson-app-tools`) run in the same
   order as the Grade 1 README shows. Stage 2 uses the same ten codes with a
   `2` in front; the progression text is the same as Stage 1's, so a Stage 2
-  build is pitched by the content, not by the framework.
+  build is pitched by the content, not by the framework. Stage 3 is the first
+  stage with progression text of its own (Stages 3-4), and Grade 3 is built
+  from its examples - see `../grade-3-app/README.md`.

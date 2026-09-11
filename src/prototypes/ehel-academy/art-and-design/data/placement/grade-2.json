@@ -1,0 +1,216 @@
+{
+  "schemaVersion": "Ehel Stage 2 Art & Design Placement Exam v1.0",
+  "assessmentId": "art-s02-placement-exam-v1",
+  "gradeId": "a02",
+  "subject": "Art & Design",
+  "kind": "readiness",
+  "title": "Stage 2 Art & Design Starting Check",
+  "shortTitle": "Starting check",
+  "description": "A short, friendly check of what you learned in Grade 1 - lines and tools, colours and patterns, making and looking - so we know where to start and which Grade 1 lessons to look at again.",
+  "placement": "Prerequisite unit - before Lesson 1",
+  "questionCount": 12,
+  "totalMarks": 12,
+  "estimatedMinutes": 8,
+  "attemptsAllowed": "Unlimited - this check finds your starting point; it is never a fail",
+  "feedbackMode": "Immediate child-friendly feedback with a starting-point report",
+  "_comment": "Grade 1's content, asked the Grade 1 way: `pic` and `optionPics` are optional pictures for a young reader (an emoji, `mark:<kind>` for a line drawn by the lesson kit, or `swatch:<hex>`). Review lessons are Grade 1's, and the page links them in ../grade-1-v2/. Built into starting-check.html by ../lesson-kit/build-check.py and checked by ../lesson-kit/check-coverage.py.",
+  "banding": {
+    "ready": {
+      "minOverallPercent": 80,
+      "minSectionPercent": 60,
+      "label": "Ready for Stage 2",
+      "message": "Brilliant! You remember your lines, colours and patterns like a real artist. Start with Lesson 1 and enjoy Grade 2."
+    },
+    "readyWithReview": {
+      "minOverallPercent": 50,
+      "label": "Ready, with a quick look back",
+      "message": "You are ready to start Grade 2. Look again at the Grade 1 lessons below first, with a grown-up close by."
+    },
+    "notReady": {
+      "label": "Let's look back at Grade 1 first",
+      "message": "Let's go back to Grade 1 for a little while. Do the lessons below with a grown-up, then come and try again.",
+      "recommendation": {
+        "label": "Grade 1 Art & Design, Lesson 1 with a grown-up",
+        "grade": 1
+      }
+    },
+    "criticalSection": {
+      "sectionId": "a02-prereq-sec01",
+      "maxFailPercent": 40
+    }
+  },
+  "sections": [
+    {
+      "sectionId": "a02-prereq-sec01",
+      "title": "Lines, tools and textures",
+      "description": "Do you remember the kinds of line, which tool makes which mark, and how things feel?",
+      "sequence": 1,
+      "questionCount": 4,
+      "sourceGrades": [1],
+      "remediation": [
+        { "grade": 1, "unit": 1, "title": "Marks and Lines" },
+        { "grade": 1, "unit": 3, "title": "Feel the Texture" }
+      ]
+    },
+    {
+      "sectionId": "a02-prereq-sec02",
+      "title": "Colours, shapes and patterns",
+      "description": "Can you say what two colours make, find a shape, and continue a pattern?",
+      "sequence": 2,
+      "questionCount": 4,
+      "sourceGrades": [1],
+      "remediation": [
+        { "grade": 1, "unit": 2, "title": "Colour Magic" },
+        { "grade": 1, "unit": 4, "title": "Shapes and Patterns" }
+      ]
+    },
+    {
+      "sectionId": "a02-prereq-sec03",
+      "title": "Making and looking",
+      "description": "Do you remember how to join things, use scissors safely, and look at art and say something kind?",
+      "sequence": 3,
+      "questionCount": 4,
+      "sourceGrades": [1],
+      "remediation": [
+        { "grade": 1, "unit": 5, "title": "Make It Stick" },
+        { "grade": 1, "unit": 6, "title": "Looking at Art" }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "questionId": "art-s02-prereq-q01", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec01", "sequence": 1,
+      "questionType": "Multiple choice",
+      "question": "Which line turns sharply, like lightning?",
+      "options": "a wavy line | a zigzag | a straight line",
+      "optionPics": "mark:wavy | mark:zigzag | mark:straight",
+      "correctAnswer": "a zigzag",
+      "explanation": "A zigzag turns sharply, up and down, like lightning. A wavy line is gentle.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Line", "sourceGrade": 1, "sourceUnitNo": 1, "sourceUnitTitle": "Marks and Lines",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q02", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec01", "sequence": 2,
+      "questionType": "Multiple choice",
+      "question": "Which tool makes a wide, wet line?",
+      "options": "a pencil | a brush | chalk",
+      "optionPics": "✏️ | 🖌️ | 🧱",
+      "correctAnswer": "a brush",
+      "explanation": "A brush is wide and wet. A pencil makes a thin, dry line.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Tools", "sourceGrade": 1, "sourceUnitNo": 1, "sourceUnitTitle": "Marks and Lines",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q03", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec01", "sequence": 3,
+      "questionType": "Multiple choice",
+      "question": "Which one feels smooth?",
+      "options": "tree bark | a mirror | sandpaper",
+      "optionPics": "🪵 | 🪞 | 🟫",
+      "correctAnswer": "a mirror",
+      "explanation": "Your finger slides on a mirror. Bark and sandpaper are rough.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Texture", "sourceGrade": 1, "sourceUnitNo": 3, "sourceUnitTitle": "Feel the Texture",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q04", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec01", "sequence": 4,
+      "questionType": "Multiple choice",
+      "question": "What does water do to paint?",
+      "options": "makes it runny | makes it thick | makes it bumpy",
+      "optionPics": "💧 | 🥣 | 🍚",
+      "correctAnswer": "makes it runny",
+      "explanation": "Water thins paint until it runs. Flour makes it thick, and rice makes it bumpy.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Texture", "sourceGrade": 1, "sourceUnitNo": 3, "sourceUnitTitle": "Feel the Texture",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q05", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec02", "sequence": 5,
+      "questionType": "Multiple choice",
+      "question": "Red and blue make…",
+      "options": "orange | purple | green",
+      "optionPics": "swatch:#F28C28 | swatch:#7B3FA0 | swatch:#3FA34D",
+      "correctAnswer": "purple",
+      "explanation": "Red and blue make purple.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Colour", "sourceGrade": 1, "sourceUnitNo": 2, "sourceUnitTitle": "Colour Magic",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q06", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec02", "sequence": 6,
+      "questionType": "Multiple choice",
+      "question": "Red and white make…",
+      "options": "dark red | pink | brown",
+      "optionPics": "swatch:#8B1A14 | swatch:#F5A3B7 | swatch:#7A4A2A",
+      "correctAnswer": "pink",
+      "explanation": "White makes red lighter. Light red is pink.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Colour", "sourceGrade": 1, "sourceUnitNo": 2, "sourceUnitTitle": "Colour Magic",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q07", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec02", "sequence": 7,
+      "questionType": "Multiple choice",
+      "question": "Yellow, yellow, green, yellow, yellow. What comes next?",
+      "pic": "🟨 🟨 🟩 🟨 🟨 ❓",
+      "options": "yellow | green | blue",
+      "optionPics": "swatch:#F6C700 | swatch:#3FA34D | swatch:#2D6CDF",
+      "correctAnswer": "green",
+      "explanation": "Yellow, yellow, green, and then it starts again: yellow, yellow, green.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Pattern", "sourceGrade": 1, "sourceUnitNo": 4, "sourceUnitTitle": "Shapes and Patterns",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q08", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec02", "sequence": 8,
+      "questionType": "Multiple choice",
+      "question": "Which shape has three straight sides?",
+      "options": "a circle | a square | a triangle",
+      "optionPics": "⚪ | 🟦 | 🔺",
+      "correctAnswer": "a triangle",
+      "explanation": "A triangle has three straight sides and three corners.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Shape", "sourceGrade": 1, "sourceUnitNo": 4, "sourceUnitTitle": "Shapes and Patterns",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q09", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec03", "sequence": 9,
+      "questionType": "Multiple choice",
+      "question": "Which join lets a card wheel turn round?",
+      "options": "glue | a split pin | sticky tape",
+      "optionPics": "🧴 | 📌 | 🩹",
+      "correctAnswer": "a split pin",
+      "explanation": "A split pin goes through both pieces and lets them turn. Glue and tape hold them still.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Making", "sourceGrade": 1, "sourceUnitNo": 5, "sourceUnitTitle": "Make It Stick",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q10", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec03", "sequence": 10,
+      "questionType": "Multiple choice",
+      "question": "How should you use scissors?",
+      "options": "walk about with them | sit down and cut carefully | wave them in the air",
+      "optionPics": "🚶 | 🪑 | 👋",
+      "correctAnswer": "sit down and cut carefully",
+      "explanation": "Sit down, hold them steady, and cut carefully, with a grown-up close by.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Making", "sourceGrade": 1, "sourceUnitNo": 5, "sourceUnitTitle": "Make It Stick",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q11", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec03", "sequence": 11,
+      "questionType": "Multiple choice",
+      "question": "Which of these is woven, over and under?",
+      "options": "a clay pot | a basket | a painting",
+      "optionPics": "🏺 | 🧺 | 🖼️",
+      "correctAnswer": "a basket",
+      "explanation": "A basket is woven, over and under. A pot is clay and a painting is paint.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Looking", "sourceGrade": 1, "sourceUnitNo": 6, "sourceUnitTitle": "Looking at Art",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s02-prereq-q12", "assessmentId": "art-s02-placement-exam-v1", "sectionId": "a02-prereq-sec03", "sequence": 12,
+      "questionType": "Multiple choice",
+      "question": "Your friend painted a big yellow sun. Which is a kind and true thing to say?",
+      "pic": "🖼️ ☀️",
+      "options": "I like your boat. | Your yellow sun is so bright. | That is bad.",
+      "correctAnswer": "Your yellow sun is so bright.",
+      "explanation": "Name something that is really in the picture. There is a sun, and no boat.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Reflecting", "sourceGrade": 1, "sourceUnitNo": 6, "sourceUnitTitle": "Looking at Art",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    }
+  ],
+  "reviewStatus": "AI-generated v1.0 - curriculum sign-off pending"
+}

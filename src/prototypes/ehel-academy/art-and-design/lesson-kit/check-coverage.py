@@ -349,7 +349,11 @@ def check_starting(cfg, sc, hub, fail):
     if 'href="%s?from=%s"' % (sc["file"], cfg["fromParam"]) not in hub:
         fail(cfg["hub"], "does not link the starting check")
     split = lambda t: [x.strip() for x in str(t or "").split("|") if x.strip()]   # noqa: E731
-    titles = {i: l["title"] for i, l in enumerate(cfg["lessons"], 1)}
+    def titles_of(grade):
+        if int(grade) == int(cfg["grade"]):
+            return {i: l["title"] for i, l in enumerate(cfg["lessons"], 1)}
+        oc = os.path.join(os.path.dirname(HERE), "grade-%d-app" % int(grade), "app.config.json")
+        return {i: l["title"] for i, l in enumerate(json.load(io.open(oc, encoding="utf-8"))["lessons"], 1)} if os.path.isfile(oc) else {}
     for q in exam["questions"]:
         opts = split(q["options"])
         if q["correctAnswer"] not in opts or len(set(opts)) != len(opts):
@@ -358,7 +362,7 @@ def check_starting(cfg, sc, hub, fail):
             fail(where, "%s: a picture for every option, or none" % q["questionId"])
     for s_ in exam["sections"]:
         for r in s_.get("remediation") or []:
-            if titles.get(r["unit"]) != r["title"]:
+            if titles_of(r.get("grade", cfg["grade"])).get(r["unit"]) != r["title"]:
                 fail(where, "%s sends the child to Lesson %s %r, which this grade does not have" % (s_["sectionId"], r["unit"], r["title"]))
     # the band rule at its edges, computed from the questions rather than trusted
     secs = [x["sectionId"] for x in exam["sections"]]

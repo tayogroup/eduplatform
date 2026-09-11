@@ -514,6 +514,10 @@ def check_step(n, k, s, codes, js, steps):
     elif kind in ("questions", "quiz"):
         if len(d["items"]) < (6 if kind == "quiz" else 3):
             sys.exit("REFUSED: %s has only %d questions" % (where, len(d["items"])))
+        # validation areas 6 and 10 (Grade 1, 2026-09-11): a quiz is not all
+        # recall - at least two questions ask the child to give a reason
+        if kind == "quiz" and sum(1 for it in d["items"] if plain(it["ask"]).lower().startswith("why")) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 WHY questions" % where)
         for it in d["items"]:
             one_ok(it["opts"], where + " %r" % it["ask"])
             if not it.get("why"):

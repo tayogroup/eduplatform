@@ -72,10 +72,18 @@ function lessonData(file) {
   return JSON.parse(m[1]);
 }
 
-/* the same tables the page carries, for playing a step correctly */
-const MIX = { "blue+red": "purple", "red+yellow": "orange", "blue+yellow": "green", "black+white": "grey" };
-const TINT = { red: "pink", yellow: "light yellow", blue: "light blue", orange: "light orange", purple: "light purple", green: "light green", white: "white", black: "grey" };
-const SHADE = { red: "dark red", yellow: "dark yellow", blue: "dark blue", orange: "dark orange", purple: "dark purple", green: "dark green", black: "black", white: "grey" };
+/* the same tables the page carries, for playing a step correctly - READ
+   from lib/art.js, never copied here: a copy of MIX in this file did not
+   learn Grade 3's complementary mixes, so the driver tapped a colour no
+   option carried and timed out (2026-09-11). The builder already holds
+   art.js equal to _rules.py, so reading art.js makes all three one table. */
+const ART_SRC = fs.readFileSync(new URL("./lib/art.js", import.meta.url), "utf8");
+const artTable = (name) => {
+  const m = new RegExp("\\n  const " + name + " = (\\{[\\s\\S]*?\\});").exec(ART_SRC);
+  if (!m) throw new Error("lib/art.js has no " + name + " table");
+  return Function("return (" + m[1] + ");")();
+};
+const MIX = artTable("MIX"), TINT = artTable("TINT"), SHADE = artTable("SHADE");
 const mixOf = (a, b) => a === b ? a : (MIX[[a, b].sort().join("+")] || (a === "white" || b === "white" ? TINT[a === "white" ? b : a] : (a === "black" || b === "black" ? SHADE[a === "black" ? b : a] : null)));
 const TEXTURE = { rice: "bumpy", flour: "thick", sugar: "gritty", water: "runny", sand: "rough", glue: "shiny" };
 const period = (seq) => { for (let p = 1; p <= 4; p++) if (seq.length >= 2 * p && seq.every((v, i) => v === seq[i % p])) return p; return null; };
@@ -402,6 +410,14 @@ async function extras(browser, base) {
     const bad = await run(false);
     if (!msg && bad.band !== exam.banding.notReady.label) msg = "all wrong gave " + JSON.stringify(bad.band);
     const files = new Set(cfg.lessons.map((l) => l.file));
+    /* a review lesson in an earlier grade is ../grade-N-v2/<file>: accept it
+       when that grade's own config lists the file */
+    for (const d of fs.readdirSync(path.dirname(APP))) {
+      const oc = path.join(path.dirname(APP), d, "app.config.json");
+      if (d === path.basename(APP) || !/^grade-\d+-app$/.test(d) || !fs.existsSync(oc)) continue;
+      const o = JSON.parse(fs.readFileSync(oc, "utf8"));
+      for (const l of o.lessons) files.add("../" + o.remote.replace(/\/$/, "").split("/").pop() + "/" + l.file);
+    }
     if (!msg && (!bad.links.length || !bad.links.every((h) => files.has(h.split("?")[0]) && /[?&]from=/.test(h)))) msg = "the review links are " + JSON.stringify(bad.links);
     await page.goto(base + cfg.hub + "?from=" + cfg.fromParam, { waitUntil: "load" }); await sleep(400);
     const meta = ((await page.textContent("#rcMeta").catch(() => "")) || "").trim();

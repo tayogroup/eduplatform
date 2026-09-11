@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 2 Art &amp; Design</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     THE BASE - lifted verbatim from the Grade 1 Mathematics standalone
+     build (mathematics/grade-1-app/g1v2), because these two are meant to
+     be one product. Everything above the ENGLISH heading further down is
+     that build's design system unchanged: the same tokens, the same deck,
+     the same gold action colour, the same voice bar.
+
+     The light palette is declared first and then overridden by the Wehel
+     block below, exactly as it is there. It is kept rather than deleted
+     so a token the override forgets still resolves to something legible
+     instead of to nothing.
+     ================================================================== */
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  /* THE SKIP LINK. Off-screen until it is focused, then a real button in the
+     top-left corner. It is not `display: none` and not `visibility: hidden` -
+     either of those would take it out of the tab order and there would be
+     nothing to focus. Moving it off-screen keeps it reachable by Tab while
+     leaving the page looking untouched.
+
+     z-index clears the two app bars, which are sticky at 40. A skip link that
+     appears UNDER the chrome it exists to skip is a skip link nobody can see
+     they have focused.
+
+     THE FILL IS --ink, NOT --teal, and that is a contrast decision rather than
+     a style one. This build is a single dark theme - the Wehel block below
+     redefines every token from bare :root, so the light palette above it never
+     renders and only the dark values matter. There --teal is #35BFB2, and the
+     obvious teal-pill-with-white-text measures 2.3:1 on it. The link renders
+     at 18px bold, which is below the 18.66px that would let it count as large
+     text, so it needs 4.5:1 and not 3:1 - it fails twice over. --ink and
+     --ground are the pair that is guaranteed to oppose each other whatever the
+     palette does, and here they give a white pill with #142B3E text at 14.5:1
+     (measured, not derived). Teal stays as the ring, which is the same 4px the
+     buttons already focus with, so the link still reads as part of this
+     product. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 100; }
+  .skip:focus {
+    left: 8px; top: 8px; padding: 12px 18px; border-radius: 12px;
+    background: var(--ink); color: var(--ground); font-weight: 700; text-decoration: none;
+    box-shadow: var(--shadow); outline: 4px solid var(--teal); outline-offset: 2px;
+  }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  /* THE DOT IS NOT THE TARGET ANY MORE. There are 23 of these — one per step —
+     and each used to BE a 16px button with a 6px gap, so the tap area was 16px
+     across with centres 22px apart. WCAG 2.5.8 asks for 24x24, and its spacing
+     exception wants 24px between centres, so this failed on both counts in an
+     app whose users are five and six years old.
+
+     The button is now a 28px target with the dot drawn inside it by ::before,
+     which buys the tap area without turning the rail into a row of fat circles:
+     the dot a child SEES is the same 16px it always was. gap goes to 0 because
+     the spacing now lives in the button's own box — leaving the 6px there would
+     push the centres to 34px and cost a row on a phone for nothing.
+
+     Every state moved to ::before with it. Leaving `background` on the button
+     would paint the whole 28px square, which is what makes this look like a
+     grid of blocks rather than a row of dots — check the dark-theme block
+     further down if you change either one. */
+  .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+  /* Growing the target costs rows, and on a phone the rail is capped at 45% of
+     380px — six per row, five rows, 140px of dots above the lesson. Letting it
+     take the full width below the title puts thirteen on a row and two rows on
+     the screen, which is shorter than the 16px version ever was. The cap is
+     what needs lifting, not the target size. */
+  @media (max-width: 560px) {
+    .hero { flex-wrap: wrap; }
+    .dots { max-width: 100%; width: 100%; justify-content: flex-start; }
+  }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  /* The deck carries tabindex="-1" so the skip link can move focus into it.
+     That makes it focusable, and a browser that rings a programmatically
+     focused container would draw a 4px outline around the whole lesson. The
+     ring is kept for :focus-visible, which is what a genuine keyboard focus
+     would match, and dropped for the skip link's own arrival. */
+  .deck:focus { outline: none; }
+  .deck:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; }
+  .choice.small { min-width: 80px; height: 64px; font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { border-radius: 18px; border: 3px solid var(--line); background: var(--card); padding: 14px 10px; text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .sticker .ic { display: block; font-size: 38px; line-height: 1.2; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker:not(.got) .ic { filter: grayscale(1); opacity: 0.35; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px 0; }
+  .foot .mid { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to the
+     viewer's setting. The selector list carries the same specificity as
+     the light block above and comes later, so it wins in both light and
+     dark. The palette is Ehel Academy's own - gold #f4c95d is the action
+     colour, teal #0f766e and coral #c2482c lifted to the same hues at a
+     lightness that is legible on a dark ground.
+
+     Copied from the Grade 1 Mathematics build. Do not re-solve it here:
+     the two builds are meant to be indistinguishable in colour.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  /* ::before, matching the block above — the button itself stays transparent
+     so the 28px tap area never paints. */
+  .dots button::before { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--teal); border-color: var(--teal); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* the fixed ground, painted by a pseudo-element rather than
+     background-attachment, which iOS Safari does not honour */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+  .deck { background: rgba(20, 43, 62, 0.88); }
+
+  /* ---- the voice bar: the speaker reads the step, Explain walks
+          through the idea behind it ---- */
+  .say button.explain {
+    flex: 0 0 auto;
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+  @media (max-width: 420px) {
+    .say button.explain .explain-t { display: none; }
+    .say button.explain { width: 44px; height: 44px; padding: 0; justify-content: center; font-size: 18px; }
+  }
+
+  /* ---- the hub ---- */
+  .hubhead { padding: 26px 4px 18px; }
+  .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
+  .hubhead h1 em { font-style: normal; color: var(--teal); }
+  .hubhead p { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; gap: 10px; padding: 20px;
+    border-radius: 22px; border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88);
+    box-shadow: var(--shadow); color: var(--ink); text-decoration: none; }
+  a.card:hover, a.card:focus-visible { border-color: var(--teal); }
+  .card h2 { font-size: 25px; }
+  .card p { color: var(--muted); font-size: 16.5px; }
+  .cardno { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .cardfoot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .meta { color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .go { flex: 0 0 auto; border-radius: 999px; background: var(--gold); color: var(--accent-ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; padding: 9px 20px; }
+  .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .card.locked { opacity: 0.62; }
+  .card.check { border-color: var(--teal); }
+  .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 62ch; }
+  .strands, .grownups { padding: 30px 4px 0; }
+  .strands h2, .grownups h2 { font-size: 26px; margin-bottom: 10px; }
+  .strand { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: baseline; padding: 10px 14px;
+    border-radius: 14px; border: 1px solid var(--line); background: var(--card); margin-bottom: 8px; font-size: 16px; }
+  .strand b { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  @media (max-width: 560px) { .strand { grid-template-columns: 1fr; gap: 2px; } }
+  .grownups > p { color: var(--muted); font-size: 16px; max-width: 64ch; margin-bottom: 14px; }
+  .gu { border: 1px solid var(--line); border-radius: 16px; background: var(--card); margin-bottom: 10px; }
+  .gu summary { cursor: pointer; padding: 14px 16px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .gu summary small { color: var(--muted); font-weight: 700; font-size: 13.5px; margin-left: 8px; }
+  .gu .body { padding: 0 16px 16px; font-size: 15.5px; display: flex; flex-direction: column; gap: 10px; }
+  .gu h3 { font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .07em; margin: 8px 0 2px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .gu ul, .gu ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .gu code { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px; color: var(--teal); }
+  .gu .key { color: var(--muted); }
+  .gu .key b { color: var(--ink); }
+  @media print {
+    .eh-bar1, .cards, .strands, .hubhead p { display: none; }
+    body::before { display: none; } html, body { background: #fff; }
+    .gu { break-inside: avoid; border-color: #999; } .gu summary { list-style: none; }
+    .gu .body { display: flex !important; } details:not([open]) .body { display: flex !important; }
+  }
+
+  /* ---- the header bar, the same one the lesson pages carry ---- */
+  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
+  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: #06231F; font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: #06231F; font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
+  @media (max-width: 720px) { .eh-progtext, .eh-brandtext { display: none; } .eh-picker { max-width: 130px; } }
+</style>
+
+<header class="eh-bar1">
+  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <div class="eh-brand"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Art &amp; Design</i></span></div>
+  <div class="eh-prog" id="ehProg">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Course progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="" selected>Jump to a lesson…</option><option value="printing-patterns.html">Printing Patterns</option><option value="colours-and-feelings.html">Colours and Feelings</option><option value="weave-it.html">Weave It</option><option value="clay-and-sculpture.html">Clay and Sculpture</option><option value="natures-art.html">Nature's Art</option><option value="cut-tear-stick.html">Cut, Tear and Stick</option><option value="look-snap-move.html">Look, Snap and Move</option><option value="our-art-corner.html">Our Art Corner</option></select>
+  </div>
+</header>
+
+<div class="wrap">
+  <header class="hubhead">
+    <p class="eyebrow">Ehel Academy &middot; Art &amp; Design</p>
+    <h1>Grade 2 <em>Art &amp; Design</em></h1>
+    <p>Eight lessons, in the order they are meant to be done. Every one is about making and looking: paints to mix, marks to make, patterns to build, art from far away to look at, and a journal to keep. About 325 minutes in all, one lesson a week in two short sittings - and a screen cannot be paint, so every lesson sends you to make something real at home.</p>
+  </header>
+
+  <main class="cards">
+      <a class="card check" href="starting-check.html?from=art2">
+        <span class="cardno">Before Lesson 1</span>
+        <h2>Starting check</h2>
+        <p>12 quick questions about colours, shapes, lines and tools, to find where to start. It is never a fail.</p>
+        <span class="cardfoot"><span class="meta"><span id="rcMeta">12 questions &middot; about 8 min</span></span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="printing-patterns.html?from=art2">
+        <span class="cardno">Lesson 1</span>
+        <h2>Printing Patterns</h2>
+        <p>Find out how a print is made, find what leaves, sponges and stamps print, choose the right printer for a picture, print a pattern that repeats, and look closely at a cloth printed with stamps.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 40 min &middot; two sittings</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="colours-and-feelings.html?from=art2">
+        <span class="cardno">Lesson 2</span>
+        <h2>Colours and Feelings</h2>
+        <p>Find out how colours can feel warm, cool, calm or stormy, mix tints and shades, put a blue in order from light to dark, group pictures by their feeling, and choose the colours for a feeling of your own.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 45 min &middot; two sittings</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="weave-it.html?from=art2">
+        <span class="cardno">Lesson 3</span>
+        <h2>Weave It</h2>
+        <p>Find out how weaving goes over and under, see what people weave, make a paper weave in the right order, choose what to weave with, fix a weave that falls apart, and look closely at a weaving on a loom.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 40 min &middot; two sittings</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="clay-and-sculpture.html?from=art2">
+        <span class="cardno">Lesson 4</span>
+        <h2>Clay and Sculpture</h2>
+        <p>Find out what makes a sculpture, join clay with score and slip, work out why some things will not join, make wobbly models stand up, choose what to build from, and look closely at a clay head from long ago.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 40 min &middot; two sittings</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="natures-art.html?from=art2">
+        <span class="cardno">Lesson 5</span>
+        <h2>Nature's Art</h2>
+        <p>Collect treasures on a nature walk, sort them by how they feel, put autumn leaves in order from light to dark, draw what you found, and look very closely at a leaf.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 40 min &middot; two sittings</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="cut-tear-stick.html?from=art2">
+        <span class="cardno">Lesson 6</span>
+        <h2>Cut, Tear and Stick</h2>
+        <p>Find out how a collage is made, meet the materials, choose pieces by their colour, decide whether to tear or cut, add something to show your idea, and look closely at a folded paper cut.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 40 min &middot; two sittings</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="look-snap-move.html?from=art2">
+        <span class="cardno">Lesson 7</span>
+        <h2>Look, Snap and Move</h2>
+        <p>Meet art tools that are not brushes, choose the right one for the job, take a good photo in the right order, sort photos into close-up and far away, draw the way you moved, and watch a flip book come alive.</p>
+        <span class="cardfoot"><span class="meta">16 steps &middot; about 40 min &middot; two sittings</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="our-art-corner.html?from=art2">
+        <span class="cardno">Lesson 8</span>
+        <h2>Our Art Corner</h2>
+        <p>Find out what goes in an art corner, group a year of art by how it was made, compare two artists' work, say something kind and true about each artist, get the corner ready together, and look back at your whole year.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 40 min &middot; two sittings</span><span class="go">Start</span></span>
+      </a>
+  </main>
+
+  <section class="strands">
+    <h2>What Stage 2 Art &amp; Design covers</h2>
+    <div class="strand"><b>Experiencing</b><span>Printing with leaves, sponges and stamps; weaving over and under; walking outside and collecting things from nature; looking closely at printed cloth, a loom, a clay head from long ago and a paper cut; and recording what we find by drawing, sorting and moving.</span></div>
+    <div class="strand"><b>Making</b><span>Printing patterns that repeat; mixing tints and shades; weaving with wool, ribbon and paper; joining clay so it stays joined; tearing, cutting and sticking a collage; and choosing the right material, colour or tool for the job, a camera included.</span></div>
+    <div class="strand"><b>Reflecting</b><span>Grouping pictures by the feeling they give; saying what is the same in our work and an artist's; celebrating our friends' work with kind and true words; and looking back through a year of making.</span></div>
+    <div class="strand"><b>Thinking and Working Artistically</b><span>Having an idea and adding the thing that shows it; asking why two things would not join, and fixing it; trying new tools; and getting our work ready to show, together.</span></div>
+  </section>
+
+  <section class="grownups" id="grown-ups">
+    <h2>For teachers and parents</h2>
+    <p>What each lesson teaches, in Cambridge's own words; the do-it-for-real version of each activity to make at home; and the answer keys. Where a step has no key, because the child's own drawing, feeling or idea is the answer, it says so. Open a lesson to read it, or print this page for the lot.</p>
+    <details class="gu"><summary>Lesson 1: Printing Patterns<small>16 steps &middot; about 40 minutes, in two sittings &middot; 9 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage 2)</h3><ul><li><code>2E.02</code> Explore media, materials, tools, technologies and processes.</li><li><code>2M.01</code> Learn to use a range of media, materials, tools, technologies and processes with increasing skill, independence and confidence.</li><li><code>2E.01</code> Encounter, sense, experiment with and respond to a wide range of sources, including a range of art from different times and cultures.</li><li><code>2E.03</code> Gather and record experiences and visual information.</li><li><code>2M.02</code> Select appropriate media, materials, tools, technologies and processes for a purpose.</li><li><code>2TWA.01</code> Generate, develop, create, innovate and communicate ideas by using and connecting the artistic processes of experiencing, making and reflecting.</li><li><code>2R.02</code> Analyse, critique and connect own and others' work as part of the artistic process.</li><li><code>2R.01</code> Celebrate artistic experiences and learning.</li><li><code>2TWA.03</code> Review and refine own work.</li></ul>
+        <h3>Two sittings</h3><p>At the end of <b>My journal</b> (step 11) the page offers to stop for today: about 30 minutes before it and 10 after. The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Art words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>How a print is made <span class="key">&middot; Press Next and watch a print being made.</span></li><li>Things that print <span class="key">&middot; Lots of things can make a print. Tap each one to hear what it prints.</span></li><li>What will it print? <span class="key">&middot; Think about the bumpy side of each thing. Will it print lines, dots or a shape?</span></li><li>Pick the printer <span class="key">&middot; Each picture needs a different print. Which thing would print it? Tap one.</span></li><li>Print a pattern <span class="key">&middot; Each row is printed with stamps. Tap the print that comes next. Then print your own pattern.</span></li><li>A cloth printed with stamps <span class="key">&middot; This cloth was printed with stamps, in the manner of the adinkra cloths printed in Ghana. Tap the things in it.</span></li><li>Print spotter <span class="key">&middot; Which one is it? Tap the answer.</span></li><li>My journal <span class="key">&middot; Look back at what you made today. Which did you make first? What would you change next time?</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Make it at home <span class="key">&middot; A screen cannot be paint. Make one of these for real, with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where art like this is made out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Where this art comes from</h3><ul><li>The stamped cloth is drawn in the manner of adinkra cloth from Ghana, printed by Asante makers with stamps carved from pieces of calabash (a hard gourd) and a dark dye made from tree bark, in squares ruled with a comb. Each real adinkra symbol has a name and a saying that goes with it. The page's stamps are simple shapes of our own and carry no meaning here: simple shapes can look like real symbols (the ringed circle is close to one), so the page uses them only to show how printing repeats a shape, not to stand for a meaning that belongs to someone else.</li></ul>
+        <h3>Make it for real</h3><ul><li><b>What will it print?.</b> Sort the pebbles, the buttons or the leaves: by colour, then by rough and smooth, then by big and small. Say why each one goes where it goes.</li><li><b>Pick the printer.</b> Put out five scraps: sandpaper, cotton wool, foil, bubble wrap, felt. Say what you want to make (a rough trunk, a fluffy cloud) and ask which scrap would work, and why.</li><li><b>Print a pattern.</b> Make a pattern with things from the kitchen: spoon, fork, spoon, fork. Ask what comes next. Then let the child make one for you to continue.</li><li><b>A cloth printed with stamps.</b> Find a picture of art from another country or from long ago (a library book or a museum website). Find three things in it and say what the artist did.</li><li><b>My journal.</b> Keep a scrapbook. Stick in what was made this week, and ask: what did you make first? What would you do differently next time?</li><li><b>Potato stamps.</b> You need: Half a potato, a grown-up with a knife, paint on a saucer, and paper. Ask a grown-up to cut a simple shape into the flat side of the potato, like a star or a heart. Dab paint on the shape. Press it on the paper, then lift it straight up. Print it again and again in a row. Look for: Is every print the same? Which one came out best, and why?</li><li><b>Leaf prints.</b> You need: Three different leaves, paint, a brush and paper. Paint the bumpy back of a leaf. Lay it paint side down on the paper and press all over it. Peel it off slowly. Try the other two leaves. Look for: Which leaf printed the most lines?</li><li><b>A printed border.</b> You need: A bottle top, a sponge, a fork, paint and a big sheet of paper. Print a pattern all round the edge of the paper. Use two or three of the printers, in the same order every time. Draw a picture in the middle when the border is dry. Look for: Does your border repeat all the way round?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Things that print</b> <span class="key">Which one prints lines, like the veins you can see on a leaf? &rarr; <b>a leaf</b></span></li><li><b>What will it print?</b> <span class="key"><b>Lines</b>: a fork, a leaf, a feather; <b>Dots</b>: bubble wrap, a sponge; <b>A shape</b>: a bottle top, a potato star, the end of a cardboard tube</span></li><li><b>Pick the printer</b><ul><li>long grass (needs lines) <span class="key">&rarr; <b>A leaf, A fork</b></span></li><li>the spots on a ladybird (needs dots) <span class="key">&rarr; <b>A sponge, Bubble wrap</b></span></li><li>a sky full of stars (needs star) <span class="key">&rarr; <b>A potato star</b></span></li><li>a row of balloons (needs circle) <span class="key">&rarr; <b>A bottle top</b></span></li></ul></li><li><b>Print a pattern</b><ul><li>Leaf, star, leaf, star. What comes next? <span class="key">&rarr; <b>leaf, star</b></span></li><li>Star, star, circle. What comes next? <span class="key">&rarr; <b>star, star, circle</b></span></li><li>Hand, circle, leaf, circle. What comes next? <span class="key">&rarr; <b>hand, circle, leaf, circle</b></span></li></ul><span class="key">then the child's own pattern: any row that repeats a unit of two or three tiles counts</span></li><li><b>A cloth printed with stamps</b> <span class="key">find: The same circle stamp, pressed four times in the square. Every one is the same, because it is one stamp.; These lines were drawn with a comb dipped in dye. The comb makes four lines at once.; A different stamp, a diamond, pressed again and again in this square.; A third stamp, a flower of dots. Three stamps, used over and over, fill the whole cloth.. How did the printer make the same shape again and again? &rarr; <b>by pressing the same stamp again and again</b></span></li><li><b>Print spotter</b><ol><li>What do you do after you press the stamp down? <span class="key">&rarr; <b>lift it straight up</b></span></li><li>What does bubble wrap print? <span class="key">&rarr; <b>rows of round dots</b></span></li><li>Press the same stamp again, and you get… <span class="key">&rarr; <b>the same mark again</b></span></li><li>Which one prints a circle? <span class="key">&rarr; <b>a bottle top</b></span></li></ol></li><li><b>My journal</b> <span class="key">reads the page's own record of what the child made - the order they made them in IS the key; what they would change has none. If the making steps were skipped: chose A leaf for long grass; chose A sponge for the spots on a ladybird; chose A potato star for a sky full of stars; chose A bottle top for a row of balloons; made a pattern that repeats</span></li><li><b>Show what you know</b><ol><li>What is a print? <span class="key">&rarr; <b>a mark made by pressing</b></span></li><li>Which one prints lines? <span class="key">&rarr; <b>a leaf</b></span></li><li>Why do all the circles on the printed cloth look the same? <span class="key">&rarr; <b>because one stamp was pressed again and again</b></span></li><li>Which one would you print a ladybird's spots with? <span class="key">&rarr; <b>a sponge</b></span></li><li>Hand, circle, leaf, circle. What comes next? <span class="key">&rarr; <b>hand</b></span></li><li>Why does a fork print lines? <span class="key">&rarr; <b>because it has long, straight prongs</b></span></li><li>Star, leaf, star, leaf, again and again, makes… <span class="key">&rarr; <b>a pattern</b></span></li><li>In Ghana, what are adinkra cloth stamps carved from? <span class="key">&rarr; <b>a hard fruit shell</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 2: Colours and Feelings<small>16 steps &middot; about 45 minutes, in two sittings &middot; 9 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage 2)</h3><ul><li><code>2E.01</code> Encounter, sense, experiment with and respond to a wide range of sources, including a range of art from different times and cultures.</li><li><code>2R.01</code> Celebrate artistic experiences and learning.</li><li><code>2M.01</code> Learn to use a range of media, materials, tools, technologies and processes with increasing skill, independence and confidence.</li><li><code>2E.02</code> Explore media, materials, tools, technologies and processes.</li><li><code>2E.03</code> Gather and record experiences and visual information.</li><li><code>2M.02</code> Select appropriate media, materials, tools, technologies and processes for a purpose.</li><li><code>2TWA.01</code> Generate, develop, create, innovate and communicate ideas by using and connecting the artistic processes of experiencing, making and reflecting.</li><li><code>2R.02</code> Analyse, critique and connect own and others' work as part of the artistic process.</li><li><code>2TWA.03</code> Review and refine own work.</li></ul>
+        <h3>Two sittings</h3><p>At the end of <b>My journal</b> (step 11) the page offers to stop for today: about 30 minutes before it and 10 after. The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Art words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Colours have feelings <span class="key">&middot; Colours can make us feel things. Tap each set of colours to hear how it feels.</span></li><li>Tints and shades <span class="key">&middot; White makes a colour lighter. Black makes it darker. Guess what each mix makes, then tap the two pots.</span></li><li>Red, from light to dark <span class="key">&middot; Here is red with more and more white or black in it. Put the reds in order, from lightest to darkest.</span></li><li>How does it feel? <span class="key">&middot; Here are some pictures, told in words. Which feeling do their colours USUALLY give: happy, calm or stormy? Tap the bin.</span></li><li>Colours for a feeling <span class="key">&middot; You want your picture to feel a certain way. Which colours would do it? Tap them.</span></li><li>Two paintings, two feelings <span class="key">&middot; Two paintings feel very different. Is each thing in BOTH of them, or only in one?</span></li><li>Colour spotter <span class="key">&middot; Which one is it? Tap the answer.</span></li><li>My journal <span class="key">&middot; Look back at what you made today. Which did you make first? What would you change next time?</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Make it at home <span class="key">&middot; A screen cannot be paint. Make one of these for real, with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where art like this is made out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Make it for real</h3><ul><li><b>Tints and shades.</b> Put out red, yellow and blue paint and a little white. Before each mix, ask: what do you think it will make? Mix it, look, and say what happened.</li><li><b>Red, from light to dark.</b> Mix a little black or white into one colour, four times, and paint four patches. Cut them out and put them in order from light to dark.</li><li><b>How does it feel?.</b> Sort the pebbles, the buttons or the leaves: by colour, then by rough and smooth, then by big and small. Say why each one goes where it goes.</li><li><b>Colours for a feeling.</b> Put out five scraps: sandpaper, cotton wool, foil, bubble wrap, felt. Say what you want to make (a rough trunk, a fluffy cloud) and ask which scrap would work, and why.</li><li><b>Two paintings, two feelings.</b> Put two pictures side by side (a book page and a photo will do). Ask: what do BOTH have? What does only one have?</li><li><b>My journal.</b> Keep a scrapbook. Stick in what was made this week, and ask: what did you make first? What would you do differently next time?</li><li><b>One picture, two moods.</b> You need: Paints, white and black paint, a brush, a saucer and two sheets of paper. Draw the same simple picture on both sheets: a house, a tree, or a boat on the sea. Paint the first one only in tints: mix a little white into every colour. Paint the second one only in shades: mix a tiny bit of black into every colour. Look for: Which one feels calm? Which one feels like night?</li><li><b>Mood hunt.</b> You need: A grown-up, and some books or magazines with pictures. Find a picture that feels happy. Find one that feels calm, and one that feels stormy. Look at the colours in each one. Look for: What colours did the happy picture use? And the stormy one?</li><li><b>Paint a feeling.</b> You need: Paints, a brush and paper. Think of a feeling: happy, calm, sleepy or excited. Choose three colours that give that feeling. Paint shapes and lines with only those colours. It does not have to be a thing. Look for: Can your grown-up guess the feeling from the colours?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Colours have feelings</b> <span class="key">Which colours often feel calm and cool? &rarr; <b>blue and green</b></span></li><li><b>Tints and shades</b><ul><li>purple + white <span class="key">&rarr; <b>light purple</b></span></li><li>green + black <span class="key">&rarr; <b>dark green</b></span></li><li>yellow + white <span class="key">&rarr; <b>light yellow</b></span></li><li>yellow + black <span class="key">&rarr; <b>dark yellow</b></span></li><li>yellow + blue <span class="key">&rarr; <b>green</b></span></li></ul><span class="key">then the child mixes any two they like: no key, the bowl shows what they made</span></li><li><b>Red, from light to dark</b> <span class="key">light to dark, by the colours' own lightness: <b>pale pink &rarr; pink &rarr; red &rarr; dark red &rarr; deep red</b></span></li><li><b>How does it feel?</b> <span class="key"><b>Happy</b>: a yellow sun over orange fields, a bright pink and orange party; <b>Calm</b>: a pale blue sea at dawn, soft green hills under a light blue sky, white snow with light blue shadows; <b>Stormy</b>: dark grey clouds and a zigzag of lightning, dark purple swirls and black trees</span></li><li><b>Colours for a feeling</b><ul><li>a hot afternoon in the desert (needs warm) <span class="key">&rarr; <b>Red, orange and yellow</b></span></li><li>a quiet swim in a cool lake (needs cool) <span class="key">&rarr; <b>Blue, green and purple</b></span></li><li>a baby's soft blanket (needs pale) <span class="key">&rarr; <b>Pink and light blue</b></span></li><li>a forest at night (needs dark) <span class="key">&rarr; <b>Dark blue and dark green</b></span></li></ul></li><li><b>Two paintings, two feelings</b> <span class="key">both have: <b>the sky</b>; only one has: <b>a sun, a moon, bright colours, mostly dark colours, stars</b>. Which they like more: no key</span></li><li><b>Colour spotter</b><ol><li>A colour with white added is called… <span class="key">&rarr; <b>a tint</b></span></li><li>Green and black make… <span class="key">&rarr; <b>dark green</b></span></li><li>Which colours feel warm? <span class="key">&rarr; <b>red, orange and yellow</b></span></li><li>Dark grey clouds and lightning feel… <span class="key">&rarr; <b>stormy</b></span></li></ol></li><li><b>My journal</b> <span class="key">reads the page's own record of what the child made - the order they made them in IS the key; what they would change has none. If the making steps were skipped: mixed purple and white and made light purple; mixed green and black and made dark green; mixed yellow and white and made light yellow; mixed yellow and black and made dark yellow; mixed yellow and blue and made green; put 5 colours in order from light to dark; chose Red, orange and yellow for a hot afternoon in the desert; chose Blue, green and purple for a quiet swim in a cool lake; chose Pink and light blue for a baby's soft blanket; chose Dark blue and dark green for a forest at night</span></li><li><b>Show what you know</b><ol><li>Purple and white make… <span class="key">&rarr; <b>light purple</b></span></li><li>A colour with black added is called… <span class="key">&rarr; <b>a shade</b></span></li><li>Why add only a tiny bit of black? <span class="key">&rarr; <b>because a little black makes a colour much darker</b></span></li><li>Which red is the lightest? <span class="key">&rarr; <b>pale pink</b></span></li><li>Which colours often feel calm? <span class="key">&rarr; <b>pale blue and soft green</b></span></li><li>Why paint a hot desert with warm colours? <span class="key">&rarr; <b>because warm colours feel hot and sunny</b></span></li><li>What do the sunny painting and the night painting both have? <span class="key">&rarr; <b>the sky</b></span></li><li>Grouping pictures by how they feel is a way of… <span class="key">&rarr; <b>looking at and celebrating art</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 3: Weave It<small>16 steps &middot; about 40 minutes, in two sittings &middot; 9 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage 2)</h3><ul><li><code>2E.02</code> Explore media, materials, tools, technologies and processes.</li><li><code>2M.01</code> Learn to use a range of media, materials, tools, technologies and processes with increasing skill, independence and confidence.</li><li><code>2E.01</code> Encounter, sense, experiment with and respond to a wide range of sources, including a range of art from different times and cultures.</li><li><code>2E.03</code> Gather and record experiences and visual information.</li><li><code>2M.02</code> Select appropriate media, materials, tools, technologies and processes for a purpose.</li><li><code>2TWA.02</code> Embrace challenges and opportunities, working with growing independence.</li><li><code>2TWA.03</code> Review and refine own work.</li><li><code>2R.02</code> Analyse, critique and connect own and others' work as part of the artistic process.</li><li><code>2R.01</code> Celebrate artistic experiences and learning.</li></ul>
+        <h3>Two sittings</h3><p>At the end of <b>My journal</b> (step 11) the page offers to stop for today: about 30 minutes before it and 10 after. The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Art words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Over and under <span class="key">&middot; Press Next and watch how a weave is made.</span></li><li>Things people weave <span class="key">&middot; People weave all over the world, and even some birds weave. Tap each one to hear about it.</span></li><li>Make a paper weave, in order <span class="key">&middot; A paper weave is made in steps. Tap them in the order you would do them.</span></li><li>What to weave with <span class="key">&middot; Each weaving needs a different material. Which would work? Tap one.</span></li><li>Fix the weave <span class="key">&middot; These weaves have a problem. Why did it go wrong? Which change fixes it? Tap one and see.</span></li><li>A weaving on a loom <span class="key">&middot; This weaving is still on its loom. Tap the parts to find out what the weaver did.</span></li><li>Weave spotter <span class="key">&middot; Which one is it? Tap the answer.</span></li><li>My journal <span class="key">&middot; Look back at what you made today. Which did you make first? What would you change next time?</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Make it at home <span class="key">&middot; A screen cannot be paint. Make one of these for real, with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where art like this is made out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Where this art comes from</h3><ul><li>Weaving on a loom is done all over the world: kente in Ghana is woven on narrow strip looms, and in Guatemala and Peru weavers use a backstrap loom tied round the waist. The loom on the page is a simple card loom of the kind a child can make, with its threads named the way weavers name them: the warp is stretched on the loom, and the weft goes over and under it.</li></ul>
+        <h3>Make it for real</h3><ul><li><b>What to weave with.</b> Put out five scraps: sandpaper, cotton wool, foil, bubble wrap, felt. Say what you want to make (a rough trunk, a fluffy cloud) and ask which scrap would work, and why.</li><li><b>Fix the weave.</b> Look at something the child made. Ask: if you made it again, what one thing would you change? Then, if you can, change it together.</li><li><b>A weaving on a loom.</b> Find a picture of art from another country or from long ago (a library book or a museum website). Find three things in it and say what the artist did.</li><li><b>My journal.</b> Keep a scrapbook. Stick in what was made this week, and ask: what did you make first? What would you do differently next time?</li><li><b>Paper weave.</b> You need: Two sheets of coloured paper, safe scissors, glue and a grown-up. Fold one sheet in half and cut slits from the fold, stopping before the edge. Open it out. Cut the other sheet into strips. Weave the first strip over, under. Weave the next one under, over. Push the strips close and glue down the ends. Look for: Does your weave make a pattern of squares?</li><li><b>Card loom.</b> You need: A piece of card, safe scissors, wool and a grown-up. Ask a grown-up to cut small notches along the top and bottom of the card. Wrap the wool round and round through the notches. That is your warp. Weave a different wool over and under, across. Turn back at the edge and go the other way. Look for: Can you make stripes by changing the colour of the weft?</li><li><b>Weave hunt.</b> You need: A grown-up and a walk around the house. Look for things that are woven: a basket, a mat, a scarf, a chair seat. Look closely. Can you see the over and under? Look for: How many woven things did you find?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Things people weave</b> <span class="key">What is weaving? &rarr; <b>going over and under, again and again</b></span></li><li><b>Make a paper weave, in order</b> <span class="key">cut slits in a folded sheet, and cut some strips &rarr; weave the first strip over, under &rarr; weave the next strip under, over &rarr; push the strips close together &rarr; glue down the ends</span></li><li><b>What to weave with</b><ul><li>a soft, warm scarf (needs soft) <span class="key">&rarr; <b>Wool</b></span></li><li>a sparkly mat for a party (needs shiny) <span class="key">&rarr; <b>Ribbon</b></span></li><li>a strong frame to weave on (needs strong) <span class="key">&rarr; <b>Thin sticks</b></span></li><li>a mat to sit on in the rain (needs waterproof) <span class="key">&rarr; <b>Strips of plastic bag</b></span></li></ul></li><li><b>Fix the weave</b><ul><li>Zara's paper weave: There are big gaps between the strips. <span class="key">&rarr; <b>Push the strips close together</b></span></li><li>Kofi's wool weave: One piece of wool keeps falling out. <span class="key">&rarr; <b>Weave it over and under, not just lying on top</b></span></li><li>Mei's ribbon mat: The strips slide out at the edges. <span class="key">&rarr; <b>Glue down the ends</b></span></li></ul></li><li><b>A weaving on a loom</b> <span class="key">find: The warp threads are stretched tight from top to bottom. At the top, they are still waiting for the weft.; The weft goes across: over one warp thread and under the next. Look how each row goes the other way.; Two rows of red, two of yellow, two of blue, and again. The weaver made a pattern of stripes.; The loom holds the warp tight, so the weaving stays flat and even.. What goes over and under the warp threads? &rarr; <b>the weft</b></span></li><li><b>Weave spotter</b><ol><li>The threads stretched tight on the loom are the… <span class="key">&rarr; <b>warp</b></span></li><li>After a row of over, under, the next row goes… <span class="key">&rarr; <b>under, over</b></span></li><li>Which would make a soft scarf? <span class="key">&rarr; <b>wool</b></span></li><li>What is a loom for? <span class="key">&rarr; <b>holding the warp tight</b></span></li></ol></li><li><b>My journal</b> <span class="key">reads the page's own record of what the child made - the order they made them in IS the key; what they would change has none. If the making steps were skipped: chose Wool for a soft, warm scarf; chose Ribbon for a sparkly mat for a party; chose Thin sticks for a strong frame to weave on; chose Strips of plastic bag for a mat to sit on in the rain; fixed Zara's paper weave: push the strips close together; fixed Kofi's wool weave: weave it over and under, not just lying on top; fixed Mei's ribbon mat: glue down the ends</span></li><li><b>Show what you know</b><ol><li>Weaving is going… <span class="key">&rarr; <b>over and under, again and again</b></span></li><li>The thread that goes across, over and under, is the… <span class="key">&rarr; <b>weft</b></span></li><li>Why did Kofi's piece of wool fall out? <span class="key">&rarr; <b>because it only lay on top instead of going over and under</b></span></li><li>What do you do first for a paper weave? <span class="key">&rarr; <b>cut slits in a folded sheet</b></span></li><li>Why would you not weave a rain mat from paper? <span class="key">&rarr; <b>because paper goes soggy when it gets wet</b></span></li><li>Which would make a strong frame to weave on? <span class="key">&rarr; <b>thin sticks</b></span></li><li>How do you get rid of gaps in a weave? <span class="key">&rarr; <b>push the strips close together</b></span></li><li>Which of these is woven from dry grass? <span class="key">&rarr; <b>a straw hat</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 4: Clay and Sculpture<small>16 steps &middot; about 40 minutes, in two sittings &middot; 7 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage 2)</h3><ul><li><code>2E.01</code> Encounter, sense, experiment with and respond to a wide range of sources, including a range of art from different times and cultures.</li><li><code>2E.02</code> Explore media, materials, tools, technologies and processes.</li><li><code>2M.01</code> Learn to use a range of media, materials, tools, technologies and processes with increasing skill, independence and confidence.</li><li><code>2R.02</code> Analyse, critique and connect own and others' work as part of the artistic process.</li><li><code>2TWA.03</code> Review and refine own work.</li><li><code>2M.02</code> Select appropriate media, materials, tools, technologies and processes for a purpose.</li><li><code>2R.01</code> Celebrate artistic experiences and learning.</li></ul>
+        <h3>Two sittings</h3><p>At the end of <b>My journal</b> (step 11) the page offers to stop for today: about 30 minutes before it and 10 after. The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Art words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Flat, or all the way round? <span class="key">&middot; A painting is flat. A sculpture you can walk all the way round. Tap each one to hear about it.</span></li><li>Score and slip <span class="key">&middot; Press Next and watch how potters join two pieces of clay so they stay joined.</span></li><li>Will it join? <span class="key">&middot; Will each pair join and stay joined? Think about why, then tap the bin.</span></li><li>Make it stand up <span class="key">&middot; These sculptures have a problem. Why did it happen? Which change fixes it? Tap one and see.</span></li><li>What to build it from <span class="key">&middot; Each sculpture needs a different material. Which one would work? Tap one.</span></li><li>A clay head from long ago <span class="key">&middot; This clay head is drawn in the manner of heads made in Nigeria more than two thousand years ago. Tap the parts.</span></li><li>Sculpture spotter <span class="key">&middot; Which one is it? Tap the answer.</span></li><li>My journal <span class="key">&middot; Look back at what you made today. Which did you make first? What would you change next time?</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Make it at home <span class="key">&middot; A screen cannot be paint. Make one of these for real, with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where art like this is made out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Where this art comes from</h3><ul><li>The clay head is drawn in the manner of the Nok terracotta sculptures of central Nigeria, made more than 2,000 years ago and among the oldest clay figures known in Africa south of the Sahara. Real Nok heads have carefully arranged hair and eyes shaped like half-moons with holes for the pupils. The picture is our own drawing in that manner, not a copy of a real head.</li></ul>
+        <h3>Make it for real</h3><ul><li><b>Will it join?.</b> Sort the pebbles, the buttons or the leaves: by colour, then by rough and smooth, then by big and small. Say why each one goes where it goes.</li><li><b>Make it stand up.</b> Look at something the child made. Ask: if you made it again, what one thing would you change? Then, if you can, change it together.</li><li><b>What to build it from.</b> Put out five scraps: sandpaper, cotton wool, foil, bubble wrap, felt. Say what you want to make (a rough trunk, a fluffy cloud) and ask which scrap would work, and why.</li><li><b>A clay head from long ago.</b> Find a picture of art from another country or from long ago (a library book or a museum website). Find three things in it and say what the artist did.</li><li><b>My journal.</b> Keep a scrapbook. Stick in what was made this week, and ask: what did you make first? What would you do differently next time?</li><li><b>Score and slip animal.</b> You need: Air-drying clay, a fork, a little water in a cup, and a grown-up. Make a body from a ball of clay. Make legs, ears or a tail as separate pieces. Score both sides of each join with the fork, dab on a little clay mixed with water, then press and smooth. Let it dry for a day or two. Look for: Did every part stay on when it dried?</li><li><b>Tallest tower.</b> You need: Empty boxes and tubes, sticky tape, and a grown-up. Build the tallest tower you can. If it tips, try a wider, heavier box at the bottom. Tape the joins. Look for: What made your tower stand up?</li><li><b>Snow or sand sculpture.</b> You need: A day with snow, or a sandpit or beach, and a grown-up. Make a sculpture you can walk all round: an animal, a castle or a face. Walk round it. Does it look good from every side? Look for: Which side of your sculpture do you like best?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Flat, or all the way round?</b> <span class="key">Which one is flat, and NOT a sculpture? &rarr; <b>a painting</b></span></li><li><b>Will it join?</b> <span class="key"><b>It joins</b>: two pieces of clay, scored and slipped, two boxes and some sticky tape, a tube glued to a box, left to dry; <b>It will not join</b>: a dry piece of clay on a wet piece, two smooth pebbles, pressed together, a plastic spoon pushed into dry clay</span></li><li><b>Make it stand up</b><ul><li>Omar's clay dog: A leg fell off when it dried. <span class="key">&rarr; <b>Score and slip the leg back on</b></span></li><li>Priya's box tower: The tower keeps tipping over. <span class="key">&rarr; <b>Put the biggest box at the bottom, with a stone inside it</b></span></li><li>Tomas's clay bird: Its head droops down to the table. <span class="key">&rarr; <b>Make the neck shorter and thicker</b></span></li></ul></li><li><b>What to build it from</b><ul><li>a tall, light tower (needs stiff) <span class="key">&rarr; <b>Cardboard boxes</b></span></li><li>a light, curly snake to hang from a string (needs bendy) <span class="key">&rarr; <b>Pipe cleaners, Foil</b></span></li><li>a shiny robot (needs shiny) <span class="key">&rarr; <b>Foil</b></span></li><li>a heavy bottom so it will not tip (needs heavy) <span class="key">&rarr; <b>Clay, Stones</b></span></li></ul></li><li><b>A clay head from long ago</b> <span class="key">find: Each eye was cut as an almond shape into the wet clay, with a small hole pierced for the middle.; The hair was pressed into the clay in neat rows of lines, all the way over the top of the head.; The mouth is open: a hole cut right into the clay.; The ears sit on the sides of the head, the same on both sides.. How did the maker make the eyes? &rarr; <b>cut almond shapes into the wet clay and pierced holes</b></span></li><li><b>Sculpture spotter</b><ol><li>What is slip? <span class="key">&rarr; <b>clay mixed with water until it is runny</b></span></li><li>A sculpture is something you can… <span class="key">&rarr; <b>walk all the way round</b></span></li><li>Which pair will NOT join? <span class="key">&rarr; <b>two smooth pebbles</b></span></li><li>A tower keeps tipping over. What fixes it? <span class="key">&rarr; <b>a wide, heavy bottom</b></span></li></ol></li><li><b>My journal</b> <span class="key">reads the page's own record of what the child made - the order they made them in IS the key; what they would change has none. If the making steps were skipped: fixed Omar's clay dog: score and slip the leg back on; fixed Priya's box tower: put the biggest box at the bottom, with a stone inside it; fixed Tomas's clay bird: make the neck shorter and thicker; chose Cardboard boxes for a tall, light tower; chose Pipe cleaners for a light, curly snake to hang from a string; chose Foil for a shiny robot; chose Clay for a heavy bottom so it will not tip</span></li><li><b>Show what you know</b><ol><li>Which one is a sculpture? <span class="key">&rarr; <b>a snowman</b></span></li><li>Scratching lines on clay before you join it is called… <span class="key">&rarr; <b>scoring</b></span></li><li>Why will dry clay not join to wet clay? <span class="key">&rarr; <b>because dry clay has no water left to join with</b></span></li><li>Why did Omar's clay dog lose a leg? <span class="key">&rarr; <b>because the leg was not scored and slipped</b></span></li><li>Which material would make a light, curly snake to hang up? <span class="key">&rarr; <b>pipe cleaners</b></span></li><li>How were the eyes on the clay head made? <span class="key">&rarr; <b>cut into the wet clay</b></span></li><li>A bird's head droops. What fixes it? <span class="key">&rarr; <b>a shorter, thicker neck</b></span></li><li>Where were the Nok clay heads made? <span class="key">&rarr; <b>in what is now Nigeria</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 5: Nature's Art<small>15 steps &middot; about 40 minutes, in two sittings &middot; 6 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage 2)</h3><ul><li><code>2E.01</code> Encounter, sense, experiment with and respond to a wide range of sources, including a range of art from different times and cultures.</li><li><code>2R.01</code> Celebrate artistic experiences and learning.</li><li><code>2E.03</code> Gather and record experiences and visual information.</li><li><code>2E.02</code> Explore media, materials, tools, technologies and processes.</li><li><code>2M.01</code> Learn to use a range of media, materials, tools, technologies and processes with increasing skill, independence and confidence.</li><li><code>2TWA.03</code> Review and refine own work.</li></ul>
+        <h3>Two sittings</h3><p>At the end of <b>My journal</b> (step 10) the page offers to stop for today: about 30 minutes before it and 10 after. The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Art words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Treasures from a nature walk <span class="key">&middot; Artists go outside to look and collect. Tap each treasure to hear about it.</span></li><li>Treasures by touch <span class="key">&middot; Imagine touching each treasure. Is it rough, smooth or soft? Tap the bin.</span></li><li>Autumn leaves, light to dark <span class="key">&middot; These leaves fell in autumn. Put them in order, from the lightest to the darkest.</span></li><li>A leaf, looked at closely <span class="key">&middot; Artists look very closely before they draw. Tap the parts of this leaf.</span></li><li>Draw the lines you found <span class="key">&middot; Look at each treasure and draw the line it has. The card tells you which tool to use.</span></li><li>Nature spotter <span class="key">&middot; Which one is it? Tap the answer.</span></li><li>My journal <span class="key">&middot; Look back at what you made today. Which did you make first? What would you change next time?</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Make it at home <span class="key">&middot; A screen cannot be paint. Make one of these for real, with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where art like this is made out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Make it for real</h3><ul><li><b>Treasures by touch.</b> Sort the pebbles, the buttons or the leaves: by colour, then by rough and smooth, then by big and small. Say why each one goes where it goes.</li><li><b>Autumn leaves, light to dark.</b> Mix a little black or white into one colour, four times, and paint four patches. Cut them out and put them in order from light to dark.</li><li><b>A leaf, looked at closely.</b> Find a picture of art from another country or from long ago (a library book or a museum website). Find three things in it and say what the artist did.</li><li><b>Draw the lines you found.</b> Give the child a pencil, a brush, a sponge and a piece of chalk. Ask for a straight line, a wavy line, a zigzag and lots of dots with each one. Which tool made the thickest mark?</li><li><b>My journal.</b> Keep a scrapbook. Stick in what was made this week, and ask: what did you make first? What would you do differently next time?</li><li><b>Nature walk collection.</b> You need: A bag, a grown-up, and a walk in a park or garden. Collect ten things that have already fallen: leaves, feathers, pebbles, sticks. At home, wash your hands, then lay your treasures out on paper. Sort them: rough, smooth and soft. Never put anything you find in your mouth. Look for: Which treasure is the roughest? Which is the smoothest?</li><li><b>Draw from life.</b> You need: One treasure from your walk, a pencil and paper. Put the treasure in front of you. Look at it for a whole minute before you draw. Draw the lines you can see, big, filling the paper. Look for: What did you notice when you looked for a whole minute?</li><li><b>Land art.</b> You need: Leaves, sticks or pebbles, a grown-up, and a space outside. Lay your treasures in a pattern on the ground: a circle, a spiral or a line. Stand back and look. Ask your grown-up to take a photo before it blows away. Look for: What shape did you make?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Treasures from a nature walk</b> <span class="key">What should you collect on a nature walk? &rarr; <b>things that have already fallen</b></span></li><li><b>Treasures by touch</b> <span class="key"><b>Rough</b>: a piece of bark, a pine cone; <b>Smooth</b>: a pebble, the inside of a shell, a conker; <b>Soft</b>: a feather, a flower petal, a tuft of sheep's wool caught on a fence</span></li><li><b>Autumn leaves, light to dark</b> <span class="key">light to dark, by the colours' own lightness: <b>pale green &rarr; yellow &rarr; orange &rarr; red &rarr; brown</b></span></li><li><b>A leaf, looked at closely</b> <span class="key">find: One straight line down the middle. It carries water to the whole leaf.; Little veins branch off the middle one, like the branches of a tree.; The edge goes in and out, sharp and pointy, like a zigzag.; The stalk held the leaf on the tree. It is thick and a little curved.. Which part is a straight line down the middle of the leaf? &rarr; <b>the middle vein</b></span></li><li><b>Draw the lines you found</b> <span class="key">the page judges the stroke itself: the straight vein of a leaf with the pencil; a leaf's jagged edge with the crayon; a round pebble with the brush; the dots on a ladybird with the finger; one thin line of a feather with the pencil. Then a free drawing: no key</span></li><li><b>Nature spotter</b><ol><li>A pebble feels… <span class="key">&rarr; <b>smooth</b></span></li><li>Which line is the edge of a leaf? <span class="key">&rarr; <b>a zigzag</b></span></li><li>Art made outside, from nature, is called… <span class="key">&rarr; <b>land art</b></span></li><li>Which autumn leaf is the darkest? <span class="key">&rarr; <b>brown</b></span></li></ol></li><li><b>My journal</b> <span class="key">reads the page's own record of what the child made - the order they made them in IS the key; what they would change has none. If the making steps were skipped: put 5 colours in order from light to dark; made the straight vein of a leaf with the pencil; made a leaf's jagged edge with the crayon; made a round pebble with the brush; made the dots on a ladybird with the finger; made one thin line of a feather with the pencil</span></li><li><b>Show what you know</b><ol><li>What should you collect on a nature walk? <span class="key">&rarr; <b>things that have already fallen</b></span></li><li>Why do artists collect leaves and pebbles? <span class="key">&rarr; <b>to look at them closely and get ideas</b></span></li><li>Bark feels… <span class="key">&rarr; <b>rough</b></span></li><li>Why is bright red not the lightest leaf? <span class="key">&rarr; <b>because bright is not the same as light</b></span></li><li>How do you draw a round pebble? <span class="key">&rarr; <b>go all the way round, back to the start</b></span></li><li>What does a leaf's middle vein do? <span class="key">&rarr; <b>carries water to the whole leaf</b></span></li><li>Drawing a real thing while you look at it is called… <span class="key">&rarr; <b>drawing from life</b></span></li><li>Leaves laid in a circle on the grass are… <span class="key">&rarr; <b>land art</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 6: Cut, Tear and Stick<small>16 steps &middot; about 40 minutes, in two sittings &middot; 10 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage 2)</h3><ul><li><code>2E.02</code> Explore media, materials, tools, technologies and processes.</li><li><code>2M.01</code> Learn to use a range of media, materials, tools, technologies and processes with increasing skill, independence and confidence.</li><li><code>2E.01</code> Encounter, sense, experiment with and respond to a wide range of sources, including a range of art from different times and cultures.</li><li><code>2TWA.02</code> Embrace challenges and opportunities, working with growing independence.</li><li><code>2M.02</code> Select appropriate media, materials, tools, technologies and processes for a purpose.</li><li><code>2E.03</code> Gather and record experiences and visual information.</li><li><code>2TWA.01</code> Generate, develop, create, innovate and communicate ideas by using and connecting the artistic processes of experiencing, making and reflecting.</li><li><code>2TWA.03</code> Review and refine own work.</li><li><code>2R.02</code> Analyse, critique and connect own and others' work as part of the artistic process.</li><li><code>2R.01</code> Celebrate artistic experiences and learning.</li></ul>
+        <h3>Two sittings</h3><p>At the end of <b>My journal</b> (step 11) the page offers to stop for today: about 30 minutes before it and 10 after. The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Art words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Tear, cut and stick <span class="key">&middot; Press Next and watch a collage being made.</span></li><li>Collage materials <span class="key">&middot; Almost anything flat can go in a collage. Tap each one to hear what it adds.</span></li><li>Pick by colour <span class="key">&middot; You are making a collage. Which piece has the right colour for each part? Tap it.</span></li><li>Tear it or cut it? <span class="key">&middot; Some things have soft edges and some have sharp ones. Would you tear it or cut it? Tap the bin.</span></li><li>Show how it feels <span class="key">&middot; These collages do not quite show what their maker meant. What could you add? Tap one and see.</span></li><li>A paper cut, folded and cut <span class="key">&middot; This red paper cut is drawn in the manner of Chinese paper cutting. Tap the parts to find out how it was made.</span></li><li>Collage spotter <span class="key">&middot; Which one is it? Tap the answer.</span></li><li>My journal <span class="key">&middot; Look back at what you made today. Which did you make first? What would you change next time?</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Make it at home <span class="key">&middot; A screen cannot be paint. Make one of these for real, with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where art like this is made out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Where this art comes from</h3><ul><li>The paper cut is drawn in the manner of Chinese paper cutting (jianzhi), where red paper is folded and cut so that both halves come out the same. Similar cut-paper work is made in many places, such as the papel picado banners of Mexico. The design on the page is our own, not a copy of a real paper cut.</li></ul>
+        <h3>Make it for real</h3><ul><li><b>Pick by colour.</b> Put out five scraps: sandpaper, cotton wool, foil, bubble wrap, felt. Say what you want to make (a rough trunk, a fluffy cloud) and ask which scrap would work, and why.</li><li><b>Tear it or cut it?.</b> Sort the pebbles, the buttons or the leaves: by colour, then by rough and smooth, then by big and small. Say why each one goes where it goes.</li><li><b>Show how it feels.</b> Look at something the child made. Ask: if you made it again, what one thing would you change? Then, if you can, change it together.</li><li><b>A paper cut, folded and cut.</b> Find a picture of art from another country or from long ago (a library book or a museum website). Find three things in it and say what the artist did.</li><li><b>My journal.</b> Keep a scrapbook. Stick in what was made this week, and ask: what did you make first? What would you do differently next time?</li><li><b>Colour collage.</b> You need: Old magazines, glue, safe scissors, paper, and a grown-up. Choose something to make: a fruit bowl, a garden or the sea. Tear or cut pieces from magazines in the right colours. Overlap them and stick them down, a little glue on each piece. Look for: Did you find every colour you needed without painting?</li><li><b>Folded paper cut.</b> You need: Thin paper, safe scissors and a grown-up. Fold the paper in half. Cut small shapes out along the fold and the edges: triangles, half-circles. Open it out. Look for: Are both halves the same? Why?</li><li><b>Texture collage.</b> You need: Scraps: fabric, foil, crumpled paper, wool, and a glue stick. Draw a simple picture: an animal, a tree or a house. Stick on scraps to show how each part would feel. Rough bark, fluffy fur, a shiny window. Look for: Can someone guess what each part feels like just by looking?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Collage materials</b> <span class="key">Which one is thin enough to see through? &rarr; <b>tissue paper</b></span></li><li><b>Pick by colour</b><ul><li>a red apple (needs red) <span class="key">&rarr; <b>Red magazine paper</b></span></li><li>a green leaf (needs green) <span class="key">&rarr; <b>Green tissue paper</b></span></li><li>the blue sea (needs blue) <span class="key">&rarr; <b>Blue fabric</b></span></li><li>a tree trunk (needs brown) <span class="key">&rarr; <b>A brown paper bag</b></span></li><li>the sun (needs yellow) <span class="key">&rarr; <b>Yellow card</b></span></li></ul></li><li><b>Tear it or cut it?</b> <span class="key"><b>Tear it</b>: a fluffy cloud, a hill with a soft, bumpy top, foamy waves; <b>Cut it</b>: a straight house wall, a pointed roof, a star with sharp points</span></li><li><b>Show how it feels</b><ul><li>Zara's tree: The trunk looks flat and smooth, not like bark. <span class="key">&rarr; <b>Stick on torn, crumpled brown paper</b></span></li><li>Kofi's sea: The sea is one flat block of blue. <span class="key">&rarr; <b>Overlap torn strips of blue and green tissue</b></span></li><li>Mei's night sky: The sky is dark, but you cannot see any stars. <span class="key">&rarr; <b>Stick on stars cut from shiny foil</b></span></li></ul></li><li><b>A paper cut, folded and cut</b> <span class="key">find: The paper was folded in half along this line before anything was cut.; Shapes were cut out of the folded paper. Where the paper was cut away, you see the background.; This half is exactly the same as the first half, the other way round, because both were cut at once.. Why are both halves exactly the same? &rarr; <b>the paper was folded before it was cut</b></span></li><li><b>Collage spotter</b><ol><li>Tearing paper makes an edge that is… <span class="key">&rarr; <b>soft and furry</b></span></li><li>A collage is… <span class="key">&rarr; <b>a picture made from pieces stuck down</b></span></li><li>Which piece would you use for the sun? <span class="key">&rarr; <b>the yellow card</b></span></li><li>A star with sharp points: tear it or cut it? <span class="key">&rarr; <b>cut it</b></span></li></ol></li><li><b>My journal</b> <span class="key">reads the page's own record of what the child made - the order they made them in IS the key; what they would change has none. If the making steps were skipped: chose Red magazine paper for a red apple; chose Green tissue paper for a green leaf; chose Blue fabric for the blue sea; chose A brown paper bag for a tree trunk; chose Yellow card for the sun; fixed Zara's tree: stick on torn, crumpled brown paper; fixed Kofi's sea: overlap torn strips of blue and green tissue; fixed Mei's night sky: stick on stars cut from shiny foil</span></li><li><b>Show what you know</b><ol><li>Cutting paper makes an edge that is… <span class="key">&rarr; <b>sharp and clean</b></span></li><li>Why tear the paper for a cloud? <span class="key">&rarr; <b>because a cloud has a soft, fuzzy edge</b></span></li><li>In your collage, how did you get each colour? <span class="key">&rarr; <b>by choosing a piece that is already that colour</b></span></li><li>Why did Zara stick crumpled paper on her tree? <span class="key">&rarr; <b>to make the trunk look rough like bark</b></span></li><li>Which material is shiny? <span class="key">&rarr; <b>foil</b></span></li><li>Why does the paper cut have two matching halves? <span class="key">&rarr; <b>because it was folded before it was cut</b></span></li><li>Putting one piece on top of another is called… <span class="key">&rarr; <b>overlapping</b></span></li><li>Which piece would you use for a green leaf? <span class="key">&rarr; <b>the green tissue paper</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 7: Look, Snap and Move<small>16 steps &middot; about 40 minutes, in two sittings &middot; 7 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage 2)</h3><ul><li><code>2M.01</code> Learn to use a range of media, materials, tools, technologies and processes with increasing skill, independence and confidence.</li><li><code>2E.02</code> Explore media, materials, tools, technologies and processes.</li><li><code>2M.02</code> Select appropriate media, materials, tools, technologies and processes for a purpose.</li><li><code>2E.03</code> Gather and record experiences and visual information.</li><li><code>2TWA.01</code> Generate, develop, create, innovate and communicate ideas by using and connecting the artistic processes of experiencing, making and reflecting.</li><li><code>2R.01</code> Celebrate artistic experiences and learning.</li><li><code>2TWA.03</code> Review and refine own work.</li></ul>
+        <h3>Two sittings</h3><p>At the end of <b>My journal</b> (step 11) the page offers to stop for today: about 30 minutes before it and 10 after. The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Art words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Art tools that are not brushes <span class="key">&middot; Artists use cameras, tablets and even their own bodies. Tap each one to hear what it does.</span></li><li>Which tool for the job? <span class="key">&middot; Each job needs a different tool. Which one would you use? Tap it.</span></li><li>Take a good photo, in order <span class="key">&middot; Taking a good photo has steps. Tap them in the order you would do them.</span></li><li>Close-up or far away? <span class="key">&middot; Each photo was taken close up or far away. Which is it? Tap the bin.</span></li><li>Draw how you moved <span class="key">&middot; Stand up and move, then draw the line your body made. The card tells you which tool to use.</span></li><li>A flip book <span class="key">&middot; Press Next and watch how a flip book makes a picture move.</span></li><li>Tool spotter <span class="key">&middot; Which one is it? Tap the answer.</span></li><li>My journal <span class="key">&middot; Look back at what you made today. Which did you make first? What would you change next time?</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Make it at home <span class="key">&middot; A screen cannot be paint. Make one of these for real, with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where art like this is made out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Make it for real</h3><ul><li><b>Which tool for the job?.</b> Put out five scraps: sandpaper, cotton wool, foil, bubble wrap, felt. Say what you want to make (a rough trunk, a fluffy cloud) and ask which scrap would work, and why.</li><li><b>Close-up or far away?.</b> Sort the pebbles, the buttons or the leaves: by colour, then by rough and smooth, then by big and small. Say why each one goes where it goes.</li><li><b>Draw how you moved.</b> Give the child a pencil, a brush, a sponge and a piece of chalk. Ask for a straight line, a wavy line, a zigzag and lots of dots with each one. Which tool made the thickest mark?</li><li><b>My journal.</b> Keep a scrapbook. Stick in what was made this week, and ask: what did you make first? What would you do differently next time?</li><li><b>Close-up and far away.</b> You need: A phone or tablet with a camera, and a grown-up. Take one close-up: a leaf, a toy or a pattern, filling the whole screen. Take one far-away photo: a whole tree, a room or a street. Hold still each time. Look for: Which photo shows more detail? Which shows more things?</li><li><b>Shadow shapes.</b> You need: A torch, a wall, and a grown-up, in a dim room. Shine the torch at the wall, never into anyone's eyes. Put your hand between the torch and the wall. Make a rabbit, a bird or a dog. Look for: What happens to the shadow when your hand moves closer to the torch?</li><li><b>Flip book.</b> You need: A small notebook or a pad of sticky notes, and a pencil. On the last page, draw a ball at the top. On the page before, draw it a little lower. Keep going, a little lower each page, until it touches the bottom. Then draw it a little higher each page after that. Flip the pages fast from the back. Look for: Does your ball bounce?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Art tools that are not brushes</b> <span class="key">What should you always do before you take a photo of a person? &rarr; <b>ask them first</b></span></li><li><b>Which tool for the job?</b><ul><li>keeping your sand sculpture before the sea washes it away (needs keeps) <span class="key">&rarr; <b>A camera</b></span></li><li>seeing the tiny lines on a feather (needs close-up) <span class="key">&rarr; <b>A magnifying glass</b></span></li><li>a drawing you can change again and again (needs undo) <span class="key">&rarr; <b>A drawing app</b></span></li><li>the sound of the rain, for your rain picture (needs sound) <span class="key">&rarr; <b>A sound recorder</b></span></li><li>a shadow puppet show on the wall (needs shadow) <span class="key">&rarr; <b>A torch</b></span></li></ul></li><li><b>Take a good photo, in order</b> <span class="key">choose what to take &rarr; move closer or step back &rarr; hold very still &rarr; press the button &rarr; look at the photo</span></li><li><b>Close-up or far away?</b> <span class="key"><b>Close-up</b>: one ladybird's spots, filling the photo, one petal, filling the photo, the pattern on one butterfly wing; <b>Far away</b>: a whole mountain, a whole beach with tiny people, a whole city at night</span></li><li><b>Draw how you moved</b> <span class="key">the page judges the stroke itself: a hopping zigzag with the crayon; a spinning circle with the brush; a swaying wave with the chalk; stamping dots with the finger; a tall stretch with the pencil. Then a free drawing: no key</span></li><li><b>Tool spotter</b><ol><li>Which tool keeps a picture of your sand sculpture? <span class="key">&rarr; <b>a camera</b></span></li><li>A photo of one petal filling the whole picture is… <span class="key">&rarr; <b>a close-up</b></span></li><li>Spinning round makes a line that is… <span class="key">&rarr; <b>round</b></span></li><li>What do you do just before you press the camera button? <span class="key">&rarr; <b>hold very still</b></span></li></ol></li><li><b>My journal</b> <span class="key">reads the page's own record of what the child made - the order they made them in IS the key; what they would change has none. If the making steps were skipped: chose A camera for keeping your sand sculpture before the sea washes it away; chose A magnifying glass for seeing the tiny lines on a feather; chose A drawing app for a drawing you can change again and again; chose A sound recorder for the sound of the rain, for your rain picture; chose A torch for a shadow puppet show on the wall; made a hopping zigzag with the crayon; made a spinning circle with the brush; made a swaying wave with the chalk; made stamping dots with the finger; made a tall stretch with the pencil</span></li><li><b>Show what you know</b><ol><li>What should you do before you take a photo of a person? <span class="key">&rarr; <b>ask them first</b></span></li><li>Which tool shows tiny details? <span class="key">&rarr; <b>a magnifying glass</b></span></li><li>Why use a drawing app for a drawing you want to change? <span class="key">&rarr; <b>because you can undo and try again</b></span></li><li>Why might a photo come out blurry? <span class="key">&rarr; <b>because the camera moved when you pressed</b></span></li><li>A photo of a whole mountain was taken… <span class="key">&rarr; <b>far away</b></span></li><li>Hopping forward like a kangaroo makes a line that is… <span class="key">&rarr; <b>zigzag</b></span></li><li>Lots of pictures, each a tiny bit different, shown fast, is… <span class="key">&rarr; <b>animation</b></span></li><li>Which tool would catch the sound of the sea? <span class="key">&rarr; <b>a sound recorder</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 8: Our Art Corner<small>15 steps &middot; about 40 minutes, in two sittings &middot; 5 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage 2)</h3><ul><li><code>2E.01</code> Encounter, sense, experiment with and respond to a wide range of sources, including a range of art from different times and cultures.</li><li><code>2R.01</code> Celebrate artistic experiences and learning.</li><li><code>2E.03</code> Gather and record experiences and visual information.</li><li><code>2R.02</code> Analyse, critique and connect own and others' work as part of the artistic process.</li><li><code>2TWA.03</code> Review and refine own work.</li></ul>
+        <h3>Two sittings</h3><p>At the end of <b>My journal, the whole year</b> (step 9) the page offers to stop for today: about 25 minutes before it and 15 after. The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Art words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>What goes in an art corner? <span class="key">&middot; An art corner is a place to look at art and get ideas. Tap each thing to hear why it belongs.</span></li><li>Group the art corner <span class="key">&middot; One way to hang an art corner is by how each thing was made. Printed, woven, clay or collage? Tap the bin.</span></li><li>Two artists, one idea <span class="key">&middot; A cloth printer and a tile maker both made patterns. Is each thing in BOTH works, or only in one?</span></li><li>Kind words for every artist <span class="key">&middot; These works are in your art corner. Say something kind and true about what is really in each one.</span></li><li>Get the corner ready <span class="key">&middot; Before the art corner opens, three things need fixing. Work out why, then tap the change that fixes it.</span></li><li>My journal, the whole year <span class="key">&middot; This is everything you made in every lesson this year. Which came first? What would you change now?</span></li><li>Art corner quiz <span class="key">&middot; Which one is it? Tap the answer.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Make it at home <span class="key">&middot; A screen cannot be paint. Make one of these for real, with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know, about the whole year. Tap the answer.</span></li><li>Our world <span class="key">&middot; Where art like this is made out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Where this art comes from</h3><ul><li>The stamped cloth is drawn in the manner of adinkra cloth from Ghana, printed by Asante makers with stamps carved from pieces of calabash (a hard gourd) and a dark dye made from tree bark, in squares ruled with a comb. Each real adinkra symbol has a name and a saying that goes with it. The page's stamps are simple shapes of our own and carry no meaning here: simple shapes can look like real symbols (the ringed circle is close to one), so the page uses them only to show how printing repeats a shape, not to stand for a meaning that belongs to someone else.</li><li>The tiled wall is drawn in the manner of the blue-and-white glazed tiles of Portugal (azulejos) and of İznik in Türkiye. Repeating star patterns are also at the heart of tile work across North Africa, the Middle East and Central Asia, such as the zellige of Morocco.</li><li>Weaving on a loom is done all over the world: kente in Ghana is woven on narrow strip looms, and in Guatemala and Peru weavers use a backstrap loom tied round the waist. The loom on the page is a simple card loom of the kind a child can make, with its threads named the way weavers name them: the warp is stretched on the loom, and the weft goes over and under it.</li><li>The clay head is drawn in the manner of the Nok terracotta sculptures of central Nigeria, made more than 2,000 years ago and among the oldest clay figures known in Africa south of the Sahara. Real Nok heads have carefully arranged hair and eyes shaped like half-moons with holes for the pupils. The picture is our own drawing in that manner, not a copy of a real head.</li><li>The paper cut is drawn in the manner of Chinese paper cutting (jianzhi), where red paper is folded and cut so that both halves come out the same. Similar cut-paper work is made in many places, such as the papel picado banners of Mexico. The design on the page is our own, not a copy of a real paper cut.</li></ul>
+        <h3>Make it for real</h3><ul><li><b>Group the art corner.</b> Sort the pebbles, the buttons or the leaves: by colour, then by rough and smooth, then by big and small. Say why each one goes where it goes.</li><li><b>Two artists, one idea.</b> Put two pictures side by side (a book page and a photo will do). Ask: what do BOTH have? What does only one have?</li><li><b>Kind words for every artist.</b> Look at a drawing the child did not make. Ask them to say one kind thing about it that is really there in the picture.</li><li><b>Get the corner ready.</b> Look at something the child made. Ask: if you made it again, what one thing would you change? Then, if you can, change it together.</li><li><b>My journal, the whole year.</b> Keep a scrapbook. Stick in what was made this week, and ask: what did you make first? What would you do differently next time?</li><li><b>A home art corner.</b> You need: A shelf or a table, your art from this year, and a grown-up. Choose four things you made this year. Put them on the shelf, grouped by how you made them. Add one thing from nature and one picture of art from far away, from a book or a card. Look for: Which work do you look at the most? Why?</li><li><b>Labels.</b> You need: Small cards, a dark pen, and a grown-up to help with the writing. For each work, write what it is called, what you made it with, and your name. Put the label next to the work. Look for: Can a visitor tell how each work was made, just from its label?</li><li><b>Art corner tour.</b> You need: Your home art corner and a visitor. Show a visitor round your art corner. For each work, say one thing you did and one thing you would change. Look for: What did your visitor like best?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>What goes in an art corner?</b> <span class="key">What is an art corner for? &rarr; <b>looking at art and getting ideas</b></span></li><li><b>Group the art corner</b> <span class="key"><b>Printed</b>: a leaf print, a border of potato stars; <b>Woven</b>: a paper weave, a small weaving from a card loom; <b>Clay</b>: a clay dog, a pinch pot; <b>Collage</b>: a tissue-paper sea, a fruit bowl from magazine pages</span></li><li><b>Two artists, one idea</b> <span class="key">both have: <b>a repeating pattern, shapes in squares</b>; only one has: <b>stars, circles, blue, dark brown</b>. Which they like more: no key</span></li><li><b>Kind words for every artist</b><ul><li>A printed cloth <span class="key">&rarr; <b>Your circle stamps are so even.</b></span></li><li>A weaving on a loom <span class="key">&rarr; <b>I love your red, yellow and blue stripes.</b></span></li><li>A clay head <span class="key">&rarr; <b>The rows of hair you pressed are so neat.</b></span></li><li>A paper cut <span class="key">&rarr; <b>Your two halves match perfectly.</b></span></li></ul></li><li><b>Get the corner ready</b><ul><li>The clay dog on the shelf: It sits right on the edge, and it could fall off. <span class="key">&rarr; <b>Move it to the middle, on a mat</b></span></li><li>The tissue-paper sea: The collage is curling up at the corners. <span class="key">&rarr; <b>Press it flat under heavy books until the glue is dry</b></span></li><li>The potato-star border: One star is a smudgy blob. <span class="key">&rarr; <b>Print a new star on a clean strip and stick it over the smudge</b></span></li></ul></li><li><b>My journal, the whole year</b> <span class="key">reads the page's own record of what the child made - the order they made them in IS the key; what they would change has none. If the making steps were skipped: chose A leaf for long grass; chose A sponge for the spots on a ladybird; chose A potato star for a sky full of stars; chose A bottle top for a row of balloons; made a pattern that repeats; mixed purple and white and made light purple; mixed green and black and made dark green; mixed yellow and white and made light yellow; mixed yellow and black and made dark yellow; mixed yellow and blue and made green; put 5 colours in order from light to dark; chose Red, orange and yellow for a hot afternoon in the desert; chose Blue, green and purple for a quiet swim in a cool lake; chose Pink and light blue for a baby's soft blanket; chose Dark blue and dark green for a forest at night; chose Wool for a soft, warm scarf; chose Ribbon for a sparkly mat for a party; chose Thin sticks for a strong frame to weave on; chose Strips of plastic bag for a mat to sit on in the rain; fixed Zara's paper weave: push the strips close together; fixed Kofi's wool weave: weave it over and under, not just lying on top; fixed Mei's ribbon mat: glue down the ends; fixed Omar's clay dog: score and slip the leg back on; fixed Priya's box tower: put the biggest box at the bottom, with a stone inside it; fixed Tomas's clay bird: make the neck shorter and thicker; chose Cardboard boxes for a tall, light tower; chose Pipe cleaners for a light, curly snake to hang from a string; chose Foil for a shiny robot; chose Clay for a heavy bottom so it will not tip; put 5 colours in order from light to dark; made the straight vein of a leaf with the pencil; made a leaf's jagged edge with the crayon; made a round pebble with the brush; made the dots on a ladybird with the finger; made one thin line of a feather with the pencil; chose Red magazine paper for a red apple; chose Green tissue paper for a green leaf; chose Blue fabric for the blue sea; chose A brown paper bag for a tree trunk; chose Yellow card for the sun; fixed Zara's tree: stick on torn, crumpled brown paper; fixed Kofi's sea: overlap torn strips of blue and green tissue; fixed Mei's night sky: stick on stars cut from shiny foil; chose A camera for keeping your sand sculpture before the sea washes it away; chose A magnifying glass for seeing the tiny lines on a feather; chose A drawing app for a drawing you can change again and again; chose A sound recorder for the sound of the rain, for your rain picture; chose A torch for a shadow puppet show on the wall; made a hopping zigzag with the crayon; made a spinning circle with the brush; made a swaying wave with the chalk; made stamping dots with the finger; made a tall stretch with the pencil; fixed The clay dog on the shelf: move it to the middle, on a mat; fixed The tissue-paper sea: press it flat under heavy books until the glue is dry; fixed The potato-star border: print a new star on a clean strip and stick it over the smudge</span></li><li><b>Art corner quiz</b><ol><li>A leaf print goes with… <span class="key">&rarr; <b>the printed things</b></span></li><li>What do the printed cloth and the tiled wall both have? <span class="key">&rarr; <b>a repeating pattern</b></span></li><li>A kind comment should name… <span class="key">&rarr; <b>something really in the work</b></span></li><li>A collage is curling up. What fixes it? <span class="key">&rarr; <b>pressing it flat while it dries</b></span></li></ol></li><li><b>Show what you know</b><ol><li>What is a print? <span class="key">&rarr; <b>a mark made by pressing</b></span></li><li>Blue and white make… <span class="key">&rarr; <b>light blue</b></span></li><li>In weaving, the thread that goes across is the… <span class="key">&rarr; <b>weft</b></span></li><li>Why do potters score and slip clay? <span class="key">&rarr; <b>so the pieces stay joined when they dry</b></span></li><li>Why do we group art in an art corner? <span class="key">&rarr; <b>so people can see how the works connect</b></span></li><li>Which line shows hopping forward? <span class="key">&rarr; <b>a zigzag</b></span></li><li>How did the paper cutter make two matching halves? <span class="key">&rarr; <b>folded the paper before cutting</b></span></li><li>What does a label tell a visitor? <span class="key">&rarr; <b>what the work is, what it is made with and who made it</b></span></li></ol></li></ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="hubfoot">Built to Cambridge Primary Art &amp; Design 0067, Stage 2 &mdash; all 10 learning objectives across the four strands. Cambridge uses the same ten objectives from Stage 1 to Stage 6; what a Stage 2 learner is expected to show is the framework's own progression text. The stickers are earned, not given.</p>
+</div>
+
+<script>
+/* ---- the header bar: how far through the course, and the way out ----
+   Everything here is answered by the launch URL and by the progress document
+   the LESSONS write, plus the starting check's result on this device. This
+   page stores nothing of its own. */
+(function () {
+  var COURSE = "ehel-art-g02";
+  var STEPS  = {"u01": 16, "u02": 16, "u03": 16, "u04": 16, "u05": 15, "u06": 16, "u07": 16, "u08": 15};     /* lesson id -> slides-1, the lesson's own denominator */
+  var FILES  = {"u01": "printing-patterns.html", "u02": "colours-and-feelings.html", "u03": "weave-it.html", "u04": "clay-and-sculpture.html", "u05": "natures-art.html", "u06": "cut-tear-stick.html", "u07": "look-snap-move.html", "u08": "our-art-corner.html"};     /* lesson id -> the page that teaches it */
+  var q = new URLSearchParams(location.search);
+  var doc = null;
+  try {
+    doc = JSON.parse(localStorage.getItem(
+      "ehel-progress:" + COURSE + ":" + (q.get("studentid") || "local")) || "null");
+  } catch (e) { doc = null; }
+  var unitOf = function (u) { return (doc && doc.units && doc.units[u]) || null; };
+  var done = 0, total = 0;
+  Object.keys(STEPS).forEach(function (u) {
+    var s = unitOf(u);
+    total += STEPS[u];
+    done += Math.min((s && s.sectionsDone && s.sectionsDone.length) || 0, STEPS[u]);
+  });
+  var pct = total ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  var pctEl = document.getElementById("ehPct");
+  if (pctEl) pctEl.textContent = pct + "%";
+  var fill = document.getElementById("ehFill");
+  if (fill) fill.style.width = pct + "%";
+  var prog = document.getElementById("ehProg");
+  if (prog) prog.title = done + " of " + total + " steps done across the course";
+
+  /* the starting check's last result, which its page keeps on this device */
+  var LABELS = {"ready": "Ready for Stage 2", "readyWithReview": "Ready, with a quick look back", "notReady": "Let's look back at Grade 1 first"};
+  var rc = null;
+  try { rc = JSON.parse(localStorage.getItem("ehel-art-starting-check:" + COURSE + ":" + (q.get("studentid") || "local")) || "null"); } catch (e) { rc = null; }
+  var rcMeta = document.getElementById("rcMeta");
+  if (rcMeta && rc && LABELS[rc.band]) rcMeta.textContent = "Done: " + LABELS[rc.band];
+
+  /* the picker jumps to a lesson, carrying the launch parameters */
+  var picker = document.getElementById("ehPicker");
+  if (picker) picker.addEventListener("change", function () {
+    if (!picker.value) return;
+    var p = new URLSearchParams(location.search);
+    p.set("from", "art2");
+    location.href = picker.value + "?" + p.toString();
+  });
+
+  /* THE WAY OUT, drawn only when the launch gave us one. */
+  var exit = q.get("exitUrl");
+  var back = document.getElementById("ehBack");
+  if (back && exit) { back.setAttribute("href", exit); back.hidden = false; }
+})();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>

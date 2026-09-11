@@ -1,0 +1,56 @@
+{
+  "_comment": "The Grade 2 Art & Design standalone lesson build, described for ../../mathematics/lesson-app-tools and built by ../lesson-kit. Order here IS the lesson number. Eight lessons against Cambridge Primary Art & Design 0067 Stage 2 - the same ten objectives as Stage 1 and the same Stages 1-2 progression text, so Grade 2 steps up by CONTENT (see README.md :: The Stage 1 / Stage 2 line): printing, weaving, clay sculpture, nature, collage by colour, cameras and movement, and connecting a child's own work with an artist's. Progress is written under u01..u08 beneath ehel-art-g02, whose catalogue entry is generated FROM this lesson list. objectiveFloors are recorded at the measured value after each build and may rise, not fall.",
+  "grade": 2,
+  "gradeLabel": "Grade 2",
+  "stage": 2,
+  "subject": "art-and-design",
+  "subjectLabel": "Art & Design",
+  "courseKey": "ehel-art-g02",
+  "progressUnitPrefix": "u",
+  "fromParam": "art2",
+  "backLabel": "Grade 2 Art & Design",
+  "hub": "g2-index.html",
+  "_startingCheck": "The readiness check before Lesson 1, over Grade 1's content: built by ../lesson-kit/build-check.py from the placement file, linked from the hub, uploaded by deploy.mjs because it is in extraPages. Its review lessons are Grade 1's, linked in ../grade-1-v2/. It is not a lesson and reports nothing to the gradebook.",
+  "startingCheck": { "file": "starting-check.html", "data": "../data/placement/grade-2.json" },
+  "extraPages": ["starting-check.html"],
+  "remote": "Ehel Primary/app/art-and-design/grade-2-v2",
+  "narrationFloor": 99,
+  "objectiveFloors": {
+    "1": 9,
+    "2": 9,
+    "3": 9,
+    "4": 7,
+    "5": 6,
+    "6": 10,
+    "7": 7,
+    "8": 5
+  },
+  "hubStrands": [
+    [
+      "Experiencing",
+      "Printing with leaves, sponges and stamps; weaving over and under; walking outside and collecting things from nature; looking closely at printed cloth, a loom, a clay head from long ago and a paper cut; and recording what we find by drawing, sorting and moving."
+    ],
+    [
+      "Making",
+      "Printing patterns that repeat; mixing tints and shades; weaving with wool, ribbon and paper; joining clay so it stays joined; tearing, cutting and sticking a collage; and choosing the right material, colour or tool for the job, a camera included."
+    ],
+    [
+      "Reflecting",
+      "Grouping pictures by the feeling they give; saying what is the same in our work and an artist's; celebrating our friends' work with kind and true words; and looking back through a year of making."
+    ],
+    [
+      "Thinking and Working Artistically",
+      "Having an idea and adding the thing that shows it; asking why two things would not join, and fixing it; trying new tools; and getting our work ready to show, together."
+    ]
+  ],
+  "lessons": [
+    { "file": "printing-patterns.html", "title": "Printing Patterns" },
+    { "file": "colours-and-feelings.html", "title": "Colours and Feelings" },
+    { "file": "weave-it.html", "title": "Weave It" },
+    { "file": "clay-and-sculpture.html", "title": "Clay and Sculpture" },
+    { "file": "natures-art.html", "title": "Nature's Art" },
+    { "file": "cut-tear-stick.html", "title": "Cut, Tear and Stick" },
+    { "file": "look-snap-move.html", "title": "Look, Snap and Move" },
+    { "file": "our-art-corner.html", "title": "Our Art Corner" }
+  ]
+}

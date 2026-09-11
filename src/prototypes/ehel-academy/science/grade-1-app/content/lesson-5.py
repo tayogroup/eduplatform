@@ -6,7 +6,7 @@ objects; 1Pf.02 pushes and pulls as forces; 1Pf.03 some objects float and
 some sink; with 1TWSp.01, 1TWSp.02, 1TWSc.01, 1TWSc.03, 1TWSc.04, 1TWSc.05,
 1TWSa.01 and 1SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "pushes-pulls-and-floating",
@@ -23,7 +23,7 @@ LESSON = {
                  ["Tap every picture and say the moving word out loud."]),
              {"items": [
                  {"pic": "⚽", "label": "ball", "sub": "rolls", "say": "A ball rolls along the ground, turning over and over."},
-                 {"pic": "\U0001F3A0", "label": "swing", "sub": "swings", "say": "A swing swings backwards and forwards."},
+                 {"pic": icon("swing"), "label": "swing", "sub": "swings", "say": "A swing swings backwards and forwards."},
                  {"pic": "\U0001F300", "label": "spinning top", "sub": "spins", "say": "A spinning top spins round and round on one point."},
                  {"pic": "\U0001F40C", "label": "snail", "sub": "slides", "say": "A snail slides slowly along on its foot."},
                  {"pic": "\U0001FA81", "label": "kite", "sub": "flies", "say": "A kite flies up when the wind pushes it."},
@@ -50,7 +50,7 @@ LESSON = {
                   {"pic": "\U0001FAA2", "label": "tug of war", "bin": "pull", "why": "You pull the rope towards you."},
                   {"pic": "\U0001F6D2", "label": "pushing a trolley", "bin": "push", "why": "You push the trolley away, in front of you."},
                   {"pic": "\U0001F415", "label": "pulling a dog back on its lead", "bin": "pull", "why": "The lead pulls the dog back towards you."},
-                  {"pic": "\U0001F3A0", "label": "pushing a swing", "bin": "push", "why": "You push the swing away and it swings back."},
+                  {"pic": icon("swing"), "label": "pushing a swing", "bin": "push", "why": "You push the swing away and it swings back."},
                   {"pic": "\U0001F6AA", "label": "pulling a door open", "bin": "pull", "why": "You pull the door towards you to open it."},
               ]},
              "Pushes and pulls are forces. They make things move."),
@@ -232,7 +232,7 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("Float or sink in the sink", "A bowl of water and eight things from the kitchen: an apple, a stone, a coin, a cork, a leaf, a spoon, a lid, a grape",
+    home("Float or sink in the sink", "A bowl of water and eight small things: an apple, a stone, a coin, a cork, a leaf, a spoon, a lid, a grape",
          ["Do this with a grown-up. Before each one goes in, say: float or sink.",
           "Drop it in gently and watch.",
           "Put the floaters in one pile and the sinkers in another."],

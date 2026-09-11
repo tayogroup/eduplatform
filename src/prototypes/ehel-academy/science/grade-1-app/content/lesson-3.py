@@ -96,11 +96,11 @@ LESSON = {
              explain(
                  ["When you cannot see, your sense of touch can still tell you a lot."],
                  ["Your fingers feel whether a thing is hard or soft, rough or smooth, warm or cold, round or pointy.",
-                  "Soft and furry: that is a woolly hat.", "Hard, cold and round: that is a marble."],
+                  "Soft and fluffy: that is a woolly hat.", "Hard, cold and round: that is a marble."],
                  ["Children guess before feeling all the clues.", "Use every clue the fingers give."],
                  ["Read what your fingers feel, then tap what is in the bag."]),
              {"label": "Bag", "items": [
-                 q("It feels soft and furry.", "\U0001F45C", "a woolly hat", ["a stone", "a spoon", "a cup"], "Soft and furry: a woolly hat. Your skin felt that."),
+                 q("It feels soft and fluffy.", "\U0001F45C", "a woolly hat", ["a stone", "a spoon", "a cup"], "Soft and fluffy: a woolly hat. Your skin felt that."),
                  q("It feels hard, cold, small and round.", "\U0001F45C", "a marble", ["a sponge", "a banana", "a feather"], "Hard, cold and round: a marble."),
                  q("It feels rough and bumpy, like sandpaper.", "\U0001F45C", "a rock", ["a silk scarf", "an egg", "a balloon"], "Rough and bumpy: a rock. Smooth things have no bumps."),
                  q("It feels light, soft and tickly.", "\U0001F45C", "a feather", ["a brick", "a key", "a bottle"], "Light and tickly: a feather."),
@@ -159,30 +159,30 @@ LESSON = {
              {"ask": "How tall is %s in hand spans? Lay down hands from feet to head.",
               "unit": {"name": "hand spans", "singular": "hand span", "pic": "\U0001F590️", "button": "Lay down a hand"},
               "objects": [
-                  {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "units": 5},
-                  {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "units": 6},
-                  {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "units": 4},
+                  {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "units": 9},
+                  {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "units": 10},
+                  {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "units": 8},
               ],
-              "compare": {"ask": "Amal is 5 hands, Sami is 6 hands, Nora is 4 hands. Who is tallest?",
+              "compare": {"ask": "Amal is 9 hands, Sami is 10 hands, Nora is 8 hands. Who is tallest?",
                           "opts": [opt("Sami", True), opt("Amal", False), opt("Nora", False)],
-                          "why": "6 hands is the most, so Sami is the tallest."}},
+                          "why": "10 hands is the most, so Sami is the tallest."}},
              "You measured your friends in hand spans."),
 
         step("record", "Write down the heights", "\U0001F4DD", "Height table", ["1TWSc.05"],
              "Put each friend's height into the table. How tall was <b>%s</b>?",
              explain(
                  ["A measurement is only useful if you write it down.", "A table keeps every friend's height in one place."],
-                 ["Amal was five hand spans.", "Sami was six.", "Nora was four.", "Tap each row and choose the right number."],
+                 ["Amal was nine hand spans.", "Sami was ten.", "Nora was eight.", "Tap each row and choose the right number."],
                  ["Children write the number they remember best for everybody.", "Each row needs its own number."],
                  ["Fill in all three rows."]),
              {"ask": "How tall was %s?",
               "columns": ["Friend", "Height in hand spans"],
               "rows": [
-                  {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "answer": "5", "why": "Amal measured 5 hand spans."},
-                  {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "answer": "6", "why": "Sami measured 6 hand spans."},
-                  {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "answer": "4", "why": "Nora measured 4 hand spans."},
+                  {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "answer": "9", "why": "Amal measured 9 hand spans."},
+                  {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "answer": "10", "why": "Sami measured 10 hand spans."},
+                  {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "answer": "8", "why": "Nora measured 8 hand spans."},
               ],
-              "choices": [{"id": "4", "t": "4 hands", "pic": "4️⃣"}, {"id": "5", "t": "5 hands", "pic": "5️⃣"}, {"id": "6", "t": "6 hands", "pic": "6️⃣"}]},
+              "choices": [{"id": "8", "t": "8 hands", "pic": "\u0038\uFE0F\u20E3"}, {"id": "9", "t": "9 hands", "pic": "\u0039\uFE0F\u20E3"}, {"id": "10", "t": "10 hands", "pic": "\U0001F51F"}]},
              "Three heights, written down in a table."),
 
         step("context", "How does that work?", "\U0001F453", "How it works", ["1SIC.02", "1Bs.02"],
@@ -234,7 +234,7 @@ LESSON = {
                  q("We taste an orange with our...", "\U0001F34A", "tongue", ["ears", "eyes", "feet"], "The tongue tastes."),
                  q("Which is at the end of your leg?", "\U0001F9B6", "your foot", ["your hand", "your head", "your ear"], "Feet are at the end of the legs."),
                  q("What does every person have?", "\U0001F465", "a head and a body", ["curly hair", "glasses", "a missing tooth"], "Every person has a head and a body. Curly hair, glasses and a missing tooth are things only some people have."),
-                 q("Sami is 6 hand spans tall and Nora is 4. Who is shorter?", "\U0001F590️", "Nora", ["Sami", "they are the same"], "4 is less than 6, so Nora is shorter."),
+                 q("Sami is 10 hand spans tall and Nora is 8. Who is shorter?", "\U0001F590️", "Nora", ["Sami", "they are the same"], "8 is less than 10, so Nora is shorter."),
                  q("Why would it be hard to find the marble in the feely bag if you wore thick gloves?", "\U0001F9E4", "The gloves stop your skin feeling the shape", ["The gloves make your ears quiet", "The gloves make the marble melt"], "You feel with your skin. Thick gloves cover the skin on your hands, so you cannot feel the shape as well."),
              ]},
              "That is the whole lesson finished. You know your body and your senses."),
@@ -283,7 +283,7 @@ LESSON["words"] = [
     word("touch", "\u270B\U0001F3FE", "The sense that uses your skin, to feel things.",
          ["Touch tells me the ice is cold.", "In the feely bag, only touch could help."]),
     word("hand span", "\u270B", "The distance from your thumb to your little finger, stretched wide.",
-         ["Nora is four hand spans tall.", "We measured the table in hand spans."]),
+         ["Nora is eight hand spans tall.", "We measured the table in hand spans."]),
 ]
 
 LESSON["home"] = [

@@ -6,7 +6,7 @@ electricity to work; 1Pe.02 what happens when magnets approach and touch
 different materials; with 1TWSp.02, 1TWSc.01, 1TWSc.04, 1TWSc.05, 1TWSa.01,
 1SIC.01 and 1SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "electricity-and-magnets",
@@ -19,7 +19,7 @@ LESSON = {
                  ["Some things only work when electricity flows into them.", "Others work with no electricity at all."],
                  ["A lamp needs electricity. Switch it off and the light goes out.", "A television needs electricity.",
                   "A book needs none. You can read it anywhere.", "A wooden chair needs none."],
-                 ["Children think anything with a switch or a button is electric.", "A tap has a handle and needs no electricity."],
+                 ["Children think anything with a switch or a button is electric.", "A tap turns on and off, but needs no electricity."],
                  ["Tap every picture and hear whether it needs electricity."]),
              {"items": [
                  {"pic": "\U0001F4A1", "label": "lamp", "sub": "needs electricity", "say": "A lamp needs electricity. Press the switch and electricity flows in and the bulb lights up."},
@@ -50,10 +50,10 @@ LESSON = {
                   {"pic": "⚽", "label": "ball", "bin": "no", "why": "A ball needs no electricity. You kick it."},
                   {"pic": "\U0001F697", "label": "toy car with a battery", "bin": "yes", "why": "The battery gives it electricity. No battery, no go."},
                   {"pic": "✏️", "label": "pencil", "bin": "no", "why": "A pencil needs no electricity."},
-                  {"pic": "\U0001F50A", "label": "radio", "bin": "yes", "why": "A radio needs electricity to make sound."},
+                  {"pic": "\U0001F4FB", "label": "radio", "bin": "yes", "why": "A radio needs electricity to make sound."},
                   {"pic": "\U0001F9F8", "label": "teddy bear", "bin": "no", "why": "A teddy bear needs no electricity."},
-                  {"pic": "\U0001F9F9", "label": "vacuum cleaner", "bin": "yes", "why": "A vacuum cleaner needs electricity for its motor."},
-                  {"pic": "\U0001F6B0", "label": "tap", "bin": "no", "why": "A tap has a handle, but it needs no electricity."},
+                  {"pic": icon("vacuum"), "label": "vacuum cleaner", "bin": "yes", "why": "A vacuum cleaner needs electricity for its motor."},
+                  {"pic": "\U0001F6B0", "label": "tap", "bin": "no", "why": "A tap turns on and off, but it needs no electricity."},
               ]},
              "If it would stop when the power goes off, it needs electricity."),
 
@@ -74,17 +74,17 @@ LESSON = {
              "Only plugs in sockets. Away from water. Tell a grown-up. Three rules."),
 
         step("context", "Before electricity", "\U0001F56F️", "Long ago", ["1SIC.01"],
-             "Long ago there was no electricity in houses. Tap each picture to see what people did instead.",
+             "Long ago homes had no electricity, and some homes still do not. Tap each picture to see what people did instead.",
              explain(
-                 ["Not so long ago, houses had no electricity at all.", "People had to do everything another way."],
+                 ["Long ago homes had no electricity at all, and some homes still do not.", "People had to do everything another way."],
                  ["For light at night they lit candles and oil lamps.", "To keep food cold they used ice or a cool cellar.",
-                  "To wash clothes they scrubbed by hand.", "Today we press a switch. Science changed how we live."],
+                  "To wash clothes they scrubbed by hand.", "Long ago nobody knew how to make electricity.", "Scientists found out how, and that changed how we live.", "Now, in many homes, we press a switch."],
                  ["Children think it has always been like now.", "Your great-grandparents may have grown up with no electric light."],
                  ["Tap each picture and compare then with now."]),
              {"items": [
-                 {"pic": "\U0001F56F️", "label": "light", "say": "Long ago: a candle or an oil lamp, and a dark house at night. Now: press a switch and the room lights up."},
-                 {"pic": "\U0001F9CA", "label": "keeping food cold", "say": "Long ago: a block of ice, or a cold cellar under the house. Now: a fridge."},
-                 {"pic": "\U0001FAA3", "label": "washing clothes", "say": "Long ago: scrubbing every shirt by hand in a tub. Now: a washing machine."},
+                 {"pic": "\U0001F56F️", "label": "light", "say": "Long ago: a candle or an oil lamp, and a dark house at night. Now, in many homes, you press a switch and the room lights up."},
+                 {"pic": "\U0001F9CA", "label": "keeping food cold", "say": "Long ago: a block of ice, or a cold cellar under the house. Now many homes have a fridge."},
+                 {"pic": "\U0001FAA3", "label": "washing clothes", "say": "Long ago: scrubbing every shirt by hand in a tub. Now many homes have a washing machine."},
                  {"pic": "\U0001F4FB", "label": "hearing the news", "say": "Long ago: somebody read it out loud from a paper. Then came the radio, then the television, and now phones and computers."},
              ], "need": 4,
               "then": {"ask": "Long ago, how did people see at night with no electricity?",
@@ -123,7 +123,7 @@ LESSON = {
                   {"pic": "\U0001F4CE", "label": "steel paperclip", "answer": "yes", "why": "The steel paperclip jumped to the magnet."},
                   {"pic": "\U0001FAB5", "label": "wooden block", "answer": "no", "why": "Wood is not magnetic. Nothing happened."},
                   {"pic": "\U0001F96B", "label": "steel tin lid", "answer": "yes", "why": "The steel tin lid stuck to the magnet."},
-                  {"pic": "\U0001F9F4", "label": "plastic cup", "answer": "no", "why": "Plastic is not magnetic."},
+                  {"pic": "\U0001F964", "label": "plastic cup", "answer": "no", "why": "Plastic is not magnetic."},
                   {"pic": "\U0001F373", "label": "iron frying pan", "answer": "yes", "why": "The iron frying pan stuck."},
                   {"pic": "\U0001F4C4", "label": "paper", "answer": "no", "why": "Paper is not magnetic."},
                   {"pic": "\U0001F9EF", "label": "kitchen foil", "answer": "no", "why": "Kitchen foil is metal, but the magnet did not stick. Not all metals are magnetic!"},
@@ -135,7 +135,7 @@ LESSON = {
              "Write the results in the table. Did the magnet stick to <b>%s</b>?",
              explain(
                  ["The table shows every result at once, so you can spot the pattern: which things stuck?"],
-                 ["Paperclip: stuck.", "Wooden block: did not.", "Tin lid: stuck.", "Plastic cup: did not.", "Look at the sticks column: every one is steel or iron."],
+                 ["Paperclip: stuck.", "Wooden block: did not.", "Tin lid: stuck.", "Plastic cup: did not.", "Look at the things that stuck: every one is steel or iron."],
                  [],
                  ["Fill in each row from what happened."]),
              {"ask": "Did the magnet stick to %s?",
@@ -144,7 +144,7 @@ LESSON = {
                   {"pic": "\U0001F4CE", "label": "the paperclip", "answer": "yes", "why": "the paperclip jumped to the magnet."},
                   {"pic": "\U0001FAB5", "label": "the wooden block", "answer": "no", "why": "nothing happened to the wooden block."},
                   {"pic": "\U0001F96B", "label": "the steel tin lid", "answer": "yes", "why": "the tin lid stuck."},
-                  {"pic": "\U0001F9F4", "label": "the plastic cup", "answer": "no", "why": "nothing happened to the plastic cup."},
+                  {"pic": "\U0001F964", "label": "the plastic cup", "answer": "no", "why": "nothing happened to the plastic cup."},
                   {"pic": "\U0001F9EF", "label": "the kitchen foil", "answer": "no", "why": "the kitchen foil did not stick, even though it is metal."},
               ],
               "choices": [{"id": "yes", "t": "Yes, it stuck", "pic": "\U0001F9F2"}, {"id": "no", "t": "No", "pic": "\U0001F6AB"}]},
@@ -240,14 +240,14 @@ LESSON["home"] = [
     home("Magnet hunt", "A fridge magnet and a tray of small things: a paperclip, a wooden spoon, a plastic cup, a key, kitchen foil, a coin, a nail",
          ["Before each one, say: will it stick?",
           "Hold the magnet close to it.",
-          "Some spoons, keys and coins stick and some do not. Test them!",
+          "Some keys and coins stick and some do not. Test them!",
           "Sort them into sticks and does not stick."],
          "The pattern: iron and steel stick, and nothing else. Keep the magnet away from phones and bank cards."),
     home("Electricity hunt", "Paper and a pencil",
          ["Walk round one room and find everything that needs electricity.",
           "Find three things that use a battery instead of a socket.",
           "Find five things that need no electricity at all."],
-         "Anything with a plug, a switch or a battery."),
+         "Anything with a plug, a cable or a battery."),
     home("Safety check with a grown-up", "A grown-up, and a look at the plugs and sockets in one room",
          ["Look at each socket. Is anything poked in it that is not a plug? Look only; do not touch.",
           "Look at each wire. Is any wire broken or frayed? Look only; do not touch.",

@@ -6,7 +6,7 @@ electricity and how to be safe with it; 2Pe.02 the parts of a simple circuit
 (cells, wires, lamps); 2Pe.03 building a simple series circuit; with 2TWSm.01,
 2TWSm.02 (make and use a model), 2TWSm.03, 2TWSc.02, 2TWSc.04 and 2SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 CIRCUIT_PARTS = [
     {"id": "cell", "label": "cell", "say": "The cell. It is what people call a battery. It pushes the electricity round the circuit."},
@@ -23,17 +23,17 @@ LESSON = {
              "We use electricity in lots of ways. Tap each picture.",
              explain(
                  ["Electricity does jobs for us all day: it lights, it heats, it cooks, it charges, it makes things move and makes sound."],
-                 ["A lamp turns electricity into light.", "A kettle turns it into heat.", "A fan turns it into movement.", "A radio turns it into sound.", "A phone stores it in a battery."],
+                 ["A lamp turns electricity into light.", "A kettle turns it into heat.", "A fan turns it into movement.", "A radio turns it into sound.", "A charger charges a phone's battery, so the phone works later."],
                  ["Children think electricity is only for lights.", "Look around: the fridge, the washing machine and the phone all use it."],
                  ["Tap every picture and say what the electricity is doing."]),
              {"items": [
                  {"pic": "\U0001F4A1", "label": "lighting", "say": "A lamp turns electricity into light."},
-                 {"pic": "\U0001FAD6", "label": "heating", "say": "A kettle and a heater turn electricity into heat."},
+                 {"pic": icon("kettle"), "label": "heating", "say": "A kettle and a heater turn electricity into heat."},
                  {"pic": "\U0001F373", "label": "cooking", "say": "An electric cooker and a microwave cook with electricity."},
                  {"pic": "\U0001F9CA", "label": "keeping cold", "say": "A fridge uses electricity to keep food cold."},
                  {"pic": "\U0001F4A8", "label": "moving", "say": "A fan and a washing machine use electricity to make things move."},
                  {"pic": "\U0001F50A", "label": "making sound", "say": "A radio and a speaker turn electricity into sound."},
-                 {"pic": "\U0001F4F1", "label": "charging", "say": "A phone charger fills the battery with electricity to use later."},
+                 {"pic": "\U0001F4F1", "label": "charging", "say": "A charger charges the phone's battery, so the phone works later."},
                  {"pic": "\U0001F4BB", "label": "computing", "say": "A computer and a tablet run on electricity."},
              ], "need": 8},
              "Light, heat, cooking, cold, movement, sound. Electricity does all of it."),
@@ -43,14 +43,14 @@ LESSON = {
              explain(
                  ["The electricity in a wall socket is strong enough to hurt you badly.", "Rules keep it useful and keep you safe."],
                  ["Only a plug goes in a socket.", "Wet hands and electricity never mix.", "A broken wire: tell a grown-up, do not touch.", "Never climb a pylon or fly a kite near power lines."],
-                 ["Children think a small battery is as dangerous as a socket.", "A little cell is safe to handle; a wall socket is not."],
+                 ["Children think a small battery is as dangerous as a socket.", "A little cell is safe to handle, but never put a cell in your mouth, and never break one open. A wall socket is not safe to touch at all."],
                  ["Ask: could this let electricity into a person?"]),
              {"ask": "Safe, or not safe?",
               "bins": [{"id": "safe", "label": "Safe", "pic": "✅"}, {"id": "unsafe", "label": "Not safe", "pic": "⚠️"}],
               "items": [
                   {"pic": "\U0001F50C", "label": "a plug in a socket", "bin": "safe", "why": "A plug is the only thing that goes in a socket."},
                   {"pic": "\U0001F4A7\U0001F50C", "label": "wet hands on a switch", "bin": "unsafe", "why": "Water lets electricity through. Dry hands first."},
-                  {"pic": "\U0001F50B", "label": "putting a cell in a torch", "bin": "safe", "why": "A small cell is safe to handle."},
+                  {"pic": "\U0001F50B", "label": "putting a cell in a torch", "bin": "safe", "why": "A small cell is safe to handle. Never put a cell in your mouth, and never break one open."},
                   {"pic": "\U0001F58A️", "label": "poking a socket with a pencil", "bin": "unsafe", "why": "Nothing but a plug goes in a socket. Ever."},
                   {"pic": "\U0001FA81", "label": "flying a kite near power lines", "bin": "unsafe", "why": "Power lines carry very strong electricity. Stay well away."},
                   {"pic": "\U0001F9D1‍\U0001F527", "label": "telling a grown-up about a broken wire", "bin": "safe", "why": "Do not touch a broken wire. Telling a grown-up is the right thing."},
@@ -95,7 +95,7 @@ LESSON = {
                  ["Press Next and match each symbol to the real part."]),
              {"frames": [
                  {"pic": "\U0001F526", "cap": "A real torch. Inside are a battery, metal strips and a bulb.", "say": "A real torch. Inside it are a battery, two metal strips and a little bulb."},
-                 {"scene": {"id": "habitat", "state": 0}, "cap": "A <b>picture</b> shows how something looks.", "say": "A picture shows how a thing looks."},
+                 {"pic": "\U0001F526", "cap": "A <b>picture</b> of a torch shows how it looks, not what is inside.", "say": "A picture of a torch shows how the torch looks. It does not show the loop inside."},
                  {"pic": "\U0001F50B", "cap": "The <b>cell symbol</b>: a long line and a short line. It stands for the battery.", "say": "In the diagram the battery is drawn as a long line and a short line. That symbol stands for the cell."},
                  {"pic": "\U0001F4A1", "cap": "The <b>lamp symbol</b>: a circle with a cross. It stands for the bulb.", "say": "The bulb is drawn as a circle with a cross inside. That symbol stands for the lamp."},
                  {"pic": "\U0001F4D0", "cap": "The diagram is a <b>model</b> of the torch: the idea of the loop, without the look.", "say": "So the circuit diagram is a model of the torch. It shows the loop clearly and leaves out what the parts look like. Every electrician in the world can read it."},
@@ -130,9 +130,9 @@ LESSON = {
              {"label": "Question", "items": [
                  q("Which part pushes the electricity round the circuit?", "\U0001F50B", "the cell", ["the lamp", "the wire", "the switch"], "The cell pushes the electricity round."),
                  q("Which part lights up?", "\U0001F4A1", "the lamp", ["the cell", "the wire"], "The lamp lights when electricity flows through it."),
-                 q("A circuit has a cell, a lamp and only ONE wire. Does the lamp light?", "➰", "No. The loop is not complete", ["Yes", "Only at night"], "Electricity needs a way back to the cell."),
+                 q("A wire is joined only to the cell, and not to the lamp. Does the lamp light?", "➰", "No. The loop is not complete", ["Yes", "Only at night"], "Electricity needs a complete loop, from the cell, through the lamp, and back to the cell."),
                  q("You take a wire out of a working circuit. What happens?", "✂️", "the lamp goes out", ["the lamp gets brighter", "nothing"], "A gap breaks the loop. You saw it."),
-                 q("Which is safe?", "✅", "putting a small cell in a torch", ["poking a socket", "wet hands on a switch"], "A small cell is safe; sockets and water are not."),
+                 q("Which is safe?", "✅", "putting a small cell in a torch", ["poking a socket", "wet hands on a switch"], "A small cell is safe to handle, but never in your mouth and never broken open. Sockets and water are not safe."),
              ]},
              "You know your circuits."),
 
@@ -144,14 +144,15 @@ LESSON = {
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
-                 q("A kettle turns electricity into...", "\U0001FAD6", "heat", ["cold", "sound", "light"], "A kettle heats water with electricity."),
-                 q("What goes into a wall socket?", "\U0001F50C", "only a plug", ["a pencil", "a wet finger", "a key"], "Only plugs. Ever."),
+                 q("A kettle turns electricity into...", icon("kettle"), "heat", ["cold", "sound", "light"], "A kettle heats water with electricity."),
+                 q("You see a wire with its plastic cover broken and the metal showing. What should you do?", "⚠️", "leave it alone and tell a grown-up", ["pick it up and fix it", "poke it with a stick"], "Never touch a broken wire. Telling a grown-up keeps everyone safe."),
                  q("Electric things and water...", "\U0001F4A7", "must stay apart", ["go well together", "make more electricity"], "Water lets electricity through to you."),
                  q("What are the three parts of a simple circuit?", "\U0001F50B", "a cell, wires and a lamp", ["a plug, a socket and a kettle", "a torch, a battery and a switch"], "Cell, wires, lamp."),
                  q("For the lamp to light, the circuit must be...", "➰", "a complete loop", ["very long", "made of plastic", "wet"], "A gap anywhere and the lamp is out."),
                  q("What did you make when you built the circuit?", "\U0001F527", "a model of a torch", ["a real torch", "a picture", "a habitat"], "The circuit is a model: it works like a torch and shows the idea."),
                  q("The circle with a cross in a circuit diagram stands for...", "\U0001F4A1", "the lamp", ["the cell", "a wire", "the switch"], "That symbol is the lamp."),
                  q("What does a switch do?", "\U0001F6CE️", "opens or closes a gap in the loop", ["makes electricity", "stores electricity"], "On closes the loop; off opens a gap."),
+                 q("Why does a torch go dark when you switch it off?", "\U0001F526", "the switch opens a gap, so the loop is broken", ["the cell is used up at once", "the lamp falls out"], "Switching off opens a gap in the circuit. Electricity cannot flow round a broken loop, so the lamp goes out."),
              ]},
              "That is the whole lesson finished. You can build a circuit."),
     ],
@@ -165,6 +166,11 @@ LESSON["about"] = [
     "Say the rules that keep you safe with electricity.",
     "Name the parts of a simple circuit.",
     "Build a circuit that lights a lamp, and break it.",
+]
+
+LESSON["warmup"] = [
+    q("Which of these needs electricity to work?", "❓", "a lamp", ["a book", "a spoon"], "A lamp needs electricity to make light."),
+    q("What is inside a torch that makes it light up?", "\U0001F526", "a battery", ["water", "sand"], "A battery inside the torch makes the lamp light."),
 ]
 
 LESSON["lecture"] = [

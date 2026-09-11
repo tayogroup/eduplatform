@@ -6,7 +6,7 @@
 activity affects the environment; with 2Cp.03, 2TWSc.01, 2TWSc.03, 2TWSc.05,
 2TWSc.06, 2TWSp.01 and 2SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "rocks-and-the-earth",
@@ -23,7 +23,7 @@ LESSON = {
                  ["Tap all six and say one thing about each."]),
              {"items": [
                  {"pic": "\U0001FAA8", "label": "granite", "sub": "hard, speckled", "say": "Granite. Very hard, with speckles of different colours. Kitchen worktops are often granite."},
-                 {"pic": "\U0001F9F1", "label": "chalk", "sub": "soft, white", "say": "Chalk. Soft and white. It crumbles, and you can draw with it."},
+                 {"pic": icon("chalk"), "label": "chalk", "sub": "soft, white", "say": "Chalk. Soft and white. It crumbles, and you can draw with it."},
                  {"pic": "\U0001F3DC️", "label": "sandstone", "sub": "grainy", "say": "Sandstone. Grains of sand stuck together. Rub it and grains come off."},
                  {"pic": "\U0001F3DB️", "label": "marble", "sub": "smooth, shiny", "say": "Marble. Smooth, and shiny when it is polished. Statues are often marble."},
                  {"pic": "\U0001F3E0", "label": "slate", "sub": "splits into sheets", "say": "Slate. Dark, and it splits into thin flat sheets, which is why roofs are made of it."},
@@ -47,11 +47,11 @@ LESSON = {
               ],
               "materials": [
                   {"id": "granite", "pic": "\U0001FAA8", "label": "granite", "props": {"scratch": "too hard to scratch", "look": "speckled with crystals", "water": "does not soak it up", "rub": "hard, nothing comes off"}},
-                  {"id": "chalk", "pic": "\U0001F9F1", "label": "chalk", "props": {"scratch": "soft, it scratches easily", "look": "smooth and powdery", "water": "soaks it up", "rub": "crumbly, white powder comes off"}},
+                  {"id": "chalk", "pic": icon("chalk"), "label": "chalk", "props": {"scratch": "soft, it scratches easily", "look": "smooth and powdery", "water": "soaks it up", "rub": "crumbly, white powder comes off"}},
                   {"id": "sandstone", "pic": "\U0001F3DC️", "label": "sandstone", "props": {"scratch": "fairly soft, it scratches", "look": "grainy, like sand", "water": "soaks it up", "rub": "grainy, sand comes off"}},
                   {"id": "marble", "pic": "\U0001F3DB️", "label": "marble", "props": {"scratch": "hard, it barely scratches", "look": "smooth with faint stripes", "water": "does not soak it up", "rub": "smooth, nothing comes off"}},
-                  {"id": "slate", "pic": "\U0001F3E0", "label": "slate", "props": {"scratch": "hard, it barely scratches", "look": "flat layers", "water": "does not soak it up", "rub": "smooth, it splits into sheets"}},
-                  {"id": "pumice", "pic": "\U0001F30B", "label": "pumice", "props": {"scratch": "soft, it scratches", "look": "full of tiny holes", "water": "soaks it up", "rub": "rough, bits come off"}},
+                  {"id": "slate", "pic": "\U0001F3E0", "label": "slate", "props": {"scratch": "hard, it barely scratches", "look": "flat layers", "water": "does not soak it up", "rub": "smooth, nothing comes off"}},
+                  {"id": "pumice", "pic": "\U0001F30B", "label": "pumice", "props": {"scratch": "rough; the coin does not scratch it, but bits break off", "look": "full of tiny holes", "water": "soaks it up", "rub": "rough, bits come off"}},
               ]},
              "Every rock has its own properties, and testing finds them."),
 
@@ -66,7 +66,7 @@ LESSON = {
               "columns": ["Rock", "Soaks up water?"],
               "rows": [
                   {"pic": "\U0001FAA8", "label": "granite", "answer": "no", "why": "the water sat on top of the granite."},
-                  {"pic": "\U0001F9F1", "label": "chalk", "answer": "yes", "why": "the chalk soaked it up."},
+                  {"pic": icon("chalk"), "label": "chalk", "answer": "yes", "why": "the chalk soaked it up."},
                   {"pic": "\U0001F3DC️", "label": "sandstone", "answer": "yes", "why": "the sandstone soaked it up between its grains."},
                   {"pic": "\U0001F3DB️", "label": "marble", "answer": "no", "why": "the water ran off the marble."},
               ],
@@ -84,7 +84,7 @@ LESSON = {
               "unit": {"name": "cubes", "singular": "cube", "pic": "\U0001F7E9", "button": "Lay a cube"},
               "objects": [
                   {"pic": "\U0001FAA8", "label": "the granite rock", "units": 7},
-                  {"pic": "\U0001F9F1", "label": "the piece of chalk", "units": 4},
+                  {"pic": icon("chalk"), "label": "the piece of chalk", "units": 4},
               ],
               "compare": {"ask": "The granite is 7 cubes and the chalk is 4 cubes. Which is longer?",
                           "opts": [opt("the granite rock", True), opt("the piece of chalk", False), opt("they are the same", False)],
@@ -145,7 +145,7 @@ LESSON = {
                   {"pic": "♻️", "label": "recycling glass and cans", "bin": "help", "why": "Recycling means less rock and sand have to be dug up."},
                   {"pic": "\U0001F6E3️", "label": "covering a meadow with concrete", "bin": "harm", "why": "The plants and animals that lived there lose their habitat."},
                   {"pic": "\U0001F6B0", "label": "keeping streams clean", "bin": "help", "why": "Clean water keeps fish, frogs and people healthy."},
-                  {"pic": "\U0001F6A8", "label": "leaving litter on the beach", "bin": "harm", "why": "Litter harms sea birds and turtles."},
+                  {"pic": "\U0001F5D1️", "label": "leaving litter on the beach", "bin": "harm", "why": "Litter harms sea birds and turtles."},
               ]},
              "What people do changes the environment, for better or worse."),
 
@@ -171,14 +171,15 @@ LESSON = {
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
-                 q("Which rock is soft, white and crumbly?", "\U0001F9F1", "chalk", ["granite", "marble", "slate"], "Chalk is soft; you can write with it."),
+                 q("Which rock is soft, white and crumbly?", icon("chalk"), "chalk", ["granite", "marble", "slate"], "Chalk is soft; you can write with it."),
                  q("Which rock is so full of holes that it floats?", "\U0001F30B", "pumice", ["granite", "marble", "chalk"], "Pumice comes from a volcano and floats."),
                  q("Which rock splits into flat sheets for roofs?", "\U0001F3E0", "slate", ["sandstone", "chalk", "pumice"], "Slate splits into thin sheets."),
                  q("Which rock soaked up the water in your test?", "\U0001F4A7", "chalk", ["granite", "marble"], "Chalk and sandstone soak up water; granite and marble do not."),
                  q("A huge open pit where rock is cut out is a...", "⛏️", "quarry", ["mine", "riverbed", "factory"], "A quarry is an open pit; a mine is underground."),
                  q("Where do smooth pebbles come from?", "\U0001FAA8", "a riverbed, where water rolled them smooth", ["a factory", "the Moon"], "Rivers roll rock into smooth pebbles."),
-                 q("Which of these HARMS the environment?", "\U0001F6AB", "dumping rubbish in a river", ["planting trees", "recycling cans", "making an old quarry a lake"], "Rubbish poisons water and animals."),
+                 q("Which of these harms the environment?", "\U0001F6AB", "dumping rubbish in a river", ["planting trees", "recycling cans", "making an old quarry a lake"], "Rubbish poisons water and animals."),
                  q("How do we find out a rock's properties?", "\U0001F52C", "test it: scratch, look, drop water, rub", ["guess from its name", "ask the rock"], "Rocks are tested like any material."),
+                 q("Why is granite, not chalk, used for kitchen worktops?", icon("rock"), "granite is hard and does not soak up water; chalk is soft and crumbles", ["chalk is too heavy to lift", "granite is softer than chalk"], "A worktop has to stay hard and dry. Chalk would crumble and soak up every spill."),
              ]},
              "That is the whole lesson finished. You know your rocks."),
     ],
@@ -192,6 +193,11 @@ LESSON["about"] = [
     "Test rocks and record their properties.",
     "Say where rock is taken from the Earth.",
     "Say how what people do helps or harms the land.",
+]
+
+LESSON["warmup"] = [
+    q("Which of these is a kind of rock?", "❓", "a pebble", ["a leaf", "a feather"], "A pebble is a small piece of rock, worn smooth by water."),
+    q("Which is the hardest?", "❓", "a stone", ["a sponge", "a slice of bread"], "A stone is a piece of rock, and most rock is hard."),
 ]
 
 LESSON["lecture"] = [
@@ -217,7 +223,7 @@ LESSON["words"] = [
     word("mine", "\U0001F573\uFE0F", "Tunnels dug deep underground to take out rock or metal.",
          ["Miners work in a mine.", "Coal comes from a mine."]),
     word("soak", "\U0001F4A7", "To take in water.",
-         ["Chalk soaks up water.", "Marble does not soak."]),
+         ["Chalk soaks up water.", "Marble does not soak up water."]),
     word("grainy", "\U0001F7E4", "Made of tiny grains you can see or feel.",
          ["Sandstone is grainy.", "The grainy rock felt rough."]),
     word("environment", "\U0001F30D", "Everything around us: the land, the water, the air and the living things.",
@@ -225,18 +231,19 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("Rock collection", "A bag, a walk outside, a magnifying glass",
-         ["Collect five different stones.",
+    home("Rock collection", "A bag, a walk outside with a grown-up, a magnifying glass",
+         ["Go for a walk with a grown-up and collect five different stones.",
           "Look at each with the magnifying glass. Grainy, smooth, speckled, holes?",
-          "Sort them by one property."],
+          "Sort them by one property.",
+          "Wash your hands afterwards."],
          "No two are quite the same."),
     home("The drip test on rocks", "Your five stones, a dropper or a spoon, water",
          ["Put one drop of water on each stone.",
           "Watch for one minute.",
           "Say which soaked it up and which stayed wet on top."],
          "Soft, grainy rocks soak. Hard, smooth ones do not."),
-    home("Rock spotting walk", "A street, paper and a pencil",
-         ["Find rock used in five places: a wall, a roof, a path, a step, a kerb.",
+    home("Rock spotting walk", "A grown-up, a street, paper and a pencil",
+         ["Walk along a street with a grown-up. Find rock used in five places: a wall, a roof, a path, a step, a kerb.",
           "Say what kind it might be.",
           "Draw the one you like best."],
          "Rock is all around, doing jobs."),

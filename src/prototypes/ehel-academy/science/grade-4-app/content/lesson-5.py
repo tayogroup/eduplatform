@@ -25,7 +25,7 @@ LESSON = {
               "bins": [{"id": "desert", "label": "Desert", "pic": "\U0001F3DC️"}, {"id": "arctic", "label": "Arctic", "pic": "\U0001F9CA"}, {"id": "forest", "label": "Rainforest", "pic": "\U0001F334"}, {"id": "ocean", "label": "Ocean", "pic": "\U0001F30A"}],
               "items": [
                   {"pic": "\U0001F42A", "label": "camel", "bin": "desert", "why": "Wide feet for sand, a hump of fat, and it can go days without water."},
-                  {"pic": "\U0001F43B‍❄️", "label": "polar bear", "bin": "arctic", "why": "Thick fur and fat for the cold, white to hide on the ice."},
+                  {"pic": icon("polarbear"), "label": "polar bear", "bin": "arctic", "why": "Thick fur and fat for the cold, white to hide on the ice."},
                   {"pic": "\U0001F412", "label": "monkey", "bin": "forest", "why": "Grasping hands and a tail for the trees."},
                   {"pic": "\U0001F40B", "label": "whale", "bin": "ocean", "why": "A tail for swimming and blubber for the cold sea."},
                   {"pic": "\U0001F98E", "label": "desert lizard", "bin": "desert", "why": "Scaly skin keeps water in; it hides from the midday heat."},
@@ -46,7 +46,7 @@ LESSON = {
                  ["Tap all four."]),
              {"items": [
                  {"pic": "\U0001F42A", "label": "camel", "sub": "hump, wide feet, long lashes", "say": "A camel stores fat in its hump, walks on sand with wide feet, and keeps sand out of its eyes with long lashes. Every feature suits the desert."},
-                 {"pic": "\U0001F43B‍❄️", "label": "polar bear", "sub": "thick fur, fat, white coat", "say": "A polar bear has thick fur over a layer of fat, so the Arctic cold does not reach it. Its white coat hides it on the ice."},
+                 {"pic": icon("polarbear"), "label": "polar bear", "sub": "thick fur, fat, white coat", "say": "A polar bear has thick fur over a layer of fat, so the Arctic cold does not reach it. Its white coat hides it on the ice."},
                  {"pic": "\U0001F41F", "label": "fish", "sub": "gills, fins, scales", "say": "A fish breathes with gills, which take air out of water. Fins steer it. Take it out of the ocean and it cannot breathe."},
                  {"pic": "\U0001F335", "label": "cactus", "sub": "stores water, spines", "say": "A cactus stores water in its thick stem and has spines instead of leaves, so it loses very little water in the desert heat."},
              ], "need": 4,
@@ -132,7 +132,7 @@ LESSON = {
                  ["Read the question, then tap."]),
              {"label": "Question", "items": [
                  q("Which feature suits a camel to the desert?", "\U0001F42A", "a hump that stores fat", ["thick white fur", "gills", "sticky toes"], "Fat for days without food."),
-                 q("Which feature suits a polar bear to the Arctic?", "\U0001F43B‍❄️", "thick fur over a layer of fat", ["a hump", "a long tail for climbing"], "Keeps the cold out."),
+                 q("Which feature suits a polar bear to the Arctic?", icon("polarbear"), "thick fur over a layer of fat", ["a hump", "a long tail for climbing"], "Keeps the cold out."),
                  q("Can a goldfish survive outside a river?", "\U0001F41F", "yes, in a bowl, if a person gives it what it needs", ["no, never", "only in the sea"], "Food and clean water provided."),
                  q("Why can a zoo keep a seal far from the sea?", "\U0001F9AD", "it copies the habitat with a pool", ["seals do not need water", "it cannot"], "Provide what the habitat gives."),
                  q("Why would a fish not survive in a desert?", "\U0001F3DC️", "its gills need water to breathe", ["it would get too cold", "it would"], "No water, no breathing."),
@@ -185,7 +185,7 @@ LESSON["words"] = [
          ["The desert is a camel's habitat.", "A pond is a habitat."]),
     word("suited", "\U0001F42A", "Having features that fit a place, so the living thing can survive there.",
          ["A polar bear is suited to the cold.", "Gills make a fish suited to water."]),
-    word("feature", "\U0001F43B‍❄️", "A part of a living thing's body, like thick fur or wide feet.",
+    word("feature", icon("polarbear"), "A part of a living thing's body, like thick fur or wide feet.",
          ["Thick fur is a feature for the cold.", "Which feature suits the desert?"]),
     word("survive", "\U0001F3E0", "To stay alive.",
          ["A goldfish survives in a bowl.", "Camels survived in Australia."]),

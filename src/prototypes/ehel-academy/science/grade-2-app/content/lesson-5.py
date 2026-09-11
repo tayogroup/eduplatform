@@ -90,19 +90,19 @@ LESSON = {
              "Heating changes materials, and heat can hurt. Tap each rule.",
              explain(
                  ["Experiments with heat are done with a grown-up, and there are rules that keep everyone safe."],
-                 ["A grown-up does the cooker.", "Oven gloves for anything hot.", "Never touch a pan to see if it is hot.", "Long hair tied back.", "Wait for things to cool before you pick them up."],
+                 ["A grown-up uses the cooker.", "Leave anything hot for a grown-up to move.", "Never touch a pan to see if it is hot.", "Long hair tied back.", "Wait for things to cool before you pick them up."],
                  ["Children think a pan that has stopped steaming is cool.", "Metal stays hot long after it stops steaming."],
                  ["Tap every rule and listen."]),
              {"items": [
-                 {"pic": "\U0001F9D1‍\U0001F373", "label": "a grown-up does the heat", "say": "A grown-up works the cooker, the kettle and the oven. You watch and record."},
-                 {"pic": "\U0001F9E4", "label": "oven gloves", "say": "Oven gloves for anything that has been heated, even if it looks cool."},
+                 {"pic": "\U0001F9D1‍\U0001F373", "label": "a grown-up handles the heat", "say": "A grown-up uses the cooker, the kettle and the oven. You watch and record."},
+                 {"pic": "\U0001F9E4", "label": "leave it for a grown-up", "say": "Anything that has been heated, even if it looks cool, is for a grown-up to move with oven gloves. Leave it, or wait until it is cool."},
                  {"pic": "✋", "label": "never touch to test", "say": "Never touch a pan or a tray to find out if it is hot. Ask, or wait."},
                  {"pic": "\U0001F487", "label": "hair tied back", "say": "Long hair tied back and sleeves rolled up, away from the heat."},
                  {"pic": "⏳", "label": "wait for it to cool", "say": "Metal stays hot long after it stops steaming. Wait before picking anything up."},
              ], "need": 5,
               "then": {"ask": "The pan has stopped steaming. Is it safe to pick up with bare hands?",
                        "opts": [opt("No. Metal stays hot long after it stops steaming", True), opt("Yes, no steam means it is cool", False), opt("Yes, if you are quick", False)],
-                       "why": "No steam does not mean no heat. Use oven gloves or wait."}},
+                       "why": "No steam does not mean no heat. Leave it for a grown-up to move, or wait until it is cool."}},
              "Heat changes materials, and heat rules keep hands safe."),
 
         step("context", "Long ago, and now", "\U0001F56F️", "Long ago", ["2SIC.01"],
@@ -149,12 +149,13 @@ LESSON = {
              {"items": [
                  q("You cook an egg. Can you cool it back into a raw egg?", "\U0001F373", "No. Cooking made a new material.", ["Yes, put it in the fridge", "Yes, if you are quick"], "You tried it. Cooling does not undo cooking."),
                  q("Ice melts. Is the water a new material?", "\U0001F9CA", "No. It is the same water, and can freeze again.", ["Yes, water is new", "Yes, it can never be ice"], "Melting and freezing keep the material."),
-                 q("Which change makes a NEW material?", "\U0001F525", "burning wood", ["melting chocolate", "folding paper", "squashing clay"], "Burning turns wood into ash and smoke, which cannot become wood again."),
-                 q("Which change keeps the SAME material?", "\U0001F504", "melting butter", ["baking a cake", "frying an egg", "burning a candle"], "Melted butter sets again."),
+                 q("Which change makes a new material?", "\U0001F525", "burning wood", ["melting chocolate", "folding paper", "squashing clay"], "Burning turns wood into ash and smoke, which cannot become wood again."),
+                 q("Which change keeps the same material?", "\U0001F504", "melting butter", ["baking a cake", "frying an egg", "burning a candle"], "Melted butter sets again."),
                  q("Dough goes in the oven. What comes out?", "\U0001F35E", "bread, a new material", ["dough, the same", "water"], "Baking makes a new material."),
                  q("Who works the cooker in a heating experiment?", "\U0001F9D1‍\U0001F373", "a grown-up", ["the fastest child", "nobody"], "Heat is a grown-up's job; you watch and record."),
-                 q("The pan has stopped steaming. What do you do?", "\U0001F9E4", "wait, or use oven gloves", ["pick it up with bare hands", "touch it to check"], "Metal stays hot long after the steam stops."),
+                 q("The pan has stopped steaming. What do you do?", "\U0001F9E4", "leave it for a grown-up to move, or wait until it is cool", ["pick it up with bare hands", "touch it to check"], "Metal stays hot long after the steam stops."),
                  q("Long ago people tried to make gold by heating other materials. What happened?", "\U0001F9EA", "It never worked, but it started chemistry", ["They made lots of gold", "They gave up straight away"], "What people knew changed by testing."),
+                 q("Why can you get chocolate back after it melts, but not bread back after it is toasted?", "\U0001F36B", "melting keeps the same material; toasting makes a new one", ["chocolate is brown", "bread is bigger than chocolate"], "Melted chocolate sets into chocolate again. Toasting changes bread into a new material that cannot go back."),
              ]},
              "That is the whole lesson finished. You know which changes make something new."),
     ],
@@ -170,17 +171,22 @@ LESSON["about"] = [
     "Say the safety rules for anything hot.",
 ]
 
+LESSON["warmup"] = [
+    q("What happens to an ice cube on a warm day?", "\U0001F9CA", "it melts into water", ["it grows bigger", "it turns into wood"], "Warmth melts ice into water."),
+    q("What does a toaster do to bread?", "\U0001F35E", "makes it brown and crisp", ["turns it back into dough", "makes it cold and wet"], "Heat changes bread into toast."),
+]
+
 LESSON["lecture"] = [
     part("\U0001F9CA", "Same material back",
          "Ice melts into water. Put the water in the freezer and it is ice again. Melting and freezing keep the same material. You can get it back."),
     part("\U0001F373", "A new material",
-         "A raw egg is runny and clear. Cook it and it goes white and solid. Cool it down and it stays cooked. Cooking made a new material. You cannot get the egg back."),
+         "The egg white is runny and clear. Cook it and it goes white and solid. Cool it down and it stays cooked. Cooking made a new material. You cannot get the egg back."),
     part("\U0001F525", "Burning",
          "Wood burns. What is left is ash and smoke. You cannot turn ash back into wood. Burning always makes a new material."),
     part("\U0001F35E", "Baking",
          "Soft dough goes into the oven. Bread comes out. A new material: the dough is gone for good. Cake mix does the same."),
     part("\U0001F9E4", "Safe with heat",
-         "A grown-up does the heating. Use oven gloves. Never touch to test if it is hot. Tie back hair. Wait for things to cool. Heat changes materials, and heat rules keep hands safe."),
+         "A grown-up handles the heating. Leave hot things for a grown-up to move. Never touch to test if it is hot. Tie back hair. Wait for things to cool. Heat changes materials, and heat rules keep hands safe."),
 ]
 
 LESSON["words"] = [
@@ -207,7 +213,8 @@ LESSON["home"] = [
           "Look the next morning."],
          "The same water came back as ice. Reversible."),
     home("Cook an egg with a grown-up", "An egg, a pan, a hob, a grown-up",
-         ["Crack the egg into a bowl. Look: runny and clear.",
+         ["Crack the egg into a bowl. Look: the egg white is runny and clear.",
+          "Wash your hands after touching raw egg.",
           "A grown-up cooks it in the pan. Watch it change.",
           "Let it cool. Is it runny again?"],
          "It stays cooked. A new material. You cannot get the egg back."),

@@ -9,7 +9,7 @@ describe materials by their properties; 1Cc.01 changing materials by
 stretching, compressing, bending and twisting; with 1TWSc.01, 1TWSc.02,
 1TWSc.04, 1TWSc.05, 1TWSp.02, 1TWSa.01 and 1SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "what-is-it-made-of",
@@ -50,7 +50,7 @@ LESSON = {
                  {"pic": "\U0001F944⚙️", "cap": "It is made of <b>metal</b>. Metal is the <b>material</b>.", "say": "The spoon is made of metal. Metal is the material."},
                  {"pic": "\U0001F6AA", "cap": "A door is an <b>object</b>. It is made of <b>wood</b>.", "say": "A door is an object. It is made of wood. Wood is the material."},
                  {"pic": "\U0001FA91✏️\U0001F6AA", "cap": "One material makes many objects: wood makes chairs, pencils and doors.", "say": "One material can make many objects. Wood makes chairs, pencils and doors."},
-                 {"pic": "\U0001F9F4\U0001F95B\U0001F9F8", "cap": "And one object can use many materials: a toy has plastic, fabric and metal.", "say": "And one object can be made of several materials. A toy can have plastic, fabric and metal in it."},
+                 {"pic": "\U0001F9F8", "cap": "And one object can use many materials: a toy has plastic, fabric and metal.", "say": "And one object can be made of several materials. A toy can have plastic, fabric and metal in it."},
              ]},
              "Object is the thing. Material is what it is made of."),
 
@@ -70,7 +70,7 @@ LESSON = {
                   {"pic": "\U0001FAB5", "label": "wood", "bin": "mat", "why": "Wood is what chairs and doors are made of. A material."},
                   {"pic": "\U0001F511", "label": "key", "bin": "obj", "why": "A key is a thing. An object."},
                   {"pic": "\U0001F9F5", "label": "fabric", "bin": "mat", "why": "Fabric is what clothes are made of. A material."},
-                  {"pic": "\U0001FA9F", "label": "glass (what windows are made of)", "bin": "mat", "why": "Glass is what windows are made of. A material."},
+                  {"pic": icon("glass"), "label": "glass", "bin": "mat", "why": "Glass is what windows are made of. A material."},
                   {"pic": "\U0001F4D6", "label": "book", "bin": "obj", "why": "A book is a thing. An object made of paper."},
               ]},
              "Objects are things. Materials are what they are made of."),
@@ -85,7 +85,7 @@ LESSON = {
                  ["Look, decide the material, then tap its bin."]),
              {"ask": "What material is it made from?",
               "bins": [{"id": "wood", "label": "Wood", "pic": "\U0001FAB5"}, {"id": "metal", "label": "Metal", "pic": "⚙️"},
-                       {"id": "plastic", "label": "Plastic", "pic": "\U0001F9F4"}, {"id": "glass", "label": "Glass", "pic": "\U0001FA9F"},
+                       {"id": "plastic", "label": "Plastic", "pic": "\U0001F9F4"}, {"id": "glass", "label": "Glass", "pic": icon("glass")},
                        {"id": "paper", "label": "Paper", "pic": "\U0001F4C4"}, {"id": "fabric", "label": "Fabric", "pic": "\U0001F9F5"}],
               "items": [
                   {"pic": "✏️", "label": "pencil", "bin": "wood", "why": "A pencil is made of wood, with a grey stick inside that writes."},
@@ -126,8 +126,8 @@ LESSON = {
                   {"id": "spoon", "pic": "\U0001F944", "label": "metal spoon", "props": {"press": "hard", "bend": "stiff", "look": "shiny", "water": "is waterproof"}, "animates": {"bend": False}},
                   {"id": "wood", "pic": "\U0001FAB5", "label": "wood block", "props": {"press": "hard", "bend": "stiff", "look": "dull", "water": "soaks up a little water"}, "animates": {"bend": False}},
                   {"id": "cloth", "pic": "\U0001F9E3", "label": "cotton scarf", "props": {"press": "soft", "bend": "bendy", "look": "dull", "water": "soaks up water"}},
-                  {"id": "glass", "pic": "\U0001F95B", "label": "glass", "props": {"press": "hard", "bend": "stiff", "look": "shiny", "water": "is waterproof"}, "animates": {"bend": False}},
-                  {"id": "cup", "pic": "\U0001F964", "label": "plastic cup", "props": {"press": "hard", "bend": "stiff", "look": "shiny", "water": "is waterproof"}, "animates": {"bend": False}},
+                  {"id": "glass", "pic": icon("glass"), "label": "glass", "props": {"press": "hard", "bend": "stiff", "look": "shiny", "water": "is waterproof"}, "animates": {"bend": False}},
+                  {"id": "cup", "pic": "\U0001F964", "label": "hard plastic beaker", "props": {"press": "hard", "bend": "stiff", "look": "shiny", "water": "is waterproof"}, "animates": {"bend": False}},
               ]},
              "Every material has its own properties. You tested them."),
 
@@ -141,7 +141,7 @@ LESSON = {
              {"label": "Question", "items": [
                  q("A pillow feels...", "\U0001F6CF️", "soft", ["hard", "rough", "stiff"], "A pillow presses in easily. That is soft."),
                  q("A stone feels...", "\U0001FAA8", "hard", ["soft", "bendy", "fluffy"], "A stone does not press in. That is hard."),
-                 q("Sandpaper feels...", "\U0001F9F1", "rough", ["smooth", "soft", "shiny"], "Sandpaper is bumpy to touch. That is rough."),
+                 q("Sandpaper feels...", icon("sandpaper"), "rough", ["smooth", "soft", "shiny"], "Sandpaper is bumpy to touch. That is rough."),
                  q("A glass window is...", "\U0001FA9F", "smooth and see-through", ["rough and bendy", "soft and furry"], "Glass is smooth, and you can see through it."),
                  q("An elastic band is...", "➰", "bendy and stretchy", ["stiff", "hard", "rough"], "An elastic band bends and stretches."),
                  q("A metal spoon is...", "\U0001F944", "hard and shiny", ["soft and dull", "bendy and rough"], "Metal is hard and shiny."),
@@ -214,7 +214,7 @@ LESSON = {
                  q("A metal spoon. Which word is the <b>material</b>?", "\U0001F944", "metal", ["spoon", "shiny", "soup"], "Metal is what the spoon is made of. Spoon is the object."),
                  q("What is a wooden chair made from?", "\U0001FA91", "wood", ["glass", "paper", "metal"], "Wood comes from trees and makes chairs, doors and pencils."),
                  q("Which material can you see through?", "\U0001FA9F", "glass", ["wood", "fabric", "rock"], "Glass is see-through, which is why windows are made of it."),
-                 q("Which of these feels rough?", "\U0001F9F1", "sandpaper", ["a glass window", "a silk scarf", "a marble"], "Sandpaper is bumpy to touch. That is rough; the others are smooth."),
+                 q("Which of these feels rough?", icon("sandpaper"), "sandpaper", ["a glass window", "a silk scarf", "a marble"], "Sandpaper is bumpy to touch. That is rough; the others are smooth."),
                  q("Which of these is bendy?", "➰", "an elastic band", ["a stone", "a drinking glass", "a brick"], "An elastic band bends and stretches."),
                  q("You squash a ball of clay. What happens?", "\U0001F7E4", "it changes shape", ["nothing", "it turns to glass", "it gets harder"], "Clay changes shape when you squash it."),
                  q("You squash a stone as hard as you can. What happens?", "\U0001FAA8", "nothing, it keeps its shape", ["it goes flat", "it stretches"], "You tried it. A stone keeps its shape."),

@@ -6,7 +6,7 @@ quieter as it travels from its source; with 1Bs.02 (the ear), 1TWSp.02,
 1TWSc.01, 1TWSc.02, 1TWSc.03, 1TWSc.04, 1TWSc.05, 1TWSa.01, 1SIC.02 and
 1SIC.03. The sounds are synthesised on the page - tap a drum and it thuds.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "sounds-near-and-far",
@@ -29,7 +29,7 @@ LESSON = {
                  {"pic": "\U0001F44F", "label": "clapping hands", "sound": "clap", "say": "Clap. Your hands are the source of that one."},
                  {"pic": "\U0001F431", "label": "cat", "sound": "cat", "say": "Miaow. The cat is the source."},
                  {"pic": "\U0001F327️", "label": "rain", "sound": "rain", "say": "Pitter patter. The rain is the source."},
-                 {"pic": "\U0001F3B5", "label": "whistle", "sound": "whistle", "say": "Wheee. The whistle is the source."},
+                 {"pic": icon("whistle"), "label": "whistle", "sound": "whistle", "say": "Wheee. The whistle is the source."},
              ], "need": 8},
              "Every sound has a source. Your ears find it."),
 
@@ -110,12 +110,12 @@ LESSON = {
              explain(
                  ["Loud sounds can hurt your ears, so sound makers have rules."],
                  ["A drum is hit with the stick, gently, never near somebody's ear.", "A whistle is blown outdoors, not right next to a friend.",
-                  "A shaker is shaken by the handle.", "If a sound hurts, cover your ears and move away."],
+                  "A shaker is held firmly in both hands.", "If a sound hurts, cover your ears and move away."],
                  ["Children think louder is always better.", "Very loud sounds can damage ears for good."],
                  ["Tap every sound maker and listen to its rule."]),
              {"items": [
                  {"pic": "\U0001F941", "label": "drum", "sound": "drum", "say": "Hit the drum with the stick, gently. Never bang it next to somebody's ear."},
-                 {"pic": "\U0001F3B5", "label": "whistle", "sound": "whistle", "say": "Blow the whistle outside, and never right next to a friend."},
+                 {"pic": icon("whistle"), "label": "whistle", "sound": "whistle", "say": "Blow the whistle outside, and never right next to a friend."},
                  {"pic": "\U0001F96B", "label": "shaker tin", "sound": "shake", "say": "Hold the shaker tin with both hands and shake it. Do not throw it."},
                  {"pic": "\U0001F514", "label": "bell", "sound": "bell", "say": "Ring the bell once and listen. Keep it away from ears."},
                  {"pic": "\U0001F442", "label": "your ears", "say": "If a sound hurts your ears, cover them and move away. Hearing that is damaged does not come back."},
@@ -156,7 +156,7 @@ LESSON = {
                  q("A drum booms. What is the source of the sound?", "\U0001F941", "the drum", ["your ears", "the air", "the floor"], "The drum made the sound. It is the source."),
                  q("A sound is made when something...", "➰", "shakes very fast", ["gets wet", "goes dark", "sits still"], "Shaking very fast, vibrating, is what makes a sound."),
                  q("You walk away from a ringing bell. The sound gets...", "\U0001F514", "quieter", ["louder", "higher", "faster"], "Sound gets quieter as it travels away from its source. You tested it."),
-                 q("Which of these is a source of sound?", "❓", "a barking dog", ["a sleeping cat", "a still stone", "an empty room"], "A barking dog makes a sound. The dog is the source."),
+                 q("Which of these is a source of sound?", "❓", "a barking dog", ["a closed book", "a still stone", "an empty room"], "A barking dog makes a sound. The dog is the source."),
                  q("You hum and feel your throat. What do you feel?", "\U0001F5E3️", "shaking", ["nothing", "cold", "wet"], "Your voice is your throat shaking."),
                  q("A sound hurts your ears. What should you do?", "\U0001F442", "cover your ears and move away", ["get closer", "shout louder"], "Loud sounds can hurt ears. Move away from the source."),
                  q("Stop an elastic band shaking with your finger. What happens to the sound?", "✋", "it stops", ["it gets louder", "it gets higher"], "No shaking, no sound."),

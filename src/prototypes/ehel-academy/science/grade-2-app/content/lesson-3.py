@@ -7,7 +7,7 @@ animals; 2Be.03 compare local environments (hot, cold, dry, wet, many or few
 plants and animals); with 2TWSc.01, 2TWSc.05, 2TWSa.02, 2TWSa.03, 2TWSp.01
 and 2SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "habitats",
@@ -25,8 +25,8 @@ LESSON = {
              {"button": "Next place ▶", "frames": [
                  {"scene": {"id": "habitat", "state": 0}, "cap": "A <b>pond</b>: wet. Frogs, ducks, fish and water plants live here.", "say": "A pond. It is wet. Frogs, ducks, fish and water plants live here. The pond is their habitat."},
                  {"scene": {"id": "habitat", "state": 1}, "cap": "A <b>desert</b>: hot and dry. Camels, lizards, scorpions and cactus plants.", "say": "A desert. Hot and dry, with sand. Camels, lizards, scorpions and cactus plants live here."},
-                 {"scene": {"id": "habitat", "state": 2}, "cap": "A <b>forest</b>: shady, many plants. Deer, birds, mushrooms.", "say": "A forest. Shady, with many trees and plants. Deer, birds and mushrooms live here."},
-                 {"scene": {"id": "habitat", "state": 3}, "cap": "The <b>Arctic</b>: cold and icy. Polar bears and penguins.", "say": "The icy Arctic. Very cold. A polar bear's thick fur suits it here. A camel would not last a day."},
+                 {"scene": {"id": "habitat", "state": 2}, "cap": "A <b>forest</b>: shady, many plants. Deer, owls and squirrels.", "say": "A forest. Shady, with many trees and plants. Deer, owls and squirrels live here."},
+                 {"scene": {"id": "habitat", "state": 3}, "cap": "The <b>Arctic</b>: cold and icy. Polar bears and seals.", "say": "The icy Arctic. Very cold. A polar bear's thick fur suits it here, and seals swim in the icy sea. Penguins live at the icy South Pole, not the Arctic."},
                  {"pic": "\U0001F30D", "cap": "Different habitats hold <b>different</b> plants and animals.", "say": "Different habitats hold different plants and animals, because each animal suits the place it lives in."},
              ]},
              "A habitat is where a living thing naturally lives. Different habitats, different living things."),
@@ -36,7 +36,7 @@ LESSON = {
              explain(
                  ["Each plant and animal suits its habitat.", "A fish needs water, so it lives in a pond, not a desert."],
                  ["A frog: pond.", "A camel: desert.", "A polar bear: the Arctic.", "A deer: forest."],
-                 ["Children put the penguin in the pond because it swims.", "Penguins live where it is icy cold."],
+                 ["Children put the seal in the pond because it swims.", "A seal lives in the icy Arctic sea. And penguins live at the icy South Pole, not the Arctic."],
                  ["Think about what the animal needs: water, heat, cold, trees."]),
              {"ask": "Pond, desert, forest, or Arctic?",
               "bins": [{"id": "pond", "label": "Pond", "pic": "\U0001F438"}, {"id": "desert", "label": "Desert", "pic": "\U0001F335"},
@@ -44,12 +44,12 @@ LESSON = {
               "items": [
                   {"pic": "\U0001F41F", "label": "fish", "bin": "pond", "why": "A fish needs water. Pond."},
                   {"pic": "\U0001F42A", "label": "camel", "bin": "desert", "why": "A camel can go for days without water in the hot desert."},
-                  {"pic": "\U0001F43B‍❄️", "label": "polar bear", "bin": "arctic", "why": "Thick fur and fat for the icy Arctic."},
+                  {"pic": icon("polarbear"), "label": "polar bear", "bin": "arctic", "why": "Thick fur and fat for the icy Arctic."},
                   {"pic": "\U0001F98C", "label": "deer", "bin": "forest", "why": "A deer eats leaves and hides among trees. Forest."},
                   {"pic": "\U0001F335", "label": "cactus", "bin": "desert", "why": "A cactus stores water and lives in the dry desert."},
                   {"pic": "\U0001F986", "label": "duck", "bin": "pond", "why": "A duck swims and feeds on a pond."},
-                  {"pic": "\U0001F427", "label": "penguin", "bin": "arctic", "why": "Penguins live where it is icy cold."},
-                  {"pic": "\U0001F344", "label": "mushroom", "bin": "forest", "why": "Mushrooms grow in the damp shade of a forest."},
+                  {"pic": icon("seal"), "label": "seal", "bin": "arctic", "why": "A seal has thick fat under its skin and swims in the icy Arctic sea."},
+                  {"pic": "\U0001F989", "label": "owl", "bin": "forest", "why": "An owl nests in the trees of a forest and hunts at night."},
                   {"pic": "\U0001F98E", "label": "lizard", "bin": "desert", "why": "A lizard warms up on hot desert rocks."},
                   {"pic": "\U0001F43F️", "label": "squirrel", "bin": "forest", "why": "A squirrel lives in the trees of a forest."},
               ]},
@@ -64,16 +64,16 @@ LESSON = {
                  ["Children think a place with no animals in sight has none.", "Look under a stone: a car park has a few, a garden has many more."],
                  ["Picture the two places, then tap the words that fit."]),
              {"label": "Compare", "items": [
-                 q("A garden and a car park. Which has MORE plants?", "\U0001F33F", "the garden", ["the car park", "they have the same"], "A garden is full of plants; a car park has a few weeds in the cracks."),
-                 q("A pond and a sandy beach. Which is WETTER?", "\U0001F4A7", "the pond", ["the beach sand", "they are the same"], "A pond is water; sand dries in the sun."),
-                 q("A desert and a forest. Which is HOTTER and DRIER?", "☀️", "the desert", ["the forest", "they are the same"], "A desert is hot and dry; a forest is shady and damp."),
-                 q("Where would you find MORE animals?", "\U0001F41C", "under a log in a garden", ["on a concrete playground", "on a tarmac road"], "Damp dark places under logs are full of small animals."),
+                 q("A garden and a car park. Which has more plants?", "\U0001F33F", "the garden", ["the car park", "they have the same"], "A garden is full of plants; a car park has a few weeds in the cracks."),
+                 q("A pond and a sandy beach. Which is wetter?", "\U0001F4A7", "the pond", ["the beach sand", "they are the same"], "A pond is water; sand dries in the sun."),
+                 q("A desert and a forest. Which is hotter and drier?", "☀️", "the desert", ["the forest", "they are the same"], "A desert is hot and dry; a forest is shady and damp."),
+                 q("Where would you find more animals?", "\U0001F41C", "under a log in a garden", ["on a concrete playground", "on a tarmac road"], "Damp dark places under logs are full of small animals."),
                  q("A snowy mountain top. Which words fit?", "\U0001F3D4️", "cold, few plants", ["hot, many plants", "wet, many animals"], "It is cold up high, and few plants can grow there."),
                  q("A shady forest floor. Which words fit?", "\U0001F333", "damp, many plants, many animals", ["dry, no plants", "hot, no animals"], "A forest is damp and full of plants and small animals."),
              ]},
              "Hot or cold, wet or dry, many or few. That is how scientists compare places."),
 
-        step("lookup", "Look it up: the pond", "\U0001F4D6", "Fact finder", ["2TWSc.05", "2Be.02"],
+        step("lookup", "Look it up: the pond", "\U0001F4D6", "Fact finder", ["2TWSc.05", "2Be.02", "2Be.03"],
              "Read the fact card about a pond, then answer <b>from the card</b>.",
              explain(
                  ["A fact card is a secondary source: somebody else looked, and wrote down what they found."],
@@ -85,12 +85,14 @@ LESSON = {
                                    "Plants grow at the edge and on the water: <b>reeds</b>, <b>water lilies</b> and tiny green <b>duckweed</b>.",
                                    "Frogs lay their eggs in the pond. The eggs hatch into <b>tadpoles</b>, which grow legs and become frogs.",
                                    "<b>Dragonflies</b> hunt over the water. <b>Pond snails</b> eat the plants. Small fish eat insects.",
-                                   "A pond can <b>dry up</b> in a hot summer, and then many of its animals die or move away."]},
+                                   "A pond can <b>dry up</b> in a hot summer, and then many of its animals die or move away.",
+                                   "Compared with a dry car park nearby, a pond is <b>wet</b>, with <b>many plants</b> and <b>many animals</b>. The car park has few of either."]},
               "items": [
                   {"ask": "What do frog eggs hatch into?", "opts": [opt("tadpoles", True), opt("ducklings", False), opt("dragonflies", False)], "why": "The card says the eggs hatch into tadpoles, which grow legs and become frogs."},
                   {"ask": "Name a plant that grows on a pond.", "opts": [opt("water lilies", True), opt("cactus", False), opt("an oak tree", False)], "why": "Reeds, water lilies and duckweed are the pond plants in the card."},
                   {"ask": "What does a pond snail eat?", "opts": [opt("plants", True), opt("fish", False), opt("frogs", False)], "why": "The card says pond snails eat the plants."},
                   {"ask": "What can happen to a pond in a hot summer?", "opts": [opt("It can dry up", True), opt("It freezes", False), opt("It fills with sand", False)], "why": "A pond can dry up in a hot summer, and its animals die or move away."},
+                  {"ask": "How is a pond different from a dry car park nearby?", "opts": [opt("The pond is wet, with many plants and many animals", True), opt("The pond is dry, with few plants", False), opt("They are just the same", False)], "why": "The card says the pond is wet, with many plants and animals; the car park has few of either."},
               ]},
              "You found every answer in the card."),
 
@@ -109,7 +111,7 @@ LESSON = {
                   {"pic": "\U0001F3DE️", "label": "park", "value": 4},
                   {"pic": "\U0001F697", "label": "car park", "value": 1},
               ],
-              "pattern": {"ask": "Look at your graph. Where did the class find the MOST animals?",
+              "pattern": {"ask": "Look at your graph. Where did the class find the <b>most</b> animals?",
                           "opts": [opt("the pond, the tallest column", True), opt("the car park, the shortest column", False), opt("they were all the same", False)],
                           "why": "The pond column is the tallest: eight animals. The car park, with one, is the shortest. Wetter places with more plants had more animals."}},
              "A block graph shows the most and the least at a glance."),
@@ -129,12 +131,13 @@ LESSON = {
                           "why": "Watching is observing; a fact book is a secondary source. Both are ways scientists find out."}},
              "Ask, then watch or look it up."),
 
-        step("context", "Looking after habitats", "\U0001F49A", "Habitat carer", ["2SIC.04", "2Be.01"],
+        step("context", "Looking after habitats", "\U0001F49A", "Habitat carer", ["2SIC.04", "2Be.01", "2ESp.03"],
              "What people do can change a habitat. Tap each picture.",
              explain(
                  ["Because we know what living things need from their habitat, we can see how what we do affects them."],
                  ["Rubbish in a pond can hurt the frogs and fish.", "Cutting down a forest takes away the deer's home.",
-                  "Planting flowers gives bees a habitat.", "A pile of logs in a corner gives beetles somewhere to live."],
+                  "Planting flowers gives bees a habitat.", "A pile of logs in a corner gives beetles somewhere to live.",
+                  "Building on a wild field changes the whole place: what people do changes the environment."],
                  [],
                  ["Tap each picture, then answer the question."]),
              {"items": [
@@ -142,8 +145,9 @@ LESSON = {
                  {"pic": "\U0001FA93", "label": "cutting down a forest", "say": "Cut down a forest and the deer, birds and squirrels lose their habitat."},
                  {"pic": "\U0001F33B", "label": "planting flowers", "say": "Plant flowers and bees and butterflies get a habitat with food in it."},
                  {"pic": "\U0001FAB5", "label": "a log pile", "say": "A pile of logs left in a corner becomes a habitat for beetles, woodlice and hedgehogs."},
-             ], "need": 4,
-              "then": {"ask": "Which of these HELPS the animals in a habitat?",
+                 {"pic": "\U0001F3D7️", "label": "building on a wild field", "say": "Build houses on a wild field and the flowers, insects and rabbits that lived there lose their habitat. What people do can change the environment, for better or for worse."},
+             ], "need": 5,
+              "then": {"ask": "Which of these <b>helps</b> the animals in a habitat?",
                        "opts": [opt("Leaving a log pile and planting flowers", True), opt("Throwing rubbish in the pond", False), opt("Cutting down all the trees", False)],
                        "why": "Log piles and flowers give living things a place to live and food to eat."}},
              "What we do changes habitats. Science helps us see how."),
@@ -159,11 +163,12 @@ LESSON = {
                  q("What is a habitat?", "\U0001F3E1", "the place where a plant or animal naturally lives", ["a kind of food", "a pet's name", "a kind of weather"], "A habitat is where a living thing naturally lives and finds what it needs."),
                  q("Which animal lives in a pond?", "\U0001F438", "a frog", ["a camel", "a polar bear", "a squirrel"], "Frogs need water; a pond is their habitat."),
                  q("Which habitat is hot and dry?", "☀️", "a desert", ["a pond", "the Arctic", "a forest"], "Deserts are hot and dry."),
-                 q("A polar bear has thick fur and fat. Which habitat suits it?", "\U0001F43B‍❄️", "the icy Arctic", ["a desert", "a pond", "a garden"], "Thick fur and fat keep it warm in the cold."),
-                 q("A garden and a car park. Which has MORE animals?", "\U0001F41C", "the garden", ["the car park", "the same"], "More plants means more food and hiding places, so more animals."),
+                 q("A polar bear has thick fur and fat. Which habitat suits it?", icon("polarbear"), "the icy Arctic", ["a desert", "a pond", "a garden"], "Thick fur and fat keep it warm in the cold."),
+                 q("A garden and a car park. Which has more animals?", "\U0001F41C", "the garden", ["the car park", "the same"], "More plants means more food and hiding places, so more animals."),
                  q("In a block graph, the tallest column shows...", "\U0001F4CA", "the biggest number", ["the smallest number", "the wettest place"], "Taller column, bigger number."),
-                 q("Which of these HARMS a pond habitat?", "\U0001F5D1️", "throwing rubbish in it", ["planting reeds beside it", "leaving it alone"], "Rubbish traps and poisons pond animals."),
+                 q("Which of these harms a pond habitat?", "\U0001F5D1️", "throwing rubbish in it", ["planting reeds beside it", "leaving it alone"], "Rubbish traps and poisons pond animals."),
                  q("Why does a forest hold different animals from a desert?", "\U0001F333", "each animal suits the place it lives in", ["animals choose at random", "all animals live everywhere"], "Different habitats hold different living things because each suits its place."),
+                 q("Why could a frog not live in a desert?", "\U0001F438", "a desert is too dry, and a frog needs water", ["a desert is too cold", "a frog does not like the colour of sand"], "A frog's habitat must give it water for its wet skin and its eggs. A dry desert cannot."),
              ]},
              "That is the whole lesson finished. You know where living things live."),
     ],
@@ -179,11 +184,16 @@ LESSON["about"] = [
     "Count animals and show them in a block graph.",
 ]
 
+LESSON["warmup"] = [
+    q("Where does a fish live?", "\U0001F41F", "in water", ["in a tree", "in the sand"], "A fish needs water, so it lives in a pond, a river or the sea."),
+    q("Which place is very cold and icy?", "\U0001F9CA", "the Arctic", ["a desert", "a sunny beach"], "The Arctic, at the top of the world, is icy cold all year."),
+]
+
 LESSON["lecture"] = [
     part("\U0001F3DE\uFE0F", "What a habitat is",
-         "A habitat is where a living thing naturally lives. A pond is a habitat. So is a desert, a forest and the icy Arctic. A habitat gives a living thing what it needs."),
+         "A habitat is where a living thing naturally lives. A pond is a habitat. So are a desert, a forest and the icy Arctic. A habitat gives a living thing what it needs."),
     part("\U0001F438", "The pond",
-         "A pond is wet. Frogs, ducks, fish and water plants live there. A frog's smooth skin and long legs suit a pond. A camel would not last a day."),
+         "A pond is wet. Frogs, ducks, fish and water plants live there. A frog's smooth skin and long legs suit a pond. A camel's habitat is the dry desert."),
     part("\U0001F42A", "The desert and the Arctic",
          "A desert is hot and dry. A camel can go days without water. The Arctic is icy. A polar bear's thick fur keeps it warm. Each animal suits its habitat."),
     part("\U0001F4CA", "Counting and graphing",
@@ -210,18 +220,19 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("Minibeast count", "A garden, a park or a window box, a magnifying glass, paper",
-         ["Look under a stone, a log or a leaf. Put it back gently afterwards.",
-          "Count each kind: ants, woodlice, snails, worms, spiders.",
-          "Draw a block graph: one block per animal."],
+    home("Minibeast count", "A grown-up, a garden, a park or a window box, a magnifying glass, paper",
+         ["Go outside with a grown-up. Look under a stone, a log or a leaf, and put it back gently afterwards.",
+          "Count each kind: ants, woodlice, snails, worms, spiders. Look, do not touch.",
+          "Draw a block graph: one block per animal.",
+          "Wash your hands afterwards."],
          "Which spot had the most? Damp, dark places are full of life."),
     home("Make a log pile", "A few logs or sticks, a shady corner, a grown-up",
          ["Pile the logs loosely in a shady, damp corner.",
           "Leave it alone for two weeks.",
           "Lift one log and look under it. Put it back."],
          "Who has moved in? A log pile is a habitat you made."),
-    home("Hot or cold, wet or dry", "Your street or garden",
-         ["Find the hottest spot and the coldest spot outside.",
+    home("Hot or cold, wet or dry", "Your street or garden, and a grown-up",
+         ["Go outside with a grown-up. Find the hottest spot and the coldest spot.",
           "Find the wettest and the driest.",
           "Say which animal or plant you found in each."],
          "Moss in the damp shade, ants on the warm path."),

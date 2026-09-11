@@ -77,7 +77,7 @@ LESSON = {
                  q("Which part catches sunlight and makes food?", "☀️", "leaves", ["roots", "flower", "stem"], "The green leaves catch the sunlight."),
                  q("Which part makes the seeds?", "\U0001F330", "flower", ["roots", "leaves", "stem"], "The flower makes seeds for new plants."),
                  q("Which part holds the plant up tall?", "\U0001F33F", "stem", ["roots", "flower", "leaves"], "The stem is the stalk that holds the plant up."),
-                 q("Which part is hidden under the soil?", "\U0001F33E", "roots", ["flower", "leaves", "stem"], "The roots grow down into the soil."),
+                 q("Which part is hidden under the soil?", icon("soil"), "roots", ["flower", "leaves", "stem"], "The roots grow down into the soil."),
                  q("Which part is usually the most colourful?", "\U0001F3A8", "flower", ["roots", "stem", "leaves"], "Flowers are colourful to attract bees and other insects."),
              ]},
              "You know the parts of a plant and what each one does."),
@@ -149,7 +149,7 @@ LESSON = {
              {"items": [
                  {"pic": icon("wateringcan"), "label": "watering can", "say": "Pour gently at the soil, near the roots. Not on the flower. Stop when the soil is damp."},
                  {"pic": "\U0001F50D", "label": "magnifying glass", "say": "Hold it near your eye and move the leaf closer until it looks sharp. Never point it at the sun."},
-                 {"pic": "\U0001F33E", "label": "trowel", "say": "Hold the handle and dig a small hole. Keep it pointing down, away from other people."},
+                 {"pic": icon("trowel"), "label": "trowel", "say": "Hold the handle and dig a small hole. Keep it pointing down, away from other people."},
                  {"pic": "\U0001F9E4", "label": "gloves", "say": "Gloves keep soil off your hands. Wash your hands afterwards anyway."},
                  {"pic": "\U0001F4CF", "label": "ruler", "say": "Put the zero end at the bottom of the plant and read the number at the top."},
              ], "need": 5,
@@ -244,7 +244,7 @@ LESSON["lecture"] = [
 ]
 
 LESSON["words"] = [
-    word("roots", "\U0001F33F", "The parts of a plant under the soil. They hold it in the soil and take in water.",
+    word("roots", icon("roots"), "The parts of a plant under the soil. They hold it in the soil and take in water.",
          ["The roots grow down into the soil.", "Pull up a weed and you can see its roots."]),
     word("stem", "\U0001F331", "The part that holds a plant up and carries water to the leaves.",
          ["A sunflower has a tall stem.", "Water goes up the stem to the leaves."]),
@@ -271,9 +271,9 @@ LESSON["home"] = [
           "Water both the same.",
           "After four days, put them side by side."],
          "The plant from the dark is pale, thin and floppy."),
-    home("Measure a plant in cubes", "A plant, some building bricks or sugar cubes",
-         ["Stand the bricks in a tower next to the plant.",
-          "Count the bricks up to the top leaf.",
+    home("Measure a plant in cubes", "A plant, some building cubes or sugar cubes",
+         ["Stand the cubes in a tower next to the plant.",
+          "Count the cubes up to the top leaf.",
           "Do it again in a week."],
          "Did the number go up? By how many?"),
 ]

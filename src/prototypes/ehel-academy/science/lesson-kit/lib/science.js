@@ -235,8 +235,15 @@
       const stars = '<g fill="#fff"><circle cx="40" cy="40" r="2.5"/><circle cx="90" cy="90" r="1.8"/><circle cx="150" cy="30" r="2"/><circle cx="210" cy="70" r="2.6"/><circle cx="270" cy="40" r="1.8"/><circle cx="240" cy="130" r="2"/><circle cx="60" cy="140" r="1.6"/><circle cx="120" cy="150" r="2.2"/><circle cx="290" cy="110" r="1.6"/><circle cx="180" cy="120" r="1.4"/></g>';
       const ground = '<rect x="0" y="200" width="320" height="60" fill="' + (s === 0 ? "#173B2A" : "#3E8E4A") + '"/>';
       if (s === 0) return '<svg viewBox="0 0 320 260" role="img" aria-label="The night sky, full of stars"><rect width="320" height="200" fill="#0B1D2C"/>' + stars + ground + "</svg>";
-      if (s === 1) return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun rising"><rect width="320" height="200" fill="#F0A56B"/><circle cx="160" cy="200" r="46" fill="#F4C95D"/>' + ground + "</svg>";
-      if (s === 2) return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun high in a blue sky"><rect width="320" height="200" fill="#BFE3F5"/><circle cx="250" cy="60" r="36" fill="#F4C95D"/>' + ground + "</svg>";
+      /* East on the left, west on the right, in every state and in sunPath: the
+         Sun rises low on one side, is highest at midday, and sets low on the OTHER
+         side. Sunrise and sunset used to be the same picture, a centred Sun, so a
+         lesson teaching the path across the sky could not show it (validation of
+         Grade 2, 2026-09-11). State 4 is the sunset. */
+      const compass = '<text x="12" y="248" font-size="15" font-family="Inter, sans-serif" font-weight="800" fill="#fff">east</text><text x="308" y="248" text-anchor="end" font-size="15" font-family="Inter, sans-serif" font-weight="800" fill="#fff">west</text>';
+      if (s === 1) return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun rising in the east"><rect width="320" height="200" fill="#F0A56B"/><circle cx="62" cy="200" r="40" fill="#F4C95D"/>' + ground + compass + "</svg>";
+      if (s === 2) return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun high in a blue sky at midday"><rect width="320" height="200" fill="#BFE3F5"/><circle cx="160" cy="48" r="34" fill="#F4C95D"/>' + ground + compass + "</svg>";
+      if (s === 4) return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun setting in the west"><rect width="320" height="200" fill="#E07A6B"/><circle cx="258" cy="200" r="40" fill="#F4C95D"/>' + ground + compass + "</svg>";
       return '<svg viewBox="0 0 320 260" role="img" aria-label="The Sun drawn as a star among stars"><rect width="320" height="260" fill="#0B1D2C"/>' + stars +
         '<g stroke="#F4C95D" stroke-width="6" stroke-linecap="round">' + [0, 45, 90, 135, 180, 225, 270, 315].map((a) => '<line x1="160" y1="130" x2="160" y2="30" transform="rotate(' + a + ' 160 130)"/>').join("") + "</g>" +
         '<circle cx="160" cy="130" r="58" fill="#F4C95D"/><text x="160" y="240" text-anchor="middle" fill="#fff" font-size="18" font-family="Inter, sans-serif" font-weight="800">The Sun is a star</text></svg>';
@@ -1192,7 +1199,10 @@
       '<text x="70" y="150" font-size="40">\u{1F438}</text><text x="200" y="120" font-size="40">\u{1F986}</text><text x="130" y="185" font-size="34">\u{1F41F}</text><text x="250" y="180" font-size="34">\u{1F33F}</text>',
       '<text x="60" y="170" font-size="44">\u{1F42A}</text><text x="200" y="160" font-size="40">\u{1F335}</text><text x="260" y="180" font-size="30">\u{1F98E}</text><text x="130" y="185" font-size="30">\u{1F982}</text>',
       '<text x="40" y="120" font-size="48">\u{1F333}</text><text x="220" y="120" font-size="48">\u{1F333}</text><text x="120" y="180" font-size="36">\u{1F98C}</text><text x="230" y="185" font-size="30">\u{1F344}</text><text x="170" y="100" font-size="26">\u{1F426}</text>',
-      '<text x="60" y="170" font-size="44">\u{1F43B}‍❄️</text><text x="200" y="175" font-size="40">\u{1F427}</text><text x="130" y="110" font-size="30">❄️</text><text x="260" y="100" font-size="30">❄️</text>',
+      /* the Arctic: a polar bear and a seal. Penguins live in the far SOUTH, and the
+         polar-bear emoji is an Emoji 13 sequence older devices split into a brown
+         bear and a snowflake, so both are the kit's own drawings. */
+      glyphAt(85, 172, 50, ICONS.polarbear) + glyphAt(222, 177, 44, ICONS.seal) + '<text x="130" y="110" font-size="30">❄️</text><text x="260" y="100" font-size="30">❄️</text>',
     ][s];
     const name = ["A pond", "A desert", "A forest", "The icy Arctic"][s];
     return '<svg viewBox="0 0 320 200" role="img" aria-label="' + name + '"><rect width="320" height="200" fill="' + sky + '"/><rect x="0" y="130" width="320" height="70" fill="' + ground + '"/>' + (s === 1 ? '<circle cx="270" cy="40" r="26" fill="#F4C95D"/>' : "") + items + "</svg>";

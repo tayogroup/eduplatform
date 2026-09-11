@@ -2,7 +2,7 @@
 """Lesson 10 - The Sun Across the Sky.
 
 0097 Stage 2: 2ESs.01 the apparent movement of the Sun during the day; with
-2TWSm.02, 2TWSp.02, 2TWSa.01, 2TWSa.02, 2TWSa.03, 2TWSc.03, 2TWSc.04,
+2TWSc.02, 2TWSp.02, 2TWSa.01, 2TWSa.02, 2TWSa.03, 2TWSc.03, 2TWSc.04,
 2TWSc.06, 2SIC.01 and 2SIC.03.
 """
 from _kit import explain, step, opt, q, part, word, home
@@ -20,11 +20,11 @@ LESSON = {
                  ["Children think the Sun goes straight up and straight down in the same place.", "It comes up on one side and goes down on the other."],
                  ["Press Next and say where the Sun is each time."]),
              {"frames": [
-                 {"scene": {"id": "sky", "state": 0}, "cap": "Night. The Sun is below the ground on the far side of the Earth.", "say": "Night. No Sun in the sky. It is lighting the other side of the Earth."},
+                 {"scene": {"id": "sky", "state": 0}, "cap": "Night. Our side of the Earth is turned away from the Sun.", "say": "Night. No Sun in the sky. Our side of the Earth is turned away from the Sun, and the Sun is lighting the other side."},
                  {"scene": {"id": "sky", "state": 1}, "cap": "<b>Sunrise</b>: the Sun comes up in the <b>east</b>.", "say": "Sunrise. The Sun comes up low in the east."},
                  {"scene": {"id": "sky", "state": 2}, "cap": "<b>Midday</b>: the Sun is at its <b>highest</b>.", "say": "Midday. The Sun has climbed to its highest point."},
-                 {"scene": {"id": "sky", "state": 1}, "cap": "<b>Sunset</b>: the Sun goes down in the <b>west</b>.", "say": "Sunset. The Sun sinks down and disappears in the west, the opposite side from where it rose."},
-                 {"pic": "\U0001F305➡️☀️➡️\U0001F307", "cap": "East, up high, west. The same path <b>every day</b>.", "say": "East in the morning, high at midday, west in the evening. The same path every single day."},
+                 {"scene": {"id": "sky", "state": 4}, "cap": "<b>Sunset</b>: the Sun goes down in the <b>west</b>.", "say": "Sunset. The Sun sinks down and disappears in the west, the opposite side from where it rose."},
+                 {"pic": "\U0001F305➡️☀️➡️\U0001F307", "cap": "East, up high, west. Nearly the same path <b>each day</b>.", "say": "East in the morning, high at midday, west in the evening. Nearly the same path each day."},
              ]},
              "The Sun rises in the east, is highest at midday, and sets in the west."),
 
@@ -59,7 +59,7 @@ LESSON = {
                   {"pic": "☀️", "label": "the midday shadow", "units": 1},
                   {"pic": "\U0001F307", "label": "the 3 o'clock shadow", "units": 3},
               ],
-              "compare": {"ask": "Morning 3 hands, midday 1 hand, afternoon 3 hands. When was the shadow SHORTEST?",
+              "compare": {"ask": "Morning 3 hands, midday 1 hand, afternoon 3 hands. When was the shadow <b>shortest</b>?",
                           "opts": [opt("at midday, when the Sun was highest", True), opt("at 9 o'clock", False), opt("at 3 o'clock", False)],
                           "why": "1 hand is the shortest. The higher the Sun, the shorter the shadow."}},
              "Long, short, long. The shadow measured in hands."),
@@ -115,10 +115,10 @@ LESSON = {
              ]},
              "Sunrise, morning, midday, afternoon, sunset. Every day."),
 
-        step("demo", "Make a shadow clock", "\U0001F570️", "Model maker", ["2TWSm.02", "2ESs.01"],
-             "You can <b>make a model</b> that shows the Sun's movement: a shadow clock. Press <b>Next</b>.",
+        step("demo", "Make a shadow clock", "\U0001F570️", "Clock maker", ["2TWSc.02", "2ESs.01", "2TWSm.02"],
+             "You can make a <b>shadow clock</b> that uses the Sun's movement to tell the time. Press <b>Next</b>.",
              explain(
-                 ["A model is something you make that works like the real thing and shows an idea.", "A shadow clock is a model of the Sun's day."],
+                 ["A shadow clock is a simple tool that tells the time from the Sun's shadow.", "It only needs a stick, a pot and some stones, used the right way."],
                  ["A stick in a pot of sand, in a sunny place.", "Every hour, mark where the tip of the shadow is and write the time.",
                   "By evening the marks make a curve, and tomorrow the shadow will touch each mark at the same time."],
                  ["Children move the pot between marks.", "The pot must stay exactly where it is all day, or the marks mean nothing."],
@@ -127,9 +127,10 @@ LESSON = {
                  {"pic": "\U0001FAB4", "cap": "A stick standing up in a pot of sand, in a sunny spot outside.", "say": "Push a stick into a pot of sand and stand it in a sunny spot outside. Do not move the pot all day."},
                  {"pic": "\U0001F305", "cap": "At 9 o'clock, put a stone where the shadow's tip is. Write 9.", "say": "At nine o'clock, put a small stone where the tip of the shadow is, and write nine on it."},
                  {"pic": "☀️", "cap": "Every hour, another stone. The shadow swings round and gets shorter, then longer.", "say": "Every hour, put another stone at the shadow's tip. Watch the shadow swing round and shrink, then grow."},
-                 {"pic": "\U0001F570️", "cap": "By evening the stones make a curve: a <b>model</b> of the Sun's day. Tomorrow it tells the time.", "say": "By evening the stones make a curve. That is a model of the Sun's day. Tomorrow, the shadow will touch each stone at the same time, and your model tells the time."},
+                 {"pic": "\U0001F570️", "cap": "By evening the stones make a curve that follows the Sun's day. Tomorrow it tells the <b>time</b>.", "say": "By evening the stones make a curve that follows the Sun across the sky. Tomorrow, the shadow will touch each stone at the same time, and your shadow clock tells the time."},
+                 {"pic": "🔦", "cap": "No sun today? Make a <b>model</b>: a torch is the Sun, a pencil in play dough is the stick.", "say": "No sun today? Make a model of the Sun's day. A torch is the Sun, and a pencil standing in play dough is the stick. Hold the torch low on one side, then high over the top, then low on the other side, and watch the pencil's shadow swing round and change length."},
              ]},
-             "A shadow clock is a model you can make of the Sun's movement."),
+             "A shadow clock uses the Sun's moving shadow to tell the time."),
 
         step("context", "What people thought the Sun was doing", "\U0001F52D", "Sky watchers", ["2SIC.01", "2SIC.03"],
              "People have always watched the Sun cross the sky. Tap each picture.",
@@ -145,12 +146,12 @@ LESSON = {
                  {"pic": "\U0001F3A0", "label": "the roundabout", "say": "On a roundabout the playground seems to whirl past you. It is you that is turning. The Sun is like that."},
                  {"pic": "\U0001F52D", "label": "astronomers", "say": "Astronomers are the scientists who study the sky. Shadow clocks like yours were among their first tools, thousands of years ago."},
              ], "need": 4,
-              "then": {"ask": "Why does the Sun SEEM to move across the sky?",
+              "then": {"ask": "Why does the Sun <b>seem</b> to move across the sky?",
                        "opts": [opt("Because the Earth is turning", True), opt("Because the Sun flies round us", False), opt("Because of the wind", False)],
                        "why": "What people knew changed: it is the Earth that turns, and the Sun only seems to move."}},
              "It looks as if the Sun moves. It is the Earth that turns."),
 
-        step("quiz", "Show what you know", "⭐", "Star scientist", ["2ESs.01", "2TWSa.02", "2TWSm.02"],
+        step("quiz", "Show what you know", "⭐", "Star scientist", ["2ESs.01", "2TWSa.02"],
              "Time to show what you know. Tap the answer.",
              explain(
                  ["No new ideas here.", "Every question uses something you have already done in this lesson."],
@@ -164,8 +165,9 @@ LESSON = {
                  q("When is a stick's shadow shortest?", "\U0001F4CF", "at midday, when the Sun is highest", ["at 9 o'clock", "at sunset"], "The higher the Sun, the shorter the shadow."),
                  q("Which way does a shadow point?", "\U0001F311", "away from the Sun", ["towards the Sun", "always north"], "The shadow is on the opposite side of the stick from the Sun."),
                  q("What pattern did the shadow graph show?", "\U0001F4CA", "shorter towards midday, then longer again", ["longer all day", "the same all day"], "Down, then up."),
-                 q("A shadow clock is a...", "\U0001F570️", "model of the Sun's day", ["real clock with batteries", "picture"], "A model you make that shows the idea."),
-                 q("Why does the Sun SEEM to move across the sky?", "\U0001F504", "the Earth is turning", ["the Sun flies round the Earth", "clouds push it"], "It is the Earth that turns; the Sun only seems to move."),
+                 q("A shadow clock tells the time using...", "\U0001F570️", "the shadow made by the Sun", ["batteries inside it", "the light of the Moon at midday"], "As the Sun moves across the sky, the shadow moves round, so the shadow shows the time."),
+                 q("Why does the Sun seem to move across the sky?", "\U0001F504", "the Earth is turning", ["the Sun flies round the Earth", "clouds push it"], "It is the Earth that turns; the Sun only seems to move."),
+                 q("Why is your shadow short at midday?", "☀️", "the Sun is high in the sky", ["the Sun is low in the east", "your body shrinks at lunchtime"], "When the Sun is high, its light comes from above you, so your shadow is short."),
              ]},
              "That is the whole lesson finished, and the whole of Grade 2 Science."),
     ],
@@ -179,6 +181,11 @@ LESSON["about"] = [
     "Measure a shadow through the day and record it.",
     "Graph the shadows and read the pattern.",
     "Put a day's events in order.",
+]
+
+LESSON["warmup"] = [
+    q("When is it dark outside?", "\U0001F319", "at night", ["at midday", "in the afternoon"], "At night our side of the Earth is turned away from the Sun."),
+    q("What makes your shadow on a sunny day?", "\U0001F464", "your body blocking the Sun's light", ["the wind", "the grass"], "A shadow is the dark shape where something blocks the light."),
 ]
 
 LESSON["lecture"] = [
@@ -213,17 +220,20 @@ LESSON["words"] = [
 
 LESSON["home"] = [
     home("Shadow clock", "A stick, a pot of sand or soil, some small stones, a sunny day",
-         ["Stand the stick in the pot in a sunny place.",
+         ["Never look straight at the Sun. Look at the shadow on the ground instead.",
+          "Stand the stick in the pot in a sunny place.",
           "Every hour, put a stone at the tip of the shadow.",
           "By evening, look at the curve of stones."],
          "The shadow swings round and changes length. Shortest at midday."),
     home("Sunrise and sunset watch", "A window, a grown-up, a clock",
-         ["Note where in the sky the Sun comes up. Which side of the house?",
+         ["Never look straight at the Sun, not even through a window.",
+          "Note where in the sky the Sun comes up. Which side of the house?",
           "Note where it sets. Which side?",
           "Do it again the next day."],
-         "The same sides both days. East and west. Never look straight at the Sun."),
-    home("Measure your own shadow", "A sunny day, a friend, chalk or a tape measure",
-         ["At nine, midday and three, stand on the same spot.",
+         "The same sides both days. East and west."),
+    home("Measure your own shadow", "A sunny day, a friend, chalk",
+         ["Never look straight at the Sun. Look at your shadow on the ground instead.",
+          "At nine, midday and three, stand on the same spot.",
           "A friend marks the end of your shadow.",
           "Measure each one in foot-lengths and write them down."],
          "Long, short, long."),

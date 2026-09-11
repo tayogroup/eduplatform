@@ -5,7 +5,7 @@
 is the absence of light; 2TWSm.01 a model represents an idea; with 2TWSp.01,
 2TWSp.02, 2TWSa.01, 2TWSc.01 and 2SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 RAY_MODEL = ('<svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#0E2434"/><circle cx="24" cy="45" r="12" fill="#F4C95D"/>'
              '<g stroke="#F4C95D" stroke-width="2"><line x1="36" y1="45" x2="130" y2="20"/><line x1="36" y1="45" x2="130" y2="45"/><line x1="36" y1="45" x2="130" y2="70"/></g>'
@@ -24,7 +24,7 @@ LESSON = {
                  ["Children say the Moon is a light source.", "The Moon makes no light of its own. It only shines back the Sun's light, like a mirror."],
                  ["Tap all eight and say the source out loud."]),
              {"items": [
-                 {"pic": "☀️", "label": "the Sun", "say": "The Sun. The biggest light source there is. Daylight is sunlight."},
+                 {"pic": "☀️", "label": "the Sun", "say": "The Sun. The biggest light source we have. Daylight is sunlight."},
                  {"pic": "\U0001F4A1", "label": "a lamp", "say": "A lamp makes light from electricity."},
                  {"pic": "\U0001F56F️", "label": "a candle", "say": "A candle flame makes light as the wax burns."},
                  {"pic": "\U0001F526", "label": "a torch", "say": "A torch makes light from its battery."},
@@ -33,7 +33,7 @@ LESSON = {
                  {"pic": "\U0001F4FA", "label": "a screen", "say": "A television or phone screen makes its own light. That is why you can see it in the dark."},
                  {"pic": "\U0001F41B", "label": "a glow-worm", "say": "A glow-worm is an animal that makes its own light at night."},
              ], "need": 8},
-             "A light source makes its own light. The Sun is the biggest."),
+             "A light source makes its own light. The Sun is the biggest we have."),
 
         step("sort", "Source, or not?", "\U0001F5C2️", "Source spotter", ["2Ps.01", "2TWSc.01"],
              "Does this <b>make</b> light, or only shine light back? Tap the right bin.",
@@ -50,7 +50,7 @@ LESSON = {
                   {"pic": "\U0001F319", "label": "the Moon", "bin": "no", "why": "The Moon only shines back the Sun's light."},
                   {"pic": "\U0001FA9E", "label": "a mirror", "bin": "no", "why": "A mirror bounces light back. In a dark room it is dark."},
                   {"pic": "\U0001F56F️", "label": "a candle", "bin": "yes", "why": "A candle flame makes light."},
-                  {"pic": "\U0001F408‍⬛", "label": "a cat's shining eyes", "bin": "no", "why": "A cat's eyes shine back the torch light. In the dark they are dark."},
+                  {"pic": "\U0001F431", "label": "a cat's shining eyes", "bin": "no", "why": "A cat's eyes shine back the torch light. In the dark they are dark."},
                   {"pic": "\U0001F526", "label": "a torch", "bin": "yes", "why": "A torch makes light from its battery."},
                   {"pic": "\U0001F4C4", "label": "white paper", "bin": "no", "why": "White paper looks bright because it bounces light back. It makes none."},
                   {"pic": "\U0001F525", "label": "a fire", "bin": "yes", "why": "A fire makes its own light."},
@@ -60,7 +60,7 @@ LESSON = {
              "Makes light, or only shines it back. The dark cupboard test tells you."),
 
         step("experiment", "Total darkness", "\U0001F9EA", "Dark room", ["2Ps.02", "2TWSp.02", "2TWSa.01"],
-             "What is darkness? Predict, then close the curtains and switch the lamp off.",
+             "What is darkness? Predict, then close the curtains and switch the lamp off. At the end, switch the lamp back on.",
              explain(
                  ["Darkness is not a thing. Darkness is what is left when there is no light."],
                  ["Predict: with the curtains shut and the lamp off, what will you see?",
@@ -68,7 +68,7 @@ LESSON = {
                  ["Children think darkness comes in, like fog.", "Nothing comes in. The light went out, and darkness is the absence of light."],
                  ["Tap your prediction, close the curtains, switch off the lamp, look, then switch it on again."]),
              {"sim": "darkRoom",
-              "predict": {"ask": "Curtains shut AND lamp off. What do you think you will see?",
+              "predict": {"ask": "Curtains shut <b>and</b> lamp off. What do you think you will see?",
                           "opts": [opt("Nothing at all. It will be completely dark", True), opt("Everything, just a bit greyer", False), opt("Only the cat", False)]},
               "runAsk": "Close the curtains. Then switch the lamp off. Look. Then switch the lamp back on.",
               "happened": {"ask": "What happened with no light source left?",
@@ -76,7 +76,7 @@ LESSON = {
                            "why": "With every light source gone there was nothing to see by. Darkness is the absence of light. Switching the lamp on brought the light, and the seeing, back."}},
              "Darkness is what is left when there is no light."),
 
-        step("demo", "A model of light", "\U0001F4D0", "Model maker", ["2TWSm.01", "2TWSm.03", "2Ps.01"],
+        step("demo", "A model of light", "\U0001F4D0", "Model maker", ["2TWSm.01", "2Ps.01"],
              "Light is hard to see moving, so scientists draw a <b>model</b> of it. Press <b>Next</b>.",
              explain(
                  ["A model is a clear way of showing an object or an idea, so that people can think about it.", "It is not the real thing. It leaves things out on purpose."],
@@ -107,12 +107,13 @@ LESSON = {
                           "why": "Trying it and measuring is an experiment. That is how scientists find out."}},
              "Ask, then test it in the dark with a torch."),
 
-        step("context", "What people thought about light", "\U0001F56F️", "Long ago", ["2SIC.01"],
+        step("context", "What people thought about light", "\U0001F56F️", "Long ago", ["2SIC.01", "2SIC.03"],
              "People have not always understood light. Tap each picture.",
              explain(
                  ["What people know about light has changed over thousands of years."],
-                 ["Long ago some people thought our eyes sent out beams to see with.", "Now we know light comes FROM sources INTO our eyes; in the dark room you saw that with no light you see nothing.",
-                  "Long ago the only light after sunset was fire.", "Now we have lamps at the flick of a switch."],
+                 ["Long ago some people thought our eyes sent out beams to see with.", "Now we know light comes from sources into our eyes; in the dark room you saw that with no light you see nothing.",
+                  "Long ago the only light after sunset was fire.", "Now we have lamps at the flick of a switch.",
+                  "Today some people use the science of light as their job, like a photographer."],
                  [],
                  ["Tap each picture and compare then with now."]),
              {"items": [
@@ -120,9 +121,10 @@ LESSON = {
                  {"pic": "\U0001F525", "label": "fire for light", "say": "For most of history the only light after sunset was fire: torches, candles, oil lamps. Nights were dark."},
                  {"pic": "\U0001F4A1", "label": "the electric lamp", "say": "About a hundred and fifty years ago people worked out how to make light with electricity. Now a whole city lights up at night."},
                  {"pic": "\U0001F52D", "label": "now", "say": "Now scientists know that light travels in straight lines, very fast, and they can draw a model of it, the one you saw."},
-             ], "need": 4,
+                 {"pic": "\U0001F4F7", "label": "a photographer", "say": "A photographer uses the science of light every day. With no light there is no photo, so they bring lamps and flashes to light up what they take a picture of."},
+             ], "need": 5,
               "then": {"ask": "Long ago some people thought eyes sent out light. What did the dark room show?",
-                       "opts": [opt("With no light source you see nothing, so light must come INTO the eyes", True), opt("Eyes glow in the dark", False), opt("The cat was the light source", False)],
+                       "opts": [opt("With no light source you see nothing, so light must come into the eyes", True), opt("Eyes glow in the dark", False), opt("The cat was the light source", False)],
                        "why": "What people knew changed by testing. In total darkness nobody sees anything."}},
              "What people knew about light has changed, by testing."),
 
@@ -151,13 +153,14 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("Which of these makes its own light?", "❓", "the Sun", ["the Moon", "a mirror", "a diamond"], "The Sun is a light source; the others shine light back."),
-                 q("Which of these is NOT a light source?", "❓", "a mirror", ["a torch", "a fire", "a lamp"], "A mirror only bounces light."),
+                 q("Which of these is not a light source?", "❓", "a mirror", ["a torch", "a fire", "a lamp"], "A mirror only bounces light."),
                  q("What is darkness?", "\U0001F311", "the absence of light", ["a black fog", "cold air"], "Darkness is what is left when the light is gone."),
-                 q("In the experiment, what made the room completely dark?", "\U0001F6AA", "shutting the curtains AND switching the lamp off", ["only shutting the curtains", "the cat"], "Every light source had to be gone."),
+                 q("In the experiment, what made the room completely dark?", "\U0001F6AA", "shutting the curtains and switching the lamp off", ["only shutting the curtains", "the cat"], "Every light source had to be gone."),
                  q("A drawing of straight lines from a lamp to an eye is a...", "\U0001F4D0", "model of how light travels", ["photo of light", "picture of a lamp"], "A model shows an idea clearly."),
                  q("A globe is a model of...", "\U0001F30D", "the Earth", ["the Sun", "a ball", "the Moon"], "A globe shows the Earth's shape and seas."),
                  q("Long ago some people thought eyes sent out light. Why is that wrong?", "\U0001F441️", "in total darkness you see nothing, so light must come into the eyes", ["because eyes are round", "because torches exist"], "Testing showed light comes from sources into our eyes."),
                  q("Why can you see a screen in a dark room?", "\U0001F4FA", "the screen makes its own light", ["the room is not really dark", "screens are mirrors"], "A switched-on screen is a light source."),
+                 q("Why can a mirror not help you see in a room with no light at all?", icon("mirror"), "a mirror only shines light back, and there is no light to shine back", ["mirrors only work in the morning", "the mirror is too small"], "A mirror is not a light source. With no light in the room, there is nothing for it to bounce back."),
              ]},
              "That is the whole lesson finished. You know where light comes from."),
     ],
@@ -171,6 +174,11 @@ LESSON["about"] = [
     "Tell a light source from something that only shines light back.",
     "Say what darkness is.",
     "Say what a model is and why scientists use them.",
+]
+
+LESSON["warmup"] = [
+    q("When would you need a torch to see?", "\U0001F526", "in the dark", ["on a sunny afternoon", "in a bright room"], "A torch gives light where there is none."),
+    q("What lights up the sky in the daytime?", "❓", "the Sun", ["the Moon", "a mirror"], "The Sun makes its own light, and daylight is sunlight."),
 ]
 
 LESSON["lecture"] = [
@@ -190,7 +198,7 @@ LESSON["words"] = [
     word("light", "\u2600\uFE0F", "What lets you see. It comes from a light source.",
          ["Light comes from the Sun.", "Without light you cannot see."]),
     word("light source", "\U0001F526", "Something that makes its own light.",
-         ["A torch is a light source.", "The Sun is the biggest light source."]),
+         ["A torch is a light source.", "The Sun is the biggest light source we have."]),
     word("dark", "\U0001F311", "No light at all.",
          ["The cupboard is dark inside.", "At night, without lamps, it is dark."]),
     word("reflect", "\U0001FA9E", "To shine light back.",
@@ -204,11 +212,12 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("The dark cupboard test", "A torch, a mirror, a shiny spoon, white paper, a glow star, a cupboard you can shut",
-         ["Put one thing in the cupboard and shut the door.",
-          "Look through a crack: can you see it glowing?",
-          "Now switch on the torch inside. What happens?"],
-         "Only a light source glows in the dark. The rest need the torch."),
+    home("The dark box test", "A shoebox with a lid, a torch, a small mirror, a shiny spoon, white paper, a glow-in-the-dark star, a grown-up",
+         ["Ask a grown-up to make two small holes in the shoebox: a peep-hole in one end, and a torch hole in the lid.",
+          "Hold the glow star under a lamp for a minute. Then put the star, the mirror, the spoon and the paper inside the box.",
+          "Put the lid on and cover the torch hole with your finger. Look through the peep-hole: what can you see?",
+          "Now take your finger away, shine the torch in through the torch hole, and look again."],
+         "In the dark box only the glow star shines, because it gives out light. The mirror, the spoon and the paper only shine when the torch lights them."),
     home("Shadow shapes", "A torch, a wall, a dark room, your hands",
          ["Shine the torch at the wall.",
           "Put your hand between the torch and the wall.",

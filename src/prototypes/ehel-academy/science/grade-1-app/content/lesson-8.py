@@ -92,7 +92,7 @@ LESSON = {
               "items": [
                   {"pic": "\U0001FAA8", "label": "pebble", "bin": "rock", "why": "A pebble is a small, smooth piece of rock."},
                   {"pic": "\U0001F30A", "label": "the sea", "bin": "water", "why": "The sea is water, and it covers most of Earth."},
-                  {"pic": "\U0001F33E", "label": "garden soil", "bin": "soil", "why": "Garden soil is dark and crumbly. Plants grow in it."},
+                  {"pic": icon("soil"), "label": "garden soil", "bin": "soil", "why": "Garden soil is dark and crumbly. Plants grow in it."},
                   {"pic": "\U0001F3D4️", "label": "mountain", "bin": "rock", "why": "A mountain is a huge piece of rock."},
                   {"pic": "\U0001F30A", "label": "river", "bin": "water", "why": "A river is water flowing over the land."},
                   {"pic": "\U0001FAB4", "label": "soil in a flower pot", "bin": "soil", "why": "The soil in a flower pot is where the plant's roots grow."},
@@ -197,7 +197,7 @@ LESSON = {
                  q("What is the name of the planet we live on?", "\U0001F30D", "Earth", ["the Sun", "the Moon", "a star"], "We live on the planet Earth."),
                  q("Most of Earth is covered in...", "\U0001F30A", "water", ["sand", "grass", "ice"], "Seven of your ten catches landed on water. Earth is mostly water."),
                  q("Dig down through the soil. What do you find underneath?", "⛏️", "rock", ["more grass", "clouds", "sky"], "Land is soil on top and rock underneath."),
-                 q("What is soil?", "\U0001F33E", "the dark, crumbly top layer of the land", ["a kind of water", "a piece of the Sun", "a cloud"], "Soil is the crumbly layer plants grow in, on top of the rock."),
+                 q("What is soil?", icon("soil"), "the dark, crumbly top layer of the land", ["a kind of water", "a piece of the Sun", "a cloud"], "Soil is the crumbly layer plants grow in, on top of the rock."),
                  q("The Sun gives us...", "☀️", "light and heat", ["rain and wind", "rock and soil", "nothing"], "The Sun is a source of light and heat."),
                  q("Which cup of water got warmer?", "\U0001F964", "the one in the sun", ["the one in the shade", "neither"], "The Sun's heat warmed the water in the sun."),
                  q("What is the Sun?", "⭐", "a star, the nearest one to Earth", ["a planet", "a cloud", "a big lamp"], "The Sun is a star. The others look small because they are far away."),
@@ -249,14 +249,15 @@ LESSON["words"] = [
          ["The Sun rises in the morning.", "The Sun warms the ground."]),
     word("star", "\u2B50", "A huge ball of hot, glowing gas, very far away. The Sun is a star.",
          ["I can see a star.", "The Sun is our nearest star."]),
-    word("heat", "\U0001F525", "Warmth. The Sun gives us heat.",
+    word("heat", "\U0001F321\uFE0F", "Warmth. The Sun gives us heat.",
          ["Feel the heat of the Sun.", "The shade has less heat."]),
 ]
 
 LESSON["home"] = [
-    home("Catch the globe", "A ball with blue and green paper stuck on it, or a globe; two people",
-         ["Throw the ball to each other and catch it ten times.",
-          "Each catch, look where your right thumb landed: water or land.",
+    home("Catch the globe", "A ball, blue and green paper and sticky tape, or a globe; two people",
+         ["No globe? Cover about three quarters of the ball in blue paper and the rest in green.",
+          "Throw the ball to each other and catch it ten times.",
+          "Each catch, look where your finger landed: water or land.",
           "Keep a tally of water and land."],
          "More water than land. Earth is mostly water."),
     home("Dig a hole", "A trowel or a spoon, a patch of garden or a big plant pot, a grown-up",

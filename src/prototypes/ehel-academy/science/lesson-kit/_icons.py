@@ -143,6 +143,57 @@ _BODIES = {
         ' stroke="#A67CC4" stroke-width="3" fill="none" stroke-linecap="round"/>'
         '<path d="M11 31 C11 11 53 11 53 31 C46 35 18 35 11 31 Z" fill="#C79BE0" stroke="#8E62B0" stroke-width="2"/>'
         '<path d="M20 21 C23 16 28 14 33 14" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/>'),
+    "polarbear": (
+        '<rect x="13" y="43" width="7" height="13" rx="3" fill="#E9EDF1" stroke="#9AA7B2" stroke-width="2"/>'
+        '<rect x="23" y="44" width="7" height="12" rx="3" fill="#E9EDF1" stroke="#9AA7B2" stroke-width="2"/>'
+        '<rect x="35" y="44" width="7" height="12" rx="3" fill="#E9EDF1" stroke="#9AA7B2" stroke-width="2"/>'
+        '<rect x="44" y="43" width="7" height="13" rx="3" fill="#E9EDF1" stroke="#9AA7B2" stroke-width="2"/>'
+        '<ellipse cx="31" cy="37" rx="23" ry="13" fill="#F6F8FA" stroke="#9AA7B2" stroke-width="2"/>'
+        '<circle cx="48" cy="22" r="3.5" fill="#F6F8FA" stroke="#9AA7B2" stroke-width="2"/>'
+        '<ellipse cx="53" cy="30" rx="10" ry="8" fill="#F6F8FA" stroke="#9AA7B2" stroke-width="2"/>'
+        '<circle cx="62" cy="31" r="2.2" fill="#1B1B1B"/><circle cx="55" cy="27" r="1.5" fill="#1B1B1B"/>'),
+    "chalk": (
+        '<g transform="rotate(-25 32 32)">'
+        '<rect x="9" y="25" width="46" height="13" rx="3" fill="#F7F4EC" stroke="#B9B2A3" stroke-width="2"/>'
+        '<rect x="9" y="25" width="9" height="13" rx="3" fill="#E4DDCD"/></g>'
+        '<circle cx="14" cy="52" r="1.6" fill="#D8D1C1"/><circle cx="20" cy="56" r="1.2" fill="#D8D1C1"/><circle cx="9" cy="57" r="1.2" fill="#D8D1C1"/>'),
+    "towel": (
+        '<path d="M5 11 H59" stroke="#8A8F96" stroke-width="4" stroke-linecap="round"/>'
+        '<rect x="12" y="11" width="40" height="42" rx="3" fill="#5DA9E9" stroke="#3B7FD1" stroke-width="2"/>'
+        '<rect x="12" y="40" width="40" height="5" fill="#fff" opacity=".85"/>'
+        '<path d="M16 53 v6 M22 53 v6 M28 53 v6 M34 53 v6 M40 53 v6 M46 53 v6" stroke="#3B7FD1" stroke-width="2" stroke-linecap="round"/>'),
+    "swing": (
+        '<path d="M5 9 H59" stroke="#7A5A3A" stroke-width="5" stroke-linecap="round"/>'
+        '<path d="M8 9 L3 61 M56 9 L61 61" stroke="#7A5A3A" stroke-width="4" stroke-linecap="round"/>'
+        '<path d="M24 9 V43 M40 9 V43" stroke="#8A8F96" stroke-width="2"/>'
+        '<rect x="19" y="42" width="26" height="6" rx="2" fill="#D9473F"/>'),
+    "trowel": (
+        '<path d="M32 4 C45 16 43 30 32 37 C21 30 19 16 32 4 Z" fill="#B8C6D1" stroke="#4E6070" stroke-width="2"/>'
+        '<rect x="30" y="36" width="4" height="8" fill="#4E6070"/>'
+        '<rect x="26" y="43" width="12" height="18" rx="5" fill="#7A5A3A"/>'),
+    "sandpaper": (
+        '<rect x="9" y="11" width="46" height="42" rx="3" fill="#D8B77A" stroke="#9A7A40" stroke-width="2"/>'
+        '<path d="M43 53 L55 41 V53 Z" fill="#F2E6C8" stroke="#9A7A40" stroke-width="2" stroke-linejoin="round"/>'
+        '<g fill="#9A7A40"><circle cx="16" cy="18" r="1.3"/><circle cx="24" cy="22" r="1.1"/><circle cx="33" cy="17" r="1.3"/><circle cx="42" cy="21" r="1.1"/>'
+        '<circle cx="49" cy="17" r="1.3"/><circle cx="18" cy="29" r="1.1"/><circle cx="28" cy="31" r="1.3"/><circle cx="38" cy="28" r="1.1"/>'
+        '<circle cx="47" cy="31" r="1.3"/><circle cx="15" cy="40" r="1.3"/><circle cx="25" cy="42" r="1.1"/><circle cx="34" cy="39" r="1.3"/>'
+        '<circle cx="20" cy="48" r="1.1"/><circle cx="31" cy="48" r="1.3"/><circle cx="40" cy="46" r="1.1"/></g>'),
+    "whistle": (
+        '<circle cx="11" cy="19" r="5" fill="none" stroke="#4E6070" stroke-width="2.5"/>'
+        '<rect x="7" y="24" width="36" height="13" rx="3" fill="#9AA7B2" stroke="#4E6070" stroke-width="2"/>'
+        '<circle cx="41" cy="39" r="15" fill="#9AA7B2" stroke="#4E6070" stroke-width="2"/>'
+        '<rect x="29" y="24" width="7" height="6" fill="#4E6070"/>'
+        '<circle cx="41" cy="39" r="5" fill="#4E6070"/>'),
+    "vacuum": (
+        '<rect x="15" y="4" width="16" height="6" rx="3" fill="#4E6070"/>'
+        '<path d="M23 8 V24" stroke="#4E6070" stroke-width="4"/>'
+        '<rect x="15" y="22" width="20" height="24" rx="6" fill="#D9473F" stroke="#8E2A24" stroke-width="2"/>'
+        '<rect x="9" y="46" width="34" height="9" rx="3" fill="#4E6070"/>'
+        '<path d="M35 32 C50 32 54 46 46 52 C52 56 56 58 61 57" stroke="#1B1B1B" stroke-width="2" fill="none"/>'
+        '<rect x="57" y="53" width="5" height="7" rx="1" fill="#1B1B1B"/>'),
+    "glass": (
+        '<rect x="12" y="7" width="40" height="50" rx="2" fill="#CFE8F5" stroke="#8FB7CC" stroke-width="2.5"/>'
+        '<path d="M18 21 L30 10 M18 34 L41 12 M30 50 L46 35" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'),
     "seal": (
         '<path d="M11 45 L2 38 L4 51 Z" fill="#6F7B87"/>'
         '<path d="M8 47 C8 35 24 26 40 28 C50 29 56 35 56 41 C56 47 50 49 44 47 L20 51 C12 53 8 51 8 47 Z" fill="#8E9AA6"/>'
@@ -262,11 +313,31 @@ def iconize(obj):
     return obj
 
 
+# Emoji 13+ made by JOINING old code points: every part is old, so a per-code-point
+# check passes them, and an older device draws the parts side by side (a brown bear
+# and a snowflake for a polar bear). Found in the kit's own Arctic scene, 2026-09-11.
+ZWJ_TOO_NEW = [(0x1F43B, 0x2744, "polar bear"), (0x1F408, 0x2B1B, "black cat"), (0x1F426, 0x2B1B, "black bird"),
+               (0x1F9D1, 0x1F384, "Mx Claus"), (0x1F468, 0x1F37C, "man feeding baby"), (0x1F469, 0x1F37C, "woman feeding baby"),
+               (0x1F9D1, 0x1F37C, "person feeding baby"), (0x1F3F3, 0x26A7, "transgender flag")]
+
+
+def _decode_escapes(text):
+    import re
+    text = re.sub(r"\\u\{([0-9A-Fa-f]{4,6})\}", lambda m: chr(int(m.group(1), 16)), text)
+    text = re.sub(r"\\U([0-9A-Fa-f]{8})", lambda m: chr(int(m.group(1), 16)), text)
+    return re.sub(r"\\u([0-9A-Fa-f]{4})", lambda m: chr(int(m.group(1), 16)), text)
+
+
 def too_new_in(text):
     """Every Emoji 13+ code point left in a built page, written literally or as a
-    JavaScript escape (\\u{1FAA8}), with a little context for the refusal."""
+    JavaScript escape (\\u{1FAA8}), with a little context for the refusal - and every
+    Emoji 13+ ZWJ sequence (ZWJ_TOO_NEW), which no single code point gives away."""
     import re
     found = []
+    plain = _decode_escapes(text)
+    for a, b, name in ZWJ_TOO_NEW:
+        for m in re.finditer(re.escape(chr(a)) + "\ufe0f?\u200d" + re.escape(chr(b)), plain):
+            found.append("%s (a ZWJ sequence, Emoji 13+) near %r" % (name, plain[max(0, m.start() - 40):m.end() + 10]))
     for i, c in enumerate(text):
         if emoji_version(ord(c)) >= TOO_NEW:
             found.append("U+%X near %r" % (ord(c), text[max(0, i - 40):i + 10]))

@@ -6677,11 +6677,15 @@
      name at call time, so every wrapper the build or the pipeline puts
      around it (the header bar\x27s percentage, a step\x27s arrival line)
      runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
   window.__ehelRestore = function (doneIdx, resumeIdx) {
-    /* read BEFORE the ticks land: the record\x27s own step 1 must not
-       count as the learner having touched it (measured: it did, and the
-       page stayed on step 1 with the dots restored) */
-    const untouched = cur === 0 && !done[0];
+    const untouched = cur === 0 && !ehelInteracted;
     let changed = false;
     for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
     if (changed) paintDots();

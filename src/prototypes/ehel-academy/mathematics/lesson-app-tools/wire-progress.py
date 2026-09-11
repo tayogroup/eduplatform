@@ -87,7 +87,12 @@ SHOW_TAIL = re.compile(r"(\n    window\.scrollTo\(\{ top: 0, behavior: \"smooth\
 # install it: wire() for a fresh page, upgrade() for a page wired before the
 # hook existed (2026-09-10). The upgrade anchors on the exact text the older
 # tool wrote, so a page it cannot recognise is refused, never guessed at.
-RESTORE_HOOK = (
+#
+# RESTORE_HOOK_V1 is kept VERBATIM because it is an anchor, not a live value:
+# it is exactly what the 2026-09-10 tool wrote into every page, and wire()
+# swaps it for RESTORE_HOOK below. Editing it would orphan every page that
+# carries it - the upgrade would stop recognising them and refuse.
+RESTORE_HOOK_V1 = (
         '  /* RESUME ON REOPEN. The stored record already knew which steps were\n'
         '     done and where the learner was; until this hook every reopened\n'
         '     lesson drew an empty dot rail and step 1. Called once, after the\n'
@@ -111,6 +116,44 @@ RESTORE_HOOK = (
         '    else if (changed) show(cur, false);\n'
         '  };'
 )
+
+# THE GUARD V1 ASKED THE WRONG QUESTION (2026-09-11). It read "has the learner
+# touched the page?" as "is step 1 done?", and those differ on any build whose
+# renderers finish their step when DRAWN. The deck draws every slide at load,
+# and English's unitOverview and unitPlan both end with an unconditional
+# finish() - so done[0] and done[1] were true before the record arrived, the
+# guard read step 1 as touched, and every reopened English lesson stayed on
+# step 1 with its dots restored. Science resumed correctly only because its
+# first step does not finish on draw. V1's comment guarded against the RECORD's
+# own ticks marking step 1; nothing guarded against the PAGE's.
+#
+# So the question is now answered directly, from real input. On a build whose
+# first step finishes only when a child acts, done[0] becomes true only through
+# input, which also sets the flag - so the two guards agree there and this is
+# the same behaviour. Where they disagree, this one is right.
+_V1_GUARD = (
+        '  window.__ehelRestore = function (doneIdx, resumeIdx) {\n'
+        '    /* read BEFORE the ticks land: the record\\x27s own step 1 must not\n'
+        '       count as the learner having touched it (measured: it did, and the\n'
+        '       page stayed on step 1 with the dots restored) */\n'
+        '    const untouched = cur === 0 && !done[0];\n'
+)
+_V2_GUARD = (
+        '  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:\n'
+        '     a step that finishes when it is DRAWN marks itself done at load, before\n'
+        '     the record arrives, and read as the learner having touched the page it\n'
+        '     kept every reopened English lesson on step 1 (measured 2026-09-11). */\n'
+        '  let ehelInteracted = false;\n'
+        '  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,\n'
+        '    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));\n'
+        '  window.__ehelRestore = function (doneIdx, resumeIdx) {\n'
+        '    const untouched = cur === 0 && !ehelInteracted;\n'
+)
+RESTORE_HOOK = RESTORE_HOOK_V1.replace(_V1_GUARD, _V2_GUARD, 1)
+# a replacement that matches nothing leaves V1 in place and ships the bug again
+# under a new name - so it is proved to have happened, not assumed
+assert RESTORE_HOOK != RESTORE_HOOK_V1 and RESTORE_HOOK.count("ehelInteracted") == 3, \
+    "RESTORE_HOOK: the V1 guard was not found, so the fix was not applied"
 
 OLD_HYDRATE = """  let baseAttempted = {};
   let baseKnown = [];
@@ -463,8 +506,20 @@ def wire(app, unit, name, title):
     s = app.read(name)
     if MARK in s:
         if "window.__ehelRestore = function" in s:
-            print("  skip %-26s already reports and resumes" % name)
-            return True
+            # A hook being PRESENT is not the hook being RIGHT. This used to
+            # skip any page that had one, so the V1 guard's bug could never be
+            # repaired by re-running the tool - the same update-instead-of-skip
+            # trap this pipeline has already been fixed for once.
+            if "ehelInteracted" in s:
+                print("  skip %-26s already reports and resumes" % name)
+                return True
+            if s.count(RESTORE_HOOK_V1) == 1:
+                app.write(name, s.replace(RESTORE_HOOK_V1, RESTORE_HOOK, 1))
+                print("  up   %-26s resume guard now reads real input" % name)
+                return True
+            print("  REFUSED %-24s has a restore hook in a shape this does not know (%d V1 matches)"
+                  % (name, s.count(RESTORE_HOOK_V1)))
+            return False
         return upgrade(app, name, s)
 
     if len(FINISH.findall(s)) != 1:

@@ -5,7 +5,7 @@
 4Bs.04 some animals have an exoskeleton; 4TWSc.02 use a key to identify
 living things; with 4TWSc.01 and 4TWSc.07.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 KEY = [
     {"id": "legs", "q": "Does it have legs?", "yes": "six", "no": "shell"},
@@ -75,7 +75,7 @@ LESSON = {
                   {"pic": "\U0001F577️", "label": "a creature with eight legs", "answer": "spider", "facts": {"legs": True, "six": False, "eight": True}, "why": "Eight legs: a spider, which is not an insect."},
                   {"pic": "\U0001F40C", "label": "a creature with no legs and a shell", "answer": "snail", "facts": {"legs": False, "shell": True}, "why": "No legs, a shell: a snail."},
                   {"pic": "\U0001FAB1", "label": "a creature with no legs and no shell", "answer": "worm", "facts": {"legs": False, "shell": False}, "why": "No legs, no shell: a worm."},
-                  {"pic": "\U0001FAB2", "label": "a creature with fourteen legs", "answer": "woodlouse", "facts": {"legs": True, "six": False, "eight": False}, "why": "More than eight legs: a woodlouse, with fourteen."},
+                  {"pic": icon("woodlouse"), "label": "a creature with fourteen legs", "answer": "woodlouse", "facts": {"legs": True, "six": False, "eight": False}, "why": "More than eight legs: a woodlouse, with fourteen."},
               ]},
              "A key names the creature. You just answer what you see."),
 

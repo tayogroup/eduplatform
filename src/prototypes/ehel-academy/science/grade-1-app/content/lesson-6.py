@@ -49,7 +49,7 @@ LESSON = {
                   {"pic": "\U0001F697", "label": "honk", "bin": "thing", "why": "A car horn honks. A machine made it."},
                   {"pic": "\U0001F415", "label": "woof", "bin": "living", "why": "A dog barks. An animal made it."},
                   {"pic": "\U0001F941", "label": "boom", "bin": "thing", "why": "A drum booms. A thing made it, when somebody hit it."},
-                  {"pic": "\U0001F3A4", "label": "singing", "bin": "living", "why": "A person sings."},
+                  {"pic": "\U0001F9D1‍\U0001F3A4", "label": "singing", "bin": "living", "why": "A person sings."},
                   {"pic": "⏰", "label": "ring ring", "bin": "thing", "why": "An alarm clock rings. A machine made it."},
               ]},
              "Sounds come from animals, people, things and machines."),
@@ -58,16 +58,16 @@ LESSON = {
              "A sound is made when something <b>shakes</b> very fast. Press <b>Next</b> and listen.",
              explain(
                  ["A sound happens when something shakes very fast.", "Scientists call that fast shaking vibrating."],
-                 ["Pluck a rubber band and watch it.", "It goes blurry because it is shaking, and you hear a twang.",
+                 ["Pluck an elastic band and watch it.", "It goes blurry because it is shaking, and you hear a twang.",
                   "Hit a drum and touch the skin: you can feel it shaking.", "Hum, and put your hand on your throat: it buzzes."],
                  ["Children think the sound is in the air by itself.", "Stop the band shaking with your finger and the sound stops too."],
                  ["Press Next, listen, and try the throat one for real."]),
              {"frames": [
-                 {"pic": "➰", "cap": "Pluck a rubber band. It <b>shakes</b> and you hear a twang.", "say": "Pluck a rubber band. It shakes so fast it looks blurry, and you hear a twang.", "sound": "pluck"},
+                 {"pic": "➰", "cap": "Pluck an elastic band. It <b>shakes</b> and you hear a twang.", "say": "Pluck an elastic band. It shakes so fast it looks blurry, and you hear a twang.", "sound": "pluck"},
                  {"pic": "\U0001F941", "cap": "Hit a drum. The skin <b>shakes</b>. Touch it and feel!", "say": "Hit a drum. The skin shakes. Put your hand on it and you can feel the shaking.", "sound": "drum"},
                  {"pic": "\U0001F41D", "cap": "A bee's wings <b>shake</b> very fast. Buzz!", "say": "A bee's wings shake very fast. That is the buzz.", "sound": "buzz"},
                  {"pic": "\U0001F5E3️", "cap": "Hum. Put your hand on your throat. It <b>shakes</b>!", "say": "Now hum, and put your hand flat on your throat. Feel it shaking? That is your voice.", "sound": "hum"},
-                 {"pic": "✋➰", "cap": "Stop the shaking and the sound <b>stops</b>.", "say": "Touch the rubber band to stop it shaking, and the sound stops too. No shaking, no sound."},
+                 {"pic": "✋➰", "cap": "Stop the shaking and the sound <b>stops</b>.", "say": "Touch the elastic band to stop it shaking, and the sound stops too. No shaking, no sound."},
              ]},
              "Sound is made when something shakes very fast."),
 
@@ -118,7 +118,7 @@ LESSON = {
                  {"pic": "\U0001F3B5", "label": "whistle", "sound": "whistle", "say": "Blow the whistle outside, and never right next to a friend."},
                  {"pic": "\U0001F96B", "label": "shaker tin", "sound": "shake", "say": "Hold the shaker tin with both hands and shake it. Do not throw it."},
                  {"pic": "\U0001F514", "label": "bell", "sound": "bell", "say": "Ring the bell once and listen. Keep it away from ears."},
-                 {"pic": "\U0001F442", "label": "your ears", "say": "If a sound hurts your ears, cover them and move away. Ears do not grow back."},
+                 {"pic": "\U0001F442", "label": "your ears", "say": "If a sound hurts your ears, cover them and move away. Hearing that is damaged does not come back."},
              ], "need": 5,
               "then": {"ask": "A sound is so loud it hurts. What should you do?",
                        "opts": [opt("Cover your ears and move away", True), opt("Get closer to hear it better", False), opt("Shout back", False)],
@@ -137,7 +137,7 @@ LESSON = {
                  {"pic": "\U0001F3B8", "label": "guitar", "sound": "pluck", "say": "A guitar works because plucked strings shake. Thick strings shake slowly for low notes, thin ones fast for high notes."},
                  {"pic": "\U0001F3B7", "label": "musician", "say": "A musician uses sound science every day, making strings, drums and air shake in just the right way."},
                  {"pic": "\U0001FA7A", "label": "doctor's stethoscope", "say": "A stethoscope carries the tiny sound of your heartbeat up a tube to the doctor's ears."},
-                 {"pic": "\U0001F9BB", "label": "ear doctor", "say": "An audiologist tests how well people hear and helps them with hearing aids. Everyone uses science; this is their job."},
+                 {"pic": "\U0001F9BB", "label": "hearing tester", "say": "An audiologist tests how well people hear and helps them with hearing aids. Everyone uses science; this is their job."},
              ], "need": 4,
               "then": {"ask": "How does a guitar make a sound?",
                        "opts": [opt("The strings shake when you pluck them", True), opt("The guitar is painted brown", False), opt("The sound is stored inside it", False)],
@@ -159,7 +159,8 @@ LESSON = {
                  q("Which of these is a source of sound?", "❓", "a barking dog", ["a sleeping cat", "a still stone", "an empty room"], "A barking dog makes a sound. The dog is the source."),
                  q("You hum and feel your throat. What do you feel?", "\U0001F5E3️", "shaking", ["nothing", "cold", "wet"], "Your voice is your throat shaking."),
                  q("A sound hurts your ears. What should you do?", "\U0001F442", "cover your ears and move away", ["get closer", "shout louder"], "Loud sounds can hurt ears. Move away from the source."),
-                 q("Stop a rubber band shaking with your finger. What happens to the sound?", "✋", "it stops", ["it gets louder", "it gets higher"], "No shaking, no sound."),
+                 q("Stop an elastic band shaking with your finger. What happens to the sound?", "✋", "it stops", ["it gets louder", "it gets higher"], "No shaking, no sound."),
+                 q("Why do you have to stand close to hear a whisper?", "\U0001F92B", "A whisper is quiet, and sound gets quieter as it travels", ["Whispers only go up to the sky", "Ears only work when you are close"], "A whisper starts quiet, and every step away makes it quieter still. Close up, it has not faded yet."),
              ]},
              "That is the whole lesson finished. You know where sounds come from."),
     ],
@@ -173,6 +174,11 @@ LESSON["about"] = [
     "Say what makes a sound.",
     "Do an experiment about sounds near and far.",
     "Use sound makers safely.",
+]
+
+LESSON["warmup"] = [
+    q("Which of these can make a loud sound?", "\U0001F941", "a drum", ["a feather", "a sock"], "Hit a drum and it booms. A feather and a sock are very quiet."),
+    q("Where is a bell harder to hear?", "\U0001F514", "far away from it", ["right next to it"], "The further away you are, the quieter a sound is."),
 ]
 
 LESSON["lecture"] = [
@@ -209,9 +215,9 @@ LESSON["home"] = [
           "The other walks away one step at a time.",
           "At each step say: loud, medium or quiet."],
          "How many steps before it is quiet? Where does it disappear?"),
-    home("Feel the shaking", "An elastic band, a tin or a drum, your throat",
-         ["Stretch the band and pluck it. Watch it blur.",
-          "Bang the tin and touch it straight away.",
+    home("Feel the shaking", "An elastic band, a biscuit tin or a saucepan, a wooden spoon, your throat",
+         ["Stretch the band gently, away from your face, and pluck it. Watch it blur.",
+          "Tap the biscuit tin or saucepan with the wooden spoon and touch it straight away.",
           "Hum and put your hand flat on your throat."],
          "The shaking you can feel is the sound you can hear."),
     home("Sound hunt", "Paper and a pencil, a quiet minute",

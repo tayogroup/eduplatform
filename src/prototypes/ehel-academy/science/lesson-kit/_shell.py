@@ -34,9 +34,42 @@ from _kit import explain, step
 # steps that teach nothing and therefore name no objective
 META_KINDS = {"world", "resources"}
 
+# Minutes a child spends on a step of each kind, including listening. One
+# table for the hub's estimates AND the two-sittings split below, so the two
+# cannot disagree about how long a lesson is.
+MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "experiment": 4, "predictEach": 5,
+           "record": 2, "measure": 2.5, "label": 3, "tester": 3, "ask": 1.5, "questions": 3, "quiz": 4,
+           "order": 2, "graph": 3, "lookup": 3, "build": 3, "diagram": 3, "key": 4,
+           # the unit shell; home projects are done off the screen and cost the page nothing
+           "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
+
+
+def minutes_of_steps(steps):
+    return sum(MINUTES.get(s["kind"], 2) for s in steps)
+
+
+def round5(m):
+    return int(5 * round(m / 5.0)) or 5
+
+
+def previous_of(lessons):
+    """{n: what lesson n-1 taught}, for the recap on lesson n's overview."""
+    out, last = {}, None
+    for n, _fname, lesson in lessons:
+        if last:
+            out[n] = {"n": last[0], "title": last[1]["title"], "about": list(last[1].get("about") or [])[:3]}
+        last = (n, lesson)
+    return out
+
 
 def plain(html):
     return re.sub(r"\s+", " ", re.sub(r"<[^>]*>", " ", str(html))).strip()
+
+
+def textpic(p):
+    """A picture that can sit inside a line of text: an emoji can, one of the
+    kit's drawings (_icons.py) cannot - a game prompt is text - so it is left out."""
+    return "" if str(p).startswith("<") else p
 
 
 def lesson_codes(lesson):
@@ -79,7 +112,7 @@ def games_pack(n, lesson):
     for k, s in enumerate([s for s in lesson["steps"] if s["kind"] == "sort"]):
         d = s["data"]
         bins = {b["id"]: b["label"] for b in d["bins"]}
-        rounds = [{"prompt": "Where does " + it["label"] + " go? " + it.get("pic", ""),
+        rounds = [{"prompt": "Where does " + it["label"] + " go? " + textpic(it.get("pic", "")),
                    "choices": [bins[b] for b in bins], "answer": bins[it["bin"]],
                    "explanation": it.get("why") or bins[it["bin"]]} for it in d["items"]]
         if len(rounds) >= 3:
@@ -103,7 +136,7 @@ def games_pack(n, lesson):
     if len(spell) >= 3:
         games.append({"id": "l%d-spell" % n, "type": "spelling", "title": "Spell the science word",
                       "skill": "Science words",
-                      "rounds": [{"prompt": w["meaning"], "clue": "It starts with " + w["w"][0].lower() + ". " + w.get("pic", ""),
+                      "rounds": [{"prompt": w["meaning"], "clue": "It starts with " + w["w"][0].lower() + ". " + textpic(w.get("pic", "")),
                                   "answer": w["w"].lower()} for w in spell[:6]]})
     return games
 
@@ -111,12 +144,16 @@ def games_pack(n, lesson):
 # ----------------------------------------------------------------------
 # the shell steps
 # ----------------------------------------------------------------------
-def expand(n, lesson, code_text, finder, cfg):
+def expand(n, lesson, code_text, finder, cfg, prev=None):
     """The full ordered step list for lesson n: the shell around the content.
 
     code_text   {code: objective text} for the stage
     finder      every word of every lesson in this grade, for the word finder
-    cfg         the app's config (hub file, strands, grade label)
+    cfg         the app's config (hub file, strands, grade label; "sittings": 2
+                splits every lesson into two sittings - the lesson, then the
+                games, home projects and quiz - with a break card between)
+    prev        what the lesson before taught ({n, title, about}), for the
+                "Last time" recap on the overview; None for lesson 1
     """
     core = list(lesson["steps"])
     codes = lesson_codes(lesson)
@@ -135,7 +172,8 @@ def expand(n, lesson, code_text, finder, cfg):
                         ["You do not have to be able to do them yet.", "That is what the lesson is for."],
                         ["Have a read, then start."]),
                     {"about": about,
-                     "counts": {"steps": 0, "words": len(words), "games": len(games), "home": len(home)}},
+                     "counts": {"steps": 0, "words": len(words), "games": len(games), "home": len(home)},
+                     "recap": prev, "warmup": list(lesson.get("warmup") or []), "sittings": None},
                     "Now you know what this lesson is for. Off you go.")
 
     lec = step("lecture", "Unit lecture", "\U0001F3AC", "I heard the lesson", codes,
@@ -224,9 +262,33 @@ def expand(n, lesson, code_text, finder, cfg):
     overview["data"]["counts"]["steps"] = len(steps)
     res["data"]["homeStep"] = steps.index(hm)
 
+    # TWO SITTINGS. A Grade 1 lesson with the shell round it is 40 to 45
+    # minutes, longer than any lesson in Grades 2 to 4 and too long for one
+    # sitting at five (validation v2, area 17). Where the config asks for it
+    # the lesson is cut at the step boundary nearest its halfway point, never
+    # before the first of the lesson's own steps and never after the games.
+    # Cutting where the teaching ends was tried first and left 30-35 minutes
+    # then 10, which only moved the problem. Progress is by step, so a child
+    # who stops at the break resumes on the step after it; the marker rides
+    # on the step, not in its renderer's data.
+    if cfg.get("sittings") == 2:
+        first = steps.index(content[0]) + 1 if content else steps.index(gz)
+        cands = range(first, steps.index(gz) + 1)
+        cut = min(cands, key=lambda c: (abs(minutes_of_steps(steps[:c]) - minutes_of_steps(steps[c:])), c))
+        one, two = round5(minutes_of_steps(steps[:cut])), round5(minutes_of_steps(steps[cut:]))
+        overview["data"]["sittings"] = {"one": one, "two": two}
+        steps[cut]["sittingBreak"] = {"minutes": two, "hub": cfg.get("hub") or "index.html"}
+
     # A game that rehearses the quiz turns the quiz into a memory test of the
     # game. Checked here, where both builders pass, so neither can ship it.
     quiz_stems = {plain(it["ask"]).lower() for s in quiz for it in s["data"]["items"]}
+    # The warm-up asks what a child already knows BEFORE the lesson; the same
+    # question in the quiz would make the quiz a memory test of the warm-up.
+    for w in lesson.get("warmup") or []:
+        if plain(w["ask"]).lower() in quiz_stems:
+            raise SystemExit("REFUSED: lesson %d warm-up repeats the quiz question %r" % (n, w["ask"]))
+        if sum(1 for o in w["opts"] if o["ok"]) != 1:
+            raise SystemExit("REFUSED: lesson %d warm-up %r needs exactly one right answer" % (n, w["ask"]))
     for g in games:
         for r in g["rounds"]:
             if plain(r.get("prompt", "")).lower() in quiz_stems:

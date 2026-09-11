@@ -43,12 +43,9 @@ if not os.path.isfile(os.path.join(APP, "app.config.json")):
     sys.exit("REFUSED: no app.config.json in %s. Run from a grade directory or pass --app <dir>." % APP)
 CONTENT = os.path.join(APP, "content")
 
-# minutes a six-year-old spends on a step of each kind, including listening
-MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "experiment": 4, "predictEach": 5,
-           "record": 2, "measure": 2.5, "label": 3, "tester": 3, "ask": 1.5, "questions": 3, "quiz": 4,
-           "order": 2, "graph": 3, "lookup": 3, "build": 3, "diagram": 3, "key": 4,
-           # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
-           "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
+# minutes per step kind: ONE table, in _shell.py, shared with the two-sittings split
+from _shell import MINUTES, previous_of  # noqa: E402
+from _icons import iconize, too_new_in  # noqa: E402
 
 # the real-world version of each experiment, for a grown-up to run at home
 AT_HOME = {
@@ -105,7 +102,7 @@ def lesson_module(n):
     if KIT not in sys.path:
         sys.path.insert(0, KIT)
     spec.loader.exec_module(mod)
-    return mod.LESSON
+    return iconize(mod.LESSON)   # the same drawings the lesson pages get (_icons.py)
 
 
 def minutes_of(lesson):
@@ -344,13 +341,14 @@ def main():
     # same steps the page draws; the word finder needs every lesson's words.
     modules = {n: lesson_module(n) for n, _ in enumerate(cfg["lessons"], 1)}
     finder = finder_words([(n, l["file"], modules[n]) for n, l in enumerate(cfg["lessons"], 1) if modules[n]])
+    prevs = previous_of([(n, l["file"], modules[n]) for n, l in enumerate(cfg["lessons"], 1) if modules[n]])
     for n, l in enumerate(cfg["lessons"], 1):
         f = l["file"]
         uid = "%s%02d" % (prefix, n)
         here = os.path.isfile(os.path.join(APP, f))
         lesson = modules[n]
         if lesson:
-            lesson = dict(lesson, steps=expand(n, lesson, codes, finder, cfg))
+            lesson = dict(lesson, steps=expand(n, lesson, codes, finder, cfg, prevs.get(n)))
         if here and lesson:
             live += 1
             page = io.open(os.path.join(APP, f), encoding="utf-8").read()
@@ -359,7 +357,9 @@ def main():
             total_minutes += minutes
             steps[uid] = count
             files[uid] = f
-            meta = "%d steps &middot; about %d min &middot; stickers" % (count, minutes)
+            sit = lesson["steps"][0]["data"].get("sittings")
+            meta = ("%d steps &middot; two sittings, about %d + %d min &middot; stickers" % (count, sit["one"], sit["two"])
+                    if sit else "%d steps &middot; about %d min &middot; stickers" % (count, minutes))
             cta = '<span class="go">Start</span>'
             tag, href, cls = "a", ' href="%s?from=%s"' % (f, cfg["fromParam"]), ""
             options += '<option value="%s">%s</option>' % (f, text(l["title"]))
@@ -379,6 +379,9 @@ def main():
         "course": cfg["courseKey"], "steps": json.dumps(steps), "files": json.dumps(files),
         "from": cfg["fromParam"], "options": '<option value="" selected>Jump to a lesson…</option>' + options,
     }
+    bad = too_new_in(page)
+    if bad:
+        sys.exit("REFUSED: the hub would carry emoji from Emoji 13 or later: " + "; ".join(bad[:6]))
     io.open(os.path.join(APP, cfg["hub"]), "w", encoding="utf-8", newline="").write(page)
     print("\n  ok   %s  -  %d of %d lessons live, about %d minutes of lessons\n" % (cfg["hub"], live, len(cfg["lessons"]), total_minutes))
 

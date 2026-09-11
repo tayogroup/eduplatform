@@ -50,7 +50,8 @@ import os
 import re
 import sys
 
-from _shell import META_KINDS, expand, finder_words
+from _shell import META_KINDS, expand, finder_words, previous_of
+from _icons import ICONS, iconize, too_new_in
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 ACADEMY = os.path.abspath(os.path.join(KIT, "..", ".."))
@@ -150,7 +151,7 @@ def load_lessons(wanted):
         if KIT not in sys.path:
             sys.path.insert(0, KIT)   # `from _kit import ...`
         spec.loader.exec_module(mod)
-        lesson = mod.LESSON
+        lesson = iconize(mod.LESSON)   # Emoji 13+ -> the kit's own drawing (_icons.py)
         if lesson["title"] != entry["title"]:
             sys.exit("REFUSED: lesson %d is titled %r in app.config.json and %r in content/lesson-%d.py"
                      % (n, entry["title"], lesson["title"], n))
@@ -456,6 +457,9 @@ PAGE = """<!doctype html>
 
   const LESSON = %(data)s;
 
+  /* the kit's own drawings for pictures the emoji are too new for (lesson-kit/_icons.py) */
+  const ICONS = %(icons)s;
+
 %(voice)s
 
 %(deck)s
@@ -486,17 +490,21 @@ def bootstrap(steps):
 
 
 def prepare_quiz_pics(step):
-    """sequence() takes `pic` as HTML; the content writes an emoji."""
+    """sequence() takes `pic` as HTML; the content writes an emoji, or the
+    builder has swapped in one of the kit's drawings (_icons.py) - both go in
+    the same sized box. Authored HTML (a figure) is left as it is."""
     if step["kind"] in ("questions", "quiz"):
         for it in step["data"]["items"]:
-            p = it.get("pic") or ""
-            if p and not p.strip().startswith("<"):
+            p = (it.get("pic") or "").strip()
+            if p and not p.startswith("<"):
                 it["pic"] = '<div class="askpic" aria-hidden="true">' + text(p) + "</div>"
+            elif p.startswith('<svg class="ico"') or p.startswith('<span class="picrow"'):
+                it["pic"] = '<div class="askpic" aria-hidden="true">' + p + "</div>"
     return step
 
 
-def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science, finder):
-    steps = expand(n, lesson, codes, finder, CFG)
+def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science, finder, prev=None):
+    steps = expand(n, lesson, codes, finder, CFG, prev)
     for k, s in enumerate(steps):
         check_step(n, k, s, codes, sims, figures, scenes, sounds)
         prepare_quiz_pics(s)
@@ -523,7 +531,8 @@ def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, de
     data = {
         "lessonNo": n, "title": title,
         "objectives": sorted({c for s in steps for c in s["objectives"]}),
-        "steps": [{"kind": s["kind"], "title": s["title"], "objectives": s["objectives"], "data": s["data"]} for s in steps],
+        "steps": [dict({"kind": s["kind"], "title": s["title"], "objectives": s["objectives"], "data": s["data"]},
+                       **({"sittingBreak": s["sittingBreak"]} if s.get("sittingBreak") else {})) for s in steps],
     }
     stickers = [[s["icon"], s["sticker"]] for s in steps]
     all_codes = sorted({c for s in steps for c in s["objectives"]})
@@ -536,7 +545,13 @@ def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, de
         "voice": voice, "deck": deck, "science": science,
         "stickers": json.dumps(stickers, ensure_ascii=False),
         "bootstrap": bootstrap(steps),
+        "icons": json.dumps(ICONS, ensure_ascii=False),
     }
+    bad = too_new_in(page)
+    if bad:
+        sys.exit("REFUSED: %s would carry %d emoji from Emoji 13 or later, which devices before 2020 draw as "
+                 "empty boxes - give each a drawing in lesson-kit/_icons.py:\n  " % (fname, len(bad))
+                 + "\n  ".join(bad[:12]))
     io.open(os.path.join(APP, fname), "w", encoding="utf-8", newline="").write(page)
     print("  ok   %-32s lesson %d  %2d steps + stickers  %3d objectives  %6d bytes"
           % (fname, n, len(steps), len(all_codes), len(page)))
@@ -563,10 +578,12 @@ def main():
     covered = set()
     everything = load_lessons([])
     finder = finder_words(everything)
+    prevs = previous_of(everything)
     for n, fname, lesson in everything:
         if wanted and n not in wanted:
             continue
-        covered |= set(build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science, finder))
+        covered |= set(build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science, finder,
+                             prevs.get(n)))
     if not wanted:
         missing = sorted(set(codes) - covered)
         print("\n  %d of %d Stage %d objectives reached by at least one step%s\n"

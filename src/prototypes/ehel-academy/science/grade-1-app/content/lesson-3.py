@@ -59,7 +59,7 @@ LESSON = {
              "You have <b>five senses</b>. Each one uses a body part. Press <b>Next</b>.",
              explain(
                  ["A sense is a way your body finds out about the world.", "You have five, and each one uses a different part of you."],
-                 ["Your eyes see.", "Your ears hear.", "Your nose smells.", "Your tongue tastes.", "Your skin touches, and it is all over your body, so your hands feel and so do your feet."],
+                 ["Your eyes see.", "Your ears hear.", "Your nose smells.", "Your tongue tastes.", "Your skin feels, and it is all over your body, so your hands feel and so do your feet."],
                  ["Children think touch is only in the fingers.", "Skin covers your whole body. You can feel a stone with your foot."],
                  ["Press Next for each sense and touch the body part it uses."]),
              {"frames": [
@@ -77,7 +77,7 @@ LESSON = {
                  ["Every sense detects something different, and each one uses its own body part."],
                  ["If you know bread is baking before you see it, that was your nose smelling.",
                   "If you hear a dog bark, that was your ears.", "If you feel the sand is hot, that was your skin, through your feet."],
-                 ["Children answer with the thing, not the body part.", "The question asks which PART of you told you."],
+                 ["Children answer with the thing, not the body part.", "The question asks which part of you told you."],
                  ["Read what is happening, then tap the body part that noticed it."]),
              {"label": "Question", "items": [
                  q("You know bread is baking before you see it. Which part told you?", "\U0001F35E", "nose", ["ears", "eyes", "tongue"], "Your nose smelled the bread. That is the sense of smell."),
@@ -96,13 +96,13 @@ LESSON = {
              explain(
                  ["When you cannot see, your sense of touch can still tell you a lot."],
                  ["Your fingers feel whether a thing is hard or soft, rough or smooth, warm or cold, round or pointy.",
-                  "Soft, furry, and it purrs: that is a kitten.", "Hard, cold and round: that is a marble."],
+                  "Soft and furry: that is a woolly hat.", "Hard, cold and round: that is a marble."],
                  ["Children guess before feeling all the clues.", "Use every clue the fingers give."],
                  ["Read what your fingers feel, then tap what is in the bag."]),
              {"label": "Bag", "items": [
-                 q("It feels soft, warm and furry. It wriggles.", "\U0001F45C", "a kitten", ["a stone", "a spoon", "a cup"], "Soft, warm and furry: a kitten. Your skin felt all of that."),
+                 q("It feels soft and furry.", "\U0001F45C", "a woolly hat", ["a stone", "a spoon", "a cup"], "Soft and furry: a woolly hat. Your skin felt that."),
                  q("It feels hard, cold, small and round.", "\U0001F45C", "a marble", ["a sponge", "a banana", "a feather"], "Hard, cold and round: a marble."),
-                 q("It feels rough and bumpy, like sandpaper.", "\U0001F45C", "a rock", ["a silk scarf", "an egg", "a balloon"], "Rough and bumpy: a rock. Smooth things feel flat."),
+                 q("It feels rough and bumpy, like sandpaper.", "\U0001F45C", "a rock", ["a silk scarf", "an egg", "a balloon"], "Rough and bumpy: a rock. Smooth things have no bumps."),
                  q("It feels light, soft and tickly.", "\U0001F45C", "a feather", ["a brick", "a key", "a bottle"], "Light and tickly: a feather."),
                  q("It feels smooth, cold and hard, and it has a handle.", "\U0001F45C", "a metal spoon", ["a sock", "a leaf", "a pillow"], "Smooth, cold, hard, with a handle: a spoon."),
              ]},
@@ -117,21 +117,21 @@ LESSON = {
                  ["Children think different means better or worse.", "It does not. It just means not the same."],
                  ["Tap each friend and listen for what is the same and what is different."]),
              {"items": [
-                 {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "say": "Amal has curly black hair and brown eyes. Two eyes, one nose, two hands, like everybody."},
-                 {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "say": "Sami is the tallest. He has short hair and brown eyes. Two eyes, one nose, two hands, like everybody."},
-                 {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "say": "Nora is the shortest and wears glasses. Two eyes, one nose, two hands, like everybody."},
-                 {"pic": "\U0001F466\U0001F3FF", "label": "Omar", "say": "Omar has a gap where a tooth fell out. Two eyes, one nose, two hands, like everybody."},
+                 {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "say": "Amal has curly black hair and brown eyes. Two eyes, one nose, two hands, like most people."},
+                 {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "say": "Sami is the tallest. He has short hair and brown eyes. Two eyes, one nose, two hands, like most people."},
+                 {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "say": "Nora is the shortest and wears glasses. Two eyes, one nose, two hands, like most people."},
+                 {"pic": "\U0001F466\U0001F3FF", "label": "Omar", "say": "Omar has a gap where a tooth fell out. Two eyes, one nose, two hands, like most people."},
              ], "need": 4,
-              "then": {"ask": "What is the SAME about all four friends?",
+              "then": {"ask": "What is the <b>same</b> about all four friends?",
                        "opts": [opt("They all have two eyes, one nose and two hands", True), opt("They are all the same height", False), opt("They all wear glasses", False)],
-                       "why": "Every person has the same body parts. Height, hair and glasses are differences."}},
+                       "why": "Most people have the same body parts. Height, hair and glasses are differences."}},
              "The same body parts, but nobody is exactly the same."),
 
         step("sort", "Everyone, or not everyone?", "\U0001F5C2️", "Sorted people", ["1Bp.04", "1TWSc.01"],
              "Does <b>everyone</b> have this, or only <b>some people</b>? Tap the right bin.",
              explain(
                  ["Some things are true of every person.", "Other things are true of some people and not others."],
-                 ["Everyone has a nose.", "Only some people have curly hair.", "Everyone has two ears.", "Only some people wear glasses."],
+                 ["Everyone has a nose.", "Only some people have curly hair.", "Everyone has skin.", "Only some people wear glasses."],
                  ["Children put brown eyes in Everyone because everyone they know has brown eyes.", "Some people have blue or green eyes."],
                  ["For each one ask: does every person in the world have this?"]),
              {"ask": "Everyone, or only some people?",
@@ -139,14 +139,14 @@ LESSON = {
               "items": [
                   {"pic": "\U0001F443", "label": "a nose", "bin": "all", "why": "Every person has a nose."},
                   {"pic": "\U0001F9D1‍\U0001F9B1", "label": "curly hair", "bin": "some", "why": "Some people have curly hair, some straight."},
-                  {"pic": "\U0001F442", "label": "two ears", "bin": "all", "why": "Every person has two ears."},
+                  {"pic": "\U0001F464", "label": "a head", "bin": "all", "why": "Every person has a head."},
                   {"pic": "\U0001F453", "label": "glasses", "bin": "some", "why": "Only some people need glasses."},
-                  {"pic": "\U0001F441️", "label": "two eyes", "bin": "all", "why": "Every person has two eyes."},
+                  {"pic": "\U0001F91A", "label": "skin", "bin": "all", "why": "Every person has skin, all over their body."},
                   {"pic": "\U0001F7EB", "label": "brown eyes", "bin": "some", "why": "Many people have brown eyes, but some have blue or green."},
-                  {"pic": "\U0001F9B7", "label": "a gap tooth", "bin": "some", "why": "Only some children have a tooth missing right now."},
-                  {"pic": "\U0001F91A", "label": "hands", "bin": "all", "why": "Every person has hands."},
+                  {"pic": "\U0001F9B7", "label": "a missing tooth", "bin": "some", "why": "Only some children have a tooth missing right now."},
+                  {"pic": "\U0001FAC0", "label": "a heart", "bin": "all", "why": "Every person has a heart, beating inside them."},
               ]},
-             "Everyone has the same parts. The details are different."),
+             "Everyone shares some things. The details are different."),
 
         step("measure", "How tall? Measure in hands", "\U0001F590️", "Hand spans", ["1TWSc.03", "1Bp.04"],
              "Measure <b>%s</b> in hand spans. Press to lay down a hand each time.",
@@ -233,8 +233,9 @@ LESSON = {
                  q("How many senses do we have?", "❓", "five", ["two", "ten", "one"], "Sight, hearing, smell, taste and touch. Five."),
                  q("We taste an orange with our...", "\U0001F34A", "tongue", ["ears", "eyes", "feet"], "The tongue tastes."),
                  q("Which is at the end of your leg?", "\U0001F9B6", "your foot", ["your hand", "your head", "your ear"], "Feet are at the end of the legs."),
-                 q("What does every person have?", "\U0001F465", "two eyes and a nose", ["curly hair", "glasses", "a missing tooth"], "Every person has the same body parts."),
+                 q("What does every person have?", "\U0001F465", "a head and a body", ["curly hair", "glasses", "a missing tooth"], "Every person has a head and a body. Curly hair, glasses and a missing tooth are things only some people have."),
                  q("Sami is 6 hand spans tall and Nora is 4. Who is shorter?", "\U0001F590️", "Nora", ["Sami", "they are the same"], "4 is less than 6, so Nora is shorter."),
+                 q("Why would it be hard to find the marble in the feely bag if you wore thick gloves?", "\U0001F9E4", "The gloves stop your skin feeling the shape", ["The gloves make your ears quiet", "The gloves make the marble melt"], "You feel with your skin. Thick gloves cover the skin on your hands, so you cannot feel the shape as well."),
              ]},
              "That is the whole lesson finished. You know your body and your senses."),
     ],
@@ -250,15 +251,20 @@ LESSON["about"] = [
     "Measure a friend in hand spans and write it in a table.",
 ]
 
+LESSON["warmup"] = [
+    q("Where is your nose?", "\U0001F443", "in the middle of your face", ["on your foot", "on your back"], "Your nose is in the middle of your face. You smell with it."),
+    q("Do all your friends look exactly the same?", "\U0001F46B", "no, everyone is a bit different", ["yes, exactly the same"], "People are alike in lots of ways, and different in others."),
+]
+
 LESSON["lecture"] = [
     part("\U0001F9CD", "Parts of the body",
-         "Head, arms, hands, tummy, legs, feet. Eyes, ears, nose, mouth. Every person has the same parts. Touch each one as I say it."),
+         "Head, arms, hands, tummy, legs, feet. Eyes, ears, nose, mouth. Most people have all these parts. Touch each one as I say it."),
     part("\U0001F440", "Five senses",
          "You have five senses. Eyes see. Ears hear. Your nose smells. Your tongue tastes. Your skin feels. Your senses tell you about the world."),
     part("\u26A0\uFE0F", "Senses keep you safe",
-         "Your senses keep you safe. Your ears hear a car coming. Your nose smells smoke. Your skin feels that a cup is too hot, before you burn."),
+         "Your senses keep you safe. Your ears hear a car coming. Your nose smells smoke. Your skin feels that a cup is too hot, before it burns you."),
     part("\U0001F467\U0001F3FE", "Same and different",
-         "Everyone has two eyes. But some are brown, some are green. Everyone has hair. But some is curly, some is straight. We are alike, and we are different."),
+         "Most people have two eyes. Some eyes are brown and some are green. Most people have hair. Some hair is curly and some is straight. We are alike, and we are different."),
     part("\u270B", "Measuring in hands",
          "Long ago, people measured with their hands and feet. You can too. A hand span is from your thumb to your little finger. Today you measure your friends in hand spans."),
 ]
@@ -277,23 +283,24 @@ LESSON["words"] = [
     word("touch", "\u270B\U0001F3FE", "The sense that uses your skin, to feel things.",
          ["Touch tells me the ice is cold.", "In the feely bag, only touch could help."]),
     word("hand span", "\u270B", "The distance from your thumb to your little finger, stretched wide.",
-         ["Nora is seven hand spans tall.", "We measured the table in hand spans."]),
+         ["Nora is four hand spans tall.", "We measured the table in hand spans."]),
 ]
 
 LESSON["home"] = [
-    home("The feely bag", "A bag or a pillowcase, six small things from the kitchen: a spoon, a sponge, a key, a potato",
-         ["A grown-up puts the things in the bag without showing you.",
+    home("The feely bag", "A bag or a pillowcase, and a few small things, like a spoon, a sponge, a key and a potato. Nothing sharp.",
+         ["A grown-up puts the things in the bag without showing you. Nothing sharp.",
           "Put your hand in and feel one, without looking.",
           "Say what it is, then pull it out and check."],
          "Which sense told you? Touch. What tricked you?"),
     home("Measure your family in hands", "Your hand, a wall, a pencil, paper",
          ["Stand each person against the wall and mark their height with a pencil.",
           "Measure from the floor to the mark in your hand spans.",
+          "Ask a grown-up to measure the same mark with their hand.",
           "Write each name and number in a table."],
          "Who is tallest? Why does a grown-up's hand span give a smaller number?"),
     home("Same and different survey", "Paper and a pencil, three people",
          ["Ask three people: what colour are your eyes? Is your hair curly or straight?",
           "Draw a table with a row for each person.",
           "Count what is the same and what is different."],
-         "Everyone has the same parts. The details are different."),
+         "Most people have the same parts. The details are different."),
 ]

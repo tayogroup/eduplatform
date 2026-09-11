@@ -19,7 +19,7 @@ LESSON = {
                  ["Things move in different ways, and there is a word for each way."],
                  ["A ball rolls.", "A swing swings backwards and forwards.", "A top spins round and round.",
                   "A snail slides slowly.", "A kite flies up in the wind.", "A door swings open on its hinges."],
-                 ["Children say everything just moves.", "Scientists say HOW it moves: rolls, slides, spins, swings, bounces."],
+                 ["Children say everything just moves.", "Scientists say how it moves: rolls, slides, spins, swings, bounces."],
                  ["Tap every picture and say the moving word out loud."]),
              {"items": [
                  {"pic": "⚽", "label": "ball", "sub": "rolls", "say": "A ball rolls along the ground, turning over and over."},
@@ -49,9 +49,9 @@ LESSON = {
                   {"pic": "\U0001F6CE️", "label": "pressing a doorbell", "bin": "push", "why": "Your finger pushes the button in."},
                   {"pic": "\U0001FAA2", "label": "tug of war", "bin": "pull", "why": "You pull the rope towards you."},
                   {"pic": "\U0001F6D2", "label": "pushing a trolley", "bin": "push", "why": "You push the trolley away, in front of you."},
-                  {"pic": "\U0001F415", "label": "walking a dog on a lead", "bin": "pull", "why": "The lead pulls the dog back towards you."},
+                  {"pic": "\U0001F415", "label": "pulling a dog back on its lead", "bin": "pull", "why": "The lead pulls the dog back towards you."},
                   {"pic": "\U0001F3A0", "label": "pushing a swing", "bin": "push", "why": "You push the swing away and it swings back."},
-                  {"pic": "\U0001F9F5", "label": "pulling a zip up", "bin": "pull", "why": "You pull the zip towards you, up the jacket."},
+                  {"pic": "\U0001F6AA", "label": "pulling a door open", "bin": "pull", "why": "You pull the door towards you to open it."},
               ]},
              "Pushes and pulls are forces. They make things move."),
 
@@ -66,7 +66,7 @@ LESSON = {
              {"sim": "pushBall",
               "predict": {"ask": "What do you think a <b>hard</b> push will do, compared with a gentle one?",
                           "opts": [opt("The ball will roll further", True), opt("The ball will roll the same distance", False), opt("The ball will roll a shorter way", False)]},
-              "runAsk": "Press Push gently, then Push HARD. Count the steps each time.",
+              "runAsk": "Press <b>Push gently</b>, then <b>Push hard</b>. Count the steps each time.",
               "happened": {"ask": "What happened with the hard push?",
                            "opts": [opt("The ball rolled further, nine steps instead of three", True), opt("The ball rolled the same three steps", False), opt("The ball did not move", False)],
                            "why": "The gentle push moved the ball three steps. The hard push moved it nine. A bigger force, a bigger move."}},
@@ -116,7 +116,7 @@ LESSON = {
              explain(
                  ["A results table lets you see all the answers at once, and lets other people check your work."],
                  ["Think back to the tank.", "Apple: float.", "Stone: sink.", "Leaf: float.", "Coin: sink.", "Tap each row and pick what happened."],
-                 ["Children write down their prediction instead of the result.", "The table holds what HAPPENED."],
+                 ["Children write down their prediction instead of the result.", "The table holds what happened."],
                  ["Fill in every row."]),
              {"ask": "Did %s float or sink?",
               "columns": ["Thing", "Float or sink?"],
@@ -180,6 +180,7 @@ LESSON = {
                  q("Which of these floats?", "\U0001F30A", "an apple", ["a coin", "a brick", "a key"], "The apple floated on top of the water."),
                  q("A ball rolls towards you. You put your hand in front. What happens?", "✋", "it stops", ["it goes faster", "it floats", "it spins"], "A push back against a moving thing stops it."),
                  q("How does a spinning top move?", "\U0001F300", "it spins round and round", ["it slides", "it bounces", "it flies"], "A top spins."),
+                 q("Omar pushed the same ball twice. It rolled further the second time. Why?", "⚽", "He pushed it harder the second time", ["The ball changed colour", "The ball was tired the first time"], "It was the same ball, so the push made the difference. A bigger push makes a bigger move."),
              ]},
              "That is the whole lesson finished. You know pushes, pulls, floating and sinking."),
     ],
@@ -193,6 +194,11 @@ LESSON["about"] = [
     "Tell a push from a pull.",
     "Say what a bigger push does.",
     "Predict and test which things float and which sink.",
+]
+
+LESSON["warmup"] = [
+    q("What happens to a ball when you kick it?", "⚽", "it moves away from you", ["it stays still", "it comes towards you"], "A kick is a push. It sends the ball away from you."),
+    q("What does a boat do on the water?", "\U0001F6F6", "it floats", ["it sinks"], "A boat floats on top of the water."),
 ]
 
 LESSON["lecture"] = [
@@ -227,7 +233,7 @@ LESSON["words"] = [
 
 LESSON["home"] = [
     home("Float or sink in the sink", "A bowl of water and eight things from the kitchen: an apple, a stone, a coin, a cork, a leaf, a spoon, a lid, a grape",
-         ["Before each one goes in, say: float or sink.",
+         ["Do this with a grown-up. Before each one goes in, say: float or sink.",
           "Drop it in gently and watch.",
           "Put the floaters in one pile and the sinkers in another."],
          "Which prediction was wrong? Heavy things do not always sink."),
@@ -240,5 +246,5 @@ LESSON["home"] = [
          ["Walk round the house and find ten things you push or pull: doors, drawers, taps, switches.",
           "Draw each one.",
           "Write push or pull next to it."],
-         "Some things need a push AND a pull. A drawer is both."),
+         "Some things need a push and a pull. A drawer is both."),
 ]

@@ -7,7 +7,7 @@ on; 1ESs.02 the Sun is a source of heat and light and one of many stars;
 with 1TWSp.01, 1TWSp.02, 1TWSc.01, 1TWSc.04, 1TWSc.05, 1TWSa.01, 1SIC.01
 and 1SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "our-earth-our-sun",
@@ -83,19 +83,19 @@ LESSON = {
         step("sort", "Rock, soil or water?", "\U0001F5C2️", "Earth sorter", ["1ESp.02", "1ESp.01", "1TWSc.01"],
              "Is this <b>rock</b>, <b>soil</b> or <b>water</b>? Tap the right bin.",
              explain(
-                 ["Everything on the surface of Earth is rock, soil or water."],
-                 ["A pebble is rock.", "A mountain is a huge piece of rock.", "Mud is soil with water in it.", "The sea is water."],
+                 ["The land and the sea are made of rock, soil and water."],
+                 ["A pebble is rock.", "A mountain is a huge piece of rock.", "The soil in a flower pot is soil.", "The sea is water."],
                  ["Children think sand is soil.", "Sand is tiny bits of rock, ground up by the sea."],
                  ["Look at each one and decide: rock, soil or water?"]),
              {"ask": "Rock, soil, or water?",
-              "bins": [{"id": "rock", "label": "Rock", "pic": "\U0001FAA8"}, {"id": "soil", "label": "Soil", "pic": "\U0001F33E"}, {"id": "water", "label": "Water", "pic": "\U0001F4A7"}],
+              "bins": [{"id": "rock", "label": "Rock", "pic": "\U0001FAA8"}, {"id": "soil", "label": "Soil", "pic": icon("soil")}, {"id": "water", "label": "Water", "pic": "\U0001F4A7"}],
               "items": [
                   {"pic": "\U0001FAA8", "label": "pebble", "bin": "rock", "why": "A pebble is a small, smooth piece of rock."},
                   {"pic": "\U0001F30A", "label": "the sea", "bin": "water", "why": "The sea is water, and it covers most of Earth."},
                   {"pic": "\U0001F33E", "label": "garden soil", "bin": "soil", "why": "Garden soil is dark and crumbly. Plants grow in it."},
                   {"pic": "\U0001F3D4️", "label": "mountain", "bin": "rock", "why": "A mountain is a huge piece of rock."},
                   {"pic": "\U0001F30A", "label": "river", "bin": "water", "why": "A river is water flowing over the land."},
-                  {"pic": "\U0001F9F1", "label": "mud", "bin": "soil", "why": "Mud is soil with water mixed in."},
+                  {"pic": "\U0001FAB4", "label": "soil in a flower pot", "bin": "soil", "why": "The soil in a flower pot is where the plant's roots grow."},
                   {"pic": "\U0001F3D6️", "label": "sand", "bin": "rock", "why": "Sand is tiny bits of rock, ground up by the sea."},
                   {"pic": "\U0001F3DE️", "label": "lake", "bin": "water", "why": "A lake is water."},
               ]},
@@ -105,12 +105,12 @@ LESSON = {
              "Press <b>Next</b> and watch the Sun come up. What does it bring?",
              explain(
                  ["The Sun gives us two things: light and heat."],
-                 ["At night, with no Sun, it is dark and cold.", "The Sun rises, and the sky fills with light.",
+                 ["At night, with no Sun, it is dark and cooler.", "The Sun rises, and the sky fills with light.",
                   "By the middle of the day the Sun is high and the ground is warm.", "Stand in the sunshine and you feel the heat on your skin."],
                  ["Children think the Moon gives light at night the same way.", "The Moon only bounces the Sun's light back. It makes none of its own."],
                  ["Press Next and watch the light and the heat arrive."]),
              {"frames": [
-                 {"scene": {"id": "sky", "state": 0}, "cap": "Night. No Sun. It is <b>dark</b> and <b>cold</b>.", "say": "Night time. The Sun has gone down. It is dark, and it is cold."},
+                 {"scene": {"id": "sky", "state": 0}, "cap": "Night. No Sun. It is <b>dark</b> and <b>cooler</b>.", "say": "Night time. The Sun has gone down. It is dark, and it is cooler."},
                  {"scene": {"id": "sky", "state": 1}, "cap": "The Sun rises. <b>Light</b> fills the sky.", "say": "The Sun rises. Light fills the sky. The Sun is a source of light."},
                  {"scene": {"id": "sky", "state": 2}, "cap": "Midday. The Sun is high. The ground is <b>warm</b>.", "say": "Midday. The Sun is high. Touch the ground and it is warm. The Sun is a source of heat."},
                  {"pic": "☀️\U0001F9D2", "cap": "Stand in the sunshine. Feel the <b>heat</b> on your skin.", "say": "Stand in the sunshine. Feel the heat on your skin. That heat came all the way from the Sun."},
@@ -135,7 +135,7 @@ LESSON = {
                            "why": "The water in the sun got warm. The water in the shade stayed cool. The Sun's heat warmed it."}},
              "The Sun's heat warms things. The shade stays cooler."),
 
-        step("demo", "The Sun is a star", "⭐", "Star Sun", ["1ESs.02"],
+        step("demo", "The Sun is a star", "⭐", "Star Sun", ["1ESs.02", "1ESs.01"],
              "At night you can see many stars. Press <b>Next</b> to find out what the Sun really is.",
              explain(
                  ["The Sun is a star.", "The stars you see at night are suns too, but very, very far away."],
@@ -162,13 +162,13 @@ LESSON = {
                  ["Tap each picture and hear how thinking changed."]),
              {"items": [
                  {"pic": "\U0001F30D", "label": "flat or round?", "say": "Long ago some people thought the Earth was flat, like a plate. Now we have photographs from space, and it is round like a ball."},
-                 {"pic": "☀️", "label": "who goes round whom?", "say": "Long ago people thought the Sun went round the Earth. Now we know the Earth goes round the Sun, once a year."},
+                 {"pic": "☀️", "label": "what goes round what?", "say": "Long ago people thought the Sun went round the Earth. Now we know the Earth goes round the Sun, once a year."},
                  {"pic": "\U0001F52D", "label": "astronomer", "say": "An astronomer studies the stars and planets through a telescope. Finding out about the sky is their job."},
                  {"pic": "\U0001F468‍\U0001F680", "label": "astronaut", "say": "An astronaut flies into space and sees with their own eyes that Earth is a round blue planet."},
              ], "need": 4,
               "then": {"ask": "How do we know the Earth is round?",
                        "opts": [opt("Photographs taken from space show it", True), opt("Because the ground looks flat", False), opt("Because someone guessed", False)],
-                       "why": "Science changed what people knew: photographs from space show a round Earth."}},
+                       "why": "People worked out long ago that Earth is round. Photographs from space show it."}},
              "What people know changes as they find out more."),
 
         step("ask", "Ask a question about the sky", "❓", "Asked why", ["1TWSp.01"],
@@ -196,12 +196,13 @@ LESSON = {
              {"items": [
                  q("What is the name of the planet we live on?", "\U0001F30D", "Earth", ["the Sun", "the Moon", "a star"], "We live on the planet Earth."),
                  q("Most of Earth is covered in...", "\U0001F30A", "water", ["sand", "grass", "ice"], "Seven of your ten catches landed on water. Earth is mostly water."),
-                 q("Dig down through the soil. What do you find underneath?", "⛏️", "rock", ["more grass", "water", "sky"], "Land is soil on top and rock underneath."),
+                 q("Dig down through the soil. What do you find underneath?", "⛏️", "rock", ["more grass", "clouds", "sky"], "Land is soil on top and rock underneath."),
                  q("What is soil?", "\U0001F33E", "the dark, crumbly top layer of the land", ["a kind of water", "a piece of the Sun", "a cloud"], "Soil is the crumbly layer plants grow in, on top of the rock."),
                  q("The Sun gives us...", "☀️", "light and heat", ["rain and wind", "rock and soil", "nothing"], "The Sun is a source of light and heat."),
                  q("Which cup of water got warmer?", "\U0001F964", "the one in the sun", ["the one in the shade", "neither"], "The Sun's heat warmed the water in the sun."),
                  q("What is the Sun?", "⭐", "a star, the nearest one to Earth", ["a planet", "a cloud", "a big lamp"], "The Sun is a star. The others look small because they are far away."),
                  q("Long ago some people thought the Earth was flat. How do we know it is round?", "\U0001F6F0️", "photographs from space show it", ["because the ground is bumpy", "because the Sun is round"], "Science changed what people knew."),
+                 q("On a hot day, why does it feel cooler in the shade of a tree?", "\U0001F333", "The tree stops the Sun's heat reaching you", ["The tree is made of ice", "The shade makes it night time"], "The Sun gives heat. In the shade, the tree is in the way, so less of the Sun's heat reaches you."),
              ]},
              "That is the whole lesson finished. You know your Earth and your Sun."),
     ],
@@ -215,6 +216,11 @@ LESSON["about"] = [
     "Say what the land is made of: soil on top, rock underneath.",
     "Say what the Sun gives us: light and heat.",
     "Say that the Sun is a star.",
+]
+
+LESSON["warmup"] = [
+    q("What is the big bright light in the sky in the daytime?", "☀️", "the Sun", ["the Moon", "a lamp"], "In the daytime the Sun lights up the sky."),
+    q("What is the sea made of?", "\U0001F30A", "water", ["sand", "rock"], "The sea is water, and there is a lot of it on Earth."),
 ]
 
 LESSON["lecture"] = [
@@ -235,7 +241,7 @@ LESSON["words"] = [
          ["Earth is round.", "Earth is mostly covered in water."]),
     word("planet", "\U0001FA90", "A huge round world that goes round a star.",
          ["Earth is a planet.", "There are other planets, far away."]),
-    word("soil", "\U0001FAB4", "The dark, crumbly top part of the land, where plants grow.",
+    word("soil", icon("soil"), "The dark, crumbly top part of the land, where plants grow.",
          ["Seeds grow in soil.", "Dig down and there is soil."]),
     word("rock", "\U0001FAA8", "The hard stuff under the soil. A stone is a small piece of rock.",
          ["The mountain is made of rock.", "Under the soil is rock."]),
@@ -256,7 +262,8 @@ LESSON["home"] = [
     home("Dig a hole", "A trowel or a spoon, a patch of garden or a big plant pot, a grown-up",
          ["Dig down slowly.",
           "Put what you find in a line: grass, soil, little stones.",
-          "Feel the soil. Is it crumbly? Is it damp?"],
+          "Feel the soil. Is it crumbly? Is it damp?",
+          "Wash your hands afterwards."],
          "Small stones in the soil are little pieces of rock."),
     home("Sun or shade", "Two cups of water, a sunny day",
          ["Put one cup in the sun and one in the shade.",

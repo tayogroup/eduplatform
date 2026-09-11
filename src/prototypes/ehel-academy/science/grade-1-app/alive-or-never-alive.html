@@ -665,6 +665,31 @@
   .graph.dot .gstack { gap: 4px; }
   .graph.dot .gblock { width: 22px; height: 22px; border-radius: 50%; margin: 0 auto; }
 
+/* the kit's own drawings (lesson-kit/_icons.py) sit where an emoji would, at its size;
+   a row mixes them with ordinary emoji */
+.ico { display: inline-block; }
+.picrow { display: inline-flex; align-items: center; gap: 0.08em; }
+
+/* the overview: last time, the warm-up, the two sittings */
+.ovw-recap { background: var(--card, #fff); border: 2px dashed var(--line, #d7d2c4); border-radius: 14px; padding: 10px 14px; margin: 0 0 12px; }
+.ovw-recap p { margin: 4px 0 0; }
+/* a tint, not a fill: the lesson pages are dark, and a pale fill under inherited white text was unreadable */
+.ovw-sit { margin: 10px 0; padding: 8px 12px; border-radius: 12px; background: rgba(244, 201, 93, 0.16); border: 1px solid rgba(244, 201, 93, 0.55); color: inherit; }
+.ovw-warm { margin-top: 14px; }
+.ovw-note { margin: 0 0 8px; color: var(--muted, #555); font-size: 0.92em; }
+.warmq { margin: 0 0 12px; }
+.warmask { font: inherit; font-weight: 700; background: none; border: 0; padding: 4px 0; cursor: pointer; text-align: left; color: inherit; }
+.warmopts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.warmopts .choice.picked { outline: 3px solid #E8A33D; }
+.warmfb { min-height: 1.3em; margin: 6px 0 0; font-weight: 700; }
+/* the break card between the two sittings */
+.sit-break { display: grid; place-items: center; padding: 12px; box-sizing: border-box; }
+.sit-card { max-width: 520px; margin: 12vh auto 0; background: var(--card, #fff); border-radius: 20px; padding: 24px 22px; text-align: center; }
+.sit-pic { font-size: 64px; }
+.sit-h { margin: 6px 0 10px; }
+.sit-card p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
+.sit-card .bigbtns { justify-content: center; gap: 10px; flex-wrap: wrap; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -940,7 +965,7 @@
         <p class="score" id="score3"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Bp.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Alive means a thing grows, eats, drinks and can have babies.</s><s>A thing that was never alive does none of those.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the goat.</s><s>It eats grass.</s><s>It drinks water.</s><s>It grew from a tiny kid into a big goat.</s><s>And it can have a baby goat of its own.</s><s>Now look at the stone.</s><s>It never eats, never drinks, never grows and never has a baby stone.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think anything that moves is alive.</s><s>A car moves and a river moves, but they were never alive.</s><s>Moving is not the test. Growing, eating and having babies are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press Next, and each time ask: does the goat do this? Does the stone?</s></mstts:express-as>' data-say="Press Next and watch the goat. Living things do four things.">
+    <section class="slide" data-objectives="1Bp.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Alive means a thing grows, needs food, needs water and can have young.</s><s>A thing that was never alive does none of those.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the goat.</s><s>It grew from a tiny kid into a big goat.</s><s>It needs food, so it eats grass.</s><s>It needs water, so it drinks.</s><s>And it can have a baby goat of its own.</s><s>A plant needs food too. It makes its own food in its leaves, using light.</s><s>Now look at the stone.</s><s>It never grows, never needs food or water, and never has a baby stone.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think anything that moves is alive.</s><s>A car moves and a river moves, but they were never alive.</s><s>Moving is not the test. Growing, needing food and water, and having young are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press Next, and each time ask: does the goat do this? Does the stone?</s></mstts:express-as>' data-say="Press Next and watch the goat. Living things do four things.">
       <div class="slide-head"><span class="n">4</span><h2>What makes something alive?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Press <b>Next</b> and watch the goat. Living things do four things.</span></div>
       <div class="stage">
@@ -950,7 +975,7 @@
         <p class="score" id="score4"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Bp.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every thing in the world is either alive, or it was never alive.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the mango tree.</s><s>A tree does not walk, but it drinks water, it grows taller every year, and it makes seeds that grow into new trees.</s><s>So a tree is alive.</s><s>Tap the spoon.</s><s>It never eats, never grows and never has baby spoons.</s><s>It was never alive.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say a tree is not alive because it does not move about.</s><s>Plants are alive.</s><s>They grow and they make seeds, and that is enough.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every picture and listen for the reason each time.</s></mstts:express-as>' data-say="Tap each picture and hear whether it is alive.">
+    <section class="slide" data-objectives="1Bp.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Most things you see are alive, or were never alive. Some, like a fallen leaf, were alive once.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the mango tree.</s><s>A tree does not walk, but it takes in water, it makes its own food from sunlight, it grows taller every year, and it makes seeds that grow into new trees.</s><s>So a tree is alive.</s><s>Tap the spoon.</s><s>It never grows, needs no food or water, and never has baby spoons.</s><s>It was never alive.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say a tree is not alive because it does not move about.</s><s>Plants are alive.</s><s>They grow and they make seeds, and that is enough.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every picture and listen for the reason each time.</s></mstts:express-as>' data-say="Tap each picture and hear whether it is alive.">
       <div class="slide-head"><span class="n">5</span><h2>Alive, or never alive?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Tap each picture and hear whether it is alive.</span></div>
       <div class="stage">
@@ -960,7 +985,7 @@
         <p class="score" id="score5"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Bp.01 1TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sorting means putting things into groups by looking at what is the same about them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the thing in the box.</s><s>Ask the four questions: does it grow, eat, drink, and can it have babies?</s><s>If yes, tap Alive.</s><s>If no, tap Never alive.</s><s>A hen eats, drinks, grows and lays eggs, so hen goes in Alive.</s><s>A cup does none of those, so cup goes in Never alive.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put a cloud or a river in Alive because it moves.</s><s>Moving is not the test.</s><s>A river does not eat or have babies.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time with each one and say the reason out loud before you tap.</s></mstts:express-as>' data-say="Is it alive , or was it never alive ? Tap the right bin.">
+    <section class="slide" data-objectives="1Bp.01 1TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sorting means putting things into groups by looking at what is the same about them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the thing in the box.</s><s>Ask the four questions: does it grow? Does it need food? Does it need water? Can it have young?</s><s>If yes, tap Alive.</s><s>If no, tap Never alive.</s><s>A hen eats, drinks, grows and lays eggs, so hen goes in Alive.</s><s>A cup does none of those, so cup goes in Never alive.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put a cloud or a river in Alive because it moves.</s><s>Moving is not the test.</s><s>A river does not eat or have babies.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time with each one and say the reason out loud before you tap.</s></mstts:express-as>' data-say="Is it alive , or was it never alive ? Tap the right bin.">
       <div class="slide-head"><span class="n">6</span><h2>Sort them into two bins</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Is it <b>alive</b>, or was it <b>never alive</b>? Tap the right bin.</span></div>
       <div class="stage">
@@ -1000,7 +1025,7 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Bp.03 1TWSp.02 1TWSc.04 1TWSa.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An experiment is a fair test.</s><s>Two plants that are the same, and we change only one thing: the water.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>First you predict.</s><s>That means you say what you think will happen before we start.</s><s>Then we water one plant every day and give the other nothing, and we wait five days.</s><s>Then you say what happened, and whether it matched your prediction.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a wrong prediction means they did badly.</s><s>It does not.</s><s>Scientists are wrong all the time. What matters is looking carefully at what really happened.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your prediction, then press the button once for each day and watch both plants.</s></mstts:express-as>' data-say="Two plants. We will water one and give the other no water . First, predict!">
+    <section class="slide" data-objectives="1Bp.03 1TWSp.02 1TWSc.04 1TWSa.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This experiment is a fair test.</s><s>Two plants that are the same, and we change only one thing: the water.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>First you predict.</s><s>That means you say what you think will happen before we start.</s><s>Then we water one plant every day and give the other nothing, and we wait five days.</s><s>Then you say what happened, and whether it matched your prediction.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a wrong prediction means they did badly.</s><s>It does not.</s><s>Scientists are wrong all the time. What matters is looking carefully at what really happened.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your prediction, then press the button once for each day and watch both plants.</s></mstts:express-as>' data-say="Two plants. We will water one and give the other no water . First, predict!">
       <div class="slide-head"><span class="n">10</span><h2>Does a plant need water?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Two plants. We will <b>water one</b> and give the other <b>no water</b>. First, predict!</span></div>
       <div class="stage">
@@ -1050,7 +1075,7 @@
         <p class="score" id="score14"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Bp.01 1Bp.02 1Bp.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks whether a thing is alive, ask the four questions: does it grow, eat, drink, have babies?</s><s>If it asks what an animal needs, think air, water, food.</s><s>If it asks about plants, think water and light.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+    <section class="slide" data-objectives="1Bp.01 1Bp.02 1Bp.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks whether a thing is alive, ask the four questions: does it grow, need food, need water, have young?</s><s>If it asks what an animal needs, think air, water, food.</s><s>If it asks about plants, think water and light.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">15</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Time to show what you know. Tap the answer.</span></div>
       <div class="stage">
@@ -1163,6 +1188,47 @@
             "words": 7,
             "games": 4,
             "home": 3
+          },
+          "recap": null,
+          "warmup": [
+            {
+              "ask": "Is a tree alive?",
+              "pic": "🌳",
+              "opts": [
+                {
+                  "t": "yes",
+                  "ok": true
+                },
+                {
+                  "t": "no",
+                  "ok": false
+                }
+              ],
+              "why": "A tree grows, needs water and makes seeds, so it is alive."
+            },
+            {
+              "ask": "Which of these grows?",
+              "pic": "🌱",
+              "opts": [
+                {
+                  "t": "a seedling",
+                  "ok": true
+                },
+                {
+                  "t": "a stone",
+                  "ok": false
+                },
+                {
+                  "t": "a spoon",
+                  "ok": false
+                }
+              ],
+              "why": "A seedling grows into a big plant. Growing is one sign that a thing is alive."
+            }
+          ],
+          "sittings": {
+            "one": 20,
+            "two": 20
           }
         }
       },
@@ -1186,12 +1252,12 @@
             {
               "pic": "🐐",
               "title": "What alive means",
-              "say": "Look at a goat. It eats grass. It drinks water. It grows from a little kid into a big goat. It can have babies. Anything that does all of that is alive."
+              "say": "Look at a goat. It grows from a little kid into a big goat. It needs food, so it eats grass. It needs water, so it drinks. It can have young. Anything that grows, needs food and water, and can have young is alive."
             },
             {
-              "pic": "🪨",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
               "title": "Never alive",
-              "say": "Now look at a stone. It does not eat. It does not drink. It never grows and it never has babies. A stone was never alive. Neither was a spoon, a car or a teddy bear."
+              "say": "Now look at a stone. It needs no food. It needs no water. It never grows and it never has babies. A stone was never alive. Neither was a spoon, a car or a teddy bear."
             },
             {
               "pic": "🐱",
@@ -1201,7 +1267,7 @@
             {
               "pic": "🌱",
               "title": "What plants need",
-              "say": "Plants are alive too. They do not eat like animals. They need water from the soil, light from the Sun, and air. Today you will find out what happens to a plant with no water."
+              "say": "Plants are alive too. They do not eat like animals, but they still need food: they make their own in their leaves, using light from the Sun. They need water from the soil, and air. Today you will find out what happens to a plant with no water."
             },
             {
               "pic": "🔬",
@@ -1231,19 +1297,19 @@
             {
               "w": "alive",
               "pic": "🐣",
-              "meaning": "Something that eats or drinks, grows, and can have babies.",
+              "meaning": "Something that grows, needs food and water, and can have young.",
               "uses": [
                 "A chick is alive. It eats, drinks and grows.",
                 "My cat is alive, but my toy cat is not."
               ]
             },
             {
-              "w": "non-living",
-              "pic": "🪨",
-              "meaning": "Something that was never alive. It does not eat, grow or have babies.",
+              "w": "never alive",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
+              "meaning": "Not alive now, and not alive ever. It does not grow, need food or have young.",
               "uses": [
-                "A stone is non-living.",
-                "A spoon is a non-living thing."
+                "A stone was never alive.",
+                "A spoon was never alive."
               ]
             },
             {
@@ -1285,7 +1351,7 @@
             {
               "w": "experiment",
               "pic": "🧪",
-              "meaning": "A fair test you do to find out an answer.",
+              "meaning": "A test you do to find out an answer.",
               "uses": [
                 "Our experiment showed that a plant needs water.",
                 "Predict first, then do the experiment."
@@ -1308,29 +1374,29 @@
               "say": "This is a goat. Is it alive? Let us check four things."
             },
             {
+              "pic": "🐐➡️🐐",
+              "cap": "It <b>grows</b>. A little kid grows into a big goat.",
+              "say": "One. It grows. A little kid grows into a big goat."
+            },
+            {
               "pic": "🐐🌿",
-              "cap": "It <b>eats</b> grass.",
-              "say": "One. It eats grass. Living things eat."
+              "cap": "It <b>needs food</b>. It eats grass.",
+              "say": "Two. It needs food. The goat eats grass. A plant needs food too, but it makes its own, using sunlight."
             },
             {
               "pic": "🐐💧",
-              "cap": "It <b>drinks</b> water.",
-              "say": "Two. It drinks water. Living things drink."
+              "cap": "It <b>needs water</b>. It drinks.",
+              "say": "Three. It needs water. The goat drinks. A plant takes in water through its roots."
             },
             {
-              "pic": "🐑➡️🐐",
-              "cap": "It <b>grows</b>. A little kid grows into a big goat.",
-              "say": "Three. It grows. A little kid grows into a big goat."
+              "pic": "🐐🐐",
+              "cap": "It can have <b>young</b>: baby goats.",
+              "say": "Four. It can have young. A goat has baby goats, called kids. So the goat is alive!"
             },
             {
-              "pic": "🐐🐑",
-              "cap": "It can have <b>babies</b>.",
-              "say": "Four. It can have babies. So the goat is alive!"
-            },
-            {
-              "pic": "🪨",
-              "cap": "A stone never eats, drinks, grows or has babies. It was <b>never alive</b>.",
-              "say": "Now a stone. Does it eat? No. Drink? No. Grow? No. Have babies? No. A stone was never alive."
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
+              "cap": "A stone never grows, needs no food or water, and has no young. It was <b>never alive</b>.",
+              "say": "Now a stone. Does it grow? No. Does it need food or water? No. Can it have young? No. A stone was never alive."
             }
           ]
         }
@@ -1346,17 +1412,17 @@
             {
               "pic": "🐕",
               "label": "dog",
-              "say": "A dog is alive. It eats, drinks, grows and can have puppies."
+              "say": "A dog is alive. It grows, needs food and water, and can have puppies."
             },
             {
               "pic": "🥭",
               "label": "mango tree",
-              "say": "A mango tree is alive. It drinks water, grows tall and makes seeds for new trees."
+              "say": "A mango tree is alive. It grows tall, needs water, makes its own food from sunlight, and makes seeds for new trees."
             },
             {
-              "pic": "🪨",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
               "label": "stone",
-              "say": "A stone was never alive. It does not eat, drink or grow."
+              "say": "A stone was never alive. It does not grow, and it needs no food or water."
             },
             {
               "pic": "🥄",
@@ -1376,7 +1442,7 @@
             {
               "pic": "🌻",
               "label": "sunflower",
-              "say": "A sunflower is alive. It grows from a seed and drinks water through its roots."
+              "say": "A sunflower is alive. It grows from a seed and takes in water through its roots."
             },
             {
               "pic": "🧸",
@@ -1405,7 +1471,7 @@
             {
               "id": "never",
               "label": "Never alive",
-              "pic": "🪨"
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>"
             }
           ],
           "items": [
@@ -1437,7 +1503,7 @@
               "pic": "🌴",
               "label": "palm tree",
               "bin": "alive",
-              "why": "A palm tree drinks water, grows and makes seeds."
+              "why": "A palm tree takes in water, grows and makes seeds."
             },
             {
               "pic": "🧱",
@@ -1449,7 +1515,7 @@
               "pic": "🐝",
               "label": "bee",
               "bin": "alive",
-              "why": "A bee eats, grows and there are baby bees in the hive."
+              "why": "A bee eats and grows, and baby bees grow in the hive."
             },
             {
               "pic": "☁️",
@@ -1655,6 +1721,10 @@
             ],
             "why": "Without water the plant drooped and its leaves went yellow. Plants need water to stay alive."
           }
+        },
+        "sittingBreak": {
+          "minutes": 20,
+          "hub": "g1-index.html"
         }
       },
       {
@@ -1709,7 +1779,7 @@
         "data": {
           "items": [
             {
-              "pic": "🪴",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M32 36 V12\" stroke=\"#2F7D32\" stroke-width=\"3\" fill=\"none\"/><path d=\"M32 27 C22 27 16 19 16 12 C24 12 32 18 32 27 Z\" fill=\"#3E9A42\"/><path d=\"M32 22 C42 22 48 14 48 8 C40 8 32 14 32 22 Z\" fill=\"#4CAF50\"/><path d=\"M32 33 C40 33 46 29 48 23 C40 23 34 27 32 33 Z\" fill=\"#3E9A42\"/><rect x=\"14\" y=\"35\" width=\"36\" height=\"7\" rx=\"2\" fill=\"#A8522B\"/><path d=\"M18 42 H46 L42 58 H22 Z\" fill=\"#C8683A\"/></svg>",
               "label": "water the plant",
               "say": "A plant in a pot cannot find its own water. Water it and it stays green."
             },
@@ -1816,7 +1886,7 @@
                     "Never alive"
                   ],
                   "answer": "Alive",
-                  "explanation": "A palm tree drinks water, grows and makes seeds."
+                  "explanation": "A palm tree takes in water, grows and makes seeds."
                 },
                 {
                   "prompt": "Where does brick go? 🧱",
@@ -1834,7 +1904,7 @@
                     "Never alive"
                   ],
                   "answer": "Alive",
-                  "explanation": "A bee eats, grows and there are baby bees in the hive."
+                  "explanation": "A bee eats and grows, and baby bees grow in the hive."
                 },
                 {
                   "prompt": "Where does cloud go? ☁️",
@@ -1929,11 +1999,11 @@
                   "pairs": [
                     [
                       "alive",
-                      "Something that eats or drinks, grows, and can have babies."
+                      "Something that grows, needs food and water, and can have young."
                     ],
                     [
-                      "non-living",
-                      "Something that was never alive. It does not eat, grow or have babies."
+                      "never alive",
+                      "Not alive now, and not alive ever. It does not grow, need food or have young."
                     ],
                     [
                       "animal",
@@ -1967,7 +2037,7 @@
               "skill": "Science words",
               "rounds": [
                 {
-                  "prompt": "Something that eats or drinks, grows, and can have babies.",
+                  "prompt": "Something that grows, needs food and water, and can have young.",
                   "clue": "It starts with a. 🐣",
                   "answer": "alive"
                 },
@@ -2027,13 +2097,13 @@
             },
             {
               "title": "Alive or never alive hunt",
-              "materials": "A garden or a park, paper and a pencil",
+              "materials": "A garden or a park, a grown-up, paper and a pencil",
               "steps": [
-                "Walk round slowly and point at ten things.",
-                "For each one, ask: does it eat, drink, grow or have babies?",
-                "Draw two lists: alive, and never alive."
+                "Walk round slowly with a grown-up and point at ten things.",
+                "For each one, ask: does it grow, need food and water, or have young?",
+                "Make two lists: alive, and never alive."
               ],
-              "look": "Things that trick you, like a fallen leaf. It WAS alive.",
+              "look": "Things that trick you, like a fallen leaf. It was alive once.",
               "n": 2
             },
             {
@@ -2173,7 +2243,7 @@
             },
             {
               "ask": "A plant gets no water for five days. What happens?",
-              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🪴</div>",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\"><svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M32 36 V12\" stroke=\"#2F7D32\" stroke-width=\"3\" fill=\"none\"/><path d=\"M32 27 C22 27 16 19 16 12 C24 12 32 18 32 27 Z\" fill=\"#3E9A42\"/><path d=\"M32 22 C42 22 48 14 48 8 C40 8 32 14 32 22 Z\" fill=\"#4CAF50\"/><path d=\"M32 33 C40 33 46 29 48 23 C40 23 34 27 32 33 Z\" fill=\"#3E9A42\"/><rect x=\"14\" y=\"35\" width=\"36\" height=\"7\" rx=\"2\" fill=\"#A8522B\"/><path d=\"M18 42 H46 L42 58 H22 Z\" fill=\"#C8683A\"/></svg></div>",
               "opts": [
                 {
                   "t": "it droops and goes yellow",
@@ -2199,7 +2269,7 @@
               "pic": "<div class=\"askpic\" aria-hidden=\"true\">🥭</div>",
               "opts": [
                 {
-                  "t": "Yes. It grows, drinks water and makes seeds.",
+                  "t": "Yes. It grows, takes in water and makes seeds.",
                   "ok": true
                 },
                 {
@@ -2211,7 +2281,7 @@
                   "ok": false
                 }
               ],
-              "why": "Plants are alive. They grow, drink and make new seeds."
+              "why": "Plants are alive. They grow, need water, make their own food and make new seeds."
             },
             {
               "ask": "A hen has chicks. What does that tell you?",
@@ -2231,6 +2301,25 @@
                 }
               ],
               "why": "Only living things can have young."
+            },
+            {
+              "ask": "What would happen to a pet fish if nobody ever fed it?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🐟</div>",
+              "opts": [
+                {
+                  "t": "It could not stay alive, because animals need food",
+                  "ok": true
+                },
+                {
+                  "t": "It would grow bigger",
+                  "ok": false
+                },
+                {
+                  "t": "Nothing, because fish do not need food",
+                  "ok": false
+                }
+              ],
+              "why": "Every animal needs the right food. A fish with no food cannot stay alive, so somebody has to feed it."
             }
           ]
         }
@@ -2257,19 +2346,19 @@
             {
               "w": "alive",
               "pic": "🐣",
-              "meaning": "Something that eats or drinks, grows, and can have babies.",
+              "meaning": "Something that grows, needs food and water, and can have young.",
               "uses": [
                 "A chick is alive. It eats, drinks and grows.",
                 "My cat is alive, but my toy cat is not."
               ]
             },
             {
-              "w": "non-living",
-              "pic": "🪨",
-              "meaning": "Something that was never alive. It does not eat, grow or have babies.",
+              "w": "never alive",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
+              "meaning": "Not alive now, and not alive ever. It does not grow, need food or have young.",
               "uses": [
-                "A stone is non-living.",
-                "A spoon is a non-living thing."
+                "A stone was never alive.",
+                "A spoon was never alive."
               ]
             },
             {
@@ -2311,7 +2400,7 @@
             {
               "w": "experiment",
               "pic": "🧪",
-              "meaning": "A fair test you do to find out an answer.",
+              "meaning": "A test you do to find out an answer.",
               "uses": [
                 "Our experiment showed that a plant needs water.",
                 "Predict first, then do the experiment."
@@ -2322,7 +2411,7 @@
             {
               "w": "alive",
               "pic": "🐣",
-              "meaning": "Something that eats or drinks, grows, and can have babies.",
+              "meaning": "Something that grows, needs food and water, and can have young.",
               "uses": [
                 "A chick is alive. It eats, drinks and grows.",
                 "My cat is alive, but my toy cat is not."
@@ -2346,7 +2435,7 @@
             {
               "w": "battery",
               "pic": "🔋",
-              "meaning": "Electricity stored in a small box, for torches and toys.",
+              "meaning": "A small box that gives electricity to torches and toys.",
               "uses": [
                 "The torch needs a new battery.",
                 "Batteries make the toy car go."
@@ -2394,7 +2483,7 @@
             {
               "w": "experiment",
               "pic": "🧪",
-              "meaning": "A fair test you do to find out an answer.",
+              "meaning": "A test you do to find out an answer.",
               "uses": [
                 "Our experiment showed that a plant needs water.",
                 "Predict first, then do the experiment."
@@ -2456,7 +2545,7 @@
               "pic": "✋",
               "meaning": "The distance from your thumb to your little finger, stretched wide.",
               "uses": [
-                "Nora is seven hand spans tall.",
+                "Nora is four hand spans tall.",
                 "We measured the table in hand spans."
               ],
               "lesson": 3,
@@ -2465,7 +2554,7 @@
             },
             {
               "w": "hard",
-              "pic": "🪨",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
               "meaning": "Does not press in when you push it.",
               "uses": [
                 "A stone is hard.",
@@ -2526,7 +2615,7 @@
             {
               "w": "magnet",
               "pic": "🧲",
-              "meaning": "A piece of metal that pulls iron and steel towards it.",
+              "meaning": "A special object that pulls iron and steel towards it.",
               "uses": [
                 "A fridge magnet holds up my drawing.",
                 "The magnet picked up the paperclips."
@@ -2596,12 +2685,12 @@
               "file": "alive-or-never-alive.html"
             },
             {
-              "w": "non-living",
-              "pic": "🪨",
-              "meaning": "Something that was never alive. It does not eat, grow or have babies.",
+              "w": "never alive",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
+              "meaning": "Not alive now, and not alive ever. It does not grow, need food or have young.",
               "uses": [
-                "A stone is non-living.",
-                "A spoon is a non-living thing."
+                "A stone was never alive.",
+                "A spoon was never alive."
               ],
               "lesson": 1,
               "title": "Alive or Never Alive",
@@ -2693,7 +2782,7 @@
             },
             {
               "w": "pull",
-              "pic": "🪢",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><g transform=\"rotate(-28 32 32)\"><rect x=\"3\" y=\"26\" width=\"58\" height=\"12\" rx=\"6\" fill=\"#C9A26B\" stroke=\"#8A6A3A\" stroke-width=\"2\"/><path d=\"M10 26 l-5 12 M17 26 l-5 12 M24 26 l-5 12 M31 26 l-5 12 M38 26 l-5 12 M45 26 l-5 12 M52 26 l-5 12 M59 26 l-5 12\" stroke=\"#8A6A3A\" stroke-width=\"2\"/></g></svg>",
               "meaning": "A force that moves something towards you.",
               "uses": [
                 "I pull the drawer open.",
@@ -2729,7 +2818,7 @@
             },
             {
               "w": "rock",
-              "pic": "🪨",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
               "meaning": "The hard stuff under the soil. A stone is a small piece of rock.",
               "uses": [
                 "The mountain is made of rock.",
@@ -2754,7 +2843,7 @@
             {
               "w": "roots",
               "pic": "🌿",
-              "meaning": "The parts of a plant under the soil. They hold it up and drink water.",
+              "meaning": "The parts of a plant under the soil. They hold it in the soil and take in water.",
               "uses": [
                 "The roots grow down into the soil.",
                 "Pull up a weed and you can see its roots."
@@ -2813,7 +2902,7 @@
             },
             {
               "w": "sink",
-              "pic": "🪨",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>",
               "meaning": "To go down under the water.",
               "uses": [
                 "A stone sinks.",
@@ -2849,7 +2938,7 @@
             },
             {
               "w": "soil",
-              "pic": "🪴",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M3 46 C11 33 23 29 32 29 C42 29 53 35 61 46 V59 H3 Z\" fill=\"#6E4520\"/><circle cx=\"15\" cy=\"49\" r=\"2\" fill=\"#8F6440\"/><circle cx=\"26\" cy=\"41\" r=\"1.8\" fill=\"#8F6440\"/><circle cx=\"40\" cy=\"47\" r=\"2.2\" fill=\"#8F6440\"/><circle cx=\"50\" cy=\"53\" r=\"1.8\" fill=\"#8F6440\"/><circle cx=\"23\" cy=\"54\" r=\"1.6\" fill=\"#4E2F16\"/><circle cx=\"44\" cy=\"38\" r=\"1.6\" fill=\"#4E2F16\"/><path d=\"M34 30 V19\" stroke=\"#2F7D32\" stroke-width=\"2.5\"/><path d=\"M34 24 C28 24 25 20 25 15 C30 15 34 18 34 24 Z\" fill=\"#4CAF50\"/><path d=\"M34 22 C40 22 43 18 43 13 C38 13 34 16 34 22 Z\" fill=\"#4CAF50\"/></svg>",
               "meaning": "The dark, crumbly top part of the land, where plants grow.",
               "uses": [
                 "Seeds grow in soil.",
@@ -2900,8 +2989,8 @@
               "pic": "🔩",
               "meaning": "A strong metal that magnets stick to.",
               "uses": [
-                "The key is made of steel.",
-                "Steel spoons are magnetic."
+                "A tin lid is made of steel.",
+                "Steel paperclips are magnetic."
               ],
               "lesson": 7,
               "title": "Electricity and Magnets",
@@ -3056,6 +3145,9 @@
       }
     ]
   };
+
+  /* the kit's own drawings for pictures the emoji are too new for (lesson-kit/_icons.py) */
+  const ICONS = {"rock": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>", "wood": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"6\" y=\"20\" width=\"46\" height=\"26\" rx=\"4\" fill=\"#9A6A3A\" stroke=\"#6E4520\" stroke-width=\"2.5\"/><path d=\"M12 27h18 M16 34h24 M10 40h16\" stroke=\"#6E4520\" stroke-width=\"2\" stroke-linecap=\"round\"/><ellipse cx=\"52\" cy=\"33\" rx=\"8\" ry=\"13\" fill=\"#E2B878\" stroke=\"#6E4520\" stroke-width=\"2.5\"/><ellipse cx=\"52\" cy=\"33\" rx=\"4.5\" ry=\"7.5\" fill=\"none\" stroke=\"#B5834A\" stroke-width=\"1.5\"/><circle cx=\"52\" cy=\"33\" r=\"1.6\" fill=\"#B5834A\"/></svg>", "window": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"9\" y=\"7\" width=\"46\" height=\"48\" rx=\"3\" fill=\"#7A5A3A\"/><rect x=\"13\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"13\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><path d=\"M16 26 L26 14 M36 26 L44 16 M16 47 L24 37\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\".85\"/><rect x=\"5\" y=\"54\" width=\"54\" height=\"5\" rx=\"2\" fill=\"#5E432A\"/></svg>", "coin": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><circle cx=\"32\" cy=\"32\" r=\"24\" fill=\"#E8B931\" stroke=\"#A87C12\" stroke-width=\"3\"/><circle cx=\"32\" cy=\"32\" r=\"17\" fill=\"none\" stroke=\"#C99A1E\" stroke-width=\"2\"/><path d=\"M28 25 L33 21 V43\" stroke=\"#A87C12\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M17 25 A17 17 0 0 1 27 15\" stroke=\"#FFF1BF\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/></svg>", "rope": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><g transform=\"rotate(-28 32 32)\"><rect x=\"3\" y=\"26\" width=\"58\" height=\"12\" rx=\"6\" fill=\"#C9A26B\" stroke=\"#8A6A3A\" stroke-width=\"2\"/><path d=\"M10 26 l-5 12 M17 26 l-5 12 M24 26 l-5 12 M31 26 l-5 12 M38 26 l-5 12 M45 26 l-5 12 M52 26 l-5 12 M59 26 l-5 12\" stroke=\"#8A6A3A\" stroke-width=\"2\"/></g></svg>", "bucket": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M13 24 C13 5 51 5 51 24\" fill=\"none\" stroke=\"#56687A\" stroke-width=\"3\"/><path d=\"M13 24 H51 L45 57 H19 Z\" fill=\"#8FA3B3\" stroke=\"#56687A\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><ellipse cx=\"32\" cy=\"24\" rx=\"19\" ry=\"5\" fill=\"#C9D6E0\" stroke=\"#56687A\" stroke-width=\"2.5\"/><path d=\"M17 38 H47\" stroke=\"#56687A\" stroke-width=\"2\" opacity=\".6\"/></svg>", "plant": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M32 36 V12\" stroke=\"#2F7D32\" stroke-width=\"3\" fill=\"none\"/><path d=\"M32 27 C22 27 16 19 16 12 C24 12 32 18 32 27 Z\" fill=\"#3E9A42\"/><path d=\"M32 22 C42 22 48 14 48 8 C40 8 32 14 32 22 Z\" fill=\"#4CAF50\"/><path d=\"M32 33 C40 33 46 29 48 23 C40 23 34 27 32 33 Z\" fill=\"#3E9A42\"/><rect x=\"14\" y=\"35\" width=\"36\" height=\"7\" rx=\"2\" fill=\"#A8522B\"/><path d=\"M18 42 H46 L42 58 H22 Z\" fill=\"#C8683A\"/></svg>", "roots": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"3\" y=\"30\" width=\"58\" height=\"31\" rx=\"3\" fill=\"#8A5A3A\"/><path d=\"M3 30 H61\" stroke=\"#5E3B1E\" stroke-width=\"2\"/><path d=\"M32 30 V12\" stroke=\"#2F7D32\" stroke-width=\"3\"/><path d=\"M32 21 C24 21 18 15 18 9 C26 9 32 15 32 21 Z\" fill=\"#4CAF50\"/><path d=\"M32 17 C40 17 46 11 46 5 C38 5 32 11 32 17 Z\" fill=\"#3E9A42\"/><path d=\"M32 30 V52 M32 36 C26 40 21 45 17 54 M32 38 C38 42 43 47 47 55 M32 45 C28 49 26 53 26 59 M32 47 C36 51 38 55 38 59\" stroke=\"#F2E2C4\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/></svg>", "soil": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M3 46 C11 33 23 29 32 29 C42 29 53 35 61 46 V59 H3 Z\" fill=\"#6E4520\"/><circle cx=\"15\" cy=\"49\" r=\"2\" fill=\"#8F6440\"/><circle cx=\"26\" cy=\"41\" r=\"1.8\" fill=\"#8F6440\"/><circle cx=\"40\" cy=\"47\" r=\"2.2\" fill=\"#8F6440\"/><circle cx=\"50\" cy=\"53\" r=\"1.8\" fill=\"#8F6440\"/><circle cx=\"23\" cy=\"54\" r=\"1.6\" fill=\"#4E2F16\"/><circle cx=\"44\" cy=\"38\" r=\"1.6\" fill=\"#4E2F16\"/><path d=\"M34 30 V19\" stroke=\"#2F7D32\" stroke-width=\"2.5\"/><path d=\"M34 24 C28 24 25 20 25 15 C30 15 34 18 34 24 Z\" fill=\"#4CAF50\"/><path d=\"M34 22 C40 22 43 18 43 13 C38 13 34 16 34 22 Z\" fill=\"#4CAF50\"/></svg>", "wateringcan": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M20 26 C20 14 36 14 36 26\" fill=\"none\" stroke=\"#2F7D32\" stroke-width=\"4\"/><path d=\"M17 30 C5 30 5 46 17 46\" fill=\"none\" stroke=\"#2F7D32\" stroke-width=\"4\"/><path d=\"M15 26 H41 L39 54 H17 Z\" fill=\"#4CAF50\" stroke=\"#2F7D32\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M40 32 L55 19\" stroke=\"#2F7D32\" stroke-width=\"4.5\" stroke-linecap=\"round\"/><ellipse cx=\"56\" cy=\"18\" rx=\"4.5\" ry=\"3\" fill=\"#2F7D32\" transform=\"rotate(-40 56 18)\"/><path d=\"M58 25 l2 5 M61 22 l4 3 M55 27 l0 5\" stroke=\"#3B7FD1\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>", "kettle": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M26 12 C24 9 29 7 27 4 M34 12 C32 9 37 7 35 4\" stroke=\"#9AA9B6\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M44 24 C57 24 57 45 47 47\" fill=\"none\" stroke=\"#4E6070\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M19 27 L7 20 L10 17 L21 23\" fill=\"#B8C6D1\" stroke=\"#4E6070\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M19 19 H44 L48 50 H15 Z\" fill=\"#B8C6D1\" stroke=\"#4E6070\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><rect x=\"23\" y=\"14\" width=\"17\" height=\"6\" rx=\"2\" fill=\"#4E6070\"/><rect x=\"11\" y=\"50\" width=\"41\" height=\"6\" rx=\"2\" fill=\"#4E6070\"/></svg>", "mirror": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"29\" y=\"47\" width=\"6\" height=\"14\" rx=\"2\" fill=\"#8C6A43\"/><ellipse cx=\"32\" cy=\"27\" rx=\"19\" ry=\"23\" fill=\"#8C6A43\"/><ellipse cx=\"32\" cy=\"27\" rx=\"15\" ry=\"19\" fill=\"#CFE8F5\"/><path d=\"M24 22 L32 12 M25 31 L38 15\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\"/></svg>", "toothbrush": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><g transform=\"rotate(-35 32 32)\"><rect x=\"4\" y=\"30\" width=\"40\" height=\"8\" rx=\"4\" fill=\"#3B7FD1\"/><rect x=\"40\" y=\"29\" width=\"18\" height=\"10\" rx=\"3\" fill=\"#E9EEF2\" stroke=\"#3B7FD1\" stroke-width=\"2\"/><path d=\"M43 29 V21 M47 29 V21 M51 29 V21 M55 29 V21\" stroke=\"#8FC9EA\" stroke-width=\"3\" stroke-linecap=\"round\"/></g></svg>", "feather": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M52 7 C29 9 13 30 13 55 C31 51 52 34 52 7 Z\" fill=\"#7FB6E0\" stroke=\"#3E6E94\" stroke-width=\"2\"/><path d=\"M52 7 L10 59\" stroke=\"#3E6E94\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M41 20 H31 M37 28 L24 30 M31 37 L20 40 M44 24 L46 30 M38 33 L41 39\" stroke=\"#3E6E94\" stroke-width=\"1.5\" opacity=\".6\"/></svg>", "chrysalis": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 9 H56\" stroke=\"#7A5A3A\" stroke-width=\"4.5\" stroke-linecap=\"round\"/><path d=\"M32 9 V16\" stroke=\"#7A5A3A\" stroke-width=\"2\"/><path d=\"M32 16 C45 22 43 45 32 58 C21 45 19 22 32 16 Z\" fill=\"#7DB35A\" stroke=\"#4E7F32\" stroke-width=\"2\"/><path d=\"M25 30 H39 M24 38 H40 M26 46 H38\" stroke=\"#4E7F32\" stroke-width=\"1.5\" opacity=\".7\"/><circle cx=\"35\" cy=\"25\" r=\"1.7\" fill=\"#F4C95D\"/></svg>", "beetle": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M21 24 L10 17 M20 34 L7 34 M21 44 L10 51 M43 24 L54 17 M44 34 L57 34 M43 44 L54 51\" stroke=\"#2B2B2B\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M29 10 L24 3 M35 10 L40 3\" stroke=\"#2B2B2B\" stroke-width=\"2\" stroke-linecap=\"round\"/><ellipse cx=\"32\" cy=\"37\" rx=\"14\" ry=\"19\" fill=\"#3E5230\"/><path d=\"M32 20 V56\" stroke=\"#1E2616\" stroke-width=\"2\"/><circle cx=\"32\" cy=\"16\" r=\"7\" fill=\"#2B2B2B\"/><ellipse cx=\"26\" cy=\"31\" rx=\"3\" ry=\"6\" fill=\"#7D9A5C\" opacity=\".75\"/></svg>", "woodlouse": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M11 31 L3 25 M11 35 L3 38\" stroke=\"#4A5058\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M16 45 l-3 6 M21 47 l-2 6 M26 48 l-1 6 M32 48 v6 M38 48 l1 6 M43 47 l2 6 M48 45 l3 6\" stroke=\"#4A5058\" stroke-width=\"2\" stroke-linecap=\"round\"/><ellipse cx=\"32\" cy=\"34\" rx=\"22\" ry=\"14\" fill=\"#7E8791\"/><path d=\"M17 23 V45 M23 21 V47 M29 20 V48 M35 20 V48 M41 21 V47 M47 23 V45\" stroke=\"#5C646D\" stroke-width=\"2\"/></svg>", "heart": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M26 14 V5 M34 15 V7 M40 16 C42 10 48 8 53 10\" stroke=\"#8E2A24\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M32 57 C12 45 7 31 11 22 C15 14 26 14 30 20 C34 14 45 12 51 20 C57 30 51 45 32 57 Z\" fill=\"#C8453B\"/><path d=\"M21 30 C25 37 30 39 37 37\" stroke=\"#8E2A24\" stroke-width=\"2\" fill=\"none\" opacity=\".7\"/></svg>", "lungs": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M28 22 C18 20 8 34 8 48 C8 56 16 58 22 56 C28 54 29 46 29 38 Z\" fill=\"#E8909A\"/><path d=\"M36 22 C46 20 56 34 56 48 C56 56 48 58 42 56 C36 54 35 46 35 38 Z\" fill=\"#E8909A\"/><path d=\"M32 5 V26 M32 25 L24 34 M32 25 L40 34\" stroke=\"#B8606A\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>", "worm": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M7 44 C13 29 24 29 28 40 S42 51 46 38 S54 25 58 29\" stroke=\"#D98A8A\" stroke-width=\"10\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M7 44 C13 29 24 29 28 40 S42 51 46 38 S54 25 58 29\" stroke=\"#B86A6A\" stroke-width=\"10\" fill=\"none\" stroke-dasharray=\"1.5 6\"/><circle cx=\"57\" cy=\"28\" r=\"1.4\" fill=\"#1B1B1B\"/></svg>", "jellyfish": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M18 33 C16 43 22 49 18 59 M26 34 C24 45 30 51 26 61 M34 34 C32 45 38 51 34 61 M42 33 C40 43 46 49 42 59\" stroke=\"#A67CC4\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M11 31 C11 11 53 11 53 31 C46 35 18 35 11 31 Z\" fill=\"#C79BE0\" stroke=\"#8E62B0\" stroke-width=\"2\"/><path d=\"M20 21 C23 16 28 14 33 14\" stroke=\"#fff\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" opacity=\".7\"/></svg>", "seal": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M11 45 L2 38 L4 51 Z\" fill=\"#6F7B87\"/><path d=\"M8 47 C8 35 24 26 40 28 C50 29 56 35 56 41 C56 47 50 49 44 47 L20 51 C12 53 8 51 8 47 Z\" fill=\"#8E9AA6\"/><ellipse cx=\"45\" cy=\"27\" rx=\"11\" ry=\"10\" fill=\"#8E9AA6\"/><path d=\"M33 45 L29 55 L40 50 Z\" fill=\"#6F7B87\"/><circle cx=\"49\" cy=\"24\" r=\"2\" fill=\"#1B1B1B\"/><circle cx=\"55\" cy=\"29\" r=\"1.8\" fill=\"#3A3A3A\"/><path d=\"M55 31 l7 -1 M55 32 l7 2\" stroke=\"#3A3A3A\" stroke-width=\"1\" stroke-linecap=\"round\"/></svg>"};
 
   /* ==================================================================
      THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
@@ -4022,13 +4114,27 @@
 
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-  /* an emoji, or an inline SVG string, as stage-sized picture markup */
+  /* an emoji, or markup (an inline SVG, or one of the kit's own drawings from
+     lesson-kit/_icons.py, or a row of them), as stage-sized picture markup */
   const picHtml = (p, cls) => {
     if (!p) return "";
     const s = String(p).trim();
-    return '<div class="' + (cls || "pic") + '" aria-hidden="true">' + (s.startsWith("<svg") ? s : esc(s)) + "</div>";
+    return '<div class="' + (cls || "pic") + '" aria-hidden="true">' + (s.startsWith("<") ? s : esc(s)) + "</div>";
   };
-  const small = (p) => { const s = String(p || "").trim(); return s.startsWith("<svg") ? s : esc(s); };
+  const small = (p) => { const s = String(p || "").trim(); return s.startsWith("<") ? s : esc(s); };
+  /* A picture INSIDE a drawing, centred on cx with its baseline at y, as an
+     emoji is placed by <text>. An emoji stays SVG text; one of the kit's own
+     drawings (Emoji 13+ is missing on older school devices, lesson-kit/_icons.py)
+     is nested SVG in the same box - text cannot hold it, which is why the sims
+     that used to set textContent now go through here. */
+  const glyphAt = (cx, y, size, p) => {
+    const s = String(p || "").trim();
+    const top = Math.round(y - size * 0.86);
+    const body = s.startsWith("<svg")
+      ? s.replace('width="1em" height="1em"', 'width="100%" height="100%"').replace(/ style="vertical-align:[^"]*"/, "")
+      : '<text x="' + (size / 2) + '" y="' + Math.round(size * 0.86) + '" font-size="' + size + '" text-anchor="middle">' + esc(s) + "</text>";
+    return '<svg x="' + (cx - size / 2) + '" y="' + top + '" width="' + size + '" height="' + size + '" overflow="visible">' + body + "</svg>";
+  };
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
   /* ---- a step may speak only while it is the step on screen ------------
@@ -4040,10 +4146,20 @@
      shared pipeline patches it by matching its exact text. */
   const ONSHOW = [];
   const showWithoutHooks = show;
+  let breakOffered = false;
   show = function (i, speak) {
+    const from = cur;
     showWithoutHooks(i, speak);
     const f = ONSHOW[cur];
     if (f) { try { f(); } catch (_) { /* a step must never break the deck */ } }
+    /* TWO SITTINGS: arriving at the first step of sitting 2 by pressing on
+       from the last step of sitting 1 offers a break, once. Not on a resume
+       (the child is starting sitting 2) and not once the step is done. */
+    const brk = LESSON.steps[cur] && LESSON.steps[cur].sittingBreak;
+    if (brk && !breakOffered && from === cur - 1 && !done[cur]) {
+      breakOffered = true;
+      try { sittingBreak(brk); } catch (_) { /* never break the deck */ }
+    }
   };
   function sayHere(idx, text) { if (cur === idx && text) say(text); }
   function afterVoice(fn) {
@@ -4279,22 +4395,27 @@
     },
     /* a ball on a track marked in steps; a gentle push and a hard push */
     pushBall: {
-      draw(box, x, label) {
+      draw(box, x, label, thing) {
         let marks = "";
         for (let i = 0; i <= 10; i++) marks += '<line x1="' + (30 + i * 26) + '" y1="196" x2="' + (30 + i * 26) + '" y2="210" stroke="#fff" stroke-width="2"/><text x="' + (30 + i * 26) + '" y="228" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">' + i + "</text>";
         box.innerHTML = '<svg viewBox="0 0 320 240" role="img" aria-label="A ball on a track marked in steps"><rect width="320" height="240" fill="#3E8E4A"/><rect x="0" y="180" width="320" height="60" fill="#8B5A2B"/>' +
           '<rect x="20" y="196" width="280" height="4" fill="#fff"/>' + marks +
           '<text x="12" y="30" font-size="16" font-family="Inter, sans-serif" font-weight="800" fill="#fff">' + esc(label || "") + "</text>" +
-          '<text x="' + (30 + x * 26) + '" y="176" text-anchor="middle" font-size="44" style="transition: x 900ms ease-out">⚽</text>' +
+          '<text x="' + (30 + x * 26) + '" y="176" text-anchor="middle" font-size="44" style="transition: x 900ms ease-out">' + esc(thing || "⚽") + "</text>" +
           '<text x="14" y="176" font-size="40">\u{1F9D2}</text></svg>';
       },
-      init(box) { SIMS.pushBall.draw(box, 0, "steps along the track"); },
+      /* the defaults are Grade 1's: a ball, pushed gently and hard. A step may
+         give its own `thing` and `pushes` ({label, to, say}) instead. */
+      pushes: [{ label: "Push gently", to: 3, say: "A gentle push. The ball rolled three steps and stopped." },
+               { label: "Push HARD", to: 9, say: "A hard push! The ball rolled nine steps. A bigger push, a bigger move." }],
+      init(box, d) { SIMS.pushBall.draw(box, 0, "steps along the track", d && d.thing); },
       run(box, api) {
         return new Promise((done) => {
-          let gentle = false, hard = false;
-          api.controls.innerHTML = '<button type="button" class="big small ghost" id="' + api.id + 'g">Push gently</button><button type="button" class="big small" id="' + api.id + 'h">Push HARD</button>';
+          const d = api.data || {}, thing = d.thing, pushes = d.pushes || SIMS.pushBall.pushes;
+          const did = new Set();
+          api.controls.innerHTML = pushes.map((p, k) => '<button type="button" class="big small' + (k === 0 ? " ghost" : "") + '" id="' + api.id + "p" + k + '">' + esc(p.label) + "</button>").join("");
           const roll = (to, msg) => {
-            SIMS.pushBall.draw(box, 0, "");
+            SIMS.pushBall.draw(box, 0, "", thing);
             SOUND.play("thud", 0.4);
             setTimeout(() => {
               const b = box.querySelectorAll("text")[box.querySelectorAll("text").length - 2];
@@ -4302,19 +4423,19 @@
               const lab = box.querySelector("text"); if (lab) lab.textContent = "It rolled " + to + " steps";
             }, 40);
             api.say(msg);
-            if (gentle && hard) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 1200);
+            if (did.size >= pushes.length) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 1200);
           };
-          $(api.id + "g").addEventListener("click", () => { gentle = true; roll(3, "A gentle push. The ball rolled three steps and stopped."); });
-          $(api.id + "h").addEventListener("click", () => { hard = true; roll(9, "A hard push! The ball rolled nine steps. A bigger push, a bigger move."); });
+          pushes.forEach((p, k) => $(api.id + "p" + k).addEventListener("click", () => { did.add(k); roll(p.to, p.say); }));
         });
       },
     },
     /* a tank of water; act(item) drops it in and it floats or sinks */
     floatSink: {
-      init(box) { box.innerHTML = '<svg viewBox="0 0 320 260" role="img" aria-label="A tank of water"><rect width="320" height="260" fill="#DDEFF7"/><rect x="30" y="60" width="260" height="180" rx="10" fill="#7FC4EA" opacity="0.85"/><rect x="30" y="60" width="260" height="180" rx="10" fill="none" stroke="#2B5673" stroke-width="5"/><text id="' + "fsitem" + '" x="160" y="40" text-anchor="middle" font-size="44" style="transition: y 1100ms ease-in"></text></svg>'; },
+      init(box) { box.innerHTML = '<svg viewBox="0 0 320 260" role="img" aria-label="A tank of water"><rect width="320" height="260" fill="#DDEFF7"/><rect x="30" y="60" width="260" height="180" rx="10" fill="#7FC4EA" opacity="0.85"/><rect x="30" y="60" width="260" height="180" rx="10" fill="none" stroke="#2B5673" stroke-width="5"/><g id="fsitem" style="transition: transform 1100ms ease-in"></g></svg>'; },
       act(box, item, api) {
-        const t = box.querySelector("text");
-        t.textContent = item.pic; t.setAttribute("y", 40);
+        const t = box.querySelector("#fsitem");
+        t.innerHTML = glyphAt(160, 40, 44, item.pic); t.style.transition = "none"; t.style.transform = "";
+        void t.getBoundingClientRect(); t.style.transition = "";
         /* A short timer, NOT a paint callback: requestAnimationFrame never
            fires in a hidden tab, so a drop started just before a tab switch
            would never resolve and the step would freeze. A timer is throttled
@@ -4323,7 +4444,7 @@
         return new Promise((r) => {
           setTimeout(() => {
             SOUND.play("splash", 0.6);
-            t.setAttribute("y", item.answer === "float" ? 96 : 228);
+            t.style.transform = "translateY(" + (item.answer === "float" ? 56 : 188) + "px)";
             setTimeout(() => { api.say(item.answer === "float" ? "The " + item.label + " floats. It stays on top of the water." : "The " + item.label + " sinks. It goes down to the bottom."); r(); }, 1150);
           }, 40);
         });
@@ -4331,10 +4452,10 @@
     },
     /* a magnet approaches an item; a magnetic one jumps to it */
     magnet: {
-      init(box) { box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A magnet and a thing to test"><rect width="320" height="200" fill="#DDEFF7"/><rect x="0" y="150" width="320" height="50" fill="#C9B79C"/><g id="mg" style="transition: transform 900ms ease-in-out"><text x="30" y="118" font-size="60">\u{1F9F2}</text></g><text id="mi" x="230" y="140" text-anchor="middle" font-size="48" style="transition: transform 400ms ease-in"></text></svg>'; },
+      init(box) { box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A magnet and a thing to test"><rect width="320" height="200" fill="#DDEFF7"/><rect x="0" y="150" width="320" height="50" fill="#C9B79C"/><g id="mg" style="transition: transform 900ms ease-in-out"><text x="30" y="118" font-size="60">\u{1F9F2}</text></g><g id="mi" style="transition: transform 400ms ease-in"></g></svg>'; },
       act(box, item, api) {
         const mg = box.querySelector("#mg"), it = box.querySelector("#mi");
-        it.textContent = item.pic; it.style.transform = ""; mg.style.transform = "";
+        it.innerHTML = glyphAt(230, 140, 48, item.pic); it.style.transform = ""; mg.style.transform = "";
         return new Promise((r) => {
           setTimeout(() => {   /* a timer, not a paint callback - see floatSink */
             mg.style.transform = "translateX(120px)";
@@ -4379,18 +4500,18 @@
       items: [
         { id: "clay", pic: "\u{1F7E4}", label: "a ball of clay", changes: true, says: { squash: "Squashed flat! The clay changed shape.", bend: "It bent. The clay changed shape.", twist: "Twisted! The clay changed shape.", stretch: "It stretched long. The clay changed shape." } },
         { id: "band", pic: "➰", label: "an elastic band", changes: true, says: { squash: "It squashed up small.", bend: "It bent easily.", twist: "It twisted round and round.", stretch: "It stretched wide, then sprang back!" } },
-        { id: "stone", pic: "\u{1FAA8}", label: "a stone", changes: false, says: { squash: "Nothing happened. The stone did not change.", bend: "It will not bend.", twist: "It will not twist.", stretch: "It will not stretch. The stone keeps its shape." } },
+        { id: "stone", pic: ICONS.rock, label: "a stone", changes: false, says: { squash: "Nothing happened. The stone did not change.", bend: "It will not bend.", twist: "It will not twist.", stretch: "It will not stretch. The stone keeps its shape." } },
       ],
       draw(box, item, anim) {
         const tf = { squash: "scale(1.6, 0.45)", bend: "rotate(-30deg) skewX(20deg)", twist: "rotate(180deg) scaleX(0.6)", stretch: "scale(2.1, 0.8)" }[anim] || "";
         box.innerHTML = '<div style="display:grid;place-items:center;height:200px;font-size:90px"><span style="display:inline-block;transition:transform 500ms ease;transform:' + (item.changes ? tf : "") + '">' + item.pic + "</span></div>" +
           '<div class="tag">' + esc(item.label) + "</div>";
       },
-      init(box) { SIMS.shapeChange.draw(box, SIMS.shapeChange.items[0], ""); },
+      init(box, d) { SIMS.shapeChange.draw(box, ((d && d.things) || SIMS.shapeChange.items)[0], ""); },
       run(box, api) {
         return new Promise((done) => {
           let k = 0; let did = new Set(); let handing = false;
-          const items = SIMS.shapeChange.items;
+          const items = (api.data && api.data.things) || SIMS.shapeChange.items;
           const paint = () => {
             api.controls.innerHTML = ["squash", "bend", "twist", "stretch"].map((a) => '<button type="button" class="big small' + (did.has(a) ? " ghost" : "") + '" data-a="' + a + '">' + a[0].toUpperCase() + a.slice(1) + " it</button>").join("");
             api.controls.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
@@ -4570,8 +4691,10 @@
     stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">1 · Predict</span>' +
       '<div class="sim" id="' + el.stage + 'sim"></div><div class="simrow" id="' + el.stage + 'ctl"></div></div>';
     const box = $(el.stage + "sim"), ctl = $(el.stage + "ctl"), ph = $(el.stage + "ph");
-    const api = { id: el.stage, controls: ctl, say: (t) => sayHere(o.finish, t) };
-    sim.init(box);
+    /* data: the step's own data, so a sim can be given its own objects -
+       Grade 2 must not replay Grade 1's simulation as it was (validation v2) */
+    const api = { id: el.stage, controls: ctl, say: (t) => sayHere(o.finish, t), data: o };
+    sim.init(box, o);
     function choices(opts, cls) {
       $(el.ch).classList.add("stack");
       $(el.ch).innerHTML = shuffle(opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '" data-t="' + esc(c.t) + '">' + c.t + "</button>").join("");
@@ -5156,7 +5279,7 @@
   SCENES.habitat = (s) => {
     const sky = ["#BFE3F5", "#F6D28B", "#A9D3B6", "#DDEFF7"][s], ground = ["#3B7FD1", "#E0B86A", "#2F6B3A", "#EAF4FA"][s];
     const items = [
-      '<text x="70" y="150" font-size="40">\u{1F438}</text><text x="200" y="120" font-size="40">\u{1F986}</text><text x="130" y="185" font-size="34">\u{1F41F}</text><text x="250" y="180" font-size="34">\u{1FAB7}</text>',
+      '<text x="70" y="150" font-size="40">\u{1F438}</text><text x="200" y="120" font-size="40">\u{1F986}</text><text x="130" y="185" font-size="34">\u{1F41F}</text><text x="250" y="180" font-size="34">\u{1F33F}</text>',
       '<text x="60" y="170" font-size="44">\u{1F42A}</text><text x="200" y="160" font-size="40">\u{1F335}</text><text x="260" y="180" font-size="30">\u{1F98E}</text><text x="130" y="185" font-size="30">\u{1F982}</text>',
       '<text x="40" y="120" font-size="48">\u{1F333}</text><text x="220" y="120" font-size="48">\u{1F333}</text><text x="120" y="180" font-size="36">\u{1F98C}</text><text x="230" y="185" font-size="30">\u{1F344}</text><text x="170" y="100" font-size="26">\u{1F426}</text>',
       '<text x="60" y="170" font-size="44">\u{1F43B}‍❄️</text><text x="200" y="175" font-size="40">\u{1F427}</text><text x="130" y="110" font-size="30">❄️</text><text x="260" y="100" font-size="30">❄️</text>',
@@ -5385,14 +5508,15 @@
 
   /* a block pushed the same way across three surfaces */
   SIMS.friction = {
-    surfaces: [{ id: "ice", label: "ice", pic: "\u{1F9CA}", fill: "#DDEFF7", far: 9 }, { id: "wood", label: "smooth wood", pic: "\u{1FAB5}", fill: "#C9A26B", far: 6 }, { id: "carpet", label: "rough carpet", pic: "\u{1F9F6}", fill: "#8E4A5B", far: 2 }],
+    surfaces: [{ id: "ice", label: "ice", pic: "\u{1F9CA}", fill: "#DDEFF7", far: 9 }, { id: "wood", label: "smooth wood", pic: ICONS.wood, fill: "#C9A26B", far: 6 }, { id: "carpet", label: "rough carpet", pic: "\u{1F9F6}", fill: "#8E4A5B", far: 2 }],
     draw(box, s, x) {
       box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A block pushed across ' + esc(s ? s.label : "a surface") + '"><rect width="320" height="200" fill="#F3EFE6"/>' +
         '<rect x="0" y="140" width="320" height="60" fill="' + (s ? s.fill : "#ccc") + '"/>' +
         (s && s.id === "carpet" ? '<g stroke="#6A3040" stroke-width="2">' + Array.from({ length: 32 }, (_, k) => '<line x1="' + (k * 10) + '" y1="140" x2="' + (k * 10 + 4) + '" y2="132"/>').join("") + "</g>" : "") +
         [1, 2, 3, 4, 5, 6, 7, 8, 9].map((k) => '<line x1="' + (30 + k * 30) + '" y1="140" x2="' + (30 + k * 30) + '" y2="150" stroke="#3A3A3A" stroke-width="2"/><text x="' + (30 + k * 30) + '" y="168" font-size="11" text-anchor="middle" font-family="Inter, sans-serif" fill="#3A3A3A">' + k + "</text>").join("") +
         '<rect x="' + (14 + x * 30) + '" y="100" width="34" height="40" rx="6" fill="#D9473F" style="transition: x 1400ms ease-out"/>' +
-        '<text x="10" y="30" font-size="16" font-family="Inter, sans-serif" font-weight="800" fill="#1B1B1B">' + (s ? s.pic + " " + esc(s.label) : "choose a surface") + "</text></svg>";
+        (s ? glyphAt(20, 31, 18, s.pic) : "") +
+        '<text x="' + (s ? 34 : 10) + '" y="30" font-size="16" font-family="Inter, sans-serif" font-weight="800" fill="#1B1B1B">' + (s ? esc(s.label) : "choose a surface") + "</text></svg>";
     },
     init(box) { SIMS.friction.draw(box, null, 0); },
     run(box, api) {
@@ -5450,9 +5574,9 @@
 
   /* light shone at a material: through, some through, or blocked (predictEach) */
   SIMS.lightThrough = {
-    init(box) { box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A torch shining at a material, with a wall behind"><rect width="320" height="200" fill="#1B2A3A"/><rect x="290" y="10" width="20" height="180" fill="#3A3A3A" id="lw"/><polygon id="lb" points="30,100 150,60 150,140" fill="#F4C95D" opacity="0.35"/><polygon id="lb2" points="150,60 290,30 290,170 150,140" fill="#F4C95D" opacity="0"/><text id="lm" x="150" y="118" font-size="48" text-anchor="middle"></text><text x="30" y="118" font-size="40" text-anchor="middle">\u{1F526}</text></svg>'; },
+    init(box) { box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A torch shining at a material, with a wall behind"><rect width="320" height="200" fill="#1B2A3A"/><rect x="290" y="10" width="20" height="180" fill="#3A3A3A" id="lw"/><polygon id="lb" points="30,100 150,60 150,140" fill="#F4C95D" opacity="0.35"/><polygon id="lb2" points="150,60 290,30 290,170 150,140" fill="#F4C95D" opacity="0"/><g id="lm"></g><text x="30" y="118" font-size="40" text-anchor="middle">\u{1F526}</text></svg>'; },
     act(box, item, api) {
-      box.querySelector("#lm").textContent = item.pic;
+      box.querySelector("#lm").innerHTML = glyphAt(150, 118, 48, item.pic);
       return new Promise((r) => {
         setTimeout(() => {
           const lvl = item.answer === "through" ? 0.35 : item.answer === "some" ? 0.12 : 0;
@@ -5500,7 +5624,7 @@
   /* a mixture separated four ways */
   SIMS.separate = {
     stages: [
-      { id: "sieve", btn: "\u{1F373} Shake the sieve", pic: "\u{1FAA8}\u{1F3D6}️", cap: "stones and sand", say: "The sand falls through the holes. The stones are too big and stay in the sieve. Separated by size." },
+      { id: "sieve", btn: "\u{1F373} Shake the sieve", pic: ICONS.rock + "\u{1F3D6}️", cap: "stones and sand", say: "The sand falls through the holes. The stones are too big and stay in the sieve. Separated by size." },
       { id: "magnet", btn: "\u{1F9F2} Sweep the magnet", pic: "\u{1F9F2}\u{1F3D6}️", cap: "iron filings and sand", say: "The iron filings jump onto the magnet. The sand does not. Separated because only one of them is magnetic." },
       { id: "filter", btn: "\u{1F4A7} Pour through the filter", pic: "\u{1F4A7}\u{1F3D6}️", cap: "sand and water", say: "The water drips through the filter paper. The sand cannot get through and stays behind. Separated by size again, just a much smaller size." },
       { id: "salt", btn: "\u{1F9C2} Stir the salt in, then taste", pic: "\u{1F9C2}\u{1F4A7}", cap: "salt and water", say: "The salt disappears. But taste the water: salty! The salt is still there, in tiny pieces too small to see. It dissolved. That is a mixture too." },
@@ -5545,7 +5669,7 @@
       return new Promise((done) => {
         const s = {};
         const paint = () => {
-          api.controls.innerHTML = '<button type="button" class="big small' + (s.poured ? " ghost" : " teal") + '" data-a="poured">\u{1F4A7} Pour the water</button><button type="button" class="big small' + (s.tipped ? " ghost" : " teal") + '" data-a="tipped">\u{1FAB5} Tip the block over</button><button type="button" class="big small' + (s.let ? " ghost" : " teal") + '" data-a="let">\u{1F388} Untie the balloon</button>';
+          api.controls.innerHTML = '<button type="button" class="big small' + (s.poured ? " ghost" : " teal") + '" data-a="poured">\u{1F4A7} Pour the water</button><button type="button" class="big small' + (s.tipped ? " ghost" : " teal") + '" data-a="tipped">' + ICONS.wood + ' Tip the block over</button><button type="button" class="big small' + (s.let ? " ghost" : " teal") + '" data-a="let">\u{1F388} Untie the balloon</button>';
           api.controls.querySelectorAll("[data-a]").forEach((b) => b.addEventListener("click", () => {
             const a = b.dataset.a; if (s[a]) return; s[a] = true; SIMS.states.draw(box, s); SOUND.play(a === "poured" ? "splash" : a === "tipped" ? "thud" : "pop", 0.4); paint();
             api.say(a === "poured" ? "The water flows and takes the shape of the glass. A liquid has no shape of its own." : a === "tipped" ? "The block keeps exactly the same shape, whichever way up it is. A solid keeps its shape." : "The air rushes out and spreads everywhere. A gas fills all the space it can find.");
@@ -5876,7 +6000,7 @@
       return new Promise((done) => {
         let angle = 0, blocked = false, hit = false, seenBlock = false;
         const paint = () => {
-          api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 't">\u{1FA9E} Turn the mirror</button><button type="button" class="big small ghost" id="' + api.id + 'b">' + (blocked ? "Take the book away" : "\u{1F4D5} Put a book in the way") + "</button>";
+          api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 't">' + ICONS.mirror + ' Turn the mirror</button><button type="button" class="big small ghost" id="' + api.id + 'b">' + (blocked ? "Take the book away" : "\u{1F4D5} Put a book in the way") + "</button>";
           $(api.id + "t").addEventListener("click", () => { angle = (angle + 1) % 5; SIMS.rayMirror.draw(box, angle, blocked); SOUND.play("click", 0.3); if (angle === 2 && !blocked) { hit = true; SOUND.play("ding", 0.4); api.say("The light travels in a straight line to the mirror, bounces off, and travels in a straight line to your eye. Now you can see the torch in the mirror."); } else api.say(blocked ? "Turning the mirror does nothing while the book blocks the ray." : "The ray reflects off the mirror in a straight line, but it misses the eye."); check(); });
           $(api.id + "b").addEventListener("click", () => { blocked = !blocked; if (blocked) seenBlock = true; SIMS.rayMirror.draw(box, angle, blocked); SOUND.play("thud", 0.3); api.say(blocked ? "The book is opaque. The ray stops at it. No light reaches the mirror, so no light reaches the eye, so the eye sees nothing." : "Book gone. The ray reaches the mirror again."); paint(); check(); });
         };
@@ -5917,9 +6041,9 @@
 
   /* a conductor test: the material sits in a gap in the circuit (predictEach) */
   SIMS.conductor = {
-    init(box) { box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A circuit with a gap, and a material to put in the gap"><rect width="320" height="200" fill="#0E2434"/><path d="M40 40 H280 V160 H200 M40 40 V160 H120" fill="none" stroke="#F4C95D" stroke-width="6"/><g transform="translate(60 40)"><rect x="-10" y="-14" width="20" height="28" fill="#0E2434"/><rect x="-6" y="-12" width="5" height="24" fill="#F4C95D"/><rect x="1" y="-6" width="5" height="12" fill="#F4C95D"/></g><g transform="translate(280 100)"><circle id="cl" r="18" fill="#1B3A52" stroke="#F4C95D" stroke-width="3"/><path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="#F4C95D" stroke-width="3"/></g><text id="cm" x="160" y="172" font-size="40" text-anchor="middle"></text><text id="ct" x="160" y="120" text-anchor="middle" fill="#93AABE" font-size="13" font-family="Inter, sans-serif" font-weight="800">the gap</text></svg>'; },
+    init(box) { box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A circuit with a gap, and a material to put in the gap"><rect width="320" height="200" fill="#0E2434"/><path d="M40 40 H280 V160 H200 M40 40 V160 H120" fill="none" stroke="#F4C95D" stroke-width="6"/><g transform="translate(60 40)"><rect x="-10" y="-14" width="20" height="28" fill="#0E2434"/><rect x="-6" y="-12" width="5" height="24" fill="#F4C95D"/><rect x="1" y="-6" width="5" height="12" fill="#F4C95D"/></g><g transform="translate(280 100)"><circle id="cl" r="18" fill="#1B3A52" stroke="#F4C95D" stroke-width="3"/><path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="#F4C95D" stroke-width="3"/></g><g id="cm"></g><text id="ct" x="160" y="120" text-anchor="middle" fill="#93AABE" font-size="13" font-family="Inter, sans-serif" font-weight="800">the gap</text></svg>'; },
     act(box, item, api) {
-      box.querySelector("#cm").textContent = item.pic;
+      box.querySelector("#cm").innerHTML = glyphAt(160, 172, 40, item.pic);
       return new Promise((r) => {
         setTimeout(() => {
           const yes = item.answer === "yes";
@@ -6050,6 +6174,7 @@
     const el = o.el;
     const c = o.counts || {};
     const bits = [];
+    if (o.sittings) bits.push("two sittings: about " + o.sittings.one + " + " + o.sittings.two + " minutes");
     if (c.steps) bits.push(c.steps + " steps");
     if (c.words) bits.push(c.words + " science words");
     if (c.games) bits.push(c.games + " games");
@@ -6058,12 +6183,40 @@
     $(el.stage).innerHTML =
       '<div class="ovw">' +
       (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
+      (o.recap ? '<div class="ovw-recap"><h3 class="ovw-h">Last time: ' + esc(o.recap.title) + "</h3>" +
+        ((o.recap.about || []).length ? "<p>You learned to " + (o.recap.about || []).map((t) => esc(lowerFirst(t.replace(/\.$/, "")))).join("; ") + ".</p>" : "") + "</div>" : "") +
       '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
       '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+      (o.sittings ? '<p class="ovw-sit">This lesson comes in <b>two parts</b>, about ' + o.sittings.one + " minutes and then about " +
+        o.sittings.two + " minutes. Halfway, you can stop for a break, and next time you start where you stopped.</p>" : "") +
+      ((o.warmup || []).length ? '<div class="ovw-warm"><h3 class="ovw-h">Before you start: what do you already know?</h3>' +
+        '<p class="ovw-note">Just have a go. This is not marked.</p>' +
+        o.warmup.map((w, k) => '<div class="warmq" data-w="' + k + '"><button type="button" class="warmask" data-w="' + k + '">&#128266; ' + esc(w.ask) + "</button>" +
+          '<div class="warmopts">' + shuffle(w.opts.map((x, j) => ({ t: x.t, ok: x.ok, j }))).map((x) =>
+            '<button type="button" class="choice text" data-w="' + k + '" data-ok="' + (x.ok ? 1 : 0) + '">' + esc(x.t) + "</button>").join("") +
+          '</div><p class="warmfb" aria-live="polite"></p></div>').join("") + "</div>" : "") +
       '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
-      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+      say((o.recap ? "Last time: " + o.recap.title + ". " : "") + "By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    /* THE WARM-UP: a question or two before the lesson, so the child finds out
+       what they already know. Never marked and never reported - a guess here
+       costs nothing - and the builder refuses a warm-up that repeats the quiz. */
+    $(el.stage).querySelectorAll(".warmask").forEach((b) => b.addEventListener("click", () => {
+      const w = o.warmup[+b.dataset.w];
+      say(w.ask + " " + w.opts.map((x) => x.t).join(", or ") + "?");
+    }));
+    $(el.stage).querySelectorAll(".warmopts .choice").forEach((b) => b.addEventListener("click", () => {
+      const box = b.closest(".warmq");
+      if (box.dataset.answered) return;
+      box.dataset.answered = "1";
+      const ok = b.dataset.ok === "1";
+      box.querySelectorAll(".choice").forEach((x) => { x.disabled = true; if (x.dataset.ok === "1" && ok) x.classList.add("right"); });
+      b.classList.add(ok ? "right" : "picked");
+      const line = ok ? "You knew that already!" : "Good guess. You will find out in this lesson.";
+      box.querySelector(".warmfb").textContent = line;
+      say(line);
+    }));
     /* ON ARRIVAL, not on drawing. The deck draws every step at page load,
        so a finish() here ticked this step - and Science world, which had
        the same line - before the child had seen either: a fresh learner
@@ -6237,6 +6390,34 @@
      every round, so remember() is called before a redraw and refocus()
      after it, putting focus back on the same control where it still
      exists and on the question otherwise. */
+  const lowerFirst = (t) => String(t).charAt(0).toLowerCase() + String(t).slice(1);
+
+  /* ---- the break between two sittings --------------------------------
+     Offered once, on arriving at sitting 2 from the end of sitting 1. The
+     place is already saved (progress is by step), so stopping costs
+     nothing: next time the lesson opens here. */
+  function sittingBreak(b) {
+    const overlay = document.createElement("div");
+    overlay.className = "book-reader sit-break";
+    overlay.innerHTML = '<div class="sit-card"><div class="sit-pic" aria-hidden="true">&#127775;</div>' +
+      '<h2 class="sit-h">Halfway there!</h2>' +
+      "<p>This is a good place to stop for today. Your place is saved, so next time you start right here" +
+      (b.minutes ? ", with about " + b.minutes + " minutes to go" : "") + ".</p>" +
+      '<div class="bigbtns"><button type="button" class="big teal" data-b="stop">Stop for today</button>' +
+      '<button type="button" class="big ghost" data-b="go">Keep going</button></div></div>';
+    document.body.appendChild(overlay);
+    const opener = document.activeElement;
+    const m = modal(overlay, "Time for a break", () => { if (opener && opener.isConnected) opener.focus(); });
+    const close = () => { overlay.remove(); m.release(); };
+    overlay.querySelector('[data-b="go"]').addEventListener("click", close);
+    overlay.querySelector('[data-b="stop"]').addEventListener("click", () => {
+      close();
+      location.href = (b.hub || "index.html") + location.search;
+    });
+    overlay.querySelector('[data-b="stop"]').focus();
+    say("Halfway there! This is a good place to stop for today. Your place is saved.");
+  }
+
   function modal(overlay, label, restore) {
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
@@ -6601,9 +6782,9 @@
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
   lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
   scienceWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the science words of this lesson." }, LESSON.steps[2].data));
-  demo(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Alive means it eats, drinks, grows and can have babies. A stone does none of these." }, LESSON.steps[3].data));
+  demo(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Alive means it grows, needs food and water, and can have young. A stone does none of these." }, LESSON.steps[3].data));
   tapCards(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "You looked closely at eight things. Now you can sort them." }, LESSON.steps[4].data));
-  sortBins(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Alive things grow, eat, drink and can have babies." }, LESSON.steps[5].data));
+  sortBins(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Alive things grow, need food and water, and can have young." }, LESSON.steps[5].data));
   askQuestion(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "A good scientist asks a question, then watches carefully to find out." }, LESSON.steps[6].data));
   demo(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "Every animal needs air, water and the right food." }, LESSON.steps[7].data));
   sortBins(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Air, water and the right food. Everything else is a want." }, LESSON.steps[8].data));

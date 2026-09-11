@@ -4,8 +4,8 @@
 0097 Stage 4: 4Pe.01 a device will not work with a break in the circuit;
 4Pe.02 a switch opens and closes a circuit; 4Pe.03 more or different
 components make a lamp brighter or dimmer; 4Pe.04 conductors and
-insulators; with 4TWSp.03, 4TWSa.01, 4TWSa.03, 4TWSc.03, 4TWSc.08 and
-4SIC.04.
+insulators; with 4TWSp.03, 4TWSp.05, 4TWSa.01, 4TWSa.03, 4TWSc.03,
+4TWSc.06, 4TWSc.08 and 4SIC.04.
 """
 from _kit import explain, step, opt, q, part, word, home
 
@@ -120,6 +120,22 @@ LESSON = {
                        "opts": [opt("A break somewhere in the circuit", True), opt("A bigger car", False), opt("More petrol", False)],
                        "why": "A device will not work with a break in its circuit."}},
              "Electricians, technicians, mechanics and repairers all use circuit science."),
+
+        step("questions", "Safe with electricity", "\u26A0\uFE0F", "Safety first", ["4TWSp.05", "4TWSc.06"],
+             "Spot the risk, and say how to stay safe. Tap the answer.",
+             explain(
+                 ["Practical work with electricity is safe when you know the risks.", "A cell gives a small, safe push. The socket in the wall does not."],
+                 ["Use cells, wires and lamps, never the plug socket.", "Dry your hands before you touch a switch.",
+                  "If a wire gets hot, disconnect the cell and tell an adult."],
+                 ["Children think a thin wire cannot hurt anyone.", "Mains electricity through the wall can kill. Only plugs go into sockets."],
+                 ["Read each one, find the risk, then tap how to stay safe."]),
+             {"label": "Question", "items": [
+                 q("You want to test a circuit in class. Which is safe to use?", "\U0001F50B", "a cell, some wires and a lamp", ["the plug socket in the wall", "a mains lamp with its cover off"], "A cell gives a small push that is safe. Mains electricity from a socket can kill."),
+                 q("Your hands are wet. What should you do before you touch a switch?", "\U0001F4A7", "dry them first", ["touch it quickly", "wipe them on the wire"], "Water can carry electricity. Dry hands, always."),
+                 q("A wire in your circuit is getting hot. What should you do?", "\U0001F525", "disconnect the cell and tell an adult", ["keep going", "hold the wire tightly"], "A hot wire is a risk. Break the circuit and get help."),
+                 q("Why should you never push anything into a plug socket?", "\U0001F50C", "the electricity there is strong enough to kill", ["it wastes electricity", "it makes the lights flicker"], "Mains electricity is dangerous. Only plugs go into sockets."),
+             ]},
+             "You know the risks, and how to stay safe with electricity."),
 
         step("questions", "Circuit check", "✅", "Circuit check", ["4Pe.01", "4Pe.02", "4Pe.03", "4Pe.04"],
              "Tap the answer.",

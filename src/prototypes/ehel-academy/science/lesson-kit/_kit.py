@@ -14,6 +14,9 @@ nested - Azure forbids nesting and the voice walker flattens it.
 """
 
 
+from _icons import icon  # noqa: F401  (a lesson module may ask for a drawing by name)
+
+
 def _attr(s):
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             .replace("'", "&#39;"))

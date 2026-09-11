@@ -364,3 +364,28 @@
   .keypath { margin: 0; color: var(--muted); font-size: 13px; font-weight: 700; min-height: 1.2em; }
   .graph.dot .gstack { gap: 4px; }
   .graph.dot .gblock { width: 22px; height: 22px; border-radius: 50%; margin: 0 auto; }
+
+/* the kit's own drawings (lesson-kit/_icons.py) sit where an emoji would, at its size;
+   a row mixes them with ordinary emoji */
+.ico { display: inline-block; }
+.picrow { display: inline-flex; align-items: center; gap: 0.08em; }
+
+/* the overview: last time, the warm-up, the two sittings */
+.ovw-recap { background: var(--card, #fff); border: 2px dashed var(--line, #d7d2c4); border-radius: 14px; padding: 10px 14px; margin: 0 0 12px; }
+.ovw-recap p { margin: 4px 0 0; }
+/* a tint, not a fill: the lesson pages are dark, and a pale fill under inherited white text was unreadable */
+.ovw-sit { margin: 10px 0; padding: 8px 12px; border-radius: 12px; background: rgba(244, 201, 93, 0.16); border: 1px solid rgba(244, 201, 93, 0.55); color: inherit; }
+.ovw-warm { margin-top: 14px; }
+.ovw-note { margin: 0 0 8px; color: var(--muted, #555); font-size: 0.92em; }
+.warmq { margin: 0 0 12px; }
+.warmask { font: inherit; font-weight: 700; background: none; border: 0; padding: 4px 0; cursor: pointer; text-align: left; color: inherit; }
+.warmopts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.warmopts .choice.picked { outline: 3px solid #E8A33D; }
+.warmfb { min-height: 1.3em; margin: 6px 0 0; font-weight: 700; }
+/* the break card between the two sittings */
+.sit-break { display: grid; place-items: center; padding: 12px; box-sizing: border-box; }
+.sit-card { max-width: 520px; margin: 12vh auto 0; background: var(--card, #fff); border-radius: 20px; padding: 24px 22px; text-align: center; }
+.sit-pic { font-size: 64px; }
+.sit-h { margin: 6px 0 10px; }
+.sit-card p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
+.sit-card .bigbtns { justify-content: center; gap: 10px; flex-wrap: wrap; }

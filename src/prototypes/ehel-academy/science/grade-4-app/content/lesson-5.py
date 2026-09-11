@@ -7,7 +7,7 @@ habitats; 4Be.02 plants and animals can survive outside their habitats;
 4SIC.02 science in the local area; 4SIC.05 positive and negative effects of
 science and technology nearby; with 4TWSc.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "habitats-and-survival",
@@ -107,6 +107,21 @@ LESSON = {
                        "opts": [opt("List its good effects AND its bad effects on the living things nearby", True), opt("Roads are always good", False), opt("Roads are always bad", False)],
                        "why": "Science lets you see both sides and decide."}},
              "Science and technology near you help some living things and harm others."),
+
+        step("questions", "Back it up with science", "\U0001F5E3\uFE0F", "Backed by science", ["4SIC.03", "4Be.01"],
+             "Someone makes a point. Which reason uses science to support it? Tap it.",
+             explain(
+                 ["A point is stronger when a scientific reason supports it.", "A scientific reason is about what living things need, or about evidence."],
+                 ["Keep the hedge: birds nest in it. That is science.", "Keep the hedge: it is a nice colour. That is not."],
+                 ["Children pick the reason they like best.", "Ask: does this reason use what we know about living things?"],
+                 ["Read the point, then find the scientific reason."]),
+             {"label": "Question", "items": [
+                 q("\"We should keep the old hedge by the school.\" Which reason uses science?", "\U0001F333", "birds nest in it: it is their habitat", ["it is a nice colour", "it has always been there"], "A scientific reason is about what living things need."),
+                 q("\"Move the fish tank away from the sunny window.\" Which reason uses science?", "\U0001F41F", "the water would get too warm for the fish", ["the window looks better empty", "the fish get bored of the view"], "A habitat has to stay right for what lives in it."),
+                 q("\"Leave the woodlice under the log.\" Which reason uses science?", icon("woodlouse"), "woodlice need damp, dark places to survive", ["woodlice are too small to matter", "the log is heavy to lift"], "Woodlice are suited to damp, dark places and dry out in the sun."),
+                 q("\"A cactus is suited to the desert.\" Which evidence supports that?", "🌵", "it stores water in its thick stem and has spines, not wide leaves", ["it is green", "it grows slowly in a pot"], "Features that help it survive in its habitat are the evidence."),
+             ]},
+             "You backed up a point with science."),
 
         step("questions", "Habitat check", "✅", "Habitat check", ["4Be.01", "4Be.02"],
              "Tap the answer.",

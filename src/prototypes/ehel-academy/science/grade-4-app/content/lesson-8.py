@@ -23,7 +23,7 @@ LESSON = {
                  ["Tap all six."]),
              {"items": [
                  {"pic": "⚽", "label": "a moving ball", "sub": "movement energy", "say": "A moving ball has energy. That is why it can knock things over. The faster it goes, the more it has."},
-                 {"pic": "\U0001FA83", "label": "a stretched band", "sub": "stored energy", "say": "A stretched elastic band has energy stored in it, waiting. Let go and it becomes movement."},
+                 {"pic": "\u27B0", "label": "a stretched band", "sub": "stored energy", "say": "A stretched elastic band has energy stored in it, waiting. Let go and it becomes movement."},
                  {"pic": "\U0001F50A", "label": "sound", "sub": "energy in the air", "say": "Sound is energy travelling through the air as vibrations. A loud drum has more of it than a whisper."},
                  {"pic": "☀️", "label": "light", "sub": "energy from the Sun", "say": "Light is energy. It travels from the Sun to Earth and plants catch it to make food."},
                  {"pic": "\U0001F525", "label": "heat", "sub": "energy in warm things", "say": "Heat is energy. A hot cup has more than a cold one, and it passes into your hands."},
@@ -100,6 +100,22 @@ LESSON = {
              ]},
              "Energy is transferred from thing to thing, and some always leaks out as sound, light or heat."),
 
+        step("questions", "Energy near you", "\U0001F3D8\uFE0F", "Energy near you", ["4SIC.02", "4SIC.05"],
+             "Where is science used near you, and what does it do to the environment? Tap the answer.",
+             explain(
+                 ["Science and technology are all around where you live.", "They can help the environment, harm it, or both at once."],
+                 ["Solar panels on a roof turn light into electricity.", "Wind turbines make electricity without burning anything.",
+                  "Cars burn fuel, and the fumes pollute the air."],
+                 ["Children think a technology is simply good or simply bad.", "A new road gets people to school faster and takes away a habitat. Both are true."],
+                 ["Think about your own street, then tap."]),
+             {"label": "Question", "items": [
+                 q("Where might you see science making electricity near where you live?", "\u2600\uFE0F", "solar panels on a roof", ["a sandcastle", "a skipping rope"], "Solar panels turn light energy into electrical energy."),
+                 q("A town builds wind turbines instead of burning coal. What is good about that for the environment?", "\U0001F32C\uFE0F", "less smoke and pollution in the air", ["more rubbish in the sea", "fewer trees can grow"], "Wind turbines make electricity without burning anything."),
+                 q("Cars carry people quickly from place to place. What is one bad effect on the environment?", "\U0001F697", "their fumes pollute the air", ["the roads get longer", "the cars get heavier"], "Burning fuel makes fumes. A technology can help and harm."),
+                 q("A new road is built across a field near your school. Which is a bad effect?", "\U0001F6A7", "animals lose their habitat", ["people get to school faster", "the shops get more customers"], "The other two are good effects. One change can have both."),
+             ]},
+             "Science is used near you, and it can help or harm the environment."),
+
         step("questions", "Energy check", "✅", "Energy check", ["4Pf.01", "4Pf.02", "4Pf.03", "4Pf.04"],
              "Tap the answer.",
              explain(
@@ -126,7 +142,7 @@ LESSON = {
              {"items": [
                  q("Where does the energy to kick a ball come from?", "\U0001F34E", "your food", ["the ball", "the air"], "Stored in food, taken out by muscles."),
                  q("Sound is...", "\U0001F50A", "energy travelling through the air", ["not energy", "a kind of light"], "Vibrations carrying energy."),
-                 q("A stretched elastic band has...", "\U0001FA83", "stored energy waiting to be released", ["no energy", "sound energy"], "Let go and it moves."),
+                 q("A stretched elastic band has...", "\u27B0", "stored energy waiting to be released", ["no energy", "sound energy"], "Let go and it moves."),
                  q("Energy cannot be made or destroyed. It can only be...", "\U0001F504", "transferred", ["hidden", "eaten"], "Moved from thing to thing."),
                  q("Which chart did you draw of the bounces?", "\U0001F4CA", "a bar chart, three bars getting shorter", ["a map", "a pie"], "A falling staircase."),
                  q("A ball thumps into a wall. The thump is...", "\U0001F50A", "some of the ball's energy transferred as sound", ["the wall making energy", "nothing"], "Sound is energy."),
@@ -162,7 +178,7 @@ LESSON["words"] = [
          ["A moving ball has energy.", "Food gives you energy."]),
     word("transfer", "\U0001F504", "To move energy from one thing to another, or one form to another.",
          ["The kick transfers energy to the ball.", "Energy is transferred, never lost."]),
-    word("stored energy", "\U0001FA83", "Energy kept ready in something, like a stretched band or food.",
+    word("stored energy", "\u27B0", "Energy kept ready in something, like a stretched band or food.",
          ["A stretched band has stored energy.", "Food is stored energy."]),
     word("movement energy", "⚽", "The energy a moving thing has.",
          ["A rolling ball has movement energy.", "Faster means more movement energy."]),

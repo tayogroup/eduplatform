@@ -5,7 +5,7 @@
 (humans, birds, frogs, butterflies); 3TWSm.01 different types of model
 (diagrams and physical models); with 3TWSc.01 and 3TWSc.06.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, icon
 
 LESSON = {
     "slug": "growing-up",
@@ -38,7 +38,7 @@ LESSON = {
              {"items": [
                  {"pic": "\U0001F95A", "label": "egg", "say": "A tiny egg, laid on a leaf."},
                  {"pic": "\U0001F41B", "label": "caterpillar", "say": "A caterpillar hatches and eats leaves all day, growing and growing."},
-                 {"pic": "\U0001FAB6", "label": "chrysalis", "say": "It hangs up and becomes a chrysalis. Inside, it is changing completely."},
+                 {"pic": icon("chrysalis"), "label": "chrysalis", "say": "It hangs up and becomes a chrysalis. Inside, it is changing completely."},
                  {"pic": "\U0001F98B", "label": "butterfly", "say": "A butterfly comes out, dries its wings, and flies off to lay eggs of its own."},
              ]},
              "Egg, caterpillar, chrysalis, butterfly."),
@@ -125,7 +125,7 @@ LESSON = {
                  ["Read the question, then tap."]),
              {"label": "Question", "items": [
                  q("What hatches from frogspawn?", "\U0001F95A", "a tadpole", ["a froglet", "a fish", "a frog"], "A tadpole, with a tail and no legs."),
-                 q("What comes out of a chrysalis?", "\U0001FAB6", "a butterfly", ["a caterpillar", "an egg"], "The caterpillar changed inside it."),
+                 q("What comes out of a chrysalis?", icon("chrysalis"), "a butterfly", ["a caterpillar", "an egg"], "The caterpillar changed inside it."),
                  q("Which baby looks like a small version of its parent?", "\U0001F423", "a chick", ["a tadpole", "a caterpillar"], "A chick is a small bird."),
                  q("A globe is which kind of model?", "\U0001F30D", "a physical model", ["a diagram", "not a model"], "You can hold it and turn it."),
                  q("A drawing of the butterfly's life cycle with labels is...", "✏️", "a diagram", ["a physical model", "a photograph"], "Labels on a drawing: a diagram."),
@@ -178,7 +178,7 @@ LESSON["words"] = [
          ["A frog's offspring are tadpoles.", "Offspring grow into adults."]),
     word("tadpole", "\U0001F41F", "A baby frog: a tail, no legs, and it lives in water.",
          ["A tadpole hatches from frogspawn.", "The tadpole grew back legs."]),
-    word("chrysalis", "\U0001FAB6", "The hard case a caterpillar changes inside to become a butterfly.",
+    word("chrysalis", icon("chrysalis"), "The hard case a caterpillar changes inside to become a butterfly.",
          ["The caterpillar became a chrysalis.", "A butterfly came out of the chrysalis."]),
     word("life cycle", "\U0001F504", "The stages an animal goes through from egg or baby to adult.",
          ["The frog's life cycle has five stages.", "Draw the life cycle of a butterfly."]),

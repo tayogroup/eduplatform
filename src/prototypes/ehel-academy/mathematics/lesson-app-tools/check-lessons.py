@@ -82,6 +82,13 @@ def main():
             fail(f, "no way back to the hub")
         if "mountLearnerControls" not in s:
             fail(f, "no class controls")
+        # OPT-IN, because not every build wears the header bars: a build whose
+        # app.config.json says "headerBars": true must have them on EVERY
+        # lesson page. add-header-bars.py can fail on one page (a transient
+        # Windows write error did, twice, on 2026-09-11) and this gate passed
+        # the page without its title bar and way back - only a count caught it.
+        if app.cfg.get("headerBars") and 'class="eh-bar1"' not in s:
+            fail(f, "no header bar - run add-header-bars.py --app . again")
         if "mountWehelChat" not in s:
             fail(f, "no Wehel")
         if not re.search('class="[^"]*top-actions', s):

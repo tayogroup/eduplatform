@@ -30,9 +30,16 @@ class App(object):
         self.hub = cfg["hub"]
         self.remote = cfg["remote"]
         # order IS the unit number, so a lesson's index is not a separate fact
-        # that can drift from the one in the hub
+        # that can drift from the one in the hub.
+        #
+        # UNLESS the entry says otherwise. Intensive English's units are
+        # numbered from ZERO (u00 Letters and Sounds .. u19), and its lessons
+        # map 1:1 onto them, so position + 1 would report every unit as the
+        # next one along - a claim about the wrong unit in the gradebook and on
+        # the group board. An entry may therefore carry its own "unit"; every
+        # other app omits it and is unchanged.
         self.lessons = [
-            (i + 1, l["file"], l["title"]) for i, l in enumerate(cfg["lessons"])
+            (l.get("unit", i + 1), l["file"], l["title"]) for i, l in enumerate(cfg["lessons"])
         ]
 
     def path(self, name):

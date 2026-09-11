@@ -1706,7 +1706,7 @@
       api.controls.innerHTML = '<button type="button" class="big small" id="' + api.id + 'g">Take the grass away</button>';
       $(api.id + "g").addEventListener("click", () => {
         const s = this.state;
-        if (!s.gone) { s.gone = true; gone = true; box.innerHTML = foodChainSvg(s); SOUND.play("thud", 0.4); api.say("No grass. The rabbits have nothing to eat and die out. Then the foxes have nothing to eat. Every link needs the one before it."); $(api.id + "g").textContent = "Put the grass back"; }
+        if (!s.gone) { s.gone = true; gone = true; box.innerHTML = foodChainSvg(s); SOUND.play("thud", 0.4); api.say("No grass. The rabbits have nothing to eat and die out. Then the foxes have nothing to eat in this chain. Every link needs the one before it."); $(api.id + "g").textContent = "Put the grass back"; }
         else { s.gone = false; back = true; box.innerHTML = foodChainSvg(s); SOUND.play("ding", 0.5); api.say("The grass is back, and the chain works again. It all starts with the producer."); }
         if (gone && back) setTimeout(() => { api.controls.innerHTML = ""; api.done(); }, 2400);
       });
@@ -1775,57 +1775,88 @@
     '<g data-part="spine" tabindex="0" role="button" aria-label="spine"><g fill="#E9E4D6">' + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((k) => '<rect x="122" y="' + (98 + k * 14) + '" width="16" height="10" rx="3"/>').join("") + "</g>" + '<rect class="outline" x="114" y="94" width="32" height="176" rx="10"/></g>' +
     '<g data-part="ribcage" tabindex="0" role="button" aria-label="rib cage"><g fill="none" stroke="#E9E4D6" stroke-width="6" stroke-linecap="round">' + [0, 1, 2, 3, 4].map((k) => '<path d="M130 ' + (112 + k * 16) + ' q-44 4 -46 ' + (22 + k * 2) + '"/><path d="M130 ' + (112 + k * 16) + ' q44 4 46 ' + (22 + k * 2) + '"/>').join("") + "</g>" + '<ellipse class="outline" cx="130" cy="150" rx="56" ry="52"/></g>' +
     '<g data-part="hip" tabindex="0" role="button" aria-label="hip"><path d="M92 268 q38 -22 76 0 q6 26 -18 34 h-40 q-24 -8 -18 -34z" fill="#E9E4D6"/><ellipse class="outline" cx="130" cy="286" rx="46" ry="26"/></g>' +
-    '<g data-part="armbones" tabindex="0" role="button" aria-label="arm bones"><g fill="none" stroke="#E9E4D6" stroke-width="10" stroke-linecap="round"><path d="M86 108 L60 180 L54 250"/><path d="M174 108 L200 180 L206 250"/></g><path class="outline" d="M40 100 h56 v160 h-56z M164 100 h56 v160 h-56z"/></g>' +
-    '<g data-part="legbones" tabindex="0" role="button" aria-label="leg bones"><g fill="none" stroke="#E9E4D6" stroke-width="12" stroke-linecap="round"><path d="M110 300 L104 350 L100 400"/><path d="M150 300 L156 350 L160 400"/></g><rect class="outline" x="86" y="296" width="88" height="118" rx="14"/></g>' +
+    '<g data-part="armbones" tabindex="0" role="button" aria-label="arm bones"><g fill="none" stroke="#E9E4D6" stroke-width="10" stroke-linecap="round"><path d="M86 108 L60 180"/><path d="M174 108 L200 180"/></g><g fill="none" stroke="#E9E4D6" stroke-width="6" stroke-linecap="round"><path d="M57 186 L47 250"/><path d="M64 186 L58 250"/><path d="M203 186 L213 250"/><path d="M196 186 L202 250"/></g><path class="outline" d="M40 100 h56 v160 h-56z M164 100 h56 v160 h-56z"/></g>' +
+    '<g data-part="legbones" tabindex="0" role="button" aria-label="leg bones"><g fill="none" stroke="#E9E4D6" stroke-width="12" stroke-linecap="round"><path d="M110 300 L104 350"/><path d="M150 300 L156 350"/></g><g fill="none" stroke="#E9E4D6" stroke-width="7" stroke-linecap="round"><path d="M101 356 L95 400"/><path d="M108 356 L104 400"/><path d="M159 356 L165 400"/><path d="M152 356 L156 400"/></g><rect class="outline" x="86" y="296" width="88" height="118" rx="14"/></g>' +
     "</svg>");
   FIGURES.earthLayers = () => (
-    '<svg viewBox="0 0 320 320" role="img" aria-label="The Earth cut open: crust, mantle and core">' +
+    /* to scale in the ways that matter: a thin crust, a core reaching over half
+       way out (about 3,500 of 6,400 km). No names printed on it: the step asks
+       the child to find each layer (Grade 4 review, 2026-09-11). */
+    '<svg viewBox="0 0 320 320" role="img" aria-label="The Earth cut open to show its three layers">' +
     '<rect width="320" height="320" fill="#0B1D2C"/>' +
     '<g data-part="crust" tabindex="0" role="button" aria-label="crust"><circle cx="160" cy="160" r="140" fill="#4CB65C"/><circle cx="160" cy="160" r="134" fill="#3B7FD1"/><path d="M160 160 L160 20 A140 140 0 0 1 300 160 z" fill="#7D6B4A"/><path class="outline" d="M160 160 L160 20 A140 140 0 0 1 300 160 z"/></g>' +
-    '<g data-part="mantle" tabindex="0" role="button" aria-label="mantle"><path d="M160 160 L160 32 A128 128 0 0 1 288 160 z" fill="#E9744F"/><path d="M160 160 L160 70 A90 90 0 0 1 250 160 z" fill="#F0A56B"/><path class="outline" d="M160 160 L160 32 A128 128 0 0 1 288 160 z"/></g>' +
-    '<g data-part="core" tabindex="0" role="button" aria-label="core"><path d="M160 160 L160 110 A50 50 0 0 1 210 160 z" fill="#F4C95D"/><path class="outline" d="M160 160 L160 106 A54 54 0 0 1 214 160 z"/></g>' +
-    '<g fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800"><text x="256" y="60">crust</text><text x="228" y="110">mantle</text><text x="176" y="146">core</text></g>' +
+    '<g data-part="mantle" tabindex="0" role="button" aria-label="mantle"><path d="M160 160 L160 30 A130 130 0 0 1 290 160 z" fill="#E9744F"/><path class="outline" d="M160 160 L160 30 A130 130 0 0 1 290 160 z"/></g>' +
+    '<g data-part="core" tabindex="0" role="button" aria-label="core"><path d="M160 160 L160 83 A77 77 0 0 1 237 160 z" fill="#F4C95D"/><path d="M160 160 L160 127 A33 33 0 0 1 193 160 z" fill="#FFF3B0"/><path class="outline" d="M160 160 L160 80 A80 80 0 0 1 240 160 z"/></g>' +
     "</svg>");
   FIGURES.ray = () => (
+    /* mirror upright at x 250, the ray meets it at (250, 100): in (188, -60),
+       out (-188, -60), so the eye sits on the reflected line (equal angles) */
     '<svg viewBox="0 0 320 220" role="img" aria-label="A ray diagram: a light source, a ray, a mirror and an eye">' +
+    '<defs><marker id="rayArrowF" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#F4C95D"/></marker></defs>' +
     '<rect width="320" height="220" fill="#1B2A3A"/>' +
     '<g data-part="source" tabindex="0" role="button" aria-label="light source"><text x="40" y="180" font-size="40" text-anchor="middle">\u{1F526}</text><circle class="outline" cx="40" cy="166" r="30"/></g>' +
-    '<g data-part="ray" tabindex="0" role="button" aria-label="ray"><path d="M62 160 L250 60" stroke="#F4C95D" stroke-width="4"/><path d="M180 97 l14 4 -8 10z" fill="#F4C95D"/><path class="outline" d="M62 148 L250 48 L262 72 L74 172z"/></g>' +
-    '<g data-part="mirror" tabindex="0" role="button" aria-label="mirror"><rect x="246" y="30" width="10" height="70" rx="3" fill="#BFE3F5" stroke="#fff" stroke-width="2"/><rect class="outline" x="236" y="22" width="30" height="86" rx="8"/></g>' +
-    '<g data-part="eye" tabindex="0" role="button" aria-label="eye"><path d="M250 60 L110 30" stroke="#F4C95D" stroke-width="4" stroke-dasharray="8 6"/><text x="90" y="42" font-size="34" text-anchor="middle">\u{1F441}️</text><circle class="outline" cx="90" cy="30" r="28"/></g>' +
+    '<g data-part="ray" tabindex="0" role="button" aria-label="ray"><path d="M62 160 L156 130" stroke="#F4C95D" stroke-width="4" marker-end="url(#rayArrowF)"/><path d="M150 132 L250 100" stroke="#F4C95D" stroke-width="4"/><path d="M250 100 L180 78" stroke="#F4C95D" stroke-width="4" marker-end="url(#rayArrowF)"/><path d="M186 80 L126 61" stroke="#F4C95D" stroke-width="4"/><path class="outline" d="M58 149 L246 89 L254 112 L66 171z"/></g>' +
+    '<g data-part="mirror" tabindex="0" role="button" aria-label="mirror"><rect x="246" y="65" width="10" height="70" rx="3" fill="#BFE3F5" stroke="#fff" stroke-width="2"/><rect class="outline" x="236" y="57" width="30" height="86" rx="8"/></g>' +
+    '<g data-part="eye" tabindex="0" role="button" aria-label="eye"><text x="104" y="66" font-size="34" text-anchor="middle">\u{1F441}️</text><circle class="outline" cx="104" cy="54" r="28"/></g>' +
     "</svg>");
 
   /* ---- Stage 4 scenes ------------------------------------------------ */
   /* a volcano: 0 magma under the crust, 1 it rises through a crack, 2 eruption, 3 the lava cools to rock */
-  SCENES.volcano = (s) => (
-    '<svg viewBox="0 0 320 260" role="img" aria-label="A volcano forming and erupting"><rect width="320" height="260" fill="' + (s === 2 ? "#3A2A2A" : "#BFE3F5") + '"/>' +
-    '<rect x="0" y="150" width="320" height="110" fill="#7D6B4A"/><rect x="0" y="190" width="320" height="70" fill="#E9744F"/>' +
-    '<path d="M60 150 L160 ' + (s === 0 ? 150 : 60) + ' L260 150z" fill="#5B4A3A"/>' +
-    (s >= 1 ? '<path d="M150 150 L160 ' + (s === 3 ? 70 : 62) + ' L170 150z" fill="' + (s === 3 ? "#5B5D63" : "#E9744F") + '"/>' : "") +
-    (s === 0 ? '<text x="160" y="228" text-anchor="middle" fill="#fff" font-size="14" font-family="Inter, sans-serif" font-weight="800">hot melted rock (magma) under the crust</text>' : "") +
-    (s === 2 ? '<g fill="#F4C95D"><path d="M160 60 l-30 -50 l10 20 l-6 -30 l16 30 l4 -34 l6 34 l16 -30 l-6 30 l10 -20z"/></g><path d="M160 62 q-40 40 -70 88 M160 62 q40 40 70 88" stroke="#E9744F" stroke-width="10" fill="none"/><g fill="#5B5D63" opacity="0.7"><circle cx="150" cy="20" r="14"/><circle cx="175" cy="14" r="18"/><circle cx="200" cy="26" r="12"/></g>' : "") +
-    (s === 3 ? '<path d="M160 70 q-40 40 -70 80 M160 70 q40 40 70 80" stroke="#5B5D63" stroke-width="10" fill="none"/><text x="160" y="228" text-anchor="middle" fill="#fff" font-size="14" font-family="Inter, sans-serif" font-weight="800">cooled lava: new rock</text>' : "") +
-    "</svg>");
+  SCENES.volcano = (s) => {
+    /* 0 magma in a chamber under unbroken ground; 1 it rises through a crack
+       and a small cone forms; 2 it erupts; 3 the lava has cooled and the cone
+       is taller. The magma used to be a molten layer under all the crust and
+       the cone was full-grown before the first eruption (Grade 4 review). */
+    const peak = [150, 150, 112, 84][s], w = [0, 0, 64, 96][s];
+    const lab = (t, fill) => '<text x="160" y="248" text-anchor="middle" fill="' + (fill || "#fff") + '" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + t + "</text>";
+    return '<svg viewBox="0 0 320 260" role="img" aria-label="A volcano forming and erupting"><rect width="320" height="260" fill="' + (s === 2 ? "#3A2A2A" : "#BFE3F5") + '"/>' +
+      '<rect x="0" y="150" width="320" height="110" fill="#7D6B4A"/>' +
+      '<ellipse cx="160" cy="214" rx="56" ry="16" fill="#E9744F"/>' +
+      (s >= 1 ? '<path d="M152 204 L156 150 L164 150 L168 204z" fill="#E9744F"/>' : "") +
+      (s === 1 ? '<ellipse cx="160" cy="150" rx="12" ry="5" fill="#E9744F"/>' : "") +
+      (s >= 2 ? '<path d="M' + (160 - w) + " 150 L" + (160 - 8) + " " + peak + " L" + (160 + 8) + " " + peak + " L" + (160 + w) + ' 150z" fill="#5B4A3A" stroke="#B59A78" stroke-width="2" stroke-linejoin="round"/><path d="M156 150 L158 ' + peak + ' L162 ' + peak + ' L164 150z" fill="' + (s === 3 ? "#5B5D63" : "#E9744F") + '"/>' : "") +
+      (s === 2 ? '<g fill="#F4C95D"><path d="M160 ' + peak + ' l-30 -50 l10 20 l-6 -30 l16 30 l4 -34 l6 34 l16 -30 l-6 30 l10 -20z"/></g><path d="M156 ' + (peak + 2) + ' q-40 30 -70 54 M164 ' + (peak + 2) + ' q40 30 70 54" stroke="#E9744F" stroke-width="9" fill="none"/><g fill="#5B5D63" opacity="0.7"><circle cx="150" cy="24" r="14"/><circle cx="175" cy="18" r="18"/><circle cx="200" cy="30" r="12"/></g>' : "") +
+      (s === 3 ? '<path d="M156 ' + (peak + 2) + ' q-40 34 -80 70 M164 ' + (peak + 2) + ' q40 34 80 70" stroke="#5B5D63" stroke-width="9" fill="none"/>' : "") +
+      lab(["magma: melted rock in a chamber under the crust", "the magma rises through a crack in the crust", "an eruption: lava, ash and gas", "cooled lava: new rock, and a taller volcano"][s]) +
+      "</svg>";
+  };
   /* an earthquake: 0 two plates side by side, 1 pushing, 2 the sudden slip, 3 the cracked ground after */
-  SCENES.quake = (s) => (
-    '<svg viewBox="0 0 320 240" role="img" aria-label="Two pieces of the Earth\'s crust pushing, then slipping"><rect width="320" height="240" fill="#BFE3F5"/>' +
-    '<rect x="0" y="120" width="' + (s >= 2 ? 150 : 160) + '" height="120" fill="#7D6B4A" transform="translate(0 ' + (s === 2 ? 10 : 0) + ')"/>' +
-    '<rect x="' + (s >= 2 ? 170 : 160) + '" y="120" width="160" height="120" fill="#8A6A4A" transform="translate(0 ' + (s === 2 ? -8 : 0) + ')"/>' +
-    '<rect x="0" y="110" width="320" height="12" fill="#3E8E4A"/>' +
-    (s === 1 ? '<g fill="#D9473F"><path d="M100 170 h40 l-8 -10 v20z"/><path d="M220 170 h-40 l8 -10 v20z"/></g><text x="160" y="60" text-anchor="middle" fill="#1B1B1B" font-size="14" font-family="Inter, sans-serif" font-weight="800">the plates push against each other</text>' : "") +
-    (s === 2 ? '<g stroke="#D9473F" stroke-width="3"><path d="M30 100 l10 -14 M60 96 l8 -16 M250 98 l-10 -14 M280 100 l-8 -16"/></g><text x="160" y="60" text-anchor="middle" fill="#D9473F" font-size="16" font-family="Inter, sans-serif" font-weight="800">they slip! the ground shakes</text><text x="160" y="220" font-size="34" text-anchor="middle">\u{1F3E0}</text>' : "") +
-    (s === 3 ? '<path d="M150 122 l6 30 l-8 30 l10 40" stroke="#1B1B1B" stroke-width="4" fill="none"/><text x="160" y="60" text-anchor="middle" fill="#1B1B1B" font-size="14" font-family="Inter, sans-serif" font-weight="800">a crack in the crust where they moved</text>' : "") +
-    (s === 0 ? '<text x="160" y="60" text-anchor="middle" fill="#1B1B1B" font-size="14" font-family="Inter, sans-serif" font-weight="800">two pieces of the crust, side by side</text>' : "") +
-    "</svg>");
+  SCENES.quake = (s) => {
+    /* the plates meet at x 160 and stay touching: after the slip one is higher
+       than the other, never apart, and the house stands on the surface. A gap
+       used to open and the house sat underground (Grade 4 review). */
+    const dl = s >= 2 ? 8 : 0, dr = s >= 2 ? -8 : 0;
+    const say = (t, fill, size) => '<text x="160" y="50" text-anchor="middle" fill="' + (fill || "#1B1B1B") + '" font-size="' + (size || 14) + '" font-family="Inter, sans-serif" font-weight="800">' + t + "</text>";
+    return '<svg viewBox="0 0 320 240" role="img" aria-label="Two pieces of the Earth\'s crust pushing, then slipping"><rect width="320" height="240" fill="#BFE3F5"/>' +
+      '<g transform="translate(0 ' + dl + ')"><rect x="0" y="120" width="160" height="130" fill="#7D6B4A"/><rect x="0" y="110" width="160" height="12" fill="#3E8E4A"/><text x="70" y="108" font-size="30" text-anchor="middle">\u{1F3E0}</text></g>' +
+      '<g transform="translate(0 ' + dr + ')"><rect x="160" y="120" width="160" height="130" fill="#8A6A4A"/><rect x="160" y="110" width="160" height="12" fill="#3E8E4A"/></g>' +
+      (s === 1 ? '<g fill="#D9473F"><path d="M100 170 h40 l-8 -10 v20z"/><path d="M220 170 h-40 l8 -10 v20z"/></g>' + say("the plates push against each other") : "") +
+      (s === 2 ? '<g stroke="#D9473F" stroke-width="3"><path d="M30 92 l10 -14 M60 88 l8 -16 M250 90 l-10 -14 M280 92 l-8 -16"/></g>' + say("they slip! the ground shakes", "#D9473F", 16) : "") +
+      (s === 3 ? '<path d="M160 112 l6 30 l-8 30 l10 40 l-6 30" stroke="#1B1B1B" stroke-width="4" fill="none"/>' + say("a crack in the crust where they moved") : "") +
+      (s === 0 ? say("two pieces of the crust, side by side") : "") +
+      "</svg>";
+  };
 
   /* ---- Stage 4 sims -------------------------------------------------- */
   /* an arm: the biceps and triceps take turns to pull */
-  function armSvg(bent) {
-    return '<svg viewBox="0 0 320 220" role="img" aria-label="An arm, ' + (bent ? "bent" : "straight") + ', with the biceps and triceps"><rect width="320" height="220" fill="#F3EFE6"/>' +
+  function armSvg(bent, tricepsOn) {
+    /* bent: the biceps has contracted; tricepsOn: the triceps has pulled the arm
+       straight; neither: at rest, both relaxed. Each muscle is joined by a
+       tendon across the elbow to the forearm and moves with it, so the picture
+       shows a pull on a bone (4Bs.02); the muscles used to stop short of the
+       elbow (Grade 4 re-review, 2026-09-11). */
+    const bi = bent ? "contracted: shorter, fatter" : "relaxed", tri = !bent && tricepsOn ? "contracted: shorter, fatter" : "relaxed";
+    const th = (bent ? -70 : 0) * Math.PI / 180, rot = (x, y) => [160 + (x - 160) * Math.cos(th) - (y - 105) * Math.sin(th), 105 + (x - 160) * Math.sin(th) + (y - 105) * Math.cos(th)];
+    const bRx = bent ? 40 : 50, bY = bent ? 66 : 76, tOn = tri !== "relaxed", tRx = tOn ? 40 : 50, tY = tOn ? 136 : 132;
+    const bA = rot(184, 94), tA = rot(150, 119);
+    const tendon = (x1, y1, p) => '<path d="M' + x1 + " " + y1 + " L" + p[0].toFixed(1) + " " + p[1].toFixed(1) + '" stroke="#A8433A" stroke-width="4" stroke-linecap="round"/>';
+    return '<svg viewBox="0 0 320 220" role="img" aria-label="An arm, ' + (bent ? "bent" : "straight") + ', with the biceps and triceps joined to the forearm"><rect width="320" height="220" fill="#F3EFE6"/>' +
       '<rect x="40" y="90" width="120" height="30" rx="14" fill="#E9E4D6" stroke="#B5A990" stroke-width="2"/>' +
       '<g transform="rotate(' + (bent ? -70 : 0) + ' 160 105)"><rect x="160" y="92" width="120" height="26" rx="13" fill="#E9E4D6" stroke="#B5A990" stroke-width="2"/><text x="290" y="112" font-size="24">✋️</text></g>' +
-      '<ellipse cx="100" cy="' + (bent ? 66 : 76) + '" rx="' + (bent ? 40 : 50) + '" ry="' + (bent ? 22 : 12) + '" fill="#D9473F" style="transition: all 500ms ease"/><text x="100" y="' + (bent ? 44 : 58) + '" text-anchor="middle" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">biceps ' + (bent ? "CONTRACTED (short, fat)" : "relaxed (long, thin)") + "</text>" +
-      '<ellipse cx="100" cy="' + (bent ? 136 : 130) + '" rx="' + (bent ? 50 : 40) + '" ry="' + (bent ? 10 : 20) + '" fill="#E9744F" style="transition: all 500ms ease"/><text x="100" y="' + (bent ? 168 : 170) + '" text-anchor="middle" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">triceps ' + (bent ? "relaxed (long, thin)" : "CONTRACTED (short, fat)") + "</text></svg>";
+      tendon(100 + bRx - 4, bY, bA) + tendon(100 + tRx - 4, tY, tA) +
+      '<ellipse cx="100" cy="' + bY + '" rx="' + bRx + '" ry="' + (bent ? 22 : 12) + '" fill="#D9473F"/><text x="100" y="' + (bent ? 40 : 58) + '" text-anchor="middle" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">biceps ' + bi + "</text>" +
+      '<ellipse cx="100" cy="' + tY + '" rx="' + tRx + '" ry="' + (tOn ? 20 : 11) + '" fill="#E9744F"/><text x="100" y="' + (tOn ? 172 : 164) + '" text-anchor="middle" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">triceps ' + tri + "</text>" +
+      '<text x="210" y="206" fill="#6B5E48" font-size="11" font-family="Inter, sans-serif" font-weight="800">tendons join muscle to bone</text></svg>';
   }
   SIMS.muscles = {
     init(box) { box.innerHTML = armSvg(false); },
@@ -1834,34 +1865,45 @@
         let bent = false; const seen = new Set();
         const paint = () => {
           api.controls.innerHTML = '<button type="button" class="big small' + (bent ? " ghost" : " teal") + '" id="' + api.id + 'b"' + (bent ? " disabled" : "") + '>\u{1F4AA}\u{1F3FE} Contract the biceps</button><button type="button" class="big small' + (bent ? " teal" : " ghost") + '" id="' + api.id + 't"' + (bent ? "" : " disabled") + '>Contract the triceps</button>';
-          $(api.id + "b").addEventListener("click", () => { bent = true; seen.add("b"); box.innerHTML = armSvg(true); SOUND.play("click", 0.3); api.say("The biceps contracts: it gets shorter and fatter and PULLS the lower arm up. The triceps relaxes and stretches."); paint(); check(); });
-          $(api.id + "t").addEventListener("click", () => { bent = false; seen.add("t"); box.innerHTML = armSvg(false); SOUND.play("click", 0.3); api.say("Now the triceps contracts and pulls the arm straight. The biceps relaxes. Muscles can only pull, so they work in pairs."); paint(); check(); });
+          $(api.id + "b").addEventListener("click", () => { bent = true; seen.add("b"); box.innerHTML = armSvg(true); SOUND.play("click", 0.3); api.say("The biceps contracts: it gets shorter and fatter and pulls the lower arm up. The triceps relaxes and stretches."); paint(); check(); });
+          $(api.id + "t").addEventListener("click", () => { bent = false; seen.add("t"); box.innerHTML = armSvg(false, true); SOUND.play("click", 0.3); api.say("Now the triceps contracts and pulls the arm straight. The biceps relaxes. Muscles can only pull, so they work in pairs."); paint(); check(); });
         };
-        const check = () => { if (seen.has("b") && seen.has("t")) setTimeout(() => { api.controls.innerHTML = ""; api.say("A pair of muscles: one contracts while the other relaxes. That is how every bone in your body moves."); done(); }, 2800); };
+        const check = () => { if (seen.has("b") && seen.has("t")) setTimeout(() => { api.controls.innerHTML = ""; api.say("A pair of muscles: one contracts while the other relaxes. That is how muscles move your bones."); done(); }, 2800); };
         paint();
       });
     },
   };
 
   /* the particle model: a box of particles heated and cooled */
-  function particleSvg(state, jiggle) {
-    /* state 0 cold solid, 1 warm solid, 2 liquid */
-    const dots = [];
-    for (let r = 0; r < 5; r++) for (let c = 0; c < 8; c++) {
-      const j = state === 2 ? 0 : jiggle * (state === 1 ? 3 : 1.2);
-      const dx = state === 2 ? ((r * 7 + c * 13) % 11) - 5 : ((r + c) % 2 ? j : -j);
-      const dy = state === 2 ? ((r * 5 + c * 3) % 9) - 4 + (r < 1 ? 28 : 12) : ((r + c) % 2 ? -j : j);
-      dots.push('<circle cx="' + (60 + c * 28 + dx) + '" cy="' + (56 + r * 28 + dy) + '" r="11" fill="' + (state === 2 ? "#3B7FD1" : "#7BC47F") + '" stroke="#1B2A3A" stroke-width="2"/>');
+  function particleSvg(state, jiggle, tick) {
+    /* state 0 cold solid, 1 warm solid, 2 liquid. All forty particles touch. A
+       solid keeps them in rows, vibrating in place; in a liquid the rows slide
+       past each other, alternate rows in opposite directions, tick by tick, and
+       three darker particles let the child follow them. It used to wobble a
+       grid in place and call it sliding (Grade 4 re-review, 2026-09-11). */
+    const dots = [], t = tick || 0, R = 11, D = 23;
+    const dot = (x, y, fill) => '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + R + '" fill="' + fill + '" stroke="#1B2A3A" stroke-width="2"/>';
+    if (state === 2) {
+      for (let k = 0; k < 4; k++) for (let j = 0; j < 10; j++) {
+        const shift = Math.floor(t / 2) * (k % 2 ? 1 : -1), slot = ((j + shift) % 10 + 10) % 10;
+        const x = 52 + (k % 2 ? 11.5 : 0) + slot * D + Math.sin(t * 0.9 + j * 2.3 + k) * 1.5, y = 189 - k * 20 + Math.cos(t * 0.8 + j * 1.3) * 1.5;
+        dots.push(dot(x, y, (k * 10 + j) % 13 === 4 ? "#1F4F8A" : "#3B7FD1"));
+      }
+    } else {
+      for (let r = 0; r < 5; r++) for (let c = 0; c < 8; c++) {
+        const j = jiggle * (state === 1 ? 3 : 1.2), dx = (r + c) % 2 ? j : -j, dy = (r + c) % 2 ? -j : j;
+        dots.push(dot(80 + c * D + dx, 97 + r * D + dy, "#7BC47F"));
+      }
     }
     return '<svg viewBox="0 0 320 220" role="img" aria-label="Particles in a box, ' + ["a cold solid", "a warm solid", "a liquid"][state] + '"><rect width="320" height="220" fill="#F3EFE6"/><rect x="36" y="30" width="248" height="170" fill="none" stroke="#3A3A3A" stroke-width="3"/>' + dots.join("") +
-      '<text x="160" y="214" text-anchor="middle" fill="#1B1B1B" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + ["SOLID: particles packed in rows, vibrating a little", "SOLID, warmer: particles vibrating harder", "LIQUID: particles still touching, but sliding past each other"][state] + "</text></svg>";
+      '<text x="160" y="214" text-anchor="middle" fill="#1B1B1B" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + ["solid: packed in rows, vibrating a little", "solid, warmer: vibrating harder", "liquid: touching, but sliding past each other"][state] + "</text></svg>";
   }
   SIMS.particles = {
     init(box) { box.innerHTML = particleSvg(0, 1); },
     run(box, api) {
       return new Promise((done) => {
         let heat = 0, melted = false, frozen = false, tick = 0;
-        const timer = setInterval(() => { tick++; const state = heat >= 2 ? 2 : heat; box.innerHTML = particleSvg(state, tick % 2 ? 1 : -1); }, 260);
+        const timer = setInterval(() => { tick++; const state = heat >= 2 ? 2 : heat; box.innerHTML = particleSvg(state, tick % 2 ? 1 : -1, tick); }, 260);
         const paint = () => {
           api.controls.innerHTML = '<button type="button" class="big small' + (heat >= 2 ? " ghost" : " teal") + '" id="' + api.id + 'h"' + (heat >= 2 ? " disabled" : "") + '>\u{1F525} Heat it</button><button type="button" class="big small' + (heat <= 0 ? " ghost" : "") + '" id="' + api.id + 'c"' + (heat <= 0 ? " disabled" : "") + '>❄️ Cool it</button>';
           $(api.id + "h").addEventListener("click", () => { heat++; SOUND.play("pop", 0.3); if (heat === 1) api.say("Heat gives the particles more energy. They vibrate harder, but they stay in their rows. Still a solid."); else { melted = true; api.say("More heat, and the particles vibrate so hard they break out of their rows. They stay touching but slide past each other. It has melted: a liquid."); } paint(); check(); });
@@ -1883,8 +1925,8 @@
   SIMS.reaction = {
     draw(box, a, b) {
       box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="Two beakers: sand in water, and vinegar with bicarbonate of soda"><rect width="320" height="220" fill="#F3EFE6"/>' +
-        beakerSvg(90, "#3B7FD1", 90, false, a ? "sand and water: a MIXTURE" : "water", a ? '<rect x="48" y="166" width="84" height="16" fill="#C9A26B"/>' : "") +
-        beakerSvg(230, b ? "#BFE3F5" : "#E9E4D6", b ? 130 : 40, b, b ? "fizzing: a NEW substance, a gas" : "bicarbonate of soda", "") + "</svg>";
+        beakerSvg(90, "#3B7FD1", 90, false, a ? "sand and water: a mixture" : "water", a ? '<rect x="48" y="166" width="84" height="16" fill="#C9A26B"/>' : "") +
+        beakerSvg(230, b ? "#BFE3F5" : "#E9E4D6", b ? 130 : 40, b, b ? "fizzing: a new substance, a gas" : "bicarbonate of soda", "") + "</svg>";
     },
     init(box) { SIMS.reaction.draw(box, false, false); },
     run(box, api) {
@@ -1903,14 +1945,24 @@
 
   /* a bouncing ball: the energy goes somewhere every bounce */
   SIMS.energyDrop = {
+    /* The ball is let go from 4 marks and bounces to 3, 2, then 1. Its own
+       energy (stored by height, and movement) falls with the height, and what
+       it loses goes to sound and warmth, so the bars ALWAYS total 100. They
+       used to total 104, 108 and 112: energy made from nothing, in the lesson
+       that says it cannot be (Grade 4 review, 2026-09-11). */
+    heights: [4, 3, 2, 1],
     draw(box, n, y) {
-      const bars = [["movement", Math.max(0, 100 - n * 33), "#3B7FD1"], ["sound", n * 25, "#F4C95D"], ["warmth", n * 12, "#E9744F"]];
-      return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="A ball dropped and bouncing lower each time"><rect width="320" height="220" fill="#F3EFE6"/><rect x="0" y="180" width="180" height="40" fill="#8A6A4A"/>' +
+      const ball = SIMS.energyDrop.heights[n] * 25, lost = 100 - ball;
+      const bars = [["ball", ball, "#3B7FD1"], ["sound", Math.round(lost * 0.4), "#F4C95D"], ["warmth", lost - Math.round(lost * 0.4), "#E9744F"]];
+      const ticks = [0, 1, 2, 3, 4].map((k) => '<line x1="150" x2="162" y1="' + (180 - k * 30) + '" y2="' + (180 - k * 30) + '" stroke="#3A3A3A" stroke-width="2"/><text x="166" y="' + (184 - k * 30) + '" fill="#3A3A3A" font-size="11" font-family="Inter, sans-serif" font-weight="800">' + k + "</text>").join("");
+      return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="A ball dropped from 4 marks and bouncing lower each time"><rect width="320" height="220" fill="#F3EFE6"/><rect x="0" y="180" width="320" height="40" fill="#8A6A4A"/>' +
+        '<text x="200" y="12" fill="#1B1B1B" font-size="11" font-family="Inter, sans-serif" font-weight="800">energy, out of 100</text>' +
+        '<line x1="156" x2="156" y1="60" y2="180" stroke="#3A3A3A" stroke-width="2"/>' + ticks + '<text x="150" y="50" fill="#3A3A3A" font-size="11" font-family="Inter, sans-serif" font-weight="800">marks</text>' +
         '<circle cx="90" cy="' + y + '" r="16" fill="#D9473F" style="transition: cy 500ms ease-in"/>' +
-        bars.map((b, k) => '<rect x="210" y="' + (30 + k * 50) + '" width="' + b[1] + '" height="22" fill="' + b[2] + '" style="transition: width 600ms ease"/><text x="210" y="' + (24 + k * 50) + '" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + b[0] + " energy</text>").join("") +
-        '<text x="90" y="210" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800">bounce ' + n + " of 3</text></svg>";
+        bars.map((b, k) => '<rect x="200" y="' + (30 + k * 50) + '" width="' + b[1] + '" height="22" fill="' + b[2] + '" style="transition: width 600ms ease"/><text x="200" y="' + (24 + k * 50) + '" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + b[0] + ": " + b[1] + "</text>").join("") +
+        '<text x="160" y="206" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + (n ? "bounce " + n + " of 3: up to " + SIMS.energyDrop.heights[n] + " marks" : "held at 4 marks: stored energy") + "</text></svg>";
     },
-    init(box) { SIMS.energyDrop.draw(box, 0, 40); },
+    init(box) { SIMS.energyDrop.draw(box, 0, 44); },
     run(box, api) {
       return new Promise((done) => {
         let n = 0;
@@ -1918,7 +1970,7 @@
         $(api.id + "d").addEventListener("click", () => {
           if (n >= 3) return; n++;
           SIMS.energyDrop.draw(box, n, 164); SOUND.play("thud", 0.5);
-          setTimeout(() => { SIMS.energyDrop.draw(box, n, 40 + n * 40); api.say(n === 1 ? "Thud. The ball bounces, but not as high. Some of its movement energy became sound, and some warmed the ball and the floor a tiny bit." : n === 2 ? "Lower again. More of the energy has gone into sound and warmth. None of it has vanished; it has moved somewhere else." : "Lower still. The energy was never lost. It was transferred, bounce by bounce, into sound and heat in the room."); }, 600);
+          setTimeout(() => { SIMS.energyDrop.draw(box, n, 164 - SIMS.energyDrop.heights[n] * 30); api.say(n === 1 ? "Thud. The ball bounces, but not as high. Some of its movement energy became sound, and some warmed the ball and the floor a tiny bit." : n === 2 ? "Lower again. More of the energy has gone into sound and warmth. None of it has vanished; it has moved somewhere else." : "Lower still. The energy was never lost. It was transferred, bounce by bounce, into sound and heat in the room."); }, 600);
           if (n >= 3) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 3600);
         });
       });
@@ -1927,16 +1979,26 @@
 
   /* a torch, a mirror that turns, and an eye */
   SIMS.rayMirror = {
+    /* The reflected ray is COMPUTED (angle in = angle out) from the mirror's
+       tilt; it used to be drawn to hand-picked points that broke the law of
+       reflection (Grade 4 review, 2026-09-11). Tilt 2 is the one that sends the
+       ray to the eye. */
+    tilt: (angle) => (angle - 2) * 20 - 6,
     draw(box, angle, blocked) {
-      const hit = angle === 2;
-      return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="A torch shining at a mirror, with an eye watching"><rect width="320" height="220" fill="#1B2A3A"/>' +
+      const T = [62, 160], M = [251, 65], E = [110, 28], th = SIMS.rayMirror.tilt(angle) * Math.PI / 180;
+      const vl = Math.hypot(M[0] - T[0], M[1] - T[1]), ux = (M[0] - T[0]) / vl, uy = (M[1] - T[1]) / vl;
+      const nx = Math.cos(th), ny = Math.sin(th), d = ux * nx + uy * ny, rx = ux - 2 * d * nx, ry = uy - 2 * d * ny;
+      const ex = E[0] - M[0], ey = E[1] - M[1], hit = Math.abs(rx * ey - ry * ex) < 16 && rx * ex + ry * ey > 0;
+      const len = hit ? rx * ex + ry * ey - 18 : 420, end = [M[0] + rx * len, M[1] + ry * len];
+      const stopX = 146, stopT = (stopX - T[0]) / (M[0] - T[0]), stopY = T[1] + (M[1] - T[1]) * stopT;
+      return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="A torch shining at a mirror, with an eye watching"><defs><marker id="rmArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#F4C95D"/></marker></defs><rect width="320" height="220" fill="#1B2A3A"/>' +
         '<text x="40" y="180" font-size="40" text-anchor="middle">\u{1F526}</text>' +
-        '<path d="M62 160 L' + (blocked ? 150 : 250) + ' ' + (blocked ? 112 : 60) + '" stroke="#F4C95D" stroke-width="4"/>' +
+        '<path d="M62 160 L' + (blocked ? stopX : M[0]) + " " + (blocked ? stopY.toFixed(1) : M[1]) + '" stroke="#F4C95D" stroke-width="4" marker-end="url(#rmArrow)"/>' +
         (blocked ? '<rect x="146" y="80" width="14" height="60" fill="#8A6A4A"/><text x="153" y="70" font-size="12" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif">book</text>' : "") +
-        '<g transform="rotate(' + ((angle - 2) * 25) + ' 251 65)"><rect x="246" y="30" width="10" height="70" rx="3" fill="#BFE3F5" stroke="#fff" stroke-width="2"/></g>' +
-        (!blocked ? '<path d="M250 60 L' + [40, 70, 110, 150, 200][angle] + ' ' + [200, 120, 30, 0, 0][angle] + '" stroke="#F4C95D" stroke-width="4" stroke-dasharray="8 6"/>' : "") +
+        '<g transform="rotate(' + SIMS.rayMirror.tilt(angle) + ' 251 65)"><rect x="246" y="30" width="10" height="70" rx="3" fill="#BFE3F5" stroke="#fff" stroke-width="2"/></g>' +
+        (!blocked ? '<path d="M' + M[0] + " " + M[1] + " L" + end[0].toFixed(1) + " " + end[1].toFixed(1) + '" stroke="#F4C95D" stroke-width="4" marker-end="url(#rmArrow)"/>' : "") +
         '<text x="110" y="40" font-size="34" text-anchor="middle">\u{1F441}️</text>' +
-        '<text x="160" y="212" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + (blocked ? "the book blocks the ray: the eye sees nothing" : hit ? "the reflected ray reaches the eye: you see the torch in the mirror" : "the ray bounces off, but misses the eye") + "</text></svg>";
+        '<text x="160" y="212" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + (blocked ? "the book blocks the ray: no torch in the mirror" : hit ? "the ray reaches the eye: you see the torch" : "the ray bounces off, but misses the eye") + "</text></svg>";
     },
     init(box) { SIMS.rayMirror.draw(box, 0, false); },
     run(box, api) {
@@ -1945,7 +2007,7 @@
         const paint = () => {
           api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 't">' + ICONS.mirror + ' Turn the mirror</button><button type="button" class="big small ghost" id="' + api.id + 'b">' + (blocked ? "Take the book away" : "\u{1F4D5} Put a book in the way") + "</button>";
           $(api.id + "t").addEventListener("click", () => { angle = (angle + 1) % 5; SIMS.rayMirror.draw(box, angle, blocked); SOUND.play("click", 0.3); if (angle === 2 && !blocked) { hit = true; SOUND.play("ding", 0.4); api.say("The light travels in a straight line to the mirror, bounces off, and travels in a straight line to your eye. Now you can see the torch in the mirror."); } else api.say(blocked ? "Turning the mirror does nothing while the book blocks the ray." : "The ray reflects off the mirror in a straight line, but it misses the eye."); check(); });
-          $(api.id + "b").addEventListener("click", () => { blocked = !blocked; if (blocked) seenBlock = true; SIMS.rayMirror.draw(box, angle, blocked); SOUND.play("thud", 0.3); api.say(blocked ? "The book is opaque. The ray stops at it. No light reaches the mirror, so no light reaches the eye, so the eye sees nothing." : "Book gone. The ray reaches the mirror again."); paint(); check(); });
+          $(api.id + "b").addEventListener("click", () => { blocked = !blocked; if (blocked) seenBlock = true; SIMS.rayMirror.draw(box, angle, blocked); SOUND.play("thud", 0.3); api.say(blocked ? "The book is opaque. The ray stops at it. No light from the torch reaches the mirror, so you cannot see the torch in the mirror." : "Book gone. The ray reaches the mirror again."); paint(); check(); });
         };
         const check = () => { if (hit && seenBlock) setTimeout(() => { api.controls.innerHTML = ""; api.say("Light travels in straight lines. It bounces off a mirror, and you see a thing when light from it reaches your eye."); done(); }, 3000); };
         paint();
@@ -1955,15 +2017,18 @@
 
   /* a series circuit: more cells, more lamps, a switch */
   function seriesSvg(s) {
-    const bright = s.open ? 0 : Math.max(0, Math.min(3, s.cells - s.lamps + 2));
-    const lampFill = ["#1B3A52", "#8A7A3A", "#F4C95D", "#FFF3B0"][bright];
+    /* 0 very dim .. 4 very bright; off only when the switch is open. "Very dim"
+       used to be drawn exactly like off, and a third cell was capped at the
+       same "bright" as two (Grade 4 review, 2026-09-11). */
+    const bright = Math.max(0, Math.min(4, s.cells - s.lamps + 2));
+    const lampFill = s.open ? "#1B3A52" : ["#5E5634", "#8A7A3A", "#F4C95D", "#FFF3B0", "#FFFFFF"][bright];
     return '<svg viewBox="0 0 320 220" role="img" aria-label="A series circuit with ' + s.cells + ' cell(s), ' + s.lamps + ' lamp(s) and a switch, ' + (s.open ? "open" : "closed") + '"><rect width="320" height="220" fill="#0E2434"/>' +
       '<path d="M40 40 H280 V180 H40 Z" fill="none" stroke="#F4C95D" stroke-width="6"/>' +
       Array.from({ length: s.cells }, (_, k) => '<g transform="translate(' + (70 + k * 40) + ' 40)"><rect x="-12" y="-14" width="24" height="28" fill="#0E2434"/><rect x="-8" y="-12" width="6" height="24" fill="#F4C95D"/><rect x="2" y="-6" width="6" height="12" fill="#F4C95D"/></g>').join("") +
-      Array.from({ length: s.lamps }, (_, k) => '<g transform="translate(' + (110 + k * 60) + ' 180)"><circle r="18" fill="' + lampFill + '" stroke="#F4C95D" stroke-width="3"/><path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="' + (bright ? "#0E2434" : "#F4C95D") + '" stroke-width="3"/></g>').join("") +
+      Array.from({ length: s.lamps }, (_, k) => '<g transform="translate(' + (110 + k * 60) + ' 180)">' + (!s.open && bright >= 3 ? '<circle r="' + (bright === 4 ? 32 : 26) + '" fill="#FFF3B0" opacity="0.35"/>' : "") + '<circle r="18" fill="' + lampFill + '" stroke="#F4C95D" stroke-width="3"/><path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="' + (s.open ? "#F4C95D" : "#0E2434") + '" stroke-width="3"/></g>').join("") +
       '<g transform="translate(280 110)"><rect x="-14" y="-24" width="28" height="48" fill="#0E2434"/><circle cy="-18" r="4" fill="#F4C95D"/><circle cy="18" r="4" fill="#F4C95D"/><path d="M0 -18 L' + (s.open ? "22 8" : "0 18") + '" stroke="#F4C95D" stroke-width="5" stroke-linecap="round"/></g>' +
-      '<text x="20" y="20" fill="#93AABE" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + s.cells + " cell" + (s.cells > 1 ? "s" : "") + " · " + s.lamps + " lamp" + (s.lamps > 1 ? "s" : "") + " · switch " + (s.open ? "OPEN" : "closed") + "</text>" +
-      '<text x="160" y="120" text-anchor="middle" fill="#F4C95D" font-size="16" font-family="Inter, sans-serif" font-weight="800">' + (s.open ? "lamps OFF: a break in the circuit" : ["very dim", "dim", "normal", "BRIGHT"][bright]) + "</text></svg>";
+      '<text x="20" y="20" fill="#93AABE" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + s.cells + " cell" + (s.cells > 1 ? "s" : "") + " · " + s.lamps + " lamp" + (s.lamps > 1 ? "s" : "") + " · switch " + (s.open ? "open" : "closed") + "</text>" +
+      '<text x="160" y="120" text-anchor="middle" fill="#F4C95D" font-size="16" font-family="Inter, sans-serif" font-weight="800">' + (s.open ? "off: a break in the circuit" : ["very dim", "dim", "normal", "bright", "very bright"][bright]) + "</text></svg>";
   }
   SIMS.seriesCircuit = {
     init(box) { box.innerHTML = seriesSvg({ cells: 1, lamps: 1, open: false }); },
@@ -2003,12 +2068,22 @@
   SIMS.dayNight = {
     draw(box, h) {
       /* h 0..3: 6am, midday, 6pm, midnight; the marker sits on the globe and turns */
-      const a = h * 90, side = ["sunrise: the Sun is low in the east", "midday: the Sun is high, the shadow short", "sunset: the Sun is low in the west", "midnight: our side faces away from the Sun. Night"][h];
+      /* the Sun is on the LEFT and the night half on the right, so the Earth turns
+         anticlockwise here: top (sunrise), left (midday, facing the Sun), bottom
+         (sunset), right (midnight). It turned the other way and put "you" on the
+         dark side at midday (Grade 4 review, 2026-09-11). */
+      const a = -h * 90, side = ["sunrise: the Sun is low in the east", "midday: the Sun is high, the shadow short", "sunset: the Sun is low in the west", "midnight: our side faces away from the Sun. Night"][h];
       const mx = 160 + Math.cos((a - 90) * Math.PI / 180) * 70, my = 110 + Math.sin((a - 90) * Math.PI / 180) * 70;
       return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="The Earth spinning next to the Sun"><rect width="320" height="220" fill="#0B1D2C"/><circle cx="20" cy="110" r="40" fill="#F4C95D"/>' +
         '<circle cx="160" cy="110" r="70" fill="#3B7FD1"/><path d="M160 40 A70 70 0 0 1 160 180 z" fill="#0B1D2C" opacity="0.6"/>' +
         '<g transform="rotate(' + a + ' 160 110)"><path d="M120 60 q30 -10 40 20 q-20 30 -40 10z M150 130 q30 0 30 30 q-30 10 -30 -30z" fill="#4CB65C"/></g>' +
         '<circle cx="' + mx + '" cy="' + my + '" r="8" fill="#D9473F"/><text x="' + mx + '" y="' + (my - 12) + '" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">you</text>' +
+        /* your stick and its shadow, as you would see them where you stand:
+           long towards the west at sunrise, short at midday, long towards the
+           east at sunset, none at night (Grade 4 re-review, 2026-09-11) */
+        '<g transform="translate(250 150)"><rect x="-44" y="-40" width="88" height="44" rx="6" fill="' + (h === 3 ? "#16283A" : "#BFE3F5") + '"/><rect x="-44" y="-4" width="88" height="8" fill="#7D6B4A"/>' +
+        (h === 3 ? "" : '<circle cx="' + [-34, 0, 34][h] + '" cy="' + [-8, -32, -8][h] + '" r="5" fill="#F4C95D"/><path d="M0 -4 L' + [38, 5, -38][h] + ' -4" stroke="#3A3A3A" stroke-width="4" stroke-linecap="round" opacity="0.6"/>') +
+        '<path d="M0 -4 V-22" stroke="#6B4A2A" stroke-width="3"/><text x="0" y="16" text-anchor="middle" fill="#fff" font-size="9" font-family="Inter, sans-serif" font-weight="800">your stick</text></g>' +
         '<text x="160" y="208" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + side + "</text></svg>";
     },
     init(box) { SIMS.dayNight.draw(box, 0); },
@@ -2027,25 +2102,46 @@
 
   /* a paper spinner dropped three times: the numbers are close, not the same */
   SIMS.spinner = {
-    times: [2.1, 2.3, 2.0],
-    draw(box, n, y) {
+    /* With data "big": true the child then drops a spinner with bigger wings
+       three times, so the lesson's question (does a bigger spinner fall more
+       slowly?) is answered by the sim, not only asserted (Grade 4 review). */
+    times: [2.1, 2.3, 2.0], bigTimes: [2.8, 3.0, 2.7],
+    draw(box, n, y, big, m) {
+      const wing = big ? 32 : 16, T = SIMS.spinner.times, B = SIMS.spinner.bigTimes;
+      const row = (k, label, t, shown, yy) => '<text x="176" y="' + yy + '" fill="#1B1B1B" font-size="14" font-family="Inter, sans-serif" font-weight="800">' + label + " " + (k + 1) + ": " + (shown ? t.toFixed(1) + " s" : "") + "</text>";
       return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="A paper spinner dropped from a height, timed"><rect width="320" height="220" fill="#DDEFF7"/><rect x="0" y="190" width="320" height="30" fill="#8A6A4A"/>' +
-        '<g transform="translate(100 ' + y + ')" style="transition: transform 2000ms linear"><path d="M-6 0 v30 h12 v-30z" fill="#F4C95D"/><path d="M-6 0 l-16 -22 h12 z M6 0 l16 -22 h-12z" fill="#F0A56B"/></g>' +
-        [0, 1, 2].map((k) => '<text x="200" y="' + (50 + k * 40) + '" fill="#1B1B1B" font-size="16" font-family="Inter, sans-serif" font-weight="800">drop ' + (k + 1) + ": " + (k < n ? SIMS.spinner.times[k] + " s" : "") + "</text>").join("") +
-        (n >= 3 ? '<text x="200" y="180" fill="#1E8C86" font-size="14" font-family="Inter, sans-serif" font-weight="800">about 2.1 s each time</text>' : "") + "</svg>";
+        '<g transform="translate(100 ' + y + ')" style="transition: transform ' + (big ? 2600 : 2000) + 'ms linear"><path d="M-6 0 v30 h12 v-30z" fill="#F4C95D"/><path d="M-6 0 l-' + wing + ' -22 h' + (wing - 4) + ' z M6 0 l' + wing + ' -22 h-' + (wing - 4) + 'z" fill="#F0A56B"/></g>' +
+        [0, 1, 2].map((k) => row(k, "small", T[k], k < n, 30 + k * 22)).join("") +
+        (n >= 3 ? '<text x="176" y="96" fill="#1E8C86" font-size="13" font-family="Inter, sans-serif" font-weight="800">small: about 2.1 s</text>' : "") +
+        (m !== undefined ? [0, 1, 2].map((k) => row(k, "big", B[k], k < m, 120 + k * 22)).join("") : "") +
+        (m >= 3 ? '<text x="176" y="186" fill="#1E8C86" font-size="13" font-family="Inter, sans-serif" font-weight="800">big: about 2.8 s</text>' : "") + "</svg>";
     },
     init(box) { SIMS.spinner.draw(box, 0, 20); },
     run(box, api) {
       return new Promise((done) => {
-        let n = 0, busy = false;
-        api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 'd">⏱️ Drop it and time it</button>';
-        $(api.id + "d").addEventListener("click", () => {
-          if (busy || n >= 3) return; busy = true;
-          SIMS.spinner.draw(box, n, 20); setTimeout(() => { box.querySelector("g").setAttribute("transform", "translate(100 160)"); }, 40);
-          setTimeout(() => { n++; SIMS.spinner.draw(box, n, 160); busy = false; SOUND.play("click", 0.3);
-            api.say(n === 1 ? "2.1 seconds." : n === 2 ? "2.3 seconds. Not quite the same. Your thumb on the stopwatch, a breath of air, a wobble: small things change the number." : "2.0 seconds. Three drops, three slightly different numbers, all close to 2.1. One measurement could have been the odd one. Three together are reliable.");
-            if (n >= 3) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 3400); }, 2200);
-        });
+        const bigToo = !!(api.data && api.data.big);
+        let n = 0, m = 0, busy = false;
+        const button = (t) => { api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 'd">⏱️ ' + t + "</button>"; $(api.id + "d").addEventListener("click", drop); };
+        const finish = () => setTimeout(() => { api.controls.innerHTML = ""; done(); }, 3400);
+        const drop = () => {
+          if (busy) return;
+          const big = n >= 3;
+          if (big && (!bigToo || m >= 3)) return;
+          busy = true;
+          SIMS.spinner.draw(box, n, 20, big, big ? m : undefined); setTimeout(() => { box.querySelector("g").setAttribute("transform", "translate(100 160)"); }, 40);
+          setTimeout(() => {
+            if (big) m++; else n++;
+            SIMS.spinner.draw(box, n, 160, big, big ? m : undefined); busy = false; SOUND.play("click", 0.3);
+            if (!big) {
+              api.say(n === 1 ? "2.1 seconds." : n === 2 ? "2.3 seconds. Not quite the same. Your thumb on the stopwatch, a breath of air, a wobble: small things change the number." : "2.0 seconds. Three drops, three slightly different numbers, all close to 2.1. One measurement could have been the odd one. Three together are reliable." + (bigToo ? " Now the spinner with bigger wings." : ""));
+              if (n >= 3) { if (bigToo) button("Drop the big-wing spinner"); else finish(); }
+            } else {
+              api.say(m === 1 ? "2.8 seconds." : m === 2 ? "3.0 seconds." : "2.7 seconds. The big-wing spinner took about 2.8 seconds every time, against about 2.1 for the small one. Bigger wings, slower fall, and the repeats show it was not luck.");
+              if (m >= 3) finish();
+            }
+          }, big ? 2800 : 2200);
+        };
+        button("Drop it and time it");
       });
     },
   };

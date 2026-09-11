@@ -84,7 +84,7 @@ LESSON = {
              "The particle model is useful and it is not the whole truth. Tap each one.",
              explain(
                  ["A model shows an idea clearly by leaving things out. Knowing what it leaves out is part of using it."],
-                 ["Particles are not coloured balls. The colour is for us.", "Particles are far, far smaller than the picture.", "Real particles come in many shapes and kinds; the picture shows one.", "The model shows a few dozen particles; a drop of water has millions of millions."],
+                 ["Particles are not coloured balls. The colour is for us.", "Particles are far, far smaller than the picture.", "Real particles come in many shapes and kinds; the picture shows one.", "The model shows a few dozen particles; one drop of water has more than you could count in a lifetime."],
                  ["Children think the model is a photograph.", "Nobody has a photograph. It is a picture of an idea that works."],
                  ["Tap all four."]),
              {"items": [
@@ -107,7 +107,7 @@ LESSON = {
                  ["Read the question, then tap."]),
              {"label": "Question", "items": [
                  q("In a solid, the particles are...", "\U0001F9CA", "packed in rows, vibrating on the spot", ["far apart and flying", "sliding past each other"], "Rows, and a jiggle."),
-                 q("In a liquid, the particles are...", "\U0001F4A7", "touching, but sliding past each other", ["packed in rows", "not moving"], "That is why it flows."),
+                 q("In a liquid, the particles are...", "\U0001F4A7", "touching, but sliding past each other", ["packed tightly in rows", "not moving at all"], "That is why it flows."),
                  q("Do the particles in ice move?", "\U0001F9CA", "yes, they vibrate all the time", ["no, they are frozen still", "only when it melts"], "Always moving."),
                  q("Water is one pure kind of stuff. It is a...", "\U0001F4A7", "substance", ["material", "particle"], "One pure stuff."),
                  q("Why does sand pour?", "\U0001F3D6️", "its solid grains roll over each other", ["it is a liquid", "its particles are liquid"], "Grains slide, not particles."),
@@ -122,14 +122,15 @@ LESSON = {
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
-                 q("What is everything made of?", "\U0001F7E2", "particles too small to see", ["tiny animals", "air"], "Everything."),
-                 q("Why does a solid keep its shape?", "\U0001F9CA", "its particles hold their rows", ["it is cold", "it is heavy"], "Rows hold a shape."),
-                 q("What does heat do to particles?", "\U0001F525", "gives them energy so they move more", ["makes them stop", "makes new ones"], "More energy, more movement."),
-                 q("What happens when a solid melts?", "\U0001F4A7", "its particles break out of their rows and slide", ["its particles vanish", "new particles appear"], "Same particles, new arrangement."),
-                 q("Which is a material?", "\U0001F9F1", "wood", ["a water particle", "salt"], "What a tree trunk is made of."),
-                 q("Which is a substance?", "\U0001F9C2", "salt", ["a chair", "wood"], "One pure kind of stuff."),
-                 q("Flour pours. Is flour a liquid?", "\U0001F35E", "no, it is a powder: tiny solid grains that roll", ["yes", "only when warm"], "Each grain is a solid."),
-                 q("What does the particle model get wrong on purpose?", "\U0001F4D0", "the size, colour, shape and number of the particles", ["nothing, it is a photo", "everything"], "It leaves things out to show the idea."),
+                 q("What is everything made of?", "\U0001F7E2", "particles too small to see", ["tiny animals too small to see", "air and nothing else"], "Everything."),
+                 q("Why does a solid keep its shape?", "\U0001F9CA", "its particles hold their rows", ["it is always cold", "it is always heavy"], "Rows hold a shape."),
+                 q("What does heat do to particles?", "\U0001F525", "gives them energy so they move more", ["makes them stop moving at once", "makes brand new particles appear"], "More energy, more movement."),
+                 q("What happens when a solid melts?", "\U0001F4A7", "its particles break out of their rows and slide", ["its particles vanish one by one", "new particles appear between the old ones"], "Same particles, new arrangement."),
+                 q("Which is a material?", "\U0001F9F1", "wood", ["a water particle", "one tiny particle of salt"], "What a tree trunk is made of."),
+                 q("Which is a substance?", "❓", "salt", ["a chair", "wood"], "One pure kind of stuff."),
+                 q("Flour pours. Is flour a liquid?", "\U0001F33E", "no, it is a powder of tiny solid grains", ["yes, because it pours like water", "yes, but only when it is warm"], "Each grain is a solid, and the grains roll."),
+                 q("What does the particle model get wrong on purpose?", "\U0001F4D0", "the size, colour and number of the particles", ["nothing, it is a photograph of them", "only the way the particles move"], "It leaves things out to show the idea."),
+                 q("A bar of chocolate is put in a fridge. What happens to its particles?", "\U0001F914", "they move less, but they never stop", ["they stop moving completely", "they break out of their rows and slide"], "Cooling takes energy away, so the particles move less. They never stop moving, even in a solid."),
              ]},
              "That is the whole lesson finished. You know what everything is made of."),
     ],
@@ -140,6 +141,11 @@ LESSON["about"] = [
     "Say that particles never stop moving, and what heat does to them.",
     "Tell a material from a substance from a particle.",
     "Say why a powder pours, and what the particle model leaves out.",
+]
+
+LESSON["warmup"] = [
+    q("What is a habitat?", "\U0001F333", "the place where a living thing naturally lives", ["a kind of food", "a type of rock"], "From the last lesson."),
+    q("Is ice a solid or a liquid?", "\U0001F9CA", "a solid", ["a liquid", "a gas"], "Ice keeps its shape: a solid."),
 ]
 
 LESSON["lecture"] = [
@@ -173,10 +179,10 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("Melt and freeze", "An ice cube, a plate, the freezer",
-         ["Watch the ice cube melt on the plate. Say what the particles are doing.",
-          "Pour the water into a tray and freeze it.",
-          "Say what the particles did as it froze."],
+    home("Melt and freeze", "An ice cube, or a square of chocolate, a plate, a grown-up",
+         ["Watch the ice cube melt on the plate, or leave the chocolate somewhere warm until it goes soft and runny. Say what the particles are doing.",
+          "If you have a freezer, pour the water into a tray and freeze it. If not, put the runny chocolate somewhere cool until it sets hard again.",
+          "Say what the particles did as it went solid again."],
          "Same particles all the way through. Only how they are arranged changed."),
     home("Powder or liquid?", "Sugar, flour, rice, salt, water, a spoon, a lens",
          ["Pour each one from a spoon. Which ones flow?",

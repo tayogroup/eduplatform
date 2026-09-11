@@ -3,7 +3,7 @@
 
 0097 Stage 4: 4Bs.01 the important bones (skull, jaw, rib cage, hip, spine,
 leg bones, arm bones); 4Bs.02 bones move because pairs of muscles contract
-and relax; 4Bs.03 what skeletons do; with 4TWSm.03, 4TWSp.03, 4TWSa.03 and
+and relax; 4Bs.03 what skeletons do; with 4Bp.04, 4TWSp.03, 4TWSa.03 and
 4SIC.04.
 """
 from _kit import explain, step, opt, q, part, word, home
@@ -21,7 +21,7 @@ BONES = [
 LESSON = {
     "slug": "bones-and-muscles",
     "title": "Bones and Muscles",
-    "blurb": "Find seven important bones, find out what a skeleton is for, bend an arm to see a pair of muscles take turns, and draw a labelled diagram of the skeleton.",
+    "blurb": "Find seven important bones, find out what a skeleton is for, bend an arm to see a pair of muscles take turns, and label a diagram of the skeleton.",
     "steps": [
         step("label", "Find the bones", "\U0001F9B4", "Bone finder", ["4Bs.01"],
              "Your skeleton has about two hundred bones. Tap the <b>%s</b>.",
@@ -56,7 +56,7 @@ LESSON = {
              explain(
                  ["A muscle contracts: it gets shorter and fatter, and pulls the bone it is attached to.", "It cannot push. So muscles work in pairs: one pulls the bone one way, its partner pulls it back."],
                  ["The biceps is on the front of the upper arm. Contract it and the arm bends.", "The triceps is on the back. Contract it and the arm straightens.", "While one contracts, the other relaxes."],
-                 ["Children think a muscle pushes the arm straight.", "No muscle pushes. The triceps PULLS it straight from the other side."],
+                 ["Children think a muscle pushes the arm straight.", "No muscle pushes. The triceps pulls it straight from the other side."],
                  ["Predict, then contract each muscle in turn."]),
              {"sim": "muscles",
               "predict": {"ask": "When the <b>biceps</b> contracts, the arm will...",
@@ -70,27 +70,27 @@ LESSON = {
                            "why": "Pull, never push. Every bone that moves has a pair of muscles pulling it both ways."}},
              "Muscles pull, never push. So they work in pairs."),
 
-        step("diagram", "Draw a diagram of the skeleton", "✏️", "Skeleton diagram", ["4TWSm.03", "4Bs.01"],
-             "Make a labelled diagram. Tap a label, then tap the bone it belongs to.",
+        step("diagram", "Label a diagram of the skeleton", "✏️", "Skeleton diagram", ["4Bs.01"],
+             "Label the diagram. Tap a label, then tap the bone it belongs to.",
              explain(
-                 ["A labelled diagram names the parts. You are drawing one of the skeleton."],
+                 ["A labelled diagram names the parts. You are labelling one of the skeleton."],
                  ["Skull, jaw, rib cage, spine, hip, arm bones, leg bones. Seven labels, seven places."],
                  ["Children put the hip label on the ribs.", "The hip is at the bottom of the spine, where the legs join."],
                  ["Tap a label, then the bone."]),
              {"figure": "skeleton", "ask": "Tap a label, then tap where it goes.", "parts": BONES},
              "Seven bones labelled. A diagram of the skeleton."),
 
-        step("context", "People who work with bones", "\U0001FA7A", "Bone science", ["4SIC.04", "4Bs.03"],
+        step("context", "People who work with bones", "\U0001FA7A", "Bone science", ["4SIC.04", "4Bs.03", "4Bp.04"],
              "Some people use bone and muscle science all day. Tap each one.",
              explain(
-                 ["Science is used in your area by people you could meet."],
-                 ["A physiotherapist helps muscles and joints move again after an injury.", "A radiographer takes X-rays of bones.", "A PE teacher knows which muscles each exercise uses.", "A paramedic knows how to move someone with a broken bone safely."],
-                 [],
+                 ["Science is used in your area by people you could meet.", "Moving every day keeps your muscles and bones strong. Muscles that are not used get weak."],
+                 ["A physiotherapist helps muscles and joints move again after an injury.", "A radiographer takes X-rays of bones.", "A PE teacher knows which muscles each exercise uses, and why moving every day keeps you healthy.", "A paramedic knows how to move someone with a broken bone safely."],
+                 ["Children think only athletes need strong muscles.", "Everybody does. Walking, playing and climbing stairs all keep muscles and bones strong."],
                  ["Tap each one and say what they know."]),
              {"items": [
-                 {"pic": "\U0001F9D1\U0001F3FE‍⚕️", "label": "physiotherapist", "say": "A physiotherapist knows every muscle pair. After an injury they give you exercises so the weak muscle in the pair gets strong again."},
+                 {"pic": "\U0001F9D1\U0001F3FE‍⚕️", "label": "physiotherapist", "say": "A physiotherapist knows every muscle pair. After an injury they give you exercises, because a muscle that is not used gets weak, and moving it makes it strong again."},
                  {"pic": "\U0001F9B4", "label": "radiographer", "say": "A radiographer takes X-ray pictures of your bones, so a doctor can see a break without opening you up."},
-                 {"pic": "\U0001F3C3\U0001F3FE", "label": "PE teacher", "say": "A PE teacher knows which muscles each exercise works, and why you warm up before you run."},
+                 {"pic": "\U0001F3C3\U0001F3FE", "label": "PE teacher", "say": "A PE teacher knows which muscles each exercise works, and why you warm up before you run. Moving every day makes your muscles stronger and your bones harder, and it keeps your heart healthy."},
                  {"pic": "\U0001F691", "label": "paramedic", "say": "A paramedic knows how to keep a broken bone still while they move you, so the ends of the bone do no more damage."},
              ], "need": 4,
               "then": {"ask": "Why does a physiotherapist need to know about muscle pairs?",
@@ -110,11 +110,11 @@ LESSON = {
                  q("Which bone is a chain of small bones down your back?", "\U0001F9B4", "the spine", ["the jaw", "the leg bones"], "That is why you can bend."),
                  q("What does a muscle do when it contracts?", "\U0001F4AA\U0001F3FE", "gets shorter and pulls", ["gets longer and pushes", "nothing"], "Pull, never push."),
                  q("When the biceps contracts, the triceps...", "\U0001F504", "relaxes", ["contracts too", "disappears"], "A pair: one pulls, one rests."),
-                 q("Which is NOT a job of the skeleton?", "\U0001F6E1️", "pumping blood", ["protecting organs", "supporting the body", "giving shape"], "The heart pumps blood; bones protect it."),
+                 q("Which of these is not a job of the skeleton?", "\U0001F6E1️", "pumping blood", ["protecting organs", "supporting the body", "giving shape"], "The heart pumps blood; bones protect it."),
              ]},
              "You know your bones and muscles."),
 
-        step("quiz", "Show what you know", "⭐", "Star scientist", ["4Bs.01", "4Bs.02", "4Bs.03", "4TWSm.03"],
+        step("quiz", "Show what you know", "⭐", "Star scientist", ["4Bs.01", "4Bs.02", "4Bs.03"],
              "Time to show what you know. Tap the answer.",
              explain(
                  ["No new ideas here.", "Every question uses something you have already done in this lesson."],
@@ -125,10 +125,11 @@ LESSON = {
                  q("Which is the biggest bone in your body?", "\U0001F9B4", "the thigh bone in the leg", ["the jaw", "a rib", "the skull"], "The thigh bone."),
                  q("Which bone moves when you chew?", "\U0001F37D️", "the jaw", ["the skull", "the hip"], "The only moving bone in the head."),
                  q("Which bones join your legs to your spine?", "\U0001F9CD\U0001F3FE", "the hip bones", ["the ribs", "the arm bones"], "The hip carries your weight."),
-                 q("Can a muscle push a bone?", "\U0001F4AA\U0001F3FE", "no, muscles can only pull", ["yes, always", "only leg muscles"], "That is why they come in pairs."),
+                 q("Can a muscle push a bone?", "\U0001F4AA\U0001F3FE", "no, muscles can only pull", ["yes, every muscle can push", "only the leg muscles can push"], "That is why they come in pairs."),
                  q("Which muscle straightens the arm?", "\U0001F504", "the triceps", ["the biceps", "the jaw"], "On the back of the upper arm."),
-                 q("Why is the rib cage shaped like a cage?", "\U0001F6E1️", "to protect the heart and lungs inside it", ["to look nice", "to hold food"], "Soft organs, hard bones."),
-                 q("What would you be without a skeleton?", "\U0001F9CD\U0001F3FE", "a heap with no shape, unable to stand or move", ["taller", "faster"], "Support, shape, movement."),
+                 q("What would happen if your triceps stopped working?", "\U0001F914", "you could bend your arm, but not straighten it", ["you could straighten your arm, but not bend it", "your biceps would push the arm straight instead"], "The triceps pulls the arm straight. Without it nothing pulls the arm back, and the biceps cannot push."),
+                 q("Why is the rib cage shaped like a cage?", "\U0001F6E1️", "to protect the heart and lungs inside it", ["to make your chest look wider", "to hold your food while you eat"], "Soft organs, hard bones."),
+                 q("What would you be without a skeleton?", "\U0001F9CD\U0001F3FE", "a floppy heap that could not stand", ["much taller, with nothing holding you in", "much faster, with less to carry"], "Support, shape, movement."),
                  q("You put seven labels on the skeleton. What did you make?", "✏️", "a labelled diagram", ["a physical model", "an X-ray"], "Labels on a drawing."),
              ]},
              "That is the whole lesson finished. You know your skeleton."),
@@ -139,7 +140,12 @@ LESSON["about"] = [
     "Find the skull, jaw, rib cage, spine, hip, arm bones and leg bones.",
     "Say the four jobs a skeleton does.",
     "Say how a pair of muscles moves a bone.",
-    "Draw a labelled diagram of the skeleton.",
+    "Label a diagram of the skeleton.",
+]
+
+LESSON["warmup"] = [
+    q("What do people and animals need to stay alive?", "\U0001F37D️", "food, water and air", ["toys and games", "only sunshine"], "Every animal, you included, needs food, water and air."),
+    q("Where does your arm bend?", "\U0001F4AA\U0001F3FE", "at the elbow", ["at the knee", "at the ankle"], "The elbow is the joint in the middle of your arm."),
 ]
 
 LESSON["lecture"] = [
@@ -152,7 +158,7 @@ LESSON["lecture"] = [
     part("\U0001F504", "In pairs",
          "Because a muscle can only pull, every moving bone has two: a pair. The biceps pulls your arm up. Its partner, the triceps, pulls it straight again. While one contracts, the other relaxes."),
     part("✏️", "Today",
-         "Today you find the bones, discover the four jobs, bend an arm to watch the muscle pair take turns, and draw a labelled diagram of the whole skeleton."),
+         "Today you find the bones, discover the four jobs, bend an arm to watch the muscle pair take turns, and label a diagram of the whole skeleton."),
 ]
 
 LESSON["words"] = [
@@ -168,24 +174,24 @@ LESSON["words"] = [
          ["The biceps is a muscle.", "Muscles get tired."]),
     word("contract", "\U0001F4AA\U0001F3FE", "When a muscle gets shorter and fatter and pulls.",
          ["The biceps contracts to bend the arm.", "Feel your muscle contract."]),
-    word("relax", "\U0001F62E‍\U0001F4A8", "When a muscle stops pulling and gets longer and thinner again.",
+    word("relax", "\U0001F60C", "When a muscle stops pulling and gets longer and thinner again.",
          ["The triceps relaxes while the biceps pulls.", "Let your arm relax."]),
 ]
 
 LESSON["home"] = [
-    home("Feel the pair", "Your own arm, your other hand",
-         ["Hold the top of your arm with your other hand.",
-          "Bend your arm slowly. Feel the front go short and hard: the biceps contracting.",
+    home("Feel the pair", "Your own arm and your other hand, or a grown-up's arm",
+         ["Hold the top of your arm with your other hand. Or hold the top of a grown-up's arm while they bend it.",
+          "Bend the arm slowly. Feel the front go short and hard: the biceps contracting.",
           "Straighten it slowly. Feel the back tighten instead: the triceps."],
          "One hard while the other is soft, then they swap. A pair."),
     home("Bone hunt on yourself", "A mirror, a grown-up",
          ["Find your skull, your jaw, your ribs, your spine, your hip and the bones in your arms and legs by pressing gently.",
-          "Count how many bones you can feel in one finger.",
+          "Count how many bones you can feel in one finger, and then in your thumb.",
           "Find a joint where two bones meet."],
-         "Three bones in each finger. How many joints did you find?"),
-    home("Chicken bone model", "A clean chicken leg bone from dinner, a grown-up",
+         "Three bones in each finger, and two in your thumb. How many joints did you find?"),
+    home("Look at a real bone", "A clean bone left over from a meal, or a picture of a bone in a book or on a screen, a grown-up",
          ["Look at the bone. It is hard on the outside.",
           "Look at the ends where it joined other bones.",
-          "Draw it and label the hard outside and the joint ends."],
-         "A real bone is a physical model of yours: hard outside, and shaped to fit its neighbour."),
+          "Draw it and label the hard outside and the joint ends. If you touched a real bone, wash your hands afterwards."],
+         "An animal bone is built like yours: hard outside, and shaped at the ends to fit its neighbour."),
 ]

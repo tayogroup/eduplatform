@@ -29,7 +29,7 @@ LESSON = {
                  {"pic": "\U0001F525", "label": "heat", "sub": "energy in warm things", "say": "Heat is energy. A hot cup has more than a cold one, and it passes into your hands."},
                  {"pic": "\U0001F34E", "label": "food", "sub": "stored energy", "say": "Food has energy stored in it. Your body takes it out to move, grow and stay warm. No food, no action."},
              ], "need": 6,
-              "then": {"ask": "What is needed for ANY movement or action to happen?",
+              "then": {"ask": "What is needed for any movement or action to happen?",
                        "opts": [opt("energy", True), opt("electricity", False), opt("water", False)],
                        "why": "Every action needs energy. Electricity is only one way to carry it."}},
              "Energy is in everything, and every action needs it."),
@@ -37,14 +37,14 @@ LESSON = {
         step("experiment", "Where does the energy go?", "⚽", "Bounce tracker", ["4Pf.02", "4Pf.04", "4TWSp.03", "4TWSa.01", "4TWSa.03"],
              "Drop a ball three times. Predict what happens to its bounces.",
              explain(
-                 ["Energy cannot be made or destroyed. It can only be transferred: moved from one thing, or one form, to another.", "Each bounce, some of the ball's movement energy goes into sound and heat in the surroundings."],
-                 ["Bounce one: high, with a thud.", "Bounce two: lower. Some energy left as sound and warmth.", "Bounce three: lower still.", "None of it vanished. It is in the room now."],
+                 ["Energy cannot be made or destroyed. It can only be transferred: moved from one thing, or one form, to another.", "Held up high, the ball has stored energy. As it falls, that becomes movement energy. Each bounce, some of it goes into sound and heat in the surroundings."],
+                 ["Bounce one: 3 marks high, with a thud.", "Bounce two: 2 marks. Some energy left as sound and warmth.", "Bounce three: 1 mark.", "None of it vanished. The bars always add up to the same total. It is in the room now."],
                  ["Children say the energy is used up.", "It is never used up. It is transferred somewhere less useful."],
                  ["Predict, drop it three times, say what happened, then conclude."]),
              {"sim": "energyDrop",
               "predict": {"ask": "What will happen to the bounces?",
                           "opts": [opt("Each bounce will be lower than the last", True), opt("Every bounce will be the same height", False), opt("The bounces will get higher", False)]},
-              "runAsk": "Press Drop the ball three times. Watch the height, and the bars.",
+              "runAsk": "Press Drop the ball three times. Read each bounce height on the marked scale, and watch the bars.",
               "happened": {"ask": "What happened?",
                            "opts": [opt("Each bounce was lower; the movement energy fell as the sound and warmth rose", True), opt("Every bounce was the same", False), opt("The ball bounced higher each time", False)],
                            "why": "The ball's movement energy was transferred, bounce by bounce, into sound you heard and a little warmth in the ball and floor."},
@@ -56,8 +56,8 @@ LESSON = {
         step("record", "Record the bounces", "\U0001F4CB", "Bounce table", ["4TWSc.08", "4Pf.04"],
              "Fill in the table. How high was the <b>%s</b>?",
              explain(
-                 ["The heights, in a table."],
-                 ["First bounce: high, 3 marks.", "Second: 2.", "Third: 1."],
+                 ["The heights you read off the marked scale, in a table."],
+                 ["First bounce: 3 marks.", "Second: 2.", "Third: 1."],
                  [],
                  ["Tap the height for each bounce."]),
              {"ask": "How high was the %s?",
@@ -67,7 +67,7 @@ LESSON = {
                   {"pic": "2️⃣", "label": "second bounce", "answer": "2", "why": "the second reached two: some energy had gone into sound and heat."},
                   {"pic": "3️⃣", "label": "third bounce", "answer": "1", "why": "the third reached one mark."},
               ],
-              "choices": [{"id": "3", "t": "3 marks", "pic": "3️⃣"}, {"id": "2", "t": "2 marks", "pic": "2️⃣"}, {"id": "1", "t": "1 mark", "pic": "1️⃣"}]},
+              "choices": [{"id": "3", "t": "3 marks", "pic": "📏"}, {"id": "2", "t": "2 marks", "pic": "📏"}, {"id": "1", "t": "1 mark", "pic": "📏"}]},
              "Three, two, one. Each bounce lower."),
 
         step("graph", "Chart the bounces", "\U0001F4CA", "Bounce chart", ["4TWSa.04", "4TWSa.02", "4Pf.04"],
@@ -88,7 +88,7 @@ LESSON = {
              "Energy is always being transferred from one thing to another. Press <b>Next</b> to follow it.",
              explain(
                  ["Energy moves. It goes from food into your muscles, from your foot into a ball, from a lamp into light.", "And some always leaks into the surroundings as sound, light or heat."],
-                 ["Food to muscle.", "Muscle to ball.", "Ball to sound and heat on the floor.", "A lamp: electricity in, light out, and the bulb gets warm."],
+                 ["Food to muscle.", "Muscle to ball.", "Ball to sound and heat on the floor.", "A lamp: electricity in, light out, and the bulb gets a little warm."],
                  ["Children think a warm bulb is a broken bulb.", "Every transfer warms something. The warmth is energy that went to the surroundings."],
                  ["Press Next through all five."]),
              {"frames": [
@@ -96,7 +96,7 @@ LESSON = {
                  {"pic": "\U0001F9B5", "cap": "Your muscles transfer it into movement when you kick.", "say": "Your muscles take it out of the food and transfer it into movement: a kick."},
                  {"pic": "⚽", "cap": "The kick transfers it into the ball, which flies.", "say": "The kick transfers the energy into the ball, which flies across the pitch."},
                  {"pic": "\U0001F50A", "cap": "The ball hits the wall: some energy becomes <b>sound</b>, some <b>warms</b> the wall. It was not lost.", "say": "The ball hits the wall. Thump. Some of its energy became sound, and some warmed the wall a tiny bit. None of it was lost. It was transferred to the surroundings."},
-                 {"pic": "\U0001F4A1", "cap": "A lamp: electricity in, light out, and the bulb gets warm. Every transfer leaks a little.", "say": "A lamp is the same. Electricity goes in, light comes out, and the bulb gets warm. Every transfer leaks some energy to the surroundings as heat, light or sound."},
+                 {"pic": "\U0001F4A1", "cap": "A lamp: electricity in, light out, and the bulb gets a little warm. Every transfer leaks a little.", "say": "A lamp is the same. Electricity goes in, light comes out, and the bulb gets a little warm. Every transfer leaks some energy to the surroundings as heat, light or sound."},
              ]},
              "Energy is transferred from thing to thing, and some always leaks out as sound, light or heat."),
 
@@ -124,10 +124,10 @@ LESSON = {
                  [],
                  ["Read the question, then tap."]),
              {"label": "Question", "items": [
-                 q("Which of these has energy?", "⚡", "all of them: a moving ball, a hot cup and a loud drum", ["only the moving ball", "only the hot cup"], "Energy is in everything."),
+                 q("Which of these has energy?", "⚡", "all of them: a moving ball, a hot cup and a loud drum", ["only the moving ball, not the others", "only the hot cup, not the others"], "Energy is in everything."),
                  q("Can energy be destroyed?", "\U0001F6D1", "no, only transferred", ["yes, when it is used", "yes, in the cold"], "The rule."),
                  q("Each bounce of the ball was lower because...", "⚽", "energy was transferred to sound and heat", ["the ball got heavier", "the ball got tired"], "Transferred, not lost."),
-                 q("A lamp gets warm. Why?", "\U0001F4A1", "some energy leaks to the surroundings as heat", ["it is broken", "light is cold"], "Every transfer leaks."),
+                 q("A lamp gets warm. Why?", "\U0001F4A1", "some energy leaks to the surroundings as heat", ["the bulb must be broken", "light makes things colder"], "Every transfer leaks."),
                  q("What does every movement need?", "\U0001F3C3\U0001F3FE", "energy", ["light", "sound"], "No energy, no action."),
              ]},
              "You know where energy goes."),
@@ -140,14 +140,15 @@ LESSON = {
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
-                 q("Where does the energy to kick a ball come from?", "\U0001F34E", "your food", ["the ball", "the air"], "Stored in food, taken out by muscles."),
-                 q("Sound is...", "\U0001F50A", "energy travelling through the air", ["not energy", "a kind of light"], "Vibrations carrying energy."),
-                 q("A stretched elastic band has...", "\u27B0", "stored energy waiting to be released", ["no energy", "sound energy"], "Let go and it moves."),
+                 q("Where does the energy to kick a ball come from?", "⚽", "your food", ["the ball", "the air"], "Stored in food, taken out by muscles."),
+                 q("Sound is...", "\U0001F50A", "energy travelling through the air", ["not a kind of energy at all", "a kind of light you can hear"], "Vibrations carrying energy."),
+                 q("A stretched elastic band has...", "\u27B0", "stored energy", ["no energy until it moves", "only sound energy"], "Let go and it moves."),
                  q("Energy cannot be made or destroyed. It can only be...", "\U0001F504", "transferred", ["hidden", "eaten"], "Moved from thing to thing."),
-                 q("Which chart did you draw of the bounces?", "\U0001F4CA", "a bar chart, three bars getting shorter", ["a map", "a pie"], "A falling staircase."),
-                 q("A ball thumps into a wall. The thump is...", "\U0001F50A", "some of the ball's energy transferred as sound", ["the wall making energy", "nothing"], "Sound is energy."),
-                 q("Why can a ball never bounce back to the exact height it was dropped from?", "⚽", "some energy always leaks to the surroundings as sound and heat", ["gravity gets stronger", "it can"], "Every transfer leaks."),
-                 q("Which has MORE energy?", "\U0001F525", "a hot cup of tea", ["a cold cup of tea"], "Heat is energy."),
+                 q("Which chart did you draw of the bounces?", "\U0001F4CA", "a bar chart, three bars getting shorter", ["a map of the room", "a pie chart in three slices"], "A falling staircase."),
+                 q("A ball thumps into a wall. The thump is...", "\U0001F50A", "some of the ball's energy transferred as sound", ["the wall making brand new energy", "nothing to do with energy"], "Sound is energy."),
+                 q("Why can a ball never bounce back to the exact height it was dropped from?", "⚽", "some energy always leaks away as sound and heat", ["gravity gets stronger after each bounce", "the ball gets heavier as it bounces"], "Every transfer leaks."),
+                 q("Which has more energy?", "\U0001F321️", "a hot cup of tea", ["a cold cup of tea"], "Heat is energy."),
+                 q("A wind-up toy runs until it stops. Where did the energy stored in its spring go?", "\U0001F914", "into movement, then sound and heat in the room", ["it was destroyed when the toy stopped", "it went back into the key"], "Energy is never destroyed. The spring's stored energy became movement, and the movement leaked away as sound and heat."),
              ]},
              "That is the whole lesson finished. Energy is everywhere, and it is never lost."),
     ],
@@ -160,6 +161,11 @@ LESSON["about"] = [
     "Record it in a table and chart it as a bar chart.",
 ]
 
+LESSON["warmup"] = [
+    q("Vinegar poured on bicarbonate of soda fizzes. What is made?", "\U0001F9EA", "a new gas", ["more vinegar", "nothing new at all"], "From the last lesson: a chemical reaction makes a new substance."),
+    q("What makes a toy car start to move?", "\U0001F697", "a push or a pull", ["its colour", "being left alone"], "A push or a pull makes things start to move."),
+]
+
 LESSON["lecture"] = [
     part("⚡", "Energy everywhere",
          "Energy is what makes things happen. A moving ball has it. A stretched band has it stored. Sound carries it through the air. Light and heat carry it from the Sun. Your food has it. Energy is in everything."),
@@ -170,7 +176,7 @@ LESSON["lecture"] = [
     part("⚽", "Where it goes",
          "Drop a ball. Thud. It bounces, but lower. Some of its movement energy became sound, and some warmed the ball and the floor a tiny bit. Bounce by bounce, the energy leaks into the room. It is not lost. It has moved."),
     part("\U0001F4A1", "Leaking out",
-         "Every transfer leaks a little into the surroundings as sound, light or heat. That is why a bulb gets warm and a bouncing ball stops. Today you track it, record it and chart it."),
+         "Every transfer leaks a little into the surroundings as sound, light or heat. That is why a bulb gets a little warm and a bouncing ball stops. Today you track it, record it and chart it."),
 ]
 
 LESSON["words"] = [
@@ -196,11 +202,11 @@ LESSON["home"] = [
           "Watch the second and third bounces and mark those.",
           "Draw a bar chart of the three heights."],
          "A falling staircase. Say where the energy went after each bounce."),
-    home("Feel the leak", "Your hands, a lamp that has been on, a grown-up",
+    home("Feel the leak", "Your hands, a grown-up, and something electrical that has been on for a while: a lamp, a television or a laptop",
          ["Rub your hands together hard for twenty seconds. Feel them.",
-          "Hold your hand NEAR (not on) a lamp that has been on. Feel the warmth.",
+          "With a grown-up, hold your hand near, not on, the lamp, the back of the television or the bottom of the laptop. Feel for warmth.",
           "Say what energy went in, and what came out."],
-         "Movement became heat. Electricity became light and heat. Every transfer leaks."),
+         "Movement became heat. Electricity became light, sound and heat. Modern LED bulbs waste very little energy as heat, so a lamp may feel only a little warm, but every transfer leaks some."),
     home("Energy trail", "Paper and a pencil, one thing you did today",
          ["Pick something you did: ran, kicked, rode a bike.",
           "Draw the energy trail: Sun, plant, food, you, the action, then sound and heat.",

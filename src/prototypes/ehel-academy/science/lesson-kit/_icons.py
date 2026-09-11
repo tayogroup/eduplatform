@@ -212,6 +212,24 @@ _BODIES = {
         '<path d="M28 40 l6 10 l6 -1 M20 41 l-3 9 l-6 0" stroke="#3A3A2A" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
         '<ellipse cx="23" cy="31" rx="16" ry="12" fill="#3A3A2A"/>'
         '<circle cx="16" cy="27" r="2.6" fill="#fff"/>'),
+    "wire": (
+        '<path d="M6 44 C14 44 14 20 22 20 C30 20 30 44 38 44 C46 44 46 20 54 20" stroke="#B87333" stroke-width="5" fill="none" stroke-linecap="round"/>'
+        '<path d="M54 20 L60 16" stroke="#E2A66B" stroke-width="3" stroke-linecap="round"/><path d="M6 44 L2 48" stroke="#E2A66B" stroke-width="3" stroke-linecap="round"/>'),
+    "arcticfox": (
+        '<path d="M40 38 C52 30 62 38 58 48 C54 44 48 44 42 46 Z" fill="#F4F7FA" stroke="#9AA9B8" stroke-width="1.5"/>'
+        '<ellipse cx="32" cy="40" rx="16" ry="10" fill="#F4F7FA" stroke="#9AA9B8" stroke-width="1.5"/>'
+        '<path d="M20 34 L10 26 L14 20 L18 24 L22 18 L24 30 Z" fill="#F4F7FA" stroke="#9AA9B8" stroke-width="1.5" stroke-linejoin="round"/>'
+        '<path d="M8 27 L2 29 L9 31 Z" fill="#F4F7FA" stroke="#9AA9B8" stroke-width="1.2"/>'
+        '<circle cx="14" cy="26" r="1.6" fill="#1B1B1B"/><circle cx="3" cy="29" r="1.5" fill="#1B1B1B"/>'
+        '<path d="M24 48 v8 M30 49 v8 M38 48 v8 M44 47 v8" stroke="#9AA9B8" stroke-width="3" stroke-linecap="round"/>'),
+    "spinner": (
+        '<path d="M28 34 h8 v24 h-8 z" fill="#F4C95D" stroke="#B8902E" stroke-width="1.5"/>'
+        '<path d="M28 34 L10 8 L22 8 L32 30 Z" fill="#F0A56B" stroke="#C0763A" stroke-width="1.5" stroke-linejoin="round"/>'
+        '<path d="M36 34 L54 8 L42 8 L32 30 Z" fill="#F7C08F" stroke="#C0763A" stroke-width="1.5" stroke-linejoin="round"/>'
+        '<rect x="29" y="54" width="6" height="4" fill="#7D7D7D"/>'),
+    "lollystick": (
+        '<rect x="8" y="27" width="48" height="10" rx="5" fill="#E2C38E" stroke="#A8834A" stroke-width="2" transform="rotate(-30 32 32)"/>'
+        '<path d="M22 38 L38 29" stroke="#C9A56B" stroke-width="1.2" transform="rotate(0 32 32)"/>'),
     "froglet": (
         '<path d="M37 30 C47 22 53 40 62 30" stroke="#4E6B2F" stroke-width="4" fill="none" stroke-linecap="round"/>'
         '<path d="M29 40 l7 10 l7 -2 M20 41 l-4 10 l-7 -1" stroke="#4E6B2F" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
@@ -367,7 +385,9 @@ def iconize(obj):
 # and a snowflake for a polar bear). Found in the kit's own Arctic scene, 2026-09-11.
 ZWJ_TOO_NEW = [(0x1F43B, 0x2744, "polar bear"), (0x1F408, 0x2B1B, "black cat"), (0x1F426, 0x2B1B, "black bird"),
                (0x1F9D1, 0x1F384, "Mx Claus"), (0x1F468, 0x1F37C, "man feeding baby"), (0x1F469, 0x1F37C, "woman feeding baby"),
-               (0x1F9D1, 0x1F37C, "person feeding baby"), (0x1F3F3, 0x26A7, "transgender flag")]
+               (0x1F9D1, 0x1F37C, "person feeding baby"), (0x1F3F3, 0x26A7, "transgender flag"),
+               (0x1F62E, 0x1F4A8, "face exhaling"), (0x1F636, 0x1F32B, "face in clouds"),
+               (0x1F635, 0x1F4AB, "face with spiral eyes"), (0x2764, 0x1F525, "heart on fire")]
 
 
 def _decode_escapes(text):

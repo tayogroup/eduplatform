@@ -26,10 +26,10 @@ LESSON = {
                           "opts": [opt("The Earth spinning on its axis", True), opt("The Sun flying round the Earth", False), opt("The clouds pushing it", False)]},
               "runAsk": "Press Spin on six hours, four times. Watch where you are.",
               "happened": {"ask": "What happened?",
-                           "opts": [opt("As the Earth turned, my side faced the Sun, then turned away: day, then night, and the Sun seemed to move", True), opt("The Sun moved round the Earth", False), opt("Nothing changed", False)],
+                           "opts": [opt("As the Earth turned, my side faced the Sun, then turned away: day, then night, and the Sun seemed to move", True), opt("The Sun moved round the Earth while the Earth stayed still", False), opt("Nothing changed; it stayed day all the time", False)],
                            "why": "One spin, one day. The Sun stayed still. You turned past it."},
               "conclude": {"ask": "Why do shadows change through the day?",
-                           "opts": [opt("The Earth's spin changes where the Sun appears in the sky, so the shadow swings round and changes length", True), opt("Shadows move on their own", False), opt("The Sun gets closer at midday", False)],
+                           "opts": [opt("The Earth's spin changes where the Sun appears in the sky, so the shadow swings round and changes length", True), opt("Shadows move about on their own", False), opt("The Sun comes much closer to the Earth at midday", False)],
                            "why": "Where the Sun appears decides where a shadow falls. The spin moves it."}},
              "The Earth spins. That makes day and night, the Sun's path, and the moving shadows."),
 
@@ -41,7 +41,7 @@ LESSON = {
                  ["Children put the Earth first.", "Earth is third. Two planets are closer to the Sun than we are."],
                  ["Tap the nearest to the Sun first."]),
              {"items": [
-                 {"pic": "\U0001F7E4", "label": "Mercury", "say": "Mercury. Nearest the Sun, small, rocky, and baking on one side."},
+                 {"pic": "\U0001F7E4", "label": "Mercury", "say": "Mercury. Nearest the Sun, small and rocky: baking hot by day and freezing cold by night."},
                  {"pic": "\U0001F7E0", "label": "Venus", "say": "Venus. Wrapped in thick cloud, and the hottest planet of all."},
                  {"pic": "\U0001F30D", "label": "Earth", "say": "Earth. Third from the Sun. Ours, with water and air and life."},
                  {"pic": "\U0001F534", "label": "Mars", "say": "Mars. The red planet, rocky and cold, with the biggest volcano in the Solar System."},
@@ -57,7 +57,7 @@ LESSON = {
              explain(
                  ["The Solar System is a star, the Sun, with everything that goes round it: planets, moons, asteroids and comets."],
                  ["The Sun: a star at the centre.", "Planets: big round worlds going round it.", "Asteroids: lumps of rock, most of them in a belt between Mars and Jupiter.", "Comets: balls of ice and dust that grow a tail when they come near the Sun."],
-                 ["Children think a comet is a shooting star.", "A comet is a slow ball of ice with a tail. A shooting star is a speck of dust burning up in our air."],
+                 ["Children think a comet is a shooting star.", "A comet is a ball of ice and dust far out in space, going round the Sun. A shooting star is a speck of dust burning up in our air, just above us."],
                  ["Tap all four."]),
              {"items": [
                  {"pic": "☀️", "label": "a star", "sub": "the Sun, at the centre", "say": "A star is a huge ball of hot, glowing gas. Our star is the Sun, and it sits at the centre of the Solar System. Everything else goes round it."},
@@ -113,10 +113,10 @@ LESSON = {
                  ["Read the question, then tap."]),
              {"label": "Question", "items": [
                  q("What causes day and night?", "\U0001F30D", "the Earth spinning on its axis", ["the Sun going round the Earth", "the Moon", "clouds"], "One spin, one day."),
-                 q("Which planet is nearest the Sun?", "\U0001F7E4", "Mercury", ["Earth", "Neptune"], "First of eight."),
-                 q("Which planet is third from the Sun?", "\U0001F30D", "Earth", ["Mars", "Venus"], "Mercury, Venus, Earth."),
-                 q("What is at the centre of the Solar System?", "☀️", "the Sun", ["the Earth", "Jupiter"], "A star."),
-                 q("A ball of ice that grows a tail near the Sun is...", "☄️", "a comet", ["an asteroid", "a planet"], "Ice and dust."),
+                 q("Which planet is nearest the Sun?", "\U0001F52D", "Mercury", ["Earth", "Neptune"], "First of eight."),
+                 q("Which planet is third from the Sun?", "\U0001F522", "Earth", ["Mars", "Venus"], "Mercury, Venus, Earth."),
+                 q("What is at the centre of the Solar System?", "\U0001F30C", "the Sun", ["the Earth", "Jupiter"], "A star."),
+                 q("A ball of ice that grows a tail near the Sun is...", "✨", "a comet", ["an asteroid", "a planet"], "Ice and dust."),
              ]},
              "You know your Solar System."),
 
@@ -129,13 +129,14 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("How long does the Earth take to spin once?", "\U0001F30D", "24 hours: one day", ["one month", "one year"], "One spin, one day."),
-                 q("Why does a shadow move during the day?", "\U0001F464", "the Earth's spin moves where the Sun appears in the sky", ["the shadow walks", "the Sun gets hotter"], "Spin moves the Sun's position."),
-                 q("Which is the biggest planet?", "\U0001F7E1", "Jupiter", ["Earth", "Mercury"], "A giant of gas."),
-                 q("Which planet has the great rings?", "\U0001FA90", "Saturn", ["Mars", "Venus"], "Rings of ice and rock."),
-                 q("Where are most asteroids?", "\U0001FAA8", "in a belt between Mars and Jupiter", ["inside the Sun", "on the Moon"], "The asteroid belt."),
+                 q("Why does a shadow move during the day?", "\U0001F464", "the Earth's spin moves where the Sun appears", ["the shadow walks round by itself", "the Sun gets hotter at midday"], "Spin moves the Sun's position."),
+                 q("Which is the biggest planet?", "\U0001F30C", "Jupiter", ["Earth", "Mercury"], "A giant of gas."),
+                 q("Which planet has the great rings?", "\U0001F52D", "Saturn", ["Mars", "Venus"], "Rings of ice and rock."),
+                 q("Where are most asteroids?", "\U0001FAA8", "in a belt between Mars and Jupiter", ["inside the Sun, where it is hottest", "on the Moon, in its craters"], "The asteroid belt."),
                  q("In the football model, how far away was the Earth?", "⚽", "25 metres", ["25 centimetres", "25 kilometres"], "A peppercorn, far off."),
-                 q("What did Galileo see that showed not everything goes round the Earth?", "\U0001F52D", "moons going round Jupiter", ["a comet", "the Sun's rings"], "Evidence from a telescope."),
+                 q("What did Galileo see that showed not everything goes round the Earth?", "\U0001F52D", "moons going round Jupiter", ["a comet with a tail", "rings round the Sun"], "Evidence from a telescope."),
                  q("What makes scientific knowledge change?", "\U0001F4DA", "evidence from enquiry", ["arguing louder", "waiting"], "Evidence."),
+                 q("It is midday where you are. Why is it night on the far side of the Earth?", "\U0001F914", "that side is turned away from the Sun", ["the Sun has gone behind the Moon", "the Sun switches off there"], "The Earth spins. The half facing the Sun has day; the half turned away has night."),
              ]},
              "That is the whole lesson finished. You know your place in the Solar System."),
     ],
@@ -146,6 +147,11 @@ LESSON["about"] = [
     "Name the eight planets in order from the Sun.",
     "Say what a planetary system holds: a star, planets, asteroids and comets.",
     "Use a scale model, and say how evidence put the Sun at the centre.",
+]
+
+LESSON["warmup"] = [
+    q("We live on the Earth's thin outer layer. What is it called?", "\U0001F30D", "the crust", ["the core", "the mantle"], "From the last lesson: the crust."),
+    q("Where is the Sun in the sky around midday?", "☀️", "high up in the sky", ["under the ground", "behind the Moon"], "The Sun is highest in the sky around midday."),
 ]
 
 LESSON["lecture"] = [
@@ -180,12 +186,13 @@ LESSON["words"] = [
 
 LESSON["home"] = [
     home("Shadow stick", "A stick in a pot, small stones, a sunny day",
-         ["Stand the stick in the sun and mark the tip of its shadow with a stone every hour.",
+         ["Never look straight at the Sun, not even for a moment: it can harm your eyes. Look down at the shadow instead.",
+          "Stand the stick in the sun and mark the tip of its shadow with a stone every hour.",
           "Watch the shadow swing round and change length.",
           "Say what is really moving."],
          "Not the Sun. The Earth, under your feet."),
-    home("The peppercorn walk", "A football, a peppercorn, a grape, a tape measure or your steps, a park",
-         ["Put the football down: the Sun.",
+    home("The peppercorn walk", "A grown-up, a football, a peppercorn, a grape, a tape measure or your steps, a park or a playing field",
+         ["Go with a grown-up, and stay where they can see you. Put the football down: the Sun.",
           "Walk 25 metres and put down the peppercorn: the Earth.",
           "Walk 130 metres in all and put down the grape: Jupiter."],
          "Look back at the football. That is the scale of the Solar System: mostly empty."),

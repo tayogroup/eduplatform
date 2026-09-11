@@ -112,7 +112,7 @@ def games_pack(n, lesson):
     for k, s in enumerate([s for s in lesson["steps"] if s["kind"] == "sort"]):
         d = s["data"]
         bins = {b["id"]: b["label"] for b in d["bins"]}
-        rounds = [{"prompt": "Where does " + it["label"] + " go? " + textpic(it.get("pic", "")),
+        rounds = [{"prompt": "Where does this go: " + it["label"] + "? " + textpic(it.get("pic", "")),
                    "choices": [bins[b] for b in bins], "answer": bins[it["bin"]],
                    "explanation": it.get("why") or bins[it["bin"]]} for it in d["items"]]
         if len(rounds) >= 3:

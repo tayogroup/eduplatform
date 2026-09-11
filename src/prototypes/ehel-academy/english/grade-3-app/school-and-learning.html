@@ -736,6 +736,20 @@
   .gloxeg { margin: 4px 0 0; font-size: 15px; line-height: 1.5; font-style: italic; }
   .gloxdef .hear, .gloxeg .hear { vertical-align: middle; margin-left: 6px; }
 
+  /* ---- the unit's writing and speaking tasks (lib/tasks.js; apps that set "taskSteps") ---- */
+  .task-title { flex: 1 1 auto; font-size: 17px; font-weight: 700; line-height: 1.25; }
+  .task-review { margin: 0; align-self: flex-start; padding: 3px 10px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 12.5px; }
+  .task-lines { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+  .task-lines p { margin: 0; }
+  .task-meta { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .task-meta b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--teal); margin-right: 4px; }
+  .task-model { margin: 0; white-space: pre-line; font-size: 15.5px; border-left: 3px solid var(--teal);
+    padding-left: 10px; }
+  .task-check { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 4px; font-size: 15px; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1139,30 +1153,30 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         <p class="score" id="score15"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Talking is why you are learning any of this.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what is happening.</s><s>Then tap the thing you would say.</s><s>Say it out loud too - that is the part that counts.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>More than one answer can be real English.</s><s>Only one of them answers what was asked.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, choose it, then say it out loud.</s></mstts:express-as>' data-say="What do you say?">
-      <div class="slide-head"><span class="n">16</span><h2>Let us talk</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">What do you say?</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are this unit&#39;s writing tasks, for paper and a pencil.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Choose one. Read it, or press Listen.</s><s>Write it on paper first.</s><s>Then press See an example, and Check my work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody marks this page.</s><s>The checklist is how you mark your own work.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a task and write.</s></mstts:express-as>' data-say="Writing to do on paper.">
+      <div class="slide-head"><span class="n">16</span><h2>Write it yourself</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Writing to do on paper.</span></div>
       <div class="stage">
         <div id="stage16"></div>
         <div class="choices" id="ch16"></div>
         <p class="fb" id="fb16" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score16"></p>
-        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the unit&#39;s own Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game card to play it.</s><s>Each game asks you a few short questions.</s><s>Play as many as you like, then come back for another.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play.">
-      <div class="slide-head"><span class="n">17</span><h2>Games</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask17">Choose a game to play.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Talking is why you are learning any of this.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what is happening.</s><s>Then tap the thing you would say.</s><s>Say it out loud too - that is the part that counts.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>More than one answer can be real English.</s><s>Only one of them answers what was asked.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, choose it, then say it out loud.</s></mstts:express-as>' data-say="What do you say?">
+      <div class="slide-head"><span class="n">17</span><h2>Let us talk</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask17">What do you say?</span></div>
       <div class="stage">
         <div id="stage17"></div>
         <div class="choices" id="ch17"></div>
         <p class="fb" id="fb17" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score17"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the reading this unit is built around.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pick one and press Read.</s><s>Press Listen and follow the words with your finger.</s><s>Press Next page when you are ready.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The next step asks about the story.</s><s>You can come back and read it again any time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and press Listen.</s></mstts:express-as>' data-say="Choose something to read.">
-      <div class="slide-head"><span class="n">18</span><h2>The unit story</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask18">Choose something to read.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are this unit&#39;s speaking tasks.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Choose one. Read it, or press Listen.</s><s>Do it out loud - with a partner, a grown-up, or on your own.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is listening to you on this page.</s><s>Tick a task when you have done it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a task and talk.</s></mstts:express-as>' data-say="Speaking to do out loud.">
+      <div class="slide-head"><span class="n">18</span><h2>Talk it through</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask18">Speaking to do out loud.</span></div>
       <div class="stage">
         <div id="stage18"></div>
         <div class="choices" id="ch18"></div>
@@ -1170,9 +1184,9 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         <p class="score" id="score18"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These questions are about this unit&#39;s own story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, go back one step.</s><s>The story is right above this one.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">19</span><h2>What happened in the story?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask19">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the unit&#39;s own Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game card to play it.</s><s>Each game asks you a few short questions.</s><s>Play as many as you like, then come back for another.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play.">
+      <div class="slide-head"><span class="n">19</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask19">Choose a game to play.</span></div>
       <div class="stage">
         <div id="stage19"></div>
         <div class="choices" id="ch19"></div>
@@ -1180,9 +1194,9 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         <p class="score" id="score19"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the jobs you do with your hands, not on the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press Listen.</s><s>Go and do it - colour it, draw it, act it out, make it.</s><s>Then come back and tick it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>Press How did I do to see what finished looks like.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and go and do it.</s></mstts:express-as>' data-say="Jobs to do away from the screen.">
-      <div class="slide-head"><span class="n">20</span><h2>Things to do</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask20">Jobs to do away from the screen.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the reading this unit is built around.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pick one and press Read.</s><s>Press Listen and follow the words with your finger.</s><s>Press Next page when you are ready.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The next step asks about the story.</s><s>You can come back and read it again any time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and press Listen.</s></mstts:express-as>' data-say="Choose something to read.">
+      <div class="slide-head"><span class="n">20</span><h2>The unit story</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask20">Choose something to read.</span></div>
       <div class="stage">
         <div id="stage20"></div>
         <div class="choices" id="ch20"></div>
@@ -1190,20 +1204,19 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         <p class="score" id="score20"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
-      <div class="slide-head"><span class="n">21</span><h2>Fluency Practice</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask21">Tap the answer. Nothing here is new.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These questions are about this unit&#39;s own story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, go back one step.</s><s>The story is right above this one.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">21</span><h2>What happened in the story?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask21">Tap the answer.</span></div>
       <div class="stage">
         <div id="stage21"></div>
         <div class="choices" id="ch21"></div>
         <p class="fb" id="fb21" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score21"></p>
-        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">22</span><h2>Show what you know again</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask22">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the jobs you do with your hands, not on the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press Listen.</s><s>Go and do it - colour it, draw it, act it out, make it.</s><s>Then come back and tick it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>Press How did I do to see what finished looks like.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and go and do it.</s></mstts:express-as>' data-say="Jobs to do away from the screen.">
+      <div class="slide-head"><span class="n">22</span><h2>Things to do</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask22">Jobs to do away from the screen.</span></div>
       <div class="stage">
         <div id="stage22"></div>
         <div class="choices" id="ch22"></div>
@@ -1211,24 +1224,45 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         <p class="score" id="score22"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is you telling us how it went.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read each one.</s><s>Tap Not yet, With help, or By myself.</s><s>There is no right answer - it is what YOU think.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is marking this.</s><s>Not yet is a fine answer, and it is the honest one at the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one and tap.</s></mstts:express-as>' data-say="Say how you feel about each one.">
-      <div class="slide-head"><span class="n">23</span><h2>How did I do?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask23">Say how you feel about each one.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
+      <div class="slide-head"><span class="n">23</span><h2>Fluency Practice</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask23">Tap the answer. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage23"></div>
         <div class="choices" id="ch23"></div>
         <p class="fb" id="fb23" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score23"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is your drawer. Nothing in here is a step to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to look a word up.</s><s>Open the plan to see what comes next.</s><s>Print a sheet if you want to write with a pencil.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come here whenever you like.</s><s>Nothing here can be got wrong.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what is in here.</s></mstts:express-as>' data-say="Your word lists, your plans, and a pencil and paper.">
-      <div class="slide-head"><span class="n">24</span><h2>Student resources</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask24">Your word lists, your plans, and a pencil and paper.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">24</span><h2>Show what you know again</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask24">Tap the answer.</span></div>
       <div class="stage">
         <div id="stage24"></div>
         <div class="choices" id="ch24"></div>
         <p class="fb" id="fb24" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score24"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is you telling us how it went.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read each one.</s><s>Tap Not yet, With help, or By myself.</s><s>There is no right answer - it is what YOU think.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is marking this.</s><s>Not yet is a fine answer, and it is the honest one at the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one and tap.</s></mstts:express-as>' data-say="Say how you feel about each one.">
+      <div class="slide-head"><span class="n">25</span><h2>How did I do?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask25">Say how you feel about each one.</span></div>
+      <div class="stage">
+        <div id="stage25"></div>
+        <div class="choices" id="ch25"></div>
+        <p class="fb" id="fb25" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score25"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is your drawer. Nothing in here is a step to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to look a word up.</s><s>Open the plan to see what comes next.</s><s>Print a sheet if you want to write with a pencil.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come here whenever you like.</s><s>Nothing here can be got wrong.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what is in here.</s></mstts:express-as>' data-say="Your word lists, your plans, and a pencil and paper.">
+      <div class="slide-head"><span class="n">26</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask26">Your word lists, your plans, and a pencil and paper.</span></div>
+      <div class="stage">
+        <div id="stage26"></div>
+        <div class="choices" id="ch26"></div>
+        <p class="fb" id="fb26" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score26"></p>
       </div>
     </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1288,9 +1322,7 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
       "termDates": "25 August – 4 December 2026",
       "year": "2026–27",
       "days": [
-        "Start What this unit is about",
-        "Finish What this unit is about",
-        "Unit lecture",
+        "What this unit is about · Unit lecture",
         "Spelling: oa says the long o",
         "Words: books, tools and technology",
         "Words: people who help us (1 of 2)",
@@ -1303,7 +1335,9 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         "Show what you know",
         "How English works",
         "Write a sentence",
+        "Write it yourself",
         "Let us talk",
+        "Talk it through",
         "Games",
         "The unit story",
         "What happened in the story?",
@@ -1316,8 +1350,8 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
       ]
     },
     "lecture": {
-      "video": "../grade-3/media/unit-2/teacher-lecture.f1123e13.mp4",
-      "poster": "../grade-3/media/unit-2/teacher-lecture-poster.4cb349ce.jpg",
+      "video": "../grade-3/media/unit-2/teacher-lecture.680d70d6.mp4",
+      "poster": "../grade-3/media/unit-2/teacher-lecture-poster.a0f5c40a.jpg",
       "captions": "../grade-3/media/unit-2/teacher-lecture.7e447ab2.vtt",
       "slides": [
         {
@@ -1352,7 +1386,7 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         },
         {
           "start": 134.73,
-          "end": 149.954,
+          "end": 149.909,
           "title": "You are ready to begin"
         }
       ]
@@ -2290,7 +2324,7 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
             "ok": 1
           },
           {
-            "t": "Today’s lesson is about authors.",
+            "t": "It shows that he values school and enjoys learning enough to want to teach others.",
             "ok": 0
           },
           {
@@ -2309,6 +2343,25 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
             "ok": 1
           },
           {
+            "t": "Maya brought her book and her eraser.",
+            "ok": 0
+          },
+          {
+            "t": "The word studied tells us that it happened in the past.",
+            "ok": 0
+          }
+        ],
+        "why": "The sentence beginning At break time gives both the place and the reason.",
+        "srcTitle": "A Day at School"
+      },
+      {
+        "ask": "The group did not win first place. How did they feel, and why did they feel that way?",
+        "opts": [
+          {
+            "t": "They felt proud because their hard work and teamwork helped them do their best.",
+            "ok": 1
+          },
+          {
             "t": "The word studied tells us that it happened in the past.",
             "ok": 0
           },
@@ -2317,8 +2370,8 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
             "ok": 0
           }
         ],
-        "why": "The sentence beginning At break time gives both the place and the reason.",
-        "srcTitle": "A Day at School"
+        "why": "The final two sentences give the feeling first and then the reason behind it.",
+        "srcTitle": "Getting Ready for the Contest"
       },
       {
         "ask": "What is today’s lesson about in Teacher Yasmin’s classroom?",
@@ -2340,10 +2393,10 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         "srcTitle": "In the Classroom"
       },
       {
-        "ask": "Which two things did Maya bring to school that morning?",
+        "ask": "In the song, where does the singer go to learn something new?",
         "opts": [
           {
-            "t": "Maya brought her book and her eraser.",
+            "t": "The singer learns in the library, which the song calls quiet and bright.",
             "ok": 1
           },
           {
@@ -2355,33 +2408,14 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
             "ok": 0
           }
         ],
-        "why": "Maya lists both items when she answers Teacher Yasmin’s first question.",
-        "srcTitle": "In the Classroom"
-      },
-      {
-        "ask": "Which word in the song tells you that the singing happened in the past?",
-        "opts": [
-          {
-            "t": "The word studied tells us that it happened in the past.",
-            "ok": 1
-          },
-          {
-            "t": "He goes to the library at break time so that he can read.",
-            "ok": 0
-          },
-          {
-            "t": "Today’s lesson is about authors.",
-            "ok": 0
-          }
-        ],
-        "why": "Studied ends in –ed, the regular past-tense ending taught in Grammar 1.",
+        "why": "The third line of the song names the library and describes what it is like.",
         "srcTitle": "A Learning Song"
       },
       {
-        "ask": "Why did the Grammar Champions win? Give two reasons from the story.",
+        "ask": "What is the name of Amal’s group, and which topic did they choose?",
         "opts": [
           {
-            "t": "They worked as a team, and they gave a clear lesson with good details.",
+            "t": "Her group is called The Grammar Champions, and they chose prepositions.",
             "ok": 1
           },
           {
@@ -2389,11 +2423,11 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
             "ok": 0
           },
           {
-            "t": "Today’s lesson is about authors.",
+            "t": "They felt proud because their hard work and teamwork helped them do their best.",
             "ok": 0
           }
         ],
-        "why": "Amal gives both reasons herself when the teacher asks why the group won.",
+        "why": "The group name appears when Amal joins Daniel and Nora, and Amal suggests prepositions a few lines later.",
         "srcTitle": "The Grammar Champions"
       }
     ],
@@ -2483,6 +2517,24 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         "tip": "Find the owner and stick the little ’s on. Then use because as the bridge that answers the question why.",
         "practice": "Write the correct possessive form of the owner in brackets. | The ______ (cat) toy is missing. | The ______ (teacher) desk is tidy. | My ______ (sister) book is on the table. | The ______ (child) drawing is on the wall. | Now finish each sentence with your own reason, using because. | I love reading ______. | We went to the library ______. | I enjoy grammar ______. Check yourself: 1. cat's 2. teacher's 3. sister's 4. child's. The last three sentences are your own ideas, so there is no single correct answer — here is one model example for each: I love reading because it takes me to new places. We went to the library because we wanted quiet books to borrow. I enjoy grammar because it helps me speak and write clearly.",
         "audio": "./media/audio/grade-3/grammar/eng-g03-t01-u02-grammar06.mp3"
+      },
+      {
+        "title": "Prepositions: Where, When and Which Way",
+        "pattern": "Where: “The teacher’s pen is on the desk.” “The bag is under the table.” “Adam reads in the library.”\nWhen: “The contest is on Friday.” “We have lunch at 1 o’clock.” “We played after the contest.”\nWhich way or who with: “Amal walked to the library with Nora.” “Daniel’s notes came from his sister’s class.”",
+        "explanation": "A preposition is a small word that links one thing to another. Many tell us WHERE something is (in, on, under, beside). Some tell us WHEN (at, on, in, after). Some tell us WHICH WAY or WHO WITH (to, from, across, with). The Grammar Champions taught in, on and under - there are many more.",
+        "mistake": "Using the wrong small word for a time: “in Friday” or “on June”. Use on for days (on Friday), in for months (in June) and at for clock times (at 8 o’clock).",
+        "tip": "Picture a box: a ball can be IN it, ON it, UNDER it or BESIDE it. For time, go from small to big: AT a time, ON a day, IN a month.",
+        "practice": "Write in, on, under, at or to in each gap. | 1. The eraser is ______ my pencil case. | 2. The contest is ______ Friday. | 3. The bag is ______ the table. | 4. We have break ______ 10 o’clock. | 5. Adam walks ______ the library. | Check yourself: 1. in 2. on 3. under 4. at 5. to",
+        "audio": ""
+      },
+      {
+        "title": "Finding Your Way Round a Book",
+        "pattern": "Fiction or non-fiction? “A story about a clever camel” is fiction. “A grammar book that explains prepositions” is non-fiction.\nIn the library: fiction by the author’s last name, A to Z; non-fiction by subject and number.\nContents, at the front: chapters in page order - “Chapter 2: Prepositions, page 14”.\nIndex, at the back: topics A to Z - “prepositions 14, 22” means pages 14 and 22.",
+        "explanation": "Fiction is a made-up story, like Maya’s book about a clever camel. Non-fiction gives real information, like the grammar book the Grammar Champions used. A library keeps them apart: fiction is shelved in order of the author’s last name, and non-fiction by its subject, with a number on the spine. Inside a non-fiction book, the contents page at the front lists the chapters in page order, and the index at the back lists topics in alphabetical order with their page numbers.",
+        "mistake": "Reading a non-fiction book from page one to find one fact. Go to the index, find the word in alphabetical order, and turn straight to its page.",
+        "tip": "Contents at the front, Index at the end - C comes before I, just as the contents comes before the index.",
+        "practice": "Use this index from a grammar book to answer. | Index: adjectives 8, 30 · full stops 4 · past tense 18, 19 · possessive ’s 25 · prepositions 14, 22 · questions 11 | 1. Which pages tell you about prepositions? | 2. Where would you read about the possessive ’s? | 3. Which topic is on page 4? | 4. Is this book fiction or non-fiction? | Check yourself: 1. pages 14 and 22 2. page 25 3. full stops 4. non-fiction",
+        "audio": ""
       }
     ],
     "write": {
@@ -2537,6 +2589,251 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
       ],
       "audio": "./media/audio/grade-3/writing/eng-g03-t01-u02-write01.mp3"
     },
+    "writetasks": [
+      {
+        "n": 1,
+        "title": "Sentences About School",
+        "lines": [
+          "Finish these sentences, then write two more of your own:",
+          "Today the teacher gave a lesson about ______.",
+          "I like the library because ______.",
+          "Yesterday I studied ______.",
+          "This is my ______. (Write one sentence using the possessive ’s, like “This is Nora’s eraser.”)"
+        ],
+        "length": "5-6 complete sentences",
+        "model": "Today the teacher gave a lesson about authors. I like the library because it is quiet and full of stories. Yesterday I studied my spelling words twice. This is Nora’s eraser, and this one is mine.",
+        "criteria": [
+          "I finished all four sentences",
+          "I used one school word in each",
+          "I used the possessive ’s once",
+          "I checked my capital letters and full stops"
+        ],
+        "support": "Say each sentence aloud before you write it, and keep your Word Wall open beside you.",
+        "extension": "Write two extra sentences about a lesson you would like to teach the class.",
+        "audio": "./media/audio/grade-3/writing/eng-g03-t01-u02-write01.mp3",
+        "review": false
+      },
+      {
+        "n": 2,
+        "title": "A Short Report",
+        "lines": [
+          "Write a short report of three or four sentences about a topic you know well, such as an animal, a game, or your town.",
+          "Name your topic, add two details, and finish with one sentence about why you like it.",
+          "Then draw a small picture to go beside your report."
+        ],
+        "length": "3-4 sentences plus a labelled picture",
+        "model": "Camels are strong animals that live in dry places. They can walk for days without drinking water. Their wide feet stop them sinking into soft sand. I like camels because they carry heavy loads without complaining.",
+        "criteria": [
+          "I named my topic in the first sentence",
+          "I gave two true details",
+          "I ended with a reason using because",
+          "my picture matches my report"
+        ],
+        "support": "Choose a topic you could already talk about for one minute, then write those spoken ideas down.",
+        "extension": "Add a heading and one interesting fact that most readers would not know.",
+        "audio": "./media/audio/grade-3/writing/eng-g03-t01-u02-write02.mp3",
+        "review": false
+      },
+      {
+        "n": 3,
+        "title": "First, I Prepared",
+        "lines": [
+          "Write three sentences about a time you prepared for something at school.",
+          "Begin the first sentence with “First, I ______.”",
+          "Use the simple past tense in all three sentences, and check every verb ending."
+        ],
+        "length": "3 connected past-tense sentences",
+        "model": "First, I collected my spelling list and a sharp pencil. Then I studied five words each evening with my sister. On the morning of the test I felt calm because I prepared carefully.",
+        "criteria": [
+          "I began with First",
+          "every verb tells about the past",
+          "I spelled the –ed endings correctly",
+          "my sentences follow a sensible order"
+        ],
+        "support": "List the three steps in order before you write, using one word for each step.",
+        "extension": "Add a fourth sentence beginning Later that day to link your steps together.",
+        "audio": "./media/audio/grade-3/writing/eng-g03-t01-u02-write03.mp3",
+        "review": false
+      },
+      {
+        "n": 4,
+        "title": "Helping My Team",
+        "lines": [
+          "Imagine you joined the Grammar Champions for the contest.",
+          "Write one sentence about the job you would do to help your team.",
+          "Then write a second sentence that gives your reason, using because."
+        ],
+        "length": "2 sentences, one of them a reason",
+        "model": "I would draw the pictures for our poster so the whole class can see each rule. I chose that job because I like drawing and it makes our lesson easy to follow.",
+        "criteria": [
+          "I named one clear job",
+          "my second sentence uses because",
+          "both sentences make sense together",
+          "I checked my punctuation"
+        ],
+        "support": "Think of three jobs the group needed doing, then pick the one you would enjoy most.",
+        "extension": "Write one sentence about the job you would find hardest, and explain why.",
+        "audio": "./media/audio/grade-3/writing/eng-g03-t01-u02-write04.mp3",
+        "review": false
+      },
+      {
+        "n": 5,
+        "title": "Draw and Caption the Winners",
+        "lines": [
+          "Draw Amal, Daniel, and Nora holding their contest prize.",
+          "Write one sentence under your picture about how the three friends feel.",
+          "Use the possessive ’s once, for example “Amal’s smile is the widest.”"
+        ],
+        "length": "1-2 caption sentences under a drawing",
+        "model": "Amal, Daniel, and Nora feel proud because their hard work paid off. Nora’s hands shake a little as she holds the prize.",
+        "criteria": [
+          "My drawing shows all three friends",
+          "my caption names a feeling",
+          "I used the possessive ’s correctly",
+          "the caption sits under the picture"
+        ],
+        "support": "Choose the feeling word first, then build the caption around it.",
+        "extension": "Add a speech bubble for one character, punctuated with speech marks.",
+        "audio": "./media/audio/grade-3/writing/eng-g03-t01-u02-write05.mp3",
+        "review": false
+      },
+      {
+        "n": 6,
+        "title": "Check and Improve Your Report",
+        "lines": [
+          "Read your short report aloud to an adult if one is nearby, or to yourself, and listen for any sentence that sounds wrong.",
+          "Check every capital letter, every full stop, and every past-tense verb ending.",
+          "Rewrite two sentences to make them clearer, then say what you improved."
+        ],
+        "length": "2 rewritten sentences plus one comment",
+        "model": "I changed “We goed to the library” to “We went to the library.” I also added a full stop and one more detail about the quiet reading corner.",
+        "criteria": [
+          "I read my work aloud",
+          "I found at least two things to fix",
+          "my rewrites are clearer than before",
+          "I explained one improvement"
+        ],
+        "support": "Read one sentence at a time and put your finger on each full stop as you reach it.",
+        "extension": "Swap reports with a partner and suggest one improvement each, kindly and clearly.",
+        "audio": "./media/audio/grade-3/writing/eng-g03-t01-u02-write06.mp3",
+        "review": true
+      },
+      {
+        "n": 7,
+        "title": "A Blurb and a Review",
+        "lines": [
+          "A blurb on the back of a book tells a reader just enough to want to read it, without giving away the ending. A review tells other readers what you thought of a book, and whether they should choose it.",
+          "Choose a story you have read this year, such as ‘The Grammar Champions’.",
+          "Write a blurb of three sentences: who the story is about and their problem, a question that makes the reader curious, and an invitation to read it.",
+          "Then write a review of three sentences: what you liked, one thing you did not like, and who should read it."
+        ],
+        "length": "6 sentences: a 3-sentence blurb and a 3-sentence review",
+        "model": "Blurb: Amal and her friends have until Friday to get ready for the grammar contest. Can three friends and one grammar book beat every other group? Read ‘The Grammar Champions’ to find out.\nReview: I liked the part where Daniel draws a funny cartoon on the board. I wanted to see the other groups’ lessons too. Anyone who likes school stories should choose this book.",
+        "criteria": [
+          "My blurb says who the story is about and their problem",
+          "it ends with a question or an invitation",
+          "it does not give away the ending",
+          "my review gives one thing I liked, one I did not, and who should read it."
+        ],
+        "support": "Look at the back cover of any book at home or in the library, and copy how its blurb begins.",
+        "extension": "Swap blurbs with a partner. Would you choose their book? Say why, using because.",
+        "audio": "",
+        "review": true
+      }
+    ],
+    "speaktasks": [
+      {
+        "n": 1,
+        "title": "Talk About Your School Day",
+        "lines": [
+          "Get ready to say three sentences about your day at school:",
+          "“Today I studied ______.”",
+          "“My favourite subject is ______ because ______.”",
+          "“At school I use a ______.” (name a supply)",
+          "Record yourself. Check: Did you speak clearly? Did you use the word because? Did you name a subject and a supply?"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-3/speaking/eng-g03-t01-u02-speak01.mp3",
+        "review": false
+      },
+      {
+        "n": 2,
+        "title": "Ask and Answer About the Past",
+        "lines": [
+          "Practise asking a partner or your AI tutor these questions, then answer them:",
+          "“What did you study yesterday?”",
+          "“Did you go to the library this week?”",
+          "“Where did you do your homework?”"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-3/speaking/eng-g03-t01-u02-speak02.mp3",
+        "review": false
+      },
+      {
+        "n": 3,
+        "title": "Guess My Subject",
+        "lines": [
+          "Play with your AI tutor or your family:",
+          "Think of a school subject, but do not say it.",
+          "Give a clue: “In this subject, we work with numbers.”",
+          "The other person guesses: “Is it mathematics?” Say “Yes, it is!” or “No, try again.” Then swap turns."
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-3/speaking/eng-g03-t01-u02-speak03.mp3",
+        "review": false
+      },
+      {
+        "n": 4,
+        "title": "Vocabulary Expert Interview",
+        "lines": [
+          "Choose six Unit 2 words from your Word Wall, such as report, supply, and graduate.",
+          "Ask an adult to interview you if one is nearby, or interview yourself with the AI tutor: “What does the word report mean?”",
+          "Answer in one full sentence: “A report is a short talk or paper that tells about something.”",
+          "Then swap over and interview the adult (or the tutor) about three more words."
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-3/speaking/eng-g03-t01-u02-speak04.mp3",
+        "review": true
+      },
+      {
+        "n": 5,
+        "title": "Explain and Respond",
+        "lines": [
+          "Explain one idea from this unit to an adult if one is nearby, or to the AI tutor, such as why the library is a good place to study.",
+          "Give your reason with because: “I study in the library because it is quiet.”",
+          "Then answer two follow-up questions, such as “What did you study there last week?”"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-3/speaking/eng-g03-t01-u02-speak05.mp3",
+        "review": true
+      },
+      {
+        "n": 6,
+        "title": "One-Minute Unit Talk",
+        "lines": [
+          "Plan a one-minute talk called “How I prepare for a contest.”",
+          "Open with one sentence, give three connected details, and close by saying what you learned.",
+          "Record the talk, listen back with an adult if one is nearby, or by yourself, and name one thing you would improve next time."
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-3/speaking/eng-g03-t01-u02-speak06.mp3",
+        "review": true
+      },
+      {
+        "n": 7,
+        "title": "Choose a Book by Its Blurb",
+        "lines": [
+          "In ‘In the Classroom’, Maya and Daniel talk about the books they read. Here are two blurbs, each with a short review. Read them aloud, choose the book you would read first, and tell a partner why, using because.",
+          "Book 1: The Clever Camel. Blurb: Kamal the camel is the slowest in the caravan, but he is the only one who knows the way to water. When a sandstorm hides the path, will the others trust him? Review: “Very funny, and I cheered at the end.” - Maya",
+          "Book 2: The Girl Who Wanted to Graduate. Blurb: Zara wants to be a scientist, but her village has no school after Grade 6. What will she do to keep learning? Review: “It made me want to study harder.” - Daniel",
+          "Say: I would choose ___ first, because ___.",
+          "Then say one thing the blurb told you, and one thing it kept secret."
+        ],
+        "record": false,
+        "audio": "",
+        "review": true
+      }
+    ],
     "quizmid": [
       {
         "ask": "Which word means a place where you can find and borrow books?",
@@ -5302,6 +5599,25 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
         ],
         "why": "The possessive ’s shows that something belongs to somebody, and because joins an idea to the reason behind it.",
         "reference": "I like the library because it is quiet."
+      },
+      {
+        "ask": "Your friend asks how to use “Prepositions”. Which sentence shows it?",
+        "opts": [
+          {
+            "t": "The teacher’s pen is on the desk.",
+            "ok": 1
+          },
+          {
+            "t": "The student studied for the grammar contest.",
+            "ok": 0
+          },
+          {
+            "t": "Did you forget your eraser?",
+            "ok": 0
+          }
+        ],
+        "why": "A preposition is a small word that links one thing to another. Many tell us WHERE something is (in, on, under, beside). Some tell us WHEN (at, on, in, after). Some tell us WHICH WAY or WHO WITH (to, from, across, with). The Grammar Champions taught in, on and under - there are many more.",
+        "reference": "The teacher’s pen is on the desk."
       }
     ],
     "overview": {
@@ -8278,6 +8594,100 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
     if (got === STICKERS.length) REACTION.lessonDone();
   }
 
+  /* ==================================================================
+     THE UNIT'S WRITING AND SPEAKING TASKS, IN FULL
+
+     Inlined only into an app whose app.config.json sets "taskSteps" (Grades
+     1-4 do), so a build without the steps carries none of this code.
+     build-lessons.py says why the step exists: "Write a sentence"
+     and "Say it out loud" reach a slice of the unit's tasks, and the rest -
+     including every task authored to close a Cambridge objective - were on no
+     page of this build.
+
+     PAPER WORK, the way activityList() is off-screen work: nothing marks
+     it and nothing pretends to. A writing card keeps its model and its
+     checklist behind buttons, so the learner writes first and looks second.
+     The checklist is the unit's own successCriteria, which the course
+     already writes in the learner's voice ("I chose one clear feeling"), so
+     it is drawn as theirs - not as a note for a grown-up.
+
+     A task that has not been through curriculum review says so on its
+     card, the way the Fluency step says it for the same state.
+     ================================================================== */
+  function taskList(o) {
+    const el = o.el;
+    const did = new Array(o.items.length).fill(false);
+    const open = o.items.map(() => ({ model: false, check: false }));
+
+    function card(it, k) {
+      let html = '<div class="act task' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
+        '<div class="act-head"><span class="act-n">' + it.n + "</span>" +
+        '<span class="task-title">' + esc(it.title) + "</span>" +
+        '<button type="button" class="hear" data-act="hear" aria-label="Hear this task">&#128266;</button></div>';
+      if (it.review) {
+        html += '<p class="task-review">A teacher has not checked this task yet.</p>';
+      }
+      html += '<div class="task-lines">' + it.lines.map((t) => "<p>" + esc(t) + "</p>").join("") + "</div>";
+      if (o.write) {
+        if (it.length) html += '<p class="task-meta"><b>How long</b> ' + esc(it.length) + "</p>";
+        if (it.support) html += '<p class="task-meta"><b>Stuck?</b> ' + esc(it.support) + "</p>";
+        if (it.model) {
+          html += '<button type="button" class="act-how" data-act="model">' +
+            (open[k].model ? "Hide the example" : "See an example") + "</button>";
+          if (open[k].model) html += '<p class="task-model">' + esc(it.model) + "</p>";
+        }
+        if (it.criteria && it.criteria.length) {
+          html += '<button type="button" class="act-how" data-act="check">' +
+            (open[k].check ? "Hide the checklist" : "Check my work") + "</button>";
+          if (open[k].check) {
+            html += '<ul class="task-check">' + it.criteria.map((c) => "<li>" + esc(c) + "</li>").join("") + "</ul>";
+            if (it.extension) html += '<p class="task-meta"><b>Want more?</b> ' + esc(it.extension) + "</p>";
+          }
+        }
+      } else if (it.record) {
+        html += '<p class="task-meta"><b>Tip</b> Record yourself on a phone or tablet if you can, then listen back.</p>';
+      }
+      return html + '<button type="button" class="tick" data-act="tick">' +
+        (did[k] ? "✓ done" : "I did this") + "</button></div>";
+    }
+
+    function paint() {
+      $(el.ask).innerHTML = o.write ? "Writing to do on paper." : "Speaking to do out loud.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="acts" id="' + el.tasks + '">' + o.items.map(card).join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + el.tasks + 'fin">' +
+        "I have done my tasks &#10003;</button></div>";
+
+      const ticked = did.filter(Boolean).length;
+      reportAttempt(o.finish, ticked, did.length, "tasks");
+      $(el.score).textContent = ticked + " of " + o.items.length + " ticked"
+        + (ticked === o.items.length ? " - all of them" : "");
+
+      $(el.tasks + "fin").addEventListener("click", () => {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = o.done;
+        finish(o.finish, o.done);
+      });
+    }
+
+    $(el.stage).addEventListener("click", (e) => {
+      const card = e.target.closest(".task");
+      const button = e.target.closest("[data-act]");
+      if (!card || !button) return;
+      const k = Number(card.dataset.k);
+      const it = o.items[k];
+      /* The spoken fallback is the whole task - its title and every line -
+         for the reason activityList gives: a task whose clip is missing or
+         withdrawn must not be read out as its first sentence alone. */
+      if (button.dataset.act === "hear") { playClip(it.audio, [it.title].concat(it.lines).join(" ")); return; }
+      if (button.dataset.act === "model") { open[k].model = !open[k].model; paint(); return; }
+      if (button.dataset.act === "check") { open[k].check = !open[k].check; paint(); return; }
+      if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
+    });
+
+    paint();
+  }
+
 
   /* ==================================================================
      PICTURE BOOKS
@@ -10062,7 +10472,7 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
   }
 
 
-  const STICKERS = [["🧭", "I know what this unit is for"], ["📅", "I read the plan"], ["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["📖", "I met the new words"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["✅", "I showed what I know so far"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["📖", "I read the unit story"], ["🤔", "I answered the story questions"], ["✋", "I did the activities"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"], ["🌟", "I thought about my learning"], ["🎒", "I used my resources"]];
+  const STICKERS = [["🧭", "I know what this unit is for"], ["📅", "I read the plan"], ["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["📖", "I met the new words"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["✅", "I showed what I know so far"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["📝", "I did my writing"], ["💬", "I practised talking"], ["🎤", "I did my speaking"], ["🎮", "I played the games"], ["📖", "I read the unit story"], ["🤔", "I answered the story questions"], ["✋", "I did the activities"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"], ["🌟", "I thought about my learning"], ["🎒", "I used my resources"]];
 
   unitOverview({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, data: LESSON.overview, finish: 0,
     done: "Now you know what this unit is for." });
@@ -10103,24 +10513,28 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
   buildSentence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15", line: "line15", tiles: "tiles15", check: "check15", clear: "clear15" }, ask: LESSON.write.ask, tiles: LESSON.write.tiles,
     answer: LESSON.write.answer, finish: 14,
     done: "That is a real sentence, written by you." });
-  letUsTalk({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, items: LESSON.talk, finish: 15,
+  taskList({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16", tasks: "tasks16" }, items: LESSON.writetasks, finish: 15, write: true,
+    done: "That is your writing done." });
+  letUsTalk({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17" }, items: LESSON.talk, finish: 16,
     label: "Round", done: "That is talking practised." });
-  gameZone({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17", gamelist: "gamelist17" }, pack: LESSON.games, finish: 16,
+  taskList({ el: { ask: "ask18", say: "ask18", stage: "stage18", ch: "ch18", fb: "fb18", score: "score18", tasks: "tasks18" }, items: LESSON.speaktasks, finish: 17, write: false,
+    done: "That is your speaking done." });
+  gameZone({ el: { ask: "ask19", say: "ask19", stage: "stage19", ch: "ch19", fb: "fb19", score: "score19", gamelist: "gamelist19" }, pack: LESSON.games, finish: 18,
     done: "That is the Game Zone played." });
-  unitReadings({ el: { ask: "ask18", say: "ask18", stage: "stage18", ch: "ch18", fb: "fb18", score: "score18", pick: "pick18" }, items: LESSON.reads, finish: 17,
+  unitReadings({ el: { ask: "ask20", say: "ask20", stage: "stage20", ch: "ch20", fb: "fb20", score: "score20", pick: "pick20" }, items: LESSON.reads, finish: 19,
     done: "You read the whole story." });
-  sequence({ el: { ask: "ask19", say: "ask19", stage: "stage19", ch: "ch19", fb: "fb19", score: "score19" }, items: LESSON.questions, finish: 18, attemptOnly: true,
+  sequence({ el: { ask: "ask21", say: "ask21", stage: "stage21", ch: "ch21", fb: "fb21", score: "score21" }, items: LESSON.questions, finish: 20, attemptOnly: true,
     label: "Question", done: "You remembered the story well." });
-  activityList({ el: { ask: "ask20", say: "ask20", stage: "stage20", ch: "ch20", fb: "fb20", score: "score20", acts: "acts20" }, items: LESSON.activities, finish: 19,
+  activityList({ el: { ask: "ask22", say: "ask22", stage: "stage22", ch: "ch22", fb: "fb22", score: "score22", acts: "acts22" }, items: LESSON.activities, finish: 21,
     done: "That is this unit's jobs done." });
-  sequence({ el: { ask: "ask21", say: "ask21", stage: "stage21", ch: "ch21", fb: "fb21", score: "score21" }, items: LESSON.fluency, finish: 20,
+  sequence({ el: { ask: "ask23", say: "ask23", stage: "stage23", ch: "ch23", fb: "fb23", score: "score23" }, items: LESSON.fluency, finish: 22,
     label: "Question", done: "That is this unit's words and patterns practised." });
-  sequence({ el: { ask: "ask22", say: "ask22", stage: "stage22", ch: "ch22", fb: "fb22", score: "score22" }, items: LESSON.quiz, finish: 21,
+  sequence({ el: { ask: "ask24", say: "ask24", stage: "stage24", ch: "ch24", fb: "fb24", score: "score24" }, items: LESSON.quiz, finish: 23,
     label: "Question", done: "That is the whole unit finished." });
-  selfCheck({ el: { ask: "ask23", say: "ask23", stage: "stage23", ch: "ch23", fb: "fb23", score: "score23", self: "self23" }, items: LESSON.reflect, unit: LESSON.unitNo,
-    finish: 22, done: "Thank you for telling us." });
-  studentResources({ el: { ask: "ask24", say: "ask24", stage: "stage24", ch: "ch24", fb: "fb24", score: "score24", res: "res24" }, res: LESSON.resources, plan: LESSON.plan,
-    finish: 23, done: "That is your drawer." });
+  selfCheck({ el: { ask: "ask25", say: "ask25", stage: "stage25", ch: "ch25", fb: "fb25", score: "score25", self: "self25" }, items: LESSON.reflect, unit: LESSON.unitNo,
+    finish: 24, done: "Thank you for telling us." });
+  studentResources({ el: { ask: "ask26", say: "ask26", stage: "stage26", ch: "ch26", fb: "fb26", score: "score26", res: "res26" }, res: LESSON.resources, plan: LESSON.plan,
+    finish: 25, done: "That is your drawer." });
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

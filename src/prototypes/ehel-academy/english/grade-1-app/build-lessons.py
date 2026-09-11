@@ -94,6 +94,11 @@ if not os.path.isdir(DATA):
 # strand did silently. Unmapped strands keep their own name, so a grade that
 # adds a strand no step reads simply does not draw it, the way Grade 1 units
 # without a "sight" group draw no everyday-words step.
+# "taskSteps": the unit's writing and speaking tasks as two steps of their own.
+# Off unless an app turns it on. Grades 1-4 all do (Grade 4 first, Grades 1-3
+# the same day, 2026-09-11); a grade built later decides for itself. See the
+# build, below "write it".
+TASK_STEPS = bool(CFG.get("taskSteps"))
 STRAND_ROLES = CFG.get("strandRoles") or {"phonics": "phonics", "topic": "topic", "sight": "sight"}
 
 
@@ -221,6 +226,15 @@ WORDS_PER_STEP = 14
 # more, each of which drew a step a child finishes in one tap.
 WORDS_MIN_STEP = 4
 
+# The longest answer a story question offers as a tappable option. 70 was set
+# for Grade 1, whose answers are a few words ("Six years old"). Grades 3 and 4
+# answer in full sentences - median 65 and 71 characters, three-quarters under
+# 90 - so at 70 Grade 4's Unit 4 and Unit 10 built no story-question step at
+# all and Grade 3's Units 4, 9 and 10 had three questions each. 110 admits
+# eleven or twelve of every unit's twelve at Grades 3-4 while still refusing
+# the two-clause answers a child cannot read as one option. Grades 1-2 keep 70.
+STORY_ANSWER_MAX = 70 if GRADE <= 2 else 110
+
 # The order a learner walks a unit. Owner, 2026-09-08, matching the shell
 # course's own Grades 1-4 arrangement: the picture books LEAD the reading,
 # their questions come straight after them, and the unit's own text sits near
@@ -255,7 +269,11 @@ STEP_ORDER = [
     "checkmid",
     "rules",
     "write",
+    # The unit's writing tasks IN FULL - see the build, below "write it". Only
+    # an app whose app.config.json sets "taskSteps" has these two steps.
+    "writetasks",
     "talk",           # "Let us talk" — say it out loud, and Azure checks it
+    "speaktasks",
     "games",          # the whole game pack, one step
     # "story" IS DELIBERATELY ABSENT. Owner, 2026-09-08. The unit's own story
     # is ALREADY on the shelf at step 6 as an illustrated, narrated,
@@ -1320,7 +1338,7 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
             return False
         if re.search(r"\(\s*(any|or)\b", ans, re.I) or re.match(r"^\s*any\b", ans, re.I):
             return False
-        return len(ans) <= 70
+        return len(ans) <= STORY_ANSWER_MAX
 
     factual = [c for c in unit["comprehension"] if is_factual(c)]
 
@@ -1373,11 +1391,21 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     for c in factual:
         by_reading.setdefault(c.get("readingId"), []).append(c)
     queues = [by_reading[r] for r in sorted(by_reading, key=lambda r: reading_order.get(r, len(reading_order)))]
+    #
+    # A PARTIAL LAST ROUND goes to the readings with the most usable
+    # questions, not to the first readings in the unit. Grade 4 Unit 9 has
+    # five readings, so the second round had one slot and it went to reading
+    # one - and the Mombasa story, which carries five questions (two of them
+    # written to teach viewpoint and setting, Stage 4 objectives nothing else
+    # in the unit teaches), never got its second. The reading with the most
+    # questions is the unit's main text; ties keep reading order.
     chosen, n = [], 0
     while len(chosen) < 6 and any(len(q) > n for q in queues):
-        for q in queues:
-            if n < len(q) and len(chosen) < 6:
-                chosen.append(q[n])
+        live = [q for q in queues if n < len(q)]
+        room = 6 - len(chosen)
+        if len(live) > room:
+            live = sorted(live, key=lambda q: -len(q))[:room]   # stable: ties stay in reading order
+        chosen.extend(q[n] for q in live)
         n += 1
     chosen.sort(key=lambda c: reading_order.get(c.get("readingId"), len(reading_order)))
 
@@ -1615,6 +1643,96 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                     ["Read your line out loud before you check it.",
                      "Your ears will tell you if a word is in the wrong place."]),
                 ["line", "tiles", "check", "clear"])
+
+    # ---- 9b  the unit's writing and speaking tasks, in full ------------
+    #         THE STEPS ABOVE REACH A SLICE OF THEM. "Write a sentence" turns
+    #         the FIRST writing task that has a model into one tile sentence,
+    #         and "Say it out loud" quotes model lines from the speaking
+    #         tasks, six at most. Measured 2026-09-11: every unit in Grades
+    #         1-4 carries six writing tasks and six speaking tasks (Grade 4
+    #         seven in places), and those two steps reached 10 of 64 writing
+    #         tasks and 20 of 61 speaking tasks across Grade 4, and 10 of 60
+    #         and about 22 of 60 in each of Grades 1-3 - the rest were in
+    #         the unit file and on no page of this build. That
+    #         includes every task authored to close a Stage 4 objective
+    #         (tools/author-english-g4-stage4-gaps.py): the playscript, the
+    #         different ending, the attic description, Noah's diary and the
+    #         drama task. A claim in the unit file is not teaching until a
+    #         learner can open it.
+    #
+    #         THEY ARE PAPER WORK, like "Things to do": a paragraph, a
+    #         playscript, a talk. Nothing here is marked and nothing
+    #         pretends to be. The model text and the unit's own success
+    #         criteria sit behind buttons, so a learner writes before they
+    #         look.
+    #
+    #         A task not yet through curriculum review says so on its card,
+    #         in the words the Fluency step uses for the same state.
+    def task_title(t):
+        return re.sub(r"^\s*(writing|speaking)\s+\d+\s*[:\-\u2013\u2014]\s*", "", t or "", flags=re.I).strip()
+
+    def task_lines(t):
+        return [x.strip() for x in str(t or "").split("\n") if x.strip()]
+
+    def unreviewed(item):
+        return str(item.get("reviewStatus") or "").lower().startswith("needs")
+
+    if TASK_STEPS:
+        wtasks = []
+        for w in unit.get("writing") or []:
+            prompt = task_lines(w.get("promptAndInstructions"))
+            if not prompt:
+                continue
+            wtasks.append({
+                "n": w.get("sequence") or (len(wtasks) + 1),
+                "title": task_title(w.get("title")),
+                "lines": prompt,
+                "length": (w.get("expectedLength") or "").strip(),
+                "model": (w.get("modelText") or "").strip(),
+                "criteria": [c.strip() for c in re.split(r"\s*;\s*", w.get("successCriteria") or "") if c.strip()],
+                "support": (w.get("support") or "").strip(),
+                "extension": (w.get("extension") or "").strip(),
+                "audio": source_of(w),
+                "review": unreviewed(w),
+            })
+        if wtasks:
+            data["writetasks"] = wtasks
+            add("writetasks", "Write it yourself", "\U0001F4DD", "I did my writing",
+                "Writing to do on paper.",
+                explain(
+                    ["These are this unit's writing tasks, for paper and a pencil."],
+                    ["Choose one. Read it, or press Listen.",
+                     "Write it on paper first.",
+                     "Then press See an example, and Check my work."],
+                    ["Nobody marks this page.",
+                     "The checklist is how you mark your own work."],
+                    ["Pick a task and write."]),
+                ["tasks"])
+        stasks = []
+        for sp in unit.get("speaking") or []:
+            lines = task_lines(sp.get("instructionsAndModelLines"))
+            if not lines:
+                continue
+            stasks.append({
+                "n": sp.get("sequence") or (len(stasks) + 1),
+                "title": task_title(sp.get("title")),
+                "lines": lines,
+                "record": bool(sp.get("recordingRequired")),
+                "audio": source_of(sp),
+                "review": unreviewed(sp),
+            })
+        if stasks:
+            data["speaktasks"] = stasks
+            add("speaktasks", "Talk it through", "\U0001F3A4", "I did my speaking",
+                "Speaking to do out loud.",
+                explain(
+                    ["These are this unit's speaking tasks."],
+                    ["Choose one. Read it, or press Listen.",
+                     "Do it out loud - with a partner, a grown-up, or on your own."],
+                    ["Nobody is listening to you on this page.",
+                     "Tick a task when you have done it."],
+                    ["Pick a task and talk."]),
+                ["tasks"])
 
     # ---- 10  the two checks ------------------------------------------
     #         Ten questions each: five authored, five drawn from the unit's own
@@ -2339,6 +2457,11 @@ def bootstrap(slides, data):
         elif k == "activities":
             out.append('  activityList({ el: %s, items: LESSON.activities, finish: %d,\n'
                        '    done: "That is this unit\'s jobs done." });' % (el, i))
+        elif k in ("writetasks", "speaktasks"):
+            out.append('  taskList({ el: %s, items: LESSON.%s, finish: %d, write: %s,\n'
+                       '    done: %s });' % (el, k, i, "true" if k == "writetasks" else "false",
+                                            json.dumps("That is your writing done." if k == "writetasks"
+                                                       else "That is your speaking done.")))
         elif k == "talk":
             out.append('  letUsTalk({ el: %s, items: LESSON.talk, finish: %d,\n'
                        '    label: "Round", done: "That is talking practised." });' % (el, i))
@@ -2456,6 +2579,12 @@ def main():
     games_js = io.open(os.path.join(LIB, "games.js"), encoding="utf-8").read()
     speech_js = io.open(os.path.join(LIB, "speech.js"), encoding="utf-8").read()
     resources_js = io.open(os.path.join(LIB, "resources.js"), encoding="utf-8").read()
+    if TASK_STEPS:
+        # Appended, not always inlined: an app without "taskSteps" (Grades
+        # 1-3) must build exactly the bytes it built before, and a function
+        # and stylesheet nothing calls would still change every page.
+        english += "\n" + io.open(os.path.join(LIB, "tasks.js"), encoding="utf-8").read()
+        css += io.open(os.path.join(LIB, "tasks.css"), encoding="utf-8").read()
     ebooks = ebook_catalog()
     book_sets = book_comprehension_sets()
     lectures = lecture_media()

@@ -736,6 +736,20 @@
   .gloxeg { margin: 4px 0 0; font-size: 15px; line-height: 1.5; font-style: italic; }
   .gloxdef .hear, .gloxeg .hear { vertical-align: middle; margin-left: 6px; }
 
+  /* ---- the unit's writing and speaking tasks (lib/tasks.js; apps that set "taskSteps") ---- */
+  .task-title { flex: 1 1 auto; font-size: 17px; font-weight: 700; line-height: 1.25; }
+  .task-review { margin: 0; align-self: flex-start; padding: 3px 10px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 12.5px; }
+  .task-lines { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+  .task-lines p { margin: 0; }
+  .task-meta { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .task-meta b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--teal); margin-right: 4px; }
+  .task-model { margin: 0; white-space: pre-line; font-size: 15.5px; border-left: 3px solid var(--teal);
+    padding-left: 10px; }
+  .task-check { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 4px; font-size: 15px; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1091,30 +1105,30 @@
         <p class="score" id="score11"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Talking is why you are learning any of this.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what is happening.</s><s>Then tap the thing you would say.</s><s>Say it out loud too - that is the part that counts.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>More than one answer can be real English.</s><s>Only one of them answers what was asked.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, choose it, then say it out loud.</s></mstts:express-as>' data-say="What do you say?">
-      <div class="slide-head"><span class="n">12</span><h2>Let us talk</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">What do you say?</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are this unit&#39;s writing tasks, for paper and a pencil.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Choose one. Read it, or press Listen.</s><s>Write it on paper first.</s><s>Then press See an example, and Check my work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody marks this page.</s><s>The checklist is how you mark your own work.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a task and write.</s></mstts:express-as>' data-say="Writing to do on paper.">
+      <div class="slide-head"><span class="n">12</span><h2>Write it yourself</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Writing to do on paper.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
         <p class="fb" id="fb12" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score12"></p>
-        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the unit&#39;s own Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game card to play it.</s><s>Each game asks you a few short questions.</s><s>Play as many as you like, then come back for another.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play.">
-      <div class="slide-head"><span class="n">13</span><h2>Games</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Choose a game to play.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Talking is why you are learning any of this.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what is happening.</s><s>Then tap the thing you would say.</s><s>Say it out loud too - that is the part that counts.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>More than one answer can be real English.</s><s>Only one of them answers what was asked.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, choose it, then say it out loud.</s></mstts:express-as>' data-say="What do you say?">
+      <div class="slide-head"><span class="n">13</span><h2>Let us talk</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">What do you say?</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
         <p class="fb" id="fb13" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score13"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the reading this unit is built around.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pick one and press Read.</s><s>Press Listen and follow the words with your finger.</s><s>Press Next page when you are ready.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The next step asks about the story.</s><s>You can come back and read it again any time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and press Listen.</s></mstts:express-as>' data-say="Choose something to read.">
-      <div class="slide-head"><span class="n">14</span><h2>The unit story</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Choose something to read.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are this unit&#39;s speaking tasks.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Choose one. Read it, or press Listen.</s><s>Do it out loud - with a partner, a grown-up, or on your own.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is listening to you on this page.</s><s>Tick a task when you have done it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a task and talk.</s></mstts:express-as>' data-say="Speaking to do out loud.">
+      <div class="slide-head"><span class="n">14</span><h2>Talk it through</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Speaking to do out loud.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
@@ -1122,9 +1136,9 @@
         <p class="score" id="score14"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These questions are about this unit&#39;s own story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, go back one step.</s><s>The story is right above this one.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">15</span><h2>What happened in the story?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the unit&#39;s own Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game card to play it.</s><s>Each game asks you a few short questions.</s><s>Play as many as you like, then come back for another.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play.">
+      <div class="slide-head"><span class="n">15</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Choose a game to play.</span></div>
       <div class="stage">
         <div id="stage15"></div>
         <div class="choices" id="ch15"></div>
@@ -1132,9 +1146,9 @@
         <p class="score" id="score15"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the jobs you do with your hands, not on the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press Listen.</s><s>Go and do it - colour it, draw it, act it out, make it.</s><s>Then come back and tick it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>Press How did I do to see what finished looks like.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and go and do it.</s></mstts:express-as>' data-say="Jobs to do away from the screen.">
-      <div class="slide-head"><span class="n">16</span><h2>Things to do</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Jobs to do away from the screen.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the reading this unit is built around.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pick one and press Read.</s><s>Press Listen and follow the words with your finger.</s><s>Press Next page when you are ready.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The next step asks about the story.</s><s>You can come back and read it again any time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and press Listen.</s></mstts:express-as>' data-say="Choose something to read.">
+      <div class="slide-head"><span class="n">16</span><h2>The unit story</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Choose something to read.</span></div>
       <div class="stage">
         <div id="stage16"></div>
         <div class="choices" id="ch16"></div>
@@ -1142,20 +1156,19 @@
         <p class="score" id="score16"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
-      <div class="slide-head"><span class="n">17</span><h2>Fluency Practice</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask17">Tap the answer. Nothing here is new.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These questions are about this unit&#39;s own story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, go back one step.</s><s>The story is right above this one.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">17</span><h2>What happened in the story?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask17">Tap the answer.</span></div>
       <div class="stage">
         <div id="stage17"></div>
         <div class="choices" id="ch17"></div>
         <p class="fb" id="fb17" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score17"></p>
-        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">18</span><h2>Show what you know again</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask18">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the jobs you do with your hands, not on the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press Listen.</s><s>Go and do it - colour it, draw it, act it out, make it.</s><s>Then come back and tick it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>Press How did I do to see what finished looks like.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and go and do it.</s></mstts:express-as>' data-say="Jobs to do away from the screen.">
+      <div class="slide-head"><span class="n">18</span><h2>Things to do</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask18">Jobs to do away from the screen.</span></div>
       <div class="stage">
         <div id="stage18"></div>
         <div class="choices" id="ch18"></div>
@@ -1163,24 +1176,45 @@
         <p class="score" id="score18"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is you telling us how it went.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read each one.</s><s>Tap Not yet, With help, or By myself.</s><s>There is no right answer - it is what YOU think.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is marking this.</s><s>Not yet is a fine answer, and it is the honest one at the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one and tap.</s></mstts:express-as>' data-say="Say how you feel about each one.">
-      <div class="slide-head"><span class="n">19</span><h2>How did I do?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask19">Say how you feel about each one.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
+      <div class="slide-head"><span class="n">19</span><h2>Fluency Practice</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask19">Tap the answer. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage19"></div>
         <div class="choices" id="ch19"></div>
         <p class="fb" id="fb19" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score19"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is your drawer. Nothing in here is a step to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to look a word up.</s><s>Open the plan to see what comes next.</s><s>Print a sheet if you want to write with a pencil.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come here whenever you like.</s><s>Nothing here can be got wrong.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what is in here.</s></mstts:express-as>' data-say="Your word lists, your plans, and a pencil and paper.">
-      <div class="slide-head"><span class="n">20</span><h2>Student resources</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask20">Your word lists, your plans, and a pencil and paper.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">20</span><h2>Show what you know again</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask20">Tap the answer.</span></div>
       <div class="stage">
         <div id="stage20"></div>
         <div class="choices" id="ch20"></div>
         <p class="fb" id="fb20" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score20"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is you telling us how it went.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read each one.</s><s>Tap Not yet, With help, or By myself.</s><s>There is no right answer - it is what YOU think.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is marking this.</s><s>Not yet is a fine answer, and it is the honest one at the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one and tap.</s></mstts:express-as>' data-say="Say how you feel about each one.">
+      <div class="slide-head"><span class="n">21</span><h2>How did I do?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask21">Say how you feel about each one.</span></div>
+      <div class="stage">
+        <div id="stage21"></div>
+        <div class="choices" id="ch21"></div>
+        <p class="fb" id="fb21" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score21"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is your drawer. Nothing in here is a step to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to look a word up.</s><s>Open the plan to see what comes next.</s><s>Print a sheet if you want to write with a pencil.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come here whenever you like.</s><s>Nothing here can be got wrong.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what is in here.</s></mstts:express-as>' data-say="Your word lists, your plans, and a pencil and paper.">
+      <div class="slide-head"><span class="n">22</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask22">Your word lists, your plans, and a pencil and paper.</span></div>
+      <div class="stage">
+        <div id="stage22"></div>
+        <div class="choices" id="ch22"></div>
+        <p class="fb" id="fb22" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score22"></p>
       </div>
     </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1241,10 +1275,10 @@
       "year": "2026–27",
       "days": [
         "What this unit is about · Words: numbers, time and feelings · Word and picture",
-        "Words we see everywhere · Reading books",
-        "Story questions for each book · Say it out loud",
-        "Show what you know · How English works",
-        "Write a sentence · Let us talk",
+        "Words we see everywhere · Reading books · Story questions for each book",
+        "Say it out loud · Show what you know · How English works",
+        "Write a sentence · Write it yourself",
+        "Let us talk · Talk it through",
         "Games · The unit story",
         "What happened in the story? · Things to do",
         "Fluency Practice · Show what you know again",
@@ -1874,6 +1908,184 @@
       ],
       "audio": "./media/audio/grade-1/writing/eng-g01-t03-u10-write01.mp3"
     },
+    "writetasks": [
+      {
+        "n": 1,
+        "title": "My First English World page 1",
+        "lines": [
+          "Page 1: draw yourself and write 'My name is ___.' Write your age underneath. This page is the cover of your book."
+        ],
+        "length": "One picture, 1-3 labels and one short pattern",
+        "model": "My name is ___.",
+        "criteria": [
+          "My picture and my words match",
+          "I said my idea first",
+          "I used the model",
+          "I read it out loud"
+        ],
+        "support": "Tracing, copying, word cards, dictation to an adult and oral recording are allowed.",
+        "extension": "Add a second sentence or question.",
+        "audio": "./media/audio/grade-1/writing/eng-g01-t03-u10-write01.mp3",
+        "review": false
+      },
+      {
+        "n": 2,
+        "title": "My First English World page 2",
+        "lines": [
+          "Page 2: draw one thing you learned this year and write 'I can ___.' Add one extra label to your drawing."
+        ],
+        "length": "One picture, 1-3 labels and one short pattern",
+        "model": "I can ___.",
+        "criteria": [
+          "My picture and my words match",
+          "I said my idea first",
+          "I used the model",
+          "I read it out loud"
+        ],
+        "support": "Tracing, copying, word cards, dictation to an adult and oral recording are allowed.",
+        "extension": "Add a second sentence or question.",
+        "audio": "./media/audio/grade-1/writing/eng-g01-t03-u10-write02.mp3",
+        "review": false
+      },
+      {
+        "n": 3,
+        "title": "My First English World page 3",
+        "lines": [
+          "Page 3: draw your favourite unit and write 'I like ___.' Add two labels, such as farm and duck."
+        ],
+        "length": "One picture, 1-3 labels and one short pattern",
+        "model": "I like ___.",
+        "criteria": [
+          "My picture and my words match",
+          "I said my idea first",
+          "I used the model",
+          "I read it out loud"
+        ],
+        "support": "Tracing, copying, word cards, dictation to an adult and oral recording are allowed.",
+        "extension": "Add a second sentence or question.",
+        "audio": "./media/audio/grade-1/writing/eng-g01-t03-u10-write03.mp3",
+        "review": false
+      },
+      {
+        "n": 4,
+        "title": "My First English World page 4",
+        "lines": [
+          "Page 4: draw a place you know and write 'This is a ___.' Choose your school, the market or the library."
+        ],
+        "length": "One picture, 1-3 labels and one short pattern",
+        "model": "This is a ___.",
+        "criteria": [
+          "My picture and my words match",
+          "I said my idea first",
+          "I used the model",
+          "I read it out loud"
+        ],
+        "support": "Tracing, copying, word cards, dictation to an adult and oral recording are allowed.",
+        "extension": "Add a second sentence or question.",
+        "audio": "./media/audio/grade-1/writing/eng-g01-t03-u10-write04.mp3",
+        "review": false
+      },
+      {
+        "n": 5,
+        "title": "My First English World page 5",
+        "lines": [
+          "Page 5: draw the weather today and write 'It is ___.' Use sunny, rainy or windy, and colour the sky to match."
+        ],
+        "length": "One picture, 1-3 labels and one short pattern",
+        "model": "It is ___.",
+        "criteria": [
+          "My picture and my words match",
+          "I said my idea first",
+          "I used the model",
+          "I read it out loud"
+        ],
+        "support": "Tracing, copying, word cards, dictation to an adult and oral recording are allowed.",
+        "extension": "Add a second sentence or question.",
+        "audio": "./media/audio/grade-1/writing/eng-g01-t03-u10-write05.mp3",
+        "review": false
+      },
+      {
+        "n": 6,
+        "title": "My First English World page 6",
+        "lines": [
+          "Page 6: draw yourself in Grade 2 and write 'My next goal is ___.' Then read your whole book to your family."
+        ],
+        "length": "One picture, 1-3 labels and one short pattern",
+        "model": "My next goal is ___.",
+        "criteria": [
+          "My picture and my words match",
+          "I said my idea first",
+          "I used the model",
+          "I read it out loud"
+        ],
+        "support": "Tracing, copying, word cards, dictation to an adult and oral recording are allowed.",
+        "extension": "Add a second sentence or question.",
+        "audio": "./media/audio/grade-1/writing/eng-g01-t03-u10-write06.mp3",
+        "review": false
+      }
+    ],
+    "speaktasks": [
+      {
+        "n": 1,
+        "title": "Capstone speaking 1",
+        "lines": [
+          "Practise the opening of your show-and-tell. Say: 'Assalamu alaikum. My name is ___.' 'I am in Grade 1.' 'This is my English book.'"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t03-u10-speak01.mp3",
+        "review": false
+      },
+      {
+        "n": 2,
+        "title": "Capstone speaking 2",
+        "lines": [
+          "Rehearse your two best skills while a partner listens. Say: 'I can read ten words.' 'I can count to twenty.' 'I can write my name.'"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t03-u10-speak02.mp3",
+        "review": false
+      },
+      {
+        "n": 3,
+        "title": "Capstone speaking 3",
+        "lines": [
+          "Show a favourite page and say why you chose it. Say: 'I like this page.' 'I like the farm animals.' 'I like reading with my father.'"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t03-u10-speak03.mp3",
+        "review": false
+      },
+      {
+        "n": 4,
+        "title": "Capstone speaking 4",
+        "lines": [
+          "Hold up three pictures from your folder and name them clearly. Say: 'This is a bus.' 'This is a shop.' 'This is a duck.'"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t03-u10-speak04.mp3",
+        "review": false
+      },
+      {
+        "n": 5,
+        "title": "Capstone speaking 5",
+        "lines": [
+          "Describe one picture from your folder in two ways. Say: 'It is big.' 'It is blue and round.' 'It is my favourite.'"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t03-u10-speak05.mp3",
+        "review": false
+      },
+      {
+        "n": 6,
+        "title": "Capstone speaking 6",
+        "lines": [
+          "Present your finished book to the class. Say: 'Thank you for listening.' 'My next goal is to read a whole book.' 'I will keep practising.'"
+        ],
+        "record": true,
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t03-u10-speak06.mp3",
+        "review": false
+      }
+    ],
     "quizmid": [
       {
         "ask": "Which word fills the gap: My name ___ Maya.",
@@ -2564,7 +2776,7 @@
         "why": "Think about what you would love to learn next, then say it out loud to your teacher."
       },
       {
-        "ask": "Which word means: Happy means you feel good and want to smile.",
+        "ask": "Which word fills the gap: ___ means you feel good and want to smile.",
         "opts": [
           {
             "t": "sad",
@@ -2586,7 +2798,7 @@
         "why": "happy: Happy means you feel good and want to smile."
       },
       {
-        "ask": "Which word means: Sad means you feel unhappy, like when something upsets you.",
+        "ask": "Which word fills the gap: ___ means you feel unhappy, like when something upsets you.",
         "opts": [
           {
             "t": "three",
@@ -2718,7 +2930,7 @@
         "why": "nine: The number 9. It comes after eight and before ten."
       },
       {
-        "ask": "Which word means: Please is a kind word we use when we ask for something.",
+        "ask": "Which word fills the gap: ___ is a kind word we use when we ask for something.",
         "opts": [
           {
             "t": "hello",
@@ -2740,7 +2952,7 @@
         "why": "please: Please is a kind word we use when we ask for something."
       },
       {
-        "ask": "Which word means: Hello is a friendly word we say when we meet someone.",
+        "ask": "Which word fills the gap: ___ is a friendly word we say when we meet someone.",
         "opts": [
           {
             "t": "goodbye",
@@ -7460,6 +7672,100 @@
     if (got === STICKERS.length) REACTION.lessonDone();
   }
 
+  /* ==================================================================
+     THE UNIT'S WRITING AND SPEAKING TASKS, IN FULL
+
+     Inlined only into an app whose app.config.json sets "taskSteps" (Grades
+     1-4 do), so a build without the steps carries none of this code.
+     build-lessons.py says why the step exists: "Write a sentence"
+     and "Say it out loud" reach a slice of the unit's tasks, and the rest -
+     including every task authored to close a Cambridge objective - were on no
+     page of this build.
+
+     PAPER WORK, the way activityList() is off-screen work: nothing marks
+     it and nothing pretends to. A writing card keeps its model and its
+     checklist behind buttons, so the learner writes first and looks second.
+     The checklist is the unit's own successCriteria, which the course
+     already writes in the learner's voice ("I chose one clear feeling"), so
+     it is drawn as theirs - not as a note for a grown-up.
+
+     A task that has not been through curriculum review says so on its
+     card, the way the Fluency step says it for the same state.
+     ================================================================== */
+  function taskList(o) {
+    const el = o.el;
+    const did = new Array(o.items.length).fill(false);
+    const open = o.items.map(() => ({ model: false, check: false }));
+
+    function card(it, k) {
+      let html = '<div class="act task' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
+        '<div class="act-head"><span class="act-n">' + it.n + "</span>" +
+        '<span class="task-title">' + esc(it.title) + "</span>" +
+        '<button type="button" class="hear" data-act="hear" aria-label="Hear this task">&#128266;</button></div>';
+      if (it.review) {
+        html += '<p class="task-review">A teacher has not checked this task yet.</p>';
+      }
+      html += '<div class="task-lines">' + it.lines.map((t) => "<p>" + esc(t) + "</p>").join("") + "</div>";
+      if (o.write) {
+        if (it.length) html += '<p class="task-meta"><b>How long</b> ' + esc(it.length) + "</p>";
+        if (it.support) html += '<p class="task-meta"><b>Stuck?</b> ' + esc(it.support) + "</p>";
+        if (it.model) {
+          html += '<button type="button" class="act-how" data-act="model">' +
+            (open[k].model ? "Hide the example" : "See an example") + "</button>";
+          if (open[k].model) html += '<p class="task-model">' + esc(it.model) + "</p>";
+        }
+        if (it.criteria && it.criteria.length) {
+          html += '<button type="button" class="act-how" data-act="check">' +
+            (open[k].check ? "Hide the checklist" : "Check my work") + "</button>";
+          if (open[k].check) {
+            html += '<ul class="task-check">' + it.criteria.map((c) => "<li>" + esc(c) + "</li>").join("") + "</ul>";
+            if (it.extension) html += '<p class="task-meta"><b>Want more?</b> ' + esc(it.extension) + "</p>";
+          }
+        }
+      } else if (it.record) {
+        html += '<p class="task-meta"><b>Tip</b> Record yourself on a phone or tablet if you can, then listen back.</p>';
+      }
+      return html + '<button type="button" class="tick" data-act="tick">' +
+        (did[k] ? "✓ done" : "I did this") + "</button></div>";
+    }
+
+    function paint() {
+      $(el.ask).innerHTML = o.write ? "Writing to do on paper." : "Speaking to do out loud.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="acts" id="' + el.tasks + '">' + o.items.map(card).join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + el.tasks + 'fin">' +
+        "I have done my tasks &#10003;</button></div>";
+
+      const ticked = did.filter(Boolean).length;
+      reportAttempt(o.finish, ticked, did.length, "tasks");
+      $(el.score).textContent = ticked + " of " + o.items.length + " ticked"
+        + (ticked === o.items.length ? " - all of them" : "");
+
+      $(el.tasks + "fin").addEventListener("click", () => {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = o.done;
+        finish(o.finish, o.done);
+      });
+    }
+
+    $(el.stage).addEventListener("click", (e) => {
+      const card = e.target.closest(".task");
+      const button = e.target.closest("[data-act]");
+      if (!card || !button) return;
+      const k = Number(card.dataset.k);
+      const it = o.items[k];
+      /* The spoken fallback is the whole task - its title and every line -
+         for the reason activityList gives: a task whose clip is missing or
+         withdrawn must not be read out as its first sentence alone. */
+      if (button.dataset.act === "hear") { playClip(it.audio, [it.title].concat(it.lines).join(" ")); return; }
+      if (button.dataset.act === "model") { open[k].model = !open[k].model; paint(); return; }
+      if (button.dataset.act === "check") { open[k].check = !open[k].check; paint(); return; }
+      if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
+    });
+
+    paint();
+  }
+
 
   /* ==================================================================
      PICTURE BOOKS
@@ -9244,7 +9550,7 @@
   }
 
 
-  const STICKERS = [["🧭", "I know what this unit is for"], ["📅", "I read the plan"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["✅", "I showed what I know so far"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["📖", "I read the unit story"], ["🤔", "I answered the story questions"], ["✋", "I did the activities"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"], ["🌟", "I thought about my learning"], ["🎒", "I used my resources"]];
+  const STICKERS = [["🧭", "I know what this unit is for"], ["📅", "I read the plan"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["✅", "I showed what I know so far"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["📝", "I did my writing"], ["💬", "I practised talking"], ["🎤", "I did my speaking"], ["🎮", "I played the games"], ["📖", "I read the unit story"], ["🤔", "I answered the story questions"], ["✋", "I did the activities"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"], ["🌟", "I thought about my learning"], ["🎒", "I used my resources"]];
 
   unitOverview({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, data: LESSON.overview, finish: 0,
     done: "Now you know what this unit is for." });
@@ -9274,24 +9580,28 @@
   buildSentence({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11", line: "line11", tiles: "tiles11", check: "check11", clear: "clear11" }, ask: LESSON.write.ask, tiles: LESSON.write.tiles,
     answer: LESSON.write.answer, finish: 10,
     done: "That is a real sentence, written by you." });
-  letUsTalk({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, items: LESSON.talk, finish: 11,
+  taskList({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12", tasks: "tasks12" }, items: LESSON.writetasks, finish: 11, write: true,
+    done: "That is your writing done." });
+  letUsTalk({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, items: LESSON.talk, finish: 12,
     label: "Round", done: "That is talking practised." });
-  gameZone({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", gamelist: "gamelist13" }, pack: LESSON.games, finish: 12,
+  taskList({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14", tasks: "tasks14" }, items: LESSON.speaktasks, finish: 13, write: false,
+    done: "That is your speaking done." });
+  gameZone({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15", gamelist: "gamelist15" }, pack: LESSON.games, finish: 14,
     done: "That is the Game Zone played." });
-  unitReadings({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14", pick: "pick14" }, items: LESSON.reads, finish: 13,
+  unitReadings({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16", pick: "pick16" }, items: LESSON.reads, finish: 15,
     done: "You read the whole story." });
-  sequence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, items: LESSON.questions, finish: 14, attemptOnly: true,
+  sequence({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17" }, items: LESSON.questions, finish: 16, attemptOnly: true,
     label: "Question", done: "You remembered the story well." });
-  activityList({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16", acts: "acts16" }, items: LESSON.activities, finish: 15,
+  activityList({ el: { ask: "ask18", say: "ask18", stage: "stage18", ch: "ch18", fb: "fb18", score: "score18", acts: "acts18" }, items: LESSON.activities, finish: 17,
     done: "That is this unit's jobs done." });
-  sequence({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17" }, items: LESSON.fluency, finish: 16,
+  sequence({ el: { ask: "ask19", say: "ask19", stage: "stage19", ch: "ch19", fb: "fb19", score: "score19" }, items: LESSON.fluency, finish: 18,
     label: "Question", done: "That is this unit's words and patterns practised." });
-  sequence({ el: { ask: "ask18", say: "ask18", stage: "stage18", ch: "ch18", fb: "fb18", score: "score18" }, items: LESSON.quiz, finish: 17,
+  sequence({ el: { ask: "ask20", say: "ask20", stage: "stage20", ch: "ch20", fb: "fb20", score: "score20" }, items: LESSON.quiz, finish: 19,
     label: "Question", done: "That is the whole unit finished." });
-  selfCheck({ el: { ask: "ask19", say: "ask19", stage: "stage19", ch: "ch19", fb: "fb19", score: "score19", self: "self19" }, items: LESSON.reflect, unit: LESSON.unitNo,
-    finish: 18, done: "Thank you for telling us." });
-  studentResources({ el: { ask: "ask20", say: "ask20", stage: "stage20", ch: "ch20", fb: "fb20", score: "score20", res: "res20" }, res: LESSON.resources, plan: LESSON.plan,
-    finish: 19, done: "That is your drawer." });
+  selfCheck({ el: { ask: "ask21", say: "ask21", stage: "stage21", ch: "ch21", fb: "fb21", score: "score21", self: "self21" }, items: LESSON.reflect, unit: LESSON.unitNo,
+    finish: 20, done: "Thank you for telling us." });
+  studentResources({ el: { ask: "ask22", say: "ask22", stage: "stage22", ch: "ch22", fb: "fb22", score: "score22", res: "res22" }, res: LESSON.resources, plan: LESSON.plan,
+    finish: 21, done: "That is your drawer." });
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

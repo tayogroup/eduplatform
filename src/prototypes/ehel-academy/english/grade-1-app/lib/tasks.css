@@ -1,0 +1,14 @@
+
+  /* ---- the unit's writing and speaking tasks (lib/tasks.js; apps that set "taskSteps") ---- */
+  .task-title { flex: 1 1 auto; font-size: 17px; font-weight: 700; line-height: 1.25; }
+  .task-review { margin: 0; align-self: flex-start; padding: 3px 10px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 12.5px; }
+  .task-lines { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+  .task-lines p { margin: 0; }
+  .task-meta { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .task-meta b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--teal); margin-right: 4px; }
+  .task-model { margin: 0; white-space: pre-line; font-size: 15.5px; border-left: 3px solid var(--teal);
+    padding-left: 10px; }
+  .task-check { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 4px; font-size: 15px; }

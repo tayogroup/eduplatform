@@ -70,7 +70,21 @@ node   $T/deploy.mjs                --app ../grade-2-app    # plan; --upload wri
   Listening, Story — 13,695 words across the grade) where Grade 1 reads
   three, every one already narrated.
 
-Not yet done for this grade, and not this build's to do: a launch-override
-row for `ehel-eng-g02` (see `../grade-1-app/repoint-grade-1.php`), and the
-`learningTime` estimate `../grade-1-app/estimate-learning-time.py` writes
-into Grade 1's unit JSONs.
+Both items once listed here as not done are done: `ehel-eng-g02` is routed to
+this build, and `learningTime` is written into the unit JSONs.
+
+## Closed on 2026-09-11, after the Grade 3 and 4 builds
+
+- **Cambridge coverage 72 → 99 of 99.** Never measured before; see
+  `docs/english-g2-objective-gaps.md`. Some were taught and unclaimed (the
+  spelling strand's two spellings of one sound and magic e; the poems written
+  on a familiar pattern); the rest were authored by
+  `tools/author-english-g2-stage2-gaps.py`, all "Needs curriculum review".
+- **Every writing and speaking task is on a page** (`"taskSteps": true`):
+  before, the app reached 10 of 60 writing and 23 of 60 speaking tasks.
+- **Tutor prompts filled** on the 283 core links that had none, in the one
+  template the grade uses (628 links); the tool used to read the one-off
+  prompts beside it as a rival template and refuse.
+- **Story step:** its spare sixth slot goes to the reading with the most
+  questions (see `../grade-1-app/README.md`), which swaps one question in
+  Units 1, 3, 8 and 9.

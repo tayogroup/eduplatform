@@ -47,6 +47,39 @@ strand mapped onto a role another strand holds is MERGED, not overwritten.
 next build — the Maths builds copied a stylesheet per grade and the copies
 drifted.
 
+`"taskSteps": true` adds two steps, **Write it yourself** and **Talk it
+through**, carrying every writing and speaking task of the unit in full
+(`lib/tasks.js`, `lib/tasks.css`, inlined only when the key is set). Without
+them the app reaches a slice of the tasks: "Write a sentence" turns the first
+writing task into one tile sentence and "Say it out loud" quotes six model
+lines. Measured 2026-09-11, those two steps reach 10 of 60 writing tasks and
+about 22 of 60 speaking tasks in each of Grades 1–3 (10 of 64 and 20 of 61 in
+Grade 4). All four grades set the key (2026-09-11).
+
+**The story step's sixth slot goes to the main story.** The step takes one
+question from each reading in turn and stops at six; when the last round
+cannot give every reading one, the spare slots go to the readings with the
+most usable questions, ties in reading order. It used to give them to the
+first readings, which left Grade 4 Unit 9's Mombasa story - five questions,
+two written for Stage 4 objectives - with one question on the page. Grade 1
+is unchanged; sixteen units in Grades 2–4 swap one question from a shorter
+text for one from the story, and every reading keeps at least one.
+
+**The hub's voice toggle is 44px**, as every control on the lesson pages is.
+The shared bar draws it at 40px for all subjects; the hub raises it for
+English alone.
+
+**Grade 1 content, 2026-09-11.** Fluency Practice: the 45 word questions
+whose meaning named its own answer ("Which word means: Fun means enjoying
+yourself.") are gap questions now, rewritten in place by
+`tools/repair-english-g1-fluency-giveaways.py` - not by re-running the
+authoring tool, which would have reverted 146 later edits to the bank - and
+one option that also fitted its gap ("were" beside "are") was swapped out.
+Learning time counts taught words only, as Grades 2-4 do (759 self-paced
+minutes, from 995). Tutor prompts and spelling rows filled on the core links
+that lacked them (159 and 50). Cambridge Stage 1 is 90 of 90
+(`docs/english-g1-objective-gaps.md`).
+
 Grade 2's Video lesson step exists since 2026-09-11, when its unit lessons
 were rendered (see `../grade-2-app/README.md`). Two steps read Grade 2's grammar differently because its shape
 differs: **Let us talk** and **Fluency Practice** draw on `ruleAndExamples`
@@ -71,6 +104,9 @@ lesson pages byte-identical:
   contrast fix.
 - **Hub cards show the unit's learning-time estimate** ("about N min") where
   the unit carries one.
+- **Story-question options up to 110 characters at Grades 3-4** (Grade 4
+  build): those grades answer in full sentences, and the Grade 1 cap of 70
+  left two Grade 4 units with no story-question step.
 
 ```bash
 

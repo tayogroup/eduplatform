@@ -26,8 +26,15 @@ are all bespoke) does it fall back to every link in the grade:
     aiTutorPrompt      "With an adult, ask the tutor to say name slowly,
                         use it in one easy sentence and wait for you to repeat."
 
-A form is used only if it covers at least 80% of the links it was read from,
-so a grade whose own files disagree is refused rather than given a guess. The
+A form is used only if it covers at least 80% of the TEMPLATED links it was
+read from - links whose form recurs at least three times - so a grade whose
+templates disagree is refused rather than given a guess. A prompt written for
+one word alone ("With an adult beside me, ask me what arrives in the post and
+let me name three examples") is not a competing template, and counting it as
+one is what refused Grades 1, 2 and 4 on 2026-09-11: their tutor prompts are
+one template (690, 628 and 835 links - the same sentence Grade 3 was filled
+with) plus a few hundred one-offs, and "best covers 835 of 1,044" read as two
+templates when it was one. The
 letter string follows the course's own conventions, measured on the filled
 links: letters joined by " - ", a hyphen spoken as "hyphen", a space as
 "space", an apostrophe dropped. A field that already has a value is never
@@ -118,16 +125,16 @@ def learn_forms(units, core_only, fields=None):
         if fields and name not in fields:
             continue
         form, k = c.most_common(1)[0] if c else (None, 0)
-        if not c or k < COVER * n or (core_only and k < 3):
+        # agreement among the TEMPLATED links: a form seen fewer than three
+        # times is one author's sentence for one word, not a rival template
+        templated = sum(v for v in c.values() if v >= 3)
+        if not c or k < COVER * templated or k < 3:
             # No agreed form: this field is left EMPTY and said so, never
-            # guessed. Grade 2's glossary links carry two tutor-prompt
-            # templates (the best covers 628 of 930), so Grade 2 gets its
-            # spelling rows and keeps its tutor prompts absent until a person
-            # chooses between the two.
+            # guessed.
             out[name] = None
             if not core_only:
-                print("  NOT FILLED: the grade's own %s links do not agree on a form "
-                      "(best covers %d of %d)" % (name, k, n))
+                print("  NOT FILLED: the grade's own %s templates do not agree on a form "
+                      "(best covers %d of %d templated links)" % (name, k, templated))
             continue
         out[name] = (form, k, n)
     return out

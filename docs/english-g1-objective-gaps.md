@@ -1,5 +1,13 @@
 # Grade 1 English — the uncovered Cambridge objectives
 
+**Closed 2026-09-11: 90 of 90.** The last two - `1Wp.03` (join letters for a
+two-letter sound) and `1Ww.07` (ask for spellings, keep a spelling log) - were
+closed as Grades 2-4 were, by teaching first and claiming second:
+`tools/author-english-g1-stage1-gaps.py` adds "Writing 7 - Join sh and ch"
+(Unit 6, lo02) and "Writing 7 - My Word Book" (Unit 9, lo02), both "Needs
+curriculum review", both shown by the lesson app's "Write it yourself" step.
+What follows is the history of how the other eighty-eight got there.
+
 Found by the content validation of 2026-09-09. Updated 2026-09-10, when three
 of the fifteen turned out to be a mapping fix and were claimed.
 

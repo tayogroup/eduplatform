@@ -144,6 +144,11 @@ PAGE = """<!doctype html>
      the spacer, and the year bar beside the unit bar */
   .eh-round { flex: 0 0 auto; }
   .eh-bar1 .hubhead-spacer { display: none; }
+  /* the voice toggle is a 44px target, as every control on the lesson pages
+     is (lesson.css: the step dots, the hear buttons). The shared bar draws it
+     at 40px for every subject's apps; raised here for English alone, so a
+     rebuild of another subject's app does not change under it. */
+  .eh-icon { width: 44px; height: 44px; }
   @media (max-width: 720px) {
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-picker { max-width: 130px; }

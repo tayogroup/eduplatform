@@ -274,7 +274,7 @@ reload after moving to step 4 opens step 4.
 Against the owner's 27-area framework (OneDrive: `computing-grades validation.docx`);
 the full report is [VALIDATION.md](VALIDATION.md), and the Word copy sits beside the
 other validation reports as `computing-grade-2-v2 validation report.docx`. Average
-4.1 / 5.
+4.3 / 5 after the remaining fixes (4.1 in the first version).
 
 Reading every learner-facing line found eight kinds of error, the widest spread
 being that data on a computer "does not get lost" or "cannot be spilt on", and
@@ -287,10 +287,15 @@ and deployed the same day (see below). The progress fix from the Grade 1 validat
 live lessons: every step stored, the lesson recorded complete, and a reopened
 lesson opening where it was left.
 
-Left as required changes: a second activity for the four objectives that rest on
-one (2CS.03, 2CS.04, 2CS.05, 2MD.03, which also needs a second way of collecting
-data with a device), a recap and a warm-up per lesson, new tasks where Grade 1's
-toast and sandwich return almost word for word, and the human checks.
+**The remaining fixes** (`6f2f7c6f2`, the same day): a second activity for each of the
+four objectives that rested on one (lesson 7 chooses the device way of collecting
+for four purposes, which also meets 2MD.03 in full; lesson 10 sorts which way the
+information goes, sorts computer jobs from people jobs, and asks why a device fits);
+a "Last time" recap on lessons 2 to 10 and an unmarked two-question warm-up on all
+ten; and new tasks where Grade 1 repeated: taking a photo instead of the toast,
+feeding the cat instead of the sandwich, and two debug rounds with new goals. Lessons
+7 and 10 gain steps in the middle, so records made there before the redeploy read
+a step or more out. Not deployed. Left: the human checks and the owner's decisions.
 
 ## Redeployed 2026-09-11 with the Grade 2 validation fixes
 

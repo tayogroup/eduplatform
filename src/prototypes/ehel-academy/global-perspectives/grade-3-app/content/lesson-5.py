@@ -7,8 +7,12 @@ a positive difference to an issue affecting others. The topic is our
 classroom and our street: why we do what we do, what it does to the people
 around us, and what one child could do about a problem that is somebody
 else's.
+
+Evaluation: 3Ea.01 express an opinion about another person's viewpoint,
+giving reasons - a second application after Lesson 4, on the street's shared
+problems.
 """
-from _kit import explain, step, opt, q, action, part, word, home
+from _kit import explain, step, opt, q, action, part, word, home, tagged
 
 LESSON = {
     "slug": "causes-and-actions",
@@ -50,8 +54,8 @@ LESSON = {
                   "predict": {"ask": "What did it do to Sami?", "opts": [opt("He finished his sums and understood them", True), opt("He got confused", False), opt("He left the room", False)]},
                   "result": {"pic": "\U0001F60A", "say": "Sami finished all ten sums and said he understood them now.", "sound": "ding"},
                   "why": "A good cause, a good action, a good consequence for Sami."},
-                 {"situation": "You were tired after a late night, so you snapped at Nora when she asked to borrow your rubber.", "pic": "\U0001F971",
-                  "cause": {"ask": "What was the CAUSE of snapping at Nora?", "opts": [opt("You were tired after a late night", True), opt("Nora was rude", False), opt("You lost your rubber", False)], "why": "The late night made you tired and grumpy. Nora only asked."},
+                 {"situation": "You stayed up after your bedtime, so you were tired and snapped at Nora when she asked to borrow your rubber.", "pic": "\U0001F971",
+                  "cause": {"ask": "What was the CAUSE of snapping at Nora?", "opts": [opt("You stayed up after your bedtime", True), opt("Nora was rude", False), opt("You lost your rubber", False)], "why": "Staying up made you tired and grumpy. Nora only asked."},
                   "predict": {"ask": "What did it do to Nora?", "opts": [opt("She felt hurt and did not ask again", True), opt("She laughed", False), opt("She got a new rubber", False)]},
                   "result": {"pic": "\U0001F61F", "say": "Nora went quiet and did not ask you for anything for the rest of the day.", "sound": "thud"},
                   "why": "The cause was tiredness, not Nora. Going to bed when you are told changes this chain."},
@@ -66,7 +70,7 @@ LESSON = {
         step("sort", "Which cause could you change?", "\U0001F527", "Cause changer", ["3Ac.01"],
              "Here are causes of actions. Could YOU change this cause, or is it outside your control?",
              explain(
-                 ["Some causes are yours to change: a late night, a lost pencil, leaving late.", "Some are not: the weather, a fire alarm."],
+                 ["Some causes are yours to change: staying up after bedtime, a lost pencil, being slow to get ready.", "Some are not: the weather, a fire alarm."],
                  [],
                  [],
                  ["Read the cause, then tap the bin."]),
@@ -77,7 +81,7 @@ LESSON = {
                   {"pic": "\U0001F327️", "label": "the rain kept us indoors all day", "bin": "not", "why": "Nobody controls the rain."},
                   {"pic": "✏️", "label": "I could not find my pencil", "bin": "mine", "why": "Keeping it in your pencil case fixes that."},
                   {"pic": "\U0001F6A8", "label": "the fire alarm went off", "bin": "not", "why": "That is not yours to change."},
-                  {"pic": "\U0001F552", "label": "I left home late", "bin": "mine", "why": "Getting ready the night before changes it."},
+                  {"pic": "\U0001F552", "label": "I was slow getting ready", "bin": "mine", "why": "Getting ready the night before changes it."},
                   {"pic": "\U0001F68C", "label": "the bus broke down", "bin": "not", "why": "The bus is outside your control."},
               ]},
              "You know which causes are yours to change."),
@@ -131,6 +135,34 @@ LESSON = {
              ]},
              "Four problems that were somebody else's, four actions of your own that helped."),
 
+        step("opinion", "What do YOU think of their views?", "\U0001F4AD", "Viewpoint judge", ["3Ea.01"],
+             "People on our street have views about shared problems. Say what you think of each view, with two reasons.",
+             explain(
+                 ["An opinion about somebody else's viewpoint says whether you agree, and why.", "Two reasons, both about the topic."],
+                 ["I partly agree with Mr Ali, because a ball can hit a parked car, and because children need somewhere to play.",
+                  "One reason for his view and one against: that is partly agreeing."],
+                 ["Children agree with whoever spoke last.", "Think about the view itself, then give your reasons."],
+                 ["Tap what you think, then two reasons."]),
+             {"reasonsNeeded": 2,
+              "rounds": [
+                 {"topic": "football in the street", "tag": "street", "pic": "\U0001F474\U0001F3FE", "ask": "What do you think of Mr Ali's view?",
+                  "view": {"name": "Mr Ali", "pic": "\U0001F474\U0001F3FE", "says": "Children should not play football in the street at all."},
+                  "stances": [{"id": "agree", "t": "I agree with Mr Ali"}, {"id": "part", "t": "I partly agree with Mr Ali", "mixed": True}, {"id": "disagree", "t": "I disagree with Mr Ali"}],
+                  "reasons": [dict(tagged("because a ball can hit a parked car or somebody walking past", "street"), supports=['agree', 'part']), dict(tagged("because cars come round the corner fast", "street"), supports=['agree', 'part']), dict(tagged("because there is no park near us to play in", "street"), supports=['disagree', 'part']), dict(tagged("because children need somewhere to run and play", "street"), supports=['disagree', 'part']),
+                              tagged("because I had eggs for breakfast", "breakfast"), tagged("because my cousin is tall", "cousins")]},
+                 {"topic": "tidying the classroom", "tag": "tidying", "pic": "\U0001F467\U0001F3FF", "ask": "What do you think of Hana's view?",
+                  "view": {"name": "Hana", "pic": "\U0001F467\U0001F3FF", "says": "Everyone in the class should take a turn tidying the classroom each day."},
+                  "stances": [{"id": "agree", "t": "I agree with Hana"}, {"id": "part", "t": "I partly agree with Hana", "mixed": True}, {"id": "disagree", "t": "I disagree with Hana"}],
+                  "reasons": [dict(tagged("because then nobody has to do all the tidying alone", "tidying"), supports=['agree', 'part']), dict(tagged("because a tidy room is easier to learn in", "tidying"), supports=['agree', 'part']), dict(tagged("because tidying every day takes time away from lessons", "tidying"), supports=['disagree', 'part']), dict(tagged("because some tidying jobs are too heavy for children", "tidying"), supports=['disagree', 'part']),
+                              tagged("because the sea is blue", "the sea"), tagged("because I like the colour red", "colours")]},
+                 {"topic": "dropping litter", "tag": "litter", "pic": "\U0001F466\U0001F3FE", "ask": "What do you think of Sami's view?",
+                  "view": {"name": "Sami", "pic": "\U0001F466\U0001F3FE", "says": "Anyone who drops litter should have to pick up litter for a whole week."},
+                  "stances": [{"id": "agree", "t": "I agree with Sami"}, {"id": "part", "t": "I partly agree with Sami", "mixed": True}, {"id": "disagree", "t": "I disagree with Sami"}],
+                  "reasons": [dict(tagged("because then they learn how much work litter makes", "litter"), supports=['agree', 'part']), dict(tagged("because it would keep the street clean", "litter"), supports=['agree', 'part']), dict(tagged("because a whole week is too long for one wrapper", "litter"), supports=['disagree', 'part']), dict(tagged("because the wind can blow litter out of somebody's hand", "litter"), supports=['disagree', 'part']),
+                              tagged("because my bag is heavy", "bags"), tagged("because it is Monday", "days")]},
+             ]},
+             "You gave your opinion about three people's views on shared problems, each with two reasons."),
+
         step("explore", "Small actions, big differences", "\U0001F31F", "Difference maker", ["3As.01"],
              "Six actions a child can take for somebody else. Tap each one.",
              explain(
@@ -162,7 +194,7 @@ LESSON = {
                  q("Tariq ran down the corridor and broke Hana's model. What was the CAUSE?", "\U0001F552", "he was late for class", ["he wanted to break it", "Hana was rude"], "Being late was why he ran."),
                  q("You snapped at Nora because you were tired. What did that do to Nora?", "\U0001F61F", "she felt hurt and did not ask again", ["she laughed", "nothing"], "Your tiredness reached Nora."),
                  q("The new girl eats alone. Which action of yours would help her most?", "\U0001F91D", "sit with her at lunch", ["smile at her from your table", "wait for her to come to you"], "Sitting with her is something you do. Telling a teacher is good too."),
-                 q("Which cause could you change?", "\U0001F527", "a late night made me grumpy", ["the rain", "the fire alarm"], "Going to bed when you are told is yours to do."),
+                 q("Which cause could you change?", "\U0001F527", "staying up after bedtime made me grumpy", ["the rain", "the fire alarm"], "Going to bed when you are told is yours to do."),
              ]},
              "You find causes, see consequences for others, and act for them."),
 
@@ -181,7 +213,7 @@ LESSON = {
                  q("Which problem is somebody ELSE'S?", "\U0001F465", "the Grade 1s cannot reach the fountain", ["I keep losing my pencil", "I am tired after lunch", "I am slow at tying my laces"], "The Grade 1s' problem, and your action."),
                  q("Next door cannot hear over our noise. Which action helps?", "\U0001F910", "use my inside voice and remind my table", ["shout at everyone", "blame other tables", "ask them to shut their door"], "Your own quiet voice is yours to give."),
                  q("Mr Ali cannot carry his shopping. Which action of yours, with a grown-up, would help him most?", "\U0001F6CD️", "carry a bag up with my mum", ["hope for a ramp", "tell him to buy less", "pretend not to see"], "Carrying a bag makes a real difference today."),
-                 q("Which cause is OUTSIDE your control?", "\U0001F326️", "the rain", ["staying up after bedtime", "a lost pencil", "leaving home late"], "Nobody controls the rain."),
+                 q("Which cause is OUTSIDE your control?", "\U0001F326️", "the rain", ["staying up after bedtime", "a lost pencil", "being slow to get ready"], "Nobody controls the rain."),
              ]},
              "That is the whole lesson finished. You find causes, see what your actions do to others, and act for them."),
     ],
@@ -193,6 +225,7 @@ LESSON["about"] = [
     "Say what an action of yours did to somebody else.",
     "Tell a cause you could change from one outside your control.",
     "Suggest an action of your own for a problem that is somebody else's.",
+    "Give your opinion about somebody else's view on a shared problem, with two reasons.",
 ]
 
 LESSON["lecture"] = [
@@ -201,11 +234,13 @@ LESSON["lecture"] = [
     part("\U0001F914", "Find the cause",
          "If Tariq had left home earlier, he would not have run, and the model would be fine. Change the cause and the whole chain changes. That is why finding the cause matters."),
     part("\U0001F465", "Consequences for others",
-         "A late night made you snap at Nora, and Nora went quiet all day. Finishing early let you help Sami, and Sami understood his sums. What you do reaches other people, for better and for worse."),
+         "Staying up after bedtime made you snap at Nora, and Nora went quiet all day. Finishing early let you help Sami, and Sami understood his sums. What you do reaches other people, for better and for worse."),
     part("\U0001F527", "Causes you can change",
-         "Some causes are yours: a late night, a lost pencil, leaving late. Some are not: the rain, the fire alarm. Work on the ones that are yours."),
+         "Some causes are yours: staying up after bedtime, a lost pencil, being slow to get ready. Some are not: the rain, the fire alarm. Work on the ones that are yours."),
     part("\U0001F4AA", "An action for somebody else",
          "The new girl eats alone. Sit with her. Next door cannot hear. Keep your voice down. Mr Ali cannot carry his shopping. Carry a bag with your mum. Their problem, your action, a real difference."),
+    part("\U0001F4AD", "What do you think of their view?",
+         "Mr Ali thinks children should not play football in the street at all. Do you agree? Say what you think of his view, and give two reasons. If you partly agree, one reason can be for his view and one against."),
 ]
 
 LESSON["words"] = [
@@ -249,3 +284,10 @@ LESSON["lookback"] = {
         {"before": "If I was grumpy, it was the other person's fault.", "after": "The cause was often mine, like staying up when I was told to go to bed, and I can change it."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You forgot your water bottle, so you were thirsty all morning. What was the cause?", "\U0001F4A7", "forgetting the water bottle", ["being thirsty", "the morning"], "The cause is why it happened: you forgot the bottle."),
+    q("An older neighbour cannot reach the top shelf in the shop. What could you do?", "\U0001F6D2", "ask if you can help, and reach it for them", ["walk past", "laugh"], "Offering help is an action of yours that makes a difference to somebody else."),
+]

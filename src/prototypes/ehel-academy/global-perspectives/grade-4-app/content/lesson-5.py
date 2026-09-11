@@ -7,8 +7,12 @@ a positive difference to an issue affecting others. The topic is the spaces
 we share: the lunch queue, the library, the assembly hall, the street - where
 what one child does for a small reason reaches other people, and where one
 child's action can change a problem that belongs to somebody else.
+
+Evaluation: 4Ea.01 express an opinion about another person's viewpoint,
+giving reasons - a second application after Lesson 4, on the school's shared
+spaces.
 """
-from _kit import explain, step, opt, q, action, part, word, home
+from _kit import explain, step, opt, q, action, part, word, home, tagged
 
 LESSON = {
     "slug": "shared-spaces",
@@ -93,7 +97,7 @@ LESSON = {
                  {"issue": {"title": "Hana cannot see the board from the back row", "pic": "\U0001F453", "say": "Her new glasses are not ready yet. What could YOU do?", "fixed": "Hana can see every word!"},
                   "needs": "view",
                   "actions": [
-                      action("swap", "I could swap seats with her until her glasses come", "\U0001FA91", "view", "You swapped. Hana read the whole board and finished the task first."),
+                      action("swap", "I could swap seats with her until her glasses come", "\U0001FA91", "view", "You swapped. Hana could see the whole board and finished the task first."),
                       action("teacher", "I could tell the teacher that Hana cannot see the board", "\U0001F469\U0001F3FE‍\U0001F3EB", "view", "You told the teacher. She moved Hana to the front."),
                       action("read", "I could shout the board out loud to her", "\U0001F4E2", "worse", "Now nobody could concentrate, and Hana still could not see."),
                       action("wait", "I could wait until her glasses arrive", "⏳", "nothing", "Two weeks of lessons she could not see."),
@@ -128,6 +132,33 @@ LESSON = {
                   "why": "Tidying a shelf a day is your action, and it makes a real difference to the librarian."},
              ]},
              "Four problems that were somebody else's, four actions of your own that helped."),
+
+        step("opinion", "What do YOU think of their views?", "\U0001F4AD", "Viewpoint judge", ["4Ea.01"],
+             "People who share our school's spaces have views about them. Say what you think of each view, with two reasons about the topic.",
+             explain(
+                 ["An opinion about somebody else's viewpoint says whether you agree, and why.", "Think about where they stand: what do they see every day?"],
+                 ["Mrs Noor, the librarian, sees crumbs in the books every day. I partly agree with her, because crumbs spoil the books, and because some children are hungry after a long morning."],
+                 ["Children agree with whoever spoke last.", "Look at the view itself, then give two reasons about the topic."],
+                 ["Tap what you think, then two reasons."]),
+             {"reasonsNeeded": 2,
+              "rounds": [
+                 {"topic": "eating in the library", "tag": "library", "pic": "\U0001F9D5\U0001F3FE", "ask": "What do you think of Mrs Noor's view?",
+                  "view": {"name": "Mrs Noor, the librarian", "pic": "\U0001F9D5\U0001F3FE", "says": "Nobody should eat in the library, not even a quick snack."},
+                  "stances": [{"id": "agree", "t": "I agree with Mrs Noor"}, {"id": "part", "t": "I partly agree with Mrs Noor", "mixed": True}, {"id": "disagree", "t": "I disagree with Mrs Noor"}],
+                  "reasons": [dict(tagged("because crumbs and spills spoil the books", "library"), supports=['agree', 'part']), dict(tagged("because food left behind brings ants", "library"), supports=['agree', 'part']), dict(tagged("because some children are hungry after a long morning", "library"), supports=['disagree', 'part']), dict(tagged("because children who stay late need a snack to keep going", "library"), supports=['disagree', 'part']),
+                              tagged("because I like drawing", "drawing"), tagged("because the bus was late", "buses")]},
+                 {"topic": "bikes in the playground", "tag": "bikes", "pic": "\U0001F468\U0001F3FF\u200d\U0001F527", "ask": "What do you think of Mr Hassan's view?",
+                  "view": {"name": "Mr Hassan, the caretaker", "pic": "\U0001F468\U0001F3FF\u200d\U0001F527", "says": "Bikes should be left outside the school gate, not in the playground."},
+                  "stances": [{"id": "agree", "t": "I agree with Mr Hassan"}, {"id": "part", "t": "I partly agree with Mr Hassan", "mixed": True}, {"id": "disagree", "t": "I disagree with Mr Hassan"}],
+                  "reasons": [dict(tagged("because bikes in the playground block the way", "bikes"), supports=['agree', 'part']), dict(tagged("because a falling bike could hurt a small child", "bikes"), supports=['agree', 'part']), dict(tagged("because bikes left outside the gate could be stolen", "bikes"), supports=['disagree', 'part']), dict(tagged("because it is a long walk from the gate with a heavy bag", "bikes"), supports=['disagree', 'part']),
+                              tagged("because I have two sisters", "sisters"), tagged("because it is hot today", "the weather")]},
+                 {"topic": "seats in assembly", "tag": "assembly", "pic": "\U0001F467\U0001F3FF", "ask": "What do you think of Hana's view?",
+                  "view": {"name": "Hana", "pic": "\U0001F467\U0001F3FF", "says": "The best seats in assembly should go to whoever arrives first."},
+                  "stances": [{"id": "agree", "t": "I agree with Hana"}, {"id": "part", "t": "I partly agree with Hana", "mixed": True}, {"id": "disagree", "t": "I disagree with Hana"}],
+                  "reasons": [dict(tagged("because it is fair to people who come on time", "assembly"), supports=['agree', 'part']), dict(tagged("because everyone knows the rule, so it is easy to follow", "assembly"), supports=['agree', 'part']), dict(tagged("because small children at the back cannot see", "assembly"), supports=['disagree', 'part']), dict(tagged("because people might push to get there first", "assembly"), supports=['disagree', 'part']),
+                              tagged("because my shoes are black", "shoes"), tagged("because I had rice for lunch", "food")]},
+             ]},
+             "You gave your opinion about three people's views on shared spaces, each with two reasons."),
 
         step("explore", "Small actions in shared spaces", "\U0001F31F", "Difference maker", ["4As.01"],
              "Six actions a child can take for somebody else in a shared space. Tap each one.",
@@ -191,6 +222,7 @@ LESSON["about"] = [
     "Say that in a shared space a consequence reaches more people than you meant.",
     "Tell a cause you could change from one outside your control.",
     "Suggest an action of your own for a problem that belongs to somebody else.",
+    "Give your opinion about somebody else's view on a shared space, with two reasons about the topic.",
 ]
 
 LESSON["lecture"] = [
@@ -204,6 +236,8 @@ LESSON["lecture"] = [
          "Hana cannot see the board: swap seats. The bikes block the caretaker: rack yours and ask friends. The Grade 2s lose their ball: fetch it with a grown-up. The librarian cannot keep up: tidy a shelf a day. Their problem, your action."),
     part("\U0001F31F", "Small, and yours",
          "Each is something you can do today, and each one changes somebody else's day."),
+    part("\U0001F4AD", "What do you think of their view?",
+         "Mrs Noor, the librarian, thinks nobody should eat in the library. She sees the crumbs in the books every day. Do you agree? Give your opinion of her view, with two reasons about the topic."),
 ]
 
 LESSON["words"] = [
@@ -247,3 +281,10 @@ LESSON["lookback"] = {
         {"before": "Other people's problems are for grown-ups to fix.", "after": "I can take an action of my own, and tell a grown-up when it needs one."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You leave the tap running in the school washroom. Who could that reach?", "\U0001F6B0", "everybody who shares the school's water", ["only you", "nobody at all"], "In a shared space, what you do reaches other people too."),
+    q("The library books are always messy. Which is an action you could take?", "\U0001F4DA", "put back every book you take out", ["wait for somebody else to do it", "stop going to the library"], "Putting your own books back is an action of yours that helps everyone."),
+]

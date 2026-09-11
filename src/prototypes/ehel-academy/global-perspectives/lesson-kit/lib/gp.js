@@ -54,6 +54,9 @@
     .replace(/\byour\b/gi, (m) => (m[0] === "Y" ? "My" : "my"))
     .replace(/\byou\b/gi, "I");
   const noDot = (s) => String(s || "").replace(/[.!]\s*$/, "");
+  /* what the voice says for a word card: its spoken form where the content
+     gives one ("to record" for a verb a voice would read as REcord) */
+  const sw = (w) => (w && w.say) || (w && w.w) || "";
 
   /* ---- a step may speak only while it is the step on screen ------------
      Every renderer draws once, at load, because the deck paints all its
@@ -1717,6 +1720,64 @@
     ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
+  /* ---- before we start: last lesson in one frame, then a starting check ----
+     The recap is the previous lesson's own about lines, copied by the builder
+     so it cannot say something that lesson never promised. The two questions
+     come BEFORE the teaching, so nothing is marked: whichever answer the child
+     taps, the right one is shown and said, and a wrong tap hears that not
+     knowing yet is what the lesson is for. What was already known goes to the
+     school as participation (reportAttempt), never as a score - a mark taken
+     before the teaching would drag a child's record down for a lesson they
+     have not had. */
+  function warmUp(o) {
+    const el = o.el, items = o.check || [];
+    let i = 0, known = 0, lock = false;
+    const rc = o.recap;
+    const learnedLine = (t) => "You learned to " + lower1(noDot(t)) + ".";
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      (rc ? '<div class="recap"><p class="recap-h"><span class="recap-pic" aria-hidden="true">' + small(rc.icon) + "</span>" +
+            "Last time: <b>" + esc(rc.title) + "</b></p>" +
+            '<ul class="ovw-list">' + (rc.learned || []).map((t) => "<li>" + esc(learnedLine(t)) + "</li>").join("") + "</ul>" +
+            '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Remind me</button></div></div>'
+          : "") +
+      '<div class="wu"><p class="wu-h">What do you already know?</p><div class="wu-q" id="' + el.stage + 'q"></div></div>';
+    if (rc) $(el.stage + "r").addEventListener("click", () =>
+      say("Last time, in " + rc.title + ". " + (rc.learned || []).map(learnedLine).join(" ")));
+    function draw() {
+      lock = false;
+      const it = items[i];
+      $(el.stage + "q").innerHTML = (it.pic ? '<span class="wu-pic" aria-hidden="true">' + small(it.pic) + "</span>" : "") +
+        '<span class="wu-ask">' + esc(plain(it.ask)) + "</span>";
+      $(el.ch).className = "choices stack";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+      $(el.fb).className = "fb"; $(el.fb).textContent = "";
+      $(el.score).textContent = "Question " + (i + 1) + " of " + items.length;
+      sayHere(o.finish, plain(it.ask));
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1", it = items[i];
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (ok) known++; else b.classList.add("wrong");
+      const line = (ok ? "You knew that already. " : "Not yet, and that is fine. ") + it.why;
+      $(el.fb).className = "fb " + (ok ? "good" : "calm"); $(el.fb).textContent = line;
+      say(line);
+      i++;
+      setTimeout(() => {
+        if (i < items.length) return draw();
+        const msg = (known === items.length ? "You knew both already." : known ? "You knew one already." : "Those are new to you.") + " " + o.done;
+        $(el.ch).innerHTML = ""; $(el.ch).className = "choices";
+        $(el.score).textContent = "";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = msg;
+        reportAttempt(o.finish, known, items.length, "known before the lesson");
+        finish(o.finish, msg);
+      }, 2700);
+    });
+    if (items.length) draw();
+  }
+
   /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
   function lecture(o) {
     const el = o.el;
@@ -1781,7 +1842,7 @@
         open = Number(b.dataset.k); heard.add(open);
         paintGrid();
         const w = items[open];
-        say(w.w + ". " + w.meaning + " " + (w.uses[0] || ""));
+        say(sw(w) + ". " + w.meaning + " " + (w.uses[0] || ""));
         if (heard.size === items.length) {
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You have heard every word. Now, which word is which?";
@@ -1798,7 +1859,7 @@
         '<p class="wp-meaning">' + esc(w.meaning) + "</p></div></div>" +
         '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => "<li>" + esc(u) + "</li>").join("") + "</ul>" +
         '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
-      $(id + "h").addEventListener("click", () => say(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")));
+      $(id + "h").addEventListener("click", () => say(sw(w) + ". " + w.meaning + " " + (w.uses || []).join(" ")));
     }
 
     /* the check: which word means this? */
@@ -1829,7 +1890,8 @@
         $(el.ch).querySelectorAll(".wordbtn").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
         if (!ok) b.classList.add("wrong"); else { right++; known.push(w.w); }
         const msg = ok ? cheer() + " " + w.w + "." : "That word is " + w.w + ". " + w.meaning;
-        $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = msg; say(msg);
+        $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = msg;
+        say(ok ? cheer() + " " + sw(w) + "." : "That word is " + sw(w) + ". " + w.meaning);
         i++;
         setTimeout(() => {
           if (i >= items.length) {
@@ -2099,7 +2161,7 @@
     const wordRows = (words, withLesson) => words.map((w) =>
       '<div class="wordrow"><span class="gloxpic" aria-hidden="true">' + small(w.pic) + "</span>" +
       '<div class="gloxbody"><div class="gloxhead"><strong>' + esc(w.w) + "</strong>" +
-      '<button type="button" class="hear" data-say="' + esc(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")) + '" aria-label="Hear ' + esc(w.w) + '">&#128266;</button>' +
+      '<button type="button" class="hear" data-say="' + esc(sw(w) + ". " + w.meaning + " " + (w.uses || []).join(" ")) + '" aria-label="Hear ' + esc(w.w) + '">&#128266;</button>' +
       (withLesson && w.file ? '<a class="gloxlesson" href="' + esc(w.file) + location.search + '">Lesson ' + w.lesson + "</a>" : "") + "</div>" +
       '<p class="gloxdef">' + esc(w.meaning) + "</p>" +
       ((w.uses || []).length ? '<p class="gloxeg">“' + esc(w.uses[0]) + "”</p>" : "") + "</div></div>").join("");

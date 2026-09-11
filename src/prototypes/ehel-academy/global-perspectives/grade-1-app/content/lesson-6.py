@@ -8,8 +8,11 @@ action intended to help achieve a shared outcome; 1Ft.01 identify an action
 that someone else contributed to achieve a shared outcome. The topic is the
 class garden and the class mural - two jobs one child cannot finish alone,
 which is what makes a shared outcome shared.
+
+Analysis: 1As.01 choose a possible solution to an issue from a range of
+actions given - a second application after Lesson 4, on problems a team meets.
 """
-from _kit import explain, step, opt, q, person, part, word, home
+from _kit import explain, step, opt, q, person, part, word, home, action
 
 GARDEN_FRIENDS = [person("sami", "Sami", "\U0001F466\U0001F3FE"), person("nora", "Nora", "\U0001F467\U0001F3FD"), person("omar", "Omar", "\U0001F466\U0001F3FD")]
 MURAL_FRIENDS = [person("hana", "Hana", "\U0001F467\U0001F3FF"), person("tariq", "Tariq", "\U0001F466\U0001F3FF"), person("amal", "Amal", "\U0001F467\U0001F3FE")]
@@ -99,6 +102,44 @@ LESSON = {
               ]},
              "Kind words help a team. Unkind words stop it."),
 
+        step("solve", "Fix a team problem", "\U0001F527", "Team fixer", ["1As.01"],
+             "Things go wrong when a team works. Some actions fix the problem and some do not. Tap one and see what happens.",
+             explain(
+                 ["A team problem needs an action that FIXES it."],
+                 ["Two of you want the same brush.", "Grabbing it starts a quarrel. Taking turns fixes it."],
+                 ["Children pick the quickest action, not the one that works.", "Ask: would this really fix it?"],
+                 ["Tap an action. If it does not fix it, try another."]),
+             {"rounds": [
+                 {"issue": {"title": "Two of you want the same paint brush", "pic": "\U0001F58C\ufe0f", "say": "Tariq wants it, and so do you. What could you do?", "fixed": "You are both painting!"},
+                  "needs": "turns",
+                  "actions": [
+                      action("turns", "Take turns: one of you, then the other", "\U0001F504", "turns", "You painted a flower, then Tariq painted a sun. You both had a turn."),
+                      action("grab", "Grab it and run", "\U0001F3C3", "worse", "Tariq is upset, and the paint went on the floor. Now nobody is painting."),
+                      action("shout", "Shout until Tariq gives up", "\U0001F4E2", "worse", "Tariq gave up and walked away sad. The team is not working now."),
+                      action("hide", "Hide the brush in your bag", "\U0001F392", "nothing", "Now nobody can use it. The problem is still there."),
+                  ],
+                  "why": "Taking turns meant you both got to paint."},
+                 {"issue": {"title": "The watering can is too heavy for one", "pic": "\U0001F331", "say": "Nora cannot lift it on her own. What could you do?", "fixed": "The garden has had its drink!"},
+                  "needs": "together",
+                  "actions": [
+                      action("together", "Carry it together, one hand each", "\U0001F91D", "together", "You and Nora carried it between you, and the whole garden got watered."),
+                      action("drag", "Drag it along the ground", "\U0001F4A6", "worse", "The water sloshed out on the path. Now there is less for the plants."),
+                      action("leave", "Leave it and go and play", "\U0001F6B6", "nothing", "The can is still full, and the plants are still thirsty."),
+                      action("rain", "Wait for it to rain", "\u2601\ufe0f", "nothing", "No rain came today. The plants are still thirsty."),
+                  ],
+                  "why": "Two people could lift what one could not. Carrying it together fixed it."},
+                 {"issue": {"title": "The top of the mural is too high to reach", "pic": "\U0001F3A8", "say": "Nobody can reach the top of the wall. What could you do?", "fixed": "The top of the mural is painted!"},
+                  "needs": "grownup",
+                  "actions": [
+                      action("grownup", "Ask a grown-up to help you reach", "\U0001F64B", "grownup", "Teacher Yasmin held the steps steady, and the top got painted safely."),
+                      action("climb", "Climb on a wobbly chair on your own", "\U0001FA91", "worse", "The chair wobbled and you nearly fell. Climbing on your own is not safe."),
+                      action("jump", "Jump up and try to reach", "\u2B06\ufe0f", "nothing", "You jumped and jumped. The top is still not painted."),
+                      action("blank", "Leave the top empty", "\U0001F6AB", "nothing", "The mural has a big empty strip at the top. It is not finished."),
+                  ],
+                  "why": "Asking a grown-up got the top painted safely."},
+             ]},
+             "You chose the action that really fixed each team problem."),
+
         step("team", "Paint the class mural", "\U0001F3A8", "Mural team", ["1Cc.01", "1Ct.01"],
              "A new team, a new job: a big painting for the classroom wall. Share, be kind, watch it fill up.",
              explain(
@@ -183,6 +224,7 @@ LESSON["about"] = [
     "Work kindly with others when something goes wrong.",
     "Say what you did to help the team finish a job.",
     "Say what a friend did to help the team.",
+    "Choose the action that would really fix a team problem.",
 ]
 
 LESSON["lecture"] = [
@@ -196,6 +238,8 @@ LESSON["lecture"] = [
          "When the job is done, look back. What did you do to help? You shared your seeds. You helped Sami plant his. Say the things you really did."),
     part("\U0001F64C", "What a friend did",
          "And say what a friend did. Omar dug the holes. Nora watered the seeds. Everybody did something, and that is why the garden got done."),
+    part("\U0001F527", "Fix a team problem",
+         "Two of you want the same brush: take turns. The watering can is too heavy: carry it together. The wall is too high: ask a grown-up. Choose the action that really fixes the problem."),
 ]
 
 LESSON["words"] = [
@@ -234,3 +278,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to bake bread", "the names of the planets", "how to swim"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You have two crayons. Your friend has none. What is a kind thing to do?", "\U0001F58D\ufe0f", "give your friend one", ["keep both", "break them"], "Giving one away means you can both draw."),
+    q("Why do people work in a team?", "\U0001F91D", "to get a big job done together", ["so nobody has to do anything", "to make the job take longer"], "A team gets a big job done because everyone does a part."),
+]

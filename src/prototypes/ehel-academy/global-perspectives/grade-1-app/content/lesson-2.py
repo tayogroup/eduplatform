@@ -162,7 +162,7 @@ LESSON = {
                   {"ask": "Which game did the FEWEST children choose?", "check": {"kind": "least"},
                    "opts": [opt("Sandpit", True), opt("Football", False), opt("Skipping", False)], "why": "The Sandpit row has 0, fewer than any other."},
               ]},
-             "You read a pictogram twice. You can talk about what one shows."),
+             "You used a pictogram twice. You can talk about what one shows."),
 
         step("questions", "Finding out", "\U0001F4AC", "Finding-out judge", ["1Rc.01", "1Ad.01"],
              "Think about what we did. Tap the answer.",
@@ -225,7 +225,7 @@ LESSON["words"] = [
     word("survey", "\U0001F5E3️", "Asking everyone the same question and recording the answers.",
          ["We did a survey about getting to school.", "A survey asks everyone."]),
     word("record", "✏️", "To write or draw an answer down so it is kept.",
-         ["Record what Amal said.", "We recorded six answers."]),
+         ["Record what Amal said.", "We recorded six answers."], say="to record"),
     word("pictogram", "\U0001F4CA", "A picture for every person, in rows.",
          ["The pictogram shows most of us walk.", "One picture is one person."]),
     word("chart", "\U0001F4CB", "A page with sides or boxes to record things in.",
@@ -257,3 +257,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to swim", "the names of the planets", "how to tie a shoelace"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You want to know which fruit your class likes best. What is the best way to find out?", "\U0001F34E", "ask everyone in the class", ["guess", "ask one friend"], "Asking everyone tells you what the whole class thinks. A guess does not."),
+    q("You draw one picture for each child who walks to school. How many pictures for three children?", "\U0001F6B6", "3", ["1", "6"], "One picture for each child, so three children need three pictures."),
+]

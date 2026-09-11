@@ -214,3 +214,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to tie a shoelace", "how to swim", "the names of the planets"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You want to know how to make bread. Who would know?", "\U0001F35E", "a baker", ["a bus driver", "a football player"], "A baker makes bread every day, so a baker knows."),
+    q("Your tooth hurts. Who knows most about teeth?", "\U0001F9B7", "a dentist", ["a farmer", "a painter"], "Looking after teeth is a dentist's job."),
+]

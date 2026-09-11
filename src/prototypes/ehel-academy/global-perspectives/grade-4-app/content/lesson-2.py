@@ -87,7 +87,7 @@ LESSON = {
                   {"ask": "How many more plastic cups than cartons?", "check": {"kind": "difference", "a": "Plastic cups", "b": "Cartons"},
                    "opts": [opt("3", True), opt("7", False), opt("2", False)], "why": "5 take away 2 is 3."},
               ]},
-             "You read your own observation as a chart."),
+             "You turned your own observation into a chart."),
 
         step("survey", "Ask: what do you do with an empty carton?", "\U0001F4DD", "Questionnaire", ["4Rc.01", "4Rf.01"],
              "What happens to a carton at home is something you cannot observe. ASK. Give each classmate the questionnaire.",
@@ -99,12 +99,12 @@ LESSON = {
              {"question": "What do you do with an empty juice carton at home?", "pic": "\U0001F9C3", "columns": ["What we do", "How many"],
               "options": [{"id": "recycle", "t": "Put it in the recycling", "pic": "♻️"}, {"id": "bin", "t": "Put it in the bin", "pic": "\U0001F5D1️"}, {"id": "reuse", "t": "Keep it to reuse", "pic": "\U0001F331"}],
               "people": people([
-                  ("recycle", "We have a green box for cartons and cans."),
+                  ("recycle", "We keep cartons for the recycling collector."),
                   ("bin", "The bin. I did not know cartons could be recycled."),
                   ("recycle", "Recycling. My dad rinses them first."),
                   ("reuse", "I keep them. We grow seeds in them."),
                   ("bin", "In the bin, usually. Nobody told me not to."),
-                  ("recycle", "The recycling box by the back door."),
+                  ("recycle", "We take them to the recycling point at the market."),
               ])},
              "Six questionnaires answered and recorded. Information you could not have observed."),
 
@@ -152,7 +152,7 @@ LESSON = {
                   {"ask": "Which day had NO rain at all?", "check": {"kind": "least"},
                    "opts": [opt("Wednesday", True), opt("Monday", False), opt("Thursday", False)], "why": "Wednesday measured 0 mm: a dry day."},
               ]},
-             "You read four measurements and compared them. That is what a gauge is for."),
+             "You compared four measurements. That is what a gauge is for."),
 
         step("organiser", "Which bin does it belong in?", "\U0001F5C2️", "Waste sorter", ["4Rf.01"],
              "Everything we found can be recorded by where it should GO. Record each thing under recycling, compost, or rubbish.",
@@ -236,13 +236,13 @@ LESSON["words"] = [
     word("questionnaire", "\U0001F4DD", "The same question, with the same choices, given to everyone.",
          ["Six children answered the questionnaire.", "A questionnaire finds out what you cannot see."]),
     word("gauge", "\U0001F327️", "A tool that measures how much of something there is.",
-         ["A rain gauge measures rain.", "We read the gauge every morning."]),
+         ["A rain gauge measures rain.", "We check the gauge every morning."]),
     word("millimetre", "\U0001F4CF", "A very small measure: a thousand make a metre.",
          ["Twelve millimetres of rain fell.", "Written as mm."]),
     word("compost", "\U0001F331", "Food and plant waste that rots down into soil.",
          ["Apple cores go in the compost.", "The compost heap needs water."]),
     word("record", "\U0001F4CB", "To write down or chart what you found, so it is not lost.",
-         ["Record each count in the table.", "We recorded the rain every day."]),
+         ["Record each count in the table.", "We recorded the rain every day."], say="to record"),
 ]
 
 LESSON["home"] = [
@@ -271,3 +271,10 @@ LESSON["lookback"] = {
         {"before": "A wetter day is just wetter.", "after": "A gauge lets me say HOW MANY millimetres wetter."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You want to know how many birds visit the tree at break. What should you do?", "\U0001F426", "watch and count them", ["ask one friend to guess", "measure the tree"], "You can see the birds, so observe and count them."),
+    q("You want to know what your classmates do with old clothes at home. What should you do?", "\U0001F455", "ask them with a questionnaire", ["watch the playground", "measure the clothes"], "You cannot see what happens at home, so ask."),
+]

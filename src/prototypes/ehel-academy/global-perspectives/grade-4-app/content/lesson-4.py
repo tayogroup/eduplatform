@@ -90,9 +90,9 @@ LESSON = {
              explain(
                  ["A source is written by somebody, and that somebody has a viewpoint.", "Look for the sentences that show what the author wants to happen, and the reasons they give."],
                  ["Eighty new jobs for local people: that is the author's reason.", "We hope you will support the plan: that is what the author wants."],
-                 ["Children read a leaflet as plain facts.", "Ask: who wrote this, and what do THEY want from me?"],
+                 ["Children take a leaflet as plain facts.", "Ask: who wrote this, and what do THEY want from me?"],
                  ["Press Read it to me, then tap the sentences."]),
-             {"title": "A leaflet through the door",
+             {"title": "A leaflet from the market",
               "lines": [
                   "A new supermarket for our town.",
                   "The store will bring eighty new jobs for local people.",
@@ -261,3 +261,10 @@ LESSON["lookback"] = {
         {"before": "Saying I agree is an opinion.", "after": "An opinion is what I think AND two reasons about the topic."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Which one is what somebody thinks, not a fact?", "\U0001F4AD", "The new shop will be wonderful.", ["The field is next to the school.", "The field has two goals."], "Wonderful is an opinion. The others can be checked."),
+    q("A farmer and a footballer look at the same field. Why might they think different things about it?", "\U0001F33E", "because they use the field in different ways", ["because one of them is always wrong", "because fields change colour"], "Where you stand shapes what you think: one grows food on it, one plays on it."),
+]

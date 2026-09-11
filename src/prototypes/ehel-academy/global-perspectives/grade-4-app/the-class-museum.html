@@ -710,6 +710,18 @@
   .gloxq { width: 100%; padding: 13px 16px; border-radius: 14px; border: 3px solid var(--teal); background: var(--card); color: var(--ink); font-family: inherit; font-size: 19px; margin-bottom: 12px; }
   .gloxmore { color: var(--muted); font-size: 14px; text-align: center; }
 
+/* before we start: last lesson in one frame, then the starting check. Built
+   from the theme's own tokens, like every other panel here: the header bars
+   repaint the deck dark, so a fixed light colour would sit under white ink. */
+.recap, .wu { width: 100%; max-width: 36em; box-sizing: border-box; background: var(--cell); border: 2px solid var(--line); border-radius: 16px; padding: 10px 14px; }
+.recap-h { margin: 0 0 4px; font-weight: 800; color: var(--gold); }
+.recap-pic { font-size: 1.4em; margin-right: 6px; vertical-align: middle; }
+.recap .ovw-list { margin: 4px 0 6px; font-size: 18px; gap: 8px; }
+.wu-h { margin: 0 0 6px; font-weight: 800; color: var(--gold); }
+.wu-q { display: flex; align-items: center; gap: 10px; font-size: 1.12em; font-weight: 700; }
+.wu-pic { font-size: 1.8em; line-height: 1; }
+.fb.calm { color: var(--ink); }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -965,9 +977,9 @@
         <p class="score" id="score1"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson, told to you before you do it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to each part.</s><s>Look at the picture while you listen.</s><s>Press Next part to go on, and Listen again to hear it twice.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Listening is not the same as hearing.</s><s>Sit still, and actually listen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen.</s></mstts:express-as>' data-say="Listen to the lesson, one part at a time. Press Next part when you are ready.">
-      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Listen to the lesson, one part at a time. Press Next part when you are ready.</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is a warm-up.</s><s>Nothing here is marked.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>First, remember what you learned last time. Press Remind me to hear it again.</s><s>Then answer two questions about what this lesson is about.</s><s>If you know, great. If you do not, the page tells you, and this lesson will teach it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children worry about getting it wrong.</s><s>Not knowing yet is fine. That is what the lesson is for.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap an answer.</s></mstts:express-as>' data-say="Last time, in Shared Spaces, you learned to say the cause behind an action, and who its consequence reached. And to say that in a shared space a consequence reaches more people than you meant. And to tell a cause you could change from one outside your control. And to suggest an action of your own for a problem that belongs to somebody else. And to give your opinion about somebody else&#39;s view on a shared space, with two reasons about the topic. Now, have a go at two questions. It is fine not to know yet.">
+      <div class="slide-head"><span class="n">2</span><h2>Before we start</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">First, remember last time. Then have a go at two questions. It is fine not to know yet.</span></div>
       <div class="stage">
         <div id="stage2"></div>
         <div class="choices" id="ch2"></div>
@@ -975,9 +987,9 @@
         <p class="score" id="score2"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the big words in this lesson.</s><s>They are the words people use when they find things out and talk about them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a word.</s><s>You will see its picture, hear what it means, and hear it used in a sentence.</s><s>When you have heard them all, the page asks which word is which.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A big word often means something very exact.</s><s>Listen to the meaning, not just the word.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the first word.</s></mstts:express-as>' data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
-      <div class="slide-head"><span class="n">3</span><h2>Big words</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson, told to you before you do it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to each part.</s><s>Look at the picture while you listen.</s><s>Press Next part to go on, and Listen again to hear it twice.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Listening is not the same as hearing.</s><s>Sit still, and actually listen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen.</s></mstts:express-as>' data-say="Listen to the lesson, one part at a time. Press Next part when you are ready.">
+      <div class="slide-head"><span class="n">3</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">Listen to the lesson, one part at a time. Press Next part when you are ready.</span></div>
       <div class="stage">
         <div id="stage3"></div>
         <div class="choices" id="ch3"></div>
@@ -985,9 +997,9 @@
         <p class="score" id="score3"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Allocating tasks means giving each job to the team member whose skill it needs.</s><s>The one who can read old handwriting reads the old letters. The one who draws well draws the high street.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The class museum about the old town needs four jobs.</s><s>Sami makes models, so he builds the old bridge.</s><s>Yusuf speaks clearly, so he reads the labels at the opening.</s><s>Give the reading to the one who cannot read old writing and the museum opens a week late.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children give the best job to their best friend.</s><s>Give each job to the person whose skill it needs.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and watch the jobs go out.</s></mstts:express-as>' data-say="A team has jobs, and people who are good at different things. Press Next and see the jobs given out.">
-      <div class="slide-head"><span class="n">4</span><h2>Match the job to the skill</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">A team has jobs, and people who are good at different things. Press <b>Next</b> and see the jobs given out.</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the big words in this lesson.</s><s>They are the words people use when they find things out and talk about them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a word.</s><s>You will see its picture, hear what it means, and hear it used in a sentence.</s><s>When you have heard them all, the page asks which word is which.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A big word often means something very exact.</s><s>Listen to the meaning, not just the word.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the first word.</s></mstts:express-as>' data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">4</span><h2>Big words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
       <div class="stage">
         <div id="stage4"></div>
         <div class="choices" id="ch4"></div>
@@ -995,9 +1007,9 @@
         <p class="score" id="score4"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01 4Ct.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>First the team gives out its jobs. Then each person does theirs. When the team is stuck, somebody brings an idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Build the bridge: Sami makes models.</s><s>The paint will not stick to the shiny card: paint on paper and glue it on.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children give every job to themselves.</s><s>Look at what each job NEEDS, and who has it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the right person for each job, then play on.</s></mstts:express-as>' data-say="You and three friends are making the museum display. Give out the jobs, bring ideas when the team is stuck, and work kindly. Watch the display fill up.">
-      <div class="slide-head"><span class="n">5</span><h2>Build the class museum</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">You and three friends are making the museum display. Give out the jobs, bring ideas when the team is stuck, and work kindly. Watch the display fill up.</span></div>
+    <section class="slide" data-objectives="4Cc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Allocating tasks means giving each job to the team member whose skill it needs.</s><s>The one who can read old handwriting reads the old letters. The one who draws well draws the high street.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The class museum about the old town needs four jobs.</s><s>Sami makes models, so he builds the old bridge.</s><s>Yusuf speaks clearly, so he reads the labels at the opening.</s><s>Give the reading to the one who cannot read old writing and the museum opens a week late.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children give the best job to their best friend.</s><s>Give each job to the person whose skill it needs.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and watch the jobs go out.</s></mstts:express-as>' data-say="A team has jobs, and people who are good at different things. Press Next and see the jobs given out.">
+      <div class="slide-head"><span class="n">5</span><h2>Match the job to the skill</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">A team has jobs, and people who are good at different things. Press <b>Next</b> and see the jobs given out.</span></div>
       <div class="stage">
         <div id="stage5"></div>
         <div class="choices" id="ch5"></div>
@@ -1005,9 +1017,9 @@
         <p class="score" id="score5"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A strength is something you did well, first time.</s><s>A limitation is something that took more than one go, or that you could do better.</s><s>Both are true at once, and saying both is honest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You gave out the jobs right first time: a strength.</s><s>The paint idea took two goes: a limitation, and knowing it is how you improve.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say everything was a strength.</s><s>The page remembers what took two goes. Be honest; it is not a mark.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap what you got right first time. Then what took two goes.</s></mstts:express-as>' data-say="Look back at YOUR part in the museum team. Which things did you get right first time? Which took more than one go? Then: what did working together make possible?">
-      <div class="slide-head"><span class="n">6</span><h2>What I did well, and what took two goes</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Look back at YOUR part in the museum team. Which things did you get right first time? Which took more than one go? Then: what did working together make possible?</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>First the team gives out its jobs. Then each person does theirs. When the team is stuck, somebody brings an idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Build the bridge: Sami makes models.</s><s>The paint will not stick to the shiny card: paint on paper and glue it on.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children give every job to themselves.</s><s>Look at what each job NEEDS, and who has it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the right person for each job, then play on.</s></mstts:express-as>' data-say="You and three friends are making the museum display. Give out the jobs, bring ideas when the team is stuck, and work kindly. Watch the display fill up.">
+      <div class="slide-head"><span class="n">6</span><h2>Build the class museum</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">You and three friends are making the museum display. Give out the jobs, bring ideas when the team is stuck, and work kindly. Watch the display fill up.</span></div>
       <div class="stage">
         <div id="stage6"></div>
         <div class="choices" id="ch6"></div>
@@ -1015,9 +1027,9 @@
         <p class="score" id="score6"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01 4Ct.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The same three things: allocate, do your part, bring ideas.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the right person for each job, then play on.</s></mstts:express-as>' data-say="A new team, a new job: the bee garden by the field, full of flowers bees love. Give out the jobs and bring ideas.">
-      <div class="slide-head"><span class="n">7</span><h2>Plant the bee garden</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">A new team, a new job: the bee garden by the field, full of flowers bees love. Give out the jobs and bring ideas.</span></div>
+    <section class="slide" data-objectives="4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A strength is something you did well, first time.</s><s>A limitation is something that took more than one go, or that you could do better.</s><s>Both are true at once, and saying both is honest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You gave out the jobs right first time: a strength.</s><s>The paint idea took two goes: a limitation, and knowing it is how you improve.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say everything was a strength.</s><s>The page remembers what took two goes. Be honest; it is not a mark.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap what you got right first time. Then what took two goes.</s></mstts:express-as>' data-say="Look back at YOUR part in the museum team. Which things did you get right first time? Which took more than one go? Then: what did working together make possible?">
+      <div class="slide-head"><span class="n">7</span><h2>What I did well, and what took two goes</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Look back at YOUR part in the museum team. Which things did you get right first time? Which took more than one go? Then: what did working together make possible?</span></div>
       <div class="stage">
         <div id="stage7"></div>
         <div class="choices" id="ch7"></div>
@@ -1025,9 +1037,9 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Ft.01 4Fc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Looking back at a team job: what was mine, what was a friend&#39;s.</s><s>And together it was more than any of us alone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap yours, then each friend&#39;s.</s></mstts:express-as>' data-say="The garden is done. Which of these were YOURS, and what did each friend do?">
-      <div class="slide-head"><span class="n">8</span><h2>Who did what in the garden?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">The garden is done. Which of these were YOURS, and what did each friend do?</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The same three things: allocate, do your part, bring ideas.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the right person for each job, then play on.</s></mstts:express-as>' data-say="A new team, a new job: the bee garden by the field, full of flowers bees love. Give out the jobs and bring ideas.">
+      <div class="slide-head"><span class="n">8</span><h2>Plant the bee garden</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">A new team, a new job: the bee garden by the field, full of flowers bees love. Give out the jobs and bring ideas.</span></div>
       <div class="stage">
         <div id="stage8"></div>
         <div class="choices" id="ch8"></div>
@@ -1035,9 +1047,9 @@
         <p class="score" id="score8"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Give jobs to the right people. Bring ideas. Say what you did well and what you could do better.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, then tap.</s></mstts:express-as>' data-say="Think about the museum, the garden and your honest look back. Tap the answer.">
-      <div class="slide-head"><span class="n">9</span><h2>Jobs, ideas and looking back</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Think about the museum, the garden and your honest look back. Tap the answer.</span></div>
+    <section class="slide" data-objectives="4Ft.01 4Fc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Looking back at a team job: what was mine, what was a friend&#39;s.</s><s>And together it was more than any of us alone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap yours, then each friend&#39;s.</s></mstts:express-as>' data-say="The garden is done. Which of these were YOURS, and what did each friend do?">
+      <div class="slide-head"><span class="n">9</span><h2>Who did what in the garden?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">The garden is done. Which of these were YOURS, and what did each friend do?</span></div>
       <div class="stage">
         <div id="stage9"></div>
         <div class="choices" id="ch9"></div>
@@ -1045,9 +1057,9 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Fv.01 4Fl.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Looking back has three parts.</s><s>What you learned, how your ideas changed, and which KIND of activity helped.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>First: I learned that. Tap two things you really did learn today.</s><s>Then: before I thought, now I think. Pick how one of your ideas changed.</s><s>Then: which kind of activity helped you learn most, and why.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say their ideas did not change.</s><s>If you learned something, an idea moved. Find it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the first thing you learned.</s></mstts:express-as>' data-say="What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.">
-      <div class="slide-head"><span class="n">10</span><h2>Look back</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Give jobs to the right people. Bring ideas. Say what you did well and what you could do better.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, then tap.</s></mstts:express-as>' data-say="Think about the museum, the garden and your honest look back. Tap the answer.">
+      <div class="slide-head"><span class="n">10</span><h2>Jobs, ideas and looking back</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Think about the museum, the garden and your honest look back. Tap the answer.</span></div>
       <div class="stage">
         <div id="stage10"></div>
         <div class="choices" id="ch10"></div>
@@ -1055,9 +1067,9 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
-      <div class="slide-head"><span class="n">11</span><h2>Games</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Choose a game to play. Nothing here is new.</span></div>
+    <section class="slide" data-objectives="4Fv.01 4Fl.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Looking back has three parts.</s><s>What you learned, how your ideas changed, and which KIND of activity helped.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>First: I learned that. Tap two things you really did learn today.</s><s>Then: before I thought, now I think. Pick how one of your ideas changed.</s><s>Then: which kind of activity helped you learn most, and why.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say their ideas did not change.</s><s>If you learned something, an idea moved. Find it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the first thing you learned.</s></mstts:express-as>' data-say="What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.">
+      <div class="slide-head"><span class="n">11</span><h2>Look back</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.</span></div>
       <div class="stage">
         <div id="stage11"></div>
         <div class="choices" id="ch11"></div>
@@ -1065,9 +1077,9 @@
         <p class="score" id="score11"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are things to find out at home, with a grown-up.</s><s>Asking, listening, counting and looking. That is real research.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who answers your questions properly is your best source.</s><s>Ask them, listen, and remember what they said.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Finding out does not stop at school. Do one of these with a grown-up.">
-      <div class="slide-head"><span class="n">12</span><h2>Find out at home</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Finding out does not stop at school. Do one of these with a grown-up.</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
+      <div class="slide-head"><span class="n">12</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Choose a game to play. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
@@ -1075,9 +1087,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">13</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Time to show what you know. Tap the answer.</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are things to find out at home, with a grown-up.</s><s>Asking, listening, counting and looking. That is real research.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A grown-up who answers your questions properly is your best source.</s><s>Ask them, listen, and remember what they said.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Finding out does not stop at school. Do one of these with a grown-up.">
+      <div class="slide-head"><span class="n">13</span><h2>Find out at home</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Finding out does not stop at school. Do one of these with a grown-up.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -1085,9 +1097,9 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Our world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s skills are used out in the real world.</s><s>Places you can visit, people who ask questions for a living, and things near you to go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where these skills are used out in the real world. This part is still being built.">
-      <div class="slide-head"><span class="n">14</span><h2>Our world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Where these skills are used out in the real world. This part is still being built.</span></div>
+    <section class="slide" data-objectives="4Cc.01 4Ct.01 4Fc.01 4Ft.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">14</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Time to show what you know. Tap the answer.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
@@ -1095,14 +1107,24 @@
         <p class="score" id="score14"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
-      <div class="slide-head"><span class="n">15</span><h2>Student resources</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Our world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s skills are used out in the real world.</s><s>Places you can visit, people who ask questions for a living, and things near you to go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where these skills are used out in the real world. This part is still being built.">
+      <div class="slide-head"><span class="n">15</span><h2>Our world</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Where these skills are used out in the real world. This part is still being built.</span></div>
       <div class="stage">
         <div id="stage15"></div>
         <div class="choices" id="ch15"></div>
         <p class="fb" id="fb15" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score15"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
+      <div class="slide-head"><span class="n">16</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+      <div class="stage">
+        <div id="stage16"></div>
+        <div class="choices" id="ch16"></div>
+        <p class="fb" id="fb16" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score16"></p>
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1174,11 +1196,74 @@
             "Say how working together made the shared outcome possible and better."
           ],
           "counts": {
-            "steps": 15,
+            "steps": 16,
             "words": 6,
             "games": 3,
             "home": 3
           }
+        }
+      },
+      {
+        "kind": "warmup",
+        "title": "Before we start",
+        "objectives": [
+          "4Cc.01",
+          "4Ct.01",
+          "4Fc.01",
+          "4Ft.01"
+        ],
+        "data": {
+          "recap": {
+            "title": "Shared Spaces",
+            "icon": "🔗",
+            "learned": [
+              "Say the cause behind an action, and who its consequence reached.",
+              "Say that in a shared space a consequence reaches more people than you meant.",
+              "Tell a cause you could change from one outside your control.",
+              "Suggest an action of your own for a problem that belongs to somebody else.",
+              "Give your opinion about somebody else's view on a shared space, with two reasons about the topic."
+            ]
+          },
+          "check": [
+            {
+              "ask": "Your team needs a map drawn. Who should draw it?",
+              "pic": "🗺️",
+              "opts": [
+                {
+                  "t": "the person who draws carefully",
+                  "ok": true
+                },
+                {
+                  "t": "the person who talks loudest",
+                  "ok": false
+                },
+                {
+                  "t": "the newest person, whatever they are good at",
+                  "ok": false
+                }
+              ],
+              "why": "A job goes to the person whose skill it needs."
+            },
+            {
+              "ask": "How can a team do better than one person?",
+              "pic": "🤝",
+              "opts": [
+                {
+                  "t": "everyone brings a different skill",
+                  "ok": true
+                },
+                {
+                  "t": "one person does all the work",
+                  "ok": false
+                },
+                {
+                  "t": "nobody needs to talk",
+                  "ok": false
+                }
+              ],
+              "why": "Different skills together make a better result."
+            }
+          ]
         }
       },
       {
@@ -1195,7 +1280,7 @@
             {
               "pic": "📋",
               "title": "Giving out the jobs",
-              "say": "The class museum needs four jobs: read the old letters, draw the high street, build the bridge, read the labels aloud. You read old handwriting, Hana draws, Sami makes models, Yusuf speaks clearly. Each job to the person whose skill it needs."
+              "say": "The class museum needs four jobs: read the old letters, draw the high street, build the bridge, read the labels aloud. You can read old handwriting, Hana draws, Sami makes models, Yusuf speaks clearly. Each job to the person whose skill it needs."
             },
             {
               "pic": "💡",
@@ -1578,7 +1663,7 @@
               "missed": false
             }
           ],
-          "teamStep": 4
+          "teamStep": 5
         }
       },
       {
@@ -1839,7 +1924,7 @@
               ]
             }
           ],
-          "teamStep": 6
+          "teamStep": 7
         }
       },
       {
@@ -2232,7 +2317,7 @@
                   "ok": false
                 },
                 {
-                  "t": "you, because you read old writing",
+                  "t": "you, because you can read old writing",
                   "ok": false
                 },
                 {
@@ -2351,7 +2436,7 @@
                   "ok": false
                 },
                 {
-                  "t": "a bath",
+                  "t": "a big bowl of water",
                   "ok": false
                 }
               ],
@@ -2378,7 +2463,7 @@
                   "ok": false
                 }
               ],
-              "why": "Letters read, street drawn, bridge built, labels spoken: each by the right person."
+              "why": "Letters done, street drawn, bridge built, labels spoken: each by the right person."
             }
           ]
         }
@@ -2656,7 +2741,7 @@
               "meaning": "A tool that measures how much of something there is.",
               "uses": [
                 "A rain gauge measures rain.",
-                "We read the gauge every morning."
+                "We check the gauge every morning."
               ],
               "lesson": 2,
               "title": "Waste Watchers",
@@ -2800,23 +2885,25 @@
               "meaning": "To tell people about a topic, clearly and in order.",
               "uses": [
                 "Amal presented her talk about energy.",
-                "Present what you found out."
+                "I will present what I found out."
               ],
               "lesson": 7,
               "title": "Energy Talks",
-              "file": "energy-talks.html"
+              "file": "energy-talks.html",
+              "say": "to present"
             },
             {
               "w": "present",
               "pic": "🎤",
               "meaning": "To tell people about a topic, clearly and in order.",
               "uses": [
-                "Present what you learned.",
+                "We will present what we learned.",
                 "A talk with a start, a middle and an end."
               ],
               "lesson": 8,
               "title": "Look Back",
-              "file": "look-back.html"
+              "file": "look-back.html",
+              "say": "to present"
             },
             {
               "w": "prove",
@@ -2852,7 +2939,8 @@
               ],
               "lesson": 2,
               "title": "Waste Watchers",
-              "file": "waste-watchers.html"
+              "file": "waste-watchers.html",
+              "say": "to record"
             },
             {
               "w": "reflect",
@@ -3082,7 +3170,7 @@
           "hub": "g4-index.html",
           "gradeLabel": "Grade 4",
           "lessonNo": 6,
-          "homeStep": 11
+          "homeStep": 12
         }
       }
     ]
@@ -4083,6 +4171,9 @@
     .replace(/\byour\b/gi, (m) => (m[0] === "Y" ? "My" : "my"))
     .replace(/\byou\b/gi, "I");
   const noDot = (s) => String(s || "").replace(/[.!]\s*$/, "");
+  /* what the voice says for a word card: its spoken form where the content
+     gives one ("to record" for a verb a voice would read as REcord) */
+  const sw = (w) => (w && w.say) || (w && w.w) || "";
 
   /* ---- a step may speak only while it is the step on screen ------------
      Every renderer draws once, at load, because the deck paints all its
@@ -5746,6 +5837,64 @@
     ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
+  /* ---- before we start: last lesson in one frame, then a starting check ----
+     The recap is the previous lesson's own about lines, copied by the builder
+     so it cannot say something that lesson never promised. The two questions
+     come BEFORE the teaching, so nothing is marked: whichever answer the child
+     taps, the right one is shown and said, and a wrong tap hears that not
+     knowing yet is what the lesson is for. What was already known goes to the
+     school as participation (reportAttempt), never as a score - a mark taken
+     before the teaching would drag a child's record down for a lesson they
+     have not had. */
+  function warmUp(o) {
+    const el = o.el, items = o.check || [];
+    let i = 0, known = 0, lock = false;
+    const rc = o.recap;
+    const learnedLine = (t) => "You learned to " + lower1(noDot(t)) + ".";
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      (rc ? '<div class="recap"><p class="recap-h"><span class="recap-pic" aria-hidden="true">' + small(rc.icon) + "</span>" +
+            "Last time: <b>" + esc(rc.title) + "</b></p>" +
+            '<ul class="ovw-list">' + (rc.learned || []).map((t) => "<li>" + esc(learnedLine(t)) + "</li>").join("") + "</ul>" +
+            '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Remind me</button></div></div>'
+          : "") +
+      '<div class="wu"><p class="wu-h">What do you already know?</p><div class="wu-q" id="' + el.stage + 'q"></div></div>';
+    if (rc) $(el.stage + "r").addEventListener("click", () =>
+      say("Last time, in " + rc.title + ". " + (rc.learned || []).map(learnedLine).join(" ")));
+    function draw() {
+      lock = false;
+      const it = items[i];
+      $(el.stage + "q").innerHTML = (it.pic ? '<span class="wu-pic" aria-hidden="true">' + small(it.pic) + "</span>" : "") +
+        '<span class="wu-ask">' + esc(plain(it.ask)) + "</span>";
+      $(el.ch).className = "choices stack";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+      $(el.fb).className = "fb"; $(el.fb).textContent = "";
+      $(el.score).textContent = "Question " + (i + 1) + " of " + items.length;
+      sayHere(o.finish, plain(it.ask));
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1", it = items[i];
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (ok) known++; else b.classList.add("wrong");
+      const line = (ok ? "You knew that already. " : "Not yet, and that is fine. ") + it.why;
+      $(el.fb).className = "fb " + (ok ? "good" : "calm"); $(el.fb).textContent = line;
+      say(line);
+      i++;
+      setTimeout(() => {
+        if (i < items.length) return draw();
+        const msg = (known === items.length ? "You knew both already." : known ? "You knew one already." : "Those are new to you.") + " " + o.done;
+        $(el.ch).innerHTML = ""; $(el.ch).className = "choices";
+        $(el.score).textContent = "";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = msg;
+        reportAttempt(o.finish, known, items.length, "known before the lesson");
+        finish(o.finish, msg);
+      }, 2700);
+    });
+    if (items.length) draw();
+  }
+
   /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
   function lecture(o) {
     const el = o.el;
@@ -5810,7 +5959,7 @@
         open = Number(b.dataset.k); heard.add(open);
         paintGrid();
         const w = items[open];
-        say(w.w + ". " + w.meaning + " " + (w.uses[0] || ""));
+        say(sw(w) + ". " + w.meaning + " " + (w.uses[0] || ""));
         if (heard.size === items.length) {
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You have heard every word. Now, which word is which?";
@@ -5827,7 +5976,7 @@
         '<p class="wp-meaning">' + esc(w.meaning) + "</p></div></div>" +
         '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => "<li>" + esc(u) + "</li>").join("") + "</ul>" +
         '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
-      $(id + "h").addEventListener("click", () => say(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")));
+      $(id + "h").addEventListener("click", () => say(sw(w) + ". " + w.meaning + " " + (w.uses || []).join(" ")));
     }
 
     /* the check: which word means this? */
@@ -5858,7 +6007,8 @@
         $(el.ch).querySelectorAll(".wordbtn").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
         if (!ok) b.classList.add("wrong"); else { right++; known.push(w.w); }
         const msg = ok ? cheer() + " " + w.w + "." : "That word is " + w.w + ". " + w.meaning;
-        $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = msg; say(msg);
+        $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = msg;
+        say(ok ? cheer() + " " + sw(w) + "." : "That word is " + sw(w) + ". " + w.meaning);
         i++;
         setTimeout(() => {
           if (i >= items.length) {
@@ -6128,7 +6278,7 @@
     const wordRows = (words, withLesson) => words.map((w) =>
       '<div class="wordrow"><span class="gloxpic" aria-hidden="true">' + small(w.pic) + "</span>" +
       '<div class="gloxbody"><div class="gloxhead"><strong>' + esc(w.w) + "</strong>" +
-      '<button type="button" class="hear" data-say="' + esc(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")) + '" aria-label="Hear ' + esc(w.w) + '">&#128266;</button>' +
+      '<button type="button" class="hear" data-say="' + esc(sw(w) + ". " + w.meaning + " " + (w.uses || []).join(" ")) + '" aria-label="Hear ' + esc(w.w) + '">&#128266;</button>' +
       (withLesson && w.file ? '<a class="gloxlesson" href="' + esc(w.file) + location.search + '">Lesson ' + w.lesson + "</a>" : "") + "</div>" +
       '<p class="gloxdef">' + esc(w.meaning) + "</p>" +
       ((w.uses || []).length ? '<p class="gloxeg">“' + esc(w.uses[0]) + "”</p>" : "") + "</div></div>").join("");
@@ -6189,23 +6339,24 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Big words"], ["📋", "Job giver"], ["🏛️", "Museum team"], ["💪", "Honest reflector"], ["🐝", "Garden team"], ["🙋", "Garden rememberer"], ["💬", "Team judge"], ["⏪", "I looked back"], ["🎮", "I played the games"], ["🏠", "Find out at home"], ["⭐", "Star team player"], ["🌍", "Our world"], ["🗂️", "My resources"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🧠", "Warmed up"], ["🎬", "I heard the lesson"], ["🔤", "Big words"], ["📋", "Job giver"], ["🏛️", "Museum team"], ["💪", "Honest reflector"], ["🐝", "Garden team"], ["🙋", "Garden rememberer"], ["💬", "Team judge"], ["⏪", "I looked back"], ["🎮", "I played the games"], ["🏠", "Find out at home"], ["⭐", "Star team player"], ["🌍", "Our world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
-  bigWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the big words of this lesson." }, LESSON.steps[2].data));
-  demo(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Give each job to the person whose skill it needs." }, LESSON.steps[3].data));
-  teamBuild(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "The museum is done: jobs given out, ideas when it was stuck, and everyone kept working." }, LESSON.steps[4].data));
-  strengthsLimits(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "You said what you did well, what took two goes, and what the team made possible." }, LESSON.steps[5].data));
-  teamBuild(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "The bee garden is dug, watered, labelled and protected. A team did it." }, LESSON.steps[6].data));
-  contributions(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "You said what you did and what each friend did. Together, the garden got done." }, LESSON.steps[7].data));
-  sequence(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "You know how a team allocates, brings ideas, and looks back honestly." }, LESSON.steps[8].data));
-  lookBack(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "You looked back: what you learned, how your ideas changed, and what kind of activity helped. That is reflecting." }, LESSON.steps[9].data));
-  gameZone(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[10].data));
-  homeProjects(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "Finding out at home. That is the best kind of research." }, LESSON.steps[11].data));
-  sequence(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "That is the whole lesson finished. You allocate, bring ideas, and look back honestly at your teamwork." }, LESSON.steps[12].data));
-  ourWorld(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Our world is on its way." }, LESSON.steps[13].data));
-  resources(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Your resources are always here." }, LESSON.steps[14].data));
+  warmUp(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is you warmed up. Now the lesson." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[2].data));
+  bigWords(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "You know the big words of this lesson." }, LESSON.steps[3].data));
+  demo(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Give each job to the person whose skill it needs." }, LESSON.steps[4].data));
+  teamBuild(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "The museum is done: jobs given out, ideas when it was stuck, and everyone kept working." }, LESSON.steps[5].data));
+  strengthsLimits(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "You said what you did well, what took two goes, and what the team made possible." }, LESSON.steps[6].data));
+  teamBuild(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "The bee garden is dug, watered, labelled and protected. A team did it." }, LESSON.steps[7].data));
+  contributions(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "You said what you did and what each friend did. Together, the garden got done." }, LESSON.steps[8].data));
+  sequence(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "You know how a team allocates, brings ideas, and looks back honestly." }, LESSON.steps[9].data));
+  lookBack(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "You looked back: what you learned, how your ideas changed, and what kind of activity helped. That is reflecting." }, LESSON.steps[10].data));
+  gameZone(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[11].data));
+  homeProjects(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Finding out at home. That is the best kind of research." }, LESSON.steps[12].data));
+  sequence(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "That is the whole lesson finished. You allocate, bring ideas, and look back honestly at your teamwork." }, LESSON.steps[13].data));
+  ourWorld(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Our world is on its way." }, LESSON.steps[14].data));
+  resources(Object.assign({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, finish: 15, done: "Your resources are always here." }, LESSON.steps[15].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

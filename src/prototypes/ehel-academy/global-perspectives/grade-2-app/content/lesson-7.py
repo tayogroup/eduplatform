@@ -8,6 +8,10 @@ about a given topic. The topic is moving to a new place and a new pupil
 joining our class - a child listens to classmates who have moved, asks
 them a relevant question, and gives a talk about our school so a new pupil
 would know what to expect.
+
+Evaluation: 2Ea.01 express an opinion about a given topic, giving reasons -
+a second application after Lesson 5, on the lesson's own topic of moving and
+being new.
 """
 from _kit import explain, step, opt, q, tagged, part, word, home
 
@@ -137,6 +141,31 @@ LESSON = {
               ]},
              "Four questions from Leo, four answers that told him what he asked."),
 
+        step("opinion", "What do you think, and why?", "\U0001F4AD", "Opinion giver", ["2Ea.01"],
+             "In a talk you can give your opinion. Say what YOU think about each topic, then give TWO reasons that are about it.",
+             explain(
+                 ["An opinion is what you think.", "This year, give two reasons, both about the topic."],
+                 ["I think every new pupil should have a buddy, because a buddy shows you where everything is, and because the first day is less lonely.",
+                  "Because my kite is red is not about buddies."],
+                 ["Children say they are sure, then give a reason for the other side.", "If you said yes, both reasons should back up yes."],
+                 ["Tap what you think, then two reasons."]),
+             {"reasonsNeeded": 2,
+              "rounds": [
+                 {"topic": "a buddy for every new pupil", "tag": "buddy", "pic": "\U0001F91D", "ask": "What do you think about giving every new pupil a buddy?",
+                  "stances": [{"id": "yes", "t": "I think every new pupil should have a buddy"}, {"id": "no", "t": "I think new pupils can find their own friends"}, {"id": "unsure", "t": "I am not sure about buddies", "mixed": True}],
+                  "reasons": [dict(tagged("because a buddy shows you where everything is", "buddy"), supports=['yes', 'unsure']), dict(tagged("because the first day is less lonely with a buddy", "buddy"), supports=['yes', 'unsure']), dict(tagged("because it is fun to choose your own friends", "buddy"), supports=['no', 'unsure']), dict(tagged("because your buddy might not be somebody you get on with", "buddy"), supports=['no', 'unsure']),
+                              tagged("because my kite is red", "kites"), tagged("because it is windy today", "the weather")]},
+                 {"topic": "moving to a new town", "tag": "moving", "pic": "\U0001F3E1", "ask": "What do you think about moving to a new town?",
+                  "stances": [{"id": "fun", "t": "I think moving would be exciting"}, {"id": "hard", "t": "I think moving would be hard"}, {"id": "both", "t": "I think it would be exciting and hard", "mixed": True}],
+                  "reasons": [dict(tagged("because you see new places and meet new people", "moving"), supports=['fun', 'both']), dict(tagged("because there is a new school to explore", "moving"), supports=['fun', 'both']), dict(tagged("because you have to say goodbye to your friends", "moving"), supports=['hard', 'both']), dict(tagged("because everything is strange at first", "moving"), supports=['hard', 'both']),
+                              tagged("because I like mangoes", "food"), tagged("because the bus was late", "buses")]},
+                 {"topic": "giving a talk to the class", "tag": "talks", "pic": "\U0001F5E3\ufe0f", "ask": "What do you think about giving a talk to the class?",
+                  "stances": [{"id": "like", "t": "I like giving talks"}, {"id": "nervous", "t": "Talks make me nervous"}, {"id": "both", "t": "I like talks, but they make me nervous", "mixed": True}],
+                  "reasons": [dict(tagged("because I can tell people something I know", "talks"), supports=['like', 'both']), dict(tagged("because everybody claps at the end", "talks"), supports=['like', 'both']), dict(tagged("because everybody is looking at me", "talks"), supports=['nervous', 'both']), dict(tagged("because I might forget what to say", "talks"), supports=['nervous', 'both']),
+                              tagged("because my cat is fluffy", "cats"), tagged("because it is Tuesday", "days")]},
+             ]},
+             "Three opinions, each with two reasons about the topic. That is how you give your opinion in a talk."),
+
         step("sort", "Relevant, or not?", "\U0001F442", "Relevance judge", ["2Ml.01"],
              "Leo said: I moved here from a town by the sea, and I miss the waves. Is this question relevant to what he said?",
              explain(
@@ -198,6 +227,7 @@ LESSON["about"] = [
     "Give a talk about a topic where everything you say is about it.",
     "Build a focused question to find out about somebody.",
     "Answer a question with the information that was asked for.",
+    "Say what you think about a topic, with two reasons about it.",
 ]
 
 LESSON["lecture"] = [
@@ -211,6 +241,8 @@ LESSON["lecture"] = [
          "To find out about Leo's old town, ask focused questions. What was your old school called? Where was the beach in your old town? Why did you move here?"),
     part("\U0001F5E3️", "Answer what he asks",
          "And when Leo asks you, answer what he asked. Where do we line up? By the blue door. When is PE? Thursdays. Both ways: listen and ask, tell and answer."),
+    part("\U0001F4AD", "What do you think?",
+         "In a talk you can give your opinion. I think every new pupil should have a buddy, because a buddy shows you where everything is, and because the first day is less lonely. Two reasons, both about buddies."),
 ]
 
 LESSON["words"] = [
@@ -249,3 +281,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to bake bread", "how to ride a bike", "the names of the planets"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Your friend says: we went to the beach at the weekend. Which question is relevant?", "\U0001F3D6\ufe0f", "What did you see at the beach?", ["What is your cat called?", "Do you like maths?"], "They talked about the beach, so a question about the beach is relevant."),
+    q("Which sentence belongs in a talk about the rainy season?", "\U0001F327\ufe0f", "The rain makes the river rise.", ["My cat likes fish.", "I have a red pen."], "The river rising is about the rainy season. The others are about something else."),
+]

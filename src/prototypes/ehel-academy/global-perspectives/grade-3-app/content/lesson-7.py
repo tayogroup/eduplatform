@@ -106,7 +106,7 @@ LESSON = {
              "Four questions of your own that open up Sami's talk."),
 
         step("know", "Build a talk: our park", "\U0001F3DE️", "Park presenter", ["3Mi.01"],
-             "Another talk, another structure. Present what the class found out about our park: start, middle, end.",
+             "Another talk, another structure. Now give a talk about what the class found out about our park: start, middle, end.",
              explain(
                  ["The same three parts.", "Start with the topic, give the facts in the middle, finish with what we should do."],
                  [],
@@ -115,7 +115,7 @@ LESSON = {
              {"mode": "structured", "topic": "our park", "tag": "park", "topicPic": "\U0001F3DE️", "slots": SLOTS,
               "cards": [
                   dict(tagged("Today I am going to tell you what we found out about Riverside Park", "park", "1️⃣"), say="Today I am going to tell you what we found out about Riverside Park", part="start"),
-                  dict(tagged("We counted twelve dogs in the park in one afternoon, and nine were off the lead", "park", "\U0001F415"), say="We counted twelve dogs in the park in one afternoon, and nine were off the lead", part="middle"),
+                  dict(tagged("We counted twelve dogs in the park in one afternoon, and nine were off the leash", "park", "\U0001F415"), say="We counted twelve dogs in the park in one afternoon, and nine were off the leash", part="middle"),
                   dict(tagged("Three duck nests were lost this year", "park", "\U0001F986"), say="Three duck nests were lost this year", part="middle"),
                   dict(tagged("So we think the park needs a fenced dog area away from the pond. Thank you for listening", "park", "3️⃣"), say="So we think the park needs a fenced dog area away from the pond. Thank you for listening", part="end"),
                   dict(tagged("I had toast for breakfast", "breakfast", "\U0001F35E"), say="I had toast for breakfast", aboutLabel="breakfast"),
@@ -155,7 +155,7 @@ LESSON = {
                  q("Which sentence belongs at the END?", "3️⃣", "So turn the taps off tightly. Thank you for listening.", ["Today I am going to tell you about water.", "We use four thousand litres a day."], "What we should do, and a finish."),
                  q("After a talk, a question that helps you UNDERSTAND it is…", "❓", "How much water does the fountain waste in a day?", ["Do you like maths?", "What is your cat called?"], "It opens up what was said."),
              ]},
-             "You present with structure, and respond with relevance."),
+             "You can present with a structure, and respond with relevance."),
 
         step("quiz", "Show what you know", "⭐", "Star presenter", ["3Mi.01", "3Ml.01", "3Rq.01"],
              "Time to show what you know. Tap the answer.",
@@ -174,7 +174,7 @@ LESSON = {
                  q("Which question word asks for an AMOUNT of water?", "\U0001F4A7", "How much", ["Where", "Who", "When"], "How much water does the fountain waste?"),
                  q("Responding to a talk means…", "\U0001F442", "an idea or a question about what was said", ["saying whatever you want", "clapping only", "changing the subject"], "Relevant means about what was said."),
              ]},
-             "That is the whole lesson finished. You present with a structure, and you respond with relevant ideas and questions."),
+             "That is the whole lesson finished. You can present with a structure, and respond with relevant ideas and questions."),
     ],
 }
 
@@ -201,7 +201,7 @@ LESSON["lecture"] = [
 
 LESSON["words"] = [
     word("present", "\U0001F3A4", "To tell people about a topic, clearly and in order.",
-         ["Amal presented her talk about water.", "Present what you found out."]),
+         ["Amal presented her talk about water.", "I will present what I found out."], say="to present"),
     word("structure", "\U0001F3D7️", "The shape of a talk: start, middle, end.",
          ["A talk needs a structure.", "The structure helps listeners follow."]),
     word("start", "1️⃣", "The first part of a talk, which says what it is about.",
@@ -240,3 +240,10 @@ LESSON["lookback"] = {
         {"before": "I understand a talk when it is over.", "after": "My own questions after a talk help me understand it more."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Which sentence would make a good start to a talk about bees?", "\U0001F41D", "Today I will tell you about bees.", ["So that is why we need bees.", "Thank you for listening."], "A start says what the talk is about. The others are endings."),
+    q("Your friend gives a talk about her garden. Which question is relevant?", "\U0001F33B", "How often do you water it?", ["What did you have for breakfast?", "Is your bike fast?"], "A question about her garden is relevant to her talk."),
+]

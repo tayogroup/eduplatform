@@ -23,7 +23,15 @@ in the vocabulary of _kit.py) and this file turns them into steps, in one
 place, so the lesson builder and the hub builder cannot disagree about how
 many steps a lesson has or what they are called:
 
-    overview  lecture  words  <the lesson's own steps ...>  lookback  games  home  quiz  world  resources
+    overview  warmup  lecture  words  <the lesson's own steps ...>  lookback  games  home  quiz  world  resources
+
+"Before we start" (warmup) is the second step of every lesson: a one-frame
+recap of the previous lesson, read back from that lesson's own about lines
+(filled by build-lessons.py, which can see every lesson), and a two-question
+starting check the content writes as LESSON["check"]. The check is asked
+BEFORE the teaching, so it is not marked: both answers are accepted, the right
+one is shown, and the page reports how many were already known as
+participation, never as a score.
 
 The games are DERIVED, not written: a quick quiz from the lesson's own
 questions, a sort race from its sort and organiser steps, word pairs and a
@@ -40,6 +48,7 @@ Stage 1 is a whole-class, talk-with-a-grown-up subject (the framework says the
 Stage 1 learner records "as a class ... with support and guidance"), so a home
 project here is an interview, a survey or a walk, never a worksheet.
 """
+import copy
 import re
 
 from _kit import explain, step
@@ -308,6 +317,24 @@ def expand(n, lesson, code_text, finder, cfg):
               {"items": [dict(h, n=i + 1) for i, h in enumerate(home)]},
               "Finding out at home. That is the best kind of research.")
 
+    first = n == 1
+    warm = step("warmup", "Before we start", "\U0001F9E0", "Warmed up", codes,
+                ("Before we start, have a go at two questions. It is fine not to know yet."
+                 if first else
+                 "First, remember last time. Then have a go at two questions. It is fine not to know yet."),
+                explain(
+                    ["This is a warm-up.", "Nothing here is marked."],
+                    (["Answer two questions about what this lesson is about.",
+                      "If you know, great. If you do not, the page tells you, and this lesson will teach it."]
+                     if first else
+                     ["First, remember what you learned last time. Press Remind me to hear it again.",
+                      "Then answer two questions about what this lesson is about.",
+                      "If you know, great. If you do not, the page tells you, and this lesson will teach it."]),
+                    ["Children worry about getting it wrong.", "Not knowing yet is fine. That is what the lesson is for."],
+                    ["Tap an answer."]),
+                {"recap": None, "check": copy.deepcopy(lesson.get("check") or [])},
+                "That is you warmed up. Now the lesson.")
+
     world = step("world", "Our world", "\U0001F30D", "Our world", [],
                  "Where these skills are used out in the real world. This part is still being built.",
                  explain(
@@ -346,7 +373,7 @@ def expand(n, lesson, code_text, finder, cfg):
         content, quiz = core, []
     own_lookback = any(s["kind"] == "lookback" for s in core)
     look = [] if own_lookback else [lookback_step(lesson, content, cfg)]
-    steps = [overview, lec, wds] + content + look + [gz, hm] + quiz + [world, res]
+    steps = [overview, warm, lec, wds] + content + look + [gz, hm] + quiz + [world, res]
     steps = [s for s in steps if s is not None]
     overview["data"]["counts"]["steps"] = len(steps)
     res["data"]["homeStep"] = steps.index(hm)
@@ -358,7 +385,8 @@ def finder_words(lessons):
     out = []
     for n, fname, lesson in lessons:
         for w in lesson.get("words") or []:
-            out.append({"w": w["w"], "pic": w.get("pic", ""), "meaning": w["meaning"],
-                        "uses": w.get("uses") or [], "lesson": n, "title": lesson["title"], "file": fname})
+            out.append(dict({"w": w["w"], "pic": w.get("pic", ""), "meaning": w["meaning"],
+                             "uses": w.get("uses") or [], "lesson": n, "title": lesson["title"], "file": fname},
+                            **({"say": w["say"]} if w.get("say") else {})))
     out.sort(key=lambda x: x["w"].lower())
     return out

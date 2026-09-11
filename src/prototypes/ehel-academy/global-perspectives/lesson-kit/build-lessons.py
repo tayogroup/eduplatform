@@ -98,7 +98,7 @@ KINDS = {
     "answer": "relevantAnswer", "listen": "listenAsk",
     "questions": "sequence", "quiz": "sequence",
     # the unit shell, drawn around every lesson by _shell.py
-    "overview": "unitOverview", "lecture": "lecture", "words": "bigWords",
+    "overview": "unitOverview", "warmup": "warmUp", "lecture": "lecture", "words": "bigWords",
     "games": "gameZone", "home": "homeProjects", "world": "ourWorld", "resources": "resources",
 }
 
@@ -174,6 +174,18 @@ def fill_derived(n, lesson, steps, everything):
     step, a course-wide look-back from every lesson's about lines."""
     for k, s in enumerate(steps):
         d = s["data"]
+        if s["kind"] == "warmup" and n > 1:
+            # last time: the previous lesson's own title and about lines, copied
+            # rather than retyped, so the recap cannot drift from what that lesson promised
+            prev = [les for m, _f, les in everything if m == n - 1]
+            if not prev:
+                sys.exit("REFUSED: lesson %d recaps lesson %d, which is not in app.config.json" % (n, n - 1))
+            p = prev[0]
+            d["recap"] = {"title": p["title"], "icon": (p["steps"][0]["icon"] if p["steps"] else "\U0001F4D8"),
+                          "learned": list(p.get("about") or [])}
+            s["say"] = ("Last time, in " + p["title"] + ", you learned to " +
+                        ". And to ".join(a[:1].lower() + a[1:].rstrip(".") for a in d["recap"]["learned"]) +
+                        ". Now, have a go at two questions. It is fine not to know yet.")
         if s["kind"] == "pictogram" and d.get("fromObserve"):
             prev = [x for x in steps[:k] if x["kind"] == "observe"]
             if not prev:
@@ -292,6 +304,20 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
         if len(set(ts)) != len(ts):
             sys.exit("REFUSED: %s %s repeats an option" % (where, what))
 
+    if kind == "warmup":
+        if k != 1 or steps[0]["kind"] != "overview":
+            sys.exit("REFUSED: %s: Before we start must be the second step, straight after the overview" % where)
+        if len(d.get("check") or []) < 2:
+            sys.exit("REFUSED: %s: the lesson writes fewer than 2 starting questions (LESSON[\"check\"])" % where)
+        stems = {plain(it["ask"]) for x in steps if x["kind"] in ("questions", "quiz") for it in x["data"]["items"]}
+        for it in d["check"]:
+            one_ok(it["opts"], where + " %r" % it["ask"])
+            if not it.get("why"):
+                sys.exit("REFUSED: %s %r has no why" % (where, it["ask"]))
+            if plain(it["ask"]) in stems:
+                sys.exit("REFUSED: %s %r is also a practice or quiz question in this lesson" % (where, it["ask"]))
+        if n > 1 and not (d.get("recap") and d["recap"].get("learned")):
+            sys.exit("REFUSED: %s has nothing to recap from lesson %d" % (where, n - 1))
     if kind in ("explore", "context"):
         if not d.get("items"):
             sys.exit("REFUSED: %s has no items" % where)

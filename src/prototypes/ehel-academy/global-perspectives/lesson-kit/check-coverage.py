@@ -81,6 +81,9 @@ def main():
 
     reached = {c: [] for c in codes}
     pages = 0
+    prev_lesson = None   # (title, about lines) of the page before, for the recap
+    asked = {}           # every quiz and practice stem in the grade -> the page that asks it
+    checks = []          # (page, starting-question stem)
     for n, entry in enumerate(cfg["lessons"], 1):
         path = os.path.join(HERE, entry["file"])
         if not os.path.isfile(path):
@@ -109,6 +112,36 @@ def main():
             fail(entry["file"], "LESSON block is not JSON: %s" % e); continue
         last_survey = None
         last_observe = None
+        # BEFORE WE START: second in every lesson, unmarked but single-keyed, never a
+        # copy of a practice or quiz question, and its recap is the previous page's
+        # own title and about lines - re-read from that page, not trusted
+        kinds = [st["kind"] for st in data["steps"]]
+        if kinds.count("warmup") != 1 or kinds[:2] != ["overview", "warmup"]:
+            fail(entry["file"], "Before we start is missing, doubled, or not straight after the overview")
+        else:
+            w = data["steps"][1]
+            stems = {re.sub(r"<[^>]*>", "", it["ask"]).strip() for st in data["steps"] if st["kind"] in ("quiz", "questions") for it in st["data"]["items"]}
+            if len(w["data"].get("check") or []) < 2:
+                fail(entry["file"], "the starting check has fewer than 2 questions")
+            for it in w["data"].get("check") or []:
+                if not one_key(it["opts"]) or not it.get("why"):
+                    fail(entry["file"], "starting question %r does not have exactly one key and an explanation" % it["ask"])
+                if re.sub(r"<[^>]*>", "", it["ask"]).strip() in stems:
+                    fail(entry["file"], "starting question %r repeats a practice or quiz question" % it["ask"])
+            checks += [(entry["file"], re.sub(r"<[^>]*>", "", it["ask"]).strip()) for it in w["data"].get("check") or []]
+            rc = w["data"].get("recap")
+            if n == 1 and rc:
+                fail(entry["file"], "lesson 1 recaps a lesson that does not exist")
+            if n > 1 and (not rc or prev_lesson is None or (rc.get("title"), rc.get("learned")) != prev_lesson):
+                fail(entry["file"], "the recap is not the previous lesson's own title and about lines")
+            if set(w["objectives"]) != set(data["steps"][0]["objectives"]):
+                fail(entry["file"], "Before we start does not carry the lesson's codes")
+            computed += 1
+        prev_lesson = (data["title"], list(data["steps"][0]["data"].get("about") or []))
+        for st in data["steps"]:
+            if st["kind"] in ("quiz", "questions"):
+                for it in st["data"]["items"]:
+                    asked.setdefault(re.sub(r"<[^>]*>", "", it["ask"]).strip(), entry["file"])
         for k, st in enumerate(data["steps"], 1):
             d = st["data"]
             kind = st["kind"]
@@ -284,6 +317,11 @@ def main():
 
     if pages < len(cfg["lessons"]):
         print("  cannot run: %d of %d pages" % (pages, len(cfg["lessons"]))); sys.exit(2)
+    # a starting question that is a quiz or practice question ANYWHERE in the grade
+    # gives that question's answer away before the lesson that asks it
+    for f, stem in checks:
+        if stem in asked:
+            fail(f, "starting question %r is also asked in %s" % (stem, asked[stem]))
 
     print("\n  Cambridge Primary Global Perspectives 0838 - Stage %d\n" % stage)
     for c, o in codes.items():

@@ -76,7 +76,7 @@ LESSON = {
              "You looked back over the whole course: what you learned, how your ideas changed, and what helped. That is reflecting."),
 
         step("know", "Present what you learned", "\U0001F3A4", "Learning presenter", ["4Mi.01"],
-             "Present what you learned this year as a talk: a start, a middle and an end, all about finding things out.",
+             "Give a talk about what you learned this year: a start, a middle and an end, all about finding things out.",
              explain(
                  ["A talk about your own learning has the same shape as any talk."],
                  [],
@@ -170,7 +170,7 @@ LESSON["lecture"] = [
     part("\U0001F9E9", "Six skills, sharper again",
          "Finding out, thinking about it, choosing and saying why, working together, talking and listening, looking back. The same six as every year, and each one took a step."),
     part("\U0001F50D", "What you did",
-         "You constructed questions that opened a food journey and located the answers. You chose to observe, ask or measure, and read a rain gauge. You drew conclusions that went exactly as far as the data. You saw that people think differently from where they stand, and that a leaflet's author wants something."),
+         "You constructed questions that opened a food journey and located the answers. You chose to observe, ask or measure, and used a rain gauge. You drew conclusions that went exactly as far as the data. You saw that people think differently from where they stand, and that a leaflet's author wants something."),
     part("\U0001F91D", "And more",
          "You followed a cause through a shared space to twenty people, and acted for other people's problems. You allocated a team's jobs by skill and brought ideas. You presented with a start, a middle and an end, and responded with relevant ideas."),
     part("\u23EA", "Looking back",
@@ -191,7 +191,7 @@ LESSON["words"] = [
     word("support", "\U0001F91D", "To help something happen.",
          ["Working in a team supported my learning.", "Which activities support learning?"]),
     word("present", "\U0001F3A4", "To tell people about a topic, clearly and in order.",
-         ["Present what you learned.", "A talk with a start, a middle and an end."]),
+         ["We will present what we learned.", "A talk with a start, a middle and an end."], say="to present"),
 ]
 
 LESSON["home"] = [
@@ -210,4 +210,11 @@ LESSON["home"] = [
           "Everyone responds with one relevant question or idea.",
           "Answer each one."],
          "Did your start tell them what the talk was about?"),
+]
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("How would you find out how many cars pass the school?", "\U0001F697", "observe and count them", ["ask one person", "measure the road"], "Cars can be seen, so observe and count them."),
+    q("What is an author's viewpoint?", "\u270d\ufe0f", "what the author thinks about the topic", ["how long the text is", "where the author lives"], "A viewpoint is what the author thinks."),
 ]

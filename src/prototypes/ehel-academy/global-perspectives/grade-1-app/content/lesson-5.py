@@ -235,3 +235,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to ride a bike", "the names of the planets", "how to swim"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You want to find out about the moon. Which would help?", "\U0001F319", "a book about space", ["a cookbook", "a football"], "A book about space tells you about the moon."),
+    q("Which one is an opinion?", "\U0001F4AD", "I think cats are the best pets.", ["A cat has four legs.", "Cats drink water."], "I think is what YOU think. That is an opinion. Four legs is a fact."),
+]

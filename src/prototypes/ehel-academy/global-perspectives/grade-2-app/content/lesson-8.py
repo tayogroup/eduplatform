@@ -206,3 +206,10 @@ LESSON["home"] = [
           "Show somebody and say: this helped me learn to…"],
          "What would you like to find out about next year?"),
 ]
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You want to know when the library opens. Which question is focused on that?", "\U0001F3AF", "What time does the library open?", ["Do you like books?", "Is the library big?"], "It asks exactly what you want to find out: the time it opens."),
+    q("Which one is information, not an opinion?", "\U0001F4CB", "Six children walk to school.", ["Walking is the best way.", "Buses are boring."], "Six children walk is information you can count. Best and boring are opinions."),
+]

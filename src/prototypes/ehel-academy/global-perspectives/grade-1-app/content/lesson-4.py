@@ -244,3 +244,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to swim", "how to bake bread", "the names of the planets"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("You do not eat your breakfast. What might happen next?", "\U0001F963", "You feel hungry before lunch", ["You grow taller at once", "It starts to rain"], "Skipping breakfast can make you hungry. That is a consequence of what you did."),
+    q("Your pencil is broken. What would fix it?", "\u270f\ufe0f", "sharpen it, or use another pencil", ["sing to it", "hide it in your bag"], "Sharpening it, or using another one, fixes the problem. Singing does not."),
+]

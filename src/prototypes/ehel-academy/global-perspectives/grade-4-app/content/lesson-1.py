@@ -134,12 +134,12 @@ LESSON = {
               "spots": [
                   spot("bread", "the bread stall", "The baker made this bread at four o'clock this morning, from flour milled thirty kilometres away.", 70, 150, "\U0001F35E"),
                   spot("bananas", "the banana box", "A chalk sign says: picked yesterday at a farm three kilometres up the road.", 160, 155, "\U0001F34C"),
-                  spot("apples", "the apple crate", "The crate says: Produce of South Africa. These apples travelled thousands of kilometres.", 250, 150, "\U0001F34E"),
+                  spot("apples", "the apple crate", "The crate says: Grown in South Africa. These apples travelled thousands of kilometres.", 250, 150, "\U0001F34E"),
                   spot("van", "the delivery van", "The van brings fruit from the big wholesale market in the city before dawn.", 60, 80, "\U0001F69A"),
                   spot("fish", "the fish counter", "The fish came from the coast overnight, packed in ice to keep it fresh.", 250, 85, "\U0001F41F"),
               ],
               "rounds": [
-                  {"ask": "Which part shows food that came from another COUNTRY?", "about": "which food came from another country", "spot": "apples", "why": "The crate says Produce of South Africa."},
+                  {"ask": "Which part shows food that came from another COUNTRY?", "about": "which food came from another country", "spot": "apples", "why": "The crate says Grown in South Africa."},
                   {"ask": "Which part shows food grown CLOSEST to the market?", "about": "which food was grown closest", "spot": "bananas", "why": "A farm three kilometres up the road."},
                   {"ask": "Which part shows HOW food reaches the market before dawn?", "about": "how food reaches the market", "spot": "van", "why": "The delivery van brings it from the wholesale market."},
                   {"ask": "Which part shows food kept fresh with ICE?", "about": "which food was kept fresh with ice", "spot": "fish", "why": "The fish counter: packed in ice overnight."},
@@ -200,7 +200,7 @@ LESSON["lecture"] = [
     part("\U0001F4C4", "Locate the answer",
          "A text about the banana's journey holds the answers, one per sentence. Why are they kept cold? Locate the sentence with the reason. How many days? Locate the sentence with the number. Every sentence is about bananas; only one answers your question."),
     part("\U0001F3EA", "A market answers too",
-         "The apple crate says Produce of South Africa. The banana sign says a farm three kilometres up the road. The fish is packed in ice from the coast. Locate the part that answers your question."),
+         "The apple crate says Grown in South Africa. The banana sign says a farm three kilometres up the road. The fish is packed in ice from the coast. Locate the part that answers your question."),
 ]
 
 LESSON["words"] = [
@@ -241,6 +241,13 @@ LESSON["lookback"] = {
     "changed": [
         {"before": "Food just comes from the shop.", "after": "Food is grown, moved, sold and eaten, and a banana can travel eight thousand kilometres."},
         {"before": "Any question about a topic is worth asking.", "after": "The questions worth asking open a stage I cannot see yet."},
-        {"before": "To find an answer I read the whole text.", "after": "I can find the one sentence that answers my question."},
+        {"before": "To find an answer I had to go through the whole text.", "after": "I can find the one sentence that answers my question."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Which question would help you understand how milk gets to the shop?", "\U0001F95B", "Where does the milk go after the cow is milked?", ["Do you like milk?", "Is milk white?"], "It asks about a stage of the milk's journey that you cannot answer yet."),
+    q("A box of mangoes has a label: Grown in Kenya. What does the label tell you?", "\U0001F96D", "where the mangoes were grown", ["how much they cost", "who will eat them"], "The label says where they were grown."),
+]

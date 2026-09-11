@@ -226,3 +226,10 @@ LESSON["lookback"] = {
         {"before": "A team is just more people doing the same thing.", "after": "A team is better because each part is done by the person best at it."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Your team is making a poster. Who should do the lettering?", "\u270f\ufe0f", "the person with the neatest handwriting", ["whoever shouts first", "nobody"], "Give each job to the person whose skill it needs."),
+    q("What is a strength?", "\U0001F4AA", "something you do well", ["something you cannot do", "a kind of paint"], "A strength is something you are good at."),
+]

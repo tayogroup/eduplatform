@@ -8,11 +8,24 @@ lesson whose page is not built is drawn as "Coming soon" with no link - a card
 that looks like a link and goes nowhere is worse than one that says it is not
 ready.
 
-THE TIME ESTIMATE on a card is derived from the kinds of step the lesson has,
-at the minutes per kind in MINUTES below - a demo is a minute and a half of
-pressing Next and listening, a survey is five minutes of asking six classmates
-and recording each answer. An estimate is a claim; it is here so a teacher can
-plan a session, not so a child is timed.
+THE TIME ESTIMATE on a card comes from a play-through of the lesson, recorded
+in the grade's timing.json: every step driven to completion, with the words
+the page actually spoke (ask lines, frames, feedback, lecture parts, word
+cards) and the taps it asked for. Minutes are those words at the voice's pace
+(TIMING_WPM), a response time per tap at the grade's stage (TAP_SECONDS), and
+a moment to arrive at each step (STEP_SECONDS). So a lesson that grows a step,
+or a lecture that grows a paragraph, moves its own estimate.
+
+It is a model, not a measurement of children. TAP_SECONDS and STEP_SECONDS are
+the two numbers timing two real children would correct; the per-kind MINUTES
+table below is kept only for a grade with no timing.json yet. A timing.json
+whose steps do not match the lesson as built is REFUSED, because a card that
+states minutes for a lesson it no longer describes is a wrong claim to a
+teacher planning a session. Regenerate it with the timing play-through
+(drive-gp-mods.mjs with TIMING set) after any content change.
+
+An estimate is a claim; it is here so a teacher can plan a session, not so a
+child is timed.
 
 THE GROWN-UPS SECTION at the foot of the hub is the teacher-and-parent
 support this build otherwise lacks: per lesson, the Cambridge objectives it
@@ -50,7 +63,7 @@ MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2,
            "sources": 4, "opinion": 3, "team": 5, "contrib": 3, "lookback": 3,
            "questions": 3, "quiz": 4,
            # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
-           "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
+           "overview": 1, "warmup": 2, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
 
 # the talk-together version of each kind of step, for a grown-up to run at home
 TOGETHER = {
@@ -99,8 +112,24 @@ def lesson_module(n):
     return mod.LESSON
 
 
-def minutes_of(lesson):
-    return int(5 * round(sum(MINUTES.get(s["kind"], 2) for s in lesson["steps"]) / 5.0))
+# the play-through model (see THE TIME ESTIMATE above)
+TIMING_WPM = 140                         # the course voice at the house pace (SSML rate -8%)
+TAP_SECONDS = {1: 8, 2: 7, 3: 6, 4: 6}   # read the choices, think, tap - by stage
+STEP_SECONDS = 20                        # arrive at a step, look at it, move on
+TIMING = load_json(os.path.join(APP, "timing.json")) if os.path.isfile(os.path.join(APP, "timing.json")) else None
+
+
+def minutes_of(lesson, n=None, stage=1):
+    if TIMING is None:
+        return int(5 * round(sum(MINUTES.get(s["kind"], 2) for s in lesson["steps"]) / 5.0))
+    rec = TIMING["lessons"].get(str(n)) or []
+    built = [s["kind"] for s in lesson["steps"]]
+    if [x["kind"] for x in rec] != built:
+        sys.exit("REFUSED: timing.json does not describe lesson %d as built (%d steps recorded, %d built).\n"
+                 "  Re-run the timing play-through and rewrite timing.json - see THE TIME ESTIMATE in this file." % (n, len(rec), len(built)))
+    tap = TAP_SECONDS.get(int(stage), 6)
+    secs = sum(x["words"] * 60.0 / TIMING_WPM + x["taps"] * tap + STEP_SECONDS for x in rec)
+    return max(5, int(5 * round(secs / 60.0 / 5.0)))
 
 
 CARD = """      <%(tag)s class="card%(cls)s"%(href)s>
@@ -286,6 +315,9 @@ def keys_for(s):
             groups.setdefault(bins[it["bin"]], []).append(it["label"])
         out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), "; ".join(
             "<b>%s</b>: %s" % (text(g), text(", ".join(v))) for g, v in groups.items())))
+    elif k == "warmup":
+        out.append("<li><b>%s</b> <span class=\"key\">a starting check, not marked: %s</span></li>" % (text(s["title"]), "; ".join(
+            "%s &rarr; <b>%s</b>" % (text(plain(it["ask"])), text(ok_text(it["opts"]))) for it in d["check"])))
     elif k == "order":
         out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), text(" &rarr; ".join(it["label"] for it in d["items"]))))
     elif k == "askq":
@@ -473,7 +505,7 @@ def main():
             live += 1
             page = io.open(os.path.join(APP, f), encoding="utf-8").read()
             count = len(re.findall(r'<section class="slide"', page)) - 1
-            minutes = minutes_of(lesson)
+            minutes = minutes_of(lesson, n, stage)
             total_minutes += minutes
             steps[uid] = count
             files[uid] = f
@@ -498,7 +530,9 @@ def main():
         "from": cfg["fromParam"], "options": '<option value="" selected>Jump to a lesson…</option>' + options,
     }
     io.open(os.path.join(APP, cfg["hub"]), "w", encoding="utf-8", newline="").write(page)
-    print("\n  ok   %s  -  %d of %d lessons live, about %d minutes of lessons\n" % (cfg["hub"], live, len(cfg["lessons"]), total_minutes))
+    print("\n  ok   %s  -  %d of %d lessons live, about %d minutes of lessons (%s)\n" % (
+        cfg["hub"], live, len(cfg["lessons"]), total_minutes,
+        "from the play-through in timing.json" if TIMING else "from MINUTES per kind of step: no timing.json"))
 
 
 main()

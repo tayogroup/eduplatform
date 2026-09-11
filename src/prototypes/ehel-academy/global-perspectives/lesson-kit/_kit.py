@@ -138,9 +138,17 @@ def part(pic, title, say):
     return {"pic": pic, "title": title, "say": say}
 
 
-def word(w, pic, meaning, uses):
-    """A Global Perspectives word: the word, its picture, what it means, and sentences that use it."""
-    return {"w": w, "pic": pic, "meaning": meaning, "uses": list(uses)}
+def word(w, pic, meaning, uses, say=None):
+    """A Global Perspectives word: the word, its picture, what it means, and sentences that use it.
+
+    `say` is what the voice reads in place of the bare word, for a word a voice
+    reads as the wrong part of speech on its own: "record" and "present" are
+    taught as verbs, and alone both are read as nouns (REcord, PREsent). The
+    card still shows the word; only the voice gets "to record"."""
+    out = {"w": w, "pic": pic, "meaning": meaning, "uses": list(uses)}
+    if say:
+        out["say"] = say
+    return out
 
 
 def home(title, materials, steps, look):

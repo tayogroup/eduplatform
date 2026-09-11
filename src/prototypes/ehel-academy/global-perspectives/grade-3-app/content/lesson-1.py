@@ -20,15 +20,15 @@ LESSON = {
                  ["This year you make your own questions, and the good ones help you understand the topic.",
                   "Understanding means knowing how it works, not just one fact."],
                  ["Where does our tap water come from? That helps you understand.",
-                  "What happens to the water after we pull the plug? That helps too.",
+                  "What happens to the water after we pour it away? That helps too.",
                   "Is water wet? Everybody knows. It does not help."],
                  ["Children ask the easy question they can already answer.", "Ask the one you cannot answer yet, about how it works."],
                  ["Press Next and listen to Amal's questions."]),
              {"frames": [
                  {"pic": "\U0001F6B0", "cap": "Amal turns on the tap. Water comes out. But <b>from where?</b>", "say": "Amal turns on the tap. Water comes out. But from where? She does not know, and she wants to understand."},
                  {"pic": "❓", "cap": "She makes a question: <b>where does our tap water come from?</b>", "say": "She makes a question: where does our tap water come from? She cannot answer it yet, so it will help her understand.", "sound": "ding"},
-                 {"pic": "\U0001F30A", "cap": "Then: <b>what happens to the water after we pull the plug?</b>", "say": "Then another: what happens to the water after we pull the plug? Another question she cannot answer yet.", "sound": "ding"},
-                 {"pic": "\U0001F6C1", "cap": "And: <b>how much water does a bath use?</b> A number she can find out.", "say": "And: how much water does a bath use? A number she can find out.", "sound": "ding"},
+                 {"pic": "\U0001F30A", "cap": "Then: <b>what happens to the water after we pour it away?</b>", "say": "Then another: what happens to the water after we pour it away? Another question she cannot answer yet.", "sound": "ding"},
+                 {"pic": "\U0001F46A", "cap": "And: <b>how much water does a family use in a day?</b> A number she can find out.", "say": "And: how much water does a family use in a day? A number she can find out.", "sound": "ding"},
                  {"pic": "\U0001F914", "cap": "Sami asks: <b>is water wet?</b> Everybody knows. That does not help you understand.", "say": "Sami asks: is water wet? Everybody already knows that. It does not help anybody understand water.", "sound": "boing"},
                  {"pic": "\U0001F4A1", "cap": "Your own question helps when you <b>cannot answer it yet</b> and it is about <b>how the topic works</b>.", "say": "Your own question helps when you cannot answer it yet, and it is about how the topic works.", "sound": "tada"},
              ]},
@@ -44,10 +44,10 @@ LESSON = {
              {"items": [
                  {"pic": "\U0001F4CD", "label": "where does it come from?", "say": "Where does it come from? Where does our tap water come from? A river, a lake, under the ground. That opens up the start of the story."},
                  {"pic": "➡️", "label": "what happens next?", "say": "What happens next? What happens to the water after we use it? Down the drain, to a cleaning works, back to the river. That opens up the end of the story."},
-                 {"pic": "\U0001F522", "label": "how much, how many?", "say": "How much, how many? How much water does a bath use? A number you can measure or look up."},
+                 {"pic": "\U0001F522", "label": "how much, how many?", "say": "How much, how many? How much water does a family use in a day? A number you can measure or look up."},
              ], "need": 3,
               "then": {"ask": "Which of these questions helps you UNDERSTAND water?",
-                       "opts": [opt("What happens to the water after we pull the plug?", True), opt("Is water wet?", False), opt("Do you like water?", False)],
+                       "opts": [opt("What happens to the water after we pour it away?", True), opt("Is water wet?", False), opt("Do you like water?", False)],
                        "why": "You cannot answer it yet, and it is about how water works. That helps you understand."}},
              "Where from, what happens next, how much. Three kinds of question that open up a topic."),
 
@@ -62,7 +62,7 @@ LESSON = {
               "ends": [
                   {"id": "from", "t": "does our tap water come from?", "words": ["Where"], "asks": "where the water starts"},
                   {"id": "after", "t": "happens to water after we use it?", "words": ["What"], "asks": "what happens after"},
-                  {"id": "bath", "t": "water does a bath use?", "words": ["How much"], "asks": "the amount a bath uses"},
+                  {"id": "family", "t": "water does a family use in a day?", "words": ["How much"], "asks": "the amount a family uses"},
                   {"id": "clean", "t": "do they clean dirty water?", "words": ["How", "Why", "Where"], "asks": "the cleaning of water"},
                   {"id": "litres", "t": "litres does our school use in a day?", "words": ["How many"], "asks": "the school's daily litres"},
                   {"id": "winter", "t": "is the river higher in the rainy season?", "words": ["Why", "How much", "Where"], "asks": "the river in the rainy season"},
@@ -70,7 +70,7 @@ LESSON = {
               "rounds": [
                   {"want": "where our tap water starts", "pic": "\U0001F6B0", "word": "Where", "end": "from", "why": "Where asks for the place it starts. A river, a lake, under the ground."},
                   {"want": "what becomes of water after we have used it", "pic": "\U0001F30A", "word": "What", "end": "after", "why": "What happens next opens up the end of the story."},
-                  {"want": "the amount of water a bath uses", "pic": "\U0001F6C1", "word": "How much", "end": "bath", "why": "How much asks for an amount. About eighty litres."},
+                  {"want": "the amount of water a family uses in a day", "pic": "\U0001F46A", "word": "How much", "end": "family", "why": "How much asks for an amount. About eighty litres."},
                   {"want": "the way dirty water is cleaned", "pic": "\U0001F9FC", "word": "How", "end": "clean", "why": "How asks for the way it is done."},
                   {"want": "the number of litres our school uses in a day", "pic": "\U0001F3EB", "word": "How many", "end": "litres", "why": "How many asks for a number you can count."},
                   {"want": "the reason the river is higher in the rainy season", "pic": "\U0001F327️", "word": "Why", "end": "winter", "why": "Why asks for a reason: more rain."},
@@ -81,13 +81,13 @@ LESSON = {
              "Our topic is water where we live. Would this question help you UNDERSTAND it?",
              explain(
                  ["A question helps you understand when you cannot answer it yet and it is about how the topic works."],
-                 ["Where does the water go after the plug? Helps.", "Is water wet? Everybody knows. Does not help.", "What is my favourite drink? About me, not about water where we live."],
+                 ["Where does the water go after we pour it away? Helps.", "Is water wet? Everybody knows. Does not help.", "What is my favourite drink? About me, not about water where we live."],
                  [],
                  ["Read it, then tap the bin."]),
              {"ask": "Would it help me understand water where we live?",
               "bins": [{"id": "yes", "label": "Helps me understand", "pic": "\U0001F9E0"}, {"id": "no", "label": "Does not help", "pic": "\U0001F937"}],
               "items": [
-                  {"pic": "\U0001F30A", "label": "Where does the water go after I pull the plug?", "bin": "yes", "why": "You cannot answer it yet, and it is about how water works."},
+                  {"pic": "\U0001F30A", "label": "Where does the water go after I pour it away?", "bin": "yes", "why": "You cannot answer it yet, and it is about how water works."},
                   {"pic": "\U0001F4A7", "label": "Is water wet?", "bin": "no", "why": "Everybody knows. It does not help you understand anything new."},
                   {"pic": "\U0001F3EB", "label": "How many litres does our school use in a day?", "bin": "yes", "why": "A number you can find out that tells you how much we use."},
                   {"pic": "\U0001F964", "label": "What is my favourite drink?", "bin": "no", "why": "It is about you, not about water where we live."},
@@ -101,7 +101,7 @@ LESSON = {
              explain(
                  ["A source holds the answers to your questions, but not all in one place.", "Read the question, then find the sentence that answers it."],
                  ["Where does our tap water come from? Find the sentence about the river.",
-                  "How much does a bath use? Find the sentence with the number."],
+                  "How much does a family use in a day? Find the sentence with the number."],
                  ["Children answer from what they think they know.", "The answer is IN the text. Find the sentence."],
                  ["Press Read it to me, then tap the sentence that answers."]),
              {"title": "Water where we live",
@@ -109,14 +109,14 @@ LESSON = {
                   "The water in our taps starts in the river outside the town.",
                   "At the water works it is cleaned, so it is safe to drink.",
                   "Pipes under the road carry it to every house and to our school.",
-                  "A bath uses about eighty litres of water, and a shower about forty.",
-                  "When we pull the plug, the water goes down a drain to a second works, where it is cleaned again.",
+                  "A family of five uses about eighty litres of water a day: four jerrycans full.",
+                  "When we pour used water away, it goes down a drain to a second works, where it is cleaned again.",
                   "Then it goes back into the river, and the river carries it to the sea.",
               ],
               "rounds": [
                   {"ask": "Where does our tap water come from?", "about": "where the water starts", "line": 0, "why": "It starts in the river outside the town. The first sentence tells us."},
-                  {"ask": "How much water does a bath use?", "about": "how much a bath uses", "line": 3, "why": "About eighty litres. The sentence with the number."},
-                  {"ask": "What happens to the water after we pull the plug?", "about": "what happens after the plug", "line": 4, "why": "Down a drain to a second works, where it is cleaned again."},
+                  {"ask": "How much water does a family use in a day?", "about": "how much a family uses", "line": 3, "why": "About eighty litres. The sentence with the number."},
+                  {"ask": "What happens to the water after we pour it away?", "about": "what happens after we pour it away", "line": 4, "why": "Down a drain to a second works, where it is cleaned again."},
                   {"ask": "How does the water get to our school?", "about": "how the water reaches school", "line": 2, "why": "Pipes under the road carry it."},
                   {"ask": "Where does the river carry the water in the end?", "about": "where the river carries it", "line": 5, "why": "To the sea. The last sentence."},
               ]},
@@ -132,13 +132,13 @@ LESSON = {
              {"scene": "kitchen", "need": 5, "caption": "Tap the things in the kitchen to see what each one tells us about water.",
               "spots": [
                   spot("tap", "the tap", "The tap brings clean water from the pipes under the road.", 160, 130, "\U0001F6B0"),
-                  spot("sink", "the sink and its plughole", "Used water goes down the plughole to the drain.", 100, 175, "\U0001F30A"),
+                  spot("sink", "the sink", "Used water goes down the sink to the drain.", 100, 175, "\U0001F30A"),
                   spot("kettle", "the kettle", "The kettle heats water for tea. It holds about one and a half litres.", 250, 130, "☕"),
                   spot("bottle", "the water bottle", "In our town the water works makes tap water safe, so we can fill a bottle. Always ask a grown-up if your tap water is safe.", 60, 120, "\U0001F964"),
                   spot("plant", "the plant on the windowsill", "Plants need water too. This one gets a cup every day.", 160, 60, "\U0001F331"),
               ],
               "rounds": [
-                  {"ask": "Where does the used water go?", "about": "where used water goes", "spot": "sink", "why": "Down the plughole to the drain."},
+                  {"ask": "Where does the used water go?", "about": "where used water goes", "spot": "sink", "why": "Down the sink to the drain."},
                   {"ask": "Where does clean water come INTO the kitchen?", "about": "where clean water comes in", "spot": "tap", "why": "Through the tap, from the pipes."},
                   {"ask": "Which thing shows we drink water from the tap?", "about": "that we drink water from the tap", "spot": "bottle", "why": "We fill a bottle from the tap and drink it. Always ask a grown-up if your tap water is safe."},
                   {"ask": "Which thing uses water that is not for people?", "about": "water for something other than people", "spot": "plant", "why": "The plant drinks a cup a day."},
@@ -154,8 +154,8 @@ LESSON = {
                  ["Read it, then tap."]),
              {"label": "Question", "items": [
                  q("You want to understand how water reaches our taps. Which question helps?", "\U0001F9E0", "Where does our tap water come from?", ["Is water wet?", "What colour is my bottle?"], "You cannot answer it yet, and it is about how water works."),
-                 q("Which sentence answered 'how much water does a bath use'?", "\U0001F6C1", "A bath uses about eighty litres of water.", ["The water starts in the river.", "Then it goes back into the river."], "The sentence with the number."),
-                 q("Which part of the kitchen showed where used water goes?", "\U0001F30A", "the plughole in the sink", ["the kettle", "the plant"], "Down the plughole to the drain."),
+                 q("Which sentence answered 'how much water does a family use in a day'?", "\U0001F46A", "A family of five uses about eighty litres of water a day.", ["The water starts in the river.", "Then it goes back into the river."], "The sentence with the number."),
+                 q("Which part of the kitchen showed where used water goes?", "\U0001F30A", "the sink", ["the kettle", "the plant"], "Down the sink to the drain."),
                  q("When you look for an answer in a text, you…", "\U0001F50D", "find the sentence that answers your question", ["read every sentence twice", "guess from the title"], "One sentence answers. Locate it."),
              ]},
              "You make your own questions, and you find their answers."),
@@ -169,13 +169,13 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("A question helps you understand a topic when…", "\U0001F9E0", "you cannot answer it yet and it is about how the topic works", ["everybody already knows the answer", "it is very short", "it is about you"], "Amal's questions were ones she could not answer yet."),
-                 q("Where does our tap water start?", "\U0001F6B0", "in the river outside the town", ["in the kettle", "in the sea", "in the bath"], "The text said so, in its first sentence."),
+                 q("Where does our tap water start?", "\U0001F6B0", "in the river outside the town", ["in the kettle", "in the sea", "in the bucket"], "The text said so, in its first sentence."),
                  q("Why is the water cleaned at the water works?", "\U0001F9FC", "so it is safe to drink", ["so it is warm", "so it is blue", "it is not cleaned"], "The second sentence: cleaned so it is safe to drink."),
-                 q("What happens to water after we pull the plug?", "\U0001F30A", "it goes down a drain to a second works and is cleaned again", ["it disappears", "it goes straight to the tap", "it stays in the sink"], "The text told us: a drain, a second works, cleaned again."),
+                 q("What happens to water after we pour it away?", "\U0001F30A", "it goes down a drain to a second works and is cleaned again", ["it disappears", "it goes straight to the tap", "it stays in the sink"], "The text told us: a drain, a second works, cleaned again."),
                  q("Which question word asks for a NUMBER of litres?", "\U0001F522", "How many", ["Where", "Why", "Who"], "How many litres does our school use in a day?"),
                  q("Sami asked if water is wet. Why did that not help?", "\U0001F914", "everybody already knew the answer", ["it was too long", "water is not wet", "it was rude"], "A question you can already answer does not help you understand."),
                  q("How does water get from the works to our school?", "\U0001F3EB", "through pipes under the road", ["in buckets", "by lorry", "it rains into the school"], "Pipes under the road carry it to every house and the school."),
-                 q("Where in the kitchen does clean water come in?", "\U0001F6B0", "at the tap", ["at the plughole", "in the plant pot", "in the kettle"], "The tap brings clean water from the pipes."),
+                 q("Where in the kitchen does clean water come in?", "\U0001F6B0", "at the tap", ["at the drain", "in the plant pot", "in the kettle"], "The tap brings clean water from the pipes."),
              ]},
              "That is the whole lesson finished. You make your own questions and find their answers in a source."),
     ],
@@ -193,13 +193,13 @@ LESSON["lecture"] = [
     part("\U0001F4A7", "Amal and the tap",
          "Amal turns on the tap and water comes out. But from where? She does not know, and she wants to understand. So she makes her own questions."),
     part("❓", "Questions that help you understand",
-         "Where does our tap water come from? What happens after we pull the plug? How much does a bath use? Each one Amal cannot answer yet, and each one is about how water works. Is water wet? Everybody knows. That one does not help."),
+         "Where does our tap water come from? What happens after we pour it away? How much does a family use in a day? Each one Amal cannot answer yet, and each one is about how water works. Is water wet? Everybody knows. That one does not help."),
     part("\U0001F50D", "Three kinds",
          "Where does it come from, opens the start of the story. What happens next, opens the end. How much and how many, gives you a number. Three kinds of question that open up a topic."),
     part("\U0001F4C4", "The answers are in the source",
-         "A text about water has the answers, but not all in one place. Read your question, then find the sentence that answers it. A bath uses about eighty litres: there it is, in the sentence with the number."),
+         "A text about water has the answers, but not all in one place. Read your question, then find the sentence that answers it. A family uses about eighty litres a day: there it is, in the sentence with the number."),
     part("\U0001F373", "A picture answers too",
-         "A kitchen is a source about water. The tap is where clean water comes in. The plughole is where used water goes. Find the part that answers your question."),
+         "A kitchen is a source about water. The tap is where clean water comes in. The sink is where used water goes. Find the part that answers your question."),
 ]
 
 LESSON["words"] = [
@@ -210,15 +210,15 @@ LESSON["words"] = [
     word("source", "\U0001F4D6", "Somewhere you can find information: a text, a picture, a person.",
          ["The text was our source.", "The kitchen was a source too."]),
     word("locate", "\U0001F50D", "To find exactly where something is.",
-         ["Locate the sentence that answers.", "We located the plughole in the picture."]),
+         ["Locate the sentence that answers.", "We located the sink in the picture."]),
     word("litre", "\U0001F964", "A measure of how much water: a big bottle holds about one litre.",
-         ["A bath uses eighty litres.", "The kettle holds one and a half litres."]),
+         ["A family uses eighty litres a day.", "The kettle holds one and a half litres."]),
     word("drain", "\U0001F30A", "The pipe that takes used water away.",
          ["Used water goes down the drain.", "The drain leads to the cleaning works."]),
 ]
 
 LESSON["home"] = [
-    home("Questions I cannot answer yet", "A grown-up and a topic at home: the fridge, the post, the bins",
+    home("Questions I cannot answer yet", "A grown-up and a topic at home: the fridge, the water tank, the bins",
          ["Make three questions about it that you cannot answer yet.",
           "Say which is a where-from, a what-happens or a how-much question.",
           "Ask your grown-up, or find out together."],
@@ -243,3 +243,10 @@ LESSON["lookback"] = {
         {"before": "I had to read all of a text to find an answer.", "after": "I can find the one sentence that answers my question."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Which question would help you understand how rain is made?", "\U0001F327\ufe0f", "What happens to water when the sun warms it?", ["Do you like rain?", "Is rain wet?"], "It asks how rain works, and it is something you might not know yet."),
+    q("A book has the answer to your question somewhere in it. How do you find it quickly?", "\U0001F4C4", "look for the sentence that is about your question", ["read only the last word", "look at the cover"], "Look for the sentence about your question. That is where the answer is."),
+]

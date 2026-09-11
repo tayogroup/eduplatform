@@ -252,3 +252,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to swim", "the names of the planets", "how to tie a shoelace"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Which of these is an opinion?", "\U0001F4AD", "Football is the best game.", ["I play football on Mondays.", "A football team has eleven players."], "Best is what somebody thinks. That is an opinion. The others are information."),
+    q("You ask six friends a question. How can you remember all their answers?", "\U0001F4DD", "write or draw each answer down", ["try to remember them all", "ask only one friend"], "Recording each answer means nothing gets forgotten."),
+]

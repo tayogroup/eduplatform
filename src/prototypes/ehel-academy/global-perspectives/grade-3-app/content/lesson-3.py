@@ -26,7 +26,7 @@ LESSON = {
     "blurb": "A chart is not the end of an investigation. Survey the class about snacks, draw conclusions the data proves, tell a conclusion from a guess, and sort snacks on a Venn diagram.",
     "steps": [
         step("demo", "A conclusion is a sentence the data proves", "\U0001F4A1", "Concluder", ["3Ad.01"],
-             "Last year you read charts. This year you draw CONCLUSIONS from them. Press <b>Next</b>.",
+             "Last year you learned to read charts. This year you draw CONCLUSIONS from them. Press <b>Next</b>.",
              explain(
                  ["A conclusion is a sentence you can say because the data proves it.", "If the numbers do not show it, it is not a conclusion."],
                  ["Fruit 3, crisps 1. Conclusion: more children chose fruit than crisps.",
@@ -54,10 +54,10 @@ LESSON = {
                           {"id": "yog", "t": "Yoghurt", "pic": "\U0001F963"}, {"id": "sweets", "t": "Sweets", "pic": "\U0001F36C"}],
               "people": people([
                   ("fruit", "An apple. Or a banana."),
-                  ("crisps", "Crisps, salt and vinegar."),
+                  ("crisps", "Crisps. I like the salty ones."),
                   ("yog", "A yoghurt, strawberry."),
                   ("fruit", "Grapes, usually."),
-                  ("fruit", "A pear from our tree."),
+                  ("fruit", "A mango from our tree."),
                   ("yog", "Yoghurt, the one with the crunchy bits."),
               ])},
              "Six answers recorded. Now the data can be asked what it proves."),
@@ -96,12 +96,12 @@ LESSON = {
                   {"label": "Apples", "pic": "\U0001F34E", "value": 24},
                   {"label": "Bananas", "pic": "\U0001F34C", "value": 18},
                   {"label": "Crisps", "pic": "\U0001F954", "value": 30},
-                  {"label": "Flapjacks", "pic": "\U0001F36A", "value": 12},
+                  {"label": "Samosas", "pic": "\U0001F95F", "value": 12},
               ],
               "items": [
                   {"ask": "Which snack sold the MOST?", "check": {"kind": "most"},
                    "opts": [opt("Crisps", True), opt("Apples", False), opt("Bananas", False)], "why": "Crisps: 30, the biggest number."},
-                  {"ask": "How many more apples than flapjacks were sold?", "check": {"kind": "difference", "a": "Apples", "b": "Flapjacks"},
+                  {"ask": "How many more apples than samosas were sold?", "check": {"kind": "difference", "a": "Apples", "b": "Samosas"},
                    "opts": [opt("12", True), opt("36", False), opt("6", False)], "why": "24 take away 12 is 12."},
                   {"ask": "Did the shop sell more bananas than crisps?", "check": {"kind": "more", "a": "Bananas", "b": "Crisps"},
                    "opts": [opt("No", True), opt("Yes", False)], "why": "Bananas 18, crisps 30. No, fewer."},
@@ -158,7 +158,7 @@ LESSON = {
              {"label": "Question", "items": [
                  q("Fruit 3, crisps 1. Which is a conclusion the data proves?", "\U0001F4CA", "More children chose fruit than crisps", ["Fruit is the tastiest", "Crisps are bad for you"], "Three is more than one. Proved."),
                  q("What goes in the MIDDLE of a Venn diagram?", "\U0001F91D", "things that are in both groups", ["things in neither group", "the biggest things"], "The middle is where the circles overlap: both."),
-                 q("The tuck shop sold 24 apples and 12 flapjacks. How many more apples?", "\U0001F34E", "12", ["36", "24"], "24 take away 12."),
+                 q("The tuck shop sold 24 apples and 12 samosas. How many more apples?", "\U0001F34E", "12", ["36", "24"], "24 take away 12."),
                  q("We asked only our class. Can we conclude every class likes fruit best?", "\U0001F3EB", "No, the data is only about our class", ["Yes", "Yes, if we like fruit"], "A conclusion cannot go further than the data."),
              ]},
              "You draw conclusions the data proves, and record on a diagram."),
@@ -174,7 +174,7 @@ LESSON = {
                  q("What is a conclusion?", "\U0001F4A1", "a sentence the data proves", ["a guess", "an opinion", "a kind of chart"], "Nothing more, nothing less than what the data shows."),
                  q("Sami said fruit is the tastiest snack. Why was that not a conclusion?", "\U0001F60B", "the chart does not measure taste", ["fruit is not tasty", "Sami was wrong about fruit", "it was too short"], "The data only counted choices."),
                  q("How many more children chose yoghurt than sweets?", "\U0001F963", "2", ["0", "1", "6"], "Yoghurt 2, sweets 0. 2 take away 0 is 2."),
-                 q("Which snack did the tuck shop sell most?", "\U0001F954", "crisps", ["apples", "bananas", "flapjacks"], "30, the biggest number."),
+                 q("Which snack did the tuck shop sell most?", "\U0001F954", "crisps", ["apples", "bananas", "samosas"], "30, the biggest number."),
                  q("How many more children chose fruit than crisps?", "\U0001F34E", "2", ["1", "3", "4"], "Fruit 3, crisps 1. 3 take away 1 is 2."),
                  q("Where does an apple go on the liked-and-healthy Venn diagram?", "\U0001F34E", "the middle: both", ["liked only", "healthy only", "nowhere"], "We like it, and it is healthy."),
                  q("Where do carrot sticks go?", "\U0001F955", "healthy only", ["the middle", "liked only", "nowhere"], "Healthy, but nobody chose them."),
@@ -200,7 +200,7 @@ LESSON["lecture"] = [
     part("\U0001F914", "Not a conclusion",
          "Fruit is the tastiest snack? The chart does not measure taste. Every class likes fruit best? We only asked our class. Those sound sensible, but the data does not prove them."),
     part("\U0001F4CB", "Numbers in a table",
-         "A table works the same way. The tuck shop sold 30 packets of crisps and 24 apples. Crisps sold most. Twelve more apples than flapjacks. Eighty-four snacks altogether."),
+         "A table works the same way. The tuck shop sold 30 packets of crisps and 24 apples. Crisps sold most. Twelve more apples than samosas. Eighty-four snacks altogether."),
     part("\U0001F5C2️", "A Venn diagram",
          "Two circles that overlap. Snacks we like on one side, healthy snacks on the other, and in the middle the ones that are both. An apple is both. Crisps are liked only. Carrot sticks are healthy only."),
 ]
@@ -246,3 +246,10 @@ LESSON["lookback"] = {
         {"before": "A thing is in one group or the other.", "after": "A thing can be in both, and a Venn diagram has a place for it."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Seven children chose football and three chose skipping. Which is true?", "\U0001F4CA", "More children chose football", ["More children chose skipping", "Everyone chose football"], "Seven is more than three, so more children chose football."),
+    q("Ten children chose rice and four chose beans. How many more chose rice?", "\U0001F35A", "6", ["14", "4"], "Ten take away four is six."),
+]

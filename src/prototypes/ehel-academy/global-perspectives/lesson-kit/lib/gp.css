@@ -409,3 +409,15 @@
   .gloxeg { margin: 4px 0 0; font-size: 15px; line-height: 1.5; font-style: italic; }
   .gloxq { width: 100%; padding: 13px 16px; border-radius: 14px; border: 3px solid var(--teal); background: var(--card); color: var(--ink); font-family: inherit; font-size: 19px; margin-bottom: 12px; }
   .gloxmore { color: var(--muted); font-size: 14px; text-align: center; }
+
+/* before we start: last lesson in one frame, then the starting check. Built
+   from the theme's own tokens, like every other panel here: the header bars
+   repaint the deck dark, so a fixed light colour would sit under white ink. */
+.recap, .wu { width: 100%; max-width: 36em; box-sizing: border-box; background: var(--cell); border: 2px solid var(--line); border-radius: 16px; padding: 10px 14px; }
+.recap-h { margin: 0 0 4px; font-weight: 800; color: var(--gold); }
+.recap-pic { font-size: 1.4em; margin-right: 6px; vertical-align: middle; }
+.recap .ovw-list { margin: 4px 0 6px; font-size: 18px; gap: 8px; }
+.wu-h { margin: 0 0 6px; font-weight: 800; color: var(--gold); }
+.wu-q { display: flex; align-items: center; gap: 10px; font-size: 1.12em; font-weight: 700; }
+.wu-pic { font-size: 1.8em; line-height: 1; }
+.fb.calm { color: var(--ink); }

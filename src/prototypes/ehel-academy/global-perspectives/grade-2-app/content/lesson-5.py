@@ -75,12 +75,12 @@ LESSON = {
                   "sources": [
                       source("seabook", "a book about the sea", "\U0001F4D8", ["sea"], "A book about the sea lists the animals that live in it."),
                       source("film", "a film about turtles", "\U0001F3AC", ["sea"], "A film about turtles shows a sea animal living its life."),
-                      source("aquarium", "a visit to the aquarium", "\U0001F41F", ["sea"], "At the aquarium you can see real sea animals."),
+                      source("fisher", "a fisherman who works at sea", "\U0001F3A3", ["sea"], "A fisherman sees real sea animals every day."),
                       source("bakery", "the bakery", "\U0001F35E", ["bread"], "The bakery is about bread."),
                       source("bus", "a bus timetable", "\U0001F68C", ["buses"], "A bus timetable is about buses."),
                   ],
                   "reasons": [opt("because each one shows animals that live in the sea", True), opt("because they are all blue", False), opt("because fish are fun", False)],
-                  "why": "The book, the film and the aquarium all show sea animals."},
+                  "why": "The book and the film show sea animals, and the fisherman sees them every day."},
                  {"topic": "why the beach has litter on it", "tag": "beach", "pic": "\U0001F3D6️", "multi": True,
                   "sources": [
                       source("photo", "a photo of the beach", "\U0001F4F7", ["beach"], "A photo of the beach shows the litter and where it is."),
@@ -162,11 +162,11 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("What does it mean to SUGGEST sources?", "\U0001F4DA", "name all the sources that would help", ["pick the biggest one", "guess the answer", "write a book"], "More than one helps. Name them all."),
-                 q("Which source would NOT help with the sea?", "\U0001F5FA️", "the bakery", ["a book about the sea", "a film about turtles", "the aquarium"], "The bakery is about bread."),
+                 q("Which source would NOT help with the sea?", "\U0001F5FA️", "the bakery", ["a book about the sea", "a film about turtles", "a fisherman"], "The bakery is about bread."),
                  q("Why does a photo of the beach help with beach litter?", "\U0001F4F7", "because it shows the litter and where it is", ["because photos are pretty", "because beaches are big"], "The reason is about the topic."),
                  q("I think zoos are good because a zoo keeps rare animals safe, and…? Which is a second reason ABOUT zoos?", "\U0001F981", "because we can learn about animals there", ["because my shoes are new", "because it rained"], "Learning about animals is about zoos."),
                  q("An opinion is…", "\U0001F4AD", "what you think, with reasons", ["a fact everyone agrees on", "a kind of source", "a question"], "Your opinion, your reasons."),
-                 q("Which is a source for finding out about the sea?", "\U0001F420", "a visit to the aquarium", ["a bus timetable", "a football", "a cookbook"], "Real sea animals live there."),
+                 q("Which is a source for finding out about the sea?", "\U0001F420", "a fisherman who works at sea", ["a bus timetable", "a football", "a cookbook"], "A fisherman sees sea animals every day."),
                  q("A website can be a source if…", "\U0001F4BB", "a grown-up helps you use it", ["it is blue", "it has a game", "nobody helps"], "Only use a website with a grown-up beside you. Then the zoo's website can tell you about its animals."),
                  q("Sami suggests looking in the recycling bin. Why is that a good source?", "\U0001F5D1️", "because it shows what goes in it", ["because bins are big", "because Sami said so"], "A real thing shows you the real answer."),
              ]},
@@ -231,3 +231,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to ride a bike", "the names of the planets", "how to swim"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Which would help you find out about sea turtles?", "\U0001F422", "a film about the sea", ["a bus timetable", "a shopping list"], "A film about the sea can show you turtles."),
+    q("I think we should plant more trees, because... Which reason is about trees?", "\U0001F333", "trees give us shade", ["my bag is blue", "it is Tuesday"], "Shade is about trees, so it is a reason about the topic."),
+]

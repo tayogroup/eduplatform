@@ -82,7 +82,7 @@ LESSON = {
              "Some of these ask. Some of these tell. Which is it?",
              explain(
                  ["A question ASKS for something you do not know.", "Telling SAYS something. It gives information."],
-                 ["What does a rabbit eat? That asks. It is a question.", "My cat is black. That tells. It is not a question.",
+                 ["What does a rabbit eat? That asks. It is a question.", "My cat is fluffy. That tells. It is not a question.",
                   "A question usually starts with a question word and ends with a question mark."],
                  ["Children think anything about a pet is a question.", "Listen for the asking."],
                  ["Read it, listen for the asking, tap the bin."]),
@@ -118,19 +118,19 @@ LESSON = {
                                 {"t": "This is a place to buy shoes"},
                                 {"t": "Animals live here for ever"}],
                        "why": "The picture shows a vet checking a dog, medicine on the shelf and a cat waiting. A vet helps animals get better."}},
-             "You read a picture and said what it tells us. That is using a source."),
+             "You looked at a picture and said what it tells us. That is using a source."),
 
         step("source", "Read the picture: at the park", "\U0001F333", "Park reader", ["1Ri.01"],
              "Another picture, another source. Tap the animals and the sign to find out about them.",
              explain(
                  ["A different picture tells you different things."],
-                 ["This is the park.", "There are ducks on the pond.", "There is a dog on a lead.", "There is a sign, and a sign tells you something too."],
+                 ["This is the park.", "There are ducks on the pond.", "There is a dog on a leash.", "There is a sign, and a sign tells you something too."],
                  ["Children forget that signs in a picture are information.", "Look at the sign."],
                  ["Tap four things and listen."]),
              {"scene": "park", "need": 4, "caption": "Tap the animals and the sign.",
               "spots": [
                   spot("ducks", "the ducks", "Ducks live on the pond. They eat plants and seeds from the water.", 200, 200, "\U0001F986"),
-                  spot("dog", "the dog on a lead", "Dogs in the park stay on a lead so they do not chase the ducks.", 120, 190, "\U0001F415"),
+                  spot("dog", "the dog on a leash", "Dogs in the park stay on a leash so they do not chase the ducks.", 120, 190, "\U0001F415"),
                   spot("nest", "the nest in the tree", "A bird made a nest in the tree to keep its eggs safe.", 47, 62, "\U0001F423"),
                   spot("sign", "the sign", "The sign says: please do not feed the ducks bread. Bread is bad for them.", 230, 110, "\U0001F6AB"),
                   spot("squirrel", "the squirrel", "A squirrel is looking for nuts to hide and eat later.", 267, 150, "\U0001F43F️"),
@@ -138,9 +138,9 @@ LESSON = {
               "then": {"ask": "What does this picture tell us about the ducks?",
                        "opts": [{"t": "They live on the pond and should not be fed bread", "spot": "ducks"},
                                 {"t": "They sleep in the tree"},
-                                {"t": "They are on a lead"}],
+                                {"t": "They are on a leash"}],
                        "why": "The ducks are on the pond, and the sign says not to feed them bread. The picture told us both."}},
-             "Two pictures read. A source can be a picture, and you can talk about what it tells you."),
+             "Two pictures done. A source can be a picture, and you can talk about what it tells you."),
 
         step("questions", "Ask the right question", "\U0001F4AC", "Question picker", ["1Rq.01", "1Ri.01"],
              "Which question would find it out? Tap the answer.",
@@ -235,3 +235,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to bake bread", "the names of the planets", "how to ride a bike"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Which one is a question?", "\u2753", "Where does a duck sleep?", ["A duck can swim.", "I saw a duck."], "Where does a duck sleep? asks something, so you can find out. The others tell."),
+    q("Why do people ask questions?", "\U0001F914", "to find something out", ["to make a noise", "to finish a game"], "We ask questions to find something out."),
+]

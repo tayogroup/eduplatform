@@ -245,3 +245,10 @@ LESSON["lookback"] = {
         {"before": "An activity is either indoors or outdoors.", "after": "Some are both, and a Venn diagram has a place for them."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Four children watch TV before bed and two read. Which conclusion does that prove?", "\U0001F4FA", "More of these children watch TV than read", ["TV is bad for everyone", "All children read"], "Four is more than two. That is all the numbers prove."),
+    q("We asked only five children. Can we say what every child in the country does?", "\U0001F30D", "No: only what those five children do", ["Yes: five is enough", "Yes: if we write it neatly"], "Five children tell you about five children, not about everyone."),
+]

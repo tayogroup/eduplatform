@@ -168,7 +168,7 @@ LESSON["lecture"] = [
     part("\U0001F9E9", "Six skills",
          "Everything you did in these lessons was one of six skills: finding out, thinking about it, choosing and saying why, working together, talking and listening, and looking back."),
     part("\U0001F50D", "What you did",
-         "You built questions and read pictures. You asked the class and made pictograms. You said what you knew, thought about what happens next, and chose actions that fixed problems."),
+         "You built questions and looked at pictures. You asked the class and made pictograms. You said what you knew, thought about what happens next, and chose actions that fixed problems."),
     part("\U0001F91D", "And more",
          "You chose the source that helps and said why. You said what you think. You planted a garden and painted a mural with a team. You listened, and asked, and answered."),
     part("\u23EA", "Looking back",
@@ -208,4 +208,11 @@ LESSON["home"] = [
           "Draw yourself doing the thing you learned.",
           "Show somebody and say: I learned to…"],
          "What would you like to find out about next?"),
+]
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("A chart shows one picture for each person. What is it called?", "\U0001F4CA", "a pictogram", ["a map", "a question"], "A chart with one picture for each person is a pictogram."),
+    q("Which word can start a question?", "\u2753", "Where", ["Blue", "Dog"], "Where starts a question: where is my bag?"),
 ]

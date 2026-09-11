@@ -152,13 +152,13 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("What does it mean to ALLOCATE tasks?", "\U0001F4CB", "give each job to the team member whose skill it needs", ["do every job yourself", "do the jobs in alphabetical order", "give the best job to your friend"], "The model maker builds, the clear speaker presents."),
-                 q("Who should build the model bridge?", "\U0001F309", "Sami, because he makes models", ["Yusuf, because he speaks clearly", "you, because you read old writing", "anyone"], "The job needs model-making."),
+                 q("Who should build the model bridge?", "\U0001F309", "Sami, because he makes models", ["Yusuf, because he speaks clearly", "you, because you can read old writing", "anyone"], "The job needs model-making."),
                  q("Yusuf was worried about reading aloud. What is working positively?", "\U0001F5E3️", "practise with him at lunchtime", ["read the labels instead of him", "tell him not to be silly", "ignore him"], "Help with the job, without taking it away."),
                  q("The bridge kept tipping over. Which idea helped?", "\U0001F309", "glue it to a wide base", ["tell everyone to stop walking", "put it in a cupboard", "give up"], "A wide base cannot tip."),
                  q("What is a STRENGTH of your teamwork?", "\U0001F4AA", "something you did well, first time", ["something that took three goes", "a job you skipped", "being the loudest"], "Giving out the jobs right first time was a strength."),
                  q("Why be honest about what took two goes?", "\U0001F914", "because knowing it is how you get better", ["to get told off", "you should not be", "to win"], "A limitation you know about is one you can work on."),
-                 q("The bees needed water without drowning. Which idea helped?", "\U0001F41D", "pebbles in a saucer of water", ["no water", "a deeper bucket", "a bath"], "Pebbles give bees a place to land."),
-                 q("How did working together make the museum BETTER, not just possible?", "\U0001F31F", "each part was done by the person best at it", ["it was slower", "it was not better", "only one person worked"], "Letters read, street drawn, bridge built, labels spoken: each by the right person."),
+                 q("The bees needed water without drowning. Which idea helped?", "\U0001F41D", "pebbles in a saucer of water", ["no water", "a deeper bucket", "a big bowl of water"], "Pebbles give bees a place to land."),
+                 q("How did working together make the museum BETTER, not just possible?", "\U0001F31F", "each part was done by the person best at it", ["it was slower", "it was not better", "only one person worked"], "Letters done, street drawn, bridge built, labels spoken: each by the right person."),
              ]},
              "That is the whole lesson finished. You allocate, bring ideas, and look back honestly at your teamwork."),
     ],
@@ -174,7 +174,7 @@ LESSON["about"] = [
 
 LESSON["lecture"] = [
     part("\U0001F4CB", "Giving out the jobs",
-         "The class museum needs four jobs: read the old letters, draw the high street, build the bridge, read the labels aloud. You read old handwriting, Hana draws, Sami makes models, Yusuf speaks clearly. Each job to the person whose skill it needs."),
+         "The class museum needs four jobs: read the old letters, draw the high street, build the bridge, read the labels aloud. You can read old handwriting, Hana draws, Sami makes models, Yusuf speaks clearly. Each job to the person whose skill it needs."),
     part("\U0001F4A1", "Ideas when the team is stuck",
          "The paint will not stick to the card. The bridge keeps tipping. Each time the team is stuck, a team member brings an idea: paint on paper, glue to a wide base. Ideas keep a team moving."),
     part("\U0001F91D", "Working positively",
@@ -226,3 +226,10 @@ LESSON["lookback"] = {
         {"before": "A team just shares the jobs out any old way.", "after": "A team is better because each part is done by the person best at it."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Your team needs a map drawn. Who should draw it?", "\U0001F5FA\ufe0f", "the person who draws carefully", ["the person who talks loudest", "the newest person, whatever they are good at"], "A job goes to the person whose skill it needs."),
+    q("How can a team do better than one person?", "\U0001F91D", "everyone brings a different skill", ["one person does all the work", "nobody needs to talk"], "Different skills together make a better result."),
+]

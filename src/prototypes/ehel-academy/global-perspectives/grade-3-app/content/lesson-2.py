@@ -83,7 +83,7 @@ LESSON = {
                   {"ask": "Did more bikes pass than buses?", "check": {"kind": "more", "a": "Bikes", "b": "Buses"},
                    "opts": [opt("Yes", True), opt("No", False)], "why": "Bikes 3, buses 2. Yes, more bikes."},
               ]},
-             "You read your own observation as a chart."),
+             "You turned your own observation into a chart."),
 
         step("survey", "Ask: how long is your journey?", "\U0001F4DD", "Questionnaire", ["3Rc.01", "3Rf.01"],
              "Some things you cannot observe at the gate. How long each journey takes: you have to ASK. Give each classmate the questionnaire.",
@@ -146,7 +146,7 @@ LESSON = {
                   {"ask": "Whose plant is the SHORTEST?", "check": {"kind": "least"},
                    "opts": [opt("Sami's plant", True), opt("Omar's plant", False), opt("Nora's plant", False)], "why": "Sami's plant measures 8 cm, the least."},
               ]},
-             "You read four measurements and compared them. That is what a ruler is for."),
+             "You compared four measurements. That is what a ruler is for."),
 
         step("organiser", "How did we find it out?", "\U0001F5C2️", "Findings organiser", ["3Rf.01"],
              "Everything we found today was observed, asked, or measured. Record each finding under HOW we found it.",
@@ -265,3 +265,10 @@ LESSON["lookback"] = {
         {"before": "A finding is just a fact.", "after": "A finding is a fact and how we found it: observed, asked or measured."},
     ],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Which tool would you use to measure how long your pencil is?", "\U0001F4CF", "a ruler", ["a clock", "a cup"], "A ruler measures length, in centimetres."),
+    q("You want to know what your classmates ate for breakfast. Can you find out by watching them now?", "\U0001F963", "No: you have to ask them", ["Yes: just look at them", "Yes: measure them"], "Breakfast is over, so you cannot see it. You have to ask."),
+]

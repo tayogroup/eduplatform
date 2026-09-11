@@ -7,6 +7,9 @@ information about a given topic. Research: 1Rq.01 ask basic questions about
 a given topic, because the response to a classmate is a question, and a
 question is built. The topic is my family, which every child can talk about
 and every child has questions about.
+
+Evaluation: 1Ea.01 state an opinion about a given topic - a second
+application after Lesson 5, on things a child talks about at home.
 """
 from _kit import explain, step, opt, q, tagged, part, word, home
 
@@ -115,6 +118,29 @@ LESSON = {
               ]},
              "Five questions about families, built by you."),
 
+        step("opinion", "Say what you think", "\U0001F4AD", "Opinion sharer", ["1Ea.01"],
+             "In a talk you can say what YOU think. There is no wrong answer. Say what you think, then say why.",
+             explain(
+                 ["An opinion is what you think.", "Your friend may think something different, and that is all right."],
+                 ["I like going to the market. Why? Because there is so much to see.", "The reason is about the market."],
+                 ["Children give a reason about something else.", "I like the market because the moon is round. The moon is not about the market."],
+                 ["Tap what you think, then a reason about it."]),
+             {"rounds": [
+                 {"topic": "helping at home", "tag": "helping", "pic": "\U0001F9F9", "ask": "What do you think about helping at home?",
+                  "stances": [{"id": "like", "t": "I like helping at home"}, {"id": "some", "t": "I like helping with some jobs"}, {"id": "no", "t": "I do not like helping much"}],
+                  "reasons": [dict(tagged("because it makes my family happy", "helping"), supports=['like', 'some']), dict(tagged("because I feel big and grown-up", "helping"), supports=['like', 'some']), dict(tagged("because some jobs are boring", "helping"), supports=['some', 'no']),
+                              tagged("because the moon is round", "the moon"), tagged("because my shoes are red", "shoes")]},
+                 {"topic": "going to the market", "tag": "market", "pic": "\U0001F9FA", "ask": "What do you think about going to the market?",
+                  "stances": [{"id": "like", "t": "I like going to the market"}, {"id": "ok", "t": "The market is all right"}, {"id": "no", "t": "I do not like the market much"}],
+                  "reasons": [dict(tagged("because there is so much to see", "market"), supports=['like', 'ok']), dict(tagged("because I help carry the bags", "market"), supports=['like', 'ok']), dict(tagged("because it is very busy and noisy", "market"), supports=['ok', 'no']),
+                              tagged("because fish can swim", "fish"), tagged("because it is my birthday soon", "birthdays")]},
+                 {"topic": "stories at bedtime", "tag": "stories", "pic": "\U0001F4D6", "ask": "What do you think about stories at bedtime?",
+                  "stances": [{"id": "love", "t": "I love bedtime stories"}, {"id": "ok", "t": "Bedtime stories are all right"}, {"id": "no", "t": "I would rather just go to sleep"}],
+                  "reasons": [dict(tagged("because the stories are exciting", "stories"), supports=['love', 'ok']), dict(tagged("because a grown-up sits with me", "stories"), supports=['love', 'ok']), dict(tagged("because I am too sleepy to listen", "stories"), supports=['ok', 'no']),
+                              tagged("because my bike is fast", "bikes"), tagged("because it rained today", "the weather")]},
+             ]},
+             "You said what you think about three things, with a reason about each one. That is an opinion."),
+
         step("sort", "Good listening?", "\U0001F442", "Listening judge", ["1Ml.01"],
              "Is this good listening, or not?",
              explain(
@@ -176,6 +202,7 @@ LESSON["about"] = [
     "Ask a classmate a simple question about what they said.",
     "Answer a question about a family with the information that was asked for.",
     "Build a question to find out about somebody's family.",
+    "Say what you think about something, with a reason about it.",
 ]
 
 LESSON["lecture"] = [
@@ -189,6 +216,8 @@ LESSON["lecture"] = [
          "Every family is different. Amal has a baby brother. Sami lives with his grandma. Hana shares a bedroom with her big sister. Talking and listening is how we find out about each other."),
     part("\U0001F60A", "Both halves",
          "Talking is one half and listening is the other. A good talker listens, and a good listener asks. Do both, and the class finds out a lot."),
+    part("\U0001F4AD", "Say what you think",
+         "In a talk you can say what you think. I like going to the market, because there is so much to see. The reason is about the market. That is an opinion."),
 ]
 
 LESSON["words"] = [
@@ -227,3 +256,10 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to bake bread", "how to ride a bike", "the names of the planets"],
 }
+
+# Before we start: two questions asked BEFORE the teaching, answerable
+# without this lesson's story. Not marked - see warmUp in lesson-kit/lib/gp.js.
+LESSON["check"] = [
+    q("Your friend is talking to you. What should you do?", "\U0001F442", "look at them and listen", ["talk at the same time", "walk away"], "Looking and listening shows you care about what they say."),
+    q("Your friend says: I have a new kite. Which question is about what they said?", "\U0001FA81", "What colour is your kite?", ["Do you like rice?", "Where is my bag?"], "They talked about a kite, so a question about the kite is about what they said."),
+]

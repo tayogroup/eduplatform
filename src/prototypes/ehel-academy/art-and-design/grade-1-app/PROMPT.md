@@ -202,6 +202,16 @@ line spoken on arrival. Sound is synthesised; nothing is recorded.
 7. A README beside the build says what it is, what is generated, what will
    bite, and what was deliberately not done; the kit's README says what is
    computed rather than trusted.
+8. **Added after the Grade 1 validation (2026-09-11), and expected of every
+   grade from now on:** the canvas has a keyboard and switch route that is
+   judged by the same checks as a stroke, and the phone-width drive plays it
+   by keyboard alone; each lesson offers a good place to stop at the end of
+   its journal, with the next step kept; the grade opens with a starting check
+   in the placement-exam file shape, banded by `shell/placement.js`'s rule;
+   every quiz carries at least two WHY questions; the grown-up notes name the
+   tradition each far-away or long-ago picture is drawn in the manner of, and
+   say why the page responds rather than copies; and each lesson's home
+   projects print as one sheet. `check-coverage.py` holds all of these.
 
 ### What is deliberately out of scope
 

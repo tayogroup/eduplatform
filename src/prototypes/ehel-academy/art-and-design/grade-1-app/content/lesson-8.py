@@ -25,10 +25,10 @@ LESSON = {
                  ["Children think artists only paint.", "Artists look, make, think, and look again."],
                  ["Tap all four and listen."]),
              {"items": [
-                 {"pic": "👀", "label": "experiencing", "say": "Experiencing. Looking at art, touching materials, trying tools. Everything you did with lines, colours, textures and shapes."},
-                 {"pic": "✋", "label": "making", "say": "Making. Doing it with your hands: mixing, drawing, joining, building. Every mark you made."},
-                 {"pic": "💛", "label": "reflecting", "say": "Reflecting. Looking back at what you made, saying kind words, and finding what is the same and different."},
-                 {"pic": "💡", "label": "thinking and working like an artist", "say": "Thinking and working like an artist. Having an idea, being brave with new things, and changing one thing to make it better."},
+                 {"pic": "👀", "label": "experiencing", "say": "Experiencing. You looked at art, touched materials and tried tools. You met lines, colours, textures and shapes."},
+                 {"pic": "✋", "label": "making", "say": "Making. You used your hands to mix, draw, join and build. Every mark you made was making."},
+                 {"pic": "💛", "label": "reflecting", "say": "Reflecting. You looked back at what you made. You said kind words. You found what is the same and what is different."},
+                 {"pic": "💡", "label": "thinking and working like an artist", "say": "Thinking and working like an artist. You had ideas. You were brave with new things. You changed one thing to make it better."},
              ], "need": 4,
               "then": {"ask": "Which of these is REFLECTING?",
                        "opts": [opt("looking back at what you made and saying a kind word", True), opt("mixing red and blue", False), opt("cutting with scissors", False)],
@@ -168,14 +168,14 @@ LESSON = {
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
-                 q("Red and blue make…", "🍇", "purple", ["orange", "green"], "Red and blue make purple. You mixed it yourself."),
+                 q("Red and blue make…", "🍇", "purple", ["orange", "green"], "Red and blue make purple. You mixed it."),
                  q("Texture is how a thing…", "🖐️", "feels", ["sounds", "smells"], "How it feels when you touch it."),
                  q("A pattern is something that…", "🧱", "repeats", ["is blue", "is big"], "It says the same thing again and again."),
                  q("Wet clay joins…", "🏺", "wet clay", ["dry paper", "glass"], "Wet clay presses onto wet clay."),
-                 q("Which of the four things artists do is 'looking back and celebrating'?", "💛", "reflecting", ["making", "experiencing"], "Reflecting is looking back."),
-                 q("A kind comment about a picture should be about…", "💬", "something really in it", ["a different picture", "nothing"], "Name the thing that is there."),
-                 q("When a piece is not right, an artist…", "🔧", "changes one thing", ["throws it away", "gives up"], "Change one thing, and look again."),
-                 q("Your journal is for…", "📒", "keeping what you made, to look back at", ["throwing away", "hiding from everyone"], "A journal keeps your work so you can look back and think."),
+                 q("Why keep a journal of your art?", "📒", "to look back and see what you learned", ["to throw it away", "to hide it"], "A journal keeps your work. You can look back and see what you learned."),
+                 q("A kind comment is about…", "💬", "something really in the picture", ["a different picture", "nothing"], "Name a thing that is really there."),
+                 q("Why change just one thing at a time?", "🔧", "so you can see what that change did", ["so it takes longer", "because two is too many"], "Change one thing, then look. Now you know what helped."),
+                 q("Which shape has three corners?", "🔺", "a triangle", ["a circle", "a square"], "A triangle has three sides and three corners."),
              ]},
              "That is the whole year finished. You are an artist: you look, you make, you think, and you look again."),
     ],
@@ -193,13 +193,13 @@ LESSON["about"] = [
 
 LESSON["lecture"] = [
     part("🧑🏾‍🎨", "What artists do",
-         "Artists do four things, round and round. They experience: look, touch, try. They make: mix, draw, join, build. They reflect: look back, celebrate, compare. And they think and work like an artist: have ideas, be brave, make it better. You did all four this year."),
+         "Artists do four things. They experience: they look, touch and try. They make: they mix, draw, join and build. They reflect: they look back and say what they like. And they think like artists: they have ideas and make things better. You did all four this year."),
     part("🖼️", "A gallery",
-         "A gallery is a place where art is put up for people to see. The pictures hang in groups: by colour, or by what they are about. People walk past and compare them, and say what they like. Your class can make one on a table."),
+         "A gallery is a place to show art. The pictures hang in groups. Some are grouped by colour. Some are grouped by what they show. People walk past and look. They say what they like. Your class can make a gallery on a table."),
     part("🔧", "Making it better",
-         "Before a show, artists look at every piece and make one change to make it better. Not because it was bad. Nothing you made was bad. Because an artist can always see one more thing to try."),
+         "Before a show, artists look at each piece. They make one change to make it better. That is not because it was bad. Nothing you made was bad. An artist can always see one more thing to try."),
     part("📒", "Looking back",
-         "Your journal holds everything you made. Look back through it. Your first line, your first mix, your first pattern. See how far you came. That is reflecting, and it is the last thing an artist does, and the first thing before the next picture."),
+         "Your journal holds everything you made. Look back through it. Find your first line, your first mix and your first pattern. See how far you came! That is reflecting. It is the last thing an artist does. It is also the first thing before the next picture."),
 ]
 
 LESSON["words"] = [

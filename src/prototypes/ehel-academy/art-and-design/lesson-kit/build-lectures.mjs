@@ -3,6 +3,11 @@
  * shape (content-hashed filenames, a WebVTT caption track, a poster).
  *
  *   node ../lesson-kit/build-lectures.mjs --app .     # after narrate.mjs
+ *   node ../lesson-kit/build-lectures.mjs --app . --only our-gallery
+ *
+ * --only rebuilds the named lesson(s) (comma-separated slugs) and keeps every
+ * other entry of index.json as it is, so a wording change in one lecture does
+ * not re-encode, rename and re-upload the other seven videos.
  *
  * A part is a slide (the part's picture, its title, the words being said)
  * held on screen for exactly as long as its narration lasts. The narration is
@@ -74,6 +79,10 @@ function slideHtml(lessonTitle, n, total, part) {
 
 const browser = await chromium.launch();
 const page = await (await browser.newContext({ viewport: { width: 1280, height: 720 } })).newPage();
+const ONLY = arg("--only", "") ? new Set(arg("--only", "").split(",").map((x) => x.trim()).filter(Boolean)) : null;
+const known = new Set(cfg.lessons.map((l) => l.file.replace(/\.html$/, "")));
+if (ONLY) for (const o of ONLY) if (!known.has(o)) { console.error("  --only " + o + ": no lesson has that slug"); process.exit(2); }
+const prior = ONLY && fs.existsSync(path.join(OUT, "index.json")) ? JSON.parse(fs.readFileSync(path.join(OUT, "index.json"), "utf8")) : {};
 const index = {};
 const missing = [];
 for (const l of cfg.lessons) {
@@ -81,6 +90,10 @@ for (const l of cfg.lessons) {
   const lec = lesson.steps.find((s) => s.kind === "lecture");
   if (!lec) continue;
   const slug = l.file.replace(/\.html$/, "");
+  if (ONLY && !ONLY.has(slug)) {
+    if (prior[slug]) index[slug] = prior[slug];
+    continue;
+  }
   const parts = lec.data.parts;
   const work = fs.mkdtempSync(path.join(os.tmpdir(), "lec-" + slug + "-"));
   const segs = [], cues = [];

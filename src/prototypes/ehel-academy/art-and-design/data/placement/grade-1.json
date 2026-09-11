@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "Ehel Stage 1 Art & Design Placement Exam v1.0",
+  "assessmentId": "art-s01-placement-exam-v1",
+  "gradeId": "a01",
+  "subject": "Art & Design",
+  "kind": "readiness",
+  "title": "Stage 1 Art & Design Starting Check",
+  "shortTitle": "Starting check",
+  "description": "A short, friendly check of how you see colours, shapes, lines and textures, and how you use art tools, so we know where to start and where a grown-up can help.",
+  "placement": "Prerequisite unit - before Lesson 1",
+  "questionCount": 12,
+  "totalMarks": 12,
+  "estimatedMinutes": 8,
+  "attemptsAllowed": "Unlimited - this check finds your starting point; it is never a fail",
+  "feedbackMode": "Immediate child-friendly feedback with a starting-point report",
+  "_comment": "Two fields beyond the shared placement shape, both optional and both for a reader of five: `pic` on a question is a picture drawn above it (emoji), and `optionPics` is one picture per option in the same order as `options` - an emoji, `mark:<kind>` for a line drawn by the lesson kit's own mark previews, or `swatch:<hex>` for a patch of colour. The text of every option is still there, so the key is the same text the other subjects' keys are. Built into starting-check.html by ../lesson-kit/build-check.py and checked by ../lesson-kit/check-coverage.py.",
+  "banding": {
+    "ready": {
+      "minOverallPercent": 80,
+      "minSectionPercent": 60,
+      "label": "Ready for Stage 1",
+      "message": "Brilliant looking! You know your colours, shapes and lines like a real artist. Start with Lesson 1 and have fun."
+    },
+    "readyWithReview": {
+      "minOverallPercent": 50,
+      "label": "Ready, with a grown-up close by",
+      "message": "You are ready to start. Do the lessons below with a grown-up close by, and take your time."
+    },
+    "notReady": {
+      "label": "Let's look and make together first",
+      "message": "Let's start slowly. Do Lesson 1 with a grown-up beside you, and look for colours, shapes and lines together every day.",
+      "recommendation": {
+        "label": "Stage 1 Art & Design, Lesson 1 with a grown-up",
+        "grade": 1
+      }
+    },
+    "criticalSection": {
+      "sectionId": "a01-prereq-sec02",
+      "maxFailPercent": 40
+    }
+  },
+  "sections": [
+    {
+      "sectionId": "a01-prereq-sec01",
+      "title": "Colours and shapes",
+      "description": "Can you name the colours you see, find a shape, and see what comes next in a pattern?",
+      "sequence": 1,
+      "questionCount": 4,
+      "sourceGrades": [0],
+      "remediation": [
+        { "grade": 1, "unit": 2, "title": "Colour Magic" },
+        { "grade": 1, "unit": 4, "title": "Shapes and Patterns" }
+      ]
+    },
+    {
+      "sectionId": "a01-prereq-sec02",
+      "title": "Lines, marks and touch",
+      "description": "Can you tell one kind of line from another, pick the right tool for a mark, and say how something feels?",
+      "sequence": 2,
+      "questionCount": 4,
+      "sourceGrades": [0],
+      "remediation": [
+        { "grade": 1, "unit": 1, "title": "Marks and Lines" },
+        { "grade": 1, "unit": 3, "title": "Feel the Texture" }
+      ]
+    },
+    {
+      "sectionId": "a01-prereq-sec03",
+      "title": "Making and looking",
+      "description": "Do you know the tools for cutting and sticking, can you say what is in a picture, and say something kind about it?",
+      "sequence": 3,
+      "questionCount": 4,
+      "sourceGrades": [0],
+      "remediation": [
+        { "grade": 1, "unit": 5, "title": "Make It Stick" },
+        { "grade": 1, "unit": 6, "title": "Looking at Art" }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "questionId": "art-s01-prereq-q01", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec01", "sequence": 1,
+      "questionType": "Multiple choice",
+      "question": "Which one is red?",
+      "options": "blue | red | yellow",
+      "optionPics": "swatch:#2D6CDF | swatch:#E0312B | swatch:#F6C700",
+      "correctAnswer": "red",
+      "explanation": "Red is the colour of a strawberry and a fire engine.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Colour", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q02", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec01", "sequence": 2,
+      "questionType": "Multiple choice",
+      "question": "Which one is a circle?",
+      "options": "a triangle | a circle | a square",
+      "optionPics": "🔺 | ⚪ | 🟦",
+      "correctAnswer": "a circle",
+      "explanation": "A circle is round all the way, with no corners.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Shape", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q03", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec01", "sequence": 3,
+      "questionType": "Multiple choice",
+      "question": "What colour is grass?",
+      "options": "pink | orange | green",
+      "optionPics": "swatch:#EC6FA8 | swatch:#F28C28 | swatch:#2E9B4F",
+      "correctAnswer": "green",
+      "explanation": "Grass is green, like a leaf.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Colour", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q04", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec01", "sequence": 4,
+      "questionType": "Multiple choice",
+      "question": "Red, blue, red, blue. What comes next?",
+      "pic": "🔴 🔵 🔴 🔵 ❓",
+      "options": "yellow | red | green",
+      "optionPics": "swatch:#F6C700 | swatch:#E0312B | swatch:#2E9B4F",
+      "correctAnswer": "red",
+      "explanation": "Red, blue, red, blue, red. The pattern says it again.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Pattern", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q05", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec02", "sequence": 5,
+      "questionType": "Multiple choice",
+      "question": "Which one is a wavy line?",
+      "options": "a straight line | a wavy line | a zigzag",
+      "optionPics": "mark:straight | mark:wavy | mark:zigzag",
+      "correctAnswer": "a wavy line",
+      "explanation": "A wavy line goes up and down gently, like the sea.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Line", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q06", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec02", "sequence": 6,
+      "questionType": "Multiple choice",
+      "question": "Which one is a zigzag?",
+      "options": "a circle | dots | a zigzag",
+      "optionPics": "mark:round | mark:dots | mark:zigzag",
+      "correctAnswer": "a zigzag",
+      "explanation": "A zigzag turns sharply, up and down, like lightning.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Line", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q07", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec02", "sequence": 7,
+      "questionType": "Multiple choice",
+      "question": "Which one feels rough and bumpy?",
+      "options": "a feather | a rock | a teddy",
+      "optionPics": "🪶 | 🪨 | 🧸",
+      "correctAnswer": "a rock",
+      "explanation": "A rock is rough and bumpy. A feather and a teddy are soft.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Texture", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q08", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec02", "sequence": 8,
+      "questionType": "Multiple choice",
+      "question": "Which one would you use to draw a thin line?",
+      "options": "a sponge | a pencil | your whole hand",
+      "optionPics": "🧽 | ✏️ | ✋",
+      "correctAnswer": "a pencil",
+      "explanation": "A pencil has a thin point, so it makes a thin line.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Tools", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q09", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec03", "sequence": 9,
+      "questionType": "Multiple choice",
+      "question": "What do you use to cut paper?",
+      "options": "a spoon | scissors | a sock",
+      "optionPics": "🥄 | ✂️ | 🧦",
+      "correctAnswer": "scissors",
+      "explanation": "Scissors cut paper. Hold them carefully, with a grown-up close by.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Making", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q10", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec03", "sequence": 10,
+      "questionType": "Multiple choice",
+      "question": "What do you use to stick two pieces of paper together?",
+      "options": "water | glue | a feather",
+      "optionPics": "💧 | 🧴 | 🪶",
+      "correctAnswer": "glue",
+      "explanation": "Glue sticks things together. Water would just make the paper wet.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Making", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q11", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec03", "sequence": 11,
+      "questionType": "Multiple choice",
+      "question": "Look at the picture. What can you see in it?",
+      "pic": "🏠 🌳 ☀️",
+      "options": "a car and a boat | a house, a tree and the sun | a cat and a dog",
+      "optionPics": "🚗 ⛵ | 🏠 🌳 ☀️ | 🐱 🐶",
+      "correctAnswer": "a house, a tree and the sun",
+      "explanation": "A house, a tree and the sun. Looking closely is what artists do.",
+      "marks": 1, "difficulty": "Foundation", "curriculumArea": "Looking", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    },
+    {
+      "questionId": "art-s01-prereq-q12", "assessmentId": "art-s01-placement-exam-v1", "sectionId": "a01-prereq-sec03", "sequence": 12,
+      "questionType": "Multiple choice",
+      "question": "Your friend shows you a picture of a bright red sun. Which is a kind thing to say?",
+      "pic": "🖼️ 🔴",
+      "options": "I did not look. | I like the bright red sun. | That is bad.",
+      "optionPics": "😶 | 😊 | 😠",
+      "correctAnswer": "I like the bright red sun.",
+      "explanation": "Saying what you like, and what is really there, is kind and true.",
+      "marks": 1, "difficulty": "Core", "curriculumArea": "Reflecting", "sourceGrade": 0, "sourceUnitNo": 0, "sourceUnitTitle": "Readiness",
+      "origin": "AI-generated placement item", "reviewStatus": "Pending curriculum sign-off"
+    }
+  ],
+  "reviewStatus": "AI-generated v1.0 - curriculum sign-off pending"
+}

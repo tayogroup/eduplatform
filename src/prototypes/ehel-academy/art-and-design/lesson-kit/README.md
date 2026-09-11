@@ -21,8 +21,10 @@ its own.
 | --- | --- |
 | `build-lessons.py --app <dir>` | writes `<slug>.html` per lesson from the content; refuses a bad objective code, a quiz with no single key, a sort into a missing bin, and every relationship in `_rules.py` that the content gets wrong; refuses to build at all if `lib/art.js`'s colour and texture tables have drifted from `_rules.py`'s |
 | `build-hub.py --app <dir>` | writes the hub: cards with step counts and time estimates, the four-strands panel, the printable teachers-and-parents section with the make-it-for-real version of every activity and the answer keys — saying so where a step has no key because the child's own drawing, feeling or idea IS the answer |
-| `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single, every relationship RE-COMPUTED from the shipped data, and the page's own tables equal to `_rules.py`'s |
-| `drive-lessons.mjs --app <dir>` | plays every step of every lesson in Chromium the way a child would — real strokes on the canvas included — and reports which did not end at 100% with every sticker; `--width 375` adds an overflow check |
+| `build-check.py --app <dir>` | writes the STARTING CHECK, `starting-check.html`, from the grade's placement file (`../data/placement/grade-N.json`, the shape `shell/placement.js` reads); refuses a key that is not an option, a picture list the wrong length, counts that disagree, or a review link to a lesson the grade does not have under that title. Not a lesson: named in `extraPages` (so `deploy.mjs` uploads it) and `startingCheck` (so the hub links it) |
+| `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single, every relationship RE-COMPUTED from the shipped data, and the page's own tables equal to `_rules.py`'s; and, since 2026-09-11, the five validation fixes (below) |
+| `check-marks.mjs <page>…` | called by `check-coverage.py`: draws every mark the keyboard route can ask for through the SHIPPED page's own judge, at three heights, and fails if one is judged wrong or a rival shape passes it |
+| `drive-lessons.mjs --app <dir>` | plays every step of every lesson in Chromium the way a child would — real strokes on the canvas at desktop width, the keyboard route at `--width 375` (or `--keyboard`) — and reports which did not end at 100% with every sticker; `--width 375` adds an overflow check. A full run then checks Stop for today, prints every make-at-home sheet to PDF, and answers the starting check all right and all wrong |
 | `_rules.py` | the relationships the kit computes rather than trusts, imported by the builder AND the gate so they cannot disagree |
 | `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `pot()`, `swatch()`, `material()`, `change()`, `work()`, `comment()`, `spot()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in |
 | `_shell.py` | the unit shell: the steps drawn AROUND every lesson (overview, lecture, words, journal, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree |
@@ -106,16 +108,17 @@ authors its own gets no second.
 | `tone` | `order` | the same, over swatches whose order the builder computed from their lightness (1E.01) |
 | `source` | `pictureSource` | finds the things in a drawn artwork and hears what the artist did; then a question keyed by a spot in the picture (1E.01) |
 | `mix` | `colourMixer` | predicts, then taps two pots; the bowl swirls to the computed mix; a last free round mixes any two and writes the result to the journal (1E.02, 1M.01, 1R.02) |
-| `marks` | `markMaker` | draws on a canvas with a real pointer and a chosen tool; each round asks for a KIND of mark and the page judges the stroke; a last free drawing is stuck in the journal (1E.03, 1M.01) |
+| `marks` | `markMaker` | draws on a canvas with a real pointer and a chosen tool; each round asks for a KIND of mark and the page judges the stroke; a last free drawing is stuck in the journal (1E.03, 1M.01). Or, by keyboard or switch: **Choose the mark** opens three drawn marks, and the right one is drawn onto the paper and judged by the same check; the free round has stamp buttons |
 | `pattern` | `patternMaker` | taps the tile that comes next, then builds a row that counts only if it repeats (1E.01, 1TWA.01) |
 | `choose` | `chooseFor` | picks the material whose property the purpose needs; a wrong pick says what the material IS like (1M.02) |
 | `experiment` | `paintExperiment` | predicts, adds rice / flour / sugar / water / sand / glue, sees the paint change, names what it is like, hears whether it matched (1TWA.02) |
 | `compare` | `sameDifferent` | sorts cards into "both have it" / "only one has it" by set arithmetic on two works' features; then which they like more, never marked (1R.02) |
 | `comment` | `kindComment` | picks the kind comment that names something actually in a friend's work (1R.01) |
 | `refine` | `refineIt` | tries a change on a piece with a problem and sees what it did; the fix redraws the piece (1TWA.03) |
-| `journal` | `myJournal` | orders what they made from the page's own log, picks one, and says what they would change — never marked (1R.01, 1TWA.03) |
+| `journal` | `myJournal` | orders what they made from the page's own log, picks one, and says what they would change — never marked (1R.01, 1TWA.03). Then **a good place to stop**: Stop for today (back to the hub, the next step kept) or Keep going |
 | `questions` / `quiz` | `sequence` | the Mathematics build's own, with pictures |
-| `overview` … `resources` (shell) | as in Global Perspectives | the unit shell |
+| `overview` … `resources` (shell) | as in Global Perspectives | the unit shell; `home` adds **Print it for home**, one A4 sheet per lesson |
+| `readiness` (starting-check.html only) | `readinessCheck` | twelve picture questions in three sections, banded by `shell/placement.js`'s own rule, review lessons linked; the result is kept on the device and shown on the hub, and reported to nobody |
 
 Scenes (`SCENES` in `lib/art.js`, read by name at build time): art from
 different times and cultures drawn IN THE MANNER of traditional and ancient
@@ -192,10 +195,11 @@ node $K/deploy-media.mjs  --app . --upload            # media BEFORE the pages
   run.
 - **Never name a pipeline tool's filename** in anything that ends up in a
   page; each tool's filename is its idempotence marker.
-- **The canvas re-paints by replacing its own `outerHTML`**, so the pointer
-  listeners are re-attached after every stroke (`repaint()` calls `wire()`).
-  A stroke in flight is drawn from `live` on every move; the cost is one SVG
-  rebuild per pointer event, which is fine at 320×220.
+- **The canvas is never replaced mid-stroke.** An earlier version rebuilt
+  the SVG from `outerHTML` on every pointer move, which dropped the pointer
+  capture, so a stroke ending near the edge was never judged. The live stroke
+  is one `<path>` whose `d` is updated in place; the SVG is redrawn only
+  between strokes (`draw()` then `wire()`).
 - **A reversal is an accumulated bend, not a per-sample one.** The first judge
   required a sample to turn more than 8° at the flip, and a smooth wave never
   does, so no wave was ever wavy. Found by the driver on the first run, not by
@@ -211,6 +215,41 @@ node $K/deploy-media.mjs  --app . --upload            # media BEFORE the pages
   `art.js`. So the safety proof for a kit change is not a byte-identical
   rebuild of the live grade: it is that grade rebuilt through the new kit and
   driven to 100% again (`drive-lessons.mjs`) before the new grade is.
+- **The keyboard route is judged by the check a finger meets.** `markPts()`
+  draws each mark and `strokeFeatures()`/`CHECKS` judge it, so tightening a
+  check can make the keyboard route impossible — `check-marks.mjs` is what
+  says so. Writing it found two things no stroke by hand had: a big zigzag
+  passed as a **circle** (the round check now refuses more than two sharp
+  turns), and every dot before the sixth set `missed`, so the **dots round
+  could never score** (a dot on the way to six is now progress, not a miss).
+- **Chalk is a coloured chalk.** It was `#F7F1E3` on `#FFFDF6` paper — a
+  contrast of about 1.07 — so chalk marks were drawn and could not be seen.
+- **Never add a step to fix a lesson's length.** Progress names steps by
+  POSITION (`step-01`…), so a new step moves every step after it, the quiz's
+  gradebook key included, under records already written. The stop card is
+  drawn inside the journal step for exactly that reason.
+- **The voice's reaction banks are wanted in full.** They are SSML, which the
+  literal scan skips, and a run speaks one at random, so a trace keeps some and
+  loses the rest; `narrate.mjs --prune` would have deleted "Hmm." and "Let us
+  think it through again." until every bank line was added to what is wanted.
+- **A page reads `media/tts/index.<sha10>.json`, never `index.json`.** The
+  edge does not refresh a path when storage is overwritten, and it caches each
+  compressed variant separately. After the 2026-09-11 re-upload a plain
+  request read back the new index while the zstd copy a browser receives was
+  still the morning's, so every newly recorded line went to the live voice.
+  `narrate.mjs` writes the content-named copy beside `index.json`, the
+  builders point every page at it (and refuse if it is missing or differs),
+  `deploy-media.mjs` ships it with the indexes last, and `check-narration.mjs`
+  fails a page that names any other. To see what a browser gets, ask with
+  `Accept-Encoding: gzip, deflate, br, zstd` — a bare `curl` asks for a
+  different cache entry.
+- **A page with one slide gets a hidden last slide.** The deck paints its
+  sticker shelf on the last slide, so the starting check, alone, said "Every
+  sticker! You finished the whole lesson." at load. Heard live, not caught by
+  a gate; now checked by loading the page and reading its narration log.
+- **`build-lectures.mjs --only <slug>`** rebuilds one lesson's video and keeps
+  the other entries of `media/lecture/index.json` untouched, so one lecture's
+  wording change does not rename and re-upload the other seven.
 - **Adding a grade** is a directory with `app.config.json` and `content/`, and
   the same pipeline (`../../mathematics/lesson-app-tools`) run in the same
   order as the Grade 1 README shows. Stage 2 uses the same ten codes with a

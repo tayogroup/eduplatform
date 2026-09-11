@@ -29,6 +29,30 @@ def _sentences(parts):
     return "".join("<s>" + _attr(p) + "</s>" for p in parts if p)
 
 
+def narration_index(app_dir, art):
+    """lib/art.js with NARRATION_INDEX pointed at media/tts/index.<sha10>.json,
+    the content-named copy narrate.mjs writes beside index.json. Refuses when
+    the copy is missing or is not index.json byte for byte, because a page
+    that reads a stale or absent index plays nothing it has recorded. With no
+    recordings at all the page keeps reading index.json and speaks live."""
+    import hashlib
+    import os
+    import sys
+    line = 'const NARRATION_INDEX = "index.json";'
+    if art.count(line) != 1:
+        sys.exit("REFUSED: lib/art.js has no single NARRATION_INDEX line to point at the index")
+    tts = os.path.join(app_dir, "media", "tts")
+    idx = os.path.join(tts, "index.json")
+    if not os.path.isfile(idx):
+        return art
+    body = open(idx, "rb").read()
+    name = "index.%s.json" % hashlib.sha1(body).hexdigest()[:10]
+    named = os.path.join(tts, name)
+    if not os.path.isfile(named) or open(named, "rb").read() != body:
+        sys.exit("REFUSED: media/tts/%s is missing or differs from index.json - run narrate.mjs --index" % name)
+    return art.replace(line, 'const NARRATION_INDEX = "%s";' % name)
+
+
 def explain(calm, friendly, watch, go):
     out = ""
     if calm:

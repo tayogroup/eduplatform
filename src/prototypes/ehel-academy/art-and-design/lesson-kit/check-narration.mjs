@@ -19,6 +19,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -62,6 +63,19 @@ for (const h of listed) {
   if (!words) { fail(h + " has no words in scripts.json"); continue; }
   if (T.cyrb53(words) !== h) fail(h + " holds words that hash to " + T.cyrb53(words) + ": " + JSON.stringify(words));
   checked++;
+}
+
+/* every page reads the content-named copy of THIS index */
+{
+  const body = fs.readFileSync(path.join(TTS, "index.json"));
+  const named = "index." + crypto.createHash("sha1").update(body).digest("hex").slice(0, 10) + ".json";
+  const namedPath = path.join(TTS, named);
+  if (!fs.existsSync(namedPath) || !fs.readFileSync(namedPath).equals(body)) fail("media/tts/" + named + " is missing or differs from index.json - run narrate.mjs --index");
+  for (const file of [...cfg.lessons.map((l) => l.file), ...(cfg.extraPages || [])]) {
+    const m = /const NARRATION_INDEX = "([^"]+)";/.exec(fs.readFileSync(path.join(APP, file), "utf8"));
+    if (!m) fail(file + " carries no NARRATION_INDEX");
+    else if (m[1] !== named) fail(file + " reads " + m[1] + ", not the current " + named + " - rebuild the pages");
+  }
 }
 
 /* the lecture videos */

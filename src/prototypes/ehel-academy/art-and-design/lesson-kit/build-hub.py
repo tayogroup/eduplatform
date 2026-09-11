@@ -49,7 +49,55 @@ MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2, "to
            "compare": 3, "comment": 3, "refine": 4, "journal": 3,
            "questions": 3, "quiz": 4,
            # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
-           "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
+           # the lecture is a video of about a minute (the eight measured 55 to 63
+           # seconds, media/lecture/index.json) plus pressing I watched it; it was
+           # 4 when the lecture was eight parts read aloud one Next at a time
+           "overview": 1, "lecture": 2, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
+
+# WHERE THE ART COMES FROM (validation area 20, 2026-09-11). The pictures of
+# art from long ago and far away are drawn for this build IN THE MANNER of real
+# traditions, never copied from one real work - and a grown-up deserves to know
+# which traditions, so that a child who asks "who made that?" gets a true
+# answer and a real one can be found together. Keyed by the SCENE a step draws
+# (lib/art.js :: SCENES), so a lesson gets a note exactly when it shows the
+# picture: nothing to keep in step by hand. check-coverage.py holds every key
+# to a real scene and every heritage scene a lesson draws to a note.
+TRADITIONS = {
+    "cave": "The cave wall is drawn in the manner of the painted caves of Europe, such as Lascaux in France (about 17,000 years ago) and Chauvet in France (more than 30,000 years ago), and of the hand stencils at the Cueva de las Manos in Argentina (about 9,000 years ago) and in the caves of Sulawesi in Indonesia, where some are more than 40,000 years old. People in many parts of the world made pictures like these long before writing. The picture on the page is our own drawing in that manner, not a copy of one wall.",
+    "cloth": "The striped cloth is drawn in the manner of kente, the woven cloth of Ghana, made by Asante and Ewe weavers in narrow strips that are sewn together. In real kente the patterns and colours have names and meanings that the weavers give them, so the page's stripes are our own simple pattern and not a real kente design. A photograph of a real one is well worth finding together.",
+    "basket": "Baskets are woven on every inhabited continent, from grass, reed, palm leaves, willow and pine needles. The basket on the page stands for that whole family of making, not for one people.",
+    "mask": "The mask is drawn in the manner of the carved wooden face masks of West and Central Africa; the masks of the Dan people of Liberia and C\u00f4te d'Ivoire are one well-known example. Masks like these are made to be worn in dances and ceremonies and to tell stories, and what a mask means belongs to the people who make and wear it. So the lesson talks about what the carver did (the lines cut in, the dots painted on, the shape) and not about what a mask is for in any one community. The picture is our own drawing, not a copy of a real mask.",
+    "tiles": "The tiled wall is drawn in the manner of the blue-and-white glazed tiles of Portugal (azulejos) and of \u0130znik in T\u00fcrkiye. Repeating star patterns are also at the heart of tile work across North Africa, the Middle East and Central Asia, such as the zellige of Morocco.",
+    "dots": "The dot painting is drawn in the manner of Aboriginal Australian painting from the Western Desert, where painting in dots on board and canvas began at Papunya in the early 1970s. Many of those paintings tell stories of Country, the land, that belong to particular families and places, and some designs may only be painted by the people they belong to. That is why the page draws its own rings and lines of dots rather than copying a real painting, and why the child is asked to make dots of their own in response, not to copy.",
+}
+
+
+def scenes_in(o, out=None):
+    """Every scene a lesson's steps draw, in the order they first appear."""
+    out = [] if out is None else out
+    if isinstance(o, dict):
+        for k, v in o.items():
+            if k == "scene" and isinstance(v, str):
+                if v not in out:
+                    out.append(v)
+            else:
+                scenes_in(v, out)
+    elif isinstance(o, list):
+        for v in o:
+            scenes_in(v, out)
+    return out
+
+
+def sittings_of(steps):
+    """The two sittings a lesson splits into at the journal's stop card:
+    (index of the journal, minutes before it, minutes after it), or None."""
+    js = [k for k, s in enumerate(steps) if s["kind"] == "journal"]
+    if not js:
+        return None
+    j = js[-1]
+    m = lambda xs: max(5, int(5 * round(sum(MINUTES.get(s["kind"], 2) for s in xs) / 5.0)))   # noqa: E731
+    return j, m(steps[:j + 1]), m(steps[j + 1:])
+
 
 # the do-it-for-real version of each kind of step, for a grown-up to run at home
 TOGETHER = {
@@ -135,6 +183,7 @@ PAGE = """<!doctype html>
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; padding: 9px 20px; }
   .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
   .card.locked { opacity: 0.62; }
+  .card.check { border-color: var(--teal); }
   .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 62ch; }
   .strands, .grownups { padding: 30px 4px 0; }
   .strands h2, .grownups h2 { font-size: 26px; margin-bottom: 10px; }
@@ -199,7 +248,7 @@ PAGE = """<!doctype html>
   <header class="hubhead">
     <p class="eyebrow">Ehel Academy &middot; Art &amp; Design</p>
     <h1>%(gradeLabel)s <em>Art &amp; Design</em></h1>
-    <p>%(nlessons)s lessons, in the order they are meant to be done. Every one is about making and looking: paints to mix, marks to make, patterns to build, art from far away to look at, and a journal to keep. About %(total)d minutes in all, one lesson a week - and a screen cannot be paint, so every lesson sends you to make something real at home.</p>
+    <p>%(nlessons)s lessons, in the order they are meant to be done. Every one is about making and looking: paints to mix, marks to make, patterns to build, art from far away to look at, and a journal to keep. About %(total)d minutes in all, one lesson a week in two short sittings - and a screen cannot be paint, so every lesson sends you to make something real at home.</p>
   </header>
 
   <main class="cards">
@@ -220,7 +269,8 @@ PAGE = """<!doctype html>
 <script>
 /* ---- the header bar: how far through the course, and the way out ----
    Everything here is answered by the launch URL and by the progress document
-   the LESSONS write. This page stores nothing of its own. */
+   the LESSONS write, plus the starting check's result on this device. This
+   page stores nothing of its own. */
 (function () {
   var COURSE = "%(course)s";
   var STEPS  = %(steps)s;     /* lesson id -> slides-1, the lesson's own denominator */
@@ -245,6 +295,13 @@ PAGE = """<!doctype html>
   if (fill) fill.style.width = pct + "%%";
   var prog = document.getElementById("ehProg");
   if (prog) prog.title = done + " of " + total + " steps done across the course";
+
+  /* the starting check's last result, which its page keeps on this device */
+  var LABELS = %(checkLabels)s;
+  var rc = null;
+  try { rc = JSON.parse(localStorage.getItem("ehel-art-starting-check:" + COURSE + ":" + (q.get("studentid") || "local")) || "null"); } catch (e) { rc = null; }
+  var rcMeta = document.getElementById("rcMeta");
+  if (rcMeta && rc && LABELS[rc.band]) rcMeta.textContent = "Done: " + LABELS[rc.band];
 
   /* the picker jumps to a lesson, carrying the launch parameters */
   var picker = document.getElementById("ehPicker");
@@ -280,10 +337,10 @@ def keys_for(s):
         out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), "; ".join(
             "<b>%s</b>: %s" % (text(g), text(", ".join(v))) for g, v in groups.items())))
     elif k == "order":
-        out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), text(" &rarr; ".join(it["label"] for it in d["items"]))))
+        out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), " &rarr; ".join(text(it["label"]) for it in d["items"])))
     elif k == "tone":
         by = {sw["id"]: sw["label"] for sw in d["swatches"]}
-        out.append("<li><b>%s</b> <span class=\"key\">light to dark, by the colours' own lightness: <b>%s</b></span></li>" % (text(s["title"]), text(" &rarr; ".join(by[i] for i in tone_order(d["swatches"])))))
+        out.append("<li><b>%s</b> <span class=\"key\">light to dark, by the colours' own lightness: <b>%s</b></span></li>" % (text(s["title"]), " &rarr; ".join(text(by[i]) for i in tone_order(d["swatches"]))))
     elif k == "source":
         spots = {sp["id"]: sp for sp in d["spots"]}
         bits = ["find: " + "; ".join(sp["fact"] for sp in d["spots"])]
@@ -356,15 +413,26 @@ def grownups_for(n, lesson, codes, minutes, steps, stage):
     keys = []
     for s in lesson["steps"]:
         keys.extend(keys_for(s))
+    where = "".join("<li>%s</li>" % text(TRADITIONS[sc]) for sc in scenes_in(lesson["steps"]) if sc in TRADITIONS)
+    sit = sittings_of(lesson["steps"])
+    sitting = ""
+    if sit:
+        j, a, b = sit
+        sitting = ('        <h3>Two sittings</h3><p>At the end of <b>%s</b> (step %d) the page offers to stop for today: about %d minutes before it and %d after. '
+                   'The child&rsquo;s place is kept, and the lesson opens at the next step when they come back.</p>\n'
+                   % (text(lesson["steps"][j]["title"]), j + 1, a, b))
     return (
-        '    <details class="gu"><summary>Lesson %d: %s<small>%d steps &middot; about %d minutes &middot; %d objectives</small></summary>\n'
+        '    <details class="gu"><summary>Lesson %d: %s<small>%d steps &middot; about %d minutes, in two sittings &middot; %d objectives</small></summary>\n'
         '      <div class="body">\n'
         '        <h3>What it teaches (Cambridge Primary Art &amp; Design 0067, Stage %d)</h3><ul>%s</ul>\n'
+        '%s'
         '        <h3>The steps</h3><ol>%s</ol>\n'
+        '%s'
         '%s'
         '        <h3>Answer keys</h3><ul>%s</ul>\n'
         '      </div>\n    </details>\n'
-        % (n, text(lesson["title"]), steps, minutes, len(reached), stage, objectives, steplist,
+        % (n, text(lesson["title"]), steps, minutes, len(reached), stage, objectives, sitting, steplist,
+           ('        <h3>Where this art comes from</h3><ul>%s</ul>\n' % where) if where else "",
            ('        <h3>Make it for real</h3><ul>%s</ul>\n' % "".join(home)) if home else "",
            "".join(keys)))
 
@@ -414,7 +482,7 @@ def main():
             total_minutes += minutes
             steps[uid] = count
             files[uid] = f
-            meta = "%d steps &middot; about %d min &middot; stickers" % (count, minutes)
+            meta = "%d steps &middot; about %d min &middot; two sittings" % (count, minutes)
             cta = '<span class="go">Start</span>'
             tag, href, cls = "a", ' href="%s?from=%s"' % (f, cfg["fromParam"]), ""
             options += '<option value="%s">%s</option>' % (f, text(l["title"]))
@@ -424,6 +492,21 @@ def main():
             tag, href, cls = "div", "", " locked"
         cards += CARD % {"tag": tag, "href": href, "cls": cls, "n": n, "title": text(l["title"]),
                          "blurb": text((lesson or {}).get("blurb", "")), "meta": meta, "cta": cta}
+    # THE STARTING CHECK, first, as the card before Lesson 1 - drawn only when
+    # build-check.py has built its page (a card to a page that is not there is
+    # the "Coming soon" rule above, the other way round)
+    check_card, check_labels = "", {}
+    sc = cfg.get("startingCheck")
+    if sc and os.path.isfile(os.path.join(APP, sc["file"])):
+        exam = load_json(os.path.normpath(os.path.join(APP, sc["data"])))
+        check_labels = {k: v["label"] for k, v in exam["banding"].items() if isinstance(v, dict) and v.get("label")}
+        check_card = CARD % {
+            "tag": "a", "href": ' href="%s?from=%s"' % (sc["file"], cfg["fromParam"]), "cls": " check", "n": 0, "title": text(exam["shortTitle"].capitalize()),
+            "blurb": text("%d quick questions about colours, shapes, lines and tools, to find where to start. It is never a fail." % exam["questionCount"]),
+            "meta": '<span id="rcMeta">%d questions &middot; about %d min</span>' % (exam["questionCount"], exam["estimatedMinutes"]),
+            "cta": '<span class="go">Start</span>'}
+        check_card = check_card.replace('<span class="cardno">Lesson 0</span>', '<span class="cardno">Before Lesson 1</span>')
+    cards = check_card + cards
     css = io.open(os.path.join(LIB, "lesson.css"), encoding="utf-8").read()
     strands_html = "".join('    <div class="strand"><b>%s</b><span>%s</span></div>\n' % (text(a), text(b)) for a, b in strands)
     WORDS = {6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve"}
@@ -432,6 +515,7 @@ def main():
         "grownups": grownups, "total": total_minutes, "stage": stage,
         "gradeLabel": text(cfg["gradeLabel"]), "nlessons": WORDS.get(len(cfg["lessons"]), str(len(cfg["lessons"]))),
         "course": cfg["courseKey"], "steps": json.dumps(steps), "files": json.dumps(files),
+        "checkLabels": json.dumps(check_labels, ensure_ascii=False),
         "from": cfg["fromParam"], "options": '<option value="" selected>Jump to a lesson…</option>' + options,
     }
     io.open(os.path.join(APP, cfg["hub"]), "w", encoding="utf-8", newline="").write(page)

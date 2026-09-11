@@ -29,16 +29,31 @@ question, plus what only the shipped bytes can answer:
   - the colour and texture tables the PAGE carries equal _rules.py's, so
     the page cannot make a colour the gate did not expect.
 
+And the five fixes of the 2026-09-11 validation, each held here so a later
+edit cannot quietly undo one:
+  - the keyboard route: check-marks.mjs draws every mark a round can ask for
+    through the SHIPPED page's own judge, and no rival shape may pass it
+  - a good place to stop: exactly one journal per page carries the stop card
+  - the make-at-home sheet: every home step knows its lesson's title and number
+  - where the art comes from: every tradition note belongs to a scene the
+    pages draw, and every lesson that draws one has its note in the built hub
+  - the starting check: the page carries the placement file as it is on
+    disk, every key is one of its options, every remediation lesson exists
+    under its own title, the band rule gives the right band at the edges,
+    and the hub links the page and deploy.mjs will upload it
+
 Exit 0 clean, 1 on a finding, 2 when it could not run (no framework, fewer
 pages than app.config.json names) - a gate that cannot read its target and
 passes is green about nothing.
 
     python ../lesson-kit/check-coverage.py --app .
 """
+import ast
 import io
 import json
 import os
 import re
+import subprocess
 import sys
 
 KIT = os.path.dirname(os.path.abspath(__file__))
@@ -91,6 +106,7 @@ def main():
         return sum(1 for o in opts if o.get("ok")) == 1 and len({o["t"] for o in opts}) == len(opts)
 
     reached = {c: [] for c in codes}
+    drawn = {}
     pages = 0
     for n, entry in enumerate(cfg["lessons"], 1):
         path = os.path.join(HERE, entry["file"])
@@ -125,9 +141,12 @@ def main():
             data = json.loads(m.group(1))
         except ValueError as e:
             fail(entry["file"], "LESSON block is not JSON: %s" % e); continue
+        pauses = 0
+        drawn[n] = set()
         for k, st in enumerate(data["steps"], 1):
             d = st["data"]
             kind = st["kind"]
+            drawn[n] |= scenes_in(d)
             if kind in ("quiz", "questions"):
                 for it in d["items"]:
                     if not one_key(it["opts"]):
@@ -201,7 +220,11 @@ def main():
             elif kind == "journal":
                 if len(d.get("fallback") or []) < 2 or set(st["objectives"]) != JOURNAL_CODES or len(d.get("changes") or []) < 3:
                     fail(entry["file"], "step %d's journal has fewer than 2 things made, or the wrong codes, or too few changes" % k)
+                pauses += 1 if d.get("pause") else 0
                 computed += 1
+            elif kind == "home":
+                if d.get("lesson") != data["title"] or d.get("lessonNo") != n:
+                    fail(entry["file"], "step %d's make-at-home sheet does not know its lesson (%r, %r)" % (k, d.get("lesson"), d.get("lessonNo")))
             elif kind == "lecture":
                 for key in ("video", "captions", "poster"):
                     if d.get(key) and not os.path.isfile(os.path.join(HERE, d[key])):
@@ -215,11 +238,47 @@ def main():
             for spec in (d.get("then"),) if kind in ("explore", "context") else ():
                 if spec and not one_key(spec["opts"]):
                     fail(entry["file"], "step %d's question does not have exactly one key" % k)
+        if pauses != 1:
+            fail(entry["file"], "%d journals carry the stop card; a lesson needs exactly one" % pauses)
         if not bad or not bad[-1].startswith(entry["file"] + ":"):
             print("  ok   %-32s %2d objectives" % (entry["file"], len(mine)))
 
     if pages < len(cfg["lessons"]):
         print("  cannot run: %d of %d pages" % (pages, len(cfg["lessons"]))); sys.exit(2)
+
+    # ---- the keyboard route, on the shipped bytes ----
+    print()
+    r = subprocess.run(["node", os.path.join(KIT, "check-marks.mjs")] + [os.path.join(HERE, e["file"]) for e in cfg["lessons"]],
+                       capture_output=True, text=True)
+    print(r.stdout.rstrip())
+    if r.returncode == 2 or not r.stdout.strip():
+        print("  cannot run: check-marks.mjs could not read the pages\n" + r.stderr); sys.exit(2)
+    if r.returncode:
+        fail("keyboard route", "a mark the keyboard route draws is judged wrong, or a rival passes - see above")
+
+    # ---- where the art comes from ----
+    trad = traditions()
+    hub_path = os.path.join(HERE, cfg["hub"])
+    hub = io.open(hub_path, encoding="utf-8").read() if os.path.isfile(hub_path) else ""
+    sample = js_keys(io.open(os.path.join(HERE, cfg["lessons"][0]["file"]), encoding="utf-8").read(), "SCENES")
+    for sc in trad:
+        if sc not in sample:
+            fail("traditions", "build-hub.py has a note for scene %r, which the pages do not draw" % sc)
+    blocks = re.findall(r'<details class="gu"><summary>Lesson (\d+):(.*?)</details>', hub, re.S)
+    by_lesson = {int(a): b for a, b in blocks}
+    noted = 0
+    for n, sc_set in drawn.items():
+        for sc in sorted(sc_set & set(trad)):
+            if trad[sc][:60] not in by_lesson.get(n, "").replace("&#x27;", "'").replace("&#39;", "'"):
+                fail(cfg["hub"], "Lesson %d draws %r but its grown-up notes do not say where that art comes from (rebuild the hub?)" % (n, sc))
+            else:
+                noted += 1
+    print("  ok   traditions: %d notes, %d placed in the hub where a lesson draws that art" % (len(trad), noted))
+
+    # ---- the starting check ----
+    sc = cfg.get("startingCheck")
+    if sc:
+        check_starting(cfg, sc, hub, fail)
 
     print("\n  Cambridge Primary Art & Design 0067 - Stage %d\n" % stage)
     for c, o in codes.items():
@@ -235,6 +294,95 @@ def main():
           "  and %d relationships were re-computed from the shipped data (mixes, tone ladders,\n"
           "  patterns, materials, comparisons, comments, refinements, experiments, marks, journals)\n" % (len(codes), stage, computed))
     sys.exit(0)
+
+
+def scenes_in(o, out=None):
+    out = set() if out is None else out
+    if isinstance(o, dict):
+        for k, v in o.items():
+            if k == "scene" and isinstance(v, str):
+                out.add(v)
+            else:
+                scenes_in(v, out)
+    elif isinstance(o, list):
+        for v in o:
+            scenes_in(v, out)
+    return out
+
+
+def traditions():
+    """build-hub.py's TRADITIONS, read as a literal - importing the builder would run it."""
+    tree = ast.parse(io.open(os.path.join(KIT, "build-hub.py"), encoding="utf-8").read())
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(getattr(t, "id", "") == "TRADITIONS" for t in node.targets):
+            return ast.literal_eval(node.value)
+    print("  cannot run: no TRADITIONS in build-hub.py"); sys.exit(2)
+
+
+def band(exam, percent, sections):
+    """shell/placement.js :: band, line for line (the page carries the same)."""
+    b = exam.get("banding") or {}
+    ready, review, crit = b.get("ready") or {}, b.get("readyWithReview") or {}, b.get("criticalSection")
+    c = next((x for x in sections if crit and x["id"] == crit["sectionId"]), None)
+    if percent < review.get("minOverallPercent", 50) or (c and c["percent"] <= crit.get("maxFailPercent", 40)):
+        return "notReady"
+    if percent >= ready.get("minOverallPercent", 80) and all(x["percent"] >= ready.get("minSectionPercent", 60) for x in sections):
+        return "ready"
+    return "readyWithReview"
+
+
+def check_starting(cfg, sc, hub, fail):
+    where = sc["file"]
+    page_path = os.path.join(HERE, sc["file"])
+    data_path = os.path.normpath(os.path.join(HERE, sc["data"]))
+    if not os.path.isfile(page_path) or not os.path.isfile(data_path):
+        fail(where, "the starting check's page or its placement file is missing"); return
+    exam = json.load(io.open(data_path, encoding="utf-8"))
+    m = LESSON_RE.search(io.open(page_path, encoding="utf-8").read())
+    if not m:
+        fail(where, "no LESSON data block"); return
+    shipped = json.loads(m.group(1))["steps"][0]["data"]
+    if shipped["exam"] != exam:
+        fail(where, "the page's questions are not the placement file's - rebuild it with build-check.py")
+    if sc["file"] not in (cfg.get("extraPages") or []):
+        fail(where, "not in extraPages, so deploy.mjs would never upload it")
+    if 'href="%s?from=%s"' % (sc["file"], cfg["fromParam"]) not in hub:
+        fail(cfg["hub"], "does not link the starting check")
+    split = lambda t: [x.strip() for x in str(t or "").split("|") if x.strip()]   # noqa: E731
+    titles = {i: l["title"] for i, l in enumerate(cfg["lessons"], 1)}
+    for q in exam["questions"]:
+        opts = split(q["options"])
+        if q["correctAnswer"] not in opts or len(set(opts)) != len(opts):
+            fail(where, "%s: the key is not exactly one of its options" % q["questionId"])
+        if q.get("optionPics") and len(split(q["optionPics"])) != len(opts):
+            fail(where, "%s: a picture for every option, or none" % q["questionId"])
+    for s_ in exam["sections"]:
+        for r in s_.get("remediation") or []:
+            if titles.get(r["unit"]) != r["title"]:
+                fail(where, "%s sends the child to Lesson %s %r, which this grade does not have" % (s_["sectionId"], r["unit"], r["title"]))
+    # the band rule at its edges, computed from the questions rather than trusted
+    secs = [x["sectionId"] for x in exam["sections"]]
+
+    def outcome(right_ids):
+        per = []
+        got = tot = 0
+        for sid in secs:
+            mine = [q for q in exam["questions"] if q["sectionId"] == sid]
+            g = sum(q.get("marks", 1) for q in mine if q["questionId"] in right_ids)
+            t = sum(q.get("marks", 1) for q in mine)
+            per.append({"id": sid, "percent": round(g / t * 100) if t else 0}); got += g; tot += t
+        return band(exam, round(got / tot * 100) if tot else 0, per)
+    everything = {q["questionId"] for q in exam["questions"]}
+    crit = (exam["banding"].get("criticalSection") or {}).get("sectionId")
+    cases = [("all right", everything, "ready"), ("none right", set(), "notReady")]
+    if crit:
+        cases.append(("all right but the critical section", {q["questionId"] for q in exam["questions"] if q["sectionId"] != crit}, "notReady"))
+    for name, ids, want in cases:
+        got = outcome(ids)
+        if got != want:
+            fail(where, "%s gives %s, not %s" % (name, got, want))
+    print("  ok   %-32s %d questions, keys single, %d remediation links, bands right at the edges" % (
+        where, len(exam["questions"]), sum(len(s_.get("remediation") or []) for s_ in exam["sections"])))
 
 
 main()

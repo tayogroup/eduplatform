@@ -53,7 +53,7 @@ for (const dir of ["tts", "lecture"]) {
   for (const f of fs.readdirSync(d).sort()) {
     if (f === "scripts.json") continue;              /* the review surface, not something a page reads */
     if (!CT[path.extname(f)]) continue;
-    files.push({ rel: dir + "/" + f, local: path.join(d, f), index: f === "index.json" });
+    files.push({ rel: dir + "/" + f, local: path.join(d, f), index: f === "index.json" || /^index\.[0-9a-f]{10}\.json$/.test(f) });
   }
 }
 files.sort((a, b) => Number(a.index) - Number(b.index));

@@ -156,8 +156,8 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("Glue is best for…", "🧴", "sticking flat things like paper", ["hanging a mobile", "cutting card"], "Glue sticks flat things."),
-                 q("Which join lets two pieces of card turn, like a wheel?", "📌", "a split pin", ["glue", "a fold"], "A split pin goes through both and lets them turn."),
-                 q("What do you do with scissors?", "✂️", "sit down and cut", ["walk about with them", "glue with them"], "Scissors cut, and you sit down to use them."),
+                 q("Why use a split pin for a wheel, not glue?", "⚙️", "because a split pin lets the wheel turn", ["because glue is too pretty", "because a split pin is softer"], "Glue holds a thing still. A split pin holds it and lets it turn."),
+                 q("Why sit down to cut with scissors?", "✂️", "so you can hold them steady and safe", ["so the scissors can rest", "so you can cut faster"], "Sitting down keeps the scissors steady and safe."),
                  q("The pot cracked. What fixed it?", "🏺", "wet fingers, smoothing the crack", ["painting over it", "adding a lid"], "Wet clay mends when it is smoothed."),
                  q("The crown was too small. What fixed it?", "👑", "a longer strip of paper", ["cutting it shorter", "colouring it gold"], "Too small needs bigger."),
                  q("What is the FIRST step of a pinch pot?", "⚪", "roll a ball", ["let it dry", "pinch the sides"], "Roll the ball first, then thumb in, then pinch."),

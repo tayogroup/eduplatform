@@ -29,6 +29,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -66,7 +67,13 @@ function writeIndex() {
   const clips = fs.readdirSync(OUT).filter((f) => /^[0-9a-f]+\.mp3$/.test(f) && fs.statSync(path.join(OUT, f)).size > 1024)
     .map((f) => f.replace(/\.mp3$/, "")).sort();
   const { VOICE_ID, MODEL_ID } = require(path.join(REPO, "tools", "lib", "ehel-tts.js"));
-  fs.writeFileSync(path.join(OUT, "index.json"), JSON.stringify({ voice: VOICE_ID, model: MODEL_ID, clips }) + "\n");
+  const body = JSON.stringify({ voice: VOICE_ID, model: MODEL_ID, clips }) + "\n";
+  fs.writeFileSync(path.join(OUT, "index.json"), body);
+  /* the copy a PAGE reads, named for its content (lib/art.js ::
+     NARRATION_INDEX says why); the builders point every page at it */
+  const named = "index." + crypto.createHash("sha1").update(body).digest("hex").slice(0, 10) + ".json";
+  for (const f of fs.readdirSync(OUT)) if (/^index\.[0-9a-f]{10}\.json$/.test(f) && f !== named) fs.unlinkSync(path.join(OUT, f));
+  fs.writeFileSync(path.join(OUT, named), body);
   return clips.length;
 }
 if (INDEX_ONLY) { console.log("index.json: " + writeIndex() + " clips"); process.exit(0); }
@@ -83,6 +90,12 @@ if (TRACE) {
   console.warn("  (no --trace: recording from the static sources alone, which misses every line the renderers compose)");
 }
 const SPOKEN_KEYS = new Set(["why", "say", "fact", "done", "cap", "problem", "fixed"]);
+/* every page the build ships that speaks: the lessons, and the pages beside
+   them that are not lessons (the starting check) */
+const PAGES = [...cfg.lessons.map((l) => l.file), ...(cfg.extraPages || [])];
+/* the marks step's keyboard route names marks out loud; its names and rivals
+   are lib/art.js's own tables, lifted out rather than retyped */
+const MK = new Function(ART.slice(ART.indexOf("  const MARK_NAME = {"), ART.indexOf("  function markPts(")) + "; return { MARK_NAME, MARK_RIVALS };")();
 function walk(o) {
   if (Array.isArray(o)) { o.forEach(walk); return; }
   if (!o || typeof o !== "object") return;
@@ -91,17 +104,17 @@ function walk(o) {
     else if (typeof v === "object") walk(v);
   }
 }
-for (const l of cfg.lessons) {
-  const s = fs.readFileSync(path.join(APP, l.file), "utf8");
+for (const file of PAGES) {
+  const s = fs.readFileSync(path.join(APP, file), "utf8");
   const m = /\n  const LESSON = (\{.*?\n  \});\n/s.exec(s);
-  if (!m) { console.error(l.file + ": no LESSON block"); process.exit(2); }
+  if (!m) { console.error(file + ": no LESSON block"); process.exit(2); }
   const data = JSON.parse(m[1]);
   for (const st of data.steps) { add(st.done || "", "lesson:done"); walk(st.data); }
 }
 /* lines the renderers COMPOSE from a closed set of the child's choices: a run
    picks one option, the child may pick any, and each set is small */
-for (const l of cfg.lessons) {
-  const s = fs.readFileSync(path.join(APP, l.file), "utf8");
+for (const file of PAGES) {
+  const s = fs.readFileSync(path.join(APP, file), "utf8");
   const data = JSON.parse(/\n  const LESSON = (\{.*?\n  \});\n/s.exec(s)[1]);
   for (const st of data.steps) {
     const d = st.data;
@@ -116,7 +129,32 @@ for (const l of cfg.lessons) {
     if (st.kind === "lecture") for (const p of d.parts) add(p.title + ". " + p.say, "template:lecture");
     if (st.kind === "words") for (const w of d.items) add(w.w + ". " + w.meaning + " " + ((w.uses || [])[0] || ""), "template:words");
     if (st.kind === "source") for (const sp of d.spots) add(sp.label + ". " + sp.fact, "template:spot");
+    /* the keyboard route: the question it asks, and what a wrong pick hears */
+    if (st.kind === "marks") for (const rd of d.rounds) {
+      add("Which one is " + MK.MARK_NAME[rd.want] + "? Tap it.", "template:marks");
+      for (const r of MK.MARK_RIVALS[rd.want] || []) add("That is " + MK.MARK_NAME[r] + ". Look for " + MK.MARK_NAME[rd.want] + ".", "template:marks");
+    }
+    /* the starting check: every question, every explanation, every band */
+    if (st.kind === "readiness") {
+      for (const q of d.exam.questions) { add(q.question, "template:check"); add(q.explanation, "template:check"); }
+      for (const b of Object.values(d.exam.banding)) if (b && b.label && b.message) add(b.label + ". " + b.message, "template:check");
+    }
   }
+}
+/* the voice's reaction banks (lib/voice.js :: BANKS) are SSML, which the
+   literal scan below skips for its tags - and a run speaks one of each bank
+   at random, so a trace alone keeps some and loses the rest (a prune on
+   2026-09-11 would have deleted "Hmm." and "Let us think it through again."
+   that way). Every line of every bank, tags stripped, is wanted. */
+{
+  const VOICE_SRC = fs.readFileSync(path.join(HERE, "lib", "voice.js"), "utf8");
+  const banks = VOICE_SRC.slice(VOICE_SRC.indexOf("const BANKS = {"), VOICE_SRC.indexOf("};", VOICE_SRC.indexOf("const BANKS = {")));
+  let n = 0;
+  for (const m of banks.matchAll(/'((?:[^'\\]|\\.)*)'/g)) {
+    const t = m[1].replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    if (/[a-z]/i.test(t) && !/^[\d.]+$/.test(t)) { add(t, "template:voice"); n++; }
+  }
+  if (n < 10) { console.error("read only " + n + " lines out of lib/voice.js's BANKS - the parser is broken"); process.exit(2); }
 }
 /* complete sentences written as string literals in the page's own scripts */
 function literals(src) {

@@ -4,6 +4,21 @@
  *   node ../lesson-kit/drive-lessons.mjs --app .              # all lessons, desktop
  *   node ../lesson-kit/drive-lessons.mjs --app . --only 3     # one lesson
  *   node ../lesson-kit/drive-lessons.mjs --app . --width 375  # phone width, and check overflow
+ *   node ../lesson-kit/drive-lessons.mjs --app . --keyboard   # the marks step by keyboard alone
+ *
+ * THE MARKS STEP IS PLAYED TWO WAYS. At desktop width by drawing on the
+ * paper with the mouse; at phone width (or with --keyboard) with the KEYBOARD
+ * alone - focus "Choose the mark", press Enter, pick a wrong mark first and
+ * then the right one, then stamp a mark in the free round - so the two
+ * routine runs between them prove both routes finish every round.
+ *
+ * AND THREE THINGS THAT ARE NOT A LESSON STEP, checked once per run after the
+ * lessons (skipped with --only): "Stop for today" at the end of Lesson 1's
+ * journal leaves for the hub with the NEXT step kept as the place to resume;
+ * every lesson's make-at-home sheet prints to PDF on its own, on one or two
+ * A4 pages, with the lesson hidden; and the starting check, answered all right
+ * and then all wrong, reports the right band, keeps its result on the device,
+ * links its review lessons, and shows up on the hub's card.
  *
  * WHY THIS EXISTS. The gates read the shipped bytes and re-compute every
  * relationship, and they cannot see a renderer that never calls finish(), a
@@ -37,6 +52,7 @@ const PAR = Number(arg("--parallel", "4"));
    list narrate.mjs records from, and the measurement of how much of a lesson
    is heard in the recorded voice. */
 const TRACE = arg("--trace", null);
+const KEYBOARD = argv.includes("--keyboard") || WIDTH <= 480;
 const HERE = path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
 const REPO = path.resolve(HERE, "../../../../..");
 const cfgPath = path.join(APP, "app.config.json");
@@ -136,6 +152,28 @@ const PLAY = {
     await page.click("#stage" + n + "done"); await sleep(300);
   },
   marks: async (page, st, n, d) => {
+    if (KEYBOARD) {
+      const key = async (sel) => { await page.focus(sel); await page.keyboard.press("Enter"); };
+      for (const [k, rd] of d.rounds.entries()) {
+        await key("#stage" + n + ' [data-alt]'); await sleep(300);
+        const focused = await page.evaluate(() => (document.activeElement && document.activeElement.className) || "");
+        if (!/markopt/.test(focused)) throw new Error("Choose the mark did not move focus to the marks (" + focused + ")");
+        if (k === 0) {   /* a wrong pick first, once: it must say so and leave the round open */
+          const wrong = await page.locator("#stage" + n + ' .markopt[data-w]:not([data-w="' + rd.want + '"])').first().getAttribute("data-w");
+          await key("#stage" + n + ' .markopt[data-w="' + wrong + '"]'); await sleep(500);
+          const fb = (await page.textContent("#fb" + n)).trim();
+          if (!/^That is /.test(fb)) throw new Error("a wrong mark by keyboard said " + JSON.stringify(fb));
+        }
+        await key("#stage" + n + ' .markopt[data-w="' + rd.want + '"]');
+        await sleep(rd.want === "dots" ? 2000 : 1400);
+        const fb = (await page.textContent("#fb" + n)).trim();
+        if (!/That is /.test(fb) || /Look for/.test(fb)) throw new Error("round " + (k + 1) + " (" + rd.want + ") by keyboard ended on " + JSON.stringify(fb));
+        await sleep(3200);
+      }
+      await key("#stage" + n + ' .markopt[data-stamp="round"]'); await sleep(1500);
+      await key("#stage" + n + "stick"); await sleep(300);
+      return;
+    }
     for (const rd of d.rounds) {
       await page.click('#stage' + n + ' .toolbtn[data-t="' + rd.tool + '"]'); await sleep(200);
       const cv = page.locator("#stage" + n + "cv");
@@ -186,6 +224,14 @@ const PLAY = {
     if (cards) await sleep(2700);
     await page.click('#stage' + n + ' .journalcard[data-j="0"]'); await sleep(400);
     await page.click('#ch' + n + ' .choice'); await sleep(3700);
+    /* the stop card: drawn at the end of exactly the journal that carries it */
+    const card = await page.locator("#stage" + n + " .pausecard").count();
+    if (card !== (d.pause ? 1 : 0)) throw new Error("the journal drew " + card + " stop cards, the data asks for " + (d.pause ? 1 : 0));
+    if (d.pause) {
+      await page.click("#stage" + n + " .pausecard [data-go]"); await sleep(300);
+      const at = await page.evaluate(() => [...document.querySelectorAll(".slide")].findIndex((x) => x.classList.contains("active")));
+      if (at !== n) throw new Error("Keep going opened slide " + (at + 1) + ", not the next step " + (n + 1));
+    }
   },
   questions: async (page, st, n, d) => { for (let k = 0; k < d.items.length; k++) { await page.click('#ch' + n + ' .choice[data-ok="1"]'); await sleep(2900); } },
   quiz: async (page, st, n, d) => PLAY.questions(page, st, n, d),
@@ -264,6 +310,108 @@ async function drive(browser, file, base) {
   return { file, ok, got, steps: steps.length, shelf, pct, doneDots, errors, overflow, narration, secs: Math.round((Date.now() - t0) / 1000) };
 }
 
+/* ---- the things that are not a lesson step ------------------------------ */
+async function extras(browser, base) {
+  const out = [];
+  const pdfPages = (buf) => (buf.toString("latin1").match(/\/Type\s*\/Page(?!s)/g) || []).length;
+  const newPage = async () => { const ctx = await browser.newContext({ viewport: { width: WIDTH, height: 900 } }); const page = await ctx.newPage(); const errs = []; page.on("pageerror", (e) => errs.push(e.message)); return { ctx, page, errs }; };
+
+  /* 1. Stop for today, at the end of Lesson 1's journal */
+  {
+    const file = cfg.lessons[0].file, data = lessonData(file);
+    const j = data.steps.findIndex((x) => x.kind === "journal" && x.data.pause);
+    const { ctx, page, errs } = await newPage();
+    await page.goto(base + file + "?from=" + cfg.fromParam, { waitUntil: "load" }); await sleep(600);
+    await page.evaluate((k) => document.querySelector('#dots button[data-i="' + k + '"]').click(), j); await sleep(300);
+    await PLAY.journal(page, data.steps[j], j + 1, Object.assign({}, data.steps[j].data, { pause: false })).catch(() => {});
+    const stop = page.locator("#stage" + (j + 1) + " .pausecard [data-stop]");
+    let msg = "";
+    if (!(await stop.count())) msg = "no Stop for today on the journal";
+    else {
+      /* The progress module is not served by the preview (it is deployed
+         beside the pages), so what is measured is the hook every navigation
+         reports the resume place through - the deck's show() calls
+         window.__ehelAt(cur), and the progress block turns that into
+         `resume`. Recorded in sessionStorage so it survives leaving. */
+      await page.evaluate(() => { window.__ehelAt = (i) => sessionStorage.setItem("__ehelAtLast", String(i)); });
+      await Promise.all([page.waitForURL(/\/index\.html/, { timeout: 5000 }).catch(() => null), stop.click()]);
+      const url = page.url();
+      const last = await page.evaluate(() => sessionStorage.getItem("__ehelAtLast"));
+      if (!/\/index\.html/.test(url)) msg = "Stop for today stayed on " + url;
+      else if (last !== String(j + 1)) msg = "the place reported last is step " + (Number(last) + 1) + ", not the next step " + (j + 2);
+    }
+    out.push({ what: "stop for today", ok: !msg && !errs.length, note: msg || "left for the hub, resume kept at the next step", errs });
+    await ctx.close();
+  }
+
+  /* 2. every lesson's make-at-home sheet, printed */
+  {
+    const counts = [];
+    let msg = "";
+    for (const l of cfg.lessons) {
+      const data = lessonData(l.file);
+      const h = data.steps.findIndex((x) => x.kind === "home");
+      const { ctx, page, errs } = await newPage();
+      await page.goto(base + l.file + "?from=" + cfg.fromParam, { waitUntil: "load" }); await sleep(500);
+      await page.evaluate(() => { window.print = () => {}; });
+      await page.evaluate((k) => document.querySelector('#dots button[data-i="' + k + '"]').click(), h); await sleep(250);
+      await page.click("#stage" + (h + 1) + "hprint"); await sleep(200);
+      await page.emulateMedia({ media: "print" });
+      const seen = await page.evaluate(() => ({ cls: document.body.classList.contains("printing-home"), wrap: getComputedStyle(document.querySelector(".wrap")).display,
+        sheet: getComputedStyle(document.getElementById("printsheet")).display, projects: document.querySelectorAll("#printsheet .ps-proj").length, h1: (document.querySelector("#printsheet h1") || {}).textContent || "" }));
+      const pdf = await page.pdf({ format: "A4", preferCSSPageSize: true });
+      const pages = pdfPages(pdf);
+      counts.push(pages);
+      const want = data.steps[h].data.items.length;
+      if (!seen.cls || seen.wrap !== "none" || seen.sheet !== "block") msg = msg || l.file + ": the lesson shows through the print (" + JSON.stringify(seen) + ")";
+      else if (seen.projects !== want || seen.h1.indexOf(data.title) < 0) msg = msg || l.file + ": the sheet has " + seen.projects + " of " + want + " projects, heading " + JSON.stringify(seen.h1);
+      else if (pages < 1 || pages > 2) msg = msg || l.file + ": the sheet printed on " + pages + " pages";
+      if (errs.length) msg = msg || l.file + ": " + errs[0];
+      await ctx.close();
+    }
+    out.push({ what: "make-at-home sheets", ok: !msg, note: msg || "all " + counts.length + " print alone, on " + [...new Set(counts)].sort().join(" or ") + " A4 page(s): " + counts.join(","), errs: [] });
+  }
+
+  /* 3. the starting check, all right then all wrong, and the hub's card */
+  if (cfg.startingCheck) {
+    const sc = cfg.startingCheck;
+    const exam = JSON.parse(fs.readFileSync(path.resolve(APP, sc.data), "utf8"));
+    const { ctx, page, errs } = await newPage();
+    let msg = "";
+    await page.goto(base + sc.file + "?from=" + cfg.fromParam, { waitUntil: "load" }); await sleep(600);
+    /* the page has no header bar to tame the lesson eyebrow, which is how it
+       first ran past the screen edge at phone width */
+    const wideAt = async (what) => { if (WIDTH <= 480 && await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1)) msg = msg || "horizontal overflow on the " + what; };
+    await wideAt("intro");
+    const run = async (right) => {
+      await page.click("#stage1go"); await sleep(300);
+      for (const q of [...exam.questions].sort((a, b) => a.sequence - b.sequence)) {
+        const opts = q.options.split("|").map((x) => x.trim());
+        const pick = right ? q.correctAnswer : opts.find((o) => o !== q.correctAnswer);
+        await page.click('#ch1 .rc-opt[data-t="' + pick.replace(/"/g, '\\"') + '"]'); await sleep(3000);
+      }
+      await sleep(300);
+      return { band: (await page.textContent("#stage1 .rc-band")).trim(), links: await page.$$eval("#stage1 .rc-rev a", (as) => as.map((a) => a.getAttribute("href"))) };
+    };
+    const good = await run(true);
+    await wideAt("report");
+    if (good.band !== exam.banding.ready.label) msg = "all right gave " + JSON.stringify(good.band);
+    const stored = await page.evaluate((c) => JSON.parse(localStorage.getItem("ehel-art-starting-check:" + c + ":local") || "null"), cfg.courseKey);
+    if (!msg && (!stored || stored.band !== "ready" || stored.percent !== 100)) msg = "the result kept on the device is " + JSON.stringify(stored);
+    await page.click("#stage1again"); await sleep(300);
+    const bad = await run(false);
+    if (!msg && bad.band !== exam.banding.notReady.label) msg = "all wrong gave " + JSON.stringify(bad.band);
+    const files = new Set(cfg.lessons.map((l) => l.file));
+    if (!msg && (!bad.links.length || !bad.links.every((h) => files.has(h.split("?")[0]) && /[?&]from=/.test(h)))) msg = "the review links are " + JSON.stringify(bad.links);
+    await page.goto(base + cfg.hub + "?from=" + cfg.fromParam, { waitUntil: "load" }); await sleep(400);
+    const meta = ((await page.textContent("#rcMeta").catch(() => "")) || "").trim();
+    if (!msg && meta !== "Done: " + exam.banding.notReady.label) msg = "the hub's card says " + JSON.stringify(meta);
+    out.push({ what: "starting check", ok: !msg && !errs.length, note: msg || "ready when all right, not ready when all wrong, " + bad.links.length + " review links, the hub shows the result", errs });
+    await ctx.close();
+  }
+  return out;
+}
+
 async function main() {
   const server = spawn(process.execPath, [path.join(REPO, "tools", "serve-src-preview.js")], { env: { ...process.env, PORT: String(PORT) }, stdio: "ignore" });
   const base = "http://127.0.0.1:" + PORT + "/" + rel + "/";
@@ -277,6 +425,7 @@ async function main() {
   let next = 0;
   const worker = async () => { while (next < files.length) { const f = files[next++]; try { results.push(await drive(browser, f, base)); } catch (e) { results.push({ file: f, ok: false, errors: ["driver: " + e.message.split("\n")[0]].concat(e.pageErrors || []), secs: 0 }); } } };
   await Promise.all(Array.from({ length: Math.min(PAR, files.length) }, worker));
+  const extra = ONLY ? [] : await extras(browser, base).catch((e) => [{ what: "extras", ok: false, note: e.message.split("\n")[0], errs: [] }]);
   await browser.close(); server.kill();
   results.sort((a, b) => files.indexOf(a.file) - files.indexOf(b.file));
   let bad = 0;
@@ -284,6 +433,11 @@ async function main() {
     if (!r.ok) bad++;
     console.log("  " + (r.ok ? "ok  " : "FAIL") + " " + r.file.padEnd(28) + (r.steps ? r.got + "/" + r.steps + " stickers  " + r.pct + "  " : "") + r.secs + "s" + (r.overflow && r.overflow.length ? "  overflow at steps " + r.overflow.join(",") : ""));
     for (const e of r.errors || []) console.log("       " + e);
+  }
+  for (const x of extra) {
+    if (!x.ok) bad++;
+    console.log("  " + (x.ok ? "ok  " : "FAIL") + " " + x.what.padEnd(28) + x.note);
+    for (const e of x.errs || []) console.log("       pageerror: " + e);
   }
   if (TRACE) {
     const sentences = new Set(); let calls = 0, covered = 0;
@@ -296,7 +450,7 @@ async function main() {
     fs.writeFileSync(TRACE, JSON.stringify({ width: WIDTH, lines: calls, recorded: covered, byLesson, sentences: [...sentences].sort() }, null, 1) + "\n");
     console.log("\n  narration: " + calls + " spoken lines, " + covered + " (" + (calls ? Math.round(covered * 100 / calls) : 0) + "%) fully recorded; " + sentences.size + " distinct sentences -> " + TRACE);
   }
-  console.log(bad ? "\n  " + bad + " lesson(s) did not finish clean\n" : "\n  every lesson ended at 100% with every sticker, no console errors" + (WIDTH <= 480 ? ", no horizontal overflow" : "") + "\n");
+  console.log(bad ? "\n  " + bad + " lesson(s) or check(s) did not finish clean\n" : "\n  every lesson ended at 100% with every sticker, no console errors" + (WIDTH <= 480 ? ", no horizontal overflow" : "") + (KEYBOARD ? "; the marks were played by keyboard" : "; the marks were drawn with the mouse") + "\n");
   process.exitCode = bad ? 1 : 0;
 }
 main().catch((e) => { console.error(e); process.exitCode = 2; });

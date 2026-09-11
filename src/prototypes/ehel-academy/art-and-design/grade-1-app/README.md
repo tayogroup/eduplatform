@@ -39,7 +39,8 @@ eleven framework files.
 K=../lesson-kit
 python $K/build-lessons.py --app .      # every lesson in app.config.json; refuses on a bad code or relationship
 python $K/build-lessons.py --app . 3    # just lesson 3
-python $K/build-hub.py --app .          # after the lessons
+python $K/build-check.py --app .        # the starting check, from ../data/placement/grade-1.json
+python $K/build-hub.py --app .          # after the lessons and the check
 
 T=../../mathematics/lesson-app-tools
 python $T/wire-navigation.py        --app .
@@ -56,6 +57,7 @@ node   $K/drive-lessons.mjs  --app . --trace t.json   # what the pages actually 
 node   $K/narrate.mjs        --app . --trace t.json --dry   # characters first: ElevenLabs bills per character
 node   $K/narrate.mjs        --app . --trace t.json         # record only what is missing
 node   $K/build-lectures.mjs --app .                  # then rebuild the pages so the lecture step picks it up
+node   $K/build-lectures.mjs --app . --only our-gallery   # just one lesson's video; the others keep their names
 node   $K/check-narration.mjs --app . --trace t.json  # the narration gate
 node   $K/deploy-media.mjs   --app . --upload         # MEDIA FIRST
 node   $T/deploy.mjs                --app .    # then the pages; plan only without --upload
@@ -177,6 +179,58 @@ What the gates do NOT establish: that the teaching is right, well pitched, or
 free of error. The quiz keys, the sort verdicts and the explainers were
 authored, not computed. Nothing here has had a human reading.
 
+## The validation fixes, 2026-09-11
+
+Five findings of the Grade 1 validation (report v1.1, areas 6, 10, 11, 15, 17,
+20 and 24) that could be fixed from here, all in the kit or the content, all
+held by `check-coverage.py` so an edit cannot quietly undo one.
+
+- **A keyboard and switch route through the canvas (area 15).** Every marks
+  round has **Choose the mark**: three drawn marks, focus moves to them, and
+  the right one is drawn onto the paper and judged by the SAME check a
+  finger's stroke meets. A wrong pick says which mark it was and leaves the
+  round open. The free round has five stamp buttons. The paper says how many
+  marks are on it to a screen reader. Four lessons have a marks step (1, 4, 6
+  and 7); the phone-width drive plays all four by keyboard alone.
+- **A good place to stop (area 17).** At the end of the journal a card
+  offers **Stop for today** (back to the hub, with the next step kept as the
+  place to resume) or **Keep going**. The hub's cards say "two sittings", and
+  the grown-up notes say where the break is and how long each half runs. It
+  is inside the journal step, not a step of its own: step ids are positional.
+  The lecture estimate fell from 4 minutes to 2 (the videos run about a
+  minute), so the grade is about 330 minutes, not 350.
+- **A starting check (area 11).** `starting-check.html`, the card before
+  Lesson 1 on the hub: twelve picture questions in three sections (colours and
+  shapes; lines, marks and touch; making and looking), in the placement-exam
+  file shape the other subjects use (`../data/placement/grade-1.json`), banded
+  by `shell/placement.js`'s own rule, with the lessons to do with a grown-up
+  close by linked from the result. **It is not reported to the school.** It is
+  not a lesson, earns no unit, and keeps its result on the device, where the
+  hub's card reads it. Reporting it would need a unit the course does not
+  have; that is a decision, not a missing line.
+- **Reasoning questions (areas 6 and 10).** Every quiz swaps two recall
+  questions for two WHY questions ("Why use a split pin for a wheel, not
+  glue?"), still eight each. Lesson 8 also lost the three questions that
+  repeated others, and its lecture and its four "what artists do" cards were
+  cut into short sentences: the lecture now averages 6.4 words a sentence,
+  below Lesson 2's 7.0. Its video was rebuilt from the new recording.
+- **Where the art comes from, and a sheet for home (areas 20 and 24).** The
+  grown-up notes of every lesson that draws art from another time or place
+  now say which tradition the picture is drawn in the manner of — the painted
+  caves of Lascaux, Chauvet, the Cueva de las Manos and Sulawesi; kente cloth
+  of the Asante and Ewe weavers of Ghana; baskets from every continent; the
+  carved face masks of West and Central Africa; azulejos and Iznik tiles; and
+  Western Desert dot painting from Papunya — and why the page responds rather
+  than copies. Keyed by the scene a step draws (`TRADITIONS` in
+  `build-hub.py`), so a lesson gets the note exactly when it shows the
+  picture. The **Make it at home** step prints one A4 sheet per lesson: what
+  to get, what to do, what to look for, a box to stick the result in.
+
+Found on the way, and fixed: chalk was drawn in a colour the paper nearly
+matched (contrast about 1.07); a big zigzag passed as a circle; the dots round
+could never score; and the tone-ladder and order answer keys on the hub
+printed a literal `&rarr;`.
+
 ## Things that will bite
 
 - **`lib/deck.js` is stored UNWIRED, and that is load-bearing.** The shared
@@ -206,6 +260,21 @@ authored, not computed. Nothing here has had a human reading.
   `--prune` only alongside `--trace` and the templates, or a clip reachable
   only by a button the run never pressed goes with them (it happened: eight
   lecture titles).
+- **A page reads `media/tts/index.<sha10>.json`, never `index.json`.** The
+  edge does not refresh a path when storage is overwritten, and it caches each
+  compressed variant separately. After the 2026-09-11 re-upload a plain
+  request read back the new index while the zstd copy a browser receives was
+  still the morning's, so every newly recorded line went to the live voice.
+  `narrate.mjs` writes the content-named copy beside `index.json`, the
+  builders point every page at it (and refuse if it is missing or differs),
+  `deploy-media.mjs` ships it with the indexes last, and `check-narration.mjs`
+  fails a page that names any other. To see what a browser gets, ask with
+  `Accept-Encoding: gzip, deflate, br, zstd` — a bare `curl` asks for a
+  different cache entry.
+- **A page with one slide gets a hidden last slide.** The deck paints its
+  sticker shelf on the last slide, so the starting check, alone, said "Every
+  sticker! You finished the whole lesson." at load. Heard live, not caught by
+  a gate; now checked by loading the page and reading its narration log.
 - **Playwright's Chromium cannot play the videos** (no H.264/AAC), so the
   driver presses *I watched it* and ignores the aborted request; playback is
   checked in Edge.
@@ -284,6 +353,40 @@ the staged files and their hashes, are in [GO-LIVE.md](GO-LIVE.md).
   caught, thirteen distinct lines, every file restored byte-identical.
 - Deployed: 2,240 media files (78.7 MB) read back identical from storage, then
   the 9 pages, then booted live.
+
+## Verification of the fixes, 2026-09-11
+
+- `check-lessons.py`, `check-coverage.py` (78 relationships, 8 pages' keyboard
+  marks, 6 tradition notes placed 12 times, the starting check's keys, links
+  and bands) and `check-narration.mjs` all exit 0.
+- Every lesson driven to 100% with every sticker at 1100px (marks drawn with
+  the mouse) and at 375px (marks played by keyboard alone, a wrong pick first),
+  no console errors beyond the five platform 404s, no overflow at 375px. The
+  same runs checked Stop for today (it leaves for the hub and reports the next
+  step as the place to resume), printed all eight make-at-home sheets to PDF
+  (each prints alone, on two A4 pages, the lesson hidden), and answered the
+  starting check all right (Ready) and all wrong (not ready, six review links,
+  shown on the hub's card), with no overflow at 375px.
+- Narration: 154 new sentences recorded (5,138 characters: the new questions,
+  Lesson 8's new wording, the keyboard route's lines, the starting check, and
+  thirteen reaction lines never recorded before); 55 clips of replaced wording
+  pruned; 1,709 of 1,709 spoken lines played from recordings. The new Lesson 8
+  video plays with captions in Microsoft Edge 152; the other seven kept their
+  names.
+- `check-coverage.py` mutation-tested 33 ways, 11 of them new (a journal with
+  no stop card, a home sheet that does not know its lesson, a circle check that
+  lets a zigzag through, a keyboard wave too flat, a tradition note missing
+  from the hub, a starting check out of step with its file, keyed to no option,
+  linking a lesson that is not there, with a critical section that no longer
+  bites, dropped from the upload, or unlinked from the hub) — 33 caught, every
+  file restored byte-identical and checked against a separate copy.
+  `check-narration.mjs`: 15 of 15, two of them new (a page reading a stale
+  index, the named index missing).
+- Found at deploy, by listening to the live pages rather than trusting the
+  upload: the edge was serving browsers a stale narration index, and the
+  starting check announced a finished lesson at load. Both fixed, redeployed,
+  and re-checked live: Lesson 8's new wording and the starting check's
+  questions now play from recordings, and the check is silent until Start.
 
 ## What was deliberately not done
 

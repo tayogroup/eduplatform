@@ -711,7 +711,8 @@ def build(n, fname, lesson, codes, js, css, voice, deck, art, finder, everything
 def main():
     wanted = [int(a) for a in sys.argv[1:] if a.isdigit()]
     codes = stage_codes()
-    art = read("art.js")
+    from _kit import narration_index
+    art = narration_index(APP, read("art.js"))
     js = {"scenes": js_keys(art, "SCENES"), "sounds": js_keys(art, "BANK", indent="    "),
           "checks": js_keys(art, "CHECKS"), "tools": js_keys(art, "TOOLS")}
     if not all(js.values()):

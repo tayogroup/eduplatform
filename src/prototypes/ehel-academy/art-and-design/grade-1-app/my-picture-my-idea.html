@@ -472,6 +472,16 @@
   .toolbtn:disabled { opacity: 0.55; cursor: default; }
   .canvasbox { max-width: 520px; background: #FFFDF6; }
   .canvas { touch-action: none; cursor: crosshair; user-select: none; -webkit-user-select: none; }
+  /* the keyboard and switch route: pick the mark, or stamp one on */
+  .kbnote { margin: 0; text-align: center; color: var(--muted); font-size: 15px; }
+  .markopts { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; }
+  .markopts[hidden] { display: none; }
+  .markopts .phase { width: 100%; text-align: center; margin: 0; }
+  .markopt { width: 120px; padding: 6px; border-radius: 16px; border: 3px solid var(--line); background: var(--card); cursor: pointer; }
+  .markopt svg { display: block; width: 100%; height: auto; }
+  .markopt:hover { border-color: var(--gold); }
+  .markopt.wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake 360ms ease; }
+  .stamps .markopt { width: 92px; }
 
   /* the pattern row and its palette */
   .patternrow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; min-height: 62px; width: 100%; max-width: 560px;
@@ -508,7 +518,7 @@
 
   @keyframes pop { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   @media (prefers-reduced-motion: reduce) {
-    .sortnow.shake, .tapcard.wrong, .ptile.new, .bowl.swirl .paint, .cpic.big .applied { animation: none; }
+    .sortnow.shake, .tapcard.wrong, .markopt.wrong, .ptile.new, .bowl.swirl .paint, .cpic.big .applied { animation: none; }
   }
 
   /* ==================================================================
@@ -645,6 +655,68 @@
   .gloxeg { margin: 4px 0 0; font-size: 15px; line-height: 1.5; font-style: italic; }
   .gloxq { width: 100%; padding: 13px 16px; border-radius: 14px; border: 3px solid var(--teal); background: var(--card); color: var(--ink); font-family: inherit; font-size: 19px; margin-bottom: 12px; }
   .gloxmore { color: var(--muted); font-size: 14px; text-align: center; }
+
+  /* ---- a good place to stop: the card at the end of the journal ---- */
+  .pausecard { width: 100%; max-width: 560px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px;
+    padding: 16px 18px; border-radius: 20px; border: 3px solid var(--teal); background: var(--teal-soft); }
+  .pausecard > .cpic { font-size: 40px; line-height: 1; }
+  .pausecard .pc-text { flex: 1 1 240px; display: flex; flex-direction: column; gap: 4px; }
+  .pausecard .pc-text .phase, .pausecard .pc-text .sub { margin: 0; text-align: left; max-width: none; }
+  .pausecard .pc-text b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 18px; }
+  .pausecard .bigbtns { width: 100%; justify-content: center; }
+
+  /* ---- the make-at-home sheet: invisible on screen, alone on paper ---- */
+  #printsheet { display: none; }
+  @media print {
+    @page { size: A4 portrait; margin: 14mm; }
+    body.printing-home { background: #fff !important; color: #000 !important; }
+    body.printing-home > *:not(#printsheet) { display: none !important; }
+    body.printing-home #printsheet { display: block; color: #000; background: #fff;
+      font: 12pt/1.45 "Atkinson Hyperlegible", Arial, sans-serif; }
+    #printsheet h1 { font: 800 20pt/1.2 "Inter", Arial, sans-serif; margin: 2pt 0 4pt; color: #000; }
+    #printsheet h2 { font: 800 14pt/1.25 "Inter", Arial, sans-serif; margin: 0 0 4pt; color: #000; }
+    #printsheet p { margin: 0 0 4pt; }
+    #printsheet ol { margin: 0 0 4pt; padding-left: 18pt; }
+    .ps-eyebrow { font-size: 9.5pt; letter-spacing: .06em; text-transform: uppercase; }
+    .ps-tip { font-style: italic; }
+    .ps-name span, .ps-done span { display: inline-block; width: 60mm; border-bottom: 1pt solid #000; }
+    .ps-head { margin-bottom: 8pt; }
+    .ps-proj { break-inside: avoid; border: 1.5pt solid #000; border-radius: 8pt; padding: 8pt 12pt; margin: 0 0 9pt; }
+    .ps-box { height: 38mm; border: 1pt dashed #555; border-radius: 6pt; margin: 6pt 0; display: flex; align-items: flex-end;
+      justify-content: flex-end; padding: 4pt 6pt; color: #555; font-size: 9pt; }
+  }
+
+  /* ---- the starting check (starting-check.html) ---- */
+  body.single .foot, body.single .dots, body.single .slide-head .n { display: none; }
+  .qbook { display: block; color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2px; }
+  .rc-intro, .rc-report { width: 100%; max-width: 620px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+  .rc-intro > .cpic { font-size: 56px; line-height: 1; }
+  .rc-bits { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0; }
+  .rc-bits span { padding: 5px 12px; border-radius: 999px; background: var(--cell); border: 1px solid var(--line); font-weight: 700; font-size: 14px; }
+  .rc-last { margin: 0; color: var(--muted); }
+  .rc-opts { gap: 12px; }
+  .rc-opt { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 170px; min-height: 150px; padding: 12px 10px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; line-height: 1.25; }
+  .rc-opt .rc-pic { font-size: 44px; line-height: 1.1; min-height: 64px; display: grid; place-items: center; }
+  .rc-opt .rc-pic svg { width: 130px; height: auto; display: block; }
+  .rc-opt.right { border-color: var(--good); background: var(--good-soft); }
+  .rc-opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .rc-opt:disabled { cursor: default; }
+  .rc-band { margin: 0; padding: 8px 18px; border-radius: 999px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px;
+    background: var(--teal-soft); color: var(--ink); border: 3px solid var(--teal); }
+  .rc-band.ready { border-color: var(--good); background: var(--good-soft); }
+  .rc-band.notReady { border-color: var(--accent); background: var(--accent-soft); }
+  .rc-secs { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+  .rc-sec { display: grid; grid-template-columns: minmax(120px, 1fr) 2fr auto; gap: 10px; align-items: center; text-align: left; font-weight: 700; }
+  .rc-bar { height: 12px; border-radius: 999px; background: var(--line); overflow: hidden; }
+  .rc-bar i { display: block; height: 100%; background: var(--teal); border-radius: 999px; }
+  .rc-pct { color: var(--muted); font-size: 14px; white-space: nowrap; }
+  .rc-h { margin: 8px 0 0; font-size: 16px; color: var(--teal); }
+  .rc-rev { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .rc-rev a { color: var(--ink); font-weight: 800; }
+  a.big { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -1909,7 +1981,8 @@
             "try charcoal for a storm",
             "stick on more wool",
             "keep it just as it is"
-          ]
+          ],
+          "pause": true
         }
       },
       {
@@ -2105,7 +2178,10 @@
               "look": "Can someone tell it is windy just by looking?",
               "n": 3
             }
-          ]
+          ],
+          "lesson": "My Picture, My Idea",
+          "lessonNo": 7,
+          "gradeLabel": "Grade 1"
         }
       },
       {
@@ -2199,42 +2275,42 @@
               "why": "Show what the wind does."
             },
             {
-              "ask": "What does sand do to paint?",
+              "ask": "Why add sand to the paint for a beach picture?",
               "pic": "<div class=\"askpic\" aria-hidden=\"true\">🏖️</div>",
               "opts": [
                 {
-                  "t": "makes it rough",
+                  "t": "because sand makes it rough, like a real beach",
                   "ok": true
                 },
                 {
-                  "t": "makes it shiny",
+                  "t": "because sand makes it shiny",
                   "ok": false
                 },
                 {
-                  "t": "makes it runny",
+                  "t": "because sand is yellow paint",
                   "ok": false
                 }
               ],
-              "why": "Sand makes paint rough to touch."
+              "why": "Sand makes the paint rough. A real beach is rough and gritty."
             },
             {
-              "ask": "Trying something new in your art is…",
+              "ask": "Why is it good to try something new in your art?",
               "pic": "<div class=\"askpic\" aria-hidden=\"true\">🧪</div>",
               "opts": [
                 {
-                  "t": "brave, and how you find things out",
+                  "t": "because trying is how you find out what works",
                   "ok": true
                 },
                 {
-                  "t": "not allowed",
+                  "t": "because it is always perfect",
                   "ok": false
                 },
                 {
-                  "t": "a waste of paint",
+                  "t": "because it is quick",
                   "ok": false
                 }
               ],
-              "why": "Trying is how artists learn."
+              "why": "You do not know what will happen until you try. Trying is how artists find out."
             },
             {
               "ask": "Amal stuck wool on her picture. Why?",
@@ -4062,13 +4138,21 @@
   }
   /* NARRATION-TEXT-END */
 
+  /* THE INDEX A PAGE READS IS NAMED FOR ITS CONTENT. The builders replace
+     this line with index.<sha10>.json, a copy narrate.mjs writes beside
+     index.json. A fixed name is read once and kept: the edge does not refresh
+     when storage is overwritten, and it caches each compressed variant on its
+     own - on 2026-09-11 the zstd copy a browser receives was still the
+     morning's after a re-upload, so every newly recorded line went to the live
+     voice while a plain request read back correct. A new name is a new URL. */
+  const NARRATION_INDEX = "index.7f75e3ba86.json";
   const NARRATION = (function () {
     const BASE = "media/tts/";
     const el = typeof Audio === "function" ? new Audio() : null;
     let have = null, queue = [], after = [], playing = false, token = 0, line = null;
     const log = window.__artNarrationLog = window.__artNarrationLog || [];
     try {
-      fetch(BASE + "index.json").then((r) => (r.ok ? r.json() : null))
+      fetch(BASE + NARRATION_INDEX).then((r) => (r.ok ? r.json() : null))
         .then((j) => { if (j && Array.isArray(j.clips)) have = new Set(j.clips); })
         .catch(() => { /* no recordings: every line goes to the voice engine */ });
     } catch (_) { /* no fetch: the same */ }
@@ -4703,7 +4787,10 @@
     zigzag: (f) => f.len > 90 && f.sharp >= 3,
     long: (f) => f.len > 220,
     short: (f) => f.len > 4 && f.len < 60,
-    round: (f) => f.len > 90 && f.straightness < 0.35 && f.turning > 250,
+    /* sharp <= 2: without it a big zigzag passed as a circle - it turns
+       819 degrees and ends far from nowhere in particular (measured on the
+       keyboard route's own zigzag, 2026-09-11) */
+    round: (f) => f.len > 90 && f.straightness < 0.35 && f.turning > 250 && f.sharp <= 2,
     dots: (f) => f.dots >= 6,
     thick: (f) => f.len > 40 && f.width >= 10,
     thin: (f) => f.len > 40 && f.width <= 4,
@@ -4723,7 +4810,11 @@
     pencil: { label: "Pencil", pic: "\u{270F}\u{FE0F}", colour: "#3B3B3B", width: 3, cap: "round", sound: "click" },
     brush: { label: "Brush", pic: "\u{1F58C}\u{FE0F}", colour: "#E0312B", width: 14, cap: "round", sound: "swish" },
     sponge: { label: "Sponge", pic: "\u{1F9FD}", colour: "#F6C700", width: 22, cap: "round", dashed: "1 30", sound: "dab" },
-    chalk: { label: "Chalk", pic: "\u{1F9F1}", colour: "#F7F1E3", width: 7, cap: "butt", dashed: "3 3", sound: "rustle" },
+    /* CHALK IS A COLOURED CHALK, not white. It was #F7F1E3 on paper that is
+       #FFFDF6 - a contrast of about 1.07, so the lesson's chalk marks were
+       drawn and could not be seen (found while drawing the mark previews for
+       the keyboard route, 2026-09-11). */
+    chalk: { label: "Chalk", pic: "\u{1F9F1}", colour: "#C2417A", width: 7, cap: "butt", dashed: "3 3", sound: "rustle" },
     finger: { label: "Finger", pic: "\u{1F446}", colour: "#7B3FA0", width: 18, cap: "round", sound: "squelch" },
     crayon: { label: "Crayon", pic: "\u{1F58D}\u{FE0F}", colour: "#2D6CDF", width: 8, cap: "round", sound: "rustle" },
   };
@@ -4753,6 +4844,55 @@
     }
     return { len, chord, straightness: len ? chord / len : 1, turning, sharp, reversals, width: TOOLS[tool].width, dots: session.dots };
   }
+  /* THE KEYBOARD AND SWITCH ROUTE (validation area 15, 2026-09-11). The
+     paper is a pointer surface, so a child who cannot drag - a switch user,
+     a keyboard user, a child whose hands are not ready yet - had no way
+     through the marks step at all. Every mark the step can ask for is also
+     a shape this function can draw, and the shapes are judged by the SAME
+     CHECKS a hand-drawn stroke is: check-coverage runs every one of them
+     through strokeFeatures, so a check tightened later cannot quietly make
+     the keyboard route impossible. The child still has to KNOW the mark -
+     they pick it out of three - so this is a different way to show the
+     same thing, not a way round it. */
+  const MARK_NAME = {
+    straight: "a straight line", wavy: "a wavy line", zigzag: "a zigzag", long: "a long line", short: "a short mark",
+    round: "a circle", dots: "dots", thick: "a thick line", thin: "a thin line",
+  };
+  const MARK_RIVALS = {
+    straight: ["wavy", "zigzag"], wavy: ["straight", "zigzag"], zigzag: ["wavy", "round"], round: ["zigzag", "dots"],
+    dots: ["straight", "round"], long: ["short", "dots"], short: ["long", "wavy"], thick: ["thin"], thin: ["thick"],
+  };
+  function markPts(want, dy) {
+    dy = dy || 0;
+    const line = (x0, y0, x1, y1) => {
+      const n = Math.max(2, Math.round(Math.hypot(x1 - x0, y1 - y0) / 3)), out = [];
+      for (let i = 0; i <= n; i++) out.push({ x: Math.round(x0 + (x1 - x0) * i / n), y: Math.round(y0 + dy + (y1 - y0) * i / n) });
+      return out;
+    };
+    const pts = [];
+    if (want === "straight") return [line(50, 110, 270, 110)];
+    if (want === "long") return [line(20, 110, 300, 110)];
+    if (want === "short") return [line(140, 110, 180, 110)];
+    if (want === "thick" || want === "thin") return [line(60, 110, 260, 110)];
+    if (want === "wavy") { for (let x = 30; x <= 290; x += 3) pts.push({ x, y: Math.round(110 + dy + 32 * Math.sin((x - 30) / 26)) }); return [pts]; }
+    if (want === "zigzag") {
+      const c = [[30, 165], [70, 55], [110, 165], [150, 55], [190, 165], [230, 55], [270, 165]];
+      for (let i = 1; i < c.length; i++) pts.push(...line(c[i - 1][0], c[i - 1][1], c[i][0], c[i][1]).slice(i > 1 ? 1 : 0));
+      return [pts.map((p) => ({ x: p.x, y: p.y }))];
+    }
+    if (want === "round") { for (let a = 0; a <= 372; a += 4) pts.push({ x: Math.round(160 + 62 * Math.cos(a * Math.PI / 180)), y: Math.round(110 + dy + 62 * Math.sin(a * Math.PI / 180)) }); return [pts]; }
+    if (want === "dots") return [0, 1, 2, 3, 4, 5].map((i) => [{ x: 60 + 40 * i, y: 110 + dy + (i % 2 ? -22 : 22) }]);
+    return [];
+  }
+  /* the little picture of a mark on its choice button */
+  function markPreview(want, tool) {
+    const t = TOOLS[tool] || TOOLS.pencil;
+    const w = want === "thin" ? 3 : want === "thick" ? 16 : Math.min(t.width, 9);
+    const paths = markPts(want).map((pts) => pts.length === 1
+      ? '<circle cx="' + pts[0].x + '" cy="' + pts[0].y + '" r="' + Math.max(6, w) + '" fill="' + t.colour + '"/>'
+      : '<path d="M' + pts.map((p) => p.x + " " + p.y).join(" L") + '" fill="none" stroke="' + t.colour + '" stroke-width="' + w + '" stroke-linecap="round" stroke-linejoin="round"/>');
+    return '<svg viewBox="0 0 320 220" aria-hidden="true"><rect width="320" height="220" rx="14" fill="#FFFDF6"/>' + paths.join("") + "</svg>";
+  }
   function markMaker(o) {
     const el = o.el, rounds = o.rounds, tools = o.tools;
     let r = 0, tool = tools[0], strokes = [], live = null, lock = false, score = 0, missed = false;
@@ -4764,17 +4904,28 @@
       const d = s.pts.length === 1 ? "M" + s.pts[0].x + " " + s.pts[0].y + " l0.1 0" : "M" + s.pts.map((p) => p.x + " " + p.y).join(" L");
       return '<path d="' + d + '" fill="none" stroke="' + t.colour + '" stroke-width="' + t.width + '" stroke-linecap="' + t.cap + '" stroke-linejoin="round"' + (t.dashed ? ' stroke-dasharray="' + t.dashed + '"' : "") + ' opacity="0.92"/>';
     }
+    const STAMPS = ["straight", "wavy", "zigzag", "round", "dots"];
+    let opened = false, choices = [];
+    const paperLabel = () => "Your paper, " + (strokes.length ? "with " + strokes.length + (strokes.length === 1 ? " mark" : " marks") + " on it" : "empty");
+    const labelPaper = () => { const s = $(svgId); if (s) s.setAttribute("aria-label", paperLabel()); };
     function canvasSvg() {
-      return '<svg viewBox="0 0 320 220" class="canvas" id="' + svgId + '" role="img" aria-label="Your paper"><rect width="320" height="220" fill="#FFFDF6"/>' + strokes.map(strokeSvg).join("") + "</svg>";
+      return '<svg viewBox="0 0 320 220" class="canvas" id="' + svgId + '" role="img" aria-label="' + paperLabel() + '" aria-describedby="' + el.stage + 'kb"><rect width="320" height="220" fill="#FFFDF6"/>' + strokes.map(strokeSvg).join("") + "</svg>";
     }
     function draw() {
       const rd = rounds[r];
       $(el.stage).innerHTML = '<div class="stagewide">' +
         (free() ? '<div class="wantcard"><span class="cpic" aria-hidden="true">\u{1F3A8}</span><div><p class="phase">Your turn</p><b>Draw anything you like, with any tool.</b></div></div>'
           : '<div class="wantcard"><span class="cpic" aria-hidden="true">' + small(rd.pic || "\u270F\uFE0F") + '</span><div><p class="phase">With the ' + esc(TOOLS[rd.tool].label.toLowerCase()) + "</p><b>" + esc(rd.ask) + "</b></div></div>") +
-        '<div class="toolrow">' + tools.map((t) => '<button type="button" class="toolbtn' + (tool === t ? " on" : "") + '" data-t="' + t + '"><span class="cpic" aria-hidden="true">' + TOOLS[t].pic + "</span>" + esc(TOOLS[t].label) + "</button>").join("") + "</div>" +
+        '<div class="toolrow">' + tools.map((t) => '<button type="button" class="toolbtn' + (tool === t ? " on" : "") + '" data-t="' + t + '" aria-pressed="' + (tool === t) + '"><span class="cpic" aria-hidden="true">' + TOOLS[t].pic + "</span>" + esc(TOOLS[t].label) + "</button>").join("") + "</div>" +
         '<div class="sim canvasbox">' + canvasSvg() + "</div>" +
-        '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.stage + 'clear">Clean paper</button>' +
+        '<p class="kbnote" id="' + el.stage + 'kb">' + (free() ? "Draw on the paper with a finger or the mouse, or add a mark with the buttons." : "Draw on the paper with a finger or the mouse, or press Choose the mark.") + "</p>" +
+        (free()
+          ? '<div class="markopts stamps" role="group" aria-label="Add a mark"><span class="phase">Add a mark</span>' + STAMPS.map((w) => '<button type="button" class="markopt" data-stamp="' + w + '" aria-label="Add ' + MARK_NAME[w] + '">' + markPreview(w, tool) + "</button>").join("") + "</div>"
+          : '<div class="markopts" id="' + el.stage + 'opts" role="group" aria-label="Which one is ' + MARK_NAME[rd.want] + '?"' + (opened ? "" : " hidden") + ">" +
+            choices.map((w) => '<button type="button" class="markopt" data-w="' + w + '" aria-label="' + cap1(MARK_NAME[w]) + '">' + markPreview(w, rd.tool) + "</button>").join("") + "</div>") +
+        '<div class="bigbtns">' +
+        (free() ? "" : '<button type="button" class="big small teal" data-alt="1" aria-expanded="' + opened + '" aria-controls="' + el.stage + 'opts">&#9000; Choose the mark</button>') +
+        '<button type="button" class="big small ghost" id="' + el.stage + 'clear">Clean paper</button>' +
         (free() ? '<button type="button" class="big small" id="' + el.stage + 'stick"' + (strokes.length ? "" : " disabled") + ">Stick it in my journal &#10003;</button>" : "") + "</div></div>";
       $(el.score).textContent = free() ? strokes.length + " marks" : "Mark " + (r + 1) + " of " + rounds.length;
       $(el.stage + "clear").addEventListener("click", () => { strokes = []; session.dots = 0; draw(); });
@@ -4829,9 +4980,35 @@
       svg.addEventListener("pointerup", up);
       svg.addEventListener("pointercancel", up);
     }
+    /* draw a list of strokes onto the paper a few points at a time, the way
+       a hand would, then hand the LAST one back to be judged. Every earlier
+       stroke is laid down as if drawn (a dot counts as a dot), which is what
+       makes "dots" - six strokes - one answer rather than six. Timers, not
+       animation frames, so a hidden tab still finishes; instant under
+       reduced motion. */
+    function animate(list, toolName, then) {
+      const svg = $(svgId);
+      const quick = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let k = 0;
+      function next() {
+        const pts = list[k++], s = { tool: toolName, pts: [pts[0]] };
+        const p = pathEl(s); p.setAttribute("d", pathD(s.pts)); svg.appendChild(p);
+        SOUND.play(TOOLS[toolName].sound, 0.3);
+        let i = 1;
+        (function grow() {
+          if (i < pts.length) { i = quick ? pts.length : Math.min(pts.length, i + 6); s.pts = pts.slice(0, i); p.setAttribute("d", pathD(s.pts)); setTimeout(grow, 16); return; }
+          if (k >= list.length) { then(s); return; }
+          strokes.push(s);
+          if (strokeFeatures(s.pts, toolName, session).len < 14) session.dots++;
+          setTimeout(next, quick ? 0 : 140);
+        })();
+      }
+      next();
+    }
     function judge(s) {
       const f = strokeFeatures(s.pts, s.tool, session);
       if (f.len < 14) session.dots++;
+      labelPaper();
       $(el.score).textContent = (free() ? strokes.length + " marks" : "Mark " + (r + 1) + " of " + rounds.length);
       if (free()) { $(el.stage + "stick").disabled = false; return; }
       const rd = rounds[r];
@@ -4848,6 +5025,14 @@
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         r++; missed = false; session.dots = 0;
         setTimeout(() => { lock = false; strokes = []; startRound(); }, 3000);
+      } else if (rd.want === "dots" && f.len < 14) {
+        /* A DOT ON THE WAY TO SIX IS PROGRESS, NOT A MISS. Every dot before
+           the sixth used to fail the check and set `missed`, so the dots round
+           could never score for anyone - found writing the keyboard route,
+           which lays six dots down and had to decide what the first five
+           were. */
+        SOUND.play("pop", 0.2);
+        $(el.fb).className = "fb"; $(el.fb).textContent = "Tap, tap. " + Math.max(1, 6 - session.dots) + " more.";
       } else {
         missed = true; SOUND.play("pop", 0.2);
         const line = CHECK_HINT[rd.want] || "Not quite. Try again.";
@@ -4856,14 +5041,50 @@
     }
     function startRound() {
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
-      if (!free()) { tool = rounds[r].tool; }
+      if (!free()) { tool = rounds[r].tool; choices = shuffle([rounds[r].want].concat(MARK_RIVALS[rounds[r].want] || [])); }
+      opened = false;
       draw();
       if (free()) { $(el.ask).innerHTML = "Now draw <b>anything you like</b>. Then stick it in your journal."; sayHere(o.finish, "Now draw anything you like, with any tool. Then press Stick it in my journal."); }
       else { $(el.ask).innerHTML = "<b>" + esc(rounds[r].ask) + "</b> Use the " + esc(TOOLS[rounds[r].tool].label.toLowerCase()) + "."; sayHere(o.finish, rounds[r].ask + " Use the " + TOOLS[rounds[r].tool].label.toLowerCase() + ". Draw on the paper with your finger or the mouse."); }
     }
     $(el.stage).addEventListener("click", (e) => {
-      const b = e.target.closest(".toolbtn"); if (!b || lock) return;
-      tool = b.dataset.t; SOUND.play("click", 0.3); draw(); say(TOOLS[tool].label);
+      if (lock) return;
+      const b = e.target.closest(".toolbtn");
+      if (b) { tool = b.dataset.t; SOUND.play("click", 0.3); draw(); say(TOOLS[tool].label); return; }
+      const alt = e.target.closest("[data-alt]");
+      if (alt && !free()) {
+        opened = !opened;
+        $(el.stage + "opts").hidden = !opened; alt.setAttribute("aria-expanded", String(opened));
+        if (opened) {
+          SOUND.play("click", 0.3);
+          const first = $(el.stage + "opts").querySelector(".markopt"); if (first) first.focus();
+          say("Which one is " + MARK_NAME[rounds[r].want] + "? Tap it.");
+        }
+        return;
+      }
+      const pick = e.target.closest(".markopt[data-w]");
+      if (pick && !free()) {
+        const rd = rounds[r], w = pick.dataset.w;
+        if (w !== rd.want) {
+          missed = true; SOUND.play("error", 0.3); pick.classList.add("wrong");
+          setTimeout(() => pick.classList.remove("wrong"), 700);
+          const line = "That is " + MARK_NAME[w] + ". Look for " + MARK_NAME[rd.want] + ".";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          return;
+        }
+        lock = true; tool = rd.tool; strokes = []; session.dots = 0; opened = false; draw();
+        animate(markPts(rd.want), rd.tool, (s) => { strokes.push(s); lock = false; judge(s); });
+        return;
+      }
+      const stamp = e.target.closest(".markopt[data-stamp]");
+      if (stamp && free()) {
+        const w = stamp.dataset.stamp;
+        lock = true;
+        animate(markPts(w, rnd(-40, 40)), tool, (s) => {
+          strokes.push(s); lock = false; judge(s);
+          $(el.fb).className = "fb good"; $(el.fb).textContent = "You added " + MARK_NAME[w] + ".";
+        });
+      }
     });
     startRound();
   }
@@ -5229,6 +5450,41 @@
     start();
   }
 
+  /* ---- a good place to stop (validation area 17, 2026-09-11) -------------
+     A lesson here is forty minutes or more, and a five-year-old's sitting
+     is about twenty. The journal is where the making and the looking back
+     are done, so it is the natural half-way line, and it is offered there:
+     stop now, or keep going. It is drawn INSIDE the journal step rather than
+     as a step of its own on purpose - progress names every step by its
+     position (step-01, step-02...), so a new step would move every step
+     after it, the quiz's gradebook key included, under every record already
+     written. Stopping first moves the page on one step, so the place that is
+     kept is the next thing to do, not the journal just finished. */
+  function pauseCard(o) {
+    const el = o.el;
+    const box = document.createElement("div");
+    box.className = "pausecard";
+    box.setAttribute("role", "group");
+    box.setAttribute("aria-label", "A good place to stop");
+    box.innerHTML = '<span class="cpic" aria-hidden="true">\u{1F319}</span><div class="pc-text"><p class="phase">A good place to stop</p>' +
+      "<b>You made things and looked back at them. That is half the lesson.</b>" +
+      '<p class="sub">You can stop now and come back later. Your place is kept.</p></div>' +
+      '<div class="bigbtns"><button type="button" class="big small ghost" data-stop="1">Stop for today</button>' +
+      '<button type="button" class="big small" data-go="1">Keep going &#9654;</button></div>';
+    $(el.stage).appendChild(box);
+    box.addEventListener("click", (e) => {
+      if (e.target.closest("[data-go]")) { show(o.finish + 1, true); return; }
+      if (!e.target.closest("[data-stop]")) return;
+      const back = document.querySelector(".lesson-back");
+      if (back && back.href) { show(o.finish + 1, false); setTimeout(() => { location.href = back.href; }, 350); return; }
+      /* opened on its own, with no hub to go back to: the place kept is this
+         step, so the sentence says what to press when they come back */
+      box.querySelector(".bigbtns").innerHTML = '<p class="sub">Well done today. You can close this page now. When you come back, press Next to go on.</p>';
+      say("Well done today. You can close this page now. When you come back, press Next to go on.");
+    });
+    afterVoice(() => sayHere(o.finish, "This is a good place to stop. You can stop for today, or keep going."));
+  }
+
   /* ---- my journal: what I made, in order, and what I would change
      (R.01, TWA.03) ---------------------------------------------------------
      Reads the page's own journal - what this child actually made a few
@@ -5298,7 +5554,7 @@
       const sentence = "Next time I would " + b.dataset.ch + ".";
       sayLine(el, "You " + esc(en.text) + ". You said: <b>" + esc(sentence) + "</b> That is an artist looking back.", "You " + en.text + ". You said: " + sentence + " That is an artist looking back.");
       reportScore(o.finish, Math.max(0, orderable.length - wrong), Math.max(1, orderable.length));
-      setTimeout(() => endStep(o), 3400);
+      setTimeout(() => { endStep(o); if (o.pause) pauseCard(o); }, 3400);
     });
     draw();
     if (phase === "change") { $(el.ask).innerHTML = "Look at what you made. <b>Pick one</b>."; }
@@ -5690,6 +5946,36 @@
     drawShelf();
   }
 
+  /* ---- the make-at-home sheet, printed (validation area 24, 2026-09-11) --
+     The projects are for a table covered in newspaper, which is not where
+     the screen is. One A4 sheet per lesson: what to get, what to do, what to
+     look for, and a box to stick the result in, so the page can go on the
+     fridge and the making can happen away from the device. It prints the
+     page itself rather than opening a window - a pop-up is blocked more
+     often than not inside a school's launcher - by filling #printsheet and
+     letting @media print show that alone. break-inside: avoid is safe here
+     only because every project is far shorter than a page; the driver prints
+     all eight to PDF and counts pages to hold that. */
+  function printHomeSheet(o, items) {
+    let sheet = document.getElementById("printsheet");
+    if (!sheet) { sheet = document.createElement("div"); sheet.id = "printsheet"; document.body.appendChild(sheet); }
+    sheet.innerHTML =
+      '<header class="ps-head"><p class="ps-eyebrow">Ehel Academy &middot; ' + esc(o.gradeLabel || "") + " Art &amp; Design &middot; Lesson " + esc(o.lessonNo || "") + "</p>" +
+      "<h1>Make it at home: " + esc(o.lesson || "") + "</h1>" +
+      '<p class="ps-tip">Make one with a grown-up. Cover the table first and roll up your sleeves. Messy is fine.</p>' +
+      '<p class="ps-name">Name: <span></span></p></header>' +
+      items.map((it) => '<section class="ps-proj"><h2>' + esc(it.n) + ". " + esc(it.title) + "</h2>" +
+        '<p><b>You need:</b> ' + esc(it.materials) + "</p>" +
+        "<ol>" + (it.steps || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+        '<p><b>Look for:</b> ' + esc(it.look) + "</p>" +
+        '<div class="ps-box"><span>Stick it or draw it here</span></div>' +
+        '<p class="ps-done">&#9744; We made this &nbsp;&nbsp; Date: <span></span></p></section>').join("");
+    document.body.classList.add("printing-home");
+    const off = () => { document.body.classList.remove("printing-home"); window.removeEventListener("afterprint", off); };
+    window.addEventListener("afterprint", off);
+    try { window.print(); } catch (_) { off(); }
+  }
+
   /* ---- things to make at home: real projects, ticked when done ---- */
   function homeProjects(o) {
     const el = o.el;
@@ -5708,10 +5994,12 @@
         '<p class="act-check"><span>Look for</span>' + esc(it.look) + "</p>" +
         '<button type="button" class="tick" data-act="tick">' + (did[k] ? "✓ we made this" : "We made this") + "</button>" +
         "</div>").join("") + "</div>" +
-        '<div class="bigbtns"><button type="button" class="big small" id="' + id + 'fin">We made these &#10003;</button></div>';
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'print">&#128424; Print it for home</button>' +
+        '<button type="button" class="big small" id="' + id + 'fin">We made these &#10003;</button></div>';
       reportAttempt(o.finish, did.filter(Boolean).length, did.length, "projects");
       $(el.score).textContent = did.filter(Boolean).length + " of " + items.length + " ticked";
       $(id + "fin").addEventListener("click", () => { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); });
+      $(id + "print").addEventListener("click", () => printHomeSheet(o, items));
     }
     $(el.stage).addEventListener("click", (e) => {
       const card = e.target.closest(".act"), button = e.target.closest("[data-act]");
@@ -5812,6 +6100,128 @@
       }
     }
     drawShelf();
+  }
+
+  /* ---- the starting check (validation area 11, 2026-09-11) ----------------
+     The readiness check every other subject opens with, in its own file
+     shape (art-and-design/data/placement/grade-N.json - the shape
+     shell/placement.js reads), drawn by this kit because this subject has no
+     shell course to hang it on. Built into its own page, starting-check.html,
+     linked from the hub, and deliberately NOT a lesson: it is not in the
+     lesson list, so it earns no unit and reports nothing to the school's
+     gradebook. The result stays on this device (the hub shows it), which is
+     where the shell keeps a placement too until a teacher asks for it.
+     band() is shell/placement.js's own rule, line for line, so a score means
+     the same thing here as in Science. */
+  function readinessCheck(o) {
+    const el = o.el, exam = o.exam, lessons = o.lessons || {};
+    const qs = exam.questions.slice().sort((a, b) => a.sequence - b.sequence);
+    const split = (s) => String(s || "").split("|").map((x) => x.trim()).filter(Boolean);
+    const q = new URLSearchParams(location.search);
+    const KEY = "ehel-art-starting-check:" + (o.course || "") + ":" + (q.get("studentid") || "local");
+    let i = 0, answers = {}, lock = false;
+    const link = (file) => {
+      const p = new URLSearchParams(location.search);
+      p.set("from", o.from || "");
+      return file + "?" + p.toString();
+    };
+    function picOf(p) {
+      p = String(p || "").trim();
+      if (p.startsWith("mark:")) return markPreview(p.slice(5), "crayon");
+      if (p.startsWith("swatch:")) return swatchSvg(p.slice(7), 64);
+      return esc(p);
+    }
+    function band(percent, sectionScores) {
+      const banding = exam.banding || {};
+      const ready = banding.ready || {};
+      const review = banding.readyWithReview || {};
+      const criticalRule = banding.criticalSection;
+      const critical = criticalRule && sectionScores.find((item) => item.id === criticalRule.sectionId);
+      if (percent < (review.minOverallPercent ?? 50) || (critical && critical.percent <= (criticalRule.maxFailPercent ?? 40))) return "notReady";
+      if (percent >= (ready.minOverallPercent ?? 80) && sectionScores.every((item) => item.percent >= (ready.minSectionPercent ?? 60))) return "ready";
+      return "readyWithReview";
+    }
+    function results() {
+      let score = 0, total = 0;
+      const sectionScores = exam.sections.map((s) => {
+        const mine = qs.filter((x) => x.sectionId === s.sectionId);
+        const got = mine.filter((x) => answers[x.questionId] === x.correctAnswer).reduce((n, x) => n + (x.marks || 1), 0);
+        const of = mine.reduce((n, x) => n + (x.marks || 1), 0);
+        score += got; total += of;
+        return { id: s.sectionId, label: s.title, score: got, total: of, percent: of ? Math.round(got / of * 100) : 0, remediation: s.remediation || [] };
+      });
+      const percent = total ? Math.round(score / total * 100) : 0;
+      return { score, total, percent, sectionScores, band: band(percent, sectionScores) };
+    }
+    function stored() { try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch (_) { return null; } }
+    function intro() {
+      const last = stored();
+      $(el.ask).innerHTML = "Before Lesson 1: a short <b>starting check</b>. Tap the answer you think is right. It is never a fail.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="rc-intro"><span class="cpic" aria-hidden="true">\u{1F3A8}</span>' +
+        "<h3>" + esc(exam.shortTitle || exam.title) + "</h3><p class=\"sub\">" + esc(exam.description) + "</p>" +
+        '<p class="rc-bits"><span>' + qs.length + " questions</span><span>about " + esc(exam.estimatedMinutes) + " minutes</span><span>never a fail</span></p>" +
+        (last && exam.banding[last.band] ? '<p class="rc-last">Last time: <b>' + esc(exam.banding[last.band].label) + "</b> (" + esc(last.percent) + "%)</p>" : "") +
+        '<div class="bigbtns"><button type="button" class="big" id="' + el.stage + 'go">Start &#9654;</button></div></div>';
+      $(el.ch).innerHTML = ""; $(el.fb).textContent = ""; $(el.score).textContent = "";
+      $(el.stage + "go").addEventListener("click", () => { i = 0; answers = {}; ask(); });
+    }
+    function ask() {
+      lock = false;
+      const it = qs[i], sec = exam.sections.find((s) => s.sectionId === it.sectionId) || {};
+      const opts = split(it.options), pics = split(it.optionPics);
+      $(el.ask).innerHTML = '<span class="qbook">' + esc(sec.title || "") + "</span>" + esc(it.question);
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = it.pic ? '<div class="askpic" aria-hidden="true">' + esc(it.pic) + "</div>" : "";
+      $(el.ch).className = "choices rc-opts";
+      $(el.ch).innerHTML = shuffle(opts.map((t, k) => ({ t, p: pics[k] }))).map((x) =>
+        '<button type="button" class="rc-opt" data-t="' + esc(x.t) + '">' + (x.p ? '<span class="rc-pic" aria-hidden="true">' + picOf(x.p) + "</span>" : "") +
+        '<span class="rc-t">' + esc(x.t) + "</span></button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = "Question " + (i + 1) + " of " + qs.length;
+      sayHere(o.finish, it.question);
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".rc-opt"); if (!b || lock) return;
+      lock = true;
+      const it = qs[i], ok = b.dataset.t === it.correctAnswer;
+      answers[it.questionId] = b.dataset.t;
+      $(el.ch).querySelectorAll(".rc-opt").forEach((c) => { c.disabled = true; if (c.dataset.t === it.correctAnswer) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      SOUND.play(ok ? "tada" : "pop", ok ? 0.35 : 0.2);
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = (ok ? cheer() + " " : "") + it.explanation;
+      say((ok ? cheer() + " " : "") + it.explanation);
+      setTimeout(() => { i++; if (i < qs.length) ask(); else report(); }, 2800);
+    });
+    function report() {
+      const r = results();
+      const info = exam.banding[r.band] || {};
+      const minSec = (exam.banding.ready || {}).minSectionPercent ?? 60;
+      const weak = r.sectionScores.filter((s) => s.percent < minSec);
+      const review = weak.length ? weak : (r.band === "ready" ? [] : r.sectionScores.filter((s) => s.percent < ((exam.banding.ready || {}).minOverallPercent ?? 80)));
+      const first = lessons[1];
+      try { localStorage.setItem(KEY, JSON.stringify({ band: r.band, percent: r.percent, score: r.score, total: r.total, sections: r.sectionScores.map((s) => ({ id: s.id, percent: s.percent })), at: new Date().toISOString() })); } catch (_) { /* a private window: the report still shows */ }
+      $(el.ask).innerHTML = "Here is <b>where you start</b>.";
+      $(el.ch).innerHTML = ""; $(el.ch).className = "choices";
+      $(el.score).textContent = "";
+      $(el.stage).innerHTML = '<div class="rc-report">' +
+        '<p class="rc-band ' + esc(r.band) + '">' + esc(info.label || "") + "</p>" +
+        '<p class="lead">' + esc(info.message || "") + "</p>" +
+        '<p class="sub">You got ' + r.score + " of " + r.total + ".</p>" +
+        '<div class="rc-secs">' + r.sectionScores.map((s) => '<div class="rc-sec"><span class="rc-sname">' + esc(s.label) + "</span>" +
+          '<span class="rc-bar" aria-hidden="true"><i style="width:' + s.percent + '%"></i></span><span class="rc-pct">' + s.score + " of " + s.total + "</span></div>").join("") + "</div>" +
+        (review.length ? '<h3 class="rc-h">Do these with a grown-up close by</h3><ul class="rc-rev">' +
+          review.flatMap((s) => s.remediation).filter((m, k, a) => a.findIndex((x) => x.unit === m.unit) === k)
+            .map((m) => lessons[m.unit] ? '<li><a href="' + esc(link(lessons[m.unit].file)) + '">Lesson ' + m.unit + ": " + esc(lessons[m.unit].title) + "</a></li>" : "").join("") + "</ul>" : "") +
+        '<div class="bigbtns">' + (first ? '<a class="big" href="' + esc(link(first.file)) + '">Start Lesson 1 &#9654;</a>' : "") +
+        '<button type="button" class="big small ghost" id="' + el.stage + 'again">Try again</button></div></div>';
+      $(el.stage + "again").addEventListener("click", intro);
+      $(el.fb).className = "fb good"; $(el.fb).textContent = "";
+      say((info.label || "") + ". " + (info.message || ""));
+      finish(o.finish, "");
+    }
+    intro();
   }
 
   /* ---- the sticker shelf --------------------------------------------- */

@@ -244,7 +244,9 @@ def expand(n, lesson, code_text, finder, cfg):
                   ["Cover the table first, and roll up your sleeves.",
                    "Messy is fine. Mess on the sofa is not."],
                   ["Pick a project and tick it when you have made it."]),
-              {"items": [dict(h, n=i + 1) for i, h in enumerate(home)]},
+              {"items": [dict(h, n=i + 1) for i, h in enumerate(home)],
+               # for the printed sheet's heading
+               "lesson": lesson["title"], "lessonNo": n, "gradeLabel": cfg.get("gradeLabel") or ""},
               "Making it at home. That is the best kind of art.")
 
     world = step("world", "Our world", "\U0001F30D", "Our world", [],
@@ -285,6 +287,13 @@ def expand(n, lesson, code_text, finder, cfg):
         content, quiz = core, []
     own_journal = any(s["kind"] == "journal" for s in core)
     jn = [] if own_journal else [journal_step(lesson, content, cfg)]
+    # A GOOD PLACE TO STOP is offered at the end of the journal - drawn inside
+    # that step, never as a step of its own, because progress names steps by
+    # position and a new one would move every step after it (lib/art.js ::
+    # pauseCard says the rest). Exactly one journal per lesson carries it.
+    journals = [s for s in content + jn if s["kind"] == "journal"]
+    if journals:
+        journals[-1]["data"]["pause"] = True
     steps = [overview, lec, wds] + content + jn + [gz, hm] + quiz + [world, res]
     steps = [s for s in steps if s is not None]
     overview["data"]["counts"]["steps"] = len(steps)

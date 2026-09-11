@@ -39,8 +39,12 @@ if (!fs.existsSync(cfgPath)) {
 const cfg = JSON.parse(fs.readFileSync(cfgPath, "utf8"));
 const REMOTE = cfg.remote;
 
-// the hub is served as index.html; every lesson keeps its own name
-const FILES = [[cfg.hub, "index.html"], ...cfg.lessons.map((l) => [l.file, l.file])];
+// the hub is served as index.html; every lesson keeps its own name.
+// extraPages (optional) are pages beside the lessons that are NOT lessons -
+// Art & Design's starting check - uploaded under their own names. A build
+// without the key uploads exactly what it always did.
+const FILES = [[cfg.hub, "index.html"], ...cfg.lessons.map((l) => [l.file, l.file]),
+  ...(cfg.extraPages || []).map((f) => [f, f])];
 
 function key() {
   if (process.env.BUNNY_KEY) return process.env.BUNNY_KEY.trim();

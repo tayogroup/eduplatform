@@ -173,11 +173,11 @@ LESSON = {
              {"items": [
                  q("Which of these is made by weaving?", "🧺", "a basket", ["a cave painting", "a mask"], "A basket is woven over and under."),
                  q("Where was the cave art made?", "🪨", "on a cave wall, long ago", ["on a computer", "in a shop"], "On the wall of a cave, thousands of years ago."),
-                 q("What is in every tile on the tiled wall?", "🔷", "a star", ["a fish", "a face"], "A star, repeated on every tile."),
+                 q("Why is a basket art, when you carry things in it?", "🧺", "because someone made it with skill and care", ["because it is brown", "because it is heavy"], "Art is anything made with skill and care. A woven basket is art."),
                  q("Which is the lightest tone in the night picture?", "🌙", "star white", ["night sky", "the hills"], "White is the lightest of all."),
                  q("Sami's sea picture and Amal's sunny picture are different because…", "⚖️", "only one has a boat", ["both have a boat", "both are the same"], "Only Sami's picture has a boat."),
                  q("Which is a kind AND true thing to say about Nadia's flowers?", "💐", "'Your pink flowers are beautiful'", ["'I like your fish'", "'Your moon is round'"], "There are pink flowers in her picture. No fish, no moon."),
-                 q("Looking at art can give you…", "💡", "ideas for your own", ["a headache", "nothing"], "The marks the artists made became your marks."),
+                 q("Why look closely at art from far away?", "🌍", "to see what other artists did, and get ideas of your own", ["to copy it exactly", "to find a mistake"], "Looking closely shows how other artists work. Then you can have your own ideas."),
                  q("A mask is worn for…", "🎭", "dances and stories", ["swimming", "sleeping"], "Masks are worn to dance and to tell stories."),
              ]},
              "That is the whole lesson finished. You can look at art, and talk about it."),

@@ -234,7 +234,7 @@ def bar_html(app, title, current):
         for _, f, t in app.lessons)
     return (
         '\n<header class="eh-bar1">\n'
-        '  <a class="eh-brand" href="index.html">%s<span class="eh-brandtext"><b>Ehel Academy</b><i>Primary %s</i></span></a>\n'
+        '  <a class="eh-brand" href="index.html">%s<span class="eh-brandtext"><b>Ehel Academy</b><i>%s</i></span></a>\n'
         '  <div class="eh-prog" title="How much of this lesson you have finished">\n'
         '    <span class="eh-pct" id="ehPct">0%%</span>\n'
         '    <span class="eh-progtext">Lesson progress</span>\n'
@@ -253,7 +253,11 @@ def bar_html(app, title, current):
         '  <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>\n'
         '</nav>\n'
         '<div class="eh-steps" id="ehSteps" hidden></div>\n'
-        % (CREST, app.subject_label, opts, title))
+        # "Primary <subject>" is right for the school builds and wrong for a
+        # course that is not a school year at all: Intensive English is adult
+        # ESL by CEFR level, and its bar read "Primary Intensive English". A
+        # build may name its own line; every other one is unchanged.
+        % (CREST, app.cfg.get("brandLine", "Primary %s" % app.subject_label), opts, title))
 
 
 def patch(app, unit, name, title):

@@ -1,0 +1,112 @@
+/* ==================================================================
+   INTENSIVE ENGLISH — this kit's own styles.
+
+   The base above is the Mathematics design system, lifted through
+   English. Nothing here introduces a new hue: it reuses the tokens
+   (--teal, --plum, --gold, --accent) so the two builds read as one
+   product.
+
+   What it does change is REGISTER. This course is for adults, so the
+   type is a little smaller and denser than the Grade 1 build's, the
+   cards are quieter, and there is no reward furniture of any kind —
+   no stickers, no confetti, no cheering colour. A finished step shows
+   in the dot rail and nowhere else.
+   ================================================================== */
+
+body { font-size: 19px; }
+.wrap { max-width: 980px; }
+.hero .eyebrow { letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+.slide h2 { font-size: 30px; margin: 0 0 8px; text-wrap: balance; }
+.slide h3 { font-size: 21px; margin: 18px 0 6px; }
+.lead { color: var(--muted); margin: 0 0 14px; }
+
+.panel {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 16px 18px; margin: 14px 0; box-shadow: var(--shadow);
+}
+.panel h3 { margin-top: 0; }
+.panel.task { border-left: 4px solid var(--teal); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; align-items: center; }
+/* A display rule beats the hidden ATTRIBUTE, so .actions[hidden] drew
+   anyway: the quiz shipped showing "Try again" before the first
+   question. Anything hidden stays hidden, whatever it is. */
+[hidden] { display: none !important; }
+
+/* the pattern card: the rule is a laid-out column of examples, never prose */
+pre.rule {
+  font-family: "Atkinson Hyperlegible", "Segoe UI", monospace; font-size: 18px; line-height: 1.6;
+  background: var(--cell); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 16px; margin: 12px 0; white-space: pre-wrap; overflow-x: auto;
+}
+.drawer { border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin: 10px 0; background: var(--card); }
+.drawer > summary { cursor: pointer; font-weight: 700; }
+.drawer.warn { border-color: #E7C9A8; background: #FDF6EE; }
+.drawer p, .answers p, .criteria p, .reading p { margin: 6px 0; }
+.tip { color: var(--plum); font-weight: 700; margin: 10px 0; }
+
+.reading { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; margin: 12px 0; }
+.reading.document {
+  font-family: "Atkinson Hyperlegible", monospace; background: #FFFDF6; border-style: dashed;
+  border-color: #D9CBA6; white-space: pre-wrap;
+}
+
+/* a word card. NOT .wordcard: the lifted design system already has that
+   name for the Grade 1 word button, and two rules for one class is how a
+   card ends up centred by a stylesheet nobody was reading. */
+.ien-word { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; text-align: center; box-shadow: var(--shadow); }
+.ien-word .pic { font-size: 64px; line-height: 1.1; display: block; }
+.ien-word h3 { font-size: 38px; margin: 6px 0; }
+.ien-word .pos { color: var(--muted); font-size: 14px; text-transform: uppercase; letter-spacing: .08em; margin: 0; }
+.ien-word .meaning { font-size: 20px; margin: 8px 0; }
+.ien-word .example { color: var(--teal); font-weight: 700; margin: 10px 0 0; }
+.ien-word .starter { color: var(--muted); margin: 8px 0 0; }
+
+.prompt { font-size: 24px; font-weight: 700; margin: 16px 0; text-wrap: balance; }
+.options { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.opt {
+  font: inherit; font-weight: 700; background: var(--card); color: var(--ink);
+  border: 2px solid var(--line); border-radius: 12px; padding: 12px 18px; cursor: pointer; min-height: 52px;
+}
+.opt.wide { flex: 1 1 260px; text-align: left; }
+.opt:hover:not(:disabled) { border-color: var(--teal); }
+.opt:disabled { cursor: default; opacity: .85; }
+.opt.right { background: var(--good-soft); border-color: var(--good); }
+.opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+.feedback { min-height: 28px; font-weight: 700; color: var(--teal); }
+.count { color: var(--muted); font-size: 15px; }
+
+textarea.write {
+  width: 100%; font: inherit; padding: 12px 14px; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--card); color: var(--ink); resize: vertical;
+}
+.criteria { background: var(--teal-soft); border-radius: 12px; padding: 10px 14px; margin: 10px 0; }
+.criteria h4 { margin: 0 0 4px; }
+.answers { background: var(--good-soft); border: 1px solid var(--good); border-radius: 12px; padding: 10px 14px; margin: 10px 0; }
+.tick { display: flex; gap: 10px; align-items: center; margin: 12px 0 0; font-weight: 700; }
+.tick input { width: 22px; height: 22px; }
+
+.cando { list-style: none; padding: 0; margin: 0; }
+.cando li { padding: 10px 0; border-bottom: 1px dashed var(--line); font-weight: 700; }
+.cando li:last-child { border-bottom: 0; }
+.cando small { display: block; font-weight: 400; color: var(--muted); }
+.path { margin: 0; padding-left: 22px; }
+.path li { margin: 6px 0; }
+
+.self { list-style: none; padding: 0; margin: 0; }
+.self li { padding: 12px 0; border-bottom: 1px dashed var(--line); }
+.self li:last-child { border-bottom: 0; }
+.self .scale { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.rate {
+  font: inherit; font-size: 15px; background: var(--card); color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer;
+}
+.rate.chosen { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+@media (max-width: 640px) {
+  body { font-size: 18px; }
+  .slide h2 { font-size: 25px; }
+  .ien-word h3 { font-size: 30px; }
+  .prompt { font-size: 20px; }
+  .opt.wide { flex-basis: 100%; }
+}

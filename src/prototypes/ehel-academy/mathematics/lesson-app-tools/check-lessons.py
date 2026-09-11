@@ -171,7 +171,12 @@ def main():
             fail(f, "Wehel is told a unit number that is not %d" % unit)
         if "function finish" not in s and "finish(" not in s:
             fail(f, "no finish() - nothing marks a step done")
-        if "STICKERS" not in s:
+        # A build may declare that it has no reward furniture, and then it must
+        # not be failed for the absence of it. Intensive English is the first:
+        # its learners are adults, so the last slide is the unit's can-do list
+        # and its assignment rather than a sticker shelf. Every other app omits
+        # the flag and is checked exactly as before.
+        if app.cfg.get("stickers", True) and "STICKERS" not in s:
             fail(f, "no STICKERS")
         # every in-app anchor must name a file that is actually here
         for href in set(re.findall(r'href="([^"#:?]+\.html)[^"]*"', s)):

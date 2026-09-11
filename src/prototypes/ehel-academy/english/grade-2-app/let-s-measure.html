@@ -2032,7 +2032,26 @@
             "ok": 1
           },
           {
+            "t": "Describe each shape, and make a pattern with the shapes.",
+            "ok": 0
+          },
+          {
+            "t": "There are one hundred fingers in the air.",
+            "ok": 0
+          }
+        ],
+        "why": "Amal says the sun is a circle, and Leo says the door is a rectangle because two of its sides are longer than the other two.",
+        "srcTitle": "Shapes All Around Us"
+      },
+      {
+        "ask": "The text gives one shape pattern as an example. Write that pattern in the right order.",
+        "opts": [
+          {
             "t": "Circle, square, triangle, circle, square, triangle.",
+            "ok": 1
+          },
+          {
+            "t": "There are one hundred fingers in the air.",
             "ok": 0
           },
           {
@@ -2040,7 +2059,7 @@
             "ok": 0
           }
         ],
-        "why": "Amal says the sun is a circle, and Leo says the door is a rectangle because two of its sides are longer than the other two.",
+        "why": "The pattern is given near the end of the text, and the three shapes repeat in exactly the same order.",
         "srcTitle": "Shapes All Around Us"
       },
       {
@@ -2059,14 +2078,14 @@
             "ok": 0
           }
         ],
-        "why": "Every line of the song ends with the word fingers, so fingers are what the singer is counting.",
+        "why": "Every line of the song names fingers, so fingers are what the singer is counting.",
         "srcTitle": "A Counting Song"
       },
       {
-        "ask": "How many fingers are in the air at the end of the song?",
+        "ask": "How far did Leo jump the first time, and how far the second time?",
         "opts": [
           {
-            "t": "There are one hundred fingers in the air.",
+            "t": "45 centimetres the first time, and 50 centimetres the second.",
             "ok": 1
           },
           {
@@ -2075,25 +2094,6 @@
           },
           {
             "t": "The sun is a circle and the door is a rectangle.",
-            "ok": 0
-          }
-        ],
-        "why": "The last line of the song reaches one hundred, which is the biggest number in the whole song.",
-        "srcTitle": "A Counting Song"
-      },
-      {
-        "ask": "How far did Leo jump?",
-        "opts": [
-          {
-            "t": "He jumped 45 centimetres.",
-            "ok": 1
-          },
-          {
-            "t": "The sun is a circle and the door is a rectangle.",
-            "ok": 0
-          },
-          {
-            "t": "Little fingers.",
             "ok": 0
           }
         ],
@@ -2108,11 +2108,11 @@
             "ok": 1
           },
           {
-            "t": "Little fingers.",
+            "t": "The sun is a circle and the door is a rectangle.",
             "ok": 0
           },
           {
-            "t": "There are one hundred fingers in the air.",
+            "t": "Circle, square, triangle, circle, square, triangle.",
             "ok": 0
           }
         ],
@@ -2127,11 +2127,11 @@
             "ok": 1
           },
           {
-            "t": "There are one hundred fingers in the air.",
+            "t": "Circle, square, triangle, circle, square, triangle.",
             "ok": 0
           },
           {
-            "t": "He jumped 45 centimetres.",
+            "t": "Little fingers.",
             "ok": 0
           }
         ],
@@ -2806,14 +2806,14 @@
         "why": "The last line of the song reaches one hundred, which is the biggest number in the whole song."
       },
       {
-        "ask": "How far did Leo jump?",
+        "ask": "How far did Leo jump the first time, and how far the second time?",
         "opts": [
           {
             "t": "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
             "ok": 0
           },
           {
-            "t": "He jumped 45 centimetres.",
+            "t": "45 centimetres the first time, and 50 centimetres the second.",
             "ok": 1
           },
           {
@@ -2824,10 +2824,10 @@
         "why": "The text says Leo is measuring how far he can jump, and gives the exact number in centimetres."
       },
       {
-        "ask": "Why does the text say a ruler is better than measuring with our own feet?",
+        "ask": "What did people use to measure long ago in Egypt, and what did they use in Rome?",
         "opts": [
           {
-            "t": "Because a ruler and a metre stick are the same for everyone, but feet are all different sizes.",
+            "t": "In Egypt they measured with fingers, hands and arms. In Rome they measured in footsteps.",
             "ok": 1
           },
           {
@@ -2839,10 +2839,10 @@
             "ok": 0
           }
         ],
-        "why": "The last sentence gives the reason: the tool is the same for everyone, so the answer never changes."
+        "why": "The text names one method for each place, so a full answer keeps the two apart."
       },
       {
-        "ask": "What did Teacher Yasmin say they should use instead, and how many centimetres are in one metre?",
+        "ask": "Why did Amal and Leo get different answers when they measured the floor with their feet?",
         "opts": [
           {
             "t": "She is counting shapes on a chart, and she counts fifty shapes altogether.",
@@ -2853,11 +2853,11 @@
             "ok": 0
           },
           {
-            "t": "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
+            "t": "Leo's feet are big and Amal's feet are small, so the same floor took a different number of feet.",
             "ok": 1
           }
         ],
-        "why": "Teacher Yasmin names the two tools, then gives the number when she hands over the metre stick."
+        "why": "Nora spots the reason by looking down at their feet, and explains it to both of them."
       }
     ],
     "activities": [
@@ -3755,44 +3755,44 @@
               "explanation": "The last line of the song reaches one hundred, which is the biggest number in the whole song."
             },
             {
-              "prompt": "How far did Leo jump?",
+              "prompt": "How far did Leo jump the first time, and how far the second time?",
               "choices": [
                 "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
-                "He jumped 45 centimetres.",
+                "45 centimetres the first time, and 50 centimetres the second.",
                 "There are one hundred fingers in the air."
               ],
-              "answer": "He jumped 45 centimetres.",
+              "answer": "45 centimetres the first time, and 50 centimetres the second.",
               "explanation": "The text says Leo is measuring how far he can jump, and gives the exact number in centimetres."
             },
             {
-              "prompt": "Why does the text say a ruler is better than measuring with our own feet?",
+              "prompt": "What did people use to measure long ago in Egypt, and what did they use in Rome?",
               "choices": [
-                "Because a ruler and a metre stick are the same for everyone, but feet are all different sizes.",
+                "In Egypt they measured with fingers, hands and arms. In Rome they measured in footsteps.",
                 "Ten children.",
                 "The big basket of cushions was heavy, and Maya ran to help Sami carry it."
               ],
-              "answer": "Because a ruler and a metre stick are the same for everyone, but feet are all different sizes.",
-              "explanation": "The last sentence gives the reason: the tool is the same for everyone, so the answer never changes."
+              "answer": "In Egypt they measured with fingers, hands and arms. In Rome they measured in footsteps.",
+              "explanation": "The text names one method for each place, so a full answer keeps the two apart."
             },
             {
-              "prompt": "What did Teacher Yasmin say they should use instead, and how many centimetres are in one metre?",
+              "prompt": "Why did Amal and Leo get different answers when they measured the floor with their feet?",
               "choices": [
                 "She is counting shapes on a chart, and she counts fifty shapes altogether.",
                 "The red ribbon, because it was longer than the green one.",
-                "A ruler and a metre stick, and there are one hundred centimetres in one metre."
+                "Leo's feet are big and Amal's feet are small, so the same floor took a different number of feet."
               ],
-              "answer": "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
-              "explanation": "Teacher Yasmin names the two tools, then gives the number when she hands over the metre stick."
+              "answer": "Leo's feet are big and Amal's feet are small, so the same floor took a different number of feet.",
+              "explanation": "Nora spots the reason by looking down at their feet, and explains it to both of them."
             },
             {
-              "prompt": "Why did Amal say it was not fair for Theo to sit down first, and what did Theo do next?",
+              "prompt": "Daniel held up two ribbons. Which ribbon did the children need for the big cushion, and why?",
               "choices": [
-                "The red ribbon, because it was longer than the green one.",
                 "Being tall does not mean you go first. Theo thought about it, said sorry and made room for everyone.",
-                "He jumped 45 centimetres."
+                "The red ribbon, because it was longer than the green one.",
+                "45 centimetres the first time, and 50 centimetres the second."
               ],
-              "answer": "Being tall does not mean you go first. Theo thought about it, said sorry and made room for everyone.",
-              "explanation": "Amal answers Theo gently rather than crossly, and Theo changes his mind straight afterwards."
+              "answer": "The red ribbon, because it was longer than the green one.",
+              "explanation": "Daniel compares the two ribbons, calling the red one longer and the green one shorter."
             }
           ]
         },
@@ -7150,6 +7150,19 @@
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -7932,7 +7945,7 @@
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -8137,7 +8150,7 @@
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

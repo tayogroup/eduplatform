@@ -284,31 +284,41 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
+          "prompt": "Who is in this story?",
+          "choices": [
+            "Amal, Adam, Mama and Hodan",
+            "The rain comes and fills the well",
+            "It turned brown"
+          ],
+          "answer": "Amal, Adam, Mama and Hodan",
+          "explanation": "Amal walks to the well with Adam. At home Mama cooks and little Hodan drinks."
+        },
+        {
+          "prompt": "How does the story end?",
+          "choices": [
+            "They dance in the rain",
+            "Excited and happy: 'Rain! It is raining!'",
+            "The rain comes and fills the well"
+          ],
+          "answer": "The rain comes and fills the well",
+          "explanation": "Big clouds come, it rains, the river and the well fill up and the grass turns green again."
+        },
+        {
           "prompt": "Who walked to the well with Amal every morning?",
           "choices": [
+            "Because the well was getting low",
             "Her big brother, Adam",
-            "Not one drop",
-            "Because the well was getting low"
+            "They dance in the rain"
           ],
           "answer": "Her big brother, Adam",
           "explanation": "Every morning Amal walked to the well with her big brother Adam."
         },
         {
-          "prompt": "What did Amal and Adam carry to the well?",
-          "choices": [
-            "It turned brown",
-            "It is rainy.",
-            "An empty pot"
-          ],
-          "answer": "An empty pot",
-          "explanation": "The story says they carried an empty pot to the well."
-        },
-        {
           "prompt": "Adam says water is precious. How much must they not waste?",
           "choices": [
-            "We must not waste water.",
             "Not one drop",
-            "Excited and happy: 'Rain! It is raining!'"
+            "Her big brother, Adam",
+            "It is rainy."
           ],
           "answer": "Not one drop",
           "explanation": "Adam says, 'Water is precious. We must not waste one drop.'"
@@ -316,29 +326,19 @@
         {
           "prompt": "How did Amal feel when the rain came? What did she shout?",
           "choices": [
-            "Excited and happy: 'Rain! It is raining!'",
-            "Because the well was getting low",
-            "Her big brother, Adam"
+            "An empty pot",
+            "We must not waste water.",
+            "Excited and happy: 'Rain! It is raining!'"
           ],
           "answer": "Excited and happy: 'Rain! It is raining!'",
           "explanation": "Amal shouts, 'Rain! It is raining!' and the children dance outside."
         },
         {
-          "prompt": "Why did the whole village share the water?",
-          "choices": [
-            "It is rainy.",
-            "An empty pot",
-            "Because the well was getting low"
-          ],
-          "answer": "Because the well was getting low",
-          "explanation": "Adam says the well is getting low, so everyone shares and is careful."
-        },
-        {
           "prompt": "Which talk line tells us about the weather?",
           "choices": [
-            "Not one drop",
+            "Amal, Adam, Mama and Hodan",
             "It is rainy.",
-            "We must not waste water."
+            "Not one drop"
           ],
           "answer": "It is rainy.",
           "explanation": "'It is rainy' is the weather line in the talk lines."
@@ -780,15 +780,15 @@
           "explanation": "We say it is for the weather. The other ones have the words muddled up."
         },
         {
-          "prompt": "Which word is a water word?",
+          "prompt": "No rain has come and the well is low. What is the kind thing to do?",
           "choices": [
-            "rain",
-            "chair",
-            "book",
-            "shoe"
+            "Share the water and use only a little",
+            "Take a lot before it is gone",
+            "Pour some water away",
+            "Wash your hands ten times"
           ],
-          "answer": "rain",
-          "explanation": "Rain is water falling from the clouds. A chair, a shoe and a book have nothing to do with water."
+          "answer": "Share the water and use only a little",
+          "explanation": "The whole village shared and nobody wasted a drop, so there was enough for everyone."
         }
       ]
     },

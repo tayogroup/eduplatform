@@ -76,7 +76,7 @@ const amalsFirstDay = [
     schoolTable(380, CLASS_FLOOR, 1.2, { item: openBook(0, 0, 0.55) }),
     figureA("yasmin", { x: 700, y: CLASS_FLOOR, s: 1.6, mood: "happy" }),
     figureA("amal", { x: 1010, y: CLASS_FLOOR, s: 1.45, mood: "happy" }),
-    figureA("adam", { x: 1230, y: CLASS_FLOOR, s: 1.42, mood: "happy" }),
+    figureA("leo", { x: 1230, y: CLASS_FLOOR, s: 1.4, mood: "happy" }),
     figureA("samira", { x: 1430, y: CLASS_FLOOR, s: 1.42 })),
 
   page(townScene(), schoolFront(1080, 760, 0.95),
@@ -105,13 +105,13 @@ const amalsFirstDay = [
     figureA("amal", { x: 560, y: CLASS_FLOOR, s: 1.55, mood: "surprised", arms: "point" })),
 
   page(amalClassroom(),
-    figureA("adam", { x: 700, y: CLASS_FLOOR, s: 1.55, mood: "happy", arms: "point" }),
+    figureA("leo", { x: 700, y: CLASS_FLOOR, s: 1.5, mood: "happy", arms: "point" }),
     figureA("amal", { x: 1030, y: CLASS_FLOOR, s: 1.52, mood: "happy" })),
 
   page(amalClassroom(),
     figureA("yasmin", { x: 380, y: CLASS_FLOOR, s: 1.6, arms: "point" }),
     figureA("amal", { x: 860, y: CLASS_FLOOR, s: 1.48, mood: "happy", arms: "up" }),
-    figureA("adam", { x: 1090, y: CLASS_FLOOR, s: 1.45, mood: "happy", arms: "up" }),
+    figureA("leo", { x: 1090, y: CLASS_FLOOR, s: 1.42, mood: "happy", arms: "up" }),
     figureA("samira", { x: 1320, y: CLASS_FLOOR, s: 1.45, mood: "happy", arms: "up" })),
 
   page(amalClassroom(),

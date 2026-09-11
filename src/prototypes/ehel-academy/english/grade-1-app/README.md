@@ -80,6 +80,15 @@ minutes, from 995). Tutor prompts and spelling rows filled on the core links
 that lacked them (159 and 50). Cambridge Stage 1 is 90 of 90
 (`docs/english-g1-objective-gaps.md`).
 
+**Grades 1-4 content review, 2026-09-11.** 172 findings — practice items with
+two right answers, explanations citing lines the text lacks, facts, Grade 1's
+Adam appearing as a stranger — applied by one idempotent tool,
+`tools/repair-english-g1-4-review-20260911.py`. What else had to move with the
+text (books, 101 clips, the Grade 1 lectures, the game packs) is in
+`docs/english-g1-4-content-review-20260911.md`. The **Plan** step no longer
+ticks itself at load: `unitPlan`/`unitOverview` finish through
+`finishWhenShown`, which waits until the step is on screen.
+
 Grade 2's Video lesson step exists since 2026-09-11, when its unit lessons
 were rendered (see `../grade-2-app/README.md`). Two steps read Grade 2's grammar differently because its shape
 differs: **Let us talk** and **Fluency Practice** draw on `ruleAndExamples`
@@ -234,11 +243,18 @@ evaluates that slice alone through node — the same "read the real bytes, not
 a regex over them" rule as `word_pictures()`, applied to a shape a plain
 import cannot reach.
 
-**Book narration is NOT ported.** The shell's reader calls a paid runtime TTS
-endpoint (`aiVoiceUrl`) per page, which this standalone page has no business
-calling on its own; a page's Listen button instead reads its text through
-this build's own `VOICE.say()` — the same engine every Explain button already
-uses. **Tap-sound resolution IS ported, verbatim** (`TAP_VOICE_GROUPS`,
+**Book narration is a pre-rendered clip per page, not the shell's runtime
+TTS.** The shell's reader calls a paid endpoint (`aiVoiceUrl`) per page; this
+reader plays `../ebooks/<id>/page-NN.mp3` beside the page's SVG
+(`playClipFor` in `lib/books.js`) and falls back to `VOICE.say()` only when a
+clip fails to load. The clips are written by
+`tools/generate-ehel-english-ebook-audio.js`, which skips any page whose clip
+already exists — so **correcting a page's text in `ebookCatalog` does not
+re-record it.** Move the old clip aside and re-run that grade (`--dry` first);
+only the missing pages are rendered. This path is served `max-age=300`
+(measured 2026-09-11), so a same-name replacement reaches learners in five
+minutes and needs no rename. Grade 1 has clips for every page; Grades 2-4 have
+none yet, and read through `VOICE.say()`. **Tap-sound resolution IS ported, verbatim** (`TAP_VOICE_GROUPS`,
 `TAP_SOUND_MOOD_TYPES`, `TAP_SOUND_ALIASES` in `lib/books.js`, copied from
 `shell/subjects/english.js`), because it's forty lines of pure data and a tap
 that resolves to the wrong clip — or to nothing — is a worse experience than

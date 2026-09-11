@@ -1307,43 +1307,43 @@
       ]
     },
     "lecture": {
-      "video": "../grade-1/media/unit-4/teacher-lecture.75c5cd1e.mp4",
-      "poster": "../grade-1/media/unit-4/teacher-lecture-poster.a26457c2.jpg",
-      "captions": "../grade-1/media/unit-4/teacher-lecture.4c6b0a96.vtt",
+      "video": "../grade-1/media/unit-4/teacher-lecture.13db77b5.mp4",
+      "poster": "../grade-1/media/unit-4/teacher-lecture-poster.c3c08b23.jpg",
+      "captions": "../grade-1/media/unit-4/teacher-lecture.41d72032.vtt",
       "slides": [
         {
           "start": 0,
-          "end": 31.81,
+          "end": 34.61,
           "title": "Making Things"
         },
         {
-          "start": 31.81,
-          "end": 52.84,
+          "start": 34.61,
+          "end": 57.57,
           "title": "What you will achieve"
         },
         {
-          "start": 52.84,
-          "end": 64.6,
+          "start": 57.57,
+          "end": 69.26,
           "title": "Words to learn"
         },
         {
-          "start": 64.6,
-          "end": 79.38,
+          "start": 69.26,
+          "end": 85.36,
           "title": "Read and think"
         },
         {
-          "start": 79.38,
-          "end": 96.43,
+          "start": 85.36,
+          "end": 103.21,
           "title": "Name your craft materials"
         },
         {
-          "start": 96.43,
-          "end": 110.13,
+          "start": 103.21,
+          "end": 117.74,
           "title": "Use English for a real purpose"
         },
         {
-          "start": 110.13,
-          "end": 124.413,
+          "start": 117.74,
+          "end": 134.026,
           "title": "You are ready to begin"
         }
       ]
@@ -2011,7 +2011,7 @@
         "mistake": "Children pop 'a' before old by mistake. Before an a, e, i, o, u sound we say 'an': an old cloth, an empty tin.",
         "tip": "Listen to the describing word. Open-mouth start — a, e, i, o, u — use 'an'.",
         "practice": "Describe three: It is a big box. It is an old cloth. It is a red straw.",
-        "audio": ""
+        "audio": "./media/audio/grade-1/grammar/eng-g01-t02-u04-grammar02c.mp3"
       },
       {
         "title": "Say what you are cutting",
@@ -2093,7 +2093,7 @@
           "Trace the words 'circle' and 'square'. Draw that shape beside each word, then say the word as you point to it."
         ],
         "length": "Drawing, tracing or 1-3 words",
-        "model": "It is a ___ ___.",
+        "model": "circle, square",
         "criteria": [
           "I said my idea first",
           "I wrote or picked my letters and words",
@@ -2112,7 +2112,7 @@
           "Look at the pictures of scissors, glue and paper. Join each word to its picture, then copy the word you use first."
         ],
         "length": "Drawing, tracing or 1-3 words",
-        "model": "I am cutting ___.",
+        "model": "scissors, glue, paper",
         "criteria": [
           "I said my idea first",
           "I wrote or picked my letters and words",
@@ -2666,7 +2666,7 @@
         "kind": "Draw and tell",
         "lead": "Draw a thing you made this week. Then tell an adult if one is nearby, or say it out loud to yourself: 'I made a ___. It is ___.' Show them the real thing if you still have it and someone is with you.",
         "steps": [],
-        "audio": "",
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u04-act02c.mp3",
         "check": "A drawing of something they genuinely made this week, plus 'I made a ___. It is ___.' Accept any real object, however small, and simple describing words such as big, blue or soft."
       },
       {
@@ -2782,7 +2782,7 @@
           "Say one sentence that uses this pattern: This is a / an ___.",
           "Write the word “top” from memory, then check it."
         ],
-        "audio": "",
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u04-act12c.mp3",
         "check": "Answers will differ between children. Check that each word is used with the right meaning, that item 3 really follows the pattern from “Name your craft materials”, and that the word in item 4 is spelled correctly."
       }
     ],
@@ -3507,15 +3507,15 @@
               "explanation": "Wearing means it is on you. Making, cutting and painting are things you do before it is done."
             },
             {
-              "prompt": "Which word names a shape?",
+              "prompt": "Amal's first mat came out bumpy. What is the best thing to do next?",
               "choices": [
-                "circle",
-                "glue",
-                "yellow",
-                "soft"
+                "Try again",
+                "Throw it away",
+                "Ask Adam to make it",
+                "Stop making things"
               ],
-              "answer": "circle",
-              "explanation": "A circle is a shape. Yellow is a colour. Glue is a thing we use. Soft tells how a thing feels."
+              "answer": "Try again",
+              "explanation": "Amal took a deep breath and tried again, and the next mat was better. Trying again is how work gets better."
             }
           ]
         },
@@ -6835,6 +6835,19 @@
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -7617,7 +7630,7 @@
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -7822,7 +7835,7 @@
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

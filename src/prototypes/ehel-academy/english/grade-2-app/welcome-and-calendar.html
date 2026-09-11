@@ -1984,7 +1984,7 @@ He or she likes ______.</span></div>
             "ok": 0
           }
         ],
-        "why": "The four places are listed in the four middle sentences, one place in each sentence.",
+        "why": "Leo names the four places one at a time: “I can see words in books”, “on tablets”, “on signs” and “at home”.",
         "srcTitle": "Words Around Us"
       },
       {
@@ -2121,7 +2121,7 @@ He or she likes ______.</span></div>
         "pattern": "Use he for a boy or a man: This is Leo. He likes football.\nUse she for a girl or a woman: This is Nora. She likes reading.",
         "explanation": "We use he and she so that we do not need to say a person's name again and again. Use he for a boy or a man, and she for a girl or a woman.",
         "mistake": "Some children write, “This is my sister. He likes drawing.” A sister is a girl, so the second sentence needs she: “This is my sister. She likes drawing.”",
-        "tip": "She and sister begin with the same s sound. If the person is a girl or a woman, choose the word that starts with s.",
+        "tip": "She and sister begin with the same letter, s. If the person is a girl or a woman, choose the word that starts with s.",
         "practice": "Write he or she in each gap.\n1. This is my brother. ____ likes running.\n2. This is Nora. ____ likes singing.\n3. This is my father. ____ works in the market.\n4. This is Maya. ____ is my best friend.\nCheck yourself: 1. He 2. She 3. He 4. She.",
         "audio": "./media/audio/grade-2/grammar/eng-g02-t01-u01-grammar01.mp3"
       },
@@ -3229,7 +3229,7 @@ He or she likes ______.</span></div>
         "ask": "Which word fills the gap: ___ means the thing that comes right after this one.",
         "opts": [
           {
-            "t": "then",
+            "t": "about",
             "ok": 0
           },
           {
@@ -7008,6 +7008,19 @@ He or she likes ______.</span></div>
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -7790,7 +7803,7 @@ He or she likes ______.</span></div>
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -7995,7 +8008,7 @@ He or she likes ______.</span></div>
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

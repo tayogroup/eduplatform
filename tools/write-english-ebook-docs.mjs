@@ -585,7 +585,7 @@ const NOTES = {
     series: "Amal (Grade 1)", book: 1, term: "Term 1", unit: "Unit 1: Welcome to School",
     vocabulary: "table, chair, whiteboard, abc chart, clock, book, pencil, ruler, crayon, lunchbox, red, blue, green, yellow, teacher, friend, boy, girl, read, write, draw, sing, listen, point",
     themes: "a first day somewhere new; saying your own name out loud",
-    cameos: "Adam, Samira and the teacher are the Unit 1 reading's own characters; Amal returns here every unit and again in the Grade 3 and Grade 4 books.",
+    cameos: "Leo, Samira and the teacher are the Unit 1 reading's own characters; Amal returns here every unit and again in the Grade 3 and Grade 4 books.",
   },
   "breakfast-at-grandmas-house": {
     series: "Amal (Grade 1)", book: 2, term: "Term 1", unit: "Unit 2: Family Time",
@@ -621,7 +621,7 @@ const NOTES = {
     series: "Amal (Grade 1)", book: 7, term: "Term 3", unit: "Unit 7: Let's Go!",
     vocabulary: "walk, bus, car, bicycle, boat, wheels, seat, drive, ride, float, road, town, sea, fast, slow, sit down",
     themes: "a journey told by what goes past the window",
-    cameos: "Adam on his bicycle and Samira on her way to school both wave from the Unit 7 reading.",
+    cameos: "Her big brother Adam on his bicycle and Samira on her way to school both wave from the Unit 7 reading.",
   },
   "the-well-in-the-village": {
     series: "Amal (Grade 1)", book: 8, term: "Term 3", unit: "Unit 8: Wonderful Water",

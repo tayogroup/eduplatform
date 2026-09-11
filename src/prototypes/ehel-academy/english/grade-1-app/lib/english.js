@@ -106,6 +106,19 @@
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -888,7 +901,7 @@
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -1093,7 +1106,7 @@
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

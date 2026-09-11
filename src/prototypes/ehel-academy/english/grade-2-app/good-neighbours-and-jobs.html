@@ -1901,7 +1901,7 @@
             "ok": 0
           }
         ],
-        "why": "The text lists the equipment in order from the feet upwards, and finishes with the gloves.",
+        "why": "Leila shows the boots first, then the helmet and the mask, and last of all the gloves.",
         "srcTitle": "Firefighters and Their Equipment"
       },
       {
@@ -2057,7 +2057,7 @@
         "explanation": "The present continuous tells us about an action that is happening right now. It helps you describe what the people in your neighbourhood are doing at this very moment.",
         "mistake": "Children often write, The firefighters is climbing the ladder. Firefighters means more than one person, so the sentence should be, The firefighters are climbing the ladder.",
         "tip": "One person or thing takes is. More than one takes are. And never forget the -ing on the action word.",
-        "practice": "Write is or are, then add the action word in the present continuous.\n1. The police officer ______ (help) the children.\n2. The firefighters ______ (climb) the ladder.\n3. My neighbour ______ (clean) the windows.\n4. We ______ (learn) about jobs.\n5. The farmer ______ (grow) maize. Check yourself: 1. Is helping 2. Are climbing 3. Is cleaning 4. Are learning 5. Is growing.",
+        "practice": "Write is or are, then add the action word in the present continuous.\n1. The police officer ______ (help) the children.\n2. The firefighters ______ (climb) the ladder.\n3. My neighbour ______ (clean) the windows.\n4. We ______ (learn) about jobs.\n5. The farmer ______ (grow) maize. Check yourself: 1. is helping 2. are climbing 3. is cleaning 4. are learning 5. is growing.",
         "audio": "./media/audio/grade-2/grammar/eng-g02-t01-u02-grammar02.mp3"
       },
       {
@@ -2681,14 +2681,14 @@
         "why": "The text gives both reasons: fresh air for the mask, and hot things for the gloves."
       },
       {
-        "ask": "What does the poem say the neighbours are doing?",
+        "ask": "Which three words are repeated in the poem, and what new line could you add about your own street?",
         "opts": [
           {
             "t": "Karim brought water, Nadia swept the floor, Rami carried the heavy boxes, and the two firefighters helped clean the shop.",
             "ok": 0
           },
           {
-            "t": "The neighbours are helping other neighbours.",
+            "t": "The words in my neighbourhood are repeated. A new line could be: There are helpers waving in my neighbourhood.",
             "ok": 1
           },
           {
@@ -2696,13 +2696,13 @@
             "ok": 0
           }
         ],
-        "why": "Line two of the poem says that neighbours are helping neighbours."
+        "why": "Spotting the repeated phrase shows how the poem is built, and the new line must keep the same pattern."
       },
       {
-        "ask": "What is Karim's job, and what does he use to reach the high glass?",
+        "ask": "On which street does Amal live, and what stands close to her home?",
         "opts": [
           {
-            "t": "Karim is a window cleaner, and he uses a long pole to reach the high glass.",
+            "t": "Amal lives on Warta Street, and the market stands close to her home.",
             "ok": 1
           },
           {
@@ -2714,7 +2714,7 @@
             "ok": 0
           }
         ],
-        "why": "Amal names his job from her window, and the next paragraph names his long pole."
+        "why": "The very first sentence of the story gives the street and the market."
       },
       {
         "ask": "Which four pieces of equipment do the two firefighters wear in the story?",
@@ -2903,7 +2903,7 @@
         "ask": "Which sentence uses the pattern “Actions Happening Now”?",
         "opts": [
           {
-            "t": "What is the police officer doing?",
+            "t": "Who drives the bus?",
             "ok": 0
           },
           {
@@ -3061,7 +3061,7 @@
             "ok": 1
           },
           {
-            "t": "nurse",
+            "t": "farmer",
             "ok": 0
           },
           {
@@ -3637,24 +3637,24 @@
               "explanation": "The text gives both reasons: fresh air for the mask, and hot things for the gloves."
             },
             {
-              "prompt": "What does the poem say the neighbours are doing?",
+              "prompt": "Which three words are repeated in the poem, and what new line could you add about your own street?",
               "choices": [
                 "Karim brought water, Nadia swept the floor, Rami carried the heavy boxes, and the two firefighters helped clean the shop.",
-                "The neighbours are helping other neighbours.",
+                "The words in my neighbourhood are repeated. A new line could be: There are helpers waving in my neighbourhood.",
                 "Grandmas, grandpas, mums, dads and children."
               ],
-              "answer": "The neighbours are helping other neighbours.",
-              "explanation": "Line two of the poem says that neighbours are helping neighbours."
+              "answer": "The words in my neighbourhood are repeated. A new line could be: There are helpers waving in my neighbourhood.",
+              "explanation": "Spotting the repeated phrase shows how the poem is built, and the new line must keep the same pattern."
             },
             {
-              "prompt": "What is Karim's job, and what does he use to reach the high glass?",
+              "prompt": "On which street does Amal live, and what stands close to her home?",
               "choices": [
-                "Karim is a window cleaner, and he uses a long pole to reach the high glass.",
+                "Amal lives on Warta Street, and the market stands close to her home.",
                 "The neighbours are helping other neighbours.",
                 "Because the helpers had already done their own paid jobs that day, and they chose to help him only out of kindness."
               ],
-              "answer": "Karim is a window cleaner, and he uses a long pole to reach the high glass.",
-              "explanation": "Amal names his job from her window, and the next paragraph names his long pole."
+              "answer": "Amal lives on Warta Street, and the market stands close to her home.",
+              "explanation": "The very first sentence of the story gives the street and the market."
             },
             {
               "prompt": "Which four pieces of equipment do the two firefighters wear in the story?",
@@ -3671,7 +3671,7 @@
               "choices": [
                 "Two honest examples, one in each direction, such as: I carry the shopping for the family next door, and they water our plants when we are away.",
                 "Because the helpers had already done their own paid jobs that day, and they chose to help him only out of kindness.",
-                "Amal lives on Warta Street, and the market stands close to her home."
+                "He is so happy and thankful that tears come to his eyes."
               ],
               "answer": "Because the helpers had already done their own paid jobs that day, and they chose to help him only out of kindness.",
               "explanation": "Omar contrasts their important jobs with the free choice they made to help one old shopkeeper."
@@ -6943,6 +6943,19 @@
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -7725,7 +7738,7 @@
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -7930,7 +7943,7 @@
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

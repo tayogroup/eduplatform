@@ -283,31 +283,41 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
+          "prompt": "Who is in this story?",
+          "choices": [
+            "Amal, Samira, Leo and Adam",
+            "Adam shakes the branch",
+            "On a branch of the big tree"
+          ],
+          "answer": "Amal, Samira, Leo and Adam",
+          "explanation": "Amal plays with Samira and little Leo, and big brother Adam comes to help."
+        },
+        {
+          "prompt": "How is the problem solved?",
+          "choices": [
+            "Sharing",
+            "Sad, because the story says Leo looked sad",
+            "Adam shakes the branch"
+          ],
+          "answer": "Adam shakes the branch",
+          "explanation": "Adam is tall. He shakes the branch and the ball comes down."
+        },
+        {
           "prompt": "What colour was Amal's big ball?",
           "choices": [
+            "Because he was tall and could shake the branch",
             "Red",
-            "It went up into a big tree",
-            "Because he was tall and could shake the branch"
+            "Sharing"
           ],
           "answer": "Red",
           "explanation": "The story says Amal had a big red ball."
         },
         {
-          "prompt": "In which town was Amal playing?",
-          "choices": [
-            "On a branch of the big tree",
-            "The ball is on the ___.",
-            "Hargeisa"
-          ],
-          "answer": "Hargeisa",
-          "explanation": "The first line says it was a sunny day in the town of Hargeisa."
-        },
-        {
           "prompt": "What happened to the ball after Leo threw it?",
           "choices": [
-            "Can you ___?",
             "It went up into a big tree",
-            "Sad, because the story says Leo looked sad"
+            "Red",
+            "The ball is on the ___."
           ],
           "answer": "It went up into a big tree",
           "explanation": "Leo threw the ball, it went up, up, up, and landed on a branch."
@@ -315,29 +325,19 @@
         {
           "prompt": "How did Leo feel when he asked to play? How do you know?",
           "choices": [
-            "Sad, because the story says Leo looked sad",
-            "Because he was tall and could shake the branch",
-            "Red"
+            "Hargeisa",
+            "Can you ___?",
+            "Sad, because the story says Leo looked sad"
           ],
           "answer": "Sad, because the story says Leo looked sad",
           "explanation": "Leo asks 'Can I play too?' and the story says he looked sad."
         },
         {
-          "prompt": "Why could Adam get the ball down when the children could not?",
-          "choices": [
-            "The ball is on the ___.",
-            "Hargeisa",
-            "Because he was tall and could shake the branch"
-          ],
-          "answer": "Because he was tall and could shake the branch",
-          "explanation": "The story says Adam was tall, and he shook the branch until the ball fell."
-        },
-        {
           "prompt": "Which talk line tells where the ball is?",
           "choices": [
-            "It went up into a big tree",
+            "Amal, Samira, Leo and Adam",
             "The ball is on the ___.",
-            "Can you ___?"
+            "It went up into a big tree"
           ],
           "answer": "The ball is on the ___.",
           "explanation": "'The ball is on the ___' is the position line in the talk lines."
@@ -774,15 +774,15 @@
           "explanation": "Hop and top both end with the same sound: op. Hat, hen and sun end in other sounds."
         },
         {
-          "prompt": "Which word is an action word, a thing you do?",
+          "prompt": "The ball is high in the tree. Who can reach it best?",
           "choices": [
-            "rain",
-            "table",
-            "jump",
-            "shoe"
+            "Adam, because he is tall",
+            "Leo, because he is small",
+            "Samira, because she is kind",
+            "Nobody can reach it"
           ],
-          "answer": "jump",
-          "explanation": "Jump is a thing your body does. A table, rain and a shoe are naming words, not actions."
+          "answer": "Adam, because he is tall",
+          "explanation": "You need to be tall to reach something high up. Being small or being kind does not help you reach."
         }
       ]
     },

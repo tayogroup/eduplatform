@@ -3018,7 +3018,7 @@
             "ok": 0
           },
           {
-            "t": "She shouted, “Keep going, Leo!”",
+            "t": "Amal is in the green team with Nora, Sami and Leo. Theo runs for the red team.",
             "ok": 0
           }
         ],
@@ -3032,7 +3032,7 @@
             "ok": 0
           },
           {
-            "t": "He was waving to the crowd, so he did not look at his feet.",
+            "t": "She shouted, “Keep going, Leo!”",
             "ok": 0
           },
           {
@@ -3046,7 +3046,7 @@
         "ask": "What is the special day at school called in this listening text?",
         "opts": [
           {
-            "t": "She walked back and helped Theo stand up. Any reason that uses the story, such as Theo looking sad or rubbing his hurt knee.",
+            "t": "He was waving to the crowd, so he did not look at his feet.",
             "ok": 0
           },
           {
@@ -3072,29 +3072,29 @@
             "ok": 0
           },
           {
-            "t": "Her tummy felt full of butterflies and she felt worried, but she kept running as fast as she could.",
+            "t": "She walked back and helped Theo stand up. Any reason that uses the story, such as Theo looking sad or rubbing his hurt knee.",
             "ok": 0
           }
         ],
         "why": "The story opens by telling you that it was sports day at Amal's school."
       },
       {
-        "ask": "Why did Theo trip and fall in the relay race?",
+        "ask": "What did Amal shout to Leo during the hopping race?",
         "opts": [
           {
             "t": "“Get Up and Move” day.",
             "ok": 0
           },
           {
-            "t": "That kindness and effort matter more than crossing the line first.",
+            "t": "Her tummy felt full of butterflies and she felt worried, but she kept running as fast as she could.",
             "ok": 0
           },
           {
-            "t": "He was waving to the crowd, so he did not look at his feet.",
+            "t": "She shouted, “Keep going, Leo!”",
             "ok": 1
           }
         ],
-        "why": "The story says Theo was so busy waving that he did not watch where he was running, and then he tripped."
+        "why": "When Leo wobbled and nearly fell, Amal clapped her hands and called out to encourage him."
       }
     ],
     "activities": [
@@ -3984,7 +3984,7 @@
               "choices": [
                 "“Reach for the sky!”",
                 "It helps you stay strong.",
-                "She shouted, “Keep going, Leo!”"
+                "Amal is in the green team with Nora, Sami and Leo. Theo runs for the red team."
               ],
               "answer": "“Reach for the sky!”",
               "explanation": "Poems often repeat a line. Here the poem opens with “Reach for the sky!” and the last line finishes with the same words."
@@ -3993,7 +3993,7 @@
               "prompt": "According to the text, what does moving your body every day help you to do?",
               "choices": [
                 "Eating healthy food.",
-                "He was waving to the crowd, so he did not look at his feet.",
+                "She shouted, “Keep going, Leo!”",
                 "It helps you stay strong."
               ],
               "answer": "It helps you stay strong.",
@@ -4002,7 +4002,7 @@
             {
               "prompt": "What is the special day at school called in this listening text?",
               "choices": [
-                "She walked back and helped Theo stand up. Any reason that uses the story, such as Theo looking sad or rubbing his hurt knee.",
+                "He was waving to the crowd, so he did not look at his feet.",
                 "“Get Up and Move” day.",
                 "Eating healthy food."
               ],
@@ -4014,25 +4014,25 @@
               "choices": [
                 "It is sports day.",
                 "Drinking water helps your body work well, and getting enough sleep helps you grow.",
-                "Her tummy felt full of butterflies and she felt worried, but she kept running as fast as she could."
+                "She walked back and helped Theo stand up. Any reason that uses the story, such as Theo looking sad or rubbing his hurt knee."
               ],
               "answer": "It is sports day.",
               "explanation": "The story opens by telling you that it was sports day at Amal's school."
             },
             {
-              "prompt": "Why did Theo trip and fall in the relay race?",
+              "prompt": "What did Amal shout to Leo during the hopping race?",
               "choices": [
                 "“Get Up and Move” day.",
-                "That kindness and effort matter more than crossing the line first.",
-                "He was waving to the crowd, so he did not look at his feet."
+                "Her tummy felt full of butterflies and she felt worried, but she kept running as fast as she could.",
+                "She shouted, “Keep going, Leo!”"
               ],
-              "answer": "He was waving to the crowd, so he did not look at his feet.",
-              "explanation": "The story says Theo was so busy waving that he did not watch where he was running, and then he tripped."
+              "answer": "She shouted, “Keep going, Leo!”",
+              "explanation": "When Leo wobbled and nearly fell, Amal clapped her hands and called out to encourage him."
             },
             {
               "prompt": "How did Amal feel when her legs felt slow, and what did she do instead of giving up?",
               "choices": [
-                "Any personal example that names the hard thing, says what you did to keep going, and says how it ended.",
+                "That kindness and effort matter more than crossing the line first.",
                 "Her tummy felt full of butterflies and she felt worried, but she kept running as fast as she could.",
                 "Healthy and strong."
               ],
@@ -4154,11 +4154,6 @@
               "reference": "The leader says, touch your toes!"
             },
             {
-              "prompt": "Speaking 4 — Movement Coach",
-              "target": "Reach for the sky.",
-              "reference": ""
-            },
-            {
               "prompt": "Speaking 5 — Healthy Habit Interview",
               "target": "What exercise do you enjoy?",
               "reference": ""
@@ -4167,6 +4162,11 @@
               "prompt": "Speaking 6 — Sports Reporter",
               "target": "Theo is waving to the crowd.",
               "reference": ""
+            },
+            {
+              "prompt": "Speaking 7: Tell the Race Again",
+              "target": "Sami threw the ball across the field.",
+              "reference": "Sami threw the ball across the field."
             }
           ]
         },
@@ -7381,6 +7381,19 @@
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -8163,7 +8176,7 @@
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -8368,7 +8381,7 @@
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

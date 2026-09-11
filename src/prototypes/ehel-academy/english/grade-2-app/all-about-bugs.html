@@ -1036,7 +1036,7 @@
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the new words for this unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One word at a time.</s><s>Look at the picture.</s><s>Say the word out loud.</s><s>Then press Next word.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Reading a word in your head is not the same as saying it.</s><s>Your mouth has to learn it too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it to hear the word said properly.</s><s>Then say it with me.</s></mstts:express-as>' data-say="Say this word out loud.">
-      <div class="slide-head"><span class="n">5</span><h2>Words: small creatures and where they are</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>More words for this unit</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Say this word out loud.</span></div>
       <div class="stage">
         <div id="stage5"></div>
@@ -1305,7 +1305,7 @@
       "year": "2026–27",
       "days": [
         "What this unit is about · Unit lecture",
-        "Spelling: ur and ir · Words: small creatures and where they are",
+        "Spelling: ur and ir · More words for this unit",
         "Words: my body and senses · Word and picture",
         "Words that join ideas · Reading books",
         "Story questions for each book · Say it out loud",
@@ -2188,7 +2188,7 @@
         "explanation": "Position words tell us where something is. When we watch bugs we need them to say exactly where each creature sits: on a leaf, under a rock, or inside a hole.",
         "mistake": "It is easy to write “The ant is on the anthill.” when the ant has gone inside. Inside needs in, so we write “The ant is in the anthill.”",
         "tip": "Use on when something touches the top of a thing, and in when something is inside it. A bug on a box sits on the lid; a bug in a box is shut inside.",
-        "practice": "Write the best position word (on, under, in, between, above, in front of) in each gap.\n1. The butterfly is ______ the flower.\n2. The worm is ______ the rock.\n3. The ant is ______ the anthill.\n4. The cricket is ______ two leaves.\n5. The bee is flying ______ the flower.\nCheck yourself: 1. On 2. Under 3. In 4. Between 5. Above.",
+        "practice": "Write the best position word (on, under, in, between, above, in front of) in each gap.\n1. The butterfly is ______ the flower.\n2. The worm is ______ the rock.\n3. The ant is ______ the anthill.\n4. The cricket is ______ two leaves.\n5. The bee is flying ______ the flower.\nCheck yourself: 1. on 2. under 3. in 4. between 5. above.",
         "audio": "./media/audio/grade-2/grammar/eng-g02-t02-u06-grammar01.mp3"
       },
       {
@@ -2206,7 +2206,7 @@
         "explanation": "We use the simple present tense for facts, which are things that are always true. It is the tense we need for telling people what bugs have and what bugs do.",
         "mistake": "Writing “A spider spin a web.” leaves the verb bare. There is only one spider, so the verb takes an s: “A spider spins a web.”",
         "tip": "One bug puts the s on the verb, and many bugs leave it off. Say it aloud: “One bee buzzes; two bees buzz.”",
-        "practice": "Write the correct form of the verb in brackets.\n1. Butterflies ______ (fly) from flower to flower.\n2. A spider ______ (spin) a web to catch insects.\n3. Ants ______ (live) in colonies.\n4. A cricket ______ (make) sounds with its wings.\n5. Worms ______ (help) make the soil healthy.\nCheck yourself: 1. Fly 2. Spins 3. Live 4. Makes 5. Help.",
+        "practice": "Write the correct form of the verb in brackets.\n1. Butterflies ______ (fly) from flower to flower.\n2. A spider ______ (spin) a web to catch insects.\n3. Ants ______ (live) in colonies.\n4. A cricket ______ (make) sounds with its wings.\n5. Worms ______ (help) make the soil healthy.\nCheck yourself: 1. fly 2. spins 3. live 4. makes 5. help.",
         "audio": "./media/audio/grade-2/grammar/eng-g02-t02-u06-grammar02.mp3"
       },
       {
@@ -3043,7 +3043,7 @@
         "ask": "Which sentence uses the pattern “Simple Present Tense for Facts”?",
         "opts": [
           {
-            "t": "The worm is under the rock.",
+            "t": "The worm crawled under the rock.",
             "ok": 0
           },
           {
@@ -3051,11 +3051,11 @@
             "ok": 1
           },
           {
-            "t": "They eat leaves and seeds.",
+            "t": "Where do spiders live?",
             "ok": 0
           },
           {
-            "t": "The ant is in the anthill.",
+            "t": "Look at the ant.",
             "ok": 0
           }
         ],
@@ -3198,7 +3198,7 @@
         "opts": [
           {
             "t": "towards",
-            "ok": 0
+            "ok": 1
           },
           {
             "t": "upon",
@@ -3209,11 +3209,11 @@
             "ok": 0
           },
           {
-            "t": "toward",
-            "ok": 1
+            "t": "among",
+            "ok": 0
           }
         ],
-        "why": "toward: Toward means in the direction of someone or something."
+        "why": "towards: Towards means in the direction of someone or something."
       },
       {
         "ask": "Which word fills the gap: ___ means on top of something.",
@@ -5315,7 +5315,7 @@
           ]
         },
         {
-          "title": "Words: small creatures and where they are",
+          "title": "More words for this unit",
           "words": [
             {
               "w": "pretty",
@@ -7169,6 +7169,19 @@
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -7951,7 +7964,7 @@
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -8156,7 +8169,7 @@
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

@@ -1026,7 +1026,7 @@
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These words all share one sound.</s><s>Your ears do this step, not your eyes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>I will say a word.</s><s>Listen right to the end of it.</s><s>Then look at the words and tap the one you heard.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>It is easy to tap the first word you can read.</s><s>Wait for the whole word before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it again as many times as you like.</s><s>Now listen.</s></mstts:express-as>' data-say="Listen to the word, then tap the word you heard.">
-      <div class="slide-head"><span class="n">4</span><h2>Endings that make nouns: -less and -ment</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Word endings: -less and -ment</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Listen to the word, then tap the word you heard.</span></div>
       <div class="stage">
         <div id="stage4"></div>
@@ -1036,7 +1036,7 @@
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the new words for this unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One word at a time.</s><s>Look at the picture.</s><s>Say the word out loud.</s><s>Then press Next word.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Reading a word in your head is not the same as saying it.</s><s>Your mouth has to learn it too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it to hear the word said properly.</s><s>Then say it with me.</s></mstts:express-as>' data-say="Say this word out loud.">
-      <div class="slide-head"><span class="n">5</span><h2>Words: light, sky and weather</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Words: finding out and describing</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Say this word out loud.</span></div>
       <div class="stage">
         <div id="stage5"></div>
@@ -1317,7 +1317,7 @@ First, find real information. Then, write it clearly. After that, check your spe
       "year": "2026–27",
       "days": [
         "What this unit is about · Unit lecture",
-        "Endings that make nouns: -less and -ment · Words: light, sky and weather",
+        "Word endings: -less and -ment · Words: finding out and describing",
         "Words: people, work and community (1 of 2) · Words: people, work and community (2 of 2)",
         "Word and picture · Words that add another idea",
         "Reading books · Story questions for each book",
@@ -2625,7 +2625,7 @@ First, find real information. Then, write it clearly. After that, check your spe
           "Write a six-sentence paragraph about the way your community shares news. Begin with a topic sentence, and join your ideas with and, but or because."
         ],
         "length": "1-2 organised paragraphs",
-        "model": "Our community shares news in three different ways. The market seller repeats whatever he hears, but the noticeboard keeps the message the same for everybody. I trust the noticeboard because its words never change on the way.",
+        "model": "Our community shares news in three different ways. The market seller repeats whatever he hears, but the noticeboard keeps the message the same for everybody. The class newspaper goes home with every child, and parents read it at the weekend. I trust the noticeboard because its words never change on the way. The market seller is quicker, but his stories sometimes grow as they travel. The newspaper is my favourite because children write it for their own town.",
         "criteria": [
           "My first sentence names the topic",
           "I used and, but and because at least once each",
@@ -3071,32 +3071,32 @@ First, find real information. Then, write it clearly. After that, check your spe
         "why": "Sharing the page is the last step, so the sequence connective Finally opens it."
       },
       {
-        "ask": "What new service did the librarian begin, and how often does she carry it out?",
+        "ask": "Which paragraph of ‘The Library That Came to Us’ explains what the librarian does every Thursday?",
         "opts": [
           {
-            "t": "She began taking books to the villages by cart, and she does it every Thursday.",
+            "t": "The second paragraph.",
             "ok": 1
           },
+          {
+            "t": "Her weekly challenge is the class newspaper, and she hopes to be a scientist one day.",
+            "ok": 0
+          },
+          {
+            "t": "They placed it near the school gate, because every parent and child walks past that spot.",
+            "ok": 0
+          }
+        ],
+        "why": "The second paragraph says that every Thursday she loads books into a cart and travels along the dusty road to the villages."
+      },
+      {
+        "ask": "What is Maya's weekly challenge, and what job does she hope to do one day?",
+        "opts": [
           {
             "t": "She asked the class to create a way to share information with the community.",
             "ok": 0
           },
           {
             "t": "She means the books and the readers matter far more than the plain white walls.",
-            "ok": 0
-          }
-        ],
-        "why": "The passage names the new service and then gives the day, so both facts sit side by side."
-      },
-      {
-        "ask": "What is Maya's weekly challenge, and what job does she hope to do one day?",
-        "opts": [
-          {
-            "t": "Her priority is to bring information and good stories to everyone in the villages.",
-            "ok": 0
-          },
-          {
-            "t": "He stopped teasing and called it high-quality work once he had actually read it.",
             "ok": 0
           },
           {
@@ -3110,7 +3110,7 @@ First, find real information. Then, write it clearly. After that, check your spe
         "ask": "The librarian says her priority is to bring two things to everyone. What are they?",
         "opts": [
           {
-            "t": "One reading room is singular, so it takes is, while many books is plural and takes are.",
+            "t": "He stopped teasing and called it high-quality work once he had actually read it.",
             "ok": 0
           },
           {
@@ -3118,7 +3118,7 @@ First, find real information. Then, write it clearly. After that, check your spe
             "ok": 1
           },
           {
-            "t": "The population was growing, because many new families had arrived in the neighbourhood.",
+            "t": "She asked the class to create a way to share information with the community.",
             "ok": 0
           }
         ],
@@ -3132,11 +3132,11 @@ First, find real information. Then, write it clearly. After that, check your spe
             "ok": 1
           },
           {
-            "t": "The population was growing, because many new families had arrived in the neighbourhood.",
+            "t": "Her priority is to bring information and good stories to everyone in the villages.",
             "ok": 0
           },
           {
-            "t": "She meant that what people learn matters more than the number of pages on the circle.",
+            "t": "One reading room is singular, so it takes is, while many books is plural and takes are.",
             "ok": 0
           }
         ],
@@ -3146,11 +3146,11 @@ First, find real information. Then, write it clearly. After that, check your spe
         "ask": "Why does the librarian say that a library is not the building?",
         "opts": [
           {
-            "t": "The speaker uses First, Then and Finally to put the three rooms in order.",
+            "t": "The population was growing, because many new families had arrived in the neighbourhood.",
             "ok": 0
           },
           {
-            "t": "She began taking books to the villages by cart, and she does it every Thursday.",
+            "t": "She meant that what people learn matters more than the number of pages on the circle.",
             "ok": 0
           },
           {
@@ -3200,7 +3200,7 @@ First, find real information. Then, write it clearly. After that, check your spe
         "lead": "Sort these twelve Unit 4 words into three columns: Things we share, Words that describe, Things we do.\nservice, information, knowledge, thought, circular, plain, quality, quantity, deliver, discover, erase, tease\nUnder each column, write one sentence explaining the rule you used to sort those four words.",
         "steps": [],
         "audio": "./media/audio/grade-4/activities/eng-g04-t02-u04-act05.mp3",
-        "check": "Four words per column, plus one explaining sentence for each column."
+        "check": "Things we share: service, information, knowledge, thought. Words that describe: circular, plain. Things we do: deliver, discover, erase, tease. Quality and quantity are naming words, so accept them in a group the learner names and explains, such as Things we measure."
       },
       {
         "n": 6,
@@ -3242,13 +3242,13 @@ First, find real information. Then, write it clearly. After that, check your spe
           "The classroom was full of ______ after the game.",
           "Did you ______ the new picture on the wall?"
         ],
-        "audio": "./media/audio/grade-4/activities/eng-g04-t02-u04-act08.mp3",
+        "audio": "./media/audio/grade-4/activities/eng-g04-t02-u04-act08rv.mp3",
         "check": "Each word is used once, so if one sentence is hard, do the others first and see what is left. These are the intended answers, not the only ones that could work — if a child's word also makes sense in the sentence, it is not wrong. 1. movement 2. besides 3. furthermore 4. energy 5. notice"
       },
       {
         "n": 9,
         "kind": "Sort and group",
-        "lead": "These words come from two word lists in this unit: “Words: people, work and community” and “Endings that make nouns: -less and -ment”. Write the right list name next to each word.",
+        "lead": "These words come from two word lists in this unit: “Words: people, work and community” and “Word endings: -less and -ment”. Write the right list name next to each word.",
         "steps": [
           "artist",
           "careless",
@@ -3322,7 +3322,7 @@ First, find real information. Then, write it clearly. After that, check your spe
         "ask": "Which sentence uses the pattern “There is / There are”?",
         "opts": [
           {
-            "t": "There are many books.",
+            "t": "They deliver letters.",
             "ok": 0
           },
           {
@@ -3344,11 +3344,11 @@ First, find real information. Then, write it clearly. After that, check your spe
         "ask": "Which sentence uses the pattern “Present Simple”?",
         "opts": [
           {
-            "t": "I need some water.",
+            "t": "Please erase your mistakes neatly.",
             "ok": 0
           },
           {
-            "t": "There are three scientists in the laboratory.",
+            "t": "The letters were delivered yesterday.",
             "ok": 0
           },
           {
@@ -3356,7 +3356,7 @@ First, find real information. Then, write it clearly. After that, check your spe
             "ok": 1
           },
           {
-            "t": "The book is read by the teacher.",
+            "t": "Close the door.",
             "ok": 0
           }
         ],
@@ -3458,7 +3458,7 @@ First, find real information. Then, write it clearly. After that, check your spe
             "ok": 1
           },
           {
-            "t": "furthermore",
+            "t": "payment",
             "ok": 0
           },
           {
@@ -3473,7 +3473,7 @@ First, find real information. Then, write it clearly. After that, check your spe
         "why": "besides: As well as; in addition to."
       },
       {
-        "ask": "Which word fills the gap: To ___ means to see or hear something for the first time.",
+        "ask": "Which word fills the gap: To ___ means to see or become aware of something.",
         "opts": [
           {
             "t": "discover",
@@ -4036,20 +4036,20 @@ First, find real information. Then, write it clearly. After that, check your spe
           "description": "Use unit evidence to solve each reading clue.",
           "rounds": [
             {
-              "prompt": "What new service did the librarian begin, and how often does she carry it out?",
+              "prompt": "Which paragraph of ‘The Library That Came to Us’ explains what the librarian does every Thursday?",
               "choices": [
-                "She began taking books to the villages by cart, and she does it every Thursday.",
-                "She asked the class to create a way to share information with the community.",
-                "She means the books and the readers matter far more than the plain white walls."
+                "The second paragraph.",
+                "Her weekly challenge is the class newspaper, and she hopes to be a scientist one day.",
+                "They placed it near the school gate, because every parent and child walks past that spot."
               ],
-              "answer": "She began taking books to the villages by cart, and she does it every Thursday.",
-              "explanation": "The passage names the new service and then gives the day, so both facts sit side by side."
+              "answer": "The second paragraph.",
+              "explanation": "The second paragraph says that every Thursday she loads books into a cart and travels along the dusty road to the villages."
             },
             {
               "prompt": "What is Maya's weekly challenge, and what job does she hope to do one day?",
               "choices": [
-                "Her priority is to bring information and good stories to everyone in the villages.",
-                "He stopped teasing and called it high-quality work once he had actually read it.",
+                "She asked the class to create a way to share information with the community.",
+                "She means the books and the readers matter far more than the plain white walls.",
                 "Her weekly challenge is the class newspaper, and she hopes to be a scientist one day."
               ],
               "answer": "Her weekly challenge is the class newspaper, and she hopes to be a scientist one day.",
@@ -4058,9 +4058,9 @@ First, find real information. Then, write it clearly. After that, check your spe
             {
               "prompt": "The librarian says her priority is to bring two things to everyone. What are they?",
               "choices": [
-                "One reading room is singular, so it takes is, while many books is plural and takes are.",
+                "He stopped teasing and called it high-quality work once he had actually read it.",
                 "Her priority is to bring information and good stories to everyone in the villages.",
-                "The population was growing, because many new families had arrived in the neighbourhood."
+                "She asked the class to create a way to share information with the community."
               ],
               "answer": "Her priority is to bring information and good stories to everyone in the villages.",
               "explanation": "She states her priority inside the quotation marks, straight after she explains what a library really is."
@@ -4069,8 +4069,8 @@ First, find real information. Then, write it clearly. After that, check your spe
               "prompt": "Which three sequence connectives does the speaker use to put the three rooms in order?",
               "choices": [
                 "The speaker uses First, Then and Finally to put the three rooms in order.",
-                "The population was growing, because many new families had arrived in the neighbourhood.",
-                "She meant that what people learn matters more than the number of pages on the circle."
+                "Her priority is to bring information and good stories to everyone in the villages.",
+                "One reading room is singular, so it takes is, while many books is plural and takes are."
               ],
               "answer": "The speaker uses First, Then and Finally to put the three rooms in order.",
               "explanation": "Each connective opens a new sentence and is followed by a comma, which marks the next step of the tour."
@@ -4078,8 +4078,8 @@ First, find real information. Then, write it clearly. After that, check your spe
             {
               "prompt": "Why does the librarian say that a library is not the building?",
               "choices": [
-                "The speaker uses First, Then and Finally to put the three rooms in order.",
-                "She began taking books to the villages by cart, and she does it every Thursday.",
+                "The population was growing, because many new families had arrived in the neighbourhood.",
+                "She meant that what people learn matters more than the number of pages on the circle.",
                 "She means the books and the readers matter far more than the plain white walls."
               ],
               "answer": "She means the books and the readers matter far more than the plain white walls.",
@@ -4088,9 +4088,9 @@ First, find real information. Then, write it clearly. After that, check your spe
             {
               "prompt": "The speaker says there is a reading room but there are many books. Why does the verb change?",
               "choices": [
-                "Her weekly challenge is the class newspaper, and she hopes to be a scientist one day.",
+                "The second paragraph.",
                 "One reading room is singular, so it takes is, while many books is plural and takes are.",
-                "They placed it near the school gate, because every parent and child walks past that spot."
+                "The speaker uses First, Then and Finally to put the three rooms in order."
               ],
               "answer": "One reading room is singular, so it takes is, while many books is plural and takes are.",
               "explanation": "There is introduces a single thing, and there are introduces two or more, so the verb has to change."
@@ -5574,7 +5574,7 @@ First, find real information. Then, write it clearly. After that, check your spe
     "resources": {
       "words": [
         {
-          "title": "Endings that make nouns: -less and -ment",
+          "title": "Word endings: -less and -ment",
           "words": [
             {
               "w": "careless",
@@ -5632,7 +5632,7 @@ First, find real information. Then, write it clearly. After that, check your spe
           ]
         },
         {
-          "title": "Words: light, sky and weather",
+          "title": "Words: finding out and describing",
           "words": [
             {
               "w": "energy",
@@ -7595,6 +7595,19 @@ First, find real information. Then, write it clearly. After that, check your spe
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -8377,7 +8390,7 @@ First, find real information. Then, write it clearly. After that, check your spe
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -8582,7 +8595,7 @@ First, find real information. Then, write it clearly. After that, check your spe
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

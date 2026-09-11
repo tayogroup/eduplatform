@@ -46,6 +46,14 @@ those, and no less.
 
     python tools/fill-english-core-word-prompts.py --grade 3          # dry run
     python tools/fill-english-core-word-prompts.py --grade 3 --write
+    python tools/fill-english-core-word-prompts.py --grade 3 --story --write
+
+--story fills the STORY-GLOSSARY links ("Words from our stories") instead of
+the core ones, in the form every link in the grade agrees on (the glossary's
+own form - the core links' bare spelling is a core-word convention, not a
+glossary one). The Grade 1 validation listed 81 and 252 of these empty (area
+3); on 2026-09-11 they were the only empty ones left in Grades 1-4 (93, 217,
+295 and 310 links).
 
 Idempotent: a second run reports nothing to do.
 """
@@ -64,6 +72,17 @@ COVER = 0.80
 def args():
     argv = list(sys.argv[1:])
     write = "--write" in argv
+    global STORY, PREFIX
+    STORY = "--story" in argv
+    # --spelling-prefix TEXT: a person's choice of spelling form where the
+    # grade's links split (Grade 2's glossary: 620 "Say, tap and trace:"
+    # against 248 bare). The tool still refuses to guess; this is the answer
+    # it asks for, given on the command line where the diff shows it.
+    PREFIX = None
+    if "--spelling-prefix" in argv:
+        i = argv.index("--spelling-prefix")
+        PREFIX = argv[i + 1]
+        del argv[i:i + 2]
     grade = None
     if "--grade" in argv:
         i = argv.index("--grade")
@@ -71,7 +90,7 @@ def args():
             grade = int(argv[i + 1])
             del argv[i:i + 2]
     for a in argv:
-        if a != "--write":
+        if a not in ("--write", "--story"):
             sys.exit("REFUSED: unrecognised argument %r" % a)
     if grade is None:
         sys.exit("REFUSED: --grade N is required")
@@ -104,6 +123,11 @@ def learn_forms(units, core_only, fields=None):
         taught = {g["id"] for g in u.get("vocabularyGroups") or [] if g.get("title") != STORY_GLOSSARY_GROUP}
         for l in u["dictionaryLinks"]:
             if core_only and l.get("groupId") not in taught:
+                continue
+            # --story learns from the story links' own siblings only: in Grades
+            # 2 and 3 the core links spell bare and the glossary links say "Say,
+            # tap and trace:", and pooling the two reads as no agreement at all
+            if STORY and not core_only and l.get("groupId") in taught:
                 continue
             w = word_of(l)
             if not w:
@@ -155,7 +179,8 @@ def main():
             sys.exit("REFUSED: %s does not round-trip through this writer" % p)
         docs.append((full, p, doc))
     units = [d for _, _, d in docs]
-    core_forms = learn_forms(units, True)
+    # --story: the glossary's form, read from every link in the grade
+    core_forms = learn_forms(units, False) if STORY else learn_forms(units, True)
     forms = {}
     for name in ("spellingPractice", "aiTutorPrompt"):
         if core_forms[name]:
@@ -164,6 +189,8 @@ def main():
             # the fallback is asked about THIS field only: Grade 2's glossary
             # links disagree on a spelling form it has no need to learn there
             forms[name] = learn_forms(units, False, fields={name})[name]
+    if PREFIX is not None:
+        forms["spellingPractice"] = (PREFIX, 0, 0)
     sp_form, ai_form = forms["spellingPractice"], forms["aiTutorPrompt"]
     print("\n  Grade %d forms, read from the grade's own links:" % grade)
     if sp_form:
@@ -177,7 +204,7 @@ def main():
         taught = {g["id"] for g in doc.get("vocabularyGroups") or [] if g.get("title") != STORY_GLOSSARY_GROUP}
         n_sp = n_ai = 0
         for l in doc["dictionaryLinks"]:
-            if l.get("groupId") not in taught:
+            if (l.get("groupId") in taught) == STORY:
                 continue
             w = word_of(l)
             if not w:

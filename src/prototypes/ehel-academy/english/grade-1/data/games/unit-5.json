@@ -287,31 +287,41 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Which animal did Amal and Grandma go to see first?",
+          "prompt": "Who is in this story?",
+          "choices": [
+            "Amal, Grandma and Adam",
+            "Warm bread and fresh milk",
+            "Tired, but happy"
+          ],
+          "answer": "Amal, Grandma and Adam",
+          "explanation": "Amal visits Grandma on the farm, and her big brother Adam drives past on the tractor."
+        },
+        {
+          "prompt": "Where do Amal and Grandma spend the day?",
           "choices": [
             "The cow",
-            "A little white egg",
-            "The ___ says ___. (for example: The cow says moo.)"
+            "Because Amal was kind and fed her",
+            "On Grandma's farm"
+          ],
+          "answer": "On Grandma's farm",
+          "explanation": "Amal lives near a small farm where her grandma keeps animals."
+        },
+        {
+          "prompt": "Which animal did Amal and Grandma go to see first?",
+          "choices": [
+            "The ___ says ___. (for example: The cow says moo.)",
+            "The cow",
+            "The goat"
           ],
           "answer": "The cow",
           "explanation": "The story says, 'First they went to see the cow.'"
         },
         {
-          "prompt": "Which animal wanted to eat Amal's hat?",
-          "choices": [
-            "Tired, but happy",
-            "The ___ is ___ing.",
-            "The goat"
-          ],
-          "answer": "The goat",
-          "explanation": "The story says the goat wanted to eat Amal's hat, and Amal laughed."
-        },
-        {
           "prompt": "What did Amal find in the straw after she fed the hen?",
           "choices": [
-            "The cow",
             "A little white egg",
-            "Because Amal was kind and fed her"
+            "The goat",
+            "The ___ is ___ing."
           ],
           "answer": "A little white egg",
           "explanation": "Amal saw something warm in the straw: it was a little white egg."
@@ -319,29 +329,19 @@
         {
           "prompt": "How did Amal feel at the end of her farm day?",
           "choices": [
-            "Tired, but happy",
-            "The ___ says ___. (for example: The cow says moo.)",
-            "The goat"
+            "A little white egg",
+            "Amal, Grandma and Adam",
+            "Tired, but happy"
           ],
           "answer": "Tired, but happy",
           "explanation": "After waving to Adam the story says she was tired, but she was happy."
         },
         {
-          "prompt": "Why did the hen give Amal an egg?",
-          "choices": [
-            "The ___ is ___ing.",
-            "A little white egg",
-            "Because Amal was kind and fed her"
-          ],
-          "answer": "Because Amal was kind and fed her",
-          "explanation": "Grandma says, 'When you are kind to the animals, they are kind to you.'"
-        },
-        {
           "prompt": "Which talk line makes an animal sound?",
           "choices": [
-            "Tired, but happy",
+            "On Grandma's farm",
             "The ___ says ___. (for example: The cow says moo.)",
-            "The cow"
+            "Tired, but happy"
           ],
           "answer": "The ___ says ___. (for example: The cow says moo.)",
           "explanation": "'The ___ says ___' is the line for animal sounds."
@@ -778,15 +778,15 @@
           "explanation": "First shows the start. Then and next come in the middle and last comes at the end."
         },
         {
-          "prompt": "Which word names a farm animal?",
+          "prompt": "You put a seed in the ground and give it water and sun. What will happen?",
           "choices": [
-            "tractor",
-            "barn",
-            "goat",
-            "grass"
+            "It will grow into a plant",
+            "It will turn into an egg",
+            "It will become a hen",
+            "Nothing will happen"
           ],
-          "answer": "goat",
-          "explanation": "A goat is an animal. A tractor, a barn and grass are on a farm too. But they are not animals."
+          "answer": "It will grow into a plant",
+          "explanation": "A seed grows into a plant with water and sun. A chick comes from an egg, not from a seed."
         }
       ]
     },

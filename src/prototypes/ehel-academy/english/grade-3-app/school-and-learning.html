@@ -3263,7 +3263,7 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
           "contest\na. a place with many books to read or borrow\nb. a game or test to see who is best\nc. a tool that cleans pencil marks\nd. a person who helps us learn"
         ],
         "audio": "./media/audio/grade-3/activities/eng-g03-t01-u02-act02.mp3",
-        "check": "c, a, d, b — the two people words are teacher and author, so check that the learner keeps them apart."
+        "check": "c, a, d, b — teacher is the only person word, so check that the learner does not pair it with the place, library."
       },
       {
         "n": 3,
@@ -3330,7 +3330,7 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
           "The football match is on ______ tonight.",
           "We used the ______ to find facts about Kenya."
         ],
-        "audio": "./media/audio/grade-3/activities/eng-g03-t01-u02-act08.mp3",
+        "audio": "./media/audio/grade-3/activities/eng-g03-t01-u02-act08rv.mp3",
         "check": "Each word is used once, so if one sentence is hard, do the others first and see what is left. These are the intended answers, not the only ones that could work — if a child's word also makes sense in the sentence, it is not wrong. 1. workbook 2. camera 3. radio 4. television 5. internet"
       },
       {
@@ -3392,11 +3392,11 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
             "ok": 1
           },
           {
-            "t": "Did you eat?",
+            "t": "They play.",
             "ok": 0
           },
           {
-            "t": "What did you learn in mathematics?",
+            "t": "I like the library because it is quiet.",
             "ok": 0
           },
           {
@@ -7541,6 +7541,19 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -8323,7 +8336,7 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -8528,7 +8541,7 @@ This is my ______. (Write one sentence using the possessive ’s, like “This i
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

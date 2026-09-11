@@ -2474,7 +2474,7 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
           "Keep the facts exactly as they were, but improve the verbs, the joining words and the punctuation of the direct speech."
         ],
         "length": "Two paragraphs of five to seven sentences",
-        "model": "Omar has sorted the mail at the post counter for eleven years. “Not everyone owns a phone,” he told me, “so one letter can still bring peace.”",
+        "model": "Omar sorts the mail and weighs the parcels at the post counter every morning. “Not everyone owns a phone,” he told me, “so one letter can still bring peace.”",
         "criteria": [
           "I kept every fact from my first report",
           "I punctuated direct speech with commas and speech marks",
@@ -2967,28 +2967,6 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
         "why": "Grandma Hana puts down her tea at the kitchen table and compares tonight with Unit 1."
       },
       {
-        "ask": "In \"Amal's English Voice\", who tells Amal that she now reads like somebody who owns the words?",
-        "opts": [
-          {
-            "t": "Teacher Yasmin.",
-            "ok": 0
-          },
-          {
-            "t": "Grandma Hana.",
-            "ok": 1
-          },
-          {
-            "t": "Her brother Adam.",
-            "ok": 0
-          },
-          {
-            "t": "Her friend Nora.",
-            "ok": 0
-          }
-        ],
-        "why": "Grandma Hana puts down her tea at the kitchen table and compares tonight with Unit 1."
-      },
-      {
         "ask": "What did Teacher Yasmin place on every desk, and what did she tell the class to choose?",
         "opts": [
           {
@@ -3059,6 +3037,24 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
           }
         ],
         "why": "Each room in the poem holds one part of the year, so holding the key means all of that learning belongs to her now."
+      },
+      {
+        "ask": "What does Teacher Yasmin offer a learner who feels too nervous to present on Friday?",
+        "opts": [
+          {
+            "t": "It means the writer can now open and use everything she found in the nine rooms, whenever she needs it.",
+            "ok": 0
+          },
+          {
+            "t": "She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice.",
+            "ok": 0
+          },
+          {
+            "t": "She offers to let that learner present to her alone on Thursday, with nobody else in the room.",
+            "ok": 1
+          }
+        ],
+        "why": "Her reply to Leo sets out the private Thursday rehearsal as the alternative to the public evening."
       }
     ],
     "activities": [
@@ -3135,7 +3131,7 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
           "The plan is cheap; ______, it is quick.",
           "We could walk; ______, we could cycle."
         ],
-        "audio": "./media/audio/grade-4/activities/eng-g04-t03-u10-act08.mp3",
+        "audio": "./media/audio/grade-4/activities/eng-g04-t03-u10-act08rv.mp3",
         "check": "Each word is used once, so if one sentence is hard, do the others first and see what is left. These are the intended answers, not the only ones that could work — if a child's word also makes sense in the sentence, it is not wrong. 1. adventure 2. consequently 3. hence 4. moreover 5. alternatively"
       },
       {
@@ -3227,7 +3223,7 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
             "ok": 0
           },
           {
-            "t": "Did Sami deliver the invitations?",
+            "t": "Where does Omar sort the mail?",
             "ok": 0
           }
         ],
@@ -3307,7 +3303,7 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
             "ok": 0
           },
           {
-            "t": "Join ideas with and, but, so, because, although and so that.",
+            "t": "We finished the board, so we rehearsed our talk.",
             "ok": 1
           },
           {
@@ -3898,7 +3894,7 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
               "explanation": "Part 3 of the brief fixes the talk at two minutes, which is why speakers slow down rather than add pages."
             },
             {
-              "prompt": "In \"Amal's English Voice\", who tells Amal that she now reads like somebody who owns the words?",
+              "prompt": "In “Amal's English Voice”, who tells Amal that she now reads like somebody who owns the words?",
               "choices": [
                 "Teacher Yasmin.",
                 "Grandma Hana.",
@@ -4185,7 +4181,7 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
               "explanation": "Part 3 of the brief fixes the talk at two minutes, which is why speakers slow down rather than add pages."
             },
             {
-              "prompt": "In \"Amal's English Voice\", who tells Amal that she now reads like somebody who owns the words?",
+              "prompt": "In “Amal's English Voice”, who tells Amal that she now reads like somebody who owns the words?",
               "choices": [
                 "Teacher Yasmin.",
                 "Grandma Hana.",
@@ -7521,6 +7517,19 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
   function playHere(idx, source, fallback) {
     if (cur === idx) playClip(source, fallback);
   }
+  /* A READ-ONLY STEP IS DONE WHEN IT IS SEEN, not when it is drawn. The
+     overview and the unit plan used to call finish() from their renderer,
+     and every renderer runs at load - so the plan (step 2) was ticked on a
+     fresh page before a child had ever opened it, and reported to the school
+     as done (Grade 1 re-validation, 11 September, area 22). On screen now:
+     finish as before. Not on screen: finish when the deck shows it, silently,
+     because the done line spoken on arrival would cut off the step's own
+     instruction. */
+  function finishWhenShown(i, msg) {
+    if (cur === i) { finish(i, msg); return; }
+    const before = ONSHOW[i];
+    ONSHOW[i] = () => { if (before) before(); finish(i); };
+  }
   /* show(i, true) speaks the slide's data-say - the instruction - and the
      recording is the thing the instruction is about, so playing it straight
      away cuts the instruction off mid-sentence (playClip stops the voice on
@@ -8303,7 +8312,7 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
       '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
       "</div>";
     $(el.score).textContent = days.length + " school days";
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- the unit's own readings, as a shelf -------------------------
@@ -8508,7 +8517,7 @@ Start like this: “This page shows ______. It proves that I can ______.”</spa
     $(el.score).textContent = (d.outcomes || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
-    finish(o.finish, o.done);
+    finishWhenShown(o.finish, o.done);
   }
 
   /* ---- how did I do? ----------------------------------------------

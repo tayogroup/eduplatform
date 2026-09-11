@@ -256,7 +256,7 @@
             "market"
           ],
           "answer": "mum",
-          "explanation": "Mum is a family member. The other words start with m too. But they are a place, the sky and a thing."
+          "explanation": "Mum is a family member. The other words start with m too. But they are a place, a thing in the sky and a thing."
         },
         {
           "prompt": "Which word is an action you do in a ball game?",
@@ -280,31 +280,41 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
+          "prompt": "Who is this story about?",
+          "choices": [
+            "Amal",
+            "In her learning folder",
+            "Six"
+          ],
+          "answer": "Amal",
+          "explanation": "The story is about Amal looking back at her year and sharing her new book."
+        },
+        {
           "prompt": "Where did Amal find her letters and family pictures?",
           "choices": [
-            "In her learning folder",
-            "They clapped",
-            "Labels and short patterns"
+            "My First English World",
+            "One minute",
+            "In her learning folder"
           ],
           "answer": "In her learning folder",
           "explanation": "Amal opened her learning folder and found all her work from the year."
         },
         {
-          "prompt": "What is the name of Amal's new book?",
+          "prompt": "What did everyone do when Amal finished?",
           "choices": [
-            "Three",
-            "The family page",
+            "A label and a short pattern sentence",
+            "They clapped",
             "My First English World"
           ],
-          "answer": "My First English World",
-          "explanation": "Amal made a new book called My First English World."
+          "answer": "They clapped",
+          "explanation": "The last line says everyone clapped."
         },
         {
           "prompt": "How many favourite pieces must you choose?",
           "choices": [
-            "'This is my mum. I love my family.'",
             "Three",
-            "Six"
+            "They clapped",
+            "The family page"
           ],
           "answer": "Three",
           "explanation": "The first step says, 'Choose three favourite pieces.'"
@@ -312,32 +322,22 @@
         {
           "prompt": "How long is your show-and-tell?",
           "choices": [
-            "One minute",
-            "Six",
-            "To read more words"
+            "It tells you how to make your book",
+            "'This is my mum. I love my family.'",
+            "One minute"
           ],
           "answer": "One minute",
           "explanation": "The steps say to practise a one-minute show-and-tell."
         },
         {
-          "prompt": "What two things do you add to your book pages?",
+          "prompt": "Which page does the learner like best?",
           "choices": [
-            "One minute",
-            "In her learning folder",
-            "Labels and short patterns"
+            "To read more words",
+            "The family page",
+            "First"
           ],
-          "answer": "Labels and short patterns",
-          "explanation": "The steps say, 'Add labels and short patterns.'"
-        },
-        {
-          "prompt": "What does the learner say about her mum?",
-          "choices": [
-            "My First English World",
-            "'This is my mum. I love my family.'",
-            "Labels and short patterns"
-          ],
-          "answer": "'This is my mum. I love my family.'",
-          "explanation": "When the teacher asks what she can say, the learner says those two lines."
+          "answer": "The family page",
+          "explanation": "The text says: The family page"
         }
       ]
     },
@@ -401,11 +401,11 @@
           "tokens": [
             "Adam.",
             "said",
-            "sorry,\"",
+            "sorry,”",
             "am",
-            "\"I"
+            "“I"
           ],
-          "answer": "\"I am sorry,\" said Adam."
+          "answer": "“I am sorry,” said Adam."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -775,15 +775,15 @@
           "explanation": "Doing it again and checking helps you share your best work. The other choices would spoil it."
         },
         {
-          "prompt": "Which word fills the gap: My name ___ Maya.",
+          "prompt": "You are making your book. Which page comes first?",
           "choices": [
-            "is",
-            "am",
-            "be",
-            "are"
+            "The page with your name on it",
+            "The page about the weather",
+            "The page about your next goal",
+            "The page about a place you know"
           ],
-          "answer": "is",
-          "explanation": "My name is one thing, so we use is. Are is for more than one and am only goes with I."
+          "answer": "The page with your name on it",
+          "explanation": "Page 1 is the cover and it has your name on it. Your next goal goes on the last page."
         }
       ]
     },

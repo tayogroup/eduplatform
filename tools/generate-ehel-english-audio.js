@@ -481,12 +481,21 @@ function itemsForUnit(unit, grade) {
     // The title is already on screen above the Listen button, so narrating it
     // restated every card ("The letter A says /a/. Say the short sound /a/…").
     // The reviewed scripts drop that opening; the audio has to match them.
-    return (unit.grammar || []).map((g) => ({
-      id: g.grammarId, ref: g, title: g.title,
-      text: narration(`${g.explanation} ${g.ruleAndExamples || ""}`),
-      source: `./${dir}/${g.grammarId}.mp3`,
-      output: path.join(ENGLISH, dir, `${g.grammarId}.mp3`),
-    }));
+    // `audioRevision` renames the clip, as it does for activities, writing and
+    // vocabulary: a grammar explanation whose TEXT was rewritten re-records
+    // under a new filename, or every edge node and browser that played the old
+    // one keeps serving it for a year (Bunny caches media by path). The grammar
+    // path ignored the field until 2026-09-11, when Grade 1's 18 rewritten
+    // explanations were re-recorded.
+    return (unit.grammar || []).map((g) => {
+      const id = `${g.grammarId}${g.audio?.audioRevision || ""}`;
+      return {
+        id, ref: g, title: g.title,
+        text: narration(`${g.explanation} ${g.ruleAndExamples || ""}`),
+        source: `./${dir}/${id}.mp3`,
+        output: path.join(ENGLISH, dir, `${id}.mp3`),
+      };
+    });
   }
   if (category === "vocabulary") {
     const items = [];
@@ -627,13 +636,18 @@ function itemsForUnit(unit, grade) {
       };
     });
   }
-  // speaking
-  return (unit.speaking || []).map((s) => ({
-    id: s.speakingId, ref: s, title: s.title,
-    text: narration(s.instructionsAndModelLines),
-    source: `./${dir}/${s.speakingId}.mp3`,
-    output: path.join(ENGLISH, dir, `${s.speakingId}.mp3`),
-  }));
+  // speaking. `audioRevision` renames the clip, as it does for every category
+  // above: the speaking path ignored the field until 2026-09-11, when the
+  // Grades 1-4 content review rewrote three speaking tasks' instructions.
+  return (unit.speaking || []).map((s) => {
+    const id = `${s.speakingId}${s.audio?.audioRevision || ""}`;
+    return {
+      id, ref: s, title: s.title,
+      text: narration(s.instructionsAndModelLines),
+      source: `./${dir}/${id}.mp3`,
+      output: path.join(ENGLISH, dir, `${id}.mp3`),
+    };
+  });
 }
 
 // The request timeout this file used to own is now in the shared helper, and it

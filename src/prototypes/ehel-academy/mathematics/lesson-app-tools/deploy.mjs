@@ -101,7 +101,9 @@ for (const [src, remote] of MODULES) {
   plan.push({ local: path.basename(src), remote, buf, sha1: sha1(buf) });
 }
 
-const ctype = (r) => (r.endsWith(".js") ? "text/javascript; charset=utf-8" : "text/html; charset=utf-8");
+const ctype = (r) => (r.endsWith(".js") ? "text/javascript; charset=utf-8"
+  : r.endsWith(".json") ? "application/json; charset=utf-8"
+  : "text/html; charset=utf-8");
 
 console.log("\n" + (UPLOAD ? "Uploading" : "PLAN (add --upload)") + " " +
   cfg.subjectLabel + " " + cfg.gradeLabel + " to " + CDN + "/" + enc(REMOTE) + "/\n");
@@ -117,9 +119,15 @@ const K = key();
  * be cached at the edge on a path that did not exist before. It became a real
  * window on 2026-09-11, when the live Grade 1 and 2 pages first imported
  * seb-session.js, a module never before deployed beside them. */
+/* .json rides with the modules, for the same reason and one step weaker: the
+ * search index is fetched by the hub and by every lesson page, and a page live
+ * before its index answers every query with "the lesson list could not be
+ * loaded". Not fatal the way a missing module is - the lesson itself works -
+ * but the miss is edge-cacheable on a path that did not exist before. */
+const data = (r) => r.endsWith(".js") || r.endsWith(".json");
 const putOrder = [
-  ...plan.filter((f) => f.remote.endsWith(".js")),
-  ...plan.filter((f) => !f.remote.endsWith(".js") && f.remote !== "index.html"),
+  ...plan.filter((f) => data(f.remote)),
+  ...plan.filter((f) => !data(f.remote) && f.remote !== "index.html"),
   ...plan.filter((f) => f.remote === "index.html"),
 ];
 if (putOrder.length !== plan.length) { console.error("upload order lost a file"); process.exit(2); }

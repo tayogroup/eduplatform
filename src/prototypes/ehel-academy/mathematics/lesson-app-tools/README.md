@@ -34,7 +34,10 @@ python ../lesson-app-tools/add-reasoning-step.py --app . --write       # "How do
 python ../lesson-app-tools/add-explanations.py --app . --write         # every slide's Explain words (explanations.txt)
 python ../lesson-app-tools/add-warmup.py --app . --write               # a warm-up at the head of every lesson (warmUp)
 python ../lesson-app-tools/build-grownup-section.py --app . --write     # the hub's teachers-and-parents section
+python ../lesson-app-tools/build-lesson-search.py     # derive lesson-search.json from the built pages
+python ../lesson-app-tools/add-lesson-search.py       # the search field in bar 1, beside the picker
 python ../lesson-app-tools/check-lessons.py           # the gate
+python ../lesson-app-tools/check-lesson-search.py     # the gate on the search
 node   ../lesson-app-tools/deploy.mjs --app .         # plan; --upload writes
 
 # a page wired before a change to the wiring tool reached it - that tool skips
@@ -63,6 +66,18 @@ half-working, but the order is not cosmetic:
   its pass mark - so it runs after everything that builds or rebuilds them, and
   on Grade 4 after `build-hub.py`, which rebuilds the hub from Grade 2's and
   would wipe the section.
+- The two **lesson-search** tools run LAST, after everything that writes a
+  page. `build-lesson-search.py` reads the built slides, so anything that adds
+  one afterwards leaves the index stale — and `add-lesson-search.py` injects
+  into pages, so any tool that REGENERATES a page afterwards silently drops
+  the field. Both happened on 2026-09-12: `add-reasoning-step.py` ran on
+  grade-1-app/g1v2 from another session while the search was being built, the
+  index went stale by exactly one step per lesson (caught by
+  `check-lesson-search.py`, which is why the staleness check is a subprocess
+  of the real builder rather than a second parser), and the one lesson it
+  rewrote came back with no search field. Both tools are idempotent, so the
+  repair is to run them again — re-running the injector patched that one page
+  and skipped the seven that still had it.
 - `add-reasoning-step.py` before `add-explanations.py`: the step adds a slide,
   and `add-explanations.py` fails if any slide has no explanation at all (the
   reasoning slide carries its own, shared with Grade 3's). Both before

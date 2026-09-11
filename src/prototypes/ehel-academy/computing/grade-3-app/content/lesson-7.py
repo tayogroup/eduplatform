@@ -23,7 +23,7 @@ LESSON = {
                  ["Tap all seven parts."]),
              {"items": [
                  {"pic": "\U0001F170️", "label": "button A", "sub": "input", "say": "Button A. An input. Press it and the program can feel it."},
-                 {"pic": "\U0001FAE8", "label": "shake sensor", "sub": "input", "say": "The shake sensor. An input. Shake Bitsy and the program knows."},
+                 {"pic": "\U0001F4F3", "label": "shake sensor", "sub": "input", "say": "The shake sensor. An input. Shake Bitsy and the program knows."},
                  {"pic": "\U0001F3A4", "label": "microphone", "sub": "input", "say": "The microphone. An input. Clap, and the program hears it."},
                  {"pic": "\U0001F4A1", "label": "the 25 lights", "sub": "output", "say": "Twenty-five little lights in a grid. An output. The program can draw a heart or a smile on them."},
                  {"pic": "\U0001F50A", "label": "the speaker", "sub": "output", "say": "The speaker. An output. It beeps when the program says so."},
@@ -61,7 +61,7 @@ LESSON = {
                  {"pic": "\U0001F6A6", "label": "traffic lights", "say": "Traffic lights. A program switches red, amber, green in order, and holds green longer on the busy road."},
                  {"pic": "\U0001F6AA", "label": "an automatic door", "say": "An automatic door. A sensor is the input; the program turns a motor and the door opens."},
                  {"pic": "\U0001F9FA", "label": "a washing machine", "say": "A washing machine. Its program turns the drum, lets water in, heats it, spins. You chose the setting: that was the input."},
-                 {"pic": "\U0001F6D7", "label": "a lift", "say": "A lift. You press 3, the input. The program moves the lift to floor 3 and opens the doors."},
+                 {"pic": "\U0001F3E2", "label": "a lift", "say": "A lift. You press 3, the input. The program moves the lift to floor 3 and opens the doors."},
                  {"pic": "\U0001F4A1", "label": "a smart light", "say": "A smart light. A program turns it on at sunset and off at bedtime."},
                  {"pic": "\U0001F6B2", "label": "a robot lawnmower", "say": "A robot lawnmower. A program drives it round the grass and back to its charger."},
              ], "need": 6,
@@ -97,7 +97,7 @@ LESSON = {
               "items": [
                   {"pic": "\U0001F170️", "label": "a button you press", "bin": "in", "why": "The device senses the press: input."},
                   {"pic": "\U0001F4A1", "label": "a light that comes on", "bin": "out", "why": "The device does it: output."},
-                  {"pic": "\U0001FAE8", "label": "a shake", "bin": "in", "why": "Sensed: input."},
+                  {"pic": "\U0001F4F3", "label": "a shake", "bin": "in", "why": "Sensed: input."},
                   {"pic": "\U0001F50A", "label": "a beep", "bin": "out", "why": "Made: output."},
                   {"pic": "\U0001F3A4", "label": "a clap heard by the microphone", "bin": "in", "why": "Sensed: input."},
                   {"pic": "⚙️", "label": "a motor turning", "bin": "out", "why": "Done: output."},
@@ -111,7 +111,7 @@ LESSON = {
              explain(["Nothing new here."], ["When blocks, inputs, outputs, machines."], [], ["Read, think, tap."]),
              {"items": [
                  q("A device program starts with...", "\U0001F170️", "a when block that names the input", ["a beep", "the lights", "the end"], "Nothing starts before the input."),
-                 q("The program says 'when button A is pressed'. You shake Bitsy. What happens?", "\U0001FAE8", "nothing: the program is waiting for A", ["a heart appears", "it beeps", "the motor turns"], "The wrong input starts nothing."),
+                 q("The program says 'when button A is pressed'. You shake Bitsy. What happens?", "\U0001F4F3", "nothing: the program is waiting for A", ["a heart appears", "it beeps", "the motor turns"], "The wrong input starts nothing."),
                  q("A program turning a motor to open a door is an example of...", "\U0001F6AA", "a computer controlling a physical object", ["a game", "a spreadsheet", "a network"], "Programs can control real things."),
              ]},
              "When, input, output, machine."),
@@ -124,7 +124,7 @@ LESSON = {
                  q("Which is an OUTPUT on Bitsy?", "\U0001F4E4", "the speaker", ["button A", "the shake sensor", "the microphone"], "The speaker makes sound: output."),
                  q("'When it hears a clap, show a smile.' The input is...", "\U0001F3A4", "the clap", ["the smile", "the lights", "the motor"], "The when block names the input."),
                  q("Where does the when block go?", "1️⃣", "first", ["last", "in the middle", "anywhere"], "The input starts the program."),
-                 q("A lift going to the floor you pressed is...", "\U0001F6D7", "a computer controlling a machine from an input", ["magic", "a person pulling a rope", "a network"], "Press is the input; the program moves the lift."),
+                 q("A lift going to the floor you pressed is...", "\U0001F3E2", "a computer controlling a machine from an input", ["magic", "a person pulling a rope", "a network"], "Press is the input; the program moves the lift."),
                  q("You built the program and pressed A, but the outputs were wrong. You should...", "\U0001F41E", "change the blocks and press A again to test", ["give up", "shake it harder", "add another when block"], "Test, fix, test again."),
                  q("Which of these can a program control?", "⚙️", "a motor, a light, a bell", ["only a screen", "nothing real", "only sounds"], "Programs control physical objects through outputs."),
              ]},
@@ -154,7 +154,7 @@ LESSON["lecture"] = [
 LESSON["words"] = [
     word("device", "\U0001F4DF", "A small computer with inputs and outputs you can hold.",
          ["Bitsy is a physical computing device.", "Program the device."]),
-    word("sensor", "\U0001FAE8", "An input that senses something: a shake, a sound, heat.",
+    word("sensor", "\U0001F4F3", "An input that senses something: a shake, a sound, heat.",
          ["The shake sensor is an input.", "A sensor tells the program what is happening."]),
     word("when", "\U0001F170️", "The block that names the input that starts a program.",
          ["When button A is pressed.", "The when block goes first."]),
@@ -166,7 +166,7 @@ LESSON["words"] = [
 
 LESSON["home"] = [
     home("Input, output hunt", "A walk round the house",
-         ["Find five machines with a computer inside: a microwave, a washing machine, a doorbell, a thermostat.",
+         ["Find five machines with a computer inside: a microwave, a washing machine, a TV, a thermostat.",
           "For each, say the input (what you press or it senses) and the output (what it does).",
           "Which one has the most outputs?"],
          "Every machine with a program has inputs and outputs."),

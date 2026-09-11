@@ -78,7 +78,7 @@ LESSON = {
              "Three machines built, every output worked out."),
 
         step("inout", "Build a word machine", "\U0001F524", "Word machine builder", ["3CT.08", "3CT.07"],
-             "An input does not have to be a number. Build machines that take a WORD in.",
+             "An input does not have to be a number. Build a machine that takes a WORD in, and then one that takes a number.",
              explain(
                  ["Inputs can be words, pictures, sounds: anything the steps can work on."],
                  ["The letter counter: take the word in, count its letters, send the count out.", "Put 'cat' in: 3. Put 'hello' in: 5."],
@@ -160,8 +160,8 @@ LESSON["home"] = [
           "You say an input; the grown-up says the output. Try five inputs.",
           "Work out the rule. Then swap."],
          "From the inputs and outputs you can find the steps."),
-    home("Spot the input", "Things at home",
-         ["A kettle, a toaster, a washing machine, a torch.",
+    home("Spot the input", "A grown-up, things at home",
+         ["A torch, a light switch, a TV remote, a washing machine.",
           "For each one, say the input (what goes in) and the output (what comes out).",
           "Change the input: what changes about the output?"],
          "Every machine has an input and an output."),

@@ -207,7 +207,22 @@ rather than the page.
   drawings are the exception to 44 px and are held to the 24 px minimum
   instead: five of them measured 17 to 23 px (Grade 2 validation,
   2026-09-11), and 44 is not reachable without redrawing, because the
-  speaker, the port and the touchpad sit too close together.
+  speaker, the port and the touchpad sit too close together. The Stage 3
+  machines missed the rule until the Grade 3 validation (2026-09-11): the
+  cipher keys were 38 by 40, the sheet's column letters 41 by 35, the
+  number chips inside a block 40 by 30 and the choice chips 43 tall; the
+  code strip's numbers were 11 px and the machine's INPUT and OUTPUT 12 px.
+  A number chip is 44 px inside a 44 px block by pulling its margins in, so
+  the block does not grow. A new control class gets `min-height: 44px` the
+  day it is written.
+- **Pictures are Emoji 12.0 (2019) or older.** A tablet that has not had a
+  system update since then draws a newer one as an empty box, and an empty
+  box beside "shake it" teaches nothing. The kit's shake input was 🫨
+  (Emoji 15.0, 2022) and Grade 3 carried eight 2020-21 pictures (a lift, a
+  mirror, a bucket, a toothbrush, a pot plant, a slide, a wheel, bubble
+  tea); those were replaced on 2026-09-11. Grade 4 still carries five 2020
+  ones (the same lift, bubble tea, bucket, toothbrush and pot plant), left
+  for its own review. Check a new picture's Emoji version before using it.
 - **`blockBtn`'s third argument is the extra class.** It used to be passed
   as a second `class="…"` inside the attribute string, which the parser
   ignores, so the running block was never highlighted at Stages 1 and 2

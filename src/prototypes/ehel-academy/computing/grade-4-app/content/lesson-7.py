@@ -22,7 +22,7 @@ LESSON = {
                  ["Tap all five inputs."]),
              {"items": [
                  {"pic": "\U0001F170️", "label": "button A", "sub": "input: pressed", "say": "Button A. An input a person presses."},
-                 {"pic": "\U0001FAE8", "label": "shake sensor", "sub": "input: a shake", "say": "The shake sensor. It feels a shake."},
+                 {"pic": "\U0001F4F3", "label": "shake sensor", "sub": "input: a shake", "say": "The shake sensor. It feels a shake."},
                  {"pic": "\U0001F3A4", "label": "microphone", "sub": "input: a clap", "say": "The microphone. It hears a clap."},
                  {"pic": "\U0001F321️", "label": "temperature sensor", "sub": "input: hot or cold", "say": "The temperature sensor. It feels how warm it is, all by itself. When it gets hot, the program can act."},
                  {"pic": "\U0001F319", "label": "light sensor", "sub": "input: bright or dark", "say": "The light sensor. It sees how bright it is. Cover it and it gets dark, and the program can act."},

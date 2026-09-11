@@ -18,7 +18,7 @@ LESSON = {
              explain(
                  ["A cipher is a rule for changing a message so it cannot be read by anyone who does not know the rule.", "The rule is the key. With the key you read it; without the key it is nonsense."],
                  ["A message to the bank: the amount must stay secret.", "A password on its way to a website: nobody in between may read it.",
-                  "A birthday surprise sent to your dad: your sister must not read it."],
+                  "A birthday surprise for your dad, sent to your mum: your sister must not read it."],
                  ["Children think a cipher hides the message.", "It does not hide it. Anyone can see the coded message; they just cannot READ it."],
                  ["Tap all five."]),
              {"items": [
@@ -166,8 +166,8 @@ LESSON["home"] = [
           "Now hide the strip. Can they decode it without it?"],
          "With the key it is easy; without it, just numbers."),
     home("Spot the padlock", "A grown-up, a web browser",
-         ["Look for the little padlock next to a web address.",
+         ["Look for the little padlock next to a web address. Some browsers show a different small picture there: tap it, and it says whether the connection is secure.",
           "Ask: what does it mean? (The page and you are talking in cipher.)",
-          "Find one page with it and one without."],
+          "Look at three different pages. Is every one of them talking in cipher?"],
          "The padlock means cipher."),
 ]

@@ -122,7 +122,7 @@ LESSON = {
                  q("Which cell is in column B, row 4?", "\U0001F3AF", "B4", ["4B", "B1", "D2"], "Column letter, then row number."),
                  q("'20 June' should be formatted as...", "\U0001F4C5", "date", ["currency", "number", "picture"], "It is a date."),
                  q("Formatting a money column as currency means...", "\U0001F4B7", "the amounts show as pounds and pence and can be added", ["the numbers disappear", "they become dates", "nothing changes"], "Format for the purpose."),
-                 q("Filtering 'age is more than 7' selects...", "\U0001F50D", "only the rows where the age is 8 or 9", ["every row", "only age 7", "the names beginning with A"], "Select by characteristic."),
+                 q("Filtering 'age is more than 7' selects...", "\U0001F50D", "only the rows where the age is 8 or more", ["every row", "only age 7", "the names beginning with A"], "Select by characteristic."),
                  q("Putting a number into cell C4 on a tablet is...", "✏️", "recording data in a spreadsheet", ["drawing", "a network", "a bug"], "Data entered into a cell."),
              ]},
              "That is the whole lesson finished. You can find, fill, format and filter a spreadsheet."),

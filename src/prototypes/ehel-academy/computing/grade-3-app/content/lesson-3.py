@@ -17,13 +17,13 @@ LESSON = {
              "Making an algorithm takes logical thinking: this step goes here BECAUSE of that. Tap each reason.",
              explain(
                  ["Logical thinking is reasoning: if this, then that. This step needs what that step made."],
-                 ["The kettle must boil before the water is poured, because you pour boiling water.", "The bread must be toasted before it is buttered, because butter melts on hot toast.",
+                 ["The kettle must boil before the water is poured, because you pour boiling water.", "The bread must be toasted before it is buttered, because butter in a toaster would melt and burn.",
                   "The key goes in before the door opens, because a locked door does not open."],
                  ["Children put steps in the order they thought of them.", "Ask what each step needs from the step before."],
                  ["Tap all five reasons."]),
              {"items": [
-                 {"pic": "\U0001F9CB", "label": "boil, then pour", "say": "The kettle boils before you pour, because you pour boiling water. Logic."},
-                 {"pic": "\U0001F35E", "label": "toast, then butter", "say": "Toast before butter, because butter melts on hot toast. Logic."},
+                 {"pic": "\u2615", "label": "boil, then pour", "say": "The kettle boils before you pour, because you pour boiling water. Logic."},
+                 {"pic": "\U0001F35E", "label": "toast, then butter", "say": "Toast before butter, because butter in the toaster would melt and burn. Logic."},
                  {"pic": "\U0001F511", "label": "unlock, then open", "say": "Unlock before you open, because a locked door does not open. Logic."},
                  {"pic": "\U0001F45F", "label": "socks, then shoes", "say": "Socks before shoes, because a sock cannot go over a shoe. Logic."},
                  {"pic": "\U0001F4BB", "label": "switch on, then log in", "say": "Switch the computer on before you log in, because a computer that is off shows no login screen. Logic."},
@@ -45,7 +45,7 @@ LESSON = {
              ],
               "extras": [
                   {"label": "Put the bowl in the bath", "pic": "\U0001F6C1", "why": "Cereal is not made in the bath."},
-                  {"label": "Boil the milk", "pic": "\U0001F525", "why": "Cereal takes cold milk."},
+                  {"label": "Put on your wellies", "pic": "\U0001F462", "why": "Wellies are for puddles, not for breakfast."},
                   {"label": "Phone a friend", "pic": "\U0001F4DE", "why": "Lovely, but not part of making cereal."},
               ]},
              "Bowl, cereal, milk, spoon, eat: each step where logic puts it."),
@@ -84,7 +84,7 @@ LESSON = {
                  [],
                  ["Predict, then watch."]),
              {"scene": "bed",
-              "steps": [s("pyjamas", "Put on pyjamas", "\U0001F454"), s("teeth", "Brush teeth", "\U0001FAA5"), s("story", "Read a story", "\U0001F4D6"), s("bed", "Get into bed", "\U0001F6CF️"), s("lights", "Lights off", "\U0001F4A1")],
+              "steps": [s("pyjamas", "Put on pyjamas", "\U0001F454"), s("teeth", "Brush teeth", "\U0001F9B7"), s("story", "Read a story", "\U0001F4D6"), s("bed", "Get into bed", "\U0001F6CF️"), s("lights", "Lights off", "\U0001F4A1")],
               "rounds": [
                   {"change": {"kind": "swap", "a": 2, "b": 4}, "ask": "What happens at story time?",
                    "opts": [opt("The lights are off, so the story is read in the dark", True), opt("Nothing changes", False), opt("There is no bed", False)],
@@ -108,7 +108,7 @@ LESSON = {
              {"ask": "Which section?",
               "bins": [{"id": "wash", "label": "Wash", "pic": "\U0001F9FC"}, {"id": "dress", "label": "Dress", "pic": "\U0001F455"}, {"id": "breakfast", "label": "Breakfast", "pic": "\U0001F963"}, {"id": "bag", "label": "Bag", "pic": "\U0001F392"}],
               "items": [
-                  {"pic": "\U0001FAA5", "label": "brush your teeth", "bin": "wash", "why": "Teeth are part of washing."},
+                  {"pic": "\U0001F9B7", "label": "brush your teeth", "bin": "wash", "why": "Teeth are part of washing."},
                   {"pic": "\U0001F455", "label": "put on your shirt", "bin": "dress", "why": "Getting dressed."},
                   {"pic": "\U0001F33E", "label": "pour the cereal", "bin": "breakfast", "why": "Breakfast."},
                   {"pic": "\U0001F4DA", "label": "pack your reading book", "bin": "bag", "why": "Packing the bag."},
@@ -144,7 +144,7 @@ LESSON = {
              "Three quick questions.",
              explain(["Nothing new here."], ["Logic, prediction, sections."], [], ["Read, think, tap."]),
              {"items": [
-                 q("Why does toast come before butter?", "\U0001F35E", "butter melts on hot toast, so the toast must be made first", ["butter is yellow", "no reason", "toast is heavier"], "A logical reason places the step."),
+                 q("Why does toast come before butter?", "\U0001F35E", "butter in the toaster would melt and burn, so the toast is made first", ["butter is yellow", "no reason", "toast is heavier"], "A logical reason places the step."),
                  q("Predicting a change means...", "\U0001F52E", "saying what will happen before you try it", ["trying it and then looking", "guessing at random", "changing every step"], "Think the changed steps through first."),
                  q("Dividing a big task into sections makes it...", "\U0001F9E9", "easier to follow and easier to edit", ["longer", "impossible", "harder to share"], "Short sections, one change in one place."),
              ]},
@@ -156,7 +156,7 @@ LESSON = {
              {"items": [
                  q("Which is a LOGICAL reason for an order?", "\U0001F9E0", "unlock the door before opening it, because a locked door will not open", ["open the door first because doors are fun", "it does not matter", "do the longest step first"], "Logic: the step needs what the step before did."),
                  q("Swap 'spread jam' with 'put the top on'. What happens?", "\U0001F353", "the jam ends up on top of the sandwich", ["nothing", "no bread", "the sandwich is cut twice"], "The top goes on, then jam is spread on the top."),
-                 q("Take 'brush teeth' out of the bedtime algorithm. What is different?", "\U0001FAA5", "bed with unbrushed teeth", ["no story", "no bed", "two stories"], "Only that step is gone."),
+                 q("Take 'brush teeth' out of the bedtime algorithm. What is different?", "\U0001F9B7", "bed with unbrushed teeth", ["no story", "no bed", "two stories"], "Only that step is gone."),
                  q("'Getting ready for school' divided into wash, dress, breakfast, bag is...", "\U0001F9E9", "a big task divided into sections", ["four different tasks", "a bug", "a repeat"], "One task, four sections."),
                  q("To change cereal to toast you change...", "\U0001F35E", "only the breakfast section", ["every section", "the wash section", "nothing"], "A change stays in its section."),
                  q("Cereal goes in the bowl before the milk because...", "\U0001F33E", "cereal needs a dry bowl to land in and milk would splash", ["milk is white", "it is quicker to say", "no reason"], "Logical thinking places the steps."),
@@ -204,7 +204,7 @@ LESSON["home"] = [
           "For every step, say 'because': it comes here because...",
           "Find one step whose order does not matter. Most do."],
          "Logic is the 'because'."),
-    home("Predict, then try", "A recipe or routine you can change safely",
+    home("Predict, then try", "A grown-up, a recipe or routine you can change safely",
          ["Pick one change: swap two steps, or leave one out.",
           "Say out loud what will happen.",
           "Try it. Were you right?"],

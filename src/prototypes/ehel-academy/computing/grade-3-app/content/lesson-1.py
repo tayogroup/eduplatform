@@ -74,15 +74,15 @@ LESSON = {
                  ["Tap the wrong step, choose the fix, watch it run."]),
              {"scene": "plant", "rounds": [
                  {"goal": "grow a plant from a seed",
-                  "steps": [s("pot", "Get a pot", "\U0001FAB4"), s("soil", "Fill it with soil", "\U0001F7EB"), s("eat", "Eat the seed", "\U0001F60B"), s("water", "Water it", "\U0001F4A7"), s("sun", "Put it in the sun", "☀️")],
+                  "steps": [s("pot", "Get a pot", "\U0001F3FA"), s("soil", "Fill it with soil", "\U0001F7EB"), s("eat", "Eat the seed", "\U0001F60B"), s("water", "Water it", "\U0001F4A7"), s("sun", "Put it in the sun", "☀️")],
                   "wrong": 2, "why": "Eating the seed leaves nothing to grow. The step should plant it.",
-                  "fix": {"opts": [choice("seed", "Plant the seed in the soil", True, "\U0001F331"), choice("sun", "Put it in the sun", False, "☀️"), choice("pot", "Get another pot", False, "\U0001FAB4")], "why": "Plant the seed. Now the water and the sun have something to grow."}},
+                  "fix": {"opts": [choice("seed", "Plant the seed in the soil", True, "\U0001F331"), choice("sun", "Put it in the sun", False, "☀️"), choice("pot", "Get another pot", False, "\U0001F3FA")], "why": "Plant the seed. Now the water and the sun have something to grow."}},
                  {"goal": "grow a plant from a seed",
-                  "steps": [s("pot", "Get a pot", "\U0001FAB4"), s("seed", "Plant the seed", "\U0001F331"), s("soil", "Fill it with soil", "\U0001F7EB"), s("water", "Water it", "\U0001F4A7"), s("sun", "Put it in the sun", "☀️")],
+                  "steps": [s("pot", "Get a pot", "\U0001F3FA"), s("seed", "Plant the seed", "\U0001F331"), s("soil", "Fill it with soil", "\U0001F7EB"), s("water", "Water it", "\U0001F4A7"), s("sun", "Put it in the sun", "☀️")],
                   "wrong": 1, "swap": True, "why": "The seed is planted in an empty pot, with no soil under it. The soil has to go in first.",
                   },
                  {"goal": "grow a plant from a seed",
-                  "steps": [s("pot", "Get a pot", "\U0001FAB4"), s("soil", "Fill it with soil", "\U0001F7EB"), s("seed", "Plant the seed", "\U0001F331"), s("water", "Water it", "\U0001F4A7"), s("fridge", "Put it in the fridge", "\U0001F9CA")],
+                  "steps": [s("pot", "Get a pot", "\U0001F3FA"), s("soil", "Fill it with soil", "\U0001F7EB"), s("seed", "Plant the seed", "\U0001F331"), s("water", "Water it", "\U0001F4A7"), s("fridge", "Put it in the fridge", "\U0001F9CA")],
                   "wrong": 4, "why": "A plant in the fridge gets no light and no warmth. It needs the sun.",
                   "fix": {"opts": [choice("sun", "Put it in the sun", True, "☀️"), choice("water", "Water it again", False, "\U0001F4A7"), choice("eat", "Eat it", False, "\U0001F60B")], "why": "In the sun. Now it can grow."}},
              ]},
@@ -202,7 +202,7 @@ LESSON["words"] = [
 ]
 
 LESSON["home"] = [
-    home("Follow it exactly", "A grown-up, a simple job (make toast, water a plant)",
+    home("Follow it exactly", "A grown-up, a simple job (pack a school bag, water a plant)",
          ["Write the steps on cards, one per card.",
           "The grown-up follows them EXACTLY, silly mistakes and all.",
           "Did the job get done? If not, which step was wrong?"],
@@ -213,7 +213,7 @@ LESSON["home"] = [
           "That is understanding the algorithm."],
          "Every step has a reason."),
     home("Edit it", "The same cards, one blank card",
-         ["Change one card to make something different: toast with honey, a taller sandwich.",
+         ["Change one card to make something different: a bag for sports day, two plants instead of one.",
           "Say before you do it what will change.",
           "Then follow the edited algorithm."],
          "Edit is a change you want; correct is a fix you need."),

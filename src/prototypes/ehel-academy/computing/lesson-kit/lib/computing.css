@@ -497,7 +497,7 @@
   .machine2 { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; max-width: 420px; padding: 12px;
     border-radius: 18px; border: 3px solid var(--teal); background: var(--card); }
   .slot { display: flex; align-items: center; gap: 10px; }
-  .slotlab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12px; letter-spacing: .1em; color: var(--muted); }
+  .slotlab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; letter-spacing: .1em; color: var(--muted); }
   .slotval { min-width: 56px; padding: 6px 12px; border-radius: 12px; border: 2px solid var(--line); font-weight: 800; font-size: 20px; text-align: center; }
   .slot.out .slotval { border-color: var(--gold); }
   /* chips: an input, a value, a field, a format */
@@ -507,6 +507,7 @@
   .chip.on { border-color: var(--gold); background: rgba(244,201,93,0.15); }
   .chip.tried { border-color: var(--teal); opacity: 0.7; }
   .chip:disabled { opacity: 0.5; }
+  button.chip { min-height: 44px; }
   /* objects that run at once; a mark on the stage; a number inside a block */
   .objtabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
   .objtab { padding: 8px 14px; border-radius: 14px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
@@ -516,8 +517,9 @@
   .sprite { z-index: 1; }
   .sprite.static { filter: saturate(0.8); }
   .mark { position: absolute; bottom: 30px; width: 64px; height: 64px; display: grid; place-items: center; font-size: 44px; z-index: 0; }
-  .numchip { margin-left: 6px; padding: 2px 8px; border-radius: 8px; border: 2px solid rgba(0,0,0,0.25); background: #fff; color: #06231F;
+  .numchip { margin-left: 6px; min-width: 44px; min-height: 44px; padding: 2px 8px; border-radius: 8px; border: 2px solid rgba(0,0,0,0.25); background: #fff; color: #06231F;
     font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; cursor: pointer; }
+  .block .numchip { margin-top: -8px; margin-bottom: -8px; }   /* 44 px to tap, inside a 44 px block */
   /* Bitsy, the device */
   .board { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px; border-radius: 18px; background: #0B1D2C;
     border: 3px solid var(--line); width: 100%; max-width: 360px; }
@@ -542,7 +544,7 @@
   .sheet { border-collapse: collapse; margin: 0 auto; }
   .sheet th { padding: 4px 6px; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; text-align: center; }
   .sheet td { padding: 2px; }
-  .colhead { padding: 6px 14px; border-radius: 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink); font-weight: 800; }
+  .colhead { min-width: 44px; min-height: 44px; padding: 6px 14px; border-radius: 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink); font-weight: 800; }
   .colhead.on { border-color: var(--gold); }
   .cellbtn { min-width: 84px; height: 44px; padding: 4px 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink);
     font-weight: 700; font-size: 16px; text-align: left; }
@@ -557,7 +559,7 @@
   .alpha { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; max-width: 560px; }
   .al { display: flex; flex-direction: column; align-items: center; width: 34px; padding: 3px 0; border-radius: 8px; border: 1px solid var(--line); background: var(--card); line-height: 1.1; }
   .al b { font-size: 16px; }
-  .al small { font-size: 11px; color: var(--muted); }
+  .al small { font-size: 13px; color: var(--muted); }
   .coderow { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
   .codecell { display: flex; flex-direction: column; align-items: center; min-width: 40px; padding: 6px 4px; border-radius: 10px; border: 2px solid var(--line);
     font-weight: 800; font-size: 20px; background: var(--card); }
@@ -566,8 +568,7 @@
   .codecell.done small { color: var(--good); }
   .codecell.now { border-color: var(--gold); }
   .keys { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 560px; }
-  .key { width: 38px; height: 40px; border-radius: 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink); font-weight: 800; font-size: 16px; }
-  .key.num { width: 42px; }
+  .key { width: 44px; height: 44px; border-radius: 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink); font-weight: 800; font-size: 16px; }
   .key.wrong { border-color: var(--bad); animation: shake 360ms ease; }
 
   /* ==================================================================
@@ -645,7 +646,7 @@
   /* Caesar and Pigpen */
   .al.pig { width: 38px; }
   .al.pig svg { color: var(--ink); }
-  .key.pigk { width: 40px; color: var(--ink); display: grid; place-items: center; }
+  .key.pigk { width: 44px; color: var(--ink); display: grid; place-items: center; }
   .codecell small svg { color: var(--good); }
   .codecell svg { color: var(--ink); }
   .stopbtn { border-color: var(--bad); }

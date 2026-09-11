@@ -214,7 +214,7 @@ LESSON["home"] = [
           "Which parts are hardware? Which are software?",
           "Try it with a tap on a tablet."],
          "Hardware, software, hardware: one system."),
-    home("Manual or automatic hunt", "Around the house and street",
+    home("Manual or automatic hunt", "A grown-up, a walk round the house and the street",
          ["Find five inputs. A light switch, a doorbell, a street lamp's light sensor, a thermostat, a phone screen.",
           "For each one: does a person work it, or does it sense by itself?",
           "Which automatic input would you miss most if it were manual?"],

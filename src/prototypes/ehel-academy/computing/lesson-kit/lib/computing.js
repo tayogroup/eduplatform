@@ -2696,7 +2696,7 @@
      nothing else ends a forever loop. */
   const DEVICE_BLOCKS = {
     whenA: { label: "when button A is pressed", icon: "\u{1F170}️", cat: "hat", input: "A" },
-    whenShake: { label: "when it is shaken", icon: "\u{1FAE8}", cat: "hat", input: "shake" },
+    whenShake: { label: "when it is shaken", icon: "\u{1F4F3}", cat: "hat", input: "shake" },
     whenClap: { label: "when it hears a clap", icon: "\u{1F44F}", cat: "hat", input: "clap" },
     whenHot: { label: "when it gets hot", icon: "\u{1F321}️", cat: "hat", input: "hot" },
     whenDark: { label: "when it gets dark", icon: "\u{1F319}", cat: "hat", input: "dark" },
@@ -2719,7 +2719,7 @@
     light: ["11111", "11111", "11111", "11111", "11111"],
     dark: ["00000", "00000", "00000", "00000", "00000"],
   };
-  const DEVICE_INPUTS = [["A", "\u{1F170}️ Press A"], ["shake", "\u{1FAE8} Shake it"], ["clap", "\u{1F44F} Clap"], ["hot", "\u{1F321}️ Warm it"], ["dark", "\u{1F319} Cover it"]];
+  const DEVICE_INPUTS = [["A", "\u{1F170}️ Press A"], ["shake", "\u{1F4F3} Shake it"], ["clap", "\u{1F44F} Clap"], ["hot", "\u{1F321}️ Warm it"], ["dark", "\u{1F319} Cover it"]];
   const devBlock = (id, attr) => { const b = DEVICE_BLOCKS[id]; return '<button type="button" class="block ' + (b.cat === "out" ? "look" : "control") + '" ' + (attr || "") + '><span class="bicon" aria-hidden="true">' + b.icon + "</span>" + esc(b.label) + "</button>"; };
   /* the plan a device script runs: [scriptIndex, outputId] with repeats
      unrolled; a forever block marks where the plan loops back to */

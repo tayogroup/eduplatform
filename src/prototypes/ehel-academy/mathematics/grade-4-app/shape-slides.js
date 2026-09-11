@@ -100,7 +100,7 @@
     { name: "Square", ok: ["H", "V", "D1", "D2"], d: "M50,50 L150,50 L150,150 L50,150 Z" },
     { name: "Rectangle", ok: ["H", "V"], d: "M30,65 L170,65 L170,135 L30,135 Z" },
     { name: "Diamond", ok: ["H", "V"], d: "M100,30 L165,100 L100,170 L35,100 Z" },
-    { name: "Isosceles triangle", ok: ["V"], d: "M100,35 L160,155 L40,155 Z" },
+    { name: "Triangle", ok: ["V"], d: "M100,35 L160,155 L40,155 Z" },
     { name: "Parallelogram", ok: [], d: "M45,135 L85,65 L175,65 L135,135 Z" },
     { name: "Plus", ok: ["H", "V", "D1", "D2"], d: "M75,40 L125,40 L125,75 L160,75 L160,125 L125,125 L125,160 L75,160 L75,125 L40,125 L40,75 L75,75 Z" },
   ];
@@ -215,7 +215,7 @@
       why: "Two squares side by side make a rectangle twice as wide as it is tall.",
       d: '<rect class="t1" x="50" y="45" width="70" height="70"></rect><rect class="t2" x="120" y="45" width="70" height="70"></rect>' },
     { name: "Six triangles", makes: "a hexagon", tess: true,
-      why: "Six equilateral triangles round a point make a regular hexagon, and hexagons tile a floor with no gaps.",
+      why: "Six triangles with equal sides, fitted round a point, make a regular hexagon, and hexagons tile a floor with no gaps.",
       d: "HEX" },
     { name: "Circles", makes: "gaps", tess: false,
       why: "Circles cannot tessellate. However you pack them there are always gaps left between them.",
@@ -494,6 +494,7 @@
       $("choices10").innerHTML = "";
       $("score10").textContent = right10 + " out of " + Q10.length + " right.";
       if (right10 >= 7) finish(9, "");
+      else retryCheck($("fb10"), $("choices10"), right10, Q10.length, 7, function () { c10 = 0; right10 = 0; round10(); });
       return;
     }
     $("stem10").textContent = Q10[c10].q;
@@ -558,7 +559,7 @@
   /* 5 (4Gg.01) tessellation. The shapes that tile the plane alone are exactly these
      three regulars; pentagon and circle are the honest counter-examples. */
   ask(5, () => {
-    const yes = ["equilateral triangle", "square", "regular hexagon"][rnd(0, 2)];
+    const yes = ["triangle with equal sides", "square", "regular hexagon"][rnd(0, 2)];
     const no = shuffle(["regular pentagon", "circle", "regular octagon on its own"]).slice(0, 2);
     const q = askShuffle3(yes, no[0], no[1]);
     return { stem: "Which of these <b>tessellates</b> — fits together with no gaps at all?",

@@ -1,8 +1,11 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -18,7 +21,11 @@
   })();
 </script>
 <title>Count It, Chart It</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #566669; --line: #D6E3DE; --cell: #E4EEE9;
@@ -345,6 +352,14 @@
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -421,10 +436,49 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+  /* ehel-stage2-line: Count It, Chart It - Carroll diagram, coin and spinner experiments, a survey */
+  .carroll { display: grid; grid-template-columns: minmax(84px, auto) 1fr 1fr; gap: 6px; width: 100%; max-width: 480px; margin: 6px auto; }
+  .carroll .cr-head, .carroll .cr-side { display: grid; place-items: center; text-align: center; font-weight: 700; font-size: 15px; line-height: 1.2; color: var(--ink); background: var(--cell); border-radius: 10px; padding: 6px 8px; }
+  .carroll .cr-box { min-height: 66px; border-radius: 12px; border: 2px dashed var(--line); background: var(--card); font-size: 26px; color: var(--ink); cursor: pointer; }
+  .carroll .cr-box.right { border-style: solid; border-color: var(--good); background: var(--good-soft); }
+  .carroll .cr-box.wrong { border-style: solid; border-color: var(--bad); background: var(--bad-soft); }
+  .coinface { display: inline-grid; place-items: center; width: 96px; height: 96px; border-radius: 50%; margin: 4px auto; font-weight: 800; font-size: 20px; background: var(--gold-soft); color: var(--gold-ink); border: 4px solid var(--gold); }
+  .xtally { display: grid; gap: 6px; width: 100%; max-width: 420px; margin: 6px auto; }
+  .xtally .tallyrow { display: grid; grid-template-columns: 90px 1fr 40px; align-items: center; gap: 8px; background: var(--cell); border-radius: 10px; padding: 6px 10px; font-weight: 700; color: var(--ink); }
+  .xtally button.tallyrow { border: 2px solid transparent; cursor: pointer; font: inherit; text-align: left; }
+  .xtally button.tallyrow.wrong { border-color: var(--bad); }
+  .xtally button.tallyrow.right { border-color: var(--good); }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -452,7 +506,8 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
+  <div class="deck" id="deck" role="main">
     <!-- 1 sorting -->
     <section class="slide" data-say="Sorting puts things into groups. Tap a thing, then tap the hoop it belongs in.">
       <div class="slide-head"><span class="n">1</span><h2>Sort them into groups</h2></div>
@@ -460,7 +515,7 @@
       <div class="stage">
         <div class="pool" id="pool1"></div>
         <div class="hoops" id="hoops1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score1"></p>
       </div>
     </section>
@@ -472,7 +527,7 @@
       <div class="stage">
         <div class="scatter" id="scatter2"></div>
         <div id="tally2" style="width:100%;max-width:460px"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <div class="choices" id="ch2"></div>
         <p class="fb small-fb" id="score2"></p>
       </div>
@@ -487,21 +542,20 @@
         <div class="picto" id="picto3"></div>
         <p class="fb" id="q3" style="font-size:21px"></p>
         <div class="choices" id="ch3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score3"></p>
       </div>
     </section>
 
     <!-- 4 pictogram with a key -->
-    <section class="slide" data-say="Careful. Now one picture stands for two things. Read the key first.">
-      <div class="slide-head"><span class="n">4</span><h2>When one picture means two</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Read the <b>key</b> first. One picture is worth <b>2</b>, so count in twos.</span></div>
+    <section class="slide" data-say="A Carroll diagram sorts things two ways at once. Each thing goes in the one box where both labels are true.">
+      <div class="slide-head"><span class="n">4</span><h2>Sorting two ways</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Read the label <b>across the top</b> and the label <b>down the side</b>. Tap the box where <b>both</b> are true.</span></div>
       <div class="stage">
-        <div class="key" id="key4"></div>
-        <div class="picto" id="picto4"></div>
+        <p class="fb" id="key4" style="font-size:48px;min-height:56px"></p>
+        <div class="carroll" id="picto4"></div>
         <p class="fb" id="q4" style="font-size:21px"></p>
-        <div class="choices" id="ch4"></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score4"></p>
       </div>
     </section>
@@ -513,59 +567,65 @@
       <div class="stage">
         <svg class="chart" id="chart5" viewBox="0 0 340 240" role="img" aria-label="A block graph"></svg>
         <div class="bigbtns" id="add5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score5"></p>
       </div>
     </section>
 
     <!-- 6 read a bar chart -->
-    <section class="slide" data-say="This bar chart counts in twos. Read the scale carefully, then answer.">
-      <div class="slide-head"><span class="n">6</span><h2>Reading a bar chart</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Each step up the side is <b>2</b>. Read the scale carefully.</span></div>
+    <section class="slide" data-say="A block graph has one block for each thing. Count the blocks to answer.">
+      <div class="slide-head"><span class="n">6</span><h2>Reading a block graph</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Each block is <b>one</b>. Count the blocks to answer.</span></div>
       <div class="stage">
-        <svg class="chart" id="chart6" viewBox="0 0 340 240" role="img" aria-label="A bar chart"></svg>
+        <svg class="chart" id="chart6" viewBox="0 0 340 240" role="img" aria-label="A block graph"></svg>
         <p class="fb" id="q6" style="font-size:21px"></p>
         <div class="choices" id="ch6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score6"></p>
       </div>
     </section>
 
     <!-- 7 likelihood -->
-    <section class="slide" data-say="How likely is it? Impossible, unlikely, an even chance, likely, or certain.">
-      <div class="slide-head"><span class="n">7</span><h2>Impossible to certain</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">How <b>likely</b> is it? Tap a word on the line.</span></div>
+    <section class="slide" data-say="A coin can land two ways, heads or tails. Toss it ten times and keep a tally. Then say what happened.">
+      <div class="slide-head"><span class="n">7</span><h2>Toss a coin</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Toss the coin <b>ten times</b>. The tally keeps count of <b>heads</b> and <b>tails</b>.</span></div>
       <div class="stage">
-        <p class="eventcard" id="event7"></p>
-        <div class="likeline" id="line7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="eventcard" id="event7"><span class="coinface" id="coin7">?</span></p>
+        <div class="bigbtns"><button type="button" class="big teal" id="toss7">Toss the coin</button></div>
+        <div class="xtally" id="line7"></div>
+        <p class="fb" id="q7" style="font-size:21px"></p>
+        <div class="choices" id="ch7"></div>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score7"></p>
       </div>
     </section>
 
     <!-- 8 the bag -->
-    <section class="slide" data-say="A bag of counters. Which colour are you most likely to pull out without looking?">
-      <div class="slide-head"><span class="n">8</span><h2>What is in the bag?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Without looking, which colour are you <b>most likely</b> to pull out?</span></div>
+    <section class="slide" data-say="This spinner is half orange and half teal. Spin it ten times, and the block graph shows what happened.">
+      <div class="slide-head"><span class="n">8</span><h2>Spin and record</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Spin it <b>ten times</b>. Each spin adds a block to its colour.</span></div>
       <div class="stage">
-        <svg class="bag" id="bag8" viewBox="0 0 240 210" role="img" aria-label="A bag of counters"></svg>
+        <div class="spinpair" id="bag8"></div>
+        <div class="bigbtns"><button type="button" class="big teal" id="try8">Spin it</button></div>
+        <svg class="chart" id="chart8" viewBox="0 0 340 240" role="img" aria-label="A block graph of the spins"></svg>
+        <p class="fb" id="q8" style="font-size:21px"></p>
         <div class="choices" id="ch8"></div>
-        <p class="fb" id="fb8"></p>
-        <div class="bigbtns"><button type="button" class="big small teal" id="try8">Pull out 20 times</button></div>
-        <p class="fb small-fb" id="try8out"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score8"></p>
       </div>
     </section>
 
     <!-- 9 fair -->
-    <section class="slide" data-say="Is the game fair? A fair game gives both players the same chance.">
-      <div class="slide-head"><span class="n">9</span><h2>Is it fair?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">A <b>fair</b> game gives both players the <b>same chance</b>. Is this one fair?</span></div>
+    <section class="slide" data-say="An investigation starts with a question. Ask it, record every answer in a tally, then use the tally to answer.">
+      <div class="slide-head"><span class="n">9</span><h2>Ask, collect, answer</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Ask the class. Tap the row for each answer you hear, then use your tally.</span></div>
       <div class="stage">
-        <div class="spinpair" id="spin9"></div>
-        <p class="fb" id="rule9"></p>
-        <div class="choices" id="ch9"></div>
-        <p class="fb" id="fb9"></p>
+        <p class="fb" id="rule9" style="font-size:21px"></p>
+        <p class="eventcard" id="spin9"></p>
+        <div class="xtally" id="ch9"></div>
+        <p class="fb" id="q9" style="font-size:21px"></p>
+        <div class="choices" id="ans9"></div>
+        <p class="fb" id="fb9" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score9"></p>
       </div>
     </section>
@@ -578,7 +638,7 @@
       <div class="stage">
         <div class="pstrip" id="stripP"></div>
         <div class="choices" id="chP"></div>
-        <p class="fb" id="fbP"></p>
+        <p class="fb" id="fbP" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="showP" hidden>What comes next?</button></div>
         <p class="fb small-fb" id="scoreP"></p>
       </div>
@@ -591,7 +651,7 @@
       <div class="stage">
         <p class="fb" id="q10" style="font-size:22px"></p>
         <div class="choices" id="ch10"></div>
-        <p class="fb" id="fb10"></p>
+        <p class="fb" id="fb10" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score10"></p>
       </div>
     </section>
@@ -602,7 +662,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb11"></p>
+        <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -697,6 +757,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -988,6 +1050,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1377,6 +1440,7 @@
       intro.parentNode.insertBefore(bar, intro.nextSibling);
     });
   })();
+  /* ehel-stage2-line: held to Stage 2 by hold-stage-2.py (2026-09-11) */
   const $ = (id) => document.getElementById(id);
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -1424,7 +1488,7 @@
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
 
-  /* ---- 1: sorting ---- */
+  /* ---- 1: sorting (0096 2Ss.02) ---- */
   const SORTS = [
     { a: "Flies", b: "Does not fly", items: [["🦋", 0], ["🐝", 0], ["🐦", 0], ["🐟", 1], ["🐘", 1], ["🐌", 1], ["🦅", 0], ["🐢", 1]] },
     { a: "Fruit", b: "Vegetable", items: [["🍎", 0], ["🍌", 0], ["🥕", 1], ["🥦", 1], ["🍇", 0], ["🥔", 1], ["🍊", 0], ["🌽", 1]] },
@@ -1459,7 +1523,7 @@
   });
   newSort();
 
-  /* ---- 2: tally ---- */
+  /* ---- 2: tally (0096 2Ss.02) ---- */
   const TSETS = [[["🍎", "apples"], ["🍌", "bananas"], ["🍇", "grapes"]], [["🐶", "dogs"], ["🐱", "cats"], ["🐰", "rabbits"]], [["🚗", "cars"], ["🚲", "bikes"], ["🚌", "buses"]]];
   let kinds2 = [], items2 = [], counts2 = [0, 0, 0], want2 = [], quiz2 = null, right2 = 0;
   function tallySvg(n) {
@@ -1510,7 +1574,7 @@
     return rows.map((r) => { const full = Math.floor(r[1] / per), half = r[1] % per !== 0; return '<div class="pictorow"><span class="name">' + r[0] + '</span><span class="icons">' + Array.from({ length: full }, () => "<span>" + icon + "</span>").join("") + (half ? '<span class="half">' + icon + "</span>" : "") + "</span></div>"; }).join("");
   }
 
-  /* ---- 3: pictogram 1:1 ---- */
+  /* ---- 3: pictogram 1:1 (0096 2Ss.02) ---- */
   const P3 = [{ icon: "⭐", title: "Stars won this week", names: ["Amina", "Musa", "Hodan", "Kiki"] }, { icon: "📕", title: "Books read", names: ["Class 1", "Class 2", "Class 3", "Class 4"] }];
   let data3 = null, r3 = 0, right3 = 0, lock3 = false; const ROUNDS3 = 4;
   function newData3() { const P = P3[rnd(0, 1)]; data3 = { icon: P.icon, rows: P.names.map((n) => [n, rnd(2, 8)]) }; $("key3").textContent = "Key: one " + P.icon + " = 1"; $("picto3").innerHTML = pictoHtml(data3.rows, 1, P.icon); }
@@ -1539,34 +1603,54 @@
   });
   round3();
 
-  /* ---- 4: pictogram with a key of 2 ---- */
-  let data4 = null, r4 = 0, right4 = 0, lock4 = false; const ROUNDS4 = 4;
-  function newData4() { const names = ["Monday", "Tuesday", "Wednesday", "Thursday"]; data4 = { icon: "🍪", rows: names.map((n) => [n, rnd(1, 6) * 2]) }; $("key4").textContent = "Key: one 🍪 = 2 biscuits"; $("picto4").innerHTML = pictoHtml(data4.rows, 2, "🍪"); }
+  /* ---- 4: sorting two ways - a Carroll diagram (0096 2Ss.02) ----
+     Was 'When one picture means two': a pictogram key of 2 goes beyond 2Ss.02,
+     whose list names Venn and Carroll diagrams, tally charts, block graphs and
+     pictograms. The Carroll diagram was the one Stage 2 form the lesson lacked.
+     Items are [picture, column, row]. */
+  const CARROLL = [
+    { across: ["can fly", "cannot fly"], down: ["has legs", "has no legs"],
+      items: [["🦅", 0, 0], ["🐝", 0, 0], ["🦋", 0, 0], ["🐘", 1, 0], ["🐢", 1, 0], ["🐍", 1, 1], ["🐟", 1, 1], ["🐌", 1, 1]] },
+    { across: ["is round", "is not round"], down: ["you can eat it", "you cannot eat it"],
+      items: [["🍊", 0, 0], ["🍎", 0, 0], ["⚽", 0, 1], ["🏀", 0, 1], ["🍌", 1, 0], ["🥕", 1, 0], ["📘", 1, 1], ["📐", 1, 1]] },
+  ];
+  let set4 = null, order4 = [], placed4 = [], r4 = 0, right4 = 0, lock4 = false; const ROUNDS4 = 6;
+  function paintCarroll4(show, wrongAt) {
+    const S = set4;
+    let h = '<div class="cr-head" aria-hidden="true"></div>' + S.across.map((t) => '<div class="cr-head">' + t + "</div>").join("");
+    S.down.forEach((d, r) => {
+      h += '<div class="cr-side">' + d + "</div>";
+      [0, 1].forEach((c) => {
+        const here = placed4.filter((it) => it[1] === c && it[2] === r).map((it) => it[0]).join(" ");
+        const cls = show && show[0] === r && show[1] === c ? " right" : wrongAt && wrongAt[0] === r && wrongAt[1] === c ? " wrong" : "";
+        h += '<button type="button" class="cr-box' + cls + '" data-r="' + r + '" data-c="' + c + '" aria-label="' + S.across[c] + " and " + d + '">' + (here || "") + "</button>";
+      });
+    });
+    $("picto4").innerHTML = h;
+  }
   function round4() {
     lock4 = false; $("fb4").textContent = ""; $("fb4").className = "fb";
-    if (r4 >= ROUNDS4) { $("picto4").innerHTML = ""; $("ch4").innerHTML = ""; $("q4").textContent = ""; $("key4").textContent = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You read " + right4 + " of " + ROUNDS4 + "!"; finish(3, "You can read a pictogram with a key."); return; }
-    if (r4 % 2 === 0) newData4();
-    const rows = data4.rows, kind = r4 % 4;
-    let q, a, why;
-    if (kind === 0) { const i = rnd(0, 3); const pics = rows[i][1] / 2; q = "How many biscuits on " + rows[i][0] + "?"; a = rows[i][1]; why = pics + " pictures × 2 = " + a + "."; }
-    else if (kind === 1) { const i = rnd(0, 3); q = "How many pictures would show " + rows[i][1] + " biscuits?"; a = rows[i][1] / 2; why = a + " pictures, because each one is worth 2."; }
-    else if (kind === 2) { const s = rows.reduce((t, x) => t + x[1], 0); q = "How many biscuits altogether?"; a = s; why = "Count all the pictures and double: " + s / 2 + " × 2 = " + s + "."; }
-    else { const s = [...rows].sort((x, y) => y[1] - x[1]); q = "How many more on " + s[0][0] + " than " + s[3][0] + "?"; a = s[0][1] - s[3][1]; why = s[0][1] + " − " + s[3][1] + " = " + a + "."; }
-    $("score4").textContent = "Question " + (r4 + 1) + " of " + ROUNDS4; $("q4").textContent = q; $("say4").textContent = q;
-    $("ch4").innerHTML = shuffle([a, a / 2 === Math.floor(a / 2) && a / 2 !== a ? a / 2 : a + 1, a + 2]).filter((v, i, arr) => arr.indexOf(v) === i).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
-    $("ch4").dataset.answer = String(a); $("ch4").dataset.why = why; say(q);
+    if (r4 >= ROUNDS4) { $("picto4").innerHTML = ""; $("key4").textContent = ""; $("q4").textContent = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You sorted " + right4 + " of " + ROUNDS4 + " into the right box!"; finish(3, "You can sort things two ways at once."); return; }
+    if (r4 % 3 === 0) { set4 = CARROLL[(r4 / 3) % CARROLL.length]; order4 = shuffle(set4.items); placed4 = []; }
+    const it = order4[r4 % 3];
+    $("key4").textContent = it[0];
+    $("score4").textContent = "Thing " + (r4 + 1) + " of " + ROUNDS4;
+    $("q4").textContent = "Where does this one go? Tap its box.";
+    paintCarroll4(null, null); say("Where does this one go? Tap its box.");
   }
-  $("ch4").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock4) return; lock4 = true; const a = $("ch4").dataset.answer, ok = b.dataset.v === a;
-    $("ch4").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === a) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right4++;
-    $("fb4").className = "fb " + (ok ? "good" : "bad"); $("fb4").textContent = (ok ? cheer() + " " : "") + $("ch4").dataset.why;
-    say((ok ? cheer() + " " : "") + "It is " + a);
-    r4++; setTimeout(round4, 2600);
+  $("picto4").addEventListener("click", (e) => {
+    const b = e.target.closest(".cr-box"); if (!b || lock4) return; lock4 = true;
+    const it = order4[r4 % 3], r = Number(b.dataset.r), c = Number(b.dataset.c), ok = r === it[2] && c === it[1];
+    if (ok) right4++;
+    placed4.push(it); paintCarroll4([it[2], it[1]], ok ? null : [r, c]);
+    const why = it[0] + " " + set4.across[it[1]] + " and " + set4.down[it[2]] + ", so it goes in that box.";
+    $("fb4").className = "fb " + (ok ? "good" : "bad"); $("fb4").textContent = (ok ? cheer() + " " : "Not that box. ") + why;
+    say((ok ? cheer() + " " : "") + why);
+    r4++; setTimeout(round4, 2800);
   });
   round4();
 
-  /* ---- 5: build a block graph ---- */
+  /* ---- 5: build a block graph (0096 2Ss.02) ---- */
   const B5 = [["🍎", "apple"], ["🍌", "banana"], ["🍇", "grapes"], ["🍊", "orange"]];
   let target5 = [], built5 = [0, 0, 0, 0], sets5 = 0;
   function drawChart(el, values, names, scale, built) {
@@ -1602,23 +1686,28 @@
   $("add5").addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (!b) return; const i = Number(b.dataset.i); if (built5[i] < 10) { built5[i]++; paint5(); say(String(built5[i])); } });
   newBlocks();
 
-  /* ---- 6: read a bar chart (scale 2) ---- */
+  /* ---- 6: read a block graph (0096 2Ss.02, 2Ss.03) - was a bar chart with a scale of 2, which is Stage 3's Ss.02 ---- */
   const C6 = [{ title: "Ways to school", names: ["walk", "bus", "bike", "car"] }, { title: "Favourite sport", names: ["football", "running", "swimming", "netball"] }];
   let data6 = null, r6 = 0, right6 = 0, lock6 = false; const ROUNDS6 = 5;
-  function newData6() { const C = C6[rnd(0, 1)]; data6 = { names: C.names, values: C.names.map(() => rnd(1, 9) * 2) }; drawChart($("chart6"), data6.values, data6.names, 2); }
+  function newData6() {
+    const C = C6[rnd(0, 1)]; let v;
+    /* one tallest and one shortest, or 'which was chosen most' has two answers */
+    do { v = C.names.map(() => rnd(1, 9)); } while (v.filter((x) => x === Math.max(...v)).length > 1 || v.filter((x) => x === Math.min(...v)).length > 1);
+    data6 = { names: C.names, values: v }; drawChart($("chart6"), v, C.names, 1, v);
+  }
   function round6() {
     lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
-    if (r6 >= ROUNDS6) { $("chart6").innerHTML = ""; $("ch6").innerHTML = ""; $("q6").textContent = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + "!"; finish(5, "You can read a bar chart with a scale."); return; }
+    if (r6 >= ROUNDS6) { $("chart6").innerHTML = ""; $("ch6").innerHTML = ""; $("q6").textContent = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + "!"; finish(5, "You can read a block graph."); return; }
     if (r6 % 2 === 0) newData6();
     const V = data6.values, N = data6.names, kind = r6 % 5;
     let q, a, why;
-    if (kind === 0) { const i = rnd(0, 3); q = "How many chose " + N[i] + "?"; a = V[i]; why = "Its bar reaches " + V[i] + ": " + V[i] / 2 + " steps of 2."; }
-    else if (kind === 1) { const i = V.indexOf(Math.max(...V)); q = "Which was chosen most?"; a = N[i]; why = N[i] + " has the tallest bar, at " + V[i] + "."; }
-    else if (kind === 2) { const i = V.indexOf(Math.min(...V)); q = "Which was chosen least?"; a = N[i]; why = N[i] + " has the shortest bar, at " + V[i] + "."; }
+    if (kind === 0) { const i = rnd(0, 3); q = "How many chose " + N[i] + "?"; a = V[i]; why = "Count the blocks: " + N[i] + " has " + V[i] + "."; }
+    else if (kind === 1) { const i = V.indexOf(Math.max(...V)); q = "Which was chosen most?"; a = N[i]; why = N[i] + " has the tallest column, " + V[i] + " blocks."; }
+    else if (kind === 2) { const i = V.indexOf(Math.min(...V)); q = "Which was chosen least?"; a = N[i]; why = N[i] + " has the shortest column, " + V[i] + " blocks."; }
     else if (kind === 3) { const hi = Math.max(...V), lo = Math.min(...V); q = "How many more chose " + N[V.indexOf(hi)] + " than " + N[V.indexOf(lo)] + "?"; a = hi - lo; why = hi + " − " + lo + " = " + a + "."; }
     else { a = V.reduce((x, y) => x + y, 0); q = "How many people were asked altogether?"; why = V.join(" + ") + " = " + a + "."; }
     $("score6").textContent = "Question " + (r6 + 1) + " of " + ROUNDS6; $("q6").textContent = q; $("say6").textContent = q;
-    const wrongs = typeof a === "number" ? [a + 2, Math.max(1, a - 2)] : N.filter((n) => n !== a).slice(0, 2);
+    const wrongs = typeof a === "number" ? [a + 1, a > 1 ? a - 1 : a + 2] : N.filter((n) => n !== a).slice(0, 2);
     $("ch6").innerHTML = shuffle([a, ...wrongs]).filter((v, i, arr) => arr.indexOf(v) === i).map((v) => '<button type="button" class="choice' + (typeof v === "string" ? " word" : "") + '" data-v="' + v + '">' + v + "</button>").join("");
     $("ch6").dataset.answer = String(a); $("ch6").dataset.why = why; say(q);
   }
@@ -1632,117 +1721,144 @@
   });
   round6();
 
-  /* ---- 7: likelihood ---- */
-  const WORDS7 = [["impossible", 0], ["unlikely", 25], ["an even chance", 50], ["likely", 75], ["certain", 100]];
-  const EVENTS = [
-    { t: "A cat will read you a bedtime story tonight.", a: 0 },
-    { t: "The sun will come up tomorrow morning.", a: 4 },
-    { t: "You flip a coin. It lands on heads.", a: 2 },
-    { t: "It will snow in the desert today.", a: 1 },
-    { t: "You roll a normal dice and get a number less than 7.", a: 4 },
-    { t: "You roll a normal dice and get a 6.", a: 1 },
-    { t: "A baby will be born somewhere in the world today.", a: 4 },
-    { t: "You will grow taller than a house.", a: 0 },
-    { t: "You pick one shoe from a pair without looking. It is the left one.", a: 2 },
-    { t: "Your teacher will say something tomorrow.", a: 4 },
-  ];
-  let events7 = shuffle(EVENTS).slice(0, 5), r7 = 0, right7 = 0, lock7 = false; const ROUNDS7 = 5;
-  function round7() {
+  /* ---- 7: a chance experiment with two outcomes - toss a coin (0096 2Sp.02) ----
+     Was 'Impossible to certain': those words are Stage 4's Sp.01 and 'an even chance'
+     is Stage 5's Sp.01. 2Sp.02 asks for exactly this, and nothing in Grade 2 did it:
+     conduct a chance experiment with two outcomes, present and describe the
+     results. Two runs of ten, then the question the experiment is for: did
+     the second run come out the same as the first? */
+  let toss7 = { h: 0, t: 0 }, runs7 = [], ask7 = 0, right7 = 0, lock7 = false, q7 = null;
+  function tallyRows7(counts, names) { return names.map((n, i) => '<div class="tallyrow"><span>' + n + '</span><span class="marks">' + tallySvg(counts[i]) + '</span><span class="n">' + counts[i] + "</span></div>").join(""); }
+  function paint7() { $("line7").innerHTML = tallyRows7([toss7.h, toss7.t], ["heads", "tails"]); $("score7").textContent = "Run " + (runs7.length + 1) + " of 2 - toss " + Math.min(10, toss7.h + toss7.t) + " of 10"; }
+  function newRun7() { toss7 = { h: 0, t: 0 }; $("coin7").textContent = "?"; $("toss7").hidden = false; $("ch7").innerHTML = ""; $("q7").textContent = ""; paint7(); }
+  function question7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb";
-    if (r7 >= ROUNDS7) { $("event7").textContent = ""; $("line7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You judged " + right7 + " of " + ROUNDS7 + "!"; finish(6, "You can say how likely something is."); return; }
-    const E = events7[r7]; $("score7").textContent = "Event " + (r7 + 1) + " of " + ROUNDS7;
-    $("event7").textContent = E.t; $("say7").textContent = "How likely is this? " + E.t;
-    $("line7").innerHTML = '<div class="bar"></div>' + WORDS7.map((w, i) => '<button type="button" style="left:' + (w[1] === 0 ? 6 : w[1] === 100 ? 94 : w[1]) + '%" data-i="' + i + '">' + w[0] + "</button>").join("");
-    say("How likely is this? " + E.t);
+    const n = runs7.length, last = runs7[n - 1];
+    if (ask7 === 0) q7 = { q: "How many heads did you get?", a: String(last.h), opts: [last.h, last.h + 1, last.h > 0 ? last.h - 1 : last.h + 2].map(String), why: "The tally shows " + last.h + " heads and " + last.t + " tails: " + last.h + " + " + last.t + " = 10 tosses." };
+    else if (ask7 === 1) { const a = last.h > last.t ? "heads" : last.t > last.h ? "tails" : "the same"; q7 = { q: "Which came up more often this time?", a, opts: ["heads", "tails", "the same"], why: last.h === last.t ? "Heads " + last.h + ", tails " + last.t + ": the same." : a + " came up " + Math.max(last.h, last.t) + " times out of 10." }; }
+    else { const same = runs7[0].h === runs7[1].h; q7 = { q: "Did your two runs come out exactly the same?", a: same ? "yes, the same" : "no, different", opts: ["yes, the same", "no, different"], why: "Run 1 had " + runs7[0].h + " heads, run 2 had " + runs7[1].h + ". " + (same ? "The same this time - but it could have come out differently." : "A coin can land either way, so each run can come out differently.") }; }
+    $("q7").textContent = q7.q; $("say7").textContent = q7.q;
+    $("ch7").innerHTML = shuffle(q7.opts).filter((v, i, arr) => arr.indexOf(v) === i).map((v) => '<button type="button" class="choice' + (/[a-z]/.test(v) ? " word" : "") + '" data-v="' + v + '">' + v + "</button>").join("");
+    say(q7.q);
   }
-  $("line7").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock7) return; lock7 = true; const E = events7[r7], i = Number(b.dataset.i), ok = i === E.a;
-    $("line7").querySelectorAll("button").forEach((x) => { x.disabled = true; if (Number(x.dataset.i) === E.a) x.classList.add("right"); });
+  $("toss7").addEventListener("click", () => {
+    if (toss7.h + toss7.t >= 10) return;
+    const heads = Math.random() < 0.5; if (heads) toss7.h++; else toss7.t++;
+    $("coin7").textContent = heads ? "heads" : "tails"; paint7(); say(heads ? "heads" : "tails");
+    if (toss7.h + toss7.t === 10) { $("toss7").hidden = true; runs7.push({ h: toss7.h, t: toss7.t }); ask7 = 0; setTimeout(question7, 900); }
+  });
+  $("ch7").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock7 || !q7) return; lock7 = true; const ok = b.dataset.v === q7.a;
+    $("ch7").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === q7.a) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right7++;
-    $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + "That is " + WORDS7[E.a][0] + ".";
-    say((ok ? cheer() + " " : "") + "That is " + WORDS7[E.a][0]);
-    r7++; setTimeout(round7, 2400);
+    $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "Not quite. ") + q7.why; say((ok ? cheer() + " " : "") + q7.why);
+    const lastAsk = runs7.length === 2 ? 2 : 1;
+    if (ask7 < lastAsk) { ask7++; setTimeout(question7, 2800); return; }
+    if (runs7.length < 2) { setTimeout(newRun7, 3000); return; }
+    setTimeout(() => { $("ch7").innerHTML = ""; $("q7").textContent = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You ran the experiment twice and answered " + right7 + " of 5."; finish(6, "You can do a chance experiment and say what happened."); }, 3000);
   });
-  round7();
+  newRun7();
 
-  /* ---- 8: the bag ---- */
-  const COLNAMES = ["orange", "teal", "purple"];
-  let bag8 = [], r8 = 0, right8 = 0, lock8 = false, q8 = null; const ROUNDS8 = 4;
-  function drawBag() {
-    let svg = '<path class="sack" d="M60,60 Q40,120 55,175 Q120,200 185,175 Q200,120 180,60 Z"></path><path class="sack" d="M60,60 Q120,40 180,60" fill="none"></path>';
-    const pts = [[95, 95], [135, 95], [115, 120], [80, 130], [150, 130], [98, 155], [140, 158], [118, 78], [70, 105], [165, 105], [110, 178], [155, 80]];
-    bag8.forEach((c, i) => { const p = pts[i % pts.length]; svg += '<circle class="ball c' + c + '" cx="' + p[0] + '" cy="' + p[1] + '" r="14"></circle>'; });
-    $("bag8").innerHTML = svg;
-  }
-  function round8() {
-    lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("try8out").textContent = "";
-    if (r8 >= ROUNDS8) { $("bag8").innerHTML = ""; $("ch8").innerHTML = ""; $("try8").hidden = true; $("fb8").className = "fb good"; $("fb8").textContent = "You judged " + right8 + " of " + ROUNDS8 + "!"; finish(7, "You can say which is most likely."); return; }
-    const kind = r8 % 3;
-    let counts;
-    if (kind === 2) counts = [4, 4, 0]; else { counts = [rnd(2, 7), rnd(1, 5), 0]; while (counts[0] === counts[1]) counts[1] = rnd(1, 5); }
-    if (r8 === 3) counts = [6, 4, 2]; // three colours, all different, so "least" has one answer
-    bag8 = []; counts.forEach((n, c) => { for (let i = 0; i < n; i++) bag8.push(c); });
-    bag8 = shuffle(bag8); drawBag();
-    const present = counts.map((n, i) => i).filter((i) => counts[i] > 0);
-    const maxN = Math.max(...counts), minN = Math.min(...present.map((i) => counts[i]));
-    const allEqual = present.every((i) => counts[i] === counts[present[0]]);
-    if (kind === 2 || allEqual) { q8 = { a: "equal", counts, why: "There are the same number of each, so both are equally likely." }; $("say8").innerHTML = "Which colour are you <b>most likely</b> to pull out?"; $("ch8").innerHTML = present.map((i) => '<button type="button" class="choice word" data-v="' + COLNAMES[i] + '">' + COLNAMES[i] + "</button>").join("") + '<button type="button" class="choice word" data-v="equal">both the same</button>'; }
-    else if (r8 % 2 === 1) { const i = counts.indexOf(minN); q8 = { a: COLNAMES[i], counts, why: "There are fewest " + COLNAMES[i] + " (" + minN + " of " + bag8.length + "), so it is the least likely." }; $("say8").innerHTML = "Which colour are you <b>least likely</b> to pull out?"; $("ch8").innerHTML = present.map((i2) => '<button type="button" class="choice word" data-v="' + COLNAMES[i2] + '">' + COLNAMES[i2] + "</button>").join(""); }
-    else { const i = counts.indexOf(maxN); q8 = { a: COLNAMES[i], counts, why: "There are most " + COLNAMES[i] + " (" + maxN + " of " + bag8.length + "), so it is the most likely." }; $("say8").innerHTML = "Which colour are you <b>most likely</b> to pull out?"; $("ch8").innerHTML = present.map((i2) => '<button type="button" class="choice word" data-v="' + COLNAMES[i2] + '">' + COLNAMES[i2] + "</button>").join(""); }
-    $("score8").textContent = "Bag " + (r8 + 1) + " of " + ROUNDS8;
-    say($("say8").textContent);
-  }
-  $("try8").addEventListener("click", () => {
-    const tally = [0, 0, 0]; for (let i = 0; i < 20; i++) tally[bag8[rnd(0, bag8.length - 1)]]++;
-    $("try8out").textContent = "20 pulls: " + tally.map((n, i) => (q8.counts[i] ? n + " " + COLNAMES[i] : "")).filter(Boolean).join(", ") + ".";
-    say("Twenty pulls. " + $("try8out").textContent);
-  });
-  $("ch8").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const ok = b.dataset.v === q8.a;
-    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === q8.a) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right8++;
-    $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + q8.why; say((ok ? cheer() + " " : "") + q8.why);
-    r8++; setTimeout(round8, 2800);
-  });
-  round8();
-
-  /* ---- 9: is it fair? ---- */
-  let r9 = 0, right9 = 0, lock9 = false, g9 = null; const ROUNDS9 = 4;
-  function spinnerSvg(parts) {
+  /* ---- 8: spin and record - present the results as a block graph (0096 2Sp.02) ----
+     Was 'What is in the bag?': 'most likely' is Stage 5 language. The spinner
+     has two equal halves - two outcomes, as 2Sp.02 says - and the block graph
+     is the child's own results, so the answers are read off what happened. */
+  function spinnerSvg(parts, at) {
     const cx = 80, cy = 80, R = 68; let a0 = -90, svg = "";
     parts.forEach((p, i) => {
       const a1 = a0 + p * 360, r0 = (a0 * Math.PI) / 180, r1 = (a1 * Math.PI) / 180;
       svg += '<path class="s' + i + '" d="M' + cx + "," + cy + " L" + (cx + R * Math.cos(r0)).toFixed(1) + "," + (cy + R * Math.sin(r0)).toFixed(1) + " A" + R + "," + R + " 0 " + (p > 0.5 ? 1 : 0) + ",1 " + (cx + R * Math.cos(r1)).toFixed(1) + "," + (cy + R * Math.sin(r1)).toFixed(1) + ' Z"></path>';
       a0 = a1;
     });
-    svg += '<line class="needle" x1="80" y1="80" x2="80" y2="26"></line><circle class="pin" cx="80" cy="80" r="7"></circle>';
-    return '<svg class="spinner" viewBox="0 0 160 160" role="img" aria-label="A spinner">' + svg + "</svg>";
+    const na = ((at - 90) * Math.PI) / 180;
+    svg += '<line class="needle" x1="80" y1="80" x2="' + (80 + 54 * Math.cos(na)).toFixed(1) + '" y2="' + (80 + 54 * Math.sin(na)).toFixed(1) + '"></line><circle class="pin" cx="80" cy="80" r="7"></circle>';
+    return '<svg class="spinner" viewBox="0 0 160 160" role="img" aria-label="A spinner, half orange and half teal">' + svg + "</svg>";
   }
-  const GAMES = [
-    { p: 0.5, rule: "Amina wins on orange. Musa wins on teal.", fair: true, why: "Half the spinner is orange and half is teal, so both have the same chance. It is fair." },
-    { p: 0.75, rule: "Amina wins on orange. Musa wins on teal.", fair: false, why: "Orange covers three quarters of the spinner, so Amina wins far more often. Not fair." },
-    { p: 0.25, rule: "Amina wins on orange. Musa wins on teal.", fair: false, why: "Orange is only a quarter, so Musa wins much more often. Not fair." },
-    { p: 0.5, rule: "Amina wins on orange. Musa wins on teal. Amina goes first.", fair: true, why: "Going first does not change the spinner: both halves are the same size, so it is still fair." },
+  let spins8 = [0, 0], run8 = 0, ask8 = 0, right8 = 0, lock8 = false, q8 = null;
+  const COL8 = ["orange", "teal"];
+  function paint8(at) { $("bag8").innerHTML = "<div>" + spinnerSvg([0.5, 0.5], at) + '<div class="who">the spinner</div></div>'; drawChart($("chart8"), spins8, COL8, 1, spins8); $("score8").textContent = "Run " + (run8 + 1) + " of 2 - spin " + (spins8[0] + spins8[1]) + " of 10"; }
+  function newRun8() { spins8 = [0, 0]; ask8 = 0; $("try8").hidden = false; $("ch8").innerHTML = ""; $("q8").textContent = ""; paint8(0); }
+  function question8() {
+    lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb";
+    const [o, t] = spins8;
+    if (ask8 === 0) q8 = { q: "How many times did it land on teal?", a: String(t), opts: [t, t + 1, t > 0 ? t - 1 : t + 2].map(String), why: "The teal column has " + t + " blocks." };
+    else { const a = o > t ? "orange" : t > o ? "teal" : "the same"; q8 = { q: "Which colour came up more often this time?", a, opts: ["orange", "teal", "the same"], why: o === t ? "Orange " + o + ", teal " + t + ": the same." : a + " has the taller column, " + Math.max(o, t) + " blocks. The halves are the same size, so next time it could be the other one." }; }
+    $("q8").textContent = q8.q; $("say8").textContent = q8.q;
+    $("ch8").innerHTML = shuffle(q8.opts).filter((v, i, arr) => arr.indexOf(v) === i).map((v) => '<button type="button" class="choice' + (/[a-z]/.test(v) ? " word" : "") + '" data-v="' + v + '">' + v + "</button>").join("");
+    say(q8.q);
+  }
+  $("try8").addEventListener("click", () => {
+    if (spins8[0] + spins8[1] >= 10) return;
+    const k = Math.random() < 0.5 ? 0 : 1; spins8[k]++;
+    paint8(k === 0 ? rnd(10, 170) : rnd(190, 350)); say(COL8[k]);
+    if (spins8[0] + spins8[1] === 10) { $("try8").hidden = true; setTimeout(question8, 900); }
+  });
+  $("ch8").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock8 || !q8) return; lock8 = true; const ok = b.dataset.v === q8.a;
+    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === q8.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right8++;
+    $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "Not quite. ") + q8.why; say((ok ? cheer() + " " : "") + q8.why);
+    if (ask8 === 0) { ask8++; setTimeout(question8, 2800); return; }
+    run8++;
+    if (run8 < 2) { setTimeout(newRun8, 3200); return; }
+    setTimeout(() => { $("ch8").innerHTML = ""; $("q8").textContent = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You recorded two runs and answered " + right8 + " of 4."; finish(7, "You can record an experiment in a block graph."); }, 3200);
+  });
+  newRun8();
+
+  /* ---- 9: ask, collect, answer - a small investigation (0096 2Ss.01) ----
+     Was 'Is it fair?', which is Stage 5's Sp.01. 2Ss.01 is 'conduct an investigation to
+     answer questions', and the lesson only ever answered questions about data
+     it handed over. Here the child does all three parts: hears each answer,
+     records it, then answers the question from their own tally. */
+  const SURVEYS9 = [
+    { q: "What is the favourite fruit in our class?", names: [["🍌", "banana"], ["🍊", "orange"], ["🍎", "apple"]] },
+    { q: "How do children in our class get to school?", names: [["🚶", "walk"], ["🚌", "bus"], ["🚲", "bike"]] },
   ];
-  function round9() {
+  let sv9 = null, answers9 = [], tally9 = [0, 0, 0], at9 = 0, mistakes9 = 0, phase9 = 0, right9 = 0, lock9 = false, q9 = null, run9 = 0;
+  function newSurvey9() {
+    sv9 = SURVEYS9[run9 % SURVEYS9.length];
+    let counts; do { counts = [rnd(2, 6), rnd(1, 5), rnd(1, 5)]; } while (counts.filter((x) => x === Math.max(...counts)).length > 1 || counts.reduce((a, b) => a + b, 0) > 12);
+    answers9 = shuffle(counts.flatMap((n, i) => Array.from({ length: n }, () => i)));
+    tally9 = [0, 0, 0]; at9 = 0; mistakes9 = 0; phase9 = 0;
+    $("rule9").textContent = "Question: " + sv9.q; $("ans9").innerHTML = ""; $("q9").textContent = "";
+    next9();
+  }
+  function paint9() { $("ch9").innerHTML = sv9.names.map((n, i) => '<button type="button" class="tallyrow" data-i="' + i + '"><span>' + n[0] + " " + n[1] + '</span><span class="marks">' + tallySvg(tally9[i]) + '</span><span class="n">' + tally9[i] + "</span></button>").join(""); }
+  function next9() {
+    paint9(); lock9 = false;
+    if (at9 >= answers9.length) { phase9 = 1; $("spin9").textContent = "Everyone has answered."; ask9(0); return; }
+    const n = sv9.names[answers9[at9]];
+    $("spin9").textContent = "Child " + (at9 + 1) + " says: " + n[0] + " " + n[1];
+    $("score9").textContent = "Answer " + (at9 + 1) + " of " + answers9.length; say(n[1]);
+  }
+  function ask9(k) {
     lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb";
-    if (r9 >= ROUNDS9) { $("spin9").innerHTML = ""; $("ch9").innerHTML = ""; $("rule9").textContent = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You judged " + right9 + " of " + ROUNDS9 + "!"; finish(8, "You can tell whether a game is fair."); return; }
-    g9 = GAMES[r9]; $("score9").textContent = "Game " + (r9 + 1) + " of " + ROUNDS9;
-    $("spin9").innerHTML = '<div>' + spinnerSvg([g9.p, 1 - g9.p]) + '<div class="who">the spinner</div></div>';
-    $("rule9").className = "fb"; $("rule9").textContent = g9.rule;
-    $("say9").innerHTML = "<b>" + g9.rule + "</b> Is this game <b>fair</b>?";
-    $("ch9").innerHTML = [["yes", "yes, it is fair"], ["no", "no, not fair"]].map((o) => '<button type="button" class="choice word" data-v="' + o[0] + '">' + o[1] + "</button>").join("");
-    say(g9.rule + " Is this game fair?");
+    const most = tally9.indexOf(Math.max(...tally9)), pick = (most + 1 + rnd(0, 1)) % 3;
+    q9 = k === 0 ? { k, q: "Use your tally. " + sv9.q, a: sv9.names[most][1], opts: sv9.names.map((n) => n[1]), why: sv9.names[most][1] + " has the most tally marks: " + tally9[most] + "." }
+                 : { k, q: "How many children said " + sv9.names[pick][1] + "?", a: String(tally9[pick]), opts: [tally9[pick], tally9[pick] + 1, tally9[pick] + 2].map(String), why: "The tally for " + sv9.names[pick][1] + " shows " + tally9[pick] + "." };
+    $("q9").textContent = q9.q; $("say9").textContent = q9.q;
+    $("ans9").innerHTML = shuffle(q9.opts).map((v) => '<button type="button" class="choice' + (/[a-z]/.test(v) ? " word" : "") + '" data-v="' + v + '">' + v + "</button>").join("");
+    say(q9.q);
   }
   $("ch9").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock9) return; lock9 = true; const want = g9.fair ? "yes" : "no", ok = b.dataset.v === want;
-    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === want) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right9++;
-    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + g9.why; say((ok ? cheer() + " " : "") + g9.why);
-    r9++; setTimeout(round9, 3000);
+    const b = e.target.closest(".tallyrow"); if (!b || phase9 !== 0 || lock9) return;
+    const i = Number(b.dataset.i), want = answers9[at9];
+    if (i !== want) { mistakes9++; b.classList.add("wrong"); $("fb9").className = "fb bad"; $("fb9").textContent = "Listen again: they said " + sv9.names[want][1] + "."; say("They said " + sv9.names[want][1]); return; }
+    lock9 = true; tally9[i]++; at9++; $("fb9").textContent = ""; $("fb9").className = "fb"; setTimeout(next9, 500);
   });
-  round9();
+  $("ans9").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock9 || !q9) return; lock9 = true; const ok = b.dataset.v === q9.a;
+    $("ans9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === q9.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right9++;
+    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "Not quite. ") + q9.why; say((ok ? cheer() + " " : "") + q9.why);
+    if (q9.k === 0) { setTimeout(() => ask9(1), 2600); return; }
+    run9++;
+    if (run9 < 2) { setTimeout(newSurvey9, 3000); return; }
+    setTimeout(() => { $("ans9").innerHTML = ""; $("q9").textContent = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You ran two surveys and answered " + right9 + " of 4 from your own tally."; finish(8, "You can ask a question, collect the answers and use them."); }, 3000);
+  });
+  newSurvey9();
 
+  
 
   function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
   function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
@@ -1817,22 +1933,36 @@
   roundP();
 
   /* ---- 11: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11, the rule Grade 1 already keeps). Below it the child sees the score,
+     how many they need, and a button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "In a tally, how many does |||| crossed through stand for?", opts: [5, 4, 6], a: 5 },
-    { q: "On a pictogram, one 🍪 = 2. How many biscuits do 4 pictures show?", opts: [8, 4, 6], a: 8 },
-    { q: "On a bar chart each step is 2. A bar reaching the 3rd step means…", opts: [6, 3, 5], a: 6 },
-    { q: "Which word means it will definitely happen?", opts: ["certain", "likely", "impossible"], a: "certain" },
-    { q: "A bag has 8 red and 1 blue. Which are you most likely to pull out?", opts: ["red", "blue", "the same"], a: "red" },
-    { q: "Flipping a fair coin, heads is…", opts: ["an even chance", "certain", "impossible"], a: "an even chance" },
-    { q: "A cat reading you a story is…", opts: ["impossible", "unlikely", "likely"], a: "impossible" },
-    { q: "A spinner is half red, half blue. A game on red or blue is…", opts: ["fair", "not fair"], a: "fair" },
-    { q: "What is a tally chart good for?", opts: ["counting as you go", "measuring length", "telling the time"], a: "counting as you go" },
-    { q: "A bar chart shows 6, 4, 8 and 2. How many altogether?", opts: [20, 18, 22], a: 20 },
+    { q: "In a tally, how many does |||| crossed through stand for?", opts: [5, 4, 6], a: 5, why: "Four marks with one across them is a bundle of 5." },
+    { q: "A pictogram key says one ⭐ = 1. A row has 6 stars. How many is that?", opts: [6, 5, 7], a: 6, why: "Each star is 1, so 6 stars show 6." },
+    { q: "The bus column of a block graph has 7 blocks. How many chose bus?", opts: [7, 6, 8], a: 7, why: "One block is one child, so 7 blocks mean 7." },
+    { q: "In a Carroll diagram, where does a fish go?", opts: ["cannot fly, has no legs", "can fly, has legs", "cannot fly, has legs"], a: "cannot fly, has no legs", why: "A fish cannot fly and has no legs, so it goes in that box." },
+    { q: "You toss a coin. What can it land on?", opts: ["heads or tails", "only heads", "only tails"], a: "heads or tails", why: "A coin has two sides, so there are two ways it can land." },
+    { q: "You toss a coin 10 times and get 6 heads. How many tails?", opts: [4, 6, 10], a: 4, why: "There were 10 tosses: 10 − 6 = 4 tails." },
+    { q: "You toss the coin 10 more times. Will you get 6 heads again?", opts: ["maybe, maybe not", "yes, every time", "no, never"], a: "maybe, maybe not", why: "Each toss can land either way, so a new run can come out differently." },
+    { q: "You want to find the class\u2019s favourite fruit. What do you do first?", opts: ["ask everyone and keep a tally", "guess", "count the fruit in a shop"], a: "ask everyone and keep a tally", why: "An investigation starts by asking and recording every answer." },
+    { q: "What is a tally chart good for?", opts: ["counting as you go", "measuring length", "telling the time"], a: "counting as you go", why: "You make one mark for each thing as you count, so nothing is missed." },
+    { q: "A block graph shows 6, 4, 8 and 2. How many altogether?", opts: [20, 18, 22], a: 20, why: "6 + 4 + 8 + 2 = 20." }
   ];
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(10, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(10, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
     say(q.q);
@@ -1841,13 +1971,13 @@
     const b = e.target.closest(".choice"); if (!b || lock10) return; lock10 = true; const q = CHECK[c10], ok = String(b.dataset.v) === String(q.a);
     $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right10++;
-    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
-    c10++; setTimeout(round10, 1300);
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""); say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c10++; setTimeout(round10, 2800);
   });
   round10();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [["🗂️", "Sorting into groups"], ["✋", "Tally charts"], ["🖼️", "Pictograms"], ["🔑", "Reading a key"], ["🧱", "Block graphs"], ["📊", "Bar charts"], ["🎲", "Impossible to certain"], ["🎒", "What is in the bag"], ["⚖️", "Fair or not fair"], ["🔁", "Regular or random"], ["✅", "Show what I know"]];
+  const STICKERS = [["🗂️", "Sorting into groups"], ["✋", "Tally charts"], ["🖼️", "Pictograms"], ["🗃️", "Sorting two ways"], ["🧱", "Block graphs"], ["🧱", "Reading a block graph"], ["🎲", "Toss a coin"], ["🎡", "Spin and record"], ["📋", "Ask, collect, answer"], ["🔁", "Regular or random"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -1968,6 +2098,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -1992,6 +2129,19 @@
       progressUnit: "l09",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -2149,4 +2299,48 @@
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+</script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
 </script>

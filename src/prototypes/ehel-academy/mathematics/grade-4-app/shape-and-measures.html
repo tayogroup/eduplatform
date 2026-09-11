@@ -1,8 +1,11 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -18,7 +21,11 @@
   })();
 </script>
 <title>Shape and Measures</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
 
   :root {
@@ -613,10 +620,23 @@
   }
   .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
 
+  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
+     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
+     a page it had already wired, so three separate changes to this block --
+     the panel surfaces, the dark theme, the canned prompts -- reached nothing
+     already built, and each needed its own carry-across tool afterwards. */
   /* --- a home for the class controls, and the tutor dock;
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -634,6 +654,81 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
+     The dock and the drawer above already use --card/--line/--ink, so before
+     this the drawer was a dark card containing a white sheet: shell/wehel.js
+     ships a light panel (--w-bg #fff, --w-ink #17324d) and these pages are
+     always dark -- the bare `:root` in their theme selector makes the dark
+     block unconditional, so there is no light case to preserve here.
+     wehel.js now NAMES its surfaces instead of repeating literals, every
+     default being the value it already had, so this block is the whole of the
+     change a page needs and the five shell subjects that also load the tutor
+     are untouched. Mapped by ROLE, not by hue: panel takes --card, anything
+     raised off it takes --cell, so the bubbles, prompt buttons, compose row
+     and timer stay readable against the panel rather than against the page. */
+  /* DOUBLED selector, and that is load-bearing: wehel.js injects PANEL_STYLE
+     with document.head.appendChild at mount, so its own `.wehel-panel{...}`
+     always comes after this stylesheet. At equal specificity the later rule
+     wins, so the single-class version of this block lost every declaration to
+     it and the panel stayed white -- which only rendering it showed. */
+  .wehel-panel.wehel-panel {
+    --w-bg: var(--card); --w-surface: var(--card); --w-ink: var(--ink);
+    --w-line: var(--line);
+    --w-teal: var(--teal); --w-teal-2: #2AA79B; --w-teal-soft: var(--teal-soft);
+    --w-bubble: var(--cell);
+    --w-prompt-bg: var(--cell); --w-prompt-line: var(--line);
+    /* NOT var(--teal) here. The page's teal on the prompt buttons' --cell
+       ground measures 4.28:1, under the 4.5 floor -- the one surface in the
+       panel that failed when this was measured rather than eyeballed. This
+       lighter teal is 6.27:1 on the same ground. It is a literal because the
+       palette has no light-teal token: --teal-soft is a dark fill (#143A4A),
+       and --good (#4FD1A0) is the green that means "correct" in this build,
+       which a row of suggestions must not borrow. */
+    --w-prompt-ink: #7FE0D6;
+    /* the strip along the top of the panel -- timer, Full screen, voice picker */
+    --w-row-a: rgba(255, 255, 255, 0.07); --w-row-b: rgba(255, 255, 255, 0.03);
+    --w-low-line: rgba(244, 201, 93, 0.55);
+    --w-compose-bg: var(--cell);
+    --w-timer-bg: var(--cell); --w-timer-track: var(--cell);
+    /* the learner's own turn: plum, the page's third accent, so a child can
+       tell their words from Wehel's at a glance without reading the label */
+    --w-user-a: rgba(183, 139, 209, 0.30); --w-user-b: rgba(183, 139, 209, 0.16);
+    --w-user-ink: var(--ink);
+    --w-user-avatar-a: var(--plum); --w-user-avatar-b: #8E5AA8;
+    /* time nearly up: the page's gold, not the light build's cream */
+    --w-warm: var(--gold); --w-low-ink: var(--gold);
+    --w-low-fill: rgba(244, 201, 93, 0.32); --w-low-track: rgba(244, 201, 93, 0.12);
+  }
+  .wehel-panel.wehel-panel .ai-compose input::placeholder { color: var(--muted); }
+
+  /* THE CLASS CHAT, same treatment and a different scope. learner-controls.js
+     draws that panel with INLINE styles -- deliberately, so a cosmetic rule in
+     course-ui.css cannot make five other subjects' app tiers stale -- and an
+     inline style cannot be overridden by a stylesheet. It reads --lc-* through
+     var() instead, so this retints it; and the panel is appended to <body>
+     rather than to the drawer, so these live at :root and not on a class.
+
+     The bug this fixes is not only the tint. Every bubble set a background and
+     NO colour, so the text inherited the page's --ink -- white -- and a child
+     read white on #f2f4f6. The compose input was the same, so typing was
+     invisible. The defaults in learner-controls.js are course-ui.css's own
+     --ink (#17324d), which is exactly what the light subjects inherit today. */
+  :root {
+    --lc-panel-bg: var(--card); --lc-panel-line: var(--line);
+    --lc-head-a: rgba(53, 191, 178, 0.22); --lc-head-b: rgba(53, 191, 178, 0.07);
+    --lc-head-ink: var(--ink); --lc-head-sub: var(--muted);
+    --lc-form-bg: var(--cell); --lc-form-line: var(--line);
+    --lc-field-bg: var(--cell); --lc-field-ink: var(--ink);
+    --lc-them-bg: var(--cell); --lc-them-ink: var(--ink);
+    /* the learner's own turn in plum, the same signal the tutor panel uses */
+    --lc-mine-bg: rgba(183, 139, 209, 0.30); --lc-mine-ink: var(--ink);
+    /* "only your teacher sees this" keeps its amber, restated for a dark ground */
+    --lc-private-bg: rgba(244, 201, 93, 0.18); --lc-private-line: rgba(244, 201, 93, 0.45);
+    --lc-private-ink: var(--gold);
+  }
+  /* WEHEL-THEME-END */
+  /* WIRE-CSS-END */
 
   /* --- said on the learner's own screen when their work is not reaching the
          school; see lesson-app-tools/wire-progress.py --- */
@@ -653,13 +748,25 @@
   .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
   .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
   .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
   .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
   .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
   .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
   .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
     border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
   .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
-  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  /* --ink, not --muted. At 13.5px this is normal text and needs 4.5:1; on the
+     English Grade 1 palette --muted measured 4.04:1 on the --cell pill behind
+     it and failed. A fixed colour cannot fix that here - the five apps that
+     render this bar carry four different --muted values (#566669, #6B7F82,
+     #93AABE, #A4B7C8), so each would need its own answer.
+
+     --ink is the one that holds for all of them by construction: it is each
+     palette's own text colour against --card and --cell, which is what
+     .eh-brand and .eh-picker in this same bar already depend on. It also ends
+     an inconsistency rather than making one - this label was the ONLY text in
+     either bar not already drawn in --ink or --teal. */
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
   .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
@@ -667,6 +774,22 @@
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
     color: var(--ink); font-size: 17px; cursor: pointer; }
+  /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
+     writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
+     file owns the thresholds. A page without focus mode never shows it at all.
+     It is a PILL with a label, not a bare dot: the dot-only version measured
+     perfectly and could not be found on the page, and colour alone says nothing
+     to anyone who cannot separate red from green. */
+  .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+    border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
+    font-size: 12.5px; font-weight: 800; }
+  .eh-focus i { width: 9px; height: 9px; border-radius: 999px; background: currentColor; display: block; }
+  .eh-focus.is-ok { background: var(--good, #3E9C63); color: var(--good-ink, #06231F); }
+  .eh-focus.is-warn { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
+  .eh-focus.is-bad { background: var(--bad, #D7584B); color: var(--bad-ink, #2A0A07); }
+  .eh-focus b { font-weight: 800; }
+  @media (max-width: 620px) { .eh-focus b { display: none; }
+    .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
   .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
   .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
     background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
@@ -692,17 +815,44 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 </style>
 
 
-<header class="eh-bar1">
-  <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
+  <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
     <span class="eh-progtext">Lesson progress</span>
     <span class="eh-track"><i id="ehFill"></i></span>
   </div>
   <div class="eh-b1right">
+    <span id="ehFocus" hidden></span>
     <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="big-numbers-below-zero.html">Big Numbers and Below Zero</option><option value="patterns-and-squares.html">Patterns and Square Numbers</option><option value="ways-to-calculate.html">Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-and-measures.html" selected>Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>
@@ -723,7 +873,8 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
+  <div class="deck" id="deck" role="main">
 
     <!-- 1 faces of a solid -->
     <section class="slide" data-say="Every flat face of a solid is a two dimensional shape you already know.">
@@ -736,7 +887,7 @@
           <div class="faceset" id="faces1" aria-hidden="true"></div>
         </div>
         <div class="working" id="work1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="task1"></p>
         <div class="askwrap" id="ask1"></div>
       </div>
@@ -751,7 +902,7 @@
         <svg class="net" id="net2" viewBox="0 0 260 200" role="img" aria-label="A net"></svg>
         <div class="choices" id="netpick"></div>
         <div class="working" id="work2"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="task2"></p>
       </div>
     </section>
@@ -766,7 +917,7 @@
         <svg class="symbox" id="sym3" viewBox="0 0 200 200" role="img" aria-label="A shape with lines to test"></svg>
         <div class="choices" id="lines3"></div>
         <div class="working" id="work3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="task3"></p>
       </div>
     </section>
@@ -795,7 +946,7 @@
         <div class="chips" id="pickTile"></div>
         <svg class="tile" id="tile5" viewBox="0 0 260 180" role="img" aria-label="Shapes fitted together"></svg>
         <div class="working" id="work5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="task5"></p>
         <div class="askwrap" id="ask5"></div>
       </div>
@@ -813,7 +964,7 @@
         <input type="range" id="h6" min="1" max="6" value="3" step="1">
         <svg class="grid8" id="area6" viewBox="0 0 260 210" role="img" aria-label="A shape drawn on squared paper"></svg>
         <div class="working" id="work6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="task6"></p>
         <div class="askwrap" id="ask6"></div>
       </div>
@@ -828,7 +979,7 @@
         <svg class="grid8" id="blob7" viewBox="0 0 260 260" role="img" aria-label="An irregular shape on squared paper"></svg>
         <div class="working" id="work7"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="new7">A different shape</button></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="task7"></p>
         <div class="askwrap" id="ask7"></div>
       </div>
@@ -845,7 +996,7 @@
         <label class="lab" for="pos8">Move the pointer</label>
         <input type="range" id="pos8" min="0" max="16" value="10" step="1">
         <div class="working" id="work8"></div>
-        <p class="fb" id="fb8"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="task8"></p>
         <div class="askwrap" id="ask8"></div>
       </div>
@@ -859,7 +1010,7 @@
       <div class="stage">
         <p class="qstem" id="stem10"></p>
         <div class="choices" id="choices10"></div>
-        <p class="fb" id="fb10"></p>
+        <p class="fb" id="fb10" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score10"></p>
       </div>
     </section>
@@ -967,6 +1118,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1258,6 +1411,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1323,6 +1477,19 @@
 
   /* Every call site in this lesson already says say(...). It now goes to Sonia. */
   function say(text) { VOICE.speak(text); }
+
+  /* ehel-g4-validation-fixes: a check below its pass mark shows how many are needed and a Try
+     again button, instead of stopping with nothing to press. One definition for
+     every lesson; each check passes its own pass mark. */
+  function retryCheck(fb, ch, got, total, need, restart) {
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
 
   /* ==================================================================
      WHAT SHE SAYS BACK
@@ -1671,7 +1838,8 @@
     if (speak) say(slides[cur].dataset.say);
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }
-  }  /* RESUME ON REOPEN. The stored record already knew which steps were
+  }
+  /* RESUME ON REOPEN. The stored record already knew which steps were
      done and where the learner was; until this hook every reopened
      lesson drew an empty dot rail and step 1. Called once, after the
      progress document hydrates, and only if the learner has not already
@@ -1680,11 +1848,15 @@
      name at call time, so every wrapper the build or the pipeline puts
      around it (the header bar\x27s percentage, a step\x27s arrival line)
      runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
   window.__ehelRestore = function (doneIdx, resumeIdx) {
-    /* read BEFORE the ticks land: the record\x27s own step 1 must not
-       count as the learner having touched it (measured: it did, and the
-       page stayed on step 1 with the dots restored) */
-    const untouched = cur === 0 && !done[0];
+    const untouched = cur === 0 && !ehelInteracted;
     let changed = false;
     for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
     if (changed) paintDots();
@@ -1862,7 +2034,7 @@
     { name: "Square", ok: ["H", "V", "D1", "D2"], d: "M50,50 L150,50 L150,150 L50,150 Z" },
     { name: "Rectangle", ok: ["H", "V"], d: "M30,65 L170,65 L170,135 L30,135 Z" },
     { name: "Diamond", ok: ["H", "V"], d: "M100,30 L165,100 L100,170 L35,100 Z" },
-    { name: "Isosceles triangle", ok: ["V"], d: "M100,35 L160,155 L40,155 Z" },
+    { name: "Triangle", ok: ["V"], d: "M100,35 L160,155 L40,155 Z" },
     { name: "Parallelogram", ok: [], d: "M45,135 L85,65 L175,65 L135,135 Z" },
     { name: "Plus", ok: ["H", "V", "D1", "D2"], d: "M75,40 L125,40 L125,75 L160,75 L160,125 L125,125 L125,160 L75,160 L75,125 L40,125 L40,75 L75,75 Z" },
   ];
@@ -1912,7 +2084,7 @@
   });
   paint3();
 
-  /* ---- 10: angles ---- */
+  /* ---- 10: angles (0096 4Gg.08) ---- */
   let d10_deg10 = 45, d10_quiz10 = null, d10_right10 = 0;
   const d10_angleName = (d) => d < 90 ? "acute" : d === 90 ? "right" : "obtuse";
   function d10_drawAngle() {
@@ -1951,7 +2123,7 @@
       why: "Two squares side by side make a rectangle twice as wide as it is tall.",
       d: '<rect class="t1" x="50" y="45" width="70" height="70"></rect><rect class="t2" x="120" y="45" width="70" height="70"></rect>' },
     { name: "Six triangles", makes: "a hexagon", tess: true,
-      why: "Six equilateral triangles round a point make a regular hexagon, and hexagons tile a floor with no gaps.",
+      why: "Six triangles with equal sides, fitted round a point, make a regular hexagon, and hexagons tile a floor with no gaps.",
       d: "HEX" },
     { name: "Circles", makes: "gaps", tess: false,
       why: "Circles cannot tessellate. However you pack them there are always gaps left between them.",
@@ -2182,6 +2354,7 @@
       $("choices10").innerHTML = "";
       $("score10").textContent = right10 + " out of " + Q10.length + " right.";
       if (right10 >= 7) finish(8, "");
+      else retryCheck($("fb10"), $("choices10"), right10, Q10.length, 7, function () { c10 = 0; right10 = 0; round10(); });
       return;
     }
     $("stem10").textContent = Q10[c10].q;
@@ -2231,7 +2404,7 @@
 
   /* 4 (4Gp.03) reflection across a vertical mirror: the image is as far the other side.
      The distractor that keeps the distance but not the side is the error to catch. */  ask(5, () => {
-    const yes = ["equilateral triangle", "square", "regular hexagon"][rnd(0, 2)];
+    const yes = ["triangle with equal sides", "square", "regular hexagon"][rnd(0, 2)];
     const no = shuffle(["regular pentagon", "circle", "regular octagon on its own"]).slice(0, 2);
     const q = askShuffle3(yes, no[0], no[1]);
     return { stem: "Which of these <b>tessellates</b> — fits together with no gaps at all?",
@@ -2386,12 +2559,20 @@
   })();
 </script>
 
+<!-- WIRE-JS-START -->
 <script type="module">
   /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
      learner-controls.js holds the SAME singletons the shell mounts. */
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -2416,6 +2597,19 @@
       progressUnit: "l06",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -2442,10 +2636,23 @@
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
           placeholder: "Ask about Shape and Measures\u2026",
+          /* The chips a young learner presses, written as the sentence they
+             would have said. Four, because a row a six-year-old scans has to
+             be short and a fifth makes the other four less likely to be read.
+
+             "Give me a hint" is the one that carries a teaching stance: it
+             says "not the answer" in the message itself, so pressing it cannot
+             turn the tutor into an answer machine even before the prompt file
+             has its say.
+
+             True of every app this tool wires - Grade 1 English and the four
+             Mathematics builds - which is why none of them names a word, a
+             sentence or a number. */
           quickPrompts: [
-            { label: "Explain it simply", message: "Explain this step in a simpler way." },
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
-            { label: "An easier one", message: "Give me an easier question to build up with." },
           ],
         });
       } catch (e) {
@@ -2461,6 +2668,7 @@
     document.body.append(dock, drawer);
   }
 </script>
+<!-- WIRE-JS-END -->
 
 <script type="module">
   /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
@@ -2525,32 +2733,54 @@
      teacher needs to see. `resumeLabel` rides beside the id because a board
      printing "step-04" shows a teacher a word that appears nowhere on the
      child's screen. */
-  function report(i) {
-    emit({
-      type: "progress.summary", unit: UNIT,
-      sectionsDone: [...doneIds],
-      resume: sectionId(i), resumeLabel: labelOf(i),
-      xp: doneIds.size,
-    });
-    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
-  }
+  /* Activity-level participation, {section: {answered, total}}, and the words
+     the learner has shown they know. Both ride on progress.summary because the
+     reducer keeps them there and nowhere else; both are whole-map
+     last-write-wins, so every summary sends everything known so far rather
+     than a delta that could strand a count.
 
+     The server caps `attempted` at 20 sections and requires
+     ^[a-z0-9][a-z0-9_-]{0,39}$ - no dots, no slashes - so ids are kept in that
+     shape here rather than being rejected silently there. */
+  const attempted = {};
+  const known = new Set();
+  let lastAt = 0;
+
+  /* WHAT THE RECORD ALREADY HOLDS FOR THIS UNIT, read once at load.
+
+     Both maps above are REPLACED by the reducer, not merged, and both start
+     empty on every page load - so without this the first participation event
+     of a new session deletes every section reported in an earlier one. A child
+     who read four books on Monday and answered one question on Tuesday would
+     have Monday erased by Tuesday's first tick.
+
+     It is kept SEPARATE from the live maps rather than copied into them,
+     because hydrate is asynchronous and a report can fire before it lands.
+     Merged at send time, an early report sends a partial map and the next one
+     repairs it; a seed would simply have missed the window. If hydrate cannot
+     be reached at all the baseline stays empty, which is the behaviour without
+     it. */
+  let baseAttempted = {};
+  let baseKnown = [];
   /* step-NN -> the slide's 0-based index; anything else -> -1 */
   const indexOf = (id) => {
     const m = /^step-(\d{2})$/.exec(String(id || ""));
     return m ? Number(m[1]) - 1 : -1;
   };
-  /* RESUME. This build reported from the day it shipped and never read back,
-     so a child who closed the tab reopened to an empty dot rail and step 1
-     while the school's record said otherwise. The sections the record calls
-     done are seeded into doneIds as well as ticked, so unit.completed still
-     fires on the day the LAST step is finished even if the first seven were
-     finished last week. */
   (async () => {
     try {
       const doc = await ws.hydrate();
       const u = doc && doc.units && doc.units[UNIT];
       if (!u) return;
+      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
+      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+      /* RESUME. The sections the record says are done are done - seeded into
+         doneIds too, so unit.completed still fires on the day the LAST step
+         is finished even if the first seven were finished last week - and
+         the deck is told to tick them and open where the learner was. Without
+         this a child who closed the tab reopened to an empty dot rail and
+         step 1, while the school's record said otherwise; measured on the
+         Science build on 2026-09-10, and true of every build this tool wires. */
       const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
       for (const i of doneIdx) doneIds.add(sectionId(i));
       const resumeIdx = indexOf(u.resume);
@@ -2559,6 +2789,25 @@
       }
     } catch (_) { /* never break the lesson */ }
   })();
+
+
+  function report(i) {
+    lastAt = i;
+    const ev = {
+      type: "progress.summary", unit: UNIT,
+      sectionsDone: [...doneIds],
+      resume: sectionId(i), resumeLabel: labelOf(i),
+      xp: doneIds.size,
+    };
+    /* This session's answers WIN over the stored ones for the same section -
+       a child who re-does a step is telling us something newer. */
+    const allAttempted = { ...baseAttempted, ...attempted };
+    const allKnown = new Set([...baseKnown, ...known]);
+    if (Object.keys(allAttempted).length) ev.attempted = allAttempted;
+    if (allKnown.size) ev.knownWords = [...allKnown];
+    emit(ev);
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  }
 
   window.__ehelStep = function (i, done) {
     const id = sectionId(i);
@@ -2572,5 +2821,124 @@
     }
     report(i);
   };
-  window.__ehelAt = function (i) { report(i); };
+  window.__ehelAt = function (i) { lastAt = i; report(i); };
+
+  /* A SCORE, where a step actually produces one.
+     checkpoint.result is the only event the reducer turns into something a
+     teacher or a parent can read as a mark - the portal's quiz tables and the
+     gradebook are both fed from it - and nothing here emitted it, so every
+     scored step reported that it was DONE and never how it went.
+
+     ADDITIVE ON PURPOSE. A lesson that never calls this behaves exactly as it
+     did, which is what makes it safe in a tool three builds share.
+
+     ONLY WHERE THERE IS A REAL DENOMINATOR. `total` must be the number of
+     questions asked; a step that cannot say how many it asked must not call
+     this, because a score with an invented denominator is a mark nobody
+     measured. Play is deliberately excluded for the same reason the rollup
+     drops the Quran app's `games` star counts: a game is for practising. */
+  window.__ehelScore = function (i, right, total, sub, subTitle) {
+    const n = Number(total) || 0;
+    const got = Math.max(0, Math.min(Number(right) || 0, n));
+    if (!n) return;
+    /* `sub` gives ONE ACTIVITY INSIDE A STEP its own row - a single game out
+       of the twelve, say. The reducer keys checkpoints by this string and does
+       not validate it, so it is normalised here: lower case, hyphens only, and
+       short enough to read in a portal table. */
+    const key = sub
+      ? sectionId(i) + "-" + String(sub).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 28)
+      : sectionId(i);
+    emit({
+      type: "checkpoint.result", unit: UNIT, section: key,
+      title: subTitle ? labelOf(i) + ": " + subTitle : labelOf(i),
+      score: Math.round((got / n) * 100), correct: got, total: n,
+    });
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  };
+
+  /* PARTICIPATION where there is no score to give. "8 of 12 activities
+     ticked" is a real fact about a learner and is not a mark; sending it as a
+     checkpoint would put a percentage on work nobody assessed, which is the
+     thing the rollup already refuses to do for the Quran app's game stars. */
+  window.__ehelAttempt = function (i, answered, total, noun) {
+    const n = Number(total) || 0;
+    if (!n) return;
+    /* WHAT THIS IS CALLED, and what the two numbers count. The section id is a
+       POSITION here - `step-08` - and the same position is a different
+       activity in each app sharing this pipeline, so no reader of the stored
+       document can name it. `labelOf(i)` is the caption the learner is looking
+       at, the same one resumeLabel carries for the same reason: a surface
+       printing the id names a section nobody can find.
+
+       The noun is passed by the call site because only it knows: books, words,
+       rules, seconds. Both are optional and the server bounds them. */
+    attempted[sectionId(i)] = {
+      answered: Math.max(0, Math.min(Number(answered) || 0, n)),
+      total: n,
+      label: labelOf(i),
+      ...(noun ? { noun: String(noun) } : {}),
+    };
+    report(i);
+  };
+
+  /* Words the learner has shown they know, by tapping the right one when it
+     was said or pictured. A set, so hearing the same word in two steps counts
+     once, and the summary sends the whole list because the reducer replaces
+     rather than merges. */
+  window.__ehelKnown = function (words) {
+    const list = Array.isArray(words) ? words : [words];
+    let added = false;
+    for (const w of list) {
+      const t = String(w || "").trim().toLowerCase();
+      if (t && !known.has(t)) { known.add(t); added = true; }
+    }
+    // `cur` belongs to the deck's IIFE and this block is a separate module,
+    // so it is not in scope here - reading it would throw. The last position
+    // the deck told us about is, and that is the honest answer anyway.
+    if (added) report(lastAt);
+  };
+</script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
 </script>

@@ -16,11 +16,17 @@
 #
 # All five wiring tools are idempotent, so this is safe to run repeatedly.
 #
-# NOT INCLUDED, DELIBERATELY: compose-lessons.py, which regenerates the
-# c-*-body.html and c-*-slides.js sources this reads. Composing is a separate,
-# deliberate act - it OVERWRITES those sources, so folding it in here would
-# make "rebuild the pages" quietly destroy hand edits to the composed files.
-# Run it yourself when you mean to.
+# COMPOSING IS THE FIRST STEP NOW (2026-09-11). This used to leave out
+# compose-lessons.py on the grounds that it OVERWRITES the c-*-body.html and
+# c-*-slides.js files this reads, and a rebuild must not destroy hand edits to
+# them. But those files were never committed, so a fresh clone could not run
+# this script at all - build-lessons.py stopped on the first missing c-* - and
+# a hand edit to an untracked file had no second copy anyway. Measured before
+# changing it: composing from the tracked sources reproduces all sixteen c-*
+# files exactly (CRLF apart - compose wrote CRLF on Windows until the same day).
+# So they are intermediates, they are gitignored, and the tracked sources
+# (num-, frac-, time-, shape-, stats-slides.js, the new-* files, g4-lesson.js)
+# are where every change is made.
 #
 # build-hub.py READS ../grade-2-app/g2-index.html - the hub is built on Grade
 # 2's design - so this needs grade-2-app beside it and is not runnable from a
@@ -31,6 +37,8 @@ set -e
 cd "$(dirname "$0")"
 
 echo "building:"
+python compose-lessons.py > /dev/null
+echo "  ok  compose-lessons"
 python build-lessons.py
 python build-hub.py
 
@@ -38,6 +46,19 @@ echo
 echo "wiring to the platform:"
 for t in wire-navigation wire-platform-controls wire-progress preload-platform add-header-bars; do
   python "../lesson-app-tools/$t.py" > /dev/null || { echo "  FAILED: $t"; exit 1; }
+  echo "  ok  $t"
+done
+
+# The page tools the 2026-09-11 validation found this build had never had -
+# Grades 1 and 2 had them applied by hand, and a generated build has to run them
+# itself. ORDER MATTERS: wire-quiet-notice anchors on the role="main" that
+# wire-accessibility puts on the deck. Then the hub's teachers-and-parents
+# section - AFTER build-hub.py, which rebuilds the hub from Grade 2's and would
+# wipe it. All idempotent.
+python ../lesson-app-tools/add-page-doctype-lang.py $(python -c "import json; c=json.load(open('app.config.json')); print(' '.join([l['file'] for l in c['lessons']] + [c['hub']]))") > /dev/null || { echo "  FAILED: add-page-doctype-lang"; exit 1; }
+echo "  ok  add-page-doctype-lang"
+for t in wire-accessibility self-host-fonts wire-quiet-notice build-grownup-section; do
+  python "../lesson-app-tools/$t.py" --app . --write > /dev/null || { echo "  FAILED: $t"; exit 1; }
   echo "  ok  $t"
 done
 

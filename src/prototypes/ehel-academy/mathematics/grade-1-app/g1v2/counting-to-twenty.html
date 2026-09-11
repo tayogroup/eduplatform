@@ -5,6 +5,7 @@
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -564,6 +565,14 @@
   }
 
   /* --- the tutor dock, and a home for the class controls --- */
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: #fff; font: inherit; font-size: 16px; font-weight: 700;
@@ -715,6 +724,12 @@
 .dots button::after {
   content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
 }
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 
 /* ==== fix-review-findings.py ==== */
 /* A finished step you are standing on is BOTH done and current, and the dot
@@ -761,15 +776,15 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
     <!-- 1  1Nc.01  Count to 10 -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting is saying one number for each thing, and never saying two numbers for the same thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the plus.</s><s>One counter appears, and we say one.</s><s>Press again.</s><s>Two.</s><s>Each press puts exactly one counter in a hole and we say exactly one number.</s><s>When the frame is full we have said ten.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children rush and say numbers faster than the counters appear, so the last number they say is not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press once, say one number, then wait.</s><s>Let your voice keep up with your finger.</s></mstts:express-as>' data-say="Press the plus to put a counter in the frame. Count out loud with me.">
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting is saying one number for each thing, and never saying two numbers for the same thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the plus.</s><s>One counter appears, and we say one.</s><s>Press again.</s><s>Two.</s><s>Each press puts exactly one counter in a hole and we say exactly one number.</s><s>When the frame is full we have said ten.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children rush and say numbers faster than the counters appear, so the last number they say is not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press once, say one number, then wait.</s><s>Let your voice keep up with your finger.</s><s>Then press Mix them up. The counters move to new holes, but no counter comes or goes, so the number stays the same.</s></mstts:express-as>' data-say="Press the plus to put a counter in the frame. Count out loud with me. Then press Mix them up. Is it still the same number?">
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Count to 10</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Press <b>+</b> to put a counter in the frame. Count out loud with me.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Press <b>+</b> to put a counter in the frame. Count out loud with me. Then press <b>Mix them up</b>. Is it still the same number?</span></div>
       <div class="stage">
         <div class="frames"><div class="tenframe" id="tf1"></div></div>
         <div class="bignum" id="num1">0</div>
         <div class="word" id="word1">zero</div>
-        <div class="bigbtns"><button type="button" class="big ghost" id="minus1">−</button><button type="button" class="big" id="plus1">+</button></div>
+        <div class="bigbtns"><button type="button" class="big ghost" id="minus1">−</button><button type="button" class="big" id="plus1">+</button><button type="button" class="big teal" id="mix1">Mix them up</button></div>
         <p class="fb" id="fb1" role="status" aria-live="polite"></p>
       </div>
     </section>
@@ -1993,12 +2008,23 @@
   function paint1(popped) {
     setFrame($("tf1"), n1); if (popped) { const c = $("tf1").querySelector('i[data-i="' + (n1 - 1) + '"]'); if (c) c.classList.add("pop"); }
     $("num1").textContent = n1; $("word1").textContent = WORDS[n1];
-    $("plus1").disabled = n1 >= 10; $("minus1").disabled = n1 <= 0;
+    $("plus1").disabled = n1 >= 10; $("minus1").disabled = n1 <= 0; $("mix1").disabled = n1 < 2 || n1 >= 10;
     $("fb1").className = "fb " + (n1 === 10 ? "good" : ""); $("fb1").textContent = n1 === 10 ? "Ten! The frame is full." : n1 === 5 ? "Five: one whole row." : "";
     if (n1 === 10) finish(0, "Ten! The frame is full.");
   }
   $("plus1").addEventListener("click", () => { if (n1 < 10) { n1++; paint1(true); say(WORDS[n1]); } });
   $("minus1").addEventListener("click", () => { if (n1 > 0) { n1--; paint1(); say(WORDS[n1]); } });
+  /* ehel-show-conservation: 1Nc.01 names CONSERVATION of number - the same counters, moved,
+     are still the same number. Shown, not only said: the counters move to
+     other holes and the number underneath stays where it is. */
+  $("mix1").addEventListener("click", () => {
+    if (n1 < 2 || n1 >= 10) return;   /* a full frame has nowhere to move a counter to */
+    const cells = [...$("tf1").querySelectorAll("i")];
+    cells.forEach((c) => c.classList.remove("on", "pop"));
+    shuffle(cells).slice(0, n1).forEach((c) => c.classList.add("on"));
+    const msg = "Still " + WORDS[n1] + ". Moving the counters does not change how many there are.";
+    $("fb1").className = "fb good"; $("fb1").textContent = msg; say(msg);
+  });
   paint1();
 
   /* ---- 2: see how many, without counting (subitising) ---- */
@@ -2846,7 +2872,7 @@
     ["👀", "I can read numbers"],
     ["✍️", "I can write numbers"],
     ["0️⃣", "Zero means none"],
-    ["🧱", "Counting in tens"],
+    ["🔟", "Counting in tens"],
     ["🧦", "Counting in twos"],
     ["👟", "Odd and even"],
     ["⚖️", "More and fewer"],
@@ -2949,6 +2975,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -2975,6 +3008,19 @@
       progressUnit: "u01",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not

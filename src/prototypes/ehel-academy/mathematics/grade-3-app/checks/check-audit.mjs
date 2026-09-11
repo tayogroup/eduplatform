@@ -9,28 +9,38 @@ const L = (f) => path.join(HERE, f);
 
 const bad = [];
 
-/* The 53 Stage 3 codes are read out of the framework text rather than retyped,
-   so a code this audit invents cannot pass. fw.txt is a full-text extraction of
-   Cambridge's published PDF and is deliberately NOT committed - the repo holds
-   structured extractions under src/curriculum, never a reproduction of the
-   source document, and the PDFs themselves are not in the repo either.
+/* The 53 Stage 3 codes are read out of the framework rather than retyped, so a
+   code this audit invents cannot pass.
 
-   Regenerate it beside this file before running:
-     pdftotext -layout <the 0096 framework PDF> fw.txt
+   FROM THE COMMITTED EXTRACTION, src/curriculum/cambridge-mathematics-0096.json -
+   the file audit-stage-coverage.py and every other Mathematics gate reads. This
+   used to need fw.txt, a pdftotext dump of Cambridge's PDF that is deliberately
+   NOT committed (the repo holds structured extractions, never a reproduction of
+   the source document), so it could run on one machine and exited 2 everywhere
+   else: the 2026-09-11 validation found it unable to run. fw.txt is still read
+   when it is here, and must then AGREE with the JSON - two readings of one
+   framework that disagree mean one of them is wrong, and this says so.
 
    Exit 2, not 1: this is "the check could not run", which is neither a pass nor
    a finding. A gate that cannot read its target and reports green is green
    about nothing. */
-if (!fs.existsSync(L("fw.txt"))) {
-  console.error("cannot run: fw.txt is not here, so there is nothing to check the codes against.");
-  console.error("  pdftotext -layout <0096 Primary Mathematics framework PDF> " + L("fw.txt"));
+const FW = path.resolve(HERE, "../../../../../curriculum/cambridge-mathematics-0096.json");
+if (!fs.existsSync(FW)) {
+  console.error("cannot run: no framework at " + FW);
   process.exit(2);
 }
-const fw = fs.readFileSync(L("fw.txt"), "utf8").split(/\r?\n/).slice(834, 1003).join("\n");
-const codes = [...new Set(fw.match(/3[A-Za-z][a-z]\.\d\d/g))].sort();
+const codes = [...new Set((JSON.parse(fs.readFileSync(FW, "utf8")).objectivesByStage["3"] || []).map((o) => o.code))].sort();
 if (codes.length !== 53) {
-  console.error("cannot run: fw.txt yielded " + codes.length + " Stage 3 codes, not 53 - wrong PDF, or the Stage 3 line range moved.");
+  console.error("cannot run: the framework gave " + codes.length + " Stage 3 codes, not 53.");
   process.exit(2);
+}
+if (fs.existsSync(L("fw.txt"))) {
+  const fw = fs.readFileSync(L("fw.txt"), "utf8").split(/\r?\n/).slice(834, 1003).join("\n");
+  const fromPdf = [...new Set(fw.match(/3[A-Za-z][a-z]\.\d\d/g))].sort();
+  if (fromPdf.join() !== codes.join()) {
+    console.error("cannot run: fw.txt and " + path.basename(FW) + " disagree about the Stage 3 codes.");
+    process.exit(2);
+  }
 }
 
 const b = await chromium.launch();

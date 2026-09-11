@@ -1,8 +1,11 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -18,7 +21,11 @@
   })();
 </script>
 <title>Coins and Change</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
@@ -318,6 +325,14 @@
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -394,10 +409,36 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -425,7 +466,8 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
+  <div class="deck" id="deck" role="main">
     <!-- 1 know your money -->
     <section class="slide" data-say="This is our money. Round gold ones are coins. Flat ones are notes. Tap one to hear what it is worth.">
       <div class="slide-head"><span class="n">1</span><h2>Know your money</h2></div>
@@ -433,7 +475,7 @@
       <div class="stage">
         <div class="coins" id="money1"></div>
         <div class="total" id="words1">&nbsp;</div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score1"></p>
       </div>
     </section>
@@ -445,7 +487,7 @@
       <div class="stage">
         <div class="coins" id="money2"></div>
         <div class="working" id="work2"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score2"></p>
       </div>
     </section>
@@ -460,7 +502,7 @@
         <div class="purse" id="purse3"></div>
         <div class="total" id="total3"></div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="undo3">↩ Undo</button><button type="button" class="big small teal" id="next3" hidden>Next one ▶</button></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score3"></p>
       </div>
     </section>
@@ -475,7 +517,7 @@
         <div class="purse" id="purse4"></div>
         <div class="total" id="total4"></div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="undo4">↩ Undo</button><button type="button" class="big small teal" id="next4" hidden>Next one ▶</button></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score4"></p>
       </div>
     </section>
@@ -488,34 +530,33 @@
         <div class="basket" id="basket5"></div>
         <div class="working" id="work5"></div>
         <div class="choices" id="ch5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score5"></p>
       </div>
     </section>
 
     <!-- 6 change -->
-    <section class="slide" data-say="Change is what comes back. Count on from the price up to the money you handed over.">
-      <div class="slide-head"><span class="n">6</span><h2>Counting the change</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count <b>on</b> from the price up to what you paid. The hops are your change.</span></div>
+    <section class="slide" data-say="You have some money, but not enough. Count on from what you have up to the price. The hops show how much more you need.">
+      <div class="slide-head"><span class="n">6</span><h2>How much more?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count <b>on</b> from what you have up to the price. The hops show how much <b>more</b> you need.</span></div>
       <div class="stage">
         <p class="fb" id="q6" style="font-size:20px"></p>
         <div class="timeline" id="line6"></div>
         <div class="total" id="now6"></div>
-        <div class="bigbtns"><button type="button" class="big small" id="a1">+ 1</button><button type="button" class="big small" id="a5">+ 5</button><button type="button" class="big small teal" id="a10">+ 10</button><button type="button" class="big small teal" id="a50">+ 50</button><button type="button" class="big small teal" id="a100">+ 100</button><button type="button" class="big ghost small" id="undo6">↩ Undo</button><button type="button" class="big small" id="next6" hidden>Next one ▶</button></div>
-        <p class="fb" id="fb6"></p>
+        <div class="bigbtns"><button type="button" class="big small" id="a1">+ 1</button><button type="button" class="big small" id="a5">+ 5</button><button type="button" class="big small teal" id="a10">+ 10</button><button type="button" class="big small teal" id="a50">+ 50</button><button type="button" class="big ghost small" id="undo6">↩ Undo</button><button type="button" class="big small" id="next6" hidden>Next one ▶</button></div>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score6"></p>
       </div>
     </section>
 
     <!-- 7 shillings and cents -->
-    <section class="slide" data-say="One shilling is one hundred cents. So money can be written two ways.">
-      <div class="slide-head"><span class="n">7</span><h2>Shillings and cents</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7"><b>1 shilling = 100 cents.</b> So the same money can be written two ways.</span></div>
+    <section class="slide" data-say="Money has its own way of writing. Forty-five shillings can be written 45 sh, or KSh 45. Both mean the same.">
+      <div class="slide-head"><span class="n">7</span><h2>Writing money</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7"><b>45 sh</b> and <b>KSh 45</b> both mean forty-five shillings. Tap the one that matches.</span></div>
       <div class="stage">
-        <div class="hundred" id="grid7" aria-hidden="true"></div>
         <div class="swap"><span class="box" id="from7"></span><span class="eq">=</span><span class="box" id="to7">?</span></div>
         <div class="choices" id="ch7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score7"></p>
       </div>
     </section>
@@ -528,7 +569,7 @@
         <p class="fb" id="q8" style="font-size:20px"></p>
         <div class="offers" id="offers8"></div>
         <div class="working" id="work8"></div>
-        <p class="fb" id="fb8"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score8"></p>
       </div>
     </section>
@@ -541,7 +582,7 @@
         <p class="fb" id="q9" style="font-size:20px"></p>
         <div class="choices" id="ch9"></div>
         <div class="working" id="work9"></div>
-        <p class="fb" id="fb9"></p>
+        <p class="fb" id="fb9" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score9"></p>
       </div>
     </section>
@@ -553,7 +594,7 @@
       <div class="stage">
         <p class="fb" id="q10" style="font-size:22px"></p>
         <div class="choices" id="ch10"></div>
-        <p class="fb" id="fb10"></p>
+        <p class="fb" id="fb10" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score10"></p>
       </div>
     </section>
@@ -564,7 +605,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb11"></p>
+        <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -659,6 +700,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -950,6 +993,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1339,13 +1383,15 @@
       intro.parentNode.insertBefore(bar, intro.nextSibling);
     });
   })();
+  /* ehel-stage2-line: held to Stage 2 by hold-stage-2.py (2026-09-11) */
   const $ = (id) => document.getElementById(id);
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
   const sh = (n) => n + " sh";
   const pieces = (n) => n + (n === 1 ? " piece" : " pieces");
-  const MONEY = [1, 5, 10, 20, 50, 100, 200, 500, 1000];
+  /* Stage 2 numbers stop at 100, so the notes stop there too (was 200, 500, 1000). */
+  const MONEY = [1, 5, 10, 20, 50, 100];
   const kind = (v) => (v >= 500 ? "coin note big-note" : v >= 100 ? "coin note" : "coin");
   const moneyBtn = (v, extra) => '<button type="button" class="' + kind(v) + (extra || "") + '" data-v="' + v + '">' + v + "<small>sh</small></button>";
   const nameOf = (v) => v + " shilling " + (v >= 100 ? "note" : "coin");
@@ -1394,7 +1440,7 @@
   function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
   function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
 
-  /* ---- 1: know your money ---- */
+  /* ---- 1: know your money (0096 2Nm.01) ---- */
   $("money1").innerHTML = MONEY.map((v) => moneyBtn(v)).join("");
   const ASK1 = shuffle(MONEY.filter((v) => v !== 1)).slice(0, 4);
   let t1 = 0, right1 = 0, lock1 = false;
@@ -1420,8 +1466,8 @@
   });
   round1();
 
-  /* ---- 2: count the purse ---- */
-  const PURSES = [[50, 20, 10, 5], [100, 50, 20, 20, 10], [20, 20, 10, 5, 5], [200, 100, 50, 10], [100, 100, 50, 20, 5]];
+  /* ---- 2: count the purse (0096 2Nm.01) ---- */
+  const PURSES = [[50, 20, 10, 5], [50, 20, 20, 5], [20, 20, 10, 5, 5], [50, 10, 10, 5, 1], [20, 10, 5, 5, 1]];
   let p2 = 0, right2 = 0, order2 = [], running2 = 0;
   function round2() {
     $("fb2").textContent = ""; $("fb2").className = "fb";
@@ -1450,8 +1496,8 @@
   });
   round2();
 
-  /* ---- 3 and 4: build an amount ---- */
-  const BUILD = { 3: { targets: [75, 130, 240], set: [1, 5, 10, 20, 50, 100], fewest: false }, 4: { targets: [180, 265, 340], set: [5, 10, 20, 50, 100, 200], fewest: true } };
+  /* ---- 3 and 4: build an amount (0096 2Nm.01, 2Nm.02 - one amount, different coins) ---- */
+  const BUILD = { 3: { targets: [35, 60, 85], set: [1, 5, 10, 20, 50], fewest: false }, 4: { targets: [45, 70, 95], set: [1, 5, 10, 20, 50], fewest: true } };
   const greedy = (t, set) => { let n = 0, left = t; const s = set.slice().sort((a, b) => b - a); for (const c of s) { while (left >= c) { left -= c; n++; } } return n; };
   const state = { 3: { i: 0, right: 0, purse: [] }, 4: { i: 0, right: 0, purse: [] } };
   function paintBuild(step) {
@@ -1509,13 +1555,15 @@
   }
   wireBuild(3); wireBuild(4);
 
-  /* ---- 5: shopping ---- */
-  const ITEMS = [["🥭", "a mango", 35], ["✏️", "a pencil", 20], ["🍞", "a loaf", 85], ["🧃", "a juice", 45], ["📒", "a notebook", 150], ["🍌", "a banana", 15], ["🥚", "an egg", 25], ["🧼", "a bar of soap", 60], ["🪥", "a toothbrush", 70], ["🍅", "a tomato", 30]];
+  /* ---- 5: shopping (0096 2Ni.04) ---- */
+  /* prices within 100 whose digits never carry when two or three are added (2Ni.04: no regrouping) */
+  const ITEMS = [["✏️", "a pencil", 20], ["🍌", "a banana", 11], ["🥚", "an egg", 12], ["🧃", "a juice", 23], ["🍞", "a loaf", 42], ["🧼", "a bar of soap", 30], ["🍎", "an apple", 14], ["📒", "a notebook", 51], ["🥕", "a carrot", 10], ["🍊", "an orange", 13]];
+  const noCarry = (list) => list.reduce((a, it) => a + (it[2] % 10), 0) < 10 && list.reduce((a, it) => a + Math.floor(it[2] / 10), 0) < 10;
   let b5 = 0, right5 = 0, lock5 = false, basket5 = [], total5 = 0;
   function round5() {
     lock5 = false; $("fb5").textContent = ""; $("fb5").className = "fb"; $("work5").innerHTML = "";
     if (b5 >= 4) { $("basket5").innerHTML = ""; $("ch5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You added up " + right5 + " of 4 baskets!"; $("score5").textContent = ""; finish(4, "You can total a basket."); return; }
-    basket5 = shuffle(ITEMS).slice(0, b5 < 2 ? 2 : 3);
+    do { basket5 = shuffle(ITEMS).slice(0, b5 < 2 ? 2 : 3); } while (!noCarry(basket5));
     total5 = basket5.reduce((a, it) => a + it[2], 0);
     $("score5").textContent = "Basket " + (b5 + 1) + " of 4";
     $("basket5").innerHTML = basket5.map((it) => '<div class="row"><span class="e">' + it[0] + '</span><span>' + it[1] + '</span><span class="p">' + sh(it[2]) + "</span></div>").join("");
@@ -1538,9 +1586,12 @@
   });
   round5();
 
-  /* ---- 6: change ---- */
-  const HOPS = [["a1", 1], ["a5", 5], ["a10", 10], ["a50", 50], ["a100", 100]];
-  const CHANGE = [[65, 100], [130, 200], [45, 100], [340, 500]];
+  /* ---- 6: how much more do you need? (0096 2Ni.03, 2Ni.04) ----
+     Was 'Counting the change' up to 500 sh: giving change is Stage 3's Nm.02 and the
+     numbers ran past 100. The same count-on line now finds how much MORE is
+     needed - a complement, counting on from a multiple of 10 or within 20. */
+  const HOPS = [["a1", 1], ["a5", 5], ["a10", 10], ["a50", 50]];
+  const CHANGE = [[60, 100], [30, 80], [13, 20], [40, 70]];
   let c6 = 0, right6 = 0, at6 = 0, hops6 = [];
   function relayout6() { if (c6 < CHANGE.length) paintLine6(); }
   function paintLine6() {
@@ -1553,16 +1604,16 @@
     for (const h of hops6) { const a = pos(run), b = pos(run + h); html += '<div class="hop" style="left:' + a + "px;width:" + Math.max(2, b - a) + 'px"></div><div class="hoplab" style="left:' + ((a + b) / 2) + "px\">+" + h + "</div>"; run += h; }
     html += '<div class="m a" style="left:' + pos(at6) + 'px"></div>';
     $("line6").innerHTML = html;
-    $("now6").innerHTML = "You are on <b>" + sh(at6) + "</b> · change so far <b>" + sh(at6 - price) + "</b>";
+    $("now6").innerHTML = "You are on <b>" + sh(at6) + "</b> · more so far <b>" + sh(at6 - price) + "</b>";
     HOPS.forEach(([id, v]) => { $(id).disabled = at6 + v > paid; });
     $("undo6").disabled = hops6.length === 0;
   }
   function round6() {
     $("fb6").textContent = ""; $("fb6").className = "fb"; $("next6").hidden = true;
-    if (c6 >= CHANGE.length) { $("q6").textContent = ""; $("line6").innerHTML = ""; $("now6").textContent = ""; HOPS.map((h) => h[0]).concat(["undo6"]).forEach((id) => { $(id).hidden = true; }); $("fb6").className = "fb good"; $("fb6").textContent = "You counted the change " + right6 + " times!"; $("score6").textContent = ""; finish(5, "You can count change."); return; }
+    if (c6 >= CHANGE.length) { $("q6").textContent = ""; $("line6").innerHTML = ""; $("now6").textContent = ""; HOPS.map((h) => h[0]).concat(["undo6"]).forEach((id) => { $(id).hidden = true; }); $("fb6").className = "fb good"; $("fb6").textContent = "You found how much more " + right6 + " times!"; $("score6").textContent = ""; finish(5, "You can find how much more you need."); return; }
     const [price, paid] = CHANGE[c6]; at6 = price; hops6 = [];
     $("score6").textContent = "Shop " + (c6 + 1) + " of " + CHANGE.length;
-    const q = "It costs " + sh(price) + " and you pay with " + sh(paid) + ". Count on to " + sh(paid) + ".";
+    const q = "You have " + sh(price) + ". It costs " + sh(paid) + ". Count on to " + sh(paid) + ".";
     $("q6").textContent = q; $("say6").textContent = q; paintLine6(); say(q);
   }
   function hop(v) {
@@ -1571,8 +1622,8 @@
     if (at6 < paid) { $("fb6").className = "fb"; $("fb6").textContent = sh(paid - at6) + " still to go."; say(at6 + " shillings"); return; }
     right6++; const change = paid - price;
     $("fb6").className = "fb good";
-    $("fb6").textContent = cheer() + " " + hops6.join(" + ") + " = " + sh(change) + " change.";
-    say(cheer() + " Your change is " + change + " shillings");
+    $("fb6").textContent = cheer() + " " + hops6.join(" + ") + " = " + sh(change) + ". You need " + sh(change) + " more.";
+    say(cheer() + " You need " + change + " shillings more");
     HOPS.forEach(([id]) => { $(id).disabled = true; });
     c6++; $("next6").hidden = false;
   }
@@ -1581,37 +1632,38 @@
   $("next6").addEventListener("click", round6);
   round6();
 
-  /* ---- 7: shillings and cents ---- */
-  const CENTS = [250, 175, 100, 320, 405, 150, 275];
-  const asShC = (c) => Math.floor(c / 100) + " sh " + String(c % 100).padStart(2, "0") + " c";
-  const asDec = (c) => (c / 100).toFixed(2) + " sh";
+  /* ---- 7: writing money (0096 2Nm.01) ----
+     Was 'Shillings and cents': 250 cents as '2 sh 50 c' is money notation of
+     the kind Stage 3's Nm.01 introduces, and the numbers ran past 100. 2Nm.01 is
+     'recognise value and money notation used in local currency' - so: the same
+     amount written the shop way (KSh 45), the short way (45 sh) and in words. */
+  const ONES7 = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const TENS7 = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  const words7 = (n) => (n < 20 ? ONES7[n] : n === 100 ? "one hundred" : TENS7[Math.floor(n / 10)] + (n % 10 ? "-" + ONES7[n % 10] : ""));
+  const swap7 = (n) => (n % 10 && Math.floor(n / 10) ? (n % 10) * 10 + Math.floor(n / 10) : n + 10);
+  const AMOUNTS7 = [45, 20, 75, 50, 12, 90, 36, 64];
   let c7 = 0, right7 = 0, lock7 = false, list7 = [], q7 = null;
-  function paintGrid7(rem) { $("grid7").innerHTML = new Array(100).fill(0).map((_, i) => '<i class="' + (i < rem ? "on" : "") + '"></i>').join(""); }
   function round7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb"; $("to7").textContent = "?";
-    if (c7 === 0) list7 = shuffle(CENTS).slice(0, 5);
-    if (c7 >= list7.length) { $("from7").textContent = ""; $("to7").textContent = ""; $("ch7").innerHTML = ""; $("grid7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You swapped " + right7 + " of " + list7.length + "!"; $("score7").textContent = ""; finish(6, "You can swap cents and shillings."); return; }
-    const cents = list7[c7], dec = c7 % 2 === 1;
-    q7 = { cents, a: dec ? asDec(cents) : asShC(cents) };
-    $("score7").textContent = "Swap " + (c7 + 1) + " of " + list7.length;
-    $("from7").textContent = cents + " c";
-    paintGrid7(cents % 100 === 0 ? 100 : cents % 100);
-    const w = Math.floor(cents / 100), r = cents % 100, pad = String(r).padStart(2, "0");
-    const wrong = dec
-      ? [(cents / 10).toFixed(2) + " sh", w + "." + r + " sh", (w + 1) + "." + pad + " sh"]
-      : [r ? r + " sh " + String(w).padStart(2, "0") + " c" : w + " sh 10 c", (w + 1) + " sh " + pad + " c", w + " sh " + String((r + 10) % 100).padStart(2, "0") + " c"];
-    const opts = [q7.a]; for (const x of wrong) { if (opts.length < 3 && opts.indexOf(x) === -1) opts.push(x); }
-    choices($("ch7"), opts, true);
-    const q = "What is " + cents + " cents in shillings?";
+    if (c7 === 0) list7 = shuffle(AMOUNTS7).slice(0, 5);
+    if (c7 >= list7.length) { $("from7").textContent = ""; $("to7").textContent = ""; $("ch7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You matched " + right7 + " of " + list7.length + "!"; $("score7").textContent = ""; finish(6, "You can read and write money."); return; }
+    const n = list7[c7], kind = c7 % 3;
+    if (kind === 0) q7 = { from: words7(n) + " shillings", a: sh(n), opts: [sh(n), sh(swap7(n)), sh(n * 10 > 100 ? n + 5 : n * 10)] };
+    else if (kind === 1) q7 = { from: "KSh " + n, a: sh(n), opts: [sh(n), sh(swap7(n)), sh(n + 5)] };
+    else q7 = { from: sh(n), a: words7(n) + " shillings", opts: [words7(n) + " shillings", words7(swap7(n)) + " shillings", words7(n + 5 > 100 ? n - 5 : n + 5) + " shillings"] };
+    q7.n = n;
+    $("score7").textContent = "Match " + (c7 + 1) + " of " + list7.length;
+    $("from7").textContent = q7.from;
+    choices($("ch7"), q7.opts, true);
+    const q = "Which one means " + q7.from + "?";
     $("say7").textContent = q; say(q);
   }
   $("ch7").addEventListener("click", (e) => {
     const b = e.target.closest(".choice"); if (!b || lock7) return; lock7 = true;
     const ok = b.dataset.v === q7.a; reveal($("ch7"), q7.a, b); $("to7").textContent = q7.a;
     if (ok) right7++;
-    const whole = Math.floor(q7.cents / 100), rest = q7.cents % 100;
     $("fb7").className = "fb " + (ok ? "good" : "bad");
-    $("fb7").textContent = (ok ? cheer() + " " : "It is " + q7.a + ". ") + q7.cents + " cents is " + whole + " whole " + (whole === 1 ? "shilling" : "shillings") + (rest ? " and " + rest + " cents over" : " exactly") + ".";
+    $("fb7").textContent = (ok ? cheer() + " " : "It is " + q7.a + ". ") + "KSh " + q7.n + ", " + sh(q7.n) + " and " + words7(q7.n) + " shillings all mean the same money.";
     say(ok ? cheer() + " " + q7.a : "It is " + q7.a);
     c7++; setTimeout(round7, 3200);
   });
@@ -1630,7 +1682,7 @@
     { a: [50, 20], b: [100] },
     { a: [50, 5], b: [20, 20, 10] },
     { a: [20, 10], b: [5, 5, 5, 5, 5] },
-    { a: [50, 50], b: [100, 20] },
+    { a: [50, 20, 10], b: [50, 5, 5, 10] },
   ];
   const purseTotal = (p) => p.reduce((x, y) => x + y, 0);
   let d8 = 0, right8 = 0, lock8 = false, list8 = [], deal8 = null;
@@ -1663,21 +1715,26 @@
   });
   round8();
 
-  /* ---- 9: saving and spending ---- */
+  /* ---- 9: saving and spending (0096 2Ni.04) ----
+     Was up to 280 sh and 'how many weeks' by division: numbers past 100 and
+     dividing are both beyond Stage 2. Saving is now repeated addition of 5s and
+     10s (2Ni.05, 2Ni.07); spending takes one price away with no regrouping. */
   let s9 = 0, right9 = 0, lock9 = false, q9 = null;
   function make9(i) {
     if (i % 2 === 0) {
-      const perWeek = [20, 25, 30, 40][rnd(0, 3)], weeks = rnd(4, 7), goal = perWeek * weeks;
-      return { q: "You save " + sh(perWeek) + " every week. How many weeks until you have " + sh(goal) + "?", a: weeks + " weeks", opts: [weeks + " weeks", (weeks + 1) + " weeks", (weeks - 1) + " weeks"],
-        work: [{ k: "Each week", v: sh(perWeek) }, { k: goal + " ÷ " + perWeek, v: "= " + weeks }, { k: "Weeks to save", v: weeks + " weeks", total: true }],
-        why: "Each week adds " + sh(perWeek) + ", so " + goal + " ÷ " + perWeek + " = " + weeks + " weeks." };
+      const perWeek = [5, 10][rnd(0, 1)], weeks = rnd(3, perWeek === 5 ? 10 : 9), total = perWeek * weeks;
+      return { q: "You save " + sh(perWeek) + " every week. How much do you have after " + weeks + " weeks?", a: sh(total), opts: [sh(total), sh(total + perWeek), sh(total - perWeek)],
+        work: [{ k: "Each week", v: sh(perWeek) }, { k: weeks + " lots of " + perWeek, v: "= " + sh(total) }, { k: "Saved", v: sh(total), total: true }],
+        why: "Each week adds " + sh(perWeek) + ", so " + weeks + " weeks is " + weeks + " lots of " + perWeek + ": " + sh(total) + "." };
     }
-    const two = shuffle(ITEMS).slice(0, 2), spent = two[0][2] + two[1][2];
-    const start = Math.ceil((spent + rnd(40, 160)) / 50) * 50, left = start - spent;
-    return { q: "You have " + sh(start) + ". You buy " + two[0][1] + " for " + sh(two[0][2]) + " and " + two[1][1] + " for " + sh(two[1][2]) + ". How much is left?", a: sh(left), opts: [sh(left), sh(left - 10), sh(start - two[0][2])],
-      work: [{ k: "Spent", v: two[0][2] + " + " + two[1][2] + " = " + sh(spent) }, { k: start + " − " + spent, v: "= " + sh(left) }, { k: "Left", v: sh(left), total: true }],
-      why: "You spent " + sh(spent) + " altogether, and " + start + " − " + spent + " = " + sh(left) + "." };
+    let start, it;
+    do { start = rnd(5, 9) * 10 + rnd(3, 9); it = ITEMS[rnd(0, ITEMS.length - 1)]; } while (it[2] % 10 > start % 10 || Math.floor(it[2] / 10) >= Math.floor(start / 10));
+    const left = start - it[2];
+    return { q: "You have " + sh(start) + ". You buy " + it[1] + " for " + sh(it[2]) + ". How much is left?", a: sh(left), opts: [sh(left), sh(left + 10), sh(start + it[2] > 100 ? left - 1 : start + it[2])],
+      work: [{ k: "You had", v: sh(start) }, { k: start + " − " + it[2], v: "= " + sh(left) }, { k: "Left", v: sh(left), total: true }],
+      why: start + " − " + it[2] + " = " + left + ": take away the tens, then the ones." };
   }
+
   function round9() {
     lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb"; $("work9").innerHTML = "";
     if (s9 >= 4) { $("q9").textContent = ""; $("ch9").innerHTML = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You solved " + right9 + " of 4!"; $("score9").textContent = ""; finish(8, "You can save up and spend well."); return; }
@@ -1698,36 +1755,50 @@
   round9();
 
   /* ---- 10: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11, the rule Grade 1 already keeps). Below it the child sees the score,
+     how many they need, and a button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "How many cents make one shilling?", opts: ["100 c", "10 c", "50 c"], a: "100 c" },
-    { q: "A 50 and a 20 and a 10. How much altogether?", opts: ["80 sh", "70 sh", "90 sh"], a: "80 sh" },
-    { q: "Which is the fewest pieces for 70 sh?", opts: ["50 + 20", "20 + 20 + 20 + 10", "10 × 7"], a: "50 + 20" },
-    { q: "A juice is 45 sh and a bun is 30 sh. Total?", opts: ["75 sh", "65 sh", "85 sh"], a: "75 sh" },
-    { q: "It costs 80 sh. You pay 100 sh. Your change is…", opts: ["20 sh", "180 sh", "30 sh"], a: "20 sh" },
-    { q: "250 cents written in shillings is…", opts: ["2 sh 50 c", "25 sh", "2 sh 05 c"], a: "2 sh 50 c" },
-    { q: "3 mangoes for 60 sh. What does one cost?", opts: ["20 sh", "30 sh", "63 sh"], a: "20 sh" },
-    { q: "Which is worth more: 20 sh + 20 sh + 5 sh, or one 50 sh note?", opts: ["the 50 sh note", "the three coins", "the same"], a: "the 50 sh note" },
-    { q: "You save 25 sh a week. After 4 weeks you have…", opts: ["100 sh", "29 sh", "75 sh"], a: "100 sh" },
-    { q: "You have 200 sh and spend 145 sh. What is left?", opts: ["55 sh", "65 sh", "345 sh"], a: "55 sh" },
+    { q: "How do we write forty shillings?", opts: ["40 sh", "4 sh", "14 sh"], a: "40 sh", why: "Forty is 4 tens, written 40, so forty shillings is 40 sh." },
+    { q: "A 50 and a 20 and a 10. How much altogether?", opts: ["80 sh", "70 sh", "90 sh"], a: "80 sh", why: "Start with the biggest: 50, then 70, then 80." },
+    { q: "Which is the fewest pieces for 70 sh?", opts: ["50 + 20", "20 + 20 + 20 + 10", "10 + 10 + 10 + 10 + 10 + 10 + 10"], a: "50 + 20", why: "Take the biggest that fits: 50, then 20 makes 70 with just 2 pieces." },
+    { q: "A juice is 45 sh and a bun is 30 sh. Total?", opts: ["75 sh", "65 sh", "85 sh"], a: "75 sh", why: "45 + 30: 4 tens and 3 tens make 7 tens, and 5 ones, so 75 sh." },
+    { q: "You have 60 sh. A ball costs 100 sh. How much more do you need?", opts: ["40 sh", "60 sh", "160 sh"], a: "40 sh", why: "Count on from 60 to 100 in tens: 70, 80, 90, 100 is 4 tens, 40 sh." },
+    { q: "KSh 25 is the same as…", opts: ["25 sh", "52 sh", "2 sh"], a: "25 sh", why: "KSh 25 and 25 sh are two ways of writing twenty-five shillings." },
+    { q: "A mango is 10 sh. How much for 3 mangoes?", opts: ["30 sh", "13 sh", "20 sh"], a: "30 sh", why: "3 lots of 10 is 30." },
+    { q: "Which is worth more: 20 sh + 20 sh + 5 sh, or one 50 sh note?", opts: ["the 50 sh note", "the three coins", "the same"], a: "the 50 sh note", why: "The coins make 45 sh, and 50 is more than 45." },
+    { q: "You save 10 sh a week. After 5 weeks you have…", opts: ["50 sh", "15 sh", "40 sh"], a: "50 sh", why: "5 lots of 10 is 50." },
+    { q: "You have 80 sh and spend 30 sh. What is left?", opts: ["50 sh", "110 sh", "60 sh"], a: "50 sh", why: "8 tens take away 3 tens leaves 5 tens: 50 sh." }
   ];
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     choices($("ch10"), q.opts, true); say(q.q);
   }
   $("ch10").addEventListener("click", (e) => {
     const b = e.target.closest(".choice"); if (!b || lock10) return; lock10 = true; const q = CHECK[c10], ok = b.dataset.v === q.a;
     reveal($("ch10"), q.a, b); if (ok) right10++;
-    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + ".";
-    say(ok ? cheer() : "It is " + q.a);
-    c10++; setTimeout(round10, 1300);
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || "");
+    say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c10++; setTimeout(round10, 2800);
   });
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["🪙", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🧺", "Shop totals"], ["↩️", "Counting change"], ["💯", "Shillings and cents"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["✅", "Show what I know"]];
+  const STICKERS = [["💰", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🧺", "Shop totals"], ["➕", "How much more"], ["✍️", "Writing money"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -1849,6 +1920,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -1873,6 +1951,19 @@
       progressUnit: "l02",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -2030,4 +2121,48 @@
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+</script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
 </script>

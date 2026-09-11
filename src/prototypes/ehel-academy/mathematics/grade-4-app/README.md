@@ -4,11 +4,20 @@
 `../grade-1-app`: each page carries its own CSS, its own activity JS and its own
 copy of the voice engine, with no dependency on `shell/course-app.js`.
 
-## Status: LIVE — deployed, and Grade 4 learners are routed here
+## Status: deployed, NOT routed — Grade 4 learners get the shell course
 
-This file said "**None of this is deployed**" until 2026-09-09, and by then it
-was both deployed and routed. It is at `Ehel Primary/app/mathematics/grade-4-lessons`
-on the zone, and `local_prequran/ehel_app_url_overrides` names `ehel-math-g04`.
+**This heading said "LIVE — ... Grade 4 learners are routed here" until
+2026-09-11, and the routing half was wrong.** The build IS on the zone, at
+`Ehel Primary/app/mathematics/grade-4-lessons`. But
+`local_prequran/ehel_app_url_overrides`, read on the server on 2026-09-11 with
+`../lesson-app-tools/repoint-grade.php` in report mode, has NO `ehel-math-g04`
+entry — Grade 1 and Grade 2 are there, Grade 3 and Grade 4 are not — so a Grade 4
+learner is sent to the shell course and nobody opens these pages. A deploy here
+reaches no child until that setting changes, and changing it is an owner
+decision (it carries the unit problem below).
+
+Before that, this file said "**None of this is deployed**" until 2026-09-09,
+when it was already deployed.
 
 That claim could not be checked from this repo — routing lives in a Moodle
 setting — so it was an assumption written down as a status, which is exactly how
@@ -22,6 +31,29 @@ name files from the five-lesson era (`four-digits-strong.html`,
 `shape-space-place.html`, `numbers-and-behaviour.html`,
 `build-<b>-lesson.py`); `app.config.json` is the one description that is
 current, and its `lessons` order IS the unit number.
+
+## 2026-09-11: the validation, and what changed because of it
+
+All of it in the SOURCES, so `build-all.sh` carries it into every rebuild — the
+built pages are regenerated and must never be edited by hand:
+
+| what | where |
+| --- | --- |
+| a failed check shows how many are needed and **Try again** (it used to stop at "That is all of them.") | `fix-validation.py`: one `retryCheck` in `shell.js`; each source's check block calls it; `compose-lessons.py` rescales the number in the call with the pass mark, so the two cannot disagree |
+| no decimals (Stage 5): the "Decimal" readout is gone from the hundred square | `frac-slides.js`, `frac-extra.css` |
+| no "isosceles" or "equilateral" (5Gg.01): the shapes are described by their sides | `shape-slides.js` |
+| no "even chance" or "as likely as each other" (5Sp.01): Stage 4's own "maybe" | `stats-slides.js` |
+| 4Gg.08 declared, where "Acute, right or obtuse?" is taught — **46 of 46** | `g4-lesson.js` |
+| doctype and `lang`, feedback announced, skip link, main landmark, 24 px dot cells, fonts from our CDN, the "Can't hear it?" notice, focus mode | the shared tools, now run by `build-all.sh` |
+| "For teachers and parents" on the hub, minutes on every card and a total, and cards that say Start like every other grade's | `../lesson-app-tools/build-grownup-section.py`, `build-hub.py`, at-home text in `app.config.json` |
+| the hub's notes sit under the card grid, not inside it; Grade 2's section and notes cannot leak in | `build-hub.py` |
+| `compose-lessons.py` is the first build step and its sixteen outputs are gitignored — a fresh clone could not build before | `build-all.sh`, `.gitignore` |
+| every generator writes LF | `compose-lessons.py`, `build-lessons.py`, `build-hub.py` |
+
+Verified in a browser: all eight checks answered all wrong (Try again, lesson not
+completed) and then all right (completed), every step of every lesson visited
+with no page error and no unnamed control, focus mode mounting only when asked,
+and two consecutive builds byte-identical. **Not deployed**, and not routed.
 
 ## What is where
 
@@ -80,7 +112,7 @@ again on restore.
 bash build-all.sh
 
 # the pieces it runs, if you need them singly
-python compose-lessons.py   # regenerates c-*-body.html and c-*-slides.js (OVERWRITES them)
+python compose-lessons.py   # c-*-body.html and c-*-slides.js - build-all.sh's first step, gitignored
 python build-lessons.py     # assembles the eight lessons; replaced the six per-lesson builders
 python build-hub.py         # g4-index.html, on Grade 2's design
 
@@ -188,11 +220,11 @@ node   ../lesson-app-tools/deploy.mjs --app .         # plan; --upload writes
 > `learner-controls` 3 → 0, `progress-client` 1 → 0, `eh-bar1` 3 → 0 and the
 > launch parameters 6 → 2, with `check-lessons.py` reporting **128 findings**.
 >
-> Until that day this risked nothing, because no learner could reach these
-> pages. **Grade 4 is routed now**, so the same rebuild would put pages in
-> front of children with no Class chat, no Raise hand, no Wehel and nothing
+> This matters the moment Grade 4 is routed: the same rebuild would put pages
+> in front of children with no Class chat, no Raise hand, no Wehel and nothing
 > reaching the live group board — and the symptom is ABSENCE, so it shows up
-> as a quiet board rather than an error.
+> as a quiet board rather than an error. (This said "Grade 4 is routed now";
+> it is not — see the status above.)
 >
 > `build-all.sh` builds and then wires, the way Grade 3's has since it was
 > written, and ends on both gates. Verified in a copy: after the bare rebuild

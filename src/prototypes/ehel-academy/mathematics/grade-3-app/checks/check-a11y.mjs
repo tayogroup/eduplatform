@@ -55,7 +55,11 @@ for (const [file, slides] of LESSONS) {
     const g = await p.evaluate(() => {
       const scope = document.querySelector(".slide.active") || document.body;
       const vis = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
-      const focusable = "a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex='-1'])";
+      /* `details > summary` is keyboard-reachable natively - Tab stops on it and
+         Enter opens it, measured on the hub's teachers-and-parents section - so
+         leaving it out reported every summary, and the text inside it, as a
+         control the keyboard cannot reach (2026-09-11). */
+      const focusable = "a[href],button:not([disabled]),input,select,textarea,details > summary,[tabindex]:not([tabindex='-1'])";
       const nameOf = (el) => (el.getAttribute("aria-label") || el.textContent || "").trim();
 
       // anything the CSS invites a click on, that the keyboard cannot reach

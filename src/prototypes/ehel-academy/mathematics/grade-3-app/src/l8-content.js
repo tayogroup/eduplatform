@@ -342,7 +342,7 @@
       [...$("lk8").children].forEach((x) => { if (x.dataset.v === cur8.a) x.classList.add("on"); });
       asked8++; if (ok) got8++;
       $("fb8").className = "fb " + (ok ? "good" : "");
-      $("fb8").textContent = (ok ? cheer() + " " : "") + "This one is “" + cur8.a + "”. Remember that unlikely is not the same as impossible - save “will not” for things that truly cannot happen.";
+      $("fb8").textContent = (ok ? cheer() + " " : "") + "This one is “" + cur8.a + "”. Save “will not” for things that truly cannot happen. If it could happen, even rarely, it might happen.";
       say(ok ? cheer() : cur8.a);
       scoreLine("sc8", got8, asked8, 5);
       if (got8 >= 5) finish(8, "");
@@ -406,8 +406,8 @@
     () => { const per = [2, 5, 10][rnd(0, 2)], w = rnd(2, 5); return { q: "On a pictogram one picture = " + per + " children. How many is " + w + " pictures?", opts: [w * per, w, w + per], a: w * per, why: w + " × " + per + " = " + w * per + "." }; },
     () => { const per = 10; return { q: "One picture = 10 children. How many is half a picture?", opts: [5, 1, 10], a: 5, why: "Half of 10 is 5." }; },
     () => { return { q: "Where does a number that is BOTH even AND more than 20 go on a Venn diagram?", opts: ["in the middle, where the hoops overlap", "outside both hoops", "in one hoop only"], a: "in the middle, where the hoops overlap", why: "Both answers are yes, so it belongs to both hoops at once." }; },
-    () => { return { q: "You roll an ordinary six-sided dice. How likely is a 7?", opts: ["it will not happen", "it might happen", "it will happen"], a: "it will not happen", why: "An ordinary dice has no 7 on it at all." }; },
-    () => { return { q: "You toss a coin. How likely is heads?", opts: ["it might happen", "it will happen", "it will not happen"], a: "it might happen", why: "It could land either way." }; },
+    () => { return { q: "You roll an ordinary six-sided dice. Will you get a 7?", opts: ["it will not happen", "it might happen", "it will happen"], a: "it will not happen", why: "An ordinary dice has no 7 on it at all." }; },
+    () => { return { q: "You toss a coin. Will it land on heads?", opts: ["it might happen", "it will happen", "it will not happen"], a: "it might happen", why: "It could land either way." }; },
     () => { return { q: "Which question needs you to collect data?", opts: ["What is the favourite fruit in our class?", "How many days are in a week?", "How many sides has a hexagon?"], a: "What is the favourite fruit in our class?", why: "The answers would be different for different people." }; },
     () => { const a = rnd(6, 14), b2 = rnd(1, 5); return { q: "On a bar chart, Walk is " + a + " and Bus is " + b2 + ". How many more chose Walk?", opts: [a - b2, a + b2, a], a: a - b2, why: a + " − " + b2 + " = " + (a - b2) + "." }; },
     () => { return { q: "A spinner is half red, a quarter blue and a quarter gold. Which colour comes up most over many spins?", opts: ["red", "blue", "gold"], a: "red", why: "Red has the most room, so the arrow lands on it most often." }; },
@@ -420,6 +420,7 @@
       $("fb10").className = "fb good"; $("fb10").textContent = "Finished! " + got10 + " out of " + order10.length + ".";
       $("sc10").textContent = "";
       if (got10 >= 7) finish(10, "You have finished the check.");
+      else retryCheck($("fb10"), $("ch10"), got10, order10.length, 7, function () { qi = 0; got10 = 0; order10 = shuffle(QS); round10(); });
       return;
     }
     const item = nextQ(order10[qi]);
@@ -498,10 +499,10 @@
             "Rolling a 7 on an ordinary dice will not happen.",
             "An ordinary dice only has the numbers 1 to 6 on it, so there is no 7 to land on.",
             [
-                  "It is very unlikely, but it could still happen.",
+                  "It could still happen, even if it hardly ever does.",
                   "It will not happen because 7 is a big number."
             ],
-            "Save will not for things that genuinely cannot happen. Unlikely is a different thing."
+            "Save will not for things that genuinely cannot happen. Something that hardly ever happens still might."
       ],
       [
             "A tally is better than a bar chart for counting cars as they drive past.",
@@ -522,7 +523,7 @@
             "Outside both hoops is the part that means neither."
       ],
       [
-            "Three spins of a spinner do not tell you which colour is most likely.",
+            "Three spins of a spinner do not tell you which colour will come up most often.",
             "A few spins can come out any way at all; the pattern only shows after many.",
             [
                   "Spinners are always fair.",

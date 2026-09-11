@@ -41,7 +41,11 @@ import fs from "fs";
    was written through a shell heredoc that collapsed its backslashes, so "\s"
    became "s", nothing matched, and the check reported all four missing on a
    perfectly good page - a false positive that reads as the wiring being broken. */
-export const PLATFORM_MODULES = ["learner-controls.js", "wehel.js", "course-shell.js", "progress-client.js"];
+/* FIVE since focus mode: wire-platform-controls.py imports seb-session.js for its
+   side effect - `import "./seb-session.js";`, with no `from` clause - and
+   preload-platform.py preloads it. Left off this list, its two file:// errors
+   were reported as real ones by every check-l*.mjs (2026-09-11). */
+export const PLATFORM_MODULES = ["learner-controls.js", "wehel.js", "course-shell.js", "progress-client.js", "seb-session.js"];
 
 const NAMED = (msg) =>
   PLATFORM_MODULES.some((m) => msg.includes(m)) &&
@@ -53,7 +57,8 @@ const BARE = (msg) => /Failed to load resource: net::ERR_FAILED/.test(msg) && !P
  *  this, because it carries no `from` clause. */
 export function notImported(file) {
   const s = fs.readFileSync(file, "utf8");
-  return PLATFORM_MODULES.filter((m) => !s.includes('from "./' + m + '"'));
+  // a side-effect import has no `from`: `import "./seb-session.js";`
+  return PLATFORM_MODULES.filter((m) => !s.includes('from "./' + m + '"') && !s.includes('import "./' + m + '";'));
 }
 
 /** Everything that is NOT an expected platform-module block. Pass the lesson

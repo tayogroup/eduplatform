@@ -2,9 +2,13 @@
 
 One set of tools for every standalone lesson build — pages that carry their own
 CSS, activity JS and voice engine and do **not** go through
-`shell/course-app.js`. Currently that is `../grade-1-app` (live, routed) and
-`../grade-2-app` (uploaded to `app/mathematics/grade-2-lessons`, routed to by
-nobody).
+`shell/course-app.js`. Currently that is all four Mathematics builds:
+`../grade-1-app/g1v2` and `../grade-2-app`, live and routed; `../grade-3-app`
+and `../grade-4-app`, on the zone and routed to by nobody (read on the server
+2026-09-11 - check the override map before believing any of these).
+Grades 1 and 2 are hand-maintained, so the tools are run over them by hand;
+Grades 3 and 4 are generated, so their `build-all.sh` runs every tool below
+itself, and a rebuild re-applies all of it.
 
 Each build describes itself in `app.config.json` beside its lessons; no tool
 here hardcodes a directory or a lesson list. That is the whole reason these
@@ -20,8 +24,19 @@ python ../lesson-app-tools/wire-platform-controls.py  # Class chat, Hand up, Joi
 python ../lesson-app-tools/preload-platform.py        # modulepreload + preconnect
 python ../lesson-app-tools/wire-progress.py           # report to the school
 python ../lesson-app-tools/add-header-bars.py         # the two bars, and the controls into bar 2
+python ../lesson-app-tools/add-page-doctype-lang.py *.html              # a doctype, and lang="en-GB"
+python ../lesson-app-tools/wire-accessibility.py --app . --write        # feedback announced, skip link, main, 24 px dot cells
+python ../lesson-app-tools/self-host-fonts.py --app . --write           # fonts from app/shared/fonts, not Google
+python ../lesson-app-tools/wire-quiet-notice.py --app . --write         # "Can't hear it?" when nothing can speak
+python ../lesson-app-tools/build-grownup-section.py --app . --write     # the hub's teachers-and-parents section
 python ../lesson-app-tools/check-lessons.py           # the gate
 node   ../lesson-app-tools/deploy.mjs --app .         # plan; --upload writes
+
+# a page wired before a change to the wiring tool reached it - that tool skips
+# a page it has already wired, so these carry one piece across, read OUT of it
+python ../lesson-app-tools/apply-focus-mode.py *.html        # seb-session.js: focus mode and the session bar
+python ../lesson-app-tools/apply-wehel-panel-theme.py *.html # the tutor panel's colours
+python ../lesson-app-tools/apply-wehel-prompts.py *.html     # the tutor's canned prompts
 ```
 
 **Run them in that order.** Each is idempotent and each refuses rather than
@@ -35,6 +50,14 @@ half-working, but the order is not cosmetic:
   consistently"; the inconsistency was navigational, not intermittent.
 - `preload-platform.py` refuses on a page with no imports, because preloading
   three modules nothing imports is a download nobody uses.
+- `wire-quiet-notice.py` refuses every lesson until `wire-accessibility.py` has
+  run: the notice goes straight before `<div class="deck" id="deck" role="main">`,
+  and the `role="main"` is what the accessibility tool adds. Found by running
+  them over Grade 2 in the other order (2026-09-11).
+- `build-grownup-section.py` reads the BUILT lessons - their steps, their check,
+  its pass mark - so it runs after everything that builds or rebuilds them, and
+  on Grade 4 after `build-hub.py`, which rebuilds the hub from Grade 2's and
+  would wipe the section.
 
 ## `app.config.json`
 

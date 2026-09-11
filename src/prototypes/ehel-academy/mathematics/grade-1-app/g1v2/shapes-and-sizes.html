@@ -5,6 +5,7 @@
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -414,6 +415,14 @@
   }
 
   /* --- the tutor dock, and a home for the class controls --- */
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: #fff; font: inherit; font-size: 16px; font-weight: 700;
@@ -560,6 +569,12 @@
 .dots button::after {
   content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
 }
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 
 /* ==== fix-review-findings.py ==== */
 /* A finished step you are standing on is BOTH done and current, and the dot
@@ -2222,10 +2237,10 @@
       { ask: "Which one is <b>heavier</b>?", pic: balance(1, "🍉", "🍓"),
         opts: [{ t: "🍉 melon", ok: true }, { t: "🍓 strawberry", ok: false }],
         why: "The melon is heavier, so its side went DOWN." },
-      { ask: "Which one is <b>lighter</b>?", pic: balance(1, "🪨", "🪶"),
-        opts: [{ t: "🪶 feather", ok: true }, { t: "🪨 stone", ok: false }],
-        why: "The feather is lighter, so its side went UP." },
-      { ask: "This balance is <b>level</b>. What does that tell you?", pic: balance(0, "🧱", "🧱"),
+      { ask: "Which one is <b>lighter</b>?", pic: balance(1, "🔨", "🍃"),
+        opts: [{ t: "🍃 leaf", ok: true }, { t: "🔨 hammer", ok: false }],
+        why: "The leaf is lighter, so its side went UP." },
+      { ask: "This balance is <b>level</b>. What does that tell you?", pic: balance(0, "📦", "📦"),
         opts: [{ t: "They weigh the same", ok: true }, { t: "One is heavier", ok: false }, { t: "Both are empty", ok: false }],
         why: "A level balance means the two sides weigh the same." },
       { ask: "Which side has <b>more</b> on it?", pic: balance(1, "📚", "📗"),
@@ -2426,7 +2441,7 @@
     { q: "A jug with <b>no water in it</b> is…", pic: "", opts: ["empty", "full", "half full"], a: "empty", why: "No water at all means the jug is empty." },
     { q: "Which tool would you use to see <b>how heavy</b> a bag is?", pic: '<div style="max-width:130px">' + TOOLS.scales + "</div>", opts: ["scales", "a ruler", "a jug"], a: "scales", why: "Scales measure how heavy something is." },
     { q: "Which tool would you use to see <b>how hot</b> the water is?", pic: '<div style="max-width:90px">' + TOOLS.thermo + "</div>", opts: ["a thermometer", "a ruler", "scales"], a: "a thermometer", why: "A thermometer measures how hot or cold something is." },
-    { q: "The cat is <b>below</b> the table. So the cat is…", pic: '<div style="font-size:56px">🪑🐈</div>', opts: ["under the table", "on the table", "behind the table"], a: "under the table", why: "Below means UNDER." },
+    { q: "The cat is <b>below</b> the table. So the cat is…", pic: '<div style="line-height:0"><svg viewBox="0 0 140 92" width="140" height="92" aria-hidden="true"><rect x="6" y="8" width="128" height="10" rx="3" fill="currentColor"></rect><rect x="16" y="18" width="8" height="70" fill="currentColor"></rect><rect x="116" y="18" width="8" height="70" fill="currentColor"></rect><text x="70" y="84" font-size="44" text-anchor="middle">🐈</text></svg></div>', opts: ["under the table", "on the table", "behind the table"], a: "under the table", why: "Below means UNDER." },
   ];
   let qc = 0, rightc = 0, lockc = false;
   function askCheck() {
@@ -2573,18 +2588,18 @@
     el: { say: $("ss15say"), stage: $("ss15st"), ch: $("ss15ch"), fb: $("ss15fb"), score: $("ss15sc"), next: $("ss15nx") },
     label: "Question",
     items: [
-      { ask: "The balloon is bigger. Which one is <b>heavier</b>?", pic: balance(-1, "🎈", "🪨"),
-        opts: [{ t: "🪨 the stone", ok: true }, { t: "🎈 the balloon", ok: false }],
-        why: "The stone's side went down, so the stone is heavier. Bigger does not always mean heavier." },
+      { ask: "The balloon is bigger. Which one is <b>heavier</b>?", pic: balance(-1, "🎈", "🔨"),
+        opts: [{ t: "🔨 the hammer", ok: true }, { t: "🎈 the balloon", ok: false }],
+        why: "The hammer's side went down, so the hammer is heavier. Bigger does not always mean heavier." },
       { ask: "Which one is <b>lighter</b>?", pic: balance(1, "🍍", "🍋"),
         opts: [{ t: "🍋 the lemon", ok: true }, { t: "🍍 the pineapple", ok: false }],
         why: "The lemon's side went up, so the lemon is lighter." },
       { ask: "You put 3 books on one side of a balance and 1 book on the other. Which side goes <b>down</b>?", pic: '<div class="ss-emo sm">📕📕📕 ⚖️ 📕</div>',
         opts: [{ t: "the side with 3 books", ok: true }, { t: "the side with 1 book", ok: false }, { t: "neither side", ok: false }],
         why: "3 books are heavier than 1 book. More mass on that side pulls it down." },
-      { ask: "One brick goes on each side of a balance. What does the balance do?", pic: '<div class="ss-emo sm">🧱 ⚖️ 🧱</div>',
+      { ask: "Two boxes that are just the same go on a balance, one on each side. What does the balance do?", pic: '<div class="ss-emo sm">📦 ⚖️ 📦</div>',
         opts: [{ t: "It stays level", ok: true }, { t: "The left side goes down", ok: false }, { t: "The right side goes down", ok: false }],
-        why: "The two bricks weigh the same, so neither side goes down. The balance stays level." },
+        why: "The two boxes weigh the same, so neither side goes down. The balance stays level." },
       { ask: "Which is <b>heavier</b>: a bucket full of water, or the same bucket empty?", pic: "",
         opts: [{ t: "the full bucket", ok: true }, { t: "the empty bucket", ok: false }],
         why: "The water has mass too, so the full bucket is heavier than the empty one." },
@@ -2598,9 +2613,9 @@
     el: { say: $("ss16say"), stage: $("ss16st"), ch: $("ss16ch"), fb: $("ss16fb"), score: $("ss16sc"), next: $("ss16nx") },
     label: "Question",
     items: [
-      { ask: "When both are full, which one holds <b>more</b> water?", pic: '<div class="ss-emo">🪣 &nbsp; ☕</div>',
-        opts: [{ t: "the bucket", ok: true }, { t: "the cup", ok: false }],
-        why: "A bucket is much bigger inside than a cup, so when both are full the bucket holds more." },
+      { ask: "When both are full, which one holds <b>more</b> water?", pic: '<div class="ss-emo">🛁 &nbsp; ☕</div>',
+        opts: [{ t: "the bath", ok: true }, { t: "the cup", ok: false }],
+        why: "A bath is much bigger inside than a cup, so when both are full the bath holds more." },
       { ask: "A cup is full of juice. You drink it all. Now the cup is…", pic: "",
         opts: [{ t: "empty", ok: true }, { t: "full", ok: false }, { t: "half full", ok: false }],
         why: "All the juice is gone and nothing is left in the cup, so it is empty." },
@@ -2651,9 +2666,9 @@
       { ask: "Which animal is <b>between</b> the cat and the rabbit?", pic: '<div class="ss-emo">🐱 🐶 🐰</div>',
         opts: [{ t: "🐶 the dog", ok: true }, { t: "🐱 the cat", ok: false }, { t: "🐰 the rabbit", ok: false }],
         why: "The dog is in the middle, with the cat on one side and the rabbit on the other. The dog is between them." },
-      { ask: "What is <b>above</b> the ball?", pic: ssShelf("🧸", "⚽"),
-        opts: [{ t: "🧸 the teddy", ok: true }, { t: "the floor", ok: false }],
-        why: "The teddy is on the top shelf, higher up than the ball. The teddy is above the ball, and the floor is below it." },
+      { ask: "What is <b>above</b> the ball?", pic: ssShelf("📚", "⚽"),
+        opts: [{ t: "📚 the books", ok: true }, { t: "the floor", ok: false }],
+        why: "The books are on the top shelf, higher up than the ball. The books are above the ball, and the floor is below it." },
       { ask: "Where is the ball?", pic: scene("behind"),
         opts: [{ t: "behind the box", ok: true }, { t: "on the box", ok: false }, { t: "in front of the box", ok: false }],
         why: "The box is in front and covers part of the ball, so the ball is behind the box." },
@@ -2779,6 +2794,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -2805,6 +2827,19 @@
       progressUnit: "u05",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not

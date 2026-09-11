@@ -191,6 +191,12 @@
 .dots button::after {
   content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
 }
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 
 /* ==== build-grownup-section.py ==== */
 /* The adult's half of the hub. Collapsed by default: a child arriving at the
@@ -333,7 +339,7 @@ details.gu .gu-home { font-size: 15px; line-height: 1.5; margin: 0; }
       </ul>
       <h4>The steps</h4>
       <ul>
-        <li><b>Count to 10</b> &middot; Press the plus to put a counter in the frame. Count out loud with me.</li>
+        <li><b>Count to 10</b> &middot; Press the plus to put a counter in the frame. Count out loud with me. Then press Mix them up. Is it still the same number?</li>
         <li><b>See how many</b> &middot; Do not count! Press look, see the pattern, then tap how many you saw.</li>
         <li><b>Then to 20</b> &middot; Fill the first frame. That is ten. Then keep going. Ten and one more is eleven.</li>
         <li><b>Read the number</b> &middot; Look at the counters. Which number is it? Tap the number.</li>

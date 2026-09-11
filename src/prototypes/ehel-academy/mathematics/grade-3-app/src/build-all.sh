@@ -10,7 +10,7 @@
 #
 # Running the tools here instead means a rebuild RE-APPLIES the wiring rather
 # than losing it, and the tools stay the one shared definition of what wiring
-# is - the same FIVE that wire Grade 2. It said four, and listed four, while
+# is - the same FIVE that wire Grade 2 (plus the page tools further down). It said four, and listed four, while
 # Grade 2's own chain had five; the missing one was add-header-bars and the
 # stale count is what made the omission read as deliberate. All five are
 # idempotent, so this is safe to run repeatedly.
@@ -42,6 +42,21 @@ cd ..
 # shipped without it.
 for t in wire-navigation wire-platform-controls wire-progress preload-platform add-header-bars; do
   python "../lesson-app-tools/$t.py" > /dev/null || { echo "  FAILED: $t"; exit 1; }
+  echo "  ok  $t"
+done
+
+# The page tools the 2026-09-11 validation found this build had never had -
+# a doctype and a language, feedback a screen reader announces, a skip link,
+# fonts from our own CDN, and the "Can't hear it?" notice. Grades 1 and 2 had
+# them applied by hand; a generated build has to run them itself, for the reason
+# at the top of this file. ORDER MATTERS: wire-quiet-notice anchors on the
+# role="main" that wire-accessibility puts on the deck, and refuses without it.
+# Then the hub's teachers-and-parents section, which reads the built lessons.
+# All idempotent.
+python ../lesson-app-tools/add-page-doctype-lang.py *.html > /dev/null || { echo "  FAILED: add-page-doctype-lang"; exit 1; }
+echo "  ok  add-page-doctype-lang"
+for t in wire-accessibility self-host-fonts wire-quiet-notice build-grownup-section; do
+  python "../lesson-app-tools/$t.py" --app . --write > /dev/null || { echo "  FAILED: $t"; exit 1; }
   echo "  ok  $t"
 done
 python ../lesson-app-tools/check-lessons.py | tail -3

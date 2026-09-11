@@ -84,7 +84,12 @@ def card(file, cls, strand, covers):
         '      <span class="strand">%s</span>\n'
         "      <h2>%s</h2>\n"
         '      <p class="covers">%s</p>\n'
-        '      <p class="go">%s <span aria-hidden="true">&rarr;</span></p>\n'
+        # Grade 2's own card foot - the step count, the check and the stickers,
+        # and the gold Start - rather than a "10 steps ->" bar that no other
+        # grade's hub uses (2026-09-11 validation, area 14). The stylesheet is
+        # Grade 2's, lifted below, so .foot/.steps/.go are already defined.
+        '      <span class="foot"><span class="steps">%s &middot; check &middot; stickers</span>'
+        '<span class="go">Start</span></span>\n'
         "    </a>\n" % (cls, file, MARKS[cls], strand, TITLES[file], covers, steps)
     )
 
@@ -136,9 +141,17 @@ visible = re.sub(r"/\*.*?\*/", " ", head, flags=re.S)
 leftover = re.findall(r"Grade 2|Stage 2|Nine lessons", visible)
 assert not leftover, "a Grade 2 label survived into the Grade 4 hub: %s" % leftover
 
-# The foot is Grade 2's prose about Grade 2's lessons; this grade needs its own.
-foot = re.sub(r'<p class="note">.*?</p>\s*(?=<p class="note">|\s*</div>|\s*<footer|\Z)', "", foot,
-              flags=re.S)
+# The foot is Grade 2's prose about Grade 2's lessons - and, since 2026-09-11, Grade 2's
+# teachers-and-parents section (../lesson-app-tools/build-grownup-section.py, which
+# build-all.sh runs for THIS hub after this script). Neither may cross. The section goes
+# between its markers, then every note goes: the old pattern removed a note only when
+# another note, a </div> or the end came next, so a note followed by the section would
+# have survived - "These nine lessons cover all 48 objectives of Stage 2", on Grade 4.
+foot = re.sub(r"\s*<!-- GROWNUP:START.*?<!-- GROWNUP:END -->", "", foot, flags=re.S)
+foot = re.sub(r'\s*<p class="note">.*?</p>', "", foot, flags=re.S)
+seen = re.sub(r"<script.*?</script>|<style.*?</style>|<!--.*?-->", " ", foot, flags=re.S)
+leftover = re.findall(r"Grade 2|Stage 2|Nine lessons|nine lessons", seen)
+assert not leftover, "Grade 2 text survived into the Grade 4 hub's foot: %s" % leftover
 note = (
     '  <p class="note"><b>For the grown-up.</b> These eight lessons cover all 46 objectives of '
     "Cambridge Primary Mathematics Stage 4 &mdash; number, fractions and percentages, time, "
@@ -148,8 +161,11 @@ note = (
     "tell a learner they have understood, so each teaching step finishes with one question that "
     "can come back <i>not quite</i>, and a fresh one on request.</p>\n"
 )
-foot = foot.replace("</div>", note + "</div>", 1) if "</div>" in foot else foot + note
+# AFTER the grid's closing </div>, which is the first one in the foot. They went before
+# it until 2026-09-11 - inside the card grid, where each paragraph was laid out as one
+# more grid cell beside the lesson cards instead of reading as a note under them.
+foot = foot.replace("</div>", "</div>\n\n" + note, 1) if "</div>" in foot else foot + note
 
 doc = head + "".join(card(*c) for c in CARDS) + foot
-io.open(os.path.join(HERE, "g4-index.html"), "w", encoding="utf-8").write(doc)
+io.open(os.path.join(HERE, "g4-index.html"), "w", encoding="utf-8", newline="").write(doc)   # LF, as the repo stores it
 print("wrote g4-index.html %d bytes | %d cards" % (len(doc), len(CARDS)))

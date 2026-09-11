@@ -61,6 +61,54 @@ dormant path, which is what the deploy was announced as at the time.
 Note the shell course at `app/mathematics/grade-2/` is untouched and still
 serves Grade 2 on v415. This build is an alternative to it, not a patch on it.
 
+## 2026-09-11: the validation, and what changed because of it
+
+The section after this one says every step was Stage 2 after 2026-09-09. **The
+2026-09-11 validation found that was not true**: 16 items from Stages 3-5 were
+still being taught (the table is in the report — the robot facing north, "1000 g
+make 1 kg", "the rule is add 3", "Is the game fair?", thirds and sixths in the
+step that also crashed). Each is fixed now, and fixed IN PLACE:
+
+- **`hold-stage-2.py` rewrote the steps without adding or removing any.** Progress
+  is recorded by step POSITION (`step-NN`) and this build is live, so a step
+  inserted or deleted would move every learner's record after it. Nine lessons
+  keep their step counts; what a step teaches changed where it had to (Count It
+  #4 is now a Carroll diagram, #7 tosses a coin, #8 spins and records, #9 runs a
+  small survey; Patterns #5-#9 count on and back in steps; Coins #6 is "how much
+  more", #7 writes money; How Much #8 compares capacity in cups, #9 estimates
+  then measures). A learner who had finished old step 7 is shown step 7 as done.
+- **The same probes, re-run after, found three more** that the report's table
+  had not listed — "half a kilogram, because 1000 g make 1 kg" on the balance,
+  `4/3` offered as a wrong answer in Fair Shares, and 400 sh and 250 sh as wrong
+  answers in Coins — and those are gone too. What the probes still match was
+  read hit by hit: lesson titles in the nav ("Coins and Change", "Fair Shares"),
+  ordinals ("third", "every fifth mark"), "the part that repeats", and scale and
+  jug readings in hundreds of grams and millilitres, which are kept — reading
+  the number on a labelled mark is `2Gg.06`/`2Gg.07`/`2Gg.12`.
+- **The three gaps are taught**: `2Sp.02` (toss a coin, spin and record),
+  `2Nc.04` (count on and back in 1s, 2s, 5s and 10s from any number), `2Ss.01`
+  (ask a question, collect the answers, answer it).
+- **Fair Shares no longer crashes.** Step 8 picked its denominator from a list
+  the stage line had emptied of everything but halves and quarters, and on 4 of
+  6 live loads threw before the rail drew. It picks from `[2, 4]`.
+
+And what the rest of the build gained the same day:
+
+| what | how | checked by |
+| --- | --- | --- |
+| the check completes the lesson only at 75% (6 of 8, 7 of 9, 8 of 10); below it, the score, how many are needed, and **Try again** | `gate-and-explain-check.py` | all nine answered all wrong (Try again, not completed) then all right (completed), in a browser |
+| every check answer explained, on screen and aloud | the same, and `why` on each item | the same run: every reason shown |
+| **48 of 48** objectives declared, no other stage's code | `annotate-objectives.py` — each step's code read off its slide; notes about removed content now say "Stage 3's Nc.05" in prose, as Grade 1 does | `audit-stage-coverage.py` passes |
+| focus mode and the session bar | `../lesson-app-tools/apply-focus-mode.py` | served with its modules: the bar mounts only with `focusMode=1`, and Ask Wehel lifts above it |
+| doctype and `lang`, feedback announced, skip link, main landmark, fonts from our CDN, the "Can't hear it?" notice | the shared tools, in the order the notice needs (`wire-accessibility` puts the `role="main"` it anchors on) | each tool re-run: nothing to change |
+| step dots own a 24 x 24 px cell on a phone (22 px wide before) | `wire-accessibility.py`, 8 px gap | hit-tested at 375 px |
+| the fraction bars in Fair Shares #5 have names | direct edit | a probe of every step for unnamed controls: 0 |
+| "For teachers and parents" on the hub: objectives, steps, pass mark, answers with reasons, one thing to try at home; minutes on every card and a total | `../lesson-app-tools/build-grownup-section.py` (at-home text in `app.config.json`) | rendered |
+
+`app.config.json :: explorationSteps` lost `tens-and-ones.html#1`, which judges
+now. **None of this is live until the build is deployed** — and because Grade 2
+learners are routed here, a deploy reaches them the same minute.
+
 ## Every step is Stage 2 now, and 18 steps were removed to make that true
 
 This build used to teach well past Stage 2, and it said so on the hub: *"Two of

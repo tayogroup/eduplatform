@@ -285,6 +285,7 @@
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
       if (got17 >= 4) finish(4, "You have finished the check.");
+      else retryCheck($("fb17"), $("ch17"), got17, order17.length, 4, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
     const item = nextQ(order17[qi]);

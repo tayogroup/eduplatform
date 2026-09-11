@@ -1,7 +1,13 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grade 2 Mathematics</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   /* ==================================================================
      Grade 2 Mathematics - the way in.
@@ -147,16 +153,67 @@
     a.lesson { transition: none; }
     a.lesson:hover, a.lesson:focus-visible { transform: none; }
   }
+  /* ehel-stage2-line */
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
+
+/* ==== lesson-app-tools/build-grownup-section.py ==== */
+/* The adult's half of the hub. Collapsed by default: a child arriving at the
+   hub should meet the lessons, not their answer keys. */
+.grownup { margin: 26px 0 10px; }
+.grownup h3 { font-size: 20px; margin: 0 0 6px; }
+.grownup > p { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0 0 14px; }
+details.gu {
+  border: 2px solid var(--line); border-radius: 14px; background: var(--card);
+  padding: 10px 14px; margin: 0 0 10px;
+}
+details.gu > summary { cursor: pointer; font-size: 16px; }
+details.gu .gu-meta { color: var(--muted); font-weight: 600; font-size: 14px; }
+details.gu h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--muted); margin: 14px 0 6px; }
+details.gu ul { margin: 0; padding-left: 20px; }
+details.gu li { font-size: 15px; line-height: 1.5; margin: 0 0 4px; }
+details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; margin: 0 0 6px; }
+@media print {
+  details.gu { break-inside: avoid; }
+  details.gu > summary { list-style: none; }
+  details.gu[open] > summary::marker { content: ""; }
+}
+/* ==== end lesson-app-tools/build-grownup-section.py ==== */
 </style>
 
 <div class="wrap">
+  <a class="eh-skip" href="#lessons">Skip to the lesson</a>
   <header>
     <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
     <h1>Grade 2 <em>Mathematics</em></h1>
-    <p class="lede">Nine lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind.</p>
+    <p class="lede">Nine lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind. About 240 minutes in all.</p>
   </header>
 
-  <div class="grid">
+  <div class="grid" id="lessons" role="main">
 
     <a class="lesson c-number" href="tens-and-ones.html?from=g2">
       <span class="mark" aria-hidden="true">
@@ -168,7 +225,7 @@
       <span class="strand">Number</span>
       <h2>Tens and Ones</h2>
       <p class="covers">Every number to 100 and what its digits mean. See a small amount at a glance and estimate a big one, read numbers as words, compare and order them, say which place in a line, round to the nearest ten, then add, take away, share and make rows.</p>
-      <span class="foot"><span class="steps">15 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">15 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-number" href="coins-and-change.html?from=g2">
@@ -180,8 +237,8 @@
       </span>
       <span class="strand">Money</span>
       <h2>Coins and Change</h2>
-      <p class="covers">Know the coins and notes, count what is in the purse, make an exact amount and then make it with the fewest pieces, work out what a basket costs, count the change, and work out which of two purses is worth more.</p>
-      <span class="foot"><span class="steps">9 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <p class="covers">Know the coins and notes, count what is in the purse, make an exact amount and then make it with the fewest pieces, add up a basket, find how much more you need, write money the shop way, and work out which of two purses is worth more.</p>
+      <span class="foot"><span class="steps">9 steps &middot; about 25 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-frac" href="fair-shares.html?from=g2">
@@ -194,7 +251,7 @@
       <span class="strand">Fractions</span>
       <h2>Fair Shares</h2>
       <p class="covers">Equal parts before anything else. What the top and bottom numbers mean, a fraction of a group, two names for the same amount, which fraction is bigger, where they sit on a number line, adding them, and going past one whole.</p>
-      <span class="foot"><span class="steps">9 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">9 steps &middot; about 25 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-pattern" href="patterns-that-grow.html?from=g2">
@@ -207,8 +264,8 @@
       </span>
       <span class="strand">Patterns</span>
       <h2>Patterns That Grow</h2>
-      <p class="covers">Find the part that repeats and mend a pattern with a hole in it. Then patterns that grow rather than repeat: find the rule, fill the missing number, predict far ahead without drawing it, and make one that shrinks.</p>
-      <span class="foot"><span class="steps">9 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <p class="covers">Find the part that repeats and mend a pattern with a hole in it. Then count on and back in ones, twos, fives and tens from any number, say how a number pattern goes up, fill the missing number, and find patterns on the hundred square.</p>
+      <span class="foot"><span class="steps">9 steps &middot; about 25 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-shape" href="sides-and-corners.html?from=g2">
@@ -220,7 +277,7 @@
       <span class="strand">Shape and space</span>
       <h2>Sides and Corners</h2>
       <p class="covers">Count sides and corners and name the shape, solve shape riddles, fold for a line of symmetry, meet the solid shapes, find the middle of a circle, spot shapes hiding in real things, and turn a shape all the way round.</p>
-      <span class="foot"><span class="steps">11 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-shape" href="which-way-from-here.html?from=g2">
@@ -233,7 +290,7 @@
       <span class="strand">Position and direction</span>
       <h2>Which Way From Here</h2>
       <p class="covers">Say where something is in words, work out whose left is whose, drive a robot to the flag and say the route it took, then flip a shape over a mirror line.</p>
-      <span class="foot"><span class="steps">5 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">5 steps &middot; about 15 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-measure" href="how-much-how-long.html?from=g2">
@@ -245,8 +302,8 @@
       </span>
       <span class="strand">Measurement</span>
       <h2>How Much, How Long</h2>
-      <p class="covers">Compare lengths, measure with cubes and then with a ruler, and draw a line to the length you are asked for. Choose the right unit, balance the scales, read grams and kilograms, millilitres and litres, and read a value that falls between two marks.</p>
-      <span class="foot"><span class="steps">11 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <p class="covers">Compare lengths, measure with cubes and then with a ruler, and draw a line to the length you are asked for. Choose the right unit, balance the scales, read a kitchen scale and a measuring jug, find which holds more by counting cups, estimate before you measure, and read a value that falls between the marks.</p>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-measure" href="half-past-quarter-to.html?from=g2">
@@ -259,7 +316,7 @@
       <span class="strand">Time</span>
       <h2>Half Past, Quarter To</h2>
       <p class="covers">What the two hands do, quarter past and quarter to, counting round the clock in fives, and matching a clock face to a digital one. Then the units from seconds to years, and reading a real calendar month.</p>
-      <span class="foot"><span class="steps">6 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">6 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-data" href="count-it-chart-it.html?from=g2">
@@ -271,13 +328,378 @@
       </span>
       <span class="strand">Statistics and probability</span>
       <h2>Count It, Chart It</h2>
-      <p class="covers">Sort things into groups, keep a tally, read a pictogram where one picture stands for two, build a block graph and read a bar chart with a scale. Then how likely something is, what is in the bag, whether a game is fair, and telling a real pattern from a random one.</p>
-      <span class="foot"><span class="steps">10 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <p class="covers">Sort things into groups and then two ways at once, keep a tally, read a pictogram, and build and read a block graph. Then toss a coin and spin a spinner to see what happens, run a small survey of the class, and tell a regular pattern from a random one.</p>
+      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
   </div>
 
   <p class="note"><b>For the grown-up.</b> These nine lessons cover all 48 objectives of Cambridge Primary Mathematics Stage 2 &mdash; number, money, fractions, geometry and measure, and statistics and probability. Cards that share a colour share a strand: shape sits with position, and measurement with time.</p>
+  <!-- GROWNUP:START  built by lesson-app-tools/build-grownup-section.py -->
+  <section class="grownup" id="grownups">
+    <h3>For teachers and parents</h3>
+    <p>What each lesson teaches, in Cambridge's own words; what every step asks the child to do; the check at the end, its pass mark and its answers; and one thing to try at home with things you already have. The nine lessons are listed in the order the course runs them, but each one stands on its own, so a child can start with any of them. The minutes are an estimate of about two and a half minutes a step, not yet timed against a real class, so treat them as a guide to the length of a sitting rather than a plan.</p>
+    <details class="gu">
+      <summary><b>Lesson 1: Tens and Ones</b> <span class="gu-meta">15 steps &middot; about 40 min &middot; 16 objectives &middot; 8 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Nc.01</b> Count objects from 0 to 100.</li>
+        <li><b>2Nc.02</b> Recognise the number of objects presented in unfamiliar patterns up to 10, without counting.</li>
+        <li><b>2Nc.03</b> Estimate the number of objects or people (up to 100).</li>
+        <li><b>2Nc.05</b> Recognise the characteristics of even and odd numbers (from 0 to 100).</li>
+        <li><b>2Ni.01</b> Recite, read and write number names and whole numbers (from 0 to 100).</li>
+        <li><b>2Ni.02</b> Understand and explain the relationship between addition and subtraction.</li>
+        <li><b>2Ni.03</b> Recognise complements of 20 and complements of multiples of 10 (up to 100).</li>
+        <li><b>2Ni.04</b> Estimate, add and subtract whole numbers with up to two digits (no regrouping of ones or tens).</li>
+        <li><b>2Ni.05</b> Understand multiplication as: repeated addition an array.</li>
+        <li><b>2Ni.06</b> Understand division as: sharing (number of items per group) grouping (number of groups).</li>
+        <li><b>2Ni.07</b> Know 1, 2, 5 and 10 times tables.</li>
+        <li><b>2Np.01</b> Understand and explain that the value of each digit in a 2-digit number is determined by its position in that number, recognising zero as a place holder.</li>
+        <li><b>2Np.02</b> Compose, decompose and regroup 2-digit numbers, using tens and ones.</li>
+        <li><b>2Np.03</b> Understand the relative size of quantities to compare and order 2-digit numbers.</li>
+        <li><b>2Np.04</b> Recognise and use ordinal numbers.</li>
+        <li><b>2Np.05</b> Round 2-digit numbers to the nearest 10.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Numbers to 100</b> &middot; Here are all the numbers to one hundred. Tap any number to see its tens and ones.</li>
+        <li><b>A quick look</b> &middot; Some amounts you can see in one glance. Bigger ones you guess first, then count to check.</li>
+        <li><b>Numbers in words</b> &middot; Every number has a name as well as a numeral. Forty-two and 42 are the same number.</li>
+        <li><b>Build it with tens and ones</b> &middot; Build a number. Add tens and ones and watch the number grow.</li>
+        <li><b>Which is more?</b> &middot; To compare two-digit numbers, look at the tens first. Only if the tens match do the ones decide.</li>
+        <li><b>First, second, third</b> &middot; Counting numbers say how many. Ordinal numbers say which place in a line.</li>
+        <li><b>Round to the nearest 10</b> &middot; Which ten is nearer? Tap it.</li>
+        <li><b>Odd or even?</b> &middot; Put the counters in pairs. If one is left on its own, the number is odd.</li>
+        <li><b>Make 20, make 100</b> &middot; Two numbers that finish each other off. Six and fourteen make twenty. Thirty and seventy make a hundred.</li>
+        <li><b>Adding two-digit numbers</b> &middot; Add the tens, then add the ones, then put the two answers together.</li>
+        <li><b>Taking away by jumping back</b> &middot; Take away by jumping back. Jump back tens first, then ones.</li>
+        <li><b>One undoes the other</b> &middot; Adding and taking away undo each other. That is how you check an answer without doing it all again.</li>
+        <li><b>Arrays: 2s, 5s and 10s</b> &middot; Rows of dots make an array. Count the rows and how many in each row.</li>
+        <li><b>Know them by heart</b> &middot; No array this time. Answer from memory if you can, and press Count it up only when you are stuck.</li>
+        <li><b>Sharing and grouping</b> &middot; Sharing gives one each until they are gone. Grouping makes groups of the same size.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>6 of 8</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>How many tens in 47? <b>4</b> &mdash; 47 is 4 tens and 7 ones.</li>
+        <li>Round 63 to the nearest 10. <b>60</b> &mdash; 63 is nearer to 60 than to 70.</li>
+        <li>34 + 25 = ? <b>59</b> &mdash; 3 tens + 2 tens = 5 tens, and 4 + 5 = 9 ones: 59.</li>
+        <li>56 − 20 = ? <b>36</b> &mdash; Take away 2 tens: 5 tens becomes 3 tens, so 36.</li>
+        <li>4 × 5 = ? <b>20</b> &mdash; 4 lots of 5: 5, 10, 15, 20.</li>
+        <li>12 shared between 3 is ? each <b>4</b> &mdash; Give them out one at a time and each gets 4.</li>
+        <li>Is 17 odd or even? <b>odd</b> &mdash; Pair them up and one is left over, so 17 is odd.</li>
+        <li>One more than 59 is ? <b>60</b> &mdash; 59 and one more is 6 tens exactly: 60.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Take a big handful of dried beans or pasta and count it by making piles of ten. Say how many tens and how many ones there are, then write the number: 3 tens and 4 ones is 34. Then pair the beans up: if one is left without a partner, the number is odd.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 2: Coins and Change</b> <span class="gu-meta">9 steps &middot; about 25 min &middot; 6 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Ni.03</b> Recognise complements of 20 and complements of multiples of 10 (up to 100).</li>
+        <li><b>2Ni.04</b> Estimate, add and subtract whole numbers with up to two digits (no regrouping of ones or tens).</li>
+        <li><b>2Ni.05</b> Understand multiplication as: repeated addition an array.</li>
+        <li><b>2Ni.07</b> Know 1, 2, 5 and 10 times tables.</li>
+        <li><b>2Nm.01</b> Recognise value and money notation used in local currency.</li>
+        <li><b>2Nm.02</b> Compare values of different combinations of coins or notes.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Know your money</b> &middot; This is our money. Round gold ones are coins. Flat ones are notes. Tap one to hear what it is worth.</li>
+        <li><b>Count what is in the purse</b> &middot; To count money, always start with the biggest and count on. Tap the biggest one first.</li>
+        <li><b>Make this exact amount</b> &middot; Now make an amount. Tap coins and notes until the purse holds exactly the right money.</li>
+        <li><b>The fewest pieces</b> &middot; Same amount, but now use as few coins and notes as you can. Take the biggest that fits, every time.</li>
+        <li><b>What does it all cost?</b> &middot; At the shop you add the prices together to find the total.</li>
+        <li><b>How much more?</b> &middot; You have some money, but not enough. Count on from what you have up to the price. The hops show how much more you need.</li>
+        <li><b>Writing money</b> &middot; Money has its own way of writing. Forty-five shillings can be written 45 sh, or KSh 45. Both mean the same.</li>
+        <li><b>Which purse is worth more?</b> &middot; Two purses. Add up what is in each one, then choose the one worth more.</li>
+        <li><b>Saving and spending</b> &middot; Money you keep is saving. Money you hand over is spending. Both are just adding and taking away.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>8 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>How do we write forty shillings? <b>40 sh</b> &mdash; Forty is 4 tens, written 40, so forty shillings is 40 sh.</li>
+        <li>A 50 and a 20 and a 10. How much altogether? <b>80 sh</b> &mdash; Start with the biggest: 50, then 70, then 80.</li>
+        <li>Which is the fewest pieces for 70 sh? <b>50 + 20</b> &mdash; Take the biggest that fits: 50, then 20 makes 70 with just 2 pieces.</li>
+        <li>A juice is 45 sh and a bun is 30 sh. Total? <b>75 sh</b> &mdash; 45 + 30: 4 tens and 3 tens make 7 tens, and 5 ones, so 75 sh.</li>
+        <li>You have 60 sh. A ball costs 100 sh. How much more do you need? <b>40 sh</b> &mdash; Count on from 60 to 100 in tens: 70, 80, 90, 100 is 4 tens, 40 sh.</li>
+        <li>KSh 25 is the same as… <b>25 sh</b> &mdash; KSh 25 and 25 sh are two ways of writing twenty-five shillings.</li>
+        <li>A mango is 10 sh. How much for 3 mangoes? <b>30 sh</b> &mdash; 3 lots of 10 is 30.</li>
+        <li>Which is worth more: 20 sh + 20 sh + 5 sh, or one 50 sh note? <b>the 50 sh note</b> &mdash; The coins make 45 sh, and 50 is more than 45.</li>
+        <li>You save 10 sh a week. After 5 weeks you have… <b>50 sh</b> &mdash; 5 lots of 10 is 50.</li>
+        <li>You have 80 sh and spend 30 sh. What is left? <b>50 sh</b> &mdash; 8 tens take away 3 tens leaves 5 tens: 50 sh.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Put a few coins and notes on the table and count them together, starting with the biggest and counting on. Then pick something that costs less than 100 shillings and ask which coins would pay for it exactly, and which way uses the fewest coins.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 3: Fair Shares</b> <span class="gu-meta">9 steps &middot; about 25 min &middot; 6 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Nf.01</b> Understand that an object or shape can be split into four equal parts or four unequal parts.</li>
+        <li><b>2Nf.02</b> Understand that a quarter can describe one of four equal parts of a quantity or set of objects.</li>
+        <li><b>2Nf.03</b> Understand that one half and one quarter can be interpreted as division.</li>
+        <li><b>2Nf.04</b> Understand that fractions (half, quarter and three-quarters) can act as operators.</li>
+        <li><b>2Nf.05</b> Recognise the relative size of 4 , , and 1, and the equivalence of and , and , and 1.</li>
+        <li><b>2Nf.06</b> Understand and visualise that wholes, halves and quarters can be combined to create new fractions.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Equal parts first</b> &middot; A fraction only works when the parts are equal. Is this shape cut into equal parts?</li>
+        <li><b>Top number, bottom number</b> &middot; The bottom number says how many equal parts there are. The top number says how many you have.</li>
+        <li><b>A fraction of a group</b> &middot; A fraction of a group. Share the counters into equal groups, then take the parts you need.</li>
+        <li><b>Same size, different name</b> &middot; Different fractions can be the same size. The wall shows which ones match.</li>
+        <li><b>Which is bigger?</b> &middot; Which fraction is bigger? Look at the bars. A bigger bottom number means smaller pieces.</li>
+        <li><b>On the number line</b> &middot; Fractions live between zero and one. Tap the mark where the fraction belongs.</li>
+        <li><b>Putting parts together</b> &middot; Adding fractions with the same bottom number. Just count the parts.</li>
+        <li><b>More than one whole</b> &middot; More than one whole. Four quarters make one whole, so five quarters is one and a quarter.</li>
+        <li><b>Fractions in real life</b> &middot; Fractions in real life. Read the problem and work it out.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>8 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>A shape is cut into 4 pieces of different sizes. Is one piece a quarter? <b>no</b> &mdash; Quarters must be 4 EQUAL parts.</li>
+        <li>In 3/4, what does the 4 tell you? <b>how many equal parts</b> &mdash; The bottom number says how many equal parts the whole is cut into.</li>
+        <li>What is 1/4 of 12? <b>3</b> &mdash; Share 12 into 4 equal groups: 3 in each.</li>
+        <li>Which is the same as 1/2? <b>2/4</b> &mdash; Two quarters cover the same as one half.</li>
+        <li>Which is bigger: 1/2 or 1/4? <b>1/2</b> &mdash; Halves are bigger pieces than quarters.</li>
+        <li>Which is bigger: 3/4 or 2/4? <b>3/4</b> &mdash; Same size pieces, and 3 of them is more than 2.</li>
+        <li>1/4 + 2/4 = ? <b>3/4</b> &mdash; 1 quarter and 2 quarters make 3 quarters.</li>
+        <li>1/2 + 1/4 = ? <b>3/4</b> &mdash; A half is 2 quarters, and 2 quarters and 1 quarter make 3 quarters.</li>
+        <li>How many quarters make one whole? <b>4</b> &mdash; A whole cut into 4 equal parts has 4 quarters.</li>
+        <li>5 quarters is the same as… <b>1 whole and 1/4</b> &mdash; 4 quarters make 1 whole, and 1 quarter is left over.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Fold a piece of paper into four equal parts, then cut another into four parts that are not equal, and ask which ones are quarters. Share 12 beans fairly between four people: each person's share is a quarter of 12.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 4: Patterns That Grow</b> <span class="gu-meta">9 steps &middot; about 25 min &middot; 3 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Nc.04</b> Count on and count back in ones, twos, fives or tens, starting from any number (from 0 to 100).</li>
+        <li><b>2Nc.06</b> Recognise, describe and extend numerical sequences (from 0 to 100).</li>
+        <li><b>2Sp.01</b> Use familiar language associated with patterns and randomness, including regular pattern and random pattern.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>The part that repeats</b> &middot; A repeating pattern has a part that repeats. Find the part that repeats, and you know the whole pattern.</li>
+        <li><b>What comes next?</b> &middot; What comes next? Find the part that repeats, then tap the shape that comes next.</li>
+        <li><b>Mend the pattern</b> &middot; One shape has fallen out of the middle. Which shape mends the pattern?</li>
+        <li><b>Make your own</b> &middot; Make your own repeating pattern. Tap the shapes to add them. I will tell you what repeats.</li>
+        <li><b>Counting on in steps</b> &middot; Count on in steps. Pick a start and a step, then keep counting on: in ones, twos, fives or tens.</li>
+        <li><b>How does it go up?</b> &middot; A number pattern goes up by the same amount each time. How does this one go up?</li>
+        <li><b>The missing number</b> &middot; A number is missing from the pattern. Work out how it goes up, then fill the gap.</li>
+        <li><b>Counting back in steps</b> &middot; Count back in steps. Start high, and take the same step away each time.</li>
+        <li><b>Hundred square patterns</b> &middot; Patterns hide in the hundred square. The coloured numbers go up by the same amount. Tap the next one.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>8 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>In the pattern ABB ABB ABB, how long is the part that repeats? <b>3</b> &mdash; A, B, B is three shapes, and then it starts again.</li>
+        <li>Circle, square, circle, square, circle… what comes next? <b>square</b> &mdash; Circle and square take turns, so after a circle comes a square.</li>
+        <li>10, 20, 30, 40… how does it go up? <b>up in tens</b> &mdash; Each number is 10 more than the one before.</li>
+        <li>2, 4, 6, ?, 10. What is missing? <b>8</b> &mdash; It goes up in twos: 6 + 2 = 8.</li>
+        <li>5, 10, 15, 20… what comes next? <b>25</b> &mdash; It goes up in fives: 20 + 5 = 25.</li>
+        <li>Start at 37 and count on in tens: 37, 47, 57… what comes next? <b>67</b> &mdash; Counting on in tens adds 10 each time: 57 + 10 = 67.</li>
+        <li>Count back in twos: 30, 28, 26… what comes next? <b>24</b> &mdash; Counting back in twos takes 2 away each time: 26 − 2 = 24.</li>
+        <li>On a hundred square, 3, 13, 23 are coloured. What comes next? <b>33</b> &mdash; Each one is 10 more, one row down: 23 + 10 = 33.</li>
+        <li>Which is a repeating pattern? <b>AB AB AB</b> &mdash; A repeating pattern has a part that comes round again; the number patterns keep going up.</li>
+        <li>Count back in fives from 50: 50, 45, 40… what comes next? <b>35</b> &mdash; Counting back in fives takes 5 away each time: 40 − 5 = 35.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Make a repeating pattern with spoons and forks, or clap, clap, stamp, and ask your child which part repeats and what comes next. Then count on in fives from 15, and back in tens from 90, together.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 5: Sides and Corners</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 7 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Gg.01</b> Identify, describe, sort, name and sketch 2D shapes by their properties, including reference to regular polygons, number of sides and vertices. Recognise these shapes in different positions and orientations.</li>
+        <li><b>2Gg.02</b> Understand that a circle has a centre and any point on the boundary is at the same distance from the centre.</li>
+        <li><b>2Gg.05</b> Identify, describe, sort and name 3D shapes by their properties, including reference to number and shapes of faces, edges and vertices.</li>
+        <li><b>2Gg.08</b> Identify 2D and 3D shapes in familiar objects.</li>
+        <li><b>2Gg.09</b> Identify a horizontal or vertical line of symmetry on 2D shapes and patterns.</li>
+        <li><b>2Gg.10</b> Predict and check how many times a shape looks identical as it completes a full turn.</li>
+        <li><b>2Gg.11</b> Understand that an angle is a description of a turn, including reference to the terms whole, half and quarter turns, both clockwise and anticlockwise.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Sides and corners</b> &middot; Every flat shape has sides and corners. Tap each side to count them, then tap each corner.</li>
+        <li><b>Name the shape</b> &middot; Which shape is this? Count the sides to help you.</li>
+        <li><b>Shape riddles</b> &middot; A shape riddle. Read the clues and find the shape.</li>
+        <li><b>Make it match</b> &middot; A line of symmetry is a fold line. Both halves match. Colour the other half to match.</li>
+        <li><b>Does it fold in half?</b> &middot; Some shapes have lines of symmetry. Does the dotted line fold this shape into two matching halves?</li>
+        <li><b>Solid shapes</b> &middot; Solid shapes have faces, edges and corners. A face is a flat part you could paint.</li>
+        <li><b>Where is it?</b> &middot; Position words. Which one is above, below, left of or between?</li>
+        <li><b>Turning</b> &middot; Turns. A quarter turn, a half turn, a three quarter turn. Clockwise goes the way a clock goes.</li>
+        <li><b>The middle of a circle</b> &middot; A circle has a middle point. Every single point on its edge is exactly the same distance from that middle.</li>
+        <li><b>Shapes in real things</b> &middot; Shapes are not only on the page. A door is a rectangle, a tin is a cylinder, a dice is a cube.</li>
+        <li><b>Spin it all the way round</b> &middot; Spin a shape all the way round. Some shapes look exactly the same several times on the way.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>8 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>How many sides does a hexagon have? <b>6</b> &mdash; A hexagon has 6 straight sides.</li>
+        <li>Which shape has no corners? <b>circle</b> &mdash; A circle is one curved line with no corners.</li>
+        <li>A shape with 4 equal sides and 4 square corners is a… <b>square</b> &mdash; All four sides the same and square corners: a square.</li>
+        <li>How many faces does a cube have? <b>6</b> &mdash; A cube has 6 flat faces, like a dice.</li>
+        <li>Which solid is like a ball? <b>sphere</b> &mdash; A sphere is round all over, like a ball.</li>
+        <li>A line of symmetry means… <b>both halves match</b> &mdash; Fold along it and the two halves fit exactly.</li>
+        <li>Two quarter turns the same way make… <b>a half turn</b> &mdash; A quarter and another quarter make a half turn.</li>
+        <li>Facing up, you make a half turn. Now you face… <b>down</b> &mdash; A half turn faces the opposite way.</li>
+        <li>Turning clockwise means turning… <b>the way a clock goes</b> &mdash; Clockwise is the way the hands of a clock move round.</li>
+        <li>How many edges does a cube have? <b>12</b> &mdash; 4 edges round the top, 4 round the bottom and 4 up the sides: 12.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Go on a shape hunt around the house: something with four sides, something round, a box shaped like a cube, a tin shaped like a cylinder. Fold a paper square in half to find a line of symmetry.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 6: Which Way From Here</b> <span class="gu-meta">5 steps &middot; about 15 min &middot; 3 objectives &middot; 8 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Gg.11</b> Understand that an angle is a description of a turn, including reference to the terms whole, half and quarter turns, both clockwise and anticlockwise.</li>
+        <li><b>2Gp.01</b> Use knowledge of position and direction to describe movement.</li>
+        <li><b>2Gp.02</b> Sketch the reflection of a 2D shape in a vertical mirror line, including where the mirror line is the edge of the shape.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Saying where</b> &middot; Before any grid, you can say where something is in words. Above, below, next to, between.</li>
+        <li><b>Whose left is it?</b> &middot; Left and right depend on which way you are facing. Turn with the robot, not with the page.</li>
+        <li><b>Drive it to the flag</b> &middot; Now drive the robot. Forward goes the way it is facing, so turn first and then go.</li>
+        <li><b>Say the route</b> &middot; Now read a route somebody else walked, and say it in words.</li>
+        <li><b>Over the mirror line</b> &middot; A mirror line flips a shape over. The reflection is the same distance from the line, on the other side.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>6 of 8</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>The ball is sitting on top of the box. The ball is… <b>above the box</b> &mdash; On top of something means above it.</li>
+        <li>The red car is in the middle of the two blue ones. It is… <b>between them</b> &mdash; In the middle of two things is between them.</li>
+        <li>Forward means… <b>the way you are facing</b> &mdash; Forward goes wherever you are facing, so turn first, then go.</li>
+        <li>You walk to the door, turn round, and walk back. You went… <b>forwards, then backwards</b> &mdash; Turning round and walking back takes you back the way you came.</li>
+        <li>The robot faces the top of the page and turns right. It now faces… <b>the right of the page</b> &mdash; A quarter turn right from the top faces the right-hand side.</li>
+        <li>You face the window and make a whole turn. Now you face… <b>the window</b> &mdash; A whole turn goes all the way round, back to where you started.</li>
+        <li>A reflection in a mirror line is… <b>the same distance the other side</b> &mdash; Each point of the shape is copied the same distance away, on the other side of the line.</li>
+        <li>When a shape is reflected, the reflection is… <b>the same size</b> &mdash; A mirror flips a shape over; it does not grow or shrink it.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Hide a toy and guide your child to it with directions such as 'three steps forward, make a quarter turn to the left, two steps forward'. Then swap, and your child gives the directions.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 7: How Much, How Long</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 5 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Gg.03</b> Understand that length is a fixed distance between two points. Estimate and measure lengths using non-standard or standard units.</li>
+        <li><b>2Gg.04</b> Draw and measure lines, using standard units.</li>
+        <li><b>2Gg.06</b> Understand that mass is the quantity of matter in an object. Estimate and measure familiar objects using non-standard or standard units.</li>
+        <li><b>2Gg.07</b> Understand that capacity is the maximum amount that an object can contain. Estimate and measure the capacity of familiar objects using non-standard or standard units.</li>
+        <li><b>2Gg.12</b> Understand a measuring scale as a continuous number line where intermediate points have value.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Longer and shorter</b> &middot; Which one is longer? Look at where each one ends. They all start in the same place.</li>
+        <li><b>Measure with cubes</b> &middot; Measure with cubes. Lay them along the pencil and count them. Every cube must be the same size.</li>
+        <li><b>Reading a ruler</b> &middot; A ruler measures in centimetres. Start at zero, and read the number where the object ends.</li>
+        <li><b>Which unit?</b> &middot; Which unit would you use? Centimetres for small things, metres for big things like a room.</li>
+        <li><b>Balance the scales</b> &middot; A balance tips down on the heavier side. Add weights until it balances, then you know the mass.</li>
+        <li><b>Reading a kitchen scale</b> &middot; Read the kitchen scale. Each mark is one hundred grams. Read the number the needle points to.</li>
+        <li><b>Reading a jug</b> &middot; A measuring jug shows how much liquid. Each mark is one hundred millilitres.</li>
+        <li><b>Which holds more?</b> &middot; Which holds more? Fill each one with cups of water and count the cups. The one that takes more cups holds more.</li>
+        <li><b>Estimate, then measure</b> &middot; Guess first, then measure. A good guess is close to the real length.</li>
+        <li><b>Draw a line yourself</b> &middot; Now you draw the line. Tap the ruler where your line should end.</li>
+        <li><b>Between the marks</b> &middot; A measuring scale is a number line. Some marks have no number on them, so you work them out.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>8 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>Which unit would you use for the length of a pencil? <b>cm</b> &mdash; A pencil is small, so centimetres.</li>
+        <li>An object goes from 2 cm to 9 cm on a ruler. How long is it? <b>7 cm</b> &mdash; It did not start at 0, so count the centimetres from 2 to 9: 7 cm.</li>
+        <li>The needle on a kitchen scale points to 300. It is showing… <b>300 g</b> &mdash; The scale counts in grams, and the needle is on 300.</li>
+        <li>Each mark on a jug is 100 ml. The water is at the 4th mark. How much water? <b>400 ml</b> &mdash; 4 marks of 100 ml is 400 ml.</li>
+        <li>Which unit would you use for the water in a bath? <b>l</b> &mdash; A bath holds a lot of water, so litres.</li>
+        <li>A balance tips down on the left. The left side is… <b>heavier</b> &mdash; The heavier side goes down.</li>
+        <li>The jug takes 6 cups of water. The bottle takes 4. Which holds more? <b>the jug</b> &mdash; 6 cups is more than 4 cups.</li>
+        <li>You measure a book with cubes. Why must the cubes be the same size? <b>so the count is fair</b> &mdash; If the cubes are different sizes, the same book gives different counts.</li>
+        <li>A pencil is 15 cm long. A crayon is 9 cm long. Which is longer? <b>the pencil</b> &mdash; 15 cm is more than 9 cm.</li>
+        <li>A scale goes 0, 10, 20 with one unmarked line halfway between each. What is the line between 10 and 20? <b>15</b> &mdash; Halfway between 10 and 20 is 15.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Measure a table with hand spans, then with a ruler in centimetres. Count how many cups of water fill a jug, and hold two things to guess which is heavier before checking on a scale if you have one.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 8: Half Past, Quarter To</b> <span class="gu-meta">6 steps &middot; about 20 min &middot; 3 objectives &middot; 9 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Gt.01</b> Order and compare units of time (seconds, minutes, hours, days, weeks, months and years).</li>
+        <li><b>2Gt.02</b> Read and record time to five minutes in digital notation (12-hour) and on analogue clocks.</li>
+        <li><b>2Gt.03</b> Interpret and use the information in calendars.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>The two hands</b> &middot; A clock has two hands. The short fat one shows the hour. The long thin one shows the minutes.</li>
+        <li><b>Quarter past, quarter to</b> &middot; The clock face splits into quarters. Quarter past, half past, quarter to.</li>
+        <li><b>Counting round in fives</b> &middot; Now to five minutes. Count round in fives. Past on the right, to on the left.</li>
+        <li><b>Clock face and digital</b> &middot; A digital clock writes the time with numbers. Match the clock face to the digital time.</li>
+        <li><b>Seconds to years</b> &middot; Seconds, minutes, hours, days, weeks, months and years. How long is each one?</li>
+        <li><b>Days, months, calendar</b> &middot; A week has seven days in the same order every week, and a year has twelve months. A calendar lays a month out in rows of seven.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>7 of 9</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>Which hand shows the hour? <b>the short one</b> &mdash; The short hand shows the hour; the long hand shows the minutes.</li>
+        <li>The long hand points to 6. That is… <b>half past</b> &mdash; At 6 the long hand has gone half way round.</li>
+        <li>Quarter to 5 is the same as… <b>4:45</b> &mdash; Quarter to 5 is 15 minutes before 5, which is 4:45.</li>
+        <li>What is 3:20 in words? <b>twenty past three</b> &mdash; 20 minutes after 3 o’clock is twenty past three.</li>
+        <li>The long hand goes all the way round once. How many minutes is that? <b>60</b> &mdash; Once round the clock is an hour, and an hour is 60 minutes.</li>
+        <li>Which one is the longest? <b>an hour</b> &mdash; An hour is longer than a minute, and a minute is longer than a second.</li>
+        <li>Which one is the shortest? <b>a day</b> &mdash; A day is shorter than a week, and a week is shorter than a month.</li>
+        <li>Which month comes after March? <b>April</b> &mdash; The months go January, February, March, April…</li>
+        <li>The 1st of March is a Monday. What day is the 8th? <b>Monday</b> &mdash; 7 days later is the same day of the week: one row down on the calendar.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Read the clock together at a few times in the day, to five minutes. Find today's date on a calendar and count how many days are left until the weekend.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 9: Count It, Chart It</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 5 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
+      <ul>
+        <li><b>2Sp.01</b> Use familiar language associated with patterns and randomness, including regular pattern and random pattern.</li>
+        <li><b>2Sp.02</b> Conduct chance experiments with two outcomes, and present and describe the results.</li>
+        <li><b>2Ss.01</b> Conduct an investigation to answer non-statistical and statistical questions (categorical data).</li>
+        <li><b>2Ss.02</b> Record, organise and represent categorical data. Choose and explain which representation to use in a given situation: lists and tables Venn and Carroll diagrams tally charts block graphs and pictograms.</li>
+        <li><b>2Ss.03</b> Describe data, identifying similarities and variations to answer non-statistical and statistical questions and discuss conclusions.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Sort them into groups</b> &middot; Sorting puts things into groups. Tap a thing, then tap the hoop it belongs in.</li>
+        <li><b>Tally charts</b> &middot; A tally chart counts as you go. Every fifth mark goes across the other four, so you can count in fives.</li>
+        <li><b>Pictograms</b> &middot; A pictogram uses pictures. Here one picture stands for one thing, so you count the pictures.</li>
+        <li><b>Sorting two ways</b> &middot; A Carroll diagram sorts things two ways at once. Each thing goes in the one box where both labels are true.</li>
+        <li><b>Build a block graph</b> &middot; A block graph stacks one block for each thing. Build the graph from the tally.</li>
+        <li><b>Reading a block graph</b> &middot; A block graph has one block for each thing. Count the blocks to answer.</li>
+        <li><b>Toss a coin</b> &middot; A coin can land two ways, heads or tails. Toss it ten times and keep a tally. Then say what happened.</li>
+        <li><b>Spin and record</b> &middot; This spinner is half orange and half teal. Spin it ten times, and the block graph shows what happened.</li>
+        <li><b>Ask, collect, answer</b> &middot; An investigation starts with a question. Ask it, record every answer in a tally, then use the tally to answer.</li>
+        <li><b>Regular or random?</b> &middot; Some rows repeat over and over. Those are regular patterns. Others have no repeat at all. Those are random.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>8 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>In a tally, how many does |||| crossed through stand for? <b>5</b> &mdash; Four marks with one across them is a bundle of 5.</li>
+        <li>A pictogram key says one ⭐ = 1. A row has 6 stars. How many is that? <b>6</b> &mdash; Each star is 1, so 6 stars show 6.</li>
+        <li>The bus column of a block graph has 7 blocks. How many chose bus? <b>7</b> &mdash; One block is one child, so 7 blocks mean 7.</li>
+        <li>In a Carroll diagram, where does a fish go? <b>cannot fly, has no legs</b> &mdash; A fish cannot fly and has no legs, so it goes in that box.</li>
+        <li>You toss a coin. What can it land on? <b>heads or tails</b> &mdash; A coin has two sides, so there are two ways it can land.</li>
+        <li>You toss a coin 10 times and get 6 heads. How many tails? <b>4</b> &mdash; There were 10 tosses: 10 − 6 = 4 tails.</li>
+        <li>You toss the coin 10 more times. Will you get 6 heads again? <b>maybe, maybe not</b> &mdash; Each toss can land either way, so a new run can come out differently.</li>
+        <li>You want to find the class’s favourite fruit. What do you do first? <b>ask everyone and keep a tally</b> &mdash; An investigation starts by asking and recording every answer.</li>
+        <li>What is a tally chart good for? <b>counting as you go</b> &mdash; You make one mark for each thing as you count, so nothing is missed.</li>
+        <li>A block graph shows 6, 4, 8 and 2. How many altogether? <b>20</b> &mdash; 6 + 4 + 8 + 2 = 20.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Toss a coin ten times and keep a tally of heads and tails. Then ask everyone at home one question, such as their favourite fruit, and make a tally chart of the answers.</p>
+    </details>
+  </section>
+  <!-- GROWNUP:END -->
 
   <p class="note"><b>Every step is Stage 2.</b> These lessons used to carry on past it &mdash; the 24-hour clock, timetables, coordinates that cross zero, thirds, carrying a ten &mdash; on the grounds that a child could stop at the check and still have met the stage. They could not: the extra steps sat in the middle of each lesson rather than after it, so the only way to the Stage 2 material at the end was through them. The out-of-stage steps have been removed and each lesson now finishes where the stage does.</p>
 </div>

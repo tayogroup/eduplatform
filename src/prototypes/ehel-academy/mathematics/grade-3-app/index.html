@@ -1,7 +1,13 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grade 3 Mathematics</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   /* ==================================================================
      Grade 3 Mathematics - the way in.
@@ -150,16 +156,66 @@
     a.lesson { transition: none; }
     a.lesson:hover, a.lesson:focus-visible { transform: none; }
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
+
+/* ==== lesson-app-tools/build-grownup-section.py ==== */
+/* The adult's half of the hub. Collapsed by default: a child arriving at the
+   hub should meet the lessons, not their answer keys. */
+.grownup { margin: 26px 0 10px; }
+.grownup h3 { font-size: 20px; margin: 0 0 6px; }
+.grownup > p { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0 0 14px; }
+details.gu {
+  border: 2px solid var(--line); border-radius: 14px; background: var(--card);
+  padding: 10px 14px; margin: 0 0 10px;
+}
+details.gu > summary { cursor: pointer; font-size: 16px; }
+details.gu .gu-meta { color: var(--muted); font-weight: 600; font-size: 14px; }
+details.gu h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--muted); margin: 14px 0 6px; }
+details.gu ul { margin: 0; padding-left: 20px; }
+details.gu li { font-size: 15px; line-height: 1.5; margin: 0 0 4px; }
+details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; margin: 0 0 6px; }
+@media print {
+  details.gu { break-inside: avoid; }
+  details.gu > summary { list-style: none; }
+  details.gu[open] > summary::marker { content: ""; }
+}
+/* ==== end lesson-app-tools/build-grownup-section.py ==== */
 </style>
 
 <div class="wrap">
+  <a class="eh-skip" href="#lessons">Skip to the lesson</a>
   <header>
     <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
     <h1>Grade 3 <em>Mathematics</em></h1>
-    <p class="lede">Eight lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind.</p>
+    <p class="lede">Eight lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind. About 200 minutes in all.</p>
   </header>
 
-  <div class="grid">
+  <div class="grid" id="lessons" role="main">
     <a class="lesson c-number" href="up-to-a-thousand.html?from=g3">
       <span class="mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -169,7 +225,7 @@
       <span class="strand">Number</span>
       <h2>Up to a Thousand</h2>
       <p class="covers">Build and read 3-digit numbers, break them apart and put them back together, multiply by 10, count on and back in ones, tens and hundreds, then compare, order, round and estimate.</p>
-      <span class="foot"><span class="steps">11 steps &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-calc" href="adding-and-money.html?from=g3">
@@ -181,7 +237,7 @@
       <span class="strand">Calculation</span>
       <h2>Adding, Taking Away and Money</h2>
       <p class="covers">Make 100 and 1000, choose the easy pair to add first, add and take away in columns with regrouping, read money with a decimal point, and work out change.</p>
-      <span class="foot"><span class="steps">6 steps &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">6 steps &middot; about 20 min &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-pattern" href="rows-and-rules.html?from=g3">
@@ -193,7 +249,7 @@
       <span class="strand">Number</span>
       <h2>Rows and Rules</h2>
       <p class="covers">Read an array four ways, learn the times tables, split a number to multiply it, estimate first, share with something left over, and find the rule a pattern is hiding.</p>
-      <span class="foot"><span class="steps">11 steps &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-frac" href="equal-parts.html?from=g3">
@@ -205,7 +261,7 @@
       <span class="strand">Fractions</span>
       <h2>Equal Parts</h2>
       <p class="covers">Tell equal parts from unequal ones, see that all the parts make one whole, find a fraction of a shape and of a group, add and take away pieces, and compare.</p>
-      <span class="foot"><span class="steps">9 steps &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">9 steps &middot; about 30 min &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-shape" href="shapes-and-symmetry.html?from=g3">
@@ -217,7 +273,7 @@
       <span class="strand">Geometry</span>
       <h2>Shapes and Symmetry</h2>
       <p class="covers">Name flat shapes by their sides, tell regular from irregular, find lines of symmetry, mirror a shape, name solids, and work out perimeter and area.</p>
-      <span class="foot"><span class="steps">8 steps &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">8 steps &middot; about 25 min &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-measure" href="measure-it.html?from=g3">
@@ -229,7 +285,7 @@
       <span class="strand">Measurement</span>
       <h2>Measure It</h2>
       <p class="covers">Choose between millimetres, centimetres, metres and kilometres, weigh in grams and kilograms, measure in millilitres and litres, read a scale, and compare angles with a right angle.</p>
-      <span class="foot"><span class="steps">5 steps &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">5 steps &middot; about 20 min &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-time" href="time-and-direction.html?from=g3">
@@ -241,7 +297,7 @@
       <span class="strand">Time</span>
       <h2>Time and Direction</h2>
       <p class="covers">Read a clock face and digital time, work out how long something took, follow a timetable, and describe direction with north, south, east and west.</p>
-      <span class="foot"><span class="steps">4 steps &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">4 steps &middot; about 15 min &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-data" href="ask-count-chart.html?from=g3">
@@ -252,12 +308,247 @@
       </span>
       <span class="strand">Statistics</span>
       <h2>Ask, Count and Chart</h2>
-      <p class="covers">Ask a question data can answer, keep a tally, read pictograms and bar charts, sort with Venn and Carroll diagrams, and say how likely something is.</p>
-      <span class="foot"><span class="steps">10 steps &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
+      <p class="covers">Ask a question data can answer, keep a tally, read pictograms and bar charts, sort with Venn and Carroll diagrams, and say whether something will happen, might happen or will not.</p>
+      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; why &middot; stickers</span><span class="go">Start</span></span>
     </a>
   </div>
 
-  <p class="note"><b>For the grown-up.</b> These five lessons cover the Cambridge Primary Mathematics Stage 3 strands: number, multiplication and patterns, fractions, geometry and measure, and statistics and probability. Fractions at Stage 3 are halves, thirds, quarters, fifths and tenths only &mdash; nothing here is ever cut into more parts than that, and counting never goes below zero, because negative numbers are Stage 5.</p>
+  <p class="note"><b>For the grown-up.</b> These eight lessons cover all 53 objectives of Cambridge Primary Mathematics Stage 3, across its strands: number, multiplication and patterns, fractions, geometry and measure, and statistics and probability. Fractions at Stage 3 are halves, thirds, quarters, fifths and tenths only &mdash; nothing here is ever cut into more parts than that, and counting never goes below zero, because negative numbers are Stage 5.</p>
+  <!-- GROWNUP:START  built by lesson-app-tools/build-grownup-section.py -->
+  <section class="grownup" id="grownups">
+    <h3>For teachers and parents</h3>
+    <p>What each lesson teaches, in Cambridge's own words; what every step asks the child to do; the check at the end, its pass mark and its answers; and one thing to try at home with things you already have. The eight lessons are listed in the order the course runs them, but each one stands on its own, so a child can start with any of them. The minutes are an estimate of about two and a half minutes a step, not yet timed against a real class, so treat them as a guide to the length of a sitting rather than a plan.</p>
+    <details class="gu">
+      <summary><b>Lesson 1: Up to a Thousand</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 9 objectives &middot; 7 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 3)</h4>
+      <ul>
+        <li><b>3Nc.01</b> Estimate the number of objects or people (up to 1000).</li>
+        <li><b>3Nc.02</b> Count on and count back in steps of constant size: 1-digit numbers, tens or hundreds, starting from any number (from 0 to 1000).</li>
+        <li><b>3Nc.03</b> Use knowledge of even and odd numbers up to 10 to recognise and sort numbers.</li>
+        <li><b>3Ni.01</b> Recite, read and write number names and whole numbers (from 0 to 1000).</li>
+        <li><b>3Np.01</b> Understand and explain that the value of each digit is determined by its position in that number (up to 3-digit numbers).</li>
+        <li><b>3Np.02</b> Use knowledge of place value to multiply whole numbers by 10.</li>
+        <li><b>3Np.03</b> Compose, decompose and regroup 3-digit numbers, using hundreds, tens and ones.</li>
+        <li><b>3Np.04</b> Understand the relative size of quantities to compare and order 3-digit positive numbers, using the symbols =, &gt; and &lt;.</li>
+        <li><b>3Np.05</b> Round 3-digit numbers to the nearest 10 or 100.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Three digits</b> &middot; Build a number with the buttons. Look at what each digit is worth.</li>
+        <li><b>Read it and write it</b> &middot; Read the number. Tap the words that say it.</li>
+        <li><b>Break it apart</b> &middot; Tap the three parts that add up to this number.</li>
+        <li><b>Another way to break it</b> &middot; Move one hundred into the tens. The number stays the same.</li>
+        <li><b>Ten times bigger</b> &middot; Press times ten and watch every digit move one column left.</li>
+        <li><b>Count in ones, tens and hundreds</b> &middot; Pick a start and a step. Then tap the number that comes next.</li>
+        <li><b>Odd or even</b> &middot; Look at the last digit only. Is it odd or even?</li>
+        <li><b>Which is bigger?</b> &middot; Compare the hundreds first. Tap the sign that goes between them.</li>
+        <li><b>Put them in order</b> &middot; Tap the numbers in order, smallest first.</li>
+        <li><b>Round it to 10 or 100</b> &middot; Which neighbour is nearer? Look at the line, then tap.</li>
+        <li><b>Roughly how many?</b> &middot; Do not count them all. Pick the closest estimate.</li>
+        <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
+      </ul>
+      <h4>The check</h4>
+      <p class="gu-note">7 questions, with new numbers every time, so there is no fixed answer key to print: each answer is marked and explained on screen as the child gives it. It completes the lesson at <b>5 of 7</b> right; below that the child is shown the score and a Try again button.</p>
+      <h4>Try at home</h4>
+      <p class="gu-home">Find three-digit numbers around you, on a house, a bus or a price tag. Say how many hundreds, tens and ones each one has, and put three of them in order from smallest to largest.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 2: Adding, Taking Away and Money</b> <span class="gu-meta">6 steps &middot; about 20 min &middot; 5 objectives &middot; 6 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 3)</h4>
+      <ul>
+        <li><b>3Ni.02</b> Understand the commutative and associative properties of addition, and use these to simplify calculations.</li>
+        <li><b>3Ni.03</b> Recognise complements of 100 and complements of multiples of 10 or 100 (up to 1000).</li>
+        <li><b>3Ni.04</b> Estimate, add and subtract whole numbers with up to three digits (regrouping of ones or tens).</li>
+        <li><b>3Nm.01</b> Interpret money notation for currencies that use a decimal point.</li>
+        <li><b>3Nm.02</b> Add and subtract amounts of money to give change.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Make 100, and make 1000</b> &middot; How many more to make the round number? Tap it.</li>
+        <li><b>Add in any order</b> &middot; Find the two that make a round number. Tap them first.</li>
+        <li><b>Adding with regrouping</b> &middot; Work one column at a time, starting at the right. Tap the digit that goes under the line.</li>
+        <li><b>Taking away with regrouping</b> &middot; If the top digit is too small, fetch a ten. Tap the digit that goes under the line.</li>
+        <li><b>Money and the dot</b> &middot; The dot splits whole shillings from cents. Tap what this amount is worth.</li>
+        <li><b>Giving change</b> &middot; Count on from the price up to what you paid. Tap the change.</li>
+        <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
+      </ul>
+      <h4>The check</h4>
+      <p class="gu-note">6 questions, with new numbers every time, so there is no fixed answer key to print: each answer is marked and explained on screen as the child gives it. It completes the lesson at <b>4 of 6</b> right; below that the child is shown the score and a Try again button.</p>
+      <h4>Try at home</h4>
+      <p class="gu-home">Make a pretend shop with prices under 500 shillings. Add two prices together, then work out the change from a 1000-shilling note by counting on.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 3: Rows and Rules</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 9 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 3)</h4>
+      <ul>
+        <li><b>3Nc.04</b> Recognise the use of an object to represent an unknown quantity in addition and subtraction calculations.</li>
+        <li><b>3Nc.05</b> Recognise and extend linear sequences, and describe the term-to-term rule.</li>
+        <li><b>3Nc.06</b> Extend spatial patterns formed from adding and subtracting a constant.</li>
+        <li><b>3Ni.05</b> Understand and explain the relationship between multiplication and division.</li>
+        <li><b>3Ni.06</b> Understand and explain the commutative and distributive properties of multiplication, and use these to simplify calculations.</li>
+        <li><b>3Ni.07</b> Know 1, 2, 3, 4, 5, 6, 8, 9 and 10 times tables.</li>
+        <li><b>3Ni.08</b> Estimate and multiply whole numbers up to 100 by 2, 3, 4 and 5.</li>
+        <li><b>3Ni.09</b> Estimate and divide whole numbers up to 100 by 2, 3, 4 and 5.</li>
+        <li><b>3Ni.10</b> Recognise multiples of 2, 5 and 10 (up to 1000).</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Rows and columns</b> &middot; Build rows and columns. Read it as rows times columns.</li>
+        <li><b>Turn it round</b> &middot; Turn the array round. The total does not change.</li>
+        <li><b>The tables you need</b> &middot; Tap the answer. Ten in a row and you have earned it.</li>
+        <li><b>One array, four facts</b> &middot; One array makes four number sentences. Tap the ones that are true.</li>
+        <li><b>Split it to multiply</b> &middot; Split the number into tens and ones, multiply both, then add.</li>
+        <li><b>Estimate, then multiply</b> &middot; Round it first to see roughly what to expect. Then tap the real answer.</li>
+        <li><b>Sharing, and what is left</b> &middot; Share them out equally. How many does each group get, and what is left over?</li>
+        <li><b>Multiples of 2, 5 and 10</b> &middot; Tap every multiple. Look at the last digit.</li>
+        <li><b>What is the rule?</b> &middot; Find the rule first, then the next number.</li>
+        <li><b>Patterns that grow</b> &middot; Count the squares in each picture. How many in the next one?</li>
+        <li><b>The mystery box</b> &middot; What number is hiding in the box?</li>
+        <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
+      </ul>
+      <h4>The check</h4>
+      <p class="gu-note">10 questions, with new numbers every time, so there is no fixed answer key to print: each answer is marked and explained on screen as the child gives it. It completes the lesson at <b>7 of 10</b> right; below that the child is shown the score and a Try again button.</p>
+      <h4>Try at home</h4>
+      <p class="gu-home">Lay out bottle tops or buttons in rows to make arrays: 3 rows of 4 is 12, and so is 4 rows of 3. Say one times table aloud on the way to school, then share 13 beans into groups of 4 and see what is left over.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 4: Equal Parts</b> <span class="gu-meta">9 steps &middot; about 30 min &middot; 8 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 3)</h4>
+      <ul>
+        <li><b>3Nf.01</b> Understand and explain that fractions are several equal parts of an object or shape and all the parts, taken together, equal one whole.</li>
+        <li><b>3Nf.02</b> Understand that the relationship between the whole and the parts depends on the relative size of each, regardless of their shape or orientation.</li>
+        <li><b>3Nf.03</b> Understand and explain that fractions can describe equal parts of a quantity or set of objects.</li>
+        <li><b>3Nf.04</b> Understand that a fraction can be represented as a division of the numerator by the denominator (half, quarter and three-quarters).</li>
+        <li><b>3Nf.05</b> Understand that fractions (half, quarter, three-quarters, third and tenth) can act as operators.</li>
+        <li><b>3Nf.06</b> Recognise that two fractions can have an equivalent value (halves, quarters, fifths and tenths).</li>
+        <li><b>3Nf.07</b> Estimate, add and subtract fractions with the same denominator (within one whole).</li>
+        <li><b>3Nf.08</b> Use knowledge of equivalence to compare and order unit fractions and fractions with the same denominator, using the symbols =, &gt; and &lt;.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Equal parts, or not</b> &middot; Which shape is cut into equal parts? Equal means all the same size.</li>
+        <li><b>All the parts make one</b> &middot; Colour the pieces. All of them together make one whole.</li>
+        <li><b>Same fraction, different shape</b> &middot; Different shapes, same fraction. Tap all the ones that match.</li>
+        <li><b>A fraction of a group</b> &middot; Share the group into equal piles, then take the piles the fraction asks for.</li>
+        <li><b>The line means divide</b> &middot; The fraction line means divide. Match the fraction to its division.</li>
+        <li><b>A fraction of a number</b> &middot; Divide by the bottom number, then multiply by the top one.</li>
+        <li><b>The same, in different pieces</b> &middot; These two bars are shaded the same amount. Which fraction matches?</li>
+        <li><b>Adding and taking away pieces</b> &middot; Count the pieces. The bottom number never changes.</li>
+        <li><b>Which is bigger?</b> &middot; Look at the bars. Which fraction is bigger?</li>
+        <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
+      </ul>
+      <h4>The check</h4>
+      <p class="gu-note">10 questions, with new numbers every time, so there is no fixed answer key to print: each answer is marked and explained on screen as the child gives it. It completes the lesson at <b>7 of 10</b> right; below that the child is shown the score and a Try again button.</p>
+      <h4>Try at home</h4>
+      <p class="gu-home">Fold paper strips into halves, quarters and fifths and compare the pieces. Share 10 sweets equally among 5 people and say what fraction of the sweets each person gets.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 5: Shapes and Symmetry</b> <span class="gu-meta">8 steps &middot; about 25 min &middot; 7 objectives &middot; 6 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 3)</h4>
+      <ul>
+        <li><b>3Gg.01</b> Identify, describe, classify, name and sketch 2D shapes by their properties. Differentiate between regular and irregular polygons.</li>
+        <li><b>3Gg.03</b> Understand that perimeter is the total distance around a 2D shape and can be calculated by adding lengths, and area is how much space a 2D shape occupies within its boundary.</li>
+        <li><b>3Gg.04</b> Draw lines, rectangles and squares. Estimate, measure and calculate the perimeter of a shape, using appropriate metric units, and area on a square grid.</li>
+        <li><b>3Gg.05</b> Identify, describe, sort, name and sketch 3D shapes by their properties.</li>
+        <li><b>3Gg.08</b> Recognise pictures, drawings and diagrams of 3D shapes.</li>
+        <li><b>3Gg.09</b> Identify both horizontal and vertical lines of symmetry on 2D shapes and patterns.</li>
+        <li><b>3Gp.02</b> Sketch the reflection of a 2D shape in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Naming flat shapes</b> &middot; Count the straight sides, then tap the name of the shape.</li>
+        <li><b>Regular or irregular</b> &middot; Regular means every side the same length. Which one is regular?</li>
+        <li><b>Lines of symmetry</b> &middot; Would the shape fold exactly onto itself along the dashed line?</li>
+        <li><b>Mirror it</b> &middot; Tap the squares where the reflection belongs, the same distance the other side.</li>
+        <li><b>Solid shapes</b> &middot; Faces, edges and corners. Which solid shape is it?</li>
+        <li><b>All the way round</b> &middot; Add up every side, all the way round the outside.</li>
+        <li><b>Counting the space inside</b> &middot; Count the squares covered inside the shape.</li>
+        <li><b>Draw it yourself</b> &middot; Tap one corner, then the opposite corner, to draw the rectangle.</li>
+        <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
+      </ul>
+      <h4>The check</h4>
+      <p class="gu-note">6 questions, with new numbers every time, so there is no fixed answer key to print: each answer is marked and explained on screen as the child gives it. It completes the lesson at <b>4 of 6</b> right; below that the child is shown the score and a Try again button.</p>
+      <h4>Try at home</h4>
+      <p class="gu-home">Look for shapes with a line of symmetry around the house, and check by folding a paper copy. Measure all the way round the edge of a book with a ruler to find its perimeter.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 6: Measure It</b> <span class="gu-meta">5 steps &middot; about 20 min &middot; 5 objectives &middot; 6 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 3)</h4>
+      <ul>
+        <li><b>3Gg.02</b> Estimate and measure lengths in centimetres (cm), metres (m) and kilometres (km). Understand the relationship between units.</li>
+        <li><b>3Gg.06</b> Estimate and measure the mass of objects in grams (g) and kilograms (kg). Understand the relationship between units.</li>
+        <li><b>3Gg.07</b> Estimate and measure capacity in millilitres (ml) and litres (l), and understand their relationships.</li>
+        <li><b>3Gg.10</b> Compare angles with a right angle. Recognise that a straight line is equivalent to two right angles or a half turn.</li>
+        <li><b>3Gg.11</b> Use instruments that measure length, mass, capacity and temperature.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Centimetres, metres, kilometres</b> &middot; A hundred centimetres in a metre, a thousand metres in a kilometre.</li>
+        <li><b>Grams and kilograms</b> &middot; A thousand grams make one kilogram. Pick the sensible answer.</li>
+        <li><b>Millilitres and litres</b> &middot; A thousand millilitres make one litre.</li>
+        <li><b>Reading a scale</b> &middot; Work out what one mark is worth first, then read the arrow.</li>
+        <li><b>Bigger or smaller than a right angle</b> &middot; Compare this angle with a right angle. Smaller, the same, or bigger?</li>
+        <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
+      </ul>
+      <h4>The check</h4>
+      <p class="gu-note">6 questions, with new numbers every time, so there is no fixed answer key to print: each answer is marked and explained on screen as the child gives it. It completes the lesson at <b>4 of 6</b> right; below that the child is shown the score and a Try again button.</p>
+      <h4>Try at home</h4>
+      <p class="gu-home">Weigh some fruit on a kitchen scale, read the level in a measuring jug, and guess a length before measuring it in centimetres. Find a corner that is a right angle, then angles that are smaller and bigger than it.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 7: Time and Direction</b> <span class="gu-meta">4 steps &middot; about 15 min &middot; 5 objectives &middot; 6 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 3)</h4>
+      <ul>
+        <li><b>3Gp.01</b> Interpret and create descriptions of position, direction and movement, including reference to cardinal points.</li>
+        <li><b>3Gt.01</b> Choose the appropriate unit of time for familiar activities.</li>
+        <li><b>3Gt.02</b> Read and record time accurately in digital notation (12-hour) and on analogue clocks.</li>
+        <li><b>3Gt.03</b> Interpret and use the information in timetables (12-hour clock).</li>
+        <li><b>3Gt.04</b> Understand the difference between a time and a time interval. Find time intervals between the same units in days, weeks, months and years.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Telling the time</b> &middot; The short hand gives the hour, the long hand gives the minutes.</li>
+        <li><b>How long did it take?</b> &middot; Count on from the start time to the end time.</li>
+        <li><b>Reading a timetable</b> &middot; Find the row, then look along it to the right column.</li>
+        <li><b>North, south, east, west</b> &middot; North is up, south is down, east is right, west is left.</li>
+        <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
+      </ul>
+      <h4>The check</h4>
+      <p class="gu-note">6 questions, with new numbers every time, so there is no fixed answer key to print: each answer is marked and explained on screen as the child gives it. It completes the lesson at <b>4 of 6</b> right; below that the child is shown the score and a Try again button.</p>
+      <h4>Try at home</h4>
+      <p class="gu-home">Read the clock at breakfast and at bedtime, and work out how long something took, such as a meal. Stand in a room and point north, south, east and west, then give directions using those words.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 8: Ask, Count and Chart</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 5 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 3)</h4>
+      <ul>
+        <li><b>3Sp.01</b> Use familiar language associated with chance to describe events, including ‘it will happen’, ‘it will not happen’, ‘it might happen’.</li>
+        <li><b>3Sp.02</b> Conduct chance experiments, and present and describe the results.</li>
+        <li><b>3Ss.01</b> Conduct an investigation to answer non-statistical and statistical questions (categorical and discrete data).</li>
+        <li><b>3Ss.02</b> Record, organise and represent categorical and discrete data. Choose and explain which representation to use in a given situation: Venn and Carroll diagrams tally charts and frequency tables pictograms and bar charts.</li>
+        <li><b>3Ss.03</b> Interpret data, identifying similarities and variations, within data sets, to answer non- statistical and statistical questions and discuss conclusions.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>A question worth asking</b> &middot; Which question needs data? One where the answers would be different for different people.</li>
+        <li><b>Tally marks and totals</b> &middot; Count the bundles in fives, then add the single marks on the end.</li>
+        <li><b>Reading a pictogram</b> &middot; Read the key first. One picture may stand for more than one.</li>
+        <li><b>Reading a bar chart</b> &middot; Look along the bottom for what, and up the side for how many.</li>
+        <li><b>A Venn diagram</b> &middot; Ask both questions about the number, then tap where it belongs.</li>
+        <li><b>A Carroll diagram</b> &middot; One question across the top, one down the side. Which box?</li>
+        <li><b>What does it tell you?</b> &middot; What does the data actually show? Read it carefully.</li>
+        <li><b>Which one should you use?</b> &middot; Read the situation. Which way of showing the data suits it best?</li>
+        <li><b>Will, might, will not</b> &middot; Will it happen, might it, or will it not?</li>
+        <li><b>Try it and see</b> &middot; Spin it many times and keep the score. A few spins prove nothing.</li>
+        <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
+      </ul>
+      <h4>The check</h4>
+      <p class="gu-note">10 questions, with new numbers every time, so there is no fixed answer key to print: each answer is marked and explained on screen as the child gives it. It completes the lesson at <b>7 of 10</b> right; below that the child is shown the score and a Try again button.</p>
+      <h4>Try at home</h4>
+      <p class="gu-home">Ask everyone at home one question and record the answers in a tally chart, then draw a bar chart together. Talk about things that will happen tomorrow, things that might happen, and things that will not.</p>
+    </details>
+  </section>
+  <!-- GROWNUP:END -->
 </div>
 
 <script>

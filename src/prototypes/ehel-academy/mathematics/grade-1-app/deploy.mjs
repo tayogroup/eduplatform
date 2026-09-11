@@ -69,6 +69,12 @@ const MODULES = [
   // ../lesson-app-tools/wire-progress.py. Kept in step with the shared
   // deploy.mjs: two tools writing this remote must ship the same set.
   [path.join(SHARED, "progress-client.js"), "progress-client.js"],
+  // focus mode and the session bar, imported by every lesson page since
+  // ../lesson-app-tools/apply-focus-mode.py (2026-09-11). The shared deploy.mjs
+  // already shipped it; without it here the pages import a file that is not
+  // beside them, and a failed static import stops the whole module - class
+  // chat, hand-raise and Wehel with it.
+  [path.join(SHARED, "seb-session.js"), "seb-session.js"],
 ];
 const flatten = (s) => s
   .replace(/from\s*(["'])\.\.\/shared\/([A-Za-z0-9_-]+\.js)(\?[^"']*)?\1/g, 'from "./$2"')
@@ -87,8 +93,19 @@ console.log((UPLOAD ? "Uploading" : "PLAN (add --upload)") + " to " + CDN + "/" 
 for (const f of plan) console.log("  " + f.remote.padEnd(30) + String(f.buf.length).padStart(8) + "  " + f.sha1.slice(0, 12));
 if (!UPLOAD) process.exit(0);
 
+/* MODULES FIRST, then the lessons, then the hub - the rule and the reason are in
+ * ../lesson-app-tools/deploy.mjs: a live page importing a module not yet on
+ * storage fails its whole import graph for whoever opens it in that window, and
+ * seb-session.js was new beside these pages on 2026-09-11. */
+const putOrder = [
+  ...plan.filter((f) => f.remote.endsWith(".js")),
+  ...plan.filter((f) => !f.remote.endsWith(".js") && f.remote !== "index.html"),
+  ...plan.filter((f) => f.remote === "index.html"),
+];
+if (putOrder.length !== plan.length) { console.error("upload order lost a file"); process.exit(2); }
+
 console.log("\nPUT:");
-for (const f of plan) {
+for (const f of putOrder) {
   const r = await fetch(`${STORAGE}/${ZONE}/${enc(REMOTE)}/${enc(f.remote)}`, {
     method: "PUT",
     headers: { AccessKey: K, "Content-Type": "text/html; charset=utf-8" },

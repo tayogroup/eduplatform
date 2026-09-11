@@ -1,8 +1,11 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -18,7 +21,11 @@
   })();
 </script>
 <title>Sides and Corners</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #566669; --line: #D6E3DE; --cell: #E4EEE9;
@@ -355,6 +362,14 @@
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -431,10 +446,36 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -462,7 +503,8 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
+  <div class="deck" id="deck" role="main">
     <!-- 1 count sides and corners -->
     <section class="slide" data-say="Every flat shape has sides and corners. Tap each side to count them, then tap each corner.">
       <div class="slide-head"><span class="n">1</span><h2>Sides and corners</h2></div>
@@ -471,7 +513,7 @@
         <div class="bigbtns" id="pick1"></div>
         <svg class="shapebox" id="shape1" viewBox="0 0 240 240" role="img" aria-label="A shape to count"></svg>
         <div class="counters"><div class="counter sides"><div class="lab">sides tapped</div><div class="val" id="sc1">0</div></div><div class="counter corners"><div class="lab">corners tapped</div><div class="val" id="cc1">0</div></div></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="note1"></p>
       </div>
     </section>
@@ -483,7 +525,7 @@
       <div class="stage">
         <svg class="shapebox" id="shape2" viewBox="0 0 240 240" role="img" aria-label="A shape to name" style="max-width:230px"></svg>
         <div class="choices" id="ch2"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score2"></p>
       </div>
     </section>
@@ -495,7 +537,7 @@
       <div class="stage">
         <p class="fb" id="riddle3" style="font-size:24px"></p>
         <div class="choices" id="ch3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score3"></p>
       </div>
     </section>
@@ -507,7 +549,7 @@
       <div class="stage">
         <div class="symgrid" id="sym4"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="clear4">Start again</button><button type="button" class="big small teal" id="new4">A new picture</button></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score4"></p>
       </div>
     </section>
@@ -519,7 +561,7 @@
       <div class="stage">
         <svg class="shapebox" id="shape5" viewBox="0 0 240 240" role="img" aria-label="A shape with a fold line" style="max-width:250px"></svg>
         <div class="choices" id="ch5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score5"></p>
       </div>
     </section>
@@ -532,7 +574,7 @@
         <div class="bigbtns" id="pick6"></div>
         <svg class="solid" id="solid6" viewBox="0 0 220 200" role="img" aria-label="A solid shape"></svg>
         <div class="facts" id="facts6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <div class="choices" id="ch6"></div>
         <p class="fb small-fb" id="score6"></p>
       </div>
@@ -544,7 +586,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Tap the right square.</span></div>
       <div class="stage">
         <div class="posgrid" id="grid7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score7"></p>
       </div>
     </section>
@@ -558,7 +600,7 @@
         <div class="bigbtns"><button type="button" class="big teal small" id="acw8">↺ quarter turn left</button><button type="button" class="big small" id="cw8">quarter turn right ↻</button></div>
         <p class="fb" id="where8"></p>
         <div class="choices" id="ch8"></div>
-        <p class="fb" id="fb8"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score8"></p>
       </div>
     </section>
@@ -571,7 +613,7 @@
         <svg class="circsvg" id="circR" viewBox="0 0 260 260" role="img" aria-label="A circle with its centre marked"></svg>
         <p class="fb" id="qR" style="font-size:19px"></p>
         <div class="choices" id="chR"></div>
-        <p class="fb" id="fbR"></p>
+        <p class="fb" id="fbR" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreR"></p>
       </div>
     </section>
@@ -584,7 +626,7 @@
         <div class="thing" id="thingS"></div>
         <p class="fb" id="qS" style="font-size:19px"></p>
         <div class="choices" id="chS"></div>
-        <p class="fb" id="fbS"></p>
+        <p class="fb" id="fbS" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreS"></p>
       </div>
     </section>
@@ -598,7 +640,7 @@
         <div class="bigbtns"><button type="button" class="big small teal" id="turnT">Turn it a bit</button><button type="button" class="big small ghost" id="resetT">Back to the start</button></div>
         <p class="fb" id="qT" style="font-size:19px"></p>
         <div class="choices" id="chT"></div>
-        <p class="fb" id="fbT"></p>
+        <p class="fb" id="fbT" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreT"></p>
       </div>
     </section>
@@ -610,7 +652,7 @@
       <div class="stage">
         <p class="fb" id="q11" style="font-size:23px"></p>
         <div class="choices" id="ch11"></div>
-        <p class="fb" id="fb11"></p>
+        <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score11"></p>
       </div>
     </section>
@@ -621,7 +663,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb12"></p>
+        <p class="fb" id="fb12" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -716,6 +758,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1007,6 +1051,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1396,13 +1441,14 @@
       intro.parentNode.insertBefore(bar, intro.nextSibling);
     });
   })();
+  /* ehel-stage2-line: held to Stage 2 by hold-stage-2.py (2026-09-11) */
   const $ = (id) => document.getElementById(id);
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
 
   /* Three steps draw a row of choices and mark it. Both helpers used to be
-     declared inside the right-angles block, which is 3Gg.10 and was removed;
+     declared inside the right-angles block, which is Stage 3's Gg.10 and was removed;
      the steps that call them - name the shape, position words, and how many
      times a shape looks the same in a full turn - are all Stage 2 and stayed.
      A helper is not owned by the step it happens to sit next to. */
@@ -1486,7 +1532,7 @@
     return '<line x1="' + (cx - L * 0.75) + '" y1="' + (cy + L * 0.75) + '" x2="' + (cx + L * 0.75) + '" y2="' + (cy - L * 0.75) + '" stroke="var(--plum)" stroke-width="4" stroke-dasharray="8 6"></line>';
   }
 
-  /* ---- 1: count sides and corners ---- */
+  /* ---- 1: count sides and corners (0096 2Gg.01) ---- */
   const LIST1 = ["triangle", "square", "rectangle", "pentagon", "hexagon", "circle"];
   let key1 = "triangle", sides1 = [], corners1 = [], solved1 = new Set();
   function paint1() {
@@ -1507,7 +1553,7 @@
   });
   paint1();
 
-  /* ---- 2: name the shape ---- */
+  /* ---- 2: name the shape (0096 2Gg.01) ---- */
   const LIST2 = ["triangle", "square", "rectangle", "pentagon", "hexagon", "octagon", "circle"];
   let r2 = 0, right2 = 0, lock2 = false, key2 = null; const ROUNDS2 = 5;
   function round2() {
@@ -1530,7 +1576,7 @@
   });
   round2();
 
-  /* ---- 3: shape riddles ---- */
+  /* ---- 3: shape riddles (0096 2Gg.01) ---- */
   const RIDDLES = [
     { clues: "I have 3 sides and 3 corners.", a: "triangle" },
     { clues: "I have 4 sides, all the same length, and 4 square corners.", a: "square" },
@@ -1560,7 +1606,7 @@
   });
   round3();
 
-  /* ---- 4: make it match (symmetry) ---- */
+  /* ---- 4: make it match (symmetry) (0096 2Gg.09) ---- */
   const W4 = 8, H4 = 6; // 4 columns each side
   let left4 = [], mine4 = [], solved4 = 0;
   function newPic4() {
@@ -1588,7 +1634,7 @@
   $("new4").addEventListener("click", newPic4);
   newPic4();
 
-  /* ---- 5: does it fold in half? ---- */
+  /* ---- 5: does it fold in half? (0096 2Gg.09) ---- */
   const FOLDS = [
     { k: "square", fold: "v", yes: true, why: "A square folds in half down the middle: both halves match." },
     { k: "rectangle", fold: "h", yes: true, why: "A rectangle folds in half across the middle: both halves match." },
@@ -1616,7 +1662,7 @@
   });
   round5();
 
-  /* ---- 6: solid shapes ---- */
+  /* ---- 6: solid shapes (0096 2Gg.05) ---- */
   const SOLIDS = {
     cube: { name: "cube", faces: 6, edges: 12, corners: 8, facesAre: "6 squares", like: "a dice" },
     cuboid: { name: "cuboid", faces: 6, edges: 12, corners: 8, facesAre: "6 rectangles", like: "a cereal box" },
@@ -1662,7 +1708,7 @@
   });
   paint6(); ask6();
 
-  /* ---- 7: position words ---- */
+  /* ---- 7: position words (position words revisit Stage 1; describing MOVEMENT is Stage 2's work in Which Way From Here) ---- */
   const THINGS = ["🌟", "🍎", "🐟", "🌸", "🚗", "🦋", "🥕", "🐝", "⚽"];
   let grid7 = [], q7 = null, r7 = 0, right7 = 0, lock7 = false; const ROUNDS7 = 5;
   function round7() {
@@ -1691,7 +1737,7 @@
   });
   round7();
 
-  /* ---- 8: turns ---- */
+  /* ---- 8: turns (0096 2Gg.11) ---- */
   const DIRS = ["up", "right", "down", "left"];
   let dir8 = 0, quiz8 = null, right8 = 0;
   function drawTurner() {
@@ -1881,22 +1927,36 @@
   roundT();
 
   /* ---- 14: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11, the rule Grade 1 already keeps). Below it the child sees the score,
+     how many they need, and a button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "How many sides does a hexagon have?", opts: [6, 5, 8], a: 6 },
-    { q: "Which shape has no corners?", opts: ["circle", "triangle", "square"], a: "circle" },
-    { q: "A shape with 4 equal sides and 4 square corners is a…", opts: ["square", "rectangle", "pentagon"], a: "square" },
-    { q: "How many faces does a cube have?", opts: [6, 8, 12], a: 6 },
-    { q: "Which solid is like a ball?", opts: ["sphere", "cylinder", "cone"], a: "sphere" },
-    { q: "A line of symmetry means…", opts: ["both halves match", "the shape is big", "it has 4 sides"], a: "both halves match" },
-    { q: "Two quarter turns the same way make…", opts: ["a half turn", "a whole turn", "no turn"], a: "a half turn" },
-    { q: "Facing up, you make a half turn. Now you face…", opts: ["down", "left", "up"], a: "down" },
-    { q: "Turning <b>clockwise</b> means turning…", opts: ["the way a clock goes", "the way a clock does not go", "upside down"], a: "the way a clock goes" },
-    { q: "How many edges does a cube have?", opts: [12, 6, 8], a: 12 },
+    { q: "How many sides does a hexagon have?", opts: [6, 5, 8], a: 6, why: "A hexagon has 6 straight sides." },
+    { q: "Which shape has no corners?", opts: ["circle", "triangle", "square"], a: "circle", why: "A circle is one curved line with no corners." },
+    { q: "A shape with 4 equal sides and 4 square corners is a…", opts: ["square", "rectangle", "pentagon"], a: "square", why: "All four sides the same and square corners: a square." },
+    { q: "How many faces does a cube have?", opts: [6, 8, 12], a: 6, why: "A cube has 6 flat faces, like a dice." },
+    { q: "Which solid is like a ball?", opts: ["sphere", "cylinder", "cone"], a: "sphere", why: "A sphere is round all over, like a ball." },
+    { q: "A line of symmetry means…", opts: ["both halves match", "the shape is big", "it has 4 sides"], a: "both halves match", why: "Fold along it and the two halves fit exactly." },
+    { q: "Two quarter turns the same way make…", opts: ["a half turn", "a whole turn", "no turn"], a: "a half turn", why: "A quarter and another quarter make a half turn." },
+    { q: "Facing up, you make a half turn. Now you face…", opts: ["down", "left", "up"], a: "down", why: "A half turn faces the opposite way." },
+    { q: "Turning <b>clockwise</b> means turning…", opts: ["the way a clock goes", "the way a clock does not go", "upside down"], a: "the way a clock goes", why: "Clockwise is the way the hands of a clock move round." },
+    { q: "How many edges does a cube have?", opts: [12, 6, 8], a: 12, why: "4 edges round the top, 4 round the bottom and 4 up the sides: 12." }
   ];
   let c11 = 0, right11 = 0, lock11 = false;
   function round11() {
     lock11 = false; $("fb11").textContent = ""; $("fb11").className = "fb";
-    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(11, "You got " + right11 + " out of " + CHECK.length + "."); return; }
+    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right11 >= Math.ceil(CHECK.length * 0.75)) { finish(11, "You got " + right11 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb11"), $("ch11"), right11, CHECK.length, function () { c11 = 0; right11 = 0; round11(); }); return; }
     const q = CHECK[c11]; $("score11").textContent = "Question " + (c11 + 1) + " of " + CHECK.length; $("q11").textContent = q.q; $("say11").textContent = q.q;
     $("ch11").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
     say(q.q);
@@ -1905,8 +1965,8 @@
     const b = e.target.closest(".choice"); if (!b || lock11) return; lock11 = true; const q = CHECK[c11], ok = String(b.dataset.v) === String(q.a);
     $("ch11").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right11++;
-    $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
-    c11++; setTimeout(round11, 1300);
+    $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""); say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c11++; setTimeout(round11, 2800);
   });
   round11();
 
@@ -2032,6 +2092,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -2056,6 +2123,19 @@
       progressUnit: "l05",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -2213,4 +2293,48 @@
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+</script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
 </script>

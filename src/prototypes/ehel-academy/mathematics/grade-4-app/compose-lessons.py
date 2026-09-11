@@ -473,6 +473,11 @@ def compose(key, title, srckey, keep, keepq):
     scaled = int(int(mth.group(2)) * len(picked) / float(len(items)) + 0.5)
     scaled = max(2, min(len(picked), scaled))
     chk = chk[: mth.start(2)] + str(scaled) + chk[mth.end(2):]
+    # ...and the same number where Try again says how many are needed
+    # (fix-validation.py, 2026-09-11) - two copies of one mark must not disagree
+    chk, nr = re.subn(r"(retryCheck\([^;]*?\.length, )\d+(, function)",
+                      lambda r: r.group(1) + str(scaled) + r.group(2), chk)
+    assert nr == 1, "%s: expected one retryCheck in the check block, found %d" % (key, nr)
     chk = re.sub(r"\bfinish\(\s*%d\s*," % (checkno - 1), "finish(%d," % total, chk)
     parts.append(chk)
     # Stickers, one per finishable step, in sequence order so they stay parallel to
@@ -557,8 +562,8 @@ def main():
         for n in declared_names(js):
             (dup.append(n) if n in seen else seen.add(n))
         assert not dup, "%s: duplicate top-level declaration(s): %s" % (key, sorted(set(dup)))
-        io.open(os.path.join(HERE, "c-%s-body.html" % key), "w", encoding="utf-8").write(body)
-        io.open(os.path.join(HERE, "c-%s-slides.js" % key), "w", encoding="utf-8").write(js)
+        io.open(os.path.join(HERE, "c-%s-body.html" % key), "w", encoding="utf-8", newline="").write(body)
+        io.open(os.path.join(HERE, "c-%s-slides.js" % key), "w", encoding="utf-8", newline="").write(js)
         n = body.count('<section class="slide"')
         print("  %-9s %-30s %d slides (%d teaching) from %s"
               % (key, title, n, n - 2, srckey))

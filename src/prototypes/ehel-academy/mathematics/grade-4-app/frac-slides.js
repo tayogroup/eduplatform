@@ -152,7 +152,6 @@
     const g = gcd(n5, 100) || 1, sn = n5 / g, sd = 100 / g;
     $("reads5").innerHTML =
       '<div class="read3"><span class="r3lab">Fraction</span><b>' + frac(n5, 100) + "</b></div>" +
-      '<div class="read3"><span class="r3lab">Decimal</span><b>' + (n5 / 100).toFixed(2) + "</b></div>" +
       '<div class="read3 hero3"><span class="r3lab">Percentage</span><b>' + n5 + "%</b></div>";
     lines($("work5"), [
       { k: "Squares shaded", v: "<b>" + n5 + "</b> out of 100" },
@@ -290,6 +289,7 @@
       $("choices8").innerHTML = "";
       $("score8").textContent = right8 + " out of " + Q8.length + " right.";
       if (right8 >= 6) finish(7, "");
+      else retryCheck($("fb8"), $("choices8"), right8, Q8.length, 6, function () { c8 = 0; right8 = 0; round8(); });
       return;
     }
     $("stem8").textContent = Q8[c8].q;

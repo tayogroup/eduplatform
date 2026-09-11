@@ -1,8 +1,11 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -18,7 +21,11 @@
   })();
 </script>
 <title>Tens and Ones</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #566669; --line: #D6E3DE; --cell: #E4EEE9;
@@ -380,6 +387,14 @@
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -456,10 +471,36 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -487,7 +528,8 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
+  <div class="deck" id="deck" role="main">
     <!-- 1 hundred chart -->
     <section class="slide" data-say="Here are all the numbers to one hundred. Tap any number to see its tens and ones.">
       <div class="slide-head"><span class="n">1</span><h2>Numbers to 100</h2></div>
@@ -497,7 +539,7 @@
         <div class="bignum" id="num1"></div>
         <div class="pv"><div class="tens"><div class="lab">tens</div><div class="val" id="t1">4</div></div><div class="ones"><div class="lab">ones</div><div class="val" id="o1">7</div></div></div>
         <div class="blocks" id="blocks1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="find1"></p>
       </div>
     </section>
@@ -511,7 +553,7 @@
         <p class="fb" id="qA" style="font-size:19px"></p>
         <div class="choices" id="chA"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="peekA" hidden>Look again</button><button type="button" class="big small" id="countA" hidden>Count them</button></div>
-        <p class="fb" id="fbA"></p>
+        <p class="fb" id="fbA" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreA"></p>
       </div>
     </section>
@@ -523,7 +565,7 @@
       <div class="stage">
         <div class="g2num" id="showB"></div>
         <div class="choices" id="chB"></div>
-        <p class="fb" id="fbB"></p>
+        <p class="fb" id="fbB" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreB"></p>
       </div>
     </section>
@@ -538,7 +580,7 @@
         <div class="word" id="word2"></div>
         <p class="fb" id="exp2" style="color:var(--muted)"></p>
         <div class="bigbtns"><button type="button" class="big teal small" id="tenMinus">− ten</button><button type="button" class="big teal" id="tenPlus">+ ten</button><button type="button" class="big small" id="oneMinus">− one</button><button type="button" class="big" id="onePlus">+ one</button></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="find2"></p>
       </div>
     </section>
@@ -551,7 +593,7 @@
         <p class="fb" id="qC" style="font-size:19px"></p>
         <div class="choices" id="chC"></div>
         <div class="working" id="workC"></div>
-        <p class="fb" id="fbC"></p>
+        <p class="fb" id="fbC" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreC"></p>
       </div>
     </section>
@@ -564,7 +606,7 @@
         <div class="g2queue" id="queueD"></div>
         <p class="fb" id="qD" style="font-size:19px"></p>
         <div class="choices" id="chD"></div>
-        <p class="fb" id="fbD"></p>
+        <p class="fb" id="fbD" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreD"></p>
       </div>
     </section>
@@ -577,7 +619,7 @@
         <div class="bignum" id="num3"></div>
         <div class="nline" id="nl3"></div>
         <div class="choices" id="ch3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score3"></p>
       </div>
     </section>
@@ -590,7 +632,7 @@
         <div class="bignum" id="num9"></div>
         <div class="pairs" id="pairs9"></div>
         <div class="bigbtns"><button type="button" class="big ghost" id="minus9">−</button><button type="button" class="big" id="plus9">+</button></div>
-        <p class="fb" id="fb9"></p>
+        <p class="fb" id="fb9" role="status" aria-live="polite"></p>
         <div class="choices" id="ch9"></div>
         <p class="fb small-fb" id="score9"></p>
       </div>
@@ -604,7 +646,7 @@
         <div class="compbar" id="barE"></div>
         <p class="fb" id="qE" style="font-size:20px"></p>
         <div class="choices" id="chE"></div>
-        <p class="fb" id="fbE"></p>
+        <p class="fb" id="fbE" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreE"></p>
       </div>
     </section>
@@ -620,7 +662,7 @@
         <div class="bigbtns"><button type="button" class="big teal small" id="step4">Show the next step</button></div>
         <p class="fb" id="est4" style="font-size:18px;color:var(--muted)"></p>
         <div class="choices" id="ch4"></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score4"></p>
       </div>
     </section>
@@ -634,7 +676,7 @@
         <div class="nline" id="nl5"></div>
         <p class="fb" id="left5" style="color:var(--teal)"></p>
         <div class="bigbtns"><button type="button" class="big teal" id="back10">◀ back 10</button><button type="button" class="big" id="back5">◀ back 5</button><button type="button" class="big" id="back1">◀ back 1</button><button type="button" class="big ghost small" id="fwd1">forward 1 ▶</button></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="next5" hidden>Next one</button></div>
         <p class="fb small-fb" id="score5"></p>
       </div>
@@ -649,7 +691,7 @@
         <p class="fb" id="qF" style="font-size:19px"></p>
         <div class="choices" id="chF"></div>
         <div class="working" id="workF"></div>
-        <p class="fb" id="fbF"></p>
+        <p class="fb" id="fbF" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreF"></p>
       </div>
     </section>
@@ -663,7 +705,7 @@
         <div class="bigbtns"><button type="button" class="big ghost small" id="rowMinus">− row</button><button type="button" class="big teal small" id="rowPlus">+ row</button><button type="button" class="big small" id="colCycle">in each row: 5</button></div>
         <div class="working" id="work6"></div>
         <div class="choices" id="ch6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score6"></p>
       </div>
     </section>
@@ -677,7 +719,7 @@
         <div class="choices" id="chT"></div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="skipT">Count it up</button></div>
         <div class="working" id="workT"></div>
-        <p class="fb" id="fbT"></p>
+        <p class="fb" id="fbT" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreT"></p>
       </div>
     </section>
@@ -691,7 +733,7 @@
         <div class="pool" id="pool7"></div>
         <div class="plates" id="plates7"></div>
         <div class="bigbtns"><button type="button" class="big" id="go7">Share one each</button></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
       </div>
     </section>
 
@@ -702,7 +744,7 @@
       <div class="stage">
         <p class="fb" id="q11" style="font-size:26px"></p>
         <div class="choices" id="ch11"></div>
-        <p class="fb" id="fb11"></p>
+        <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score11"></p>
       </div>
     </section>
@@ -713,7 +755,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb12"></p>
+        <p class="fb" id="fb12" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -808,6 +850,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1099,6 +1143,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1488,6 +1533,7 @@
       intro.parentNode.insertBefore(bar, intro.nextSibling);
     });
   })();
+  /* ehel-stage2-line: held to Stage 2 by hold-stage-2.py (2026-09-11) */
   const $ = (id) => document.getElementById(id);
   const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
   const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
@@ -1570,7 +1616,7 @@
 
   function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
 
-  /* ---- 1: hundred chart ---- */
+  /* ---- 1: hundred chart (0096 2Np.01 - tap a number to see its tens and ones) ---- */
   let sel1 = 47, finds1 = shuffle([23, 68, 90, 15, 76]).slice(0, 3), found1 = 0;
   $("chart1").innerHTML = Array.from({ length: 100 }, (_, i) => '<button type="button" data-n="' + (i + 1) + '">' + (i + 1) + "</button>").join("");
   function paint1() {
@@ -1589,7 +1635,7 @@
   });
   paint1();
 
-  /* ---- 2: build with tens and ones ---- */
+  /* ---- 2: build with tens and ones (0096 2Np.01, 2Np.02) ---- */
   let t2 = 3, o2 = 4, finds2 = shuffle([56, 82, 19, 70, 43]).slice(0, 3), found2 = 0;
   function paint2() {
     const n = t2 * 10 + o2;
@@ -1607,7 +1653,7 @@
   $("oneMinus").addEventListener("click", () => { if (o2 > 0) { o2--; paint2(); say(words(t2 * 10 + o2)); } });
   paint2();
 
-  /* ---- 3: rounding ---- */
+  /* ---- 3: rounding (0096 2Np.05) ---- */
   let r3 = 0, right3 = 0, lock3 = false, n3 = 0; const ROUNDS3 = 5;
   function round3() {
     lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
@@ -1630,13 +1676,13 @@
   });
   round3();
 
-  /* ---- 4: two-digit addition ---- */
+  /* ---- 4: two-digit addition (0096 2Ni.04) ---- */
   let r4 = 0, right4 = 0, a4 = 0, b4 = 0, stage4 = 0; const ROUNDS4 = 4;
   function round4() {
     $("fb4").textContent = ""; $("fb4").className = "fb"; $("ch4").innerHTML = ""; stage4 = 0; $("step4").disabled = false;
     if (r4 >= ROUNDS4) { $("sum4").textContent = ""; $("est4").textContent = ""; $("blocks4").innerHTML = ""; $("work4").innerHTML = ""; $("step4").hidden = true; $("fb4").className = "fb good"; $("fb4").textContent = "You added " + right4 + " of " + ROUNDS4 + "!"; finish(9, "You can add two-digit numbers."); return; }
     // 2Ni.04 is two-digit addition WITH NO REGROUPING of ones or tens, and it
-    // says so in the objective itself - regrouping is 3Ni.04 and Cambridge
+    // says so in the objective itself - regrouping is Stage 3's Ni.04 and Cambridge
     // defers it on purpose. The line that stood here did the opposite: on every
     // odd round it pushed b4 up until the ones crossed ten, so half the sums a
     // Stage 2 child met were forced carries. Both columns are now built to stay
@@ -1682,7 +1728,7 @@
   });
   round4();
 
-  /* ---- 5: subtraction by jumping back ---- */
+  /* ---- 5: subtraction by jumping back (0096 2Ni.04) ---- */
   let r5 = 0, a5 = 0, k5 = 0, pos5 = 0, hops5 = []; const ROUNDS5 = 4;
   function round5() {
     $("fb5").textContent = ""; $("fb5").className = "fb"; $("next5").hidden = true; hops5 = [];
@@ -1707,7 +1753,7 @@
   $("next5").addEventListener("click", round5);
   round5();
 
-  /* ---- 6: arrays ---- */
+  /* ---- 6: arrays (0096 2Ni.05) ---- */
   let rows6 = 3, colI = 1, quiz6 = null, right6 = 0; const COLS = [1, 2, 5, 10];   // 1 as well: 0096 2Ni.07 names it
   function paint6() {
     const cols = COLS[colI], total = rows6 * cols;
@@ -1813,7 +1859,7 @@
   });
   roundT();
 
-  /* ---- 7: sharing and grouping ---- */
+  /* ---- 7: sharing and grouping (0096 2Ni.06) ---- */
   let mode7 = "share", pool7 = 12, plates7 = [];
   const FRIENDS = ["Amina", "Musa", "Hodan", "Kiki"];
   function reset7() {
@@ -1845,7 +1891,7 @@
   $("mode7group").addEventListener("click", () => { mode7 = "group"; reset7(); say("Group 12 into bags of 4."); });
   reset7();
 
-  /* ---- 9: odd and even ---- */
+  /* ---- 9: odd and even (0096 2Nc.05) ---- */
   let n9 = 7, quiz9 = null, right9 = 0;
   function paint9() {
     const pairs = Math.floor(n9 / 2), lonely = n9 % 2;
@@ -2139,20 +2185,34 @@
   roundF();
 
   /* ---- 17: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11, the rule Grade 1 already keeps). Below it the child sees the score,
+     how many they need, and a button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "How many tens in 47?", opts: [4, 7, 47], a: 4 },
-    { q: "Round 63 to the nearest 10.", opts: [60, 70, 65], a: 60 },
-    { q: "34 + 25 = ?", opts: [59, 49, 69], a: 59 },
-    { q: "56 − 20 = ?", opts: [36, 46, 54], a: 36 },
-    { q: "4 × 5 = ?", opts: [20, 25, 9], a: 20 },
-    { q: "12 shared between 3 is ? each", opts: [4, 3, 6], a: 4 },
-    { q: "Is 17 odd or even?", opts: ["odd", "even"], a: "odd" },
-    { q: "One more than 59 is ?", opts: [60, 58, 69], a: 60 }
+    { q: "How many tens in 47?", opts: [4, 7, 47], a: 4, why: "47 is 4 tens and 7 ones." },
+    { q: "Round 63 to the nearest 10.", opts: [60, 70, 65], a: 60, why: "63 is nearer to 60 than to 70." },
+    { q: "34 + 25 = ?", opts: [59, 49, 69], a: 59, why: "3 tens + 2 tens = 5 tens, and 4 + 5 = 9 ones: 59." },
+    { q: "56 − 20 = ?", opts: [36, 46, 54], a: 36, why: "Take away 2 tens: 5 tens becomes 3 tens, so 36." },
+    { q: "4 × 5 = ?", opts: [20, 25, 9], a: 20, why: "4 lots of 5: 5, 10, 15, 20." },
+    { q: "12 shared between 3 is ? each", opts: [4, 3, 6], a: 4, why: "Give them out one at a time and each gets 4." },
+    { q: "Is 17 odd or even?", opts: ["odd", "even"], a: "odd", why: "Pair them up and one is left over, so 17 is odd." },
+    { q: "One more than 59 is ?", opts: [60, 58, 69], a: 60, why: "59 and one more is 6 tens exactly: 60." }
   ];
   let c11 = 0, right11 = 0, lock11 = false;
   function round11() {
     lock11 = false; $("fb11").textContent = ""; $("fb11").className = "fb";
-    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(15, "You got " + right11 + " out of " + CHECK.length + "."); return; }
+    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right11 >= Math.ceil(CHECK.length * 0.75)) { finish(15, "You got " + right11 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb11"), $("ch11"), right11, CHECK.length, function () { c11 = 0; right11 = 0; round11(); }); return; }
     const q = CHECK[c11];
     $("score11").textContent = "Question " + (c11 + 1) + " of " + CHECK.length; $("q11").textContent = q.q; $("say11").textContent = q.q;
     $("ch11").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && !/\d/.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -2163,9 +2223,9 @@
     const q = CHECK[c11], ok = String(b.dataset.v) === String(q.a);
     $("ch11").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right11++;
-    $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = ok ? cheer() : "It is " + q.a + ".";
-    say(ok ? cheer() : "It is " + q.a);
-    c11++; setTimeout(round11, 1300);
+    $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || "");
+    say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c11++; setTimeout(round11, 2800);
   });
   round11();
 
@@ -2298,6 +2358,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -2322,6 +2389,19 @@
       progressUnit: "l01",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -2479,4 +2559,48 @@
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+</script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
 </script>

@@ -233,14 +233,14 @@
   paint5();
 
   /* ---- 6: the language of chance (4Sp.01) ---- */
-  const WORDS6 = ["impossible", "unlikely", "even chance", "likely", "certain"];
+  const WORDS6 = ["impossible", "unlikely", "maybe", "likely", "certain"];   /* "even chance" is Stage 5's Sp.01 */
   const EV6 = shuffle([
     { e: "Rolling a number less than 7 on an ordinary dice", a: 4, w: "Every face is 1 to 6, and all of them are less than 7. It must happen, so it is certain." },
     { e: "Rolling a 7 on an ordinary dice", a: 0, w: "There is no 7 on a dice, so it cannot happen at all. That is impossible." },
-    { e: "Rolling an even number on an ordinary dice", a: 2, w: "Three faces are even and three are odd, so it happens about half the time. An even chance." },
+    { e: "Rolling an even number on an ordinary dice", a: 2, w: "Three faces are even and three are odd, so it might happen and it might not. Maybe." },
     { e: "Taking a red counter from a bag of 9 red and 1 blue", a: 3, w: "Nine of the ten counters are red, so it will usually happen — likely, but not certain." },
     { e: "Taking a blue counter from a bag of 9 red and 1 blue", a: 1, w: "Only one counter in ten is blue, so it will not often happen. Unlikely, but not impossible." },
-    { e: "Tossing a coin and getting heads", a: 2, w: "A coin has two sides and both are as likely as each other. An even chance." },
+    { e: "Tossing a coin and getting heads", a: 2, w: "A coin has two sides, so heads might come up and it might not. Maybe." },
   ]);
   let e6 = 0, right6 = 0, lock6 = false;
   function paint6() {
@@ -332,6 +332,7 @@
       $("choices8").innerHTML = "";
       $("score8").textContent = right8 + " out of " + Q8.length + " right.";
       if (right8 >= 6) finish(7, "");
+      else retryCheck($("fb8"), $("choices8"), right8, Q8.length, 6, function () { c8 = 0; right8 = 0; round8(); });
       return;
     }
     $("stem8").textContent = Q8[c8].q;

@@ -147,7 +147,7 @@
   /* ---- 12: right angles ---- 3Gg.10 compare angles with a right angle */
   let got12 = 0, asked12 = 0;
   function round12() {
-    const kind = rnd(0, 2);   /* 0 acute, 1 right, 2 obtuse */
+    const kind = rnd(0, 2);   /* 0 smaller than, 1 the same as, 2 bigger than a right angle - 'acute' and 'obtuse' are Stage 4's Gg.08 */
     const deg = kind === 1 ? 90 : kind === 0 ? rnd(25, 75) : rnd(105, 165);
     const cx = 90, cy = 150, len = rnd(60, 120);
     const a = -deg * Math.PI / 180;
@@ -192,6 +192,7 @@
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
       if (got17 >= 4) finish(5, "You have finished the check.");
+      else retryCheck($("fb17"), $("ch17"), got17, order17.length, 4, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
     const item = nextQ(order17[qi]);

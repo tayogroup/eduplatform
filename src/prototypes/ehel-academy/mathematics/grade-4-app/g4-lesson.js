@@ -1036,7 +1036,7 @@
   });
   paint9(); ask9();
 
-  /* ---- 10: angles ---- */
+  /* ---- 10: angles (0096 4Gg.08) ---- */
   let deg10 = 45, quiz10 = null, right10 = 0;
   const angleName = (d) => d < 90 ? "acute" : d === 90 ? "right" : "obtuse";
   function drawAngle() {

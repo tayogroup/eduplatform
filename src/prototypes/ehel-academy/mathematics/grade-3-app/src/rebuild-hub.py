@@ -44,7 +44,7 @@ COVERS = {
     "shapes-and-symmetry": "Name flat shapes by their sides, tell regular from irregular, find lines of symmetry, mirror a shape, name solids, and work out perimeter and area.",
     "measure-it": "Choose between millimetres, centimetres, metres and kilometres, weigh in grams and kilograms, measure in millilitres and litres, read a scale, and compare angles with a right angle.",
     "time-and-direction": "Read a clock face and digital time, work out how long something took, follow a timetable, and describe direction with north, south, east and west.",
-    "ask-count-chart": "Ask a question data can answer, keep a tally, read pictograms and bar charts, sort with Venn and Carroll diagrams, and say how likely something is.",
+    "ask-count-chart": "Ask a question data can answer, keep a tally, read pictograms and bar charts, sort with Venn and Carroll diagrams, and say whether something will happen, might happen or will not.",
 }
 
 cfg = json.loads(io.open("app.config.json", encoding="utf-8").read())

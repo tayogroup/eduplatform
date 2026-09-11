@@ -218,6 +218,7 @@
       $("choices5").innerHTML = "";
       $("score5").textContent = right5 + " out of " + Q5.length + " right.";
       if (right5 >= 6) finish(4, "");
+      else retryCheck($("fb5"), $("choices5"), right5, Q5.length, 6, function () { c5 = 0; right5 = 0; round5(); });
       return;
     }
     const q = Q5[c5];

@@ -1,8 +1,11 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -18,7 +21,11 @@
   })();
 </script>
 <title>Fair Shares</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
@@ -342,6 +349,14 @@
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -418,10 +433,36 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -449,7 +490,8 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
+  <div class="deck" id="deck" role="main">
     <!-- 1 equal parts -->
     <section class="slide" data-say="A fraction only works when the parts are equal. Is this shape cut into equal parts?">
       <div class="slide-head"><span class="n">1</span><h2>Equal parts first</h2>
@@ -458,7 +500,7 @@
       <div class="stage">
         <svg class="cutbox flat" id="cut1" viewBox="0 0 240 200" role="img" aria-label="A shape cut into parts"></svg>
         <div class="choices" id="ch1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score1"></p>
       </div>
     </section>
@@ -470,7 +512,7 @@
       <div class="stage">
         <div class="fraclabels"><div><span class="frac big" id="target2"></span></div><div><div class="w">top: how many parts you take</div><div class="w" style="margin-top:6px">bottom: how many equal parts altogether</div></div></div>
         <div class="fbar" id="bar2"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small ghost" id="clear2">Start again</button></div>
         <p class="fb small-fb" id="score2"></p>
       </div>
@@ -484,7 +526,7 @@
       <div class="stage">
         <div class="counters" id="set3"></div>
         <div class="working" id="work3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small ghost" id="clear3">Start again</button></div>
         <p class="fb small-fb" id="score3"></p>
       </div>
@@ -498,7 +540,7 @@
         <div class="wall" id="wall4"></div>
         <p class="fb" id="eq4"></p>
         <div class="choices" id="ch4"></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score4"></p>
       </div>
     </section>
@@ -509,7 +551,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Tap the <b>bigger</b> fraction. A <b>bigger bottom number</b> means <b>smaller</b> pieces.</span></div>
       <div class="stage">
         <div class="compare" id="cmp5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score5"></p>
       </div>
     </section>
@@ -521,20 +563,20 @@
       <div class="stage">
         <p class="fb" id="ask6" style="font-size:26px"></p>
         <div class="nline" id="line6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score6"></p>
       </div>
     </section>
 
     <!-- 7 add and take away -->
     <section class="slide" data-say="Adding fractions with the same bottom number. Just count the parts.">
-      <div class="slide-head"><span class="n">7</span><h2>Adding and taking away</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Putting parts together</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Same bottom number, so just <b>count the parts</b>. The bottom number does not change.</span></div>
       <div class="stage">
         <p class="fb" id="sum7" style="font-size:30px"></p>
         <div class="fbar" id="bar7"></div>
         <div class="choices" id="ch7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score7"></p>
       </div>
     </section>
@@ -548,7 +590,7 @@
         <p class="fb" id="read8" style="font-size:26px"></p>
         <div class="bigbtns"><button type="button" class="big teal" id="add8">Add a slice</button><button type="button" class="big small ghost" id="take8">Take one away</button><button type="button" class="big small ghost" id="cut8">Change the slice size</button></div>
         <div class="choices" id="ch8"></div>
-        <p class="fb" id="fb8"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score8"></p>
       </div>
     </section>
@@ -562,7 +604,7 @@
         <p class="fb" id="q9" style="font-size:22px"></p>
         <div class="choices" id="ch9"></div>
         <div class="working" id="work9"></div>
-        <p class="fb" id="fb9"></p>
+        <p class="fb" id="fb9" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score9"></p>
       </div>
     </section>
@@ -574,7 +616,7 @@
       <div class="stage">
         <p class="fb" id="q10" style="font-size:23px"></p>
         <div class="choices" id="ch10"></div>
-        <p class="fb" id="fb10"></p>
+        <p class="fb" id="fb10" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score10"></p>
       </div>
     </section>
@@ -585,7 +627,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb11"></p>
+        <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -680,6 +722,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -971,6 +1015,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1360,13 +1405,14 @@
       intro.parentNode.insertBefore(bar, intro.nextSibling);
     });
   })();
+  /* ehel-stage2-line: held to Stage 2 by hold-stage-2.py (2026-09-11) */
   const $ = (id) => document.getElementById(id);
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
   const gcd = (a, b) => (b ? gcd(b, a % b) : a);
-  /* 2Nf is halves, quarters and three-quarters. Thirds are 3Nf.05; fifths
-     and tenths 3Nf.06; eighths and twelfths Stage 5. All of them were here. */
+  /* 2Nf is halves, quarters and three-quarters. Thirds are Stage 3's Nf.05; fifths
+     and tenths Stage 3's Nf.06; eighths and twelfths Stage 5. All of them were here. */
   const NAMES = { 2: ["half", "halves"], 4: ["quarter", "quarters"] };
   const fname = (n, d) => n + " " + (n === 1 ? NAMES[d][0] : NAMES[d][1]);
   const parts = (n) => n + (n === 1 ? " part" : " parts");
@@ -1414,7 +1460,7 @@
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
 
-  /* ---- 1: equal parts ---- */
+  /* ---- 1: equal parts (0096 2Nf.01) ---- */
   const CUTS = [
     { d: 4, equal: true, kind: "cols", why: "Four columns the same width: these ARE equal parts, so each one is a quarter." },
     { d: 4, equal: false, kind: "cols", why: "The parts are different widths, so they are NOT equal. You cannot call the shaded one a quarter." },
@@ -1467,7 +1513,7 @@
   });
   round1();
 
-  /* ---- 2: shade the fraction ---- */
+  /* ---- 2: shade the fraction (0096 2Nf.02) ---- */
   let d2 = 4, n2 = 3, on2 = [], right2 = 0, asked2 = 0;
   function paint2() {
     $("bar2").innerHTML = Array.from({ length: d2 }, (_, i) => '<button type="button" class="' + (on2.includes(i) ? "on" : "") + '" data-i="' + i + '">1/' + d2 + "</button>").join("");
@@ -1490,7 +1536,7 @@
   $("clear2").addEventListener("click", () => { on2 = []; paint2(); });
   newShade();
 
-  /* ---- 3: fraction of a group ---- */
+  /* ---- 3: fraction of a group (0096 2Nf.03, 2Nf.04 - share into equal groups, then take the parts) ---- */
   let total3 = 12, d3 = 3, n3 = 1, picked3 = [], right3 = 0;
   function paint3() {
     $("set3").innerHTML = Array.from({ length: total3 }, (_, i) => '<button type="button" class="' + (picked3.includes(i) ? "on" : "") + '" data-i="' + i + '" aria-label="counter ' + (i + 1) + '">🍎</button>').join("");
@@ -1518,7 +1564,7 @@
   $("clear3").addEventListener("click", () => { picked3 = []; paint3(); });
   newSet3();
 
-  /* ---- 4: equivalent fractions ---- */
+  /* ---- 4: equivalent fractions (0096 2Nf.05) ---- */
   const ROWS4 = [1, 2, 4];
   let sel4 = { d: 2, n: 1 }, quiz4 = null, right4 = 0;
   function paint4() {
@@ -1556,7 +1602,7 @@
   });
   paint4(); ask4();
 
-  /* ---- 5: comparing ---- */
+  /* ---- 5: comparing (0096 2Nf.05) ---- */
   let r5 = 0, right5 = 0, lock5 = false, q5 = null; const ROUNDS5 = 6;
   function round5() {
     lock5 = false; $("fb5").textContent = ""; $("fb5").className = "fb";
@@ -1569,7 +1615,7 @@
     q5 = { a, b, kind };
     $("score5").textContent = "Pair " + (r5 + 1) + " of " + ROUNDS5;
     $("say5").innerHTML = kind === "sameTop" ? "Both have <b>1</b> on top. Tap the <b>bigger</b> one. A bigger bottom number means <b>smaller</b> pieces." : "Tap the <b>bigger</b> fraction.";
-    $("cmp5").innerHTML = [a, b].map((f, i) => '<div class="cmprow"><span class="lab">' + frac(f[0], f[1], "mid") + '</span><div class="cmpbar' + (i ? " b" : "") + '" role="button" tabindex="0" data-i="' + i + '">' + Array.from({ length: f[1] }, (_, k) => '<i class="' + (k < f[0] ? "on" : "") + '"></i>').join("") + "</div></div>").join("");
+    $("cmp5").innerHTML = [a, b].map((f, i) => '<div class="cmprow"><span class="lab">' + frac(f[0], f[1], "mid") + '</span><div class="cmpbar' + (i ? " b" : "") + '" role="button" tabindex="0" data-i="' + i + '" aria-label="' + f[0] + ' of ' + f[1] + ' equal parts shaded">' + Array.from({ length: f[1] }, (_, k) => '<i class="' + (k < f[0] ? "on" : "") + '"></i>').join("") + "</div></div>").join("");
     say("Which is bigger?");
   }
   function pick5(el) {
@@ -1588,7 +1634,7 @@
   $("cmp5").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick5(e.target.closest(".cmpbar")); } });
   round5();
 
-  /* ---- 6: number line ---- */
+  /* ---- 6: number line (0096 2Nf.05) ---- */
   let r6 = 0, right6 = 0, lock6 = false, q6 = null; const ROUNDS6 = 5;
   function round6() {
     lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
@@ -1613,15 +1659,15 @@
   });
   round6();
 
-  /* ---- 7: adding and taking away ---- */
+  /* ---- 7: putting parts together (0096 2Nf.06) - adding only; taking fractions away is Stage 3's Nf.07 ---- */
   let r7 = 0, right7 = 0, lock7 = false, q7 = null; const ROUNDS7 = 6;
   function round7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb";
-    if (r7 >= ROUNDS7) { $("bar7").innerHTML = ""; $("ch7").innerHTML = ""; $("sum7").textContent = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You worked out " + right7 + " of " + ROUNDS7 + "!"; finish(6, "You can add and take away fractions."); return; }
+    if (r7 >= ROUNDS7) { $("bar7").innerHTML = ""; $("ch7").innerHTML = ""; $("sum7").textContent = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You worked out " + right7 + " of " + ROUNDS7 + "!"; finish(6, "You can put quarters and halves together."); return; }
     /* quarters only: halves leave no room for a + b inside one whole */
-    const add = r7 % 2 === 0, d = 4;
+    const add = true, d = 4;
     let a, b;
-    if (add) { a = rnd(1, d - 2); b = rnd(1, d - a - 1) || 1; } else { a = rnd(2, d); b = rnd(1, a - 1); }
+    a = rnd(1, d - 1); b = rnd(1, d - a);
     const res = add ? a + b : a - b;
     q7 = { a, b, d, add, res };
     $("score7").textContent = "Question " + (r7 + 1) + " of " + ROUNDS7;
@@ -1646,7 +1692,7 @@
   });
   round7();
 
-  /* ---- 8: more than one whole ---- */
+  /* ---- 8: more than one whole (0096 2Nf.06) ---- */
   let d8 = 4, slices8 = 0, quiz8 = null, right8 = 0;
   function pieSvg(filled, d) {
     const cx = 48, cy = 48, R = 42; let svg = "";
@@ -1667,7 +1713,7 @@
     $("cut8").textContent = "Slice size: " + NAMES[d8][1];
   }
   function ask8() {
-    const d = [2, 3, 4, 6][rnd(0, 3)], w = rnd(1, 2), rest = rnd(1, d - 1);
+    const d = [2, 4][rnd(0, 1)], w = rnd(1, 2), rest = rnd(1, d - 1); /* halves and quarters only: NAMES has no thirds or sixths, and those are 3Nf - drawing them crashed the page */
     quiz8 = { d, w, rest, total: w * d + rest };
     $("say8").innerHTML = "How many " + NAMES[d][1] + " are in <b>" + w + " whole and " + frac(rest, d, "sm") + "</b>?";
     const wrongs = [quiz8.total + 1, w + rest];
@@ -1690,15 +1736,15 @@
   });
   paint8(); ask8();
 
-  /* ---- 9: real life ---- */
+  /* ---- 9: real life (0096 2Nf.04) ---- */
   const WORDS9 = [
-    { q: "A pizza is cut into 4 equal slices. Musa eats 3. What fraction has he eaten?", a: "3/4", opts: ["3/4", "4/3", "3/1"], w: ["3 slices out of 4 equal slices is 3/4.", "The bottom number is how many slices the whole was cut into: 4."] },
+    { q: "A pizza is cut into 4 equal slices. Musa eats 3. What fraction has he eaten?", a: "3/4", opts: ["3/4", "1/4", "1/2"], w: ["3 slices out of 4 equal slices is 3/4.", "The bottom number is how many slices the whole was cut into: 4."] },
     { q: "Amina has 20 shillings and spends a quarter. How much does she spend?", a: "5 sh", opts: ["5 sh", "4 sh", "15 sh"], w: ["A quarter means 20 ÷ 4 = 5 sh.", "15 sh is what is left, not what she spent."] },
-    { q: "A class has 24 learners. Three quarters walk to school. How many walk?", a: "18", opts: ["18", "6", "12"], w: ["24 ÷ 4 = 6 in one quarter, and 3 × 6 = 18.", "6 is only one quarter."] },
-    { q: "A bottle holds 1 litre. Hodan drinks half. How many millilitres are left?", a: "500 ml", opts: ["500 ml", "100 ml", "250 ml"], w: ["Half of 1000 ml is 500 ml.", "Half the bottle is left."] },
+    { q: "A class has 20 learners. Half of them walk to school. How many walk?", a: "10", opts: ["10", "20", "5"], w: ["Half of 20 is 10.", "20 is the whole class, not half of it."] },
+    { q: "A jug holds 8 cups of juice. Hodan drinks a quarter of it. How many cups is that?", a: "2", opts: ["2", "4", "6"], w: ["A quarter of 8 is 8 shared into 4 equal parts: 2.", "4 would be half."] },
     { q: "Kiki reads 1/4 of a 20 page book. How many pages?", a: "5", opts: ["5", "4", "10"], w: ["20 ÷ 4 = 5 pages.", "The 4 is how many equal parts, not the answer."] },
-    { q: "Three quarters of an hour is how many minutes?", a: "45 min", opts: ["45 min", "30 min", "75 min"], w: ["An hour is 60 minutes. 60 ÷ 4 = 15, and 3 × 15 = 45.", ""] },
-    { q: "A cake is cut into 4 equal pieces. One is eaten. What fraction is left?", a: "3/4", opts: ["3/4", "1/4", "4/3"], w: ["4 − 1 = 3 pieces left, out of 4, so 3/4.", ""] },
+    { q: "There are 12 eggs. Three quarters of them are brown. How many brown eggs?", a: "9", opts: ["9", "3", "6"], w: ["A quarter of 12 is 3, so three quarters is 3 + 3 + 3 = 9.", "3 is only one quarter."] },
+    { q: "A cake is cut into 4 equal pieces. One is eaten. What fraction is left?", a: "3/4", opts: ["3/4", "1/4", "1/2"], w: ["4 − 1 = 3 pieces left, out of 4, so 3/4.", ""] },
   ];
   let words9 = shuffle(WORDS9).slice(0, 5), r9 = 0, right9 = 0, lock9 = false; const ROUNDS9 = 5;
   function round9() {
@@ -1721,22 +1767,36 @@
   round9();
 
   /* ---- 10: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11, the rule Grade 1 already keeps). Below it the child sees the score,
+     how many they need, and a button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "A shape is cut into 4 pieces of different sizes. Is one piece a quarter?", opts: ["no", "yes"], a: "no" },
-    { q: "In 3/4, what does the 4 tell you?", opts: ["how many equal parts", "how many you take", "the answer"], a: "how many equal parts" },
-    { q: "What is 1/4 of 12?", opts: [3, 4, 6], a: 3 },
-    { q: "Which is the same as 1/2?", opts: ["2/4", "1/4", "4/4"], a: "2/4" },
-    { q: "Which is bigger: 1/2 or 1/4?", opts: ["1/2", "1/4"], a: "1/2" },
-    { q: "Which is bigger: 3/4 or 2/4?", opts: ["3/4", "2/4"], a: "3/4" },
-    { q: "1/4 + 2/4 = ?", opts: ["3/4", "2/4", "4/4"], a: "3/4" },
-    { q: "3/4 − 1/4 = ?", opts: ["2/4", "4/4", "1/4"], a: "2/4" },
-    { q: "How many quarters make one whole?", opts: [4, 2, 8], a: 4 },
-    { q: "5 quarters is the same as…", opts: ["1 whole and 1/4", "5 wholes", "1 whole and 1/2"], a: "1 whole and 1/4" },
+    { q: "A shape is cut into 4 pieces of different sizes. Is one piece a quarter?", opts: ["no", "yes"], a: "no", why: "Quarters must be 4 EQUAL parts." },
+    { q: "In 3/4, what does the 4 tell you?", opts: ["how many equal parts", "how many you take", "the answer"], a: "how many equal parts", why: "The bottom number says how many equal parts the whole is cut into." },
+    { q: "What is 1/4 of 12?", opts: [3, 4, 6], a: 3, why: "Share 12 into 4 equal groups: 3 in each." },
+    { q: "Which is the same as 1/2?", opts: ["2/4", "1/4", "4/4"], a: "2/4", why: "Two quarters cover the same as one half." },
+    { q: "Which is bigger: 1/2 or 1/4?", opts: ["1/2", "1/4"], a: "1/2", why: "Halves are bigger pieces than quarters." },
+    { q: "Which is bigger: 3/4 or 2/4?", opts: ["3/4", "2/4"], a: "3/4", why: "Same size pieces, and 3 of them is more than 2." },
+    { q: "1/4 + 2/4 = ?", opts: ["3/4", "2/4", "4/4"], a: "3/4", why: "1 quarter and 2 quarters make 3 quarters." },
+    { q: "1/2 + 1/4 = ?", opts: ["3/4", "2/6", "1/4"], a: "3/4", why: "A half is 2 quarters, and 2 quarters and 1 quarter make 3 quarters." },
+    { q: "How many quarters make one whole?", opts: [4, 2, 8], a: 4, why: "A whole cut into 4 equal parts has 4 quarters." },
+    { q: "5 quarters is the same as…", opts: ["1 whole and 1/4", "5 wholes", "1 whole and 1/2"], a: "1 whole and 1/4", why: "4 quarters make 1 whole, and 1 quarter is left over." }
   ];
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && /[a-z]/.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
     say(q.q);
@@ -1745,14 +1805,14 @@
     const b = e.target.closest(".choice"); if (!b || lock10) return; lock10 = true; const q = CHECK[c10], ok = String(b.dataset.v) === String(q.a);
     $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right10++;
-    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + ".";
-    say(ok ? cheer() : "It is " + q.a);
-    c10++; setTimeout(round10, 1300);
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || "");
+    say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c10++; setTimeout(round10, 2800);
   });
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["✂️", "Equal parts"], ["🔢", "Top and bottom"], ["🍎", "Fraction of a group"], ["🧱", "Same size, new name"], ["⚖️", "Comparing"], ["📏", "On the number line"], ["➕", "Adding and taking away"], ["🍕", "Past one whole"], ["🌍", "Real life"], ["✅", "Show what I know"]];
+  const STICKERS = [["✂️", "Equal parts"], ["🔢", "Top and bottom"], ["🍎", "Fraction of a group"], ["🧱", "Same size, new name"], ["⚖️", "Comparing"], ["📏", "On the number line"], ["➕", "Putting parts together"], ["🍕", "Past one whole"], ["🌍", "Real life"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -1873,6 +1933,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -1897,6 +1964,19 @@
       progressUnit: "l03",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -2054,4 +2134,48 @@
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+</script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
 </script>

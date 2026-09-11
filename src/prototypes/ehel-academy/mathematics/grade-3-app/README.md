@@ -5,7 +5,7 @@ each carries its own CSS, its own activity JS and its own copy of the voice
 engine, and none of it goes through `shell/course-app.js`.
 
 Unlike Grade 1 and Grade 2, these are **built from fragments** rather than
-hand-edited. `src/` is the source; the five `.html` files beside this README are
+hand-edited. `src/` is the source; the eight lesson `.html` files beside this README are
 generated from it and are also committed, because they are what deploys and a
 deploy must not depend on a shell that can run bash.
 
@@ -17,7 +17,7 @@ node checks/check-l1.mjs                      # ... l2 l3 l4 l8, per-step maths
 node checks/check-hub.mjs
 node checks/check-a11y.mjs                    # all nine pages, both themes
 node convince/check-convince.mjs              # the "How do you know?" step
-node checks/check-audit.mjs                   # needs fw.txt — see below
+node checks/check-audit.mjs                   # codes from src/curriculum — see below
 ```
 
 `check-runtime.mjs` needs the tree served over HTTP and the platform modules
@@ -29,7 +29,7 @@ node checks/stage-local-modules.mjs           # gitignored copies, for testing o
 # then serve src/ (tools/serve-src-preview.js, port 4287)
 ```
 
-`src/build-all.sh` reproduces all five committed lessons **byte-identically**,
+`src/build-all.sh` reproduces all eight committed lessons and the hub **byte-identically**,
 which is the only thing that makes `src/` genuine source rather than a copy that
 has drifted. Re-check that after any change to a fragment.
 
@@ -38,11 +38,43 @@ tool in `../lesson-app-tools` patches a BUILT lesson in place, and these lessons
 are generated — so wiring applied by hand after a build is silently discarded by
 the next one. That is the trap CLAUDE.md records for Mathematics, where ~20
 repair tools edit built units in place and a rebuild overwrote 125 of them. So
-`build-all.sh` runs the four wiring tools itself: a rebuild re-applies the
+`build-all.sh` runs the wiring tools itself: a rebuild re-applies the
 wiring instead of losing it, the tools stay the one shared definition of what
-wiring is (the same four that wire Grade 2), and build+wire is still byte-for-byte
-reproducible. All four are idempotent — verified, a second run of the set changes
+wiring is (the same five that wire Grade 2, then the page tools and the hub's
+grown-up section since 2026-09-11), and build+wire is still byte-for-byte
+reproducible. All of them are idempotent — verified, a second run of the set changes
 no byte.
+
+## 2026-09-11: the validation, and what changed because of it
+
+In the fragments under `src/` (`src/fix-validation.py`) and the build chain, so
+`src/build-all.sh` carries all of it:
+
+- **A failed check has somewhere to go.** Below its pass mark (4 of 6, 5 of 7,
+  7 of 10 - unchanged) a check used to say "Finished! 3 out of 7." and stop. It
+  now says how many are needed and offers **Try again**, which restarts it with
+  fresh questions. One `retryCheck` in `src/_shell.js`, beside `say()` - not a
+  copy per lesson, because `check-judging.py` reads a window around each step
+  and a copy beside the step before the check made "Try it and see" look as if
+  it marked answers.
+- **Two Stage 4 wordings are gone.** Measure It named angles *acute* and
+  *obtuse* (4Gg.08); 3Gg.10 is comparing with a right angle, so it says smaller,
+  the same or bigger. Ask, Count and Chart said *unlikely*, *impossible*, *most
+  likely* and "How likely is ...?" (4Sp.01) beside Stage 3's will, might and will
+  not (3Sp.01); it says it in those words, and so does its hub card.
+- **The page tools run in the chain**: doctype and `lang`, feedback announced,
+  skip link and main landmark, 24 px dot cells on a phone, fonts from our CDN,
+  the "Can't hear it?" notice - and focus mode, which the rebuild picked up.
+- **"For teachers and parents" on the hub** — objectives, steps, the check and
+  its pass mark (its questions are generated, so there is no fixed key to print,
+  and the page says so), one thing to try at home; minutes on every card.
+- The hub note said "these five lessons"; it says eight and all 53 objectives.
+- `checks/check-hub.mjs` expected 5 cards and `checks/_platform-modules.mjs`
+  knew four platform modules - both stale since the split and focus mode. Fixed,
+  and every checker here passes.
+
+The report's claim that this build "drills the 7 times table" was wrong: TABLES
+is 1-6, 8, 9 and 10, exactly as 3Ni.07 lists them.
 
 ## Eight lessons, not five (2026-09-07)
 
@@ -90,7 +122,7 @@ place, and none was. 17 were newly authored to bring every bank back to six.
 lesson 1 had no check question on column addition or column subtraction, its two
 hardest steps.
 
-## Status: built, wired, gated, NOT deployed, NOT routed
+## Status: built, wired, gated, ON THE CDN, NOT routed
 
 | | grade-1-v2 | grade-2-app | here |
 | --- | --- | --- | --- |
@@ -103,10 +135,10 @@ hardest steps.
 | Wehel | ✓ | ✓ | ✓ |
 | progress reported to the group board | ✓ | ✓ | ✓ |
 | `check-lessons.py` (the shared gate) | ✓ | ✓ | ✓ |
-| the two header bars | ✓ | hero | hero |
+| the two header bars | ✓ | ✓ | ✓ |
 | deploy path | own `deploy.mjs` | shared | shared |
-| **on the CDN** | staged | no | **no** |
-| **a learner can reach it** | — | no | **no** |
+| **on the CDN** | ✓ | ✓ | ✓ `grade-3-lessons`, since 2026-09-09 |
+| **a learner can reach it** | ✓ routed | ✓ routed | **no** — Grade 3 is routed to the shell course |
 
 The header is the one deliberate difference, and it is the wiring tool's own
 decision rather than a gap: Grade 1 has a two-bar header from its own build,
@@ -114,10 +146,17 @@ this build and Grade 2 have a hero, and `wire-platform-controls.py` says porting
 that header "would be a design change nobody asked for — a container is all the
 contract requires". The controls sit in a `.hero-right` wrapper the tool adds.
 
-Verified against storage on 2026-09-07: `app/mathematics/` holds
-`grade-1-preview`, `grade-1-v2`, `grade-2-lessons` and the eight shell grade
-directories. There is **no** `grade-3-*` standalone path. Nothing here has ever
-been uploaded, and no learner can reach any of it.
+**This section said "NOT deployed" until 2026-09-11, and it had been wrong for two
+days.** It was measured on 2026-09-07 — storage then held no `grade-3-*` path —
+and the build was uploaded to `Ehel Primary/app/mathematics/grade-3-lessons` on
+2026-09-09 without the sentence moving. The 2026-09-11 validation found it there.
+What IS still true is the part that matters to a child: the Moodle override map,
+read on the server on 2026-09-11, has no `ehel-math-g03` entry, so Grade 3
+learners are sent to the shell course and **no learner reaches this build**. A
+deploy here is a deploy to a path nobody opens until that setting changes. (The
+table above said Grade 2 was not on the CDN and not routed; it has been both
+since 2026-09-09. And the header row said "hero": `build-all.sh` has run
+`add-header-bars.py` since the day it was found missing.)
 
 Routing, when it happens, is one Moodle setting —
 `local_prequran/ehel_app_url_overrides`, read by `pqpg_ehel_app_base()`, host-locked
@@ -134,18 +173,15 @@ by the five lessons; 8 were gaps filled by this work — 3Nc.06, 3Ni.09, 3Nf.08,
 the write-up, published as an artifact for review.
 
 **`checks/check-audit.mjs` reads the objective codes out of the framework rather
-than from anything retyped, so a code the audit invents cannot pass.** It needs
-`fw.txt` beside it:
-
-```bash
-pdftotext -layout <the 0096 framework PDF> checks/fw.txt
-```
-
-That file is deliberately **not committed**. It is a full-text extraction of
-Cambridge's published PDF, and this repo holds structured extractions under
-`src/curriculum/` but never a reproduction of a source document — the PDFs are
-not in the repo either. Without it the checker exits **2** and says so: that is
-"could not run", which is neither a pass nor a finding.
+than from anything retyped, so a code the audit invents cannot pass.** Since
+2026-09-11 it reads them from the committed extraction,
+`src/curriculum/cambridge-mathematics-0096.json` — the file every other
+Mathematics gate reads — so it runs on a fresh clone. It used to need `fw.txt`,
+a `pdftotext -layout` dump of Cambridge's PDF that is deliberately **not
+committed** (this repo holds structured extractions, never a reproduction of a
+source document), and so it exited **2** — "could not run" — everywhere but one
+machine; the validation found it that way. If `checks/fw.txt` is present it is
+still read, and the two must agree or the checker exits 2.
 
 ## Thinking and Working Mathematically
 

@@ -1,8 +1,11 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -18,7 +21,11 @@
   })();
 </script>
 <title>How Much, How Long</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #566669; --line: #D6E3DE; --cell: #E4EEE9;
@@ -373,6 +380,14 @@
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -449,10 +464,39 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+  /* ehel-stage2-line: How Much, How Long - the ribbon to estimate */
+  .rib9 { width: 100%; max-width: 440px; display: block; margin: 6px auto; }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -480,14 +524,15 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
+  <div class="deck" id="deck" role="main">
     <!-- 1 compare lengths -->
     <section class="slide" data-say="Which one is longer? Look at where each one ends. They all start in the same place.">
       <div class="slide-head"><span class="n">1</span><h2>Longer and shorter</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">They all start in the <b>same place</b>, so look at where each one <b>ends</b>.</span></div>
       <div class="stage">
         <div class="things" id="things1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score1"></p>
       </div>
     </section>
@@ -499,7 +544,7 @@
       <div class="stage">
         <div class="cubebar" id="bar2"></div>
         <div class="bigbtns"><button type="button" class="big teal" id="add2">Add a cube</button><button type="button" class="big small ghost" id="take2">Take one off</button><button type="button" class="big small ghost" id="odd2">Try odd-sized cubes</button></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <div class="choices" id="ch2"></div>
         <p class="fb small-fb" id="score2"></p>
       </div>
@@ -512,20 +557,20 @@
       <div class="stage">
         <svg class="ruler" id="ruler3" viewBox="0 0 620 150" role="img" aria-label="A ruler with an object on it"></svg>
         <div class="choices" id="ch3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score3"></p>
       </div>
     </section>
 
     <!-- 4 which unit -->
-    <section class="slide" data-say="Which unit would you use? Centimetres for small things, metres for rooms, kilometres for journeys.">
+    <section class="slide" data-say="Which unit would you use? Centimetres for small things, metres for big things like a room.">
       <div class="slide-head"><span class="n">4</span><h2>Which unit?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Pick the unit that makes sense.</span></div>
       <div class="stage">
         <p class="fb" id="q4" style="font-size:44px"></p>
         <p class="fb" id="qtext4" style="font-size:24px"></p>
         <div class="choices" id="ch4"></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score4"></p>
       </div>
     </section>
@@ -538,27 +583,27 @@
         <svg class="balance" id="bal5" viewBox="0 0 320 200" role="img" aria-label="A balance scale"></svg>
         <div class="bigbtns" id="weights5"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="clear5">Take them all off</button><button type="button" class="big small teal" id="next5" hidden>Next thing</button></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score5"></p>
       </div>
     </section>
 
     <!-- 6 kitchen scale -->
-    <section class="slide" data-say="Read the kitchen scale. Each small mark is one hundred grams. One thousand grams make one kilogram.">
-      <div class="slide-head"><span class="n">6</span><h2>Grams and kilograms</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Each small mark is <b>100 g</b>. <b>1000 g</b> make <b>1 kg</b>. What does the needle say?</span></div>
+    <section class="slide" data-say="Read the kitchen scale. Each mark is one hundred grams. Read the number the needle points to.">
+      <div class="slide-head"><span class="n">6</span><h2>Reading a kitchen scale</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Each mark is <b>100 g</b>. What does the needle say?</span></div>
       <div class="stage">
         <svg class="dial" id="dial6" viewBox="0 0 220 220" role="img" aria-label="A kitchen scale"></svg>
         <div class="choices" id="ch6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score6"></p>
       </div>
     </section>
 
     <!-- 7 jug -->
     <section class="slide" data-say="A measuring jug shows how much liquid. Each mark is one hundred millilitres.">
-      <div class="slide-head"><span class="n">7</span><h2>Millilitres and litres</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Each mark is <b>100 ml</b>. <b>1000 ml</b> make <b>1 litre</b>. Pour, then read the level.</span></div>
+      <div class="slide-head"><span class="n">7</span><h2>Reading a jug</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Each mark is <b>100 ml</b>. Pour, then read the level.</span></div>
       <div class="stage">
         <div class="bigbtns" style="align-items:center">
           <svg class="jug" id="jug7" viewBox="0 0 190 250" role="img" aria-label="A measuring jug"></svg>
@@ -570,33 +615,33 @@
         </div>
         <p class="fb" id="level7"></p>
         <div class="choices" id="ch7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score7"></p>
       </div>
     </section>
 
     <!-- 8 how long -->
-    <section class="slide" data-say="How long does it take? Count on from the start time to the end time.">
-      <div class="slide-head"><span class="n">8</span><h2>How long does it take?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Count on from the <b>start</b> to the <b>end</b>.</span></div>
+    <section class="slide" data-say="Which holds more? Fill each one with cups of water and count the cups. The one that takes more cups holds more.">
+      <div class="slide-head"><span class="n">8</span><h2>Which holds more?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Fill them with <b>cups</b> of water and count. The one that takes <b>more cups</b> holds more.</span></div>
       <div class="stage">
         <div class="clockpair" id="clocks8"></div>
-        <div class="timeline" id="tl8"></div>
+        <div class="bigbtns"><button type="button" class="big teal" id="fill8">Fill them with cups</button></div>
         <div class="choices" id="ch8"></div>
-        <p class="fb" id="fb8"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score8"></p>
       </div>
     </section>
 
-    <!-- 9 calendar -->
-    <section class="slide" data-say="A calendar shows the days of a month. Seven days make a week.">
-      <div class="slide-head"><span class="n">9</span><h2>Days and months</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">7 days make a <b>week</b>. Tap the day on the calendar.</span></div>
+    <!-- 9 estimate, then measure (was a calendar step - Half Past, Quarter To owns the calendar) -->
+    <section class="slide" data-say="Guess first, then measure. A good guess is close to the real length.">
+      <div class="slide-head"><span class="n">9</span><h2>Estimate, then measure</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Look at the ribbon. <b>Guess</b> how long it is, then the ruler will <b>measure</b> it.</span></div>
       <div class="stage">
-        <p class="calname" id="calname9"></p>
-        <div class="cal" id="cal9"></div>
+        <svg class="rib9" id="cal9" viewBox="0 0 340 110" role="img" aria-label="A ribbon to measure"></svg>
+        <p class="fb" id="calname9" style="font-size:21px"></p>
         <div class="choices" id="ch9"></div>
-        <p class="fb" id="fb9"></p>
+        <p class="fb" id="fb9" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score9"></p>
       </div>
     </section>
@@ -611,7 +656,7 @@
         <svg class="ruler" id="rulerD" viewBox="0 0 620 150" role="img" aria-label="A ruler you can draw a line on"></svg>
         <p class="fb small-fb" id="readD"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="doneD">That is my line</button><button type="button" class="big small ghost" id="clearD">Start again</button></div>
-        <p class="fb" id="fbD"></p>
+        <p class="fb" id="fbD" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreD"></p>
       </div>
     </section>
@@ -624,7 +669,7 @@
         <svg class="mstrip" id="stripV" viewBox="0 0 620 130" role="img" aria-label="A measuring scale with an arrow"></svg>
         <p class="fb" id="qV" style="font-size:19px"></p>
         <div class="choices" id="chV"></div>
-        <p class="fb" id="fbV"></p>
+        <p class="fb" id="fbV" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="scoreV"></p>
       </div>
     </section>
@@ -636,7 +681,7 @@
       <div class="stage">
         <p class="fb" id="q10" style="font-size:23px"></p>
         <div class="choices" id="ch10"></div>
-        <p class="fb" id="fb10"></p>
+        <p class="fb" id="fb10" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score10"></p>
       </div>
     </section>
@@ -647,7 +692,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb11"></p>
+        <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -742,6 +787,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -1033,6 +1080,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1422,6 +1470,7 @@
       intro.parentNode.insertBefore(bar, intro.nextSibling);
     });
   })();
+  /* ehel-stage2-line: held to Stage 2 by hold-stage-2.py (2026-09-11) */
   const $ = (id) => document.getElementById(id);
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -1468,7 +1517,7 @@
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
 
-  /* ---- 1: longer and shorter ---- */
+  /* ---- 1: longer and shorter (0096 2Gg.03) ---- */
   const ITEMS1 = [["✏️", "pencil"], ["🖍️", "crayon"], ["📏", "ruler"], ["🧵", "thread"], ["🥕", "carrot"], ["🪱", "worm"]];
   let r1 = 0, right1 = 0, lock1 = false, set1 = []; const ROUNDS1 = 5;
   function round1() {
@@ -1496,7 +1545,7 @@
   });
   round1();
 
-  /* ---- 2: measure with cubes ---- */
+  /* ---- 2: measure with cubes (0096 2Gg.03 - non-standard units) ---- */
   let len2 = 7, laid2 = 0, odd2 = false, quiz2 = null, right2 = 0;
   function paint2() {
     $("bar2").innerHTML = '<div class="obj" style="--len:' + len2 + '">&nbsp;<span>✏️</span></div><div class="cubes">' + Array.from({ length: laid2 }, (_, i) => '<i class="' + (odd2 && i % 2 ? "odd" : "") + '"></i>').join("") + "</div>";
@@ -1527,7 +1576,7 @@
   });
   ask2();
 
-  /* ---- 3: the ruler ---- */
+  /* ---- 3: the ruler (0096 2Gg.03, 2Gg.04) ---- */
   let r3 = 0, right3 = 0, lock3 = false, q3 = null; const ROUNDS3 = 5;
   function drawRuler(start, end) {
     const L = 30, R = 590, cm = (R - L) / 15;
@@ -1558,26 +1607,28 @@
   });
   round3();
 
-  /* ---- 4: which unit ---- */
+  /* ---- 4: which unit (0096 2Gg.03, 2Gg.06, 2Gg.07) ---- */
+  /* Stage 2 lengths are centimetres and metres (km is Stage 3's Gg.02; mm is in no Stage 1-3 objective). */
   const UNITS = [
     { ic: "✏️", t: "the length of a pencil", a: "cm", why: "A pencil is about 15 cm. Centimetres are for small things." },
-    { ic: "🚪", t: "the height of a door", a: "m", why: "A door is about 2 m tall. Metres are for room-sized things." },
-    { ic: "🏫", t: "the distance to school", a: "km", why: "A journey is measured in kilometres." },
-    { ic: "🐜", t: "the length of an ant", a: "mm", why: "An ant is only a few millimetres long." },
-    { ic: "🍎", t: "the mass of an apple", a: "g", why: "An apple is about 150 g. Grams are for light things." },
-    { ic: "🎒", t: "the mass of a school bag", a: "kg", why: "A bag full of books is a few kilograms." },
-    { ic: "🥄", t: "the medicine in a spoon", a: "ml", why: "A spoonful is about 5 ml." },
-    { ic: "🪣", t: "the water in a bucket", a: "l", why: "A bucket holds several litres." },
+    { ic: "🚪", t: "the height of a door", a: "m", why: "A door is about 2 m tall. Metres are for big things." },
+    { ic: "👟", t: "the length of your shoe", a: "cm", why: "A shoe is about 20 cm. Centimetres are for small things." },
+    { ic: "🏫", t: "the length of the classroom", a: "m", why: "A classroom is several metres long. Metres are for big things." },
+    { ic: "🍎", t: "the mass of an apple", a: "g", why: "An apple is light, so grams." },
+    { ic: "🎒", t: "the mass of a school bag", a: "kg", why: "A bag full of books is heavy, so kilograms." },
+    { ic: "🥄", t: "the medicine in a spoon", a: "ml", why: "A spoonful is a tiny amount, so millilitres." },
+    { ic: "🚿", t: "the water in a bath", a: "l", why: "A bath holds a lot of water, so litres." },
   ];
   let units4 = shuffle(UNITS).slice(0, 6), r4 = 0, right4 = 0, lock4 = false; const ROUNDS4 = 6;
-  const UNAME = { mm: "millimetres", cm: "centimetres", m: "metres", km: "kilometres", g: "grams", kg: "kilograms", ml: "millilitres", l: "litres" };
+  const UNAME = { cm: "centimetres", m: "metres", g: "grams", kg: "kilograms", ml: "millilitres", l: "litres" };
   function round4() {
     lock4 = false; $("fb4").textContent = ""; $("fb4").className = "fb";
     if (r4 >= ROUNDS4) { $("q4").textContent = ""; $("qtext4").textContent = ""; $("ch4").innerHTML = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You chose " + right4 + " of " + ROUNDS4 + " units!"; finish(3, "You can choose the right unit."); return; }
     const U = units4[r4]; $("score4").textContent = "Question " + (r4 + 1) + " of " + ROUNDS4;
     $("q4").textContent = U.ic; $("qtext4").textContent = "How would you measure " + U.t + "?"; $("say4").textContent = "How would you measure " + U.t + "?";
-    const family = ["mm", "cm", "m", "km"].includes(U.a) ? ["mm", "cm", "m", "km"] : ["g", "kg"].includes(U.a) ? ["g", "kg", "ml"] : ["ml", "l", "g"];
-    const opts = shuffle([U.a, ...shuffle(family.filter((f) => f !== U.a)).slice(0, 2)]);
+    const pair = ["cm", "m"].includes(U.a) ? ["cm", "m"] : ["g", "kg"].includes(U.a) ? ["g", "kg"] : ["ml", "l"];
+    const other = ["cm", "kg", "l"].filter((f) => !pair.includes(f))[rnd(0, 1)];
+    const opts = shuffle(pair.concat([other]));
     $("ch4").innerHTML = opts.map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
     say("How would you measure " + U.t + "?");
   }
@@ -1590,7 +1641,7 @@
   });
   round4();
 
-  /* ---- 5: balance ---- */
+  /* ---- 5: balance (0096 2Gg.06) ---- */
   const OBJ5 = [["🍎", "apple", 300], ["📚", "book", 500], ["🥔", "potato", 200], ["🧴", "bottle", 700], ["🍌", "banana", 100]];
   const WTS = [100, 200, 500];
   let obj5 = null, on5 = [], r5 = 0, right5 = 0; const ROUNDS5 = 3;
@@ -1606,7 +1657,7 @@
     svg += "</g>";
     $("bal5").innerHTML = svg;
     $("weights5").innerHTML = WTS.map((w) => '<button type="button" class="big small teal" data-w="' + w + '">add ' + w + " g</button>").join("");
-    if (total === obj5.m) { const kgNote = obj5.m === 500 ? " That is half a kilogram, because 1000 g make 1 kg." : obj5.m === 1000 ? " That is exactly 1 kg." : ""; $("fb5").className = "fb good"; $("fb5").textContent = cheer() + " It balances. The " + obj5.name + " has a mass of " + obj5.m + " g." + kgNote; say(cheer() + " It balances at " + obj5.m + " grams."); $("next5").hidden = false; r5++; right5++; }
+    if (total === obj5.m) { const kgNote = "";   /* it said "half a kilogram, because 1000 g make 1 kg" - that is Stage 3's Gg.06 (ehel-stage2-line) */ $("fb5").className = "fb good"; $("fb5").textContent = cheer() + " It balances. The " + obj5.name + " has a mass of " + obj5.m + " g." + kgNote; say(cheer() + " It balances at " + obj5.m + " grams."); $("next5").hidden = false; r5++; right5++; }
     else { $("fb5").className = "fb"; $("fb5").textContent = total === 0 ? "The " + obj5.name + " side is down, so it is heavier. Add weights." : total < obj5.m ? total + " g so far. Still too light: add " + (obj5.m - total) + " g more." : total + " g is too heavy. Take some off."; }
   }
   function round5() {
@@ -1622,7 +1673,7 @@
   $("next5").addEventListener("click", round5);
   round5();
 
-  /* ---- 6: kitchen scale ---- */
+  /* ---- 6: kitchen scale (0096 2Gg.06, 2Gg.12) ---- */
   let r6 = 0, right6 = 0, lock6 = false, g6 = 0; const ROUNDS6 = 5;
   function drawDial(g) {
     const cx = 110, cy = 110, R = 92;
@@ -1635,10 +1686,10 @@
   }
   function round6() {
     lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
-    if (r6 >= ROUNDS6) { $("dial6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + "!"; finish(5, "You can read a scale in grams and kilograms."); return; }
-    g6 = rnd(1, 10) * 100; drawDial(g6);
+    if (r6 >= ROUNDS6) { $("dial6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + "!"; finish(5, "You can read a kitchen scale."); return; }
+    g6 = rnd(1, 9) * 100; drawDial(g6);
     $("score6").textContent = "Reading " + (r6 + 1) + " of " + ROUNDS6;
-    const asKg = g6 % 500 === 0 && r6 >= 3;
+    const asKg = false; /* 1000 g = 1 kg is Stage 3's Gg.06 */
     $("say6").innerHTML = asKg ? "The needle is at <b>" + g6 + " g</b>. How many <b>kilograms</b> is that?" : "What does the needle say? Each mark is <b>100 g</b>.";
     if (asKg) { const kg = g6 / 1000; $("ch6").innerHTML = shuffle([String(kg), String(kg * 10), String(kg / 10)]).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + " kg</button>").join(""); $("ch6").dataset.answer = String(kg); }
     else { $("ch6").innerHTML = shuffle([g6, g6 + 100, Math.max(100, g6 - 100)]).filter((v, i, a) => a.indexOf(v) === i).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + " g</button>").join(""); $("ch6").dataset.answer = String(g6); }
@@ -1649,22 +1700,22 @@
     $("ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === ans) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right6++;
     const isKg = Number(ans) < 20;
-    const why = isKg ? "1000 g is 1 kg, so " + g6 + " g is " + ans + " kg." : "The needle points to " + g6 + " g" + (g6 === 1000 ? ", which is 1 kg" : "") + ".";
+    const why = "The needle points to " + g6 + " g.";
     $("fb6").className = "fb " + (ok ? "good" : "bad"); $("fb6").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
     r6++; setTimeout(round6, 2400);
   });
   round6();
 
-  /* ---- 7: the jug ---- */
+  /* ---- 7: the jug (0096 2Gg.07, 2Gg.12) ---- */
   let ml7 = 0, quiz7 = null, right7 = 0;
   function drawJug() {
     const top = 30, bot = 220, H = bot - top;
     let svg = '<path class="glass" d="M35,' + top + " L35," + bot + " Q35," + (bot + 16) + " 55," + (bot + 16) + " L135," + (bot + 16) + " Q155," + (bot + 16) + " 155," + bot + " L155," + top + '"></path>';
     const h = (ml7 / 1000) * H;
     svg += '<rect class="water" x="38" y="' + (bot - h).toFixed(1) + '" width="114" height="' + h.toFixed(1) + '"></rect>';
-    for (let i = 0; i <= 10; i++) { const y = bot - (i / 10) * H; svg += '<line class="mark" x1="' + (i % 5 === 0 ? 120 : 132) + '" y1="' + y.toFixed(1) + '" x2="152" y2="' + y.toFixed(1) + '"></line>'; if (i % 5 === 0 || i === 10) svg += '<text class="lab" x="60" y="' + (y - 4).toFixed(1) + '">' + i * 100 + (i === 10 ? " ml = 1 l" : " ml") + "</text>"; }
+    for (let i = 0; i <= 10; i++) { const y = bot - (i / 10) * H; svg += '<line class="mark" x1="' + (i % 5 === 0 ? 120 : 132) + '" y1="' + y.toFixed(1) + '" x2="152" y2="' + y.toFixed(1) + '"></line>'; if (i % 5 === 0 || i === 10) svg += '<text class="lab" x="60" y="' + (y - 4).toFixed(1) + '">' + i * 100 + " ml</text>"; }
     $("jug7").innerHTML = svg;
-    $("level7").className = "fb"; $("level7").textContent = ml7 + " ml" + (ml7 === 1000 ? " — that is 1 litre, and the jug is full" : ml7 === 500 ? " — that is half a litre" : "");
+    $("level7").className = "fb"; $("level7").textContent = ml7 + " ml" + (ml7 === 1000 ? " — the jug is full" : "");
     $("pour7").disabled = ml7 >= 1000; $("tip7").disabled = ml7 <= 0;
   }
   $("pour7").addEventListener("click", () => { if (ml7 < 1000) { ml7 += 100; drawJug(); say(ml7 + " millilitres"); } });
@@ -1672,7 +1723,7 @@
   $("empty7").addEventListener("click", () => { ml7 = 0; drawJug(); });
   function ask7() {
     $("fb7").textContent = ""; $("fb7").className = "fb";
-    const kind = right7 % 3;
+    const kind = right7 % 2; /* pour or read; '1 litre is 1000 ml' is Stage 3's Gg.07 */
     if (kind === 0) { const t = rnd(1, 10) * 100; quiz7 = { task: "pour", target: t, q: "Pour in <b>" + t + " ml</b>." }; ml7 = 0; drawJug(); $("ch7").innerHTML = ""; $("say7").innerHTML = quiz7.q + " Use the buttons."; say("Pour in " + t + " millilitres."); }
     else if (kind === 1) { const t = rnd(1, 9) * 100; ml7 = t; drawJug(); quiz7 = { task: "read", a: String(t) }; $("say7").innerHTML = "How much is in the jug? Read the marks."; $("ch7").innerHTML = shuffle([t, t + 100, Math.max(100, t - 100)]).filter((v, i, a) => a.indexOf(v) === i).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + " ml</button>").join(""); say("How much is in the jug?"); }
     else { ml7 = 1000; drawJug(); quiz7 = { task: "convert", a: "1000" }; $("say7").innerHTML = "The jug is full: <b>1 litre</b>. How many <b>millilitres</b> is that?"; $("ch7").innerHTML = shuffle(["1000", "100", "10"]).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + " ml</button>").join(""); say("One litre. How many millilitres is that?"); }
@@ -1687,97 +1738,88 @@
     const b = e.target.closest(".choice"); if (!b || b.disabled || !quiz7) return; const ok = b.dataset.v === quiz7.a;
     $("ch7").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === quiz7.a) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right7++;
-    const why = quiz7.task === "convert" ? "1 litre is 1000 ml." : "The water reaches the " + quiz7.a + " ml mark.";
+    const why = "The water reaches the " + quiz7.a + " ml mark.";
     $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
     if (right7 >= 3) finish(6, "You can measure liquid!"); setTimeout(ask7, 2200);
   });
   drawJug(); ask7();
 
-  /* ---- 8: how long does it take ---- */
-  let r8 = 0, right8 = 0, lock8 = false, q8 = null; const ROUNDS8 = 5;
-  function miniClock(h, m, label) {
-    const cx = 60, cy = 60, R = 48;
-    let svg = '<circle class="face" cx="' + cx + '" cy="' + cy + '" r="' + R + '"></circle>';
-    for (let i = 0; i < 12; i++) { const a = ((i * 30 - 90) * Math.PI) / 180; svg += '<line class="tick" x1="' + (cx + (R - 8) * Math.cos(a)).toFixed(1) + '" y1="' + (cy + (R - 8) * Math.sin(a)).toFixed(1) + '" x2="' + (cx + R * Math.cos(a)).toFixed(1) + '" y2="' + (cy + R * Math.sin(a)).toFixed(1) + '"></line>'; }
-    const ha = (((h % 12) / 12 + m / 720) * 360 - 90) * Math.PI / 180, ma = ((m / 60) * 360 - 90) * Math.PI / 180;
-    svg += '<line class="hour" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + 26 * Math.cos(ha)).toFixed(1) + '" y2="' + (cy + 26 * Math.sin(ha)).toFixed(1) + '"></line>';
-    svg += '<line class="minute" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + 38 * Math.cos(ma)).toFixed(1) + '" y2="' + (cy + 38 * Math.sin(ma)).toFixed(1) + '"></line><circle cx="' + cx + '" cy="' + cy + '" r="3.5" fill="var(--ink)"></circle>';
-    return '<div><svg class="miniclock" viewBox="0 0 120 120" role="img" aria-label="' + label + '">' + svg + '</svg><div class="clocklab">' + label + "</div></div>";
+  /* ---- 8: which holds more? capacity with non-standard units (0096 2Gg.07) ----
+     Was 'How long does it take?': finding a time interval is Stage 3's Gt.04 - and its
+     README said intervals had gone. Pairs are chosen so the taller one does
+     not always hold more: counting cups is the point, not looking. */
+  const JARS8 = [["jug", 6, 70, 90], ["bottle", 4, 34, 118], ["pot", 9, 110, 70], ["vase", 5, 44, 116], ["bowl", 3, 112, 34], ["bucket", 8, 88, 92]];
+  let r8 = 0, right8 = 0, lock8 = false, q8 = null; const ROUNDS8 = 4;
+  function jar8(j, cups) {
+    let cupRow = "";
+    if (cups) for (let i = 0; i < j[1]; i++) cupRow += '<rect x="' + (6 + (i % 5) * 22) + '" y="' + (140 + Math.floor(i / 5) * 22) + '" width="16" height="16" rx="4" fill="var(--teal)"></rect>';
+    return '<div><svg viewBox="0 0 120 190" width="120" height="190" role="img" aria-label="the ' + j[0] + '"><rect x="' + ((120 - j[2]) / 2).toFixed(0) + '" y="' + (128 - j[3]) + '" width="' + j[2] + '" height="' + j[3] + '" rx="10" fill="var(--teal-soft)" stroke="var(--ink)" stroke-width="3"></rect>' + cupRow + '</svg><div class="clocklab">the ' + j[0] + (cups ? " · " + j[1] + " cups" : "") + "</div></div>";
   }
-  const hhmm = (h, m) => h + ":" + String(m).padStart(2, "0");
   function round8() {
-    lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb";
-    if (r8 >= ROUNDS8) { $("clocks8").innerHTML = ""; $("tl8").innerHTML = ""; $("ch8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You worked out " + right8 + " of " + ROUNDS8 + "!"; finish(7, "You can work out how long something takes."); return; }
-    const startH = rnd(1, 9), useHalf = r8 >= 2, startM = useHalf ? [0, 30][rnd(0, 1)] : 0;
-    const mins = useHalf ? [30, 60, 90, 120][rnd(0, 3)] : [60, 120, 180][rnd(0, 2)];
-    const total = startH * 60 + startM + mins, endH = Math.floor(total / 60), endM = total % 60;
-    q8 = { startH, startM, endH, endM, mins };
-    $("score8").textContent = "Question " + (r8 + 1) + " of " + ROUNDS8;
-    $("clocks8").innerHTML = miniClock(startH, startM, "starts " + hhmm(startH, startM)) + miniClock(endH, endM, "ends " + hhmm(endH, endM));
-    const lo = startH, hi = endH + (endM ? 1 : 0), span = hi - lo || 1, x = (v) => "calc(16px + " + ((v - lo) / span) + " * (100% - 32px))";
-    let tl = '<div class="bar"></div>';
-    for (let h = lo; h <= hi; h++) { tl += '<div class="t" style="left:' + x(h) + '"></div><div class="l" style="left:' + x(h) + '">' + h + ":00</div>"; }
-    const sPos = startH + startM / 60, ePos = endH + endM / 60;
-    tl += '<div class="hop" style="left:' + x(sPos) + ";width:calc(" + ((ePos - sPos) / span) + ' * (100% - 32px))"></div>';
-    tl += '<div class="m a" style="left:' + x(sPos) + '"></div><div class="m b" style="left:' + x(ePos) + '"></div>';
-    $("tl8").innerHTML = tl;
-    $("say8").innerHTML = "It starts at <b>" + hhmm(startH, startM) + "</b> and ends at <b>" + hhmm(endH, endM) + "</b>. How long is that?";
-    const label = (m) => (m % 60 === 0 ? m / 60 + (m === 60 ? " hour" : " hours") : m === 30 ? "half an hour" : Math.floor(m / 60) + (m < 120 ? " hour " : " hours ") + (m % 60) + " minutes");
-    const wrongs = [mins + 30, mins - 30, mins + 60].filter((m) => m > 0 && m !== mins);
-    $("ch8").innerHTML = shuffle([mins, ...shuffle(wrongs).slice(0, 2)]).map((m) => '<button type="button" class="choice word" data-v="' + m + '">' + label(m) + "</button>").join("");
-    say("It starts at " + hhmm(startH, startM) + " and ends at " + hhmm(endH, endM) + ". How long is that?");
+    lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("ch8").innerHTML = "";
+    if (r8 >= ROUNDS8) { $("clocks8").innerHTML = ""; $("fill8").hidden = true; $("fb8").className = "fb good"; $("fb8").textContent = "You compared " + right8 + " of " + ROUNDS8 + " pairs!"; finish(7, "You can find which holds more."); return; }
+    let a, b; do { [a, b] = shuffle(JARS8).slice(0, 2); } while (a[1] === b[1]);
+    q8 = { a, b, more: a[1] > b[1] ? a : b, diff: Math.abs(a[1] - b[1]), filled: false };
+    $("score8").textContent = "Pair " + (r8 + 1) + " of " + ROUNDS8;
+    $("clocks8").innerHTML = jar8(a, false) + jar8(b, false); $("fill8").hidden = false;
+    $("say8").innerHTML = "Which holds more, the <b>" + a[0] + "</b> or the <b>" + b[0] + "</b>? Fill them with cups to find out.";
+    say("Which holds more, the " + a[0] + " or the " + b[0] + "? Fill them with cups to find out.");
   }
+  $("fill8").addEventListener("click", () => {
+    if (!q8 || q8.filled) return; q8.filled = true; $("fill8").hidden = true;
+    $("clocks8").innerHTML = jar8(q8.a, true) + jar8(q8.b, true);
+    $("ch8").innerHTML = shuffle([q8.a[0], q8.b[0]]).map((v) => '<button type="button" class="choice word" data-v="' + v + '">the ' + v + "</button>").join("");
+    say("The " + q8.a[0] + " took " + q8.a[1] + " cups. The " + q8.b[0] + " took " + q8.b[1] + ". Which holds more?");
+  });
   $("ch8").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const ok = Number(b.dataset.v) === q8.mins;
-    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === q8.mins) c.classList.add("right"); });
+    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const ok = b.dataset.v === q8.more[0];
+    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === q8.more[0]) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right8++;
-    const why = "From " + hhmm(q8.startH, q8.startM) + " to " + hhmm(q8.endH, q8.endM) + " is " + (q8.mins >= 60 ? Math.floor(q8.mins / 60) + (q8.mins < 120 ? " hour" : " hours") + (q8.mins % 60 ? " and " + (q8.mins % 60) + " minutes" : "") : q8.mins + " minutes") + ".";
+    const why = "The " + q8.more[0] + " took " + q8.more[1] + " cups, " + q8.diff + " more, so it holds more" + (q8.more[3] < Math.max(q8.a[3], q8.b[3]) ? " - even though it is not the taller one." : ".");
     $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
-    r8++; setTimeout(round8, 2600);
+    r8++; setTimeout(round8, 3200);
   });
   round8();
 
-  /* ---- 9: calendar ---- */
-  const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const DAYFULL = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday", Sat: "Saturday", Sun: "Sunday" };
-  const MONTHS = [["January", 31], ["February", 28], ["March", 31], ["April", 30], ["May", 31], ["June", 30], ["July", 31], ["August", 31], ["September", 30], ["October", 31], ["November", 30], ["December", 31]];
-  let r9 = 0, right9 = 0, lock9 = false, cal9 = null; const ROUNDS9 = 5;
+  /* ---- 9: estimate, then measure (0096 2Gg.03) ----
+     Was a calendar step, which Half Past, Quarter To already teaches. 2Gg.03
+     asks the child to ESTIMATE and measure lengths; Grade 2 measured and never
+     estimated. The closest guess is the right one; the ruler then shows why. */
+  let r9 = 0, right9 = 0, lock9 = false, len9 = 0, est9 = 0; const ROUNDS9 = 5;
+  function ribbon9(len, withRuler) {
+    const u = 20, x0 = 10;
+    let svg = '<rect x="' + x0 + '" y="22" width="' + len * u + '" height="18" rx="4" fill="var(--plum)"></rect>';
+    if (withRuler) {
+      svg += '<rect x="' + x0 + '" y="54" width="' + 16 * u + '" height="40" rx="4" fill="var(--gold-soft)" stroke="var(--ink)" stroke-width="1.5"></rect>';
+      for (let i = 0; i <= 16; i++) svg += '<line x1="' + (x0 + i * u) + '" y1="54" x2="' + (x0 + i * u) + '" y2="' + (i % 5 === 0 ? 70 : 64) + '" stroke="var(--ink)" stroke-width="1.5"></line><text x="' + (x0 + i * u) + '" y="86" text-anchor="middle" font-size="11" fill="var(--ink)">' + i + "</text>";
+      svg += '<line x1="' + (x0 + len * u) + '" y1="18" x2="' + (x0 + len * u) + '" y2="58" stroke="var(--bad)" stroke-width="2" stroke-dasharray="4 3"></line>';
+    }
+    $("cal9").innerHTML = svg;
+  }
   function round9() {
-    lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb"; $("ch9").innerHTML = "";
-    if (r9 >= ROUNDS9) { $("cal9").innerHTML = ""; $("calname9").textContent = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You answered " + right9 + " of " + ROUNDS9 + "!"; finish(8, "You can read a calendar."); return; }
-    const mi = rnd(0, 11), [mname, mdays] = MONTHS[mi], first = rnd(0, 6);
-    cal9 = { mname, mdays, first };
-    $("score9").textContent = "Question " + (r9 + 1) + " of " + ROUNDS9;
-    $("calname9").textContent = mname;
-    let html = DAYS.map((d) => '<div class="hd">' + d + "</div>").join("");
-    for (let i = 0; i < first; i++) html += '<button type="button" class="blank" disabled></button>';
-    for (let d = 1; d <= mdays; d++) html += '<button type="button" data-d="' + d + '">' + d + "</button>";
-    $("cal9").innerHTML = html;
-    const kind = r9 % 3;
-    if (kind === 0) { const d = rnd(1, mdays), day = DAYS[(first + d - 1) % 7]; cal9.q = { type: "which day", d, a: DAYFULL[day] }; $("say9").innerHTML = "What day of the week is <b>" + mname + " " + d + "</b>?"; $("ch9").innerHTML = shuffle([DAYFULL[day], ...shuffle(DAYS.filter((x) => x !== day)).slice(0, 2).map((x) => DAYFULL[x])]).map((v) => '<button type="button" class="choice word" data-v="' + v + '">' + v + "</button>").join(""); say("What day of the week is " + mname + " the " + d + "?"); }
-    else if (kind === 1) { const d = rnd(1, mdays - 7); cal9.q = { type: "tap", a: d + 7 }; $("say9").innerHTML = "Today is <b>" + d + "</b>. Tap the date <b>one week later</b>."; say("Today is the " + d + ". Tap the date one week later."); }
-    else { cal9.q = { type: "days", a: String(mdays) }; $("say9").innerHTML = "How many days are in <b>" + mname + "</b>? Count the calendar."; $("ch9").innerHTML = shuffle([String(mdays), String(mdays === 31 ? 30 : 31), "28"]).filter((v, i, a) => a.indexOf(v) === i).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join(""); say("How many days are in " + mname + "?"); }
+    lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb";
+    if (r9 >= ROUNDS9) { $("cal9").innerHTML = ""; $("calname9").textContent = ""; $("ch9").innerHTML = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You made " + right9 + " good guesses out of " + ROUNDS9 + "!"; finish(8, "You can estimate, then measure."); return; }
+    len9 = rnd(3, 15); est9 = Math.max(2, len9 + [-1, 0, 1][rnd(0, 2)]);
+    const far = [est9 + 7 <= 16 ? est9 + 7 : est9 - 7, est9 >= 9 ? est9 - 6 : est9 + 5].filter((v, i, a) => v > 0 && v !== est9 && a.indexOf(v) === i);
+    $("score9").textContent = "Ribbon " + (r9 + 1) + " of " + ROUNDS9;
+    ribbon9(len9, false);
+    $("calname9").textContent = "About how long is the ribbon?";
+    $("ch9").innerHTML = shuffle([est9].concat(far)).map((v) => '<button type="button" class="choice word" data-v="' + v + '">about ' + v + " cm</button>").join("");
+    say("About how long is the ribbon? Guess first.");
   }
-  function answer9(ok, why) {
-    if (ok) right9++;
-    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
-    r9++; setTimeout(round9, 2500);
-  }
-  $("cal9").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-d]"); if (!b || lock9 || cal9.q.type !== "tap") return; lock9 = true;
-    const d = Number(b.dataset.d), ok = d === cal9.q.a;
-    $("cal9").querySelectorAll("[data-d]").forEach((x) => { if (Number(x.dataset.d) === cal9.q.a) x.classList.add("right"); });
-    if (!ok) b.classList.add("wrong");
-    answer9(ok, "One week is 7 days, so 7 days after is the " + cal9.q.a + ". It is the same day of the week, one row down.");
-  });
   $("ch9").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock9) return; lock9 = true; const ok = b.dataset.v === String(cal9.q.a);
-    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(cal9.q.a)) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong");
-    answer9(ok, cal9.q.type === "days" ? cal9.mname + " has " + cal9.mdays + " days." : cal9.mname + " " + cal9.q.d + " is a " + cal9.q.a + ".");
+    const b = e.target.closest(".choice"); if (!b || lock9) return; lock9 = true; const ok = Number(b.dataset.v) === est9;
+    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === est9) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right9++;
+    ribbon9(len9, true);
+    const why = "The ruler says " + len9 + " cm, so 'about " + est9 + " cm' was the closest guess.";
+    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
+    r9++; setTimeout(round9, 3000);
   });
   round9();
 
+
+  
 
   function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
   function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
@@ -1891,22 +1933,36 @@
   roundV();
 
   /* ---- 12: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11, the rule Grade 1 already keeps). Below it the child sees the score,
+     how many they need, and a button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "Which unit would you use for the length of a pencil?", opts: ["cm", "km", "kg"], a: "cm" },
-    { q: "An object goes from 2 cm to 9 cm on a ruler. How long is it?", opts: ["7 cm", "9 cm", "11 cm"], a: "7 cm" },
-    { q: "How many grams are in 1 kilogram?", opts: [1000, 100, 10], a: 1000 },
-    { q: "How many millilitres are in 1 litre?", opts: [1000, 100, 500], a: 1000 },
-    { q: "Half a litre is…", opts: ["500 ml", "50 ml", "5000 ml"], a: "500 ml" },
-    { q: "A film starts at 3:00 and ends at 5:00. How long is it?", opts: ["2 hours", "3 hours", "5 hours"], a: "2 hours" },
-    { q: "How many minutes in half an hour?", opts: [30, 60, 15], a: 30 },
-    { q: "How many days in a week?", opts: [7, 5, 12], a: 7 },
-    { q: "Which is heavier: 1 kg or 900 g?", opts: ["1 kg", "900 g"], a: "1 kg" },
-    { q: "Which is longer: 1 m or 90 cm?", opts: ["1 m", "90 cm"], a: "1 m" },
+    { q: "Which unit would you use for the length of a pencil?", opts: ["cm", "m", "kg"], a: "cm", why: "A pencil is small, so centimetres." },
+    { q: "An object goes from 2 cm to 9 cm on a ruler. How long is it?", opts: ["7 cm", "9 cm", "11 cm"], a: "7 cm", why: "It did not start at 0, so count the centimetres from 2 to 9: 7 cm." },
+    { q: "The needle on a kitchen scale points to 300. It is showing…", opts: ["300 g", "3 g", "30 g"], a: "300 g", why: "The scale counts in grams, and the needle is on 300." },
+    { q: "Each mark on a jug is 100 ml. The water is at the 4th mark. How much water?", opts: ["400 ml", "4 ml", "40 ml"], a: "400 ml", why: "4 marks of 100 ml is 400 ml." },
+    { q: "Which unit would you use for the water in a bath?", opts: ["l", "cm", "g"], a: "l", why: "A bath holds a lot of water, so litres." },
+    { q: "A balance tips down on the left. The left side is…", opts: ["heavier", "lighter", "the same"], a: "heavier", why: "The heavier side goes down." },
+    { q: "The jug takes 6 cups of water. The bottle takes 4. Which holds more?", opts: ["the jug", "the bottle", "the same"], a: "the jug", why: "6 cups is more than 4 cups." },
+    { q: "You measure a book with cubes. Why must the cubes be the same size?", opts: ["so the count is fair", "so it looks nice", "so it is quicker"], a: "so the count is fair", why: "If the cubes are different sizes, the same book gives different counts." },
+    { q: "A pencil is 15 cm long. A crayon is 9 cm long. Which is longer?", opts: ["the pencil", "the crayon", "the same"], a: "the pencil", why: "15 cm is more than 9 cm." },
+    { q: "A scale goes 0, 10, 20 with one unmarked line halfway between each. What is the line between 10 and 20?", opts: [15, 11, 12], a: 15, why: "Halfway between 10 and 20 is 15." }
   ];
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(11, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(11, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
     say(q.q);
@@ -1915,13 +1971,13 @@
     const b = e.target.closest(".choice"); if (!b || lock10) return; lock10 = true; const q = CHECK[c10], ok = String(b.dataset.v) === String(q.a);
     $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right10++;
-    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
-    c10++; setTimeout(round10, 1300);
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""); say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c10++; setTimeout(round10, 2800);
   });
   round10();
 
   /* ---- 13: stickers ---- */
-  const STICKERS = [["📏", "Longer and shorter"], ["🧊", "Measure with cubes"], ["📐", "Reading a ruler"], ["🤔", "Choosing the unit"], ["⚖️", "Balancing scales"], ["🍎", "Grams and kilograms"], ["🥤", "Millilitres and litres"], ["⏱️", "How long it takes"], ["📅", "Days and months"], ["✏️", "Drawing a line"], ["🔍", "Between the marks"], ["✅", "Show what I know"]];
+  const STICKERS = [["📏", "Longer and shorter"], ["🧊", "Measure with cubes"], ["📐", "Reading a ruler"], ["🤔", "Choosing the unit"], ["⚖️", "Balancing scales"], ["🍎", "Reading a kitchen scale"], ["🥤", "Reading a jug"], ["🥛", "Which holds more"], ["🎯", "Estimate, then measure"], ["✏️", "Drawing a line"], ["🔍", "Between the marks"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -2042,6 +2098,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -2066,6 +2129,19 @@
       progressUnit: "l07",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -2223,4 +2299,48 @@
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+</script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
 </script>

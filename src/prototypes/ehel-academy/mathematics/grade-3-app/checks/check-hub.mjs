@@ -27,7 +27,10 @@ const cards = await p.evaluate(() => [...document.querySelectorAll("a.lesson")].
   mark: !!a.querySelector(".mark svg"),
 })));
 console.log(cards.map((c) => c.title + " -> " + c.href + " (" + c.steps + ")"));
-if (cards.length !== 5) bad.push("cards " + cards.length);
+/* read from the build's own config: this said 5 through the 2026-09-07 split to
+   eight lessons, and reported a correct eight-card hub as broken */
+const want = JSON.parse(fs.readFileSync(L("app.config.json"), "utf8")).lessons.length;
+if (cards.length !== want) bad.push("cards " + cards.length + ", config has " + want);
 
 for (const c of cards) {
   if (!c.mark) bad.push(c.title + ": no mark icon");

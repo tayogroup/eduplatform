@@ -524,6 +524,7 @@
       $("choices11").innerHTML = "";
       $("score11").textContent = rq + " out of " + Q11.length + " right.";
       if (rq >= 7) finish(10, "");
+      else retryCheck($("fb11"), $("choices11"), rq, Q11.length, 7, function () { cq = 0; rq = 0; round11(); });
       return;
     }
     $("stem11").textContent = Q11[cq].q;

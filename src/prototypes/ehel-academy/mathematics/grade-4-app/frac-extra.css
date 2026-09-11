@@ -53,7 +53,7 @@
   .hund100 i { display: block; width: 24px; height: 24px; border-radius: 3px; background: var(--cell);
     border: 1px solid var(--line); }
   .hund100 i.on { background: var(--accent); border-color: var(--accent); }
-  .reads3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+  .reads3 { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; margin-top: 10px; }
   .read3 { background: var(--cell); border: 1px solid var(--line); border-radius: 12px;
     padding: 9px 10px; text-align: center; }
   .read3.hero3 { background: var(--accent-soft); border-color: var(--accent); }

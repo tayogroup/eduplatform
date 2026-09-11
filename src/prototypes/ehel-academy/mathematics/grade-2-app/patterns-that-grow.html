@@ -1,8 +1,11 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */
@@ -18,7 +21,11 @@
   })();
 </script>
 <title>Patterns That Grow</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   :root {
     --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
@@ -327,6 +334,14 @@
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -403,10 +418,43 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+  /* ehel-stage2-line: Patterns That Grow - the hundred square */
+  .h100 { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; width: 100%; max-width: 420px; margin: 6px auto; }
+  .h100 button { aspect-ratio: 1; min-height: 28px; border: 0; border-radius: 6px; background: var(--cell); color: var(--ink); font: 700 13px "Inter", "Segoe UI", sans-serif; cursor: pointer; padding: 0; }
+  .h100 button.on { background: var(--teal); color: var(--card); }
+  .h100 button.right { background: var(--good); color: var(--card); }
+  .h100 button.wrong { background: var(--bad); color: var(--card); }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -434,7 +482,8 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
+  <div class="deck" id="deck" role="main">
     <!-- 1 the part that repeats -->
     <section class="slide" data-say="A repeating pattern has a part that repeats. Find the part that repeats, and you know the whole pattern.">
       <div class="slide-head"><span class="n">1</span><h2>The part that repeats</h2></div>
@@ -442,7 +491,7 @@
       <div class="stage">
         <div class="bigbtns" id="kinds1"></div>
         <div class="strip" id="strip1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="note1"></p>
       </div>
     </section>
@@ -454,7 +503,7 @@
       <div class="stage">
         <div class="strip" id="strip2"></div>
         <div class="choices" id="ch2"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score2"></p>
       </div>
     </section>
@@ -466,7 +515,7 @@
       <div class="stage">
         <div class="strip" id="strip3"></div>
         <div class="choices" id="ch3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score3"></p>
       </div>
     </section>
@@ -479,71 +528,66 @@
         <div class="bigbtns palette" id="pal4"></div>
         <div class="strip" id="strip4"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="undo4">Take one off</button><button type="button" class="big small ghost" id="clear4">Start again</button></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
       </div>
     </section>
 
     <!-- 5 growing staircase -->
-    <section class="slide" data-say="A growing pattern gets bigger by the same amount each time. Build the next step of the staircase.">
-      <div class="slide-head"><span class="n">5</span><h2>Growing patterns</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">A <b>growing</b> pattern gets bigger by the <b>same amount</b> each time. Press <b>Build the next one</b> and watch the orange blocks.</span></div>
+    <section class="slide" data-say="Count on in steps. Pick a start and a step, then keep counting on: in ones, twos, fives or tens.">
+      <div class="slide-head"><span class="n">5</span><h2>Counting on in steps</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Count <b>on</b> from the start number, the same step each time.</span></div>
       <div class="stage">
-        <div class="bigbtns"><span class="small-fb" style="align-self:center">Grows by</span><button type="button" class="big small ghost" id="stepMinus5">−</button><span class="fb" id="stepLab5" style="min-height:0"></span><button type="button" class="big small ghost" id="stepPlus5">+</button></div>
-        <div class="stairs" id="stairs5"></div>
-        <div class="bigbtns"><button type="button" class="big teal" id="build5">Build the next one</button><button type="button" class="big small ghost" id="reset5">Start again</button></div>
-        <div class="working" id="work5"></div>
-        <p class="fb" id="fb5"></p>
+        <div class="seq" id="stairs5"></div>
+        <div class="choices" id="ch5"></div>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
+        <p class="fb small-fb" id="score5"></p>
       </div>
     </section>
 
     <!-- 6 the step rule -->
-    <section class="slide" data-say="Look at the numbers. What is added each time? That is the rule.">
-      <div class="slide-head"><span class="n">6</span><h2>Find the rule</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Look at the jumps between the numbers. What is <b>added each time</b>? Tap the rule.</span></div>
+    <section class="slide" data-say="A number pattern goes up by the same amount each time. How does this one go up?">
+      <div class="slide-head"><span class="n">6</span><h2>How does it go up?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Look at the jumps between the numbers. Does it go up in <b>ones, twos, fives or tens</b>?</span></div>
       <div class="stage">
         <div class="seq" id="seq6"></div>
         <div class="choices" id="ch6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score6"></p>
       </div>
     </section>
 
     <!-- 7 missing number -->
-    <section class="slide" data-say="A number is missing from the pattern. Use the rule to find it.">
+    <section class="slide" data-say="A number is missing from the pattern. Work out how it goes up, then fill the gap.">
       <div class="slide-head"><span class="n">7</span><h2>The missing number</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Find the rule first, then use it to fill the <b>gap</b>.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Work out how it goes up, then fill the <b>gap</b>.</span></div>
       <div class="stage">
         <div class="seq" id="seq7"></div>
         <div class="choices" id="ch7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score7"></p>
       </div>
     </section>
 
     <!-- 8 predict far ahead -->
-    <section class="slide" data-say="You do not have to draw every pattern. Use the table and the rule to jump to pattern ten.">
-      <div class="slide-head"><span class="n">8</span><h2>Predict far ahead</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">You do not have to draw every one. Use the <b>table</b> and the <b>rule</b> to jump ahead.</span></div>
+    <section class="slide" data-say="Count back in steps. Start high, and take the same step away each time.">
+      <div class="slide-head"><span class="n">8</span><h2>Counting back in steps</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Count <b>back</b> from the start number, the same step each time.</span></div>
       <div class="stage">
-        <div class="stairs" id="stairs8"></div>
-        <table class="ptable" id="table8"></table>
-        <div class="working" id="work8"></div>
-        <div class="bigbtns"><button type="button" class="big teal small" id="hint8">Show me how</button></div>
+        <div class="seq" id="stairs8"></div>
         <div class="choices" id="ch8"></div>
-        <p class="fb" id="fb8"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score8"></p>
       </div>
     </section>
 
     <!-- 9 shrinking -->
-    <section class="slide" data-say="Some patterns shrink. The same amount is taken away each time. What comes next?">
-      <div class="slide-head"><span class="n">9</span><h2>Shrinking patterns</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Some patterns <b>shrink</b>: the same amount is <b>taken away</b> each time. What comes next?</span></div>
+    <section class="slide" data-say="Patterns hide in the hundred square. The coloured numbers go up by the same amount. Tap the next one.">
+      <div class="slide-head"><span class="n">9</span><h2>Hundred square patterns</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">The coloured numbers make a pattern. Tap the number that comes <b>next</b>.</span></div>
       <div class="stage">
-        <div class="stairs" id="stairs9"></div>
-        <div class="seq" id="seq9"></div>
-        <div class="choices" id="ch9"></div>
-        <p class="fb" id="fb9"></p>
+        <div class="h100" id="stairs9"></div>
+        <p class="fb" id="seq9" style="font-size:21px"></p>
+        <p class="fb" id="fb9" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score9"></p>
       </div>
     </section>
@@ -556,7 +600,7 @@
         <p class="fb" id="q10" style="font-size:24px"></p>
         <div class="strip" id="pic10" hidden></div>
         <div class="choices" id="ch10"></div>
-        <p class="fb" id="fb10"></p>
+        <p class="fb" id="fb10" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score10"></p>
       </div>
     </section>
@@ -567,7 +611,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb11"></p>
+        <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -662,6 +706,8 @@
     const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
     const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
     const el = typeof Audio === "function" ? new Audio() : null;
+    /* ehel-quiet-notice: a clip that STARTS is sound the child heard */
+    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });
 
     /* One clip per line asked for, kept by its exact text: a lesson repeats
        its instruction every time a child taps the speaker, and the endpoint
@@ -953,6 +999,7 @@
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
       u.onend = next;
+      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
       u.onerror = next;
       try { window.speechSynthesis.speak(u); } catch (e) { next(); }
     }
@@ -1342,6 +1389,7 @@
       intro.parentNode.insertBefore(bar, intro.nextSibling);
     });
   })();
+  /* ehel-stage2-line: held to Stage 2 by hold-stage-2.py (2026-09-11) */
   const $ = (id) => document.getElementById(id);
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -1396,7 +1444,7 @@
   const UNITS = [{ name: "AB", u: ["a", "b"] }, { name: "ABB", u: ["a", "b", "b"] }, { name: "ABC", u: ["a", "b", "c"] }, { name: "AABB", u: ["a", "a", "b", "b"] }, { name: "ABCD", u: ["a", "b", "c", "d"] }, { name: "ABAC", u: ["a", "b", "a", "c"] }];
   function smallestUnit(arr) { for (let L = 1; L <= Math.floor(arr.length / 2); L++) { let ok = true; for (let i = L; i < arr.length; i++) if (arr[i] !== arr[i - L]) { ok = false; break; } if (ok) return L; } return null; }
 
-  /* ---- 1: the part that repeats ---- */
+  /* ---- 1: the part that repeats (0096 2Sp.01 - a regular pattern has a part that repeats; describing sequences of objects began in Stage 1) ---- */
   let u1 = 0, tapped1 = new Set();
   function paint1() {
     const U = UNITS[u1].u, strip = Array.from({ length: 12 }, (_, i) => U[i % U.length]);
@@ -1409,7 +1457,7 @@
   $("strip1").addEventListener("click", (e) => { const b = e.target.closest(".slot"); if (!b) return; const i = Number(b.dataset.i), U = UNITS[u1].u; say("Shape " + (i + 1) + " is " + KINDS[U[i % U.length]].name + ". It is number " + ((i % U.length) + 1) + " in the part that repeats."); $("note1").textContent = "Shape " + (i + 1) + " is number " + ((i % U.length) + 1) + " of the " + U.length + " in the part that repeats."; });
   tapped1.add(0); paint1();
 
-  /* ---- 2: what comes next ---- */
+  /* ---- 2: what comes next (0096 2Sp.01) ---- */
   let r2 = 0, right2 = 0, lock2 = false, U2 = null, len2 = 0; const ROUNDS2 = 5;
   function round2() {
     lock2 = false; $("fb2").textContent = ""; $("fb2").className = "fb";
@@ -1433,7 +1481,7 @@
   });
   round2();
 
-  /* ---- 3: mend the pattern ---- */
+  /* ---- 3: mend the pattern (0096 2Sp.01) ---- */
   let r3 = 0, right3 = 0, lock3 = false, U3 = null, gap3 = 0; const ROUNDS3 = 4;
   function round3() {
     lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
@@ -1457,7 +1505,7 @@
   });
   round3();
 
-  /* ---- 4: make your own ---- */
+  /* ---- 4: make your own (0096 2Sp.01) ---- */
   let own4 = [];
   $("pal4").innerHTML = Object.keys(KINDS).map((k) => '<button type="button" data-k="' + k + '" aria-label="add a ' + KINDS[k].name + '">' + tile(k) + "</button>").join("");
   function paint4() {
@@ -1476,34 +1524,36 @@
   $("clear4").addEventListener("click", () => { own4 = []; paint4(); });
   paint4();
 
-  /* ---- 5: growing staircase ---- */
-  let start5 = 1, step5 = 2, terms5 = 3, builds5 = 0;
-  function counts(start, step, n) { return Array.from({ length: n }, (_, i) => start + i * step); }
-  function stairsHtml(start, step, n, opts) {
-    const c = counts(start, step, n), o = opts || {};
-    let h = c.map((v, i) => '<div class="term"><div class="col">' + Array.from({ length: v }, (_, j) => '<i class="' + (o.highlightNew && i === n - 1 && j >= v - step ? "new" : "") + '"></i>').join("") + "</div><b>" + v + "</b><small>pattern " + (i + 1) + "</small></div>").join("");
-    if (o.ghost) h += '<div class="term ghost"><div class="col">' + '<i></i>'.repeat(start + n * step) + "</div><b>?</b><small>pattern " + (n + 1) + "</small></div>";
-    return h;
+  /* ---- 5: counting on in steps from any number (0096 2Nc.04) ----
+     Was a growing staircase of blocks - a spatial pattern from adding a
+     constant, which is Stage 3's Nc.06. 2Nc.04 is 'count on and count back in ones,
+     twos, fives or tens, starting from any number (0 to 100)', and Grade 2 only
+     ever skip-counted from zero in an array. */
+  const STEPS = [1, 2, 5, 10];
+  const counts = (start, step, n) => Array.from({ length: n }, (_, i) => start + i * step);
+  let r5 = 0, right5 = 0, lock5 = false, s5 = null; const ROUNDS5 = 5;
+  function round5() {
+    lock5 = false; $("fb5").textContent = ""; $("fb5").className = "fb";
+    if (r5 >= ROUNDS5) { $("stairs5").innerHTML = ""; $("ch5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You counted on " + right5 + " of " + ROUNDS5 + " times!"; finish(4, "You can count on in steps from any number."); return; }
+    const step = STEPS[r5 % 4], start = step === 10 ? rnd(3, 49) : step === 5 ? rnd(2, 60) : rnd(11, 80), arr = counts(start, step, 4), ans = start + 4 * step;
+    s5 = { step, arr, ans };
+    $("score5").textContent = "Count " + (r5 + 1) + " of " + ROUNDS5;
+    $("stairs5").innerHTML = seqHtml(arr.concat([null]));
+    $("say5").innerHTML = "Start at <b>" + start + "</b> and count on in <b>" + (step === 1 ? "ones" : step === 2 ? "twos" : step === 5 ? "fives" : "tens") + "</b>. What comes next?";
+    $("ch5").innerHTML = shuffle([ans, ans + 1, ans - 1 === arr[3] ? ans + step : ans - 1]).filter((v, i, a) => a.indexOf(v) === i).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+    say("Start at " + start + " and count on in " + (step === 1 ? "ones" : step === 2 ? "twos" : step === 5 ? "fives" : "tens") + ". What comes next?");
   }
-  function paint5() {
-    $("stepLab5").textContent = "+" + step5;
-    $("stairs5").innerHTML = stairsHtml(start5, step5, terms5, { highlightNew: builds5 > 0, ghost: terms5 < 7 });
-    $("stepMinus5").disabled = step5 <= 1; $("stepPlus5").disabled = step5 >= 5; $("build5").disabled = terms5 >= 7;
-    const c = counts(start5, step5, terms5);
-    lines($("work5"), [
-      { k: "Blocks", v: c.join(", ") + (terms5 < 7 ? ", <b>?</b>" : "") },
-      { k: "Jumps", v: c.slice(1).map((v, i) => "+" + (v - c[i])).join(", ") + ": the same every time" },
-      { k: "Next one", v: "add " + step5 + " more: " + c[c.length - 1] + " + " + step5 + " = <b>" + (c[c.length - 1] + step5) + "</b>", total: true },
-    ]);
-    $("fb5").className = "fb " + (builds5 >= 3 ? "good" : ""); $("fb5").textContent = builds5 >= 3 ? "Each pattern has " + step5 + " more than the one before. That is what growing means." : "";
-  }
-  $("build5").addEventListener("click", () => { if (terms5 >= 7) return; terms5++; builds5++; paint5(); const c = counts(start5, step5, terms5); say("Pattern " + terms5 + " has " + c[terms5 - 1] + " blocks. " + step5 + " more than before."); if (builds5 >= 3) finish(4, "You can build a growing pattern!"); });
-  $("reset5").addEventListener("click", () => { terms5 = 3; paint5(); });
-  $("stepPlus5").addEventListener("click", () => { if (step5 < 5) { step5++; terms5 = 3; paint5(); say("Now it grows by " + step5 + " each time"); } });
-  $("stepMinus5").addEventListener("click", () => { if (step5 > 1) { step5--; terms5 = 3; paint5(); say("Now it grows by " + step5 + " each time"); } });
-  paint5();
+  $("ch5").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock5) return; lock5 = true; const ok = Number(b.dataset.v) === s5.ans;
+    $("ch5").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === s5.ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right5++;
+    $("stairs5").innerHTML = seqHtml(s5.arr.concat([s5.ans]));
+    const why = s5.arr[3] + " + " + s5.step + " = " + s5.ans + ".";
+    $("fb5").className = "fb " + (ok ? "good" : "bad"); $("fb5").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
+    r5++; setTimeout(round5, 2400);
+  });
 
-  /* ---- 6: find the rule ---- */
+  /* ---- 6: how does it go up? (0096 2Nc.06) - steps of 1, 2, 5 and 10 only; 'the rule' is Stage 3's Nc.05 ---- */
   let r6 = 0, right6 = 0, lock6 = false, seq6 = null; const ROUNDS6 = 4;
   function seqHtml(arr, opts) {
     const o = opts || {}; let h = "";
@@ -1512,31 +1562,32 @@
   }
   function round6() {
     lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
-    if (r6 >= ROUNDS6) { $("seq6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You found " + right6 + " of " + ROUNDS6 + " rules!"; finish(5, "You can find the rule of a growing pattern."); return; }
-    const step = [2, 3, 4, 5, 10, 6][rnd(0, 5)], start = rnd(1, 12);
+    if (r6 >= ROUNDS6) { $("seq6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You found " + right6 + " of " + ROUNDS6 + " patterns!"; finish(5, "You can say how a number pattern goes up."); return; }
+    const step = STEPS[rnd(0, 3)], start = rnd(1, 40);
     seq6 = { step, arr: counts(start, step, 5) };
     $("score6").textContent = "Pattern " + (r6 + 1) + " of " + ROUNDS6;
     $("seq6").innerHTML = seqHtml(seq6.arr, { hideJumps: true });
-    $("ch6").innerHTML = shuffle([step, step + 1, step - 1 > 0 ? step - 1 : step + 2]).map((v) => '<button type="button" class="choice" data-v="' + v + '">+' + v + "</button>").join("");
-    say(seq6.arr.join(", ") + ". What is added each time?");
+    $("ch6").innerHTML = shuffle(STEPS.filter((v) => v !== step).slice(0, 2).concat([step])).map((v) => '<button type="button" class="choice word" data-v="' + v + '">up in ' + (v === 1 ? "ones" : v === 2 ? "twos" : v === 5 ? "fives" : "tens") + "</button>").join("");
+    say(seq6.arr.join(", ") + ". How does it go up?");
   }
   $("ch6").addEventListener("click", (e) => {
     const b = e.target.closest(".choice"); if (!b || lock6) return; lock6 = true; const ok = Number(b.dataset.v) === seq6.step;
     $("ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === seq6.step) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right6++;
     $("seq6").innerHTML = seqHtml(seq6.arr);
-    const why = seq6.arr[1] + " − " + seq6.arr[0] + " = " + seq6.step + ", and every jump is the same. The rule is add " + seq6.step + ".";
+    const why = seq6.arr[1] + " − " + seq6.arr[0] + " = " + seq6.step + ", and every jump is the same: it goes up in " + (seq6.step === 1 ? "ones" : seq6.step === 2 ? "twos" : seq6.step === 5 ? "fives" : "tens") + ".";
     $("fb6").className = "fb " + (ok ? "good" : "bad"); $("fb6").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
     r6++; setTimeout(round6, 2300);
   });
   round6();
+  round5();
 
-  /* ---- 7: missing number ---- */
+  /* ---- 7: missing number (0096 2Nc.06) ---- */
   let r7 = 0, right7 = 0, lock7 = false, seq7 = null; const ROUNDS7 = 4;
   function round7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb";
     if (r7 >= ROUNDS7) { $("seq7").innerHTML = ""; $("ch7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You found " + right7 + " of " + ROUNDS7 + " missing numbers!"; finish(6, "You can find a missing number in a pattern."); return; }
-    const step = [2, 3, 4, 5, 10, 25][rnd(0, 5)], start = rnd(1, 15), full = counts(start, step, 6), gap = rnd(1, 5);
+    const step = STEPS[rnd(0, 3)], start = rnd(1, step === 10 ? 40 : 60), full = counts(start, step, 6), gap = rnd(1, 5);
     seq7 = { step, full, gap, arr: full.map((v, i) => (i === gap ? null : v)) };
     $("score7").textContent = "Pattern " + (r7 + 1) + " of " + ROUNDS7;
     $("seq7").innerHTML = seqHtml(seq7.arr, { hideJumps: true });
@@ -1549,88 +1600,95 @@
     $("ch7").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right7++;
     $("seq7").innerHTML = seqHtml(seq7.full); const q = $("seq7").querySelectorAll(".num")[seq7.gap]; q.classList.add("good");
-    const why = "The rule is add " + seq7.step + ". " + seq7.full[seq7.gap - 1] + " + " + seq7.step + " = " + ans + ".";
+    const why = "It goes up by " + seq7.step + " each time. " + seq7.full[seq7.gap - 1] + " + " + seq7.step + " = " + ans + ".";
     $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
     r7++; setTimeout(round7, 2300);
   });
   round7();
 
-  /* ---- 8: predict far ahead ---- */
-  let r8 = 0, right8 = 0, lock8 = false, p8 = null, hinted8 = false; const ROUNDS8 = 3;
+  /* ---- 8: counting back in steps (0096 2Nc.04) ----
+     Was 'Predict far ahead' - jumping to pattern ten with a table, which is
+     finding any term of a sequence, Stage 5's Nc.03. */
+  let r8 = 0, right8 = 0, lock8 = false, s8 = null; const ROUNDS8 = 5;
   function round8() {
-    lock8 = false; hinted8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("work8").innerHTML = ""; $("hint8").hidden = false;
-    if (r8 >= ROUNDS8) { $("stairs8").innerHTML = ""; $("table8").innerHTML = ""; $("ch8").innerHTML = ""; $("hint8").hidden = true; $("fb8").className = "fb good"; $("fb8").textContent = "You predicted " + right8 + " of " + ROUNDS8 + " far-off patterns!"; finish(7, "You can predict a pattern without drawing it."); return; }
-    const start = rnd(1, 5), step = [2, 3, 4, 5][rnd(0, 3)], target = [10, 12, 15, 20][rnd(0, 3)];
-    p8 = { start, step, target, ans: start + (target - 1) * step };
-    $("score8").textContent = "Pattern " + (r8 + 1) + " of " + ROUNDS8;
-    $("stairs8").innerHTML = stairsHtml(start, step, 4);
-    $("table8").innerHTML = "<tr><th>Pattern</th>" + [1, 2, 3, 4].map((i) => "<th>" + i + "</th>").join("") + '<th>…</th><th>' + target + "</th></tr><tr><td>Blocks</td>" + counts(start, step, 4).map((v) => "<td>" + v + "</td>").join("") + '<td class="dots">…</td><td class="q">?</td></tr>';
-    $("say8").innerHTML = "Pattern 1 has <b>" + start + "</b> and each pattern adds <b>" + step + "</b>. How many blocks in <b>pattern " + target + "</b>?";
-    const wrong1 = start + target * step, wrong2 = target * step;
-    $("ch8").innerHTML = shuffle([p8.ans, wrong1, wrong2 === p8.ans || wrong2 === wrong1 ? p8.ans - step : wrong2]).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
-    say("Pattern 1 has " + start + ", and each pattern adds " + step + ". How many in pattern " + target + "?");
+    lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb";
+    if (r8 >= ROUNDS8) { $("stairs8").innerHTML = ""; $("ch8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You counted back " + right8 + " of " + ROUNDS8 + " times!"; finish(7, "You can count back in steps from any number."); return; }
+    const step = STEPS[(r8 + 2) % 4], start = step === 10 ? rnd(55, 100) : step === 5 ? rnd(40, 100) : rnd(30, 100), arr = [start, start - step, start - 2 * step, start - 3 * step], ans = start - 4 * step;
+    s8 = { step, arr, ans };
+    $("score8").textContent = "Count " + (r8 + 1) + " of " + ROUNDS8;
+    $("stairs8").innerHTML = seqHtml(arr.concat([null]));
+    const w = step === 1 ? "ones" : step === 2 ? "twos" : step === 5 ? "fives" : "tens";
+    $("say8").innerHTML = "Start at <b>" + start + "</b> and count back in <b>" + w + "</b>. What comes next?";
+    $("ch8").innerHTML = shuffle([ans, ans + 2 * step, ans - 1]).filter((v, i, a) => a.indexOf(v) === i).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+    say("Start at " + start + " and count back in " + w + ". What comes next?");
   }
-  function hint8() {
-    hinted8 = true; $("hint8").hidden = true;
-    lines($("work8"), [
-      { k: "Pattern 1", v: "<b>" + p8.start + "</b> blocks to start" },
-      { k: "How many jumps?", v: "from pattern 1 to pattern " + p8.target + " is " + (p8.target - 1) + " jumps, not " + p8.target },
-      { k: "Each jump adds", v: p8.step + ", so " + (p8.target - 1) + " × " + p8.step + " = <b>" + (p8.target - 1) * p8.step + "</b>" },
-      { k: "Pattern " + p8.target, v: p8.start + " + " + (p8.target - 1) * p8.step + " = <b>" + p8.ans + "</b>", total: true },
-    ]);
-  }
-  $("hint8").addEventListener("click", () => { hint8(); say("From pattern 1 to pattern " + p8.target + " is " + (p8.target - 1) + " jumps of " + p8.step + "."); });
   $("ch8").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const ok = Number(b.dataset.v) === p8.ans;
-    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === p8.ans) c.classList.add("right"); });
+    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const ok = Number(b.dataset.v) === s8.ans;
+    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === s8.ans) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right8++;
-    if (!hinted8) hint8(); $("table8").querySelector("td.q").textContent = p8.ans;
-    $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + "Pattern " + p8.target + " has " + p8.ans + " blocks: " + p8.start + " + " + (p8.target - 1) + " × " + p8.step + "."; say((ok ? cheer() + " " : "") + "Pattern " + p8.target + " has " + p8.ans);
-    r8++; setTimeout(round8, 3000);
+    $("stairs8").innerHTML = seqHtml(s8.arr.concat([s8.ans]));
+    const why = s8.arr[3] + " − " + s8.step + " = " + s8.ans + ".";
+    $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
+    r8++; setTimeout(round8, 2400);
   });
   round8();
 
-  /* ---- 9: shrinking ---- */
-  let r9 = 0, right9 = 0, lock9 = false, s9 = null; const ROUNDS9 = 3;
+  /* ---- 9: patterns on the hundred square (0096 2Nc.06) ----
+     Was 'Shrinking patterns', a staircase that loses blocks - Stage 3's Nc.06 again. A
+     sequence to 100 on the hundred square is Stage 2's own. */
+  let r9 = 0, right9 = 0, lock9 = false, s9 = null; const ROUNDS9 = 4;
   function round9() {
     lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb";
-    if (r9 >= ROUNDS9) { $("stairs9").innerHTML = ""; $("seq9").innerHTML = ""; $("ch9").innerHTML = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You continued " + right9 + " of " + ROUNDS9 + " shrinking patterns!"; finish(8, "You can follow a shrinking pattern too."); return; }
-    const step = [2, 3, 4, 5][rnd(0, 3)], start = 12 + rnd(0, 8) + step * 2; const arr = [start, start - step, start - 2 * step, start - 3 * step];
-    s9 = { step, arr, ans: start - 4 * step };
+    if (r9 >= ROUNDS9) { $("stairs9").innerHTML = ""; $("seq9").textContent = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You found " + right9 + " of " + ROUNDS9 + " next numbers!"; finish(8, "You can find patterns on the hundred square."); return; }
+    const step = [10, 5, 2, 10][r9], start = step === 10 ? rnd(1, 9) : step === 5 ? rnd(1, 4) : rnd(1, 10), shown = counts(start, step, 4), ans = start + 4 * step;
+    s9 = { step, shown, ans };
     $("score9").textContent = "Pattern " + (r9 + 1) + " of " + ROUNDS9;
-    $("stairs9").innerHTML = arr.map((v, i) => '<div class="term"><div class="col">' + "<i></i>".repeat(v) + "</div><b>" + v + "</b><small>pattern " + (i + 1) + "</small></div>").join("") + '<div class="term ghost"><div class="col">' + "<i></i>".repeat(s9.ans) + "</div><b>?</b><small>pattern 5</small></div>";
-    $("seq9").innerHTML = seqHtml(arr.concat([null]), { hideJumps: true });
-    $("ch9").innerHTML = shuffle([s9.ans, s9.ans + step + step, s9.ans - 1]).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
-    say(arr.join(", ") + ". What comes next?");
+    $("stairs9").innerHTML = Array.from({ length: 100 }, (_, i) => '<button type="button" data-n="' + (i + 1) + '"' + (shown.includes(i + 1) ? ' class="on"' : "") + ">" + (i + 1) + "</button>").join("");
+    $("seq9").textContent = shown.join(", ") + ", ... ?";
+    say(shown.join(", ") + ". Tap the next number in the pattern.");
   }
-  $("ch9").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock9) return; lock9 = true; const ok = Number(b.dataset.v) === s9.ans;
-    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === s9.ans) c.classList.add("right"); });
+  $("stairs9").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock9) return; lock9 = true; const n = Number(b.dataset.n), ok = n === s9.ans;
+    const want = $("stairs9").querySelector('[data-n="' + s9.ans + '"]'); if (want) want.classList.add("right");
     if (!ok) b.classList.add("wrong"); else right9++;
-    $("seq9").innerHTML = seqHtml(s9.arr.concat([s9.ans])); $("seq9").querySelectorAll(".num")[4].classList.add("good");
-    const why = "Each time " + s9.step + " is taken away. " + s9.arr[3] + " − " + s9.step + " = " + s9.ans + ".";
+    const w = s9.step === 10 ? "ten, one row down" : s9.step === 5 ? "five" : "two";
+    const why = "It goes up by " + w + ": " + s9.shown[3] + " + " + s9.step + " = " + s9.ans + ".";
     $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
-    r9++; setTimeout(round9, 2300);
+    r9++; setTimeout(round9, 2600);
   });
   round9();
 
   /* ---- 10: check ---- */
+  /* ehel-gate-check: the end-of-lesson check completes the lesson only at 75% (owner,
+     2026-09-11, the rule Grade 1 already keeps). Below it the child sees the score,
+     how many they need, and a button that restarts the check. */
+  function retryCheck(fb, ch, got, total, restart) {
+    const need = Math.ceil(total * 0.75);
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
   const CHECK = [
-    { q: "In the pattern ABB ABB ABB, how long is the part that repeats?", opts: [3, 2, 9], a: 3 },
-    { q: "Circle, square, circle, square, circle… what comes next?", opts: ["square", "circle", "triangle"], a: "square" },
-    { q: "4, 7, 10, 13… what is the rule?", opts: ["add 3", "add 4", "add 7"], a: "add 3" },
-    { q: "2, 4, 6, ?, 10. What is missing?", opts: [8, 7, 9], a: 8 },
-    { q: "5, 10, 15, 20… what comes next?", opts: [25, 30, 21], a: 25 },
-    { q: "Pattern 1 has 3 blocks and each adds 2. Pattern 5 has…", opts: [11, 13, 10], a: 11 },
-    { q: "30, 27, 24, 21… what comes next?", opts: [18, 19, 24], a: 18 },
-    { q: "A growing pattern goes 1, 4, 7, 10. Is 15 in it?", opts: ["no", "yes"], a: "no" },
-    { q: "Which is a repeating pattern?", opts: ["AB AB AB", "1, 2, 4, 8", "3, 6, 9, 12"], a: "AB AB AB" },
-    { q: "From pattern 1 to pattern 10, how many jumps?", opts: [9, 10, 11], a: 9 },
+    { q: "In the pattern ABB ABB ABB, how long is the part that repeats?", opts: [3, 2, 9], a: 3, why: "A, B, B is three shapes, and then it starts again." },
+    { q: "Circle, square, circle, square, circle… what comes next?", opts: ["square", "circle", "triangle"], a: "square", why: "Circle and square take turns, so after a circle comes a square." },
+    { q: "10, 20, 30, 40… how does it go up?", opts: ["up in tens", "up in twos", "up in fives"], a: "up in tens", why: "Each number is 10 more than the one before." },
+    { q: "2, 4, 6, ?, 10. What is missing?", opts: [8, 7, 9], a: 8, why: "It goes up in twos: 6 + 2 = 8." },
+    { q: "5, 10, 15, 20… what comes next?", opts: [25, 30, 21], a: 25, why: "It goes up in fives: 20 + 5 = 25." },
+    { q: "Start at 37 and count on in tens: 37, 47, 57… what comes next?", opts: [67, 58, 77], a: 67, why: "Counting on in tens adds 10 each time: 57 + 10 = 67." },
+    { q: "Count back in twos: 30, 28, 26… what comes next?", opts: [24, 25, 22], a: 24, why: "Counting back in twos takes 2 away each time: 26 − 2 = 24." },
+    { q: "On a hundred square, 3, 13, 23 are coloured. What comes next?", opts: [33, 24, 30], a: 33, why: "Each one is 10 more, one row down: 23 + 10 = 33." },
+    { q: "Which is a repeating pattern?", opts: ["AB AB AB", "1, 2, 3, 4", "5, 10, 15, 20"], a: "AB AB AB", why: "A repeating pattern has a part that comes round again; the number patterns keep going up." },
+    { q: "Count back in fives from 50: 50, 45, 40… what comes next?", opts: [35, 30, 39], a: 35, why: "Counting back in fives takes 5 away each time: 40 − 5 = 35." }
   ];
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+      retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
     say(q.q.replace(/…/g, ""));
@@ -1639,13 +1697,13 @@
     const b = e.target.closest(".choice"); if (!b || lock10) return; lock10 = true; const q = CHECK[c10], ok = String(b.dataset.v) === String(q.a);
     $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right10++;
-    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
-    c10++; setTimeout(round10, 1300);
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""); say((ok ? cheer() + " " : "It is " + q.a + ". ") + (q.why || ""));
+    c10++; setTimeout(round10, 2800);
   });
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["🔁", "The part that repeats"], ["➡️", "What comes next"], ["🩹", "Mend the pattern"], ["🎨", "Make your own"], ["📶", "Growing patterns"], ["🔎", "Find the rule"], ["❓", "The missing number"], ["🔮", "Predict far ahead"], ["📉", "Shrinking patterns"], ["✅", "Show what I know"]];
+  const STICKERS = [["🔁", "The part that repeats"], ["➡️", "What comes next"], ["🩹", "Mend the pattern"], ["🎨", "Make your own"], ["👣", "Counting on in steps"], ["📈", "How it goes up"], ["❓", "The missing number"], ["⏪", "Counting back"], ["💯", "Hundred square patterns"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -1766,6 +1824,13 @@
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -1790,6 +1855,19 @@
       progressUnit: "l04",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -1947,4 +2025,48 @@
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+</script>
+
+<style>/* ehel-quiet-notice */
+  /* IN THE FLOW, under the line the child tapped - never an overlay. The first
+     version floated (position: fixed) and, measured at 375 px, sat on top of the
+     day cards the child had to tap, squeezed to 187 px wide by the left: 50%
+     shrink-to-fit trap. These pages scroll on a phone, so any overlay covers
+     whatever happens to be in view. The card surface, not --accent-soft: in the
+     dark theme that token is translucent, and the activity showed through it. */
+  .eh-quiet { display: flex; gap: 12px; align-items: center; margin: 12px 0;
+    padding: 12px 14px 12px 16px; border-radius: 14px;
+    background: var(--card, #FFFFFF); color: var(--ink, #1B1410);
+    border: 2px solid var(--accent, #E9744F); font-size: 17px; line-height: 1.35; }
+  .eh-quiet[hidden] { display: none; }
+  .eh-quiet-msg { flex: 1 1 auto; }
+  .eh-quiet-ok { flex: 0 0 auto; min-width: 56px; min-height: 44px; border-radius: 10px;
+    border: 0; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--accent, #E9744F); color: var(--accent-ink, #1B1410); }
+  .eh-quiet-ok:focus-visible { outline: 4px solid var(--ink, #1B1410); outline-offset: 2px; }
+</style>
+<script>/* ehel-quiet-notice */
+(function () {
+  var box = document.getElementById("ehQuiet");
+  if (!box) return;
+  var shown = false;
+  box.querySelector(".eh-quiet-ok").addEventListener("click", function () { box.hidden = true; });
+  function active() { return document.querySelector("section.slide.active"); }
+  document.addEventListener("click", function (e) {
+    var tap = e.target.closest && e.target.closest(".speak, .explain");
+    if (shown || !tap) return;
+    var asked = Date.now(), slide = active();
+    /* where the child is looking: the spoken line the speaker sits in */
+    var at = tap.closest(".say") || tap.parentElement;
+    setTimeout(function () {
+      if (shown || (window.__ehelHeard || 0) >= asked) return;   /* something played */
+      if (active() !== slide) return;                             /* the child moved on */
+      shown = true;
+      box.querySelector(".eh-quiet-msg").textContent =
+        "Can't hear it? The sound is not working just now. You can read the words on the screen.";
+      if (at && at.isConnected) at.insertAdjacentElement("afterend", box);
+      box.hidden = false;
+    }, 6000);
+  }, true);
+})();
 </script>

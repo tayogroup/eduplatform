@@ -279,6 +279,7 @@
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
       if (got18 >= 4) finish(6, "You have finished the check. Well done.");
+      else retryCheck($("fb18"), $("ch18"), got18, order18.length, 4, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
       return;
     }
     const item = nextQ(order18[qi]);

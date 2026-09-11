@@ -110,8 +110,22 @@ if (!UPLOAD) process.exit(0);
 
 const K = key();
 
+/* MODULES FIRST, then the lessons, then the hub. A page is live the moment its
+ * PUT lands, and a page that imports a module not yet on storage fails its
+ * whole static import graph - class chat, Hand up, Wehel, progress and focus
+ * mode together - for anyone who opens it in that window. Worse, their miss can
+ * be cached at the edge on a path that did not exist before. It became a real
+ * window on 2026-09-11, when the live Grade 1 and 2 pages first imported
+ * seb-session.js, a module never before deployed beside them. */
+const putOrder = [
+  ...plan.filter((f) => f.remote.endsWith(".js")),
+  ...plan.filter((f) => !f.remote.endsWith(".js") && f.remote !== "index.html"),
+  ...plan.filter((f) => f.remote === "index.html"),
+];
+if (putOrder.length !== plan.length) { console.error("upload order lost a file"); process.exit(2); }
+
 console.log("\nPUT:");
-for (const f of plan) {
+for (const f of putOrder) {
   const r = await fetch(`${STORAGE}/${ZONE}/${enc(REMOTE)}/${enc(f.remote)}`, {
     method: "PUT",
     headers: { AccessKey: K, "Content-Type": ctype(f.remote) },

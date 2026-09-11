@@ -438,6 +438,18 @@
   /* Every call site in this lesson already says say(...). It now goes to Sonia. */
   function say(text) { VOICE.speak(text); }
 
+  /* ehel-g3-validation-fixes: a check below its pass mark shows how many are needed and a Try
+     again button, instead of stopping with nothing to press. */
+  function retryCheck(fb, ch, got, total, need, restart) {
+    const msg = "You got " + got + " out of " + total + ". Get " + need + " right to finish. Have another go!";
+    fb.className = "fb bad"; fb.textContent = msg; say(msg);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "big retry-check"; b.textContent = "Try again";
+    b.addEventListener("click", function () { restart(); });
+    ch.innerHTML = ""; ch.appendChild(b);
+    try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
+
   /* ==================================================================
      WHAT SHE SAYS BACK
 

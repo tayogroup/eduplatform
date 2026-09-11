@@ -50,7 +50,7 @@ def main():
                '<link rel="stylesheet" href="%s">\n' % FONTS +
                "<style>\n" + head + extra + "</style>\n" + body +
                "\n<script>\n" + shell + slides + "\n})();\n</script>\n")
-        io.open(os.path.join(HERE, out), "w", encoding="utf-8").write(doc)
+        io.open(os.path.join(HERE, out), "w", encoding="utf-8", newline="").write(doc)   # LF, as the repo stores it
         n = doc.count('<section class="slide"')
         print("  %-30s %6d bytes  %d slides (%d teaching)" % (out, len(doc), n, n - 2))
     print("\n%d lessons built" % len(LESSONS))

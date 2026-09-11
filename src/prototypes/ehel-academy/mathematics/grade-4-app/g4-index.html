@@ -1,7 +1,13 @@
+<!doctype html>
+<html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grade 4 Mathematics</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>/* ehel-self-hosted-fonts: from our own CDN, not Google - see lesson-app-tools/self-host-fonts.py */
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("../../shared/fonts/AtkinsonHyperlegible-normal-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../../shared/fonts/Inter-normal-300-700.woff2") format("woff2"); }
+</style>
 <style>
   /*        Grade 4 Mathematics - the way in. Built on the Grade 2 index, which was built
        on Grade 1's, so moving up a year reads as continuity rather than a jump: same
@@ -148,16 +154,67 @@
     a.lesson { transition: none; }
     a.lesson:hover, a.lesson:focus-visible { transform: none; }
   }
+  /* ehel-stage2-line */
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
+
+/* ==== lesson-app-tools/build-grownup-section.py ==== */
+/* The adult's half of the hub. Collapsed by default: a child arriving at the
+   hub should meet the lessons, not their answer keys. */
+.grownup { margin: 26px 0 10px; }
+.grownup h3 { font-size: 20px; margin: 0 0 6px; }
+.grownup > p { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0 0 14px; }
+details.gu {
+  border: 2px solid var(--line); border-radius: 14px; background: var(--card);
+  padding: 10px 14px; margin: 0 0 10px;
+}
+details.gu > summary { cursor: pointer; font-size: 16px; }
+details.gu .gu-meta { color: var(--muted); font-weight: 600; font-size: 14px; }
+details.gu h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--muted); margin: 14px 0 6px; }
+details.gu ul { margin: 0; padding-left: 20px; }
+details.gu li { font-size: 15px; line-height: 1.5; margin: 0 0 4px; }
+details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; margin: 0 0 6px; }
+@media print {
+  details.gu { break-inside: avoid; }
+  details.gu > summary { list-style: none; }
+  details.gu[open] > summary::marker { content: ""; }
+}
+/* ==== end lesson-app-tools/build-grownup-section.py ==== */
 </style>
 
 <div class="wrap">
+  <a class="eh-skip" href="#lessons">Skip to the lesson</a>
   <header>
     <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
     <h1>Grade 4 <em>Mathematics</em></h1>
-    <p class="lede">Eight lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind.</p>
+    <p class="lede">Eight lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind. About 205 minutes in all.</p>
   </header>
 
-  <div class="grid">
+  <div class="grid" id="lessons" role="main">
 
         <a class="lesson c-number" href="big-numbers-below-zero.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -168,7 +225,7 @@
       <span class="strand">Place value</span>
       <h2>Big Numbers and Below Zero</h2>
       <p class="covers">Numbers up to a hundred thousand and down past zero. What each digit is worth, building a number from its parts and swapping one thousand for ten hundreds, ten times and a hundred times, counting on in steps of any size, putting positives and negatives in order, and rounding to every place from ten to a hundred thousand.</p>
-      <p class="go">10 steps <span aria-hidden="true">&rarr;</span></p>
+      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-pattern" href="patterns-and-squares.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -179,7 +236,7 @@
       <span class="strand">Counting and sequences</span>
       <h2>Patterns and Square Numbers</h2>
       <p class="covers">What numbers do when you look for the rule. Odd and even and what adding them always gives, a shape standing for a number nobody has told you, sequences that step evenly and ones that do not, and the dots that make a square.</p>
-      <p class="go">10 steps <span aria-hidden="true">&rarr;</span></p>
+      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-number" href="ways-to-calculate.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -190,7 +247,7 @@
       <span class="strand">Calculating</span>
       <h2>Ways to Calculate</h2>
       <p class="covers">Reading and writing numbers in words, estimating before you work, all ten times tables and the trick of regrouping them, multiples and factor pairs, and the tests that tell you what divides exactly.</p>
-      <p class="go">11 steps <span aria-hidden="true">&rarr;</span></p>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-frac" href="parts-of-a-whole.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -201,7 +258,7 @@
       <span class="strand">Fractions</span>
       <h2>Parts of a Whole</h2>
       <p class="covers">More parts means smaller parts. A fraction as a division, a fraction of an amount, equivalence, per cent, comparing, and adding and taking away with the same bottom number.</p>
-      <p class="go">7 steps <span aria-hidden="true">&rarr;</span></p>
+      <span class="foot"><span class="steps">7 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-measure" href="telling-the-time.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -212,7 +269,7 @@
       <span class="strand">Time</span>
       <h2>Telling the Time</h2>
       <p class="covers">Units of time and how to convert them, one moment written three ways, reading a timetable, and working out how long something takes.</p>
-      <p class="go">10 steps <span aria-hidden="true">&rarr;</span></p>
+      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-shape" href="shape-and-measures.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -223,7 +280,7 @@
       <span class="strand">Shape and measures</span>
       <h2>Shape and Measures</h2>
       <p class="covers">The faces of a solid and the nets that fold into one, every line of symmetry, tessellation, area without counting, estimating an odd shape on a grid, reading between the marks on a scale, and naming an angle.</p>
-      <p class="go">8 steps <span aria-hidden="true">&rarr;</span></p>
+      <span class="foot"><span class="steps">8 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-shape" href="where-things-are.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -234,7 +291,7 @@
       <span class="strand">Position and direction</span>
       <h2>Where Things Are</h2>
       <p class="covers">Saying where something is and how to get there: reflecting a shape in a mirror line, the eight points of the compass, and reading coordinates by going along first and then up.</p>
-      <p class="go">9 steps <span aria-hidden="true">&rarr;</span></p>
+      <span class="foot"><span class="steps">9 steps &middot; about 25 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-data" href="asking-sorting-chance.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -245,16 +302,348 @@
       <span class="strand">Statistics and probability</span>
       <h2>Asking, Sorting and Chance</h2>
       <p class="covers">Plan a question worth asking, tally it, show the same data three ways, sort it two ways at once, compare two classes, then put events on a line from impossible to certain and spin a spinner a thousand times.</p>
-      <p class="go">7 steps <span aria-hidden="true">&rarr;</span></p>
+      <span class="foot"><span class="steps">7 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
 
-    <p class="note"><b>For the grown-up.</b> These eight lessons cover all 46 objectives of Cambridge Primary Mathematics Stage 4 &mdash; number, fractions and percentages, time, geometry and measure, position, and statistics and probability. Cards that share a colour share a strand.</p>
+  </div>
+
+  <p class="note"><b>For the grown-up.</b> These eight lessons cover all 46 objectives of Cambridge Primary Mathematics Stage 4 &mdash; number, fractions and percentages, time, geometry and measure, position, and statistics and probability. Cards that share a colour share a strand.</p>
+  <!-- GROWNUP:START  built by lesson-app-tools/build-grownup-section.py -->
+  <section class="grownup" id="grownups">
+    <h3>For teachers and parents</h3>
+    <p>What each lesson teaches, in Cambridge's own words; what every step asks the child to do; the check at the end, its pass mark and its answers; and one thing to try at home with things you already have. The eight lessons are listed in the order the course runs them, but each one stands on its own, so a child can start with any of them. The minutes are an estimate of about two and a half minutes a step, not yet timed against a real class, so treat them as a guide to the length of a sitting rather than a plan.</p>
+    <details class="gu">
+      <summary><b>Lesson 1: Big Numbers and Below Zero</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 7 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
+      <ul>
+        <li><b>4Nc.01</b> Count on and count back in steps of constant size: 1-digit numbers, tens, hundreds or thousands, starting from any number, and extending beyond zero to include negative numbers.</li>
+        <li><b>4Ni.01</b> Read and write number names and whole numbers greater than 1000 and less than 0.</li>
+        <li><b>4Np.01</b> Understand and explain that the value of each digit in numbers is determined by its position in that number.</li>
+        <li><b>4Np.02</b> Use knowledge of place value to multiply and divide whole numbers by 10 and 100.</li>
+        <li><b>4Np.03</b> Compose, decompose and regroup whole numbers.</li>
+        <li><b>4Np.04</b> Understand the relative size of quantities to compare and order positive and negative numbers, using the symbols =, &gt; and &lt;.</li>
+        <li><b>4Np.05</b> Round numbers to the nearest 10, 100, 1000, 10 000 or 100 000.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Numbers to 10,000</b> &middot; Ten hundreds make a thousand. Build a number with thousands, hundreds, tens and ones.</li>
+        <li><b>What each digit is worth</b> &middot; Where a digit sits decides what it is worth. The same eight can mean eight, or eighty thousand.</li>
+        <li><b>The same number, regrouped</b> &middot; One thousand can be swapped for ten hundreds. The number has not changed, only the way it is stored.</li>
+        <li><b>Ten times, a hundred times</b> &middot; Multiplying by ten does not add a zero. Every digit moves one place to the left.</li>
+        <li><b>Counting on in steps</b> &middot; Find the step from one term to the next, then use it to fill the gap.</li>
+        <li><b>Below zero</b> &middot; The thermometer goes below zero. Count down through zero into the negative numbers.</li>
+        <li><b>Below zero, in order</b> &middot; On the number line, further right always means bigger, even when the numbers are below zero.</li>
+        <li><b>Smallest to largest</b> &middot; Order them from smallest to largest. Below zero, the bigger the digits look, the smaller the number is.</li>
+        <li><b>Which one is it nearer?</b> &middot; Rounding is asking which one it is nearer to. Find the two neighbours and compare the distances.</li>
+        <li><b>One number, five answers</b> &middot; One number rounds to different answers depending on which place you are asked for.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>7 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>What is 3,406 × 100? <b>340,600</b> &mdash; Every digit moves two places left, and two zeros fill the empty places.</li>
+        <li>Which is bigger, −9 or −2? <b>−2</b> &mdash; −2 is further right on the number line, so it is the bigger of the two — even though 9 is bigger than 2.</li>
+        <li>How many hundreds are there in 4,072? <b>0</b> &mdash; The hundreds place holds a 0. The 4 is thousands and the 7 is tens.</li>
+        <li>It is 3°C and it gets 5 degrees colder. What is the temperature? <b>−2°C</b> &mdash; Count back from 3 through zero: 2, 1, 0, −1, −2.</li>
+        <li>What is the 6 worth in 63,451? <b>60 000</b> &mdash; It sits in the ten thousands column, so it is worth 6 × 10 000.</li>
+        <li>Which of these is the same number as 4,208? <b>3 thousands, 12 hundreds, 0 tens, 8 ones</b> &mdash; One thousand was swapped for ten hundreds: 3,000 + 1,200 + 8 = 4,208.</li>
+        <li>A sequence goes 1,240, 1,290, 1,340 … what comes next? <b>1,390</b> &mdash; Each step adds 50, because 1,290 − 1,240 = 50. So 1,340 + 50 = 1,390.</li>
+        <li>Which list is in order, smallest first? <b>−8, −3, 0, 5</b> &mdash; Further left on the line is smaller, so −8 comes before −3.</li>
+        <li>Round 4,650 to the nearest 100. <b>4,700</b> &mdash; It is exactly halfway between 4,600 and 4,700, and halfway is the case that rounds up.</li>
+        <li>Round 47,318 to the nearest 1000. <b>47,000</b> &mdash; It sits between 47,000 and 48,000, and it is only 318 past 47,000. The other two answers round it to the nearest 100 and the nearest 10 000.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Look at a weather forecast or a freezer thermometer for temperatures below zero, and put them in order from coldest to warmest. Find a big number in a newspaper and say what each digit is worth.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 2: Patterns and Square Numbers</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 7 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
+      <ul>
+        <li><b>4Nc.02</b> Recognise and explain generalisations when adding and subtracting combinations of even and odd numbers.</li>
+        <li><b>4Nc.03</b> Recognise the use of objects, shapes or symbols to represent unknown quantities in addition and subtraction calculations.</li>
+        <li><b>4Nc.04</b> Recognise and extend linear and non-linear sequences, and describe the term-to- term rule.</li>
+        <li><b>4Nc.05</b> Recognise and extend the spatial pattern of square numbers.</li>
+        <li><b>4Ni.01</b> Read and write number names and whole numbers greater than 1000 and less than 0.</li>
+        <li><b>4Np.02</b> Use knowledge of place value to multiply and divide whole numbers by 10 and 100.</li>
+        <li><b>4Np.05</b> Round numbers to the nearest 10, 100, 1000, 10 000 or 100 000.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Odd, even, and what happens</b> &middot; Pair the counters up. If one is left over the number is odd. Now see what happens when you add two of them together.</li>
+        <li><b>Taking away, odd and even</b> &middot; Adding is not the only thing odd and even numbers do. See what happens when you take one away from the other.</li>
+        <li><b>The shape that hides a number</b> &middot; The shape stands for a number nobody has told you yet. Work out what it must be.</li>
+        <li><b>When the shape comes first</b> &middot; Sometimes the shape comes first, and then it is the whole amount that nobody has told you.</li>
+        <li><b>The same shape twice</b> &middot; When the same shape appears twice it stands for the same number both times.</li>
+        <li><b>What comes next?</b> &middot; Find the step from one term to the next. Some sequences add the same amount every time and some do not.</li>
+        <li><b>Same step, or changing step?</b> &middot; Some sequences take the same step every time and some do not. Decide which this one is.</li>
+        <li><b>Say the rule</b> &middot; Saying the rule out loud is worth more than one more term, because the rule gives you every term there will ever be.</li>
+        <li><b>Numbers that make squares</b> &middot; A square number is one you can arrange into a perfect square of dots.</li>
+        <li><b>Between one square and the next</b> &middot; To grow a square by one on each side you add a whole L shape round two of its edges.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>7 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>An odd number added to an odd number always gives: <b>An even number</b> &mdash; Each odd number has one counter left over. The two leftovers pair up with each other, so nothing is left.</li>
+        <li>If 38 + ▲ = 62, what is ▲? <b>24</b> &mdash; Undo the addition: 62 − 38 = 24.</li>
+        <li>3, 6, 12, 24 … is this linear or non-linear? <b>Non-linear</b> &mdash; The steps are +3, +6, +12 — they change every time, so it is not linear. The rule is to double.</li>
+        <li>Which of these is a square number? <b>49</b> &mdash; 49 is 7 × 7, so its dots make a 7 by 7 square.</li>
+        <li>An odd number take away an odd number always gives: <b>An even number</b> &mdash; Each one has a single leftover, and those two leftovers cancel — so nothing is left over and the answer pairs up exactly.</li>
+        <li>If ▲ − 14 = 30, what is ▲? <b>44</b> &mdash; Here the shape is the WHOLE, before anything was taken. Put the pieces back: 30 + 14 = 44.</li>
+        <li>If ■ + ■ + ■ = 24, what is ■? <b>8</b> &mdash; The same shape is the same number every time, so 24 splits into three equal parts: 24 ÷ 3 = 8.</li>
+        <li>5, 12, 19, 26 … is this linear or non-linear? <b>Linear</b> &mdash; The steps are +7, +7, +7 — the same every time, which is what linear means.</li>
+        <li>2, 5, 9, 14 … what is the term-to-term rule? <b>Add one more each time than you added before</b> &mdash; The steps are +3, +4, +5. They are not the same, so it is not add 3 every time — each step is one bigger than the last.</li>
+        <li>How many dots turn a 6 by 6 square into a 7 by 7 one? <b>13</b> &mdash; An arm of 6 down one side, an arm of 6 along the other, and 1 in the corner: 6 + 6 + 1 = 13. That is why the gaps between square numbers are the odd numbers.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Make square numbers with coins or buttons: 2 by 2, 3 by 3, 4 by 4, and count each square. Then add two odd numbers a few times and see what kind of number you always get.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 3: Ways to Calculate</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 9 objectives &middot; 11 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
+      <ul>
+        <li><b>4Nc.02</b> Recognise and explain generalisations when adding and subtracting combinations of even and odd numbers.</li>
+        <li><b>4Ni.01</b> Read and write number names and whole numbers greater than 1000 and less than 0.</li>
+        <li><b>4Ni.02</b> Estimate, add and subtract whole numbers with up to three digits.</li>
+        <li><b>4Ni.03</b> Understand the associative property of multiplication, and use this to simplify calculations.</li>
+        <li><b>4Ni.04</b> Know all times tables from 1 to 10.</li>
+        <li><b>4Ni.05</b> Estimate and multiply whole numbers up to 1000 by 1-digit whole numbers.</li>
+        <li><b>4Ni.06</b> Estimate and divide whole numbers up to 100 by 1-digit whole numbers.</li>
+        <li><b>4Ni.07</b> Understand the relationship between multiples and factors.</li>
+        <li><b>4Ni.08</b> Use knowledge of factors and multiples to understand tests of divisibility by 2, 5, 10, 25, 50 and 100.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Saying it in words</b> &middot; Every number has a name. Break it into thousands, hundreds, tens and ones and the name reads itself.</li>
+        <li><b>Estimate before you work</b> &middot; Round the numbers to something easy, work out roughly what the answer should be, and only then do it exactly.</li>
+        <li><b>Adding it exactly</b> &middot; Now do it exactly. Add the ones first, and when a column makes ten or more, carry the ten into the next column.</li>
+        <li><b>Taking away exactly</b> &middot; Taking away needs the opposite of carrying. When a column has too little, exchange a ten from next door.</li>
+        <li><b>Tables, and a shortcut</b> &middot; Multiplication can be regrouped. Choose the pair that is easy and do that one first.</li>
+        <li><b>Double one, halve the other</b> &middot; Doubling one number and halving the other leaves the answer alone, and often makes the sum easy.</li>
+        <li><b>Multiplying a big number</b> &middot; To multiply a big number, break it into its parts, multiply each one, and add them back together.</li>
+        <li><b>Sharing out, and what is left</b> &middot; Dividing is taking groups away until you cannot take another whole one. What is left over is the remainder.</li>
+        <li><b>6s, 7s, 9s and factor pairs</b> &middot; The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.</li>
+        <li><b>Multiples and factors, both ways</b> &middot; Multiple and factor are the same fact said from the two ends. The small number is a factor and the big one is a multiple.</li>
+        <li><b>Does it divide exactly?</b> &middot; You can tell whether a number divides exactly without doing the division at all. You only have to look at the end of it.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>8 of 11</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>How do you write 4,207 in words? <b>Four thousand two hundred and seven</b> &mdash; Four thousand, then the rest: two hundred and seven.</li>
+        <li>Roughly, what is 412 × 6? <b>About 2,400</b> &mdash; Round 412 to 400. 400 × 6 = 2,400, and the exact answer is 2,472.</li>
+        <li>Does 375 divide exactly by 25? <b>Yes</b> &mdash; The last two digits are 75, and 00, 25, 50 and 75 all divide by 25. In fact 375 = 25 × 15.</li>
+        <li>4 × 25 × 3 is easiest if you first work out: <b>4 × 25</b> &mdash; 4 × 25 is 100, and 100 × 3 is easy. Regrouping never changes the answer.</li>
+        <li>Which of these is a factor pair of 24? <b>4 and 6</b> &mdash; 4 × 6 = 24. A factor pair is two numbers that multiply to give the number.</li>
+        <li>What is 347 + 185? <b>532</b> &mdash; 7 + 5 = 12, so carry a ten; 4 + 8 + 1 = 13, so carry a hundred; 3 + 1 + 1 = 5. The other two answers are what you get by dropping one of those carries.</li>
+        <li>What is 623 − 187? <b>436</b> &mdash; 3 is less than 7, so exchange a ten: 13 − 7 = 6. Taking the smaller digit from the bigger in each column instead gives 564, which is the mistake to avoid.</li>
+        <li>16 × 25 is the same as: <b>8 × 50</b> &mdash; Halve one and double the other and they cancel out, so the answer cannot change: both come to 400. Doubling both would make it four times too big.</li>
+        <li>What is 342 × 6? <b>2,052</b> &mdash; 300 × 6 = 1,800, 40 × 6 = 240 and 2 × 6 = 12. Add all three: 2,052. Forgetting the 40 leaves you 240 short.</li>
+        <li>What is 87 ÷ 5? <b>17 remainder 2</b> &mdash; 5 × 17 = 85, and 2 are left over — not enough to make another group of 5. Check it: 85 + 2 = 87.</li>
+        <li>Which sentence is true about 6 and 24? <b>6 is a factor of 24</b> &mdash; 6 × 4 = 24 says both things at once: the smaller number is the factor and the bigger one is the multiple.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Before adding up a shopping list, estimate the total, then work it out exactly and compare. Pick a number such as 24 and find every pair of numbers that multiply to make it.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 4: Parts of a Whole</b> <span class="gu-meta">7 steps &middot; about 20 min &middot; 7 objectives &middot; 8 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
+      <ul>
+        <li><b>4Nf.01</b> Understand that the more parts a whole is divided into, the smaller the parts become.</li>
+        <li><b>4Nf.02</b> Understand that a fraction can be represented as a division of the numerator by the denominator (unit fractions and three-quarters).</li>
+        <li><b>4Nf.03</b> Understand that unit fractions can act as operators.</li>
+        <li><b>4Nf.04</b> Recognise that two proper fractions can have an equivalent value.</li>
+        <li><b>4Nf.05</b> Estimate, add and subtract fractions with the same denominator.</li>
+        <li><b>4Nf.06</b> Understand percentage as the number of parts in each hundred, and use the percentage symbol (%).</li>
+        <li><b>4Nf.07</b> Use knowledge of equivalence to compare and order proper fractions, using the symbols =, &gt; and &lt;.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>More parts, smaller parts</b> &middot; The whole stays the same size. Cut it into more pieces and every piece has to get smaller.</li>
+        <li><b>A fraction is a division</b> &middot; Share the cakes out fairly. The fraction each child gets is simply the cakes divided by the children.</li>
+        <li><b>A fraction of an amount</b> &middot; A unit fraction tells you how many equal groups to make. One of those groups is the answer.</li>
+        <li><b>Same value, different name</b> &middot; Two fractions can look completely different and still be worth exactly the same.</li>
+        <li><b>Out of a hundred</b> &middot; A percentage is simply how many parts in every hundred. The sign per cent means out of a hundred.</li>
+        <li><b>Which is bigger?</b> &middot; To compare two fractions, give them the same bottom number first. Then you are only comparing the top ones.</li>
+        <li><b>Adding and taking away</b> &middot; When the bottom numbers match, you are counting the same kind of piece. Guess first, then work it out.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>6 of 8</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>Which is the bigger piece, a fifth or an eighth of the same cake? <b>A fifth</b> &mdash; Cutting into 5 makes bigger pieces than cutting into 8, because the cake is shared fewer ways.</li>
+        <li>Two cakes shared fairly between 8 children. How much does each child get? <b>A quarter</b> &mdash; 2 ÷ 8 = two eighths, and two eighths is the same as one quarter.</li>
+        <li>What is a quarter of 24? <b>6</b> &mdash; Make 4 equal groups: 24 ÷ 4 = 6 in each, and one group is the quarter.</li>
+        <li>Which fraction is equivalent to three quarters? <b>Six eighths</b> &mdash; Multiply top and bottom by 2: 3 × 2 = 6 and 4 × 2 = 8, so three quarters is six eighths.</li>
+        <li>37 squares of a hundred square are shaded. What percentage is that? <b>37%</b> &mdash; Per cent means out of a hundred, so 37 out of 100 is simply 37%.</li>
+        <li>Which sign belongs between two thirds and three quarters? <b>&lt;</b> &mdash; In twelfths they are eight twelfths and nine twelfths, so two thirds is the smaller.</li>
+        <li>What is three fifths add one fifth? <b>Four fifths</b> &mdash; The pieces are the same size, so just count them: 3 fifths and 1 more fifth is 4 fifths.</li>
+        <li>Half of a hundred square is shaded. Which of these is NOT another name for it? <b>5%</b> &mdash; A half is 50 out of 100, so 50%. 5% would be only five squares.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Cut a paper circle into eighths and compare: which is bigger, three eighths or one half? Find a quarter of 20 beans by sharing them into four equal groups.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 5: Telling the Time</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 4 objectives &middot; 14 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
+      <ul>
+        <li><b>4Gt.01</b> Understand the direct relationship between units of time, and convert between them.</li>
+        <li><b>4Gt.02</b> Read and record time accurately in digital notation (12- and 24-hour) and on analogue clocks.</li>
+        <li><b>4Gt.03</b> Interpret and use the information in timetables (12- and 24-hour clock).</li>
+        <li><b>4Gt.04</b> Find time intervals between different units: days, weeks, months and years seconds, minutes and hours that do not bridge through 60.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>How long is that?</b> &middot; Sixty seconds make a minute, sixty minutes make an hour. Pick a unit and see how the smaller ones group together inside it.</li>
+        <li><b>Swapping units, both ways</b> &middot; Swapping between units works both ways. Multiply to go to the smaller unit and divide to go back.</li>
+        <li><b>Three ways to say one time</b> &middot; One moment can be written three ways. On a clock face, as a twelve hour time, or as a twenty four hour time. The am or pm tells you which half of the day it is.</li>
+        <li><b>Read the clock</b> &middot; Now read the clock with nothing to help you. The short hand gives the hour and the long hand gives the minutes.</li>
+        <li><b>Writing it in 24-hour</b> &middot; Twenty four hour time never needs am or pm, because every hour of the day has its own number.</li>
+        <li><b>Reading a timetable</b> &middot; A timetable reads down for one bus and across for one stop. Find the bus that gets you there in time.</li>
+        <li><b>Which one do you catch?</b> &middot; A timetable is only useful if you can work out which one to catch. Read across to your stop and pick the last one that gets you there in time.</li>
+        <li><b>How long between?</b> &middot; To find how long something lasted, count on from the start to the finish.</li>
+        <li><b>Over the end of the month</b> &middot; Counting days past the end of a month means knowing how many days that month has.</li>
+        <li><b>Months and years apart</b> &middot; Months and years are units of time too, and the gaps between them are counted the same way.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>11 of 14</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>How many minutes are there in 3 hours? <b>180</b> &mdash; Each hour is 60 minutes, and 3 × 60 = 180.</li>
+        <li>How many days are there in 4 weeks? <b>28</b> &mdash; A week is 7 days, and 4 × 7 = 28.</li>
+        <li>Written as a 24-hour time, what is 2:30 pm? <b>14:30</b> &mdash; Afternoon times add 12 to the hour: 2 + 12 = 14.</li>
+        <li>Written as a 12-hour time, what is 19:05? <b>7:05 pm</b> &mdash; 19 − 12 = 7, and it is after midday, so 7:05 pm.</li>
+        <li>A film starts at 16:20 and ends at 18:45. How long is it? <b>2 h 25 min</b> &mdash; 16 to 18 is 2 hours, and 20 to 45 is 25 minutes.</li>
+        <li>How many months are there in 3 years? <b>36</b> &mdash; A year is 12 months, and 3 × 12 = 36.</li>
+        <li>A train leaves at 13:20 and arrives at 14:05. How long does it take? <b>45 minutes</b> &mdash; From 13:20 to 14:00 is 40 minutes, and 5 more makes 45.</li>
+        <li>From 5 March to 26 March is how many weeks? <b>3 weeks</b> &mdash; 26 − 5 = 21 days, and 21 ÷ 7 = 3 weeks.</li>
+        <li>How many hours is 180 minutes? <b>3</b> &mdash; Going to a BIGGER unit means dividing: 180 ÷ 60 = 3. Multiplying would have given the seconds instead.</li>
+        <li>The short hand is between 4 and 5, and the long hand points at 8. What time is it? <b>4:40</b> &mdash; The short hand gives the hour it has PASSED, so 4. The long hand on the 8 is 8 × 5 = 40 minutes.</li>
+        <li>Write 12:20 am in 24-hour time. <b>00:20</b> &mdash; 12 am is midnight, and the hour after midnight is written 00. There is no 24 in 24-hour time — it runs 00:00 to 23:59.</li>
+        <li>Buses reach the library at 09:05, 09:25 and 09:45. You must be there by 09:30. Which do you catch? <b>The one arriving 09:25</b> &mdash; 09:45 is too late. 09:05 would get you there, but 09:25 is the LATEST that still makes it, so it is the one to catch.</li>
+        <li>It is 28 April. What is the date 9 days later? <b>7 May</b> &mdash; April has 30 days, so 2 days take you to the 30th and 7 are left over: 7 May.</li>
+        <li>How many months from March 2024 to January 2026? <b>22</b> &mdash; Two whole years is 24 months, but January is two months BEFORE March, so it is 24 − 2 = 22.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Read a bus timetable or a TV guide written in 24-hour time, change a few of the times into 12-hour time, and work out how long a journey or a programme lasts.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 6: Shape and Measures</b> <span class="gu-meta">8 steps &middot; about 20 min &middot; 10 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
+      <ul>
+        <li><b>4Gg.01</b> Investigate what shapes can be made if two or more shapes are combined, and analyse their properties, including reference to tessellation.</li>
+        <li><b>4Gg.02</b> Estimate and measure perimeter and area of 2D shapes, understanding that two areas can be added together to calculate the area of a compound shape.</li>
+        <li><b>4Gg.03</b> Draw rectangles and squares on square grids, and measure their perimeter and area. Derive and use formulae to calculate areas and perimeters of rectangles and squares.</li>
+        <li><b>4Gg.04</b> Estimate the area of irregular shapes on a square grid (whole and part squares).</li>
+        <li><b>4Gg.05</b> Identify 2D faces of 3D shapes, and describe their properties.</li>
+        <li><b>4Gg.06</b> Match nets to their corresponding 3D shapes.</li>
+        <li><b>4Gg.07</b> Identify all horizontal, vertical and diagonal lines of symmetry on 2D shapes and patterns.</li>
+        <li><b>4Gg.08</b> Estimate, compare and classify angles, using geometric vocabulary including acute, right and obtuse.</li>
+        <li><b>4Gg.09</b> Use knowledge of fractions to read and interpret a measuring scale.</li>
+        <li><b>4Gp.03</b> Reflect 2D shapes in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape, on square grids.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>The faces of a solid</b> &middot; Every flat face of a solid is a two dimensional shape you already know.</li>
+        <li><b>Fold it up: nets</b> &middot; A net is a solid opened out flat. Fold it up in your head and see what it makes.</li>
+        <li><b>Every line of symmetry</b> &middot; Test each line in turn. If folding along it makes the two halves match exactly, it is a line of symmetry.</li>
+        <li><b>Acute, right or obtuse?</b> &middot; Turn the arm. A square corner is a right angle. Smaller is acute. Bigger is obtuse.</li>
+        <li><b>Putting shapes together</b> &middot; Put shapes together and you make new ones. Some shapes tile a floor with no gaps at all.</li>
+        <li><b>Area without counting</b> &middot; Count the squares once, then find the rule that gives the same answer without counting.</li>
+        <li><b>An odd shape on a grid</b> &middot; An odd shape has no rule. Count the whole squares, then pair up the part squares.</li>
+        <li><b>Reading between the marks</b> &middot; When the pointer sits between two marks, the fraction of the way tells you the reading.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>7 of 10</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>How many flat faces does a square-based pyramid have? <b>5</b> &mdash; One square base and four triangles round it — five faces in all.</li>
+        <li>Which solid has two circular faces and a curved surface? <b>A cylinder</b> &mdash; A cone has only one circular face. A cylinder has one at each end.</li>
+        <li>Six squares in a cross fold up into which solid? <b>A cube</b> &mdash; Six identical squares make a cube — every face the same.</li>
+        <li>How many lines of symmetry does a rectangle have (not a square)? <b>2</b> &mdash; One horizontal and one vertical. The diagonals do not work: folding along them does not match the halves.</li>
+        <li>A parallelogram has how many lines of symmetry? <b>None</b> &mdash; It looks symmetrical because it has rotational symmetry, but no fold matches the halves up.</li>
+        <li>A rectangle is 6 squares wide and 4 tall. What is its area? <b>24 squares</b> &mdash; Area = length × width, so 6 × 4 = 24.</li>
+        <li>The same rectangle, 6 by 4. What is its perimeter? <b>20</b> &mdash; All the way round: 6 + 4 + 6 + 4, or 2 × (6 + 4) = 20.</li>
+        <li>An odd shape covers 9 whole squares and 6 part squares. Roughly what area is that? <b>About 12 squares</b> &mdash; Count each part square as about a half: 9 + 3 = about 12.</li>
+        <li>A jug is marked every 100 ml with three small marks between. What is one small step? <b>25 ml</b> &mdash; Three small marks cut the gap into four, so each step is 100 ÷ 4 = 25 ml.</li>
+        <li>An angle of 120° is: <b>Obtuse</b> &mdash; More than 90° but less than 180° is obtuse. Acute is under 90°.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Cover a table mat with square sticky notes to find its area. Look around the room for right angles, and for acute angles (smaller than a right angle) and obtuse ones (bigger).</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 7: Where Things Are</b> <span class="gu-meta">9 steps &middot; about 25 min &middot; 5 objectives &middot; 8 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
+      <ul>
+        <li><b>4Gg.01</b> Investigate what shapes can be made if two or more shapes are combined, and analyse their properties, including reference to tessellation.</li>
+        <li><b>4Gg.05</b> Identify 2D faces of 3D shapes, and describe their properties.</li>
+        <li><b>4Gp.01</b> Interpret and create descriptions of position, direction and movement, including reference to cardinal and ordinal points, and their notations.</li>
+        <li><b>4Gp.02</b> Understand that position can be described using coordinate notation. Read and plot coordinates in the first quadrant (with the aid of a grid).</li>
+        <li><b>4Gp.03</b> Reflect 2D shapes in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape, on square grids.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Facing and turning</b> &middot; North, east, south and west. A quarter turn takes you to the next one round.</li>
+        <li><b>The eight points</b> &middot; Between every two cardinal points there is one more, and its name is both of theirs joined together.</li>
+        <li><b>Which way from here?</b> &middot; North, east, south and west, and the four in between. Follow the instructions and see where you land.</li>
+        <li><b>Following a route</b> &middot; A route is several moves one after another. Do them in order and see where you land.</li>
+        <li><b>Coordinates</b> &middot; Coordinates. Go along the bottom first, then up. Tap the point I ask for.</li>
+        <li><b>Along first, then up</b> &middot; Coordinates always go along first and then up. Swapping them gives a different place altogether.</li>
+        <li><b>The corners of a shape</b> &middot; Every corner of a shape has its own pair of coordinates.</li>
+        <li><b>Reflect it in the mirror</b> &middot; Every square of the shape has a partner the same distance on the other side of the mirror line.</li>
+        <li><b>When the mirror is the edge</b> &middot; When the mirror sits on the edge of the shape, the reflection touches it and the whole thing doubles.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>6 of 8</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>Which of these is an ordinal point of the compass? <b>South-east</b> &mdash; North, east, south and west are the cardinal points. The four in between are the ordinal ones.</li>
+        <li>In the coordinates (3, 5), what does the 3 tell you? <b>How far along</b> &mdash; Go along first, then up. The first number is always the across one.</li>
+        <li>You face north and make a quarter turn clockwise. Which way now? <b>East</b> &mdash; The points run north, east, south, west, so one quarter turn moves you on one.</li>
+        <li>Which point lies between south and west? <b>SW</b> &mdash; Join the two names: south-west, written SW. The north or south part comes first.</li>
+        <li>From a square you go 3 east then 2 north. How far east are you? <b>3</b> &mdash; Only the first move went east. Going north changes the row, not the column.</li>
+        <li>Is (2, 6) the same place as (6, 2)? <b>No</b> &mdash; The first number is along and the second is up, so swapping them moves the point.</li>
+        <li>A rectangle has corners at (1, 1) and (4, 3). What are the other two? <b>(4, 1) and (1, 3)</b> &mdash; The corners share their numbers: each one takes an along from one and an up from the other.</li>
+        <li>The mirror line runs along the edge of a shape. Where does the reflection sit? <b>Touching the shape</b> &mdash; A square against the mirror has no distance to cross, so its partner sits right beside it.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Draw a grid with numbered lines on paper and hide 'treasure' at a point such as (3, 2) for your child to find, going along first and then up. Then take turns giving directions using the eight compass points.</p>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 8: Asking, Sorting and Chance</b> <span class="gu-meta">7 steps &middot; about 20 min &middot; 5 objectives &middot; 8 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
+      <ul>
+        <li><b>4Sp.01</b> Use language associated with chance to describe familiar events, including reference to maybe, likely, certain, impossible.</li>
+        <li><b>4Sp.02</b> Conduct chance experiments, using small and large numbers of trials, and present and describe the results using the language of probability.</li>
+        <li><b>4Ss.01</b> Plan and conduct an investigation to answer statistical questions, considering what data to collect (categorical and discrete data).</li>
+        <li><b>4Ss.02</b> Record, organise and represent categorical and discrete data. Choose and explain which representation to use in a given situation: Venn and Carroll diagrams tally charts and frequency tables pictograms and bar charts dot plots (one dot per count).</li>
+        <li><b>4Ss.03</b> Interpret data, identifying similarities and variations, within and between data sets, to answer statistical questions. Discuss conclusions, considering the sources of variation.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>What would answer it?</b> &middot; Before you collect anything, decide what would answer your question. Some answers are groups you can name, and some are numbers you can count.</li>
+        <li><b>Tally, then count</b> &middot; Twenty two children answer one at a time. Each answer is a tally mark, and every fifth mark is a gate.</li>
+        <li><b>One set, three pictures</b> &middot; The same twenty two answers, drawn three ways. Each picture is good at showing something different.</li>
+        <li><b>Sorting two ways at once</b> &middot; Two questions at once. A Venn diagram uses hoops that overlap. A Carroll diagram uses four boxes.</li>
+        <li><b>Two classes, one question</b> &middot; Two classes, the same question, the same number of children. Look for what is the same and what is different.</li>
+        <li><b>Impossible to certain</b> &middot; Some things cannot happen, some are sure to. Most sit somewhere in between.</li>
+        <li><b>Spin it, and spin it again</b> &middot; Spin it ten times and the counts are lumpy. Spin it a thousand times and they even out.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <p class="gu-note">It completes the lesson at <b>6 of 8</b> right; below that the child is shown the score and a Try again button. The options come in a new order each time; the questions do not change.</p>
+      <ul>
+        <li>In a tally chart, what does a line drawn across four marks mean? <b>A group of 5</b> &mdash; Four marks and one across them make a gate of five, so you can count the groups in fives.</li>
+        <li>Which data is categorical? <b>Favourite colour</b> &mdash; Colours are groups you can name. The other two are numbers you measure or count.</li>
+        <li>On a pictogram, one picture stands for 2 children. How many pictures show 9 children? <b>Four and a half</b> &mdash; 9 ÷ 2 = 4 remainder 1, so four whole pictures and one half.</li>
+        <li>Where does a number go on a Carroll diagram if it is neither even nor more than 10? <b>In the fourth box</b> &mdash; A Carroll diagram has a box for every combination, including 'neither' — that is what makes it different from a Venn diagram's middle.</li>
+        <li>Rolling a 7 on an ordinary six-sided dice is: <b>impossible</b> &mdash; There is no 7 on the dice, so it cannot happen at all.</li>
+        <li>A bag holds 9 red counters and 1 blue. Taking a red one is: <b>likely</b> &mdash; Nine times out of ten it will be red — likely, but not certain, because the blue one is still in there.</li>
+        <li>Why spin a spinner 1000 times instead of 10? <b>The results settle nearer what should happen</b> &mdash; A few trials are lumpy by chance. More trials bring the proportions closer to the quarter each colour should get.</li>
+        <li>Two classes both have 22 children. 4A walks 9 and 4B walks 5. What can you say? <b>More of 4A walk</b> &mdash; The classes are the same size, so the difference is real — 9 against 5 — and worth looking for a reason.</li>
+      </ul>
+      <h4>Try at home</h4>
+      <p class="gu-home">Ask everyone at home a question, sort the answers in a Carroll or Venn diagram, and talk about events that are certain, likely, maybe or impossible, such as rain tomorrow.</p>
+    </details>
+  </section>
+  <!-- GROWNUP:END -->
 
   <p class="note"><b>Every step ends with a question.</b> A slider that only moves cannot tell a learner they have understood, so each teaching step finishes with one question that can come back <i>not quite</i>, and a fresh one on request.</p>
-</div>
 
-  </div>
+</div>
 
 <script>
   /* wire-navigation.py :: carry

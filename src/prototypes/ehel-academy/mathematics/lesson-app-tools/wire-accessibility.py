@@ -91,7 +91,14 @@ CSS = """
 .dots button::after {
   content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
 }
+/* ...and 8px apart, not 6. With a 6px gap the dots sit 22px apart, so each
+   32px target overlaps its neighbours' and the part a tap can only mean THIS
+   dot is 22px wide: under the 24px minimum on exactly the screen - a phone -
+   where the dots wrap into rows and a child's finger is widest. At 8px every
+   dot owns a 24 x 24 cell, across and down. (2026-09-11 validation.) */
+.dots { gap: 8px; }
 """
+CSS_END = ".dots { gap: 8px; }\n"
 
 MARKER = "wire-accessibility.py"
 
@@ -189,6 +196,19 @@ def wire(app, unit, name, title):
         i = s.rindex("</style>")
         s = s[:i] + CSS + s[i:]
         changed.append("dot targets + skip-link css")
+    else:
+        # A page wired by an earlier version of this block gets the current one,
+        # so a change here reaches pages already built - the trap every
+        # skip-if-marked tool in this directory has fallen into once. The old
+        # block ends at the ::after rule; the current one at CSS_END.
+        head = CSS.lstrip("\n")
+        i = s.index(head.splitlines()[0])
+        old_end = ".dots button::after {\n  content: \"\"; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;\n}\n"
+        j = s.find(CSS_END, i)
+        j = j + len(CSS_END) if j != -1 else s.index(old_end, i) + len(old_end)
+        if s[i:j] != head:
+            s = s[:i] + head + s[j:]
+            changed.append("dot spacing css refreshed")
 
     if not changed:
         print("  --   %-28s already wired (%d announced)" % (name, already))

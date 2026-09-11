@@ -134,6 +134,8 @@ LESSON = {
                  q("Why did both plants get the same water and the same light?", "\u2696\ufe0f", "so only the temperature changed, and the test was fair", ["so the plants would look pretty", "because a plant only needs one thing"], "If two things changed, you could not tell which one made the plant droop."),
                  q("A plant in a dark cupboard, with water, will...", "\U0001F319", "go pale and thin", ["stay green", "make more flowers"], "No light, no food."),
                  q("The flower's job is...", "\U0001F33C", "making seeds", ["making food", "holding the plant up"], "Seeds for new plants."),
+                 q("What would happen to a plant if its roots were cut off?", "\U0001F331", "it could not take in water, so it would droop", ["it would grow more flowers", "nothing, because roots have no job"], "Roots take in water from the soil. Without them the plant dries out."),
+                 q("You want to test if a plant needs light. Which is the fair test?", "\U0001F4A1", "two plants with the same water and warmth, one in the light and one in the dark", ["one plant in the light with water, one in the dark with no water", "one plant in the light, looked at only once"], "Change only the light. Keep everything else the same."),
              ]},
              "That is the whole lesson finished. You know what a plant needs and what its parts do."),
     ],

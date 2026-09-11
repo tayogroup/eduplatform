@@ -163,6 +163,22 @@ LESSON = {
                           "why": "Looking closely at the inside is observing. Testing and looking are how geologists find out."}},
              "Ask, then look closely or look it up."),
 
+        step("questions", "Rock check", "✅", "Rock check", ["2ESp.01", "2ESp.02", "2ESp.03"],
+             "Tap the answer.",
+             explain(
+                 ["Kinds of rock, where rock comes from, and helping the land."],
+                 [],
+                 [],
+                 ["Read the question, then tap."]),
+             {"label": "Question", "items": [
+                 q("Which rock is hard and speckled?", "\U0001F50D", "granite", ["chalk", "pumice"], "Granite is very hard, with speckles of different colours."),
+                 q("Which rock is grainy, like sand stuck together?", "\u270B", "sandstone", ["marble", "slate"], "Rub sandstone and grains of sand come off."),
+                 q("You drop water on granite. What happens?", "\U0001F4A7", "it runs off", ["it soaks in", "the granite crumbles"], "Granite does not soak up water. The water sits on top."),
+                 q("Where do miners dig rock out in tunnels underground?", "\U0001F573\uFE0F", "in a mine", ["in a quarry", "in a riverbed"], "A mine goes deep underground. A quarry is an open pit."),
+                 q("Which of these helps the environment?", "\U0001F49A", "planting trees", ["leaving litter on the beach", "dumping rubbish in a river"], "Trees give shade, homes for animals and clean air."),
+             ]},
+             "You can tell your rocks apart."),
+
         step("quiz", "Show what you know", "⭐", "Star scientist", ["2ESp.01", "2ESp.02", "2ESp.03"],
              "Time to show what you know. Tap the answer.",
              explain(

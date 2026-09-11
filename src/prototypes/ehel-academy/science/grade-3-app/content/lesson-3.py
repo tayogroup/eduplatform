@@ -151,6 +151,8 @@ LESSON = {
                  q("What is a diagram?", "✏️", "a drawing with labels naming the parts", ["a photograph", "a story"], "You labelled one of a beetle. A diagram is a kind of model."),
                  q("Where did you find the answers about newts and crocodiles?", "\U0001F4DA", "in the fact card, a secondary source", ["by guessing", "by asking a newt"], "Reading a source for an answer is research."),
                  q("A dolphin lives in the sea and feeds its baby milk. Why is it not a fish?", "\U0001F42C", "feeding its young milk makes it a mammal", ["it is too big to be a fish", "it lives in the sea"], "Group by features, not by where it lives. Milk makes a dolphin a mammal."),
+                 q("A whale shark lives in the sea and breathes with gills all its life. Which group is it, and why?", "\U0001F988", "a fish, because it breathes with gills all its life", ["a mammal, because its name says whale", "an amphibian, because it lives in water"], "Gills all its life make it a fish, whatever its name."),
+                 q("An animal has dry scales and lays eggs on land. Why is it not an amphibian?", "\U0001F95A", "amphibians have smooth damp skin and lay eggs in water", ["amphibians are always green", "amphibians never lay eggs"], "Dry scales and eggs on land are what a reptile has."),
              ]},
              "That is the whole lesson finished. You can sort any animal into its group."),
     ],

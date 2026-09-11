@@ -151,6 +151,8 @@ LESSON = {
                  q("In the apple model, what is the skin?", "\U0001F34E", "the crust", ["the mantle", "the core"], "Thin, like the crust."),
                  q("What do earthquake waves tell us about the inside of the Earth?", "\U0001F4E1", "the mantle is solid, and part of the core is liquid", ["the Earth is hollow in the middle", "the crust is the thickest layer"], "Some waves only travel through solids. They pass through the mantle but not the outer core."),
                  q("Why are earthquakes and volcanoes often found in the same places?", "\U0001F914", "both happen at breaks in the crust, where plates meet", ["every earthquake is caused by a volcano", "those places are closest to the Sun"], "Plates meeting make the breaks in the crust, and both happen there."),
+                 q("Why is an apple a good model of the Earth's layers?", "\U0001F34E", "its thin skin, thick flesh and core are like the crust, mantle and core", ["an apple is round and red like the Earth", "an apple has lava inside it"], "The model shows the idea of the layers. It leaves the rest out."),
+                 q("Why does a volcano get taller after each eruption?", "\U0001F30B", "the lava cools into new rock and adds a layer", ["the crust under it grows", "the magma pushes the top up for ever"], "Layer on layer of cooled lava builds the mountain."),
              ]},
              "That is the whole lesson finished. You know the inside of the Earth."),
     ],

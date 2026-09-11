@@ -145,6 +145,8 @@ LESSON = {
                  q("What does a palaeontologist study?", "\U0001F469\U0001F3FE‍\U0001F52C", "fossils", ["stars", "plants"], "Fossil scientists."),
                  q("Why recycle a glass bottle?", "♻️", "less sand has to be dug up to make new glass", ["glass cannot be recycled", "to make it heavier"], "Taking less from the Earth."),
                  q("Plastic is made in a factory. Why do we say it comes from rock?", "\U0001F9F4", "it is made from oil, and oil is pumped out of rock", ["plastic grows on trees", "factories are made of rock"], "Follow it back: plastic, then oil, then rock deep underground."),
+                 q("Why is a fossil of a jellyfish very rare?", "\U0001F30A", "a jellyfish has no hard parts, and soft parts rot away", ["jellyfish never lived in the sea", "jellyfish are too big to be fossils"], "Hard parts last. A jellyfish is soft all through."),
+                 q("If nobody recycled metal cans, what would happen?", "\u267B\uFE0F", "more rock would be dug up to make new metal", ["metal would grow on trees", "old cans would turn back into rock"], "Metal comes from rock. Recycling means less digging."),
              ]},
              "That is the whole lesson finished. You know where every material began."),
     ],

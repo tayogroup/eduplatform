@@ -151,6 +151,8 @@ LESSON = {
                  q("What pattern did the bar chart show?", "\U0001F4C8", "smoother surface, longer slide", ["rougher surface, longer slide", "no pattern"], "Less friction, further."),
                  q("Why do bicycle brakes work?", "\U0001F6B2", "friction between the pads and the wheel slows it", ["gravity pulls the wheel", "magnets stop it"], "Friction slows movement."),
                  q("You want to find out which shoe grips the floor best. Which is the fair test?", "\U0001F45F", "pull each shoe across the same floor with a forcemeter, changing only the shoe", ["pull one shoe on carpet and the other on ice", "guess by looking at the soles"], "Same floor, same forcemeter, and only the shoe changes. The shoe that needs the biggest pull grips best."),
+                 q("Why is sand spread on an icy path?", "\u2744\uFE0F", "it makes the path rougher, so there is more friction and less slipping", ["it melts the ice at once", "it makes gravity pull harder"], "A rough surface gives more friction, so shoes grip."),
+                 q("Predict: a block slides on sandpaper instead of smooth wood. What will happen, and why?", "\U0001F4E6", "it stops sooner, because sandpaper is rougher and gives more friction", ["it slides further, because sandpaper is rougher", "it slides the same, because it is the same block"], "Rougher surface, more friction, shorter slide."),
              ]},
              "That is the whole lesson finished. You know gravity and friction."),
     ],

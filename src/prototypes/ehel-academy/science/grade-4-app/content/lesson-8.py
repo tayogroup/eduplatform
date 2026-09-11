@@ -149,6 +149,8 @@ LESSON = {
                  q("Why can a ball never bounce back to the exact height it was dropped from?", "⚽", "some energy always leaks away as sound and heat", ["gravity gets stronger after each bounce", "the ball gets heavier as it bounces"], "Every transfer leaks."),
                  q("Which has more energy?", "\U0001F321️", "a hot cup of tea", ["a cold cup of tea"], "Heat is energy."),
                  q("A wind-up toy runs until it stops. Where did the energy stored in its spring go?", "\U0001F914", "into movement, then sound and heat in the room", ["it was destroyed when the toy stopped", "it went back into the key"], "Energy is never destroyed. The spring's stored energy became movement, and the movement leaked away as sound and heat."),
+                 q("Predict: a ball is dropped from higher up. How will its first bounce change?", "\u26BD", "it bounces higher, because it started with more energy", ["it bounces lower, because it falls further", "it bounces the same, because it is the same ball"], "Higher up, the ball has more stored energy to begin with."),
+                 q("Why does your hand get warm when you rub it on a table?", "\u270B", "some energy of the movement is transferred as heat", ["the table makes new energy", "the energy of the movement is destroyed"], "Energy is never made or destroyed. The movement's energy becomes heat."),
              ]},
              "That is the whole lesson finished. Energy is everywhere, and it is never lost."),
     ],

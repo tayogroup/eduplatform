@@ -144,6 +144,8 @@ LESSON = {
                  q("Why not measure in hand spans?", "✋", "everyone's hand is a different size, so results cannot be compared", ["hands are dirty", "you cannot count hands"], "Standard units can be compared."),
                  q("Which equipment measures how much liquid?", "\U0001F964", "a measuring jug", ["a ruler", "a thermometer"], "Millilitres in a jug."),
                  q("You pour milk from a tall glass onto a flat plate. Why does its shape change?", "\U0001F95B", "milk is a liquid, so it takes the shape of its container", ["the plate squashes it", "milk is a solid"], "A liquid has no shape of its own. It flows into the shape of whatever holds it."),
+                 q("Why does the air fill the whole balloon, not just the bottom of it?", "\U0001F388", "air is a gas, so it spreads out to fill all the space", ["air is heavy, so it sinks to the bottom", "the balloon pushes the air up to the top"], "A gas spreads out to fill whatever holds it."),
+                 q("You can squash play dough into a new shape. Why is it still a solid?", "\U0001F3A8", "because it keeps whatever shape you give it and does not flow", ["because it is a bright colour", "because it can be squashed"], "A liquid flows. Play dough stays in its shape until you squash it again."),
              ]},
              "That is the whole lesson finished. You know your solids, liquids and gases."),
     ],

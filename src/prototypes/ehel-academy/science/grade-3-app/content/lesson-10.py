@@ -168,6 +168,8 @@ LESSON = {
                  q("What did some people long ago think about seeing?", "\U0001F441️", "that eyes sent out beams", ["that light comes from a source", "that shadows were alive"], "Testing showed it was wrong."),
                  q("Why is a shadow the same shape as the object?", "\U0001F464", "the object blocks the light in its own shape", ["the light copies it", "it is a reflection"], "Blocked in its own outline."),
                  q("Why does a clear window make almost no shadow?", "\U0001FA9F", "light goes straight through it, so almost nothing is blocked", ["windows are too cold", "windows are too big"], "A shadow needs something that blocks the light. Transparent glass lets it through."),
+                 q("What will happen to the shadow if you move the torch further away from the toy?", "\U0001F526", "the shadow gets smaller", ["the shadow gets bigger", "the shadow disappears"], "It is like moving the toy nearer the wall: the shadow shrinks."),
+                 q("Why do blackout curtains keep a bedroom dark on a summer morning?", "\U0001F6CF\uFE0F", "they are opaque, so no light gets through", ["they are transparent, so light goes straight through", "they are translucent, so the light is only blurred"], "Opaque materials block all the light."),
              ]},
              "That is the whole lesson finished. You know how light and shadows work."),
     ],

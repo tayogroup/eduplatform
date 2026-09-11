@@ -137,6 +137,8 @@ LESSON = {
                  q("What did Galileo see that showed not everything goes round the Earth?", "\U0001F52D", "moons going round Jupiter", ["a comet with a tail", "rings round the Sun"], "Evidence from a telescope."),
                  q("What makes scientific knowledge change?", "\U0001F4DA", "evidence from enquiry", ["arguing louder", "waiting"], "Evidence."),
                  q("It is midday where you are. Why is it night on the far side of the Earth?", "\U0001F914", "that side is turned away from the Sun", ["the Sun has gone behind the Moon", "the Sun switches off there"], "The Earth spins. The half facing the Sun has day; the half turned away has night."),
+                 q("In the football model, why must the Earth be tiny and far away?", "\u26BD", "the Sun is far bigger than the Earth, and a long way from it", ["the Earth is bigger than the Sun", "the model gets the sizes wrong on purpose"], "A model to scale keeps the sizes and the distances right."),
+                 q("Why do the stars seem to move across the sky during the night?", "\U0001F31F", "the Earth is spinning, so we turn past them", ["the stars go round the Earth every night", "the wind blows them along"], "Like the Sun by day, the stars only seem to move. It is the Earth that turns."),
              ]},
              "That is the whole lesson finished. You know your place in the Solar System."),
     ],

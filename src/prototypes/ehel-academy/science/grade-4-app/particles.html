@@ -2080,6 +2080,44 @@
                 }
               ],
               "why": "Cooling takes energy away, so the particles move less. They never stop moving, even in a solid."
+            },
+            {
+              "ask": "Why can you pour water, but not a brick?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🧱</div>",
+              "opts": [
+                {
+                  "t": "water particles slide past each other; a brick's are held in rows",
+                  "ok": true
+                },
+                {
+                  "t": "water has no particles at all",
+                  "ok": false
+                },
+                {
+                  "t": "a brick's particles are much bigger than water's",
+                  "ok": false
+                }
+              ],
+              "why": "Liquid particles slide. Solid particles stay in their rows, so a solid keeps its shape."
+            },
+            {
+              "ask": "Why does the particle model draw particles as big coloured balls?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🔬</div>",
+              "opts": [
+                {
+                  "t": "so we can see the idea; real particles are far too small to see",
+                  "ok": true
+                },
+                {
+                  "t": "real particles are coloured balls",
+                  "ok": false
+                },
+                {
+                  "t": "particles are as big as marbles",
+                  "ok": false
+                }
+              ],
+              "why": "A model shows the idea clearly. It gets the size and colour wrong on purpose."
             }
           ]
         }
@@ -2555,7 +2593,7 @@
             {
               "w": "identify",
               "pic": "🔍",
-              "meaning": "To work out exactly what something is.",
+              "meaning": "To work out what something is.",
               "uses": [
                 "We identified the beetle with a key.",
                 "Can you identify this bird?"
@@ -4331,12 +4369,21 @@
      the learner actually arrives; sayHere() refuses to speak for a slide
      that is not the one showing (the deck's own finish() keeps the same
      rule). show() is wrapped, not edited: it is lifted verbatim and the
-     shared pipeline patches it by matching its exact text. */
-  const ONSHOW = [];
+     shared pipeline patches it by matching its exact text.
+
+     ONLEAVE is the same idea for the step being LEFT, and it runs BEFORE
+     the deck moves: a step that finishes as the learner leaves it then
+     reports while it is still their position, and the new step's own
+     position report - made by show() itself - lands last and wins. The
+     lesson overview needs it; see unitOverview. */
+  const ONSHOW = [], ONLEAVE = [];
   const showWithoutHooks = show;
   let breakOffered = false;
   show = function (i, speak) {
     const from = cur;
+    const to = Math.max(0, Math.min(slides.length - 1, i));
+    const g = to !== cur ? ONLEAVE[cur] : null;
+    if (g) { try { g(); } catch (_) { /* a step must never break the deck */ } }
     showWithoutHooks(i, speak);
     const f = ONSHOW[cur];
     if (f) { try { f(); } catch (_) { /* a step must never break the deck */ } }
@@ -5743,6 +5790,9 @@
           api.controls.innerHTML = SIMS.friction.surfaces.map((s) => '<button type="button" class="big small' + (did.has(s.id) ? " ghost" : " teal") + '" data-s="' + s.id + '">' + s.pic + " Push on " + esc(s.label) + "</button>").join("");
           api.controls.querySelectorAll("[data-s]").forEach((b) => b.addEventListener("click", () => {
             if (busy) return; busy = true;
+            /* while the block slides the buttons are OFF, and look it: a press
+               used to be ignored with nothing on screen to say why */
+            api.controls.querySelectorAll("button").forEach((x) => { x.disabled = true; });
             const s = SIMS.friction.surfaces.find((x) => x.id === b.dataset.s);
             SIMS.friction.draw(box, s, 0);
             setTimeout(() => { box.querySelector("rect[rx='6']").setAttribute("x", 14 + s.far * 30); SOUND.play(s.id === "carpet" ? "shake" : "click", 0.4); }, 60);
@@ -5776,7 +5826,9 @@
       return new Promise((done) => {
         let pos = 1; const seen = new Set([1]);
         const paint = () => {
-          api.controls.innerHTML = '<button type="button" class="big small' + (pos >= 2 ? " ghost" : " teal") + '" id="' + api.id + 'n"' + (pos >= 2 ? " disabled" : "") + '>\u{1F526} Move it nearer the torch</button><button type="button" class="big small' + (pos <= 0 ? " ghost" : "") + '" id="' + api.id + 'w"' + (pos <= 0 ? " disabled" : "") + '>Move it nearer the wall</button>';
+          api.controls.innerHTML = '<button type="button" class="big small' + (pos >= 2 ? " ghost" : " teal") + '" id="' + api.id + 'n"' + (pos >= 2 ? " disabled" : "") + '>\u{1F526} Move it nearer the torch</button><button type="button" class="big small' + (pos <= 0 ? " ghost" : "") + '" id="' + api.id + 'w"' + (pos <= 0 ? " disabled" : "") + '>Move it nearer the wall</button>' +
+            /* what is left to try, so a child knows the step wants BOTH ends */
+            '<p style="margin:6px 0 0;font-size:14px;font-weight:700">' + (seen.has(2) ? "\u2705" : "\u2B1C") + " near the torch &nbsp; " + (seen.has(0) ? "\u2705" : "\u2B1C") + " near the wall</p>";
           $(api.id + "n").addEventListener("click", () => step(1)); $(api.id + "w").addEventListener("click", () => step(-1));
         };
         const step = (d) => {
@@ -6534,12 +6586,20 @@
       box.querySelector(".warmfb").textContent = line;
       say(line);
     }));
-    /* ON ARRIVAL, not on drawing. The deck draws every step at page load,
-       so a finish() here ticked this step - and Science world, which had
-       the same line - before the child had seen either: a fresh learner
-       opened a lesson at 13% (found by the 2026-09-11 re-validation). No
-       spoken line either: the slide's own instruction is speaking. */
-    ONSHOW[o.finish] = () => finish(o.finish);
+    /* ON LEAVING, not on drawing and not on arrival. The deck draws every
+       step at page load, so a finish() here ticked this step - and Science
+       world, which had the same line - before the child had seen either: a
+       fresh learner opened a lesson at 13% (found by the 2026-09-11
+       re-validation). Moving it to arrival was not enough for THIS step:
+       the page arrives on step 1 at load too (show(0) is the draw pass's
+       last statement), and at load the progress module - a module script,
+       run only after the page is parsed - does not exist yet. So the tick
+       reached the dots and never the record: a lesson finished to the last
+       sticker was stored 16 of 17 and never complete (measured on the live
+       Grade 1 page, 2026-09-11). Science world keeps "on arrival", because
+       nothing arrives on it during the load. No spoken line either: the
+       next slide's own instruction is speaking. */
+    ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ----
@@ -6694,7 +6754,8 @@
       '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
       '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
     $(el.score).textContent = "coming soon";
-    /* on arrival, not at page load - see unitOverview */
+    /* on arrival, not at page load - see unitOverview for why the overview
+       ticks on leaving instead */
     ONSHOW[o.finish] = () => finish(o.finish);
   }
 

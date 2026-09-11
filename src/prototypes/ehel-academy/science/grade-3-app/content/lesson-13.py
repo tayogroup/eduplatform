@@ -130,6 +130,8 @@ LESSON = {
                  q("What did telescopes show about the Moon?", "\U0001F52D", "it is a rocky ball with mountains and craters", ["it is made of cheese", "it is flat"], "Better looking, better knowing."),
                  q("Which is the biggest?", "☀️", "the Sun", ["the Earth", "the Moon"], "The Sun is far bigger than the Earth."),
                  q("In the lamp-and-ball model, why does the ball sometimes look like a crescent?", "\U0001F312", "you can see only a thin part of its lit half", ["the ball has shrunk", "the lamp is broken"], "The ball is always a ball. Where it is decides how much of the lit half you can see."),
+                 q("The Moon takes about a month to go round the Earth. If you watch it for two months, how many full Moons will you see?", "\U0001F315", "about two", ["about one", "about sixty"], "One trip round the Earth, one full Moon. Two months, two trips."),
+                 q("In the lamp-and-ball model, what does the lamp stand for, and why?", "\U0001F4A1", "the Sun, because it gives the light", ["the Moon, because it is round", "the Earth, because we live on it"], "The lamp lights the ball, as the Sun lights the Moon."),
              ]},
              "That is the whole lesson finished, and the whole of Grade 3 Science."),
     ],

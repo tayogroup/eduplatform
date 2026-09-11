@@ -149,6 +149,8 @@ LESSON = {
                  q("A toy skeleton you can take apart is...", "\U0001F9B4", "a physical model", ["a diagram", "a fair test"], "A model you can touch."),
                  q("Why do scientists use models?", "\U0001F4D0", "to show an idea clearly, leaving the rest out", ["to make things look pretty", "because real things are boring"], "A model shows the important idea."),
                  q("A caterpillar and a butterfly look nothing alike. Why do we say they are the same kind of animal?", "\U0001F41B", "the caterpillar grows and changes into the butterfly", ["they live on the same leaf", "they are both green"], "It is one life: egg, caterpillar, chrysalis, butterfly."),
+                 q("A tadpole has just grown its back legs. Predict what will happen next.", "\U0001F914", "its front legs grow, then its tail shrinks", ["it turns back into frogspawn", "it grows wings"], "Back legs, then front legs, then the tail shrinks and it becomes a froglet."),
+                 q("Why is a physical model better than a diagram for showing how a skeleton's joints bend?", "\U0001F9B4", "you can hold it and move the joints", ["a physical model always has labels", "a diagram cannot show bones at all"], "A diagram is flat. A physical model can be turned and moved."),
              ]},
              "That is the whole lesson finished. You know how animals grow up."),
     ],

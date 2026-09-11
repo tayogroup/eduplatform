@@ -151,6 +151,8 @@ LESSON = {
                  q("Why does a fridge door stay shut?", "\U0001F9CA", "a magnetic strip pulls against the fridge's steel frame", ["it is glued", "gravity"], "Magnet on steel."),
                  q("If you cut a magnet in half, each half has...", "✂️", "a north pole and a south pole", ["only one pole", "no poles"], "Every magnet has two poles."),
                  q("You want to know which of two magnets is stronger. Which is the fair test?", "\U0001F4CE", "count how many paperclips each one picks up from the same pot", ["see which magnet is bigger", "use a different kind of paperclip for each magnet"], "Same paperclips, same test, and only the magnet changes. Then count and compare."),
+                 q("If a magnet picks up a steel paperclip but not a piece of copper wire, what does that show?", "\U0001F9F2", "steel is magnetic and copper is not", ["the wire is too heavy to lift", "all metals are magnetic"], "Only some metals are magnetic. Copper is not one of them."),
+                 q("Why is a magnet used to sort steel cans from aluminium cans for recycling?", "\U0001F96B", "steel is magnetic, so the magnet pulls out only the steel cans", ["aluminium is magnetic, so it sticks", "the magnet makes the cans lighter"], "Steel is attracted to a magnet. Aluminium is not."),
              ]},
              "That is the whole lesson finished. You know how magnets behave."),
     ],

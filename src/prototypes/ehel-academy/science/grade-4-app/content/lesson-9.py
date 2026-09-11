@@ -156,6 +156,8 @@ LESSON = {
                  q("Who showed that light comes into the eye?", "\U0001F52C", "Ibn al-Haytham, with dark rooms and pinholes", ["nobody has ever shown it", "a king who ordered it to be true"], "Evidence from enquiry."),
                  q("Why did people stop believing that eyes send out beams?", "\U0001F4DA", "new evidence from enquiry showed light comes into the eye", ["people just got bored of the old idea", "the loudest people said so"], "Evidence changed what people knew."),
                  q("A mirror looks bright in a sunny room. How could you test whether it is a light source?", "\U0001F914", "look for it in a totally dark room", ["shine a torch on it", "look at it in the sunshine"], "A source would glow in the dark. A mirror only reflects, so in the dark you cannot see it."),
+                 q("White paper and black paper lie side by side in a dim room. Which is easier to see, and why?", "\U0001F4C4", "the white paper, because it reflects more light into your eye", ["the black paper, because it makes its own light", "both the same, because neither is a light source"], "Neither makes light. White reflects more of it, so more reaches your eye."),
+                 q("You shine a torch at a mirror. What happens to the beam if you tilt the mirror?", "\U0001F526", "it bounces off in a new direction, still in a straight line", ["it bends round in a curve", "it stops being light"], "A mirror reflects light. Tilt it and the straight beam goes a new way."),
              ]},
              "That is the whole lesson finished. You know how you see."),
     ],

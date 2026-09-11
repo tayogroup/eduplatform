@@ -144,6 +144,8 @@ LESSON = {
                  q("Vinegar could splash in your eyes. The plan?", "⚠️", "wear goggles", ["close your eyes", "stand closer to see"], "A specific action."),
                  q("Who should handle a hot pan?", "\U0001F525", "a grown-up", ["the fastest child", "nobody"], "Heat is for the grown-up."),
                  q("Why is burning wood a chemical reaction, but melting chocolate is not?", "\U0001FAB5", "burning makes new substances; melting does not", ["burning is much hotter than melting", "wood is much harder than chocolate"], "Ash and smoke are new substances. Melted chocolate is still chocolate."),
+                 q("What will happen if you put melted chocolate in the fridge?", "\U0001F36B", "it goes solid again, because melting can be undone", ["it stays runny, because melting cannot be undone", "it turns into a new substance"], "Melting is a physical change. Cool the chocolate and it sets again."),
+                 q("If salt stirred into water seems to vanish, how could you show it is still there?", "\U0001F9C2", "let the water dry up, and the salt is left behind", ["stir it faster until it fizzes", "shine a torch through the water"], "Dissolving is a physical change. The salt was there all along."),
              ]},
              "That is the whole lesson finished. You know a change from a reaction."),
     ],

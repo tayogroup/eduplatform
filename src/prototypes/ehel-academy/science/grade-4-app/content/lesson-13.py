@@ -155,6 +155,8 @@ LESSON = {
                  q("What is the conclusion of our test?", "\U0001F4DD", "bigger wings fall more slowly, and the repeats show it reliably", ["bigger wings make a spinner fall faster", "one drop of each spinner is enough to be sure"], "About 2.8 seconds against about 2.1: results, related to the question."),
                  q("Which unit did you measure the drop height in?", "\U0001F4CF", "centimetres", ["hand spans", "seconds"], "A standard unit."),
                  q("Why must both spinners be dropped from the same height?", "\U0001F914", "so the wings are the only thing that changes", ["so the stopwatch can start on time", "because higher drops are not allowed"], "Change one thing only. A different height would change the time too, and you could not tell which change did it."),
+                 q("Predict: a spinner with even bigger wings is dropped from the same height. What will its time be?", "\u23F1\uFE0F", "longer, because bigger wings fall more slowly", ["shorter, because bigger wings fall faster", "exactly the same as the others"], "Our results showed bigger wings fall more slowly."),
+                 q("If one drop gives a time you doubt, what should you do?", "\U0001F914", "repeat that drop to check it", ["change the size of the wings", "keep it and ignore the other drops"], "A repeat shows whether the odd time was a mistake."),
              ]},
              "That is the whole lesson finished, and the whole of Grade 4 Science. You can run a fair test from question to conclusion."),
     ],

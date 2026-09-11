@@ -143,6 +143,8 @@ LESSON = {
                  q("Which is a risk in practical work?", "⚠️", "running with a tray of glass", ["wearing goggles", "wiping up a spill"], "Trip, break, cut."),
                  q("What should you do before you smell a chemical?", "\U0001F443\U0001F3FE", "waft the smell towards you with your hand", ["sniff it up close", "taste it first"], "Waft, never sniff."),
                  q("Why can a filter not take the salt back out of salt water?", "\U0001F9C2", "the dissolved salt is in pieces small enough to go through the paper", ["the salt is too heavy", "the salt has turned into water"], "Dissolved salt spreads out in pieces too small to see, so it goes through the filter with the water."),
+                 q("Iron filings, sand and water are all mixed. Which tools would you use if you wanted all three back?", "\U0001F9F2", "a magnet for the iron and a filter for the sand", ["a sieve for the water and a magnet for the sand", "a filter for the iron and a magnet for the water"], "The magnet pulls out the iron. The filter keeps the sand and lets the water through."),
+                 q("Why does the sand stay in the filter paper while the water goes through?", "\U0001F4A7", "the sand grains are too big for the tiny holes in the paper", ["the sand is magnetic", "the water dissolves the paper"], "Water passes through the tiny holes. The grains of sand cannot."),
              ]},
              "That is the whole lesson finished. You can separate a mixture and stay safe doing it."),
     ],

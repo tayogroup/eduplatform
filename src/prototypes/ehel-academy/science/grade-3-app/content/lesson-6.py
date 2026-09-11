@@ -133,6 +133,8 @@ LESSON = {
                  q("Oil spills into a pond and the pondweed dies. What happens to the heron?", "\U0001F9A2", "it runs out of food, because its whole chain started with the pondweed", ["nothing", "it eats the oil"], "Break the producer, break the chain."),
                  q("Which way does the arrow go?", "➡️", "from the food to the animal that eats it", ["from the eater to the food", "any way you like"], "Grass → rabbit: grass is eaten by rabbit."),
                  q("Why does every food chain start with a plant?", "\U0001F331", "only plants can make their own food, from sunlight", ["plants are the smallest living things", "plants are always green"], "Animals have to eat. A plant makes its own food, so the food in every chain starts there."),
+                 q("In grass \u2192 rabbit \u2192 fox, what would happen to the grass if all the rabbits went away?", "\U0001F407", "more grass would grow, because nothing would eat it", ["the grass would die, because rabbits feed it", "the grass would turn into a consumer"], "The rabbit eats the grass. With no rabbits, the grass is left alone."),
+                 q("Leaf \u2192 caterpillar \u2192 bird \u2192 cat. If more cats come and eat lots of birds, what happens to the caterpillars?", "\U0001F408", "there will be more caterpillars, because fewer birds eat them", ["there will be fewer caterpillars, because cats eat them", "nothing, because cats do not eat caterpillars"], "Fewer birds means fewer caterpillars get eaten."),
              ]},
              "That is the whole lesson finished. You know who eats whom."),
     ],

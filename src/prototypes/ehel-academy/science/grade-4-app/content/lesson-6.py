@@ -131,6 +131,8 @@ LESSON = {
                  q("Flour pours. Is flour a liquid?", "\U0001F33E", "no, it is a powder of tiny solid grains", ["yes, because it pours like water", "yes, but only when it is warm"], "Each grain is a solid, and the grains roll."),
                  q("What does the particle model get wrong on purpose?", "\U0001F4D0", "the size, colour and number of the particles", ["nothing, it is a photograph of them", "only the way the particles move"], "It leaves things out to show the idea."),
                  q("A bar of chocolate is put in a fridge. What happens to its particles?", "\U0001F914", "they move less, but they never stop", ["they stop moving completely", "they break out of their rows and slide"], "Cooling takes energy away, so the particles move less. They never stop moving, even in a solid."),
+                 q("Why can you pour water, but not a brick?", "\U0001F9F1", "water particles slide past each other; a brick's are held in rows", ["water has no particles at all", "a brick's particles are much bigger than water's"], "Liquid particles slide. Solid particles stay in their rows, so a solid keeps its shape."),
+                 q("Why does the particle model draw particles as big coloured balls?", "\U0001F52C", "so we can see the idea; real particles are far too small to see", ["real particles are coloured balls", "particles are as big as marbles"], "A model shows the idea clearly. It gets the size and colour wrong on purpose."),
              ]},
              "That is the whole lesson finished. You know what everything is made of."),
     ],

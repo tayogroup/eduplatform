@@ -135,6 +135,8 @@ LESSON = {
                  q("What did the food chain you built show?", "\U0001F527", "who eats whom in grass, rabbit and fox", ["how big a real fox grows each year", "how fast a real rabbit can run away"], "A model of a relationship."),
                  q("Where did the fox's energy come from, in the very beginning?", "☀️", "the Sun, through the grass and the rabbit", ["the fox made it from nothing", "the soil, through the fox's feet"], "Light, then plant, then rabbit, then fox."),
                  q("In the chain grass → rabbit → fox, what would happen to the foxes if all the grass died?", "\U0001F914", "they would go hungry, because the rabbits would have nothing to eat", ["nothing, because foxes do not eat grass", "they would have more rabbits to eat"], "Every link needs the one before it. No grass, no rabbits, so no food for the foxes in this chain."),
+                 q("Why is the grass, not the rabbit, at the start of the chain grass \u2192 rabbit \u2192 fox?", "\U0001F331", "grass makes its own food using light; the rabbit has to eat", ["grass is smaller than the rabbit", "the rabbit is the predator in the chain"], "A chain starts with a producer. Grass makes food from light. The rabbit gets its energy by eating the grass."),
+                 q("In the chain seeds \u2192 mouse \u2192 owl, what would happen to the mice if all the owls were gone?", "\U0001F42D", "there would be more mice at first, because nothing eats them", ["there would be fewer mice, because owls feed them", "the mice would start to eat seeds and owls"], "The owl is the mouse's predator. Take it away and more mice survive."),
              ]},
              "That is the whole lesson finished. You know where the energy for life comes from."),
     ],

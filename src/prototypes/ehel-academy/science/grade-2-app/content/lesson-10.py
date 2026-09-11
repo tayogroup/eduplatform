@@ -151,6 +151,22 @@ LESSON = {
                        "why": "What people knew changed: it is the Earth that turns, and the Sun only seems to move."}},
              "It looks as if the Sun moves. It is the Earth that turns."),
 
+        step("questions", "Sun check", "✅", "Sun check", ["2ESs.01", "2TWSc.03", "2SIC.01"],
+             "Tap the answer.",
+             explain(
+                 ["The Sun's path across the sky, and the shadow it makes."],
+                 [],
+                 [],
+                 ["Read the question, then tap."]),
+             {"label": "Question", "items": [
+                 q("In the morning, which side of the sky is the Sun on?", "\U0001F324\uFE0F", "the east", ["the west", "right above us"], "The Sun rises in the east, so in the morning it is on the east side."),
+                 q("The Sun is low in the sky. Is the stick's shadow long or short?", "\U0001F305", "long", ["short", "there is no shadow"], "When the Sun is low, the shadow is long."),
+                 q("What did you lay along the shadow to measure it?", "\U0001F914", "hand spans", ["cubes", "spoons"], "You laid hands end to end along the shadow."),
+                 q("The shadow was 3 hands at 9 o'clock and 1 hand at midday. Which was longer?", "\U0001F4DD", "the 9 o'clock shadow", ["the midday shadow", "they were the same"], "3 hands is longer than 1 hand."),
+                 q("What does the Earth do once every day?", "\U0001F30D", "it spins round", ["it stops still", "it goes round the Moon"], "The Earth spins round once a day. That makes the Sun seem to move."),
+             ]},
+             "You can follow the Sun across the sky."),
+
         step("quiz", "Show what you know", "⭐", "Star scientist", ["2ESs.01", "2TWSa.02"],
              "Time to show what you know. Tap the answer.",
              explain(

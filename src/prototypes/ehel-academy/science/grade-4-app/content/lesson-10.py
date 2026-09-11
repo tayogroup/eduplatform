@@ -171,6 +171,8 @@ LESSON = {
                  q("To turn a lamp on and off you need...", "\U0001F4A1", "a switch", ["another lamp", "a longer wire"], "The right equipment."),
                  q("Who tests a car's headlight circuit for a break?", "\U0001F697", "a mechanic", ["a chef", "a farmer"], "Circuit science at work."),
                  q("Before testing a coin, you touch the two wire ends together and the lamp lights. Why check that first?", "\U0001F914", "to show the circuit works, so a dark lamp means an insulator", ["to make the lamp brighter for the coin", "to use up some of the cell first"], "If the lamp lights with the gap closed, the circuit works. Then a lamp that stays dark with the coin in the gap can only mean the coin does not conduct."),
+                 q("The circuit worked before. If the lamp stays dark with a rubber in the gap, what does that show?", "\U0001F4A1", "rubber is an insulator", ["rubber is a conductor", "the cell is too big"], "The circuit was working. So the rubber stopped the electricity."),
+                 q("Why do electricians wear rubber gloves?", "\U0001F9E4", "rubber is an insulator, so electricity cannot pass into their hands", ["rubber gloves keep their hands warm", "rubber conducts electricity well"], "An insulator does not let electricity through."),
              ]},
              "That is the whole lesson finished. You know how circuits work."),
     ],

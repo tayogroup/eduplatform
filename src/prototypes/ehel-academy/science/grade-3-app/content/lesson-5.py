@@ -126,6 +126,8 @@ LESSON = {
                  q("What is an organ?", "\U0001FAC0", "a part inside the body with a job", ["a bone", "a kind of food"], "Brain, heart, lungs, stomach, intestine."),
                  q("You put five labels on a body picture. What did you make?", "✏️", "a diagram", ["a physical model", "a photograph"], "Labels on a drawing."),
                  q("What would happen in the lung model if you never pulled the bottom balloon down?", "\U0001F388", "the lung balloon would stay empty", ["the lung balloon would fill up", "the bottle would melt"], "Pulling the bottom balloon down is what makes the lung balloon fill, just as your breathing muscle does."),
+                 q("What would happen if food could not get from the stomach to the intestine?", "\U0001F35E", "the goodness from food could not get into the blood", ["you would stop breathing at once", "the food would go to the brain"], "The goodness from food goes into your blood in the intestine."),
+                 q("Real lungs are not balloons. Why is the bottle-and-balloon model still useful?", "\U0001F388", "it shows the idea: the breathing muscle pulls down and the lungs fill with air", ["it looks exactly like real lungs", "real lungs are made of plastic"], "A model shows an idea clearly and leaves the rest out."),
              ]},
              "That is the whole lesson finished. You know what is inside you."),
     ],

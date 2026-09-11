@@ -192,6 +192,8 @@ LESSON = {
                  q("Sorting leaves into groups by their shape is...", "\U0001F343", "identifying and classifying", ["pattern seeking", "a fair test"], "Putting things into groups by what they are like."),
                  q("Who uses science at work?", "\U0001F469\U0001F3FE‍⚕️", "vets, farmers, nurses and cooks", ["nobody", "only teachers"], "Everyone uses science. Many people use it all day."),
                  q("You time a snail on wet ground, then on dry ground. Why use the same snail both times?", "\U0001F40C", "so only the ground changes, and the test is fair", ["so the snail does not get lonely", "because snails are slow"], "Change one thing only. A different snail might just be a faster snail."),
+                 q("A toy robot moves and makes sounds. Why is it not a living thing?", "\U0001F916", "it cannot feed, grow or make more robots by itself", ["it is too small to be alive", "it moves too slowly to be alive"], "Moving is not enough. A living thing does all four life processes."),
+                 q("You want to find out if dogs with longer legs run faster. Which type of enquiry is that?", "\U0001F415", "pattern seeking: look at lots of dogs for a pattern", ["observing over time: watch one dog grow", "identifying and classifying: sort dogs by colour"], "You compare lots of dogs and look for a pattern between legs and speed."),
              ]},
              "That is the whole lesson finished. You know what makes something alive."),
     ],

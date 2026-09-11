@@ -131,6 +131,8 @@ LESSON = {
                  q("Why is the rib cage shaped like a cage?", "\U0001F6E1️", "to protect the heart and lungs inside it", ["to make your chest look wider", "to hold your food while you eat"], "Soft organs, hard bones."),
                  q("What would you be without a skeleton?", "\U0001F9CD\U0001F3FE", "a floppy heap that could not stand", ["much taller, with nothing holding you in", "much faster, with less to carry"], "Support, shape, movement."),
                  q("You put seven labels on the skeleton. What did you make?", "✏️", "a labelled diagram", ["a physical model", "an X-ray"], "Labels on a drawing."),
+                 q("Why does your arm need two muscles, the biceps and the triceps?", "\U0001F4AA", "a muscle can only pull, so one pulls the arm bent and the other pulls it straight", ["one muscle works while the other rests all day", "two muscles make the arm twice as long"], "Muscles pull and never push. So they work in pairs."),
+                 q("A cycle helmet does the same job as one of your bones. Which bone, and why?", "\u26D1\uFE0F", "the skull, because both protect the brain", ["the spine, because both are long", "the rib cage, because both are round"], "The skull is a hard case round the brain. A helmet adds another one."),
              ]},
              "That is the whole lesson finished. You know your skeleton."),
     ],

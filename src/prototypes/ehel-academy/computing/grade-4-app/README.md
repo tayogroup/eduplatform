@@ -310,3 +310,37 @@ stored and every lesson recorded complete, nothing ticked on a fresh open, and a
 reload after moving to step 4 opens step 4. Five Emoji 13.0 (2020) pictures
 remain in Grade 4's own content (a lift, bubble tea, a bucket, a toothbrush, a
 pot plant), for its own validation.
+
+## Validated 2026-09-11
+
+Against the owner's 27-area framework (OneDrive: `computing-grades validation.docx`);
+the full report is [VALIDATION.md](VALIDATION.md), and the Word copy sits beside the
+other validation reports as `computing-grade-4-v2 validation report.docx`. Average
+4.0 / 5. The live pages had been played to the end the same day, after the redeploy
+above: every lesson stored complete, and a reopened lesson opening where it was left.
+
+Reading every learner-facing line found eighteen errors. The one that taught
+something false: lesson 1's traffic-light round asked the child to correct a loop,
+and the "corrected" loop ran red, green, red and amber, amber while the feedback
+said the loop was now right; the wrong step now sits where fixing it gives red, red
+and amber, green, amber. The others were reasons that did not follow (BAG after
+BREAKFAST "because you pack the lunch you just made"; more coat pegs because most
+children walk), an oven timer offered as a control system, one lesson's two tables
+giving the same children different ages, Maya on a scooter after she came by car,
+cars that will drive themselves "one day", step counts that disagreed, explainers
+describing what was not on the page, "a cable plugged into the wall" as ethernet,
+and "never type a password where there is no padlock", which in the most-used
+browser forbids every page. Lesson 13 gained a game file (4CS.05 names games);
+lesson 5 says its repeat block holds one block where lessons 1 and 4's loops held
+several; five 2020 emoji in 18 places are replaced. The shared kit's teachers' page
+now gives the Caesar and Pigpen steps their own unplugged versions instead of the 1 =
+a code (Grades 1 to 3's pages byte-identical). All in `d2de1fb1f`, committed and **not
+deployed**. Nothing added a step or moved one, so records already made stay true.
+
+Left open: 4CT.09 asks children to develop an algorithm whose output depends on its
+input, and in the app they only follow one (a home project has them write it); lesson
+4 teaches that through IF and otherwise, which Cambridge places at Stage 5, and
+whether Stage 4 keeps the word is the owner's call. No lesson has a recap or a
+warm-up; several routines repeat Grade 3 (three plants, the school morning, bedtime,
+laying the table); the hub still draws a hand-made shield. And the human checks and
+owner decisions every grade has.

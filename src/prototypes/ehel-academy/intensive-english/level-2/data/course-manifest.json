@@ -2,12 +2,13 @@
  "schemaVersion": "Ehel Intensive English Course Manifest v1.0",
  "course": "Ehel Intensive English",
  "subject": "English",
- "audience": "Adults and older teenagers of any first language, beginner to proficient, studying intensively",
+ "audience": "Second-language learners of any first language and any age from older children to adults, beginner upwards, studying intensively. Level 1 is written age-neutral: no child-only worlds and no adult-only worlds.",
  "frameworks": {
   "cefr": {
    "name": "Common European Framework of Reference for Languages",
    "role": "Defines what a learner can DO at the end of each level, and therefore what each level's exit assessment tests. This is the framework the course reports against.",
    "levelsUsed": [
+    "Pre-A1",
     "A1",
     "A2",
     "B1",
@@ -15,18 +16,19 @@
     "C1",
     "C2"
    ],
-   "structure": "Six CEFR levels collapse into five course levels: A1 and A2 combine into Level 1, and each level above is one CEFR level."
+   "structure": "Level 1 (Stages 1-3) runs Pre-A1 to A1 and Level 2 (Stages 4-6) A1 to A2, following the owner's planning note of 2026-09-11. Level 2 is still the earlier B1 course until it is rebuilt on the same model."
   },
   "cambridge": {
-   "name": "Cambridge Primary English 0058 and Cambridge Lower Secondary English 0861",
-   "role": "Defines the language inventory, progression and text types, because the source material is built against it. Every outcome keeps the objective code of the source unit it came from.",
+   "name": "Cambridge Primary English as a Second Language 0057; Cambridge Primary English 0058; Cambridge Lower Secondary English 0861",
+   "role": "0057 is the CONTRACT for Levels 1 and 2: every 0057 objective of a level's stages is placed in exactly one unit (plan field `esl`), and the build fails a unit whose outcomes do not cite its placed objectives. 0058 is an optional literacy cross-reference. Level 2 until it is rebuilt, and Level 3 and above, keep the 0058 / 0861 codes of the school units they were compressed from.",
    "data": [
+    "src/curriculum/cambridge-english-0057.json",
     "src/curriculum/cambridge-english-0058.json",
     "src/curriculum/cambridge-english-0861.json"
    ],
-   "coverage": "0058 covers stages 1-6, 0861 covers stages 7-9."
+   "coverage": "0057 and 0058 cover Stages 1-6, 0861 covers Stages 7-9."
   },
-  "howTheyRelate": "They are not the same axis and must not be treated as one. Cambridge grades measure a child progressing through school in English; CEFR levels measure what any user can do in a second language. A grade band supplies this course's language content; a CEFR level sets its target. The mapping below is a claim about what the compressed content delivers to an adult L2 learner, not a claim that grade N equals CEFR X."
+  "howTheyRelate": "They are not the same axis. A Cambridge stage supplies the language sequence; CEFR sets the target and is recorded separately for each skill as a language-support measure. Level 1 follows the owner's planning note (Stages 1-3, Pre-A1 to A1) and Level 2 will follow Stages 4-6 (A1 to A2). Completing a level does not by itself establish a CEFR level: reading, writing, listening and speaking are assessed separately and may be at different levels."
  },
  "level": {
   "number": 2,
@@ -65,8 +67,8 @@
    "id": "l1",
    "label": "Level 1 — Foundation",
    "cefr": [
-    "A1",
-    "A2"
+    "Pre-A1",
+    "A1"
    ],
    "unitCount": 20,
    "status": "Open"

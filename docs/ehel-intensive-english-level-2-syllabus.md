@@ -16,7 +16,12 @@ words: the B1 exit test *"is the level that matters commercially — it is where
 learner becomes an independent user and qualifies for foundation and pathway
 steps."* A learner who finishes here can go somewhere with it.
 
-**The same rubric-versus-marks question as Level 1 applies**, and slightly
+**Level 1 was rebuilt on 2026-09-11** (Cambridge 0057 Stages 1-3, Pre-A1 to
+A1). This level has not been yet: it is still the B1 course written to follow
+the earlier Level 1, and it is due to be rebuilt on Stages 4-6 (A1 to A2). The
+Prerequisites section says what that means for a learner in between.
+
+**The same rubric-versus-marks question as the earlier Level 1 applies**, and slightly
 worse: the rubrics award **32 marks**, a unit assignment is worth **25 or 30**,
 and no unit reconciles them. Set out under Assessment.
 
@@ -70,8 +75,10 @@ The level ends in a **B1 exit test across all four skills**.
 
 ### Prerequisites
 
-Level 2 assumes Level 1, and the entry condition is explicit: **passing Level
-1's A2 exit test**.
+Level 2 was written to follow a Level 1 that ended at A2. **Level 1 has since
+been rebuilt and now ends at A1**, so until Level 2 is rebuilt on the same
+model there is a gap between them: a learner finishing the new Level 1 should
+take the Level 2 placement exam, and may be advised to consolidate A2 first.
 
 A learner arriving from outside takes the **Level 2 Placement Exam** first: 30
 questions, 30 marks, about 30 minutes, in three sections — everyday words and

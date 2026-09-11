@@ -122,7 +122,9 @@ function addIntensiveCourses(courses, categorySet) {
       fullname: `Ehel Intensive English — ${fullLabel}`,
       shortname: idnumber.toUpperCase(),
       categoryPath,
-      summary: `CEFR-aligned intensive English for adults${band}. ${fullLabel}. ${units.length} units.`,
+      // Not "for adults": Level 1 was rebuilt age-neutral on Cambridge 0057
+      // (2026-09-11), for second-language learners from older children up.
+      summary: `CEFR-aligned intensive English for second-language learners${band}. ${fullLabel}. ${units.length} units.`,
       unitCount: units.length,
       units,
     });

@@ -33,7 +33,7 @@ function textsForUnit(unit, category) {
     // the point on the page and unreadable aloud. Use it only where a blank
     // makes the text unspeakable, not to reword a passage.
     case "readings":
-      return (unit.readings || []).map((r) => r.passageScriptSpeech || r.passageScript);
+      return (unit.readings || []).map((r) => r.passageScript);
     // line 234: voiceButton(`${lesson.title}. ${lesson.explanation}`)
     // The title is spoken here even though the review stripped it from the
     // workbook's grammar rows — that row is a composite of explanation, rule,
@@ -44,7 +44,7 @@ function textsForUnit(unit, category) {
     // line 348: voiceButton(task.instructionsAndModelLines)
     // Same spoken-form rule as readings above.
     case "speaking":
-      return (unit.speaking || []).map((s) => s.instructionsAndModelLinesSpeech || s.instructionsAndModelLines);
+      return (unit.speaking || []).map((s) => s.instructionsAndModelLines);
     // line 179: voiceButton(item.displayWord)
     case "words":
       return (unit.dictionaryLinks || []).map((d) => d.displayWord);
@@ -60,11 +60,36 @@ function textsForUnit(unit, category) {
 
 // Every clip the course needs, de-duplicated by hash: the same text in two
 // units is one file, bought once.
+// The spoken form beside a displayed text, index-aligned with textsForUnit, or
+// null where there is none. Only readings and speaking carry one.
+//
+// textsForUnit returns what the app DISPLAYS, because that is what it hashes
+// to find a clip. It used to return the spoken form instead, wherever one was
+// authored, and so named those clips after text the app never asks for: the
+// three spoken-form clips in the earlier Level 1 were on disk under the spoken
+// form's hash, and the app requested the displayed text's hash and fell back
+// to the paid runtime voice, reading the blanks aloud (found 2026-09-11). Now
+// the name comes from the display and only the recording comes from here.
+function speechForUnit(unit, category) {
+  switch (category) {
+    case "readings":
+      return (unit.readings || []).map((r) => r.passageScriptSpeech || null);
+    case "speaking":
+      return (unit.speaking || []).map((s) => s.instructionsAndModelLinesSpeech || null);
+    default:
+      return textsForUnit(unit, category).map(() => null);
+  }
+}
+
 function clipsForUnit(unit, categories = CATEGORIES) {
   const out = [];
   for (const category of categories) {
-    for (const raw of textsForUnit(unit, category)) {
+    const speech = speechForUnit(unit, category);
+    for (const [index, raw] of textsForUnit(unit, category).entries()) {
       const text = clean(raw);
+      // `source` is what is recorded: the spoken form where one is authored,
+      // otherwise the displayed text itself.
+      const source = speech[index] ? clean(speech[index]) : text;
       // Below the floor the request is not worth making; the UI speaks these
       // through the runtime voice instead.
       if (!text || text.length < MIN_CHARS) continue;
@@ -78,7 +103,7 @@ function clipsForUnit(unit, categories = CATEGORIES) {
       // both levels — almost entirely "speaking" drills pairing full
       // sentences or minimal pairs with "/" — that carried a literal slash
       // into the recording with no transform at all.
-      out.push({ category, text, spoken: speakableWords(speakableFrames(text)), hash: cyrb53(text) });
+      out.push({ category, text, source, spoken: speakableWords(speakableFrames(source)), hash: cyrb53(text) });
     }
   }
   return out;
@@ -122,4 +147,4 @@ function hashGradeMap(courseRoot, categories = CATEGORIES) {
   return map;
 }
 
-module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, clipsForUnit, hashesForLevel, hashGradeMap };
+module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, speechForUnit, clipsForUnit, hashesForLevel, hashGradeMap };

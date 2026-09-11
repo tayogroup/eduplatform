@@ -836,6 +836,57 @@ npm run validate:curriculum-units -- --strict-cambridge
 
 A framework failure usually means the extracted JSON is wrong, not the unit. The frameworks are parsed out of Cambridge's PDFs and the source documents are not in the repo, so fix the framework before re-pointing any mapping at it.
 
+## Intensive English Level 1 is built on Cambridge 0057 (2026-09-11)
+
+```bash
+node tools/build-intensive-prompt.js 1 <unit>   # one unit's authoring prompt, every slot filled
+node tools/build-intensive-units.js [l1-uNN]    # expand authored JSON + the gate
+npm run check:intensive                         # the build + the audio-template check
+```
+
+Owner decision: Level 1 = Cambridge Primary **English as a Second Language 0057**
+Stages 1-3, **Pre-A1 to A1**, age-neutral (older children to adults); Level 2 =
+Stages 4-6, A1 to A2, **not rebuilt yet** (still the earlier B1 course). The
+earlier Level 1 (A1-A2, adult) is in
+`inputs/ehel-english-intensive-source/archive/level-1-a1-a2-2026-08/`.
+`src/curriculum/cambridge-english-0057.json` comes from
+`tools/extract-cambridge-esl-framework.py`, run on the official text PDF — the
+owner's OneDrive copy is a page capture with no text layer.
+
+**The plan is the contract, and the build holds each unit to it.**
+`course-plan.json` places every 0057 objective of the level's stages in exactly
+one unit (`esl.use` = the grammar cards, `esl.skills` = the tasks) and allocates
+every word to one unit. The build fails a unit whose outcomes do not cite its
+placed codes, that teaches a word not allocated to it or drops one, whose
+outcome claims above its band, or whose assignment writes marks by hand (marks
+are 4 per rubric criterion named). Mutation-tested twelve ways. The level sum
+("150/150 objectives cited") is read from the built units, never the plan.
+
+Four things that are not obvious:
+
+- **0057 and 0058 share sub-strand tags** (`1Wc.01` is "Content" in one and
+  "Creation of texts" in the other), so they are two indexes and two outcome
+  fields: `esl` → runtime `cambridgeObjectives` (+ `cambridgeFramework`),
+  `cambridge` → `literacyObjectives`. Never merge them into one map.
+- **A narrated blank needs a spoken form** (`passageSpeech` /
+  `instructionsSpeech`). This course's audio generator refuses `___`; the
+  "a blank is a pause" rule is the ENGLISH generator's. The build now fails a
+  narrated blank with no spoken form. Clips are named by the DISPLAYED text's
+  hash and record the spoken form — until 2026-09-11 the narration lib named
+  them after the spoken form, which the app never requests, so the earlier
+  course's three spoken-form clips were never served.
+- **`lectureVersion` is written by the builder.** It was stamped afterwards by
+  another tool, so every full rebuild stripped it from all 40 units. Level 1
+  carries `lessonVersion: "v2"`, so a learner's old lesson ticks reset.
+- **Word pictures for this level are `GRADE_WORD_PICTURES.ien1`**, re-audited
+  for the new 510 words (a water tap beside "tap" = touch, a teddy bear beside
+  "play", a flag beside "country" were live defects of the shared map).
+
+**Not done, and each needs the owner:** narration (Level 1 dry run: 2,364
+clips, ~174k characters, paid), the content upload (replaces Level 1 at once
+for every learner mid-course), and the Moodle catalogue sync of the new unit
+titles. Nothing about the rebuild has been deployed.
+
 ## The Ehel Academy shell keeps TWO progress stores per learner, and only one drives the UI
 
 Shared across all six subjects (`shell/course-app.js` + `shared/progress-client.js`), found while seeding `localStorage` in the browser to test a completion-card wording change and finding more keys than expected.

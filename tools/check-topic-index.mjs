@@ -49,7 +49,10 @@ const TOPIC_FLOORS = {
   computing: 1895,
   "global-perspectives": 1273,
   english: 2165,
-  "intensive-english": 862,
+  // Raised from 862 on 2026-09-11, when Level 1 was rebuilt on Cambridge 0057
+  // (577 topics, against ~300 before). Left at 862, the new level could lose
+  // every topic of a category and still clear the floor by 300.
+  "intensive-english": 1186,
 };
 
 const failures = [];

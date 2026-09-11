@@ -2,12 +2,13 @@
  "schemaVersion": "Ehel Intensive English Course Manifest v1.0",
  "course": "Ehel Intensive English",
  "subject": "English",
- "audience": "Adults and older teenagers of any first language, beginner to proficient, studying intensively",
+ "audience": "Second-language learners of any first language and any age from older children to adults, beginner upwards, studying intensively. Level 1 is written age-neutral: no child-only worlds and no adult-only worlds.",
  "frameworks": {
   "cefr": {
    "name": "Common European Framework of Reference for Languages",
    "role": "Defines what a learner can DO at the end of each level, and therefore what each level's exit assessment tests. This is the framework the course reports against.",
    "levelsUsed": [
+    "Pre-A1",
     "A1",
     "A2",
     "B1",
@@ -15,50 +16,69 @@
     "C1",
     "C2"
    ],
-   "structure": "Six CEFR levels collapse into five course levels: A1 and A2 combine into Level 1, and each level above is one CEFR level."
+   "structure": "Level 1 (Stages 1-3) runs Pre-A1 to A1 and Level 2 (Stages 4-6) A1 to A2, following the owner's planning note of 2026-09-11. Level 2 is still the earlier B1 course until it is rebuilt on the same model."
   },
   "cambridge": {
-   "name": "Cambridge Primary English 0058 and Cambridge Lower Secondary English 0861",
-   "role": "Defines the language inventory, progression and text types, because the source material is built against it. Every outcome keeps the objective code of the source unit it came from.",
+   "name": "Cambridge Primary English as a Second Language 0057; Cambridge Primary English 0058; Cambridge Lower Secondary English 0861",
+   "role": "0057 is the CONTRACT for Levels 1 and 2: every 0057 objective of a level's stages is placed in exactly one unit (plan field `esl`), and the build fails a unit whose outcomes do not cite its placed objectives. 0058 is an optional literacy cross-reference. Level 2 until it is rebuilt, and Level 3 and above, keep the 0058 / 0861 codes of the school units they were compressed from.",
    "data": [
+    "src/curriculum/cambridge-english-0057.json",
     "src/curriculum/cambridge-english-0058.json",
     "src/curriculum/cambridge-english-0861.json"
    ],
-   "coverage": "0058 covers stages 1-6, 0861 covers stages 7-9."
+   "coverage": "0057 and 0058 cover Stages 1-6, 0861 covers Stages 7-9."
   },
-  "howTheyRelate": "They are not the same axis and must not be treated as one. Cambridge grades measure a child progressing through school in English; CEFR levels measure what any user can do in a second language. A grade band supplies this course's language content; a CEFR level sets its target. The mapping below is a claim about what the compressed content delivers to an adult L2 learner, not a claim that grade N equals CEFR X."
+  "howTheyRelate": "They are not the same axis. A Cambridge stage supplies the language sequence; CEFR sets the target and is recorded separately for each skill as a language-support measure. Level 1 follows the owner's planning note (Stages 1-3, Pre-A1 to A1) and Level 2 will follow Stages 4-6 (A1 to A2). Completing a level does not by itself establish a CEFR level: reading, writing, listening and speaking are assessed separately and may be at different levels."
  },
  "level": {
   "number": 1,
   "id": "l1",
   "label": "Level 1 — Foundation",
   "cefr": [
-   "A1",
-   "A2"
+   "Pre-A1",
+   "A1"
   ],
-  "cefrName": "Beginner and Elementary",
+  "cefrName": "Pre-A1 to A1",
   "cefrBands": [
    {
-    "cefr": "A1",
-    "cefrName": "Beginner",
+    "stage": 1,
+    "cefr": "Pre-A1",
+    "cefrName": "Pre-A1, moving towards A1",
     "units": [
      0,
-     9
+     6
     ],
-    "canDo": "Understand and use basic words and set phrases for immediate needs, and interact slowly with a patient speaker."
+    "canDo": "Recognise familiar words and letters, follow simple instructions with support, and introduce yourself with rehearsed words and phrases."
    },
    {
-    "cefr": "A2",
-    "cefrName": "Elementary",
+    "stage": 2,
+    "cefr": "A1",
+    "cefrName": "A1, developing",
     "units": [
-     10,
+     7,
+     13
+    ],
+    "canDo": "Ask and answer basic questions, read short sentences, and write simple personal information."
+   },
+   {
+    "stage": 3,
+    "cefr": "A1",
+    "cefrName": "A1, consolidating",
+    "units": [
+     14,
      19
     ],
-    "canDo": "Follow short, simple information and hold basic exchanges about familiar, everyday matters."
+    "canDo": "Understand short familiar texts, and describe people, places, routines and events using simple sentences."
    }
   ],
-  "exitDescriptor": "Exits at a secure A2. Can handle everyday personal, practical and workplace situations: introduce themselves, describe people, places and routines, talk about the past and the future, follow and give instructions, ask for what they need, and write a short connected text.",
-  "exitAssessment": "A2 exit test across the four skills. Passing it is the entry condition for Level 2."
+  "eslFramework": "0057",
+  "cambridgeStages": [
+   1,
+   2,
+   3
+  ],
+  "exitDescriptor": "Exits at a secure A1. Can recognise and write the letters, read and understand short familiar texts, ask and answer simple questions about people, places, routines and events, follow and give simple instructions, and write short sentences and notes joined with and, but and because.",
+  "exitAssessment": "A1 check across the four skills at the end of Unit 19, reported per skill, never as one grade. Passing it is the entry condition for Level 2."
  },
  "levels": [
   {
@@ -66,8 +86,8 @@
    "id": "l1",
    "label": "Level 1 — Foundation",
    "cefr": [
-    "A1",
-    "A2"
+    "Pre-A1",
+    "A1"
    ],
    "unitCount": 20,
    "status": "Open"
@@ -118,221 +138,242 @@
   {
    "number": 0,
    "id": "ien-l1-u00",
-   "title": "The Sounds That Are Hard",
+   "title": "Letters and Sounds",
    "data": "./data/units/unit-0.json",
-   "cefr": "A1",
-   "patterns": 6,
-   "source": "G1U0",
-   "vocabularyCount": 30,
+   "cefr": "Pre-A1",
+   "stage": 1,
+   "patterns": 5,
+   "source": "G1U1 G2U1",
+   "vocabularyCount": 31,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 1,
    "id": "ien-l1-u01",
-   "title": "Who I Am",
+   "title": "Hello, My Name Is",
    "data": "./data/units/unit-1.json",
-   "cefr": "A1",
-   "patterns": 5,
-   "source": "G1U1,G1U2 G2U1 G3U1",
-   "vocabularyCount": 29,
+   "cefr": "Pre-A1",
+   "stage": 1,
+   "patterns": 4,
+   "source": "G1U1 G2U1 G3U1",
+   "vocabularyCount": 33,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 2,
    "id": "ien-l1-u02",
-   "title": "My Family and My Home",
+   "title": "My Family, My Things",
    "data": "./data/units/unit-2.json",
-   "cefr": "A1",
+   "cefr": "Pre-A1",
+   "stage": 1,
    "patterns": 4,
-   "source": "G1U2 G2U8 G3U1",
-   "vocabularyCount": 29,
+   "source": "G1U2 G3U1",
+   "vocabularyCount": 26,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 3,
    "id": "ien-l1-u03",
-   "title": "Learning English",
+   "title": "Colours and Where Things Are",
    "data": "./data/units/unit-3.json",
-   "cefr": "A1",
+   "cefr": "Pre-A1",
+   "stage": 1,
    "patterns": 4,
-   "source": "G1U1 G2U1 G3U2",
-   "vocabularyCount": 29,
+   "source": "G1U4,G1U6 G3U6",
+   "vocabularyCount": 27,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 4,
    "id": "ien-l1-u04",
-   "title": "Numbers, Money and Measuring",
+   "title": "I Can, I Like",
    "data": "./data/units/unit-4.json",
-   "cefr": "A1",
-   "patterns": 4,
-   "source": "G1U2 G2U5 G3U8",
-   "vocabularyCount": 29,
+   "cefr": "Pre-A1",
+   "stage": 1,
+   "patterns": 3,
+   "source": "G1U3,G1U1 G2U3",
+   "vocabularyCount": 26,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 5,
    "id": "ien-l1-u05",
-   "title": "My Day, My Week",
+   "title": "What Is Happening Now",
    "data": "./data/units/unit-5.json",
-   "cefr": "A1",
-   "patterns": 4,
-   "source": "G3U3 G2U1",
-   "vocabularyCount": 29,
+   "cefr": "Pre-A1",
+   "stage": 1,
+   "patterns": 3,
+   "source": "G1U7 G2U3 G3U1",
+   "vocabularyCount": 25,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 6,
    "id": "ien-l1-u06",
-   "title": "Food, Markets and Cooking",
+   "title": "Days, Dates and Time",
    "data": "./data/units/unit-6.json",
-   "cefr": "A1",
-   "patterns": 4,
-   "source": "G2U3 G4U3",
-   "vocabularyCount": 29,
+   "cefr": "Pre-A1",
+   "stage": 1,
+   "patterns": 3,
+   "source": "G2U1 G3U3 G1U10",
+   "vocabularyCount": 26,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 7,
    "id": "ien-l1-u07",
-   "title": "The Body, Illness and the Clinic",
+   "title": "Asking and Answering",
    "data": "./data/units/unit-7.json",
    "cefr": "A1",
-   "patterns": 3,
-   "source": "G1U6 G2U3 G4U3",
-   "vocabularyCount": 29,
+   "stage": 2,
+   "patterns": 4,
+   "source": "G2U1,G2U2 G3U2",
+   "vocabularyCount": 24,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 8,
    "id": "ien-l1-u08",
-   "title": "Clothes, Colours and Buying Things",
+   "title": "There Is, There Are",
    "data": "./data/units/unit-8.json",
    "cefr": "A1",
-   "patterns": 4,
-   "source": "G1U4 G2U4",
-   "vocabularyCount": 29,
+   "stage": 2,
+   "patterns": 5,
+   "source": "G2U8,G2U5 G3U1",
+   "vocabularyCount": 25,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 9,
    "id": "ien-l1-u09",
-   "title": "Finding My Way",
+   "title": "Numbers to 100, and How Things Are",
    "data": "./data/units/unit-9.json",
    "cefr": "A1",
-   "patterns": 3,
-   "source": "G1U9 G2U9 G3U4 G4U9",
+   "stage": 2,
+   "patterns": 6,
+   "source": "G2U5 G3U6,G3U8",
    "vocabularyCount": 29,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 10,
    "id": "ien-l1-u10",
-   "title": "Travel and Transport",
+   "title": "Yesterday",
    "data": "./data/units/unit-10.json",
    "cefr": "A1",
-   "patterns": 3,
-   "source": "G1U7 G4U9",
-   "vocabularyCount": 29,
+   "stage": 2,
+   "patterns": 4,
+   "source": "G2U4 G3U3,G3U5",
+   "vocabularyCount": 28,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 11,
    "id": "ien-l1-u11",
-   "title": "Work and Jobs",
+   "title": "Can I? I Will",
    "data": "./data/units/unit-11.json",
-   "cefr": "A2",
-   "patterns": 3,
-   "source": "G2U2 G3U4 G4U6",
-   "vocabularyCount": 29,
+   "cefr": "A1",
+   "stage": 2,
+   "patterns": 4,
+   "source": "G2U9,G2U3 G1U9",
+   "vocabularyCount": 24,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 12,
    "id": "ien-l1-u12",
-   "title": "Describing People and Things",
+   "title": "Where Things Go",
    "data": "./data/units/unit-12.json",
-   "cefr": "A2",
-   "patterns": 4,
-   "source": "G1U6 G3U6 G4U1",
-   "vocabularyCount": 29,
+   "cefr": "A1",
+   "stage": 2,
+   "patterns": 3,
+   "source": "G2U8,G2U7 G3U9",
+   "vocabularyCount": 25,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 13,
    "id": "ien-l1-u13",
-   "title": "Weather, Land and Water",
+   "title": "Joining and Writing Sentences",
    "data": "./data/units/unit-13.json",
-   "cefr": "A2",
-   "patterns": 3,
-   "source": "G1U8 G2U4,G2U7 G3U7 G4U2",
-   "vocabularyCount": 29,
+   "cefr": "A1",
+   "stage": 2,
+   "patterns": 4,
+   "source": "G2U10 G3U2 G1U10",
+   "vocabularyCount": 23,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 14,
    "id": "ien-l1-u14",
-   "title": "Telling What Happened",
+   "title": "Every Day",
    "data": "./data/units/unit-14.json",
-   "cefr": "A2",
+   "cefr": "A1",
+   "stage": 3,
    "patterns": 4,
-   "source": "G2U4 G3U2,G3U3,G3U5",
-   "vocabularyCount": 29,
+   "source": "G3U3,G3U5 G2U4",
+   "vocabularyCount": 24,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 15,
    "id": "ien-l1-u15",
-   "title": "Plans and the Future",
+   "title": "Do This, Then That",
    "data": "./data/units/unit-15.json",
-   "cefr": "A2",
-   "patterns": 3,
-   "source": "G2U8 G3U8 G4U9",
-   "vocabularyCount": 29,
+   "cefr": "A1",
+   "stage": 3,
+   "patterns": 4,
+   "source": "G3U4,G3U2 G1U9",
+   "vocabularyCount": 24,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 16,
    "id": "ien-l1-u16",
-   "title": "Asking Well",
+   "title": "What Happened",
    "data": "./data/units/unit-16.json",
-   "cefr": "A2",
-   "patterns": 3,
-   "source": "G2U2,G2U6 G3U1,G3U5 G4U1",
-   "vocabularyCount": 29,
+   "cefr": "A1",
+   "stage": 3,
+   "patterns": 5,
+   "source": "G3U3,G3U5,G3U7",
+   "vocabularyCount": 25,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 17,
    "id": "ien-l1-u17",
-   "title": "Instructions, Rules and Advice",
+   "title": "Bigger, Better, More",
    "data": "./data/units/unit-17.json",
-   "cefr": "A2",
-   "patterns": 3,
-   "source": "G2U3 G3U4 G4U5,G4U6",
-   "vocabularyCount": 29,
+   "cefr": "A1",
+   "stage": 3,
+   "patterns": 6,
+   "source": "G2U5 G3U6,G3U8",
+   "vocabularyCount": 24,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 18,
    "id": "ien-l1-u18",
-   "title": "Getting Help and Getting Things Done",
+   "title": "Have You Ever? Shall We?",
    "data": "./data/units/unit-18.json",
-   "cefr": "A2",
-   "patterns": 3,
-   "source": "G3U4 G4U4,G4U6",
-   "vocabularyCount": 29,
+   "cefr": "A1",
+   "stage": 3,
+   "patterns": 5,
+   "source": "G3U7,G3U6,G3U9",
+   "vocabularyCount": 24,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
    "number": 19,
    "id": "ien-l1-u19",
-   "title": "Level 1 Capstone — My English Life",
+   "title": "Because, and To",
    "data": "./data/units/unit-19.json",
-   "cefr": "A2",
-   "patterns": 2,
-   "source": "G1U10 G2U10 G3U10 G4U10",
-   "vocabularyCount": 20,
+   "cefr": "A1",
+   "stage": 3,
+   "capstone": true,
+   "patterns": 4,
+   "source": "G3U10,G3U9,G3U4",
+   "vocabularyCount": 17,
    "status": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   }
  ]

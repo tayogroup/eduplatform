@@ -143,8 +143,11 @@ async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const all = collect();
 
-  const blanked = all.filter((c) => BLANK_FRAME.test(c.text));
-  const speakable = all.filter((c) => !BLANK_FRAME.test(c.text));
+  // Tested on what would be RECORDED (c.source): a displayed frame with an
+  // authored spoken form is fine; a frame with none is refused. Testing the
+  // displayed text refused every frame whatever its spoken form said.
+  const blanked = all.filter((c) => BLANK_FRAME.test(c.source));
+  const speakable = all.filter((c) => !BLANK_FRAME.test(c.source));
 
   const queue = only ? speakable.filter((c) => only.has(c.hash))
     : force ? speakable : speakable.filter((c) => {

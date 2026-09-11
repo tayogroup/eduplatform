@@ -1051,23 +1051,39 @@ export const GRADE_WORD_PICTURES = {
 // too. The tooling for it is a meaning comparison, the same one that finds the
 // per-grade collisions.
 GRADE_WORD_PICTURES.ien1 = {
-  // Found by auditing all 411 Intensive English pictures against their own
-  // meanings. Five of these are the ADJECTIVE-vs-OBJECT trap: this course
-  // teaches the everyday adverb or adjective where English teaches a thing.
+  // Level 1 was rebuilt on Cambridge 0057 on 2026-09-11 (Stages 1-3, Pre-A1 to
+  // A1, age-neutral), with a new 510-word vocabulary. These were found by
+  // printing every one of those words beside the picture this function returns
+  // and its authored meaning. The earlier Level 1's entries that no longer name
+  // a taught word (back, smart, flat, tablet, patient, offer, exercise, round,
+  // serious) went with it; the archived course they belonged to is not served.
+  //
+  // --- the ADVERB or ADJECTIVE this level teaches, where the map has a thing --
   well: "",            // "in a good way" — English Grade 1's is the water well
-  hard: "",            // "needing a lot of effort", not the opposite of soft
-  light: "",           // "not weighing much", not brightness
-  back: "",            // the part of your body, not the direction
-  smart: "👔",         // "neat and well dressed", not clever
-  bank: "🏦",          // the money sense, English's is a riverbank
-  flat: "🏢",          // a home, as at English Grade 2
-  tablet: "💊",        // the medicine, not the screen
-  patient: "🤒",       // the person, not the virtue
-  offer: "🏷️",         // a price offer, not offering something kindly
-  exercise: "📝",      // a practice task, not physical exercise
+  hard: "",            // "with a lot of effort", not the opposite of soft
+  light: "",           // "not heavy", not brightness
   catch: "",           // "catch a bus" — nothing thrown
-  round: "",           // "round the corner" — not the shape
-  serious: "",         // "serious enough to worry about" — not the manner
+  bank: "🏦",          // the money sense, English's is a riverbank
+  // --- a different SENSE of the same word -------------------------------------
+  tap: "👆🏾",          // touch a screen, not the water tap
+  letter: "🔡",        // a letter of the alphabet, not one in the post
+  capital: "🔠",       // a capital letter, not a capital city
+  watch: "⌚",         // the thing on your wrist; the map's 👀 is the verb
+  shower: "🚿",        // washing, not a rain shower
+  brush: "🧹",         // the floor brush Unit 12 teaches, not a toothbrush
+  step: "",            // one step of instructions, not a footprint
+  break: "",           // "go into parts" — the map's ⏸️ is a pause
+  drop: "",            // "let a thing fall", not a drop of water
+  // --- a picture that would put a world this course keeps out ----------------
+  play: "",            // 🧸 is a child's toy; this course is age-neutral
+  park: "🌳",          // 🎠 is a playground ride; a park is trees and grass
+  cousin: "",          // 🧒🏾 says a child; a cousin can be any age
+  country: "",         // 🏳️ is a flag, and the course names no country or flag
+  future: "",          // 🔮 is fortune-telling
+  // --- no honest picture of the sense taught ----------------------------------
+  go: "",              // "walk or ride to a new place"; 🟢 is a traffic signal
+  table: "",           // 🍽️ is a place setting, and plate and dinner already use it
+  often: "",           // 🔁 means repeat, which Unit 0 teaches
 };
 GRADE_WORD_PICTURES.ien2 = {
   leak: "",            // information released without authorisation, not water

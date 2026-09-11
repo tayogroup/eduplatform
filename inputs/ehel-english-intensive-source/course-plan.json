@@ -2,13 +2,14 @@
   "schemaVersion": "Ehel Intensive English Course Plan v1.0",
   "course": "Ehel Intensive English",
   "subject": "English",
-  "audience": "Adults and older teenagers of any first language, beginner to proficient, studying intensively",
-  "designModel": "Grade 1 English — unit 0 sounds module, full-screen pattern carousel, one idea per screen, audio on every line",
+  "audience": "Second-language learners of any first language and any age from older children to adults, beginner upwards, studying intensively. Level 1 is written age-neutral: no child-only worlds and no adult-only worlds.",
+  "designModel": "Grade 1 English: full-screen pattern carousel, one idea per screen, audio on every line. Level 1 Unit 0 teaches the letters and the course's instruction words.",
   "frameworks": {
     "cefr": {
       "name": "Common European Framework of Reference for Languages",
       "role": "Defines what a learner can DO at the end of each level, and therefore what each level's exit assessment tests. This is the framework the course reports against.",
       "levelsUsed": [
+        "Pre-A1",
         "A1",
         "A2",
         "B1",
@@ -16,18 +17,19 @@
         "C1",
         "C2"
       ],
-      "structure": "Six CEFR levels collapse into five course levels: A1 and A2 combine into Level 1, and each level above is one CEFR level."
+      "structure": "Level 1 (Stages 1-3) runs Pre-A1 to A1 and Level 2 (Stages 4-6) A1 to A2, following the owner's planning note of 2026-09-11. Level 2 is still the earlier B1 course until it is rebuilt on the same model."
     },
     "cambridge": {
-      "name": "Cambridge Primary English 0058 and Cambridge Lower Secondary English 0861",
-      "role": "Defines the language inventory, progression and text types, because the source material is built against it. Every outcome keeps the objective code of the source unit it came from.",
+      "name": "Cambridge Primary English as a Second Language 0057; Cambridge Primary English 0058; Cambridge Lower Secondary English 0861",
+      "role": "0057 is the CONTRACT for Levels 1 and 2: every 0057 objective of a level's stages is placed in exactly one unit (plan field `esl`), and the build fails a unit whose outcomes do not cite its placed objectives. 0058 is an optional literacy cross-reference. Level 2 until it is rebuilt, and Level 3 and above, keep the 0058 / 0861 codes of the school units they were compressed from.",
       "data": [
+        "src/curriculum/cambridge-english-0057.json",
         "src/curriculum/cambridge-english-0058.json",
         "src/curriculum/cambridge-english-0861.json"
       ],
-      "coverage": "0058 covers stages 1-6, 0861 covers stages 7-9."
+      "coverage": "0057 and 0058 cover Stages 1-6, 0861 covers Stages 7-9."
     },
-    "howTheyRelate": "They are not the same axis and must not be treated as one. Cambridge grades measure a child progressing through school in English; CEFR levels measure what any user can do in a second language. A grade band supplies this course's language content; a CEFR level sets its target. The mapping below is a claim about what the compressed content delivers to an adult L2 learner, not a claim that grade N equals CEFR X."
+    "howTheyRelate": "They are not the same axis. A Cambridge stage supplies the language sequence; CEFR sets the target and is recorded separately for each skill as a language-support measure. Level 1 follows the owner's planning note (Stages 1-3, Pre-A1 to A1) and Level 2 will follow Stages 4-6 (A1 to A2). Completing a level does not by itself establish a CEFR level: reading, writing, listening and speaking are assessed separately and may be at different levels."
   },
   "sourceMaterial": "src/prototypes/ehel-academy/english/grade-{1..8} — 81 units, 2212 vocabulary items, 486 grammar lessons. Analysis: inputs/ehel-english-intensive-source/grade-1-8-analysis.json",
   "compressionPrinciple": "Grades 1-8 teach 16 language patterns more than once, because children need spiral return. Adults do not. Each pattern is taught ONCE here, at the point it first becomes useful, and then recycled through later units' tasks rather than re-taught. That is where the 81-to-40 compression comes from — not from cutting language. A card that CONTRASTS patterns already taught is not a re-teach, but it must be flagged with \"contrast\": true so the duplication gate can allow it explicitly rather than by accident.",
@@ -43,77 +45,768 @@
       "id": "l1",
       "label": "Level 1 — Foundation",
       "cefr": [
-        "A1",
-        "A2"
+        "Pre-A1",
+        "A1"
       ],
-      "cefrName": "Beginner and Elementary",
+      "cefrName": "Pre-A1 to A1",
+      "cambridgeStages": [
+        1,
+        2,
+        3
+      ],
+      "eslFramework": "0057",
       "cefrBands": [
         {
-          "cefr": "A1",
-          "cefrName": "Beginner",
+          "stage": 1,
+          "cefr": "Pre-A1",
+          "cefrName": "Pre-A1, moving towards A1",
           "units": [
             0,
-            9
+            6
           ],
-          "canDo": "Understand and use basic words and set phrases for immediate needs, and interact slowly with a patient speaker."
+          "canDo": "Recognise familiar words and letters, follow simple instructions with support, and introduce yourself with rehearsed words and phrases."
         },
         {
-          "cefr": "A2",
-          "cefrName": "Elementary",
+          "stage": 2,
+          "cefr": "A1",
+          "cefrName": "A1, developing",
           "units": [
-            10,
+            7,
+            13
+          ],
+          "canDo": "Ask and answer basic questions, read short sentences, and write simple personal information."
+        },
+        {
+          "stage": 3,
+          "cefr": "A1",
+          "cefrName": "A1, consolidating",
+          "units": [
+            14,
             19
           ],
-          "canDo": "Follow short, simple information and hold basic exchanges about familiar, everyday matters."
+          "canDo": "Understand short familiar texts, and describe people, places, routines and events using simple sentences."
         }
       ],
       "sourceGrades": [
         1,
         2,
-        3,
-        4
+        3
       ],
-      "sourceUnitCount": 41,
-      "exitDescriptor": "Exits at a secure A2. Can handle everyday personal, practical and workplace situations: introduce themselves, describe people, places and routines, talk about the past and the future, follow and give instructions, ask for what they need, and write a short connected text.",
-      "exitAssessment": "A2 exit test across the four skills. Passing it is the entry condition for Level 2.",
+      "exitDescriptor": "Exits at a secure A1. Can recognise and write the letters, read and understand short familiar texts, ask and answer simple questions about people, places, routines and events, follow and give simple instructions, and write short sentences and notes joined with and, but and because.",
+      "exitAssessment": "A1 check across the four skills at the end of Unit 19, reported per skill, never as one grade. Passing it is the entry condition for Level 2.",
       "defaultUnit": 0,
+      "lessonVersion": "v2",
       "units": [
         {
           "number": 0,
-          "title": "The Sounds That Are Hard",
+          "title": "Letters and Sounds",
+          "stage": 1,
+          "context": "The alphabet, letter names and sounds, reading a short word by blending its sounds, and the instruction words every later unit uses.",
           "source": [
             {
               "grade": 1,
               "units": [
-                0
+                1
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                1
               ]
             }
           ],
           "patterns": [
-            "th (/θ/ and /ð/)",
-            "/v/, /f/, /w/ and /b/",
-            "/r/ and /l/",
-            "consonant clusters at the start and end of a word",
-            "long and short vowels: ship and sheep",
-            "blending: reading a word you have never seen"
+            "the 26 letters: their names, capital and small forms, and alphabetical order",
+            "short vowel sounds: a, e, i, o, u",
+            "consonant sounds, including sh, ch and th",
+            "blending: reading a short word sound by sound (b-u-s, bus)",
+            "the course's instruction words: listen, look, say, read, write, tap, match, check"
           ],
-          "note": "Not the whole alphabet. This unit teaches the six things learners most often find hard in English, and it opens with a self-check so the learner discovers which of the six are hard FOR THEM. Which ones those are depends on the learner's first language, and the course never assumes what that is."
+          "esl": {
+            "use": [],
+            "skills": [
+              "1Rd.01",
+              "1Rd.02",
+              "1Wca.01",
+              "1Wca.02",
+              "1Ld.01",
+              "1Ld.02",
+              "1Sc.04"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Working words",
+              "words": [
+                "listen",
+                "look",
+                "say",
+                "read",
+                "write",
+                "tap",
+                "match",
+                "point",
+                "check",
+                "repeat"
+              ]
+            },
+            {
+              "title": "Letters and words",
+              "words": [
+                "letter",
+                "sound",
+                "word",
+                "capital",
+                "small"
+              ]
+            },
+            {
+              "title": "Short a and e",
+              "words": [
+                "bag",
+                "map",
+                "hat",
+                "bed",
+                "pen",
+                "leg",
+                "wet"
+              ]
+            },
+            {
+              "title": "Short i, o and u",
+              "words": [
+                "sit",
+                "fix",
+                "bin",
+                "box",
+                "hot",
+                "stop",
+                "bus",
+                "cup",
+                "sun"
+              ]
+            }
+          ],
+          "note": "Letters ARE taught now: 0057 Stage 1 puts letter names, letter sounds, blending and left-to-right writing in scope (1Rd.01, 1Rd.02, 1Wca.01, 1Wca.02). A learner who already reads the Latin alphabet can check themselves in the first screen and move to Unit 1. Every explanation in this unit must work through sound, a picture and a very short line; the learner may have no English yet."
         },
         {
           "number": 1,
-          "title": "Who I Am",
+          "title": "Hello, My Name Is",
+          "stage": 1,
+          "context": "Greeting people, saying who you are and where you are from, spelling your name, and numbers to twenty.",
           "source": [
             {
               "grade": 1,
+              "units": [
+                1
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                1
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "am, is, are: saying who someone is (I am Ana. She is from a small town.)",
+            "I, you, he, she, it, we, they",
+            "first question words: what, who, where, how old",
+            "numbers 1 to 20"
+          ],
+          "esl": {
+            "use": [
+              "1Ug.01",
+              "1Ug.02",
+              "1Us.03",
+              "1Uv.01"
+            ],
+            "skills": [
+              "1Sc.01",
+              "1Wc.01",
+              "1Ld.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Hello and goodbye",
+              "words": [
+                "hello",
+                "goodbye",
+                "please",
+                "thanks",
+                "sorry",
+                "yes",
+                "no"
+              ]
+            },
+            {
+              "title": "About you",
+              "words": [
+                "name",
+                "old",
+                "from",
+                "live",
+                "man",
+                "woman"
+              ]
+            },
+            {
+              "title": "Numbers 1 to 10",
+              "words": [
+                "one",
+                "two",
+                "three",
+                "four",
+                "five",
+                "six",
+                "seven",
+                "eight",
+                "nine",
+                "ten"
+              ]
+            },
+            {
+              "title": "Numbers 11 to 20",
+              "words": [
+                "eleven",
+                "twelve",
+                "thirteen",
+                "fourteen",
+                "fifteen",
+                "sixteen",
+                "seventeen",
+                "eighteen",
+                "nineteen",
+                "twenty"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "My Family, My Things",
+          "stage": 1,
+          "context": "The people in a family and the everyday things you carry.",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                2
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "my, your, his, her, our, their",
+            "a and the",
+            "this and these",
+            "one thing, two things: plural -s"
+          ],
+          "esl": {
+            "use": [
+              "1Ug.06",
+              "1Us.01",
+              "1Us.02",
+              "1Uv.07"
+            ],
+            "skills": [
+              "1Sc.02",
+              "1Wca.04"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Family",
+              "words": [
+                "family",
+                "mother",
+                "father",
+                "brother",
+                "sister",
+                "son",
+                "daughter",
+                "baby"
+              ]
+            },
+            {
+              "title": "More family",
+              "words": [
+                "grandmother",
+                "grandfather",
+                "uncle",
+                "aunt",
+                "cousin"
+              ]
+            },
+            {
+              "title": "People",
+              "words": [
+                "friend",
+                "boy",
+                "girl"
+              ]
+            },
+            {
+              "title": "Things you carry",
+              "words": [
+                "phone",
+                "key",
+                "book",
+                "bottle",
+                "watch",
+                "pencil",
+                "card",
+                "umbrella",
+                "photo",
+                "picture"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Colours and Where Things Are",
+          "stage": 1,
+          "context": "Colours, simple describing words, and where things are in a room.",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                4,
+                6
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                6
+              ]
+            }
+          ],
+          "patterns": [
+            "colour words and describing words before a noun: a red bag, a big box",
+            "it is and it has: saying what a thing is and has",
+            "in, on, at, near, next to: where things are",
+            "here and there"
+          ],
+          "esl": {
+            "use": [
+              "1Ug.05",
+              "1Uv.04",
+              "1Uv.06"
+            ],
+            "skills": [
+              "1Rd.03",
+              "1Rd.04",
+              "1Ld.04"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Colours",
+              "words": [
+                "red",
+                "blue",
+                "green",
+                "yellow",
+                "black",
+                "white",
+                "brown",
+                "orange",
+                "pink",
+                "grey"
+              ]
+            },
+            {
+              "title": "Describing things",
+              "words": [
+                "big",
+                "long",
+                "short",
+                "new",
+                "clean",
+                "dirty",
+                "full",
+                "empty"
+              ]
+            },
+            {
+              "title": "In a room",
+              "words": [
+                "room",
+                "table",
+                "chair",
+                "door",
+                "window",
+                "floor",
+                "wall",
+                "shelf",
+                "desk"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "I Can, I Like",
+          "stage": 1,
+          "context": "What people can and cannot do, and what they like doing.",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                3,
+                1
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                3
+              ]
+            }
+          ],
+          "patterns": [
+            "can and can't: saying what you are able to do",
+            "like + -ing: I like cooking. I don't like running.",
+            "and: joining two words or two ideas"
+          ],
+          "esl": {
+            "use": [
+              "1Ug.04",
+              "1Us.05",
+              "1Us.04"
+            ],
+            "skills": [
+              "1Sor.01",
+              "1Wca.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Things people do",
+              "words": [
+                "swim",
+                "cook",
+                "drive",
+                "sing",
+                "dance",
+                "draw",
+                "walk",
+                "run",
+                "ride",
+                "play",
+                "speak",
+                "count",
+                "carry",
+                "sleep"
+              ]
+            },
+            {
+              "title": "Free time",
+              "words": [
+                "football",
+                "music",
+                "bike",
+                "game",
+                "song",
+                "film",
+                "TV"
+              ]
+            },
+            {
+              "title": "What you like",
+              "words": [
+                "love",
+                "hate",
+                "favourite",
+                "language",
+                "English"
+              ]
+            }
+          ],
+          "note": "Replace the source's Fun and Games framing (toys, playground) with things any age does: cook, drive, swim, sing, speak a language."
+        },
+        {
+          "number": 5,
+          "title": "What Is Happening Now",
+          "stage": 1,
+          "context": "What people are doing at this moment, at home, at school or work, and in the street; asking someone to help you understand.",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                7
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "am, is, are + -ing: saying what is happening now",
+            "not + -ing: saying what is not happening",
+            "questions and short answers: Are you working? Yes, I am."
+          ],
+          "esl": {
+            "use": [
+              "1Ug.03"
+            ],
+            "skills": [
+              "1Sc.03",
+              "1Sc.05",
+              "1Sor.02",
+              "1Sc.06"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Everyday actions",
+              "words": [
+                "eat",
+                "drink",
+                "wash",
+                "open",
+                "close",
+                "wait",
+                "stand",
+                "talk",
+                "work",
+                "study",
+                "help",
+                "call",
+                "come",
+                "go",
+                "make"
+              ]
+            },
+            {
+              "title": "Places",
+              "words": [
+                "street",
+                "shop",
+                "school",
+                "park",
+                "office",
+                "garden"
+              ]
+            },
+            {
+              "title": "When you need help",
+              "words": [
+                "now",
+                "again",
+                "slowly",
+                "understand"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Days, Dates and Time",
+          "stage": 1,
+          "context": "Days of the week, first to tenth, times of the day, and doing things with people and for people. Ends with the Stage 1 check.",
+          "source": [
+            {
+              "grade": 2,
+              "units": [
+                1
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 1,
+              "units": [
+                10
+              ]
+            }
+          ],
+          "patterns": [
+            "first, second, third … tenth",
+            "on and in for time: on Monday, in the morning",
+            "with and for: with a friend, for my sister"
+          ],
+          "esl": {
+            "use": [
+              "1Uv.02",
+              "1Uv.03",
+              "1Uv.05"
+            ],
+            "skills": [
+              "1Lm.01",
+              "1Ld.05",
+              "1Wca.05"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Days",
+              "words": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+              ]
+            },
+            {
+              "title": "First to tenth",
+              "words": [
+                "first",
+                "second",
+                "third",
+                "fourth",
+                "fifth",
+                "sixth",
+                "seventh",
+                "eighth",
+                "ninth",
+                "tenth"
+              ]
+            },
+            {
+              "title": "Parts of the day",
+              "words": [
+                "morning",
+                "afternoon",
+                "evening",
+                "night",
+                "day",
+                "week",
+                "weekend",
+                "time",
+                "o'clock"
+              ]
+            }
+          ],
+          "note": "Stage 1 checkpoint: the unit's quiz and assignment revisit Units 0-6 as well as this unit's patterns."
+        },
+        {
+          "number": 7,
+          "title": "Asking and Answering",
+          "stage": 2,
+          "context": "Finding out about people: where they live, what job they do, how to spell a name.",
+          "source": [
+            {
+              "grade": 2,
               "units": [
                 1,
                 2
               ]
             },
             {
+              "grade": 3,
+              "units": [
+                2
+              ]
+            }
+          ],
+          "patterns": [
+            "do and does in questions: Do you live here? Where does she work?",
+            "short answers: Yes, I do. No, she doesn't.",
+            "short forms: I'm, don't, doesn't, isn't",
+            "you meaning anyone: How do you spell that?"
+          ],
+          "esl": {
+            "use": [
+              "2Ug.01",
+              "2Ug.02",
+              "2Uv.11"
+            ],
+            "skills": [
+              "2Sc.03",
+              "2Ld.02",
+              "2Sc.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Jobs",
+              "words": [
+                "job",
+                "doctor",
+                "nurse",
+                "teacher",
+                "driver",
+                "farmer",
+                "student",
+                "shopkeeper",
+                "police officer",
+                "cleaner"
+              ]
+            },
+            {
+              "title": "More question words",
+              "words": [
+                "when",
+                "why",
+                "which"
+              ]
+            },
+            {
+              "title": "Your details",
+              "words": [
+                "address",
+                "surname",
+                "number",
+                "city",
+                "village",
+                "country",
+                "neighbour"
+              ]
+            },
+            {
+              "title": "Asking",
+              "words": [
+                "know",
+                "meet",
+                "ask",
+                "answer"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "title": "There Is, There Are",
+          "stage": 2,
+          "context": "Food and the kitchen: what there is at home, and whose things are whose.",
+          "source": [
+            {
               "grade": 2,
               "units": [
-                1
+                8,
+                5
               ]
             },
             {
@@ -124,83 +817,75 @@
             }
           ],
           "patterns": [
-            "to be: am, is, are",
-            "I / you / he / she / it / we / they",
-            "possessive my, your, his, her",
-            "numbers and age",
-            "greetings and the calendar"
-          ]
-        },
-        {
-          "number": 2,
-          "title": "My Family and My Home",
-          "source": [
+            "there is and there are",
+            "things you can count and things you cannot: an apple, some rice; child and children",
+            "possessive 's: Sara's bag",
+            "this, that, these, those, and one: the red one",
+            "mine, yours, his, hers, ours, theirs"
+          ],
+          "esl": {
+            "use": [
+              "2Uv.09",
+              "2Uv.10",
+              "2Us.01",
+              "2Us.02",
+              "2Us.03"
+            ],
+            "skills": [
+              "2Rd.02",
+              "2Wc.01",
+              "2Rd.01"
+            ]
+          },
+          "vocabulary": [
             {
-              "grade": 1,
-              "units": [
-                2
+              "title": "Food and drink",
+              "words": [
+                "bread",
+                "rice",
+                "milk",
+                "water",
+                "tea",
+                "coffee",
+                "sugar",
+                "salt",
+                "egg",
+                "apple",
+                "banana",
+                "meat",
+                "fish",
+                "vegetable",
+                "fruit"
               ]
             },
             {
-              "grade": 2,
-              "units": [
-                8
+              "title": "In the kitchen",
+              "words": [
+                "kitchen",
+                "fridge",
+                "plate",
+                "glass",
+                "spoon",
+                "knife",
+                "fork",
+                "bowl"
               ]
             },
             {
-              "grade": 3,
-              "units": [
-                1
+              "title": "One and more than one",
+              "words": [
+                "child",
+                "person"
               ]
             }
-          ],
-          "patterns": [
-            "have got / has got",
-            "possessive 's",
-            "there is / there are",
-            "prepositions of place"
           ]
         },
         {
-          "number": 3,
-          "title": "Learning English",
+          "number": 9,
+          "title": "Numbers to 100, and How Things Are",
+          "stage": 2,
+          "context": "Prices and numbers to a hundred, dates, describing people, how people do things, and adding information with too.",
           "source": [
-            {
-              "grade": 1,
-              "units": [
-                1
-              ]
-            },
-            {
-              "grade": 2,
-              "units": [
-                1
-              ]
-            },
-            {
-              "grade": 3,
-              "units": [
-                2
-              ]
-            }
-          ],
-          "patterns": [
-            "can and can't for ability",
-            "like / likes and the third-person -s",
-            "classroom and study language",
-            "asking someone to repeat or slow down"
-          ]
-        },
-        {
-          "number": 4,
-          "title": "Numbers, Money and Measuring",
-          "source": [
-            {
-              "grade": 1,
-              "units": [
-                2
-              ]
-            },
             {
               "grade": 2,
               "units": [
@@ -210,282 +895,96 @@
             {
               "grade": 3,
               "units": [
+                6,
                 8
               ]
             }
           ],
           "patterns": [
-            "cardinal and ordinal numbers",
-            "how much / how many",
-            "comparing with -er than",
-            "quantifiers: some, a lot of, a little"
+            "numbers 21 to 100",
+            "first to fiftieth: dates like the 21st",
+            "-ly words for how you do something: quickly, carefully",
+            "too: I like it too",
+            "describing words for people and things",
+            "my, your, his, her … to describe familiar things"
+          ],
+          "esl": {
+            "use": [
+              "2Uv.01",
+              "2Uv.02",
+              "2Uv.07",
+              "2Uv.08",
+              "2Ug.07",
+              "2Ug.08"
+            ],
+            "skills": [
+              "2Sc.02",
+              "2Rd.04",
+              "2Wca.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Tens",
+              "words": [
+                "thirty",
+                "forty",
+                "fifty",
+                "sixty",
+                "seventy",
+                "eighty",
+                "ninety",
+                "hundred"
+              ]
+            },
+            {
+              "title": "Dates",
+              "words": [
+                "eleventh",
+                "twelfth",
+                "twentieth",
+                "thirtieth"
+              ]
+            },
+            {
+              "title": "Describing people",
+              "words": [
+                "tall",
+                "young",
+                "kind",
+                "friendly",
+                "strong",
+                "busy",
+                "beautiful"
+              ]
+            },
+            {
+              "title": "How you do it",
+              "words": [
+                "quickly",
+                "carefully",
+                "easily",
+                "loudly",
+                "clearly"
+              ]
+            },
+            {
+              "title": "Money",
+              "words": [
+                "price",
+                "money",
+                "pay",
+                "cheap",
+                "expensive"
+              ]
+            }
           ]
-        },
-        {
-          "number": 5,
-          "title": "My Day, My Week",
-          "source": [
-            {
-              "grade": 3,
-              "units": [
-                3
-              ]
-            },
-            {
-              "grade": 2,
-              "units": [
-                1
-              ]
-            }
-          ],
-          "patterns": [
-            "present simple for routine",
-            "adverbs of frequency",
-            "telling the time",
-            "prepositions of time: at, on, in"
-          ]
-        },
-        {
-          "number": 6,
-          "title": "Food, Markets and Cooking",
-          "source": [
-            {
-              "grade": 2,
-              "units": [
-                3
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                3
-              ]
-            }
-          ],
-          "patterns": [
-            "units and containers: a packet of, a bottle of, a slice of",
-            "some and any",
-            "imperatives for a recipe",
-            "sequencing: first, then, after that"
-          ],
-          "note": "Countability itself is taught in Unit 4, through how much/how many and a little/a few. This unit APPLIES it to containers and measures rather than teaching it again."
-        },
-        {
-          "number": 7,
-          "title": "The Body, Illness and the Clinic",
-          "source": [
-            {
-              "grade": 1,
-              "units": [
-                6
-              ]
-            },
-            {
-              "grade": 2,
-              "units": [
-                3
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                3
-              ]
-            }
-          ],
-          "patterns": [
-            "saying what is wrong: I have got a …, my … hurts, I feel …",
-            "should and shouldn't for advice",
-            "reading a medicine label: dose, frequency and warnings"
-          ],
-          "note": "Obligation (must, mustn't, have to) belongs to Unit 17, and the past simple to Unit 14, so this unit stays on symptom language, advice, and reading a label. Three patterns, not four."
-        },
-        {
-          "number": 8,
-          "title": "Clothes, Colours and Buying Things",
-          "source": [
-            {
-              "grade": 1,
-              "units": [
-                4
-              ]
-            },
-            {
-              "grade": 2,
-              "units": [
-                4
-              ]
-            }
-          ],
-          "patterns": [
-            "adjectives before the noun",
-            "this, that, these, those",
-            "asking for a different one: size, colour or price",
-            "too and enough"
-          ],
-          "note": "Asking a price is taught in Unit 4. This unit covers what you say AFTER the price — asking for a different size, colour or price."
-        },
-        {
-          "number": 9,
-          "title": "Finding My Way",
-          "source": [
-            {
-              "grade": 1,
-              "units": [
-                9
-              ]
-            },
-            {
-              "grade": 2,
-              "units": [
-                9
-              ]
-            },
-            {
-              "grade": 3,
-              "units": [
-                4
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                9
-              ]
-            }
-          ],
-          "patterns": [
-            "words for movement: along, past, across, through, towards",
-            "giving a route: turn, take, go straight on",
-            "asking the way politely: excuse me, could you tell me …?"
-          ],
-          "note": "Static place prepositions are taught in Unit 2 and imperatives in Units 3 and 6 — this unit APPLIES both to routes rather than teaching them again. It also owns polite requests, since it comes before Unit 18. Left and right are Unit 3 vocabulary and are recycled here, not re-listed."
         },
         {
           "number": 10,
-          "title": "Travel and Transport",
-          "source": [
-            {
-              "grade": 1,
-              "units": [
-                7
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                9
-              ]
-            }
-          ],
-          "patterns": [
-            "present continuous: happening now and arranged for later",
-            "would like to",
-            "buying a ticket: times, platforms and returns"
-          ],
-          "note": "Owns the present continuous entirely — both the now use and the arranged-future use — so Unit 15 does not teach it again. Going to belongs to Unit 15."
-        },
-        {
-          "number": 11,
-          "title": "Work and Jobs",
-          "source": [
-            {
-              "grade": 2,
-              "units": [
-                2
-              ]
-            },
-            {
-              "grade": 3,
-              "units": [
-                4
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                6
-              ]
-            }
-          ],
-          "patterns": [
-            "have to and do not have to for obligation",
-            "describing what a job involves",
-            "adverbs of degree: very, quite, really"
-          ],
-          "note": "Third-person -s is taught in Unit 3 and the present simple in Unit 5; both are used here, not retaught. Wh- questions belong to Unit 16. This unit owns have to; must and mustn't belong to Unit 17."
-        },
-        {
-          "number": 12,
-          "title": "Describing People and Things",
-          "source": [
-            {
-              "grade": 1,
-              "units": [
-                6
-              ]
-            },
-            {
-              "grade": 3,
-              "units": [
-                6
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                1
-              ]
-            }
-          ],
-          "patterns": [
-            "adjectives of character and appearance",
-            "superlatives: the -est and the most",
-            "adverbs of manner",
-            "as … as"
-          ],
-          "note": "Comparatives are taught in Unit 4, including more and the irregulars. This unit owns superlatives only."
-        },
-        {
-          "number": 13,
-          "title": "Weather, Land and Water",
-          "source": [
-            {
-              "grade": 1,
-              "units": [
-                8
-              ]
-            },
-            {
-              "grade": 2,
-              "units": [
-                4,
-                7
-              ]
-            },
-            {
-              "grade": 3,
-              "units": [
-                7
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                2
-              ]
-            }
-          ],
-          "patterns": [
-            "will for prediction and for decisions",
-            "describing a place",
-            "because and so"
-          ],
-          "note": "Owns will entirely, so Unit 15 contrasts it rather than teaching it. Present simple for facts is Unit 5 and is used here, not retaught."
-        },
-        {
-          "number": 14,
-          "title": "Telling What Happened",
+          "title": "Yesterday",
+          "stage": 2,
+          "context": "What you did yesterday, last week and last month; reading a short story with confidence.",
           "source": [
             {
               "grade": 2,
@@ -496,177 +995,844 @@
             {
               "grade": 3,
               "units": [
-                2,
                 3,
                 5
               ]
             }
           ],
           "patterns": [
-            "past simple: regular -ed",
-            "past simple: the irregular verbs that matter",
-            "past questions and negatives",
-            "ago and last: the past time markers"
+            "past with -ed: worked, played, stopped",
+            "common irregular past forms: went, had, saw, ate, got",
+            "did in questions and not: Did you go? I didn't go.",
+            "yesterday, today, last week: words for a definite time"
           ],
-          "note": "The two past-simple cards are deliberate progression within one unit. Time markers are narrowed to the past-specific ones; at, on and in are Unit 5."
+          "esl": {
+            "use": [
+              "2Ug.03",
+              "2Uv.06"
+            ],
+            "skills": [
+              "2Lm.01",
+              "2Ld.04",
+              "2Sc.04",
+              "2Rm.02"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "When",
+              "words": [
+                "yesterday",
+                "today",
+                "last",
+                "ago",
+                "year",
+                "month"
+              ]
+            },
+            {
+              "title": "Months",
+              "words": [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+              ]
+            },
+            {
+              "title": "Doing words with new past forms",
+              "words": [
+                "see",
+                "get",
+                "take",
+                "give",
+                "find",
+                "lose",
+                "leave",
+                "arrive",
+                "visit",
+                "finish"
+              ]
+            }
+          ]
         },
         {
-          "number": 15,
-          "title": "Plans and the Future",
+          "number": 11,
+          "title": "Can I? I Will",
+          "stage": 2,
+          "context": "Asking for things and asking permission, promising and offering, clock times, and travel: tickets, trains and taxis.",
           "source": [
             {
               "grade": 2,
               "units": [
-                8
+                9,
+                3
               ]
             },
             {
-              "grade": 3,
-              "units": [
-                8
-              ]
-            },
-            {
-              "grade": 4,
+              "grade": 1,
               "units": [
                 9
               ]
             }
           ],
           "patterns": [
-            "going to for plans",
-            "choosing between will, going to and the present continuous",
-            "arranging to meet: shall we, how about"
+            "Can I…? Can you…? to ask and to ask permission, with answers: here you are, OK, sure",
+            "will for what you mean to do: I'll call you.",
+            "at for clock times: at six o'clock, at night",
+            "-ing questions with short answers and short forms: Are you coming? Yes, I am."
           ],
-          "note": "Will is taught in Unit 13 and the present continuous in Unit 10. What is new here is choosing between the three, which is a genuine difficulty and not a re-teach. The contrast card names three forms taught in Units 10 and 13 and is flagged as a contrast rather than a re-teach: a card that only compares must be marked, because the duplication check cannot tell the difference and tuning it quiet would hide real collisions.",
-          "contrastPatterns": [
-            "choosing between will, going to and the present continuous"
-          ],
-          "contrast": true
+          "esl": {
+            "use": [
+              "2Ug.06",
+              "2Ug.05",
+              "2Uv.05",
+              "2Ug.04"
+            ],
+            "skills": [
+              "2Sor.02",
+              "2Sc.05",
+              "2Ld.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Travel",
+              "words": [
+                "ticket",
+                "train",
+                "taxi",
+                "car",
+                "plane",
+                "station"
+              ]
+            },
+            {
+              "title": "Asking and giving",
+              "words": [
+                "borrow",
+                "lend",
+                "bring",
+                "send",
+                "sure",
+                "minute",
+                "moment"
+              ]
+            },
+            {
+              "title": "Clock time",
+              "words": [
+                "clock",
+                "hour",
+                "half",
+                "quarter"
+              ]
+            },
+            {
+              "title": "Soon and later",
+              "words": [
+                "tomorrow",
+                "soon",
+                "later",
+                "late",
+                "early"
+              ]
+            },
+            {
+              "title": "Keeping in touch",
+              "words": [
+                "message",
+                "email"
+              ]
+            }
+          ]
         },
         {
-          "number": 16,
-          "title": "Asking Well",
+          "number": 12,
+          "title": "Where Things Go",
+          "stage": 2,
+          "context": "Places in a town, where things are and where they go, what you use to do a job, and how you feel.",
           "source": [
             {
               "grade": 2,
               "units": [
-                2,
-                6
+                8,
+                7
               ]
             },
             {
               "grade": 3,
               "units": [
-                1,
-                5
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                1
+                9
               ]
             }
           ],
           "patterns": [
-            "the full wh- question system",
-            "yes/no questions and short answers",
-            "question tags"
+            "behind, between, in front of, to: where things are and where they go",
+            "with for the thing you use, for for the person who gets it: cut it with a knife, a present for you",
+            "saying how you feel: I'm tired. I feel happy."
           ],
-          "note": "Asking someone to repeat is Unit 3 and polite requests are Unit 9. This unit owns question FORM."
+          "esl": {
+            "use": [
+              "2Uv.03",
+              "2Uv.04"
+            ],
+            "skills": [
+              "2So.01",
+              "2Wc.02",
+              "2Ld.03",
+              "2Rd.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Feelings",
+              "words": [
+                "happy",
+                "sad",
+                "tired",
+                "hungry",
+                "thirsty",
+                "angry",
+                "worried",
+                "afraid",
+                "cold"
+              ]
+            },
+            {
+              "title": "In town",
+              "words": [
+                "bank",
+                "market",
+                "hospital",
+                "library",
+                "chemist",
+                "post office",
+                "café",
+                "cinema",
+                "building",
+                "corner"
+              ]
+            },
+            {
+              "title": "Things you use",
+              "words": [
+                "soap",
+                "towel",
+                "brush",
+                "tool",
+                "scissors",
+                "present"
+              ]
+            }
+          ]
         },
         {
-          "number": 17,
-          "title": "Instructions, Rules and Advice",
+          "number": 13,
+          "title": "Joining and Writing Sentences",
+          "stage": 2,
+          "context": "Writing short notes, lists and postcards; joining ideas with but, or and then; capital letters and punctuation. Ends with the Stage 2 check.",
           "source": [
             {
               "grade": 2,
               "units": [
-                3
+                10
               ]
             },
             {
               "grade": 3,
               "units": [
-                4
+                2
               ]
             },
-            {
-              "grade": 4,
-              "units": [
-                5,
-                6
-              ]
-            }
-          ],
-          "patterns": [
-            "must and mustn't for rules",
-            "allowed and not allowed: can, cannot, no + -ing",
-            "reading a public sign or safety notice"
-          ],
-          "note": "Should is Unit 7 and have to is Unit 11, so this unit owns must and mustn't only. Imperatives are Units 3 and 6 and sequencing is Unit 6; both are applied here, not retaught."
-        },
-        {
-          "number": 18,
-          "title": "Getting Help and Getting Things Done",
-          "source": [
-            {
-              "grade": 3,
-              "units": [
-                4
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                4,
-                6
-              ]
-            }
-          ],
-          "patterns": [
-            "explaining a problem: it does not work, it is broken",
-            "so that for purpose",
-            "filling in a form and making an appointment"
-          ],
-          "note": "Because and so are taught in Unit 13, so this unit adds so that for purpose only. Polite requests are Unit 9."
-        },
-        {
-          "number": 19,
-          "title": "Level 1 Capstone — My English Life",
-          "source": [
             {
               "grade": 1,
               "units": [
                 10
               ]
+            }
+          ],
+          "patterns": [
+            "but, or and then: joining words and ideas",
+            "capital letters: names, places, days and the start of a sentence",
+            "full stops and question marks",
+            "planning, writing and checking a short text"
+          ],
+          "esl": {
+            "use": [
+              "2Us.04"
+            ],
+            "skills": [
+              "2Wor.01",
+              "2Wor.02",
+              "2Wca.01",
+              "2Wca.02",
+              "2Wca.04",
+              "2Wca.05",
+              "2Rm.01",
+              "2Sor.01",
+              "2Sc.06"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Things you write",
+              "words": [
+                "note",
+                "postcard",
+                "list",
+                "form",
+                "sentence",
+                "question",
+                "full stop",
+                "comma",
+                "paper",
+                "page",
+                "story",
+                "idea"
+              ]
+            },
+            {
+              "title": "Learning",
+              "words": [
+                "lesson",
+                "class",
+                "homework",
+                "test",
+                "notebook",
+                "dictionary",
+                "mistake",
+                "practise",
+                "learn",
+                "remember",
+                "forget"
+              ]
+            }
+          ],
+          "note": "Stage 2 checkpoint: the unit's quiz and assignment revisit Units 7-13."
+        },
+        {
+          "number": 14,
+          "title": "Every Day",
+          "stage": 3,
+          "context": "Routines, habits and states: what usually happens and what is happening now.",
+          "source": [
+            {
+              "grade": 3,
+              "units": [
+                3,
+                5
+              ]
             },
             {
               "grade": 2,
               "units": [
-                10
+                4
+              ]
+            }
+          ],
+          "patterns": [
+            "present simple for routines: I get up at six. She works in a shop.",
+            "present simple or -ing: I work here. I am working now.",
+            "how often: always, usually, often, sometimes, never",
+            "state verbs: want, need, know, prefer"
+          ],
+          "esl": {
+            "use": [
+              "3Ug.03",
+              "3Ug.05",
+              "3Uv.06"
+            ],
+            "skills": [
+              "3Sc.01",
+              "3Sc.02",
+              "3Wc.02",
+              "3Wca.02"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Routine",
+              "words": [
+                "get up",
+                "wake up",
+                "get dressed",
+                "shower",
+                "start",
+                "relax",
+                "travel",
+                "weekday"
+              ]
+            },
+            {
+              "title": "Meals",
+              "words": [
+                "breakfast",
+                "lunch",
+                "dinner"
+              ]
+            },
+            {
+              "title": "How often",
+              "words": [
+                "always",
+                "usually",
+                "often",
+                "sometimes",
+                "never",
+                "every"
+              ]
+            },
+            {
+              "title": "Wanting and needing",
+              "words": [
+                "want",
+                "need",
+                "prefer",
+                "mean"
+              ]
+            },
+            {
+              "title": "Jobs at home",
+              "words": [
+                "shopping",
+                "housework",
+                "free"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "title": "Do This, Then That",
+          "stage": 3,
+          "context": "Instructions and directions: following a recipe, finding a place, reading a sign.",
+          "source": [
+            {
+              "grade": 3,
+              "units": [
+                4,
+                2
+              ]
+            },
+            {
+              "grade": 1,
+              "units": [
+                9
+              ]
+            }
+          ],
+          "patterns": [
+            "instructions: Turn left. Mix the flour.",
+            "first, next, then, after that, finally",
+            "left, right, straight on",
+            "above, below, inside, opposite, outside, under"
+          ],
+          "esl": {
+            "use": [
+              "3Ug.02",
+              "3Uv.07",
+              "3Uv.03"
+            ],
+            "skills": [
+              "3Sc.04",
+              "3Wc.01",
+              "3Rd.02",
+              "3Ld.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Directions",
+              "words": [
+                "left",
+                "right",
+                "straight",
+                "turn",
+                "cross",
+                "road",
+                "traffic lights",
+                "bridge"
+              ]
+            },
+            {
+              "title": "Cooking",
+              "words": [
+                "mix",
+                "cut",
+                "add",
+                "pour",
+                "boil",
+                "heat",
+                "stir"
+              ]
+            },
+            {
+              "title": "Order",
+              "words": [
+                "next",
+                "finally",
+                "step",
+                "instructions"
+              ]
+            },
+            {
+              "title": "Parts of a place",
+              "words": [
+                "top",
+                "bottom",
+                "side",
+                "middle",
+                "end"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 16,
+          "title": "What Happened",
+          "stage": 3,
+          "context": "Telling what happened on a day, a trip or in bad weather, in the right order.",
+          "source": [
+            {
+              "grade": 3,
+              "units": [
+                3,
+                5,
+                7
+              ]
+            }
+          ],
+          "patterns": [
+            "the past to tell events in order: I got up, had breakfast and left.",
+            "was, were, and more irregular past forms: came, told, felt, thought",
+            "before and after: after lunch, before work",
+            "last night, two days ago, at the weekend",
+            "him, her, them, it in a story; gave him the keys"
+          ],
+          "esl": {
+            "use": [
+              "3Ug.04",
+              "3Uv.04",
+              "3Uv.05",
+              "3Us.03",
+              "3Uv.09"
+            ],
+            "skills": [
+              "3Rm.01",
+              "3Rm.02",
+              "3Rd.01",
+              "3Ld.04",
+              "3Wor.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Things that happen",
+              "words": [
+                "happen",
+                "fall",
+                "break",
+                "drop",
+                "hurt",
+                "miss",
+                "catch",
+                "hear",
+                "feel",
+                "tell",
+                "think"
+              ]
+            },
+            {
+              "title": "Days out",
+              "words": [
+                "trip",
+                "holiday",
+                "accident",
+                "party",
+                "wedding"
+              ]
+            },
+            {
+              "title": "Weather",
+              "words": [
+                "weather",
+                "rain",
+                "wind",
+                "snow",
+                "storm",
+                "cloud",
+                "warm"
+              ]
+            },
+            {
+              "title": "Story words",
+              "words": [
+                "suddenly",
+                "once"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 17,
+          "title": "Bigger, Better, More",
+          "stage": 3,
+          "context": "Comparing places, prices and things; how much and how many; numbers to a thousand.",
+          "source": [
+            {
+              "grade": 2,
+              "units": [
+                5
               ]
             },
             {
               "grade": 3,
               "units": [
-                10
-              ]
-            },
-            {
-              "grade": 4,
-              "units": [
-                10
+                6,
+                8
               ]
             }
           ],
           "patterns": [
-            "everything in Level 1, applied",
-            "finding your own errors: listen twice, sort into two lists"
+            "-er and more: cheaper, more expensive; the -est and the most",
+            "good, better, best; bad, worse, worst",
+            "how you do it: quietly, well, hard, badly",
+            "some, any, many, much, a lot of, no",
+            "this one, that one: Which one is yours?",
+            "numbers to 1,000"
           ],
-          "note": "Replaces four separate per-grade capstones. Portfolio, spoken presentation, and the Level 1 exit assessment.",
-          "contrast": true
+          "esl": {
+            "use": [
+              "3Ug.09",
+              "3Uv.08",
+              "3Us.01",
+              "3Us.02",
+              "3Uv.01"
+            ],
+            "skills": [
+              "3So.01",
+              "3Wc.03",
+              "3Sc.03",
+              "3Lo.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Comparing",
+              "words": [
+                "large",
+                "heavy",
+                "light",
+                "easy",
+                "difficult",
+                "far",
+                "safe",
+                "dangerous",
+                "comfortable",
+                "same",
+                "different"
+              ]
+            },
+            {
+              "title": "How you do it",
+              "words": [
+                "quietly",
+                "well",
+                "hard",
+                "badly"
+              ]
+            },
+            {
+              "title": "Measuring",
+              "words": [
+                "thousand",
+                "size",
+                "kilo",
+                "metre",
+                "centimetre",
+                "litre",
+                "gram"
+              ]
+            },
+            {
+              "title": "Choosing",
+              "words": [
+                "compare",
+                "choose"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "title": "Have You Ever? Shall We?",
+          "stage": 3,
+          "context": "Experiences, suggestions and plans, rules, and what you could do in the past; places in nature.",
+          "source": [
+            {
+              "grade": 3,
+              "units": [
+                7,
+                6,
+                9
+              ]
+            }
+          ],
+          "patterns": [
+            "Have you ever…? I have… I have never…: talking about experiences",
+            "Shall we…? to suggest; Will you…? to ask about plans",
+            "must for what is necessary",
+            "could for what you were able to do in the past",
+            "more question forms: What kind of…? How long…? How far…?"
+          ],
+          "esl": {
+            "use": [
+              "3Ug.06",
+              "3Ug.07",
+              "3Ug.08",
+              "3Ug.01"
+            ],
+            "skills": [
+              "3Ld.02",
+              "3Sor.02",
+              "3Sc.06",
+              "3Sc.05"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Places in nature",
+              "words": [
+                "sea",
+                "mountain",
+                "river",
+                "lake",
+                "forest",
+                "island",
+                "beach",
+                "desert"
+              ]
+            },
+            {
+              "title": "Nature",
+              "words": [
+                "animal",
+                "plant",
+                "tree"
+              ]
+            },
+            {
+              "title": "Trying things",
+              "words": [
+                "ever",
+                "try",
+                "taste",
+                "fly",
+                "climb",
+                "win",
+                "grow"
+              ]
+            },
+            {
+              "title": "Plans and rules",
+              "words": [
+                "plan",
+                "together",
+                "maybe",
+                "rule",
+                "helmet",
+                "uniform"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 19,
+          "title": "Because, and To",
+          "stage": 3,
+          "context": "Giving reasons and purposes, hopes and decisions, how and with whom you travel; bringing Level 1 together in a portfolio and the Level 1 check.",
+          "source": [
+            {
+              "grade": 3,
+              "units": [
+                10,
+                9,
+                4
+              ]
+            }
+          ],
+          "patterns": [
+            "because: giving a reason",
+            "to + verb for a purpose: I went to the shop to buy bread.",
+            "verb + to or -ing: I hope to…, I enjoy -ing",
+            "by, with, from, without: by bus, from the city, without sugar"
+          ],
+          "esl": {
+            "use": [
+              "3Us.04",
+              "3Us.05",
+              "3Us.06",
+              "3Uv.02"
+            ],
+            "skills": [
+              "3Ro.01",
+              "3Rd.03",
+              "3Ld.03",
+              "3Sor.01",
+              "3Lm.01",
+              "3Sc.07",
+              "3Wca.01",
+              "3Wca.03",
+              "3Wca.04",
+              "3Wca.05",
+              "3Wor.02"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Reasons and choices",
+              "words": [
+                "reason",
+                "hope",
+                "decide",
+                "enjoy",
+                "agree",
+                "avoid",
+                "keep"
+              ]
+            },
+            {
+              "title": "Moving on",
+              "words": [
+                "goal",
+                "progress",
+                "improve",
+                "skill",
+                "level",
+                "future",
+                "proud",
+                "confident"
+              ]
+            },
+            {
+              "title": "Getting there",
+              "words": [
+                "journey",
+                "foot"
+              ]
+            }
+          ],
+          "capstone": true,
+          "note": "Level 1 capstone. The assignment is a portfolio from at least four units plus recordings, and the unit closes with the Level 1 check across the four skills, reported per skill."
         }
       ]
     },

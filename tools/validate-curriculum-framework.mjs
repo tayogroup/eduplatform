@@ -70,7 +70,13 @@ if (!files.length) {
 // Stage 1 to 6), so the extractor prefixes the stage - 1TWA.03. TWA joins the
 // multi-letter alternatives ahead of the single-letter class for the same reason
 // SIC does; E, M and R were already well-formed.
-const CODE_RE = /^([1-9])((?:SL|SIC|TWS|TWM|TWA|ES|CT|MD|DC|CS|R|W|[EBCPAFMNGS])[a-z]?)\.?(\d{1,2})$/;
+// English as a Second Language 0057 keeps 0058's letter-plus-tag shape but with
+// tags of up to two lowercase letters (1Wca.01, 2Wor.01, 1Sor.01) and two strand
+// letters no other framework uses, L (Listening) and U (Use of English). The
+// three-letter codes go ahead of the single-letter class or "Wca" would match
+// as W + "c" and leave "a" unconsumed; Lm/Ld/Lo and Ug/Uv/Us are listed whole
+// because a bare L or U is not a strand anywhere else and must stay malformed.
+const CODE_RE = /^([1-9])((?:Wca|Wor|Sor|L[mdo]|U[gvs]|SL|SIC|TWS|TWM|TWA|ES|CT|MD|DC|CS|R|W|[EBCPAFMNGS])[a-z]?)\.?(\d{1,2})$/;
 // Page furniture that has been observed glued onto objective text, plus the
 // headings that sit between sections in the source PDFs. Any of these inside an
 // objective means the parser ran past the end of the bullet.
@@ -211,14 +217,25 @@ function validate(file) {
   // Identical text under two codes inside one stage is a parser artifact — a
   // bullet copied instead of advancing. Across stages it is normal: the recurring
   // objectives are worded identically by design.
+  //
+  // ESL 0057 is the one framework that prints the same can-do under two codes
+  // in one stage on purpose — a Speaking code and a Writing code where the skill
+  // is the same in both modes (2Sc.06 = 2Wca.05, 2So.01 = 2Wc.02). A file that
+  // declares `objectiveStyle.identicalTextAcrossStrands` is allowed that shape
+  // and no more: the duplicate must sit in DIFFERENT strands, so a copied bullet
+  // inside one strand still fails. Reported as a note so it is never silent.
+  const crossStrandOk = style.identicalTextAcrossStrands === true;
   for (const [stageKey, objs] of Object.entries(byStage)) {
     const byText = new Map();
     for (const o of (Array.isArray(objs) ? objs : [])) {
       if (isBlank(o.text)) continue;
-      byText.set(o.text, [...(byText.get(o.text) || []), o.code]);
+      byText.set(o.text, [...(byText.get(o.text) || []), o]);
     }
-    const dups = [...byText.values()].filter((v) => v.length > 1).map((v) => v.join(" = "));
+    const groups = [...byText.values()].filter((v) => v.length > 1);
+    const allowed = groups.filter((v) => crossStrandOk && new Set(v.map((o) => o.strand)).size === v.length);
+    const dups = groups.filter((v) => !allowed.includes(v)).map((v) => v.map((o) => o.code).join(" = "));
     F(dups.length === 0, `text: same wording under two codes in stage ${stageKey}`, show(dups));
+    if (allowed.length) N(`text note: stage ${stageKey} prints one can-do under two strands by design — ${allowed.map((v) => v.map((o) => o.code).join(" = ")).join(", ")}`);
   }
 
   // ═══ 4. NUMBERING CONTINUITY ═══

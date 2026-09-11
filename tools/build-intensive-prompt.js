@@ -55,6 +55,9 @@ const cefrBand = band ? band.cefr : (level.cefr || [])[0] || "";
 
 // --- already-taught: every earlier unit in this level, and every level below ---
 const alreadyTaught = [];
+// Words too, for a level whose plan allocates them: at Pre-A1 the words the
+// learner already knows ARE the register, so the author has to see them.
+const knownWords = [];
 for (const other of plan.levels) {
   if (other.number > levelNumber) continue;
   for (const otherUnit of other.units) {
@@ -62,8 +65,14 @@ for (const other of plan.levels) {
     for (const pattern of otherUnit.patterns || []) {
       alreadyTaught.push({ pattern, taughtIn: `Level ${other.number} Unit ${otherUnit.number} — ${otherUnit.title}` });
     }
+    for (const group of otherUnit.vocabulary || []) knownWords.push(...group.words);
   }
 }
+const eslLevel = Boolean(level.eslFramework);
+const eslFramework = eslLevel
+  ? JSON.parse(fs.readFileSync(path.join(CURRICULUM, `cambridge-english-${level.eslFramework}.json`), "utf8"))
+  : null;
+const eslByCode = new Map(eslLevel ? Object.values(eslFramework.objectivesByStage).flat().map((o) => [o.code, o]) : []);
 
 // --- source units -------------------------------------------------------------
 // Everything an author needs to compress, and nothing that only exists to drive
@@ -160,8 +169,24 @@ for (const source of unit.source || []) {
 }
 
 // --- Cambridge objectives for the stages involved -----------------------------
+// A 0057 level cites the objectives of the UNIT's stage — 0057 as the contract,
+// 0058 as an optional literacy cross-reference — not of the source grades, which
+// supply language and nothing else. An earlier-model level keeps citing the
+// 0058 / 0861 objectives of the stages its source units came from.
 const cambridge = [];
-for (const stage of [...stages].sort((a, b) => a - b)) {
+const citeStages = eslLevel && band?.stage ? [band.stage] : [...stages].sort((a, b) => a - b);
+if (eslLevel && band?.stage) {
+  const objectives = eslFramework.objectivesByStage[String(band.stage)] || [];
+  cambridge.push({
+    stage: band.stage,
+    framework: eslFramework.framework,
+    curriculumCode: eslFramework.curriculumCode,
+    citeIn: "esl",
+    objectiveCount: objectives.length,
+    objectives: objectives.map((objective) => ({ code: objective.code, strand: objective.strand, subStrand: objective.subStrand, text: objective.text })),
+  });
+}
+for (const stage of citeStages) {
   const code = stage <= 6 ? "0058" : "0861";
   const file = path.join(CURRICULUM, `cambridge-english-${code}.json`);
   if (!fs.existsSync(file)) continue;
@@ -171,6 +196,7 @@ for (const stage of [...stages].sort((a, b) => a - b)) {
     stage,
     framework: framework.framework,
     curriculumCode: framework.curriculumCode,
+    citeIn: "cambridge",
     objectiveCount: objectives.length,
     objectives: objectives.map((objective) => ({ code: objective.code, strand: objective.strand, subStrand: objective.subStrand, text: objective.text })),
   });
@@ -189,23 +215,57 @@ const unitLabel = `Unit ${unit.number} — ${unit.title}`;
 
 // Fenced, not inline-quoted: these blocks are multi-line JSON and a Markdown
 // document, and an inline code span mangles both.
-const jsonBlock = (value) => "```json\n" + JSON.stringify(value) + "\n```";
+// Pretty-printed, not minified: a minified block is one 150 KB line, and a
+// reader that caps line length (an agent's file reader does) sees the start of
+// the source and nothing else, with no sign anything is missing.
+const jsonBlock = (value) => "```json\n" + JSON.stringify(value, null, 1) + "\n```";
 const sourceGuide = full
   ? "Each source unit is given in full."
   : [
     "Each source unit is given in two parts.",
     "",
     "- **Reused in full** — `vocabulary`, `grammar`, `outcomes` (with their Cambridge codes) and `teacherNotes`. This is the language you are compressing; work from it directly.",
-    "- **Summarised** — every `…Covered` field lists what the source unit covered in readings, comprehension, speaking, writing, activities, quizzes and live sessions, without the child text, because you are replacing all of it with adult equivalents. You need to know what ground was covered, not the wording being thrown away. Readings also carry their length and opening 40 words so you can judge text type and level.",
+    "- **Summarised** — every `…Covered` field lists what the source unit covered in readings, comprehension, speaking, writing, activities, quizzes and live sessions, without the child text, because you are replacing all of it with age-neutral equivalents. You need to know what ground was covered, not the wording being thrown away. Readings also carry their length and opening 40 words so you can judge text type and level.",
     "",
-    "Do not treat a summarised field as content to adapt. Write the adult version from the patterns and the vocabulary.",
+    "Do not treat a summarised field as content to adapt. Write the age-neutral version from the patterns and the vocabulary.",
   ].join("\n");
+
+// The unit brief: everything the plan decided about this unit besides its
+// patterns, words and codes, which get their own slots.
+const lastOfBand = band && unitNumber === band.units[1];
+const fileId = `l${levelNumber}-u${String(unitNumber).padStart(2, "0")}`;
+const unitBrief = {
+  writeTo: `inputs/ehel-english-intensive-source/authored/${fileId}.json`,
+  buildWith: `node tools/build-intensive-units.js ${fileId}`,
+  level: levelNumber,
+  unit: unitNumber,
+  title: unit.title,
+  cefrBand,
+  bandName: band?.cefrName || "",
+  cambridgeStage: band?.stage || null,
+  bandCanDo: band?.canDo || "",
+  context: unit.context || "",
+  checkpoint: Boolean(lastOfBand && !unit.capstone) ? `Last unit of Stage ${band.stage}: the quiz spends at least four items on Units ${band.units[0]}-${band.units[1] - 1}, and the assignment draws on the whole stage.` : false,
+  capstone: unit.capstone ? `Level capstone. The assignment is a portfolio of work from at least four units of the level plus recordings, marked on all eight rubric criteria. The quiz spans the whole level. The unit closes with the level check: ${level.exitAssessment || ""}` : false,
+  levelExit: level.exitDescriptor || "",
+  note: unit.note || "",
+};
+const contract = eslLevel
+  ? ["use", "skills"].flatMap((kind) => (unit.esl?.[kind] || []).map((code) => ({
+    code, kind: kind === "use" ? "Use of English — taught on a grammar card" : "Skill — practised and evidenced in the tasks",
+    strand: eslByCode.get(code)?.strand, subStrand: eslByCode.get(code)?.subStrand, text: eslByCode.get(code)?.text,
+  })))
+  : [];
 
 const substitutions = {
   "{{LEVEL}}": levelLabel,
   "{{CEFR_BAND}}": cefrBand,
   "{{UNIT}}": unitLabel,
+  "{{UNIT_BRIEF}}": "```json\n" + JSON.stringify(unitBrief, null, 1) + "\n```",
   "{{PATTERNS}}": "```json\n" + JSON.stringify(unit.patterns || [], null, 1) + "\n```",
+  "{{CONTRACT}}": contract.length ? "```json\n" + JSON.stringify(contract, null, 1) + "\n```" : "_This level carries no 0057 contract._",
+  "{{WORDS}}": unit.vocabulary ? "```json\n" + JSON.stringify(unit.vocabulary, null, 1) + "\n```" : "_This level's plan allocates no words; choose them from the source._",
+  "{{KNOWN_WORDS}}": knownWords.length ? "```\n" + knownWords.join(", ") + "\n```" : "_None yet — this is the first unit of the course._",
   "{{ALREADY_TAUGHT}}": alreadyTaught.length
     ? jsonBlock(alreadyTaught)
     : "_Nothing yet — this is the first unit of the course._",
@@ -218,7 +278,7 @@ const substitutions = {
 // A large slot must appear exactly once. It is easy to add a prose reference
 // like "a stage present in {{SOURCE}}" to the template and silently triple the
 // prompt, which is what happened the first time this ran.
-const BIG_SLOTS = new Set(["{{SOURCE}}", "{{CAMBRIDGE}}", "{{CANON}}", "{{ALREADY_TAUGHT}}"]);
+const BIG_SLOTS = new Set(["{{SOURCE}}", "{{CAMBRIDGE}}", "{{CANON}}", "{{ALREADY_TAUGHT}}", "{{KNOWN_WORDS}}", "{{WORDS}}", "{{CONTRACT}}", "{{UNIT_BRIEF}}"]);
 for (const [slot, value] of Object.entries(substitutions)) {
   const occurrences = prompt.split(slot).length - 1;
   if (BIG_SLOTS.has(slot) && occurrences > 1) {
@@ -237,7 +297,7 @@ const brief = [
   `<!-- Assembled by tools/build-intensive-prompt.js — do not edit by hand.`,
   `     Level ${level.number} (${(level.cefr || []).join("+")}) · Unit ${unit.number} · band ${cefrBand}`,
   `     Source: ${sourceUnits.map((s) => `G${s.grade}U${s.sourceUnit}`).join(", ") || "none"}`,
-  `     Cambridge stages: ${[...stages].sort((a, b) => a - b).join(", ") || "none"}`,
+  `     Cambridge stages cited: ${citeStages.join(", ") || "none"} (source grades: ${[...stages].sort((a, b) => a - b).join(", ") || "none"})`,
   `     Patterns to teach: ${(unit.patterns || []).length} · already taught: ${alreadyTaught.length}`,
   `-->`,
   "",
@@ -255,7 +315,7 @@ console.log(`  CEFR band ............ ${cefrBand}`);
 console.log(`  patterns to teach .... ${(unit.patterns || []).length}`);
 console.log(`  already taught ....... ${alreadyTaught.length} (use, never re-teach)`);
 console.log(`  source units ......... ${sourceUnits.length}${sourceUnits.length ? ` (${sourceUnits.map((s) => `G${s.grade}U${s.sourceUnit}`).join(", ")})` : ""}`);
-console.log(`  Cambridge objectives . ${cambridge.reduce((sum, item) => sum + item.objectiveCount, 0)} across stages ${[...stages].sort((a, b) => a - b).join(", ")}`);
+console.log(`  Cambridge objectives . ${cambridge.reduce((sum, item) => sum + item.objectiveCount, 0)} across ${cambridge.map((item) => `${item.curriculumCode} stage ${item.stage}`).join(", ")}`);
 // Dense JSON runs near three characters to the token, so this is a rough floor
 // rather than the four-characters-per-token rule of thumb for prose.
 console.log(`  written .............. ${path.relative(ROOT, outPath)}  (${(bytes / 1024).toFixed(0)} KB, roughly ${Math.round(bytes / 3500)}k tokens)`);

@@ -31,10 +31,19 @@ const SCHEMA_VERSION = "Ehel Intensive English Runtime v1.0";
 // sign-off followed on 2026-08-01. This is metadata only — no narrated string
 // depends on it, so changing it moves no clip hash.
 const REVIEW = "Reviewed: script review and curriculum sign-off, 2026-08-01";
-const CEFR_ORDER = ["A1", "A2", "B1", "B1+", "B2", "C1", "C2"];
+// Pre-A1 ranks below A1: Level 1's Stage 1 units (rebuilt on 0057, 2026-09-11)
+// may claim nothing higher, and the band check below reads rank, not name.
+const CEFR_ORDER = ["Pre-A1", "A1", "A2", "B1", "B1+", "B2", "C1", "C2"];
 const CEFR_SKILLS = ["Listening", "Reading", "Spoken interaction", "Spoken production", "Writing"];
 
-// --- Cambridge objective index ----------------------------------------------
+// --- Cambridge objective indexes ----------------------------------------------
+// TWO indexes, never one map. 0057 (ESL) and 0058 (first-language English) both
+// publish Stages 1-6 and share a sub-strand tag: "1Wc.01" is "Content" in 0057
+// and "Creation of texts" in 0058. One map would let a code silently resolve in
+// the wrong framework. Outcomes therefore carry them in separate fields:
+// `esl` (0057, the contract for levels that declare `eslFramework`) and
+// `cambridge` (0058 / 0861, the literacy cross-reference, or for a level still on
+// the earlier model its only alignment).
 const cambridgeIndex = new Map();
 for (const code of ["0058", "0861"]) {
   const file = path.join(ROOT, "src", "curriculum", `cambridge-english-${code}.json`);
@@ -44,6 +53,27 @@ for (const code of ["0058", "0861"]) {
     for (const objective of objectives) cambridgeIndex.set(objective.code, objective);
   }
 }
+const eslIndex = new Map();
+{
+  const file = path.join(ROOT, "src", "curriculum", "cambridge-english-0057.json");
+  if (fs.existsSync(file)) {
+    const framework = JSON.parse(fs.readFileSync(file, "utf8"));
+    for (const objectives of Object.values(framework.objectivesByStage)) {
+      for (const objective of objectives) eslIndex.set(objective.code, objective);
+    }
+  }
+}
+// A level on the 0057 model cannot be checked without the framework, and a
+// check that cannot read its reference must not pass quietly.
+if (plan.levels.some((level) => level.eslFramework) && !eslIndex.size) {
+  console.error("src/curriculum/cambridge-english-0057.json is missing or empty, and a level in the plan is built on it.");
+  process.exit(2);
+}
+
+// Learner-facing sentence ceilings, in words, by Cambridge stage. A REPORT, not a
+// gate: a word count cannot tell a hard sentence from a list of four easy words.
+const REGISTER_CEILING = { 1: 12, 2: 15, 3: 18 };
+const registerReports = [];
 
 // No per-item audio descriptors. This course narrates through the shared
 // voiceButton, which looks a clip up by cyrb53 of the text it is about to
@@ -89,6 +119,17 @@ function buildUnit(authored) {
   const band = (level.cefrBands || []).find((item) => authored.unit >= item.units[0] && authored.unit <= item.units[1]);
   const declaredBand = authored.cefrBand || band?.cefr || (level.cefr || [])[0];
   const bandRank = CEFR_ORDER.indexOf(declaredBand);
+  if (bandRank < 0) problems.push(`${where}: CEFR band "${declaredBand}" is not one of ${CEFR_ORDER.join(", ")}.`);
+  if (level.eslFramework && band && authored.cefrBand && authored.cefrBand !== band.cefr) {
+    problems.push(`${where}: declares band ${authored.cefrBand}, but the plan puts this unit in ${band.cefr}.`);
+  }
+  // A level rebuilt on Cambridge 0057 carries its contract in the plan: which
+  // 0057 objectives this unit must deliver, and which words it teaches.
+  const eslLevel = Boolean(level.eslFramework);
+  const levelStages = level.cambridgeStages || [];
+  if (eslLevel && authored.title !== planUnit.title) {
+    problems.push(`${where}: title "${authored.title}" differs from the plan's "${planUnit.title}".`);
+  }
 
   const lid = level.id;
   const uid = `ien-${lid}-u${String(authored.unit).padStart(2, "0")}`;
@@ -99,18 +140,39 @@ function buildUnit(authored) {
   const outcomes = (authored.outcomes || []).map((outcome, n) => {
     const codes = outcome.cambridge || [];
     for (const code of codes) {
-      if (!cambridgeIndex.has(code)) problems.push(`${where}: Cambridge code ${code} does not exist in the framework data.`);
+      if (!cambridgeIndex.has(code)) problems.push(`${where}: Cambridge code ${code} does not exist in the 0058 / 0861 framework data.`);
+      else if (eslLevel && levelStages.length && !levelStages.includes(cambridgeIndex.get(code).stage)) {
+        problems.push(`${where}: outcome ${n + 1} cites 0058 code ${code}, from a stage outside this level (${levelStages.join(", ")}).`);
+      }
     }
+    const esl = outcome.esl || [];
+    for (const code of esl) {
+      if (!eslIndex.has(code)) problems.push(`${where}: outcome ${n + 1} cites ESL code ${code}, which does not exist in 0057.`);
+      else if (levelStages.length && !levelStages.includes(eslIndex.get(code).stage)) {
+        problems.push(`${where}: outcome ${n + 1} cites ESL code ${code}, from a stage outside this level (${levelStages.join(", ")}).`);
+      }
+    }
+    if (eslLevel && !esl.length) problems.push(`${where}: outcome ${n + 1} cites no 0057 code — every outcome at this level answers to the ESL framework.`);
+    if (!eslLevel && esl.length) problems.push(`${where}: outcome ${n + 1} cites 0057 codes, but this level is not built on 0057.`);
     if (outcome.cefrSkill && !CEFR_SKILLS.includes(outcome.cefrSkill)) {
       problems.push(`${where}: outcome ${n + 1} has cefrSkill "${outcome.cefrSkill}" — must be one of ${CEFR_SKILLS.join(", ")}.`);
     }
+    if (eslLevel && !outcome.cefrSkill) problems.push(`${where}: outcome ${n + 1} names no CEFR skill — CEFR is recorded per skill.`);
+    if (eslLevel && !outcome.cefrDescriptor) problems.push(`${where}: outcome ${n + 1} has no "I can" descriptor.`);
     const level_ = outcome.cefrLevel || declaredBand;
+    if (CEFR_ORDER.indexOf(level_) < 0) problems.push(`${where}: outcome ${n + 1} claims CEFR "${level_}", which is not a level.`);
     if (CEFR_ORDER.indexOf(level_) > bandRank) {
       problems.push(`${where}: outcome ${n + 1} claims CEFR ${level_}, above the unit's band ${declaredBand}.`);
     }
     if (outcome.cefrDescriptor && !/^I can\b/i.test(outcome.cefrDescriptor)) {
       problems.push(`${where}: outcome ${n + 1} descriptor must start "I can".`);
     }
+    // At a 0057 level `cambridgeObjectives` holds the ESL codes, because they
+    // are the alignment this course reports and the one the shell already
+    // prints; the 0058 cross-reference rides beside them as `literacyObjectives`.
+    // `cambridgeFramework` says which, so no reader has to guess from the shape.
+    const primary = eslLevel ? esl : codes;
+    const primaryIndex = eslLevel ? eslIndex : cambridgeIndex;
     return {
       outcomeId: id("lo", n + 1),
       unitId: uid,
@@ -119,8 +181,14 @@ function buildUnit(authored) {
       evidenceOfLearning: outcome.evidence,
       bloomLevel: outcome.bloom,
       cefr: { level: level_, skill: outcome.cefrSkill, descriptor: outcome.cefrDescriptor },
-      cambridgeObjectives: codes,
-      cambridgeStages: [...new Set(codes.map((code) => cambridgeIndex.get(code)?.stage).filter(Boolean))],
+      cambridgeObjectives: primary,
+      ...(eslLevel ? { cambridgeFramework: level.eslFramework } : {}),
+      cambridgeStages: [...new Set(primary.map((code) => primaryIndex.get(code)?.stage).filter(Boolean))],
+      ...(eslLevel ? {
+        literacyObjectives: codes,
+        literacyFramework: "0058",
+        literacyStages: [...new Set(codes.map((code) => cambridgeIndex.get(code)?.stage).filter(Boolean))],
+      } : {}),
       origin: "Authored for the intensive course",
       reviewStatus: REVIEW,
       sourceFile: sourceRef,
@@ -128,6 +196,35 @@ function buildUnit(authored) {
   });
   const skills = [...new Set(outcomes.map((outcome) => outcome.cefr.skill).filter(Boolean))];
   if (skills.length < 2) problems.push(`${where}: outcomes cover ${skills.length} CEFR skill(s); at least two are required.`);
+  if (eslLevel && skills.length < 3) problems.push(`${where}: outcomes cover ${skills.length} CEFR skill(s); a 0057 unit covers at least three of the five.`);
+
+  // --- the 0057 contract ----------------------------------------------------
+  // The plan places every 0057 objective of the level's stages in exactly one
+  // unit. That placement is only a claim until the unit's outcomes cite it, so a
+  // placed code no outcome names fails the unit — which is what makes "all 150
+  // Stage 1-3 objectives are covered" a measurement rather than a plan.
+  if (eslLevel) {
+    const cited = new Set(outcomes.flatMap((outcome) => outcome.cambridgeObjectives));
+    const contract = [...(planUnit.esl?.use || []), ...(planUnit.esl?.skills || [])];
+    const missing = contract.filter((code) => !cited.has(code));
+    if (missing.length) {
+      problems.push(`${where}: the plan places ${missing.join(", ")} in this unit, and no outcome cites ${missing.length > 1 ? "them" : "it"}.`);
+    }
+  }
+
+  // --- the word contract ----------------------------------------------------
+  // The plan allocates every word to one unit, so the level can never teach a
+  // word twice however many people author it at once. An added word is the first
+  // step to a duplicate; a dropped one is a hole in the level's vocabulary.
+  if (eslLevel && Array.isArray(planUnit.vocabulary)) {
+    const norm = (value) => String(value).trim().toLowerCase();
+    const planned = planUnit.vocabulary.flatMap((group) => group.words.map(norm));
+    const written = (authored.groups || []).flatMap((group) => (group.words || []).map((word) => norm(word.w)));
+    const dropped = planned.filter((word) => !written.includes(word));
+    const added = written.filter((word) => !planned.includes(word));
+    if (dropped.length) problems.push(`${where}: the plan's words ${dropped.map((w) => `"${w}"`).join(", ")} are not taught.`);
+    if (added.length) problems.push(`${where}: ${added.map((w) => `"${w}"`).join(", ")} ${added.length > 1 ? "are" : "is"} not in the plan for this unit — a word is allocated to one unit only.`);
+  }
   const outcomeAt = (n) => outcomes[Math.min(Math.max(n, 0), outcomes.length - 1)]?.outcomeId || "";
 
   // --- vocabulary ----------------------------------------------------------
@@ -302,6 +399,20 @@ function buildUnit(authored) {
     if (hit) problems.push(`${where}: learner-facing text contains the currency symbol "${hit[0]}" — write the amount without a symbol.`);
   }
 
+  // A narrated blank with no spoken form is a Listen button the audio
+  // generator refuses to record (generate-ehel-intensive-audio.js BLANK_FRAME),
+  // so it ships silent or falls to the paid runtime voice. Caught here, at
+  // authoring, rather than at the dry run: 26 Level 1 tasks reached the dry run
+  // that way on 2026-09-11, because the authoring prompt said blanks were read
+  // as a pause, which is the English generator's rule and not this one's.
+  const BLANK = /_{2,}/;
+  for (const item of readings) {
+    if (BLANK.test(item.passageScript) && !item.passageScriptSpeech) problems.push(`${where}: reading "${item.title}" shows a blank and has no spoken form ("passageSpeech") — the audio generator will refuse it.`);
+  }
+  for (const item of speaking) {
+    if (BLANK.test(item.instructionsAndModelLines) && !item.instructionsAndModelLinesSpeech) problems.push(`${where}: speaking "${item.title}" shows a blank and has no spoken form ("instructionsSpeech") — the audio generator will refuse it.`);
+  }
+
   // Every quiz item's explanation is the only feedback a lone learner gets.
   for (const [n, item] of quizzes.entries()) {
     if (!item.explanation) problems.push(`${where}: quiz ${n + 1} has no explanation — it is the only feedback available.`);
@@ -324,13 +435,61 @@ function buildUnit(authored) {
     origin: "Ehel Intensive English approved rubric v1", reviewStatus: REVIEW,
   }));
 
+  // Marks are DERIVED from the rubric criteria the assignment is marked on, four
+  // each. The earlier course wrote marks by hand (20, 25, 30) against all eight
+  // criteria (32), so a teacher marking by the rubric produced 32 out of 20 in
+  // every unit. An assignment that names its criteria cannot disagree with them.
+  let assignmentMarks = authored.assignment?.marks;
+  let assignmentRubricIds = [...new Set(rubrics.map((r) => r.rubricId))];
+  let assignmentCriterionIds = null;
+  if (authored.assignment) {
+    const criteria = authored.assignment.criteria;
+    if (Array.isArray(criteria)) {
+      const byName = new Map(rubrics.map((rubric) => [rubric.criterion, rubric]));
+      const unknown = criteria.filter((name) => !byName.has(name));
+      if (unknown.length) problems.push(`${where}: assignment criteria ${unknown.join(", ")} are not rubric criteria (${[...byName.keys()].join(", ")}).`);
+      if (new Set(criteria).size !== criteria.length) problems.push(`${where}: assignment names a criterion twice.`);
+      const derived = 4 * criteria.length;
+      if (authored.assignment.marks !== undefined && authored.assignment.marks !== derived) {
+        problems.push(`${where}: assignment says ${authored.assignment.marks} marks but its ${criteria.length} criteria give ${derived}. Drop "marks"; it is derived.`);
+      }
+      assignmentMarks = derived;
+      const chosen = criteria.map((name) => byName.get(name)).filter(Boolean);
+      assignmentRubricIds = [...new Set(chosen.map((rubric) => rubric.rubricId))];
+      assignmentCriterionIds = chosen.map((rubric) => rubric.criterionId);
+    } else if (eslLevel) {
+      problems.push(`${where}: assignment names no rubric criteria — at this level its marks are derived from them.`);
+    }
+  }
   const assignments = authored.assignment ? [{
     assignmentId: id("assign", 1), unitId: uid, title: authored.assignment.title,
     instructions: authored.assignment.instructions, submissionType: authored.assignment.submissionType,
-    marks: authored.assignment.marks, outcomeIds: outcomes.map((o) => o.outcomeId).join(", "),
-    rubricIds: [...new Set(rubrics.map((r) => r.rubricId))].join(", "),
+    marks: assignmentMarks, outcomeIds: outcomes.map((o) => o.outcomeId).join(", "),
+    rubricIds: assignmentRubricIds.join(", "),
+    ...(assignmentCriterionIds ? { criterionIds: assignmentCriterionIds.join(", ") } : {}),
     origin: "Authored for the intensive course", reviewStatus: REVIEW, sourceFile: sourceRef,
   }] : [];
+
+  // --- register report (a report, not a gate) --------------------------------
+  if (eslLevel && band?.stage) {
+    const ceiling = REGISTER_CEILING[band.stage] || 18;
+    const readable = [
+      authored.overview, ...(authored.learningPath || []),
+      ...grammar.flatMap((item) => [item.explanation, item.workedExample, item.commonMistake, item.memoryTip]),
+      ...readings.map((item) => item.passageScript),
+      ...comprehension.flatMap((item) => [item.question, item.explanation]),
+      ...speaking.map((item) => item.instructionsAndModelLines),
+      ...writing.flatMap((item) => [item.promptAndInstructions, item.modelText, item.successCriteria, item.support]),
+      ...activities.map((item) => item.instructionsAndItems),
+      ...quizzes.flatMap((item) => [item.question, item.explanation]),
+      ...outcomes.map((item) => item.cefr.descriptor), ...selfAssessment.map((item) => item.statement),
+    ].filter(Boolean);
+    const sentences = readable.flatMap((text) => String(text).split(/\n+|(?<=[.!?])\s+/))
+      .map((sentence) => sentence.trim()).filter(Boolean)
+      .map((sentence) => ({ sentence, words: (sentence.match(/[A-Za-z][A-Za-z'’-]*/g) || []).length }));
+    const over = sentences.filter((item) => item.words > ceiling).sort((a, b) => b.words - a.words);
+    registerReports.push({ where, band: declaredBand, stage: band.stage, ceiling, sentences: sentences.length, longest: over[0]?.words || Math.max(0, ...sentences.map((item) => item.words)), over });
+  }
 
   const answerKey = [
     ...comprehension.map((item) => ({ contentId: item.questionId, contentType: "Comprehension", answerOrGuidance: item.correctAnswer })),
@@ -350,23 +509,46 @@ function buildUnit(authored) {
     level: { id: lid, number: level.number, label: level.label, cefr: level.cefr },
     unit: {
       levelId: lid, unitId: uid, unitNo: authored.unit, unitTitle: authored.title,
-      cefr: { band: declaredBand, level: level.cefr, skills },
+      cefr: {
+        band: declaredBand, level: level.cefr, skills,
+        ...(eslLevel && band?.cefrName ? { bandName: band.cefrName } : {}),
+        ...(eslLevel && band?.stage ? { stage: band.stage } : {}),
+      },
+      ...(planUnit.capstone ? { capstone: true } : {}),
       unitOverview: authored.overview,
       learningPath: (authored.learningPath || []).join("\n"),
       origin: `Compressed from ${sourceRef}`,
       sourceFile: sourceRef,
       reviewStatus: REVIEW,
     },
-    visual: { image: authored.image || "", alt: authored.imageAlt || "", lectureScript: authored.lectureScript || "", lectureVideo: "", lecturePoster: "", lectureCaptions: "" },
+    // `lectureVersion` is written HERE. It used to be stamped afterwards by
+    // add-intensive-english-lesson-versions.mjs, so every full rebuild silently
+    // stripped it from all 40 units (seen 2026-09-11: 20 Level 2 files lost the
+    // key on a no-change rebuild). The default reproduces that tool's value
+    // exactly; a level whose lessons were genuinely rewritten sets
+    // `lessonVersion` in the plan so its learners' lesson completion resets.
+    visual: {
+      image: authored.image || "", alt: authored.imageAlt || "", lectureScript: authored.lectureScript || "",
+      ...(String(authored.lectureScript || "").trim() ? { lectureVersion: authored.lectureVersion || `ie-l${level.number}-u${authored.unit}-lesson-${level.lessonVersion || "v1"}` } : {}),
+      lectureVideo: "", lecturePoster: "", lectureCaptions: "",
+    },
     vocabularyGroups, dictionaryLinks, readings, comprehension, grammar, speaking, writing,
     activities, assignments, quizzes, teacherNotes, answerKey, selfAssessment,
     rubrics, outcomes,
     frameworks: {
       cefr: { band: declaredBand, levelCefr: level.cefr, skillsCovered: skills },
       cambridge: {
+        ...(eslLevel ? { framework: level.eslFramework, name: "Cambridge Primary English as a Second Language" } : {}),
         codes: [...new Set(outcomes.flatMap((o) => o.cambridgeObjectives))],
         stages: [...new Set(outcomes.flatMap((o) => o.cambridgeStages))].sort((a, b) => a - b),
       },
+      ...(eslLevel ? {
+        literacy: {
+          framework: "0058", name: "Cambridge Primary English",
+          codes: [...new Set(outcomes.flatMap((o) => o.literacyObjectives || []))],
+          stages: [...new Set(outcomes.flatMap((o) => o.literacyStages || []))].sort((a, b) => a - b),
+        },
+      } : {}),
     },
   };
 }
@@ -502,6 +684,38 @@ checkVocabularyDuplication();
 checkPatternDuplication();
 warnPlanOverlap();
 
+// --- level coverage of 0057 --------------------------------------------------
+// Read from the BUILT units on disk, so a single-unit run still reports the
+// level. The contract gate above fails each unit for its own placed codes; this
+// is the level's sum, and it only becomes a failure once every unit the plan
+// lists exists — until then it is progress, not a defect.
+for (const level of plan.levels.filter((item) => item.eslFramework)) {
+  const stages = level.cambridgeStages || [];
+  const expected = [...eslIndex.values()].filter((objective) => stages.includes(objective.stage)).map((objective) => objective.code);
+  const dir = path.join(COURSE_ROOT, `level-${level.number}`, "data", "units");
+  const onDisk = fs.existsSync(dir) ? fs.readdirSync(dir).filter((name) => /^unit-\d+\.json$/.test(name)) : [];
+  const cited = new Set();
+  for (const name of onDisk) {
+    const unit = JSON.parse(fs.readFileSync(path.join(dir, name), "utf8"));
+    for (const outcome of unit.outcomes || []) {
+      if (outcome.cambridgeFramework === level.eslFramework) for (const code of outcome.cambridgeObjectives || []) cited.add(code);
+    }
+  }
+  const missing = expected.filter((code) => !cited.has(code));
+  const complete = onDisk.length >= level.units.length;
+  console.log(`\nlevel ${level.number}: ${expected.length - missing.length}/${expected.length} Cambridge ${level.eslFramework} objectives of stages ${stages.join(", ")} cited, across ${onDisk.length}/${level.units.length} built units`);
+  if (complete && missing.length) problems.push(`L${level.number}: every unit is built and ${missing.length} ${level.eslFramework} objective(s) are still uncited: ${missing.join(", ")}.`);
+}
+
+if (registerReports.length) {
+  console.log("\nregister (longest learner-facing sentence, in words, against the stage's ceiling) — a report, read it:");
+  for (const report of registerReports) {
+    const flag = report.over.length ? `  ${report.over.length} over` : "";
+    console.log(`  ${report.where} (${report.band}, stage ${report.stage}): longest ${report.longest} / ${report.ceiling}${flag}`);
+    for (const item of report.over.slice(0, 3)) console.log(`      ${item.words}w  ${item.sentence.slice(0, 140)}${item.sentence.length > 140 ? "…" : ""}`);
+  }
+}
+
 if (problems.length) {
   console.error(`\n${problems.length} problem(s):`);
   for (const problem of problems) console.error(`  - ${problem}`);
@@ -537,6 +751,8 @@ for (const level of plan.levels) {
       title: planUnit.title,
       data: `./data/units/unit-${planUnit.number}.json`,
       cefr: content?.unit.cefr.band || (level.cefrBands || []).find((b) => planUnit.number >= b.units[0] && planUnit.number <= b.units[1])?.cefr || "",
+      ...(planUnit.stage ? { stage: planUnit.stage } : {}),
+      ...(planUnit.capstone ? { capstone: true } : {}),
       patterns: (planUnit.patterns || []).length,
       source: (planUnit.source || []).map((s) => s.units.map((n) => `G${s.grade}U${n}`).join(",")).join(" "),
       vocabularyCount: content?.dictionaryLinks.length || 0,
@@ -571,6 +787,7 @@ for (const level of plan.levels) {
     level: {
       number: level.number, id: level.id, label: level.label,
       cefr: level.cefr, cefrName: level.cefrName, cefrBands: level.cefrBands,
+      ...(level.eslFramework ? { eslFramework: level.eslFramework, cambridgeStages: level.cambridgeStages } : {}),
       exitDescriptor: level.exitDescriptor, exitAssessment: level.exitAssessment,
     },
     levels: levelSummaries,

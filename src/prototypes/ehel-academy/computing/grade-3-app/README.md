@@ -331,7 +331,7 @@ ticked on a fresh open, and a reload after moving to step 4 opens step 4. Lesson
 12's first attempt could not resolve the CDN's host name from this machine; the
 re-run passed. Grade 4 was redeployed straight after, for the shared kit changes.
 
-## The remaining items, 2026-09-11 (not deployed)
+## The remaining items, 2026-09-11
 
 The four items the validation left open ([VALIDATION.md](VALIDATION.md), second
 version):
@@ -365,4 +365,16 @@ lessons played to 100% locally with nothing wider than 375 px and again on the
 deployed layout with the stored record and resume; the mutation harness caught 15 of 15,
 every page byte-identical to an independent copy afterwards; the letter-name audit's
 self-test passes and every line it changes was read; no picture is newer than Emoji
-12.0. **Not deployed.**
+12.0. Redeployed the same day (below).
+
+## Redeployed 2026-09-11 with the remaining items
+
+On the owner's instruction ("redeploy Grades 2 and 3, and Grades 1 and 4 with
+them"): the pages of `a43aee2ac`. 20 files uploaded, all verified on storage, every
+page byte-identical to HEAD, every edge path fresh. All fourteen lessons were then
+played to the end on the live pages in Chromium, lesson 9 with its two new steps: 0
+console errors, every step stored and every lesson recorded complete, nothing ticked
+on a fresh open, and a reload after moving to step 4 opens step 4. How many records
+were made on lesson 9 before today, and so read two steps out from step 8 on, is on
+the platform and cannot be read from here. The letter names have still not been
+listened to.

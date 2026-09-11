@@ -334,8 +334,9 @@ browser forbids every page. Lesson 13 gained a game file (4CS.05 names games);
 lesson 5 says its repeat block holds one block where lessons 1 and 4's loops held
 several; five 2020 emoji in 18 places are replaced. The shared kit's teachers' page
 now gives the Caesar and Pigpen steps their own unplugged versions instead of the 1 =
-a code (Grades 1 to 3's pages byte-identical). All in `d2de1fb1f`, committed and **not
-deployed**. Nothing added a step or moved one, so records already made stay true.
+a code (Grades 1 to 3's pages byte-identical). All in `d2de1fb1f`, committed, and
+deployed with the kit's changes for Grade 3 (below). Nothing added a step or moved
+one, so records already made stay true.
 
 Left open: 4CT.09 asks children to develop an algorithm whose output depends on its
 input, and in the app they only follow one (a home project has them write it); lesson
@@ -345,10 +346,22 @@ warm-up; several routines repeat Grade 3 (three plants, the school morning, bedt
 laying the table); the hub still draws a hand-made shield. And the human checks and
 owner decisions every grade has.
 
-## Rebuilt 2026-09-11 on the kit's changes for Grade 3 (not deployed)
+## Rebuilt 2026-09-11 on the kit's changes for Grade 3
 
 The shared kit gained four scenes for Grade 3, none of which Grade 4 draws, and a
 rule in the voice that hands a letter standing on its own to the voice in capitals
 (see the kit README). Grade 4's ciphers are where that matters most: "a becomes d" is handed to the voice as "A becomes D". Grade 3's bedtime what-if is a kite now, so of the routines above, bedtime repeats Grade 2 rather than Grade 3. Grade 4's lesson data is unchanged; its pages differ in the
 kit's code. Both gates green and every lesson played to 100%, lesson 1 also with the
-stored record and resume. Not deployed.
+stored record and resume. Redeployed the same day (below).
+
+## Redeployed 2026-09-11 with the validation fixes and the kit's changes for Grade 3
+
+On the owner's instruction ("redeploy Grades 2 and 3, and Grades 1 and 4 with
+them"): the pages of `a43aee2ac`, which carry this grade's validation fixes
+(`d2de1fb1f`) as well as the kit's changes for Grade 3. 20 files uploaded, all
+verified on storage, every page byte-identical to HEAD, every edge path fresh. All
+fourteen lessons were then played to the end on the live pages in Chromium: 0
+console errors, every step stored and every lesson recorded complete, nothing ticked
+on a fresh open, and a reload after moving to step 4 opens step 4. The eighteen
+corrections the validation made are live; nothing added a step or moved one, so
+records made before stay true.

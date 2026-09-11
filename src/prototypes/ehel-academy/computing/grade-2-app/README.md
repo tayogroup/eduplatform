@@ -331,7 +331,7 @@ the end on the live pages in Chromium: 0 console errors, every step stored and
 every lesson recorded complete, nothing ticked on a fresh open, and a reload after
 moving to step 4 opens step 4.
 
-## The small items, 2026-09-11 (not deployed)
+## The small items, 2026-09-11
 
 The last four items of the validation ([VALIDATION.md](VALIDATION.md), third version):
 
@@ -344,7 +344,7 @@ The last four items of the validation ([VALIDATION.md](VALIDATION.md), third ver
   serves the new lesson rather than a stale copy of the old one; lesson 11 is
   `computers-devices-and-robots.html`. The two cost 20 minutes more than the one did
   (445 in all), because each carries its own shell.
-- **What the split does to a record made before it is deployed.** Positions 1 to 10
+- **What the split does to a record made before it was deployed.** Positions 1 to 10
   of lesson 10 are unchanged, so such a record reads correctly up to step 10. Its
   steps 11 to 21 land on the new lesson 10's games, home projects, quiz, Computing
   world and resources, which then count as done for a learner who had passed them.
@@ -358,9 +358,8 @@ The last four items of the validation ([VALIDATION.md](VALIDATION.md), third ver
   1's. The offline tester's button and prompts say *internet*, so every app that
   needs the network fetches from a computer far away: a printer upstairs would work
   with the internet off and turn a right answer wrong.
-- **The report's status line** now separates the items waiting for a deploy from the
-  ones waiting for a person; the second version's read as though a deploy were
-  pending after both were done.
+- **The report's status line** says which items still wait for a person; the second
+  version's read as though a deploy were pending after both deploys were done.
 
 The shared kit also changed, for Grade 3 (four scenes Grade 2 does not draw, and the
 letter-name rule in the voice; see the kit README), so every Grade 2 page differs in
@@ -369,4 +368,17 @@ Verified: both gates green (31/31, 22 keys, eleven cards resolve), every inline
 script parses, all eleven lessons played to 100% locally with nothing wider than
 375 px, and again on the deployed layout with the stored record and resume; the
 mutation harness caught 11 of 11, every page byte-identical to an independent copy
-afterwards. **Not deployed.**
+afterwards. Redeployed the same day (below).
+
+## Redeployed 2026-09-11 with the small items
+
+On the owner's instruction ("redeploy Grades 2 and 3, and Grades 1 and 4 with
+them"): the pages of `a43aee2ac`, lesson 11's page among them. 17 files uploaded,
+all verified on storage, every page byte-identical to HEAD, every edge path fresh.
+All eleven lessons were then played to the end on the live pages in Chromium, lesson
+10 at its old address as the new 15-step lesson and lesson 11 at its new one: 0
+console errors, every step stored and every lesson recorded complete, nothing ticked
+on a fresh open, and a reload after moving to step 4 opens step 4. The live hub
+lists both lessons. How many records were made on the old lesson 10 before today,
+and so read its later steps against the new lesson's shell (above), is on the
+platform and cannot be read from here.

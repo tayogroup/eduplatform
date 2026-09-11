@@ -304,10 +304,19 @@ the end on the live pages in Chromium: 0 console errors, every step stored and
 every lesson recorded complete, nothing ticked on a fresh open, and a reload after
 moving to step 4 opens step 4.
 
-## Rebuilt 2026-09-11 on the kit's changes for Grade 3 (not deployed)
+## Rebuilt 2026-09-11 on the kit's changes for Grade 3
 
 The shared kit gained four scenes for Grade 3, none of which Grade 1 draws, and a
 rule in the voice that hands a letter standing on its own to the voice in capitals
 (see the kit README). The games' clue "It starts with a" is now spoken as the letter. Grade 1's lesson data is unchanged; its pages differ in the
 kit's code. Both gates green and every lesson played to 100%, lesson 1 also with the
-stored record and resume. Not deployed.
+stored record and resume. Redeployed the same day (below).
+
+## Redeployed 2026-09-11 with the kit's changes for Grade 3
+
+On the owner's instruction ("redeploy Grades 2 and 3, and Grades 1 and 4 with
+them"): the pages of `a43aee2ac`. 14 files uploaded, all verified on storage, every
+page byte-identical to HEAD, every edge path fresh. All eight lessons were then
+played to the end on the live pages in Chromium: 0 console errors, every step stored
+and every lesson recorded complete, nothing ticked on a fresh open, and a reload
+after moving to step 4 opens step 4.

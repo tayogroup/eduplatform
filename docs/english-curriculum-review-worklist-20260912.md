@@ -3,13 +3,23 @@
 Generated 2026-09-12 from the units' own `reviewStatus` fields, counting every
 flagged object in a unit and attributing it to the section it sits under.
 
-Every item below renders to a learner today. The flag records that no teacher of
-the stage has read it - not that anything is known to be wrong. Owner's decision,
-2026-09-12: the flags stay until a reviewer clears them, because they are the
-only record of which items were authored or auto-generated rather than reviewed.
+**CLEARED. The owner approved all 1,844 on 2026-09-12**, after this list was
+written, and `tools/approve-english-review-flags-20260912.py` set every one of
+them to "Approved by the owner 2026-09-12". Grades 1-5 now ask for no review.
 
-A flag is cleared by editing that item's `reviewStatus` in
-`english/grade-N/data/units/unit-M.json`.
+This page is kept as the record of WHAT was approved, because the statuses that
+said it no longer exist in the data. It is a snapshot, not a live report: to
+see the current state, grep `reviewStatus` in `english/grade-N/data/units/`.
+
+Two things were deliberately NOT cleared:
+
+- **the ~8,200 "Auto-generated v1.0" labels**, which say how an item was made
+  rather than that a review is owed - clearing them would erase the only record
+  of what was generated rather than authored;
+- **Grades 6-8**, which were not in the approval and still carry 207 open flags
+  (61, 71 and 75).
+
+What follows is the state before the approval.
 
 ## Grade 1 - 596 item(s)
 

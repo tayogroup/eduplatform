@@ -255,7 +255,7 @@ bytes are byte-identical to HEAD and carry the Stage 4 kit markers.
 Against the owner's 27-area framework (OneDrive: `computing-grades validation.docx`);
 the full report is [VALIDATION.md](VALIDATION.md), and the Word copy sits beside the
 other validation reports as `computing-grade-1-v2 validation report.docx`. Average
-4.1 / 5.
+4.3 / 5 after the remaining fixes (4.1 in the first version).
 
 **The "100% in the browser" above was true of the page and false of the school's
 record.** The lesson overview and the Computing world placeholder ticked themselves
@@ -268,4 +268,16 @@ verified on a local copy of the deployed layout, and committed with eight conten
 corrections, three contrast fixes and three emoji replacements as `04a1ff89f`.
 **Not deployed**: until Grades 1 to 4 are redeployed, their live pages keep the
 defect.
+
+**The remaining fixes** (`ac37c2a2f`, the same day): three activities for the objectives
+that rested on one teaching step (lesson 6 records a week of weather on a form,
+lesson 7 sorts what is joined to the internet, lesson 8 picks the program for a
+job); a "Last time" recap on lessons 2 to 8 and an unmarked two-question warm-up
+on all eight, both carried by the overview; controls at least 44 px tall and a
+13 px minimum text size; a network map tall enough for its labels; and a Sort
+race question that read as broken English. The three new activities shift the
+step positions after them in lessons 6 to 8, so a record made there before the
+redeploy reads one step out. The browser driver is committed as
+`../lesson-kit/drive-lessons.mjs`, and its `--record` mode is what checks the
+school's record. Still not deployed.
 

@@ -852,7 +852,9 @@ npm run check:intensive                         # the build + the audio-template
 ```
 
 Owner decision: Level 1 = Cambridge Primary **English as a Second Language 0057**
-Stages 1-3, **Pre-A1 to A1**, age-neutral (older children to adults); Level 2 =
+Stages 1-3, **Pre-A1 to A1**. The audience is **adult ESL learners** — the owner
+restated it on 2026-09-12 after a draft of this rebuild described the course as
+age-neutral, which it is not. Level 2 =
 Stages 4-6, A1 to A2, **not rebuilt yet** (still the earlier B1 course). The
 earlier Level 1 (A1-A2, adult) is in
 `inputs/ehel-english-intensive-source/archive/level-1-a1-a2-2026-08/`.

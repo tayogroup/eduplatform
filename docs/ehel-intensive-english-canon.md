@@ -1,26 +1,27 @@
 # Ehel Intensive English — People, Places and Voice
 
 This replaces the character canon a school course needs. The intensive course is
-**self-teaching and language-neutral**, and from Level 1's rebuild on Cambridge
-0057 (2026-09-11) it is also **age-neutral**. All three change who appears in
-the content.
+**self-teaching and language-neutral**, and it is for **adults**. All three
+change who appears in the content.
 
 ## Who the learner is
 
-A second-language learner of **any first language and any age from older
-children to adults**. Level 1 starts before A1: the learner may know no English
-at all, and may be nine or fifty. Every task must make sense for both.
+**An adult ESL learner**, of any first language. Level 1 starts before A1: the
+learner may know no English at all. They may be a nurse, a driver, a business
+owner or a parent, and they are studying intensively, often alone and often
+tired.
 
-- **Never make a task depend on a life stage.** Do not assume the learner has a
-  job, a child, a car, a flat, money of their own, or goes to school. Where a
-  task needs one of these, offer both sides: "at school or at work", "your class
-  or your team", "a friend or someone in your family".
+- **Write to an adult.** Their life is the material: work, the shops, the
+  clinic, appointments, forms, travel, money, the people around them.
 - **No child-only worlds.** No toys, no cartoon animals doing human things, no
-  playground games, no "let's have fun!", no stickers or prizes as the point of a
-  task. An animal can appear as an animal.
-- **No adult-only worlds.** No tenancy agreements, payslips, visas, job
-  interviews, bank loans, or anything a nine-year-old could not meet. A doctor,
-  a shop, a bus station and a library are fine for everyone.
+  playground games, no "let's have fun!", no stickers or prizes as the point of
+  a task. An animal can appear as an animal.
+- **Assume an adult, but never a particular life.** Do not assume the learner
+  has a job, a car, a home of their own, children, papers, or money to spend.
+  Where a task would need one, let them invent it or offer the other side ("at
+  work, or where you study").
+- **Studying is adult work here.** An adult learner may well be at an English
+  school, so a lesson, a class, a notebook and homework are their world too.
 
 ## The default is you, not a character
 

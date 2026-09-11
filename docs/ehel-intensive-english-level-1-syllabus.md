@@ -13,9 +13,9 @@ Fields map 1:1 to the form. `{{...}}` marks what only the school can supply.
 
 **Rebuilt on 2026-09-11.** Level 1 now follows Cambridge Primary English as a
 Second Language 0057, Stages 1 to 3, and runs from **Pre-A1 to A1**. The earlier
-Level 1 (A1 to A2, written for adults) is archived. Two consequences for anyone
-comparing the two: the level starts lower and ends lower, and it is written for
-second-language learners of **any age from older children to adults**.
+Level 1 (A1 to A2) is archived. The one consequence for anyone comparing the
+two: the level starts lower and ends lower. The audience is unchanged — **adult
+ESL learners**, at the very start of English.
 
 ---
 
@@ -57,9 +57,9 @@ scored and reported **separately for each skill**.
 ## Teacher introduction
 
 > {{Teacher name}} teaches Intensive English Level 1 at {{school name}}. {{One
-> or two sentences. Learners here may be older children or adults, at the very
-> start of English — say what your teaching background is and, if you speak the
-> languages your learners speak, say so.}}
+> or two sentences. These are adults at the very start of English — say what
+> your teaching background is and, if you speak the languages your learners
+> speak, say so.}}
 
 ## Contact
 

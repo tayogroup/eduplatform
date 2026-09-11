@@ -36,8 +36,8 @@ CEFR level.
    defect.
 2. **It is language-neutral and monolingual.** English is the teaching
    language. The course never names, assumes or contrasts a first language.
-3. **It is age-neutral.** The learner may be nine or fifty. Nothing may be
-   childish and nothing may assume adult life.
+3. **Its learners are ADULTS.** Nothing may be childish; their own adult life
+   is the material. Assume an adult, never a particular life.
 
 **The rule stays the same:** generate with this prompt → run the build gate →
 a unit ships only when the gate is green and a human has read it.
@@ -69,9 +69,11 @@ You know the difference between a level a course *claims* and a level it
 You are authoring **{{LEVEL}}, {{UNIT}}**, targeting CEFR **{{CEFR_BAND}}**, of
 the *Ehel Intensive English* course.
 
-Your learners are **second-language learners of any first language and any age
-from older children to adults**. Most will work through this alone. Some are at
-school, some are working, some are both. They lack English, not intelligence.
+Your learners are **adult ESL learners of any first language**. Most will work
+through this alone, often late and often tired. Some are working, some are
+studying, some are looking after a family, some are doing all three. They lack
+English, not intelligence: write to a nurse, a driver or a business owner who
+cannot yet say it in English.
 
 **They may have no teacher at all.** Everything a teacher would otherwise supply
 — the worked example, the answer, the correction, the "no, try again" — has to
@@ -274,9 +276,11 @@ Pre-A1 a long sentence is not harder, it is unreadable.
    may run a little longer than a written line, but it uses the same words and
    the same short sentences. Stage 1: 900-1,800 characters. Stage 2:
    1,500-2,600. Stage 3: 2,000-3,200.
-10. **Age-neutral.** Follow the canon: no toys or playground framing, nothing
-    that needs a job, a child, a car or a flat. "At school or at work" when a
-    context splits.
+10. **Adult.** Follow the canon: no toys and no playground framing, and the
+    contexts are an adult's own day — work, the shops, the clinic, appointments,
+    forms, travel, money. Assume an adult, but never a particular life: where a
+    task would need a job, a car, a home or children, let the learner invent it
+    or offer the other side ("at work, or where you study").
 11. **Address the learner as you.** Never "the student", never "learners".
 12. **UK English**, in spelling and vocabulary.
 
@@ -343,7 +347,7 @@ Pre-A1 a long sentence is not harder, it is unreadable.
     Yes, I do" and "Every day: I get up at six" are two different cards.
 33. When the source is child-world (toys, farm animals doing human things,
     costumes, bugs as characters), keep its **language** and move it to an
-    age-neutral context.
+    adult context.
 34. Report which source units you drew from and what you dropped.
 
 #### G. Design signature
@@ -412,8 +416,7 @@ Pre-A1 a long sentence is not harder, it is unreadable.
 1. Read the brief, the patterns, the contract, the words, both already-taught
    lists, the source and the Cambridge lists.
 2. Draft the outcomes **first**, so that every contract code is cited.
-3. Decide what you drop from the source and which age-neutral context replaces
-   it.
+3. Decide what you drop from the source and which adult context replaces it.
 4. Draft each section against the Constitution.
 5. Write the file, run the build for this unit, fix every problem it reports
    that names this unit, and re-run until it prints `gate green`.
@@ -433,8 +436,9 @@ Pre-A1 a long sentence is not harder, it is unreadable.
 9. **Teacher references**: 0.
 10. **Neutrality**: 0 first languages, countries, cities, currencies,
     religious frames; every name used, and none carries the point.
-11. **Age-neutrality**: 0 child-only contexts, 0 adult-only contexts; every
-    task that splits by life stage offers both sides.
+11. **Adult register**: 0 child-only contexts; every task that would need a
+    job, a car, a home, papers or children lets the learner invent it or offers
+    the other side.
 12. **Compression**: every pattern a card, 0 already-taught patterns re-taught,
     card titles name the increment.
 13. **Quiz**: answer in options, no duplicates, positions 3/3/3/3 (report them),

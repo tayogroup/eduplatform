@@ -954,7 +954,7 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1TWA.03 1R.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Before a show, artists look at each piece and make it better.</s><s>Not because it is bad. Because it can be even better.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The pot has a crack: smooth it.</s><s>Nobody can read the label: write it bigger and darker.</s><s>The sky ran: less water, and let it dry.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think &#39;better&#39; means &#39;start again&#39;.</s><s>Change ONE thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap a change and see what it does.</s></mstts:express-as>' data-say="Before the show, three pieces need one change each. Which change? Tap one and see.">
+    <section class="slide" data-objectives="1TWA.03 1R.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Before a show, artists look at each piece and make it better.</s><s>Not because it is bad. Because it can be even better.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The pictures keep falling over: stand them against something.</s><s>Nobody can read the label: write it bigger and darker.</s><s>The pattern stops halfway: add tiles until it reaches the end.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think &#39;better&#39; means &#39;start again&#39;.</s><s>Change ONE thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap a change and see what it does.</s></mstts:express-as>' data-say="Before the show, three pieces need one change each. Which change? Tap one and see.">
       <div class="slide-head"><span class="n">8</span><h2>Make it even better</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Before the show, three pieces need one change each. Which change? Tap one and see.</span></div>
       <div class="stage">
@@ -1542,45 +1542,44 @@
           "rounds": [
             {
               "piece": {
-                "title": "The clay pot",
-                "scene": "claypot",
-                "state": "cracked",
-                "fixedState": "smooth",
-                "problem": "A crack has opened in the side.",
-                "fixed": "Smooth and ready for the show."
+                "title": "The tabletop gallery",
+                "pic": "🖼️",
+                "fixedPic": "🏛️",
+                "problem": "The pictures keep falling flat on the table.",
+                "fixed": "Every picture stands up for the show."
               },
-              "needs": "smooth",
+              "needs": "stand",
               "changes": [
                 {
-                  "id": "smooth",
-                  "t": "Wet your fingers and smooth the crack",
-                  "pic": "💧",
-                  "effect": "smooth",
-                  "say": "The crack closes over. Smooth."
+                  "id": "prop",
+                  "t": "Lean each picture against a book",
+                  "pic": "📚",
+                  "effect": "stand",
+                  "say": "Propped against a book, every picture stands up and stays up."
                 },
                 {
-                  "id": "lid",
-                  "t": "Add a lid",
-                  "pic": "🫖",
-                  "effect": "add",
-                  "say": "A lid on a cracked pot."
-                },
-                {
-                  "id": "paint",
-                  "t": "Paint over the crack",
-                  "pic": "🎨",
+                  "id": "colour",
+                  "t": "Colour the frames red",
+                  "pic": "🟥",
                   "effect": "colour",
-                  "say": "Painted, and still cracked underneath."
+                  "say": "Red frames. Still lying flat."
                 },
                 {
-                  "id": "bigger",
-                  "t": "Make the pot bigger",
-                  "pic": "⭕",
-                  "effect": "size",
-                  "say": "A bigger pot with a bigger crack."
+                  "id": "smaller",
+                  "t": "Cut the pictures smaller",
+                  "pic": "✂️",
+                  "effect": "worse",
+                  "say": "Smaller pictures, still flat, and now harder to see."
+                },
+                {
+                  "id": "hide",
+                  "t": "Put them in a drawer",
+                  "pic": "🗄️",
+                  "effect": "worse",
+                  "say": "In a drawer nobody can see them. That is not a show."
                 }
               ],
-              "why": "Wet clay mends when it is smoothed."
+              "why": "A picture that falls over needs something to stand against."
             },
             {
               "piece": {
@@ -1625,45 +1624,44 @@
             },
             {
               "piece": {
-                "title": "The house picture",
-                "scene": "housepainting",
-                "state": "runny",
-                "fixedState": "fixed",
-                "problem": "The sky ran down the picture.",
-                "fixed": "The sky stays put, and the sun is out."
+                "title": "The pattern strip",
+                "pic": "🟥🟦🟥",
+                "fixedPic": "🟥🟦🟥🟦🟥🟦",
+                "problem": "The pattern stops halfway along the strip.",
+                "fixed": "The pattern goes all the way to the end."
               },
-              "needs": "dry",
+              "needs": "continue",
               "changes": [
                 {
-                  "id": "less",
-                  "t": "Use less water and let it dry flat",
-                  "pic": "☀️",
-                  "effect": "dry",
-                  "say": "Thicker paint, dried flat. No drips."
-                },
-                {
                   "id": "more",
-                  "t": "Add more water",
-                  "pic": "💧",
-                  "effect": "worse",
-                  "say": "Runnier still."
+                  "t": "Add more tiles until it reaches the end",
+                  "pic": "🧱",
+                  "effect": "continue",
+                  "say": "Red, blue, red, blue, right to the end of the strip."
                 },
                 {
-                  "id": "frame",
-                  "t": "Put a frame round it",
-                  "pic": "🖼️",
-                  "effect": "add",
-                  "say": "A frame round a runny sky."
-                },
-                {
-                  "id": "red",
-                  "t": "Paint the house red",
-                  "pic": "🟥",
+                  "id": "colourin",
+                  "t": "Colour in the empty half with one colour",
+                  "pic": "🟨",
                   "effect": "colour",
-                  "say": "A red house under a sky that still runs."
+                  "say": "One big yellow block. That is not the pattern any more."
+                },
+                {
+                  "id": "cut",
+                  "t": "Cut the empty half off",
+                  "pic": "✂️",
+                  "effect": "worse",
+                  "say": "A shorter strip. The show wanted a long one."
+                },
+                {
+                  "id": "fold",
+                  "t": "Fold the empty half behind",
+                  "pic": "📄",
+                  "effect": "smaller",
+                  "say": "Folded away. It still stops halfway."
                 }
               ],
-              "why": "Runny paint needs less water and time to dry."
+              "why": "A pattern that stops needs more of the same pattern, not something else."
             }
           ]
         }
@@ -1980,7 +1978,7 @@
             },
             {
               "kind": "refine",
-              "text": "fixed The clay pot: wet your fingers and smooth the crack",
+              "text": "fixed The tabletop gallery: lean each picture against a book",
               "pic": "🔧",
               "lesson": 8
             },
@@ -1992,7 +1990,7 @@
             },
             {
               "kind": "refine",
-              "text": "fixed The house picture: use less water and let it dry flat",
+              "text": "fixed The pattern strip: add more tiles until it reaches the end",
               "pic": "🔧",
               "lesson": 8
             }

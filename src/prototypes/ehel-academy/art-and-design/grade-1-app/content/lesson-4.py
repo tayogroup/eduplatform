@@ -19,7 +19,7 @@ LESSON = {
              explain(
                  ["A shape is the outline of a thing, the line that goes all the way round it."],
                  ["A circle is round, like a ball.", "A square has four sides the same.", "A triangle has three pointy corners.",
-                  "A rectangle is a long square.", "A star has points.", "An oval is a squashed circle."],
+                  "A rectangle has four straight sides, two long and two short.", "A star has points.", "An oval is a squashed circle."],
                  ["Children think a square on its corner is a different shape.", "Turn it round. It is still a square."],
                  ["Tap all six and listen."]),
              {"items": [
@@ -123,7 +123,7 @@ LESSON = {
                  q("Red, blue, red, blue, red… what comes next?", "🟥", "blue", ["red", "yellow"], "After red comes blue, every time."),
                  q("A pattern is something that…", "🧱", "repeats", ["is very big", "is only blue"], "A pattern says the same thing again and again."),
                  q("Which shape is a squashed circle?", "🥚", "oval", ["square", "triangle"], "An oval is a circle squashed a little."),
-                 q("Which shape has four sides, two long and two short?", "🚪", "rectangle", ["circle", "star"], "A rectangle is a long square."),
+                 q("Which shape has four sides, two long and two short?", "🚪", "rectangle", ["circle", "star"], "A rectangle has four straight sides: two long ones and two short ones."),
              ]},
              "You know your shapes and your patterns."),
 

@@ -283,7 +283,7 @@ tell jokes. A home project had a grown-up pour hot water with no cup. Measuring
 the built pages found six sort labels the voice read with the word "slash", three
 emoji that need 2020 or 2021 devices, and five parts of the laptop and tablet
 drawings that were 17 to 23 px tap targets on a phone. All fixed in `7cc8338cf`,
-not deployed. The progress fix from the Grade 1 validation was checked on all ten
+and deployed the same day (see below). The progress fix from the Grade 1 validation was checked on all ten
 live lessons: every step stored, the lesson recorded complete, and a reopened
 lesson opening where it was left.
 
@@ -291,3 +291,13 @@ Left as required changes: a second activity for the four objectives that rest on
 one (2CS.03, 2CS.04, 2CS.05, 2MD.03, which also needs a second way of collecting
 data with a device), a recap and a warm-up per lesson, new tasks where Grade 1's
 toast and sandwich return almost word for word, and the human checks.
+
+## Redeployed 2026-09-11 with the Grade 2 validation fixes
+
+On the owner's instruction: the pages of `7cc8338cf`, 16 files uploaded, all verified
+on storage, every page byte-identical to HEAD, every edge path fresh. All ten
+lessons were then played to the end on the live pages in Chromium: 0 console
+errors, every step stored and every lesson recorded complete, nothing ticked on a
+fresh open, and a reload after moving to step 4 opens step 4. Grades 1, 3 and 4
+were not redeployed: their pages changed only in the laptop and tablet drawing
+code, which none of them draws.

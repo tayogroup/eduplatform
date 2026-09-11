@@ -22,7 +22,7 @@ LESSON = {
                  ["Press Next."]),
              {"frames": [
                  {"pic": "\U0001F4CB", "cap": "A database <b>table</b>: rows and columns of facts about the class pets.", "say": "A database table: rows and columns of facts. This one is about the class pets."},
-                 {"pic": "➡️", "cap": "A <b>record</b> is one row: everything about ONE thing. Amal's record: cat, 8, Hilltown.", "say": "A record is one row: everything about one thing. Amal's record says cat, 8, Hilltown."},
+                 {"pic": "➡️", "cap": "A <b>record</b> is one row: everything about ONE thing. Amal's record: cat, 9, Hilltown.", "say": "A record is one row: everything about one thing. Amal's record says cat, 9, Hilltown."},
                  {"pic": "⬇️", "cap": "A <b>field</b> is one column: ONE kind of fact about everything. The pet field: cat, dog, fish...", "say": "A field is one column: one kind of fact about everything. The pet field holds cat, dog, fish, and so on."},
                  {"pic": "\U0001F3AF", "cap": "<b>Data</b> is one cell: one fact about one thing. Amal's pet: cat.", "say": "Data is one cell: one fact about one thing. Amal's pet: cat.", "sound": "ding"},
              ]},
@@ -36,11 +36,11 @@ LESSON = {
                  [],
                  ["Read the task, tap the right thing."]),
              {"rows": [
-                 {"name": "Amal", "pic": "\U0001F467\U0001F3FE", "pet": "cat", "age": 8, "town": "Hilltown"},
-                 {"name": "Sami", "pic": "\U0001F466\U0001F3FE", "pet": "dog", "age": 9, "town": "Riverside"},
-                 {"name": "Zara", "pic": "\U0001F467\U0001F3FD", "pet": "fish", "age": 8, "town": "Hilltown"},
-                 {"name": "Omar", "pic": "\U0001F466\U0001F3FD", "pet": "rabbit", "age": 10, "town": "Riverside"},
-                 {"name": "Nora", "pic": "\U0001F467\U0001F3FB", "pet": "hamster", "age": 9, "town": "Greenfield"},
+                 {"name": "Amal", "pic": "\U0001F467\U0001F3FE", "pet": "cat", "age": 9, "town": "Hilltown"},
+                 {"name": "Sami", "pic": "\U0001F466\U0001F3FE", "pet": "dog", "age": 8, "town": "Riverside"},
+                 {"name": "Zara", "pic": "\U0001F467\U0001F3FD", "pet": "fish", "age": 10, "town": "Hilltown"},
+                 {"name": "Omar", "pic": "\U0001F466\U0001F3FD", "pet": "rabbit", "age": 8, "town": "Riverside"},
+                 {"name": "Nora", "pic": "\U0001F467\U0001F3FB", "pet": "hamster", "age": 7, "town": "Greenfield"},
               ],
               "fields": [{"id": "pet", "label": "pet"}, {"id": "age", "label": "age"}, {"id": "town", "label": "town"}],
               "tasks": [

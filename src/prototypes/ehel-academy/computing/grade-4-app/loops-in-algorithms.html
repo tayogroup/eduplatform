@@ -1256,7 +1256,7 @@
         <p class="score" id="score6"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CT.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Repetition - a loop - makes an algorithm more concise: the same job in fewer steps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Fill, pour, walk, three times over, is nine steps written out. Repeat 3 times, fill, pour, walk, is four.</s><s>Shorter to read, shorter to write, and one change inside the loop changes every turn.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap all four.</s></mstts:express-as>' data-say="Written out long, the plant algorithm is 11 steps. With a repeat loop it is 5. Tap each reason a loop is better.">
+    <section class="slide" data-objectives="4CT.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Repetition - a loop - makes an algorithm more concise: the same job in fewer steps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Fill, pour, walk, three times over, is nine steps written out. Repeat 3 times, fill, pour, walk, is three steps and a count.</s><s>Shorter to read, shorter to write, and one change inside the loop changes every turn.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap all four.</s></mstts:express-as>' data-say="Written out long, the plant algorithm is 11 steps. With a repeat loop it is 5. Tap each reason a loop is better.">
       <div class="slide-head"><span class="n">7</span><h2>Repetition makes it concise</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Written out long, the plant algorithm is 11 steps. With a repeat loop it is 5. Tap each reason a loop is better.</span></div>
       <div class="stage">
@@ -1557,7 +1557,7 @@
                 {
                   "id": "paste",
                   "label": "Put paste on the brush",
-                  "pic": "🪥",
+                  "pic": "🦷",
                   "say": "Put paste on the brush."
                 },
                 {
@@ -1628,7 +1628,7 @@
                 {
                   "id": "can",
                   "label": "Get the watering can",
-                  "pic": "🪣",
+                  "pic": "🚿",
                   "say": "Get the watering can."
                 },
                 {
@@ -1644,7 +1644,7 @@
                     {
                       "id": "pour",
                       "label": "Pour on a plant",
-                      "pic": "🪴",
+                      "pic": "🌱",
                       "say": "Pour on a plant."
                     },
                     {
@@ -1682,7 +1682,7 @@
                 {
                   "id": "can",
                   "label": "Get the watering can",
-                  "pic": "🪣",
+                  "pic": "🚿",
                   "say": "Get the watering can."
                 },
                 {
@@ -1698,7 +1698,7 @@
                     {
                       "id": "pour",
                       "label": "Pour on a plant",
-                      "pic": "🪴",
+                      "pic": "🌱",
                       "say": "Pour on a plant."
                     },
                     {
@@ -1835,16 +1835,16 @@
                       "say": "Red."
                     },
                     {
-                      "id": "green",
-                      "label": "Green",
-                      "pic": "🟢",
-                      "say": "Green."
-                    },
-                    {
                       "id": "greenamber",
                       "label": "Green and amber together",
                       "pic": "🟢🟡",
                       "say": "Green and amber together."
+                    },
+                    {
+                      "id": "green",
+                      "label": "Green",
+                      "pic": "🟢",
+                      "say": "Green."
                     },
                     {
                       "id": "amber",
@@ -1857,7 +1857,7 @@
               ],
               "wrong": [
                 0,
-                2
+                1
               ],
               "why": "Green and amber together is not a real signal. Drivers would not know whether to go.",
               "fix": {
@@ -1898,7 +1898,7 @@
             {
               "pic": "📏",
               "label": "shorter to read",
-              "say": "Shorter to read. Five lines instead of eleven. You see the whole algorithm at once."
+              "say": "Shorter to read. Five steps and a count instead of eleven steps. You see the whole algorithm at once."
             },
             {
               "pic": "✏️",
@@ -1966,7 +1966,7 @@
               "why": "No count. They go on until they are switched off."
             },
             {
-              "pic": "🪥",
+              "pic": "🦷",
               "label": "brush the top and bottom teeth 4 times",
               "bin": "count",
               "why": "Four times, then stop."
@@ -1978,7 +1978,7 @@
               "why": "Until the battery goes."
             },
             {
-              "pic": "🪴",
+              "pic": "🌱",
               "label": "water each of the 3 plants",
               "bin": "count",
               "why": "Three, then stop."
@@ -2022,7 +2022,7 @@
           "items": [
             {
               "ask": "Repeat 4 times: brush top, brush bottom. How many brushing steps happen?",
-              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🪥</div>",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🦷</div>",
               "opts": [
                 {
                   "t": "8",
@@ -2159,7 +2159,7 @@
                   "explanation": "No count. They go on until they are switched off."
                 },
                 {
-                  "prompt": "🪥 “brush the top and bottom teeth 4 times” Count-controlled, or forever?",
+                  "prompt": "🦷 “brush the top and bottom teeth 4 times” Count-controlled, or forever?",
                   "choices": [
                     "Repeat N times",
                     "Forever"
@@ -2177,7 +2177,7 @@
                   "explanation": "Until the battery goes."
                 },
                 {
-                  "prompt": "🪴 “water each of the 3 plants” Count-controlled, or forever?",
+                  "prompt": "🌱 “water each of the 3 plants” Count-controlled, or forever?",
                   "choices": [
                     "Repeat N times",
                     "Forever"
@@ -2385,7 +2385,7 @@
             },
             {
               "ask": "'Repeat 3 times: fill, pour, walk' unrolled is how many steps?",
-              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🪴</div>",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🌱</div>",
               "opts": [
                 {
                   "t": "9",

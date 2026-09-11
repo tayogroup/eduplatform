@@ -87,7 +87,7 @@ LESSON = {
               "bins": [{"id": "adv", "label": "Advantage", "pic": "\U0001F44D"}, {"id": "dis", "label": "Disadvantage", "pic": "\U0001F44E"}],
               "items": [
                   {"pic": "\U0001F522", "label": "the answers are easy to count", "bin": "adv", "why": "Same choices, so they add up."},
-                  {"pic": "\U0001F6B6", "label": "Maya scooters, and scooter is not a choice", "bin": "dis", "why": "Only the choices given can be answered."},
+                  {"pic": "\U0001F6B6", "label": "Hana comes by scooter, and scooter is not a choice", "bin": "dis", "why": "Only the choices given can be answered."},
                   {"pic": "\U0001F465", "label": "everyone is asked exactly the same question", "bin": "adv", "why": "Fair and comparable."},
                   {"pic": "❓", "label": "it cannot ask why", "bin": "dis", "why": "A tick box has no room for a reason."},
                   {"pic": "\U0001F4BB", "label": "a digital form counts the answers itself", "bin": "adv", "why": "No adding up by hand."},
@@ -107,14 +107,14 @@ LESSON = {
                  {"pic": "\U0001F522", "label": "data: raw facts", "say": "Data: raw facts with no meaning yet. Walk, bus, car, bike, walk, bus, walk, car."},
                  {"pic": "\U0001F4CB", "label": "organised", "say": "Organised: put in a table and counted. Walk 3, bus 2, car 2, bike 1."},
                  {"pic": "\U0001F4A1", "label": "information: the meaning", "say": "Information: what it means. Most children walk to school, and only one cycles."},
-                 {"pic": "\U0001F3AF", "label": "used", "say": "Used. The school decides it needs more coat pegs by the door for the walkers, and one bike rack is enough."},
+                 {"pic": "\U0001F3AF", "label": "used", "say": "Used. Most children walk, so the school asks for a safe crossing outside the gate, and one bike rack is enough."},
              ], "need": 4,
               "then": {"ask": "'Walk, bus, car, walk' is data. Which of these is INFORMATION made from it?",
                        "opts": [opt("Most of these children walk to school", True), opt("Walk", False), opt("Bus, car", False)],
                        "why": "Information is the meaning you get when data is organised."}},
              "Data is facts; information is meaning."),
 
-        step("sort", "Data, or information?", "\U0001F5C2️", "Data sorter", ["4MD.03"],
+        step("sort", "Raw fact, or meaning?", "\U0001F5C2️", "Data sorter", ["4MD.03"],
              "Is this a raw fact (data) or a meaning made from facts (information)?",
              explain(
                  ["Data: a number, a word, a reading, on its own.", "Information: what organised data tells you."],
@@ -131,7 +131,7 @@ LESSON = {
                   {"pic": "\U0001F45F", "label": "size 2, size 1, size 3, size 2", "bin": "data", "why": "Raw readings."},
                   {"pic": "\U0001F6D2", "label": "the shop should order more size 2 shoes", "bin": "info", "why": "A meaning you can act on."},
                   {"pic": "\U0001F6B6", "label": "walk", "bin": "data", "why": "One answer on a form."},
-                  {"pic": "\U0001F9E5", "label": "most children walk, so we need more coat pegs", "bin": "info", "why": "The data organised and used."},
+                  {"pic": "\U0001F6B8", "label": "most children walk, so the school needs a safe crossing", "bin": "info", "why": "The data organised and used."},
               ]},
              "Facts are data; meaning is information."),
 

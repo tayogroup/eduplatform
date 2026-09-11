@@ -1266,7 +1266,7 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CS.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>File size is measured in bytes: a kilobyte is about a thousand, a megabyte about a million, a gigabyte about a thousand million.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A page of text is a few kilobytes: letters are small.</s><s>A photo is a few megabytes: millions of coloured dots.</s><s>A song is a few megabytes: thousands of sounds a second.</s><s>A film is gigabytes: many pictures every second, plus the sound.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a long story is bigger than a photo.</s><s>A whole book of text is smaller than one photo.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap all four.</s></mstts:express-as>' data-say="Different types of file take up different amounts of space. Tap each to see roughly how big it is.">
+    <section class="slide" data-objectives="4CS.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>File size is measured in bytes: a kilobyte is about a thousand, a megabyte about a million, a gigabyte about a thousand million.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A page of text is a few kilobytes: letters are small.</s><s>A photo is a few megabytes: millions of coloured dots.</s><s>A song is a few megabytes: thousands of sounds a second.</s><s>A film is gigabytes: many pictures every second, plus the sound.</s><s>A game can be a few megabytes or many gigabytes.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a long story is bigger than a photo.</s><s>A whole book of text is smaller than one photo.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap all five.</s></mstts:express-as>' data-say="Different types of file take up different amounts of space. Tap each to see roughly how big it is.">
       <div class="slide-head"><span class="n">8</span><h2>File sizes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Different types of file take up different amounts of space. Tap each to see roughly how big it is.</span></div>
       <div class="stage">
@@ -1856,11 +1856,17 @@
               "label": "video: gigabytes",
               "sub": "a film, about 2 GB",
               "say": "A video file. A film is about two gigabytes: a picture twenty-five times a second, plus the sound, for two hours."
+            },
+            {
+              "pic": "🎮",
+              "label": "game: megabytes to gigabytes",
+              "sub": "a game, from a few MB to 50 GB",
+              "say": "A game file. A small puzzle game is a few megabytes; a big console game can be fifty gigabytes, because it holds pictures, sounds, music and the program together."
             }
           ],
-          "need": 4,
+          "need": 5,
           "then": {
-            "ask": "Which is usually the BIGGEST file?",
+            "ask": "Of these three, which is usually the BIGGEST file?",
             "opts": [
               {
                 "t": "A video",

@@ -18,7 +18,7 @@ LESSON = {
              explain(
                  ["Repetition in a program is a repeat block: repeat 3 times, jump, makes the cat jump three times.", "Each time round is one iteration."],
                  ["Repeat 3 times, jump: jump, jump, jump.", "Repeat 4 times, move right: four squares to the right, one per iteration."],
-                 ["Children think the repeat block repeats the whole program.", "It repeats the ONE block after it."],
+                 ["Children think the repeat block repeats the whole program.", "It repeats the ONE block after it. The loops in lessons 1 and 4 held several steps, and in many apps a repeat can hold several blocks; this one holds one."],
                  ["Press Next."]),
              {"frames": [
                  {"pic": "\U0001F501", "cap": "The <b>repeat</b> block: repeat 3 times.", "say": "The repeat block. Repeat 3 times."},
@@ -83,7 +83,7 @@ LESSON = {
              "Here is a program and four comments. Tap a comment, then tap the block it explains.",
              explain(
                  ["A comment sits beside the block it explains. Match each note to its block."],
-                 ["'Put the cat back at the start' explains go home.", "'Do the next block three times' explains the repeat.", "'The cat says goodbye at the end' explains say hello."],
+                 ["'Put the cat back at the start' explains go home.", "'Do the next block three times' explains the repeat.", "'Greet the player when the jumps are done' explains say hello."],
                  [],
                  ["Tap a comment, tap its block."]),
              {"program": ["home", "repeat3", "jump", "say"],

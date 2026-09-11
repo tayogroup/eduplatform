@@ -126,7 +126,7 @@ LESSON["lecture"] = [
     part("\U0001F52E", "Predicting a loop",
          "To predict what a looped program does, unroll the loop: do its body that many times in your head, keeping track of which way Robo faces. Repeat 3 times, forward, turn right, forward, turn left, climbs like stairs: three up and three along."),
     part("\U0001F501", "Folding a repeat",
-         "Four pancakes written out long is twenty steps. The same five steps repeated four times fold into one repeat loop: seven steps in all. Repetition makes an algorithm concise, and one change inside the loop changes every pancake."),
+         "Four pancakes written out long is twenty-two steps, mixing and serving included. The same five steps repeated four times fold into one repeat loop: seven steps in all. Repetition makes an algorithm concise, and one change inside the loop changes every pancake."),
     part("⚖️", "Comparing algorithms",
          "Several algorithms can do one task. Compare them on facts: how many steps, how long, what it costs, what the outcome is like. Contrast where they differ: the short cut is muddy, the bus costs money, the main road is long."),
     part("\U0001F3AF", "The purpose decides",

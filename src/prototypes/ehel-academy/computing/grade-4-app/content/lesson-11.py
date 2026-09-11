@@ -176,8 +176,8 @@ LESSON["home"] = [
           "Switch it back on. Which come back by themselves?"],
          "Only the things that need other devices stop."),
     home("Padlock hunt", "A browser, a grown-up",
-         ["Open five websites with a grown-up. Look beside each address for the padlock.",
-          "Which sites ask for a password or a card number? Do they all have the padlock?",
-          "Never type a password where there is no padlock."],
+         ["Open five websites with a grown-up. Look beside each address for the padlock. Some browsers show a different small picture there: tap it, and it says whether the connection is secure.",
+          "Which sites ask for a password or a card number? Is the connection secure on all of them?",
+          "Never type a password on a page that says Not secure."],
          "The padlock means encrypted."),
 ]

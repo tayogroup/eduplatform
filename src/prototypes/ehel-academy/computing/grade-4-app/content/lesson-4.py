@@ -23,7 +23,7 @@ LESSON = {
                  ["Tap all five."]),
              {"items": [
                  {"pic": "\U0001F327️", "label": "IF it is raining", "say": "IF it is raining, take an umbrella; otherwise take sunglasses. Same algorithm, two outputs, and the weather decides."},
-                 {"pic": "\U0001F9CB", "label": "IF the kettle has boiled", "say": "IF the kettle has boiled, pour the water; otherwise wait a minute and check again."},
+                 {"pic": "\u2615", "label": "IF the kettle has boiled", "say": "IF the kettle has boiled, pour the water; otherwise wait a minute and check again."},
                  {"pic": "✅", "label": "IF the answer is right", "say": "IF the answer is right, say well done; otherwise say try again. A quiz program has this branch in it."},
                  {"pic": "\U0001F6AA", "label": "IF the door is locked", "say": "IF the door is locked, use the key; otherwise just push it open."},
                  {"pic": "\U0001F3AE", "label": "IF the player presses jump", "say": "IF the player presses jump, the character jumps; otherwise it keeps running. The button press is the input."},
@@ -66,7 +66,7 @@ LESSON = {
                  ["Tap steps into the box, set the count, run."]),
              {"rounds": [
                  {"task": "water 3 plants, then put the can away",
-                  "pool": [s("fill", "Fill the can", "\U0001F4A7"), s("pour", "Pour on a plant", "\U0001FAB4"), s("walk", "Walk to the next plant", "\U0001F6B6"), s("can", "Get the can out of the shed", "\U0001FAA3")],
+                  "pool": [s("fill", "Fill the can", "\U0001F4A7"), s("pour", "Pour on a plant", "\U0001F331"), s("walk", "Walk to the next plant", "\U0001F6B6"), s("can", "Get the can out of the shed", "\U0001F6BF")],
                   "after": [s("away", "Put the can away", "\U0001F6AA")],
                   "expect": {"times": 3, "body": ["fill", "pour", "walk"]}, "hint": "Fill, pour, walk happen for every plant. Getting the can does not."},
                  {"task": "lay 4 places at the table",
@@ -90,9 +90,9 @@ LESSON = {
              {"ask": "Inside the loop, or outside?",
               "bins": [{"id": "in", "label": "Inside the loop", "pic": "\U0001F501"}, {"id": "out", "label": "Outside (once)", "pic": "1️⃣"}],
               "items": [
-                  {"pic": "\U0001FAA3", "label": "get the can from the shed", "bin": "out", "why": "Once, before."},
+                  {"pic": "\U0001F6BF", "label": "get the can from the shed", "bin": "out", "why": "Once, before."},
                   {"pic": "\U0001F4A7", "label": "fill the can", "bin": "in", "why": "For every plant."},
-                  {"pic": "\U0001FAB4", "label": "pour on the plant", "bin": "in", "why": "For every plant."},
+                  {"pic": "\U0001F331", "label": "pour on the plant", "bin": "in", "why": "For every plant."},
                   {"pic": "\U0001F6B6", "label": "walk to the next plant", "bin": "in", "why": "For every plant."},
                   {"pic": "\U0001F6AA", "label": "put the can away", "bin": "out", "why": "Once, after."},
                   {"pic": "\U0001F9E4", "label": "put on your gardening gloves", "bin": "out", "why": "Once, before."},
@@ -141,7 +141,7 @@ LESSON["lecture"] = [
     part("\U0001F501", "Building a loop",
          "When a task does the same steps for every plant, or every place, or every pancake, those steps go inside a repeat loop with a count. Fill, pour, walk, repeat 3 times. What happens only once - getting the can, putting it away - stays outside."),
     part("\U0001F52E", "Checking it",
-         "Unroll your loop to check it: repeat 3 times of three steps is nine, plus one after is ten. If the unrolled algorithm does the whole task and nothing extra, the loop is right."),
+         "Unroll your loop to check it: repeat 3 times of three steps is nine steps, with the can fetched once before and put away once after. If the unrolled algorithm does the whole task and nothing extra, the loop is right."),
 ]
 
 LESSON["words"] = [

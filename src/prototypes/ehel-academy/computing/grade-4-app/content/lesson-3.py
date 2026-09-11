@@ -41,7 +41,7 @@ LESSON = {
              {"ask": "Which sub-routine?",
               "bins": [{"id": "wash", "label": "WASH", "pic": "\U0001F9FC"}, {"id": "dress", "label": "DRESS", "pic": "\U0001F455"}, {"id": "breakfast", "label": "BREAKFAST", "pic": "\U0001F963"}, {"id": "bag", "label": "BAG", "pic": "\U0001F392"}],
               "items": [
-                  {"pic": "\U0001FAA5", "label": "brush your teeth", "bin": "wash", "why": "WASH."},
+                  {"pic": "\U0001F9B7", "label": "brush your teeth", "bin": "wash", "why": "WASH."},
                   {"pic": "\U0001F455", "label": "put on your shirt", "bin": "dress", "why": "DRESS."},
                   {"pic": "\U0001F33E", "label": "pour the cereal", "bin": "breakfast", "why": "BREAKFAST."},
                   {"pic": "\U0001F4DA", "label": "pack your reading book", "bin": "bag", "why": "BAG."},
@@ -59,7 +59,7 @@ LESSON = {
              explain(
                  ["The main algorithm is short: one call per sub-routine, in the right order, and the odd step of its own."],
                  ["Do WASH, do DRESS, do BREAKFAST, do BAG, leave the house.", "Five lines, and behind them twenty steps."],
-                 ["Children put BAG before BREAKFAST.", "You pack the lunch you just made. Breakfast first."],
+                 ["Children put BAG before BREAKFAST.", "BAG ends with your coat on and your bag in your hand: it is the last thing before the door."],
                  ["Tap what comes first."]),
              {"items": [
                  s("wash", "do WASH", "\U0001F9FC"), s("dress", "do DRESS", "\U0001F455"), s("breakfast", "do BREAKFAST", "\U0001F963"), s("bag", "do BAG", "\U0001F392"), s("leave", "Leave the house", "\U0001F6AA"),
@@ -80,11 +80,11 @@ LESSON = {
              {"rounds": [
                  {"task": "a school morning",
                   "main": [{"kind": "call", "sub": "WASH"}, {"kind": "call", "sub": "DRESS"}, s("leave", "Leave the house", "\U0001F6AA")],
-                  "subs": {"WASH": [s("face", "Wash your face", "\U0001F9FC"), s("teeth", "Brush your teeth", "\U0001FAA5"), s("hair", "Brush your hair", "\U0001F9F4")],
-                           "DRESS": [s("shirt", "Shirt on", "\U0001F455"), s("trousers", "Trousers on", "\U0001F456"), s("shoes", "Shoes on", "\U0001F45F")]}},
+                  "subs": {"WASH": [s("face", "Wash your face", "\U0001F9FC"), s("teeth", "Brush your teeth", "\U0001F9B7"), s("hair", "Brush your hair", "\U0001F9F4")],
+                           "DRESS": [s("shirt", "Shirt on", "\U0001F455"), s("trousers", "Trousers on", "\U0001F456"), s("socks", "Socks on", "\U0001F9E6"), s("shoes", "Shoes on", "\U0001F45F")]}},
                  {"task": "a bedtime",
                   "main": [s("pyjamas", "Put on pyjamas", "\U0001F454"), {"kind": "call", "sub": "WASH"}, {"kind": "call", "sub": "STORY"}, s("lights", "Lights off", "\U0001F4A1")],
-                  "subs": {"WASH": [s("face", "Wash your face", "\U0001F9FC"), s("teeth", "Brush your teeth", "\U0001FAA5"), s("hair", "Brush your hair", "\U0001F9F4")],
+                  "subs": {"WASH": [s("face", "Wash your face", "\U0001F9FC"), s("teeth", "Brush your teeth", "\U0001F9B7"), s("hair", "Brush your hair", "\U0001F9F4")],
                            "STORY": [s("book", "Choose a book", "\U0001F4D6"), s("read", "Read one chapter", "\U0001F4D6"), s("mark", "Put the bookmark in", "\U0001F516")]}},
              ]},
              "Into the sub-routine, and back to the line after the call."),

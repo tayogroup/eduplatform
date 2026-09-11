@@ -74,7 +74,7 @@ LESSON = {
                  {"pic": "\U0001F33F", "label": "a greenhouse window", "say": "A greenhouse. Sensor: temperature. Too hot, the motor opens the window. Cooler, it closes."},
                  {"pic": "\U0001F4A1", "label": "a street lamp", "say": "A street lamp. Sensor: the light sensor. Dark, lamp on. Morning, lamp off. Nobody flicks a switch."},
                  {"pic": "\U0001F9FA", "label": "a washing machine", "say": "A washing machine. Sensors for water level and heat; a program that fills, heats, turns, spins; motors and valves as outputs."},
-                 {"pic": "\U0001F6D7", "label": "a lift", "say": "A lift. Input: the buttons and a sensor in the door. The program decides which floor. Output: the motor and the doors."},
+                 {"pic": "\U0001F3E2", "label": "a lift", "say": "A lift. Input: the buttons and a sensor in the door. The program decides which floor. Output: the motor and the doors."},
              ], "need": 6,
               "then": {"ask": "What are the three parts of a control system?",
                        "opts": [opt("A sensor, a program that decides, and an output", True), opt("A screen, a keyboard and a mouse", False), opt("A person, a switch and a light", False)],
@@ -122,7 +122,7 @@ LESSON = {
                  q("'Forever: lights on, wait, lights off, wait' makes...", "\U0001F4A1", "a light that keeps flashing until Stop", ["one flash", "four flashes", "no light"], "Forever repeats until stopped."),
                  q("A control system is...", "\U0001F39B️", "a sensor, a program that decides, and an output", ["a person with a remote", "a screen", "a game"], "Sense, decide, act."),
                  q("Which is a control system?", "\U0001F6AA", "a door that opens when a sensor sees you", ["a candle", "a pencil", "a bicycle"], "Sensor, program, motor."),
-                 q("Traffic lights cycle red, amber, green all day. That is...", "\U0001F6A6", "a forever loop in a control system", ["a count-controlled loop", "a person pressing buttons", "not a program"], "Round and round until switched off."),
+                 q("Traffic lights run red, red and amber, green, amber, all day. That is...", "\U0001F6A6", "a forever loop in a control system", ["a count-controlled loop", "a person pressing buttons", "not a program"], "Round and round until switched off."),
              ]},
              "That is the whole lesson finished. You program sensors and loops, and spot control systems."),
     ],
@@ -162,13 +162,13 @@ LESSON["words"] = [
 
 LESSON["home"] = [
     home("Find the control systems", "A walk round the house",
-         ["Find three things that sense and decide by themselves: the fridge, the heating, a night light, the oven timer.",
+         ["Find three things that sense and decide by themselves: the fridge, the heating, a night light, a water heater.",
           "For each, say the sensor, the decision and the output.",
           "Find three things a person controls every time."],
          "Sense, decide, act."),
     home("Be Bitsy", "A friend, a torch",
          ["Your friend is Bitsy. Write a program: when it gets dark, forever: hands up, wait, hands down, wait.",
-          "Cover their eyes with the torch off. They run the loop until you say Stop.",
+          "Switch the torch on, then off: when it goes dark, they run the loop until you say Stop.",
           "Now write a repeat 3 times program and test that too."],
          "A forever loop needs a Stop."),
 ]

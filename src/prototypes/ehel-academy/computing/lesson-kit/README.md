@@ -220,9 +220,17 @@ rather than the page.
   box beside "shake it" teaches nothing. The kit's shake input was 🫨
   (Emoji 15.0, 2022) and Grade 3 carried eight 2020-21 pictures (a lift, a
   mirror, a bucket, a toothbrush, a pot plant, a slide, a wheel, bubble
-  tea); those were replaced on 2026-09-11. Grade 4 still carries five 2020
-  ones (the same lift, bubble tea, bucket, toothbrush and pot plant), left
-  for its own review. Check a new picture's Emoji version before using it.
+  tea); those were replaced on 2026-09-11, and Grade 4's five (the same
+  lift, bubble tea, bucket, toothbrush and pot plant) in its own validation
+  the same day. Check a new picture's Emoji version before using it.
+- **The teachers' page picks a step's unplugged version by what the step
+  teaches, not only by its kind.** `build-hub.py` chose the "Do it
+  unplugged" line from the step kind alone, so Grade 4's Caesar step
+  printed the 1 = a code and its Pigpen step printed nothing (one line per
+  kind per lesson). A cipher step now gets its own cipher's line, keyed by
+  kind and mode (`unplugged()`); Grade 3's number-code steps have no mode
+  and keep theirs. A new kind whose rounds teach different things needs the
+  same treatment the day it is written.
 - **`blockBtn`'s third argument is the extra class.** It used to be passed
   as a second `class="…"` inside the attribute string, which the parser
   ignores, so the running block was never highlighted at Stages 1 and 2

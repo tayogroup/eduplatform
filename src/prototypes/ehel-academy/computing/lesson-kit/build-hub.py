@@ -109,6 +109,24 @@ UNPLUGGED = {
     "tableparts": "Make a table of your family: one row per person, columns for age and favourite food. Point to a record, a field, and one piece of data.",
 }
 
+# A cipher step's unplugged version depends on the cipher it teaches: Stage 3's
+# is the 1 = a code (no mode), Stage 4's are Caesar and Pigpen. Until the Grade 4
+# validation (2026-09-11) every cipher step printed the 1 = a line, and a lesson
+# with two cipher steps printed only the first.
+UNPLUGGED_CIPHER = {
+    "caesar": "Agree a shift, say 3, and write a message with every letter moved that many places along the alphabet: a becomes d. Give it to someone who knows the shift and see if they can read it. Then try someone who does not.",
+    "pigpen": "Draw the two Pigpen grids and the two X shapes together, and write a name in the shapes. Can someone with the grids read it? Can someone without them?",
+}
+
+
+def unplugged(s):
+    """A step's unplugged version, and the key that keeps a lesson from printing one twice."""
+    if s["kind"] == "cipher":
+        mode = ((s.get("data") or {}).get("rounds") or [{}])[0].get("mode") or "number"
+        if mode in UNPLUGGED_CIPHER:
+            return UNPLUGGED_CIPHER[mode], "cipher:" + mode
+    return UNPLUGGED.get(s["kind"]), s["kind"]
+
 
 def load_json(p):
     return json.load(io.open(p, encoding="utf-8"))
@@ -493,9 +511,10 @@ def grownups_for(n, lesson, codes, minutes, steps, stage):
     home = []
     seen = set()
     for s in lesson["steps"]:
-        if s["kind"] in UNPLUGGED and s["kind"] not in seen:
-            seen.add(s["kind"])
-            home.append("<li><b>%s.</b> %s</li>" % (text(s["title"]), text(UNPLUGGED[s["kind"]])))
+        what, key = unplugged(s)
+        if what and key not in seen:
+            seen.add(key)
+            home.append("<li><b>%s.</b> %s</li>" % (text(s["title"]), text(what)))
     for h in lesson.get("home") or []:
         home.append("<li><b>%s.</b> You need: %s. %s Look for: %s</li>" % (
             text(h["title"]), text(h["materials"]), text(" ".join(h["steps"])), text(h["look"])))

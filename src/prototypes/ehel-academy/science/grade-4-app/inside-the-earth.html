@@ -3061,7 +3061,7 @@
             {
               "w": "star",
               "pic": "⭐",
-              "meaning": "A huge ball of burning gas. The Sun is our star.",
+              "meaning": "A huge ball of hot, glowing gas. The Sun is our star.",
               "uses": [
                 "The Sun is a star.",
                 "Other stars have planets too."
@@ -4116,11 +4116,15 @@
      name at call time, so every wrapper the build or the pipeline puts
      around it (the header bar\x27s percentage, a step\x27s arrival line)
      runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
   window.__ehelRestore = function (doneIdx, resumeIdx) {
-    /* read BEFORE the ticks land: the record\x27s own step 1 must not
-       count as the learner having touched it (measured: it did, and the
-       page stayed on step 1 with the dots restored) */
-    const untouched = cur === 0 && !done[0];
+    const untouched = cur === 0 && !ehelInteracted;
     let changed = false;
     for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
     if (changed) paintDots();
@@ -6307,7 +6311,12 @@
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
-    finish(o.finish, o.done);
+    /* ON ARRIVAL, not on drawing. The deck draws every step at page load,
+       so a finish() here ticked this step - and Science world, which had
+       the same line - before the child had seen either: a fresh learner
+       opened a lesson at 13% (found by the 2026-09-11 re-validation). No
+       spoken line either: the slide's own instruction is speaking. */
+    ONSHOW[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ----
@@ -6462,7 +6471,61 @@
       '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
       '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
     $(el.score).textContent = "coming soon";
-    finish(o.finish, o.done);
+    /* on arrival, not at page load - see unitOverview */
+    ONSHOW[o.finish] = () => finish(o.finish);
+  }
+
+  /* ---- a full-screen overlay is a modal dialog -------------------------
+     2026-09-11 re-validation: the game and drawer overlays had no dialog
+     role, left keyboard focus on the button behind them with 32 more
+     controls reachable by Tab, and dropped focus to the page body on close.
+     modal() gives the overlay a role and a name, keeps Tab inside it, and
+     hands focus back to whatever opened it. The game redraws its contents
+     every round, so remember() is called before a redraw and refocus()
+     after it, putting focus back on the same control where it still
+     exists and on the question otherwise. */
+  function modal(overlay, label, restore) {
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", label);
+    overlay.setAttribute("tabindex", "-1");
+    const focusables = () => [...overlay.querySelectorAll('button:not([disabled]), input, a[href], [tabindex="0"]')];
+    function onTab(e) {
+      if (e.key !== "Tab") return;
+      const f = focusables();
+      if (!f.length) { e.preventDefault(); overlay.focus(); return; }
+      const first = f[0], last = f[f.length - 1], a = document.activeElement;
+      if (!overlay.contains(a)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+      else if (e.shiftKey && a === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
+    }
+    document.addEventListener("keydown", onTab, true);
+    let keep = null;
+    return {
+      remember() {
+        const a = document.activeElement;
+        keep = null;
+        if (!a || !overlay.contains(a)) return;
+        for (const k of ["data-tile", "data-line", "data-c", "data-k", "id"]) {
+          const v = a.getAttribute(k);
+          if (v != null) { keep = "[" + k + '="' + v.replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"]'; break; }
+        }
+      },
+      refocus() {
+        let t = keep ? overlay.querySelector(keep) : null;
+        if (t && t.disabled) t = keep.startsWith("[data-tile") ? overlay.querySelector("[data-tile]:not([disabled])") : null;
+        /* in priority order: querySelector with a selector LIST returns the
+           first match in the page, which is the title bar, not the question */
+        for (const sel of [".gameprompt", ".gamebig", ".gloxq", ".book-reader-top .booktitle"]) { if (!t) t = overlay.querySelector(sel); }
+        if (t) { if (!t.matches("button, input")) t.setAttribute("tabindex", "-1"); t.focus({ preventScroll: true }); }
+        else overlay.focus();
+        keep = null;
+      },
+      release() {
+        document.removeEventListener("keydown", onTab, true);
+        try { if (restore) restore(); } catch (_) { /* the page may have moved on */ }
+      },
+    };
   }
 
   /* ---- the game zone: the lesson's own games, derived by the builder ----
@@ -6505,11 +6568,17 @@
       const overlay = document.createElement("div");
       overlay.className = "book-reader game-overlay";
       document.body.appendChild(overlay);
-      function close() { overlay.remove(); document.removeEventListener("keydown", onKey); try { VOICE.stop(); } catch (_) { /* nothing */ } drawShelf(); }
+      const gk = games.indexOf(game);
+      /* the shelf is redrawn on close, so focus goes back to this game's
+         own Play button on the new shelf, not to the one that opened it */
+      const m = modal(overlay, game.title, () => { const b = document.querySelector("#" + id + ' [data-game="' + gk + '"]'); if (b) b.focus(); });
+      function close() { overlay.remove(); document.removeEventListener("keydown", onKey); try { VOICE.stop(); } catch (_) { /* nothing */ } drawShelf(); m.release(); }
       function onKey(e) { if (e.key === "Escape") close(); }
       document.addEventListener("keydown", onKey);
 
       function frame(bodyHtml, footHtml) {
+        if (!overlay.isConnected) return;   /* a round timer that outlived the game */
+        m.remember();
         overlay.innerHTML =
           '<div class="book-reader-top"><span class="booktitle">' + esc(game.title) + "</span>" +
           '<button type="button" class="book-close" aria-label="Close the game">&#10005;</button></div>' +
@@ -6520,6 +6589,7 @@
           (footHtml || "") + "</div>";
         overlay.querySelector(".book-close").addEventListener("click", close);
         overlay.querySelector("#gameQuit").addEventListener("click", close);
+        m.refocus();
       }
       function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
       function endGame() {
@@ -6699,11 +6769,14 @@
         '<div class="book-stage-wrap"><div class="res-stage">' + bodyHtml + "</div></div>" +
         '<div class="book-reader-bottom">' + (footHtml || "") + "</div>";
       document.body.appendChild(overlay);
-      const close = () => { try { VOICE.stop(); } catch (_) { /* nothing */ } overlay.remove(); document.removeEventListener("keydown", onKey); };
+      const opener = document.activeElement;
+      const m = modal(overlay, title, () => { if (opener && opener.isConnected) opener.focus(); });
+      const close = () => { try { VOICE.stop(); } catch (_) { /* nothing */ } overlay.remove(); document.removeEventListener("keydown", onKey); m.release(); };
       function onKey(e) { if (e.key === "Escape") close(); }
       document.addEventListener("keydown", onKey);
       overlay.querySelector(".book-close").addEventListener("click", close);
       overlay.addEventListener("click", (e) => { const b = e.target.closest("[data-say]"); if (b) say(b.dataset.say); });
+      m.refocus();
       return overlay;
     }
     const wordRows = (words, withLesson) => words.map((w) =>

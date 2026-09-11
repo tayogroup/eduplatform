@@ -658,6 +658,13 @@
     border-right: 2px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 700; line-height: 1; margin-top: 0; }
   .gaxis span { height: 26px; display: flex; align-items: center; }
 
+  /* ---- Stage 4: a key to follow, and a dot plot ---- */
+  .keycard { width: 100%; max-width: 30em; padding: 14px 18px; border-radius: 18px; border: 3px solid var(--teal); background: var(--card); display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .keyq { margin: 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; text-align: center; }
+  .keypath { margin: 0; color: var(--muted); font-size: 13px; font-weight: 700; min-height: 1.2em; }
+  .graph.dot .gstack { gap: 4px; }
+  .graph.dot .gblock { width: 22px; height: 22px; border-radius: 50%; margin: 0 auto; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -4239,11 +4246,15 @@
      name at call time, so every wrapper the build or the pipeline puts
      around it (the header bar\x27s percentage, a step\x27s arrival line)
      runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
   window.__ehelRestore = function (doneIdx, resumeIdx) {
-    /* read BEFORE the ticks land: the record\x27s own step 1 must not
-       count as the learner having touched it (measured: it did, and the
-       page stayed on step 1 with the dots restored) */
-    const untouched = cur === 0 && !done[0];
+    const untouched = cur === 0 && !ehelInteracted;
     let changed = false;
     for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
     if (changed) paintDots();
@@ -5371,10 +5382,10 @@
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small"><thead><tr><th>' + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
         cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + (o.unit ? " " + esc(o.unit) : "") + "</span></td></tr>").join("") + "</tbody></table>" +
-        '<div class="graph' + (o.bar ? " bar" : "") + '" role="img" aria-label="' + (o.bar ? "A bar chart" : "A block graph") + '">' +
+        '<div class="graph' + (o.bar ? " bar" : "") + (o.dot ? " dot" : "") + '" role="img" aria-label="' + (o.dot ? "A dot plot" : o.bar ? "A bar chart" : "A block graph") + '">' +
         (o.bar ? '<div class="gaxis" aria-hidden="true" style="height:' + (maxV * 26 + 6) + 'px">' + Array.from({ length: maxV }, (_, i) => "<span>" + (maxV - i) + "</span>").join("") + "</div>" : "") + cols.map((c, k) =>
           '<div class="gcol"><div class="gstack" style="height:' + (maxV * 26 + 6) + 'px">' + Array.from({ length: count[k] }, () => '<i class="gblock"></i>').join("") + "</div>" +
-          '<button type="button" class="big small' + (count[k] >= c.value ? " ghost" : " teal") + '" data-k="' + k + '"' + (count[k] >= c.value ? " disabled" : "") + '>' + (o.bar ? "+ 1" + (o.unit ? " " + esc(o.unit) : "") : "+ block") + '</button>' +
+          '<button type="button" class="big small' + (count[k] >= c.value ? " ghost" : " teal") + '" data-k="' + k + '"' + (count[k] >= c.value ? " disabled" : "") + '>' + (o.dot ? "+ dot" : o.bar ? "+ 1" + (o.unit ? " " + esc(o.unit) : "") : "+ block") + '</button>' +
           '<span class="glab">' + small(c.pic) + "<br>" + esc(c.label) + (count[k] >= c.value ? " &#10003;" : "") + "</span></div>").join("") + "</div></div>";
       const done = cols.filter((c, k) => count[k] >= c.value).length;
       $(el.score).textContent = done + " of " + cols.length + " columns built";
@@ -6057,6 +6068,346 @@
   }
 
   /* ==================================================================
+     STAGE 4 (Grade 4, 2026-09-10). Three figures (a skeleton, the Earth's
+     layers, a ray diagram), two scenes (a volcano, an earthquake), nine
+     sims (muscles in pairs, the particle model, a chemical reaction, a
+     dropped ball's energy, a mirror and an eye, a series circuit, a
+     conductor test, the spinning Earth, a paper spinner dropped three
+     times), a key to identify creatures (4TWSc.02), and a dot-plot mode
+     for the graph (4TWSa.04).
+     ================================================================== */
+
+  /* ---- Stage 4 figures ---------------------------------------------- */
+  FIGURES.skeleton = () => (
+    '<svg viewBox="0 0 260 420" role="img" aria-label="A human skeleton: skull, jaw, rib cage, spine, hip, arm bones and leg bones">' +
+    '<g data-part="skull" tabindex="0" role="button" aria-label="skull"><ellipse cx="130" cy="48" rx="34" ry="36" fill="#E9E4D6"/><circle cx="118" cy="46" r="7" fill="#2B3A4A"/><circle cx="142" cy="46" r="7" fill="#2B3A4A"/><circle class="outline" cx="130" cy="44" r="40"/></g>' +
+    '<g data-part="jaw" tabindex="0" role="button" aria-label="jaw"><path d="M104 74 q26 26 52 0 v14 q-26 20 -52 0z" fill="#D9D2C0"/><path d="M110 82 h40" stroke="#2B3A4A" stroke-width="2"/><rect class="outline" x="98" y="70" width="64" height="26" rx="10"/></g>' +
+    '<g data-part="spine" tabindex="0" role="button" aria-label="spine"><g fill="#E9E4D6">' + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((k) => '<rect x="122" y="' + (98 + k * 14) + '" width="16" height="10" rx="3"/>').join("") + "</g>" + '<rect class="outline" x="114" y="94" width="32" height="176" rx="10"/></g>' +
+    '<g data-part="ribcage" tabindex="0" role="button" aria-label="rib cage"><g fill="none" stroke="#E9E4D6" stroke-width="6" stroke-linecap="round">' + [0, 1, 2, 3, 4].map((k) => '<path d="M130 ' + (112 + k * 16) + ' q-44 4 -46 ' + (22 + k * 2) + '"/><path d="M130 ' + (112 + k * 16) + ' q44 4 46 ' + (22 + k * 2) + '"/>').join("") + "</g>" + '<ellipse class="outline" cx="130" cy="150" rx="56" ry="52"/></g>' +
+    '<g data-part="hip" tabindex="0" role="button" aria-label="hip"><path d="M92 268 q38 -22 76 0 q6 26 -18 34 h-40 q-24 -8 -18 -34z" fill="#E9E4D6"/><ellipse class="outline" cx="130" cy="286" rx="46" ry="26"/></g>' +
+    '<g data-part="armbones" tabindex="0" role="button" aria-label="arm bones"><g fill="none" stroke="#E9E4D6" stroke-width="10" stroke-linecap="round"><path d="M86 108 L60 180 L54 250"/><path d="M174 108 L200 180 L206 250"/></g><path class="outline" d="M40 100 h56 v160 h-56z M164 100 h56 v160 h-56z"/></g>' +
+    '<g data-part="legbones" tabindex="0" role="button" aria-label="leg bones"><g fill="none" stroke="#E9E4D6" stroke-width="12" stroke-linecap="round"><path d="M110 300 L104 350 L100 400"/><path d="M150 300 L156 350 L160 400"/></g><rect class="outline" x="86" y="296" width="88" height="118" rx="14"/></g>' +
+    "</svg>");
+  FIGURES.earthLayers = () => (
+    '<svg viewBox="0 0 320 320" role="img" aria-label="The Earth cut open: crust, mantle and core">' +
+    '<rect width="320" height="320" fill="#0B1D2C"/>' +
+    '<g data-part="crust" tabindex="0" role="button" aria-label="crust"><circle cx="160" cy="160" r="140" fill="#4CB65C"/><circle cx="160" cy="160" r="134" fill="#3B7FD1"/><path d="M160 160 L160 20 A140 140 0 0 1 300 160 z" fill="#7D6B4A"/><path class="outline" d="M160 160 L160 20 A140 140 0 0 1 300 160 z"/></g>' +
+    '<g data-part="mantle" tabindex="0" role="button" aria-label="mantle"><path d="M160 160 L160 32 A128 128 0 0 1 288 160 z" fill="#E9744F"/><path d="M160 160 L160 70 A90 90 0 0 1 250 160 z" fill="#F0A56B"/><path class="outline" d="M160 160 L160 32 A128 128 0 0 1 288 160 z"/></g>' +
+    '<g data-part="core" tabindex="0" role="button" aria-label="core"><path d="M160 160 L160 110 A50 50 0 0 1 210 160 z" fill="#F4C95D"/><path class="outline" d="M160 160 L160 106 A54 54 0 0 1 214 160 z"/></g>' +
+    '<g fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800"><text x="256" y="60">crust</text><text x="228" y="110">mantle</text><text x="176" y="146">core</text></g>' +
+    "</svg>");
+  FIGURES.ray = () => (
+    '<svg viewBox="0 0 320 220" role="img" aria-label="A ray diagram: a light source, a ray, a mirror and an eye">' +
+    '<rect width="320" height="220" fill="#1B2A3A"/>' +
+    '<g data-part="source" tabindex="0" role="button" aria-label="light source"><text x="40" y="180" font-size="40" text-anchor="middle">\u{1F526}</text><circle class="outline" cx="40" cy="166" r="30"/></g>' +
+    '<g data-part="ray" tabindex="0" role="button" aria-label="ray"><path d="M62 160 L250 60" stroke="#F4C95D" stroke-width="4"/><path d="M180 97 l14 4 -8 10z" fill="#F4C95D"/><path class="outline" d="M62 148 L250 48 L262 72 L74 172z"/></g>' +
+    '<g data-part="mirror" tabindex="0" role="button" aria-label="mirror"><rect x="246" y="30" width="10" height="70" rx="3" fill="#BFE3F5" stroke="#fff" stroke-width="2"/><rect class="outline" x="236" y="22" width="30" height="86" rx="8"/></g>' +
+    '<g data-part="eye" tabindex="0" role="button" aria-label="eye"><path d="M250 60 L110 30" stroke="#F4C95D" stroke-width="4" stroke-dasharray="8 6"/><text x="90" y="42" font-size="34" text-anchor="middle">\u{1F441}️</text><circle class="outline" cx="90" cy="30" r="28"/></g>' +
+    "</svg>");
+
+  /* ---- Stage 4 scenes ------------------------------------------------ */
+  /* a volcano: 0 magma under the crust, 1 it rises through a crack, 2 eruption, 3 the lava cools to rock */
+  SCENES.volcano = (s) => (
+    '<svg viewBox="0 0 320 260" role="img" aria-label="A volcano forming and erupting"><rect width="320" height="260" fill="' + (s === 2 ? "#3A2A2A" : "#BFE3F5") + '"/>' +
+    '<rect x="0" y="150" width="320" height="110" fill="#7D6B4A"/><rect x="0" y="190" width="320" height="70" fill="#E9744F"/>' +
+    '<path d="M60 150 L160 ' + (s === 0 ? 150 : 60) + ' L260 150z" fill="#5B4A3A"/>' +
+    (s >= 1 ? '<path d="M150 150 L160 ' + (s === 3 ? 70 : 62) + ' L170 150z" fill="' + (s === 3 ? "#5B5D63" : "#E9744F") + '"/>' : "") +
+    (s === 0 ? '<text x="160" y="228" text-anchor="middle" fill="#fff" font-size="14" font-family="Inter, sans-serif" font-weight="800">hot melted rock (magma) under the crust</text>' : "") +
+    (s === 2 ? '<g fill="#F4C95D"><path d="M160 60 l-30 -50 l10 20 l-6 -30 l16 30 l4 -34 l6 34 l16 -30 l-6 30 l10 -20z"/></g><path d="M160 62 q-40 40 -70 88 M160 62 q40 40 70 88" stroke="#E9744F" stroke-width="10" fill="none"/><g fill="#5B5D63" opacity="0.7"><circle cx="150" cy="20" r="14"/><circle cx="175" cy="14" r="18"/><circle cx="200" cy="26" r="12"/></g>' : "") +
+    (s === 3 ? '<path d="M160 70 q-40 40 -70 80 M160 70 q40 40 70 80" stroke="#5B5D63" stroke-width="10" fill="none"/><text x="160" y="228" text-anchor="middle" fill="#fff" font-size="14" font-family="Inter, sans-serif" font-weight="800">cooled lava: new rock</text>' : "") +
+    "</svg>");
+  /* an earthquake: 0 two plates side by side, 1 pushing, 2 the sudden slip, 3 the cracked ground after */
+  SCENES.quake = (s) => (
+    '<svg viewBox="0 0 320 240" role="img" aria-label="Two pieces of the Earth\'s crust pushing, then slipping"><rect width="320" height="240" fill="#BFE3F5"/>' +
+    '<rect x="0" y="120" width="' + (s >= 2 ? 150 : 160) + '" height="120" fill="#7D6B4A" transform="translate(0 ' + (s === 2 ? 10 : 0) + ')"/>' +
+    '<rect x="' + (s >= 2 ? 170 : 160) + '" y="120" width="160" height="120" fill="#8A6A4A" transform="translate(0 ' + (s === 2 ? -8 : 0) + ')"/>' +
+    '<rect x="0" y="110" width="320" height="12" fill="#3E8E4A"/>' +
+    (s === 1 ? '<g fill="#D9473F"><path d="M100 170 h40 l-8 -10 v20z"/><path d="M220 170 h-40 l8 -10 v20z"/></g><text x="160" y="60" text-anchor="middle" fill="#1B1B1B" font-size="14" font-family="Inter, sans-serif" font-weight="800">the plates push against each other</text>' : "") +
+    (s === 2 ? '<g stroke="#D9473F" stroke-width="3"><path d="M30 100 l10 -14 M60 96 l8 -16 M250 98 l-10 -14 M280 100 l-8 -16"/></g><text x="160" y="60" text-anchor="middle" fill="#D9473F" font-size="16" font-family="Inter, sans-serif" font-weight="800">they slip! the ground shakes</text><text x="160" y="220" font-size="34" text-anchor="middle">\u{1F3E0}</text>' : "") +
+    (s === 3 ? '<path d="M150 122 l6 30 l-8 30 l10 40" stroke="#1B1B1B" stroke-width="4" fill="none"/><text x="160" y="60" text-anchor="middle" fill="#1B1B1B" font-size="14" font-family="Inter, sans-serif" font-weight="800">a crack in the crust where they moved</text>' : "") +
+    (s === 0 ? '<text x="160" y="60" text-anchor="middle" fill="#1B1B1B" font-size="14" font-family="Inter, sans-serif" font-weight="800">two pieces of the crust, side by side</text>' : "") +
+    "</svg>");
+
+  /* ---- Stage 4 sims -------------------------------------------------- */
+  /* an arm: the biceps and triceps take turns to pull */
+  function armSvg(bent) {
+    return '<svg viewBox="0 0 320 220" role="img" aria-label="An arm, ' + (bent ? "bent" : "straight") + ', with the biceps and triceps"><rect width="320" height="220" fill="#F3EFE6"/>' +
+      '<rect x="40" y="90" width="120" height="30" rx="14" fill="#E9E4D6" stroke="#B5A990" stroke-width="2"/>' +
+      '<g transform="rotate(' + (bent ? -70 : 0) + ' 160 105)"><rect x="160" y="92" width="120" height="26" rx="13" fill="#E9E4D6" stroke="#B5A990" stroke-width="2"/><text x="290" y="112" font-size="24">✋️</text></g>' +
+      '<ellipse cx="100" cy="' + (bent ? 66 : 76) + '" rx="' + (bent ? 40 : 50) + '" ry="' + (bent ? 22 : 12) + '" fill="#D9473F" style="transition: all 500ms ease"/><text x="100" y="' + (bent ? 44 : 58) + '" text-anchor="middle" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">biceps ' + (bent ? "CONTRACTED (short, fat)" : "relaxed (long, thin)") + "</text>" +
+      '<ellipse cx="100" cy="' + (bent ? 136 : 130) + '" rx="' + (bent ? 50 : 40) + '" ry="' + (bent ? 10 : 20) + '" fill="#E9744F" style="transition: all 500ms ease"/><text x="100" y="' + (bent ? 168 : 170) + '" text-anchor="middle" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">triceps ' + (bent ? "relaxed (long, thin)" : "CONTRACTED (short, fat)") + "</text></svg>";
+  }
+  SIMS.muscles = {
+    init(box) { box.innerHTML = armSvg(false); },
+    run(box, api) {
+      return new Promise((done) => {
+        let bent = false; const seen = new Set();
+        const paint = () => {
+          api.controls.innerHTML = '<button type="button" class="big small' + (bent ? " ghost" : " teal") + '" id="' + api.id + 'b"' + (bent ? " disabled" : "") + '>\u{1F4AA}\u{1F3FE} Contract the biceps</button><button type="button" class="big small' + (bent ? " teal" : " ghost") + '" id="' + api.id + 't"' + (bent ? "" : " disabled") + '>Contract the triceps</button>';
+          $(api.id + "b").addEventListener("click", () => { bent = true; seen.add("b"); box.innerHTML = armSvg(true); SOUND.play("click", 0.3); api.say("The biceps contracts: it gets shorter and fatter and PULLS the lower arm up. The triceps relaxes and stretches."); paint(); check(); });
+          $(api.id + "t").addEventListener("click", () => { bent = false; seen.add("t"); box.innerHTML = armSvg(false); SOUND.play("click", 0.3); api.say("Now the triceps contracts and pulls the arm straight. The biceps relaxes. Muscles can only pull, so they work in pairs."); paint(); check(); });
+        };
+        const check = () => { if (seen.has("b") && seen.has("t")) setTimeout(() => { api.controls.innerHTML = ""; api.say("A pair of muscles: one contracts while the other relaxes. That is how every bone in your body moves."); done(); }, 2800); };
+        paint();
+      });
+    },
+  };
+
+  /* the particle model: a box of particles heated and cooled */
+  function particleSvg(state, jiggle) {
+    /* state 0 cold solid, 1 warm solid, 2 liquid */
+    const dots = [];
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 8; c++) {
+      const j = state === 2 ? 0 : jiggle * (state === 1 ? 3 : 1.2);
+      const dx = state === 2 ? ((r * 7 + c * 13) % 11) - 5 : ((r + c) % 2 ? j : -j);
+      const dy = state === 2 ? ((r * 5 + c * 3) % 9) - 4 + (r < 1 ? 28 : 12) : ((r + c) % 2 ? -j : j);
+      dots.push('<circle cx="' + (60 + c * 28 + dx) + '" cy="' + (56 + r * 28 + dy) + '" r="11" fill="' + (state === 2 ? "#3B7FD1" : "#7BC47F") + '" stroke="#1B2A3A" stroke-width="2"/>');
+    }
+    return '<svg viewBox="0 0 320 220" role="img" aria-label="Particles in a box, ' + ["a cold solid", "a warm solid", "a liquid"][state] + '"><rect width="320" height="220" fill="#F3EFE6"/><rect x="36" y="30" width="248" height="170" fill="none" stroke="#3A3A3A" stroke-width="3"/>' + dots.join("") +
+      '<text x="160" y="214" text-anchor="middle" fill="#1B1B1B" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + ["SOLID: particles packed in rows, vibrating a little", "SOLID, warmer: particles vibrating harder", "LIQUID: particles still touching, but sliding past each other"][state] + "</text></svg>";
+  }
+  SIMS.particles = {
+    init(box) { box.innerHTML = particleSvg(0, 1); },
+    run(box, api) {
+      return new Promise((done) => {
+        let heat = 0, melted = false, frozen = false, tick = 0;
+        const timer = setInterval(() => { tick++; const state = heat >= 2 ? 2 : heat; box.innerHTML = particleSvg(state, tick % 2 ? 1 : -1); }, 260);
+        const paint = () => {
+          api.controls.innerHTML = '<button type="button" class="big small' + (heat >= 2 ? " ghost" : " teal") + '" id="' + api.id + 'h"' + (heat >= 2 ? " disabled" : "") + '>\u{1F525} Heat it</button><button type="button" class="big small' + (heat <= 0 ? " ghost" : "") + '" id="' + api.id + 'c"' + (heat <= 0 ? " disabled" : "") + '>❄️ Cool it</button>';
+          $(api.id + "h").addEventListener("click", () => { heat++; SOUND.play("pop", 0.3); if (heat === 1) api.say("Heat gives the particles more energy. They vibrate harder, but they stay in their rows. Still a solid."); else { melted = true; api.say("More heat, and the particles vibrate so hard they break out of their rows. They stay touching but slide past each other. It has melted: a liquid."); } paint(); check(); });
+          $(api.id + "c").addEventListener("click", () => { heat--; SOUND.play("click", 0.3); if (heat === 1) api.say("Cool it and the particles lose energy. They slow down and lock back into rows. It has frozen: a solid again."); else api.say("Colder still. The particles vibrate less, but they never stop moving completely."); if (melted && heat <= 1) frozen = true; paint(); check(); });
+        };
+        const check = () => { if (melted && frozen) { clearInterval(timer); box.innerHTML = particleSvg(heat >= 2 ? 2 : heat, 1); setTimeout(() => { api.controls.innerHTML = ""; api.say("Melting and freezing change how the particles are arranged, not what they are. The same particles, the same substance, all the way through."); done(); }, 2800); } };
+        paint();
+      });
+    },
+  };
+
+  /* a chemical reaction beside a plain mix */
+  function beakerSvg(x, fill, level, fizz, label, extra) {
+    return '<g><path d="M' + (x - 44) + ' 50 v120 q0 12 12 12 h64 q12 0 12 -12 v-120" fill="none" stroke="#3A3A3A" stroke-width="3"/>' +
+      '<rect x="' + (x - 42) + '" y="' + (182 - level) + '" width="84" height="' + level + '" fill="' + fill + '" opacity="0.75"/>' + (extra || "") +
+      (fizz ? '<g fill="#fff" opacity="0.8">' + [0, 1, 2, 3, 4, 5, 6].map((k) => '<circle cx="' + (x - 30 + k * 10) + '" cy="' + (90 + (k * 37) % 70) + '" r="' + (3 + k % 3) + '"/>').join("") + "</g>" : "") +
+      '<text x="' + x + '" y="206" text-anchor="middle" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + esc(label) + "</text></g>";
+  }
+  SIMS.reaction = {
+    draw(box, a, b) {
+      box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="Two beakers: sand in water, and vinegar with bicarbonate of soda"><rect width="320" height="220" fill="#F3EFE6"/>' +
+        beakerSvg(90, "#3B7FD1", 90, false, a ? "sand and water: a MIXTURE" : "water", a ? '<rect x="48" y="166" width="84" height="16" fill="#C9A26B"/>' : "") +
+        beakerSvg(230, b ? "#BFE3F5" : "#E9E4D6", b ? 130 : 40, b, b ? "fizzing: a NEW substance, a gas" : "bicarbonate of soda", "") + "</svg>";
+    },
+    init(box) { SIMS.reaction.draw(box, false, false); },
+    run(box, api) {
+      return new Promise((done) => {
+        let a = false, b = false;
+        const paint = () => {
+          api.controls.innerHTML = '<button type="button" class="big small' + (a ? " ghost" : " teal") + '" id="' + api.id + 'a"' + (a ? " disabled" : "") + '>\u{1F3D6}️ Add sand to the water</button><button type="button" class="big small' + (b ? " ghost" : " teal") + '" id="' + api.id + 'b"' + (b ? " disabled" : "") + '>\u{1F9EA} Add vinegar to the bicarbonate</button>';
+          $(api.id + "a").addEventListener("click", () => { a = true; SIMS.reaction.draw(box, a, b); SOUND.play("splash", 0.4); api.say("The sand sinks. It is still sand, and the water is still water. A mixture. Nothing new has been made, and you could filter the sand back out."); paint(); check(); });
+          $(api.id + "b").addEventListener("click", () => { b = true; SIMS.reaction.draw(box, a, b); SOUND.play("kettle", 0.5); api.say("Fizz! Bubbles pour out. A gas is being made that was not there before. The vinegar and the bicarbonate have reacted to make new substances. You cannot get them back."); paint(); check(); });
+        };
+        const check = () => { if (a && b) setTimeout(() => { api.controls.innerHTML = ""; api.say("Mixing keeps the substances. A chemical reaction makes new ones. The fizz was the clue."); done(); }, 3000); };
+        paint();
+      });
+    },
+  };
+
+  /* a bouncing ball: the energy goes somewhere every bounce */
+  SIMS.energyDrop = {
+    draw(box, n, y) {
+      const bars = [["movement", Math.max(0, 100 - n * 33), "#3B7FD1"], ["sound", n * 25, "#F4C95D"], ["warmth", n * 12, "#E9744F"]];
+      return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="A ball dropped and bouncing lower each time"><rect width="320" height="220" fill="#F3EFE6"/><rect x="0" y="180" width="180" height="40" fill="#8A6A4A"/>' +
+        '<circle cx="90" cy="' + y + '" r="16" fill="#D9473F" style="transition: cy 500ms ease-in"/>' +
+        bars.map((b, k) => '<rect x="210" y="' + (30 + k * 50) + '" width="' + b[1] + '" height="22" fill="' + b[2] + '" style="transition: width 600ms ease"/><text x="210" y="' + (24 + k * 50) + '" fill="#1B1B1B" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + b[0] + " energy</text>").join("") +
+        '<text x="90" y="210" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800">bounce ' + n + " of 3</text></svg>";
+    },
+    init(box) { SIMS.energyDrop.draw(box, 0, 40); },
+    run(box, api) {
+      return new Promise((done) => {
+        let n = 0;
+        api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 'd">⚽ Drop the ball</button>';
+        $(api.id + "d").addEventListener("click", () => {
+          if (n >= 3) return; n++;
+          SIMS.energyDrop.draw(box, n, 164); SOUND.play("thud", 0.5);
+          setTimeout(() => { SIMS.energyDrop.draw(box, n, 40 + n * 40); api.say(n === 1 ? "Thud. The ball bounces, but not as high. Some of its movement energy became sound, and some warmed the ball and the floor a tiny bit." : n === 2 ? "Lower again. More of the energy has gone into sound and warmth. None of it has vanished; it has moved somewhere else." : "Lower still. The energy was never lost. It was transferred, bounce by bounce, into sound and heat in the room."); }, 600);
+          if (n >= 3) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 3600);
+        });
+      });
+    },
+  };
+
+  /* a torch, a mirror that turns, and an eye */
+  SIMS.rayMirror = {
+    draw(box, angle, blocked) {
+      const hit = angle === 2;
+      return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="A torch shining at a mirror, with an eye watching"><rect width="320" height="220" fill="#1B2A3A"/>' +
+        '<text x="40" y="180" font-size="40" text-anchor="middle">\u{1F526}</text>' +
+        '<path d="M62 160 L' + (blocked ? 150 : 250) + ' ' + (blocked ? 112 : 60) + '" stroke="#F4C95D" stroke-width="4"/>' +
+        (blocked ? '<rect x="146" y="80" width="14" height="60" fill="#8A6A4A"/><text x="153" y="70" font-size="12" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif">book</text>' : "") +
+        '<g transform="rotate(' + ((angle - 2) * 25) + ' 251 65)"><rect x="246" y="30" width="10" height="70" rx="3" fill="#BFE3F5" stroke="#fff" stroke-width="2"/></g>' +
+        (!blocked ? '<path d="M250 60 L' + [40, 70, 110, 150, 200][angle] + ' ' + [200, 120, 30, 0, 0][angle] + '" stroke="#F4C95D" stroke-width="4" stroke-dasharray="8 6"/>' : "") +
+        '<text x="110" y="40" font-size="34" text-anchor="middle">\u{1F441}️</text>' +
+        '<text x="160" y="212" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + (blocked ? "the book blocks the ray: the eye sees nothing" : hit ? "the reflected ray reaches the eye: you see the torch in the mirror" : "the ray bounces off, but misses the eye") + "</text></svg>";
+    },
+    init(box) { SIMS.rayMirror.draw(box, 0, false); },
+    run(box, api) {
+      return new Promise((done) => {
+        let angle = 0, blocked = false, hit = false, seenBlock = false;
+        const paint = () => {
+          api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 't">\u{1FA9E} Turn the mirror</button><button type="button" class="big small ghost" id="' + api.id + 'b">' + (blocked ? "Take the book away" : "\u{1F4D5} Put a book in the way") + "</button>";
+          $(api.id + "t").addEventListener("click", () => { angle = (angle + 1) % 5; SIMS.rayMirror.draw(box, angle, blocked); SOUND.play("click", 0.3); if (angle === 2 && !blocked) { hit = true; SOUND.play("ding", 0.4); api.say("The light travels in a straight line to the mirror, bounces off, and travels in a straight line to your eye. Now you can see the torch in the mirror."); } else api.say(blocked ? "Turning the mirror does nothing while the book blocks the ray." : "The ray reflects off the mirror in a straight line, but it misses the eye."); check(); });
+          $(api.id + "b").addEventListener("click", () => { blocked = !blocked; if (blocked) seenBlock = true; SIMS.rayMirror.draw(box, angle, blocked); SOUND.play("thud", 0.3); api.say(blocked ? "The book is opaque. The ray stops at it. No light reaches the mirror, so no light reaches the eye, so the eye sees nothing." : "Book gone. The ray reaches the mirror again."); paint(); check(); });
+        };
+        const check = () => { if (hit && seenBlock) setTimeout(() => { api.controls.innerHTML = ""; api.say("Light travels in straight lines. It bounces off a mirror, and you see a thing when light from it reaches your eye."); done(); }, 3000); };
+        paint();
+      });
+    },
+  };
+
+  /* a series circuit: more cells, more lamps, a switch */
+  function seriesSvg(s) {
+    const bright = s.open ? 0 : Math.max(0, Math.min(3, s.cells - s.lamps + 2));
+    const lampFill = ["#1B3A52", "#8A7A3A", "#F4C95D", "#FFF3B0"][bright];
+    return '<svg viewBox="0 0 320 220" role="img" aria-label="A series circuit with ' + s.cells + ' cell(s), ' + s.lamps + ' lamp(s) and a switch, ' + (s.open ? "open" : "closed") + '"><rect width="320" height="220" fill="#0E2434"/>' +
+      '<path d="M40 40 H280 V180 H40 Z" fill="none" stroke="#F4C95D" stroke-width="6"/>' +
+      Array.from({ length: s.cells }, (_, k) => '<g transform="translate(' + (70 + k * 40) + ' 40)"><rect x="-12" y="-14" width="24" height="28" fill="#0E2434"/><rect x="-8" y="-12" width="6" height="24" fill="#F4C95D"/><rect x="2" y="-6" width="6" height="12" fill="#F4C95D"/></g>').join("") +
+      Array.from({ length: s.lamps }, (_, k) => '<g transform="translate(' + (110 + k * 60) + ' 180)"><circle r="18" fill="' + lampFill + '" stroke="#F4C95D" stroke-width="3"/><path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="' + (bright ? "#0E2434" : "#F4C95D") + '" stroke-width="3"/></g>').join("") +
+      '<g transform="translate(280 110)"><rect x="-14" y="-24" width="28" height="48" fill="#0E2434"/><circle cy="-18" r="4" fill="#F4C95D"/><circle cy="18" r="4" fill="#F4C95D"/><path d="M0 -18 L' + (s.open ? "22 8" : "0 18") + '" stroke="#F4C95D" stroke-width="5" stroke-linecap="round"/></g>' +
+      '<text x="20" y="20" fill="#93AABE" font-size="13" font-family="Inter, sans-serif" font-weight="800">' + s.cells + " cell" + (s.cells > 1 ? "s" : "") + " · " + s.lamps + " lamp" + (s.lamps > 1 ? "s" : "") + " · switch " + (s.open ? "OPEN" : "closed") + "</text>" +
+      '<text x="160" y="120" text-anchor="middle" fill="#F4C95D" font-size="16" font-family="Inter, sans-serif" font-weight="800">' + (s.open ? "lamps OFF: a break in the circuit" : ["very dim", "dim", "normal", "BRIGHT"][bright]) + "</text></svg>";
+  }
+  SIMS.seriesCircuit = {
+    init(box) { box.innerHTML = seriesSvg({ cells: 1, lamps: 1, open: false }); },
+    run(box, api) {
+      return new Promise((done) => {
+        const s = { cells: 1, lamps: 1, open: false }; const did = new Set();
+        const paint = () => {
+          api.controls.innerHTML = '<button type="button" class="big small' + (s.cells >= 3 ? " ghost" : " teal") + '" id="' + api.id + 'c"' + (s.cells >= 3 ? " disabled" : "") + '>\u{1F50B} Add a cell</button><button type="button" class="big small' + (s.lamps >= 3 ? " ghost" : " teal") + '" id="' + api.id + 'l"' + (s.lamps >= 3 ? " disabled" : "") + '>\u{1F4A1} Add a lamp</button><button type="button" class="big small" id="' + api.id + 's">' + (s.open ? "Close the switch" : "Open the switch") + "</button>";
+          $(api.id + "c").addEventListener("click", () => { s.cells++; did.add("cell"); box.innerHTML = seriesSvg(s); SOUND.play("ding", 0.4); api.say("Another cell. More push, and the lamps are brighter."); paint(); check(); });
+          $(api.id + "l").addEventListener("click", () => { s.lamps++; did.add("lamp"); box.innerHTML = seriesSvg(s); SOUND.play("click", 0.4); api.say("Another lamp. The same push is shared between more lamps, so each one is dimmer."); paint(); check(); });
+          $(api.id + "s").addEventListener("click", () => { s.open = !s.open; did.add(s.open ? "open" : "close"); box.innerHTML = seriesSvg(s); SOUND.play("click", 0.5); api.say(s.open ? "The switch is open. That is a break in the circuit. No electricity can flow, and every lamp goes out." : "The switch is closed. The circuit is complete again and the lamps come back on."); paint(); check(); });
+        };
+        const check = () => { if (did.has("cell") && did.has("lamp") && did.has("open") && did.has("close")) setTimeout(() => { api.controls.innerHTML = ""; api.say("More cells, brighter. More lamps, dimmer. Open the switch, off. That is a series circuit."); done(); }, 2800); };
+        paint();
+      });
+    },
+  };
+
+  /* a conductor test: the material sits in a gap in the circuit (predictEach) */
+  SIMS.conductor = {
+    init(box) { box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A circuit with a gap, and a material to put in the gap"><rect width="320" height="200" fill="#0E2434"/><path d="M40 40 H280 V160 H200 M40 40 V160 H120" fill="none" stroke="#F4C95D" stroke-width="6"/><g transform="translate(60 40)"><rect x="-10" y="-14" width="20" height="28" fill="#0E2434"/><rect x="-6" y="-12" width="5" height="24" fill="#F4C95D"/><rect x="1" y="-6" width="5" height="12" fill="#F4C95D"/></g><g transform="translate(280 100)"><circle id="cl" r="18" fill="#1B3A52" stroke="#F4C95D" stroke-width="3"/><path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="#F4C95D" stroke-width="3"/></g><text id="cm" x="160" y="172" font-size="40" text-anchor="middle"></text><text id="ct" x="160" y="120" text-anchor="middle" fill="#93AABE" font-size="13" font-family="Inter, sans-serif" font-weight="800">the gap</text></svg>'; },
+    act(box, item, api) {
+      box.querySelector("#cm").textContent = item.pic;
+      return new Promise((r) => {
+        setTimeout(() => {
+          const yes = item.answer === "yes";
+          box.querySelector("#cl").setAttribute("fill", yes ? "#F4C95D" : "#1B3A52");
+          box.querySelector("#ct").textContent = yes ? "lamp ON: a conductor" : "lamp off: an insulator";
+          SOUND.play(yes ? "ding" : "thud", 0.4);
+          setTimeout(() => { api.say(yes ? "The lamp lights. Electricity flows through the " + item.label + ". It is a conductor." : "The lamp stays off. Electricity cannot flow through the " + item.label + ". It is an insulator."); r(); }, 700);
+        }, 40);
+      });
+    },
+  };
+
+  /* the Earth spins: the Sun seems to move, and the shadow swings */
+  SIMS.dayNight = {
+    draw(box, h) {
+      /* h 0..3: 6am, midday, 6pm, midnight; the marker sits on the globe and turns */
+      const a = h * 90, side = ["sunrise: the Sun is low in the east", "midday: the Sun is high, the shadow short", "sunset: the Sun is low in the west", "midnight: our side faces away from the Sun. Night"][h];
+      const mx = 160 + Math.cos((a - 90) * Math.PI / 180) * 70, my = 110 + Math.sin((a - 90) * Math.PI / 180) * 70;
+      return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="The Earth spinning next to the Sun"><rect width="320" height="220" fill="#0B1D2C"/><circle cx="20" cy="110" r="40" fill="#F4C95D"/>' +
+        '<circle cx="160" cy="110" r="70" fill="#3B7FD1"/><path d="M160 40 A70 70 0 0 1 160 180 z" fill="#0B1D2C" opacity="0.6"/>' +
+        '<g transform="rotate(' + a + ' 160 110)"><path d="M120 60 q30 -10 40 20 q-20 30 -40 10z M150 130 q30 0 30 30 q-30 10 -30 -30z" fill="#4CB65C"/></g>' +
+        '<circle cx="' + mx + '" cy="' + my + '" r="8" fill="#D9473F"/><text x="' + mx + '" y="' + (my - 12) + '" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter, sans-serif" font-weight="800">you</text>' +
+        '<text x="160" y="208" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter, sans-serif" font-weight="800">' + side + "</text></svg>";
+    },
+    init(box) { SIMS.dayNight.draw(box, 0); },
+    run(box, api) {
+      return new Promise((done) => {
+        let h = 0;
+        api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 's">\u{1F30D} Spin on six hours</button>';
+        $(api.id + "s").addEventListener("click", () => {
+          h++; SIMS.dayNight.draw(box, h % 4); SOUND.play("pop", 0.25);
+          api.say(["", "Six hours on. The Earth has turned a quarter and you now face the Sun. Midday. The Sun looks high, and shadows are short.", "Another quarter turn. The Sun looks low on the other side of the sky. Sunset. Long shadows pointing the other way.", "Another quarter. Your side of the Earth faces away from the Sun. Night. The Sun did not go anywhere. You did.", "A whole turn. Sunrise again. One spin, one day. The Sun only seems to move because the Earth turns."][h]);
+          if (h >= 4) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 3200);
+        });
+      });
+    },
+  };
+
+  /* a paper spinner dropped three times: the numbers are close, not the same */
+  SIMS.spinner = {
+    times: [2.1, 2.3, 2.0],
+    draw(box, n, y) {
+      return box.innerHTML = '<svg viewBox="0 0 320 220" role="img" aria-label="A paper spinner dropped from a height, timed"><rect width="320" height="220" fill="#DDEFF7"/><rect x="0" y="190" width="320" height="30" fill="#8A6A4A"/>' +
+        '<g transform="translate(100 ' + y + ')" style="transition: transform 2000ms linear"><path d="M-6 0 v30 h12 v-30z" fill="#F4C95D"/><path d="M-6 0 l-16 -22 h12 z M6 0 l16 -22 h-12z" fill="#F0A56B"/></g>' +
+        [0, 1, 2].map((k) => '<text x="200" y="' + (50 + k * 40) + '" fill="#1B1B1B" font-size="16" font-family="Inter, sans-serif" font-weight="800">drop ' + (k + 1) + ": " + (k < n ? SIMS.spinner.times[k] + " s" : "") + "</text>").join("") +
+        (n >= 3 ? '<text x="200" y="180" fill="#1E8C86" font-size="14" font-family="Inter, sans-serif" font-weight="800">about 2.1 s each time</text>' : "") + "</svg>";
+    },
+    init(box) { SIMS.spinner.draw(box, 0, 20); },
+    run(box, api) {
+      return new Promise((done) => {
+        let n = 0, busy = false;
+        api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 'd">⏱️ Drop it and time it</button>';
+        $(api.id + "d").addEventListener("click", () => {
+          if (busy || n >= 3) return; busy = true;
+          SIMS.spinner.draw(box, n, 20); setTimeout(() => { box.querySelector("g").setAttribute("transform", "translate(100 160)"); }, 40);
+          setTimeout(() => { n++; SIMS.spinner.draw(box, n, 160); busy = false; SOUND.play("click", 0.3);
+            api.say(n === 1 ? "2.1 seconds." : n === 2 ? "2.3 seconds. Not quite the same. Your thumb on the stopwatch, a breath of air, a wobble: small things change the number." : "2.0 seconds. Three drops, three slightly different numbers, all close to 2.1. One measurement could have been the odd one. Three together are reliable.");
+            if (n >= 3) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 3400); }, 2200);
+        });
+      });
+    },
+  };
+
+  /* ---- use a key to identify things (4TWSc.02) -------------------------
+     A branching key: each node is a yes/no question and points at another
+     node or at a name. The child works one creature at a time down the key;
+     a wrong turn is caught at once with the creature's own fact, because a
+     key you can follow wrongly to a confident answer teaches nothing. */
+  function useKey(o) {
+    const el = o.el, nodes = {}, items = o.items, id = el.stage + "k";
+    (o.nodes || []).forEach((n) => { nodes[n.id] = n; });
+    let i = 0, node = o.nodes[0].id, right = 0, wrong = 0, lock = false;
+    function paint() {
+      const it = items[i], nd = nodes[node];
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="peitem">' + picHtml(it.pic) + '<span class="lab">' + esc(it.label) + '</span></div>' +
+        '<div class="keycard"><p class="keyq">' + esc(nd.q) + '</p><div class="bigbtns"><button type="button" class="big small teal" data-a="yes">Yes</button><button type="button" class="big small" data-a="no">No</button></div>' +
+        '<p class="keypath">' + (it.trail || []).map((t) => esc(t)).join(" &rarr; ") + "</p></div>";
+      $(el.score).textContent = "Creature " + (i + 1) + " of " + items.length;
+      $(el.ask).innerHTML = o.ask || "Follow the key. Answer each question about this creature.";
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-a]"); if (!b || lock) return;
+      const it = items[i], nd = nodes[node], ans = b.dataset.a === "yes";
+      const truth = !!(it.facts || {})[node];
+      if (ans !== truth) {
+        wrong++; $(el.fb).className = "fb bad"; $(el.fb).textContent = "Look at the " + it.label + " again. " + (it.hints && it.hints[node] ? it.hints[node] : (truth ? "It does." : "It does not.")); say($(el.fb).textContent); return;
+      }
+      const next = ans ? nd.yes : nd.no;
+      it.trail = (it.trail || []).concat([ans ? "yes" : "no"]);
+      if (next.startsWith("=")) {
+        lock = true; const name = next.slice(1); const ok = name === it.answer;
+        if (ok) right++;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " The key says: " + name + "." : "The key says " + name + ", but this is " + it.answer + ".") + " " + (it.why || "");
+        say($(el.fb).textContent);
+        setTimeout(() => {
+          i++; node = o.nodes[0].id; lock = false; $(el.fb).textContent = ""; $(el.fb).className = "fb";
+          if (i >= items.length) {
+            $(el.stage).innerHTML = ""; $(el.ask).innerHTML = "You identified " + right + " of " + items.length + " with the key."; $(el.score).textContent = "";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+            reportScore(o.finish, Math.max(0, items.length - wrong), items.length);
+            finish(o.finish, o.done);
+          } else paint();
+        }, 3200);
+      } else { node = next; $(el.fb).textContent = ""; paint(); sayHere(o.finish, nodes[node].q); }
+    });
+    paint();
+    ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, nodes[node].q));
+  }
+
+  /* ==================================================================
      THE UNIT SHELL - seven steps drawn AROUND every lesson (owner,
      2026-09-10), the furniture the English Grade 1 build carries around a
      unit: what it is about, a lecture, the words, games, things to do at
@@ -6090,7 +6441,12 @@
     $(el.score).textContent = (o.about || []).length + " things to learn";
     $(el.stage + "r").addEventListener("click", () =>
       say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
-    finish(o.finish, o.done);
+    /* ON ARRIVAL, not on drawing. The deck draws every step at page load,
+       so a finish() here ticked this step - and Science world, which had
+       the same line - before the child had seen either: a fresh learner
+       opened a lesson at 13% (found by the 2026-09-11 re-validation). No
+       spoken line either: the slide's own instruction is speaking. */
+    ONSHOW[o.finish] = () => finish(o.finish);
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ----
@@ -6245,7 +6601,61 @@
       '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
       '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
     $(el.score).textContent = "coming soon";
-    finish(o.finish, o.done);
+    /* on arrival, not at page load - see unitOverview */
+    ONSHOW[o.finish] = () => finish(o.finish);
+  }
+
+  /* ---- a full-screen overlay is a modal dialog -------------------------
+     2026-09-11 re-validation: the game and drawer overlays had no dialog
+     role, left keyboard focus on the button behind them with 32 more
+     controls reachable by Tab, and dropped focus to the page body on close.
+     modal() gives the overlay a role and a name, keeps Tab inside it, and
+     hands focus back to whatever opened it. The game redraws its contents
+     every round, so remember() is called before a redraw and refocus()
+     after it, putting focus back on the same control where it still
+     exists and on the question otherwise. */
+  function modal(overlay, label, restore) {
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", label);
+    overlay.setAttribute("tabindex", "-1");
+    const focusables = () => [...overlay.querySelectorAll('button:not([disabled]), input, a[href], [tabindex="0"]')];
+    function onTab(e) {
+      if (e.key !== "Tab") return;
+      const f = focusables();
+      if (!f.length) { e.preventDefault(); overlay.focus(); return; }
+      const first = f[0], last = f[f.length - 1], a = document.activeElement;
+      if (!overlay.contains(a)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+      else if (e.shiftKey && a === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
+    }
+    document.addEventListener("keydown", onTab, true);
+    let keep = null;
+    return {
+      remember() {
+        const a = document.activeElement;
+        keep = null;
+        if (!a || !overlay.contains(a)) return;
+        for (const k of ["data-tile", "data-line", "data-c", "data-k", "id"]) {
+          const v = a.getAttribute(k);
+          if (v != null) { keep = "[" + k + '="' + v.replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"]'; break; }
+        }
+      },
+      refocus() {
+        let t = keep ? overlay.querySelector(keep) : null;
+        if (t && t.disabled) t = keep.startsWith("[data-tile") ? overlay.querySelector("[data-tile]:not([disabled])") : null;
+        /* in priority order: querySelector with a selector LIST returns the
+           first match in the page, which is the title bar, not the question */
+        for (const sel of [".gameprompt", ".gamebig", ".gloxq", ".book-reader-top .booktitle"]) { if (!t) t = overlay.querySelector(sel); }
+        if (t) { if (!t.matches("button, input")) t.setAttribute("tabindex", "-1"); t.focus({ preventScroll: true }); }
+        else overlay.focus();
+        keep = null;
+      },
+      release() {
+        document.removeEventListener("keydown", onTab, true);
+        try { if (restore) restore(); } catch (_) { /* the page may have moved on */ }
+      },
+    };
   }
 
   /* ---- the game zone: the lesson's own games, derived by the builder ----
@@ -6288,11 +6698,17 @@
       const overlay = document.createElement("div");
       overlay.className = "book-reader game-overlay";
       document.body.appendChild(overlay);
-      function close() { overlay.remove(); document.removeEventListener("keydown", onKey); try { VOICE.stop(); } catch (_) { /* nothing */ } drawShelf(); }
+      const gk = games.indexOf(game);
+      /* the shelf is redrawn on close, so focus goes back to this game's
+         own Play button on the new shelf, not to the one that opened it */
+      const m = modal(overlay, game.title, () => { const b = document.querySelector("#" + id + ' [data-game="' + gk + '"]'); if (b) b.focus(); });
+      function close() { overlay.remove(); document.removeEventListener("keydown", onKey); try { VOICE.stop(); } catch (_) { /* nothing */ } drawShelf(); m.release(); }
       function onKey(e) { if (e.key === "Escape") close(); }
       document.addEventListener("keydown", onKey);
 
       function frame(bodyHtml, footHtml) {
+        if (!overlay.isConnected) return;   /* a round timer that outlived the game */
+        m.remember();
         overlay.innerHTML =
           '<div class="book-reader-top"><span class="booktitle">' + esc(game.title) + "</span>" +
           '<button type="button" class="book-close" aria-label="Close the game">&#10005;</button></div>' +
@@ -6303,6 +6719,7 @@
           (footHtml || "") + "</div>";
         overlay.querySelector(".book-close").addEventListener("click", close);
         overlay.querySelector("#gameQuit").addEventListener("click", close);
+        m.refocus();
       }
       function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
       function endGame() {
@@ -6482,11 +6899,14 @@
         '<div class="book-stage-wrap"><div class="res-stage">' + bodyHtml + "</div></div>" +
         '<div class="book-reader-bottom">' + (footHtml || "") + "</div>";
       document.body.appendChild(overlay);
-      const close = () => { try { VOICE.stop(); } catch (_) { /* nothing */ } overlay.remove(); document.removeEventListener("keydown", onKey); };
+      const opener = document.activeElement;
+      const m = modal(overlay, title, () => { if (opener && opener.isConnected) opener.focus(); });
+      const close = () => { try { VOICE.stop(); } catch (_) { /* nothing */ } overlay.remove(); document.removeEventListener("keydown", onKey); m.release(); };
       function onKey(e) { if (e.key === "Escape") close(); }
       document.addEventListener("keydown", onKey);
       overlay.querySelector(".book-close").addEventListener("click", close);
       overlay.addEventListener("click", (e) => { const b = e.target.closest("[data-say]"); if (b) say(b.dataset.say); });
+      m.refocus();
       return overlay;
     }
     const wordRows = (words, withLesson) => words.map((w) =>

@@ -136,7 +136,7 @@ LESSON = {
              {"label": "Question", "items": [
                  q("Which is a light source?", "\U0001F4A1", "a candle", ["a mirror", "the Moon", "a white wall"], "A candle makes its own light."),
                  q("Why is the Moon bright at night?", "\U0001F319", "it shines back the Sun's light", ["it makes its own light", "it is on fire"], "The Moon is not a source. It bounces sunlight."),
-                 q("What is darkness?", "\U0001F311", "what is left when there is no light", ["a black gas", "a kind of light"], "Darkness is the absence of light."),
+                 q("Could a torch shine darkness into a bright room?", "\U0001F311", "No. Darkness is only what is left when there is no light", ["Yes, a black torch could", "Yes, but only at night"], "Darkness is not a thing that can be shone. It is the absence of light."),
                  q("You are in a room with no windows and the lamp off. What can you see?", "\U0001F6AA", "nothing", ["everything, in grey", "only shiny things"], "No light source, nothing to see by."),
                  q("Which is the biggest light source we have?", "☀️", "the Sun", ["a torch", "a fire", "a lamp"], "The Sun lights the whole daytime side of the Earth."),
              ]},

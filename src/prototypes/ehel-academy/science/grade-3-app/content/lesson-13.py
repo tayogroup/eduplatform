@@ -17,13 +17,13 @@ LESSON = {
              "The Earth, the Sun and the Moon are all shaped like balls. Press <b>Next</b>.",
              explain(
                  ["A sphere is a ball shape.", "The Earth, the Sun and the Moon are all roughly spheres."],
-                 ["The Earth looks flat from where you stand because it is so big.", "From space it is a blue ball.", "The Moon is a smaller grey ball.", "The Sun is a huge ball of fire."],
+                 ["The Earth looks flat from where you stand because it is so big.", "From space it is a blue ball.", "The Moon is a smaller grey ball.", "The Sun is a huge ball of hot, glowing gas."],
                  ["Children think the Moon is a flat disc because it looks flat.", "It is a ball. The shadow across it curves, and that is a ball's shadow."],
                  ["Press Next through all four."]),
              {"frames": [
                  {"scene": {"id": "globe", "state": 0}, "cap": "The <b>Earth</b>: a sphere, seen from space.", "say": "The Earth is a sphere: a ball. It looks flat from where you stand because it is so big, but from space it is a round blue ball."},
                  {"pic": "\U0001F315", "cap": "The <b>Moon</b>: a smaller sphere of rock.", "say": "The Moon is a sphere too, a smaller ball of grey rock. Look at the full Moon: the edge is a curve all the way round."},
-                 {"scene": {"id": "sky", "state": 3}, "cap": "The <b>Sun</b>: a huge sphere of burning gas.", "say": "The Sun is a sphere as well, a huge ball of burning gas, far bigger than the Earth. Never look straight at it."},
+                 {"scene": {"id": "sky", "state": 3}, "cap": "The <b>Sun</b>: a huge sphere of hot, glowing gas.", "say": "The Sun is a sphere as well, a huge ball of hot, glowing gas, far bigger than the Earth. Never look straight at it."},
                  {"pic": "\U0001F4DC", "cap": "Long ago, many people thought the Earth was <b>flat</b>. Ships, shadows and, later, photographs from space showed it is a sphere.", "say": "Long ago, many people thought the Earth was flat. Sailors noticed ships disappear bottom first over the horizon. The Earth's shadow on the Moon is always curved. And now we have photographs from space. The Earth is a sphere."},
              ]},
              "Earth, Sun and Moon: three spheres."),

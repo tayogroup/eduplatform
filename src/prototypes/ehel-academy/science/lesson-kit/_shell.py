@@ -14,9 +14,10 @@ many steps a lesson has or what they are called:
 
     overview  lecture  words  <the lesson's own steps ...>  games  home  quiz  world  resources
 
-The games are DERIVED, not written: a quick quiz from the lesson's own
-questions, a sort race from its sort steps, word pairs and a spelling game
-from its words. Nothing in a game is new, which is the rule the English
+The games are DERIVED, not written: a quick quiz from the lesson's practice
+questions (never from its quiz, and expand() refuses a lesson where any game
+round repeats a quiz question), a sort race from its sort steps, word pairs
+and a spelling game from its words. Nothing in a game is new, which is the rule the English
 build's own Game Zone keeps ("every question is a word or a pattern this
 unit already taught you"), and it is why a lesson with no words gets no
 word games rather than invented ones.
@@ -54,10 +55,15 @@ def games_pack(n, lesson):
     games = []
     words = lesson.get("words") or []
 
-    # Quick quiz: the lesson's practice questions (its quiz only where it
-    # has no separate questions step - the quiz is the check, not a game).
-    qsteps = [s for s in lesson["steps"] if s["kind"] == "questions"] or \
-             [s for s in lesson["steps"] if s["kind"] == "quiz"]
+    # Quick quiz: the lesson's PRACTICE questions only, never its quiz.
+    # The first version fell back to the quiz where a lesson had no practice
+    # questions, and the games step sits just before the quiz - so in five of
+    # Grade 1's eight lessons the child rehearsed all eight quiz questions,
+    # with the answers explained, minutes before being marked on them
+    # (found by the 2026-09-11 re-validation). A lesson with no practice
+    # questions simply has no Quick quiz game; its sorts and words still
+    # make at least two.
+    qsteps = [s for s in lesson["steps"] if s["kind"] == "questions"]
     for k, s in enumerate(qsteps):
         rounds = []
         for it in s["data"]["items"]:
@@ -217,6 +223,15 @@ def expand(n, lesson, code_text, finder, cfg):
     steps = [s for s in steps if s is not None]
     overview["data"]["counts"]["steps"] = len(steps)
     res["data"]["homeStep"] = steps.index(hm)
+
+    # A game that rehearses the quiz turns the quiz into a memory test of the
+    # game. Checked here, where both builders pass, so neither can ship it.
+    quiz_stems = {plain(it["ask"]).lower() for s in quiz for it in s["data"]["items"]}
+    for g in games:
+        for r in g["rounds"]:
+            if plain(r.get("prompt", "")).lower() in quiz_stems:
+                raise SystemExit("REFUSED: lesson %d game %r repeats the quiz question %r - a game may not "
+                                 "rehearse the quiz" % (n, g["title"], r["prompt"]))
     return steps
 
 

@@ -139,13 +139,13 @@ LESSON = {
              "At night you can see many stars. Press <b>Next</b> to find out what the Sun really is.",
              explain(
                  ["The Sun is a star.", "The stars you see at night are suns too, but very, very far away."],
-                 ["At night the sky is full of tiny lights: stars.", "Each one is a huge ball of fire like our Sun, but so far away it looks tiny.",
+                 ["At night the sky is full of tiny lights: stars.", "Each one is a huge ball of hot, glowing gas like our Sun, but so far away it looks tiny.",
                   "Our Sun looks big and bright because it is the nearest star to Earth."],
                  ["Children think the Sun and the stars are different kinds of thing.", "They are the same kind of thing. Ours is just close."],
                  ["Press Next and see."]),
              {"frames": [
                  {"scene": {"id": "sky", "state": 0}, "cap": "Night. The sky is full of tiny lights: <b>stars</b>.", "say": "At night the sky is full of tiny lights. Those are stars."},
-                 {"scene": {"id": "sky", "state": 3}, "cap": "Each star is a huge ball of fire, like our <b>Sun</b>, but very far away.", "say": "Each star is a huge ball of fire, just like our Sun, but so far away it looks like a dot."},
+                 {"scene": {"id": "sky", "state": 3}, "cap": "Each star is a huge ball of hot, glowing gas, like our <b>Sun</b>, but very far away.", "say": "Each star is a huge ball of hot, glowing gas, just like our Sun, but so far away it looks like a dot."},
                  {"scene": {"id": "sky", "state": 2}, "cap": "The Sun is a star too. It looks big because it is the <b>nearest</b> one.", "say": "The Sun is a star too. It looks big and bright only because it is the nearest star to Earth."},
                  {"pic": "\U0001F30D☀️", "cap": "Earth is our planet. The Sun is our star. It gives us light and heat.", "say": "Earth is our planet. The Sun is our star. It gives us light and heat every day."},
              ]},
@@ -227,7 +227,7 @@ LESSON["lecture"] = [
     part("\u2600\uFE0F", "The Sun gives light and heat",
          "The Sun lights up the day. It warms the ground, the sea and your skin. Without the Sun it would be dark and cold. Never look straight at the Sun."),
     part("\u2B50", "The Sun is a star",
-         "At night the sky is full of tiny lights: stars. Each one is a huge ball of fire, very far away. The Sun is a star too. It looks big because it is the nearest one."),
+         "At night the sky is full of tiny lights: stars. Each one is a huge ball of hot, glowing gas, very far away. The Sun is a star too. It looks big because it is the nearest one."),
 ]
 
 LESSON["words"] = [
@@ -241,7 +241,7 @@ LESSON["words"] = [
          ["The mountain is made of rock.", "Under the soil is rock."]),
     word("Sun", "\u2600\uFE0F", "The star that gives Earth light and heat.",
          ["The Sun rises in the morning.", "The Sun warms the ground."]),
-    word("star", "\u2B50", "A huge ball of fire, very far away. The Sun is a star.",
+    word("star", "\u2B50", "A huge ball of hot, glowing gas, very far away. The Sun is a star.",
          ["I can see a star.", "The Sun is our nearest star."]),
     word("heat", "\U0001F525", "Warmth. The Sun gives us heat.",
          ["Feel the heat of the Sun.", "The shade has less heat."]),

@@ -112,7 +112,7 @@ LESSON = {
                  q("Why is a window made of glass?", "\U0001FA9F", "glass is see-through", ["glass is soft", "glass is warm", "glass soaks up water"], "A window has to let light through and let you see out."),
                  q("Why is a saucepan made of metal?", "\U0001F373", "metal is hard and does not burn", ["metal is soft", "metal is see-through", "metal is bendy"], "A saucepan sits on a hot cooker; metal does not burn or melt there."),
                  q("Why is a jumper made of wool?", "\U0001F9F6", "wool is soft and warm", ["wool is hard", "wool is see-through", "wool is waterproof"], "A jumper has to be soft on your skin and keep you warm."),
-                 q("Why is a raincoat made of plastic?", "\U0001F9E5", "plastic is waterproof", ["plastic is see-through", "plastic soaks up water", "plastic is heavy"], "A raincoat has to keep the rain off."),
+                 q("Why are wellington boots made of rubber?", "\U0001F462", "rubber is waterproof", ["rubber is see-through", "rubber soaks up water", "rubber is hard and stiff"], "Boots for puddles have to keep your feet dry."),
                  q("Why is a towel made of cotton?", "\U0001F9FB", "cotton soaks up water", ["cotton is waterproof", "cotton is hard", "cotton is see-through"], "A towel has to soak the water off you."),
                  q("Why is a bicycle frame made of metal?", "\U0001F6B2", "metal is strong and stiff", ["metal is soft", "metal soaks up water", "metal is bendy"], "A bicycle has to hold a person up without bending."),
                  q("Would a sponge make a good window?", "\U0001F9FD", "No. A sponge is not see-through", ["Yes, it is soft", "Yes, it soaks up rain"], "A window needs to be see-through, and a sponge is not."),

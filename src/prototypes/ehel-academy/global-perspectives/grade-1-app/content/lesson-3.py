@@ -81,7 +81,7 @@ LESSON = {
                    "why": "She asked when you wash your hands. Before eating and after the toilet answers it."},
                   {"ask": "Why do we drink water?", "about": "water", "pic": "\U0001F4A7",
                    "opts": [tagged("Because our bodies need water to work.", "water"), tagged("I have a blue cup.", "cups"), tagged("Today is Monday.", "days")],
-                   "why": "She asked why we drink water. Our bodies need it is the reason."},
+                   "why": "She asked why we drink water. The reason is that our bodies need it."},
               ]},
              "Five questions, five answers about the thing that was asked. That is good communicating."),
 
@@ -98,7 +98,7 @@ LESSON = {
                   {"pic": "\U0001F966", "label": "eating vegetables", "bin": "on", "why": "Vegetables help us stay healthy. On the topic."},
                   {"pic": "\U0001F697", "label": "a red car", "bin": "off", "why": "A car is about cars, not about keeping healthy."},
                   {"pic": "\U0001F634", "label": "going to bed on time", "bin": "on", "why": "Sleep keeps us healthy. On the topic."},
-                  {"pic": "\U0001F3B8", "label": "playing the guitar", "bin": "off", "why": "Music is lovely, but it is about music."},
+                  {"pic": "\U0001FA81", "label": "flying a kite", "bin": "off", "why": "A kite is fun, but it is about toys."},
                   {"pic": "\U0001F9FC", "label": "washing your hands", "bin": "on", "why": "Clean hands keep germs away. On the topic."},
                   {"pic": "\U0001F9F8", "label": "a teddy bear's name", "bin": "off", "why": "A teddy's name is about toys."},
               ]},

@@ -79,8 +79,8 @@ LESSON = {
                    "opts": [opt("2", True), opt("3", False), opt("1", False)], "why": "The skipping bar reaches 2."},
                   {"ask": "Does anyone play quiet games?", "check": {"kind": "any", "row": "Quiet games"},
                    "opts": [opt("No", True), opt("Yes", False)], "why": "Quiet games has no bar at all. Nobody chose it."},
-                  {"ask": "Which game has the SHORTEST bar?", "check": {"kind": "least"},
-                   "opts": [opt("Quiet games", True), opt("Tag", False), opt("Football", False)], "why": "Quiet games has 0, shorter than any other."},
+                  {"ask": "Which game did the FEWEST children choose?", "check": {"kind": "least"},
+                   "opts": [opt("Quiet games", True), opt("Tag", False), opt("Football", False)], "why": "Nobody chose quiet games: 0."},
               ]},
              "Bars show the same information as pictures. Longer means more."),
 
@@ -234,7 +234,7 @@ LESSON["words"] = [
 LESSON["home"] = [
     home("Interview your family", "Paper, a pencil, everyone at home",
          ["Ask everyone one information question: what do you eat for breakfast?",
-          "Ask everyone one opinion question: should we have pancakes on Sunday?",
+          "Ask everyone one opinion question: should we have pancakes at the weekend?",
           "Record both. Put a tick per person for each answer."],
          "Which question found information? Which found opinions?"),
     home("Three ways to show it", "Paper and crayons, and your breakfast findings",

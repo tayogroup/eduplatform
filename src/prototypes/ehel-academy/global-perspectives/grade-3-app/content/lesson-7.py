@@ -99,7 +99,7 @@ LESSON = {
               ],
               "rounds": [
                   {"want": "the amount of water the fountain wastes in a whole day", "pic": "\U0001F4A7", "word": "How much", "end": "waste", "why": "How much asks for an amount. Forty drips a minute, all day, is a lot."},
-                  {"want": "the way Sami counted the drips", "pic": "\U0001F522", "word": "How", "end": "count", "why": "How asks for the method. Was it a timer, a bucket?"},
+                  {"want": "the way Sami counted the drips", "pic": "\U0001F522", "word": "How", "end": "count", "why": "How asks for the method. Did he use a timer?"},
                   {"want": "the place the dripping water goes", "pic": "\U0001F30A", "word": "Where", "end": "goes", "why": "Where asks for a place. Down the drain, wasted."},
                   {"want": "the number of children who use the fountain each day", "pic": "\U0001F9D2", "word": "How many", "end": "children", "why": "How many asks for a number."},
               ]},

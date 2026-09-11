@@ -536,7 +536,8 @@
 
   /* a text source: each sentence is a button; a bar chart beside the pictogram */
   .textsrc { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px; border: 3px solid var(--line); background: #FFFDF6; color: #142B3E; text-align: left; }
-  .textsrc .phase { margin: 0 0 2px; }
+  .textsrc .phase { margin: 0 0 2px; color: #0F6E66; }  /* teal on cream paper was 2.2:1 */
+  .picto .sub { color: #B8CAD8; }  /* --muted on the chart panel was 4.0:1 */
   .sline { width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid transparent; background: transparent; color: #142B3E;
     font: inherit; font-size: 19px; line-height: 1.45; text-align: left; }
   .sline:hover, .sline:focus-visible { border-color: var(--teal); background: rgba(53,191,178,0.12); outline: none; }
@@ -1332,7 +1333,7 @@
           },
           "rounds": [
             {
-              "ask": "How is bread made?",
+              "ask": "Who would know how bread is made?",
               "about": "bread",
               "pic": "🍞",
               "opts": [
@@ -1355,7 +1356,7 @@
               "why": "The baker makes bread every day, so the baker knows."
             },
             {
-              "ask": "Which bus goes to the market?",
+              "ask": "Who would know which bus goes to the market?",
               "about": "buses",
               "pic": "🚌",
               "opts": [
@@ -1378,7 +1379,7 @@
               "why": "The bus driver drives the buses, so the bus driver knows the routes."
             },
             {
-              "ask": "When does the library open?",
+              "ask": "Who would know when the library opens?",
               "about": "books",
               "pic": "📚",
               "opts": [
@@ -1401,7 +1402,7 @@
               "why": "The librarian works at the library, so the librarian knows when it opens."
             },
             {
-              "ask": "What should I do about a sore throat?",
+              "ask": "Who would know what to do about a sore throat?",
               "about": "health",
               "pic": "🩺",
               "opts": [
@@ -1424,9 +1425,9 @@
               "why": "The doctor knows about being ill and getting better."
             },
             {
-              "ask": "When are the strawberries ready to pick?",
+              "ask": "Who would know when the mangoes are ready to pick?",
               "about": "farming",
-              "pic": "🍓",
+              "pic": "🥭",
               "opts": [
                 {
                   "t": "The farmer",
@@ -1444,7 +1445,7 @@
                   "pic": "🚌"
                 }
               ],
-              "why": "The farmer grows the strawberries, so the farmer knows when they are ready."
+              "why": "The farmer grows the mangoes, so the farmer knows when they are ready."
             }
           ]
         }
@@ -1633,10 +1634,10 @@
               "why": "The park keeper sees the ducks every day."
             },
             {
-              "pic": "🎫",
-              "label": "how much a bus ticket costs",
+              "pic": "🛣️",
+              "label": "which road the bus takes",
               "bin": "driver",
-              "why": "The bus driver sells the tickets."
+              "why": "The bus driver drives that road every day."
             }
           ]
         }
@@ -1747,7 +1748,7 @@
             "Match things known to the people whose job it is to know them."
           ],
           "not": [
-            "how to bake bread",
+            "how to tie a shoelace",
             "how to swim",
             "the names of the planets"
           ],
@@ -1901,14 +1902,14 @@
                   "explanation": "The park keeper sees the ducks every day."
                 },
                 {
-                  "prompt": "Where does how much a bus ticket costs go? 🎫",
+                  "prompt": "Where does which road the bus takes go? 🛣️",
                   "choices": [
                     "The baker",
                     "The bus driver",
                     "The park keeper"
                   ],
                   "answer": "The bus driver",
-                  "explanation": "The bus driver sells the tickets."
+                  "explanation": "The bus driver drives that road every day."
                 }
               ]
             },
@@ -2004,7 +2005,7 @@
               "title": "Who knows what at home?",
               "materials": "Everyone at home",
               "steps": [
-                "Think of three questions: how does the washing machine work, what is for dinner, where is the nearest bus stop.",
+                "Think of three questions: how do we cook rice, what is for dinner, where is the nearest bus stop.",
                 "For each one, say who at home would know best.",
                 "Ask them and see if you were right."
               ],
@@ -2180,8 +2181,8 @@
               "why": "It is true, but it is about a cat."
             },
             {
-              "ask": "When are the strawberries ready? Who knows?",
-              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🍓</div>",
+              "ask": "When are the mangoes ready? Who knows?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🥭</div>",
               "opts": [
                 {
                   "t": "the farmer",
@@ -2669,7 +2670,7 @@
               "meaning": "Using old paper, glass and tins to make new things instead of throwing them away.",
               "uses": [
                 "Recycling saves trees.",
-                "The recycling lorry comes on Fridays."
+                "The recycling lorry comes every week."
               ],
               "lesson": 5,
               "title": "Sources and Reasons",
@@ -3910,6 +3911,15 @@
      acronym, a title, a weekday or one of the course's names */
   const KEEP_CAP = /^(?:I|I'm|I've|I'd|I'll|[A-Z]{2,}|Mr|Mrs|Miss|Ms|Dr|Teacher|Grandma|Grandpa|Amal|Sami|Nora|Omar|Hana|Tariq|Leo|Yusuf|Dana|Riverside|Greenway|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Saturdays|Sundays)(?![a-z])/;
   const lower1 = (s) => { s = String(s || ""); return !s || KEEP_CAP.test(s) ? s : s[0].toLowerCase() + s.slice(1); };
+  /* an about line speaks to the child ("make your own questions"); read back
+     as the child's own words ("I learned to...") it must say my, I, me */
+  const mine = (s) => String(s || "")
+    .replace(/\bboth of you\b/gi, "both of us")
+    .replace(/\b(to|help|helps|helped) you\b/gi, "$1 me")
+    .replace(/\byourself\b/gi, "myself")
+    .replace(/\byours\b/gi, (m) => (m[0] === "Y" ? "Mine" : "mine"))
+    .replace(/\byour\b/gi, (m) => (m[0] === "Y" ? "My" : "my"))
+    .replace(/\byou\b/gi, "I");
   const noDot = (s) => String(s || "").replace(/[.!]\s*$/, "");
 
   /* ---- a step may speak only while it is the step on screen ------------
@@ -4076,7 +4086,7 @@
       '<rect x="60" y="130" width="200" height="16" rx="6" fill="#93AABE"/><rect x="70" y="146" width="12" height="40" fill="#93AABE"/><rect x="238" y="146" width="12" height="40" fill="#93AABE"/>' },
     /* a park: grass, a path, trees */
     park: { w: 320, h: 240, label: "The park", bg: SKY(240) + GROUND(120) +
-      '<path d="M0 220 q160 -60 320 -10 v30 h-320z" fill="#C9B79C"/><circle cx="270" cy="44" r="24" fill="#F4C95D"/>' +
+      '<path d="M0 220 q160 -60 320 -10 v30 h-320z" fill="#C9B79C"/><ellipse cx="200" cy="204" rx="58" ry="20" fill="#7CC4E8"/><circle cx="270" cy="44" r="24" fill="#F4C95D"/>' +
       '<rect x="40" y="90" width="14" height="60" fill="#8B5A2B"/><circle cx="47" cy="80" r="34" fill="#2F8F45"/>' +
       '<rect x="260" y="100" width="14" height="50" fill="#8B5A2B"/><circle cx="267" cy="92" r="30" fill="#4CB65C"/>' },
     /* a kitchen: a worktop, a window, a cooker */
@@ -4522,7 +4532,7 @@
       : o.display === "bars"
         ? '<div class="picto bars"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
           '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="barwrap"><span class="bar" style="width:' + Math.round(r.value / most * 100) + '%" aria-hidden="true"></span></span><b class="pcount">' + r.value + "</b></div>").join("") +
-          '<p class="sub">A bar chart: the longer the bar, the more people.</p></div>'
+          '<p class="sub">A bar chart: the longer the bar, the bigger the number.</p></div>'
         : '<div class="picto"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
           '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="pictocells">' + '<span class="pcell" aria-hidden="true">' + small(r.pic) + "</span>".repeat(r.value) + '</span><b class="pcount">' + r.value + "</b></div>").join("") +
           '<p class="sub">Each picture is one person.</p></div>';
@@ -4818,7 +4828,7 @@
      is the child hearing themselves state an opinion. */
   function opinion(o) {
     const el = o.el, rounds = o.rounds;
-    let r = 0, stance = null, said = 0, lock = false, given = [];
+    let r = 0, stance = null, said = 0, lock = false, given = [], givenK = [];
     const needR = Math.max(1, Number(o.reasonsNeeded) || 1);
     function draw() {
       const rd = rounds[r];
@@ -4831,7 +4841,7 @@
     }
     function start() {
       const rd = rounds[r];
-      stance = null; lock = false; given = [];
+      stance = null; lock = false; given = []; givenK = [];
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
       draw();
       $(el.ask).innerHTML = esc(rd.ask || "What do you think about " + rd.topic + "?") + " <b>Tap what YOU think.</b> There is no wrong answer.";
@@ -4863,8 +4873,22 @@
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         return;
       }
+      if (b.dataset.about === rd.tag && stance.mixed && needR > 1 && given.length === needR - 1) {
+        /* a mixed opinion ("I partly agree") needs reasons that do not all
+           back one side: refuse a last reason that points the same way */
+        const mixedIds = rd.stances.filter((s) => s.mixed).map((s) => s.id);
+        const sides = (k) => ((rd.reasons[k] || {}).supports || []).filter((id) => !mixedIds.includes(id));
+        let common = sides(Number(b.dataset.k));
+        givenK.forEach((k) => { common = common.filter((id) => sides(k).includes(id)); });
+        if (common.length) {
+          b.classList.add("wrong"); b.disabled = true; SOUND.play("boing", 0.3);
+          const line = "That reason points the same way as your other one. You said: " + noDot(stance.t) + ", so give a reason on each side. Pick one that points the other way.";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          return;
+        }
+      }
       if (b.dataset.about === rd.tag) {
-        given.push(b.textContent); b.classList.add("right"); b.disabled = true;
+        given.push(b.textContent); givenK.push(Number(b.dataset.k)); b.classList.add("right"); b.disabled = true;
         if (given.length < needR) { SOUND.play("pop", 0.35); draw(); const l = cheer() + " That reason is about " + rd.topic + ". Now another one."; $(el.fb).className = "fb good"; $(el.fb).textContent = l; say(l); return; }
         lock = true; said++;
         $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; });
@@ -5144,14 +5168,14 @@
     let phase = "learned", liked = null, missed = 0, lock = false, before = null;
     function draw() {
       if (phase === "changed") {
-        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (before === null ? "Before this lesson, I thought…" : "Now I think…") + '</p><div class="cardsgrid wide">' +
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (before === null ? (o.scope === "course" ? "Before these lessons, I thought…" : "Before this lesson, I thought…") : "Now I think…") + '</p><div class="cardsgrid wide">' +
           (before === null ? changed.map((c, k) => '<button type="button" class="tapcard learncard" data-before="' + k + '">' + esc(c.before) + "</button>").join("")
             : shuffle(changed.map((c, k) => k)).map((k) => '<button type="button" class="tapcard learncard" data-after="' + k + '">' + esc(changed[k].after) + "</button>").join("")) + "</div></div>";
         $(el.score).textContent = before === null ? "Pick how one of your ideas changed" : "Now pick what you think now";
         return;
       }
       if (phase === "learned") {
-        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">I learned that…</p><div class="cardsgrid wide">' + pool.map((c) => '<button type="button" class="tapcard learncard' + (got.has(c.k) ? " heard" : "") + '" data-k="' + c.k + '"' + (got.has(c.k) || lock ? " disabled" : "") + '>' + (c.lesson ? '<small>Lesson ' + c.lesson + "</small>" : "") + esc(lower1(c.t)) + "</button>").join("") + "</div></div>";
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">I learned to…</p><div class="cardsgrid wide">' + pool.map((c) => '<button type="button" class="tapcard learncard' + (got.has(c.k) ? " heard" : "") + '" data-k="' + c.k + '"' + (got.has(c.k) || lock ? " disabled" : "") + '>' + (c.lesson ? '<small>Lesson ' + c.lesson + "</small>" : "") + esc(lower1(c.ok ? mine(c.t) : c.t)) + "</button>").join("") + "</div></div>";
         $(el.score).textContent = got.size + " of " + pick + " things learned";
       } else if (phase === "liked") {
         $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (o.mode === "changed" ? "The kind of activity that helped me learn most was…" : o.mode === "helped" ? "The part that helped me learn most was…" : "I liked…") + '</p><div class="cardsgrid">' + o.liked.map((c, k) => '<button type="button" class="tapcard likecard' + (liked === k ? " now" : "") + '" data-l="' + k + '"><span class="cpic" aria-hidden="true">' + small(c.icon) + "</span>" + esc(c.title) + (c.lesson ? "<small>Lesson " + c.lesson + "</small>" : "") + "</button>").join("") + "</div></div>";
@@ -5171,7 +5195,7 @@
         const c = pool.find((x) => x.k === Number(lc.dataset.k));
         if (c.ok) {
           got.add(c.k); SOUND.play("pop", 0.35); draw();
-          const line = "I learned to " + lower1(noDot(c.t)) + ".";
+          const line = "I learned to " + lower1(noDot(mine(c.t))) + ".";
           $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + line; say(cheer() + " " + line);
           reportAttempt(o.finish, got.size, pick, "things learned");
           if (got.size >= pick) {
@@ -5184,7 +5208,7 @@
           }
         } else {
           missed++; lc.classList.add("wrong"); SOUND.play("error", 0.3);
-          const line = "We did not do that today. Tap something you really did learn in this lesson.";
+          const line = "We did not do that" + (o.scope === "course" ? "" : " today") + ". Tap something you really did learn in " + (o.scope === "course" ? "these lessons" : "this lesson") + ".";
           $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
           setTimeout(() => lc.classList.remove("wrong"), 700);
         }
@@ -5274,7 +5298,7 @@
         }, 3000);
       } else {
         missed = true; b.classList.add("wrong"); b.disabled = true; SOUND.play("error", 0.3);
-        const line = "That is true, but it is about " + (b.dataset.about || "something else") + ". " + (rd.asker ? rd.asker.name : asker.name) + " asked about " + rd.about + ". Try another.";
+        const line = "That answer is about " + (b.dataset.about || "something else") + ". " + (rd.asker ? rd.asker.name : asker.name) + " asked about " + rd.about + ". Try another.";
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
       }
     });
@@ -5288,6 +5312,7 @@
      there yet. The right question is the one whose tag is one of the
      talk's topics. */
   function listenAsk(o) {
+    const respond = (o.rounds || []).some((rd) => (rd.opts || []).some((x) => (rd.topics || []).includes(x.about) && !/\?\s*$/.test(x.t)));
     const el = o.el, rounds = o.rounds;
     let r = 0, shown = 0, phase = "listen", right = 0, missed = false, lock = false, timer = null;
     function draw() {
@@ -5304,8 +5329,9 @@
       phase = "listen"; shown = 0; lock = false; missed = false;
       $(el.ch).innerHTML = ""; $(el.ch).className = "choices"; $(el.fb).textContent = ""; $(el.fb).className = "fb";
       draw();
-      $(el.ask).innerHTML = "Listen to <b>" + esc(rounds[r].speaker.name) + "</b>. Then ask a question about what they said.";
-      sayHere(o.finish, "Listen to " + rounds[r].speaker.name + ". Then ask a question about what they said. Press Listen.");
+      const then = respond ? "Then respond with an idea or a question about what they said." : "Then ask a question about what they said.";
+      $(el.ask).innerHTML = "Listen to <b>" + esc(rounds[r].speaker.name) + "</b>. " + then;
+      sayHere(o.finish, "Listen to " + rounds[r].speaker.name + ". " + then + " Press Listen.");
     }
     function listen() {
       if (lock) return;
@@ -5321,11 +5347,13 @@
     function askPhase() {
       const rd = rounds[r];
       phase = "ask"; lock = false; draw();
-      $(el.ask).innerHTML = "Now ask <b>" + esc(rd.speaker.name) + "</b> a question about what they said. Tap one.";
+      $(el.ask).innerHTML = respond ? "Now respond to <b>" + esc(rd.speaker.name) + "</b> with an idea or a question about what they said. Tap one."
+        : "Now ask <b>" + esc(rd.speaker.name) + "</b> a question about what they said. Tap one.";
       $(el.ch).className = "choices stack";
       $(el.ch).innerHTML = shuffle(rd.opts).map((x) => '<button type="button" class="choice text" data-about="' + esc(x.about) + '">' + esc(x.t) + "</button>").join("");
       reportAttempt(o.finish, r + 1, rounds.length, "talks");
-      sayHere(o.finish, "Now ask " + rd.speaker.name + " a question about what they said. Tap one.");
+      sayHere(o.finish, respond ? "Now respond to " + rd.speaker.name + " with an idea or a question about what they said. Tap one."
+        : "Now ask " + rd.speaker.name + " a question about what they said. Tap one.");
     }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock || phase !== "ask") return;
@@ -5334,11 +5362,11 @@
         lock = true; if (!missed) right++;
         $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
         SOUND.play("ding", 0.4);
-        const line = cheer() + " You asked: " + b.textContent + " " + rd.why + (rd.reply ? " " + rd.speaker.name + " says: " + rd.reply : "");
+        const line = cheer() + (/\?\s*$/.test(b.textContent) ? " You asked: " : " You said: ") + b.textContent + " " + rd.why + (rd.reply ? " " + rd.speaker.name + " says: " + rd.reply : "");
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         r++;
         setTimeout(() => {
-          if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "You listened to " + rounds.length + " classmates and asked each one a question about what they said. " + o.done); }
+          if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "You listened to " + rounds.length + " classmates and " + (respond ? "responded to each one about what they said. " : "asked each one a question about what they said. ") + o.done); }
           else start();
         }, 4000);
       } else {

@@ -60,12 +60,12 @@ LESSON = {
                  ["Read the card, pick the word, pick the ending, press Ask it."]),
              {"topic": "our crowded playground", "words": ["What", "Where", "Who", "When", "Why", "How many"],
               "ends": [
-                  {"id": "footplay", "t": "do the footballers play?", "words": ["Where", "When", "What", "Why"], "asks": "the footballers' playing"},
+                  {"id": "footplay", "t": "do the footballers play?", "words": ["Where", "When", "What", "Why", "Who"], "asks": "the footballers' playing"},
                   {"id": "fullest", "t": "is the playground fullest?", "words": ["When", "Where"], "asks": "when or where it is fullest"},
                   {"id": "sand", "t": "children are in the sandpit?", "words": ["How many"], "asks": "how many are in the sandpit"},
                   {"id": "bench", "t": "sits on the bench?", "words": ["Who"], "asks": "who uses the bench"},
                   {"id": "crowd", "t": "does the slide get so crowded?", "words": ["Why", "When"], "asks": "the slide getting crowded"},
-                  {"id": "quiet", "t": "could we play in the quiet corner?", "words": ["What", "When"], "asks": "what we could play in the quiet corner"},
+                  {"id": "quiet", "t": "could we play in the quiet corner?", "words": ["What", "When"], "asks": "playing in the quiet corner"},
               ],
               "rounds": [
                   {"want": "the place the footballers play", "pic": "⚽", "word": "Where", "end": "footplay", "why": "Where asks for a place. Now we can look and see."},

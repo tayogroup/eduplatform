@@ -20,13 +20,13 @@ LESSON = {
              explain(
                  ["A cause is the reason you did something. A consequence is what it did to somebody else.", "In a shared space the consequence reaches more people than you meant."],
                  ["Hana wanted the window seat, so she pushed to the front of the lunch queue. The cause: wanting the seat.",
-                  "The Grade 1 behind her dropped his tray. The consequence, for him, and for the dinner staff who cleaned it up."],
+                  "The Grade 1 behind her dropped his tray. The consequence, for him, and for the kitchen staff who cleaned it up."],
                  ["Children see only the person right next to them.", "Ask who ELSE the chain reached."],
                  ["Press Next and follow the chain."]),
              {"frames": [
                  {"pic": "\U0001F4BA", "cap": "<b>Cause:</b> Hana wanted the seat by the window.", "say": "The cause. Hana wanted the seat by the window before anyone else got it."},
                  {"pic": "\U0001F3C3", "cap": "<b>Action:</b> so she pushed to the front of the lunch queue.", "say": "The action. So she pushed to the front of the lunch queue.", "sound": "pop"},
-                 {"pic": "\U0001F4A5", "cap": "<b>Consequence:</b> a Grade 1 behind her dropped his tray, and dinner was late for the whole queue.", "say": "The consequence for others. A Grade 1 behind her lost his balance and dropped his tray. The dinner staff stopped to clean it, and everyone behind waited longer.", "sound": "thud"},
+                 {"pic": "\U0001F4A5", "cap": "<b>Consequence:</b> a Grade 1 behind her dropped his tray, and lunch was late for the whole queue.", "say": "The consequence for others. A Grade 1 behind her lost his balance and dropped his tray. The kitchen staff stopped to clean it, and everyone behind waited longer.", "sound": "thud"},
                  {"pic": "\U0001F914", "cap": "One small cause, and the chain reached <b>twenty people</b>.", "say": "One small cause, one push, and the chain reached twenty people who had nothing to do with the window seat.", "sound": "ding"},
                  {"pic": "\U0001F517", "cap": "In a shared space, <b>find the cause</b> and you change what happens to everyone.", "say": "In a shared space, find the cause, and you change what happens to everyone.", "sound": "tada"},
              ]},
@@ -195,7 +195,7 @@ LESSON["about"] = [
 
 LESSON["lecture"] = [
     part("\U0001F4BA", "One push in the queue",
-         "Hana wanted the window seat, so she pushed to the front of the lunch queue. A Grade 1 dropped his tray, the dinner staff stopped to clean it, and twenty people waited longer. One small cause, and the chain reached the whole queue."),
+         "Hana wanted the window seat, so she pushed to the front of the lunch queue. A Grade 1 dropped his tray, the kitchen staff stopped to clean it, and twenty people waited longer. One small cause, and the chain reached the whole queue."),
     part("\U0001F517", "Cause, action, consequence",
          "The cause is why you did it. The action is what you did. The consequence is what it did to somebody else. In a shared space, ask who ELSE the chain reached."),
     part("\U0001F527", "Causes you can change",
@@ -234,7 +234,7 @@ LESSON["home"] = [
          "Was the wind ever to blame, or was it mostly you?"),
     home("Somebody else's problem", "A grown-up and your street or block",
          ["Find one problem that belongs to a neighbour: bins, a gate, a heavy bag.",
-          "Suggest an action YOU could take, with a grown-up if needed.",
+          "Suggest an action YOU could take, and do it with your grown-up.",
           "Do it, and notice what it changed for them."],
          "Was it a big action or a small one?"),
 ]

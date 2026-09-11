@@ -149,7 +149,7 @@ LESSON = {
                  q("Which skill is sharing your seeds so Sami can plant?", "\U0001F91D", "working together", ["looking back", "finding out", "listening"], "Sharing so both can finish is working together."),
                  q("What does a pictogram show?", "\U0001F4CA", "what everyone said, one picture per person", ["a map of the town", "a story", "the weather"], "Every picture is one person's answer."),
                  q("Teacher Yasmin asks what the team did. Which answer is about the team?", "\U0001F331", "We planted a garden and shared the seeds.", ["I went to the dentist.", "Birds have wings.", "I like toast."], "She asked about the team."),
-                 q("Can somebody tell you what you liked best is wrong?", "\U0001F4AD", "No, what you liked is yours", ["Yes, always", "Only the teacher can"], "What you liked is your own opinion."),
+                 q("Can somebody say the part you liked best is wrong?", "\U0001F4AD", "No, what you liked is yours", ["Yes, always", "Only the teacher can"], "What you liked is your own opinion."),
                  q("What is the best source for a topic?", "\U0001F3AF", "the one that is about your topic", ["the biggest one", "the newest one", "the red one"], "A source helps when it is about your topic."),
              ]},
              "That is the whole course finished. You looked back, and you know what you learned."),

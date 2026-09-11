@@ -37,7 +37,7 @@ LESSON = {
                  {"pic": "\U0001F4CA", "cap": "The class asked: <b>what is your favourite break-time snack?</b> Here is the chart.", "say": "The class asked: what is your favourite break-time snack? Here is the chart."},
                  {"pic": "\U0001F34E", "cap": "Fruit: 3. Crisps: 1. Yoghurt: 2. Sweets: 0.", "say": "Fruit, three. Crisps, one. Yoghurt, two. Sweets, none.", "sound": "pop"},
                  {"pic": "✅", "cap": "Amal: <b>more children chose fruit than crisps.</b> The numbers prove it. A conclusion.", "say": "Amal says: more children chose fruit than crisps. Three is more than one. The numbers prove it. That is a conclusion.", "sound": "ding"},
-                 {"pic": "\U0001F914", "cap": "Sami: <b>fruit is the tastiest snack.</b> Hmm. The chart says nothing about taste.", "say": "Sami says: fruit is the tastiest snack. Hmm. The chart says nothing about taste. That is an opinion, not a conclusion.", "sound": "boing"},
+                 {"pic": "\U0001F914", "cap": "Omar: <b>fruit is the tastiest snack.</b> Hmm. The chart says nothing about taste.", "say": "Omar says: fruit is the tastiest snack. Hmm. The chart says nothing about taste. That is an opinion, not a conclusion.", "sound": "boing"},
                  {"pic": "\U0001F4A1", "cap": "A <b>conclusion</b> is a sentence the data <b>proves</b>. Nothing more, nothing less.", "say": "A conclusion is a sentence the data proves. Nothing more, nothing less.", "sound": "tada"},
              ]},
              "A conclusion is a sentence the data proves."),
@@ -50,7 +50,7 @@ LESSON = {
                  [],
                  ["Ask, listen, record, six times."]),
              {"question": "What is your favourite break-time snack?", "pic": "\U0001F34E", "columns": ["Snack", "How many"],
-              "options": [{"id": "fruit", "t": "Fruit", "pic": "\U0001F34E"}, {"id": "crisps", "t": "Crisps", "pic": "\U0001F96B"},
+              "options": [{"id": "fruit", "t": "Fruit", "pic": "\U0001F34E"}, {"id": "crisps", "t": "Crisps", "pic": "\U0001F954"},
                           {"id": "yog", "t": "Yoghurt", "pic": "\U0001F963"}, {"id": "sweets", "t": "Sweets", "pic": "\U0001F36C"}],
               "people": people([
                   ("fruit", "An apple. Or a banana."),
@@ -95,7 +95,7 @@ LESSON = {
               "rows": [
                   {"label": "Apples", "pic": "\U0001F34E", "value": 24},
                   {"label": "Bananas", "pic": "\U0001F34C", "value": 18},
-                  {"label": "Crisps", "pic": "\U0001F96B", "value": 30},
+                  {"label": "Crisps", "pic": "\U0001F954", "value": 30},
                   {"label": "Flapjacks", "pic": "\U0001F36A", "value": 12},
               ],
               "items": [
@@ -125,7 +125,7 @@ LESSON = {
                   {"pic": "\U0001F36C", "label": "Nobody chose sweets", "bin": "yes", "why": "Sweets: zero. Proved."},
                   {"pic": "\U0001F3EB", "label": "Every class in the school likes fruit best", "bin": "no", "why": "We only asked OUR class. The data cannot say that."},
                   {"pic": "\U0001F522", "label": "Six children answered", "bin": "yes", "why": "3 + 1 + 2 + 0 = 6. Proved."},
-                  {"pic": "\U0001F96B", "label": "Crisps are bad for you", "bin": "no", "why": "The chart counts choices. It says nothing about health."},
+                  {"pic": "\U0001F954", "label": "Crisps are bad for you", "bin": "no", "why": "The chart counts choices. It says nothing about health."},
               ]},
              "You can tell a conclusion the data proves from a sentence it does not."),
 
@@ -140,7 +140,7 @@ LESSON = {
               "bins": [{"id": "like", "label": "We like it", "pic": "\U0001F60B"}, {"id": "both", "label": "Both", "pic": "\U0001F91D"}, {"id": "healthy", "label": "It is healthy", "pic": "\U0001F4AA"}],
               "items": [
                   {"pic": "\U0001F34E", "label": "an apple", "bin": "both", "why": "Three chose fruit, and an apple is healthy. Both."},
-                  {"pic": "\U0001F96B", "label": "crisps", "bin": "like", "why": "Somebody chose them, but they are not a healthy snack. Liked only."},
+                  {"pic": "\U0001F954", "label": "crisps", "bin": "like", "why": "Somebody chose them, but they are not a healthy snack. Liked only."},
                   {"pic": "\U0001F955", "label": "carrot sticks", "bin": "healthy", "why": "Healthy, but nobody in our survey chose them. Healthy only."},
                   {"pic": "\U0001F963", "label": "a yoghurt", "bin": "both", "why": "Two chose it, and yoghurt is healthy. Both."},
                   {"pic": "\U0001F34C", "label": "a banana", "bin": "both", "why": "Fruit was chosen three times, and a banana is healthy. Both."},
@@ -173,8 +173,8 @@ LESSON = {
              {"items": [
                  q("What is a conclusion?", "\U0001F4A1", "a sentence the data proves", ["a guess", "an opinion", "a kind of chart"], "Nothing more, nothing less than what the data shows."),
                  q("Sami said fruit is the tastiest snack. Why was that not a conclusion?", "\U0001F60B", "the chart does not measure taste", ["fruit is not tasty", "Sami was wrong about fruit", "it was too short"], "The data only counted choices."),
-                 q("How many children answered the snack survey?", "\U0001F522", "6", ["3", "4", "12"], "3 + 1 + 2 + 0."),
-                 q("Which snack did the tuck shop sell most?", "\U0001F96B", "crisps", ["apples", "bananas", "flapjacks"], "30, the biggest number."),
+                 q("How many more children chose yoghurt than sweets?", "\U0001F963", "2", ["0", "1", "6"], "Yoghurt 2, sweets 0. 2 take away 0 is 2."),
+                 q("Which snack did the tuck shop sell most?", "\U0001F954", "crisps", ["apples", "bananas", "flapjacks"], "30, the biggest number."),
                  q("How many more children chose fruit than crisps?", "\U0001F34E", "2", ["1", "3", "4"], "Fruit 3, crisps 1. 3 take away 1 is 2."),
                  q("Where does an apple go on the liked-and-healthy Venn diagram?", "\U0001F34E", "the middle: both", ["liked only", "healthy only", "nowhere"], "We like it, and it is healthy."),
                  q("Where do carrot sticks go?", "\U0001F955", "healthy only", ["the middle", "liked only", "nowhere"], "Healthy, but nobody chose them."),
@@ -196,7 +196,7 @@ LESSON["lecture"] = [
     part("\U0001F4CA", "The snack chart",
          "The class asked what everyone's favourite break-time snack is. Fruit three, crisps one, yoghurt two, sweets none. That is the data."),
     part("\U0001F4A1", "A conclusion",
-         "A conclusion is a sentence the data proves. More children chose fruit than crisps: three is more than one, proved. Six children answered: three plus one plus two plus none, proved."),
+         "A conclusion is a sentence the data proves. More children chose fruit than crisps: three is more than one, proved. Six children answered: three plus one plus two plus zero, proved."),
     part("\U0001F914", "Not a conclusion",
          "Fruit is the tastiest snack? The chart does not measure taste. Every class likes fruit best? We only asked our class. Those sound sensible, but the data does not prove them."),
     part("\U0001F4CB", "Numbers in a table",

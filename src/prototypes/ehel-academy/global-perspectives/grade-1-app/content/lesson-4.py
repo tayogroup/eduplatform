@@ -104,7 +104,7 @@ LESSON = {
                  {"issue": {"title": "The playground is covered in litter", "pic": "\U0001F5D1️", "say": "Wrappers and cups everywhere. What could we do?", "fixed": "The playground is clean!"},
                   "needs": "clean",
                   "actions": [
-                      action("bin", "Pick it up and put it in the bin", "\U0001F9F9", "clean", "You picked it all up and put it in the bin. The playground is clean."),
+                      action("bin", "Pick it up with a grown-up and put it in the bin", "\U0001F6AE", "clean", "You and a grown-up picked it all up and put it in the bin. The playground is clean."),
                       action("kick", "Kick it into the corner", "\U0001F9B6", "nothing", "Now the litter is in the corner. The playground still has litter in it."),
                       action("shout", "Shout at the litter", "\U0001F4E2", "nothing", "You shouted very loudly. The litter did not move."),
                       action("sweets", "Bring more sweets to eat outside", "\U0001F36C", "worse", "More sweets meant more wrappers. Now there is even more litter."),
@@ -143,7 +143,7 @@ LESSON = {
                  {"pic": "\U0001F6C1", "label": "washing", "say": "Washing ourselves, our clothes and our dishes."},
                  {"pic": "\U0001F372", "label": "cooking", "say": "Cooking. Rice, pasta and soup all need water."},
                  {"pic": "\U0001F331", "label": "plants", "say": "Plants. The garden and the farm need water to grow food."},
-                 {"pic": "\U0001F415", "label": "animals", "say": "Animals. Pets and farm animals need water too."},
+                 {"pic": "\U0001F410", "label": "animals", "say": "Animals. Pets and farm animals need water too."},
                  {"pic": "\U0001F9F9", "label": "cleaning", "say": "Cleaning the floor, the classroom and the streets."},
              ], "need": 6,
               "then": {"ask": "If we leave taps running and waste water, what happens?",
@@ -162,7 +162,7 @@ LESSON = {
                  q("You leave your coat at home in the rain. What happens to you?", "\U0001F327️", "you get wet and cold", ["you stay dry", "you get a hat"], "No coat, rain, wet you."),
                  q("The plants are droopy. Which action fixes it?", "\U0001F940", "give them water", ["sing to them", "give them a hat"], "Droopy plants need a drink."),
                  q("What is a consequence?", "➡️", "what happens next because of what you did", ["a kind of tap", "a game"], "Do something, and something happens next. That is a consequence."),
-                 q("The playground has litter. Which action fixes it?", "\U0001F5D1️", "pick it up and bin it", ["kick it into the corner", "shout at it"], "Litter in the bin is a clean playground."),
+                 q("The playground has litter. Which action fixes it?", "\U0001F5D1️", "pick it up and bin it", ["kick it into the corner", "shout at it"], "Litter in the bin is a clean playground. Ask a grown-up to help, and never touch anything sharp."),
              ]},
              "You know what happens next, and what fixes a problem."),
 
@@ -181,7 +181,7 @@ LESSON = {
                  q("The tap is dripping. Which action fixes it?", "\U0001F4A7", "turn it off properly, and tell a grown-up if it still drips", ["turn it on more", "walk away", "put a bowl under it and leave it"], "Turning it off properly stops the waste, and a grown-up can fix a tap that still drips."),
                  q("Sami has no crayons. Which action fixes it?", "\U0001F622", "share some of yours", ["hide yours", "draw his picture for him", "tell him drawing is boring"], "Sami needed crayons, so sharing fixed it."),
                  q("What is water for?", "\U0001F4A7", "drinking, washing, cooking and plants", ["only for swimming", "nothing much", "only for cars"], "Water is for so many things, which is why we should not waste it."),
-                 q("Before you do something, what can you think?", "\U0001F914", "what will happen to me next?", ["what is for lunch?", "nothing", "what colour is it?"], "Thinking about the next thing is thinking ahead."),
+                 q("Before you do something, what is a good question to ask yourself?", "\U0001F914", "what will happen to me next?", ["what is for lunch?", "nothing", "what colour is it?"], "Thinking about the next thing is thinking ahead."),
              ]},
              "That is the whole lesson finished. You can think about what happens next, and choose what would fix a problem."),
     ],
@@ -219,7 +219,7 @@ LESSON["words"] = [
          ["The droopy plants are a problem.", "What is the problem?"]),
     word("solution", "\U0001F527", "The action that fixes a problem.",
          ["Water was the solution for the plants.", "Choose the solution."]),
-    word("waste", "\U0001F6B1", "To use up something for nothing.",
+    word("waste", "\U0001F4A7", "To use up something for nothing.",
          ["A dripping tap wastes water.", "Do not waste it."]),
 ]
 

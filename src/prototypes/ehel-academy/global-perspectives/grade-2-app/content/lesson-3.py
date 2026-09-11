@@ -43,21 +43,21 @@ LESSON = {
                  ["Read the question, then tap the person who would know."]),
              {"asker": YASMIN,
               "rounds": [
-                  {"ask": "How is bread made?", "about": "bread", "pic": "\U0001F35E",
+                  {"ask": "Who would know how bread is made?", "about": "bread", "pic": "\U0001F35E",
                    "opts": [tagged("The baker", "bread", "\U0001F469\U0001F3FE‍\U0001F373"), tagged("The bus driver", "buses", "\U0001F68C"), tagged("The librarian", "books", "\U0001F469\U0001F3FD‍\U0001F4BC")],
                    "why": "The baker makes bread every day, so the baker knows."},
-                  {"ask": "Which bus goes to the market?", "about": "buses", "pic": "\U0001F68C",
+                  {"ask": "Who would know which bus goes to the market?", "about": "buses", "pic": "\U0001F68C",
                    "opts": [tagged("The bus driver", "buses", "\U0001F68C"), tagged("The baker", "bread", "\U0001F469\U0001F3FE‍\U0001F373"), tagged("The doctor", "health", "\U0001F469\U0001F3FF‍⚕️")],
                    "why": "The bus driver drives the buses, so the bus driver knows the routes."},
-                  {"ask": "When does the library open?", "about": "books", "pic": "\U0001F4DA",
+                  {"ask": "Who would know when the library opens?", "about": "books", "pic": "\U0001F4DA",
                    "opts": [tagged("The librarian", "books", "\U0001F469\U0001F3FD‍\U0001F4BC"), tagged("The farmer", "farming", "\U0001F468\U0001F3FD‍\U0001F33E"), tagged("The bus driver", "buses", "\U0001F68C")],
                    "why": "The librarian works at the library, so the librarian knows when it opens."},
-                  {"ask": "What should I do about a sore throat?", "about": "health", "pic": "\U0001FA7A",
+                  {"ask": "Who would know what to do about a sore throat?", "about": "health", "pic": "\U0001FA7A",
                    "opts": [tagged("The doctor", "health", "\U0001F469\U0001F3FF‍⚕️"), tagged("The baker", "bread", "\U0001F469\U0001F3FE‍\U0001F373"), tagged("The librarian", "books", "\U0001F469\U0001F3FD‍\U0001F4BC")],
                    "why": "The doctor knows about being ill and getting better."},
-                  {"ask": "When are the strawberries ready to pick?", "about": "farming", "pic": "\U0001F353",
+                  {"ask": "Who would know when the mangoes are ready to pick?", "about": "farming", "pic": "\U0001F96D",
                    "opts": [tagged("The farmer", "farming", "\U0001F468\U0001F3FD‍\U0001F33E"), tagged("The doctor", "health", "\U0001F469\U0001F3FF‍⚕️"), tagged("The bus driver", "buses", "\U0001F68C")],
-                   "why": "The farmer grows the strawberries, so the farmer knows when they are ready."},
+                   "why": "The farmer grows the mangoes, so the farmer knows when they are ready."},
               ]},
              "Five questions, five people who would know. You asked the right person every time."),
 
@@ -117,7 +117,7 @@ LESSON = {
                   {"pic": "\U0001F333", "label": "how old the big acacia tree is", "bin": "keeper", "why": "The park keeper looks after the trees."},
                   {"pic": "\U0001F950", "label": "what time the buns come out of the oven", "bin": "baker", "why": "The baker bakes them."},
                   {"pic": "\U0001F986", "label": "where the ducks nest", "bin": "keeper", "why": "The park keeper sees the ducks every day."},
-                  {"pic": "\U0001F3AB", "label": "how much a bus ticket costs", "bin": "driver", "why": "The bus driver sells the tickets."},
+                  {"pic": "\U0001F6E3\uFE0F", "label": "which road the bus takes", "bin": "driver", "why": "The bus driver drives that road every day."},
               ]},
              "You matched six things to the people who know them."),
 
@@ -150,7 +150,7 @@ LESSON = {
                  q("Who would know where the ducks nest?", "\U0001F986", "the park keeper", ["the baker", "the librarian", "the bus driver"], "The park keeper is in the park every day."),
                  q("A talk about our town should say…", "\U0001F5E3️", "only things about the town", ["anything true", "things about pets", "one word"], "Everything in a talk about a topic is about that topic."),
                  q("Which sentence does NOT belong in a talk about our town?", "\U0001F431", "My cat is called Tiger.", ["The market is on Saturdays.", "The library is next to the park.", "The bus stops at the school."], "It is true, but it is about a cat."),
-                 q("When are the strawberries ready? Who knows?", "\U0001F353", "the farmer", ["the doctor", "the librarian", "the bus driver"], "The farmer grows them."),
+                 q("When are the mangoes ready? Who knows?", "\U0001F96D", "the farmer", ["the doctor", "the librarian", "the bus driver"], "The farmer grows them."),
                  q("Nobody knows everything. So to find out, you…", "\U0001F50D", "ask the person whose job it is", ["ask anyone", "guess", "ask your cat"], "Ask the one who knows."),
              ]},
              "That is the whole lesson finished. You know who knows what, and how to give a talk."),
@@ -195,7 +195,7 @@ LESSON["words"] = [
 
 LESSON["home"] = [
     home("Who knows what at home?", "Everyone at home",
-         ["Think of three questions: how does the washing machine work, what is for dinner, where is the nearest bus stop.",
+         ["Think of three questions: how do we cook rice, what is for dinner, where is the nearest bus stop.",
           "For each one, say who at home would know best.",
           "Ask them and see if you were right."],
          "Did the same person know all three?"),
@@ -212,5 +212,5 @@ LESSON["home"] = [
 ]
 
 LESSON["lookback"] = {
-    "not": ["how to bake bread", "how to swim", "the names of the planets"],
+    "not": ["how to tie a shoelace", "how to swim", "the names of the planets"],
 }

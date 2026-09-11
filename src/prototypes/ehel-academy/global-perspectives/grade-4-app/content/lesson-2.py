@@ -248,7 +248,7 @@ LESSON["words"] = [
 LESSON["home"] = [
     home("Observe the bin", "A grown-up and the kitchen bin at the end of a day",
          ["Decide what counts: packets, peel, paper, plastic.",
-          "Count one kind at a time.",
+          "Count one kind at a time, just by looking. Your grown-up moves things, and you wash your hands after.",
           "Draw a bar for each kind."],
          "Which kind is there most of? Could any of it have gone somewhere else?"),
     home("Ask at home", "Everyone at home",
@@ -266,8 +266,8 @@ LESSON["home"] = [
 LESSON["lookback"] = {
     "not": ["how to bake bread", "the names of the oceans", "how to swim"],
     "changed": [
-        {"before": "Asking people is the way to find things out.", "after": "Observe what I can see, ask what I cannot, and measure what has a size."},
-        {"before": "Everything on the ground is litter.", "after": "I decide what counts before I start counting."},
+        {"before": "Asking people is the way to find things out.", "after": "I should observe what I can see, ask what I cannot, and measure what has a size."},
+        {"before": "Everything on the ground is litter.", "after": "I should decide what counts before I start counting."},
         {"before": "A wetter day is just wetter.", "after": "A gauge lets me say HOW MANY millimetres wetter."},
     ],
 }

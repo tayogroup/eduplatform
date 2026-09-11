@@ -32,9 +32,9 @@ LESSON = {
              "A question is how you find out. Wanda asked, and now she knows."),
 
         step("explore", "The six question words", "❓", "Question words", ["1Rq.01"],
-             "Every question starts with a question word. Tap each one to hear what it asks for.",
+             "Lots of questions start with a question word. Tap each one to hear what it asks for.",
              explain(
-                 ["There are six question words.", "Each one asks for a different kind of answer."],
+                 ["Here are six question words.", "Each one asks for a different kind of answer."],
                  ["What asks for a thing.", "Where asks for a place.", "Who asks for a person.",
                   "When asks for a time.", "Why asks for a reason.", "How asks for the way something is done."],
                  ["Children mix up Where and When.", "Where is a place. When is a time."],
@@ -90,7 +90,7 @@ LESSON = {
               "bins": [{"id": "q", "label": "A question", "pic": "❓"}, {"id": "t", "label": "Telling", "pic": "\U0001F4AC"}],
               "items": [
                   {"pic": "\U0001F430", "label": "What does a rabbit eat?", "bin": "q", "why": "It asks for a thing. That is a question."},
-                  {"pic": "\U0001F408", "label": "My cat is black.", "bin": "t", "why": "It tells you something. Nobody is asking."},
+                  {"pic": "\U0001F408", "label": "My cat is fluffy.", "bin": "t", "why": "It tells you something. Nobody is asking."},
                   {"pic": "\U0001F426", "label": "Where do birds sleep?", "bin": "q", "why": "It asks for a place. A question."},
                   {"pic": "\U0001F408", "label": "I have a cat.", "bin": "t", "why": "It tells you. Not a question."},
                   {"pic": "\U0001F41F", "label": "Who feeds the fish?", "bin": "q", "why": "It asks for a person. A question."},
@@ -108,7 +108,7 @@ LESSON = {
              {"scene": "vet", "need": 5,
               "spots": [
                   spot("dog", "the dog on the table", "The vet is checking the dog's ears.", 160, 118, "\U0001F415"),
-                  spot("cat", "the cat in the basket", "A cat is waiting for its turn.", 60, 160, "\U0001F431"),
+                  spot("cat", "the cat waiting", "A cat is waiting for its turn.", 60, 160, "\U0001F431"),
                   spot("scales", "the scales", "The vet weighs every animal to see if it is growing well.", 260, 160, "⚖️"),
                   spot("medicine", "the medicine shelf", "Medicine helps a poorly pet get better.", 225, 62, "\U0001F48A"),
                   spot("vet", "the vet", "The vet is a doctor for animals.", 110, 70, "\U0001F469\U0001F3FE‍⚕️"),
@@ -125,7 +125,7 @@ LESSON = {
              explain(
                  ["A different picture tells you different things."],
                  ["This is the park.", "There are ducks on the pond.", "There is a dog on a lead.", "There is a sign, and a sign tells you something too."],
-                 ["Children forget that words in a picture are information.", "Read the sign."],
+                 ["Children forget that signs in a picture are information.", "Look at the sign."],
                  ["Tap four things and listen."]),
              {"scene": "park", "need": 4, "caption": "Tap the animals and the sign.",
               "spots": [
@@ -150,7 +150,7 @@ LESSON = {
                  [],
                  ["Read what you want to know, then tap the question that asks for it."]),
              {"label": "Question", "items": [
-                 q("You want to know the PLACE the hamster sleeps. Which question?", "\U0001F439", "Where does the hamster sleep?", ["Why does the hamster sleep?", "What is a hamster?"], "A place needs Where."),
+                 q("You want to know the PLACE the rabbit sleeps. Which question?", "\U0001F407", "Where does the rabbit sleep?", ["Why does the rabbit sleep?", "What is a rabbit?"], "A place needs Where."),
                  q("You want to know the PERSON who feeds the cat. Which question?", "\U0001F408", "Who feeds the cat?", ["When is the cat?", "How is a cat?"], "A person needs Who."),
                  q("You want to know the REASON the cat hides. Which question?", "\U0001F408", "Why does the cat hide?", ["Where is a cat?", "What colour is the cat?"], "A reason needs Why."),
                  q("A picture shows a vet holding a rabbit. What does it tell us?", "\U0001F430", "The vet is looking after the rabbit", ["Rabbits can fly", "The vet is asleep"], "Look at what is happening: the vet is holding the rabbit to look after it."),

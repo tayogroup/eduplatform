@@ -84,7 +84,7 @@ LESSON = {
                  {"topic": "why the beach has litter on it", "tag": "beach", "pic": "\U0001F3D6️", "multi": True,
                   "sources": [
                       source("photo", "a photo of the beach", "\U0001F4F7", ["beach"], "A photo of the beach shows the litter and where it is."),
-                      source("keeper", "the person who cleans the beach", "\U0001F9D1\U0001F3FD‍\U0001F33E", ["beach"], "The beach cleaner knows what gets left and by whom."),
+                      source("keeper", "the person who cleans the beach", "\U0001F9F9", ["beach"], "The beach cleaner knows what gets left and by whom."),
                       source("dino", "a book about dinosaurs", "\U0001F4D5", ["dinosaurs"], "Dinosaurs are not on the beach."),
                       source("moon", "a photo of the moon", "\U0001F319", ["the moon"], "A photo of the moon cannot show our beach."),
                   ],
@@ -104,16 +104,17 @@ LESSON = {
              {"reasonsNeeded": 2,
               "rounds": [
                  {"topic": "recycling at school", "tag": "recycling", "pic": "♻️", "ask": "What do you think about recycling at school?",
-                  "stances": [{"id": "more", "t": "I think we should recycle more"}, {"id": "ok", "t": "I think we recycle enough already"}, {"id": "unsure", "t": "I am not sure about recycling"}],
-                  "reasons": [dict(tagged("because it saves paper and trees", "recycling"), supports=['more', 'unsure']), dict(tagged("because it keeps rubbish out of the sea", "recycling"), supports=['more', 'unsure']), dict(tagged("because the bins are sometimes confusing", "recycling"), supports=['ok', 'unsure']), dict(tagged("because it takes time at the end of the day", "recycling"), supports=['ok', 'unsure']),
+                  "stances": [{"id": "more", "t": "I think we should recycle more"}, {"id": "ok", "t": "I think we recycle enough already"}, {"id": "unsure", "t": "I am not sure about recycling", "mixed": True}],
+                  "reasons": [dict(tagged("because it saves paper and trees", "recycling"), supports=['more', 'unsure']), dict(tagged("because it keeps rubbish out of the sea", "recycling"), supports=['more', 'unsure']), dict(tagged("because the bins are sometimes confusing", "recycling"), supports=['unsure']), dict(tagged("because it takes time at the end of the day", "recycling"), supports=['ok', 'unsure']),
+                              dict(tagged("because we already fill the recycling bin every day", "recycling"), supports=['ok', 'unsure']),
                               tagged("because I have a red bike", "bikes"), tagged("because it is Tuesday", "days")]},
                  {"topic": "keeping animals in a zoo", "tag": "zoo", "pic": "\U0001F981", "ask": "What do you think about keeping animals in a zoo?",
-                  "stances": [{"id": "good", "t": "I think zoos are a good thing"}, {"id": "bad", "t": "I think animals should not be in zoos"}, {"id": "some", "t": "I think it depends on the animal"}],
+                  "stances": [{"id": "good", "t": "I think zoos are a good thing"}, {"id": "bad", "t": "I think animals should not be in zoos"}, {"id": "some", "t": "I think it depends on the animal", "mixed": True}],
                   "reasons": [dict(tagged("because a zoo keeps rare animals safe", "zoo"), supports=['good', 'some']), dict(tagged("because animals need space to run", "zoo"), supports=['bad', 'some']), dict(tagged("because we can learn about animals there", "zoo"), supports=['good', 'some']), dict(tagged("because a cage is not a home", "zoo"), supports=['bad', 'some']),
                               tagged("because my shoes are new", "shoes"), tagged("because it rained yesterday", "weather")]},
                  {"topic": "litter on the beach", "tag": "beach", "pic": "\U0001F3D6️", "ask": "What do you think about litter on the beach?",
                   "stances": [{"id": "clean", "t": "I think everyone should take their litter home"}, {"id": "bins", "t": "I think the beach needs more bins"}, {"id": "both", "t": "I think we need both"}],
-                  "reasons": [dict(tagged("because litter hurts the sea animals", "beach"), supports=['clean', 'bins', 'both']), dict(tagged("because a clean beach is nicer to play on", "beach"), supports=['clean', 'bins', 'both']), dict(tagged("because bins fill up on a hot day", "beach"), supports=['clean', 'bins', 'both']), dict(tagged("because people forget their bags", "beach"), supports=['bins', 'both']),
+                  "reasons": [dict(tagged("because litter hurts the sea animals", "beach"), supports=['clean', 'bins', 'both']), dict(tagged("because a clean beach is nicer to play on", "beach"), supports=['clean', 'bins', 'both']), dict(tagged("because bins fill up on a hot day", "beach"), supports=['clean', 'bins', 'both']), dict(tagged("because people forget to bring a bag for their rubbish", "beach"), supports=['bins', 'both']),
                               tagged("because I like ice cream", "food"), tagged("because the bus was late", "buses")]},
              ]},
              "Three opinions, each with two reasons about the topic. That is expressing an opinion."),
@@ -130,7 +131,7 @@ LESSON = {
               "items": [
                   {"pic": "\U0001F4D7", "label": "a book about endangered animals", "bin": "yes", "why": "It is about exactly our topic."},
                   {"pic": "\U0001F3AC", "label": "a film about tigers in the wild", "bin": "yes", "why": "Tigers are in danger, and the film shows them."},
-                  {"pic": "\U0001F9D1\U0001F3FE‍\U0001F33E", "label": "the zoo keeper", "bin": "yes", "why": "The zoo keeper looks after rare animals every day."},
+                  {"pic": "\U0001F43E", "label": "the zoo keeper", "bin": "yes", "why": "The zoo keeper looks after rare animals every day."},
                   {"pic": "\U0001F68C", "label": "a bus timetable", "bin": "no", "why": "Buses are not animals."},
                   {"pic": "\U0001F4D9", "label": "a cookbook", "bin": "no", "why": "A cookbook is about food."},
                   {"pic": "\U0001F4BB", "label": "the zoo's website, with a grown-up", "bin": "yes", "why": "The zoo's website tells you which animals it protects."},
@@ -206,7 +207,7 @@ LESSON["words"] = [
     word("opinion", "\U0001F4AD", "What you think about something.",
          ["My opinion is that zoos are good.", "Give your opinion with two reasons."]),
     word("recycling", "♻️", "Using old paper, glass and tins to make new things instead of throwing them away.",
-         ["Recycling saves trees.", "The recycling lorry comes on Fridays."]),
+         ["Recycling saves trees.", "The recycling lorry comes every week."]),
 ]
 
 LESSON["home"] = [
@@ -220,11 +221,11 @@ LESSON["home"] = [
           "Everyone gives their opinion and TWO reasons.",
           "Check every reason is about pets."],
          "Did anybody give a reason that was about something else?"),
-    home("Look in the real thing", "The recycling bin at home, and a grown-up",
-         ["Stand by the recycling bin with your grown-up. Let your grown-up open it; keep your hands out.",
-          "Say what goes in it and what does not.",
-          "Ask your grown-up where the lorry takes it."],
-         "Was the bin a better source than a book for what YOUR family recycles?"),
+    home("Look in the real thing", "The rubbish bin at home, and a grown-up",
+         ["Stand by the rubbish bin with your grown-up. Let your grown-up open it; keep your hands out.",
+          "Say which things in it could be recycled: bottles, tins, paper.",
+          "Ask your grown-up where the rubbish goes."],
+         "Was the bin a better source than a book for what YOUR family throws away?"),
 ]
 
 LESSON["lookback"] = {

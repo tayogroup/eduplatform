@@ -536,7 +536,8 @@
 
   /* a text source: each sentence is a button; a bar chart beside the pictogram */
   .textsrc { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px; border: 3px solid var(--line); background: #FFFDF6; color: #142B3E; text-align: left; }
-  .textsrc .phase { margin: 0 0 2px; }
+  .textsrc .phase { margin: 0 0 2px; color: #0F6E66; }  /* teal on cream paper was 2.2:1 */
+  .picto .sub { color: #B8CAD8; }  /* --muted on the chart panel was 4.0:1 */
   .sline { width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid transparent; background: transparent; color: #142B3E;
     font: inherit; font-size: 19px; line-height: 1.45; text-align: left; }
   .sline:hover, .sline:focus-visible { border-color: var(--teal); background: rgba(53,191,178,0.12); outline: none; }
@@ -1054,7 +1055,7 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="3Fv.01 3Fl.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Looking back at this year has three parts.</s><s>What you learned, how your ideas changed, and which KIND of activity helped.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>First: I learned that. Tap two things you really did learn today.</s><s>Then: before I thought, now I think. Pick how one of your ideas changed.</s><s>Then: which kind of activity helped you learn most, and why.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say their ideas did not change.</s><s>If you learned something, an idea moved. Find it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the first thing you learned.</s></mstts:express-as>' data-say="What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.">
+    <section class="slide" data-objectives="3Fv.01 3Fl.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Looking back has three parts.</s><s>What you learned, how your ideas changed, and which KIND of activity helped.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>First: I learned that. Tap two things you really did learn today.</s><s>Then: before I thought, now I think. Pick how one of your ideas changed.</s><s>Then: which kind of activity helped you learn most, and why.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say their ideas did not change.</s><s>If you learned something, an idea moved. Find it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the first thing you learned.</s></mstts:express-as>' data-say="What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.">
       <div class="slide-head"><span class="n">11</span><h2>Look back</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.</span></div>
       <div class="stage">
@@ -1203,7 +1204,7 @@
             {
               "pic": "💡",
               "title": "A conclusion",
-              "say": "A conclusion is a sentence the data proves. More children chose fruit than crisps: three is more than one, proved. Six children answered: three plus one plus two plus none, proved."
+              "say": "A conclusion is a sentence the data proves. More children chose fruit than crisps: three is more than one, proved. Six children answered: three plus one plus two plus zero, proved."
             },
             {
               "pic": "🤔",
@@ -1316,8 +1317,8 @@
             },
             {
               "pic": "🤔",
-              "cap": "Sami: <b>fruit is the tastiest snack.</b> Hmm. The chart says nothing about taste.",
-              "say": "Sami says: fruit is the tastiest snack. Hmm. The chart says nothing about taste. That is an opinion, not a conclusion.",
+              "cap": "Omar: <b>fruit is the tastiest snack.</b> Hmm. The chart says nothing about taste.",
+              "say": "Omar says: fruit is the tastiest snack. Hmm. The chart says nothing about taste. That is an opinion, not a conclusion.",
               "sound": "boing"
             },
             {
@@ -1351,7 +1352,7 @@
             {
               "id": "crisps",
               "t": "Crisps",
-              "pic": "🥫"
+              "pic": "🥔"
             },
             {
               "id": "yog",
@@ -1533,7 +1534,7 @@
             },
             {
               "label": "Crisps",
-              "pic": "🥫",
+              "pic": "🥔",
               "value": 1
             },
             {
@@ -1579,7 +1580,7 @@
             },
             {
               "label": "Crisps",
-              "pic": "🥫",
+              "pic": "🥔",
               "value": 30
             },
             {
@@ -1728,7 +1729,7 @@
               "why": "3 + 1 + 2 + 0 = 6. Proved."
             },
             {
-              "pic": "🥫",
+              "pic": "🥔",
               "label": "Crisps are bad for you",
               "bin": "no",
               "why": "The chart counts choices. It says nothing about health."
@@ -1771,7 +1772,7 @@
               "why": "Three chose fruit, and an apple is healthy. Both."
             },
             {
-              "pic": "🥫",
+              "pic": "🥔",
               "label": "crisps",
               "bin": "like",
               "why": "Somebody chose them, but they are not a healthy snack. Liked only."
@@ -2072,7 +2073,7 @@
                   "explanation": "3 + 1 + 2 + 0 = 6. Proved."
                 },
                 {
-                  "prompt": "Where does Crisps are bad for you go? 🥫",
+                  "prompt": "Where does Crisps are bad for you go? 🥔",
                   "choices": [
                     "A conclusion: the data proves it",
                     "Not proved by the data"
@@ -2099,7 +2100,7 @@
                   "explanation": "Three chose fruit, and an apple is healthy. Both."
                 },
                 {
-                  "prompt": "Where does crisps go? 🥫",
+                  "prompt": "Where does crisps go? 🥔",
                   "choices": [
                     "We like it",
                     "Both",
@@ -2320,31 +2321,31 @@
               "why": "The data only counted choices."
             },
             {
-              "ask": "How many children answered the snack survey?",
-              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🔢</div>",
+              "ask": "How many more children chose yoghurt than sweets?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🥣</div>",
               "opts": [
                 {
-                  "t": "6",
+                  "t": "2",
                   "ok": true
                 },
                 {
-                  "t": "3",
+                  "t": "0",
                   "ok": false
                 },
                 {
-                  "t": "4",
+                  "t": "1",
                   "ok": false
                 },
                 {
-                  "t": "12",
+                  "t": "6",
                   "ok": false
                 }
               ],
-              "why": "3 + 1 + 2 + 0."
+              "why": "Yoghurt 2, sweets 0. 2 take away 0 is 2."
             },
             {
               "ask": "Which snack did the tuck shop sell most?",
-              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🥫</div>",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🥔</div>",
               "opts": [
                 {
                   "t": "crisps",
@@ -4142,6 +4143,15 @@
      acronym, a title, a weekday or one of the course's names */
   const KEEP_CAP = /^(?:I|I'm|I've|I'd|I'll|[A-Z]{2,}|Mr|Mrs|Miss|Ms|Dr|Teacher|Grandma|Grandpa|Amal|Sami|Nora|Omar|Hana|Tariq|Leo|Yusuf|Dana|Riverside|Greenway|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Saturdays|Sundays)(?![a-z])/;
   const lower1 = (s) => { s = String(s || ""); return !s || KEEP_CAP.test(s) ? s : s[0].toLowerCase() + s.slice(1); };
+  /* an about line speaks to the child ("make your own questions"); read back
+     as the child's own words ("I learned to...") it must say my, I, me */
+  const mine = (s) => String(s || "")
+    .replace(/\bboth of you\b/gi, "both of us")
+    .replace(/\b(to|help|helps|helped) you\b/gi, "$1 me")
+    .replace(/\byourself\b/gi, "myself")
+    .replace(/\byours\b/gi, (m) => (m[0] === "Y" ? "Mine" : "mine"))
+    .replace(/\byour\b/gi, (m) => (m[0] === "Y" ? "My" : "my"))
+    .replace(/\byou\b/gi, "I");
   const noDot = (s) => String(s || "").replace(/[.!]\s*$/, "");
 
   /* ---- a step may speak only while it is the step on screen ------------
@@ -4308,7 +4318,7 @@
       '<rect x="60" y="130" width="200" height="16" rx="6" fill="#93AABE"/><rect x="70" y="146" width="12" height="40" fill="#93AABE"/><rect x="238" y="146" width="12" height="40" fill="#93AABE"/>' },
     /* a park: grass, a path, trees */
     park: { w: 320, h: 240, label: "The park", bg: SKY(240) + GROUND(120) +
-      '<path d="M0 220 q160 -60 320 -10 v30 h-320z" fill="#C9B79C"/><circle cx="270" cy="44" r="24" fill="#F4C95D"/>' +
+      '<path d="M0 220 q160 -60 320 -10 v30 h-320z" fill="#C9B79C"/><ellipse cx="200" cy="204" rx="58" ry="20" fill="#7CC4E8"/><circle cx="270" cy="44" r="24" fill="#F4C95D"/>' +
       '<rect x="40" y="90" width="14" height="60" fill="#8B5A2B"/><circle cx="47" cy="80" r="34" fill="#2F8F45"/>' +
       '<rect x="260" y="100" width="14" height="50" fill="#8B5A2B"/><circle cx="267" cy="92" r="30" fill="#4CB65C"/>' },
     /* a kitchen: a worktop, a window, a cooker */
@@ -4754,7 +4764,7 @@
       : o.display === "bars"
         ? '<div class="picto bars"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
           '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="barwrap"><span class="bar" style="width:' + Math.round(r.value / most * 100) + '%" aria-hidden="true"></span></span><b class="pcount">' + r.value + "</b></div>").join("") +
-          '<p class="sub">A bar chart: the longer the bar, the more people.</p></div>'
+          '<p class="sub">A bar chart: the longer the bar, the bigger the number.</p></div>'
         : '<div class="picto"><p class="pictotitle">' + esc(o.title) + "</p>" + o.rows.map((r) =>
           '<div class="pictorow"><span class="rowlab">' + small(r.pic) + " " + esc(r.label) + '</span><span class="pictocells">' + '<span class="pcell" aria-hidden="true">' + small(r.pic) + "</span>".repeat(r.value) + '</span><b class="pcount">' + r.value + "</b></div>").join("") +
           '<p class="sub">Each picture is one person.</p></div>';
@@ -5050,7 +5060,7 @@
      is the child hearing themselves state an opinion. */
   function opinion(o) {
     const el = o.el, rounds = o.rounds;
-    let r = 0, stance = null, said = 0, lock = false, given = [];
+    let r = 0, stance = null, said = 0, lock = false, given = [], givenK = [];
     const needR = Math.max(1, Number(o.reasonsNeeded) || 1);
     function draw() {
       const rd = rounds[r];
@@ -5063,7 +5073,7 @@
     }
     function start() {
       const rd = rounds[r];
-      stance = null; lock = false; given = [];
+      stance = null; lock = false; given = []; givenK = [];
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
       draw();
       $(el.ask).innerHTML = esc(rd.ask || "What do you think about " + rd.topic + "?") + " <b>Tap what YOU think.</b> There is no wrong answer.";
@@ -5095,8 +5105,22 @@
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         return;
       }
+      if (b.dataset.about === rd.tag && stance.mixed && needR > 1 && given.length === needR - 1) {
+        /* a mixed opinion ("I partly agree") needs reasons that do not all
+           back one side: refuse a last reason that points the same way */
+        const mixedIds = rd.stances.filter((s) => s.mixed).map((s) => s.id);
+        const sides = (k) => ((rd.reasons[k] || {}).supports || []).filter((id) => !mixedIds.includes(id));
+        let common = sides(Number(b.dataset.k));
+        givenK.forEach((k) => { common = common.filter((id) => sides(k).includes(id)); });
+        if (common.length) {
+          b.classList.add("wrong"); b.disabled = true; SOUND.play("boing", 0.3);
+          const line = "That reason points the same way as your other one. You said: " + noDot(stance.t) + ", so give a reason on each side. Pick one that points the other way.";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          return;
+        }
+      }
       if (b.dataset.about === rd.tag) {
-        given.push(b.textContent); b.classList.add("right"); b.disabled = true;
+        given.push(b.textContent); givenK.push(Number(b.dataset.k)); b.classList.add("right"); b.disabled = true;
         if (given.length < needR) { SOUND.play("pop", 0.35); draw(); const l = cheer() + " That reason is about " + rd.topic + ". Now another one."; $(el.fb).className = "fb good"; $(el.fb).textContent = l; say(l); return; }
         lock = true; said++;
         $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; });
@@ -5376,14 +5400,14 @@
     let phase = "learned", liked = null, missed = 0, lock = false, before = null;
     function draw() {
       if (phase === "changed") {
-        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (before === null ? "Before this lesson, I thought…" : "Now I think…") + '</p><div class="cardsgrid wide">' +
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (before === null ? (o.scope === "course" ? "Before these lessons, I thought…" : "Before this lesson, I thought…") : "Now I think…") + '</p><div class="cardsgrid wide">' +
           (before === null ? changed.map((c, k) => '<button type="button" class="tapcard learncard" data-before="' + k + '">' + esc(c.before) + "</button>").join("")
             : shuffle(changed.map((c, k) => k)).map((k) => '<button type="button" class="tapcard learncard" data-after="' + k + '">' + esc(changed[k].after) + "</button>").join("")) + "</div></div>";
         $(el.score).textContent = before === null ? "Pick how one of your ideas changed" : "Now pick what you think now";
         return;
       }
       if (phase === "learned") {
-        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">I learned that…</p><div class="cardsgrid wide">' + pool.map((c) => '<button type="button" class="tapcard learncard' + (got.has(c.k) ? " heard" : "") + '" data-k="' + c.k + '"' + (got.has(c.k) || lock ? " disabled" : "") + '>' + (c.lesson ? '<small>Lesson ' + c.lesson + "</small>" : "") + esc(lower1(c.t)) + "</button>").join("") + "</div></div>";
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">I learned to…</p><div class="cardsgrid wide">' + pool.map((c) => '<button type="button" class="tapcard learncard' + (got.has(c.k) ? " heard" : "") + '" data-k="' + c.k + '"' + (got.has(c.k) || lock ? " disabled" : "") + '>' + (c.lesson ? '<small>Lesson ' + c.lesson + "</small>" : "") + esc(lower1(c.ok ? mine(c.t) : c.t)) + "</button>").join("") + "</div></div>";
         $(el.score).textContent = got.size + " of " + pick + " things learned";
       } else if (phase === "liked") {
         $(el.stage).innerHTML = '<div class="stagewide"><p class="phase">' + (o.mode === "changed" ? "The kind of activity that helped me learn most was…" : o.mode === "helped" ? "The part that helped me learn most was…" : "I liked…") + '</p><div class="cardsgrid">' + o.liked.map((c, k) => '<button type="button" class="tapcard likecard' + (liked === k ? " now" : "") + '" data-l="' + k + '"><span class="cpic" aria-hidden="true">' + small(c.icon) + "</span>" + esc(c.title) + (c.lesson ? "<small>Lesson " + c.lesson + "</small>" : "") + "</button>").join("") + "</div></div>";
@@ -5403,7 +5427,7 @@
         const c = pool.find((x) => x.k === Number(lc.dataset.k));
         if (c.ok) {
           got.add(c.k); SOUND.play("pop", 0.35); draw();
-          const line = "I learned to " + lower1(noDot(c.t)) + ".";
+          const line = "I learned to " + lower1(noDot(mine(c.t))) + ".";
           $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + line; say(cheer() + " " + line);
           reportAttempt(o.finish, got.size, pick, "things learned");
           if (got.size >= pick) {
@@ -5416,7 +5440,7 @@
           }
         } else {
           missed++; lc.classList.add("wrong"); SOUND.play("error", 0.3);
-          const line = "We did not do that today. Tap something you really did learn in this lesson.";
+          const line = "We did not do that" + (o.scope === "course" ? "" : " today") + ". Tap something you really did learn in " + (o.scope === "course" ? "these lessons" : "this lesson") + ".";
           $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
           setTimeout(() => lc.classList.remove("wrong"), 700);
         }
@@ -5506,7 +5530,7 @@
         }, 3000);
       } else {
         missed = true; b.classList.add("wrong"); b.disabled = true; SOUND.play("error", 0.3);
-        const line = "That is true, but it is about " + (b.dataset.about || "something else") + ". " + (rd.asker ? rd.asker.name : asker.name) + " asked about " + rd.about + ". Try another.";
+        const line = "That answer is about " + (b.dataset.about || "something else") + ". " + (rd.asker ? rd.asker.name : asker.name) + " asked about " + rd.about + ". Try another.";
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
       }
     });
@@ -5520,6 +5544,7 @@
      there yet. The right question is the one whose tag is one of the
      talk's topics. */
   function listenAsk(o) {
+    const respond = (o.rounds || []).some((rd) => (rd.opts || []).some((x) => (rd.topics || []).includes(x.about) && !/\?\s*$/.test(x.t)));
     const el = o.el, rounds = o.rounds;
     let r = 0, shown = 0, phase = "listen", right = 0, missed = false, lock = false, timer = null;
     function draw() {
@@ -5536,8 +5561,9 @@
       phase = "listen"; shown = 0; lock = false; missed = false;
       $(el.ch).innerHTML = ""; $(el.ch).className = "choices"; $(el.fb).textContent = ""; $(el.fb).className = "fb";
       draw();
-      $(el.ask).innerHTML = "Listen to <b>" + esc(rounds[r].speaker.name) + "</b>. Then ask a question about what they said.";
-      sayHere(o.finish, "Listen to " + rounds[r].speaker.name + ". Then ask a question about what they said. Press Listen.");
+      const then = respond ? "Then respond with an idea or a question about what they said." : "Then ask a question about what they said.";
+      $(el.ask).innerHTML = "Listen to <b>" + esc(rounds[r].speaker.name) + "</b>. " + then;
+      sayHere(o.finish, "Listen to " + rounds[r].speaker.name + ". " + then + " Press Listen.");
     }
     function listen() {
       if (lock) return;
@@ -5553,11 +5579,13 @@
     function askPhase() {
       const rd = rounds[r];
       phase = "ask"; lock = false; draw();
-      $(el.ask).innerHTML = "Now ask <b>" + esc(rd.speaker.name) + "</b> a question about what they said. Tap one.";
+      $(el.ask).innerHTML = respond ? "Now respond to <b>" + esc(rd.speaker.name) + "</b> with an idea or a question about what they said. Tap one."
+        : "Now ask <b>" + esc(rd.speaker.name) + "</b> a question about what they said. Tap one.";
       $(el.ch).className = "choices stack";
       $(el.ch).innerHTML = shuffle(rd.opts).map((x) => '<button type="button" class="choice text" data-about="' + esc(x.about) + '">' + esc(x.t) + "</button>").join("");
       reportAttempt(o.finish, r + 1, rounds.length, "talks");
-      sayHere(o.finish, "Now ask " + rd.speaker.name + " a question about what they said. Tap one.");
+      sayHere(o.finish, respond ? "Now respond to " + rd.speaker.name + " with an idea or a question about what they said. Tap one."
+        : "Now ask " + rd.speaker.name + " a question about what they said. Tap one.");
     }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock || phase !== "ask") return;
@@ -5566,11 +5594,11 @@
         lock = true; if (!missed) right++;
         $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
         SOUND.play("ding", 0.4);
-        const line = cheer() + " You asked: " + b.textContent + " " + rd.why + (rd.reply ? " " + rd.speaker.name + " says: " + rd.reply : "");
+        const line = cheer() + (/\?\s*$/.test(b.textContent) ? " You asked: " : " You said: ") + b.textContent + " " + rd.why + (rd.reply ? " " + rd.speaker.name + " says: " + rd.reply : "");
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         r++;
         setTimeout(() => {
-          if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "You listened to " + rounds.length + " classmates and asked each one a question about what they said. " + o.done); }
+          if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "You listened to " + rounds.length + " classmates and " + (respond ? "responded to each one about what they said. " : "asked each one a question about what they said. ") + o.done); }
           else start();
         }, 4000);
       } else {

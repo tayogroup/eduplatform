@@ -17,7 +17,7 @@ NORA = {"name": "Nora", "pic": "\U0001F467\U0001F3FD"}
 OMAR = {"name": "Omar", "pic": "\U0001F466\U0001F3FD"}
 HANA = {"name": "Hana", "pic": "\U0001F467\U0001F3FF"}
 TARIQ = {"name": "Tariq", "pic": "\U0001F466\U0001F3FF"}
-LEO = {"name": "Leo, the new pupil", "pic": "\U0001F466\U0001F3FC"}
+LEO = {"name": "Leo", "pic": "\U0001F466\U0001F3FC"}
 
 LESSON = {
     "slug": "talk-it-through",
@@ -51,14 +51,14 @@ LESSON = {
              {"rounds": [
                  {"speaker": HANA, "talk": ["We moved to a new flat last month.", "It is on the fifth floor, right at the top.", "There is a lift, but I like to race my sister up the stairs."],
                   "topics": ["flat", "stairs", "floor"],
-                  "opts": [tagged("Can you see far from your window on the fifth floor?", "floor"), tagged("What is your favourite colour?", "colours"), tagged("Do you have a dog?", "pets")],
+                  "opts": [tagged("Can you see far from your window on the fifth floor?", "floor"), tagged("What is your favourite colour?", "colours"), tagged("Do you have a bike?", "bikes")],
                   "why": "Hana talked about living on the fifth floor, so a question about the view is about what she said.",
                   "reply": "Yes! I can see the whole park and the river."},
                  {"speaker": OMAR, "talk": ["My family moved here from a village in the hills.", "My old school had only twelve children in it.", "Here there are twelve children just in our row!"],
                   "topics": ["old school", "village", "hills"],
                   "opts": [tagged("What did you like best about your small school?", "old school"), tagged("Can you swim?", "swimming"), tagged("What is for lunch today?", "lunch")],
                   "why": "Omar talked about his tiny old school, so a question about it is about what he said.",
-                  "reply": "Everybody knew everybody. Even the teacher's dog."},
+                  "reply": "Everybody knew everybody. Even the teacher's goats."},
                  {"speaker": LEO, "talk": ["I moved here from a town by the sea.", "Every Saturday we went to the beach, even when it rained.", "I miss the sound of the waves at night."],
                   "topics": ["sea", "beach", "waves"],
                   "opts": [tagged("What did you do at the beach when it rained?", "beach"), tagged("What is your teddy called?", "toys"), tagged("Do you like maths?", "maths")],
@@ -98,11 +98,11 @@ LESSON = {
              {"topic": "Leo's old town", "words": ["What", "Where", "Who", "When", "Why", "How"],
               "ends": [
                   {"id": "school", "t": "was your old school called?", "words": ["What"], "asks": "the name of his old school"},
-                  {"id": "beach", "t": "was the beach in your old town?", "words": ["Where"], "asks": "where the beach was"},
+                  {"id": "beach", "t": "was the beach in your old town?", "words": ["Where", "How"], "asks": "the beach in his old town"},
                   {"id": "far", "t": "far was the beach from your house?", "words": ["How"], "asks": "how far away the beach was"},
                   {"id": "friend", "t": "was your best friend there?", "words": ["Who"], "asks": "his best friend"},
                   {"id": "move", "t": "did you move here?", "words": ["When", "Why", "How"], "asks": "the move"},
-                  {"id": "miss", "t": "do you miss most?", "words": ["What", "Who", "Where"], "asks": "what he misses"},
+                  {"id": "miss", "t": "do you miss most?", "words": ["What", "Who", "Where"], "asks": "missing his old town"},
               ],
               "rounds": [
                   {"want": "the name of Leo's old school", "pic": "\U0001F3EB", "word": "What", "end": "school", "why": "What asks for a name or a thing."},
@@ -150,7 +150,7 @@ LESSON = {
                   {"pic": "\U0001F30A", "label": "What was the sea like?", "bin": "rel", "why": "Leo talked about the sea."},
                   {"pic": "\U0001F366", "label": "Do you like ice cream?", "bin": "not", "why": "Leo said nothing about ice cream."},
                   {"pic": "\U0001F3D6️", "label": "Did you go to the beach a lot?", "bin": "rel", "why": "The beach is part of a town by the sea."},
-                  {"pic": "\U0001F3B8", "label": "Can you play the guitar?", "bin": "not", "why": "Leo did not mention music."},
+                  {"pic": "\U0001F6B2", "label": "Can you ride a bike?", "bin": "not", "why": "Leo did not mention bikes."},
                   {"pic": "\U0001F634", "label": "Why do you miss the waves at night?", "bin": "rel", "why": "Leo said he misses the waves at night."},
                   {"pic": "\U0001F431", "label": "What is your cat called?", "bin": "not", "why": "Leo did not mention a cat."},
               ]},
@@ -164,10 +164,10 @@ LESSON = {
                  [],
                  ["Read it, then tap."]),
              {"label": "Question", "items": [
-                 q("Hana said her flat is on the fifth floor. Which question is relevant?", "\U0001F3E2", "Can you see far from your window?", ["What is your favourite colour?", "Do you have a dog?"], "The fifth floor is what she talked about."),
+                 q("Hana said her flat is on the fifth floor. Which question is relevant?", "\U0001F3E2", "Can you see far from your window?", ["What is your favourite colour?", "Do you have a bike?"], "The fifth floor is what she talked about."),
                  q("Which sentence belongs in a talk about our school for Leo?", "\U0001F3EB", "We have PE on Thursdays.", ["My cat is called Tiger.", "Lions live in Africa."], "Leo needs to know about the school."),
                  q("Leo asks where we line up. Which answer tells him?", "\U0001F6AA", "By the blue door.", ["I like blue.", "Playtime is fun."], "He asked WHERE."),
-                 q("You want to know WHY Leo's family moved. Which word?", "❓", "Why", ["Where", "Who"], "Why asks for a reason."),
+                 q("You want to know the REASON Leo's family moved. Which word?", "❓", "Why", ["Where", "Who"], "Why asks for a reason."),
              ]},
              "You listen, ask, talk and answer, all on the topic."),
 
@@ -185,7 +185,7 @@ LESSON = {
                  q("A talk about our school for Leo should include…", "\U0001F5E3️", "when playtime is and where we line up", ["your cat's name", "what you had for breakfast", "lions in Africa"], "Things about the school."),
                  q("Leo asks when PE is. Which answer?", "\U0001F45F", "On Thursdays, after lunch.", ["My trainers are red.", "I can run fast.", "PE is fun."], "He asked WHEN."),
                  q("You want to know the NAME of Leo's old school. Which question word?", "❓", "What", ["Where", "Why", "How"], "What asks for a name or a thing."),
-                 q("Leo misses the sound of the waves. Which question is about that?", "\U0001F30A", "Why do you miss the waves at night?", ["What is your cat called?", "Can you play the guitar?", "Do you like maths?"], "The waves are what he talked about."),
+                 q("Leo misses the sound of the waves. Which question is about that?", "\U0001F30A", "Why do you miss the waves at night?", ["What is your cat called?", "Can you ride a bike?", "Do you like maths?"], "The waves are what he talked about."),
                  q("Talking and listening go…", "\U0001F91D", "both ways: you listen, then you tell", ["one way only", "nowhere", "only in the hall"], "The class listened to Leo, then told him about the school."),
              ]},
              "That is the whole lesson finished. You listen, ask relevant questions, and talk about a topic."),

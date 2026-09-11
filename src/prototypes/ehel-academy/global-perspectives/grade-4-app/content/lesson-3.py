@@ -29,14 +29,14 @@ LESSON = {
              "A conclusion is a sentence the data proves. This year: it goes exactly as far as the data, and no further. Press <b>Next</b>.",
              explain(
                  ["The data proves what it proves.", "A conclusion that goes further than the data is a guess wearing a conclusion's clothes."],
-                 ["Three of six slept eight to ten hours. Conclusion: half our class slept eight to ten hours.",
+                 ["Three of six slept eight to ten hours. Conclusion: half of the children we asked slept eight to ten hours.",
                   "Children everywhere sleep eight to ten hours? We asked six children in one class. Too far."],
                  ["Children stretch a conclusion to the whole world.", "Say what THIS data proves about THESE people."],
                  ["Press Next and see how far a conclusion can go."]),
              {"frames": [
                  {"pic": "\U0001F634", "cap": "The class asked: <b>how many hours did you sleep last night?</b>", "say": "The class asked: how many hours did you sleep last night? Six answers."},
                  {"pic": "\U0001F4CA", "cap": "Less than 8 hours: 2. 8 to 10 hours: 3. More than 10: 1.", "say": "Less than eight hours, two. Eight to ten hours, three. More than ten, one.", "sound": "pop"},
-                 {"pic": "✅", "cap": "Nora: <b>half of our class slept 8 to 10 hours.</b> Three of six. The data proves it.", "say": "Nora says: half of our class slept eight to ten hours. Three of six is half. The data proves it.", "sound": "ding"},
+                 {"pic": "✅", "cap": "Nora: <b>half of the children we asked slept 8 to 10 hours.</b> Three of six. The data proves it.", "say": "Nora says: half of the children we asked slept eight to ten hours. Three of six is half. The data proves it.", "sound": "ding"},
                  {"pic": "\U0001F914", "cap": "Tariq: <b>children everywhere sleep 8 to 10 hours.</b> We asked SIX children. Too far.", "say": "Tariq says: children everywhere sleep eight to ten hours. We asked six children in one class. That goes much further than the data.", "sound": "boing"},
                  {"pic": "\U0001F4A1", "cap": "A conclusion goes <b>exactly as far as the data</b>, and no further.", "say": "A conclusion goes exactly as far as the data, and no further.", "sound": "tada"},
              ]},
@@ -113,13 +113,13 @@ LESSON = {
              "Our sleep chart says: less than 8 hours, 2; 8 to 10, 3; more than 10, 1. Does the data PROVE this sentence, or does it go too far?",
              explain(
                  ["A conclusion is proved by the data and goes no further.", "A sentence about people we did not ask, or things we did not measure, goes too far."],
-                 ["Half our class slept 8 to 10 hours: proved. Three of six.", "Sami is always tired: we asked about ONE night. Too far."],
+                 ["Half of the children we asked slept 8 to 10 hours: proved. Three of six.", "Sami is always tired: we asked about ONE night. Too far."],
                  [],
                  ["Read the sentence, then tap the bin."]),
              {"ask": "Does the data prove it?",
               "bins": [{"id": "yes", "label": "Proved by the data", "pic": "✅"}, {"id": "no", "label": "Goes too far", "pic": "\U0001F6D1"}],
               "items": [
-                  {"pic": "\U0001F60A", "label": "Half of our class slept 8 to 10 hours", "bin": "yes", "why": "Three of six. Proved."},
+                  {"pic": "\U0001F60A", "label": "Half of the children we asked slept 8 to 10 hours", "bin": "yes", "why": "Three of six. Proved."},
                   {"pic": "\U0001F30D", "label": "Children everywhere sleep 8 to 10 hours", "bin": "no", "why": "We asked six children in one class. Much too far."},
                   {"pic": "\U0001F971", "label": "Two children slept less than 8 hours", "bin": "yes", "why": "The less-than-8 bar reaches 2. Proved."},
                   {"pic": "\U0001F634", "label": "Sami is always tired", "bin": "no", "why": "We asked about one night, not always. Too far."},
@@ -141,7 +141,7 @@ LESSON = {
                   {"pic": "\U0001F4FA", "label": "watching television", "bin": "in", "why": "The television is in the house."},
                   {"pic": "⚽", "label": "playing football", "bin": "out", "why": "Football needs the park or the garden."},
                   {"pic": "\U0001F4D6", "label": "reading a comic", "bin": "both", "why": "A comic goes anywhere, indoors or out. Both."},
-                  {"pic": "\U0001F6C1", "label": "having a bath", "bin": "in", "why": "The bath is in the house."},
+                  {"pic": "\U0001F6CF\uFE0F", "label": "sleeping in bed", "bin": "in", "why": "Your bed is in the house."},
                   {"pic": "\U0001F333", "label": "climbing a tree", "bin": "out", "why": "Trees are outdoors."},
                   {"pic": "\U0001F34E", "label": "eating a snack", "bin": "both", "why": "In the kitchen or on a bench. Both."},
               ]},
@@ -155,7 +155,7 @@ LESSON = {
                  [],
                  ["Read it, then tap."]),
              {"label": "Question", "items": [
-                 q("Three of six slept 8 to 10 hours. Which conclusion is proved?", "\U0001F4CA", "Half of our class slept 8 to 10 hours", ["Children everywhere sleep 8 to 10 hours", "Screens make us sleep less"], "Three of six is half. No further."),
+                 q("Three of six slept 8 to 10 hours. Which conclusion is proved?", "\U0001F4CA", "Half of the children we asked slept 8 to 10 hours", ["Children everywhere sleep 8 to 10 hours", "Screens make us sleep less"], "Three of six is half. No further."),
                  q("What goes in the MIDDLE of a Venn diagram?", "\U0001F91D", "things that belong in both groups", ["things in neither group", "the biggest things"], "Where the circles overlap."),
                  q("14 books on Wednesday, 6 on Tuesday. How many more on Wednesday?", "\U0001F4DA", "8", ["20", "14"], "14 take away 6."),
                  q("We asked about ONE night. Can we conclude Sami is always tired?", "\U0001F634", "No, one night proves nothing about always", ["Yes", "Yes, if he yawns"], "A conclusion cannot go further than the data."),
@@ -195,7 +195,7 @@ LESSON["lecture"] = [
     part("\U0001F634", "The sleep survey",
          "How many hours did you sleep last night? Less than eight, two. Eight to ten, three. More than ten, one. Six answers, and a chart."),
     part("✅", "As far as the data",
-         "Nora says half of our class slept eight to ten hours. Three of six is half; the data proves it. Tariq says children everywhere sleep eight to ten hours. We asked six children. That goes much further than the data."),
+         "Nora says half of the children we asked slept eight to ten hours. Three of six is half; the data proves it. Tariq says children everywhere sleep eight to ten hours. We asked six children. That goes much further than the data."),
     part("\U0001F4CB", "Numbers in a table",
          "The library counted the books borrowed each day. Wednesday fourteen, Tuesday six: eight more on Wednesday. Nine plus six plus fourteen plus eleven: forty altogether. Numbers can be compared and added like bars."),
     part("⚖️", "Proved, or too far",
@@ -206,7 +206,7 @@ LESSON["lecture"] = [
 
 LESSON["words"] = [
     word("conclusion", "\U0001F4A1", "A sentence the data proves.",
-         ["Half the class slept eight to ten hours: a conclusion.", "A conclusion goes no further than the data."]),
+         ["Half of the children we asked slept eight to ten hours: a conclusion.", "A conclusion goes no further than the data."]),
     word("data", "\U0001F4CA", "The numbers and answers an investigation collects.",
          ["The sleep survey gave us data.", "Read the data before you conclude."]),
     word("prove", "✅", "To show that something is true, with evidence.",

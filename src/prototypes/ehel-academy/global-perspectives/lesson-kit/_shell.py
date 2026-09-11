@@ -196,7 +196,7 @@ def lookback_step(lesson, core, cfg):
         return step("lookback", "Look back", "\u23EA", "I looked back", lookback_codes(stage),
                     "What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.",
                     explain(
-                        ["Looking back at this year has three parts.", "What you learned, how your ideas changed, and which KIND of activity helped."],
+                        ["Looking back has three parts.", "What you learned, how your ideas changed, and which KIND of activity helped."],
                         ["First: I learned that. Tap two things you really did learn today.",
                          "Then: before I thought, now I think. Pick how one of your ideas changed.",
                          "Then: which kind of activity helped you learn most, and why."],

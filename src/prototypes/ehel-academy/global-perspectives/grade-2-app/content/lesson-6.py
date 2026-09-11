@@ -90,7 +90,7 @@ LESSON = {
               "bins": [{"id": "job", "label": "A job", "pic": "\U0001F6E0️"}, {"id": "idea", "label": "An idea", "pic": "\U0001F4A1"}],
               "items": [
                   {"pic": "\U0001F573️", "label": "digging the rows", "bin": "job", "why": "Omar did it with a spade. A job."},
-                  {"pic": "\U0001F3AD", "label": "make a scarecrow to stop the birds", "bin": "idea", "why": "Somebody suggested it, and it changed what the team did. An idea."},
+                  {"pic": "\U0001F426", "label": "make a scarecrow to stop the birds", "bin": "idea", "why": "Somebody suggested it, and it changed what the team did. An idea."},
                   {"pic": "\U0001F4A7", "label": "watering every row", "bin": "job", "why": "Nora did it with the can. A job."},
                   {"pic": "\U0001F3F7️", "label": "put a picture label on each row", "bin": "idea", "why": "Somebody suggested it. An idea."},
                   {"pic": "\U0001F331", "label": "planting the seeds", "bin": "job", "why": "You did it with your hands. A job."},
@@ -111,7 +111,7 @@ LESSON = {
                   {"kind": "idea", "who": "tariq", "situation": "The green paint is nearly gone, and the hills are only half done. The team is stuck.", "pic": "\U0001F7E9",
                    "opts": [{"t": "Let's mix the last green with white so it goes further.", "good": True, "log": "Your idea: mix the green with white to make it go further."},
                             {"t": "Let's leave the hills half painted.", "good": False, "why": "A half-painted backdrop is not finished. The team is still stuck."},
-                            {"t": "Let's paint the hills red instead.", "good": False, "why": "There is no red paint either, and the hills in our picture are green. The team is still stuck."}],
+                            {"t": "Let's paint the hills red instead.", "good": False, "why": "There is no red paint, and the hills in our picture are green. The team is still stuck."}],
                    "why": "Mixing the paint with white makes it go further. That idea finishes the hills."},
                   {"kind": "friend", "who": "tariq", "did": "had the idea to use a step stool so somebody could reach the top for the sun.", "log": "Tariq's idea: a step stool to reach the top.", "pic": "\U0001F4A1"},
                   {"kind": "idea", "who": "amal", "situation": "Everyone wants to paint a house, but there is only room for two. The team is stuck.", "pic": "\U0001F3E0",

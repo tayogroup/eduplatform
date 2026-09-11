@@ -236,7 +236,8 @@
 
   /* a text source: each sentence is a button; a bar chart beside the pictogram */
   .textsrc { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px; border: 3px solid var(--line); background: #FFFDF6; color: #142B3E; text-align: left; }
-  .textsrc .phase { margin: 0 0 2px; }
+  .textsrc .phase { margin: 0 0 2px; color: #0F6E66; }  /* teal on cream paper was 2.2:1 */
+  .picto .sub { color: #B8CAD8; }  /* --muted on the chart panel was 4.0:1 */
   .sline { width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid transparent; background: transparent; color: #142B3E;
     font: inherit; font-size: 19px; line-height: 1.45; text-align: left; }
   .sline:hover, .sline:focus-visible { border-color: var(--teal); background: rgba(53,191,178,0.12); outline: none; }

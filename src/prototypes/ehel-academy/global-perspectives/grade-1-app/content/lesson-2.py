@@ -55,7 +55,7 @@ LESSON = {
                  ["Tap all four, then answer the question."]),
              {"items": [
                  {"pic": "\U0001F5E3️", "label": "ask people", "say": "Ask people. If you want to know about the people in your class, ask them. That is a survey."},
-                 {"pic": "\U0001F440", "label": "look and count", "say": "Look and count. How many red cars go past? Stand and count them."},
+                 {"pic": "\U0001F440", "label": "look and count", "say": "Look and count. How many red cars go past? Watch from a window with a grown-up and count them."},
                  {"pic": "\U0001F4D6", "label": "look in a book", "say": "Look in a book. A book about dinosaurs tells you about dinosaurs."},
                  {"pic": "\U0001F475\U0001F3FE", "label": "ask a grown-up", "say": "Ask a grown-up. Grandma knows what school was like long ago."},
              ], "need": 4,

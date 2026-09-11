@@ -41,7 +41,7 @@ import sys
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, KIT)
-from _rules import supporting  # noqa: E402
+from _rules import supporting, mixed_pair_exists  # noqa: E402
 from _rules import (survey_counts, observe_counts, pictogram_answer, relevant, relevant_sources,  # noqa: E402
                     solutions, share_outcome, question_fits, allocations)
 
@@ -238,6 +238,10 @@ def main():
                         fail(entry["file"], "step %d topic %r: a reason about the topic does not say which opinions it supports: %r" % (k, rd["topic"], unsaid[0]))
                     elif short:
                         fail(entry["file"], "step %d topic %r: %r has fewer than %d reasons that support it" % (k, rd["topic"], short[0], per))
+                    mixed_ids = [s["id"] for s in rd["stances"] if s.get("mixed")]
+                    lop = [s["t"] for s in rd["stances"] if s.get("mixed") and (per < 2 or not mixed_pair_exists(rd["reasons"], rd["tag"], s["id"], mixed_ids))]
+                    if lop:
+                        fail(entry["file"], "step %d topic %r: the mixed opinion %r has no pair of reasons pointing different ways" % (k, rd["topic"], lop[0]))
                     computed += 1
             elif kind == "team":
                 fids = {f["id"] for f in d["friends"]}

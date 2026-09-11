@@ -29,7 +29,7 @@ LESSON = {
                  {"pic": "❓", "cap": "She makes a question: <b>where does our tap water come from?</b>", "say": "She makes a question: where does our tap water come from? She cannot answer it yet, so it will help her understand.", "sound": "ding"},
                  {"pic": "\U0001F30A", "cap": "Then: <b>what happens to the water after we pull the plug?</b>", "say": "Then another: what happens to the water after we pull the plug? Another question she cannot answer yet.", "sound": "ding"},
                  {"pic": "\U0001F6C1", "cap": "And: <b>how much water does a bath use?</b> A number she can find out.", "say": "And: how much water does a bath use? A number she can find out.", "sound": "ding"},
-                 {"pic": "\U0001F914", "cap": "Sami asks: <b>is water wet?</b> Everybody knows. That does not help understand.", "say": "Sami asks: is water wet? Everybody already knows that. It does not help anybody understand water.", "sound": "boing"},
+                 {"pic": "\U0001F914", "cap": "Sami asks: <b>is water wet?</b> Everybody knows. That does not help you understand.", "say": "Sami asks: is water wet? Everybody already knows that. It does not help anybody understand water.", "sound": "boing"},
                  {"pic": "\U0001F4A1", "cap": "Your own question helps when you <b>cannot answer it yet</b> and it is about <b>how the topic works</b>.", "say": "Your own question helps when you cannot answer it yet, and it is about how the topic works.", "sound": "tada"},
              ]},
              "Make questions you cannot answer yet, about how the topic works."),
@@ -65,7 +65,7 @@ LESSON = {
                   {"id": "bath", "t": "water does a bath use?", "words": ["How much"], "asks": "the amount a bath uses"},
                   {"id": "clean", "t": "do they clean dirty water?", "words": ["How", "Why", "Where"], "asks": "the cleaning of water"},
                   {"id": "litres", "t": "litres does our school use in a day?", "words": ["How many"], "asks": "the school's daily litres"},
-                  {"id": "winter", "t": "is the river higher in the rainy season?", "words": ["Why", "How much"], "asks": "the river in the rainy season"},
+                  {"id": "winter", "t": "is the river higher in the rainy season?", "words": ["Why", "How much", "Where"], "asks": "the river in the rainy season"},
               ],
               "rounds": [
                   {"want": "where our tap water starts", "pic": "\U0001F6B0", "word": "Where", "end": "from", "why": "Where asks for the place it starts. A river, a lake, under the ground."},
@@ -100,7 +100,7 @@ LESSON = {
              "Teacher Yasmin found a text about water where we live. Your questions have answers in it. Find the sentence that answers each one.",
              explain(
                  ["A source holds the answers to your questions, but not all in one place.", "Read the question, then find the sentence that answers it."],
-                 ["Where does our tap water come from? Find the sentence about the river and the cleaning works.",
+                 ["Where does our tap water come from? Find the sentence about the river.",
                   "How much does a bath use? Find the sentence with the number."],
                  ["Children answer from what they think they know.", "The answer is IN the text. Find the sentence."],
                  ["Press Read it to me, then tap the sentence that answers."]),

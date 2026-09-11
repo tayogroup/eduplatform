@@ -92,7 +92,7 @@ LESSON = {
                       source("baker", "the baker next door", "\U0001F469\U0001F3FE‍\U0001F373", ["bread", "food"], "The baker makes bread every morning and can tell you how."),
                       source("football", "a football", "⚽", ["football"], "A football is for playing football."),
                       source("moon", "a photo of the moon", "\U0001F319", ["the moon"], "A photo of the moon shows the moon."),
-                      source("music", "a drum", "\U0001F941", ["music"], "A drum makes music."),
+                      source("kite", "a kite", "\U0001FA81", ["toys"], "A kite is a toy for a windy day."),
                   ],
                   "reasons": [opt("because the baker knows how bread is made", True), opt("because the baker lives near us", False), opt("because bakers wear hats", False)],
                   "why": "The baker makes bread, so the baker knows how it is made."},
@@ -166,7 +166,7 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("Which of these is a source you could find out from?", "\U0001F4DA", "a person who knows", ["a kind of soup", "a game of tag", "a nap"], "A person who knows can tell you. So can a book, a photo, a map, a film or a real thing."),
-                 q("Which source shows you WHERE places are?", "\U0001F5FA️", "a map", ["a cookbook", "a drum", "a football"], "A map shows where places are."),
+                 q("Which source shows you WHERE places are?", "\U0001F5FA️", "a map", ["a cookbook", "a kite", "a football"], "A map shows where places are."),
                  q("You want to know where our milk comes from. Which source helps most?", "\U0001F95B", "a film about a dairy farm", ["a book about dinosaurs", "a bus ticket", "a photo of the beach"], "The dairy farm is where milk comes from."),
                  q("Why was the book about breakfasts a good source for breakfasts?", "\U0001F4D7", "because it is about breakfast", ["because it is heavy", "because it is red", "because it is new"], "The reason is that it is about the topic."),
                  q("Does everybody have the same opinion?", "\U0001F4AD", "No, people can think different things", ["Yes, always", "Only on Mondays"], "Your opinion is what you think. Other people may think something different, and that is all right."),

@@ -213,7 +213,7 @@ LESSON["about"] = [
 
 LESSON["lecture"] = [
     part("\U0001F52C", "Three ways",
-         "An investigation can ask people, observe things, or measure things. The class is investigating the journey to school, and it needs all three."),
+         "An investigation can ask people, observe things, or measure things. The class is investigating the journey to school and the bean plants, and it needs all three."),
     part("\U0001F440", "Observing",
          "Stand at the gate for five minutes and count what goes past. Cars, buses, bikes, walkers. Tap each one so nothing is counted twice, and the table fills itself."),
     part("\U0001F4DD", "Asking",

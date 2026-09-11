@@ -91,6 +91,14 @@ def supporting(reasons, tag, stance):
     return [k for k, o in enumerate(reasons) if o.get("about") == tag and stance in (o.get("supports") or [])]
 
 
+def mixed_pair_exists(reasons, tag, stance, mixed_ids):
+    """A mixed stance ("I partly agree") needs two of its supporting reasons
+    that do not both back the same one-sided stance."""
+    sides = [set(o.get("supports") or []) - set(mixed_ids) for o in reasons
+             if o.get("about") == tag and stance in (o.get("supports") or [])]
+    return any(not (a & b) for i, a in enumerate(sides) for b in sides[i + 1:])
+
+
 def relevant_sources(sources, topic):
     """Ids of the sources that can tell you about the topic."""
     return [s["id"] for s in sources if topic in (s.get("about") or [])]

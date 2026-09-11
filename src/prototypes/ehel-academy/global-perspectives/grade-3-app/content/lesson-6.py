@@ -44,7 +44,7 @@ LESSON = {
              "You and three friends are making the fair sign. Give out the jobs, bring ideas when the team is stuck, and work kindly. Watch the sign fill up.",
              explain(
                  ["First the team gives out its jobs. Then each person does theirs. When the team is stuck, somebody brings an idea."],
-                 ["Carry the board: Sami is strong.", "The paint runs out: mix it with white, or send Omar to count for more."],
+                 ["Carry the board: Sami is strong.", "The paint is running out: mix it with white so it goes further."],
                  ["Children give every job to themselves.", "Look at what each job NEEDS, and who has it."],
                  ["Tap the right person for each job, then play on."]),
              {"goal": "paint the sign for our fair stall", "scene": "mural", "friends": SIGN_FRIENDS,

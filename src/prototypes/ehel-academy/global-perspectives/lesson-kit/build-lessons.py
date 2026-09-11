@@ -55,7 +55,7 @@ import os
 import re
 import sys
 
-from _shell import META_KINDS, lookback_codes, expand, finder_words
+from _shell import META_KINDS, lookback_codes, expand, finder_words, TYPE_OF
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 ACADEMY = os.path.abspath(os.path.join(KIT, "..", ".."))
@@ -104,7 +104,7 @@ KINDS = {
 
 # The relationships the subject is about live in _rules.py, shared with the
 # gate, so the builder and check-coverage.py cannot disagree about any of them.
-from _rules import supporting  # noqa: E402
+from _rules import supporting, mixed_pair_exists  # noqa: E402
 from _rules import (survey_counts, observe_counts, pictogram_answer, relevant, relevant_sources,  # noqa: E402
                     solutions, share_outcome, question_fits, allocations)
 
@@ -205,8 +205,24 @@ def fill_derived(n, lesson, steps, everything):
             d["teamStep"] = steps.index(prev[-1])   # the same index the page passes as `finish`
         if s["kind"] == "lookback" and d.get("scope") == "course":
             d["learned"] = [{"t": a, "lesson": m} for m, _, les in everything for a in (les.get("about") or [])]
-            d["liked"] = [{"title": les["title"], "icon": (les["steps"][0]["icon"] if les["steps"] else "\U0001F4D8"), "lesson": m}
-                          for m, _, les in everything]
+            if d.get("mode") == "changed":
+                # "which KIND of activity helped": the kinds this lesson itself teaches in its
+                # explore step (six of them), else the kinds the course's steps used
+                taught = [x for x in steps[:k] if x["kind"] == "explore"]
+                if taught:
+                    kinds = [{"title": it["label"], "icon": it.get("pic", "")} for it in taught[-1]["data"]["items"]]
+                else:
+                    seen, kinds = set(), []
+                    for _m, _f, les in everything:
+                        for st in les["steps"]:
+                            t = TYPE_OF.get(st["kind"])
+                            if t and t[0] not in seen:
+                                seen.add(t[0]); kinds.append({"title": t[0], "icon": t[1]})
+                d["liked"] = kinds
+            else:
+                # the other lessons: the course look-back is not something to pick as a favourite
+                d["liked"] = [{"title": les["title"], "icon": (les["steps"][0]["icon"] if les["steps"] else "\U0001F4D8"), "lesson": m}
+                              for m, _, les in everything if m != n]
             d.setdefault("pick", 3)
 
 
@@ -518,6 +534,10 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
             for s in rd["stances"]:
                 if len(supporting(rd["reasons"], rd["tag"], s["id"])) < per:
                     sys.exit("REFUSED: %s topic %r: %r has fewer than %d reasons that support it" % (where, rd["topic"], s["t"], per))
+            mixed_ids = [s["id"] for s in rd["stances"] if s.get("mixed")]
+            for s in rd["stances"]:
+                if s.get("mixed") and (per < 2 or not mixed_pair_exists(rd["reasons"], rd["tag"], s["id"], mixed_ids)):
+                    sys.exit("REFUSED: %s topic %r: the mixed opinion %r needs 2+ reasons and a pair of them pointing different ways" % (where, rd["topic"], s["t"]))
     elif kind == "team":
         scene_ok(d["scene"])
         fids = {f["id"] for f in d["friends"]}

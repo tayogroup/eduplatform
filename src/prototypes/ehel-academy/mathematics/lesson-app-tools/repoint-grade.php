@@ -99,6 +99,19 @@ $SUBJECTS = [
             5 => ['ehel-eng-g05', RP_HOST . 'Ehel%20Primary/app/english/grade-5-v2/index.html'],
         ],
     ],
+    // Intensive English is the one family here whose "grade" is a CEFR LEVEL,
+    // not a school year: --grade 1 means Level 1, and the course key is the
+    // shell's own ehel-intensive-eng-l01 (shell/subjects/intensive-english.js,
+    // config.courseKey), which is also what the catalogue publishes. Unlike
+    // every other build in this table, its lessons ARE the shell course's
+    // units, 1:1 and numbered from zero, so THE UNIT PROBLEM does not apply:
+    // the standalone pages report u00..u19, the same ids the shell writes.
+    'intensive-english' => [
+        'entry' => RP_HOST . 'Ehel%20Primary/app/intensive-english/index.html',
+        'targets' => [
+            1 => ['ehel-intensive-eng-l01', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-1-v2/index.html'],
+        ],
+    ],
     'science' => [
         'entry' => RP_HOST . 'Ehel%20Primary/app/science/index.html',
         'targets' => [

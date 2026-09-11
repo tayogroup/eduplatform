@@ -96,6 +96,7 @@ $SUBJECTS = [
             1 => ['ehel-sci-g01', RP_HOST . 'Ehel%20Primary/app/science/grade-1-v2/index.html'],
             2 => ['ehel-sci-g02', RP_HOST . 'Ehel%20Primary/app/science/grade-2-v2/index.html'],
             3 => ['ehel-sci-g03', RP_HOST . 'Ehel%20Primary/app/science/grade-3-v2/index.html'],
+            4 => ['ehel-sci-g04', RP_HOST . 'Ehel%20Primary/app/science/grade-4-v2/index.html'],
         ],
     ],
     // The course key is the shell's `ehel-comp-g${pad2(s)}` (shell/subjects/

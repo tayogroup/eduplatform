@@ -253,8 +253,8 @@ already exists — so **correcting a page's text in `ebookCatalog` does not
 re-record it.** Move the old clip aside and re-run that grade (`--dry` first);
 only the missing pages are rendered. This path is served `max-age=300`
 (measured 2026-09-11), so a same-name replacement reaches learners in five
-minutes and needs no rename. Grade 1 has clips for every page; Grades 2-4 have
-none yet, and read through `VOICE.say()`. **Tap-sound resolution IS ported, verbatim** (`TAP_VOICE_GROUPS`,
+minutes and needs no rename. Every page of Grades 1-4 has a clip since
+2026-09-11 (3,430 pages, the whole catalogue). **Tap-sound resolution IS ported, verbatim** (`TAP_VOICE_GROUPS`,
 `TAP_SOUND_MOOD_TYPES`, `TAP_SOUND_ALIASES` in `lib/books.js`, copied from
 `shell/subjects/english.js`), because it's forty lines of pure data and a tap
 that resolves to the wrong clip — or to nothing — is a worse experience than

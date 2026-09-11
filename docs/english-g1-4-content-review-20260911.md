@@ -95,6 +95,22 @@ live, and each was done:
   (three units moved by a minute or two) and the English topic index were
   regenerated.
 
+## Follow-up the same day: the narration that was still missing
+
+- **76 unit items authored for the Cambridge gaps** had been left unrecorded
+  (`status: "Not recorded - authored …; the app speaks the text."`): 24 grammar
+  explanations, their 24 practice lines, 12 writing tasks, 10 speaking tasks and
+  6 activities. Recorded with `--only` naming each exact id (28,827 characters)
+  — a bare category run would also have recorded the 186 items held for
+  curriculum review, because the generator does not read `available: false`.
+  The standalone apps play 52 of them; the other 24 are grammar-practice clips,
+  which only the shell course plays.
+- **Grades 2-4 picture books** had no page clips, so the apps read them with the
+  browser voice. All 2,520 pages recorded (190,028 characters); every book in
+  the catalogue now has a clip per page.
+- **Staleness re-run after the commit:** 47,749 live clips in Grades 1-4, none
+  whose script changed since it was recorded.
+
 ## What this is not
 
 It is not a curriculum sign-off. A reviewer who is a teacher of the stage still

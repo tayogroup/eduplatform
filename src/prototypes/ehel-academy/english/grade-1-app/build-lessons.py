@@ -99,6 +99,122 @@ if not os.path.isdir(DATA):
 # the same day, 2026-09-11); a grade built later decides for itself. See the
 # build, below "write it".
 TASK_STEPS = bool(CFG.get("taskSteps"))
+# "talkFromGrammar": false drops "Let us talk", whose rounds are assembled from
+# the unit's grammar text. Grade 5 turns it off (2026-09-11): its rules are
+# prose that sets wrong beside right ("X" becomes "Y", Wrong: ... Correct: ...,
+# a draft to repair) and explains in sentences of its own, so the parse held up
+# "I am afraid from the dark." and "Everyone are excited about the fair." as
+# the sentence to say. "Talk it through" carries every authored speaking task.
+TALK_FROM_GRAMMAR = CFG.get("talkFromGrammar", True)
+# "fluencyAtBuild": "words" builds Fluency Practice here, from the unit's own
+# word meanings (the fluency author's word review), for a grade whose units
+# carry no fluency array. Written into the page only, never into the unit
+# JSON: the shell course draws a gated Fluency section for any unit that has
+# one, and Grade 5's shell course is not to change. Its grammar half is left
+# out for the reason above.
+FLUENCY_AT_BUILD = CFG.get("fluencyAtBuild")
+# "sentenceTiles": false drops "Write a sentence", which rebuilds the first
+# writing task's model as word tiles. Grade 5's models are whole stories,
+# scripts and planning notes ("Title The Goat and the Weaver Bird . Setting
+# ..."), so the tiles were a paragraph with its labels in; "Write it yourself"
+# carries every writing task in full.
+SENTENCE_TILES = CFG.get("sentenceTiles", True)
+# "grammarPractice": a file beside app.config.json holding one AUTHORED "Let us
+# talk" round and one Fluency question per grammar item, for a grade whose
+# grammar text cannot be parsed into examples (Grade 5, 2026-09-11). When set,
+# it feeds both steps in place of the parse; it is never written into the unit
+# JSON. Validated here, so a malformed item stops the build.
+GRAMMAR_PRACTICE = None
+if CFG.get("grammarPractice"):
+    _gp = json.load(io.open(os.path.join(OUT, CFG["grammarPractice"]), encoding="utf-8"))
+    GRAMMAR_PRACTICE = {int(k): v for k, v in _gp["units"].items()}
+    for _u, _items in GRAMMAR_PRACTICE.items():
+        for _it in _items:
+            _t, _f = _it["talk"], _it["fluency"]
+            _bad = []
+            if len(_t["wrong"]) != 2 or _t["say"] in _t["wrong"] or len(set(_t["wrong"])) != 2:
+                _bad.append("talk options")
+            if len(_f["wrong"]) != 3 or _f["answer"] in _f["wrong"] or len(set(_f["wrong"])) != 3:
+                _bad.append("fluency options")
+            if any("__" in x for x in [_t["say"], _f["answer"]] + _t["wrong"] + _f["wrong"]):
+                _bad.append("a blank in an option")
+            if not all((x or "").strip() for x in (_t["ask"], _t["why"], _f["ask"], _f["why"])):
+                _bad.append("an empty field")
+            if _bad:
+                sys.exit("REFUSED: %s unit %d %s: %s" % (CFG["grammarPractice"], _u, _it["grammarId"], ", ".join(_bad)))
+
+
+# "sayitLines": a file beside app.config.json holding "Say it out loud" lines
+# for the units whose speaking tasks mark no line the Grade 5 rule accepts
+# (Grade 5 Units 3, 7, 9 and 10, 2026-09-11: their model lines are unquoted,
+# single-quoted, or absent). Used only where the unit yields no line of its
+# own, never written into the unit JSON, and each line names the speaking task
+# it belongs to so a renamed task stops the build.
+SAYIT_LINES = {}
+if CFG.get("sayitLines"):
+    _sl = json.load(io.open(os.path.join(OUT, CFG["sayitLines"]), encoding="utf-8"))
+    for _u, _lines in _sl["units"].items():
+        if not 1 <= len(_lines) <= 6:
+            sys.exit("REFUSED: %s unit %s holds %d lines; a step takes 1 to 6" % (CFG["sayitLines"], _u, len(_lines)))
+        for _l in _lines:
+            _t = (_l.get("line") or "").strip()
+            if not (re.search(r"[.!?]$", _t) and len(_t.split()) >= 3 and _t[:1].isupper()
+                    and "__" not in _t and _l.get("speakingId")):
+                sys.exit("REFUSED: %s unit %s: %r is not a complete sentence with its speakingId"
+                         % (CFG["sayitLines"], _u, _t))
+    SAYIT_LINES = {int(k): v for k, v in _sl["units"].items()}
+# "stepVoice": a file beside app.config.json that rewords a step's spoken
+# explanation for an older learner - the four parts explain() takes - keyed by
+# step kind. Grades 1-4 set none, so their pages are unchanged; Grade 5
+# (2026-09-11) replaces the lines written for a six-year-old ("A word is a
+# picture you can say", "follow the words with your finger", "colour it, draw
+# it"). The kinds are checked against STEP_ORDER below.
+STEP_VOICE = {}
+if CFG.get("stepVoice"):
+    STEP_VOICE = json.load(io.open(os.path.join(OUT, CFG["stepVoice"]), encoding="utf-8"))["steps"]
+    for _k, _v in STEP_VOICE.items():
+        _e = _v.get("explain")
+        if (set(_v) != {"explain"} or not isinstance(_e, list) or len(_e) != 4
+                or not all(isinstance(p, list) and all(isinstance(s, str) and s.strip() for s in p) for p in _e)):
+            sys.exit("REFUSED: %s %s: a step's voice is {\"explain\": [calm, friendly, watch, go]}, "
+                     "four lists of sentences" % (CFG["stepVoice"], _k))
+# "writeExample": true puts the task's completedExample behind "See an example"
+# in "Write it yourself", where the modelText is shown otherwise. Grade 5's
+# modelText often DESCRIBES a good answer ("Three lines that keep the five,
+# seven, five pattern exactly ...") while its completedExample is the answer
+# itself; every Grade 5 task carries one. A task without one keeps its model.
+WRITE_EXAMPLE = bool(CFG.get("writeExample"))
+
+
+def authored_talk_rounds(unit):
+    """The grammarPractice file's talk rounds for this unit, answer placed by
+    index so it is not always in the same spot."""
+    rounds = []
+    items = (GRAMMAR_PRACTICE or {}).get(unit["unit"]["unitNo"]) or []
+    known = {g["grammarId"] for g in unit.get("grammar") or []}
+    for i, it in enumerate(items):
+        if it["grammarId"] not in known:
+            sys.exit("REFUSED: grammarPractice names %s, which unit %d does not have"
+                     % (it["grammarId"], unit["unit"]["unitNo"]))
+        t = it["talk"]
+        opts = list(t["wrong"])
+        opts.insert(i % 3, t["say"])
+        rounds.append({"ask": t["ask"], "opts": [{"t": o, "ok": 1 if o == t["say"] else 0} for o in opts],
+                       "why": t["why"], "reference": t["say"]})
+    return rounds
+
+
+def authored_fluency_items(unit):
+    """The grammarPractice file's fluency questions for this unit, in the shape
+    the unit JSON's own fluency array uses (question / options / answer)."""
+    out = []
+    for i, it in enumerate((GRAMMAR_PRACTICE or {}).get(unit["unit"]["unitNo"]) or []):
+        f = it["fluency"]
+        opts = list(f["wrong"])
+        opts.insert(i % 4, f["answer"])
+        out.append({"question": f["ask"], "options": " | ".join(opts),
+                    "correctAnswer": f["answer"], "explanation": f["why"]})
+    return out
 STRAND_ROLES = CFG.get("strandRoles") or {"phonics": "phonics", "topic": "topic", "sight": "sight"}
 
 
@@ -318,6 +434,10 @@ STEP_ORDER = [
     # the shell course.
     "resources",
 ]
+_unknown_voice = sorted(k for k in STEP_VOICE if k not in STEP_ORDER)
+if _unknown_voice:
+    sys.exit("REFUSED: %s names steps this build has no place for: %s"
+             % (CFG["stepVoice"], ", ".join(_unknown_voice)))
 
 
 # Fluency Practice and Let us talk are built from items this course did NOT
@@ -1074,6 +1194,9 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     pending = {}
 
     def add(kind, title, icon, sticker, ask, explain_ssml, extra_ids=(), block=None, note=""):
+        voice = STEP_VOICE.get(re.sub(r"-\d+$", "", kind))
+        if voice:
+            explain_ssml = explain(*voice["explain"])
         pending[kind] = {
             "kind": kind, "title": title, "icon": icon, "sticker": sticker,
             "ask": ask, "explain": explain_ssml, "extra": list(extra_ids),
@@ -1489,6 +1612,16 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     for item in sorted(unit["speaking"], key=lambda x: 0 if x.get("recordingRequired") else 1):
         quoted = [q.strip() for q in re.findall(r"[\u201c\"']([^\u201d\"']{3,})[\u201d\"']",
                                                 item.get("instructionsAndModelLines") or "")]
+        if GRADE >= 5:
+            # From Grade 5 the single quote is an apostrophe ("your partner's
+            # turn"), not how a model line is marked, and double quotes also
+            # carry titles ("The Camel and the Sparrow"): measured on Grade 5,
+            # the Grade 1-4 pattern cut lines mid-word. A model line there is
+            # a double-quoted complete sentence with no blank in it.
+            quoted = [q.strip() for q in re.findall(r"[“\"]([^”\"]{3,})[”\"]",
+                                                    item.get("instructionsAndModelLines") or "")]
+            quoted = [q for q in quoted if re.search(r"[.!?]$", q) and len(q.split()) >= 3
+                      and q[0].isupper() and "__" not in q]
         for sentence in quoted:
             if len(lines) >= 6:
                 break
@@ -1500,7 +1633,20 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 "audio": source_of(item),
                 "check": bool(item.get("recordingRequired")),
             })
-    if not lines:
+    if not lines and SAYIT_LINES.get(unit["unit"]["unitNo"]):
+        # the sayitLines file's lines, for a unit whose tasks mark none. No
+        # clip: the task's recording narrates the whole task, not this line,
+        # so speech.js speaks the line itself.
+        known = {sp.get("speakingId") for sp in unit["speaking"]}
+        for entry in SAYIT_LINES[unit["unit"]["unitNo"]]:
+            if entry["speakingId"] not in known:
+                sys.exit("REFUSED: %s names %s, which unit %d does not have"
+                         % (CFG["sayitLines"], entry["speakingId"], unit["unit"]["unitNo"]))
+            lines.append({"text": entry["line"].strip(), "audio": "", "check": False})
+    if not lines and GRADE < 5:
+        # From Grade 5 a unit with no model lines draws no step: the fallback
+        # is the task paragraphs themselves, and "Talk it through" carries
+        # every one of those in full.
         for item in unit["speaking"][:3]:
             t = (item.get("instructionsAndModelLines") or "").strip()
             if t:
@@ -1548,7 +1694,7 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     #        own words, so a wrong build is still English the child is
     #        learning rather than nonsense put there to trip them.
     write = next((w for w in unit["writing"] if (w.get("modelText") or "").strip()), None)
-    if write:
+    if write and SENTENCE_TILES:
         raw_model = write["modelText"]
         has_blank = "_" in raw_model
 
@@ -1688,7 +1834,9 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 "title": task_title(w.get("title")),
                 "lines": prompt,
                 "length": (w.get("expectedLength") or "").strip(),
-                "model": (w.get("modelText") or "").strip(),
+                "model": ("\n".join(str(x).strip() for x in (w.get("completedExample") or {}).get("items") or [])
+                          if WRITE_EXAMPLE and (w.get("completedExample") or {}).get("items")
+                          else (w.get("modelText") or "").strip()),
                 "criteria": [c.strip() for c in re.split(r"\s*;\s*", w.get("successCriteria") or "") if c.strip()],
                 "support": (w.get("support") or "").strip(),
                 "extension": (w.get("extension") or "").strip(),
@@ -1864,7 +2012,12 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     #         says so on its own face rather than passing for reviewed
     #         content the way the rest of this build legitimately does.
     fluency = []
-    for f in unit.get("fluency") or []:
+    fluency_src = unit.get("fluency") or []
+    if not fluency_src and FLUENCY_AT_BUILD == "words":
+        grammar_part = authored_fluency_items(unit) if GRAMMAR_PRACTICE else []
+        fluency_src = grammar_part + fluency_tool().word_review_items(
+            unit, None, want=15 - len(grammar_part))[:15 - len(grammar_part)]
+    for f in fluency_src:
         opts = [o.strip() for o in str(f.get("options") or "").split("|") if o.strip()]
         ok = (f.get("correctAnswer") or "").strip()
         if not opts or ok not in opts:
@@ -2517,7 +2670,10 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
 
     # the Grade 1 shape first (spoken examples under an instruction title),
     # then the rule examples where that yields nothing - see both functions
-    talk_rounds = talk_items(unit) or talk_items_from_rules(unit)
+    if GRAMMAR_PRACTICE:
+        talk_rounds = authored_talk_rounds(unit)
+    else:
+        talk_rounds = (talk_items(unit) or talk_items_from_rules(unit)) if TALK_FROM_GRAMMAR else []
 
     # The schedule for THIS unit, plus the day lines, which need the step
     # titles - so it is finished after build_slides() below has named them.

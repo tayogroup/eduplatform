@@ -110,6 +110,15 @@ live, and each was done:
   the catalogue now has a clip per page.
 - **Staleness re-run after the commit:** 47,749 live clips in Grades 1-4, none
   whose script changed since it was recorded.
+- **The 186 activities held "awaiting curriculum review"** were recorded once
+  the owner confirmed the review (50,195 characters). No Grade 1-4 descriptor
+  is held or unrecorded any more.
+- **The shell's book reader played the paid runtime voice** for every page on
+  every play, though every page had a clip. It now plays the clip (page Listen,
+  Watch the story, and the whole-book pop-up), falling back to the runtime
+  voice only for a clip that is missing or broken; released as English v421.
+  Every clip was first checked against the text it was recorded from: 3,430 of
+  3,430 current.
 
 ## What this is not
 

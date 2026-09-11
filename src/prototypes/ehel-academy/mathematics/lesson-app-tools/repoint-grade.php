@@ -88,6 +88,9 @@ $SUBJECTS = [
             2 => ['ehel-eng-g02', RP_HOST . 'Ehel%20Primary/app/english/grade-2-v2/index.html'],
             3 => ['ehel-eng-g03', RP_HOST . 'Ehel%20Primary/app/english/grade-3-v2/index.html'],
             4 => ['ehel-eng-g04', RP_HOST . 'Ehel%20Primary/app/english/grade-4-v2/index.html'],
+            // Grade 5 (built 2026-09-11) is the step-by-step app too, by owner
+            // decision - the one Grade 5-8 course routed away from the shell.
+            5 => ['ehel-eng-g05', RP_HOST . 'Ehel%20Primary/app/english/grade-5-v2/index.html'],
         ],
     ],
     'science' => [

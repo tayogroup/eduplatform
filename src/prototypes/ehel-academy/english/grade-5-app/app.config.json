@@ -1,0 +1,72 @@
+{
+  "_comment": "The Grade 5 English standalone lesson build - the same builder as Grades 1-4 (../grade-1-app/build-lessons.py --app .), pointed at english/grade-5/data by this file. Owner decision 2026-09-11: Grade 5 gets the same step-by-step app as Grades 1-4, an exception to the 'Grades 5-8 keep their page design' rule for this standalone app only; the Grade 5 shell course is unchanged. Grade 5 has no picture-book shelf (that stops at Grade 4), so its Reading books steps do not appear and 'The unit story' carries the unit's own readings, the serialised stories included. Order here IS the unit number and the course's unit number, so u01..u10 are unit completions. strandRoles: spelling -> the sounds step, topic AND joining groups -> Meet the words (see _strandRoles).",
+  "grade": 5,
+  "gradeLabel": "Grade 5",
+  "subject": "english",
+  "subjectLabel": "English",
+  "courseKey": "ehel-eng-g05",
+  "progressUnitPrefix": "u",
+  "fromParam": "eng5",
+  "backLabel": "Grade 5 English",
+  "hub": "g5-index.html",
+  "remote": "Ehel Primary/app/english/grade-5-v2",
+  "taskSteps": true,
+  "_taskSteps": "The unit's writing and speaking tasks as two steps of their own ('Write it yourself', 'Talk it through'), as in Grades 1-4.",
+  "strandRoles": {
+    "spelling": "phonics",
+    "topic": "topic",
+    "joining": "topic"
+  },
+  "_strandRoles": "joining -> topic, not the everyday-words step: Grade 5's joining groups are two or three academic connectives (accordingly, ultimately; albeit, regardless) - too few for that step's minimum of three, and not sight words - so they are taught in Meet the words with their meanings.",
+  "talkFromGrammar": false,
+  "grammarPractice": "grammar-practice.json",
+  "fluencyAtBuild": "words",
+  "sentenceTiles": false,
+  "sayitLines": "sayit-lines.json",
+  "stepVoice": "step-voice.json",
+  "writeExample": true,
+  "_upperVoice": "sayitLines: 'Say it out loud' lines for Units 3, 7, 9 and 10, whose tasks mark no double-quoted model line. stepVoice: the spoken step explanations reworded for a ten-year-old. writeExample: 'See an example' shows the task's completedExample, because Grade 5's modelText often describes a good answer instead of showing one. All three live in this app only; nothing is written into the unit JSON.",
+  "_fluency": "See build-lessons.py: Write a sentence is off (Grade 5 models are whole texts, not one sentence), the grammar parse mis-reads Grade 5's prose rules, so Let us talk and the grammar half of Fluency Practice come from grammar-practice.json (one authored round and one question per grammar item) and the rest of Fluency is the unit's own word-meaning review, built into the page and never written to the unit JSON (which would add a gated section to the Grade 5 shell course).",
+  "lessons": [
+    {
+      "file": "there-s-a-lesson-in-that.html",
+      "title": "There’s a Lesson in That"
+    },
+    {
+      "file": "exploring-space.html",
+      "title": "Exploring Space"
+    },
+    {
+      "file": "reflections.html",
+      "title": "Reflections"
+    },
+    {
+      "file": "telling-timeless-tales.html",
+      "title": "Telling Timeless Tales"
+    },
+    {
+      "file": "tell-me-how.html",
+      "title": "Tell Me How"
+    },
+    {
+      "file": "a-different-type-of-story.html",
+      "title": "A Different Type of Story"
+    },
+    {
+      "file": "tell-it-another-way.html",
+      "title": "Tell It Another Way"
+    },
+    {
+      "file": "share-your-views.html",
+      "title": "Share Your Views"
+    },
+    {
+      "file": "lights-camera-action.html",
+      "title": "Lights, Camera, Action…"
+    },
+    {
+      "file": "my-english-voice-grade-5-capstone.html",
+      "title": "My English Voice: Grade 5 Capstone"
+    }
+  ]
+}

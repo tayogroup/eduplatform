@@ -43,6 +43,13 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 ## Hard rules
 
 - **Grades/Stages 5-8 keep their design**: the full-screen slide deck (`gc-*`, `shell/deck.js`) is for Grades/Stages 1-4 only. By Grade 5 a learner scans a page rather than being walked through it one item at a time, so the grids, tabs and two-column labs there are the intended design, not a backlog waiting to be converted. Gate on stage number, in ONE constant per subject, never per section — the name differs by subject — `DECK_MAX_STAGE` in Science, Mathematics and Global Perspectives, `BOTH_DESIGNS_MAX_STAGE` in Computing, `BOTH_DESIGNS` in English (a boolean, `gradeNumber <= 4`) — but the line is 4 in every one of them; keep every grid renderer byte-identical and give it only a one-line early return (Computing is the exception and says why below: the stacked designs forced its originals to query inside a region, so they moved into `…Classic` functions behind a dispatcher — the upper stages still reach them unchanged); scope deck CSS to deck-only classes (`.gc-*`, `.wc-*`, `.<subject>-gc-*`) so no rule can match an upper-stage page. Verify at an upper stage in the browser — zero `gc-*` nodes and `body.gc-full` never set — not just by reading the diff. The upper stages carry known cosmetic defects that look like invitations (Science's `.method-example > strong` is 70px serif, a Mathematics size for `24 + 8`, applied to a whole investigation): flag them, never fix them in passing.
+
+  **One owner-approved exception (2026-09-11): the English Grade 5 STANDALONE
+  lesson app** (`english/grade-5-app/`) is the Grades 1-4 step-by-step build,
+  chosen by the owner for that app only. The Grade 5 shell course keeps its
+  page design, and nothing in that app writes to `english/grade-5/data` — its
+  README says what Grade 5 switches off and why. It is not a precedent for any
+  other grade or subject.
 - **Grades/Stages 1-4 are the deck ALONE except where the deck DROPPED
   something** — ten sections, listed below.
   Owner, 2026-08-26, across all five deck
@@ -2799,10 +2806,14 @@ still carry hand-typed copies, which is the thing being avoided — a hand copy 
 shipped text goes stale the first time a sentence is corrected, and the review
 workbook then shows a reviewer a story the app no longer tells.
 
-**Book narration is runtime TTS, not pre-rendered clips.** `renderEbooks` calls
-`aiVoiceUrl` per page, so a new book costs nothing to generate and none of the
-English audio tooling applies to it. What IS pre-rendered is the tap-and-story
-sound effects in `ebooks/tap-sounds/` — 34 clips, and **`playStorySound` takes
+**Book narration is a pre-recorded clip per page** (`ebooks/<id>/page-NN.mp3`,
+`tools/generate-ehel-english-ebook-audio.js`; all 3,430 Grade 1-4 pages since
+2026-09-11). The shell reader (`playPageNarration(…, clipUrl)`, the whole-book
+pop-up's `playClip`) and the standalone apps play it; only a clip that is
+missing or broken falls back to the paid runtime voice (`aiVoiceUrl`). The
+generator SKIPS any page whose clip exists, so a corrected page text is not
+re-recorded until the old clip is moved aside — a new book's pages need a run
+too. Also pre-rendered: the tap-and-story sound effects in `ebooks/tap-sounds/` — 34 clips, and **`playStorySound` takes
 the raw key while a tap goes through `TAP_SOUND_ALIASES`**, so a page `sound:`
 value that works as a `data-tap` can still be silent. The gate checks both paths
 separately for that reason. Zuri has no cue of her own and is aliased to the

@@ -54,7 +54,31 @@ def grade_arg(argv):
 GRADE = grade_arg(sys.argv[1:])
 UNITS = os.path.join(HERE, "..", "grade-%d" % GRADE, "data", "units")
 # supported reading speed for this grade, words a minute - see the docstring
-READING_WPM = {1: 60, 2: 75, 3: 90, 4: 100}
+READING_WPM = {1: 60, 2: 75, 3: 90, 4: 100, 5: 110}
+# Grade 5 (2026-09-11) continues the series rather than falling back to Grade
+# 1's 60.
+#
+# WRITING FROM GRADE 5 IS PRICED FROM EACH TASK'S OWN LENGTH, not at the flat
+# 90 seconds below. Grade 1's rate is for a sentence formed letter by letter;
+# a Grade 5 task is "Two to three organised paragraphs", "150 to 250 words",
+# "One procedural text of eight to twelve steps", and 90 seconds for that put
+# the whole unit's writing at 9 minutes. Every task states its length in
+# expectedLength, so the words are read from there (writing_words below) and
+# written at WRITING_WPM, a supported composing speed for a ten-year-old in an
+# additional language, plus WRITING_OVERHEAD to plan and check. Grades 1-4 keep
+# the flat rate, so their stored estimates do not move. Same provisional status,
+# same reviewer.
+WRITING_FROM_LENGTH_GRADE = 5
+WRITING_WPM = 8
+WRITING_OVERHEAD = 240          # seconds: plan before, reread after
+NUMBER_WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8,
+                "nine": 9, "ten": 10, "eleven": 11, "twelve": 12, "twenty": 20, "thirty": 30, "forty": 40,
+                "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90, "a": 1}
+# words per unit of length, where a task counts in something other than words
+UNIT_WORDS = {"paragraph": 70, "sentence": 12, "line": 7, "step": 12, "page": 150, "fact": 12,
+              "box": 15, "answer": 25, "response": 25, "section": 70,
+              "scene": 60}
+DEFAULT_TASK_WORDS = 100        # a length the parse cannot read: a planning frame, a poster
 
 # seconds per item -- see the note above before changing one
 RATES = {
@@ -83,6 +107,56 @@ def count_words(text):
     return len(re.findall(r"[A-Za-z']+", text or ""))
 
 
+def _number(tok):
+    tok = tok.lower()
+    return int(tok) if tok.isdigit() else NUMBER_WORDS.get(tok)
+
+
+def writing_words(length):
+    """How many words a task's expectedLength asks for.
+
+    "150 to 250 words" -> 200; "Two paragraphs of about sixty words each" ->
+    120; "Eight to twelve sentences" -> 10 x 12; "One procedural text of eight
+    to twelve steps" -> 10 x 12. Every counted part of the length is added, so
+    "Three paragraphs plus greeting and sign-off" counts the paragraphs and
+    "A revised legend plus four sentences of reflection" the sentences it can
+    see; a length with nothing countable in it gets DEFAULT_TASK_WORDS."""
+    text = (length or "").lower().replace("-", " ")
+    num = r"(\d+|%s)" % "|".join(sorted(NUMBER_WORDS, key=len, reverse=True))
+    m = re.search(r"%s\s+(?:to|-)\s+%s\s+words" % (num, num), text)
+    if m:
+        return (_number(m.group(1)) + _number(m.group(2))) / 2.0
+    m = re.search(r"%s\s+(\w+?)s?\s+of\s+(?:about\s+|roughly\s+)?%s\s+words" % (num, num), text)
+    if m:
+        return _number(m.group(1)) * _number(m.group(3))
+    m = re.search(r"(?:about|roughly)?\s*%s\s+words" % num, text)
+    if m:
+        return float(_number(m.group(1)))
+    found = []
+    for m in re.finditer(r"%s(?:\s+(?:to|-)\s+%s)?\s+(?:\w+\s+){0,2}?(%s)s?\b"
+                         % (num, num, "|".join(UNIT_WORDS)), text):
+        lo = _number(m.group(1))
+        hi = _number(m.group(2)) if m.group(2) else lo
+        found.append((m.start(), m.end(), (lo + hi) / 2.0, UNIT_WORDS[m.group(3)]))
+    # "One paragraph of four to six sentences" is ONE measure, not two: the
+    # outer count multiplies the inner one instead of adding a paragraph's worth
+    total, i = 0.0, 0
+    while i < len(found):
+        start, end, count, per = found[i]
+        nxt = found[i + 1] if i + 1 < len(found) else None
+        if nxt and re.fullmatch(r"\s+of\s+(?:about\s+|roughly\s+)?", text[end:nxt[0]]):
+            total += count * nxt[2] * nxt[3]
+            i += 2
+            continue
+        total += count * per
+        i += 1
+    return total or float(DEFAULT_TASK_WORDS)
+
+
+def writing_seconds(task):
+    return WRITING_OVERHEAD + round(writing_words(task.get("expectedLength")) * 60 / WRITING_WPM)
+
+
 def estimate(unit):
     """Seconds per section, from what the unit actually contains."""
     sec = {}
@@ -106,7 +180,10 @@ def estimate(unit):
     sec["fluency"] = len(unit.get("fluency") or []) * RATES["fluency_q"]
     sec["activities"] = len(unit.get("activities") or []) * RATES["activity"]
     sec["speaking"] = len(unit.get("speaking") or []) * RATES["speaking"]
-    sec["writing"] = len(unit.get("writing") or []) * RATES["writing"]
+    if GRADE >= WRITING_FROM_LENGTH_GRADE:
+        sec["writing"] = sum(writing_seconds(w) for w in unit.get("writing") or [])
+    else:
+        sec["writing"] = len(unit.get("writing") or []) * RATES["writing"]
     sec["grammar"] = len(unit.get("grammar") or []) * RATES["grammar"]
     return sec
 
@@ -119,7 +196,10 @@ def block(unit):
         "status": "provisional",
         "basis": "arithmetic from the unit's own counts using the rate table in "
                  "grade-1-app/estimate-learning-time.py; not observed timings"
-                 + ("" if GRADE == 1 else "; reading at %d words a minute" % READING_WPM.get(GRADE, RATES["reading_wpm"])),
+                 + ("" if GRADE == 1 else "; reading at %d words a minute" % READING_WPM.get(GRADE, RATES["reading_wpm"]))
+                 + ("" if GRADE < WRITING_FROM_LENGTH_GRADE else
+                    "; writing from each task's expectedLength at %d words a minute plus %d minutes to plan and check"
+                    % (WRITING_WPM, WRITING_OVERHEAD // 60)),
         "generatedFrom": "content",
         "sectionMinutes": {k: max(1, round(v / 60)) for k, v in sorted(sec.items()) if v},
         "selfPacedMinutes": round(total / 60),

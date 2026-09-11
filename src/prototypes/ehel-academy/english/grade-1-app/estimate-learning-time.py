@@ -58,26 +58,45 @@ READING_WPM = {1: 60, 2: 75, 3: 90, 4: 100, 5: 110}
 # Grade 5 (2026-09-11) continues the series rather than falling back to Grade
 # 1's 60.
 #
-# WRITING FROM GRADE 5 IS PRICED FROM EACH TASK'S OWN LENGTH, not at the flat
-# 90 seconds below. Grade 1's rate is for a sentence formed letter by letter;
-# a Grade 5 task is "Two to three organised paragraphs", "150 to 250 words",
-# "One procedural text of eight to twelve steps", and 90 seconds for that put
-# the whole unit's writing at 9 minutes. Every task states its length in
-# expectedLength, so the words are read from there (writing_words below) and
-# written at WRITING_WPM, a supported composing speed for a ten-year-old in an
-# additional language, plus WRITING_OVERHEAD to plan and check. Grades 1-4 keep
-# the flat rate, so their stored estimates do not move. Same provisional status,
-# same reviewer.
-WRITING_FROM_LENGTH_GRADE = 5
-WRITING_WPM = 8
+# WRITING FROM GRADE 2 IS PRICED FROM EACH TASK'S OWN LENGTH, not at the flat
+# 90 seconds below. That rate is for a sentence formed letter by letter, and by
+# Grade 2 a task is already paragraphs: the median task states 60 words at
+# Grades 2 and 3, 70 at Grade 4 and 120 at Grade 5, so 90 seconds put a whole
+# unit's writing at 9 minutes in every one of them. Every task states its length
+# in expectedLength, so the words are read from there (writing_words below) and
+# written at WRITING_WPM for the grade, plus WRITING_OVERHEAD to plan and check.
+#
+# GRADE 1 IS DELIBERATELY EXCLUDED, and the reason is a measurement rather than
+# a judgement: its lengths are "Drawing, tracing or 1-3 words" and "One label,
+# phrase or short sentence", which this parser cannot read - 29 of its 62 tasks,
+# against 94-95% at Grades 2-4. Priced here, half of Grade 1's tasks would be
+# charged DEFAULT_TASK_WORDS, a hundred words a six-year-old was never asked to
+# write. Its rate needs a person who has watched the writing, not this parser.
+#
+# The speeds are supported composing speeds in an additional language - slower
+# than handwriting alone, because the child is choosing the words too - and they
+# rise with the grade for the reason READING_WPM does. Provisional, and the
+# reviewer who owns the table below owns these.
+WRITING_FROM_LENGTH_GRADE = 2
+WRITING_WPM = {2: 5, 3: 6, 4: 7, 5: 8}
+DEFAULT_WRITING_WPM = 8
 WRITING_OVERHEAD = 240          # seconds: plan before, reread after
 NUMBER_WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8,
                 "nine": 9, "ten": 10, "eleven": 11, "twelve": 12, "twenty": 20, "thirty": 30, "forty": 40,
                 "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90, "a": 1}
-# words per unit of length, where a task counts in something other than words
+# words per unit of length, where a task counts in something other than words.
+# These are Grade 5 sizes; a sentence and a paragraph get shorter down the
+# grades, and they have to, because "6 complete sentences" is what a Grade 2
+# task asks for and a seven-year-old's sentence is not a ten-year-old's. Read
+# off the grade's own model answers, so the count is measured and only the
+# rounding is judgement.
 UNIT_WORDS = {"paragraph": 70, "sentence": 12, "line": 7, "step": 12, "page": 150, "fact": 12,
               "box": 15, "answer": 25, "response": 25, "section": 70,
               "scene": 60}
+UNIT_WORDS_BY_GRADE = {2: {"sentence": 7, "paragraph": 45},
+                       3: {"sentence": 9, "paragraph": 55},
+                       4: {"sentence": 11, "paragraph": 60}}
+UNIT_WORDS.update(UNIT_WORDS_BY_GRADE.get(GRADE, {}))
 DEFAULT_TASK_WORDS = 100        # a length the parse cannot read: a planning frame, a poster
 
 # seconds per item -- see the note above before changing one
@@ -153,8 +172,12 @@ def writing_words(length):
     return total or float(DEFAULT_TASK_WORDS)
 
 
+def writing_wpm():
+    return WRITING_WPM.get(GRADE, DEFAULT_WRITING_WPM)
+
+
 def writing_seconds(task):
-    return WRITING_OVERHEAD + round(writing_words(task.get("expectedLength")) * 60 / WRITING_WPM)
+    return WRITING_OVERHEAD + round(writing_words(task.get("expectedLength")) * 60 / writing_wpm())
 
 
 def estimate(unit):
@@ -199,7 +222,7 @@ def block(unit):
                  + ("" if GRADE == 1 else "; reading at %d words a minute" % READING_WPM.get(GRADE, RATES["reading_wpm"]))
                  + ("" if GRADE < WRITING_FROM_LENGTH_GRADE else
                     "; writing from each task's expectedLength at %d words a minute plus %d minutes to plan and check"
-                    % (WRITING_WPM, WRITING_OVERHEAD // 60)),
+                    % (writing_wpm(), WRITING_OVERHEAD // 60)),
         "generatedFrom": "content",
         "sectionMinutes": {k: max(1, round(v / 60)) for k, v in sorted(sec.items()) if v},
         "selfPacedMinutes": round(total / 60),

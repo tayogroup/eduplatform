@@ -12005,7 +12005,12 @@ async function aiVoiceUrl(text) {
   return pending;
 }
 
-async function playPageNarration(button, narrationOverride = null, readAlong = null) {
+// `clipUrl` is a pre-recorded clip of exactly this narration. Every picture-book
+// page has one (ebooks/<id>/page-NN.mp3, tools/generate-ehel-english-ebook-audio.js,
+// all 3,430 Grade 1-4 pages since 2026-09-11), and the runtime voice bills every
+// play, so the clip is tried first and the runtime voice is only the fallback for
+// a clip that fails to load or play.
+async function playPageNarration(button, narrationOverride = null, readAlong = null, clipUrl = null) {
   if (!audioEnabled) { toast("Sound is muted. Use the sound button in the header to turn it on."); return false; }
   if (activeAudioButton === button) {
     stopAudio();
@@ -12025,35 +12030,60 @@ async function playPageNarration(button, narrationOverride = null, readAlong = n
   button.innerHTML = `${icon("loader-circle")} <span>Preparing voice</span>`;
   button.classList.add("loading");
   icons();
+  const playSource = (source) => new Promise((resolve, reject) => {
+    const finish = () => { cleanup(); resolve(); };
+    const fail = () => { cleanup(); reject(new Error("The ElevenLabs recording could not be played.")); };
+    const cleanup = () => {
+      player.removeEventListener("ended", finish);
+      player.removeEventListener("error", fail);
+      if (pageNarrationCancel === cancel) pageNarrationCancel = null;
+    };
+    const cancel = () => { cleanup(); resolve(); };
+    pageNarrationCancel = cancel;
+    player.addEventListener("ended", finish, { once: true });
+    player.addEventListener("error", fail, { once: true });
+    player.src = source;
+    player.playbackRate = AI_NARRATION_RATE;
+    player.play().catch(fail);
+  });
+  const showPlaying = (part, parts) => {
+    button.innerHTML = `${icon("square")} <span>Stop listening</span>`;
+    button.setAttribute("aria-label", parts > 1 ? `Stop listening. Part ${part} of ${parts}` : "Stop listening");
+    button.classList.remove("loading");
+    icons();
+  };
   try {
-    const chunks = narrationChunks(narration);
     const segments = readAlong?.length ? readAlong : null;
+    if (clipUrl) {
+      let clipPlayed = true;
+      try {
+        // One recording of the whole page, so the read-along runs across the
+        // full clip rather than per runtime chunk.
+        if (segments) startNarrationSync(player, segments);
+        showPlaying(1, 1);
+        await playSource(clipUrl);
+      } catch {
+        clipPlayed = false;
+      }
+      if (requestId !== audioRequestId || !button.isConnected) return;
+      if (clipPlayed) return narrationOk;
+      // Only a clip that is missing or broken (a media error) earns the paid
+      // runtime voice. A play the browser refused or interrupted would be
+      // refused again, so it ends the page as a failed runtime play always did.
+      if (!player.error) throw new Error("The recording could not be played.");
+      button.innerHTML = `${icon("loader-circle")} <span>Preparing voice</span>`;
+      button.classList.add("loading");
+      icons();
+    }
+    const chunks = narrationChunks(narration);
     const chunkRanges = segments ? narrationChunkRanges(chunks, segments.reduce((sum, segment) => sum + segment.chars, 0)) : null;
     if (segments) startNarrationSync(player, segments, chunkRanges);
     for (let index = 0; index < chunks.length; index += 1) {
       const source = await aiVoiceUrl(chunks[index]);
       if (requestId !== audioRequestId || !button.isConnected) return;
       if (segments && narrationSync?.player === player) narrationSync.sourceIndex = index;
-      button.innerHTML = `${icon("square")} <span>Stop listening</span>`;
-      button.setAttribute("aria-label", `Stop listening. Part ${index + 1} of ${chunks.length}`);
-      button.classList.remove("loading");
-      icons();
-      await new Promise((resolve, reject) => {
-        const finish = () => { cleanup(); resolve(); };
-        const fail = () => { cleanup(); reject(new Error("The ElevenLabs recording could not be played.")); };
-        const cleanup = () => {
-          player.removeEventListener("ended", finish);
-          player.removeEventListener("error", fail);
-          if (pageNarrationCancel === cancel) pageNarrationCancel = null;
-        };
-        const cancel = () => { cleanup(); resolve(); };
-        pageNarrationCancel = cancel;
-        player.addEventListener("ended", finish, { once: true });
-        player.addEventListener("error", fail, { once: true });
-        player.src = source;
-        player.playbackRate = AI_NARRATION_RATE;
-        player.play().catch(fail);
-      });
+      showPlaying(index + 1, chunks.length);
+      await playSource(source);
     }
   } catch (error) {
     narrationOk = false;
@@ -15665,6 +15695,12 @@ function ebookAsset(book, filename) {
   return asset.href;
 }
 
+// The pre-recorded narration of one page, beside its artwork. The path is served
+// max-age=300, so a re-recorded page reaches learners without a stamp.
+function ebookPageClip(book, pageIndex) {
+  return ebookAsset(book, `page-${String(pageIndex + 1).padStart(2, "0")}.mp3`);
+}
+
 function openEbookReadAloud(book) {
   const readerWindow = window.open("", "_blank", "popup=yes,width=1100,height=860,resizable=yes,scrollbars=yes");
   if (!readerWindow) {
@@ -15807,6 +15843,28 @@ function openEbookReadAloud(book) {
     await finished;
   };
 
+  // The page's pre-recorded clip. "failed" means the clip itself could not load
+  // or decode, and only then does the page fall back to the runtime voice; a
+  // browser refusing or interrupting play is "blocked", which waitForPlayback
+  // already turns into a Start button.
+  const playClip = (url) => new Promise((resolve) => {
+    const done = (result) => {
+      audio.removeEventListener("ended", ended);
+      audio.removeEventListener("error", failed);
+      resolve(result);
+    };
+    const ended = () => done("played");
+    const failed = () => done("failed");
+    audio.addEventListener("ended", ended, { once: true });
+    audio.addEventListener("error", failed, { once: true });
+    audio.src = url;
+    audio.playbackRate = AI_NARRATION_RATE;
+    audio.defaultPlaybackRate = AI_NARRATION_RATE;
+    // A media error means the clip is missing or broken; any other refusal
+    // (autoplay, an interrupted play) is the Start-button case.
+    audio.play().catch(() => done(audio.error ? "failed" : "blocked"));
+  });
+
   const playFromPage = async (startIndex) => {
     const token = ++playbackToken;
     audio.pause();
@@ -15814,6 +15872,15 @@ function openEbookReadAloud(book) {
     for (; pageIndex < book.pages.length; pageIndex += 1) {
       if (token !== playbackToken || readerWindow.closed) return;
       drawPage();
+      status.textContent = "Playing ElevenLabs voice";
+      const clip = ebookPageClip(book, pageIndex);
+      const result = await playClip(clip);
+      if (token !== playbackToken || readerWindow.closed) return;
+      if (result === "played") continue;
+      if (result === "blocked") {
+        await waitForPlayback(clip, token);
+        continue;
+      }
       status.textContent = "Preparing ElevenLabs voice";
       try {
         const source = await aiVoiceUrl(book.pages[pageIndex].text);
@@ -16118,7 +16185,7 @@ function renderEbooks() {
       const lines = () => readAlongSegments($("#course-ebook-page"), ".course-ebook-transcript .rd-line");
       if (activeAudioButton === listenButton) { playPageNarration(listenButton, page.text, lines()); return; }
       await playStorySound(page.sound);
-      if (listenButton.isConnected) playPageNarration(listenButton, page.text, lines());
+      if (listenButton.isConnected) playPageNarration(listenButton, page.text, lines(), ebookPageClip(book, activeEbookPage));
     });
     $("#previous-ebook-page").addEventListener("click", () => { stopEbookWatch({ keepFullscreen: true }); activeEbookPage -= 1; drawPage(true); });
     $("#next-ebook-page").addEventListener("click", () => { stopEbookWatch({ keepFullscreen: true }); activeEbookPage += 1; drawPage(true); });
@@ -16160,7 +16227,7 @@ function renderEbooks() {
       if (!pageButton) break;
       await playStorySound(book.pages[activeEbookPage].sound);
       if (!ebookWatchActive || ebookWatchToken !== token) return;
-      const narrated = await playPageNarration(pageButton, book.pages[activeEbookPage].text, readAlongSegments($("#course-ebook-page"), ".course-ebook-transcript .rd-line"));
+      const narrated = await playPageNarration(pageButton, book.pages[activeEbookPage].text, readAlongSegments($("#course-ebook-page"), ".course-ebook-transcript .rd-line"), ebookPageClip(book, activeEbookPage));
       if (!ebookWatchActive || ebookWatchToken !== token) return;
       if (!narrated) break;
       if (activeEbookPage >= book.pages.length - 1) {

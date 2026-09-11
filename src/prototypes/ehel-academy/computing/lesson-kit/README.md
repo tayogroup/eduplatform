@@ -202,7 +202,12 @@ rather than the page.
 - **Controls are 44 px tall; labels at least 13 px.** The blocks, the wifi
   toggle and the home cards' buttons measured 40 to 43 px at phone width and
   two label styles 11 to 11.5 px (validation, 2026-09-11). The network map's
-  labels are 13 units and the drawing is as tall as its lowest label needs.
+  labels are 13 units and the drawing is as tall as its lowest label needs,
+  which on a phone draws them at 12 px. The parts of the laptop and tablet
+  drawings are the exception to 44 px and are held to the 24 px minimum
+  instead: five of them measured 17 to 23 px (Grade 2 validation,
+  2026-09-11), and 44 is not reachable without redrawing, because the
+  speaker, the port and the touchpad sit too close together.
 - **`blockBtn`'s third argument is the extra class.** It used to be passed
   as a second `class="…"` inside the attribute string, which the parser
   ignores, so the running block was never highlighted at Stages 1 and 2

@@ -97,7 +97,7 @@ LESSON = {
                  ["Tap the steps in the order the algorithm shows."]),
              {"scene": "bed", "steps": [
                  s("pyjamas", "Put on pyjamas", "\U0001F454", "Pyjamas on."),
-                 s("teeth", "Brush your teeth", "\U0001FAA5", "Teeth brushed."),
+                 s("teeth", "Brush your teeth", "\U0001F9B7", "Teeth brushed."),
                  s("story", "Read a story", "\U0001F4D6", "A story."),
                  s("bed", "Get into bed", "\U0001F6CF️", "Into bed."),
                  s("lights", "Lights off", "\U0001F4A1", "Lights off. Goodnight."),
@@ -120,7 +120,7 @@ LESSON = {
              ], "extras": [
                  {"pic": "\U0001F9E5", "label": "put on your coat", "why": "A coat has nothing to do with toast."},
                  {"pic": "\U0001F3B5", "label": "sing a song", "why": "Singing does not make toast."},
-                 {"pic": "\U0001FAB4", "label": "water the plant", "why": "The plant is not part of this task."},
+                 {"pic": "\U0001F331", "label": "water the plant", "why": "The plant is not part of this task."},
              ]},
              "Five needed steps, in order, and three left out. That is writing an algorithm."),
 
@@ -221,9 +221,9 @@ LESSON["home"] = [
           "'Draw a shape' gets a shape. 'Draw a roof' with no place gets a roof anywhere.",
           "Swap over."],
          "How many tries until the drawing came out right? Precise instructions get it right first time."),
-    home("Tea for a robot", "A grown-up in the kitchen",
-         ["Say the tea algorithm, one step at a time. Your grown-up is the robot.",
-          "If you say 'pour the water' before 'get a cup', watch what the robot does.",
+    home("Tea for a robot", "A grown-up, an empty cup and a spoon. No real water.",
+         ["Say the tea algorithm, one step at a time. Your grown-up is the robot and acts each step out with the empty cup.",
+          "If you say 'pour the water' before 'get a cup', watch what the robot pretends to do.",
           "Say it again, precisely, in order."],
          "A robot needs the cup BEFORE the water."),
     home("Needed or not", "Paper and a pencil",

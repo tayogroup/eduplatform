@@ -18,17 +18,17 @@ LESSON = {
              "Data on paper and data on a computer are not the same. Tap each reason.",
              explain(
                  ["Data stored on a computer can do things a piece of paper cannot."],
-                 ["It does not get lost or torn.", "You can search it.", "You can copy it.", "You can send it to someone far away.",
+                 ["A spill or a tear cannot spoil it, and a spare copy can be kept.", "You can search it.", "You can copy it.", "You can send it to someone far away.",
                   "The computer can count it in a blink."],
                  ["Children think paper is safer because you can hold it.", "One cup of juice and the paper data is gone. The computer's copy is still there."],
                  ["Tap all six reasons."]),
              {"items": [
-                 {"pic": "\U0001F5C2️", "label": "it does not get lost", "say": "Data on a computer does not get lost, torn or spilt on. It is still there tomorrow."},
+                 {"pic": "\U0001F5C2️", "label": "it is harder to lose", "say": "Paper gets lost, torn and spilt on. Data on a computer is safe from all three, and a spare copy can be kept."},
                  {"pic": "\U0001F50E", "label": "you can search it", "say": "You can search it. One name out of five hundred, found in a blink."},
                  {"pic": "\U0001F4CB", "label": "you can copy it", "say": "You can copy it, so two classes can have the same table without writing it twice."},
                  {"pic": "\U0001F4E4", "label": "you can share it", "say": "You can share it. Send the table to Grandma or to another school in a second."},
                  {"pic": "⚡", "label": "it can be counted in a blink", "say": "The computer counts it for you, in a blink, and never miscounts."},
-                 {"pic": "\U0001F4E6", "label": "it takes up no space", "say": "A thousand tables take up no space at all. On paper they would fill a cupboard."},
+                 {"pic": "\U0001F4E6", "label": "it takes up almost no room", "say": "A thousand tables fit on one tablet. On paper they would fill a cupboard."},
              ], "need": 6,
               "then": {"ask": "Which is something a computer can do with data that a piece of paper cannot?",
                        "opts": [opt("Search it and count it in a blink", True), opt("Hold it in your hand", False), opt("Fold it", False)],
@@ -161,7 +161,7 @@ LESSON = {
                  q("Your favourite fruit is what kind of data?", "\U0001F3F7️", "a category", ["a count", "a measurement", "a story"], "A choice from a list is a category."),
                  q("How tall you are is what kind of data?", "\U0001F4CF", "a measurement", ["a count", "a category", "an opinion"], "Measured in centimetres."),
                  q("Which of these can a form record?", "\U0001F4DD", "counts, measurements and categories", ["only stories", "nothing", "only pictures"], "All three kinds of statistical data go into a form."),
-                 q("Juice spills on the paper table. What about the computer copy?", "\U0001F4BB", "it is still there", ["it is soaked too", "it disappears", "it turns to juice"], "Data on a computer does not get spilt on."),
+                 q("Juice spills on the paper table. What about the computer copy?", "\U0001F4BB", "it is still there", ["it is soaked too", "it disappears", "it turns to juice"], "The juice only reached the paper. The computer's copy was not touched."),
                  q("What can a computer do with data that paper cannot?", "\U0001F50E", "search, copy, send and count it in a blink", ["hold it", "fold it", "nothing"], "That is why data is stored on computers."),
              ]},
              "That is the whole lesson finished. You can collect data, and you know what kind you are collecting."),
@@ -178,7 +178,7 @@ LESSON["about"] = [
 
 LESSON["lecture"] = [
     part("\U0001F4BE", "Why computers keep data",
-         "Data on a computer does not get lost or spilt on. You can search it, copy it, send it to Grandma, and the computer counts it in a blink. Paper can do none of that."),
+         "Data on a computer is safe from spills and tears, and a spare copy can be kept. You can search it, copy it, send it to Grandma, and the computer counts it in a blink. Paper cannot do any of that in a blink."),
     part("\U0001F3AF", "A purpose first",
          "Collecting data starts with a purpose: we need to know which fruit to buy for the party. The purpose decides the question: which fruit do you like best, apple, banana, orange or grapes?"),
     part("\U0001F4F1", "Ways of collecting",

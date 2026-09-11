@@ -127,7 +127,7 @@ LESSON = {
                  q("You cannot see the bug. What is a good thing to do?", "\U0001F465", "ask a friend to look", ["hide the program", "give up", "delete everything"], "Fresh eyes find what tired eyes miss."),
                  q("Explaining each block out loud helps you...", "\U0001F5E3️", "hear the block that is wrong", ["run faster", "make the cat bigger", "add more blocks"], "You hear 'spin' when the goal says 'jump'."),
                  q("Which is the BAD debugging habit?", "\U0001F6AB", "changing three blocks at once without running", ["running after every fix", "asking a friend", "explaining out loud"], "If it still fails you cannot tell which change was wrong."),
-                 q("Who is a program's bug the fault of?", "\U0001F4BB", "the program: the computer did what it was told", ["the computer", "the cat", "nobody"], "The computer did exactly what the program said."),
+                 q("A program goes wrong. Where is the bug?", "\U0001F4BB", "in the program: the computer did what it was told", ["in the computer", "in the cat", "nowhere"], "The computer did exactly what the program said."),
                  q("What does debugging mean?", "\U0001F527", "finding and fixing bugs so the program does what we wanted", ["writing a new program", "drawing insects", "switching off"], "Debugging is finding and fixing the errors."),
              ]},
              "That is the whole lesson finished. You can debug, and you know why two heads are better than one."),

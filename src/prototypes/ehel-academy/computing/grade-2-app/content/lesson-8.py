@@ -105,7 +105,7 @@ LESSON = {
                  ["Tap each one and find the problem and the decision."]),
              {"items": [
                  {"pic": "\U0001F3EA", "label": "a shop", "say": "A shop counts what it sells each day. Bananas sell out, apples do not. So it orders more bananas. Data, then a decision."},
-                 {"pic": "\U0001F469‍⚕️", "label": "a doctor", "say": "A doctor writes down a patient's temperature every hour and draws a graph. The line going down means the medicine is working."},
+                 {"pic": "\U0001F469‍⚕️", "label": "a doctor", "say": "A doctor writes down a patient's temperature every hour and draws a graph. The line going down shows the fever is going down."},
                  {"pic": "\U0001F6A6", "label": "a city", "say": "A city counts the cars on a road, and the children crossing it. Lots of both means a crossing is needed there."},
                  {"pic": "\U0001F371", "label": "a school kitchen", "say": "A school counts how many children want a hot lunch, so the kitchen cooks the right amount and nothing is wasted."},
              ], "need": 4,
@@ -122,7 +122,7 @@ LESSON = {
                  [],
                  ["Think about what happened to the paper table, then tap."]),
              {"label": "Question", "items": [
-                 q("The class list on paper got wet. What about the copy on the computer?", "\U0001F4A7", "still there, and it can be printed again", ["also wet", "gone for ever", "half wet"], "A computer copy does not get wet."),
+                 q("The class list on paper got wet. What about the copy on the computer?", "\U0001F4A7", "still there, and it can be printed again", ["also wet", "gone for ever", "half wet"], "The water only reached the paper. The copy on the computer is still there."),
                  q("You need to find one name out of 500. Which is faster?", "\U0001F50E", "the computer searches it in a blink", ["reading the paper list", "they are the same", "asking everyone"], "Searching is what computers are best at."),
                  q("Two classes need the same table. On a computer you can...", "\U0001F4CB", "copy it in a blink", ["write it out twice", "share one piece of paper", "not do it"], "Copying is instant."),
                  q("You want to turn the table into a graph. Which is faster?", "\U0001F4CA", "the computer draws it in a blink", ["drawing it by hand with a ruler", "they take the same time", "graphs cannot be made"], "Presenting data is a computer's job."),
@@ -144,7 +144,7 @@ LESSON = {
                  q("A shop's data says bananas sell out every day. What should it do?", "\U0001F3EA", "order more bananas", ["order fewer", "stop counting", "sell apples only"], "Data, then a decision."),
                  q("Which is a problem data could help solve?", "\U0001F4A1", "where a town needs a new crossing", ["what colour is nicest", "how a cat feels", "none of these"], "Count the cars and the children, and the answer is in the data."),
                  q("What is the first thing to do with data before deciding?", "\U0001F4D6", "read it carefully", ["throw it away", "decide first", "colour it in"], "Look first, then decide."),
-                 q("Where is the class data safest?", "\U0001F4BE", "on the computer", ["on a piece of paper by the sink", "in your head", "nowhere"], "Stored on a computer it cannot be spilt on, and it can be searched, copied and sent."),
+                 q("Where is the class data safest?", "\U0001F4BE", "on the computer", ["on a piece of paper by the sink", "in your head", "nowhere"], "A spill on a paper list cannot touch it, a spare copy can be kept, and it can be searched and sent."),
              ]},
              "That is the whole lesson finished. You can present data and use it to decide."),
     ],

@@ -85,14 +85,14 @@ LESSON = {
              explain(
                  ["A floor robot in the classroom and a robot in a warehouse follow the same kind of program: a path, a square at a time."],
                  ["A warehouse robot drives to shelf 14 and back.", "A hospital robot carries medicines along a corridor and turns at the right door.",
-                  "A robot vacuum turns when it bumps.", "A delivery robot follows the pavement to a house number."],
+                  "A simple robot vacuum turns when it bumps.", "A delivery robot follows the pavement to a house number."],
                  [],
                  ["Tap each one and hear its journey."]),
              {"items": [
                  {"pic": "\U0001F4E6", "label": "a warehouse robot", "say": "A warehouse robot is given a destination: shelf fourteen. It drives forward, turns, and stops there."},
                  {"pic": "\U0001F3E5", "label": "a hospital robot", "say": "A hospital delivery robot follows the corridor, turns left at the right ward, and stops at the door."},
-                 {"pic": "\U0001F916", "label": "a robot vacuum", "say": "A robot vacuum goes forward until it bumps, then turns and goes forward again."},
-                 {"pic": "\U0001F6F5", "label": "a delivery robot", "say": "A delivery robot follows the pavement, square by square, to the right house number."},
+                 {"pic": "\U0001F916", "label": "a robot vacuum", "say": "A simple robot vacuum goes forward until it bumps, then turns and goes forward again."},
+                 {"pic": "\U0001F6F5", "label": "a delivery robot", "say": "A delivery robot follows the pavement, turn by turn, to the right house number."},
              ], "need": 4,
               "then": {"ask": "What does a warehouse robot need before it can drive to a shelf?",
                        "opts": [opt("A destination and the instructions to reach it", True), opt("A cup of tea", False), opt("Nothing; it guesses", False)],

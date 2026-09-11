@@ -382,3 +382,30 @@ on a fresh open, and a reload after moving to step 4 opens step 4. The live hub
 lists both lessons. How many records were made on the old lesson 10 before today,
 and so read its later steps against the new lesson's shell (above), is on the
 platform and cannot be read from here.
+
+## The open items, 2026-09-12 (not deployed)
+
+Grade 2 needed no content change. Its seven pictures from 2019 are replaced: GO is
+the play triangle, the code block a puzzle piece, the counters a blue circle, the
+router's green light a plug, the factory arm a car and a palette, the fighting robot
+a boxing glove, the juice a cup and how tall you are a giraffe; Robo's big square is
+drawn in the scene's own colour.
+
+Every grade's pictures are 2018 or older now (Emoji 11.0), so a tablet that has had
+no system update since then draws all of them; the reports kept asking for the 2019
+ones to be checked on the school's oldest tablets, and there is nothing left to
+check. Where the colour is the content, the picture is drawn instead of typed
+(`_kit.swatch`): Robo's big square. A picture that reaches a game or a sort stays an
+emoji, because `_shell.py` carries both into the derived games as text, and none is
+the icon of the bin its item sorts into.
+
+Also checked, for every grade: every answer key read a second time by a reader that
+had not written it (709 questions across the four grades, none keyed wrong); the
+accessibility tree walked step by step on two lessons, which is what a screen reader
+is handed (every control named, the feedback panels polite live regions, the drawings
+hidden from it); and the a11y probe over every step of every lesson - no contrast
+failure, no control under 44 px, the focus ring 4 px (the things the probe reports as unreachable or unnamed are the Robo grid's squares, its program read-out and the labelled parts of the laptop and tablet drawings, which are content, not controls).
+
+Verified: both gates green (31/31, 22 keys), every inline script parses, all eleven
+lessons played to 100% with nothing wider than 375 px, and lesson 1 again on the
+deployed layout with the stored record and resume. **Not deployed.**

@@ -320,3 +320,29 @@ page byte-identical to HEAD, every edge path fresh. All eight lessons were then
 played to the end on the live pages in Chromium: 0 console errors, every step stored
 and every lesson recorded complete, nothing ticked on a fresh open, and a reload
 after moving to step 4 opens step 4.
+
+## The open items, 2026-09-12 (not deployed)
+
+Grade 1 needed no content change. Its nine pictures from 2019 are replaced: the code
+block is a puzzle piece, the juice a cup, the factory arm a factory, the ice a
+snowflake, and the tower's three bricks, the soil in the pot and the butter on the
+toast are drawn in the scene's own colours.
+
+Every grade's pictures are 2018 or older now (Emoji 11.0), so a tablet that has had
+no system update since then draws all of them; the reports kept asking for the 2019
+ones to be checked on the school's oldest tablets, and there is nothing left to
+check. Where the colour is the content, the picture is drawn instead of typed
+(`_kit.swatch`): the tower's bricks, the soil and the butter. A picture that reaches a game or a sort stays an
+emoji, because `_shell.py` carries both into the derived games as text, and none is
+the icon of the bin its item sorts into.
+
+Also checked, for every grade: every answer key read a second time by a reader that
+had not written it (709 questions across the four grades, none keyed wrong); the
+accessibility tree walked step by step on two lessons, which is what a screen reader
+is handed (every control named, the feedback panels polite live regions, the drawings
+hidden from it); and the a11y probe over every step of every lesson - no contrast
+failure, no control under 44 px, the focus ring 4 px (the things the probe reports as unreachable or unnamed are the Robo grid's squares and its program read-out, which are content, not controls).
+
+Verified: both gates green (28/28, 16 keys), every inline script parses, all eight
+lessons played to 100% with nothing wider than 375 px, and lesson 1 again on the
+deployed layout with the stored record and resume. **Not deployed.**

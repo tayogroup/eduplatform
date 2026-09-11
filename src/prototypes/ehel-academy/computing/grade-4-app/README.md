@@ -365,3 +365,54 @@ console errors, every step stored and every lesson recorded complete, nothing ti
 on a fresh open, and a reload after moving to step 4 opens step 4. The eighteen
 corrections the validation made are live; nothing added a step or moved one, so
 records made before stay true.
+
+## The open items, 2026-09-12 (not deployed)
+
+- **Lesson 4 has the child write an algorithm whose output depends on its input**
+  (4CT.09, the activity the validation asked for). *Write the branch* is its third
+  step: choose the question that decides the middle, then put every step where it
+  belongs - first, in one answer's branch or the other's, or after - and press Test
+  it. The page runs the child's own algorithm with both inputs and reads the two
+  outputs back; a misplaced step shows up as the wrong output for one answer, and the
+  page names it, says what the test showed and hands it back to be placed again.
+  Three rounds: a library book, a school lunch, a locked door in a game. The machine
+  is the kit's new `branchbuild` (see the kit README).
+- **The step is new, so lesson 4's later steps each move one place along.** A record
+  made on lesson 4 before the redeploy reads one step out from its sixth step on
+  (overview, lecture and words come first, then the three teaching steps). No other
+  lesson gained or lost a step.
+- **A recap and a warm-up** (areas 9 and 11): lessons 2 to 14 open with a line
+  recalling the lesson before, and all fourteen with two questions that are never
+  marked. Both sit on the overview, so no step moved for them. The overlap check was
+  run against Grades 1 to 3 before they were written.
+- **The letter names were listened to**, in the three voices, and the clips went to
+  the owner; the cipher lessons are where a lone letter matters most here.
+- **The five pictures from 2019 are replaced**: the ice is a snowflake, the
+  stethoscope a bone, a microscope and a hospital, and the traffic lights are drawn
+  as lamps - red and amber as two of them, which the old orange circle never showed.
+
+Every grade's pictures are 2018 or older now (Emoji 11.0), so a tablet that has had
+no system update since then draws all of them; the reports kept asking for the 2019
+ones to be checked on the school's oldest tablets, and there is nothing left to
+check. Where the colour is the content, the picture is drawn instead of typed
+(`_kit.swatch`): the traffic lights. A picture that reaches a game or a sort stays an
+emoji, because `_shell.py` carries both into the derived games as text, and none is
+the icon of the bin its item sorts into.
+
+Also checked, for every grade: every answer key read a second time by a reader that
+had not written it (709 questions across the four grades, none keyed wrong); the
+accessibility tree walked step by step on two lessons, which is what a screen reader
+is handed (every control named, the feedback panels polite live regions, the drawings
+hidden from it); and the a11y probe over every step of every lesson - no contrast
+failure, no control under 44 px, the focus ring 4 px.
+
+Still open and the owner's: whether Stage 4 keeps the word IF, which Cambridge places
+at Stage 5 (5CT.06), or teaches 4CT.09 through input-to-output rules as Grade 3's
+machines do. The new activity works either way; only the label above its two branches
+would change.
+
+Verified: both gates green (39/39, 44 keys), every inline script parses, all fourteen
+lessons played to 100% with nothing wider than 375 px and again on the deployed
+layout with the stored record and resume; the mutation harness caught 23 of 23, three
+of them written for the new machine (a step in two places, an empty branch, a
+question the round never offers). **Not deployed.**

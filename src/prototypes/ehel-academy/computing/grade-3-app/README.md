@@ -378,3 +378,41 @@ on a fresh open, and a reload after moving to step 4 opens step 4. How many reco
 were made on lesson 9 before today, and so read two steps out from step 8 on, is on
 the platform and cannot be read from here. The letter names have still not been
 listened to.
+
+## The open items, 2026-09-12 (not deployed)
+
+- **The repeat-block sentence** the validation left open (area 7). Where the program
+  repeat block first appears, in lesson 5's demonstration, the explainer and the
+  lecture now say that here it repeats the one block after it, and that in many other
+  apps several blocks go inside a repeat and it repeats them all. Grade 2 has said so
+  since its own small items; Grade 4 says it in lesson 5.
+- **The letter names were listened to.** The cipher lesson's lines were rendered in
+  three voices - the platform voice (ElevenLabs, the settings `quiz_tts.php` posts),
+  Sonia (what Edge and Windows publish to the page) and a Windows desktop voice -
+  as the page shows them and as the voice is handed them, and measured. The platform
+  voice spends 1.2 to 2.6 times as long on the capital letter as on the lowercase
+  one, which is a letter's name in place of the word *a*; Sonia read the old lines as
+  "R is 1" and "or is number one" and reads the new ones as "A is 1". The clips went
+  to the owner.
+- **The ten pictures from 2019 are replaced**: the juice is a cup, the ice a
+  snowflake, the chair a seat, the welding arm a flame and the factory a factory, and
+  the tower's bricks are drawn in the scene's own colours.
+
+Every grade's pictures are 2018 or older now (Emoji 11.0), so a tablet that has had
+no system update since then draws all of them; the reports kept asking for the 2019
+ones to be checked on the school's oldest tablets, and there is nothing left to
+check. Where the colour is the content, the picture is drawn instead of typed
+(`_kit.swatch`): the tower's bricks. A picture that reaches a game or a sort stays an
+emoji, because `_shell.py` carries both into the derived games as text, and none is
+the icon of the bin its item sorts into.
+
+Also checked, for every grade: every answer key read a second time by a reader that
+had not written it (709 questions across the four grades, none keyed wrong); the
+accessibility tree walked step by step on two lessons, which is what a screen reader
+is handed (every control named, the feedback panels polite live regions, the drawings
+hidden from it); and the a11y probe over every step of every lesson - no contrast
+failure, no control under 44 px, the focus ring 4 px.
+
+Verified: both gates green (36/36, 42 keys), every inline script parses, all fourteen
+lessons played to 100% with nothing wider than 375 px, lessons 1 and 5 again on the
+deployed layout with the stored record and resume. **Not deployed.**

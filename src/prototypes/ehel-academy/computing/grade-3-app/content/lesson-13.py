@@ -220,3 +220,10 @@ LESSON["home"] = [
           "Which automatic input would you miss most if it were manual?"],
          "Manual needs a person; automatic does not."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you learned why messages travel in cipher, and wrote and decoded messages in the code where 1 is a."
+LESSON["warmup"] = [
+    q("The keyboard is hardware. The writing app is...", "\U0001F4BF", "software", ["hardware", "a cable", "a battery"], "Programs are software; the parts you can touch are hardware."),
+    q("A door opens by itself when you walk up to it. What noticed you?", "\U0001F6AA", "a sensor", ["the door handle", "a key", "a password"], "A sensor is an input that works without anyone pressing it."),
+]

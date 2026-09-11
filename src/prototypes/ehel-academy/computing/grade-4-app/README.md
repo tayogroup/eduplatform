@@ -344,3 +344,11 @@ whether Stage 4 keeps the word is the owner's call. No lesson has a recap or a
 warm-up; several routines repeat Grade 3 (three plants, the school morning, bedtime,
 laying the table); the hub still draws a hand-made shield. And the human checks and
 owner decisions every grade has.
+
+## Rebuilt 2026-09-11 on the kit's changes for Grade 3 (not deployed)
+
+The shared kit gained four scenes for Grade 3, none of which Grade 4 draws, and a
+rule in the voice that hands a letter standing on its own to the voice in capitals
+(see the kit README). Grade 4's ciphers are where that matters most: "a becomes d" is handed to the voice as "A becomes D". Grade 3's bedtime what-if is a kite now, so of the routines above, bedtime repeats Grade 2 rather than Grade 3. Grade 4's lesson data is unchanged; its pages differ in the
+kit's code. Both gates green and every lesson played to 100%, lesson 1 also with the
+stored record and resume. Not deployed.

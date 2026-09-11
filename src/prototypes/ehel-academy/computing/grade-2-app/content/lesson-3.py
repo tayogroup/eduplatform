@@ -47,7 +47,8 @@ LESSON = {
         step("explore", "The repeat block", "\U0001F501", "Repeat reader", ["2P.03"],
              "A new kind of block. Tap each one to hear what it does.",
              explain(
-                 ["The repeat block repeats the block that comes AFTER it.", "Repeat 3 times, jump: the cat jumps three times, from two blocks instead of three."],
+                 ["The repeat block repeats the block that comes AFTER it.", "Repeat 3 times, jump: the cat jumps three times, from two blocks instead of three.",
+                  "Some other apps have a repeat block that holds several blocks and repeats them all; this one repeats just the block after it."],
                  ["Repeat 2 times, spin: two spins.", "Repeat 4 times, move right: four moves right.", "A repeat block with nothing after it repeats nothing."],
                  ["Children put the repeat block AFTER the block they want repeated.", "It goes before. It says: do the NEXT block this many times."],
                  ["Tap all three and say what each one would do to a jump."]),
@@ -150,7 +151,7 @@ LESSON["lecture"] = [
     part("\U0001F3D7️", "Building and running",
          "To build a program, take each step of the algorithm and place its block, in order. Then press Run. The cat does the blocks one at a time. Watching it run is how you test it."),
     part("\U0001F501", "The repeat block",
-         "The repeat block repeats the block after it. Repeat 3 times, jump makes three jumps from two blocks. Repeat 4 times, move right makes four moves. The repeat block always goes BEFORE the block it repeats."),
+         "The repeat block repeats the block after it. Repeat 3 times, jump makes three jumps from two blocks. Repeat 4 times, move right makes four moves. The repeat block always goes BEFORE the block it repeats. Some other apps have a repeat block that holds several blocks and repeats them all; this one repeats just the block after it."),
     part("=", "Same output, fewer blocks",
          "Jump, jump, jump and repeat 3 times, jump do exactly the same thing. The output is the same. The second program is shorter, and shorter programs are easier to read and easier to fix."),
     part("\U0001F50E", "Test as you go",

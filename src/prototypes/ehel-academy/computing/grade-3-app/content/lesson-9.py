@@ -5,13 +5,17 @@
 collection and interpretation of data; 3MD.03 record discrete and categorical
 data using computing devices; 3MD.02 investigate different ways of
 representing discrete and categorical data, using a digital tool.
+
+Until the Grade 3 validation (2026-09-11) categorical data was explained but
+never recorded or charted; the favourite-pet form and its three views, after
+the pets count, do both.
 """
 from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "data-problems",
     "title": "Data Problems",
-    "blurb": "Spot the problems that data can solve, record how many pets each child has, then look at the same data three ways: a table, a bar chart and a pictogram.",
+    "blurb": "Spot the problems that data can solve, record how many pets each child has and which pet they would most like, then show each set of data three ways: a table, a bar chart and a pictogram.",
     "steps": [
         step("context", "Problems that data can solve", "\U0001F50D", "Problem spotter", ["3MD.01"],
              "Some problems are solved by collecting data and reading it. Tap each problem.",
@@ -91,6 +95,43 @@ LESSON = {
               ]},
              "Three views, one set of data."),
 
+        step("form", "Record it: which pet would you like?", "\U0001F4DD", "Category recorder", ["3MD.03"],
+             "The same eight children say which pet they would most like. Record each answer. A kind of pet is <b>categorical</b> data: a category, not a count.",
+             explain(
+                 ["Categorical data is a category: cat, dog, fish, rabbit.", "You cannot add a cat to a dog, but you can count how many children chose each."],
+                 ["Sami would like a cat. Tap cat, submit. The table counts how many children chose cat."],
+                 ["Children tap the pet a child already has.", "The form asks which pet they would most LIKE."],
+                 ["Listen, tap, submit."]),
+             {"question": "Which pet would you most like?", "columns": ["Pet", "Children"],
+              "options": [{"id": "cat", "t": "cat", "pic": "\U0001F431"}, {"id": "dog", "t": "dog", "pic": "\U0001F436"}, {"id": "fish", "t": "fish", "pic": "\U0001F41F"}, {"id": "rabbit", "t": "rabbit", "pic": "\U0001F430"}],
+              "people": [
+                  {"name": "Amal", "pic": "\U0001F467\U0001F3FE", "say": "A dog, to go with my cat.", "answer": "dog"},
+                  {"name": "Sami", "pic": "\U0001F466\U0001F3FE", "say": "A cat, please.", "answer": "cat"},
+                  {"name": "Zara", "pic": "\U0001F467\U0001F3FD", "say": "A fluffy cat.", "answer": "cat"},
+                  {"name": "Omar", "pic": "\U0001F466\U0001F3FD", "say": "Another dog!", "answer": "dog"},
+                  {"name": "Leo", "pic": "\U0001F466\U0001F3FB", "say": "A fish. We have no fish yet.", "answer": "fish"},
+                  {"name": "Nora", "pic": "\U0001F467\U0001F3FB", "say": "A cat, like I said.", "answer": "cat"},
+                  {"name": "Karim", "pic": "\U0001F466\U0001F3FE", "say": "A rabbit.", "answer": "rabbit"},
+                  {"name": "Maya", "pic": "\U0001F467\U0001F3FC", "say": "A third cat!", "answer": "cat"},
+              ]},
+             "Eight answers recorded, and every one is a category."),
+
+        step("views", "Categories, three ways", "\U0001F4CA", "Category viewer", ["3MD.02"],
+             "Here is the favourite-pet data. Open the table, the bar chart and the pictogram, then answer from whichever view you like.",
+             explain(
+                 ["Categorical data can be shown the same three ways as a count.", "Each category gets its own row in the table, its own bar, and its own row of pictures."],
+                 ["Which pet is the favourite? The tallest bar.", "How many chose a dog? The table says exactly."],
+                 ["Children think a chart needs numbers along the bottom.", "Categories along the bottom work just as well: cat, dog, fish, rabbit."],
+                 ["Open all three, then answer."]),
+             {"title": "Which pet would you most like?", "columns_label": "pet", "value_label": "children",
+              "columns": [{"label": "cat", "pic": "\U0001F431", "value": 4}, {"label": "dog", "pic": "\U0001F436", "value": 2}, {"label": "fish", "pic": "\U0001F41F", "value": 1}, {"label": "rabbit", "pic": "\U0001F430", "value": 1}],
+              "questions": [
+                  {"ask": "Which pet is the class's favourite?", "check": {"kind": "most"}, "opts": [opt("cat", True), opt("dog", False), opt("rabbit", False)], "why": "The tallest bar, the most pictures, the biggest number: cat, with 4."},
+                  {"ask": "How many children chose a dog?", "check": {"kind": "count", "row": "dog"}, "opts": [opt("2", True), opt("4", False), opt("1", False)], "why": "The table says 2, and the pictogram shows two dogs."},
+                  {"ask": "How many children chose a fish?", "check": {"kind": "count", "row": "fish"}, "opts": [opt("1", True), opt("2", False), opt("0", False)], "why": "One fish in the pictogram, the shortest bar, and 1 in the table."},
+              ]},
+             "Categories in a table, a bar chart and a pictogram."),
+
         step("context", "Which view for which question?", "\U0001F4CA", "View chooser", ["3MD.02"],
              "Each way of showing data is best for something. Tap each one.",
              explain(
@@ -109,11 +150,12 @@ LESSON = {
              "Each view for its question."),
 
         step("questions", "Check: data problems", "\U0001F4DD", "Data checker", ["3MD.01", "3MD.02", "3MD.03"],
-             "Three quick questions.",
+             "Four quick questions.",
              explain(["Nothing new here."], ["Problems, recording, views."], [], ["Read, think, tap."]),
              {"items": [
                  q("Which problem can data solve?", "\U0001F50D", "which snack the tuck shop should sell", ["what my story should be about", "how to be kind", "which colour I like"], "Ask and count."),
                  q("'How many pets do you have?' collects...", "\U0001F522", "discrete data: whole numbers you count", ["categorical data", "no data", "a story"], "0, 1, 2, 3: counted whole numbers."),
+                 q("'Which pet would you most like?' collects...", "\U0001F431", "categorical data: a category, not a count", ["discrete data: numbers you count", "no data", "a story"], "Cat, dog, fish, rabbit: categories."),
                  q("The same data as a table, a bar chart and a pictogram is...", "\U0001F4CA", "one set of data shown three ways", ["three different surveys", "wrong twice", "a bug"], "Different views, same numbers."),
              ]},
              "Problems, recording, views."),
@@ -137,7 +179,7 @@ LESSON = {
 
 LESSON["about"] = [
     "Spot a problem that can be solved by collecting and reading data.",
-    "Record discrete data with a form on a computing device.",
+    "Record discrete data and categorical data with a form on a computing device.",
     "Show the same data as a table, a bar chart and a pictogram.",
     "Choose the view that answers a question best.",
 ]
@@ -146,9 +188,9 @@ LESSON["lecture"] = [
     part("\U0001F50D", "Problems data solves",
          "Which snack to sell, how many chairs to put out, when the playground is busiest: each is answered by collecting data - asking or counting - and interpreting it, reading what the numbers say. Not every problem is a data problem, but these are."),
     part("\U0001F522", "Discrete and categorical",
-         "Discrete data is whole numbers you count: 0 pets, 1 pet, 2 pets. Categorical data is a category: cat, dog, fish. A form on a tablet records either kind, and the table counts the answers as they come in."),
+         "Discrete data is whole numbers you count: 0 pets, 1 pet, 2 pets. Categorical data is a category: cat, dog, fish. The same eight children gave both kinds: how many pets they have, and which pet they would most like. A form on a tablet recorded each, counting the answers as they came in."),
     part("\U0001F4CA", "Three views",
-         "A digital tool can show the same data three ways. A table gives exact numbers. A bar chart shows the biggest at a glance. A pictogram draws one picture for each one. They never disagree, because they are the same data."),
+         "A digital tool can show the same data three ways. A table gives exact numbers. A bar chart shows the biggest at a glance. A pictogram draws one picture for each one. Counts and categories both work: a bar for 2 pets, or a bar for cats. The views never disagree, because they are the same data."),
     part("\U0001F914", "Which view?",
          "Choose the view for the question. Exactly how many? The table. Which is biggest? The bar chart. Count them by eye? The pictogram. Interpreting data is reading the right view."),
 ]
@@ -161,7 +203,7 @@ LESSON["words"] = [
     word("discrete", "\U0001F522", "Data in whole numbers you count.",
          ["Number of pets is discrete data.", "Discrete data never has halves."]),
     word("categorical", "\U0001F3A8", "Data that is a category, like a colour or a kind of pet.",
-         ["Favourite colour is categorical.", "Cat, dog, fish: categories."]),
+         ["Favourite pet is categorical data.", "Cat, dog, fish, rabbit: categories."]),
     word("bar chart", "\U0001F4CA", "A chart where a taller bar means a bigger count.",
          ["The bar chart shows 1 pet is biggest.", "Read the bar chart."]),
     word("pictogram", "\U0001F431", "A chart with one picture for each one.",
@@ -179,4 +221,11 @@ LESSON["home"] = [
           "Show it as a table of numbers, a bar of bricks per colour, and a row of stickers per shoe.",
           "Which view showed the biggest fastest?"],
          "Same data, three ways."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you debugged programs with two bugs in them, asked a partner when you were stuck, and turned each mistake into a rule."
+LESSON["warmup"] = [
+    q("To find out which fruit most of the class likes, you could...", "\U0001F34E", "ask each child and keep a tally", ["guess", "ask one friend", "eat all the fruit"], "Asking everyone and tallying is collecting data."),
+    q("On a bar chart, what does a taller bar mean?", "\U0001F4CA", "a bigger number", ["a smaller number", "a newer bar", "a different colour"], "The taller the bar, the bigger the count."),
 ]

@@ -1427,7 +1427,56 @@
             "words": 6,
             "games": 6,
             "home": 2
-          }
+          },
+          "recap": "Last time you learned why messages travel in cipher, and wrote and decoded messages in the code where 1 is a.",
+          "warmup": [
+            {
+              "ask": "The keyboard is hardware. The writing app is...",
+              "pic": "💿",
+              "opts": [
+                {
+                  "t": "software",
+                  "ok": true
+                },
+                {
+                  "t": "hardware",
+                  "ok": false
+                },
+                {
+                  "t": "a cable",
+                  "ok": false
+                },
+                {
+                  "t": "a battery",
+                  "ok": false
+                }
+              ],
+              "why": "Programs are software; the parts you can touch are hardware."
+            },
+            {
+              "ask": "A door opens by itself when you walk up to it. What noticed you?",
+              "pic": "🚪",
+              "opts": [
+                {
+                  "t": "a sensor",
+                  "ok": true
+                },
+                {
+                  "t": "the door handle",
+                  "ok": false
+                },
+                {
+                  "t": "a key",
+                  "ok": false
+                },
+                {
+                  "t": "a password",
+                  "ok": false
+                }
+              ],
+              "why": "A sensor is an input that works without anyone pressing it."
+            }
+          ]
         }
       },
       {
@@ -2838,8 +2887,8 @@
               "pic": "🎨",
               "meaning": "Data that is a category, like a colour or a kind of pet.",
               "uses": [
-                "Favourite colour is categorical.",
-                "Cat, dog, fish: categories."
+                "Favourite pet is categorical data.",
+                "Cat, dog, fish, rabbit: categories."
               ],
               "lesson": 9,
               "title": "Data Problems",
@@ -2899,7 +2948,7 @@
               "meaning": "Short, with only the steps that are needed.",
               "uses": [
                 "Make the algorithm concise.",
-                "Five steps is concise for tea."
+                "Seven steps is concise for the cake."
               ],
               "lesson": 2,
               "title": "Concise Algorithms",
@@ -2934,7 +2983,7 @@
               "pic": "🐛",
               "meaning": "To fix a step of an algorithm that is wrong.",
               "uses": [
-                "Correct the step that says eat the seed.",
+                "Correct the step that cuts the paper into tiny pieces.",
                 "Run it again after you correct it."
               ],
               "lesson": 1,
@@ -3246,7 +3295,7 @@
               "pic": "📏",
               "meaning": "In a line: one step after another, in order.",
               "uses": [
-                "Hand washing is a linear algorithm.",
+                "Making a smoothie is a linear algorithm.",
                 "A linear program runs top to bottom."
               ],
               "lesson": 1,
@@ -3258,7 +3307,7 @@
               "pic": "🧠",
               "meaning": "Reasoning: this comes here because of that.",
               "uses": [
-                "Logic puts the tap before the soap.",
+                "Logic puts the lid on before the blending.",
                 "Use logic to order the steps."
               ],
               "lesson": 3,
@@ -3270,7 +3319,7 @@
               "pic": "🧠",
               "meaning": "Using reasons: this step comes here because of that.",
               "uses": [
-                "Logical thinking puts the soap after the tap.",
+                "Logical thinking puts the lid on before the blending.",
                 "Give a logical reason for the order."
               ],
               "lesson": 1,
@@ -3403,7 +3452,7 @@
               "meaning": "To say what will happen before it happens.",
               "uses": [
                 "Predict what the change will do.",
-                "I predict the jam ends up on top."
+                "I predict the smoothie sprays everywhere."
               ],
               "lesson": 3,
               "title": "Think It Through",
@@ -3606,7 +3655,7 @@
               "pic": "📋",
               "meaning": "The job an algorithm is for.",
               "uses": [
-                "The task is to make tea.",
+                "The task is to bake a cake.",
                 "Every step should help the task."
               ],
               "lesson": 2,
@@ -3630,7 +3679,7 @@
               "pic": "💡",
               "meaning": "To know why each step of an algorithm is where it is.",
               "uses": [
-                "I understand why the tap comes first.",
+                "I understand why the lid goes on first.",
                 "Understand it before you change it."
               ],
               "lesson": 1,
@@ -3654,7 +3703,7 @@
               "pic": "🗑️",
               "meaning": "A step that does nothing for the task, or does something again.",
               "uses": [
-                "The second stir is waste.",
+                "The second mix is waste.",
                 "Cut the waste."
               ],
               "lesson": 2,
@@ -4001,14 +4050,47 @@
     function escapeText(s) {
       return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
+
+    /* LETTER NAMES. A letter standing on its own - "a is 1", "8 is h", "c, a,
+       t", "under a is d" - is handed to the voice in CAPITALS, the form every
+       engine here reads as the letter's name ("A is for apple"). Lowercase, a
+       lone "a" is read as the article: "uh is one". The screen keeps the
+       lowercase; only the words sent to the voice change. The Grade 3
+       validation (2026-09-11) found the cipher lesson could only ask for
+       someone to listen; this makes the reading a rule instead of a hope.
+
+       A lone b to z is always a letter in these lessons. A lone "a" is the
+       letter only where an article cannot stand: before "is", "becomes",
+       "moves", "to", "into", "and", "or", before punctuation or the end, or
+       after "=". Not before "..." or "…": "is called a..." is the article
+       in front of a blank. Not after "letter": "give each letter a shape" is
+       an article. The first draft had that clause and no ellipsis rule, and
+       the audit found both. A letter after "%" is a format code, never
+       spoken. Contractions (it&#39;s), "e.g." and "a.m." are left alone,
+       and text inside tags is never touched. No lookbehind, which older
+       Safari cannot parse. Every change it makes across Grades 1 to 4 is
+       listed by the kit's letter-name audit, and was read before shipping. */
+    function letterNames(text) {
+      return String(text).replace(/(^|[^A-Za-z0-9'\u2018\u2019%-])([a-z])(?=$|[^A-Za-z0-9'\u2019-])/g, function (m, pre, ch, off, all) {
+        const i = off + pre.length, before = all.slice(0, i), after = all.slice(i + 1);
+        if (/&(#39|#x27|apos);$/i.test(before)) return m;
+        if (/^\.[a-z]\./i.test(after) || /(^|[^A-Za-z])[a-z]\.$/i.test(before)) return m;
+        if (ch === "a" && !(/^\s*(is|becomes|moves|to|into|and|or)\b(?!-)/.test(after) || /^\s*([,;:!?)\u2019"]|\.(?!\.)|$)/.test(after) || /=\s*$/.test(before))) return m;
+        return pre + ch.toUpperCase();
+      });
+    }
+    function letterNamesInSsml(s) {
+      return s.split(/(<[^>]*>)/).map(function (part, k) { return k % 2 ? part : letterNames(part); }).join("");
+    }
+    /* end LETTER NAMES */
     const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
     const SHUT = "</voice></speak>";
     /* Plain text is still SSML here - it just gets the house style put round it. */
     function wrap(x) {
       const s = String(x == null ? "" : x).trim();
       if (!s) return "";
-      if (/^<speak[\s>]/i.test(s)) return s;
-      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      if (/^<speak[\s>]/i.test(s)) return letterNamesInSsml(s);
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? letterNamesInSsml(s) : letterNames(escapeText(s));
       /* A line that already names its own feeling keeps it: Azure forbids one
          express-as inside another, so the house style stands aside. */
       if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
@@ -4844,6 +4926,10 @@
      ================================================================== */
   const T = (x, y, size, glyph) => '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + size + '">' + glyph + "</text>";
   const LABEL = (x, y, t) => '<text x="' + x + '" y="' + y + '" text-anchor="middle" fill="#fff" font-size="15" font-family="Inter, sans-serif" font-weight="800">' + esc(t) + "</text>";
+  /* white words on a dark pill, for a scene that says what went wrong. LABEL on
+     its own is white on whatever the scene drew underneath, which on a kitchen
+     floor is beige. The Stage 3 scenes use this; the older ones are unchanged. */
+  const NOTE = (y, t) => '<rect x="14" y="' + (y - 17) + '" width="292" height="24" rx="12" fill="#0B1D2C" opacity="0.82"/>' + LABEL(160, y, t);
   const SCENES = {
     /* a child getting dressed: socks, shoes, coat, hat - painted in the order given */
     dress: (ids) => {
@@ -4988,6 +5074,108 @@
       if (has("story")) g += T(has("bed") ? 130 : 240, has("bed") ? 108 : 160, 34, "\u{1F4D6}") + (readingInDark ? T(200, 80, 30, "❓") : "");
       if (!dark) g += '<circle cx="160" cy="30" r="12" fill="#F4C95D"/><line x1="160" y1="0" x2="160" y2="18" stroke="#93AABE" stroke-width="3"/>';
       return '<svg viewBox="0 0 320 240" role="img" aria-label="Bedtime: ' + (ids.join(", ") || "nothing yet") + (readingInDark ? ", trying to read in the dark" : "") + '">' + g + (readingInDark ? LABEL(160, 232, "reading a story in the dark?") : "") + "</svg>";
+    },
+    /* ---- Stage 3's own tasks. Until the Grade 3 validation (2026-09-11)
+       Grade 3 followed, debugged, trimmed and changed the same routines Grades
+       1 and 2 had taught - handwashing, a seed, tea, getting dressed, the
+       sandwich, bedtime. These four are its own, drawn the same way: from the
+       ids done so far, in order, so a wrong order draws its own consequence. */
+
+    /* a smoothie: fruit, milk, the lid, blend, pour. Blending before the lid
+       is on sprays it round the kitchen; pouring before blending puts lumps of
+       fruit in the glass. "ice" and "mango" are the what-if extras. */
+    smoothie: (ids) => {
+      ids = ids || [];
+      const has = (id) => ids.includes(id), at = (id) => ids.indexOf(id);
+      const blended = has("blend"), splat = blended && !(has("lid") && at("lid") < at("blend"));
+      const poured = has("pour"), lumpy = poured && !(blended && at("blend") < at("pour"));
+      const colour = has("berries") ? (has("mango") ? "#F59A7A" : "#F2A5B5") : has("mango") ? "#F7B35C" : has("banana") ? "#F5E6A8" : "#F4F8FB";
+      const d = (y) => (8 * (y - 58)) / 102;
+      const fillTo = (top, fill, op) => '<path d="M' + (94 + d(top)).toFixed(1) + " " + top + " H" + (166 - d(top)).toFixed(1) + ' L158 156 H102 Z" fill="' + fill + '"' + (op ? ' opacity="' + op + '"' : "") + "/>";
+      let g = '<rect width="320" height="240" fill="#F4EAD4"/><rect x="0" y="186" width="320" height="54" fill="#C9B79C"/>';
+      if (splat) g += '<g fill="' + colour + '" stroke="#C2667A" stroke-width="1.5"><circle cx="52" cy="46" r="12"/><circle cx="108" cy="22" r="8"/><circle cx="200" cy="30" r="14"/><circle cx="262" cy="62" r="9"/><circle cx="30" cy="112" r="7"/><circle cx="190" cy="96" r="6"/><ellipse cx="232" cy="204" rx="26" ry="7"/><ellipse cx="62" cy="206" rx="18" ry="5"/></g>';
+      g += '<rect x="86" y="160" width="88" height="28" rx="8" fill="#4A5A6A"/><circle cx="130" cy="174" r="6" fill="' + (blended && !poured ? "#4FD1A0" : "#93AABE") + '"/>';
+      g += '<path d="M90 58 h80 l-8 102 h-64z" fill="#EAF4FA" stroke="#93AABE" stroke-width="4"/>';
+      if (!poured) {
+        if (blended) {
+          g += fillTo(splat ? 126 : has("milk") ? 88 : 122, colour);
+          if (has("ice")) g += '<g fill="#fff" opacity="0.9"><circle cx="116" cy="112" r="2.5"/><circle cx="140" cy="104" r="2.5"/><circle cx="130" cy="130" r="2.5"/><circle cx="150" cy="120" r="2.5"/></g>' + T(188, 60, 22, "✨");
+          if (!splat) g += '<g stroke="#93AABE" stroke-width="3" fill="none" stroke-linecap="round"><path d="M76 96 q-8 12 0 24"/><path d="M184 96 q8 12 0 24"/></g>';
+        } else {
+          if (has("milk")) g += fillTo(90, "#FFFDF6", 0.95) + '<line x1="' + (94 + d(90)).toFixed(1) + '" y1="90" x2="' + (166 - d(90)).toFixed(1) + '" y2="90" stroke="#D6E3DE" stroke-width="2"/>';
+          if (has("banana")) g += '<g fill="#F7E9A0" stroke="#E0C95A" stroke-width="2"><ellipse cx="112" cy="146" rx="10" ry="6"/><ellipse cx="132" cy="148" rx="10" ry="6"/><ellipse cx="150" cy="145" rx="9" ry="6"/></g>';
+          if (has("mango")) g += '<g fill="#F4A23B" stroke="#D9822B" stroke-width="2"><rect x="104" y="138" width="14" height="12" rx="3"/><rect x="124" y="140" width="14" height="12" rx="3"/><rect x="143" y="136" width="13" height="12" rx="3"/></g>';
+          if (has("berries")) g += '<g fill="#D33A4C"><circle cx="118" cy="128" r="8"/><circle cx="138" cy="126" r="8"/><circle cx="154" cy="131" r="7"/></g><g fill="#3E8E4A"><rect x="116" y="118" width="4" height="4"/><rect x="136" y="116" width="4" height="4"/><rect x="152" y="122" width="4" height="4"/></g>';
+          if (has("ice")) g += '<g fill="#E6F7FF" stroke="#9CC8E0" stroke-width="2"><rect x="108" y="106" width="14" height="14" rx="3"/><rect x="136" y="100" width="14" height="14" rx="3"/></g>';
+        }
+        if (has("lid")) g += '<rect x="84" y="44" width="92" height="16" rx="6" fill="#4A5A6A"/><rect x="122" y="36" width="16" height="10" rx="3" fill="#4A5A6A"/>';
+      }
+      g += '<path d="M212 104 h48 l-6 80 h-36z" fill="#FFFFFF" stroke="#93AABE" stroke-width="4" opacity="0.95"/>';
+      if (poured && !lumpy) g += '<path d="M216 116 h40 l-5 64 h-30z" fill="' + colour + '"/><line x1="248" y1="84" x2="240" y2="150" stroke="#E9744F" stroke-width="5" stroke-linecap="round"/>';
+      if (lumpy) g += '<path d="M216 128 h40 l-4 52 h-32z" fill="#FFFFFF" opacity="0.7"/><g fill="#F7E9A0" stroke="#E0C95A" stroke-width="1.5"><circle cx="228" cy="164" r="6"/><circle cx="244" cy="170" r="6"/></g><g fill="#D33A4C"><circle cx="236" cy="150" r="5"/><circle cx="246" cy="140" r="5"/></g>';
+      const name = { banana: "banana", berries: "strawberries", milk: "milk", lid: "lid on", blend: "blend", pour: "pour", ice: "ice", mango: "mango" };
+      return '<svg viewBox="0 0 320 240" role="img" aria-label="Making a smoothie: ' + (ids.map((i) => name[i] || i).join(", ") || "nothing yet") + (splat ? ", blended with no lid on" : "") + (lumpy ? ", poured before it was blended" : "") + '">' + g +
+        (splat ? NOTE(228, "no lid on: smoothie everywhere!") : lumpy ? NOTE(228, "lumps of fruit in the glass!") : "") + "</svg>";
+    },
+    /* a kite: cross the sticks, tie them, paper, a tail, the string, then run
+       into the wind. Running before the string is tied lets the wind take it.
+       "face" is the what-if extra. */
+    kite: (ids) => {
+      ids = ids || [];
+      const has = (id) => ids.includes(id), at = (id) => ids.indexOf(id);
+      const flying = has("fly") && has("string") && at("string") < at("fly");
+      const gone = has("fly") && !flying;
+      let g = '<rect width="320" height="240" fill="#BFE3F5"/><rect x="0" y="200" width="320" height="40" fill="#3E8E4A"/>';
+      if (has("fly")) g += '<g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity="0.8"><path d="M12 40 q30 -10 60 0"/><path d="M96 24 q30 -10 60 0"/><path d="M20 96 q24 -8 48 0"/></g>';
+      g += '<circle cx="46" cy="148" r="14" fill="#C68642"/><rect x="34" y="162" width="24" height="38" rx="8" fill="#35BFB2"/><line x1="54" y1="172" x2="62" y2="166" stroke="#C68642" stroke-width="6" stroke-linecap="round"/>';
+      const cx = flying ? 214 : gone ? 290 : 170, cy = flying ? 64 : gone ? 30 : 128, sc = gone ? 0.45 : 1;
+      let k = "";
+      if (has("paper")) k += '<path d="M0 -46 L34 -8 L0 46 L-34 -8Z" fill="#E9744F" stroke="#C2482C" stroke-width="3"/>';
+      if (has("face") && has("paper")) k += '<circle cx="-10" cy="-14" r="4" fill="#0B1D2C"/><circle cx="10" cy="-14" r="4" fill="#0B1D2C"/><path d="M-12 4 q12 12 24 0" fill="none" stroke="#0B1D2C" stroke-width="3" stroke-linecap="round"/>';
+      if (has("sticks")) k += '<g stroke="#8B5A2B" stroke-width="' + (has("paper") ? 3 : 5) + '" stroke-linecap="round" opacity="' + (has("paper") ? 0.55 : 1) + '"><line x1="0" y1="-46" x2="0" y2="46"/><line x1="-34" y1="-8" x2="34" y2="-8"/></g>';
+      if (has("tie")) k += '<circle cx="0" cy="-8" r="5" fill="#F4C95D" stroke="#8B5A2B" stroke-width="2"/>';
+      if (has("tail")) k += '<path d="M0 46 q14 16 0 30 q-14 16 0 30" fill="none" stroke="#6E9DE8" stroke-width="3"/><g fill="#F4C95D"><path d="M-8 64 l8 -4 l8 4 l-8 4z"/><path d="M-8 92 l8 -4 l8 4 l-8 4z"/></g>';
+      if (k) g += '<g transform="translate(' + cx + " " + cy + ") scale(" + sc + ')">' + k + "</g>";
+      if (has("string") && !gone) g += '<path d="M62 166 Q' + (flying ? "150 160 " : "115 196 ") + cx + " " + (cy - 8) + '" fill="none" stroke="#fff" stroke-width="2"/>';
+      return '<svg viewBox="0 0 320 240" role="img" aria-label="Making a kite: ' + (ids.join(", ") || "nothing yet") + (gone ? ", and the wind took it" : flying ? ", flying" : "") + '">' + g +
+        (gone ? NOTE(226, "no string yet: the wind took the kite!") : "") + "</svg>";
+    },
+    /* a cake: bowl, flour and sugar, eggs, mix, the tin, the oven, then cool */
+    cake: (ids) => {
+      ids = ids || [];
+      const has = (id) => ids.includes(id);
+      const inTin = has("tin"), baked = inTin && has("oven"), cooled = baked && has("cool");
+      let g = '<rect width="320" height="240" fill="#F4EAD4"/><rect x="0" y="180" width="320" height="60" fill="#C9B79C"/>';
+      g += '<rect x="214" y="70" width="92" height="110" rx="8" fill="#4A5A6A"/><rect x="226" y="96" width="68" height="50" rx="6" fill="' + (baked && !cooled ? "#F9B35C" : "#1B2A36") + '"/><g fill="#93AABE"><circle cx="234" cy="82" r="4"/><circle cx="250" cy="82" r="4"/><circle cx="266" cy="82" r="4"/></g>';
+      if (baked && !cooled) g += '<rect x="238" y="126" width="44" height="14" rx="3" fill="#93AABE"/><path d="M240 126 q20 -18 40 0z" fill="#D9A15A"/>';
+      if (has("bowl")) {
+        g += '<path d="M24 132 h100 q0 46 -50 46 q-50 0 -50 -46z" fill="#6E9DE8" stroke="#3B6FB8" stroke-width="3"/>';
+        if (!inTin && has("mix")) g += '<ellipse cx="74" cy="136" rx="46" ry="8" fill="#F3D9A4"/><line x1="98" y1="94" x2="78" y2="136" stroke="#93AABE" stroke-width="6" stroke-linecap="round"/>';
+        else if (!inTin) {
+          if (has("flour")) g += '<ellipse cx="74" cy="134" rx="40" ry="9" fill="#FFFDF6"/><path d="M50 134 q24 -26 48 0z" fill="#FFFDF6"/>';
+          if (has("eggs")) g += '<ellipse cx="64" cy="126" rx="9" ry="6" fill="#fff"/><circle cx="64" cy="126" r="4" fill="#F4C95D"/><ellipse cx="86" cy="128" rx="9" ry="6" fill="#fff"/><circle cx="86" cy="128" r="4" fill="#F4C95D"/>';
+        }
+      } else if (has("flour") || has("eggs")) g += T(74, 170, 34, has("eggs") ? "\u{1F95A}" : "\u{1F33E}");
+      if (inTin && !baked) g += '<rect x="136" y="158" width="56" height="22" rx="4" fill="#93AABE"/><rect x="139" y="158" width="50" height="8" fill="#F3D9A4"/>';
+      if (cooled) g += '<rect x="130" y="178" width="80" height="6" rx="3" fill="#93AABE"/><path d="M138 154 v20 a32 7 0 0 0 64 0 v-20z" fill="#C98B45" stroke="#A9552B" stroke-width="3"/><ellipse cx="170" cy="154" rx="32" ry="7" fill="#E0B070" stroke="#A9552B" stroke-width="3"/>' + T(170, 138, 20, "✨");
+      return '<svg viewBox="0 0 320 240" role="img" aria-label="Baking a cake: ' + (ids.join(", ") || "nothing yet") + '">' + g + "</svg>";
+    },
+    /* a present: the teddy in the box, the lid, paper, tape, ribbon, a tag */
+    present: (ids) => {
+      ids = ids || [];
+      const has = (id) => ids.includes(id);
+      const wrapped = has("paper");
+      const fill = wrapped ? "#6E9DE8" : "#C9A06A", edge = wrapped ? "#3B6FB8" : "#A67C44";
+      let g = '<rect width="320" height="240" fill="#EDE3F5"/><rect x="0" y="182" width="320" height="58" fill="#C9B79C"/>';
+      if (!has("box")) return '<svg viewBox="0 0 320 240" role="img" aria-label="Wrapping a present: nothing yet, the teddy is waiting">' + g + T(160, 176, 54, "\u{1F9F8}") + "</svg>";
+      if (!has("lid")) g += T(160, 126, 46, "\u{1F9F8}");
+      g += '<rect x="100" y="106" width="120" height="76" rx="6" fill="' + fill + '" stroke="' + edge + '" stroke-width="3"/>';
+      if (has("lid")) g += '<rect x="94" y="96" width="132" height="18" rx="4" fill="' + fill + '" stroke="' + edge + '" stroke-width="3"/>';
+      if (wrapped) g += '<g fill="#fff" opacity="0.85"><circle cx="118" cy="126" r="5"/><circle cx="146" cy="160" r="5"/><circle cx="184" cy="124" r="5"/><circle cx="204" cy="164" r="5"/><circle cx="126" cy="104" r="4"/><circle cx="196" cy="104" r="4"/></g>';
+      if (has("tape")) g += '<g fill="#FFF8D0" opacity="0.9" stroke="#E0D6A0" stroke-width="1"><rect x="104" y="140" width="18" height="10" rx="2"/><rect x="198" y="150" width="18" height="10" rx="2"/><rect x="140" y="98" width="18" height="10" rx="2"/></g>';
+      if (has("ribbon")) g += '<rect x="154" y="96" width="12" height="86" fill="#E9744F"/><rect x="94" y="136" width="132" height="12" fill="#E9744F"/><path d="M160 94 q-30 -26 -34 -4 q4 16 34 4z M160 94 q30 -26 34 -4 q-4 16 -34 4z" fill="#F0806F" stroke="#C2482C" stroke-width="2"/><circle cx="160" cy="94" r="6" fill="#C2482C"/>';
+      if (has("tag")) g += '<line x1="226" y1="140" x2="236" y2="150" stroke="#93AABE" stroke-width="2"/><path d="M232 146 l30 8 l-6 22 l-30 -8z" fill="#FFFDF6" stroke="#93AABE" stroke-width="2"/><text x="244" y="168" text-anchor="middle" font-size="11" font-family="Inter, sans-serif" font-weight="700" fill="#0B1D2C" transform="rotate(15 244 164)">Nora</text>';
+      return '<svg viewBox="0 0 320 240" role="img" aria-label="Wrapping a present: ' + ids.join(", ") + '">' + g + "</svg>";
     },
     /* the internet: 0 one computer, 1 two joined, 2 many around the world, 3 a message hopping */
     internet: (s) => {

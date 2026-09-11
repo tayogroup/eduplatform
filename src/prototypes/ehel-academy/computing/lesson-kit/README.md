@@ -88,10 +88,14 @@ codes the builder accepts and which the gate demands.
 | `overview` … `resources` (shell) | as in Science | the unit shell |
 
 Scenes: `dress`, `sandwich`, `teeth`, `handwash`, `tower`, `plant`, `catfeed`,
-`tea`, `bed` (each drawn from the list of step ids done so far, IN ORDER —
-later ids paint over earlier ones, which is how shoes-before-socks draws socks
-on the outside, water-before-cup draws a puddle, and lights-before-story draws
-reading in the dark) and `internet` (numeric states). Blocks: `right`, `left`,
+`tea`, `bed`, and Stage 3's own `smoothie`, `kite`, `cake`, `present` (each
+drawn from the list of step ids done so far, IN ORDER — later ids paint over
+earlier ones, which is how shoes-before-socks draws socks on the outside,
+water-before-cup draws a puddle, lights-before-story draws reading in the dark,
+blend-before-lid sprays the smoothie round the kitchen, and running before the
+string is tied lets the wind take the kite) and `internet` (numeric states).
+A scene that says what went wrong uses `NOTE` (white on a dark pill), not a
+bare `LABEL`. Blocks: `right`, `left`,
 `jump`, `spin`, `say`, `grow`, `shrink`, `hide`, `home`, `wait`, and the
 control blocks `repeat2`, `repeat3`, `repeat4`. Drawings (`precise`): `house`,
 `boat`, each with its silly wrong parts. Figures (`label`): `laptop`, `tablet`.
@@ -108,6 +112,20 @@ format written into a content module that does not exist fails the build
 rather than the page.
 
 ## Rules that cost something to learn
+
+- **A letter standing alone is spoken in capitals** (Grade 3 validation,
+  2026-09-11). `letterNames()` in `lib/voice.js` hands the voice "A is 1"
+  where the page shows "a is 1": the production voice is ElevenLabs taking
+  plain text and the fallback is the browser's own, so an SSML `say-as` tag
+  reaches neither, and a lowercase lone "a" is read as the article. A lone
+  "a" counts as a letter only where an article cannot stand (before "is",
+  "becomes", "moves", "to", "into", "and", "or", punctuation or the end;
+  after "="). Not before "..." ("is called a..." is an article before a
+  blank) and not after "letter" ("give each letter a shape"): the first draft
+  had neither guard and the audit found both. The screen is untouched. Run the audit after writing any line
+  with a lone letter in it, and read what it lists:
+  `node ../lesson-kit/letter-names-audit.mjs` (from a grade directory, or
+  with the grade directories as arguments).
 
 - **Nothing waits on `requestAnimationFrame`** — a hidden tab never paints,
   and a sim that did froze a step in the Science kit. Timers only; there is no

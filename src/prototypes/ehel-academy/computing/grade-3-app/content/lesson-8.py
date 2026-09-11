@@ -36,16 +36,16 @@ LESSON = {
              "Each program has bugs; some have two. Run it, find one, fix it, run again, find the other. Ask your partner if you are stuck.",
              explain(
                  ["A program can have more than one bug. Fix one, run again, and the second one shows itself."],
-                 ["The cat should move right twice then jump. It moves right, then left, then spins. Two blocks are wrong.",
-                  "Fix the left: run again: it still spins. Fix the spin: run again: right."],
+                 ["The cat should shrink, jump, then hide. It grows, jumps, then spins. Two blocks are wrong.",
+                  "Fix the grow: run again: it still spins at the end. Fix the spin: run again: right."],
                  ["Children fix one bug and stop.", "The run after the fix tells you if there is another."],
                  ["Run, find, fix, run, find, fix, run."]),
              {"sprite": "\U0001F431",
               "rounds": [
-                  {"goal": "move right twice, then jump", "program": ["right", "left", "spin"], "bugs": [1, 2], "expect": ["right", "right", "jump"],
-                   "whys": {"1": "The second block moves left. We wanted a second move right.", "2": "The last block spins. We wanted a jump."},
-                   "fixes": {"1": {"opts": [choice("right", "move right", True), choice("hide", "hide", False), choice("shrink", "shrink", False)], "why": "Move right, move right. Run it again: is that everything?"},
-                             "2": {"opts": [choice("jump", "jump", True), choice("grow", "grow", False), choice("say", "say hello", False)], "why": "Jump. Run it again to test."}},
+                  {"goal": "shrink, jump, then hide", "program": ["grow", "jump", "spin"], "bugs": [0, 2], "expect": ["shrink", "jump", "hide"],
+                   "whys": {"0": "The first block grows. We wanted the cat to shrink.", "2": "The last block spins. We wanted the cat to hide."},
+                   "fixes": {"0": {"opts": [choice("shrink", "shrink", True), choice("say", "say hello", False), choice("left", "move left", False)], "why": "Shrink. Run it again: is that everything?"},
+                             "2": {"opts": [choice("hide", "hide", True), choice("jump", "jump", False), choice("right", "move right", False)], "why": "Hide. Run it again to test."}},
                    "partner": {"name": "Amal", "pic": "\U0001F467\U0001F3FE", "hint": "I think there is more than one bug. Fix one, run it, and look again."}},
                   {"goal": "jump 3 times, then say hello, then grow", "program": ["repeat3", "spin", "say", "shrink"], "bugs": [1, 3], "expect": ["repeat3", "jump", "say", "grow"],
                    "whys": {"1": "The repeat repeats a spin. We wanted jumps.", "3": "The last block shrinks. We wanted grow."},
@@ -165,4 +165,11 @@ LESSON["home"] = [
           "Say what the mistake was, and what the rule is.",
           "Read the rules before you start something new."],
          "Mistakes inform what you make next."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you programmed Bitsy so that a press, a shake or a clap made a light, a sound or a motor go."
+LESSON["warmup"] = [
+    q("Your friend spots a bug in your program. What is the best thing to say?", "\U0001F91D", "thank you, let us fix it together", ["that is not a bug", "go away", "I will start again from nothing"], "A partner who spots a bug is helping."),
+    q("Can a program have more than one bug?", "\U0001F41E", "yes, and each one needs finding and fixing", ["no, never", "only if the tablet is new", "only if it has no blocks"], "Fix one, run it again, and look for the next."),
 ]

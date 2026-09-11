@@ -176,3 +176,10 @@ LESSON["home"] = [
           "Swap."],
          "The right input, the right output."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you ran two programs at once, kept one object still, and saw why programmers work together and learn from mistakes."
+LESSON["warmup"] = [
+    q("You press a button on a toy and it lights up. The press is the...", "\U0001F518", "input", ["output", "battery", "box"], "The press goes in; the light comes out."),
+    q("Which of these has a small computer inside it running a program?", "\U0001F9FA", "a washing machine", ["a wooden spoon", "a pebble", "a paper cup"], "A program inside runs each wash."),
+]

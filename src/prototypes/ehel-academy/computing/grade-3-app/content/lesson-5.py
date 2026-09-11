@@ -172,3 +172,10 @@ LESSON["home"] = [
           "Add a 'go to the start square' card at the top and run twice more."],
          "A reset at the top makes every run the same."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you found the input an algorithm starts from, and built machines that turn an input into an output."
+LESSON["warmup"] = [
+    q("A program says: grow, grow, grow, grow. How could it be shorter?", "\U0001F501", "repeat 4 times, grow", ["grow", "shrink 4 times", "stop"], "One repeat block does the same job with fewer blocks."),
+    q("You run a program and it does the wrong thing. What do you do next?", "\U0001F41B", "find the bug, fix it and run it again", ["delete the whole program", "run it again without changing anything", "switch the tablet off"], "Test, fix, and test again."),
+]

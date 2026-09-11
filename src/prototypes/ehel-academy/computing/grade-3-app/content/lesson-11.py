@@ -195,3 +195,10 @@ LESSON["home"] = [
           "That list is the advantages; the second half is a disadvantage."],
          "Every service depends on the network."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you found cells by their column and row, put data in, formatted dates and money, and filtered a table."
+LESSON["warmup"] = [
+    q("Your class prints from ten tablets to one printer. What joins them?", "\U0001F5A8\uFE0F", "a network", ["a battery", "a spreadsheet", "a pencil"], "A network lets many devices share one printer."),
+    q("Which of these can a school network share?", "\U0001F3EB", "files and printers", ["chairs and desks", "lunchboxes", "the playground"], "A network shares the things computers use: files, printers, the web."),
+]

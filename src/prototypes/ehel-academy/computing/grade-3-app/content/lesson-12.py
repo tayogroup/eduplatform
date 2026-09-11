@@ -105,7 +105,7 @@ LESSON = {
              explain(["Nothing new here."], ["Why ciphers, and the 1 = a code."], [], ["Read, think, tap."]),
              {"items": [
                  q("A cipher keeps a message secret by...", "\U0001F512", "changing it so only someone with the key can read it", ["hiding the paper", "shouting it", "deleting it"], "Seen but not read."),
-                 q("In the 1 = a code, what is the letter d?", "\U0001F522", "4", ["3", "5", "26"], "a 1, b 2, c 3, d 4."),
+                 q("In the 1 = a code, what is the letter d?", "\U0001F522", "4", ["3", "5", "26"], "a is 1, b is 2, c is 3, d is 4."),
                  q("Decode 2 5 4.", "\U0001F6CF️", "bed", ["bad", "bee", "cat"], "b 2, e 5, d 4."),
              ]},
              "Why, and how."),
@@ -119,7 +119,7 @@ LESSON = {
                  q("Which is the number for the letter a?", "1️⃣", "1", ["0", "26", "10"], "a is the first letter."),
                  q("Which is the number for z?", "\U0001F51A", "26", ["25", "1", "20"], "z is the twenty-sixth letter."),
                  q("What is 'dog' in code?", "\U0001F436", "4 15 7", ["4 16 7", "3 15 7", "4 15 8"], "d 4, o 15, g 7."),
-                 q("Decode 3 1 20.", "\U0001F431", "cat", ["dog", "cot", "bat"], "c 3, a 1, t 20."),
+                 q("Decode 3 1 20.", "\U0001F431", "cat", ["dog", "cot", "bat"], "c is 3, a is 1, t is 20."),
                  q("Someone sees your coded message but does not have the key. They can...", "\U0001F440", "see it but not read it", ["read it easily", "delete it", "change the key"], "Without the key it is just numbers."),
                  q("Which does NOT need to travel in cipher?", "\U0001F513", "a public web page about lions", ["your password", "a message to the bank", "your home address"], "Public things are for everyone."),
              ]},
@@ -170,4 +170,11 @@ LESSON["home"] = [
           "Ask: what does it mean? (The page and you are talking in cipher.)",
           "Look at three different pages. Is every one of them talking in cipher?"],
          "The padlock means cipher."),
+]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you wired up a school network, used its services, and weighed what a network gives against what it costs."
+LESSON["warmup"] = [
+    q("Should you tell a stranger your password?", "\U0001F511", "no, a password stays secret", ["yes, if they ask nicely", "yes, if they are online", "only if they guess it"], "A password is kept secret, even from friends."),
+    q("How many letters are in the alphabet?", "\U0001F524", "26", ["10", "24", "100"], "From the first letter to the last, the alphabet has 26 letters."),
 ]

@@ -15,7 +15,7 @@ Grade 1 is authored against.
 | | |
 | --- | --- |
 | `content/lesson-N.py` | the authored lessons: every step names its 0059 codes |
-| `app.config.json` | grade 2, stage 2, floors, hub strands, the ten lessons — what `../lesson-kit` and `../../mathematics/lesson-app-tools` read |
+| `app.config.json` | grade 2, stage 2, floors, hub strands, the eleven lessons — what `../lesson-kit` and `../../mathematics/lesson-app-tools` read |
 | `<slug>.html`, `g2-index.html` | **GENERATED.** Do not hand-edit |
 | `../lesson-kit/` | the generator, shared with Grade 1 and extended for this stage — see its README for the step-kind table |
 
@@ -62,7 +62,7 @@ live pages are this kit too.
 
 ## What a lesson is
 
-Ten lessons, organised by the framework's five strands, 13 to 21 steps each
+Eleven lessons, organised by the framework's five strands, 13 to 16 steps each
 including the seven of the unit shell:
 
 | lesson | steps | objectives | the machine the child drives |
@@ -76,7 +76,8 @@ including the seven of the unit shell:
 | 7 Collecting Data | 15 | 4 | designs a survey for a purpose — which ways of collecting would work?; picks the device way for four purposes; sorts statistical questions from the rest |
 | 8 Presenting Data | 14 | 3 | builds two block graphs column by column; reads a table; every key computed |
 | 9 Connected Devices | 16 | 5 | wires a home network and sends a photo to the printer; wired against wireless; reads the network's own signs; shares and keeps private |
-| 10 Hardware, Software and Robots | 21 | 6 | taps the parts of a laptop and a tablet by name; inputs and outputs, then which way the information goes in eight real situations; races the computer at sums, then sorts computer jobs from people jobs; the device for the place, and why; story robots against working ones |
+| 10 Hardware and Software | 15 | 3 | taps the parts of a laptop and a tablet by name; spots what makes a device easy to use; inputs and outputs, then which way the information goes in eight real situations |
+| 11 Computers, Devices and Robots | 14 | 3 | races the computer at sums, then sorts computer jobs from people jobs; the device for the place, and why; story robots against working ones |
 
 The computing-shaped machines only do what they are told, as in Grade 1, and
 the Stage 2 ones add:
@@ -164,10 +165,11 @@ Stage 2:
   over `columns`); a tie is refused. The party chart is keyed Banana and the
   school chart Walk because the columns say so.
 
-## Progress: `l01`..`l10`, and why not `u01`
+## Progress: `l01`..`l11`, and why not `u01`
 
-Written under `l01`..`l10` beneath the shell's course key `ehel-comp-g02`.
-THE UNIT PROBLEM (see `wire-progress.py`) applies exactly as in Grade 1: ten
+Written under `l01`..`l11` beneath the shell's course key `ehel-comp-g02`
+(`l11` since lesson 10 was split, 2026-09-11; see below).
+THE UNIT PROBLEM (see `wire-progress.py`) applies exactly as in Grade 1: eleven
 lessons by strand against a framework the shell's Word-pack course does not
 declare, so emitting `u01` would put a unit completion in the gradebook on
 the strength of a lesson that is not that unit.
@@ -328,3 +330,43 @@ byte-identical to HEAD, every edge path fresh. All ten lessons were then played 
 the end on the live pages in Chromium: 0 console errors, every step stored and
 every lesson recorded complete, nothing ticked on a fresh open, and a reload after
 moving to step 4 opens step 4.
+
+## The small items, 2026-09-11 (not deployed)
+
+The last four items of the validation ([VALIDATION.md](VALIDATION.md), third version):
+
+- **Lesson 10 is two lessons.** It had grown to 21 steps and about an hour. Hardware
+  and Software keeps 2CS.01 to 2CS.03 (15 steps) and Computers, Devices and Robots
+  takes 2CS.04 to 2CS.06 (14 steps). The thirteen activities are byte-identical to
+  the old lesson's and in the same order; each lesson has its own quiz, about,
+  lecture, words, home projects, recap and warm-up. Lesson 10 keeps its file name,
+  `hardware-software-and-robots.html`, so the address the live course already knows
+  serves the new lesson rather than a stale copy of the old one; lesson 11 is
+  `computers-devices-and-robots.html`. The two cost 20 minutes more than the one did
+  (445 in all), because each carries its own shell.
+- **What the split does to a record made before it is deployed.** Positions 1 to 10
+  of lesson 10 are unchanged, so such a record reads correctly up to step 10. Its
+  steps 11 to 21 land on the new lesson 10's games, home projects, quiz, Computing
+  world and resources, which then count as done for a learner who had passed them.
+  `l11` starts empty, so a learner who finished the old lesson 10 sees it complete
+  and lesson 11 not started. The hub caps each lesson at its own step count, so
+  nothing reads over 100%.
+- **Lesson 3** says, in the repeat explainer and the lecture, that some other apps'
+  repeat blocks hold several blocks and repeat them all, while this one repeats the
+  block after it.
+- **Lesson 9's offline and wired activities** have their own items instead of Grade
+  1's. The offline tester's button and prompts say *internet*, so every app that
+  needs the network fetches from a computer far away: a printer upstairs would work
+  with the internet off and turn a right answer wrong.
+- **The report's status line** now separates the items waiting for a deploy from the
+  ones waiting for a person; the second version's read as though a deploy were
+  pending after both were done.
+
+The shared kit also changed, for Grade 3 (four scenes Grade 2 does not draw, and the
+letter-name rule in the voice; see the kit README), so every Grade 2 page differs in
+the kit's code: the games' clue "It starts with a" is now spoken as the letter.
+Verified: both gates green (31/31, 22 keys, eleven cards resolve), every inline
+script parses, all eleven lessons played to 100% locally with nothing wider than
+375 px, and again on the deployed layout with the stored record and resume; the
+mutation harness caught 11 of 11, every page byte-identical to an independent copy
+afterwards. **Not deployed.**

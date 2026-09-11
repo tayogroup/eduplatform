@@ -166,3 +166,10 @@ LESSON["home"] = [
           "Change the input: what changes about the output?"],
          "Every machine has an input and an output."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you put steps in order with logic, predicted what one change would do, and divided a big task into sections."
+LESSON["warmup"] = [
+    q("A machine adds 3 to any number you put in. You put in 2. What comes out?", "\U0001F522", "5", ["2", "3", "23"], "2 in, add 3, 5 out."),
+    q("In a recipe, what goes in at the start?", "\U0001F95A", "the ingredients", ["the finished cake", "the clean plates", "the washing-up"], "The ingredients go in; the cake comes out."),
+]

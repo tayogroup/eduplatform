@@ -191,3 +191,10 @@ LESSON["home"] = [
           "Which mistake have you stopped making?"],
          "Mistakes inform the next program."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you made programs shorter, started every run from the same place, changed the number in a block, and tested after every fix."
+LESSON["warmup"] = [
+    q("In a cartoon, can two characters move at the same time?", "\U0001F3AC", "yes, both at once", ["no, only one can ever move", "only if one is asleep", "only in black and white"], "Programs can run more than one thing at once, too."),
+    q("Who can help you find a mistake you cannot see?", "\U0001F46B", "a partner looking with fresh eyes", ["nobody, ever", "the mistake itself", "a louder speaker"], "A second pair of eyes often spots what you missed."),
+]

@@ -264,14 +264,47 @@
     function escapeText(s) {
       return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
+
+    /* LETTER NAMES. A letter standing on its own - "a is 1", "8 is h", "c, a,
+       t", "under a is d" - is handed to the voice in CAPITALS, the form every
+       engine here reads as the letter's name ("A is for apple"). Lowercase, a
+       lone "a" is read as the article: "uh is one". The screen keeps the
+       lowercase; only the words sent to the voice change. The Grade 3
+       validation (2026-09-11) found the cipher lesson could only ask for
+       someone to listen; this makes the reading a rule instead of a hope.
+
+       A lone b to z is always a letter in these lessons. A lone "a" is the
+       letter only where an article cannot stand: before "is", "becomes",
+       "moves", "to", "into", "and", "or", before punctuation or the end, or
+       after "=". Not before "..." or "…": "is called a..." is the article
+       in front of a blank. Not after "letter": "give each letter a shape" is
+       an article. The first draft had that clause and no ellipsis rule, and
+       the audit found both. A letter after "%" is a format code, never
+       spoken. Contractions (it&#39;s), "e.g." and "a.m." are left alone,
+       and text inside tags is never touched. No lookbehind, which older
+       Safari cannot parse. Every change it makes across Grades 1 to 4 is
+       listed by the kit's letter-name audit, and was read before shipping. */
+    function letterNames(text) {
+      return String(text).replace(/(^|[^A-Za-z0-9'\u2018\u2019%-])([a-z])(?=$|[^A-Za-z0-9'\u2019-])/g, function (m, pre, ch, off, all) {
+        const i = off + pre.length, before = all.slice(0, i), after = all.slice(i + 1);
+        if (/&(#39|#x27|apos);$/i.test(before)) return m;
+        if (/^\.[a-z]\./i.test(after) || /(^|[^A-Za-z])[a-z]\.$/i.test(before)) return m;
+        if (ch === "a" && !(/^\s*(is|becomes|moves|to|into|and|or)\b(?!-)/.test(after) || /^\s*([,;:!?)\u2019"]|\.(?!\.)|$)/.test(after) || /=\s*$/.test(before))) return m;
+        return pre + ch.toUpperCase();
+      });
+    }
+    function letterNamesInSsml(s) {
+      return s.split(/(<[^>]*>)/).map(function (part, k) { return k % 2 ? part : letterNames(part); }).join("");
+    }
+    /* end LETTER NAMES */
     const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
     const SHUT = "</voice></speak>";
     /* Plain text is still SSML here - it just gets the house style put round it. */
     function wrap(x) {
       const s = String(x == null ? "" : x).trim();
       if (!s) return "";
-      if (/^<speak[\s>]/i.test(s)) return s;
-      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      if (/^<speak[\s>]/i.test(s)) return letterNamesInSsml(s);
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? letterNamesInSsml(s) : letterNames(escapeText(s));
       /* A line that already names its own feeling keeps it: Azure forbids one
          express-as inside another, so the house style stands aside. */
       if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;

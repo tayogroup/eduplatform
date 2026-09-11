@@ -175,3 +175,10 @@ LESSON["home"] = [
           "Count them. Try another rule."],
          "A filter selects by a characteristic."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you recorded how many pets each child has and which pet they would most like, and showed each set of data three ways."
+LESSON["warmup"] = [
+    q("A table has rows going across and what going down?", "\U0001F4CB", "columns", ["circles", "chapters", "wheels"], "Rows go across; columns go down."),
+    q("How is six pounds fifty written as money?", "\U0001F4B7", "£6.50", ["650", "6:50", "6/50"], "Money has a £ sign, then the pounds, a dot and the pence."),
+]

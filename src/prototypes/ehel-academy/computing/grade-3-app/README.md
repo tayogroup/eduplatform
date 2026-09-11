@@ -330,3 +330,39 @@ console errors, every step stored and every lesson recorded complete, nothing
 ticked on a fresh open, and a reload after moving to step 4 opens step 4. Lesson
 12's first attempt could not resolve the CDN's host name from this machine; the
 re-run passed. Grade 4 was redeployed straight after, for the shared kit changes.
+
+## The remaining items, 2026-09-11 (not deployed)
+
+The four items the validation left open ([VALIDATION.md](VALIDATION.md), second
+version):
+
+- **Categorical data is recorded and charted** (3MD.02, 3MD.03). Lesson 9 gains two
+  steps after the pets count: the same eight children say which pet they would most
+  like (cat, dog, fish, rabbit), the child records each answer on the form and reads
+  the result as a table, a bar chart and a pictogram, answering from any view; the
+  chart's keys are computed by the gate.
+- **Those two steps move the ones after them** (steps 8 and 9 are new), and the
+  platform names a step by its position, so a record made on lesson 9 before the
+  redeploy is read two steps out from step 8 on. No other lesson gained or lost a
+  step: the new tasks below replace the old ones in place.
+- **A recap on lessons 2 to 14 and a two-question warm-up on all fourteen**, on the
+  overview and never marked. The overlap check caught two first drafts repeating
+  Grade 2's warm-ups; they were rewritten.
+- **Grade 3's own tasks** where it repeated Grades 1 and 2, on four new kit scenes: a
+  smoothie (lesson 1's demonstration, the algorithm to follow and the reasons for its
+  order; lesson 3's first what-if), a kite (lesson 1's bug hunt; lesson 3's second
+  what-if), a cake and a present to trim and a fruit salad to sort (lesson 2), and the
+  debug round *shrink, jump, then hide* (lesson 8), with every line that named the old
+  tasks, and a helmet reason where lesson 3 had "socks, then shoes".
+- **Letter names.** The voice is handed a letter standing on its own in capitals ("A
+  is 1" where the page shows "a is 1"). The production voice is ElevenLabs taking
+  plain text and the fallback is the browser's own, so an SSML tag would reach
+  neither. The rule and its audit are in the shared kit (see its README). Nobody has
+  listened yet.
+
+Verified: both gates green (36/36, 42 keys), every inline script parses, all fourteen
+lessons played to 100% locally with nothing wider than 375 px and again on the
+deployed layout with the stored record and resume; the mutation harness caught 15 of 15,
+every page byte-identical to an independent copy afterwards; the letter-name audit's
+self-test passes and every line it changes was read; no picture is newer than Emoji
+12.0. **Not deployed.**

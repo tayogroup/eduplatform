@@ -209,3 +209,10 @@ LESSON["home"] = [
           "Which step would a robot do best? Which needs a person?"],
          "Exact, heavy, dangerous, repeated: a robot's jobs."),
 ]
+
+# Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
+LESSON["recap"] = "Last time you saw hardware and software work as one system, told manual inputs from automatic ones, and named the types of file a computer stores."
+LESSON["warmup"] = [
+    q("Which of these can talk to the internet?", "\U0001F50A", "a smart speaker", ["a wooden chair", "a paper map", "a pencil case"], "A smart speaker has a computer inside and joins the internet."),
+    q("A robot in a car factory does the same job all day. How?", "\U0001F916", "it follows its program exactly, again and again", ["it does whatever it feels like", "it asks a friend each time", "it guesses"], "A factory robot follows its program for one job."),
+]

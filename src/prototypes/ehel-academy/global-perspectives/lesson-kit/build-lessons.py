@@ -104,6 +104,7 @@ KINDS = {
 
 # The relationships the subject is about live in _rules.py, shared with the
 # gate, so the builder and check-coverage.py cannot disagree about any of them.
+from _rules import supporting  # noqa: E402
 from _rules import (survey_counts, observe_counts, pictogram_answer, relevant, relevant_sources,  # noqa: E402
                     solutions, share_outcome, question_fits, allocations)
 
@@ -361,6 +362,8 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
                 sys.exit("REFUSED: %s counts %r, and the scene has none" % (where, r["kind"]))
             if not (r.get("label") and r.get("pic")):
                 sys.exit("REFUSED: %s round %r needs a label and a pic" % (where, r["kind"]))
+            if not (r.get("one") or "").strip():
+                sys.exit("REFUSED: %s round %r needs its singular in 'one' (\"a bus\"): the correction says it aloud" % (where, r["kind"]))
         if not d.get("title"):
             sys.exit("REFUSED: %s has no title" % where)
     elif kind == "strengths":
@@ -427,6 +430,11 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
             for c in d["cards"]:
                 if c.get("about") == d["tag"] and c.get("part") not in {sl["id"] for sl in slots}:
                     sys.exit("REFUSED: %s card %r is about the topic but names no slot" % (where, c["t"]))
+            for pid in {sl["id"] for sl in slots}:
+                n_slots = sum(1 for sl in slots if sl["id"] == pid)
+                n_cards = sum(1 for c in d["cards"] if c.get("about") == d["tag"] and c.get("part") == pid)
+                if n_cards != n_slots:
+                    sys.exit("REFUSED: %s structured talk has %d %r slot(s) and %d on-topic card(s) for them; a correct card with no slot left is marked wrong" % (where, n_slots, pid, n_cards))
             d["need"] = len(slots)
         for c in d["cards"]:
             if not c.get("say"):
@@ -501,6 +509,15 @@ def check_step(n, k, s, codes, scenes, sounds, steps):
             need_r = max(2, int(d.get("reasonsNeeded") or 1))
             if len(rel) < need_r or len(rel) == len(rd["reasons"]):
                 sys.exit("REFUSED: %s topic %r needs %d+ reasons about %r and at least one about something else" % (where, rd["topic"], need_r, rd["tag"]))
+            ids = {s["id"] for s in rd["stances"]}
+            for k in rel:
+                sup = rd["reasons"][k].get("supports")
+                if not sup or not set(sup) <= ids:
+                    sys.exit("REFUSED: %s topic %r: the reason %r must say which opinions it supports (supports=[...] from %s)" % (where, rd["topic"], rd["reasons"][k]["t"], sorted(ids)))
+            per = max(1, int(d.get("reasonsNeeded") or 1))
+            for s in rd["stances"]:
+                if len(supporting(rd["reasons"], rd["tag"], s["id"])) < per:
+                    sys.exit("REFUSED: %s topic %r: %r has fewer than %d reasons that support it" % (where, rd["topic"], s["t"], per))
     elif kind == "team":
         scene_ok(d["scene"])
         fids = {f["id"] for f in d["friends"]}

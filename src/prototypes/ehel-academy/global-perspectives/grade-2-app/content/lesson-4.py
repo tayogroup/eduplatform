@@ -56,7 +56,7 @@ LESSON = {
                   "predict": {"ask": "What happens to the next class?", "opts": [opt("They find the pencils ready to use", True), opt("They have no pencils", False), opt("Nothing", False)]},
                   "result": {"pic": "\U0001F60A", "say": "The next class found every pencil in the pot and started straight away.", "sound": "ding"},
                   "why": "Tidying up reaches people you never even see."},
-                 {"situation": "You push in front of Sami in the lunch line.", "pic": "\U0001F6B7",
+                 {"situation": "You push in front of Sami in the lunch queue.", "pic": "\U0001F6B7",
                   "predict": {"ask": "What happens to Sami?", "opts": [opt("He waits longer and feels it is unfair", True), opt("He gets his lunch first", False), opt("He does not mind", False)]},
                   "result": {"pic": "\U0001F620", "say": "Sami had to wait longer, and he felt it was unfair.", "sound": "thud"},
                   "why": "Pushing in takes Sami's place. It reaches him."},
@@ -85,9 +85,9 @@ LESSON = {
         step("solve", "Something I could do", "\U0001F4AA", "Action suggester", ["2As.01"],
              "Here is a problem YOU have. Suggest something you could do about it yourself. Tap one and see what happens.",
              explain(
-                 ["At Stage 2 you do not just pick from a list.", "You suggest an action of your own that would make a difference to YOUR problem."],
+                 ["This year you do not just pick from a list.", "You suggest an action of your own that would make a difference to YOUR problem."],
                  ["I keep forgetting my reading book.", "I could put it in my bag the night before. That fixes it.",
-                  "I could ask the teacher to remember for me. That is somebody else's action, not mine."],
+                  "I could ask the teacher to remember for me. That is the teacher's action, not mine. Asking a grown-up for help is always all right, but this one I can fix myself."],
                  ["Children pick the action where somebody else does the work.", "It has to be something YOU do."],
                  ["Tap an action. If it does not fix your problem, try another."]),
              {"rounds": [
@@ -95,7 +95,7 @@ LESSON = {
                   "needs": "remember",
                   "actions": [
                       action("bag", "I could put it in my bag the night before", "\U0001F392", "remember", "You packed it at bedtime. On Monday it was in your bag."),
-                      action("teacher", "I could ask the teacher to remember for me", "\U0001F469\U0001F3FE‍\U0001F3EB", "nothing", "The teacher cannot pack your bag at your house. The book stayed at home."),
+                      action("teacher", "I could ask the teacher to remember for me", "\U0001F469\U0001F3FE‍\U0001F3EB", "nothing", "The teacher cannot pack your bag at your house, so the book stayed at home. Asking for help is always all right. This one you can fix yourself."),
                       action("hide", "I could hide it under my bed", "\U0001F6CF️", "worse", "Now it is even harder to find."),
                       action("wish", "I could wish really hard", "\U0001F31F", "nothing", "You wished. The book did not move."),
                   ],
@@ -105,7 +105,7 @@ LESSON = {
                   "actions": [
                       action("practise", "I could practise my laces at home every day", "\U0001F45F", "quicker", "After a week of practice your laces took one minute."),
                       action("skip", "I could skip PE", "\U0001F6AB", "worse", "Now you miss PE altogether. That is worse."),
-                      action("mum", "I could ask my mum to come and tie them", "\U0001F469\U0001F3FE", "nothing", "Your mum is at work. Nobody came."),
+                      action("wait", "I could wait for somebody to tie them for me", "⏳", "nothing", "You waited. Everyone else went to PE without you."),
                       action("shout", "I could shout that it is not fair", "\U0001F4E2", "nothing", "You shouted. The laces stayed untied."),
                   ],
                   "why": "Practising is YOUR action, and it makes YOU quicker."},
@@ -114,19 +114,19 @@ LESSON = {
                   "actions": [
                       action("case", "I could keep two pencils in a pencil case with my name on", "\U0001F392", "keep", "Two named pencils in a case. You always had one."),
                       action("borrow", "I could take Sami's pencil when he is not looking", "\U0001F648", "worse", "Now Sami has no pencil, and he is cross with you."),
-                      action("cry", "I could cry until somebody gives me one", "\U0001F622", "nothing", "That is somebody else fixing it, and only for today."),
+                      action("wait", "I could wait for somebody to give me one", "⏳", "nothing", "Somebody lent you one, but only for today. Tomorrow there was no pencil again."),
                       action("nothing", "I could do nothing and hope", "\U0001F937", "nothing", "You hoped. Tomorrow there was still no pencil."),
                   ],
                   "why": "A named pencil case is YOUR action, and it keeps YOUR pencils."},
                  {"issue": {"title": "I get tired and grumpy after lunch", "pic": "\U0001F971", "say": "Every afternoon I cannot think. What could I do?", "fixed": "I feel awake in the afternoon!"},
                   "needs": "rest",
                   "actions": [
-                      action("bed", "I could go to bed earlier", "\U0001F6CF️", "rest", "An earlier bedtime, and the afternoons felt fine."),
-                      action("sweets", "I could eat more sweets at lunch", "\U0001F36C", "worse", "A sugar rush, and then even more tired."),
+                      action("bed", "I could go to bed on time, without asking to stay up", "\U0001F6CF️", "rest", "Bed on time every night, and the afternoons felt fine."),
+                      action("sweets", "I could eat more sweets at lunch", "\U0001F36C", "worse", "The sweets did not help. You were still tired."),
                       action("blame", "I could say the lessons are boring", "\U0001F644", "nothing", "Saying that did not make you less tired."),
                       action("home", "I could go home at lunchtime", "\U0001F3E0", "nothing", "You cannot go home at lunch. Still tired."),
                   ],
-                  "why": "Going to bed earlier is YOUR action, and it fixes YOUR tiredness."},
+                  "why": "Going to bed on time is YOUR action, and it fixes YOUR tiredness."},
              ]},
              "Four problems of your own, and an action of your own for each one."),
 
@@ -141,7 +141,7 @@ LESSON = {
                  {"pic": "\U0001F392", "label": "pack my bag at night", "say": "Pack my bag at night. Then nothing is forgotten in the morning."},
                  {"pic": "\U0001F45F", "label": "practise my laces", "say": "Practise my laces. Then I am ready with everyone else."},
                  {"pic": "✏️", "label": "keep spare pencils", "say": "Keep spare pencils in a named case. Then I always have one."},
-                 {"pic": "\U0001F6CF️", "label": "go to bed earlier", "say": "Go to bed earlier. Then I am not grumpy after lunch."},
+                 {"pic": "\U0001F6CF️", "label": "go to bed on time", "say": "Go to bed on time. Then I am not grumpy after lunch."},
                  {"pic": "\U0001F4A7", "label": "bring a water bottle", "say": "Bring a water bottle. Then I am not thirsty in the afternoon."},
                  {"pic": "\U0001F5D3️", "label": "check the timetable", "say": "Check the timetable the night before. Then I know when it is PE."},
              ], "need": 6,
@@ -160,7 +160,7 @@ LESSON = {
              {"label": "Question", "items": [
                  q("You leave your bag on the floor. What happens to the next person?", "\U0001F392", "they trip over it", ["they get a bag", "nothing"], "Your bag is in their way."),
                  q("You share your glue with Tariq. What happens to Tariq?", "\U0001F9F4", "he can finish his model", ["he has to stop", "he loses his glue"], "Your sharing reached him."),
-                 q("I keep forgetting my reading book. Which action is MINE to take?", "\U0001F4D5", "pack it the night before", ["ask the teacher to remember", "wish hard"], "Packing your own bag is your action."),
+                 q("I keep forgetting my reading book. Which action is MINE to take?", "\U0001F4D5", "pack it the night before", ["ask the teacher to remember", "wish hard"], "Packing your own bag is your action. Asking the teacher is all right too, but she cannot pack your bag at home."),
                  q("Why think about others before you act?", "\U0001F465", "because what you do reaches them", ["because it is a rule", "you do not need to"], "Nearly everything you do in a classroom reaches somebody."),
              ]},
              "You think about others, and you suggest your own actions."),
@@ -176,9 +176,9 @@ LESSON = {
                  q("Omar talked during the story. What happened to NORA?", "\U0001F467\U0001F3FD", "she could not hear the story", ["she got a prize", "nothing", "she fell asleep"], "Omar's noise reached Nora."),
                  q("You talk loudly while Amal reads. What happens to Amal?", "\U0001F4E2", "nobody can hear her and she feels upset", ["she reads faster", "she wins", "nothing"], "Your noise reached Amal."),
                  q("Which action HELPS other people?", "\U0001F60A", "holding the door open", ["leaving crumbs", "shouting across the room", "taking all the crayons"], "The person behind you gets through."),
-                 q("I am always last for PE. Which action is MINE?", "\U0001F45F", "practise my laces at home", ["skip PE", "ask my mum to come", "shout"], "Practising is something you do."),
+                 q("I am always last for PE. Which action is MINE?", "\U0001F45F", "practise my laces at home", ["skip PE", "wait for somebody to tie them", "shout"], "Practising is something you do."),
                  q("What is a personal action?", "\U0001F4AA", "something you can do yourself", ["something the teacher does", "a rule", "a wish"], "You do it, without waiting for somebody else."),
-                 q("I get grumpy after lunch. Which action fixes it?", "\U0001F971", "go to bed earlier", ["eat more sweets", "say lessons are boring", "go home"], "More sleep, less grumpy."),
+                 q("I get grumpy after lunch. Which action fixes it?", "\U0001F971", "go to bed on time", ["eat more sweets", "say lessons are boring", "go home"], "More sleep, less grumpy."),
                  q("You put the pencils back in the pot. Who does that reach?", "✏️", "the next class", ["nobody", "only you", "the pencils"], "Tidying reaches people you never see."),
                  q("Before you do something in class, what can you ask?", "\U0001F914", "what will this do to the person next to me?", ["what is for lunch?", "nothing", "who is watching?"], "Thinking about others is the skill."),
              ]},
@@ -202,9 +202,9 @@ LESSON["lecture"] = [
     part("\U0001F914", "Helps or hurts",
          "Some actions make things better for the people around you: holding the door, letting Nora go first, wiping up your spill. Some make things worse: shouting, crumbs, taking all the crayons."),
     part("\U0001F4AA", "My own action",
-         "When you have a problem of your own, suggest an action of your own. I keep forgetting my book: I could pack it the night before. Not: I could ask the teacher to remember. That is somebody else's action."),
+         "When you have a problem of your own, suggest an action of your own. I keep forgetting my book: I could pack it the night before. Asking the teacher to remember is the teacher's action, and she cannot pack your bag at home. Asking a grown-up for help is always all right; this one you can fix yourself."),
     part("\U0001F31F", "Making a difference",
-         "A personal action is something you can do without waiting for anybody. Practise your laces. Keep spare pencils. Go to bed earlier. Small actions, real differences."),
+         "A personal action is something you can do without waiting for anybody. Practise your laces. Keep spare pencils. Go to bed on time. Small actions, real differences."),
 ]
 
 LESSON["words"] = [
@@ -217,7 +217,7 @@ LESSON["words"] = [
     word("personal", "\U0001F9D1", "Your own; something you do yourself.",
          ["A personal action is one you take yourself.", "It is my personal problem, and my personal action."]),
     word("difference", "\U0001F31F", "A change that makes something better or worse.",
-         ["My action made a difference.", "Going to bed earlier made a big difference."]),
+         ["My action made a difference.", "Going to bed on time made a big difference."]),
     word("suggest", "\U0001F4A1", "To say an idea for what could be done.",
          ["Suggest an action for your problem.", "I suggest packing my bag at night."]),
 ]

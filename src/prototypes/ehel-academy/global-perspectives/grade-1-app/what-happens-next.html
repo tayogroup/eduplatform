@@ -1630,11 +1630,11 @@
                   "say": "You turned it off properly and told a grown-up. The dripping stopped."
                 },
                 {
-                  "id": "bucket",
-                  "t": "Put a bucket under it and leave it",
-                  "pic": "🪣",
+                  "id": "bowl",
+                  "t": "Put a bowl under it and leave it",
+                  "pic": "🥣",
                   "effect": "nothing",
-                  "say": "The bucket filled up, and then it dripped over the top. Water is still being wasted."
+                  "say": "The bowl filled up, and then it spilled over the top. Water is still being wasted."
                 },
                 {
                   "id": "more",
@@ -2262,7 +2262,7 @@
                   "ok": false
                 },
                 {
-                  "t": "put a bucket under it and leave it",
+                  "t": "put a bowl under it and leave it",
                   "ok": false
                 }
               ],
@@ -2669,7 +2669,7 @@
             },
             {
               "w": "look back",
-              "pic": "🪞",
+              "pic": "⏪",
               "meaning": "To think about what you did and say what you learned and liked.",
               "uses": [
                 "Look back over the lesson.",
@@ -3849,11 +3849,15 @@
      name at call time, so every wrapper the build or the pipeline puts
      around it (the header bar\x27s percentage, a step\x27s arrival line)
      runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
   window.__ehelRestore = function (doneIdx, resumeIdx) {
-    /* read BEFORE the ticks land: the record\x27s own step 1 must not
-       count as the learner having touched it (measured: it did, and the
-       page stayed on step 1 with the dots restored) */
-    const untouched = cur === 0 && !done[0];
+    const untouched = cur === 0 && !ehelInteracted;
     let changed = false;
     for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
     if (changed) paintDots();
@@ -4013,7 +4017,11 @@
     return '<div class="' + (cls || "pic") + '" aria-hidden="true">' + (s.startsWith("<svg") ? s : esc(s)) + "</div>";
   };
   const small = (p) => { const s = String(p || "").trim(); return s.startsWith("<svg") ? s : esc(s); };
-  const lower1 = (s) => { s = String(s || ""); return s ? s[0].toLowerCase() + s.slice(1) : s; };
+  /* lower-case a sentence's first letter to run it on after "I know that",
+     "Now I think", "Look for the part that tells us"; but never "I", an
+     acronym, a title, a weekday or one of the course's names */
+  const KEEP_CAP = /^(?:I|I'm|I've|I'd|I'll|[A-Z]{2,}|Mr|Mrs|Miss|Ms|Dr|Teacher|Grandma|Grandpa|Amal|Sami|Nora|Omar|Hana|Tariq|Leo|Yusuf|Dana|Riverside|Greenway|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Saturdays|Sundays)(?![a-z])/;
+  const lower1 = (s) => { s = String(s || ""); return !s || KEEP_CAP.test(s) ? s : s[0].toLowerCase() + s.slice(1); };
   const noDot = (s) => String(s || "").replace(/[.!]\s*$/, "");
 
   /* ---- a step may speak only while it is the step on screen ------------
@@ -4947,7 +4955,7 @@
       const rd = rounds[r];
       $(el.ask).innerHTML = "You think: <b>" + esc(stance.t) + "</b>. Now say <b>why</b>. Pick " + (needR > 1 ? needR + " reasons that are" : "a reason that is") + " about " + esc(rd.topic) + ".";
       $(el.ch).className = "choices stack";
-      $(el.ch).innerHTML = shuffle(rd.reasons).map((x, k) => '<button type="button" class="choice text" data-about="' + esc(x.about) + '">' + esc(x.t) + "</button>").join("");
+      $(el.ch).innerHTML = shuffle(rd.reasons.map((x, k) => [x, k])).map(([x, k]) => '<button type="button" class="choice text" data-k="' + k + '" data-about="' + esc(x.about) + '">' + esc(x.t) + "</button>").join("");
       sayHere(o.finish, "You think: " + stance.t + ". Now say why. Pick " + (needR > 1 ? needR + " reasons that are" : "a reason that is") + " about " + rd.topic + ".");
     }
     $(el.ch).addEventListener("click", (e) => {
@@ -4957,6 +4965,15 @@
         stance = rd.stances.find((s) => s.id === b.dataset.st); SOUND.play("click", 0.3); draw();
         $(el.fb).className = "fb"; $(el.fb).textContent = "You think: " + stance.t + ".";
         reasons(); return;
+      }
+      const why = rd.reasons[Number(b.dataset.k)] || {};
+      if (b.dataset.about === rd.tag && why.supports && !why.supports.includes(stance.id)) {
+        /* on the topic, but it argues the other way: "I think we should
+           recycle more, because it takes time" is not a reason FOR recycling */
+        b.classList.add("wrong"); b.disabled = true; SOUND.play("boing", 0.3);
+        const line = "That reason is about " + rd.topic + ", but it does not back up what you said: " + noDot(stance.t) + ". Pick a reason that does.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        return;
       }
       if (b.dataset.about === rd.tag) {
         given.push(b.textContent); b.classList.add("right"); b.disabled = true;
@@ -5081,7 +5098,7 @@
         const rd = rounds[r], t = rd.tasks[ti], m = rd.members.find((x) => x.id === mb.dataset.m);
         if ((m.skills || []).includes(t.needs)) {
           given[t.id] = m.name; ti++; SOUND.play("pop", 0.35); draw();
-          const line = cheer() + " " + t.t + " goes to " + m.name + ", who is good at " + t.needs + ".";
+          const line = cheer() + " " + t.t + (m.id === "you" ? " goes to you, because you are good at " : " goes to " + m.name + ", who is good at ") + t.needs + ".";
           $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
           if (ti >= rd.tasks.length) {
             lock = true; if (!missed) score++;
@@ -5090,7 +5107,7 @@
           } else { $(el.ask).innerHTML = "<b>" + esc(rd.tasks[ti].t) + "</b>: who should do it?"; sayHere(o.finish, rd.tasks[ti].t + ": who should do it?"); }
         } else {
           missed = true; mb.classList.add("wrong"); SOUND.play("error", 0.3);
-          const line = m.name + " is good at " + (m.skills || []).join(" and ") + ", not " + t.needs + ". Who is good at " + t.needs + "?";
+          const line = (m.id === "you" ? "You are good at " : m.name + " is good at ") + (m.skills || []).join(" and ") + ", not " + t.needs + ". Who is good at " + t.needs + "?";
           $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
           setTimeout(() => mb.classList.remove("wrong"), 700);
         }
@@ -5538,7 +5555,7 @@
         }
       } else {
         missed++; b.classList.add("wrong"); SOUND.play("error", 0.3);
-        const line = "That is " + it.label + ", not " + rd.label.toLowerCase().replace(/s$/, "") + ". Count only the " + rd.label.toLowerCase() + ".";
+        const line = "That is " + it.label + ", not " + (rd.one || "one of the " + rd.label.toLowerCase()) + ". Count only the " + rd.label.toLowerCase() + ".";
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         setTimeout(() => b.classList.remove("wrong"), 700);
       }
@@ -6094,7 +6111,7 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Big words"], ["➡️", "If, then"], ["🔮", "Next-thing predictor"], ["🤔", "Consequence sorter"], ["🔧", "Problem fixer"], ["💧", "Water spotter"], ["💬", "Next-thing judge"], ["🪞", "I looked back"], ["🎮", "I played the games"], ["🏠", "Find out at home"], ["⭐", "Star thinker"], ["🌍", "Our world"], ["🗂️", "My resources"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Big words"], ["➡️", "If, then"], ["🔮", "Next-thing predictor"], ["🤔", "Consequence sorter"], ["🔧", "Problem fixer"], ["💧", "Water spotter"], ["💬", "Next-thing judge"], ["⏪", "I looked back"], ["🎮", "I played the games"], ["🏠", "Find out at home"], ["⭐", "Star thinker"], ["🌍", "Our world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
   lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));

@@ -41,6 +41,7 @@ import sys
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, KIT)
+from _rules import supporting  # noqa: E402
 from _rules import (survey_counts, observe_counts, pictogram_answer, relevant, relevant_sources,  # noqa: E402
                     solutions, share_outcome, question_fits, allocations)
 
@@ -132,6 +133,8 @@ def main():
                 last_observe = d
                 if not all(any(it["kind"] == r["kind"] for it in d["scene"]) for r in d["rounds"]):
                     fail(entry["file"], "step %d counts a kind the scene does not hold" % k)
+                if not all((r.get("one") or "").strip() for r in d["rounds"]):
+                    fail(entry["file"], "step %d has a round with no singular ('one'), so its correction cannot be spoken properly" % k)
                 computed += 1
             elif kind == "strengths":
                 if not d.get("fallback") or len(d.get("limits") or []) < 2:
@@ -190,6 +193,11 @@ def main():
                     for sl in d.get("slots") or []:
                         if not any(c.get("about") == d["tag"] and c.get("part") == sl["id"] for c in d["cards"]):
                             fail(entry["file"], "step %d: no card for the %r slot of the talk" % (k, sl["id"]))
+                    for pid in {sl["id"] for sl in d.get("slots") or []}:
+                        n_slots = sum(1 for sl in d["slots"] if sl["id"] == pid)
+                        n_cards = sum(1 for c in d["cards"] if c.get("about") == d["tag"] and c.get("part") == pid)
+                        if n_cards != n_slots:
+                            fail(entry["file"], "step %d: %d %r slot(s) but %d card(s) for them" % (k, n_slots, pid, n_cards))
                 computed += 1
             elif kind == "answer":
                 for rd in d["rounds"]:
@@ -223,6 +231,13 @@ def main():
                     rel = relevant(rd["reasons"], rd["tag"])
                     if len(rel) < max(2, int(d.get("reasonsNeeded") or 1)) or len(rel) == len(rd["reasons"]):
                         fail(entry["file"], "step %d topic %r: the reasons do not make a fair round" % (k, rd["topic"]))
+                    per = max(1, int(d.get("reasonsNeeded") or 1))
+                    short = [s["t"] for s in rd["stances"] if len(supporting(rd["reasons"], rd["tag"], s["id"])) < per]
+                    unsaid = [rd["reasons"][i]["t"] for i in rel if not rd["reasons"][i].get("supports")]
+                    if unsaid:
+                        fail(entry["file"], "step %d topic %r: a reason about the topic does not say which opinions it supports: %r" % (k, rd["topic"], unsaid[0]))
+                    elif short:
+                        fail(entry["file"], "step %d topic %r: %r has fewer than %d reasons that support it" % (k, rd["topic"], short[0], per))
                     computed += 1
             elif kind == "team":
                 fids = {f["id"] for f in d["friends"]}

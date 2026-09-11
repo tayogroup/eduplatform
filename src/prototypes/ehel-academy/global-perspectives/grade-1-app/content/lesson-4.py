@@ -114,7 +114,7 @@ LESSON = {
                   "needs": "off",
                   "actions": [
                       action("tight", "Turn it off properly, and tell a grown-up if it still drips", "\U0001F6B0", "off", "You turned it off properly and told a grown-up. The dripping stopped."),
-                      action("bucket", "Put a bucket under it and leave it", "\U0001FAA3", "nothing", "The bucket filled up, and then it dripped over the top. Water is still being wasted."),
+                      action("bowl", "Put a bowl under it and leave it", "\U0001F963", "nothing", "The bowl filled up, and then it spilled over the top. Water is still being wasted."),
                       action("more", "Turn the tap on more", "\U0001F30A", "worse", "Now it is not dripping. It is pouring. That is even more water wasted."),
                       action("nobody", "Say nothing and walk away", "\U0001F6B6", "nothing", "You walked away. Drip, drip, drip. Nothing changed."),
                   ],
@@ -178,7 +178,7 @@ LESSON = {
                  q("You stay up very late. What happens to you tomorrow?", "\U0001F319", "you are tired at school", ["you are taller", "you are full of energy", "you get a prize"], "Less sleep means a tired you."),
                  q("You share your crayons with Nora. What happens?", "\U0001F58D️", "Nora is happy, and you draw together", ["Nora runs away", "the crayons vanish", "you get told off"], "Sharing has a happy consequence."),
                  q("Which of these is GOOD for you?", "\U0001F60A", "wearing a hat in the hot sun", ["running into the road", "forgetting your lunch", "pushing in the line"], "A hat keeps your head cool and safe."),
-                 q("The tap is dripping. Which action fixes it?", "\U0001F4A7", "turn it off properly, and tell a grown-up if it still drips", ["turn it on more", "walk away", "put a bucket under it and leave it"], "Turning it off properly stops the waste, and a grown-up can fix a tap that still drips."),
+                 q("The tap is dripping. Which action fixes it?", "\U0001F4A7", "turn it off properly, and tell a grown-up if it still drips", ["turn it on more", "walk away", "put a bowl under it and leave it"], "Turning it off properly stops the waste, and a grown-up can fix a tap that still drips."),
                  q("Sami has no crayons. Which action fixes it?", "\U0001F622", "share some of yours", ["hide yours", "draw his picture for him", "tell him drawing is boring"], "Sami needed crayons, so sharing fixed it."),
                  q("What is water for?", "\U0001F4A7", "drinking, washing, cooking and plants", ["only for swimming", "nothing much", "only for cars"], "Water is for so many things, which is why we should not waste it."),
                  q("Before you do something, what can you think?", "\U0001F914", "what will happen to me next?", ["what is for lunch?", "nothing", "what colour is it?"], "Thinking about the next thing is thinking ahead."),

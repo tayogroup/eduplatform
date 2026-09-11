@@ -38,7 +38,7 @@ LESSON = {
              "Asking is one way to find out. This year there are three. Press <b>Next</b>.",
              explain(
                  ["An investigation can ask people, observe things, or measure things.", "Each way finds a different kind of information."],
-                 ["How many buses pass the gate? Observe and count.", "How long is your journey? Ask a questionnaire.", "How tall is the bean plant? Measure with a ruler."],
+                 ["How many buses pass the gate? Observe and count.", "How long is your journey? Ask with a questionnaire.", "How tall is the bean plant? Measure with a ruler."],
                  ["Children ask people things they could observe.", "Do not ask how many buses passed. Stand at the gate and count."],
                  ["Press Next and see all three."]),
              {"frames": [
@@ -60,10 +60,10 @@ LESSON = {
              {"title": "What passed the school gate in five minutes", "columns": ["What we saw", "How many"],
               "scene": GATE,
               "rounds": [
-                  {"kind": "car", "label": "Cars", "pic": "\U0001F697", "ask": "Count the cars. Tap each one."},
-                  {"kind": "bus", "label": "Buses", "pic": "\U0001F68C", "ask": "Now the buses. Tap each one."},
-                  {"kind": "bike", "label": "Bikes", "pic": "\U0001F6B2", "ask": "Now the bikes. Tap each one."},
-                  {"kind": "walker", "label": "Walkers", "pic": "\U0001F6B6", "ask": "Now the people walking. Tap each one."},
+                  {"kind": "car", "one": "a car", "label": "Cars", "pic": "\U0001F697", "ask": "Count the cars. Tap each one."},
+                  {"kind": "bus", "one": "a bus", "label": "Buses", "pic": "\U0001F68C", "ask": "Now the buses. Tap each one."},
+                  {"kind": "bike", "one": "a bike", "label": "Bikes", "pic": "\U0001F6B2", "ask": "Now the bikes. Tap each one."},
+                  {"kind": "walker", "one": "a person walking", "label": "Walkers", "pic": "\U0001F6B6", "ask": "Now the people walking. Tap each one."},
               ]},
              "You observed the gate and counted four kinds of thing. Every count is recorded."),
 
@@ -178,7 +178,7 @@ LESSON = {
                  q("How many buses pass the gate? Best way to find out?", "\U0001F68C", "observe and count at the gate", ["ask the class", "measure with a ruler"], "You can see buses. Count them."),
                  q("How long is Sami's journey? Best way?", "\U0001F552", "ask him on a questionnaire", ["count at the gate", "measure with a ruler"], "You cannot see a journey's length from the gate."),
                  q("How tall is a bean plant? Best way?", "\U0001F331", "measure with a ruler", ["ask the plant", "count the leaves"], "A ruler gives a number in centimetres."),
-                 q("Nora's plant is 15 cm and Sami's is 8 cm. How much taller is Nora's?", "\U0001F4CF", "7 cm", ["15 cm", "23 cm"], "15 take away 8 is 7."),
+                 q("Amal's plant is 12 cm and Omar's is 10 cm. How much taller is Amal's?", "\U0001F4CF", "2 cm", ["10 cm", "12 cm", "22 cm"], "12 take away 10 is 2."),
              ]},
              "You know which way to investigate, and what each way finds."),
 
@@ -191,10 +191,10 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("What does OBSERVE mean?", "\U0001F440", "look carefully and count what is really there", ["guess", "ask a friend", "draw a picture"], "Standing at the gate and counting is observing."),
-                 q("What passed the gate most?", "\U0001F6B6", "walkers", ["cars", "buses", "bikes"], "Five walkers, the longest bar."),
+                 q("How many more walkers than cars passed the gate?", "\U0001F6B6", "1", ["4", "5", "9"], "Five walkers, four cars. 5 take away 4 is 1."),
                  q("What is a questionnaire?", "\U0001F4DD", "the same question and choices given to everyone", ["a ruler", "a chart", "a picture"], "Everyone answers the same question, and every answer is recorded."),
                  q("Which finding was MEASURED?", "\U0001F4CF", "Nora's plant is 15 cm tall", ["Four cars passed", "Sami's journey is twenty minutes", "Nora lives across the road"], "A ruler gave that number."),
-                 q("How many children answered the questionnaire altogether?", "\U0001F522", "6", ["3", "5", "10"], "1 + 3 + 2 = 6."),
+                 q("How many children have a journey under 5 minutes?", "\U0001F522", "1", ["2", "3", "6"], "The Under 5 minutes row says 1."),
                  q("Whose bean plant was shortest?", "\U0001F331", "Sami's", ["Nora's", "Amal's", "Omar's"], "8 cm, the least."),
                  q("Why measure instead of just saying 'taller'?", "\U0001F4CF", "so you can say HOW MUCH taller", ["because rulers are fun", "you do not need to", "to make it longer"], "Measuring gives a number you can compare."),
                  q("Why record findings by HOW you found them?", "\U0001F5C2️", "so everyone knows which were seen, asked or measured", ["because it looks tidy", "it is a rule", "you do not need to"], "Organising findings is part of recording them."),
@@ -206,7 +206,7 @@ LESSON = {
 
 LESSON["about"] = [
     "Investigate by observing and counting what is really there.",
-    "Investigate by asking a questionnaire for things you cannot see.",
+    "Investigate by asking with a questionnaire for things you cannot see.",
     "Investigate by measuring with a ruler, and compare the numbers.",
     "Record findings organised by how they were found: observed, asked or measured.",
 ]
@@ -229,7 +229,7 @@ LESSON["words"] = [
          ["We observed the gate for five minutes.", "Observe, do not guess."]),
     word("questionnaire", "\U0001F4DD", "The same question and choices, given to everyone, with every answer recorded.",
          ["Our questionnaire asked how long the journey takes.", "Six classmates filled in the questionnaire."]),
-    word("measure", "\U0001F4CF", "To find a size with a ruler, a jug or a clock.",
+    word("measure", "\U0001F4CF", "To find a size or an amount with a ruler or a jug.",
          ["Measure the bean plant.", "We measured 15 centimetres."]),
     word("centimetre", "\U0001F4CF", "A small measure of length; about the width of your little finger.",
          ["Nora's plant is 15 centimetres.", "The ruler is marked in centimetres."]),
@@ -261,7 +261,7 @@ LESSON["lookback"] = {
     "not": ["how to swim", "the names of the planets", "how to tie a shoelace"],
     "changed": [
         {"before": "Finding out means asking somebody.", "after": "Finding out can mean observing, asking, or measuring."},
-        {"before": "You can tell which plant is taller just by looking.", "after": "Measuring tells you how MUCH taller, in centimetres."},
+        {"before": "Saying which plant is taller is enough.", "after": "Measuring tells you how MUCH taller, in centimetres."},
         {"before": "A finding is just a fact.", "after": "A finding is a fact and how we found it: observed, asked or measured."},
     ],
 }

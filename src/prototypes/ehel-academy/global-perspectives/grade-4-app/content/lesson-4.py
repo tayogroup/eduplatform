@@ -6,7 +6,7 @@ different things about a topic. Evaluation: 4Es.01 discuss a source,
 recognising that the author has a clear viewpoint on the topic; 4Ea.01
 express an opinion about another person's viewpoint, giving reasons for
 opinion. The topic is a supermarket planned for the old field at the edge of
-town - a corner shopkeeper, a mother of four, a farmer and a builder really do
+town - a corner shopkeeper, a mother of four, a farmer and a supermarket company really do
 think different things, a leaflet and a letter each carry their author's
 viewpoint, and a child can say what they think of somebody else's view, with
 reasons.
@@ -17,18 +17,18 @@ YASMIN = {"name": "Teacher Yasmin", "pic": "\U0001F469\U0001F3FE‍\U0001F3EB"}
 OMAR = {"name": "Mr Omar, the corner shopkeeper", "pic": "\U0001F9D4\U0001F3FE"}
 FARAH = {"name": "Mrs Farah, a mother of four", "pic": "\U0001F469\U0001F3FD"}
 HASSAN = {"name": "Mr Hassan, the farmer", "pic": "\U0001F9D1\U0001F3FE‍\U0001F33E"}
-DANA = {"name": "Dana, from the building company", "pic": "\U0001F477\U0001F3FC"}
+DANA = {"name": "Dana, from the supermarket company", "pic": "\U0001F469\U0001F3FC‍\U0001F4BC"}
 
 LESSON = {
     "slug": "the-old-field",
     "title": "The Old Field",
-    "blurb": "A supermarket is planned for the old field at the edge of town. The corner shopkeeper, a mother of four, the farmer and the builder all think differently. Work out who thinks what, find the author's viewpoint in a leaflet and a letter, and give your own opinion about somebody else's, with reasons.",
+    "blurb": "A supermarket is planned for the old field at the edge of town. The corner shopkeeper, a mother of four, the farmer and the supermarket company all think differently. Work out who thinks what, find the author's viewpoint in a leaflet and a letter, and give your own opinion about somebody else's, with reasons.",
     "steps": [
         step("demo", "One field, four views", "\U0001F3EA", "View spotter", ["4Ap.01"],
              "Everybody knows the same facts about the old field. They still think different things. Press <b>Next</b>.",
              explain(
                  ["People can know the same facts and think different things, because each person is affected differently.",
-                  "A shopkeeper, a parent, a farmer and a builder look at the same field from four places."],
+                  "A shopkeeper, a parent, a farmer and a company look at the same field from four places."],
                  ["Mr Omar thinks the supermarket will close his shop.", "Mrs Farah thinks it will make food cheaper for her four children.", "Same field, opposite views, and both have reasons."],
                  ["Children decide one person is right and the rest are wrong.", "Ask what each person stands to gain or lose. That is where views come from."],
                  ["Press Next and hear four views."]),
@@ -36,8 +36,8 @@ LESSON = {
                  {"pic": "\U0001F33E", "cap": "Our topic: <b>the old field</b>. A company wants to build a supermarket on it.", "say": "Our topic: the old field at the edge of town. A company wants to build a supermarket on it. Should it?"},
                  {"pic": "\U0001F9D4\U0001F3FE", "cap": "Mr Omar, the corner shopkeeper, thinks: <b>it will close small shops like mine</b>.", "say": "Mr Omar, the corner shopkeeper, thinks it will close small shops like his. Everyone will drive to the big one.", "sound": "pop"},
                  {"pic": "\U0001F469\U0001F3FD", "cap": "Mrs Farah, a mother of four, thinks: <b>food will be cheaper and closer</b>.", "say": "Mrs Farah, a mother of four, thinks food will be cheaper and closer. She takes two buses to the nearest big shop now.", "sound": "pop"},
-                 {"pic": "\U0001F9D1\U0001F3FE‍\U0001F33E", "cap": "Mr Hassan, the farmer, thinks: <b>my sheep have grazed there for forty years</b>.", "say": "Mr Hassan, the farmer, thinks the field should stay a field. His sheep have grazed there for forty years.", "sound": "pop"},
-                 {"pic": "\U0001F477\U0001F3FC", "cap": "Dana, from the building company, thinks: <b>it will bring eighty jobs to town</b>.", "say": "Dana, from the building company, thinks it will bring eighty jobs to the town.", "sound": "pop"},
+                 {"pic": "\U0001F9D1\U0001F3FE‍\U0001F33E", "cap": "Mr Hassan, the farmer, thinks: <b>the field should stay a field for my sheep</b>.", "say": "Mr Hassan, the farmer, thinks the field should stay a field. His sheep have grazed there for forty years.", "sound": "pop"},
+                 {"pic": "\U0001F469\U0001F3FC‍\U0001F4BC", "cap": "Dana, from the supermarket company, thinks: <b>it will bring eighty jobs to town</b>.", "say": "Dana, from the supermarket company, thinks it will bring eighty jobs to the town.", "sound": "pop"},
                  {"pic": "\U0001F4AD", "cap": "Same field, same facts, <b>four different views</b>, each from where that person stands.", "say": "Same field, same facts, four different views, each one from where that person stands.", "sound": "tada"},
              ]},
              "People think different things about the same topic, from where each of them stands."),
@@ -46,22 +46,22 @@ LESSON = {
              "Teacher Yasmin describes a view. Who holds it? Tap the person.",
              explain(
                  ["Recognising that people think different things means being able to say WHO thinks WHAT, and why they might."],
-                 ["The supermarket will close small shops: that is the shopkeeper.", "Eighty jobs: that is the builder."],
+                 ["The supermarket will close small shops: that is the shopkeeper.", "Eighty jobs: that is the supermarket company."],
                  [],
                  ["Read the view, then tap the person who holds it."]),
              {"asker": YASMIN,
               "rounds": [
                   {"ask": "Who thinks the supermarket will close small shops?", "about": "shops", "pic": "\U0001F3EA",
-                   "opts": [tagged("Mr Omar, the corner shopkeeper", "shops", "\U0001F9D4\U0001F3FE"), tagged("Mrs Farah, the mother of four", "cheaper", "\U0001F469\U0001F3FD"), tagged("Dana, from the building company", "jobs", "\U0001F477\U0001F3FC")],
+                   "opts": [tagged("Mr Omar, the corner shopkeeper", "shops", "\U0001F9D4\U0001F3FE"), tagged("Mrs Farah, the mother of four", "cheaper", "\U0001F469\U0001F3FD"), tagged("Dana, from the supermarket company", "jobs", "\U0001F469\U0001F3FC‍\U0001F4BC")],
                    "why": "Mr Omar runs a small shop. A big one nearby is his worry."},
                   {"ask": "Who thinks food will be cheaper and closer?", "about": "cheaper", "pic": "\U0001F6D2",
                    "opts": [tagged("Mrs Farah, the mother of four", "cheaper", "\U0001F469\U0001F3FD"), tagged("Mr Hassan, the farmer", "sheep", "\U0001F9D1\U0001F3FE‍\U0001F33E"), tagged("Mr Omar, the corner shopkeeper", "shops", "\U0001F9D4\U0001F3FE")],
                    "why": "Mrs Farah feeds four children and takes two buses to shop now."},
                   {"ask": "Who thinks the field should stay a field for the sheep?", "about": "sheep", "pic": "\U0001F411",
-                   "opts": [tagged("Mr Hassan, the farmer", "sheep", "\U0001F9D1\U0001F3FE‍\U0001F33E"), tagged("Dana, from the building company", "jobs", "\U0001F477\U0001F3FC"), tagged("Mrs Farah, the mother of four", "cheaper", "\U0001F469\U0001F3FD")],
+                   "opts": [tagged("Mr Hassan, the farmer", "sheep", "\U0001F9D1\U0001F3FE‍\U0001F33E"), tagged("Dana, from the supermarket company", "jobs", "\U0001F469\U0001F3FC‍\U0001F4BC"), tagged("Mrs Farah, the mother of four", "cheaper", "\U0001F469\U0001F3FD")],
                    "why": "Mr Hassan's sheep have grazed there for forty years."},
-                  {"ask": "Who thinks the supermarket will bring eighty jobs?", "about": "jobs", "pic": "\U0001F477",
-                   "opts": [tagged("Dana, from the building company", "jobs", "\U0001F477\U0001F3FC"), tagged("Mr Omar, the corner shopkeeper", "shops", "\U0001F9D4\U0001F3FE"), tagged("Mr Hassan, the farmer", "sheep", "\U0001F9D1\U0001F3FE‍\U0001F33E")],
+                  {"ask": "Who thinks the supermarket will bring eighty jobs?", "about": "jobs", "pic": "\U0001F4BC",
+                   "opts": [tagged("Dana, from the supermarket company", "jobs", "\U0001F469\U0001F3FC‍\U0001F4BC"), tagged("Mr Omar, the corner shopkeeper", "shops", "\U0001F9D4\U0001F3FE"), tagged("Mr Hassan, the farmer", "sheep", "\U0001F9D1\U0001F3FE‍\U0001F33E")],
                    "why": "Dana works for the company that would build it."},
               ]},
              "Four views matched to the four people who hold them."),
@@ -81,12 +81,12 @@ LESSON = {
                   {"pic": "\U0001F411", "label": "Sheep have grazed the field for forty years", "bin": "fact", "why": "The farm's records show it. A fact."},
                   {"pic": "\U0001F469\U0001F3FD", "label": "Cheaper food matters more than one field", "bin": "view", "why": "That is what Mrs Farah thinks."},
                   {"pic": "\U0001F68C", "label": "The nearest big shop is two bus rides away", "bin": "fact", "why": "You can check the bus map. A fact."},
-                  {"pic": "\U0001F477\U0001F3FC", "label": "Eighty jobs are worth losing a field for", "bin": "view", "why": "That is what Dana thinks. Mr Hassan would not agree."},
+                  {"pic": "\U0001F469\U0001F3FC‍\U0001F4BC", "label": "Eighty jobs are worth losing a field for", "bin": "view", "why": "That is what Dana thinks. Mr Hassan would not agree."},
               ]},
              "You can tell a fact from what somebody thinks."),
 
         step("text", "The company's leaflet", "\U0001F4CB", "Leaflet reader", ["4Es.01"],
-             "The building company posted a leaflet through every door. Find the sentences that show what the AUTHOR thinks. Then say what the viewpoint is.",
+             "The supermarket company posted a leaflet through every door. Find the sentences that show what the AUTHOR thinks. Then say what the viewpoint is.",
              explain(
                  ["A source is written by somebody, and that somebody has a viewpoint.", "Look for the sentences that show what the author wants to happen, and the reasons they give."],
                  ["Eighty new jobs for local people: that is the author's reason.", "We hope you will support the plan: that is what the author wants."],
@@ -121,17 +121,17 @@ LESSON = {
               "lines": [
                   "My family has run the corner shop on Mill Street for thirty years.",
                   "When a supermarket opened in the next town, four of its small shops closed within a year.",
-                  "A big store cannot know your name or keep a loaf back for you on a Saturday.",
+                  "A big supermarket cannot know your name or keep a loaf back for you on a Saturday.",
                   "I think the town should say no to the plan and keep the field, and its small shops.",
-                  "Omar Said, Mill Street.",
+                  "Omar Salim, Mill Street.",
               ],
               "rounds": [
                   {"ask": "Which sentence says what the author thinks the town SHOULD do?", "about": "what the author thinks the town should do", "line": 3, "why": "Say no to the plan. That is his viewpoint."},
                   {"ask": "Which sentence gives his evidence about the NEXT town?", "about": "his evidence about the next town", "line": 1, "why": "Four small shops closed within a year."},
-                  {"ask": "Which sentence gives a reason a SMALL shop is different?", "about": "why a small shop is different", "line": 2, "why": "A big store cannot know your name or keep a loaf back."},
+                  {"ask": "Which sentence gives a reason a SMALL shop is different?", "about": "why a small shop is different", "line": 2, "why": "A big supermarket cannot know your name or keep a loaf back."},
               ],
               "then": {"ask": "Do the leaflet and the letter have the same viewpoint?",
-                       "opts": [opt("No: the leaflet wants the store built, the letter wants the field kept", True), opt("Yes, both want the store", False), opt("Yes, both want the field kept", False)],
+                       "opts": [opt("No: the leaflet wants the supermarket built, the letter wants the field kept", True), opt("Yes, both want the supermarket", False), opt("Yes, both want the field kept", False)],
                        "why": "Two sources, two authors, two opposite viewpoints about the same field."}},
              "Two sources about one field, and two authors who think differently."),
 
@@ -148,18 +148,18 @@ LESSON = {
                  {"topic": "keeping the field and the small shops", "tag": "shops", "pic": "\U0001F9D4\U0001F3FE", "ask": "What do you think of Mr Omar's view?",
                   "view": {"name": "Mr Omar", "pic": "\U0001F9D4\U0001F3FE", "says": "The town should say no to the plan and keep its field and its small shops."},
                   "stances": [{"id": "agree", "t": "I agree with Mr Omar"}, {"id": "part", "t": "I partly agree with Mr Omar"}, {"id": "disagree", "t": "I disagree with Mr Omar"}],
-                  "reasons": [tagged("because small shops really did close in the next town", "shops"), tagged("because a shopkeeper who knows your name is worth keeping", "shops"), tagged("because some families cannot afford small-shop prices", "shops"), tagged("because a town can have both big and small shops", "shops"),
-                              tagged("because I like chips", "food"), tagged("because it is Tuesday", "days")]},
+                  "reasons": [dict(tagged("because small shops really did close in the next town", "shops"), supports=['agree', 'part']), dict(tagged("because a shopkeeper who knows your name is worth keeping", "shops"), supports=['agree', 'part']), dict(tagged("because some families cannot afford small-shop prices", "shops"), supports=['disagree', 'part']), dict(tagged("because a town can have both big and small shops", "shops"), supports=['disagree', 'part']),
+                              tagged("because I like chips", "food"), tagged("because it is sunny today", "weather")]},
                  {"topic": "cheaper food closer to home", "tag": "cheaper", "pic": "\U0001F469\U0001F3FD", "ask": "What do you think of Mrs Farah's view?",
                   "view": {"name": "Mrs Farah", "pic": "\U0001F469\U0001F3FD", "says": "Cheaper food a short walk away matters more than one field."},
                   "stances": [{"id": "agree", "t": "I agree with Mrs Farah"}, {"id": "part", "t": "I partly agree with Mrs Farah"}, {"id": "disagree", "t": "I disagree with Mrs Farah"}],
-                  "reasons": [tagged("because two bus rides to buy food is too many for a family", "cheaper"), tagged("because lower prices help the families with the least money", "cheaper"), tagged("because once a field is built on it never comes back", "cheaper"), tagged("because the small shops might lower their prices instead", "cheaper"),
+                  "reasons": [dict(tagged("because two bus rides to buy food is too many for a family", "cheaper"), supports=['agree', 'part']), dict(tagged("because lower prices help the families with the least money", "cheaper"), supports=['agree', 'part']), dict(tagged("because once a field is built on it never comes back", "cheaper"), supports=['disagree', 'part']), dict(tagged("because the small shops might lower their prices instead", "cheaper"), supports=['disagree', 'part']),
                               tagged("because my shoes are new", "shoes"), tagged("because the sea is salty", "the sea")]},
                  {"topic": "keeping the field for the sheep", "tag": "sheep", "pic": "\U0001F9D1\U0001F3FE‍\U0001F33E", "ask": "What do you think of Mr Hassan's view?",
                   "view": {"name": "Mr Hassan", "pic": "\U0001F9D1\U0001F3FE‍\U0001F33E", "says": "The field should stay a field. My sheep have grazed it for forty years."},
                   "stances": [{"id": "agree", "t": "I agree with Mr Hassan"}, {"id": "part", "t": "I partly agree with Mr Hassan"}, {"id": "disagree", "t": "I disagree with Mr Hassan"}],
-                  "reasons": [tagged("because a farmer should not lose land he has used for forty years", "sheep"), tagged("because green fields at the edge of town are good for everyone", "sheep"), tagged("because the sheep could graze another field", "sheep"), tagged("because eighty jobs would help more people than one farm", "sheep"),
-                              tagged("because I had toast for breakfast", "breakfast"), tagged("because the bus was late", "buses")]},
+                  "reasons": [dict(tagged("because a farmer should not lose land he has used for forty years", "sheep"), supports=['agree', 'part']), dict(tagged("because green fields at the edge of town are good for everyone", "sheep"), supports=['agree', 'part']), dict(tagged("because the sheep could graze another field", "sheep"), supports=['disagree', 'part']), dict(tagged("because eighty jobs would help more people than one farm", "sheep"), supports=['disagree', 'part']),
+                              tagged("because I had toast for breakfast", "breakfast"), tagged("because my kite is red", "kites")]},
              ]},
              "You gave your opinion about three people's views, each with two reasons."),
 
@@ -173,7 +173,7 @@ LESSON = {
              {"label": "Question", "items": [
                  q("Mr Omar and Mrs Farah know the same facts about the field. Do they think the same?", "\U0001F4AD", "No, they hold different views", ["Yes, exactly the same", "Neither has a view"], "Same facts, different views, from where each stands."),
                  q("Who wrote the leaflet?", "\U0001F4CB", "Greenway Stores, the company that would build it", ["Mr Omar", "Mr Hassan"], "It was signed Greenway Stores Ltd."),
-                 q("What was the viewpoint in Mr Omar's letter?", "✉️", "the town should say no and keep the field and its shops", ["the store should be built quickly", "the field should be a car park"], "He thinks the town should say no to the plan."),
+                 q("What was the viewpoint in Mr Omar's letter?", "✉️", "the town should say no and keep the field and its shops", ["the supermarket should be built quickly", "the field should be a car park"], "He thinks the town should say no to the plan."),
                  q("I agree with Mrs Farah because…? Which reason is ABOUT the old field?", "\U0001F6D2", "two bus rides to buy food is too many", ["my shoes are new", "the sea is salty"], "It is about shopping in this town."),
              ]},
              "You know who thinks what, whose viewpoint a source carries, and how to give your opinion of it."),
@@ -186,14 +186,14 @@ LESSON = {
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
-                 q("Why do four people think differently about one field?", "\U0001F4AD", "each is affected differently, so each looks from where they stand", ["three of them are lying", "they know different facts", "they have not seen the field"], "A shopkeeper, a parent, a farmer and a builder."),
-                 q("Which of these is a FACT, not a view?", "✅", "The nearest big shop is two bus rides away", ["The store should be built", "The field should stay a field", "Jobs matter more than sheep"], "You can check the bus map."),
-                 q("Who thinks the supermarket will bring eighty jobs?", "\U0001F477", "Dana, from the building company", ["Mr Omar", "Mr Hassan", "Mrs Farah"], "She works for the company."),
+                 q("Why do four people think differently about one field?", "\U0001F4AD", "each is affected differently, so each looks from where they stand", ["three of them are lying", "they know different facts", "they have not seen the field"], "A shopkeeper, a parent, a farmer and the supermarket company."),
+                 q("Which of these is a FACT, not a view?", "✅", "The nearest big shop is two bus rides away", ["The supermarket should be built", "The field should stay a field", "Jobs matter more than sheep"], "You can check the bus map."),
+                 q("Dana says the supermarket will bring eighty jobs. Who does she work for?", "\U0001F4BC", "the supermarket company", ["Mr Omar's shop", "Mr Hassan's farm", "the school"], "She works for the company that wants to build it."),
                  q("Why does it help to know who wrote a source?", "✍️", "because the author has a viewpoint, and knowing who helps you see it", ["it does not help", "so you can write to them", "to know their age"], "A company's leaflet and a shopkeeper's letter say opposite things."),
                  q("What did the leaflet ask people to do?", "\U0001F4CB", "support the plan at Tuesday's meeting", ["close their shops", "plant a hundred trees", "buy sheep"], "We hope you will support the plan."),
                  q("What evidence did Mr Omar give?", "✉️", "four small shops closed in the next town within a year", ["the field is muddy", "his shop is the biggest", "he has no customers"], "His letter's second sentence."),
                  q("Can you disagree with Mr Hassan and still be fair?", "⚖️", "Yes, if you give reasons about the topic", ["No, never", "Only if he is wrong"], "An opinion about a viewpoint needs reasons."),
-                 q("Which reason is NOT about the old field?", "\U0001F937", "because it is Tuesday", ["because small shops closed in the next town", "because the sheep could graze elsewhere", "because prices would be lower"], "The day of the week is not the topic."),
+                 q("Which reason is NOT about the old field?", "\U0001F937", "because it is sunny today", ["because small shops closed in the next town", "because the sheep could graze elsewhere", "because prices would be lower"], "The weather today is not the topic."),
              ]},
              "That is the whole lesson finished. You see who thinks what, whose viewpoint a source carries, and you give your own opinion with reasons."),
     ],
@@ -211,20 +211,20 @@ LESSON["lecture"] = [
     part("\U0001F33E", "The old field",
          "A company wants to build a supermarket on the old field at the edge of town. Everybody knows the same facts about it. They still think different things."),
     part("\U0001F4AD", "Four views",
-         "Mr Omar the shopkeeper thinks it will close small shops. Mrs Farah, a mother of four, thinks food will be cheaper and closer. Mr Hassan the farmer thinks the field should stay a field. Dana from the building company thinks it will bring eighty jobs. Each view comes from where that person stands."),
+         "Mr Omar the shopkeeper thinks it will close small shops. Mrs Farah, a mother of four, thinks food will be cheaper and closer. Mr Hassan the farmer thinks the field should stay a field. Dana from the supermarket company thinks it will bring eighty jobs. Each view comes from where that person stands."),
     part("\U0001F4CB", "The leaflet",
          "The company's leaflet says: eighty jobs, cheaper food, a hundred trees, support the plan on Tuesday. Who wrote it? Greenway Stores Ltd, the company that would build it. Knowing the author is how you see the viewpoint."),
     part("✉️", "The letter",
-         "Mr Omar's letter says: four small shops closed in the next town, a big store cannot know your name, the town should say no. A different author, an opposite viewpoint, about the same field."),
+         "Mr Omar's letter says: four small shops closed in the next town, a big supermarket cannot know your name, the town should say no. A different author, an opposite viewpoint, about the same field."),
     part("⚖️", "Your opinion, with reasons",
-         "Now you. Do you agree with Mr Omar, partly agree, or disagree? Say why, twice, and make both reasons about the field, the shops, the prices or the jobs. Because it is Tuesday is not a reason."),
+         "Now you. Do you agree with Mr Omar, partly agree, or disagree? Say why, twice, and make both reasons about the field, the shops, the prices or the jobs. Because it is sunny today is not a reason."),
 ]
 
 LESSON["words"] = [
     word("viewpoint", "\U0001F4AD", "What a person thinks should happen about a topic.",
-         ["The leaflet's viewpoint is that the store should be built.", "Every author has a viewpoint."]),
+         ["The leaflet's viewpoint is that the supermarket should be built.", "Every author has a viewpoint."]),
     word("author", "✍️", "The person or company that wrote a source.",
-         ["The leaflet's author is the building company.", "Knowing the author helps you see the viewpoint."]),
+         ["The leaflet's author is the supermarket company.", "Knowing the author helps you see the viewpoint."]),
     word("evidence", "\U0001F50D", "Facts that support a view.",
          ["Four shops closing was Mr Omar's evidence.", "Give evidence, not just feelings."]),
     word("opinion", "\U0001F5E3️", "What you think about something, with your reasons.",

@@ -89,7 +89,7 @@ LESSON = {
              "The pictogram shows what the class said. Look at it, then tap the answer.",
              explain(
                  ["A pictogram is a picture for every person, in rows.", "The longest row is the answer most people gave."],
-                 ["Walk has three pictures.", "Bus has one. Car has one. Bike has one.", "So most of the class walks."],
+                 ["Walk has three pictures.", "Bus has one. Car has one. Bike has one.", "So more children walk than come any other way."],
                  ["Children answer from memory.", "Count the pictures. The answer is IN the pictogram."],
                  ["Read the question, count the row, tap the answer."]),
              {"fromSurvey": True, "title": "How we get to school",
@@ -190,7 +190,7 @@ LESSON = {
                  q("What is a survey?", "\U0001F5E3️", "asking everyone the same question and recording the answers", ["a kind of bus", "a picture of a school", "a game of tag"], "A survey asks everyone and records every answer."),
                  q("Why do we record each answer?", "✏️", "so we do not forget it", ["because it is fun to draw", "so the teacher can go home", "we do not need to"], "Six answers are too many to remember. Recording keeps them."),
                  q("What is a pictogram?", "\U0001F4CA", "a picture for every person, in rows", ["a photo of the class", "a story about a bus", "a big map"], "A pictogram is pictures in rows, one for each person."),
-                 q("How did most of the class get to school?", "\U0001F6B6", "walk", ["bus", "car", "bike"], "The Walk row had three pictures."),
+                 q("Which way did the most children get to school?", "\U0001F6B6", "walk", ["bus", "car", "bike"], "The Walk row had three pictures."),
                  q("Who should you ask to find out about YOUR class?", "\U0001F3EB", "the people in your class", ["a book about classes", "the bus driver", "a dinosaur"], "Only the people in the class know their own answers."),
                  q("On our chart, where does Hana's bike go?", "\U0001F6B2", "on wheels", ["on foot", "in the sandpit", "nowhere"], "A bike has wheels."),
                  q("Nobody chose the sandpit. What does the sandpit row look like?", "\U0001F3D6️", "empty, no pictures", ["the longest row", "full of pictures"], "No answers, no pictures."),

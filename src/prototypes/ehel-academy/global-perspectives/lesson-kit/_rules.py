@@ -84,6 +84,13 @@ def relevant(options, topics):
     return [k for k, o in enumerate(options) if o.get("about") in topics]
 
 
+def supporting(reasons, tag, stance):
+    """Indexes of the reasons that are about `tag` AND back up `stance`.
+    A reason says which stances it supports in `supports`; one that argues
+    against a stance is not a reason for it, however on-topic it is."""
+    return [k for k, o in enumerate(reasons) if o.get("about") == tag and stance in (o.get("supports") or [])]
+
+
 def relevant_sources(sources, topic):
     """Ids of the sources that can tell you about the topic."""
     return [s["id"] for s in sources if topic in (s.get("about") or [])]

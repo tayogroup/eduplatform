@@ -193,10 +193,10 @@ def lookback_step(lesson, core, cfg):
             t = TYPE_OF.get(s["kind"])
             if t and t[0] not in seen:
                 seen.add(t[0]); types.append({"title": t[0], "icon": t[1]})
-        return step("lookback", "Look back", "\U0001FA9E", "I looked back", lookback_codes(stage),
+        return step("lookback", "Look back", "\u23EA", "I looked back", lookback_codes(stage),
                     "What did you learn, how did your ideas change, and which kind of activity helped you learn? Tap to say it.",
                     explain(
-                        ["Looking back at Stage %d has three parts." % stage, "What you learned, how your ideas changed, and which KIND of activity helped."],
+                        ["Looking back at this year has three parts.", "What you learned, how your ideas changed, and which KIND of activity helped."],
                         ["First: I learned that. Tap two things you really did learn today.",
                          "Then: before I thought, now I think. Pick how one of your ideas changed.",
                          "Then: which kind of activity helped you learn most, and why."],
@@ -206,7 +206,7 @@ def lookback_step(lesson, core, cfg):
                      "liked": types, "becauses": list(lb.get("becauses") or DEFAULT_TYPE_BECAUSES), "pick": min(2, len(learned))},
                     "You looked back: what you learned, how your ideas changed, and what kind of activity helped. That is reflecting.")
     if helped:
-        return step("lookback", "Look back", "\U0001FA9E", "I looked back", lookback_codes(stage),
+        return step("lookback", "Look back", "\u23EA", "I looked back", lookback_codes(stage),
                     "What did you learn today, and which part helped you learn it? Tap to say it.",
                     explain(
                         ["Looking back is a skill too.", "At the end of an activity you say what you learned, and which part helped you learn it."],
@@ -217,7 +217,7 @@ def lookback_step(lesson, core, cfg):
                     {"scope": "lesson", "mode": "helped", "learned": learned, "not": not_learned, "liked": liked, "becauses": becauses,
                      "pick": min(2, len(learned))},
                     "You looked back at what you learned and what helped you learn it. That is reflecting.")
-    return step("lookback", "Look back", "\U0001FA9E", "I looked back", lookback_codes(stage),
+    return step("lookback", "Look back", "\u23EA", "I looked back", lookback_codes(stage),
                 "What did you learn today, and what did you like? Tap to say it.",
                 explain(
                     ["Looking back is a skill too.", "At the end of an activity you say what you learned, and what you liked."],

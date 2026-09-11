@@ -12,7 +12,7 @@ from _kit import explain, step, opt, q, part, word, home
 
 CLASS = [
     ("amal", "Amal", "\U0001F467\U0001F3FE"), ("sami", "Sami", "\U0001F466\U0001F3FE"), ("nora", "Nora", "\U0001F467\U0001F3FD"),
-    ("omar", "Omar", "\U0001F466\U0001F3FD"), ("hana", "Hana", "\U0001F467\U0001F3FF"), ("tariq", "Tariq", "\U0001F466\U0001F3FF"),
+    ("yusuf", "Yusuf", "\U0001F466\U0001F3FD"), ("hana", "Hana", "\U0001F467\U0001F3FF"), ("tariq", "Tariq", "\U0001F466\U0001F3FF"),
 ]
 
 
@@ -52,7 +52,7 @@ LESSON = {
              {"question": "How many hours did you sleep last night?", "pic": "\U0001F634", "columns": ["Hours of sleep", "How many"],
               "options": [{"id": "under", "t": "Less than 8 hours", "pic": "\U0001F971"}, {"id": "eight", "t": "8 to 10 hours", "pic": "\U0001F60A"}, {"id": "over", "t": "More than 10 hours", "pic": "\U0001F634"}],
               "people": people([
-                  ("eight", "About nine hours. Bed at eight, up at five past seven."),
+                  ("eight", "About nine hours. Bed at nine, up at six."),
                   ("under", "Seven, maybe. I was watching a film."),
                   ("eight", "Nine and a half hours."),
                   ("over", "Eleven. I was really tired after football."),
@@ -77,7 +77,7 @@ LESSON = {
                   {"ask": "How many MORE slept 8 to 10 hours than more than 10?", "check": {"kind": "difference", "a": "8 to 10 hours", "b": "More than 10 hours"},
                    "opts": [opt("2", True), opt("3", False), opt("1", False)], "why": "3 take away 1 is 2."},
                   {"ask": "Which answer did the FEWEST children give?", "check": {"kind": "least"},
-                   "opts": [opt("More than 10 hours", True), opt("Less than 8 hours", False), opt("8 to 10 hours", False)], "why": "More than 10 hours: only Omar."},
+                   "opts": [opt("More than 10 hours", True), opt("Less than 8 hours", False), opt("8 to 10 hours", False)], "why": "More than 10 hours: only Yusuf."},
                   {"ask": "Did more children sleep more than 10 hours than less than 8?", "check": {"kind": "more", "a": "More than 10 hours", "b": "Less than 8 hours"},
                    "opts": [opt("No", True), opt("Yes", False)], "why": "More than 10: 1. Less than 8: 2. No, fewer."},
               ]},
@@ -132,16 +132,16 @@ LESSON = {
              "A diagram with two circles that overlap. Some evening activities happen indoors, some outdoors, some both. Record each one in the right part.",
              explain(
                  ["A Venn diagram has two circles that overlap.", "Only in the left, only in the right, or in the middle where both are true."],
-                 ["Reading: indoors. Football: outdoors.", "Listening to music: you can do it either way. The middle."],
+                 ["Watching television: indoors. Football: outdoors.", "Reading a comic: you can do it either way. The middle."],
                  ["Children put everything in the middle.", "The middle is only for things that are really BOTH."],
                  ["Read the activity, tap the part of the diagram."]),
              {"title": "What we do in the evening", "ask": "Indoors only, both, or outdoors only?", "venn": True,
               "bins": [{"id": "in", "label": "Indoors", "pic": "\U0001F3E0"}, {"id": "both", "label": "Both", "pic": "\U0001F91D"}, {"id": "out", "label": "Outdoors", "pic": "\U0001F333"}],
               "items": [
-                  {"pic": "\U0001F4D6", "label": "reading a book", "bin": "in", "why": "Reading is an indoors thing, in the evening at least."},
+                  {"pic": "\U0001F4FA", "label": "watching television", "bin": "in", "why": "The television is in the house."},
                   {"pic": "⚽", "label": "playing football", "bin": "out", "why": "Football needs the park or the garden."},
-                  {"pic": "\U0001F3B5", "label": "listening to music", "bin": "both", "why": "Headphones work anywhere. Both."},
-                  {"pic": "♟️", "label": "playing chess", "bin": "in", "why": "A board on a table, indoors."},
+                  {"pic": "\U0001F4D6", "label": "reading a comic", "bin": "both", "why": "A comic goes anywhere, indoors or out. Both."},
+                  {"pic": "\U0001F6C1", "label": "having a bath", "bin": "in", "why": "The bath is in the house."},
                   {"pic": "\U0001F333", "label": "climbing a tree", "bin": "out", "why": "Trees are outdoors."},
                   {"pic": "\U0001F34E", "label": "eating a snack", "bin": "both", "why": "In the kitchen or on a bench. Both."},
               ]},
@@ -173,10 +173,10 @@ LESSON = {
                  q("What is a conclusion?", "\U0001F4A1", "a sentence the data proves, and no further", ["a guess", "an opinion", "a kind of chart"], "Exactly as far as the data."),
                  q("Tariq said children everywhere sleep 8 to 10 hours. Why was that too far?", "\U0001F30D", "we only asked six children in one class", ["children do not sleep", "Tariq was tired", "it was too short"], "The data is about our class only."),
                  q("How many children slept less than 8 hours?", "\U0001F971", "2", ["3", "1", "6"], "Sami and Tariq."),
-                 q("Which answer did the fewest children give?", "\U0001F634", "more than 10 hours", ["8 to 10 hours", "less than 8 hours"], "Only Omar."),
-                 q("On which day were the most books borrowed?", "\U0001F4DA", "Wednesday", ["Monday", "Tuesday", "Thursday"], "14."),
-                 q("How many books altogether over the four days?", "\U0001F522", "40", ["34", "44", "30"], "9 + 6 + 14 + 11."),
-                 q("Where does 'listening to music' go on the Venn diagram?", "\U0001F3B5", "the middle: both", ["indoors only", "outdoors only", "nowhere"], "Headphones work anywhere."),
+                 q("How many children slept 8 to 10 hours?", "\U0001F60A", "3", ["1", "2", "6"], "8 to 10 hours: 3 children."),
+                 q("How many more books were borrowed on Thursday than on Monday?", "\U0001F4DA", "2", ["9", "11", "20"], "11 take away 9 is 2."),
+                 q("How many books were borrowed on Monday and Tuesday together?", "\U0001F522", "15", ["9", "6", "40"], "9 + 6 = 15."),
+                 q("Where does 'reading a comic' go on the Venn diagram?", "\U0001F4D6", "the middle: both", ["indoors only", "outdoors only", "nowhere"], "A comic goes anywhere."),
                  q("Screens make children sleep less. Can our sleep data prove it?", "\U0001F4FA", "No, we did not ask about screens", ["Yes", "Yes, if Sami says so"], "The data cannot prove what it did not measure."),
              ]},
              "That is the whole lesson finished. Your conclusions go exactly as far as the data."),
@@ -201,7 +201,7 @@ LESSON["lecture"] = [
     part("⚖️", "Proved, or too far",
          "Two children slept less than eight hours: proved. Sami is always tired: we asked about one night. Screens make children sleep less: we never asked about screens. A conclusion stops where the data stops."),
     part("\U0001F5C2️", "The Venn diagram",
-         "Reading, indoors. Football, outdoors. Listening to music, both, in the middle where the circles cross. Only things that are really both go in the middle."),
+         "Watching television, indoors. Football, outdoors. Reading a comic, both, in the middle where the circles cross. Only things that are really both go in the middle."),
 ]
 
 LESSON["words"] = [
@@ -214,7 +214,7 @@ LESSON["words"] = [
     word("survey", "\U0001F4DD", "Asking a group of people the same question and recording every answer.",
          ["Our sleep survey asked six children.", "A survey is data about the people you asked."]),
     word("Venn diagram", "\U0001F5C2️", "Two overlapping circles that show one group, the other, or both.",
-         ["Music went in the middle of the Venn diagram.", "Sort the activities on a Venn diagram."]),
+         ["The comic went in the middle of the Venn diagram.", "Sort the activities on a Venn diagram."]),
     word("altogether", "\U0001F522", "All of them added up.",
          ["Six children answered altogether.", "Forty books altogether."]),
 ]

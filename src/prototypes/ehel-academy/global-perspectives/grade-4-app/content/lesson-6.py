@@ -13,10 +13,10 @@ play.
 """
 from _kit import explain, step, opt, q, person, task, part, word, home
 
-MUSEUM_FRIENDS = [person("sami", "Sami", "\U0001F466\U0001F3FE", ["making models"]), person("hana", "Hana", "\U0001F467\U0001F3FF", ["drawing"]), person("omar", "Omar", "\U0001F466\U0001F3FD", ["speaking clearly"])]
+MUSEUM_FRIENDS = [person("sami", "Sami", "\U0001F466\U0001F3FE", ["making models"]), person("hana", "Hana", "\U0001F467\U0001F3FF", ["drawing"]), person("yusuf", "Yusuf", "\U0001F466\U0001F3FD", ["speaking clearly"])]
 MUSEUM_MEMBERS = [person("you", "You", "\U0001F9D2", ["reading old writing"])] + MUSEUM_FRIENDS
 GARDEN_FRIENDS = [person("amal", "Amal", "\U0001F467\U0001F3FE", ["digging"]), person("tariq", "Tariq", "\U0001F466\U0001F3FF", ["carrying water"]), person("nora", "Nora", "\U0001F467\U0001F3FD", ["painting signs"])]
-GARDEN_MEMBERS = [person("you", "You", "\U0001F9D2", ["sowing seeds"])] + GARDEN_FRIENDS
+GARDEN_MEMBERS = [person("you", "You", "\U0001F9D2", ["planting seeds"])] + GARDEN_FRIENDS
 
 LESSON = {
     "slug": "the-class-museum",
@@ -27,7 +27,7 @@ LESSON = {
              "A team has jobs, and people who are good at different things. Press <b>Next</b> and see the jobs given out.",
              explain(
                  ["Allocating tasks means giving each job to the team member whose skill it needs.", "The one who can read old handwriting reads the old letters. The one who draws well draws the high street."],
-                 ["The class museum about the old town needs four jobs.", "Sami makes models, so he builds the old bridge.", "Omar speaks clearly, so he reads the labels at the opening.",
+                 ["The class museum about the old town needs four jobs.", "Sami makes models, so he builds the old bridge.", "Yusuf speaks clearly, so he reads the labels at the opening.",
                   "Give the reading to the one who cannot read old writing and the museum opens a week late."],
                  ["Children give the best job to their best friend.", "Give each job to the person whose skill it needs."],
                  ["Press Next and watch the jobs go out."]),
@@ -35,7 +35,7 @@ LESSON = {
                  {"pic": "\U0001F3DB️", "cap": "The class is making a <b>museum display about the old town</b> for parents' evening.", "say": "The class is making a museum display about the old town, for parents' evening. That is a job for a team."},
                  {"pic": "\U0001F4CB", "cap": "Four jobs: <b>read the old letters, draw the old high street, build the model bridge, read the labels aloud</b>.", "say": "Four jobs: read the old letters to find the facts, draw the old high street, build a model of the old bridge, and read the labels aloud at the opening.", "sound": "pop"},
                  {"pic": "\U0001F9D2", "cap": "You can <b>read old handwriting</b>: the letters are yours. Hana <b>draws</b>: the high street is hers.", "say": "You can read old handwriting, so the letters are yours. Hana draws beautifully, so the high street is hers.", "sound": "pop"},
-                 {"pic": "\U0001F466\U0001F3FE", "cap": "Sami <b>makes models</b>: the bridge. Omar <b>speaks clearly</b>: the labels at the opening.", "say": "Sami makes models, so the bridge is his. Omar speaks clearly and loudly, so he reads the labels at the opening.", "sound": "pop"},
+                 {"pic": "\U0001F466\U0001F3FE", "cap": "Sami <b>makes models</b>: the bridge. Yusuf <b>speaks clearly</b>: the labels at the opening.", "say": "Sami makes models, so the bridge is his. Yusuf speaks clearly and loudly, so he reads the labels at the opening.", "sound": "pop"},
                  {"pic": "\U0001F91D", "cap": "Every job with the <b>right person</b>. That is how a team makes a museum in a week.", "say": "Every job with the right person. That is how a team makes a whole museum in a week.", "sound": "tada"},
              ]},
              "Give each job to the person whose skill it needs."),
@@ -58,13 +58,13 @@ LESSON = {
                             {"t": "Let's leave the high street out.", "good": False, "why": "The high street is half the museum. Leaving it out is giving up."},
                             {"t": "Let's use more paint.", "good": False, "why": "More paint slides off just the same. Still stuck."}],
                    "why": "Paper takes paint; card takes glue. Your idea got the team unstuck."},
-                  {"kind": "work", "who": "omar", "situation": "Omar is worried about reading the labels aloud in front of all the parents. He says he will get the words wrong.", "pic": "\U0001F5E3️",
-                   "opts": [{"t": "Let's practise together at lunchtime, and I will hold the labels for you.", "good": True, "log": "You practised the labels with Omar."},
-                            {"t": "Then I will read them instead.", "good": False, "why": "Reading was Omar's job. Taking it off him is not teamwork."},
-                            {"t": "Do not be silly, it is easy.", "good": False, "why": "Omar feels worse, and he still has not practised."}],
+                  {"kind": "work", "who": "yusuf", "situation": "Yusuf is worried about reading the labels aloud in front of all the parents. He says he will get the words wrong.", "pic": "\U0001F5E3️",
+                   "opts": [{"t": "Let's practise together at lunchtime, and I will hold the labels for you.", "good": True, "log": "You practised the labels with Yusuf."},
+                            {"t": "Then I will read them instead.", "good": False, "why": "Reading was Yusuf's job. Taking it off him is not teamwork."},
+                            {"t": "Do not be silly, it is easy.", "good": False, "why": "Yusuf feels worse, and he still has not practised."}],
                    "why": "Helping a team member with their job, without taking it away, is working positively."},
                   {"kind": "friend", "who": "hana", "did": "drew every shop on the old high street, with the names from your letters.", "log": "Hana drew the high street.", "pic": "\U0001F3A8"},
-                  {"kind": "idea", "who": "omar", "situation": "The model bridge keeps tipping over every time somebody walks past the table. The team is stuck.", "pic": "\U0001F309",
+                  {"kind": "idea", "who": "yusuf", "situation": "The model bridge keeps tipping over every time somebody walks past the table. The team is stuck.", "pic": "\U0001F309",
                    "opts": [{"t": "Let's glue the bridge to a wide card base so it cannot tip.", "good": True, "log": "Your idea: glue the bridge to a wide base."},
                             {"t": "Let's tell everyone to stop walking past.", "good": False, "why": "Parents will walk past all evening. Still tipping."},
                             {"t": "Let's put the bridge in a cupboard.", "good": False, "why": "A museum nobody can see is not a museum."}],
@@ -95,9 +95,9 @@ LESSON = {
                  ["Tap the right person for each job, then play on."]),
              {"goal": "plant the bee garden", "scene": "garden", "friends": GARDEN_FRIENDS,
               "rounds": [
-                  {"kind": "allocate", "who": "amal", "members": GARDEN_MEMBERS, "log": "You gave each garden job to the right person.", "why": "Digging, carrying, painting, sowing: four skills, four people.",
+                  {"kind": "allocate", "who": "amal", "members": GARDEN_MEMBERS, "log": "You gave each garden job to the right person.", "why": "Digging, carrying, painting, planting: four skills, four people.",
                    "tasks": [task("dig", "Dig the beds along the fence", "\U0001F573️", "digging"), task("water", "Carry the watering cans from the tap", "\U0001F4A7", "carrying water"),
-                             task("signs", "Paint the flower name signs", "\U0001FAA7", "painting signs"), task("sow", "Sow the wildflower seeds", "\U0001F33B", "sowing seeds")]},
+                             task("signs", "Paint the flower name signs", "\U0001F3F7\uFE0F", "painting signs"), task("sow", "Plant the wildflower seeds", "\U0001F33B", "planting seeds")]},
                   {"kind": "friend", "who": "amal", "did": "dug all three beds before anyone else had found the trowels.", "log": "Amal dug the beds.", "pic": "\U0001F573️"},
                   {"kind": "idea", "who": "tariq", "situation": "The bees need water too, but a bowl of water is deep enough to drown them. The team is stuck.", "pic": "\U0001F41D",
                    "opts": [{"t": "Let's put pebbles in a saucer of water so the bees can land on them.", "good": True, "log": "Your idea: pebbles in a saucer of water."},
@@ -105,11 +105,11 @@ LESSON = {
                             {"t": "Let's use a deeper bucket.", "good": False, "why": "Deeper is worse. Still stuck."}],
                    "why": "Pebbles give the bees a place to land. Your idea kept the team going."},
                   {"kind": "work", "who": "tariq", "situation": "Tariq spilled a whole can of water over the seed packets and wants to give up.", "pic": "\U0001F4A7",
-                   "opts": [{"t": "Wet seeds still grow, Tariq. Let's dry the packets on the wall and sow them now.", "good": True, "log": "You helped Tariq rescue the wet seeds."},
+                   "opts": [{"t": "Wet seeds still grow, Tariq. Let's dry the packets on the wall and plant them now.", "good": True, "log": "You helped Tariq rescue the wet seeds."},
                             {"t": "You have ruined everything.", "good": False, "why": "Tariq feels worse, and the seeds are still wet."},
                             {"t": "Fine, no seeds then.", "good": False, "why": "Then there is no bee garden at all."}],
                    "why": "Kind help keeps a team member in the team."},
-                  {"kind": "friend", "who": "nora", "did": "painted a sign for every flower, with a bee on each one.", "log": "Nora painted the signs.", "pic": "\U0001FAA7"},
+                  {"kind": "friend", "who": "nora", "did": "painted a sign for every flower, with a bee on each one.", "log": "Nora painted the signs.", "pic": "\U0001F3F7\uFE0F"},
                   {"kind": "idea", "who": "amal", "situation": "The cats from the houses next door are digging up the seed beds every night. The team is stuck.", "pic": "\U0001F408",
                    "opts": [{"t": "Let's lay twigs across the soil so the cats cannot dig.", "good": True, "log": "Your idea: twigs across the soil."},
                             {"t": "Let's stand guard all night.", "good": False, "why": "Nobody can stand guard all night. The cats win."},
@@ -136,7 +136,7 @@ LESSON = {
                  [],
                  ["Read it, then tap."]),
              {"label": "Question", "items": [
-                 q("Who should read the labels aloud at the opening?", "\U0001F5E3️", "Omar, because he speaks clearly", ["Hana, because she likes museums", "whoever asks first"], "The job needs a clear voice. Give it to the one who has it."),
+                 q("Who should read the labels aloud at the opening?", "\U0001F5E3️", "Yusuf, because he speaks clearly", ["Hana, because she likes museums", "whoever asks first"], "The job needs a clear voice. Give it to the one who has it."),
                  q("The paint would not stick to the card. Which idea got the team unstuck?", "\U0001F3A8", "paint on paper and glue it on", ["leave the high street out", "use more paint"], "Paper takes paint; card takes glue."),
                  q("What is a LIMITATION of your teamwork?", "\U0001F914", "something that took more than one go, or that you could do better", ["something you did well", "a job you did not have"], "Knowing it is how you improve."),
                  q("What did working together make possible for the museum?", "\U0001F91D", "four jobs needing four skills, done in one week", ["nothing", "a museum with no bridge"], "One person could not read, draw, build and present all at once."),
@@ -152,8 +152,8 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("What does it mean to ALLOCATE tasks?", "\U0001F4CB", "give each job to the team member whose skill it needs", ["do every job yourself", "do the jobs in alphabetical order", "give the best job to your friend"], "The model maker builds, the clear speaker presents."),
-                 q("Who should build the model bridge?", "\U0001F309", "Sami, because he makes models", ["Omar, because he speaks clearly", "you, because you read old writing", "anyone"], "The job needs model-making."),
-                 q("Omar was worried about reading aloud. What is working positively?", "\U0001F5E3️", "practise with him at lunchtime", ["read the labels instead of him", "tell him not to be silly", "ignore him"], "Help with the job, without taking it away."),
+                 q("Who should build the model bridge?", "\U0001F309", "Sami, because he makes models", ["Yusuf, because he speaks clearly", "you, because you read old writing", "anyone"], "The job needs model-making."),
+                 q("Yusuf was worried about reading aloud. What is working positively?", "\U0001F5E3️", "practise with him at lunchtime", ["read the labels instead of him", "tell him not to be silly", "ignore him"], "Help with the job, without taking it away."),
                  q("The bridge kept tipping over. Which idea helped?", "\U0001F309", "glue it to a wide base", ["tell everyone to stop walking", "put it in a cupboard", "give up"], "A wide base cannot tip."),
                  q("What is a STRENGTH of your teamwork?", "\U0001F4AA", "something you did well, first time", ["something that took three goes", "a job you skipped", "being the loudest"], "Giving out the jobs right first time was a strength."),
                  q("Why be honest about what took two goes?", "\U0001F914", "because knowing it is how you get better", ["to get told off", "you should not be", "to win"], "A limitation you know about is one you can work on."),
@@ -174,11 +174,11 @@ LESSON["about"] = [
 
 LESSON["lecture"] = [
     part("\U0001F4CB", "Giving out the jobs",
-         "The class museum needs four jobs: read the old letters, draw the high street, build the bridge, read the labels aloud. You read old handwriting, Hana draws, Sami makes models, Omar speaks clearly. Each job to the person whose skill it needs."),
+         "The class museum needs four jobs: read the old letters, draw the high street, build the bridge, read the labels aloud. You read old handwriting, Hana draws, Sami makes models, Yusuf speaks clearly. Each job to the person whose skill it needs."),
     part("\U0001F4A1", "Ideas when the team is stuck",
          "The paint will not stick to the card. The bridge keeps tipping. Each time the team is stuck, a team member brings an idea: paint on paper, glue to a wide base. Ideas keep a team moving."),
     part("\U0001F91D", "Working positively",
-         "Omar is worried about reading aloud. Practise with him. Tariq spilled water on the seeds. Dry them and sow them together. Help with a job without taking it away, and nobody leaves the team."),
+         "Yusuf is worried about reading aloud. Practise with him. Tariq spilled water on the seeds. Dry them and plant them together. Help with a job without taking it away, and nobody leaves the team."),
     part("\U0001F4AA", "Strengths and limitations",
          "Then look back honestly. What did you get right first time? That is a strength. What took two goes? That is a limitation, and knowing it is how you get better. Both are true at once."),
     part("\U0001F31F", "Better together",
@@ -223,6 +223,6 @@ LESSON["lookback"] = {
     "changed": [
         {"before": "The best job should go to my best friend.", "after": "Each job should go to the person whose skill it needs."},
         {"before": "Looking back means saying what I did well.", "after": "Looking back means saying what I did well AND what took more than one go."},
-        {"before": "A team is faster because there are more hands.", "after": "A team is better because each part is done by the person best at it."},
+        {"before": "A team just shares the jobs out any old way.", "after": "A team is better because each part is done by the person best at it."},
     ],
 }

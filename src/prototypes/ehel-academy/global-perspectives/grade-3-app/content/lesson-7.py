@@ -14,7 +14,7 @@ from _kit import explain, step, opt, q, tagged, slot, part, word, home
 AMAL = {"name": "Amal", "pic": "\U0001F467\U0001F3FE"}
 SAMI = {"name": "Sami", "pic": "\U0001F466\U0001F3FE"}
 HANA = {"name": "Hana", "pic": "\U0001F467\U0001F3FF"}
-SLOTS = [slot("start", "Start", "Say what your talk is about"), slot("middle", "Middle", "Give the facts you found"), slot("end", "End", "Say what we should do, and finish")]
+SLOTS = [slot("start", "Start", "Say what your talk is about"), slot("middle", "Middle", "Give a fact you found"), slot("middle", "Middle", "Give another fact"), slot("end", "End", "Say what we should do, and finish")]
 
 LESSON = {
     "slug": "present-it",
@@ -25,13 +25,13 @@ LESSON = {
              "A talk is not a pile of facts. It has a shape. Press <b>Next</b> and hear one.",
              explain(
                  ["A clear talk has a start, a middle and an end.", "The start says what it is about. The middle gives the facts. The end says what we should do."],
-                 ["Start: today I am going to tell you about water at our school.", "Middle: we use about four hundred litres a day.", "End: so turn the taps off tightly."],
+                 ["Start: today I am going to tell you about water at our school.", "Middle: we use about four thousand litres a day.", "End: so turn the taps off tightly."],
                  ["Children start with a fact and never say what the talk is about.", "Say the topic first, so people know what they are listening to."],
                  ["Press Next and hear the three parts."]),
              {"frames": [
                  {"pic": "\U0001F3A4", "cap": "Amal is presenting what the class found out about <b>water at school</b>.", "say": "Amal is presenting what the class found out about water at school. Listen for the three parts."},
                  {"pic": "1️⃣", "cap": "<b>Start:</b> Today I am going to tell you how our school uses water, and how we can save it.", "say": "The start. Today I am going to tell you how our school uses water, and how we can save it. Now everybody knows what the talk is about.", "sound": "pop"},
-                 {"pic": "2️⃣", "cap": "<b>Middle:</b> We use about four hundred litres a day. Most goes on toilets and hand washing. A dripping tap wastes twenty litres a day.", "say": "The middle. We use about four hundred litres a day. Most of it goes on the toilets and hand washing. A dripping tap wastes twenty litres a day. The facts, in order.", "sound": "pop"},
+                 {"pic": "2️⃣", "cap": "<b>Middle:</b> We use about four thousand litres a day. Most goes on toilets and hand washing. A dripping tap wastes twenty litres a day.", "say": "The middle. We use about four thousand litres a day. Most of it goes on the toilets and hand washing. A dripping tap wastes twenty litres a day. The facts, in order.", "sound": "pop"},
                  {"pic": "3️⃣", "cap": "<b>End:</b> So turn taps off tightly, and tell a teacher about drips. Thank you for listening.", "say": "The end. So turn taps off tightly, and tell a teacher about any drips. Thank you for listening. What we should do, and a finish.", "sound": "pop"},
                  {"pic": "\U0001F44F", "cap": "Start, middle, end. The class knew what it was about, learned the facts, and knows what to do.", "say": "Start, middle, end. The class knew what it was about, learned the facts, and knows what to do. That is a clear talk.", "sound": "tada"},
              ]},
@@ -48,7 +48,7 @@ LESSON = {
              {"mode": "structured", "topic": "saving water at school", "tag": "water", "topicPic": "\U0001F6B0", "slots": SLOTS,
               "cards": [
                   dict(tagged("Today I am going to tell you how our school uses water, and how we can save it", "water", "1️⃣"), say="Today I am going to tell you how our school uses water, and how we can save it", part="start"),
-                  dict(tagged("Our school uses about four hundred litres of water a day", "water", "\U0001F4A7"), say="Our school uses about four hundred litres of water a day", part="middle"),
+                  dict(tagged("Our school uses about four thousand litres of water a day", "water", "\U0001F4A7"), say="Our school uses about four thousand litres of water a day", part="middle"),
                   dict(tagged("A dripping tap wastes twenty litres a day", "water", "\U0001F6B0"), say="A dripping tap wastes twenty litres a day", part="middle"),
                   dict(tagged("So turn the taps off tightly, and tell a teacher about drips. Thank you for listening", "water", "3️⃣"), say="So turn the taps off tightly, and tell a teacher about drips. Thank you for listening", part="end"),
                   dict(tagged("My cat is called Tiger", "pets", "\U0001F431"), say="My cat is called Tiger", aboutLabel="pets"),
@@ -59,7 +59,7 @@ LESSON = {
         step("listen", "Listen, then respond with an idea or a question", "\U0001F442", "Responder", ["3Ml.01"],
              "Three classmates present their talks. Listen to each, then respond with something RELEVANT: an idea, or a question, about what they said.",
              explain(
-                 ["At Stage 3 you respond with ideas as well as questions.", "Both have to be about what the person said."],
+                 ["This year you respond with ideas as well as questions.", "Both have to be about what the person said."],
                  ["Sami says the drinking fountain drips all day.", "A relevant idea: put a sign on it saying press gently.", "A relevant question: how much does it waste?", "Do you like football? Not relevant."],
                  ["Children respond with what THEY want to say.", "Respond to what they SAID."],
                  ["Press Listen, hear it all, then tap a response."]),
@@ -69,16 +69,16 @@ LESSON = {
                   "opts": [tagged("You could ask the caretaker to fit a new washer; that stops drips.", "fountain"), tagged("Do you like football?", "football"), tagged("What is your favourite colour?", "colours")],
                   "why": "Sami talked about the dripping fountain, so an idea about fixing it is relevant.",
                   "reply": "A washer! I will ask him tomorrow."},
-                 {"speaker": AMAL, "talk": ["My talk is about the taps in the Year 3 toilets.", "Three of the six taps are left running after hand washing.", "We watched at playtime and it happened eleven times.", "We think a poster above the sinks would help."],
+                 {"speaker": AMAL, "talk": ["My talk is about the taps in the Grade 3 toilets.", "Three of the six taps are left running after hand washing.", "We watched at playtime and it happened eleven times.", "We think a poster above the sinks would help."],
                   "topics": ["taps", "poster", "toilets"],
                   "opts": [tagged("How many times did it happen after lunch, when it is busiest?", "taps"), tagged("Can you swim?", "swimming"), tagged("What did you have for breakfast?", "breakfast")],
                   "why": "Amal talked about taps left running, so a question about when it happens most is relevant.",
                   "reply": "We did not count after lunch yet. That is a good next step."},
-                 {"speaker": HANA, "talk": ["I am presenting about the water we use on the school garden.", "The garden gets two full watering cans every morning.", "But the rain butt by the shed is always full and nobody uses it.", "So we should water the garden from the rain butt."],
-                  "topics": ["garden", "rain butt", "watering"],
-                  "opts": [tagged("You could put a tap on the rain butt so the cans fill faster.", "rain butt"), tagged("What is your teddy called?", "toys"), tagged("Do you like maths?", "maths")],
-                  "why": "Hana talked about the rain butt nobody uses, so an idea about using it is relevant.",
-                  "reply": "A tap on the butt. Yes! Then it is quicker than the sink."},
+                 {"speaker": HANA, "talk": ["I am presenting about the water we use on the school garden.", "The garden gets two full watering cans every morning.", "But the rainwater tank by the shed is always full and nobody uses it.", "So we should water the garden from the rainwater tank."],
+                  "topics": ["garden", "rainwater tank", "watering"],
+                  "opts": [tagged("You could put a tap on the rainwater tank so the cans fill faster.", "rainwater tank"), tagged("What is your teddy called?", "toys"), tagged("Do you like maths?", "maths")],
+                  "why": "Hana talked about the rainwater tank nobody uses, so an idea about using it is relevant.",
+                  "reply": "A tap on the tank. Yes! Then the cans fill quickly."},
              ]},
              "Three talks heard, three relevant responses: ideas and questions about what was said."),
 
@@ -92,7 +92,7 @@ LESSON = {
              {"topic": "Sami's talk about the fountain", "words": ["What", "Where", "Why", "How", "How much", "How many"],
               "ends": [
                   {"id": "waste", "t": "water does the fountain waste in a day?", "words": ["How much"], "asks": "the daily waste"},
-                  {"id": "count", "t": "did you count the drips?", "words": ["How", "Why"], "asks": "the counting"},
+                  {"id": "count", "t": "did you count the drips?", "words": ["How", "Why", "Where"], "asks": "the counting"},
                   {"id": "goes", "t": "does the dripping water go?", "words": ["Where"], "asks": "where the water goes"},
                   {"id": "fix", "t": "would it cost to fix the fountain?", "words": ["What", "How much"], "asks": "the cost of fixing"},
                   {"id": "children", "t": "children use the fountain each day?", "words": ["How many"], "asks": "how many use it"},
@@ -116,7 +116,7 @@ LESSON = {
               "cards": [
                   dict(tagged("Today I am going to tell you what we found out about Riverside Park", "park", "1️⃣"), say="Today I am going to tell you what we found out about Riverside Park", part="start"),
                   dict(tagged("We counted twelve dogs in the park in one afternoon, and nine were off the lead", "park", "\U0001F415"), say="We counted twelve dogs in the park in one afternoon, and nine were off the lead", part="middle"),
-                  dict(tagged("Three duck nests were lost this spring", "park", "\U0001F986"), say="Three duck nests were lost this spring", part="middle"),
+                  dict(tagged("Three duck nests were lost this year", "park", "\U0001F986"), say="Three duck nests were lost this year", part="middle"),
                   dict(tagged("So we think the park needs a fenced dog area away from the pond. Thank you for listening", "park", "3️⃣"), say="So we think the park needs a fenced dog area away from the pond. Thank you for listening", part="end"),
                   dict(tagged("I had toast for breakfast", "breakfast", "\U0001F35E"), say="I had toast for breakfast", aboutLabel="breakfast"),
                   dict(tagged("A bus has big wheels", "vehicles", "\U0001F68C"), say="A bus has big wheels", aboutLabel="buses"),
@@ -135,8 +135,8 @@ LESSON = {
               "items": [
                   {"pic": "\U0001F3A4", "label": "Today I am going to tell you about the school garden.", "bin": "start", "why": "It says what the talk is about."},
                   {"pic": "\U0001F331", "label": "The garden gets two watering cans every morning.", "bin": "middle", "why": "A fact for the middle."},
-                  {"pic": "✅", "label": "So we should water it from the rain butt. Thank you for listening.", "bin": "end", "why": "What we should do, and a finish."},
-                  {"pic": "\U0001F3A4", "label": "My talk is about the taps in the Year 3 toilets.", "bin": "start", "why": "It names the topic."},
+                  {"pic": "✅", "label": "So we should water it from the rainwater tank. Thank you for listening.", "bin": "end", "why": "What we should do, and a finish."},
+                  {"pic": "\U0001F3A4", "label": "My talk is about the taps in the Grade 3 toilets.", "bin": "start", "why": "It names the topic."},
                   {"pic": "\U0001F6B0", "label": "Three of the six taps are left running.", "bin": "middle", "why": "A fact for the middle."},
                   {"pic": "✅", "label": "So a poster above the sinks would help. Thank you.", "bin": "end", "why": "What to do, and a finish."},
               ]},
@@ -152,7 +152,7 @@ LESSON = {
              {"label": "Question", "items": [
                  q("What does the START of a talk do?", "1️⃣", "says what the talk is about", ["gives the facts", "says thank you"], "So people know what they are listening to."),
                  q("Sami said the fountain drips. Which response is relevant?", "\U0001F6B0", "You could ask the caretaker to fit a new washer.", ["Do you like football?", "What is your favourite colour?"], "It is an idea about what he said."),
-                 q("Which sentence belongs at the END?", "3️⃣", "So turn the taps off tightly. Thank you for listening.", ["Today I am going to tell you about water.", "We use four hundred litres a day."], "What we should do, and a finish."),
+                 q("Which sentence belongs at the END?", "3️⃣", "So turn the taps off tightly. Thank you for listening.", ["Today I am going to tell you about water.", "We use four thousand litres a day."], "What we should do, and a finish."),
                  q("After a talk, a question that helps you UNDERSTAND it is…", "❓", "How much water does the fountain waste in a day?", ["Do you like maths?", "What is your cat called?"], "It opens up what was said."),
              ]},
              "You present with structure, and respond with relevance."),
@@ -166,9 +166,9 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("What are the three parts of a clear talk?", "\U0001F3A4", "start, middle, end", ["facts, facts, facts", "loud, quiet, loud", "hello, goodbye"], "Topic, facts, what to do."),
-                 q("What goes in the MIDDLE of a talk?", "2️⃣", "the facts you found", ["what the talk is about", "thank you for listening", "a joke"], "We use four hundred litres a day: a middle fact."),
+                 q("What goes in the MIDDLE of a talk?", "2️⃣", "the facts you found", ["what the talk is about", "thank you for listening", "a joke"], "We use four thousand litres a day: a middle fact."),
                  q("Amal said three taps are left running. Which response is a relevant QUESTION?", "\U0001F6B0", "How many times did it happen after lunch?", ["Can you swim?", "What did you have for breakfast?", "Do you like blue?"], "It asks more about what she said."),
-                 q("Hana said the rain butt is never used. Which response is a relevant IDEA?", "\U0001F327️", "Put a tap on the rain butt so the cans fill faster.", ["What is your teddy called?", "Do you like maths?", "I like rain."], "An idea about what she said."),
+                 q("Hana said the rainwater tank is never used. Which response is a relevant IDEA?", "\U0001F327️", "Put a tap on the rainwater tank so the cans fill faster.", ["What is your teddy called?", "Do you like maths?", "I like rain."], "An idea about what she said."),
                  q("Why say what the talk is about at the START?", "1️⃣", "so people know what they are listening to", ["because it is a rule", "to make it longer", "you should not"], "The start tells the listener the topic."),
                  q("Which sentence does NOT belong in a talk about our park?", "\U0001F35E", "I had toast for breakfast.", ["We counted twelve dogs.", "Three nests were lost.", "The park needs a fenced area."], "It is about breakfast."),
                  q("Which question word asks for an AMOUNT of water?", "\U0001F4A7", "How much", ["Where", "Who", "When"], "How much water does the fountain waste?"),
@@ -190,7 +190,7 @@ LESSON["lecture"] = [
     part("\U0001F3A4", "A talk has a shape",
          "A clear talk is not a pile of facts. It has a start, a middle and an end. The start says what it is about. The middle gives the facts. The end says what we should do, and finishes."),
     part("\U0001F6B0", "Amal's talk",
-         "Today I am going to tell you how our school uses water. That is the start. We use about four hundred litres a day; a dripping tap wastes twenty. That is the middle. So turn the taps off tightly. That is the end."),
+         "Today I am going to tell you how our school uses water. That is the start. We use about four thousand litres a day; a dripping tap wastes twenty. That is the middle. So turn the taps off tightly. That is the end."),
     part("\U0001F442", "Responding",
          "When a classmate presents, listen, then respond with something relevant: an idea about what they said, or a question about it. Sami's fountain drips: you could ask the caretaker for a new washer. That is an idea about his talk."),
     part("❓", "Questions to understand",

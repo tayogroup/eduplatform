@@ -39,7 +39,11 @@
     return '<div class="' + (cls || "pic") + '" aria-hidden="true">' + (s.startsWith("<svg") ? s : esc(s)) + "</div>";
   };
   const small = (p) => { const s = String(p || "").trim(); return s.startsWith("<svg") ? s : esc(s); };
-  const lower1 = (s) => { s = String(s || ""); return s ? s[0].toLowerCase() + s.slice(1) : s; };
+  /* lower-case a sentence's first letter to run it on after "I know that",
+     "Now I think", "Look for the part that tells us"; but never "I", an
+     acronym, a title, a weekday or one of the course's names */
+  const KEEP_CAP = /^(?:I|I'm|I've|I'd|I'll|[A-Z]{2,}|Mr|Mrs|Miss|Ms|Dr|Teacher|Grandma|Grandpa|Amal|Sami|Nora|Omar|Hana|Tariq|Leo|Yusuf|Dana|Riverside|Greenway|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Saturdays|Sundays)(?![a-z])/;
+  const lower1 = (s) => { s = String(s || ""); return !s || KEEP_CAP.test(s) ? s : s[0].toLowerCase() + s.slice(1); };
   const noDot = (s) => String(s || "").replace(/[.!]\s*$/, "");
 
   /* ---- a step may speak only while it is the step on screen ------------
@@ -973,7 +977,7 @@
       const rd = rounds[r];
       $(el.ask).innerHTML = "You think: <b>" + esc(stance.t) + "</b>. Now say <b>why</b>. Pick " + (needR > 1 ? needR + " reasons that are" : "a reason that is") + " about " + esc(rd.topic) + ".";
       $(el.ch).className = "choices stack";
-      $(el.ch).innerHTML = shuffle(rd.reasons).map((x, k) => '<button type="button" class="choice text" data-about="' + esc(x.about) + '">' + esc(x.t) + "</button>").join("");
+      $(el.ch).innerHTML = shuffle(rd.reasons.map((x, k) => [x, k])).map(([x, k]) => '<button type="button" class="choice text" data-k="' + k + '" data-about="' + esc(x.about) + '">' + esc(x.t) + "</button>").join("");
       sayHere(o.finish, "You think: " + stance.t + ". Now say why. Pick " + (needR > 1 ? needR + " reasons that are" : "a reason that is") + " about " + rd.topic + ".");
     }
     $(el.ch).addEventListener("click", (e) => {
@@ -983,6 +987,15 @@
         stance = rd.stances.find((s) => s.id === b.dataset.st); SOUND.play("click", 0.3); draw();
         $(el.fb).className = "fb"; $(el.fb).textContent = "You think: " + stance.t + ".";
         reasons(); return;
+      }
+      const why = rd.reasons[Number(b.dataset.k)] || {};
+      if (b.dataset.about === rd.tag && why.supports && !why.supports.includes(stance.id)) {
+        /* on the topic, but it argues the other way: "I think we should
+           recycle more, because it takes time" is not a reason FOR recycling */
+        b.classList.add("wrong"); b.disabled = true; SOUND.play("boing", 0.3);
+        const line = "That reason is about " + rd.topic + ", but it does not back up what you said: " + noDot(stance.t) + ". Pick a reason that does.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        return;
       }
       if (b.dataset.about === rd.tag) {
         given.push(b.textContent); b.classList.add("right"); b.disabled = true;
@@ -1107,7 +1120,7 @@
         const rd = rounds[r], t = rd.tasks[ti], m = rd.members.find((x) => x.id === mb.dataset.m);
         if ((m.skills || []).includes(t.needs)) {
           given[t.id] = m.name; ti++; SOUND.play("pop", 0.35); draw();
-          const line = cheer() + " " + t.t + " goes to " + m.name + ", who is good at " + t.needs + ".";
+          const line = cheer() + " " + t.t + (m.id === "you" ? " goes to you, because you are good at " : " goes to " + m.name + ", who is good at ") + t.needs + ".";
           $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
           if (ti >= rd.tasks.length) {
             lock = true; if (!missed) score++;
@@ -1116,7 +1129,7 @@
           } else { $(el.ask).innerHTML = "<b>" + esc(rd.tasks[ti].t) + "</b>: who should do it?"; sayHere(o.finish, rd.tasks[ti].t + ": who should do it?"); }
         } else {
           missed = true; mb.classList.add("wrong"); SOUND.play("error", 0.3);
-          const line = m.name + " is good at " + (m.skills || []).join(" and ") + ", not " + t.needs + ". Who is good at " + t.needs + "?";
+          const line = (m.id === "you" ? "You are good at " : m.name + " is good at ") + (m.skills || []).join(" and ") + ", not " + t.needs + ". Who is good at " + t.needs + "?";
           $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
           setTimeout(() => mb.classList.remove("wrong"), 700);
         }
@@ -1564,7 +1577,7 @@
         }
       } else {
         missed++; b.classList.add("wrong"); SOUND.play("error", 0.3);
-        const line = "That is " + it.label + ", not " + rd.label.toLowerCase().replace(/s$/, "") + ". Count only the " + rd.label.toLowerCase() + ".";
+        const line = "That is " + it.label + ", not " + (rd.one || "one of the " + rd.label.toLowerCase()) + ". Count only the " + rd.label.toLowerCase() + ".";
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         setTimeout(() => b.classList.remove("wrong"), 700);
       }

@@ -184,7 +184,7 @@ LESSON = {
              {"items": [
                  q("What is an interview?", "\U0001F399️", "asking someone questions and recording the answers", ["a kind of game", "a bar chart", "a rule"], "Ask, listen, record."),
                  q("Which is an OPINION?", "\U0001F4AD", "Sami thinks playtime should be longer", ["Three children play football", "Nobody plays quiet games", "Two children skip"], "What somebody thinks is an opinion."),
-                 q("Which game did most of the class play?", "⚽", "football", ["skipping", "tag", "quiet games"], "Football had 3, the longest bar."),
+                 q("Which game did the most children play?", "⚽", "football", ["skipping", "tag", "quiet games"], "Football had 3, the longest bar."),
                  q("How many children said playtime should be longer?", "\U0001F44D", "4", ["1", "6", "0"], "The Yes row in the table said 4."),
                  q("A bar chart, a pictogram and a table can all…", "\U0001F4C8", "show the same information", ["show different surveys", "only show opinions"], "Same findings, drawn three ways."),
                  q("In a pictogram, one picture is…", "\U0001F4CA", "one person", ["one bar", "the whole class"], "Each picture stands for one person."),

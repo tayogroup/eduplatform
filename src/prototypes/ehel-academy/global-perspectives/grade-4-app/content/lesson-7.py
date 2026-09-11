@@ -14,7 +14,7 @@ from _kit import explain, step, opt, q, tagged, slot, part, word, home
 AMAL = {"name": "Amal", "pic": "\U0001F467\U0001F3FE"}
 SAMI = {"name": "Sami", "pic": "\U0001F466\U0001F3FE"}
 HANA = {"name": "Hana", "pic": "\U0001F467\U0001F3FF"}
-SLOTS = [slot("start", "Start", "Say what your talk is about"), slot("middle", "Middle", "Give the facts you found"), slot("end", "End", "Say what we should do, and finish")]
+SLOTS = [slot("start", "Start", "Say what your talk is about"), slot("middle", "Middle", "Give a fact you found"), slot("middle", "Middle", "Give another fact"), slot("end", "End", "Say what we should do, and finish")]
 
 LESSON = {
     "slug": "energy-talks",
@@ -69,8 +69,8 @@ LESSON = {
                   "opts": [tagged("You could have a light monitor for each room, with a badge.", "lights"), tagged("Do you like football?", "football"), tagged("What is your favourite colour?", "colours")],
                   "why": "Sami talked about the hall lights, so an idea about a light monitor is relevant.",
                   "reply": "A monitor with a badge! I will ask Teacher Yasmin."},
-                 {"speaker": AMAL, "talk": ["My talk is about the heating in the Year 4 corridor.", "The radiators are on full, and three windows were open at the same time.", "We checked at nine, at eleven and at two.", "We think the windows should stay shut while the heating is on."],
-                  "topics": ["heating", "windows", "radiators"],
+                 {"speaker": AMAL, "talk": ["My talk is about the air conditioning in the Grade 4 corridor.", "The air conditioners are on full, and three windows were open at the same time.", "We checked at nine, at eleven and at two.", "We think the windows should stay shut while the air conditioning is on."],
+                  "topics": ["air conditioning", "windows", "air conditioners"],
                   "opts": [tagged("Were the same three windows open every time you checked?", "windows"), tagged("Can you swim?", "swimming"), tagged("What did you have for breakfast?", "breakfast")],
                   "why": "Amal talked about the open windows, so a question about whether they were the same ones is relevant.",
                   "reply": "Two of them were. That is a good next thing to find out."},
@@ -91,11 +91,11 @@ LESSON = {
                  ["Read the card, pick the word and the ending, press Ask it."]),
              {"topic": "Sami's talk about the hall lights", "words": ["What", "Where", "Why", "How", "How much", "How many"],
               "ends": [
-                  {"id": "cost", "t": "does it cost to light the hall for a day?", "words": ["How much"], "asks": "the daily cost"},
+                  {"id": "cost", "t": "does it cost to light the hall for a day?", "words": ["How much", "What"], "asks": "the daily cost"},
                   {"id": "count", "t": "did you work out the hall was empty for four hours?", "words": ["How", "Why"], "asks": "the working out"},
                   {"id": "switch", "t": "is the switch for the hall lights?", "words": ["Where"], "asks": "where the switch is"},
                   {"id": "left", "t": "are they left on when the hall is empty?", "words": ["Why"], "asks": "the reason they stay on"},
-                  {"id": "lights", "t": "lights are there in the hall?", "words": ["How many"], "asks": "how many lights"},
+                  {"id": "lights", "t": "lights are there in the hall?", "words": ["How many", "What"], "asks": "how many lights"},
               ],
               "rounds": [
                   {"want": "the cost of lighting the hall for a whole day", "pic": "\U0001F4B0", "word": "How much", "end": "cost", "why": "How much asks for an amount of money."},
@@ -136,9 +136,9 @@ LESSON = {
                   {"pic": "\U0001F3A4", "label": "Today I am going to tell you about the printer in the office.", "bin": "start", "why": "It says what the talk is about."},
                   {"pic": "\U0001F5A8️", "label": "It printed four hundred pages last week.", "bin": "middle", "why": "A fact for the middle."},
                   {"pic": "✅", "label": "So print on both sides. Thank you for listening.", "bin": "end", "why": "What we should do, and a finish."},
-                  {"pic": "\U0001F3A4", "label": "My talk is about the heating in the Year 4 corridor.", "bin": "start", "why": "It names the topic."},
-                  {"pic": "\U0001FA9F", "label": "Three windows were open with the radiators on full.", "bin": "middle", "why": "A fact for the middle."},
-                  {"pic": "✅", "label": "So keep the windows shut while the heating is on. Thank you.", "bin": "end", "why": "What to do, and a finish."},
+                  {"pic": "\U0001F3A4", "label": "My talk is about the air conditioning in the Grade 4 corridor.", "bin": "start", "why": "It names the topic."},
+                  {"pic": "\U0001F32C\uFE0F", "label": "Three windows were open with the air conditioners on full.", "bin": "middle", "why": "A fact for the middle."},
+                  {"pic": "✅", "label": "So keep the windows shut while the air conditioning is on. Thank you.", "bin": "end", "why": "What to do, and a finish."},
               ]},
              "You know which part of a talk a sentence belongs in."),
 
@@ -167,7 +167,7 @@ LESSON = {
              {"items": [
                  q("What are the three parts of a clear talk?", "\U0001F3A4", "start, middle, end", ["facts, facts, facts", "loud, quiet, loud", "hello, goodbye"], "Topic, facts, what to do."),
                  q("What goes in the MIDDLE of a talk?", "2️⃣", "the facts you found", ["what the talk is about", "thank you for listening", "a joke"], "Fourteen rooms had their lights on: a middle fact."),
-                 q("Amal said three windows were open with the heating on. Which response is a relevant QUESTION?", "\U0001FA9F", "Were the same three windows open every time?", ["Can you swim?", "What did you have for breakfast?", "Do you like blue?"], "It asks more about what she said."),
+                 q("Amal said three windows were open with the air conditioning on. Which response is a relevant QUESTION?", "\U0001F32C\uFE0F", "Were the same three windows open every time?", ["Can you swim?", "What did you have for breakfast?", "Do you like blue?"], "It asks more about what she said."),
                  q("Hana said half the pages were printed on one side. Which response is a relevant IDEA?", "\U0001F5A8️", "Set the printer to both sides unless somebody changes it.", ["What is your teddy called?", "Do you like maths?", "I like paper."], "An idea about what she said."),
                  q("Why say what the talk is about at the START?", "1️⃣", "so people know what they are listening to", ["because it is a rule", "to make it longer", "you should not"], "The start tells the listener the topic."),
                  q("Which sentence does NOT belong in a talk about the class museum?", "\U0001F963", "I had cereal for breakfast.", ["We read letters from a hundred years ago.", "Sami built the old bridge.", "Come and see it on Thursday."], "It is about breakfast."),
@@ -204,7 +204,7 @@ LESSON["words"] = [
          ["Amal presented her talk about energy.", "Present what you found out."]),
     word("structure", "\U0001F3D7️", "The shape of a talk: start, middle, end.",
          ["A talk needs a structure.", "The structure helps listeners follow."]),
-    word("energy", "\U0001F4A1", "What makes lights shine, computers run and radiators warm.",
+    word("energy", "\U0001F4A1", "What makes lights shine, computers run and fans turn.",
          ["Our school uses energy all day.", "Switching off saves energy."]),
     word("respond", "\U0001F4AC", "To say something back after listening: an idea or a question.",
          ["Respond with a relevant idea.", "The class responded to Sami's talk."]),

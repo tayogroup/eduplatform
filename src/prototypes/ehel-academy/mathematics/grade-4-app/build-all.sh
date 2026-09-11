@@ -52,12 +52,18 @@ done
 # The page tools the 2026-09-11 validation found this build had never had -
 # Grades 1 and 2 had them applied by hand, and a generated build has to run them
 # itself. ORDER MATTERS: wire-quiet-notice anchors on the role="main" that
-# wire-accessibility puts on the deck. Then the hub's teachers-and-parents
-# section - AFTER build-hub.py, which rebuilds the hub from Grade 2's and would
-# wipe it. All idempotent.
+# wire-accessibility puts on the deck. Then the three the same report's
+# teaching areas asked for: the "How do you know?" step (reasoning_banks.py),
+# an authored explanation on every slide (explanations.txt) and a warm-up at
+# the head of each lesson (warmUp in app.config.json). ORDER MATTERS here too:
+# the reasoning step adds a slide, and add-explanations fails the build if any
+# slide has no explanation, so the step must exist before it is counted. Then
+# the hub's teachers-and-parents section - AFTER build-hub.py, which rebuilds
+# the hub from Grade 2's and would wipe it, and after the reasoning step, whose
+# slide it counts into each lesson's time. All idempotent.
 python ../lesson-app-tools/add-page-doctype-lang.py $(python -c "import json; c=json.load(open('app.config.json')); print(' '.join([l['file'] for l in c['lessons']] + [c['hub']]))") > /dev/null || { echo "  FAILED: add-page-doctype-lang"; exit 1; }
 echo "  ok  add-page-doctype-lang"
-for t in wire-accessibility self-host-fonts wire-quiet-notice build-grownup-section; do
+for t in wire-accessibility self-host-fonts wire-quiet-notice add-reasoning-step add-explanations add-warmup build-grownup-section; do
   python "../lesson-app-tools/$t.py" --app . --write > /dev/null || { echo "  FAILED: $t"; exit 1; }
   echo "  ok  $t"
 done

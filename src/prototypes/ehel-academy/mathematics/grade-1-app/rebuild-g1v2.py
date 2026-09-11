@@ -70,6 +70,15 @@ STEPS = [
     ("add-warmup.py", ["--write"]),
     ("add-second-steps.py", ["--write"]),
     ("fix-turn-and-tree.py", ["--write"]),
+    # two more from the same evening that never reached this list, found by
+    # running it: step 1's "Mix them up" (1Nc.01), and focus mode
+    ("show-conservation.py", ["--write"]),
+    (T + "apply-focus-mode.py", PAGES),
+    # emoji a school tablet can draw: Grade 1's own six, then the rest of the
+    # 2026-09-11 sweep - after add-second-steps.py, whose steps some of them
+    # redraw, and before the hub, whose answer keys quote a picture
+    ("replace-new-emoji.py", ["--write"]),
+    (T + "replace-new-emoji-all-grades.py", ["--only", "grade-1-app/", "--write"]),
     ("build-grownup-section.py", ["--write"]),
 ]
 

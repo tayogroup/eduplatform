@@ -29,6 +29,12 @@ node checks/stage-local-modules.mjs           # gitignored copies, for testing o
 # then serve src/ (tools/serve-src-preview.js, port 4287)
 ```
 
+**Port 4287 costs money.** The lesson voice engines treat `localhost:4287` as
+the dev server and send every line they have not heard before to its PAID
+ElevenLabs proxy, so a scripted drive through eight lessons there buys a clip
+per new sentence. For a drive that needs no voice, serve the same tree on any
+other port - the engines then call nothing.
+
 `src/build-all.sh` reproduces all eight committed lessons and the hub **byte-identically**,
 which is the only thing that makes `src/` genuine source rather than a copy that
 has drifted. Re-check that after any change to a fragment.
@@ -75,6 +81,37 @@ In the fragments under `src/` (`src/fix-validation.py`) and the build chain, so
 
 The report's claim that this build "drills the 7 times table" was wrong: TABLES
 is 1-6, 8, 9 and 10, exactly as 3Ni.07 lists them.
+
+## 2026-09-11 (later): the thin lessons grew, and people arrived
+
+The same report: "53 of 53 on 64 teaching steps, 1.2 per objective - the
+thinnest of the four ... A second step for the objectives that share one,
+starting with time and measures"; "no warm-up"; "no named people at all".
+
+- **Seven new judged steps** (`src/add-second-steps.py`, written into the
+  fragments once), each before its lesson's check so no existing step moves:
+  *Estimate first* (the ESTIMATE in 3Ni.04 had no step) and *Shopping with
+  shillings and cents* (Adding and Money, 6 steps to 8); *Measure from any mark*
+  and *Two right angles, one straight line* - the half of 3Gg.10 only the check
+  had asked (Measure It, 5 to 7); *Which unit of time?* (3Gt.01's own step),
+  *Which bus do you catch?* (USING a timetable) and *Find your way* - the CREATE
+  half of 3Gp.01 (Time and Direction, 4 to 7). 64 teaching steps became 71.
+- **Named, local children** in all seven, and in the sharing, fractions and
+  chart questions of three more lessons (`../lesson-app-tools/add-local-names.py`).
+- **A warm-up at the head of every lesson** - each lesson's `warmUp` in
+  `app.config.json`, written by `../lesson-app-tools/add-warmup.py`, which
+  `src/build-all.sh` now runs.
+- **No emoji past Emoji 5.0 and no repeated sticker**, gated
+  (`emojiBaseline`, `uniqueStickers` in `app.config.json`): the compass, the
+  mirror, the ice cube, the ladder, the axe, the coin and the coloured squares
+  are drawn with older glyphs, and Ask, Count and Chart no longer shows the
+  thinking face twice.
+
+Verified from a local server: every generated answer of the seven new steps
+agrees with an answer computed from the question on the screen (70 rounds),
+each new step reports its completion, all eight warm-ups answer, the "How do you
+know?" steps still earn their stickers, and all eight checks still gate at
+their new indices. Two builds in a row are byte-identical.
 
 ## Eight lessons, not five (2026-09-07)
 
@@ -164,6 +201,12 @@ to `ehelacademy.b-cdn.net` — through the staged-script + cPanel Terminal loop,
 run by `../lesson-app-tools/repoint-grade.php --grade 3`. The course idnumber is
 `ehel-math-g03`. The shell course at `app/mathematics/grade-3/` is untouched and
 still serves Grade 3; this is an alternative to it, not a patch on it.
+
+**Install the lesson map on the server first** (`local_hubredirect/
+standalone_lessons.json` and the portal and board code that reads it, 2026-09-11):
+without it, a routed Grade 3 learner's family portal counts these eight lessons'
+`l01`..`l08` against the shell course's eighteen units, so a child who has done
+every lesson reads as 44%.
 
 ## Coverage: 53 of 53 Stage 3 objectives
 

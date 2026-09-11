@@ -427,10 +427,10 @@
   const STICKERS = [
     ["🏗️", "Three digits"],
     ["🔤", "Read it and write it"],
-    ["🧩", "Break it apart"],
+    ["✂️", "Break it apart"],
     ["🔄", "Regrouping"],
     ["✖️", "Ten times bigger"],
-    ["🪜", "Count in steps"],
+    ["👣", "Count in steps"],
     ["⚖️", "Odd or even"],
     ["📏", "Which is bigger"],
     ["🔢", "Put them in order"],

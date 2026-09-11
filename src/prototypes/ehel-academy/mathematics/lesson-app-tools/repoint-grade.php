@@ -35,10 +35,16 @@
  * WHAT ROUTING A GRADE HERE COSTS, stated because the setting cannot state it:
  * the standalone builds report progress under their own unit namespace
  * (l01..l08), not the shell course's eighteen term-ordered units. The live
- * group board, resume and last-seen all work; the gradebook will not show
- * eighteen units of completion, because eight strand lessons are not those
- * eighteen units. Mapping one onto the other is a curriculum decision nobody
- * has made. See each build's README :: THE UNIT PROBLEM.
+ * group board, resume and last-seen all work. Since 2026-09-11 the family
+ * portal and the parent and group boards read that namespace for what it is:
+ * local_hubredirect/standalone_lessons.json (generated from every build's
+ * app.config.json by tools/build-standalone-lesson-map.mjs, and held to it by
+ * check:php) names each routed course's lessons, so a learner reads as
+ * "Lesson 5: Shapes and Symmetry" and 5 of 8 lessons, not 5 of 18 units.
+ * INSTALL THAT BEFORE ROUTING: without it on the server, a routed grade's
+ * percentage is counted against the shell course's unit total. The lessons
+ * are still not mapped onto the eighteen units - that would claim coverage
+ * nobody measured. See each build's README :: THE UNIT PROBLEM.
  *
  * This file contains no credentials. Delete it when you are done.
  */

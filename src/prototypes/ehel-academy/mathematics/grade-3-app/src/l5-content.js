@@ -378,11 +378,11 @@
   const STICKERS = [
     ["🔺", "Naming flat shapes"],
     ["⬡", "Regular or irregular"],
-    ["🪞", "Lines of symmetry"],
+    ["🦋", "Lines of symmetry"],
     ["↔️", "Mirror it"],
-    ["🧊", "Solid shapes"],
+    ["📦", "Solid shapes"],
     ["🚧", "Perimeter"],
-    ["🟩", "Area"],
+    ["🔲", "Area"],
     ["✏️", "Draw it yourself"],
     ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]

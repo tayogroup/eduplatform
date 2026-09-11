@@ -261,32 +261,32 @@
      rather than a count. */
   const PICKS = [
     {
-      q: "You are standing by the road counting cars as they drive past, as fast as they come.",
+      q: "Musa is standing by the road, counting cars as they drive past as fast as they come.",
       a: "a tally chart",
       why: "A tally is the only one you can keep up with while things are happening - one mark each, bundled in fives. You cannot draw a bar chart of cars that have already gone past."
     },
     {
-      q: "You have the totals already, and you want to see at a glance which fruit was most popular.",
+      q: "Hodan has the totals already, and wants to see at a glance which fruit was most popular.",
       a: "a bar chart",
       why: "Height is the quickest thing an eye can compare. A tally would hold the same numbers, but you would have to count them all again to see which won."
     },
     {
-      q: "You want to show how many children chose each drink, using one picture to stand for five children.",
+      q: "Omar wants to show how many children chose each drink, using one picture to stand for five children.",
       a: "a pictogram",
       why: "A pictogram is a bar chart made of pictures, and its key is what lets one picture stand for five. Nothing else here uses a key."
     },
     {
-      q: "Some children play football, some play chess, and you especially want the ones who do both to stand out.",
+      q: "Some children play football, some play chess, and Amina wants the ones who do both to stand out.",
       a: "a Venn diagram",
       why: "The overlap is the whole point, and only the Venn diagram has one. A bar chart would need a third bar for 'both' and would hide who they are."
     },
     {
-      q: "You want to sort numbers by two yes-or-no questions, with a box for every combination including neither.",
+      q: "Yusuf wants to sort numbers by two yes-or-no questions, with a box for every combination, including neither.",
       a: "a Carroll diagram",
       why: "Four boxes for four answers, and everything lands in exactly one. A Venn holds the same information, but 'neither' sits outside the hoops rather than in a box of its own."
     },
     {
-      q: "You have finished counting and want the totals written down neatly, ready to read off.",
+      q: "Leila has finished counting and wants the totals written down neatly, ready to read off.",
       a: "a frequency table",
       why: "A table is for holding numbers, not for comparing them. It is what you make from a tally before you draw anything."
     },
@@ -406,8 +406,8 @@
     () => { const per = [2, 5, 10][rnd(0, 2)], w = rnd(2, 5); return { q: "On a pictogram one picture = " + per + " children. How many is " + w + " pictures?", opts: [w * per, w, w + per], a: w * per, why: w + " × " + per + " = " + w * per + "." }; },
     () => { const per = 10; return { q: "One picture = 10 children. How many is half a picture?", opts: [5, 1, 10], a: 5, why: "Half of 10 is 5." }; },
     () => { return { q: "Where does a number that is BOTH even AND more than 20 go on a Venn diagram?", opts: ["in the middle, where the hoops overlap", "outside both hoops", "in one hoop only"], a: "in the middle, where the hoops overlap", why: "Both answers are yes, so it belongs to both hoops at once." }; },
-    () => { return { q: "You roll an ordinary six-sided dice. Will you get a 7?", opts: ["it will not happen", "it might happen", "it will happen"], a: "it will not happen", why: "An ordinary dice has no 7 on it at all." }; },
-    () => { return { q: "You toss a coin. Will it land on heads?", opts: ["it might happen", "it will happen", "it will not happen"], a: "it might happen", why: "It could land either way." }; },
+    () => { return { q: "Zara rolls an ordinary six-sided dice. Will she get a 7?", opts: ["it will not happen", "it might happen", "it will happen"], a: "it will not happen", why: "An ordinary dice has no 7 on it at all." }; },
+    () => { return { q: "Ali tosses a coin. Will it land on heads?", opts: ["it might happen", "it will happen", "it will not happen"], a: "it might happen", why: "It could land either way." }; },
     () => { return { q: "Which question needs you to collect data?", opts: ["What is the favourite fruit in our class?", "How many days are in a week?", "How many sides has a hexagon?"], a: "What is the favourite fruit in our class?", why: "The answers would be different for different people." }; },
     () => { const a = rnd(6, 14), b2 = rnd(1, 5); return { q: "On a bar chart, Walk is " + a + " and Bus is " + b2 + ". How many more chose Walk?", opts: [a - b2, a + b2, a], a: a - b2, why: a + " − " + b2 + " = " + (a - b2) + "." }; },
     () => { return { q: "A spinner is half red, a quarter blue and a quarter gold. Which colour comes up most over many spins?", opts: ["red", "blue", "gold"], a: "red", why: "Red has the most room, so the arrow lands on it most often." }; },
@@ -444,7 +444,7 @@
   /* ---- 11: stickers ---- */
   const STICKERS = [
     ["❓", "A question worth asking"], ["✏️", "Tally marks"], ["🍎", "Pictograms"], ["📊", "Bar charts"],
-    ["⭕", "Venn diagrams"], ["🔲", "Carroll diagrams"], ["🔍", "What the data says"], ["🤔", "Choosing the right chart"], ["🎲", "Will, might, will not"],
+    ["⭕", "Venn diagrams"], ["🔲", "Carroll diagrams"], ["🔍", "What the data says"], ["📈", "Choosing the right chart"], ["🎲", "Will, might, will not"],
     ["🎡", "Try it and see"], ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];

@@ -64,6 +64,17 @@ Mapping lessons onto course units is a curriculum decision, not a wiring one,
 and it belongs to whoever owns the Cambridge alignment. When it is made, it
 is `unitFor()` below and nothing else.
 
+WHAT THE PLATFORM READS FROM IT (owner's decision, 2026-09-11). The family
+portal and the parent and group boards now count `l01`..`lNN` as the build's
+LESSONS rather than dropping them against the shell's unit total: the server
+reads local_hubredirect/standalone_lessons.json, which
+tools/build-standalone-lesson-map.mjs generates from every build's
+app.config.json (lessons[] order = lNN, exactly as here) and check:php holds
+byte-equal to them. So a learner shows as "Lesson 3: Fair Shares" and 3 of 9
+lessons done. Nothing claims a shell unit - the rule above is unchanged - and
+a lesson added to a build changes the count the day the map is regenerated
+and the server copy replaced, which is why the map is generated, never typed.
+
 Idempotent.
 """
 import os

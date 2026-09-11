@@ -23,6 +23,13 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _app import load  # noqa: E402
+from _emoji import late_glyphs, stickers, repeated_faces  # noqa: E402
+
+# A finding can now NAME an emoji, and a Windows console piped into `tail`
+# encodes cp1252: the first version of the emoji check crashed on its own
+# message with a UnicodeEncodeError, which exits 1 - the right code for the
+# wrong reason, and the finding itself lost. Mutation-testing found it.
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 MODULES = ["learner-controls.js", "wehel.js", "course-shell.js"]
 
@@ -71,6 +78,30 @@ def main():
     if not carries_params(hub):
         fail(app.hub, "does not carry the launch parameters onto the cards")
 
+    # OPT-IN, like headerBars below: "emojiBaseline": "5.0" says every page of
+    # this build draws only emoji an Emoji 5.0 font has, and "uniqueStickers":
+    # true that no two stickers on one shelf share a face. The Maths builds
+    # declare both. Another build that runs this gate is untouched until it
+    # declares them - it gets a new failure the day it decides to, not the day
+    # somebody else's build did. _emoji.py says why 5.0 and reads all four
+    # spellings of a glyph; a scan of the literal characters alone missed every
+    # one spelled as an escape - Grade 2's window and ice cube, and five of
+    # Grade 4's composed stickers.
+    baseline = app.cfg.get("emojiBaseline")
+    if baseline not in (None, "5.0"):
+        print("  cannot check an emoji baseline of %r - only 5.0 is defined" % baseline)
+        sys.exit(2)
+
+    def late_check(name, s):
+        if baseline:
+            late = sorted(set(g for g, _ in late_glyphs(s)))
+            if late:
+                fail(name, "draws %s - past Emoji %s, so an older tablet shows an "
+                           "empty box. replace-new-emoji-all-grades.py is the worked "
+                           "example" % (" ".join(late), baseline))
+
+    late_check(app.hub, hub)
+
     for unit, f, title in app.lessons:
         s = app.read(f)
         if "claude.ai/code/artifact" in s:
@@ -89,6 +120,15 @@ def main():
         # the page without its title bar and way back - only a count caught it.
         if app.cfg.get("headerBars") and 'class="eh-bar1"' not in s:
             fail(f, "no header bar - run add-header-bars.py --app . again")
+        late_check(f, s)
+        if app.cfg.get("uniqueStickers"):
+            shelf = stickers(s)
+            if not shelf:
+                fail(f, "no sticker shelf could be read - a STICKERS array that "
+                        "stopped being [glyph, label] pairs cannot be checked")
+            elif repeated_faces(shelf):
+                fail(f, "two stickers on one shelf share %s - to a child they are "
+                        "one sticker" % " ".join(repeated_faces(shelf)))
         if "mountWehelChat" not in s:
             fail(f, "no Wehel")
         if not re.search('class="[^"]*top-actions', s):

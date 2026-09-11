@@ -138,7 +138,7 @@
     const n = rnd(1, d - 1);
     const answer = each * n;
     $("set4").innerHTML = Array.from({ length: total }, (_, i) => '<i class="' + (i < answer ? "on" : "") + '"></i>').join("");
-    $("say4").innerHTML = "What is " + fracHTML(n, d) + " of <b>" + total + "</b>?";
+    $("say4").innerHTML = ["Zara", "Yusuf", "Leila", "Ali"][rnd(0, 3)] + " has <b>" + total + "</b> beads. What is " + fracHTML(n, d) + " of them?";
     const opts = [answer];
     [d, each, answer + each, Math.max(1, answer - each), n].forEach((c) => { if (opts.length < 4 && c > 0 && !opts.includes(c)) opts.push(c); });
     offer("ch4", opts, answer, (e) => {
@@ -189,7 +189,7 @@
     const each = rnd(2, 9), total = d * each;
     const answer = each * n;
     $("q6").innerHTML = fracHTML(n, d) + " of " + total;
-    $("say6").innerHTML = "What is " + fracHTML(n, d) + " of <b>" + total + "</b>?";
+    $("say6").innerHTML = ["Amina", "Omar", "Hodan", "Musa"][rnd(0, 3)] + " has <b>" + total + "</b> shillings. What is " + fracHTML(n, d) + " of that?";
     $("hint6").className = "fb";
     $("hint6").textContent = "Divide by " + d + " to find one part, then multiply by " + n + ".";
     const opts = [answer];
@@ -392,7 +392,7 @@
   /* ---- 11: stickers ---- */
   const STICKERS = [
     ["✂️", "Equal parts"], ["🥧", "All the parts make one"], ["🔷", "Same fraction, different shape"], ["🍬", "A fraction of a group"],
-    ["➗", "The line means divide"], ["🔢", "A fraction of a number"], ["🟰", "The same, in different pieces"], ["➕", "Adding pieces"],
+    ["➗", "The line means divide"], ["🔢", "A fraction of a number"], ["⚖️", "The same, in different pieces"], ["➕", "Adding pieces"],
     ["📏", "Which is bigger"], ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];

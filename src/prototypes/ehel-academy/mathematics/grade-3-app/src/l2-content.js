@@ -257,6 +257,81 @@
   }
   round17();
 
+  /* ---- ehel-g3-second-steps: estimate first ---- 3Ni.04 ESTIMATE, add and subtract whole numbers with up to three digits */
+  (function () {
+    const WHO = ["Yusuf", "Amina", "Musa", "Hodan", "Omar", "Leila", "Nadia", "Ali"];
+    const r100 = (n) => Math.round(n / 100) * 100;
+    const num = () => { let n; do { n = rnd(1, 8) * 100 + rnd(11, 89); } while (n % 100 === 50); return n; };
+    let got = 0, asked = 0;
+    function round() {
+      const add = rnd(0, 1) === 1;
+      let a, b, est, exact, guard = 0;
+      do {
+        a = num(); b = num();
+        if (!add && b > a) { const t = a; a = b; b = t; }
+        est = add ? r100(a) + r100(b) : r100(a) - r100(b);
+        exact = add ? a + b : a - b;
+      } while ((add ? exact >= 1000 : est < 100) || Math.abs(exact - est) >= 50 && guard++ < 200);
+      const who = WHO[rnd(0, WHO.length - 1)];
+      const q = add ? who + " adds " + a + " and " + b + ". About how much is that?"
+                    : who + " takes " + b + " away from " + a + ". About how much is left?";
+      $("qx21").textContent = q; $("sayx21").textContent = q;
+      const opts = [est, est + 100, est > 100 ? est - 100 : est + 200];
+      offer("chx21", opts, est, (e) => {
+        const btn = e.target.closest(".choice"); if (!btn) return;
+        const ok = Number(btn.dataset.v) === est;
+        if (!mark("chx21", btn, ok)) return;
+        asked++; if (ok) got++;
+        const why = a + " is about " + r100(a) + " and " + b + " is about " + r100(b) + ", so the answer is about " + est +
+          ". The exact answer is " + exact + ", which is close to " + est + ".";
+        $("fbx21").className = "fb " + (ok ? "good" : "");
+        $("fbx21").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx21", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 3200);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx21").closest(".slide"));
+    round();
+  })();
+
+  /* ---- ehel-g3-second-steps: shopping with cents ---- 3Nm.02 add and subtract amounts of money; 3Nm.01 money notation */
+  (function () {
+    const WHO = ["Hodan", "Musa", "Nadia", "Omar", "Zara", "Ali", "Leila", "Yusuf"];
+    const ITEMS = ["a pencil", "a rubber", "a ruler", "an exercise book", "a mango", "a bottle of water", "a bread roll", "a packet of crayons"];
+    const money = (v) => "sh " + v.toFixed(2);
+    let got = 0, asked = 0;
+    function round() {
+      const i1 = rnd(0, ITEMS.length - 1); let i2 = rnd(0, ITEMS.length - 1); while (i2 === i1) i2 = rnd(0, ITEMS.length - 1);
+      let c1, c2; do { c1 = rnd(1, 19) * 5; c2 = rnd(1, 19) * 5; } while (c1 + c2 >= 100);
+      const s1 = rnd(5, 45), s2 = rnd(5, 45);
+      const p1 = s1 + c1 / 100, p2 = s2 + c2 / 100;
+      const tot = Math.round((p1 + p2) * 100) / 100;
+      const who = WHO[rnd(0, WHO.length - 1)];
+      $("shopx22").innerHTML = '<div class="tag"><span>' + ITEMS[i1] + "</span><b>" + money(p1) + '</b></div><div class="tag"><span>' + ITEMS[i2] + "</span><b>" + money(p2) + "</b></div>";
+      const q = who + " buys " + ITEMS[i1] + " and " + ITEMS[i2] + ". How much is that altogether?";
+      $("qx22").textContent = q; $("sayx22").textContent = q;
+      const right = money(tot);
+      const opts = [right, money(tot + 1), money(Math.round((tot + 0.1) * 100) / 100)];
+      offer("chx22", opts, right, (e) => {
+        const btn = e.target.closest(".choice"); if (!btn) return;
+        const ok = btn.dataset.v === right;
+        if (!mark("chx22", btn, ok)) return;
+        asked++; if (ok) got++;
+        const why = "The shillings: " + s1 + " add " + s2 + " is " + (s1 + s2) + ". The cents: " + c1 + " add " + c2 + " is " + (c1 + c2) + ". Together that is " + right + ".";
+        $("fbx22").className = "fb " + (ok ? "good" : "");
+        $("fbx22").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx22", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 3200);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx22").closest(".slide"));
+    round();
+  })();
+
   /* ---- 18: check ---- every question draws on a step above */
   const QS = [
     () => { let a = rnd(11, 89); while (a === 50 || a === 55) a = rnd(11, 89); return { q: a + " + ? = 100", opts: [100 - a, 100 - a + 10, a], a: 100 - a, why: a + " + " + (100 - a) + " = 100." }; },
@@ -278,7 +353,7 @@
       $("fb18").className = "fb good";
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
-      if (got18 >= 4) finish(6, "You have finished the check. Well done.");
+      if (got18 >= 4) finish(8, "You have finished the check. Well done.");
       else retryCheck($("fb18"), $("ch18"), got18, order18.length, 4, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
       return;
     }
@@ -307,8 +382,10 @@
     ["🔀", "Add in any order"],
     ["➕", "Adding with regrouping"],
     ["➖", "Taking away with regrouping"],
-    ["🪙", "Money and the dot"],
+    ["💵", "Money and the dot"],
     ["🛒", "Giving change"],
+    ["🎯", "Estimate first"],
+    ["🛍️", "Shopping with cents"],
     ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];

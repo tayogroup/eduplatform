@@ -165,6 +165,58 @@ check('a malformed entry is skipped, not fatal',
     week(['_activitySince' => 900000,
         '_activity' => ['nonsense', [1000500], [1000600, 's', 'ok']]])['sections'], 1);
 
+// ---- standalone lesson builds: what their units are, and how many ------
+// The Maths, Science, Computing and Global Perspectives Grade 1-4 builds write
+// progress under their OWN lesson units, l01..lNN, beneath the shell's course
+// key. Until 2026-09-11 a parent read "L03", and the course was divided by the
+// catalogue's SHELL unit count: Maths Grade 2, 9 lessons against 15 units, read
+// 60% with every lesson done; Science Grade 3, 13 lessons against 6, read 100%
+// with seven still to do.
+echo "\na standalone lesson build is counted in lessons, and named\n";
+eval(grab($src, 'function pqpr_standalone_lessons(', 'pqpr_standalone_lessons'));
+eval(grab($src, 'function pqpr_course_units(', 'pqpr_course_units'));
+
+check('a lesson unit is a Lesson', pqpr_unit_label('l03'), 'Lesson 3');
+check('with the course titles it is the lesson the child sees',
+    pqpr_unit_label('l03', ['l03' => 'Fair Shares']), 'Lesson 3: Fair Shares');
+check('a shell unit is unchanged', pqpr_unit_label('u03', ['l03' => 'Fair Shares']), 'Unit 3');
+check('the fixed keys are unchanged', pqpr_unit_label('capstone'), 'Capstone');
+
+$nine = array_fill_keys(['l01', 'l02', 'l03', 'l04', 'l05', 'l06', 'l07', 'l08', 'l09'], 'x');
+check('shell rows only: the catalogue decides, as before',
+    pqpr_course_units(3, 5, 0, 0, 15, []), ['done' => 3, 'total' => 15]);
+check('every lesson of a 9-lesson build done is 9 of 9, not 9 of 15',
+    pqpr_course_units(9, 9, 9, 9, 15, $nine), ['done' => 9, 'total' => 9]);
+$thirteen = [];
+for ($i = 1; $i <= 13; $i++) {
+    $thirteen[sprintf('l%02d', $i)] = 'x';
+}
+check('7 of 13 lessons is 7 of 13, not "all 6 units"',
+    pqpr_course_units(7, 7, 7, 7, 6, $thirteen), ['done' => 7, 'total' => 13]);
+check('shell rows from before routing are not added to the lessons',
+    pqpr_course_units(7, 12, 2, 4, 15, $nine), ['done' => 2, 'total' => 9]);
+check('lesson rows of a course the map does not know: as before',
+    pqpr_course_units(2, 4, 2, 4, 15, []), ['done' => 2, 'total' => 15]);
+check('no catalogue row and no map: the rows seen, as before',
+    pqpr_course_units(1, 4, 0, 0, 0, []), ['done' => 1, 'total' => 4]);
+
+// The REAL generated map, against the builds it was generated from - a map
+// that parses to nothing would pass every case above and fix nobody.
+$mapfile = __DIR__ . '/../src/moodle/local_hubredirect/standalone_lessons.json';
+$map = pqpr_standalone_lessons($mapfile);
+$ehel = __DIR__ . '/../src/prototypes/ehel-academy';
+foreach ([['ehel-math-g01', '/mathematics/grade-1-app/g1v2'], ['ehel-math-g02', '/mathematics/grade-2-app'],
+          ['ehel-math-g03', '/mathematics/grade-3-app'], ['ehel-math-g04', '/mathematics/grade-4-app']] as [$key, $dir]) {
+    $cfg = json_decode((string)file_get_contents($ehel . $dir . '/app.config.json'), true);
+    $want = [];
+    foreach ($cfg['lessons'] as $i => $l) {
+        $want[sprintf('l%02d', $i + 1)] = $l['title'];
+    }
+    check("$key: the map is its build's lessons", $map[$key] ?? null, $want);
+}
+check('a course on the shell alone is not in the map', isset($map['ehel-eng-g01']), false);
+check('an unreadable map is empty, which changes nothing', pqpr_standalone_lessons(__DIR__ . '/no-such-map.json'), []);
+
 echo "\n$pass passed, $fail failed\n";
 if ($fail) {
     echo "a family portal would print something a parent cannot read.\n";

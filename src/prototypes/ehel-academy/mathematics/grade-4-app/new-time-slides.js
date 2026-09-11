@@ -232,8 +232,8 @@
       h += "<tr><td>" + s + "</td>" + P.runs.map((r) => "<td>" + tm24(r[i]) + "</td>").join("") + "</tr>";
     });
     $("tmtt4").innerHTML = h;
-    $("tmq4").innerHTML = "You must be at <b>" + TM_STOPS[P.stop] + "</b> by <b>" + tm24(P.by) +
-      "</b>. Which bus do you catch &mdash; the <b>latest</b> one that still gets you there?";
+    $("tmq4").innerHTML = "Musa must be at <b>" + TM_STOPS[P.stop] + "</b> by <b>" + tm24(P.by) +
+      "</b>. Which bus should he catch &mdash; the <b>latest</b> one that still gets him there?";
     $("tmpick4").innerHTML = P.runs.map((r, i) =>
       '<button type="button" class="choice" data-i="' + i + '">' + tm24(r[0]) + "</button>").join("");
     $("tmtask4").textContent = "Right so far: " + tm4right + " of 4";

@@ -26,11 +26,43 @@ only thing that answers it is the setting, via
 `../lesson-app-tools/repoint-grade.php --grade 4` through the cPanel loop.
 
 The count was stale too: this opened describing five lessons and a donor, and
-the build has been eight since 2026-09-08. Several rows of the table below still
-name files from the five-lesson era (`four-digits-strong.html`,
-`shape-space-place.html`, `numbers-and-behaviour.html`,
-`build-<b>-lesson.py`); `app.config.json` is the one description that is
-current, and its `lessons` order IS the unit number.
+the build has been eight since 2026-09-08. The table below was rewritten for the
+eight on 2026-09-11; `app.config.json` is still the one description that is
+authoritative, and its `lessons` order IS the unit number.
+
+The three pages the five-lesson era left on storage (`four-digits-strong.html`,
+`numbers-and-behaviour.html`, `shape-space-place.html`) were DELETED on
+2026-09-11 with the owner's go-ahead, after checking nothing on the zone linked
+them: 17 objects in `grade-4-lessons/` became 14. All three are in git at
+0a837e193 if they are ever wanted.
+
+Routing this grade is `../lesson-app-tools/repoint-grade.php --grade 4` - AFTER
+the server has `local_hubredirect/standalone_lessons.json` and the portal code
+that reads it, or a routed learner's percentage is counted against the shell
+course's eighteen units instead of these eight lessons (see THE UNIT PROBLEM in
+`../lesson-app-tools/wire-progress.py`).
+
+## 2026-09-11 (later): the teaching the report asked for
+
+The same report scored the teaching itself: "no worked examples or authored
+explanations, no reasoning step and no warm-up", "the least content time of the
+four", "several objectives share one step (4Gg.02 and 4Gg.03 in 'Area without
+counting')", "no named people or local settings". All of it is now in the build:
+
+| what | where |
+| --- | --- |
+| an authored explanation on every slide - 102 of 102, the four moves Grades 1 and 3 use | `explanations.txt`, written into the pages by `../lesson-app-tools/add-explanations.py` (build-all.sh; it fails the build if a slide has none) |
+| a "How do you know?" step in every lesson, after the check: a true claim, three reasons, one that works | `reasoning_banks.py`, `../lesson-app-tools/add-reasoning-step.py` |
+| a warm-up at the head of every lesson | each lesson's `warmUp` in `app.config.json`, `../lesson-app-tools/add-warmup.py` |
+| six new judged steps, each with a check question: fractions of amounts as word problems and putting three fractions in order (Parts of a Whole, 7 steps to 9); choosing the right chart and maybe / likely / certain (Asking, Sorting and Chance, 7 to 9); perimeter all the way round and the area of an L shape (Shape and Measures, 8 to 10 - 4Gg.02 and 4Gg.03 no longer share one exploration) | `new-frac-*`, `new-stats-*`, `new-shape-*`, ordered by `STRUCTURE` in `compose-lessons.py` |
+| named children in the new steps and in the timetable, sharing and route questions, and the numbers below zero set on a night on Mount Kenya | `../lesson-app-tools/add-local-names.py` |
+| no emoji past Emoji 5.0, and no two stickers alike on a shelf - gated | `../lesson-app-tools/replace-new-emoji-all-grades.py`; `emojiBaseline` and `uniqueStickers` in `app.config.json` |
+
+Verified in a browser from a local server: every generated answer of the six new
+steps agrees with an answer computed independently from the question on the
+screen (60 rounds), each new step and each reasoning step reports its
+completion, all eight warm-ups answer, and all eight checks still gate - Try
+again below the mark, completion at it - with their new questions.
 
 ## 2026-09-11: the validation, and what changed because of it
 
@@ -59,19 +91,21 @@ and two consecutive builds byte-identical. **Not deployed**, and not routed.
 
 | | |
 | --- | --- |
-| `app.config.json` | the one description of this build — every tool in `../lesson-app-tools` reads it. **Order in `lessons` IS the unit number** |
+| `app.config.json` | the one description of this build — every tool in `../lesson-app-tools` reads it. **Order in `lessons` IS the unit number**. Also each lesson's `warmUp` and at-home line |
 | `g4-index.html` | the lesson picker, built by `build-hub.py` on Grade 2's design. Deployed as `index.html` |
-| `four-digits-strong.html` | the donor lesson, reassembled by `build-donor-lesson.py`. Without it the build teaches 35 of the 46 objectives; with it, 46 |
-| `telling-the-time.html`, `asking-sorting-chance.html`, `parts-of-a-whole.html`, `shape-space-place.html`, `numbers-and-behaviour.html` | the five written lessons, 37 teaching slides between them |
-| `{time,stats,frac,shape,num}-{body.html,slides.js,extra.css}` | their sources — the body markup, the slide JS, and the per-lesson CSS |
-| `shell.js` | the shared framework: deck navigation, narration client, `finish`, `lines`, `nline`, `ask`, `pick3` |
+| the eight `*.html` lessons (`big-numbers-below-zero.html` ... `asking-sorting-chance.html`) | GENERATED — never edit them; the next build overwrites the edit |
+| `{num,frac,time,shape,stats}-{body.html,slides.js,extra.css}` | the five source lessons — body markup, slide JS, per-lesson CSS |
+| `new-{bignum,patterns,calc,time,where,frac,stats,shape}-{body.html,slides.js}` | slides written for this build rather than cut from a source |
+| `g4-lesson-body.html`, `g4-lesson.js` | *Four Digits Strong*, the donor: five of its slides are composed into the strand lessons; it has had no page of its own since 2026-09-08. `shell.js` is its framework half |
+| `shell.js` | the shared framework: deck navigation, narration client, `finish`, `lines`, `nline`, `ask`, `pick3`, `retryCheck` |
 | `g4-lesson.css` | the shared stylesheet every lesson embeds |
-| `g4-lesson-body.html`, `g4-lesson.js` | *Four Digits Strong*, the donor lesson these were derived from. `shell.js` is its framework half, split at `/* ---- 1: thousands ---- */` |
+| `explanations.txt`, `reasoning_banks.py` | the Explain words for every slide, and the "How do you know?" claims |
+| `compose-lessons.py` | STRUCTURE: which slides, in which order, make each lesson; the donor and new slides' stickers and check questions. Writes `c-*-body.html` / `c-*-slides.js`, gitignored intermediates |
+| `build-lessons.py`, `build-hub.py`, `build-all.sh` | the pages, the hub, and the whole build including the wiring and page tools and the gates |
 
-`build-<b>-lesson.py` assembles `<b>-body.html` + `shell.js` + `<b>-slides.js` +
-`g4-lesson.css` + `<b>-extra.css` into the finished page. All five rebuild
-**byte-identical** from the sources here; do that after any refactor of
-`shell.js`, the way the ebook kit extraction was proved safe.
+`build-all.sh` rebuilds everything and is **byte-identical** from run to run;
+check that after any refactor of `shell.js` or `compose-lessons.py`, the way the
+ebook kit extraction was proved safe.
 
 ## check-judging.py moved, because it was reading half the build
 

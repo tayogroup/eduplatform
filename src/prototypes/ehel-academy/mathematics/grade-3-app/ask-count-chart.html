@@ -892,6 +892,7 @@
 
     <!-- 1 statistical questions -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some questions need data to answer them, and some do not.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>How many legs has a spider?</s><s>You just know that.</s><s>One answer, the same for everybody, and no counting needed.</s><s>How do the children in this class travel to school?</s><s>Nobody knows until somebody asks them all.</s><s>That is a statistical question.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The test is whether the answers would vary.</s><s>If everybody would say the same thing, there is nothing to collect.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Which of these needs you to go and ask people?</s></mstts:express-as>' data-say="Which question needs data? One where the answers would be different for different people.">
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>A question worth asking</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Which one do you need to <b>collect data</b> to answer?</span></div>
       <div class="stage">
@@ -1872,6 +1873,26 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see lesson-app-tools/add-warmup.py. NOT a step: no sticker, no
+     dot, no score. */
+  const WARM = [{ q: "Last lesson, you told the time and followed directions. Warm up: a tally shows one bundle of five and 2 more marks. How many is that?", opts: [7, 6, 52], a: 7, why: "A bundle is 5, and 2 more make 7. Today you will ask questions, count and draw charts." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
 
   /* ==================================================================
@@ -2164,32 +2185,32 @@
      rather than a count. */
   const PICKS = [
     {
-      q: "You are standing by the road counting cars as they drive past, as fast as they come.",
+      q: "Musa is standing by the road, counting cars as they drive past as fast as they come.",
       a: "a tally chart",
       why: "A tally is the only one you can keep up with while things are happening - one mark each, bundled in fives. You cannot draw a bar chart of cars that have already gone past."
     },
     {
-      q: "You have the totals already, and you want to see at a glance which fruit was most popular.",
+      q: "Hodan has the totals already, and wants to see at a glance which fruit was most popular.",
       a: "a bar chart",
       why: "Height is the quickest thing an eye can compare. A tally would hold the same numbers, but you would have to count them all again to see which won."
     },
     {
-      q: "You want to show how many children chose each drink, using one picture to stand for five children.",
+      q: "Omar wants to show how many children chose each drink, using one picture to stand for five children.",
       a: "a pictogram",
       why: "A pictogram is a bar chart made of pictures, and its key is what lets one picture stand for five. Nothing else here uses a key."
     },
     {
-      q: "Some children play football, some play chess, and you especially want the ones who do both to stand out.",
+      q: "Some children play football, some play chess, and Amina wants the ones who do both to stand out.",
       a: "a Venn diagram",
       why: "The overlap is the whole point, and only the Venn diagram has one. A bar chart would need a third bar for 'both' and would hide who they are."
     },
     {
-      q: "You want to sort numbers by two yes-or-no questions, with a box for every combination including neither.",
+      q: "Yusuf wants to sort numbers by two yes-or-no questions, with a box for every combination, including neither.",
       a: "a Carroll diagram",
       why: "Four boxes for four answers, and everything lands in exactly one. A Venn holds the same information, but 'neither' sits outside the hoops rather than in a box of its own."
     },
     {
-      q: "You have finished counting and want the totals written down neatly, ready to read off.",
+      q: "Leila has finished counting and wants the totals written down neatly, ready to read off.",
       a: "a frequency table",
       why: "A table is for holding numbers, not for comparing them. It is what you make from a tally before you draw anything."
     },
@@ -2309,8 +2330,8 @@
     () => { const per = [2, 5, 10][rnd(0, 2)], w = rnd(2, 5); return { q: "On a pictogram one picture = " + per + " children. How many is " + w + " pictures?", opts: [w * per, w, w + per], a: w * per, why: w + " × " + per + " = " + w * per + "." }; },
     () => { const per = 10; return { q: "One picture = 10 children. How many is half a picture?", opts: [5, 1, 10], a: 5, why: "Half of 10 is 5." }; },
     () => { return { q: "Where does a number that is BOTH even AND more than 20 go on a Venn diagram?", opts: ["in the middle, where the hoops overlap", "outside both hoops", "in one hoop only"], a: "in the middle, where the hoops overlap", why: "Both answers are yes, so it belongs to both hoops at once." }; },
-    () => { return { q: "You roll an ordinary six-sided dice. Will you get a 7?", opts: ["it will not happen", "it might happen", "it will happen"], a: "it will not happen", why: "An ordinary dice has no 7 on it at all." }; },
-    () => { return { q: "You toss a coin. Will it land on heads?", opts: ["it might happen", "it will happen", "it will not happen"], a: "it might happen", why: "It could land either way." }; },
+    () => { return { q: "Zara rolls an ordinary six-sided dice. Will she get a 7?", opts: ["it will not happen", "it might happen", "it will happen"], a: "it will not happen", why: "An ordinary dice has no 7 on it at all." }; },
+    () => { return { q: "Ali tosses a coin. Will it land on heads?", opts: ["it might happen", "it will happen", "it will not happen"], a: "it might happen", why: "It could land either way." }; },
     () => { return { q: "Which question needs you to collect data?", opts: ["What is the favourite fruit in our class?", "How many days are in a week?", "How many sides has a hexagon?"], a: "What is the favourite fruit in our class?", why: "The answers would be different for different people." }; },
     () => { const a = rnd(6, 14), b2 = rnd(1, 5); return { q: "On a bar chart, Walk is " + a + " and Bus is " + b2 + ". How many more chose Walk?", opts: [a - b2, a + b2, a], a: a - b2, why: a + " − " + b2 + " = " + (a - b2) + "." }; },
     () => { return { q: "A spinner is half red, a quarter blue and a quarter gold. Which colour comes up most over many spins?", opts: ["red", "blue", "gold"], a: "red", why: "Red has the most room, so the arrow lands on it most often." }; },
@@ -2347,7 +2368,7 @@
   /* ---- 11: stickers ---- */
   const STICKERS = [
     ["❓", "A question worth asking"], ["✏️", "Tally marks"], ["🍎", "Pictograms"], ["📊", "Bar charts"],
-    ["⭕", "Venn diagrams"], ["🔲", "Carroll diagrams"], ["🔍", "What the data says"], ["🤔", "Choosing the right chart"], ["🎲", "Will, might, will not"],
+    ["⭕", "Venn diagrams"], ["🔲", "Carroll diagrams"], ["🔍", "What the data says"], ["📈", "Choosing the right chart"], ["🎲", "Will, might, will not"],
     ["🎡", "Try it and see"], ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];
@@ -2972,3 +2993,19 @@
   }, true);
 })();
 </script>
+
+<style>/* ehel-warmup - see lesson-app-tools/add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>

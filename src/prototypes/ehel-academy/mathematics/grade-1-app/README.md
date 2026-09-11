@@ -83,6 +83,11 @@ python gate-and-explain-check.py --write               # 75% to complete; every 
 python add-warmup.py --write                           # a recap and one question at the top of step 1
 python add-second-steps.py --write                     # a second step for 17 single-slide objectives
 python fix-turn-and-tree.py --write                    # the turning circle's dot, the short tree
+python show-conservation.py --write                    # step 1's "Mix them up": the count does not change (1Nc.01)
+python ../lesson-app-tools/apply-focus-mode.py g1v2/<the seven lessons>   # focus mode and the session bar
+python replace-new-emoji.py --write                    # six glyphs past Emoji 5.0 (rock, feather, bucket, ...)
+python ../lesson-app-tools/replace-new-emoji-all-grades.py --only grade-1-app/ --write   # the other ten, and
+                                                       # the fruit survey is about pineapple now
 python build-grownup-section.py --write                # the parents' section, cards and minutes on the hub
 
 python rebuild-g1v2.py                     # run all of the above in a temp copy and compare

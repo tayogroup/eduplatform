@@ -363,7 +363,10 @@ if ($progressrows) {
             continue; // never the unit-percent rollup
         }
         if (!isset($bycourse[$key])) {
-            $bycourse[$key] = ['done' => 0, 'seen' => 0, 'checkpoints' => [], 'attempts' => [],
+            // lessondone/lessonseen: the rows that are a standalone build's own
+            // lesson units (l01..) - see pqpr_course_units().
+            $bycourse[$key] = ['done' => 0, 'seen' => 0, 'lessondone' => 0, 'lessonseen' => 0,
+                'checkpoints' => [], 'attempts' => [],
                 // Where they are, in the child's own words, and how many words
                 // they have shown they know. `at` tracks which unit row these
                 // came from so the two always describe ONE unit - the same
@@ -379,12 +382,19 @@ if ($progressrows) {
                 'weekdone' => 0, 'weekquiz' => 0, 'ring' => false, 'weekcovered' => true];
         }
         $bycourse[$key]['seen']++;
+        $islesson = (bool)preg_match('/^l\d+$/', (string)$row->unit);
+        if ($islesson) {
+            $bycourse[$key]['lessonseen']++;
+        }
         $state = json_decode((string)$row->statejson, true);
         if (!is_array($state)) {
             continue;
         }
         if (!empty($state['completed'])) {
             $bycourse[$key]['done']++;
+            if ($islesson) {
+                $bycourse[$key]['lessondone']++;
+            }
         }
         // The most recently touched unit of this course is the one a parent
         // means by "where are they".
@@ -397,7 +407,7 @@ if ($progressrows) {
             $bycourse[$key]['where'] = $label;
             $bycourse[$key]['wheredone'] = $resume !== ''
                 && in_array($resume, (array)($state['sectionsDone'] ?? []), true);
-            $bycourse[$key]['whereunit'] = pqpr_unit_label((string)$row->unit);
+            $bycourse[$key]['whereunit'] = pqpr_unit_label((string)$row->unit, pqpr_standalone_lessons()[$key] ?? []);
         }
         // Words the learner has PROVED, summed across the course's units. No
         // denominator on purpose: the unit's word list belongs to the content
@@ -431,8 +441,12 @@ if ($progressrows) {
     $courselabels = pqpr_course_labels(array_keys($bycourse));
     foreach ($bycourse as $key => $counts) {
         $map = $courselabels[$key] ?? null;
-        $total = $map && $map['unitcount'] > 0 ? $map['unitcount'] : $counts['seen'];
-        $total = max($total, $counts['done'], 1);
+        // A course a learner takes as a standalone lesson build is counted in
+        // its LESSONS, not the catalogue's shell units - see pqpr_course_units().
+        $units = pqpr_course_units((int)$counts['done'], (int)$counts['seen'],
+            (int)$counts['lessondone'], (int)$counts['lessonseen'],
+            $map ? (int)$map['unitcount'] : 0, pqpr_standalone_lessons()[$key] ?? []);
+        $total = $units['total'];
         $courseprogress[] = array_merge([
             'coursekey' => $key,
             // Subject and stage stay for anything reading the parts; `title` is
@@ -441,9 +455,9 @@ if ($progressrows) {
             'title' => pqpr_course_title($key, $courselabels),
             'subject' => $map ? $map['subject'] : $key,
             'stage' => $map ? $map['stage'] : 0,
-            'units_completed' => $counts['done'],
+            'units_completed' => $units['done'],
             'units_total' => $total,
-            'percent' => (int)round(100 * $counts['done'] / $total),
+            'percent' => (int)round(100 * $units['done'] / $total),
             // "Working on Reading books in Unit 1", or "Just finished ...".
             // Empty for any app that does not send a caption, and the page
             // says nothing rather than guessing.

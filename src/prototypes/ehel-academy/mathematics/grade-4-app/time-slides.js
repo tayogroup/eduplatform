@@ -109,11 +109,11 @@
     [8 * 60 + 10, 8 * 60 + 55, 10 * 60 + 40, 12 * 60],
   ];
   const Q3 = [
-    { q: "You must be at School by 09:00. Which is the latest bus you can take?", a: 1,
+    { q: "Hodan must be at School by 09:00. Which is the latest bus she can take?", a: 1,
       why: "Bus B reaches School at 08:55, five minutes before nine. Bus C does not get there until 10:40." },
     { q: "Which bus takes the longest to get from Market Gate to School?", a: 2,
       why: "Bus C leaves Market Gate at 09:40 and reaches School at 10:40, which is a whole hour. A and B take 50 minutes, and D takes only 45." },
-    { q: "You arrive at Riverside at 09:45. Which is the next bus?", a: 2,
+    { q: "Omar arrives at Riverside at 09:45. Which is the next bus?", a: 2,
       why: "Bus C calls at Riverside at 10:02, the first one after you get there." },
   ];
   let q3 = 0, right3 = 0, lock3 = false;

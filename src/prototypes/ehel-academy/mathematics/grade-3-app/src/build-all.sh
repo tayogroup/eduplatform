@@ -51,11 +51,15 @@ done
 # them applied by hand; a generated build has to run them itself, for the reason
 # at the top of this file. ORDER MATTERS: wire-quiet-notice anchors on the
 # role="main" that wire-accessibility puts on the deck, and refuses without it.
-# Then the hub's teachers-and-parents section, which reads the built lessons.
-# All idempotent.
+# Then the warm-up at the head of every lesson (2026-09-11 report, area 9: "a
+# warm-up question per lesson"; its words are each lesson's warmUp in
+# app.config.json), and last the hub's teachers-and-parents section, which
+# reads the built lessons. All idempotent. The second steps for the thin
+# lessons are NOT here - they live in the fragments (src/add-second-steps.py
+# wrote them there once), because a step is teaching, not wiring.
 python ../lesson-app-tools/add-page-doctype-lang.py *.html > /dev/null || { echo "  FAILED: add-page-doctype-lang"; exit 1; }
 echo "  ok  add-page-doctype-lang"
-for t in wire-accessibility self-host-fonts wire-quiet-notice build-grownup-section; do
+for t in wire-accessibility self-host-fonts wire-quiet-notice add-warmup build-grownup-section; do
   python "../lesson-app-tools/$t.py" --app . --write > /dev/null || { echo "  FAILED: $t"; exit 1; }
   echo "  ok  $t"
 done

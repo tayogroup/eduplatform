@@ -109,6 +109,30 @@ And what the rest of the build gained the same day:
 now. **None of this is live until the build is deployed** — and because Grade 2
 learners are routed here, a deploy reaches them the same minute.
 
+## 2026-09-11 (later): the teaching the report asked for
+
+The report: "Missing: authored explanations or worked examples (the Explain
+button falls back to a derived one), a review or warm-up, any 'how do you
+know?'". Authored explanation words: Grade 1 9,327, Grade 3 6,309, **here 0**.
+
+| what | where | how it was checked |
+| --- | --- | --- |
+| an authored explanation on every slide: 103 of 103, about 6,500 words, in the four moves Grades 1 and 3 use - name the idea, show one example from the step, warn about the mistake children make there, hand back one thing to try | `explanations.txt`, written by `../lesson-app-tools/add-explanations.py` | every body parsed as the engine parses it: 0 refused |
+| a warm-up at the top of step 1 of every lesson: last lesson in a sentence, one question about today's | each lesson's `warmUp` in `app.config.json`, `../lesson-app-tools/add-warmup.py` | answered in a browser, all nine |
+| a "How do you know?" step after every check: a true claim, three reasons, one that works | `reasoning_banks.py`, `../lesson-app-tools/add-reasoning-step.py` | four right in a browser earns the sticker and reports the step, all nine |
+| no emoji past Emoji 5.0 and no two stickers alike on one shelf, gated | `../lesson-app-tools/replace-new-emoji-all-grades.py`; `emojiBaseline`, `uniqueStickers` in `app.config.json` | the gate, mutation-tested 11 ways |
+
+**What it costs a learner who has already finished a lesson**: progress is kept
+by step POSITION, and the new step comes after the check - the one place no
+stored position moves - so nothing a child has done changes meaning; the lesson
+simply has one more step to finish. The warm-up is not a step at all. The same
+trade Grade 1's second steps made, which the owner accepted.
+
+In the shop, "a juice" and "a bar of soap" are a cup of tea and a balloon, and
+in measuring the thread, the worm and the bottle are a spoon, a caterpillar and
+a coconut - same numbers, older glyphs. The window and the ice cube among the
+real-thing shapes are a picture frame and a dice.
+
 ## Every step is Stage 2 now, and 18 steps were removed to make that true
 
 This build used to teach well past Stage 2, and it said so on the hub: *"Two of
@@ -300,6 +324,14 @@ a learner's work in the slot the gradebook reads as "Numbers to 100" completed
 The board works; the gradebook does not see fifteen units' worth of completion,
 because these nine lessons are not those fifteen units. Mapping them is a
 curriculum decision and belongs to whoever owns the Cambridge alignment.
+
+What the owner DID decide (2026-09-11) is how the platform reads `l01`..`l09`:
+as this build's lessons. `local_hubredirect/standalone_lessons.json`, generated
+from this `app.config.json` by `tools/build-standalone-lesson-map.mjs`, lets the
+family portal and the boards say "Lesson 3: Fair Shares" and count 3 of 9
+lessons - where they used to count against the shell course's fifteen units,
+so a child who had done every lesson read as 60%. It takes effect when the
+server has the map and the code that reads it.
 
 **Tested on the live upload and it correctly REFUSED.** With a Grade 1 launch
 token (`course: ehel-math-g01`) the gateway answered 403 to a client writing

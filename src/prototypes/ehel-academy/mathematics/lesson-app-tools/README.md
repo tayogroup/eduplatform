@@ -5,7 +5,9 @@ CSS, activity JS and voice engine and do **not** go through
 `shell/course-app.js`. Currently that is all four Mathematics builds:
 `../grade-1-app/g1v2` and `../grade-2-app`, live and routed; `../grade-3-app`
 and `../grade-4-app`, on the zone and routed to by nobody (read on the server
-2026-09-11 - check the override map before believing any of these).
+2026-09-11 - check the override map before believing any of these; routing
+them is `repoint-grade.php --grade 3,4`, after the server has the lesson map
+described under "What these tools do NOT do").
 Grades 1 and 2 are hand-maintained, so the tools are run over them by hand;
 Grades 3 and 4 are generated, so their `build-all.sh` runs every tool below
 itself, and a rebuild re-applies all of it.
@@ -28,6 +30,9 @@ python ../lesson-app-tools/add-page-doctype-lang.py *.html              # a doct
 python ../lesson-app-tools/wire-accessibility.py --app . --write        # feedback announced, skip link, main, 24 px dot cells
 python ../lesson-app-tools/self-host-fonts.py --app . --write           # fonts from app/shared/fonts, not Google
 python ../lesson-app-tools/wire-quiet-notice.py --app . --write         # "Can't hear it?" when nothing can speak
+python ../lesson-app-tools/add-reasoning-step.py --app . --write       # "How do you know?" after the check (reasoning_banks.py)
+python ../lesson-app-tools/add-explanations.py --app . --write         # every slide's Explain words (explanations.txt)
+python ../lesson-app-tools/add-warmup.py --app . --write               # a warm-up at the head of every lesson (warmUp)
 python ../lesson-app-tools/build-grownup-section.py --app . --write     # the hub's teachers-and-parents section
 python ../lesson-app-tools/check-lessons.py           # the gate
 node   ../lesson-app-tools/deploy.mjs --app .         # plan; --upload writes
@@ -58,6 +63,45 @@ half-working, but the order is not cosmetic:
   its pass mark - so it runs after everything that builds or rebuilds them, and
   on Grade 4 after `build-hub.py`, which rebuilds the hub from Grade 2's and
   would wipe the section.
+- `add-reasoning-step.py` before `add-explanations.py`: the step adds a slide,
+  and `add-explanations.py` fails if any slide has no explanation at all (the
+  reasoning slide carries its own, shared with Grade 3's). Both before
+  `build-grownup-section.py`, which counts the new slide into the lesson's time.
+
+## The teaching the 2026-09-11 validation asked for, and where each lives
+
+The reports scored Grades 2 and 4 lowest on the teaching itself: no authored
+explanation on any slide (Grade 1 had 9,327 words of them, Grade 3 6,309),
+no warm-up, and no step that asks a child WHY. Three tools close those, each
+reading its words from a file beside the build, so the words are content and
+the tools stay grade-agnostic:
+
+| tool | its words | what it adds |
+| --- | --- | --- |
+| `add-explanations.py` | `explanations.txt` | the Explain button's four moves - name, show, warn, hand - per slide, keyed by file and heading; written as SSML so no tag is typed |
+| `add-warmup.py` | each lesson's `warmUp` in `app.config.json` | Grade 1's warm-up box at the top of step 1; not a step, so no index moves |
+| `add-reasoning-step.py` | `reasoning_banks.py` | Grade 3's "How do you know?" step between the check and the shelf |
+
+Grade 2 has all three (run once; its pages are hand-edited), Grade 4 all three
+(its `build-all.sh` runs them after every build), Grade 3 the warm-up (it had
+the other two). Grade 3 and 4's thin lessons also grew judged second steps -
+`grade-3-app/src/add-second-steps.py` and Grade 4's `new-frac/new-stats/
+new-shape` slides - and `add-local-names.py` put named local children (and a
+night on Mount Kenya, for the numbers below zero) where the lessons already
+described a situation.
+
+## Emoji a school tablet can draw
+
+`_emoji.py` is the line: nothing past **Emoji 5.0** (2017), which is where the
+older Android tablets' fonts stop - past it a glyph is an empty box. It reads
+all four spellings (the character, a JS surrogate pair, a `\u{...}` escape and
+an HTML reference) because a scan of the characters alone missed every escaped
+one. `replace-new-emoji-all-grades.py` swapped every one in the four builds on
+2026-09-11 - 27 different glyphs, counted on the committed files before it ran. A build that sets `"emojiBaseline": "5.0"` and
+`"uniqueStickers": true` in its `app.config.json` has `check-lessons.py` hold
+it to both - no late glyph on any page, and no two stickers on one shelf with
+the same face. They are opt-in so a build that also runs this gate (English's
+standalone builds do) meets them the day it chooses to, not the day Maths did.
 
 ## `app.config.json`
 
@@ -123,6 +167,13 @@ else.
   because these builds are organised by strand and the shell courses are
   fifteen term-ordered units. Read THE UNIT PROBLEM in that tool before
   changing it: emitting `u01` would claim curriculum coverage nobody measured.
+  What the platform does with `lNN` is decided on the SERVER (owner,
+  2026-09-11): `local_hubredirect/standalone_lessons.json`, generated from
+  every build's `app.config.json` by `tools/build-standalone-lesson-map.mjs`
+  and held byte-equal to them by `npm run check:php`, lets the family portal
+  and the boards count a routed course's lessons as its units - "Lesson 3:
+  Fair Shares", 3 of 9. **Regenerate it whenever a build gains or loses a
+  lesson**, and install it before routing a grade.
 
 ## Grade 1 is half-migrated, on purpose
 

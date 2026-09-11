@@ -823,7 +823,7 @@
     $("warm2").disabled = temp2 >= T_MAX; $("cold2").disabled = temp2 <= T_MIN;
     const T = tasks2[ti2];
     if (T) {
-      $("task2").textContent = "It is " + sg(T.from) + "°C. It gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
+      $("task2").textContent = "On Mount Kenya it is " + sg(T.from) + "°C. In the night it gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
       if (temp2 === T.to) { $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); ti2++; if (ti2 >= tasks2.length) finish(1, "You can count below zero!"); else setTimeout(() => { temp2 = tasks2[ti2].from; $("fb2").textContent = ""; paint2(); say(tasks2[ti2].from + " degrees. " + $("task2").textContent); }, 2200); }
       else { $("fb2").className = "fb"; $("fb2").textContent = temp2 < 0 ? "Below zero: minus " + (-temp2) : temp2 === 0 ? "Zero, the line between" : ""; }
     } else { $("task2").textContent = "All three done."; }
@@ -1125,7 +1125,7 @@
   round12();
 
   /* ---- 13: stickers ---- */
-  const STICKERS = [["🧊", "Numbers to 10,000"], ["🌡️", "Below zero"], ["🎯", "Rounding"], ["▦", "Grid multiplying"], ["🍬", "Dividing with remainders"], ["✖️", "Tables and factors"], ["🟧", "Tenths and hundredths"], ["🍫", "Adding fractions"], ["📐", "Perimeter and area"], ["📏", "Angles"], ["📍", "Coordinates"], ["✅", "Show what I know"]];
+  const STICKERS = [["🔢", "Numbers to 10,000"], ["🌡️", "Below zero"], ["🎯", "Rounding"], ["▦", "Grid multiplying"], ["🍬", "Dividing with remainders"], ["✖️", "Tables and factors"], ["🔸", "Tenths and hundredths"], ["🍫", "Adding fractions"], ["📐", "Perimeter and area"], ["📏", "Angles"], ["📍", "Coordinates"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;

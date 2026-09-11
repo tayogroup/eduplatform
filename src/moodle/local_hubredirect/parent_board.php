@@ -204,7 +204,9 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
     var place = [];
     if (c.subject) { place.push(['<span class="pqpb-pl pqpb-pl--course">' + esc(c.subject) + "</span>"]); }
     if (c.stage) { place.push(['<span class="pqpb-pl pqpb-pl--course">' + esc(c.stage) + "</span>"]); }
-    if (c.unit) { place.push(['<span class="pqpb-pl pqpb-pl--course">' + esc(String(c.unit).replace(/^u0?/, "Unit ")) + "</span>"]); }
+    /* "l03" is a standalone lesson build's Lesson 3 - it used to print as a raw
+       "l03", which names nothing on the child's own screen */
+    if (c.unit) { place.push(['<span class="pqpb-pl pqpb-pl--course">' + esc(String(c.unit).replace(/^u0?/, "Unit ").replace(/^l0*(\d+)$/, "Lesson $1")) + "</span>"]); }
     if (c.resumelabel) {
       /* The learner's OWN caption, never the route id: a surface printing
          `dictionary` names a section the family cannot find. */

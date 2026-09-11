@@ -548,7 +548,7 @@
 
   /* ---- 12: stickers ---- */
   const STICKERS = [["🔤", "Saying it in words"], ["🔗", "Odd, even, and what happens"], ["🔺", "The shape that hides a number"],
-    ["🪜", "What comes next?"], ["🟦", "Numbers that make squares"], ["🎯", "Estimate before you work"],
+    ["👣", "What comes next?"], ["🔲", "Numbers that make squares"], ["🎯", "Estimate before you work"],
     ["✖️", "Tables, and a shortcut"], ["➗", "Does it divide exactly?"], ["🔟", "Ten times, a hundred times"],
     ["🌡️", "Below zero, in order"], ["✅", "Show what I know"]];
   function paintStickers() {

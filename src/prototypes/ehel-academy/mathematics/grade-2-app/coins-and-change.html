@@ -469,7 +469,8 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
     <!-- 1 know your money -->
-    <section class="slide" data-say="This is our money. Round gold ones are coins. Flat ones are notes. Tap one to hear what it is worth.">
+    <section class="slide" data-say="This is our money. Round gold ones are coins. Flat ones are notes. Tap one to hear what it is worth." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Money comes as coins and notes, and each one is worth a different number of shillings.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A 10 shilling coin is worth ten single shillings.</s><s>A 50 shilling note is worth fifty.</s><s>The number printed on it tells you what it is worth.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A big coin is not always worth more than a small one.</s><s>Read the number on it, not its size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each coin and note and listen to what it is worth.</s></mstts:express-as>'>
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Know your money</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Round gold ones are <b>coins</b>. Flat ones are <b>notes</b>. Tap one to hear what it is worth.</span></div>
       <div class="stage">
@@ -481,7 +482,7 @@
     </section>
 
     <!-- 2 count the purse -->
-    <section class="slide" data-say="To count money, always start with the biggest and count on. Tap the biggest one first.">
+    <section class="slide" data-say="To count money, always start with the biggest and count on. Tap the biggest one first." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To count money, start with the biggest and count on.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A 50 note, a 20 coin and a 5 coin.</s><s>Start at 50, count on 20 to 70, then 5 more to 75.</s><s>That is 75 shillings.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Counting the pieces is not counting the money.</s><s>Three coins can be worth much more than three shillings.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the biggest one first, then keep counting on.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">2</span><h2>Count what is in the purse</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Start with the <b>biggest</b>, then count on. Tap them in order, biggest first.</span></div>
       <div class="stage">
@@ -493,7 +494,7 @@
     </section>
 
     <!-- 3 make this amount -->
-    <section class="slide" data-say="Now make an amount. Tap coins and notes until the purse holds exactly the right money.">
+    <section class="slide" data-say="Now make an amount. Tap coins and notes until the purse holds exactly the right money." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now you choose the money to make an amount exactly.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To make 35 shillings, take a 20, then a 10, then a 5.</s><s>Say 20, 30, 35 as you go.</s><s>Exactly right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you go past the amount, press Undo and take the last piece back out.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Keep a running total in your head as you tap each piece.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">3</span><h2>Make this exact amount</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Tap money into the purse until it holds <b>exactly</b> the amount.</span></div>
       <div class="stage">
@@ -508,7 +509,7 @@
     </section>
 
     <!-- 4 fewest coins -->
-    <section class="slide" data-say="Same amount, but now use as few coins and notes as you can. Take the biggest that fits, every time.">
+    <section class="slide" data-say="Same amount, but now use as few coins and notes as you can. Take the biggest that fits, every time." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The same amount can be made with lots of pieces or just a few.</s><s>Take the biggest that fits, every time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>70 shillings.</s><s>A 50 fits, and leaves 20.</s><s>A 20 fits, and leaves nothing.</s><s>That is two pieces.</s><s>Seven 10 shilling coins also make 70, but that is seven pieces.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Starting with small coins still reaches the amount, but it takes far more pieces.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask yourself which is the biggest piece that still fits, and tap that one.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">4</span><h2>The fewest pieces</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Make it again with as <b>few</b> pieces as you can. Take the <b>biggest that fits</b>, every time.</span></div>
       <div class="stage">
@@ -523,7 +524,7 @@
     </section>
 
     <!-- 5 shopping -->
-    <section class="slide" data-say="At the shop you add the prices together to find the total.">
+    <section class="slide" data-say="At the shop you add the prices together to find the total." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The total is all the prices added together.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil for 20 shillings and a banana for 11.</s><s>20 add 11 is 31, so the total is 31 shillings.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Add every price in the basket.</s><s>It is easy to add two prices and forget the third.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Add the first two prices, then add the next one to that answer.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">5</span><h2>What does it all cost?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Add the prices together. What is the <b>total</b>?</span></div>
       <div class="stage">
@@ -536,7 +537,7 @@
     </section>
 
     <!-- 6 change -->
-    <section class="slide" data-say="You have some money, but not enough. Count on from what you have up to the price. The hops show how much more you need.">
+    <section class="slide" data-say="You have some money, but not enough. Count on from what you have up to the price. The hops show how much more you need." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When you do not have enough money, count on from what you have up to the price.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You have 35 shillings and the price is 50.</s><s>Hop 5 to reach 40, then hop 10 to reach 50.</s><s>5 and 10 make 15, so you need 15 shillings more.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Stop exactly on the price.</s><s>A hop that jumps past it counts too much.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Use the biggest hop that does not jump past the price.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">6</span><h2>How much more?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count <b>on</b> from what you have up to the price. The hops show how much <b>more</b> you need.</span></div>
       <div class="stage">
@@ -550,7 +551,7 @@
     </section>
 
     <!-- 7 shillings and cents -->
-    <section class="slide" data-say="Money has its own way of writing. Forty-five shillings can be written 45 sh, or KSh 45. Both mean the same.">
+    <section class="slide" data-say="Money has its own way of writing. Forty-five shillings can be written 45 sh, or KSh 45. Both mean the same." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Money has its own way of being written, with the number and the letters sh or KSh.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>45 sh and KSh 45 both mean forty-five shillings.</s><s>The letters say it is money.</s><s>The number says how much.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>KSh goes in front of the number and sh goes after it, but the amount is exactly the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the number first, then find the one that means the same amount.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">7</span><h2>Writing money</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7"><b>45 sh</b> and <b>KSh 45</b> both mean forty-five shillings. Tap the one that matches.</span></div>
       <div class="stage">
@@ -562,7 +563,7 @@
     </section>
 
     <!-- 8 best value -->
-    <section class="slide" data-say="Two purses. Add up what is in each one, then choose the one worth more.">
+    <section class="slide" data-say="Two purses. Add up what is in each one, then choose the one worth more." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To compare two purses, find the total in each one, then compare the totals.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One purse has two 20 shilling coins, which is 40.</s><s>The other has two 10s and a 5, which is 25.</s><s>40 is more than 25.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The purse with more coins is not always worth more.</s><s>Count the money, not the coins.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count one purse, remember its total, then count the other one.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">8</span><h2>Which purse is worth more?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Two purses. Add up what is in each one, then choose the one worth <b>more</b>.</span></div>
       <div class="stage">
@@ -575,7 +576,7 @@
     </section>
 
     <!-- 9 saving and spending -->
-    <section class="slide" data-say="Money you keep is saving. Money you hand over is spending. Both are just adding and taking away.">
+    <section class="slide" data-say="Money you keep is saving. Money you hand over is spending. Both are just adding and taking away." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Saving adds money to what you have.</s><s>Spending takes money away.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa has 30 shillings and saves 20 more.</s><s>30 add 20 is 50.</s><s>Then he spends 15.</s><s>50 take away 15 is 35.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read carefully whether the money comes in or goes out before you decide to add or take away.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask yourself, is this saving or spending?</s><s>Then add or take away.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">9</span><h2>Saving and spending</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Saving <b>adds</b> up. Spending <b>takes</b> away. Work it out.</span></div>
       <div class="stage">
@@ -588,7 +589,7 @@
     </section>
 
     <!-- 10 check -->
-    <section class="slide" data-say="Time to show what you know. Tap the answer.">
+    <section class="slide" data-say="Time to show what you know. Tap the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the check for coins and change.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You will count money, add prices, and work out how much more.</s><s>Get most of them right to finish the lesson, and the screen tells you how many you need.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you do not get enough, that is fine.</s><s>Press Try again and the questions come round again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Whenever you count money, start with the biggest piece.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
       <div class="stage">
@@ -600,7 +601,19 @@
     </section>
 
     <!-- 11 stickers -->
-    <section class="slide" data-say="Look at all the stickers you earned!">
+    <!-- how do you know -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+      <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
+      <div class="stage">
+        <p class="fb" id="clW" style="font-size:21px"></p>
+        <div class="choices" id="chW"></div>
+        <p class="fb" id="fbW"></p>
+        <p class="score" id="scW"></p>
+      </div>
+    </section>
+
+    <section class="slide" data-say="Look at all the stickers you earned!" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf, with a sticker for every step you finished.</s></prosody></mstts:express-as>'>
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
@@ -1435,6 +1448,26 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see lesson-app-tools/add-warmup.py. NOT a step: no sticker, no
+     dot, no score. */
+  const WARM = [{ q: "Last lesson, you worked with tens and ones. Warm up: what is 20 add 10?", opts: [30, 21, 12], a: 30, why: "2 tens and 1 ten make 3 tens, which is 30. Today you will count money the same way, biggest first." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
   function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
@@ -1557,7 +1590,7 @@
 
   /* ---- 5: shopping (0096 2Ni.04) ---- */
   /* prices within 100 whose digits never carry when two or three are added (2Ni.04: no regrouping) */
-  const ITEMS = [["✏️", "a pencil", 20], ["🍌", "a banana", 11], ["🥚", "an egg", 12], ["🧃", "a juice", 23], ["🍞", "a loaf", 42], ["🧼", "a bar of soap", 30], ["🍎", "an apple", 14], ["📒", "a notebook", 51], ["🥕", "a carrot", 10], ["🍊", "an orange", 13]];
+  const ITEMS = [["✏️", "a pencil", 20], ["🍌", "a banana", 11], ["🥚", "an egg", 12], ["☕", "a cup of tea", 23], ["🍞", "a loaf", 42], ["🎈", "a balloon", 30], ["🍎", "an apple", 14], ["📒", "a notebook", 51], ["🥕", "a carrot", 10], ["🍊", "an orange", 13]];
   const noCarry = (list) => list.reduce((a, it) => a + (it[2] % 10), 0) < 10 && list.reduce((a, it) => a + Math.floor(it[2] / 10), 0) < 10;
   let b5 = 0, right5 = 0, lock5 = false, basket5 = [], total5 = 0;
   function round5() {
@@ -1798,7 +1831,7 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["💰", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🧺", "Shop totals"], ["➕", "How much more"], ["✍️", "Writing money"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["✅", "Show what I know"]];
+  const STICKERS = [["💰", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🛒", "Shop totals"], ["➕", "How much more"], ["✍️", "Writing money"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -1807,6 +1840,114 @@
   $("restart").addEventListener("click", () => location.reload());
 
   window.addEventListener("resize", relayout6);
+  /* ==================================================================
+     CONVINCING - "presenting evidence to justify or challenge a
+     mathematical idea or solution" (Cambridge TWM.04). See
+     lesson-app-tools/add-reasoning-step.py: a true claim and three
+     reasons, only one of which does the work. It works out its own slide
+     index from the DOM, so it moved no other step.
+     ================================================================== */
+  (function () {
+    const BANK = [
+      [
+            "A 50 note and a 20 coin make 70 shillings.",
+            "Start at 50 and count on 20: 60, 70.",
+            [
+                  "There are two pieces of money.",
+                  "The note is bigger than the coin."
+            ],
+            "Counting money means adding what each piece is worth, not counting the pieces."
+      ],
+      [
+            "One 50 shilling note is worth more than four 10 shilling coins.",
+            "Four 10s make 40, and 50 is more than 40.",
+            [
+                  "Four is more than one.",
+                  "Notes are made of paper."
+            ],
+            "Count what the money is worth, not how many pieces there are."
+      ],
+      [
+            "With 35 shillings, you need 15 more for a book that costs 50.",
+            "Counting on from 35 to 50 takes 5 and then 10, which is 15.",
+            [
+                  "You add 50 and 35.",
+                  "35 is less than 50."
+            ],
+            "How much more is the gap between what you have and the price. Count on across it."
+      ],
+      [
+            "You can pay 70 shillings with just two pieces.",
+            "A 50 and a 20 make 70.",
+            [
+                  "70 is an even number.",
+                  "Seven 10 shilling coins make 70."
+            ],
+            "Seven 10s do make 70, but that is seven pieces. The biggest pieces that fit use the fewest."
+      ],
+      [
+            "45 sh and KSh 45 are the same amount.",
+            "Both say forty-five shillings. Only the letters are in a different place.",
+            [
+                  "They both have a 4 and a 5.",
+                  "Money is always written with letters."
+            ],
+            "The number is the amount. The letters only say that it is money."
+      ],
+      [
+            "Musa had 30 shillings, saved 20 and spent 15. Now he has 35.",
+            "30 add 20 is 50, and 50 take away 15 is 35.",
+            [
+                  "30 add 20 add 15 is 65.",
+                  "He spent less than he saved."
+            ],
+            "Saving adds and spending takes away. He did spend less than he saved, but that alone does not tell you he has 35."
+      ]
+];
+    const host = document.getElementById("clW");
+    if (!host) return;
+    ["fbW", "scW", "clW"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && !el.hasAttribute("aria-live")) el.setAttribute("aria-live", "polite");
+    });
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    let got = 0, asked = 0, order = shuffle(BANK), qi = 0, live = false;
+    function paint() {
+      if (qi >= order.length) { order = shuffle(BANK); qi = 0; }
+      const it = order[qi];
+      document.getElementById("clW").textContent = it[0];
+      document.getElementById("sayW").textContent = it[0] + " Which reason really explains it?";
+      document.getElementById("chW").innerHTML = shuffle([it[1]].concat(it[2]))
+        .map((o) => '<button type="button" class="choice word" data-v="' + esc(o) + '">' + esc(o) + "</button>").join("");
+      document.getElementById("fbW").className = "fb";
+      document.getElementById("fbW").textContent = "";
+      live = true;
+    }
+    document.getElementById("chW").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = order[qi];
+      const ok = b.dataset.v === it[1];
+      [...document.getElementById("chW").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.v === it[1]) x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      asked++; if (ok) got++;
+      const fb = document.getElementById("fbW");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not that one. ") + it[3];
+      say(ok ? cheer() : it[3]);
+      document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
+      if (got >= 4) finish(SLOT, "");
+      qi++;
+      setTimeout(paint, 3400);
+    });
+    paint();
+  })();
+
   show(0, false);
 
   /* ================= the two header bars =================
@@ -2166,3 +2307,19 @@
   }, true);
 })();
 </script>
+
+<style>/* ehel-warmup - see lesson-app-tools/add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>

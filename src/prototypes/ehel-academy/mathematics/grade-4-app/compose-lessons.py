@@ -63,21 +63,35 @@ STRUCTURE = [
     ("calc", "Ways to Calculate", "num",
      [1, 6, ("n", 1), ("n", 2), 7, ("n", 3), ("n", 4), ("n", 5), ("d", 6), ("n", 6), 8],
      [1, 6, 7, 10]),
-    ("frac", "Parts of a Whole", "frac", None, None),
+    # The thinnest lessons grew a step each way (2026-09-11 validation, area 3:
+    # "grow the thinnest lessons"): a fraction of an amount met again as a word
+    # problem about somebody, straight after the slide that teaches it, and
+    # ordering three fractions after comparing two - 4Nf.07 says "compare AND
+    # order", and the kept slide only ever compares a pair.
+    ("frac", "Parts of a Whole", "frac",
+     [1, 2, 3, ("n", 1), 4, 5, 6, ("n", 2), 7], None),
     # Units are converted both ways before a clock is read; the clock is read before
     # it is rewritten in 24-hour; the timetable is read before it is used to choose;
     # and intervals go clock, then over a month end, then months and years.
     ("time", "Telling the Time", "time",
      [1, ("n", 1), 2, ("n", 2), ("n", 3), 3, ("n", 4), 4, ("n", 5), ("n", 6)],
      None),
+    # 4Gg.02 and 4Gg.03 shared 'Area without counting', an exploration with two
+    # sliders; each now gets a step that asks: the perimeter a rectangle's formula
+    # gives, then the area of an L shape as two rectangles added.
     ("shape", "Shape and Measures", "shape",
-     [1, 2, 3, ("d", 10), 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+     [1, 2, 3, ("d", 10), 5, 6, ("n", 1), ("n", 2), 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]),
     # Direction is taught before it is used, coordinates are introduced before the
     # order of the pair is argued about, and the mirror-on-the-edge case comes after
     # an ordinary reflection rather than before it.
     ("where", "Where Things Are", "shape",
      [("n", 1), ("n", 2), 9, ("n", 3), ("d", 11), ("n", 4), ("n", 5), 4, ("n", 6)], [10]),
-    ("stats", "Asking, Sorting and Chance", "stats", None, None),
+    # Choosing a representation comes after all four have been drawn (4Ss.02 says
+    # "choose and explain which representation to use"); the words of chance are
+    # used on familiar events after the line that introduces them, before the
+    # experiment that tests them.
+    ("stats", "Asking, Sorting and Chance", "stats",
+     [1, 2, 3, 4, ("n", 1), 5, 6, ("n", 2), 7], None),
 ]
 
 SRC = {"num": "num", "shape": "shape", "frac": "frac", "time": "time", "stats": "stats"}
@@ -95,7 +109,7 @@ DONOR_EXTRAS = {
          '{ q: "How many hundreds are there in 4,072?", o: ["0", "4", "7"], a: 0,'
          ' w: "The hundreds place holds a 0. The 4 is thousands and the 7 is tens." }'),
     2: ("\\u2744\\ufe0f",
-         '{ q: "It is 3\\u00b0C and it gets 5 degrees colder. What is the temperature?",'
+         '{ q: "On Mount Kenya it is 3\\u00b0C, and in the night it gets 5 degrees colder. What is the temperature now?",'
          ' o: ["\\u22122\\u00b0C", "2\\u00b0C", "\\u22128\\u00b0C"], a: 0,'
          ' w: "Count back from 3 through zero: 2, 1, 0, \\u22121, \\u22122." }'),
     6: ("\u2b1c",           # a rectangle, because that is how the slide draws a factor pair
@@ -132,12 +146,13 @@ NEW_EXTRAS = {
             '{ q: "16 \\u00d7 25 is the same as:", o: ["8 \\u00d7 50", "32 \\u00d7 50", "8 \\u00d7 25"], a: 0,'
             ' w: "Halve one and double the other and they cancel out, so the answer cannot change:'
             ' both come to 400. Doubling both would make it four times too big." }'),
-        4: ("\\U0001f9f1",
+        4: ("\\u2702\\ufe0f",
             '{ q: "What is 342 \\u00d7 6?", o: ["2,052", "1,812", "2,040"], a: 0,'
             ' w: "300 \\u00d7 6 = 1,800, 40 \\u00d7 6 = 240 and 2 \\u00d7 6 = 12. Add all three: 2,052.'
             ' Forgetting the 40 leaves you 240 short." }'),
-        5: ("\\U0001f9fa",
-            '{ q: "What is 87 \\u00f7 5?", o: ["17 remainder 2", "17", "18 remainder 2"], a: 0,'
+        5: ("\\U0001f36c",
+            '{ q: "Omar shares 87 sweets equally among 5 friends. How many does each friend get, and how many are left over?",'
+            ' o: ["17 each, 2 left over", "17 each, none left over", "18 each, 2 left over"], a: 0,'
             ' w: "5 \\u00d7 17 = 85, and 2 are left over \\u2014 not enough to make another group of 5.'
             ' Check it: 85 + 2 = 87." }'),
         6: ("\\U0001f501",
@@ -161,8 +176,8 @@ NEW_EXTRAS = {
             ' w: "12 am is midnight, and the hour after midnight is written 00. There is no 24 in'
             ' 24-hour time \\u2014 it runs 00:00 to 23:59." }'),
         4: ("\U0001f68f",
-            '{ q: "Buses reach the library at 09:05, 09:25 and 09:45. You must be there by 09:30.'
-            ' Which do you catch?", o: ["The one arriving 09:25", "The one arriving 09:05",'
+            '{ q: "Buses reach the library at 09:05, 09:25 and 09:45. Leila must be there by 09:30.'
+            ' Which one should Leila catch?", o: ["The one arriving 09:25", "The one arriving 09:05",'
             ' "The one arriving 09:45"], a: 0,'
             ' w: "09:45 is too late. 09:05 would get you there, but 09:25 is the LATEST that still'
             ' makes it, so it is the one to catch." }'),
@@ -205,7 +220,7 @@ NEW_EXTRAS = {
         1: ("\\U0001f3f7\\ufe0f",
             '{ q: "What is the 6 worth in 63,451?", o: ["60 000", "6 000", "6"], a: 0,'
             ' w: "It sits in the ten thousands column, so it is worth 6 \\u00d7 10 000." }'),
-        2: ("\\U0001f9f1",
+        2: ("\\U0001f504",
             '{ q: "Which of these is the same number as 4,208?",'
             ' o: ["3 thousands, 12 hundreds, 0 tens, 8 ones", "4 thousands, 12 hundreds, 0 tens, 8 ones",'
             ' "3 thousands, 2 hundreds, 0 tens, 8 ones"], a: 0,'
@@ -214,14 +229,14 @@ NEW_EXTRAS = {
             '{ q: "A sequence goes 1,240, 1,290, 1,340 \\u2026 what comes next?",'
             ' o: ["1,390", "1,350", "1,440"], a: 0,'
             ' w: "Each step adds 50, because 1,290 \\u2212 1,240 = 50. So 1,340 + 50 = 1,390." }'),
-        4: ("\\U0001fa9c",
+        4: ("\\U0001f4f6",
             '{ q: "Which list is in order, smallest first?",'
             ' o: ["\\u22128, \\u22123, 0, 5", "\\u22123, \\u22128, 0, 5", "0, \\u22123, \\u22128, 5"], a: 0,'
             ' w: "Further left on the line is smaller, so \\u22128 comes before \\u22123." }'),
         5: ("\\U0001f3af",
             '{ q: "Round 4,650 to the nearest 100.", o: ["4,700", "4,600", "5,000"], a: 0,'
             ' w: "It is exactly halfway between 4,600 and 4,700, and halfway is the case that rounds up." }'),
-        6: ("\\U0001f9ee",
+        6: ("\\U0001f590\\ufe0f",
             '{ q: "Round 47,318 to the nearest 1000.", o: ["47,000", "47,300", "50,000"], a: 0,'
             ' w: "It sits between 47,000 and 48,000, and it is only 318 past 47,000. The other two answers'
             ' round it to the nearest 100 and the nearest 10 000." }'),
@@ -235,7 +250,7 @@ NEW_EXTRAS = {
             '{ q: "Which point lies between south and west?", o: ["SW", "SE", "NW"], a: 0,'
             ' w: "Join the two names: south-west, written SW. The north or south part comes first." }'),
         3: ("\\U0001f6b6",
-            '{ q: "From a square you go 3 east then 2 north. How far east are you?", o: ["3", "5", "1"], a: 0,'
+            '{ q: "Hodan starts on a square and walks 3 squares east, then 2 north. How many squares east of her start is she?", o: ["3", "5", "1"], a: 0,'
             ' w: "Only the first move went east. Going north changes the row, not the column." }'),
         4: ("\\u2195\\ufe0f",
             '{ q: "Is (2, 6) the same place as (6, 2)?", o: ["No", "Yes", "Only on a big grid"], a: 0,'
@@ -248,6 +263,37 @@ NEW_EXTRAS = {
             '{ q: "The mirror line runs along the edge of a shape. Where does the reflection sit?",'
             ' o: ["Touching the shape", "One square away", "On top of the shape"], a: 0,'
             ' w: "A square against the mirror has no distance to cross, so its partner sits right beside it." }'),
+    },
+    # 2026-09-11: the thinnest lessons grew, and every new step is about a named child
+    "frac": {
+        1: ("\\U0001f36c",
+            '{ q: "Amina has 30 mangoes and gives one fifth of them to her grandmother. How many does she give?",'
+            ' o: ["6", "5", "25"], a: 0,'
+            ' w: "One fifth means 5 equal groups: 30 \\u00f7 5 = 6 in each group. 5 is the number of groups, and 25 is what she keeps." }'),
+        2: ("\\U0001f4f6",
+            '{ q: "Which list is in order, smallest first?",'
+            ' o: ["One quarter, one half, five eighths", "Five eighths, one half, one quarter", "One half, one quarter, five eighths"], a: 0,'
+            ' w: "In eighths they are 2, 4 and 5 eighths, so one quarter is the smallest and five eighths the biggest." }'),
+    },
+    "stats": {
+        1: ("\\U0001f4c8",
+            '{ q: "Which would you use to sort children by two questions at once: has a pet, and walks to school?",'
+            ' o: ["A Carroll diagram", "A bar chart", "A dot plot"], a: 0,'
+            ' w: "A Carroll diagram has a box for each pair of answers, so it sorts by two questions at once." }'),
+        2: ("\\u2614",
+            '{ q: "Musa rolls an ordinary dice. How likely is it that he rolls a number less than 7?",'
+            ' o: ["Certain", "Maybe", "Impossible"], a: 0,'
+            ' w: "Every number on an ordinary dice, 1 to 6, is less than 7, so it is certain." }'),
+    },
+    "shape": {
+        1: ("\\U0001f6a7",
+            '{ q: "Hodan puts a fence all the way round a garden 7 metres long and 3 metres wide. How much fence does she need?",'
+            ' o: ["20 metres", "21 metres", "10 metres"], a: 0,'
+            ' w: "All the way round is 7 + 3 + 7 + 3 = 2 \\u00d7 (7 + 3) = 20 metres. 21 is the area inside, and 10 only goes half way round." }'),
+        2: ("\\u2795",
+            '{ q: "An L shape is a 5 by 3 rectangle joined to a 2 by 2 square. What is its area?",'
+            ' o: ["19 squares", "15 squares", "25 squares"], a: 0,'
+            ' w: "Add the two areas: 5 \\u00d7 3 = 15 and 2 \\u00d7 2 = 4, so 15 + 4 = 19 squares." }'),
     },
 }
 

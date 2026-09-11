@@ -517,9 +517,9 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["🧊", "The faces of a solid"], ["📦", "Fold it up: nets"], ["🦋", "Every line of symmetry"],
-    ["🪞", "Reflect it in the mirror"], ["🔷", "Putting shapes together"], ["📐", "Area without counting"],
-    ["🫐", "An odd shape on a grid"], ["🥛", "Reading between the marks"], ["🧭", "Which way from here?"], ["✅", "Show what I know"]];
+  const STICKERS = [["🎲", "The faces of a solid"], ["📦", "Fold it up: nets"], ["🦋", "Every line of symmetry"],
+    ["↔️", "Reflect it in the mirror"], ["🔷", "Putting shapes together"], ["📐", "Area without counting"],
+    ["🍃", "An odd shape on a grid"], ["🥛", "Reading between the marks"], ["📍", "Which way from here?"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

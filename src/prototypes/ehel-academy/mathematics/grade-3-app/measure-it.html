@@ -892,6 +892,7 @@
 
     <!-- 8 length -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Length is measured in centimetres, metres and kilometres, and they step up in known jumps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A hundred centimetres make one metre.</s><s>A thousand metres make one kilometre.</s><s>So going up a unit means dividing, and coming down means multiplying.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Pick the unit that gives a sensible number.</s><s>A pencil is about fifteen centimetres.</s><s>Nobody measures a pencil in kilometres, and nobody measures a journey in centimetres.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Choose the right unit, or change one into another.</s></mstts:express-as>' data-say="A hundred centimetres in a metre, a thousand metres in a kilometre.">
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Centimetres, metres, kilometres</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Choose the answer.</span></div>
       <div class="stage">
@@ -943,6 +944,28 @@
         <div class="choices" id="ch12"></div>
         <p class="fb" id="fb12" role="status" aria-live="polite"></p>
         <p class="score" id="sc12"></p>
+      </div>
+    </section>
+    <!-- ehel-g3-second-steps: measure from any mark -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The length of something is the gap from where it starts to where it ends.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil starts at the 2 and ends at the 9.</s><s>Count on from 2 to 9: that is 7 centimetres.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Reading only the end gives 9, which is too long, because the pencil did not start at 0.</s><s>The start matters as much as the end.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find the start and the end, then count on the centimetres between them.</s></mstts:express-as>' data-say="A ruler does not have to start at zero. Count on from where it starts to where it ends.">
+      <div class="slide-head"><span class="n">6</span><h2>Measure from any mark</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayx61">How long is it?</span></div>
+      <div class="stage">
+        <svg class="scaleline gsvg" id="gx61" viewBox="0 0 460 130" role="img" aria-label="a ruler with something lying along it"></svg><p class="fb" id="qx61" style="font-size:20px"></p>
+        <div class="choices" id="chx61"></div>
+        <p class="fb" id="fbx61" role="status" aria-live="polite"></p>
+        <p class="score" id="scx61"></p>
+      </div>
+    </section>
+    <!-- ehel-g3-second-steps: two right angles -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A right angle is a quarter turn.</s><s>Two right angles make a straight line, which is a half turn.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Start with an arm pointing right.</s><s>Turn it one right angle and it points up.</s><s>Turn it another right angle and it points left, and the two arms now make one straight line.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A straight line does not look like an angle, but it is one.</s><s>It is two right angles put side by side.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count the little square corners.</s><s>Each one is a right angle.</s></mstts:express-as>' data-say="Every square corner is one right angle. Two of them side by side make a straight line.">
+      <div class="slide-head"><span class="n">7</span><h2>Two right angles, one straight line</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayx62">How many right angles?</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="gx62" viewBox="0 0 300 220" role="img" aria-label="a turn made of right angles"></svg><p class="fb" id="qx62" style="font-size:20px"></p>
+        <div class="choices" id="chx62"></div>
+        <p class="fb" id="fbx62" role="status" aria-live="polite"></p>
+        <p class="score" id="scx62"></p>
       </div>
     </section>
     <!-- 17 check -->
@@ -1817,6 +1840,26 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see lesson-app-tools/add-warmup.py. NOT a step: no sticker, no
+     dot, no score. */
+  const WARM = [{ q: "Last lesson, you looked at shapes and perimeter. Warm up: which unit would you use to measure a pencil?", opts: ["centimetres", "kilograms", "litres"], a: "centimetres", why: "A pencil is a length, so it is measured in centimetres. Today you will measure length, mass and capacity." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
 
   /* ==================================================================
@@ -2023,6 +2066,99 @@
   }
   round12();
 
+  /* ---- ehel-g3-second-steps: measure from any mark ---- 3Gg.02 estimate and MEASURE lengths in cm; 3Gg.11 use instruments */
+  (function () {
+    const THINGS = [["Musa", "pencil"], ["Amina", "ribbon"], ["Hodan", "crayon"], ["Yusuf", "leaf"], ["Leila", "stick"], ["Omar", "straw"]];
+    let got = 0, asked = 0;
+    function round() {
+      const s = rnd(1, 4), len = rnd(3, 7), e = s + len;
+      const x0 = 20, x1 = 440, cm = (x1 - x0) / 12, y = 92;
+      let svg = '<rect class="sh" x="' + (x0 + s * cm).toFixed(1) + '" y="' + (y - 46) + '" width="' + (len * cm).toFixed(1) + '" height="18" rx="7"></rect>';
+      svg += '<line class="tk" stroke-dasharray="4 4" x1="' + (x0 + s * cm).toFixed(1) + '" y1="' + (y - 28) + '" x2="' + (x0 + s * cm).toFixed(1) + '" y2="' + y + '"></line>';
+      svg += '<line class="tk" stroke-dasharray="4 4" x1="' + (x0 + e * cm).toFixed(1) + '" y1="' + (y - 28) + '" x2="' + (x0 + e * cm).toFixed(1) + '" y2="' + y + '"></line>';
+      svg += '<line class="ax" x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '"></line>';
+      for (let k = 0; k <= 24; k++) {
+        const x = x0 + cm * k / 2, big = k % 2 === 0;
+        svg += '<line class="tk" x1="' + x.toFixed(1) + '" y1="' + (y - (big ? 16 : 8)) + '" x2="' + x.toFixed(1) + '" y2="' + y + '"></line>';
+        if (big) svg += '<text class="n" x="' + x.toFixed(1) + '" y="' + (y + 22) + '">' + (k / 2) + "</text>";
+      }
+      $("gx61").innerHTML = svg;
+      const t = THINGS[rnd(0, THINGS.length - 1)];
+      const q = t[0] + "'s " + t[1] + " does not start at 0. How long is it?";
+      $("qx61").textContent = q; $("sayx61").textContent = q;
+      const right = len + " cm";
+      const opts = [right, e + " cm", (s === 1 ? len - 1 : len + 1) + " cm"];
+      offer("chx61", opts, right, (ev) => {
+        const btn = ev.target.closest(".choice"); if (!btn) return;
+        const ok = btn.dataset.v === right;
+        if (!mark("chx61", btn, ok)) return;
+        asked++; if (ok) got++;
+        const why = "It starts at " + s + " and ends at " + e + ". Count on from " + s + " to " + e + ": that is " + len + " centimetres. Reading only the end gives " + e + ", which is too long.";
+        $("fbx61").className = "fb " + (ok ? "good" : "");
+        $("fbx61").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx61", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 3200);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx61").closest(".slide"));
+    round();
+  })();
+
+  /* ---- ehel-g3-second-steps: two right angles ---- 3Gg.10 recognise that a straight line is equivalent to two right angles or a half turn */
+  (function () {
+    const NAME = { 1: "a quarter turn", 2: "a half turn", 3: "three quarters of a turn", 4: "a whole turn" };
+    const FACTS = [
+      { q: "Two right angles side by side make...", opts: ["a straight line", "a square corner", "a whole turn"], a: "a straight line", why: "Two right angles make a half turn, and a half turn is a straight line." },
+      { q: "A half turn is how many right angles?", opts: ["2", "1", "4"], a: "2", why: "A quarter turn is one right angle, so a half turn is two." },
+      { q: "A straight line is the same as...", opts: ["a half turn", "a quarter turn", "a whole turn"], a: "a half turn", why: "A straight line is two right angles, and that is a half turn." },
+      { q: "How many right angles make a whole turn?", opts: ["4", "2", "3"], a: "4", why: "Four quarter turns bring you all the way round, and each one is a right angle." },
+    ];
+    let got = 0, asked = 0;
+    function draw(k) {
+      const cx = 150, cy = 115, L = 90, m = 18;
+      let svg = '<line class="arm" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L) + '" y2="' + cy + '"></line>';
+      /* one small square per right angle, each in its own corner and apart from
+         the others - drawn as corner ticks they joined into ONE square at a whole
+         turn, and a child told to count four corners saw one */
+      const SG = [[1, -1], [-1, -1], [-1, 1], [1, 1]];
+      for (let q = 0; q < k; q++) svg += '<rect class="rt" x="' + (cx + (SG[q][0] > 0 ? 5 : -5 - m)) + '" y="' + (cy + (SG[q][1] > 0 ? 5 : -5 - m)) + '" width="' + m + '" height="' + m + '"></rect>';
+      const a = -k * Math.PI / 2;
+      if (k < 4) svg += '<line class="arm b" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L * Math.cos(a)).toFixed(1) + '" y2="' + (cy + L * Math.sin(a)).toFixed(1) + '"></line>';
+      else svg += '<circle class="rt" cx="' + cx + '" cy="' + cy + '" r="40"></circle>';
+      $("gx62").innerHTML = svg;
+    }
+    function round() {
+      let q, opts, right, why;
+      if (rnd(0, 4) < 3) {
+        const k = rnd(1, 4); draw(k);
+        q = "The arm turns from pointing right. How many right angles is this turn?";
+        right = String(k);
+        opts = [right].concat(["1", "2", "3", "4"].filter((x) => x !== right).sort(() => Math.random() - 0.5).slice(0, 2));
+        why = "Count the square corners: " + k + ". That is " + NAME[k] + (k === 2 ? ", and the two arms make a straight line." : ".");
+      } else {
+        const f = FACTS[rnd(0, FACTS.length - 1)]; draw(2);
+        q = f.q; right = f.a; opts = f.opts; why = f.why;
+      }
+      $("qx62").textContent = q; $("sayx62").textContent = q;
+      offer("chx62", opts, right, (e) => {
+        const btn = e.target.closest(".choice"); if (!btn) return;
+        const ok = btn.dataset.v === right;
+        if (!mark("chx62", btn, ok)) return;
+        asked++; if (ok) got++;
+        $("fbx62").className = "fb " + (ok ? "good" : "");
+        $("fbx62").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx62", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 3000);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx62").closest(".slide"));
+    round();
+  })();
+
   /* ---- 17: check ---- */
   const QS = [
     () => { const m = rnd(1, 9); return { q: m + " m = ? cm", opts: [m * 100, m * 10, m * 1000], a: m * 100, why: "100 cm in a metre." }; },
@@ -2039,7 +2175,7 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 4) finish(5, "You have finished the check.");
+      if (got17 >= 4) finish(7, "You have finished the check.");
       else retryCheck($("fb17"), $("ch17"), got17, order17.length, 4, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
@@ -2068,6 +2204,8 @@
     ["🥤", "Capacity"],
     ["🌡️", "Reading a scale"],
     ["📐", "Right angles"],
+    ["✏️", "Measure from any mark"],
+    ["🔄", "Two right angles, one straight line"],
     ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];
@@ -2693,3 +2831,19 @@
   }, true);
 })();
 </script>
+
+<style>/* ehel-warmup - see lesson-app-tools/add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>

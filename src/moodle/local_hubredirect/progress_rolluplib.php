@@ -35,13 +35,80 @@ const PQPR_SUPPORT_THRESHOLD = 70;
  */
 const PQPR_GENERIC_LEVELS = ['primary', 'lower secondary', 'upper secondary'];
 
-/** `u03` -> `Unit 3`; the fixed unit keys keep their own names. */
-function pqpr_unit_label(string $unit): string {
+/**
+ * `u03` -> `Unit 3`; `l03` -> `Lesson 3`, and `Lesson 3: Fair Shares` when the
+ * course's lesson titles are passed; the fixed unit keys keep their own names.
+ *
+ * `l03` is the unit a STANDALONE lesson build writes (Mathematics, Science,
+ * Computing and Global Perspectives at Grades 1-4 - see
+ * pqpr_standalone_lessons()). It used to fall through to ucfirst() and reach a
+ * parent as "L03", which names nothing on the child's own screen.
+ */
+function pqpr_unit_label(string $unit, array $lessontitles = []): string {
     if (preg_match('/^u(\d+)$/', $unit, $m)) {
         return 'Unit ' . (int)$m[1];
     }
+    if (preg_match('/^l(\d+)$/', $unit, $m)) {
+        $title = trim((string)($lessontitles[$unit] ?? ''));
+        return 'Lesson ' . (int)$m[1] . ($title !== '' ? ': ' . $title : '');
+    }
     $known = ['capstone' => 'Capstone', 'final' => 'Final', 'prereq' => 'Placement', '_' => 'Course'];
     return $known[$unit] ?? ucfirst(str_replace('-', ' ', $unit));
+}
+
+/**
+ * The lessons of every standalone lesson build, by course key:
+ * [coursekey => [unit => title, ...]] in lesson order.
+ *
+ * Those builds are organised by strand rather than by the shell course's
+ * term-ordered units, so they write progress under their own l01..lNN beneath
+ * the shell's course key - and the catalogue's unit count, which is the
+ * SHELL's, says nothing about them. Maths Grade 2 is 9 lessons against 15
+ * units; Science Grade 3 is 13 lessons against 6. standalone_lessons.json is
+ * generated from each build's app.config.json by
+ * tools/build-standalone-lesson-map.mjs and never edited by hand. A missing or
+ * unreadable file is an empty map, which leaves every course exactly as it was.
+ */
+function pqpr_standalone_lessons(?string $path = null): array {
+    static $cache = [];
+    $path = $path ?? __DIR__ . '/standalone_lessons.json';
+    if (!array_key_exists($path, $cache)) {
+        $map = [];
+        $raw = is_readable($path) ? file_get_contents($path) : false;
+        $data = $raw === false ? null : json_decode((string)$raw, true);
+        foreach ((array)($data['courses'] ?? []) as $key => $course) {
+            foreach ((array)($course['lessons'] ?? []) as $lesson) {
+                $unit = (string)($lesson['unit'] ?? '');
+                if (preg_match('/^l\d+$/', $unit)) {
+                    $map[(string)$key][$unit] = (string)($lesson['title'] ?? '');
+                }
+            }
+        }
+        $cache[$path] = $map;
+    }
+    return $cache[$path];
+}
+
+/**
+ * Units done, and out of how many, for one course.
+ *
+ * $done/$seen count every progress row of the course; $lessondone/$lessonseen
+ * the rows that are lesson units (l01..); $unitcount is the catalogue's; and
+ * $lessons the course's entry in pqpr_standalone_lessons(). When the learner has
+ * lesson rows and the course has a lesson list, the answer is LESSONS - done of
+ * the build's own count - because that is the course they are doing. Any shell
+ * rows from before their course was routed are left out of that count rather
+ * than added to it: fifteen shell units plus nine lessons is not a course
+ * anybody takes. Otherwise it is exactly what it always was.
+ */
+function pqpr_course_units(int $done, int $seen, int $lessondone, int $lessonseen,
+                           int $unitcount, array $lessons): array {
+    if ($lessonseen > 0 && $lessons) {
+        $total = max(count($lessons), $lessondone, 1);
+        return ['done' => $lessondone, 'total' => $total];
+    }
+    $total = $unitcount > 0 ? $unitcount : $seen;
+    return ['done' => $done, 'total' => max($total, $done, 1)];
 }
 
 /** `course-quiz` -> `Course quiz`. */

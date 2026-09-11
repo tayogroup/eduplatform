@@ -175,6 +175,99 @@
   }
   round12();
 
+  /* ---- ehel-g3-second-steps: measure from any mark ---- 3Gg.02 estimate and MEASURE lengths in cm; 3Gg.11 use instruments */
+  (function () {
+    const THINGS = [["Musa", "pencil"], ["Amina", "ribbon"], ["Hodan", "crayon"], ["Yusuf", "leaf"], ["Leila", "stick"], ["Omar", "straw"]];
+    let got = 0, asked = 0;
+    function round() {
+      const s = rnd(1, 4), len = rnd(3, 7), e = s + len;
+      const x0 = 20, x1 = 440, cm = (x1 - x0) / 12, y = 92;
+      let svg = '<rect class="sh" x="' + (x0 + s * cm).toFixed(1) + '" y="' + (y - 46) + '" width="' + (len * cm).toFixed(1) + '" height="18" rx="7"></rect>';
+      svg += '<line class="tk" stroke-dasharray="4 4" x1="' + (x0 + s * cm).toFixed(1) + '" y1="' + (y - 28) + '" x2="' + (x0 + s * cm).toFixed(1) + '" y2="' + y + '"></line>';
+      svg += '<line class="tk" stroke-dasharray="4 4" x1="' + (x0 + e * cm).toFixed(1) + '" y1="' + (y - 28) + '" x2="' + (x0 + e * cm).toFixed(1) + '" y2="' + y + '"></line>';
+      svg += '<line class="ax" x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '"></line>';
+      for (let k = 0; k <= 24; k++) {
+        const x = x0 + cm * k / 2, big = k % 2 === 0;
+        svg += '<line class="tk" x1="' + x.toFixed(1) + '" y1="' + (y - (big ? 16 : 8)) + '" x2="' + x.toFixed(1) + '" y2="' + y + '"></line>';
+        if (big) svg += '<text class="n" x="' + x.toFixed(1) + '" y="' + (y + 22) + '">' + (k / 2) + "</text>";
+      }
+      $("gx61").innerHTML = svg;
+      const t = THINGS[rnd(0, THINGS.length - 1)];
+      const q = t[0] + "'s " + t[1] + " does not start at 0. How long is it?";
+      $("qx61").textContent = q; $("sayx61").textContent = q;
+      const right = len + " cm";
+      const opts = [right, e + " cm", (s === 1 ? len - 1 : len + 1) + " cm"];
+      offer("chx61", opts, right, (ev) => {
+        const btn = ev.target.closest(".choice"); if (!btn) return;
+        const ok = btn.dataset.v === right;
+        if (!mark("chx61", btn, ok)) return;
+        asked++; if (ok) got++;
+        const why = "It starts at " + s + " and ends at " + e + ". Count on from " + s + " to " + e + ": that is " + len + " centimetres. Reading only the end gives " + e + ", which is too long.";
+        $("fbx61").className = "fb " + (ok ? "good" : "");
+        $("fbx61").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx61", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 3200);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx61").closest(".slide"));
+    round();
+  })();
+
+  /* ---- ehel-g3-second-steps: two right angles ---- 3Gg.10 recognise that a straight line is equivalent to two right angles or a half turn */
+  (function () {
+    const NAME = { 1: "a quarter turn", 2: "a half turn", 3: "three quarters of a turn", 4: "a whole turn" };
+    const FACTS = [
+      { q: "Two right angles side by side make...", opts: ["a straight line", "a square corner", "a whole turn"], a: "a straight line", why: "Two right angles make a half turn, and a half turn is a straight line." },
+      { q: "A half turn is how many right angles?", opts: ["2", "1", "4"], a: "2", why: "A quarter turn is one right angle, so a half turn is two." },
+      { q: "A straight line is the same as...", opts: ["a half turn", "a quarter turn", "a whole turn"], a: "a half turn", why: "A straight line is two right angles, and that is a half turn." },
+      { q: "How many right angles make a whole turn?", opts: ["4", "2", "3"], a: "4", why: "Four quarter turns bring you all the way round, and each one is a right angle." },
+    ];
+    let got = 0, asked = 0;
+    function draw(k) {
+      const cx = 150, cy = 115, L = 90, m = 18;
+      let svg = '<line class="arm" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L) + '" y2="' + cy + '"></line>';
+      /* one small square per right angle, each in its own corner and apart from
+         the others - drawn as corner ticks they joined into ONE square at a whole
+         turn, and a child told to count four corners saw one */
+      const SG = [[1, -1], [-1, -1], [-1, 1], [1, 1]];
+      for (let q = 0; q < k; q++) svg += '<rect class="rt" x="' + (cx + (SG[q][0] > 0 ? 5 : -5 - m)) + '" y="' + (cy + (SG[q][1] > 0 ? 5 : -5 - m)) + '" width="' + m + '" height="' + m + '"></rect>';
+      const a = -k * Math.PI / 2;
+      if (k < 4) svg += '<line class="arm b" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L * Math.cos(a)).toFixed(1) + '" y2="' + (cy + L * Math.sin(a)).toFixed(1) + '"></line>';
+      else svg += '<circle class="rt" cx="' + cx + '" cy="' + cy + '" r="40"></circle>';
+      $("gx62").innerHTML = svg;
+    }
+    function round() {
+      let q, opts, right, why;
+      if (rnd(0, 4) < 3) {
+        const k = rnd(1, 4); draw(k);
+        q = "The arm turns from pointing right. How many right angles is this turn?";
+        right = String(k);
+        opts = [right].concat(["1", "2", "3", "4"].filter((x) => x !== right).sort(() => Math.random() - 0.5).slice(0, 2));
+        why = "Count the square corners: " + k + ". That is " + NAME[k] + (k === 2 ? ", and the two arms make a straight line." : ".");
+      } else {
+        const f = FACTS[rnd(0, FACTS.length - 1)]; draw(2);
+        q = f.q; right = f.a; opts = f.opts; why = f.why;
+      }
+      $("qx62").textContent = q; $("sayx62").textContent = q;
+      offer("chx62", opts, right, (e) => {
+        const btn = e.target.closest(".choice"); if (!btn) return;
+        const ok = btn.dataset.v === right;
+        if (!mark("chx62", btn, ok)) return;
+        asked++; if (ok) got++;
+        $("fbx62").className = "fb " + (ok ? "good" : "");
+        $("fbx62").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx62", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 3000);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx62").closest(".slide"));
+    round();
+  })();
+
   /* ---- 17: check ---- */
   const QS = [
     () => { const m = rnd(1, 9); return { q: m + " m = ? cm", opts: [m * 100, m * 10, m * 1000], a: m * 100, why: "100 cm in a metre." }; },
@@ -191,7 +284,7 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 4) finish(5, "You have finished the check.");
+      if (got17 >= 4) finish(7, "You have finished the check.");
       else retryCheck($("fb17"), $("ch17"), got17, order17.length, 4, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
@@ -220,6 +313,8 @@
     ["🥤", "Capacity"],
     ["🌡️", "Reading a scale"],
     ["📐", "Right angles"],
+    ["✏️", "Measure from any mark"],
+    ["🔄", "Two right angles, one straight line"],
     ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];

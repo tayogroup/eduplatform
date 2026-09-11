@@ -892,6 +892,7 @@
 
     <!-- 1 arrays -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Multiplying is counting equal groups, and an array is those groups laid out in neat rows.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Four rows with six in each row.</s><s>You could count all twenty four one at a time, but you do not need to.</s><s>Four sixes is twenty four.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The groups have to be equal.</s><s>If one row is short it is not a times fact any more, and counting in that table will give you the wrong answer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Build an array with the buttons and read it out loud.</s></mstts:express-as>' data-say="Build rows and columns. Read it as rows times columns.">
+      <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Rows and columns</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Change the rows and the columns. Read it as <b>rows × columns</b>.</span></div>
       <div class="stage">
@@ -1885,6 +1886,26 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+
+  /* ---- warm-up (areas 9 and 11, 2026-09-11) ---- ehel-warmup
+     A recap of the last lesson and one question about today's, at the head of
+     step 1 - see lesson-app-tools/add-warmup.py. NOT a step: no sticker, no
+     dot, no score. */
+  const WARM = [{ q: "Last lesson, you added and worked with money. Warm up: what is 5 times 2?", opts: [10, 7, 25], a: 10, why: "5 times 2 is 5 twos, which is 10. Today you will use arrays and times tables." }];
+  (function () {
+    const w = document.getElementById("ehWarm"); if (!w) return;
+    const W = WARM[0], ch = w.querySelector(".eh-warm-ch"), fb = w.querySelector(".fb");
+    w.querySelector(".eh-warm-q").textContent = W.q;
+    ch.innerHTML = shuffle(W.opts.slice()).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(W.a);
+      ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(W.a)) c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + W.why;
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
 
   /* ==================================================================
@@ -2109,7 +2130,7 @@
     /* 3Ni.09 asks the learner to ESTIMATE as well as divide, so the estimate is
        made first, out loud, against a friendly multiple of the divisor */
     const near = Math.floor(total / g) * g;
-    $("say7").innerHTML = "Share <b>" + total + "</b> between <b>" + g + "</b>. " + near + " ÷ " + g + " = " + (near / g) + ", so expect about <b>" + (near / g) + "</b> each. Now work it out exactly.";
+    $("say7").innerHTML = ["Nadia", "Musa", "Hodan", "Omar"][rnd(0, 3)] + " shares <b>" + total + "</b> sweets between <b>" + g + "</b> friends. " + near + " ÷ " + g + " = " + (near / g) + ", so expect about <b>" + (near / g) + "</b> each. Now work it out exactly.";
     let h = "";
     for (let k = 0; k < g; k++) h += '<div class="grp">' + dots(each) + "</div>";
     $("sb7").innerHTML = h;
@@ -2303,7 +2324,7 @@
   /* ---- 13: stickers ---- */
   const STICKERS = [
     ["🔲", "Rows and columns"], ["🔄", "Turn it round"], ["✖️", "The tables you need"], ["👨‍👩‍👧", "One array, four facts"],
-    ["🪓", "Split it to multiply"], ["🎯", "Estimate, then multiply"], ["🍪", "Sharing and leftovers"], ["🔟", "Multiples"],
+    ["✂️", "Split it to multiply"], ["🎯", "Estimate, then multiply"], ["🍪", "Sharing and leftovers"], ["🔟", "Multiples"],
     ["📈", "The rule"], ["🔺", "Patterns that grow"], ["📦", "The mystery box"], ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];
@@ -2928,3 +2949,19 @@
   }, true);
 })();
 </script>
+
+<style>/* ehel-warmup - see lesson-app-tools/add-warmup.py */
+  .eh-warm { margin: 0 0 18px; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--teal, #2BB3A6); }
+  .eh-warm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--teal, #2BB3A6); }
+  /* mirrors .say, under its own class so Explain never finds it - see the tool */
+  .eh-warm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--teal-soft, #DDF3F0); font-size: 21px; }
+  .eh-warm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .eh-warm-say button:active { transform: scale(0.94); }
+  .eh-warm-ch { margin-top: 12px; }
+</style>

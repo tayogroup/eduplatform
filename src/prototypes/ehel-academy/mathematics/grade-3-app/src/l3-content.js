@@ -193,7 +193,7 @@
     /* 3Ni.09 asks the learner to ESTIMATE as well as divide, so the estimate is
        made first, out loud, against a friendly multiple of the divisor */
     const near = Math.floor(total / g) * g;
-    $("say7").innerHTML = "Share <b>" + total + "</b> between <b>" + g + "</b>. " + near + " ÷ " + g + " = " + (near / g) + ", so expect about <b>" + (near / g) + "</b> each. Now work it out exactly.";
+    $("say7").innerHTML = ["Nadia", "Musa", "Hodan", "Omar"][rnd(0, 3)] + " shares <b>" + total + "</b> sweets between <b>" + g + "</b> friends. " + near + " ÷ " + g + " = " + (near / g) + ", so expect about <b>" + (near / g) + "</b> each. Now work it out exactly.";
     let h = "";
     for (let k = 0; k < g; k++) h += '<div class="grp">' + dots(each) + "</div>";
     $("sb7").innerHTML = h;
@@ -387,7 +387,7 @@
   /* ---- 13: stickers ---- */
   const STICKERS = [
     ["🔲", "Rows and columns"], ["🔄", "Turn it round"], ["✖️", "The tables you need"], ["👨‍👩‍👧", "One array, four facts"],
-    ["🪓", "Split it to multiply"], ["🎯", "Estimate, then multiply"], ["🍪", "Sharing and leftovers"], ["🔟", "Multiples"],
+    ["✂️", "Split it to multiply"], ["🎯", "Estimate, then multiply"], ["🍪", "Sharing and leftovers"], ["🔟", "Multiples"],
     ["📈", "The rule"], ["🔺", "Patterns that grow"], ["📦", "The mystery box"], ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];

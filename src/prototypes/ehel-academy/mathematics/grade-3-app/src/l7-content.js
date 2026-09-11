@@ -231,7 +231,7 @@
     const cells = [];
     for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) cells.push([c, r]);
     $("cp16").innerHTML = cells.map(([c, r]) => {
-      if (c === 1 && r === 1) return '<div class="mid">🧭</div>';
+      if (c === 1 && r === 1) return '<div class="mid">📍</div>';
       const dir = c === 1 && r === 0 ? "N" : c === 1 && r === 2 ? "S" : c === 2 && r === 1 ? "E" : c === 0 && r === 1 ? "W" : null;
       return dir ? '<button type="button" data-d="' + dir + '">' + dir + "</button>" : "<span></span>";
     }).join("");
@@ -268,6 +268,158 @@
   }
   paint16(); round16();
 
+  /* ---- ehel-g3-second-steps: which unit of time ---- 3Gt.01 choose the appropriate unit of time for familiar activities */
+  (function () {
+    const ITEMS = [
+      { q: "About how long does Amina take to walk to school?", n: 15, a: "minutes", w: ["seconds", "hours"] },
+      { q: "About how long can Musa hold his breath?", n: 20, a: "seconds", w: ["minutes", "hours"] },
+      { q: "About how long does the bus from Nairobi to Mombasa take?", n: 8, a: "hours", w: ["minutes", "weeks"] },
+      { q: "How old is Hodan's baby sister?", n: 7, a: "months", w: ["hours", "years"] },
+      { q: "About how long is the long school holiday?", n: 6, a: "weeks", w: ["hours", "years"] },
+      { q: "How old is Grandmother Halima?", n: 68, a: "years", w: ["months", "days"] },
+      { q: "How long does Omar's football match last?", n: 90, a: "minutes", w: ["seconds", "days"] },
+      { q: "About how long does Leila sleep every night?", n: 10, a: "hours", w: ["minutes", "weeks"] },
+      { q: "About how long does it take Yusuf to tie his shoes?", n: 30, a: "seconds", w: ["hours", "days"] },
+      { q: "How long does it take a mango tree to grow big enough for fruit?", n: 4, a: "years", w: ["days", "hours"] },
+    ];
+    let got = 0, asked = 0, last = -1;
+    function round() {
+      let i; do { i = rnd(0, ITEMS.length - 1); } while (i === last); last = i;
+      const it = ITEMS[i];
+      $("qx71").textContent = it.q; $("sayx71").textContent = it.q;
+      const right = it.n + " " + it.a;
+      offer("chx71", [right].concat(it.w.map((u) => it.n + " " + u)), right, (e) => {
+        const btn = e.target.closest(".choice"); if (!btn) return;
+        const ok = btn.dataset.v === right;
+        if (!mark("chx71", btn, ok)) return;
+        asked++; if (ok) got++;
+        const why = "It is about " + right + ". " + it.n + " " + it.w[0] + " or " + it.n + " " + it.w[1] + " would not make sense.";
+        $("fbx71").className = "fb " + (ok ? "good" : "");
+        $("fbx71").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx71", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 2800);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx71").closest(".slide"));
+    round();
+  })();
+
+  /* ---- ehel-g3-second-steps: which bus ---- 3Gt.03 interpret and USE the information in timetables (12-hour clock) */
+  (function () {
+    const PLACES = ["Market", "School", "Clinic", "Library"];
+    const WHO = ["Hodan", "Musa", "Leila", "Omar", "Zara", "Yusuf", "Amina", "Ali"];
+    const fmt = (t) => Math.floor(t / 60) + ":" + (t % 60 < 10 ? "0" : "") + (t % 60);
+    let got = 0, asked = 0;
+    function round() {
+      const first = rnd(7, 9) * 60 + rnd(0, 5) * 5, gap = rnd(4, 6) * 5;
+      const legs = [rnd(2, 4) * 5, rnd(2, 4) * 5, rnd(2, 4) * 5];
+      const T = [0, 1, 2].map((b) => { let t = first + b * gap; const row = [t]; for (const l of legs) { t += l; row.push(t); } return row; });
+      let h = "<tr><th>Stop</th><th>Bus 1</th><th>Bus 2</th><th>Bus 3</th></tr>";
+      PLACES.forEach((p, s) => { h += "<tr><th>" + p + "</th>" + T.map((row) => "<td>" + fmt(row[s]) + "</td>").join("") + "</tr>"; });
+      $("ttx72").innerHTML = h;
+      const who = WHO[rnd(0, WHO.length - 1)], j = rnd(0, 2);
+      let q, why;
+      if (rnd(0, 1) === 0) {
+        const by = T[j][3] + rnd(1, gap / 5 - 1) * 5;
+        q = who + " is at the Market and must be at the Library by " + fmt(by) + ". Which bus should " + who + " catch?";
+        why = "Bus " + (j + 1) + " reaches the Library at " + fmt(T[j][3]) + ", in time" +
+          (j < 2 ? ", and Bus " + (j + 2) + " gets there at " + fmt(T[j + 1][3]) + ", which is too late." : ", and it is the last bus.");
+      } else {
+        const at = j === 0 ? T[0][0] - rnd(1, 3) * 5 : T[j - 1][0] + rnd(1, gap / 5 - 1) * 5;
+        q = who + " gets to the Market at " + fmt(at) + ". Which is the first bus " + who + " can catch?";
+        why = (j > 0 ? "Bus " + j + " left the Market at " + fmt(T[j - 1][0]) + ", before " + fmt(at) + ". " : "") +
+          "Bus " + (j + 1) + " leaves the Market at " + fmt(T[j][0]) + ", so that is the first one " + who + " can catch.";
+      }
+      const right = "Bus " + (j + 1);
+      $("qx72").textContent = q; $("sayx72").textContent = q;
+      offer("chx72", ["Bus 1", "Bus 2", "Bus 3"], right, (e) => {
+        const btn = e.target.closest(".choice"); if (!btn) return;
+        const ok = btn.dataset.v === right;
+        if (!mark("chx72", btn, ok)) return;
+        asked++; if (ok) got++;
+        $("fbx72").className = "fb " + (ok ? "good" : "");
+        $("fbx72").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx72", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 3600);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx72").closest(".slide"));
+    round();
+  })();
+
+  /* ---- ehel-g3-second-steps: find your way ---- 3Gp.01 interpret AND CREATE descriptions of position, direction and movement, including cardinal points */
+  (function () {
+    const PL = [
+      { n: "Home", e: "\u{1F3E0}", c: 1, r: 3 }, { n: "School", e: "\u{1F3EB}", c: 3, r: 1 },
+      { n: "Market", e: "\u{1F6D2}", c: 4, r: 3 }, { n: "Clinic", e: "\u{1F3E5}", c: 0, r: 0 },
+      { n: "Shop", e: "\u{1F3EA}", c: 2, r: 4 }, { n: "Bus stop", e: "\u{1F68F}", c: 4, r: 0 },
+      { n: "Park", e: "\u{1F333}", c: 0, r: 2 },
+    ];
+    const WHO = ["Amina", "Musa", "Hodan", "Omar", "Zara", "Yusuf", "Leila", "Ali"];
+    const S = 64, X = 20, Y = 30;
+    const at = (c, r) => PL.find((p) => p.c === c && p.r === r);
+    function map(a, b) {
+      let svg = '<text class="lab" x="' + (X + 5 * S + 20) + '" y="' + (Y + 16) + '">N</text><text class="lab" x="' + (X + 5 * S + 20) + '" y="' + (Y + 40) + '">↑</text>';
+      for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++)
+        svg += '<rect class="cell' + (c === a.c && r === a.r ? " on" : "") + '" x="' + (X + c * S) + '" y="' + (Y + r * S) + '" width="' + S + '" height="' + S + '"></rect>';
+      if (b) svg += '<rect class="rt" x="' + (X + b.c * S + 3) + '" y="' + (Y + b.r * S + 3) + '" width="' + (S - 6) + '" height="' + (S - 6) + '"></rect>';
+      for (const p of PL) {
+        svg += '<text x="' + (X + p.c * S + S / 2) + '" y="' + (Y + p.r * S + 34) + '" font-size="26" text-anchor="middle">' + p.e + "</text>";
+        svg += '<text class="lab m" x="' + (X + p.c * S + S / 2) + '" y="' + (Y + p.r * S + 55) + '">' + p.n + "</text>";
+      }
+      $("gx73").innerHTML = svg;
+    }
+    const sq = (n) => n + " square" + (n > 1 ? "s" : "");
+    function describe(dc, dr) {
+      const parts = [];
+      if (dc) parts.push(sq(Math.abs(dc)) + " " + (dc > 0 ? "east" : "west"));
+      if (dr) parts.push(sq(Math.abs(dr)) + " " + (dr > 0 ? "south" : "north"));
+      return "Go " + parts.join(", then ");
+    }
+    let got = 0, asked = 0;
+    function round() {
+      let A, B; do { A = PL[rnd(0, PL.length - 1)]; B = PL[rnd(0, PL.length - 1)]; } while (A === B);
+      const dc = B.c - A.c, dr = B.r - A.r;
+      const who = WHO[rnd(0, WHO.length - 1)];
+      let q, right, opts;
+      if (rnd(0, 1) === 0) {
+        map(A, null);
+        q = "Start at the " + A.n + ". " + describe(dc, dr) + ". Where are you?";
+        right = B.n;
+        const wrong = [at(A.c + dc, A.r - dr), at(A.c - dc, A.r + dr)].filter((p) => p && p !== B).map((p) => p.n);
+        const rest = PL.filter((p) => p !== A && p !== B && wrong.indexOf(p.n) < 0).map((p) => p.n).sort(() => Math.random() - 0.5);
+        opts = [right].concat(wrong.concat(rest).slice(0, 2));
+      } else {
+        map(A, B);
+        q = "Which directions take " + who + " from the " + A.n + " to the " + B.n + "?";
+        right = describe(dc, dr);
+        const w1 = dr ? describe(dc, -dr) : describe(-dc, dr);
+        const w2 = dc && dr ? describe(-dc, dr) : dc ? describe(dc + (dc > 0 ? 1 : -1), dr) : describe(dc, dr + (dr > 0 ? 1 : -1));
+        opts = [right, w1, w2];
+      }
+      $("qx73").textContent = q; $("sayx73").textContent = q;
+      offer("chx73", opts, right, (e) => {
+        const btn = e.target.closest(".choice"); if (!btn) return;
+        const ok = btn.dataset.v === right;
+        if (!mark("chx73", btn, ok)) return;
+        asked++; if (ok) got++;
+        const why = "From the " + A.n + ", " + describe(dc, dr).replace(/^Go/, "go") + " and you reach the " + B.n + ". North is up the map and east is to the right.";
+        $("fbx73").className = "fb " + (ok ? "good" : "");
+        $("fbx73").textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine("scx73", got, asked, 4);
+        if (got >= 4) finish(SLOT, "");
+        setTimeout(round, 3600);
+      });
+    }
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx73").closest(".slide"));
+    round();
+  })();
+
   /* ---- 17: check ---- */
   const QS = [
     () => { const h1 = rnd(1, 9), m1 = rnd(0, 5) * 10, add = rnd(1, 5) * 10; const t = h1 * 60 + m1 + add; return { q: "It is " + h1 + ":" + two(m1) + ". What time is it " + add + " minutes later?", opts: [Math.floor(t / 60) + ":" + two(t % 60), h1 + ":" + two((m1 + add) % 60), (h1 + 1) + ":" + two(m1)], a: Math.floor(t / 60) + ":" + two(t % 60), why: "Count on " + add + " minutes." }; },
@@ -284,7 +436,7 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 4) finish(4, "You have finished the check.");
+      if (got17 >= 4) finish(7, "You have finished the check.");
       else retryCheck($("fb17"), $("ch17"), got17, order17.length, 4, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
@@ -311,7 +463,10 @@
     ["🕰️", "Telling the time"],
     ["⏳", "How long it takes"],
     ["🚌", "Timetables"],
-    ["🧭", "North, south, east, west"],
+    ["🗺️", "North, south, east, west"],
+    ["⏱️", "Which unit of time"],
+    ["🚏", "Which bus to catch"],
+    ["🚶", "Find your way"],
     ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];

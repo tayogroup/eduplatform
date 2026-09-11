@@ -317,6 +317,10 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     if (tutoring) { return "G" + Number(tutoring[1]) + " Unit " + Number(tutoring[2]); }
     var course = raw.match(/^u(\d+)$/);
     if (course) { return "Unit " + Number(course[1]); }
+    // A standalone lesson build's own unit (Maths, Science, Computing and
+    // Global Perspectives at Grades 1-4): "l03" is Lesson 3, not a unit id.
+    var lesson = raw.match(/^l(\d+)$/);
+    if (lesson) { return "Lesson " + Number(lesson[1]); }
     return raw;
   }
 

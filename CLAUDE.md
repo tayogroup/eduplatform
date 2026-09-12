@@ -854,10 +854,20 @@ npm run check:intensive                         # the build + the audio-template
 Owner decision: Level 1 = Cambridge Primary **English as a Second Language 0057**
 Stages 1-3, **Pre-A1 to A1**. The audience is **adult ESL learners** — the owner
 restated it on 2026-09-12 after a draft of this rebuild described the course as
-age-neutral, which it is not. Level 2 =
-Stages 4-6, A1 to A2, **not rebuilt yet** (still the earlier B1 course). The
-earlier Level 1 (A1-A2, adult) is in
-`inputs/ehel-english-intensive-source/archive/level-1-a1-a2-2026-08/`.
+age-neutral, which it is not. **Level 2 = Stages 4-6, A1 to A2, rebuilt the
+same way on 2026-09-12** (commit `1fcf959c7`): 176/176 objectives, 585 words,
+20/20 units, gate green — built and committed, NOT narrated and NOT deployed.
+It replaced a B1 course, and that gap is why it had to: Level 1 exits at a
+secure A1 and Level 2 opened at B1, so nothing taught A1 to B1 and a learner
+finishing Level 1 met a course two CEFR levels above them on the first screen.
+Its bands mirror Level 1's shape — Stage 4 (units 1-7) is "A1, extending
+towards A2" and claims no more than A1, because the level STARTS where Level 1
+ends; Stage 5 is "A2, developing", Stage 6 "A2, consolidating".
+The earlier Level 1 (A1-A2, adult) is in
+`inputs/ehel-english-intensive-source/archive/level-1-a1-a2-2026-08/`, and the
+earlier Level 2 (B1-B1+) in `archive/level-2-b1-2026-08/` — that one is the
+material **Level 3** wants (Lower Secondary 7-9, 0876, A2 to B1), since B1 is
+the level it genuinely belongs to.
 `src/curriculum/cambridge-english-0057.json` comes from
 `tools/extract-cambridge-esl-framework.py`, run on the official text PDF — the
 owner's OneDrive copy is a page capture with no text layer.
@@ -933,13 +943,50 @@ run proved too slow), the media and content uploads, app **v422** for the shell
 course, and the standalone build above. Verified from storage by hash and in a
 browser on the live pages.
 
-**Still needs a person, and neither is an engineering step:** an administrator
+**ROUTED 2026-09-12.** `repoint-grade.php --subject intensive-english --grade 1
+--apply` was run through the CDN-staging loop, taking
+`local_prequran/ehel_app_url_overrides` from 22 entries to 23, so
+`ehel-intensive-eng-l01` now opens `app/intensive-english/level-1-v2/`. Learner
+progress is unaffected: the standalone pages report the same unit ids the shell
+writes, `u00`..`u19`. The operator's first attempt failed with "Could not open
+input file" — the script lives only in this repo, so it has to be pulled into
+the docroot, which is what that loop is for.
+
+**Still needs a person, and it is not an engineering step:** an administrator
 must point Moodle's `local_prequran/catalog_source_url` at
-`catalog-36265fe0a1.json` and run the catalogue sync (the unit titles changed),
-and run `repoint-grade.php --subject intensive-english --grade 1 --apply` if
-the standalone build is to be what learners open. Note the catalogue also lists
-**Art & Design Stage 3**, committed by another session and not deployed when
-this was written — worth checking before that sync runs.
+`catalog-36265fe0a1.json` and run the catalogue sync (the unit titles changed).
+Note the catalogue also lists **Art & Design Stage 3**, committed by another
+session and not deployed when this was written — worth checking before that
+sync runs.
+
+### Level 2, rebuilt 2026-09-12 (`1fcf959c7`) — built, NOT shipped
+
+Same pipeline, same prompt, Stages 4-6 and A1 to A2. 176/176 objectives, 585
+words, 20/20 units, gate green, 0 sentences over any band's ceiling. Three
+things it needed that Level 1 did not, each of which would have been invisible
+until it bit:
+
+- **`REGISTER_CEILING` knew only stages 1-3**, and an unlisted stage inherited
+  Stage 3's number through a `|| 18` fallback — so every A2 unit would have
+  been measured against an A1 ceiling and every ordinary A2 sentence reported
+  as over. Stages 4/5/6 are now stated (21/24/27), with lecture and
+  reading-length bands to match.
+- **Cambridge spirals, so a plan pattern must name its INCREMENT.** Present
+  simple, past simple, both continuous forms, the present perfect, the future,
+  adjectives, relative clauses, adverbs and prepositions each appear in Stages
+  4, 5 AND 6. The build fails two cards in a level whose titles share two
+  keywords, and an author writes the plan's own words onto the card — so three
+  near-identical plan patterns become three near-identical titles and a red
+  gate. Three pairs were word-for-word identical in the first draft. Naming the
+  increment took the overlap warnings from 72 to 5.
+- **The placement exam was broken and no gate could see it.** It guards the
+  entrance to Level 2 and still tested the PREVIOUS Level 1: all fifteen
+  remediation pointers named unit titles that no longer existed, and its first
+  question turned on "receipt", which the rebuilt Level 1 does not teach.
+  A learner failing a section was sent to a unit that is not there.
+
+**Not narrated and not deployed** — both need the owner, and there is no
+`level-2-app` yet either.
 
 ## The Ehel Academy shell keeps TWO progress stores per learner, and only one drives the UI
 
@@ -1725,6 +1772,32 @@ a computer part beside it in the other. Same rule as English's file: the picture
 must BE the word, and a word with no honest picture shows none — which is most
 of this vocabulary, because most of it is abstract. About a third of cards are
 pictured.
+
+**A PICTURE OVERRIDE IS A CLAIM ABOUT A SENSE, AND A SENSE BELONGS TO A COURSE
+THAT CAN BE REPLACED UNDER IT** (2026-09-12, found in Intensive English but
+true of every per-grade override in these maps). `GRADE_WORD_PICTURES.ien2`
+held seven entries written for a B1 course. When Level 2 was rebuilt on
+Cambridge 0057, six of them named words the new level does not teach — dead,
+and harmless. The seventh had stopped being stale and become **wrong**:
+`platform` was overridden to a laptop because the B1 course taught the
+publishing sense, and the rebuilt Unit 13 teaches it beside departure, arrival
+and luggage, where the shared map's railway station was already correct. The
+override was replacing a right picture with a wrong one, and deleting it was
+the whole fix.
+
+The note above that block warns about one subject's pass breaking ANOTHER
+subject's word. This is the same failure reached from inside a single subject,
+and it is the more likely one, because nothing reports it: the override goes on
+applying, the gate has nothing to check it against, and the content it was
+written for is gone. So **re-run the audit whenever a level's vocabulary is
+rebuilt, not only when the shared map is edited** — and run it the way `ien1`
+was audited: print every word beside the picture the function returns AND the
+meaning the unit actually authored, because the authored meaning is the only
+thing that settles which sense is being taught. Reading the map alone cannot
+find this; seven further wrong senses turned up that way in one pass (a jar of
+preserve for a traffic jam, a stop sign for a block of flats and again for
+freezing water, a traffic light for a phone signal, two people for assembling
+parts, theatre masks for the place something happened, a heartbeat for a pump).
 
 ### Global Perspectives
 

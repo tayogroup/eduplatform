@@ -488,6 +488,10 @@ readable at the band, and does the unit deliver what its codes claim.
 - **CEFR placement is a claim until it is tested.** Validate the bands against
   real learner output from the first cohort before advertising levels by CEFR
   name.
-- **Level 2 is still the earlier B1 course.** Until it is rebuilt on Stages 4-6
-  there is a gap between Level 1's exit (A1) and Level 2's entry (B1), and
-  Level 2's placement exam still tests the earlier Level 1.
+- **Level 3 is not in the repo.** Lower Secondary Stages 7-9 (0876, A2 to B1)
+  is the next level, and the archived B1 course under
+  `archive/level-2-b1-2026-08/` is its material. (This entry used to say Level 2
+  was still the earlier B1 course, leaving a gap between Level 1's exit at A1
+  and Level 2's entry at B1. Level 2 was rebuilt on Stages 4-6 on 2026-09-12 and
+  its placement exam rewritten against the real Level 1, so both halves of that
+  gap are closed.)

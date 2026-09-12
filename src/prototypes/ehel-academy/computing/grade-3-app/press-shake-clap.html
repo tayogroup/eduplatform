@@ -1168,6 +1168,35 @@
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
   }
+
+  /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
+  .eh-find { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 0;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 10px; }
+  .eh-find svg { width: 17px; height: 17px; color: var(--muted); flex: 0 0 auto; }
+  .eh-find input { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink);
+    background: none; border: 0; padding: 8px 0; width: 148px; min-width: 0; }
+  .eh-find input::placeholder { color: var(--muted); font-weight: 400; }
+  .eh-find input:focus { outline: none; }
+  .eh-find:focus-within { border-color: var(--teal); }
+  .eh-find input::-webkit-search-cancel-button { filter: grayscale(1) brightness(2); }
+  .eh-found { position: sticky; top: var(--eh-found-top, 104px); z-index: 41;
+    background: var(--card); border-bottom: 1px solid var(--line);
+    max-height: 62vh; overflow-y: auto; padding: 8px; }
+  .eh-foundsay { margin: 2px 6px 8px; font-size: 13px; font-weight: 700; color: var(--muted); }
+  .eh-found button { display: block; width: 100%; text-align: left; font: inherit;
+    background: none; border: none; border-radius: 10px; padding: 9px 12px; cursor: pointer; color: var(--ink); }
+  .eh-found button:hover, .eh-found button.sel { background: var(--cell); }
+  .eh-found button.sel { outline: 2px solid var(--teal); outline-offset: -2px; }
+  .eh-found .w { display: block; font-size: 12px; font-weight: 800; color: var(--teal);
+    text-transform: uppercase; letter-spacing: .04em; }
+  .eh-found .t { display: block; font-size: 16px; font-weight: 700; }
+  .eh-found .s { display: block; font-size: 13px; color: var(--muted); font-weight: 400;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .eh-found mark { background: var(--gold); color: #2A1F05; border-radius: 3px; padding: 0 2px; }
+  @media (max-width: 720px) {
+    .eh-find input { width: 96px; }
+    .eh-found { top: var(--eh-found-top-narrow, 100px); }
+  }
 </style>
 
 <a class="skip" href="#deck">Skip to the lesson</a>
@@ -1181,7 +1210,7 @@
   </div>
   <div class="eh-b1right">
     <span id="ehFocus" hidden></span>
-    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="follow-edit-correct.html">Follow, Edit, Correct</option><option value="concise-algorithms.html">Concise Algorithms</option><option value="think-it-through.html">Think It Through</option><option value="input-machines.html">Input Machines</option><option value="tidy-programs.html">Tidy Programs</option><option value="many-things-at-once.html">Many Things at Once</option><option value="press-shake-clap.html" selected>Press, Shake, Clap</option><option value="mistakes-make-programs-better.html">Mistakes Make Programs Better</option><option value="data-problems.html">Data Problems</option><option value="spreadsheets.html">Spreadsheets</option><option value="networks-around-us.html">Networks Around Us</option><option value="secret-codes.html">Secret Codes</option><option value="systems-inputs-and-files.html">Systems, Inputs and Files</option><option value="machines-things-and-robots.html">Machines, Things and Robots</option></select>
+    <label class="eh-find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.4 15.4 21 21"></path></svg><input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Grade 3 Computing lessons" aria-controls="ehFound" aria-expanded="false"></label><select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="follow-edit-correct.html">Follow, Edit, Correct</option><option value="concise-algorithms.html">Concise Algorithms</option><option value="think-it-through.html">Think It Through</option><option value="input-machines.html">Input Machines</option><option value="tidy-programs.html">Tidy Programs</option><option value="many-things-at-once.html">Many Things at Once</option><option value="press-shake-clap.html" selected>Press, Shake, Clap</option><option value="mistakes-make-programs-better.html">Mistakes Make Programs Better</option><option value="data-problems.html">Data Problems</option><option value="spreadsheets.html">Spreadsheets</option><option value="networks-around-us.html">Networks Around Us</option><option value="secret-codes.html">Secret Codes</option><option value="systems-inputs-and-files.html">Systems, Inputs and Files</option><option value="machines-things-and-robots.html">Machines, Things and Robots</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>
 </header>
@@ -1192,6 +1221,7 @@
   <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
 </nav>
 <div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden><p class="eh-foundsay" id="ehFoundSay" role="status" aria-live="polite"></p><div id="ehFoundList"></div></div>
 <div class="wrap">
   <header class="hero">
     <div>
@@ -9039,6 +9069,245 @@
     const realShow = show;
     show = function (i, speak) { realShow(i, speak); ehPaint(); };
     ehPaint();
+  })();
+
+  
+  /* ================= the lesson search ================= ehel-lesson-search
+     One body, two hosts - see add-lesson-search.py. Everything it knows comes
+     from lesson-search.json, which is derived from these very pages. */
+  (function () {
+    var box = document.getElementById("ehFind");
+    var panel = document.getElementById("ehFound");
+    var say = document.getElementById("ehFoundSay");
+    var list = document.getElementById("ehFoundList");
+    if (!box || !panel || !say || !list) return;
+
+    var HERE = (location.pathname.split("/").pop() || "");
+    var INDEX = null, STATE = "cold", sel = -1, rows = [];
+    var esc = function (s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    };
+    /* the curly apostrophe is normalised in the index too, so o’clock and
+       o'clock are one word to both sides */
+    var flat = function (s) { return String(s).replace(/\u2019/g, "'").toLowerCase(); };
+    var toks = function (s) { return flat(s).match(/[a-z0-9']+/g) || []; };
+
+    /* KEEP THE LAUNCH PARAMETERS. ?from is ours and is put back; everything
+       else - pwsToken, pwsEndpoint, studentid - belongs to the launch and a
+       result that dropped it would report nothing to the school. */
+    function query() {
+      var p = new URLSearchParams(location.search);
+      p.delete("from");
+      var rest = p.toString();
+      return "?from=comp3" + (rest ? "&" + rest : "");
+    }
+
+    /* WAITERS, not an early return. The focus handler starts this fetch with
+       nothing to do on arrival, and the first keystroke lands while it is
+       still in flight - so a `if (STATE === "loading") return` DROPS that
+       query's callback and the panel never opens. Measured: typing "addition"
+       on a cold field, index fetched 200, nothing rendered. */
+    var waiting = [];
+    function load(then) {
+      if (STATE === "ready") { then(); return; }
+      waiting.push(then);
+      if (STATE === "loading") return;
+      STATE = "loading";
+      fetch("lesson-search.json", { credentials: "omit" })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (doc) {
+          INDEX = [];
+          (doc.lessons || []).forEach(function (l) {
+            (l.steps || []).forEach(function (s) {
+              INDEX.push({
+                file: l.file, title: l.title, unit: l.u, i: s.i, h: s.h, t: s.t,
+                wh: toks(s.h), wt: toks(s.t),
+                wgh: toks(s.gh || ""), wg: toks(s.g || ""),
+                gm: s.gm || {}
+              });
+            });
+          });
+          STATE = "ready";
+          var q = waiting; waiting = [];
+          q.forEach(function (f) { f(); });
+        })
+        .catch(function () {
+          STATE = "cold";
+          waiting = [];
+          /* honest rather than silent: the field stays, and says why it
+             cannot answer, because the usual cause is a page opened before
+             the index landed and a reload fixes it */
+          say.textContent = "The lesson list could not be loaded. Try again in a moment.";
+          list.innerHTML = "";
+          open(true);
+        });
+    }
+
+    /* every token must START a word somewhere. Four tiers, best first:
+         the step's HEADING says it                       ("Adding")
+         the heading IMPLIES it                           ("Adding" -> addition)
+         a sentence in the step implies it                (a mention)
+         the step's own words say it somewhere
+       The middle tier is what puts Adding and Taking Away above a counting
+       step that happens to say "add" once - see build-lesson-search.py. */
+    /* BOTH directions, or the plural of a term finds nothing. Measured: the
+       one-way version (content word starts with the query) answered
+       "fractions" with "No step in Grade 1 Mathematics mentions fractions"
+       while Halves and Wholes IS the fractions lesson - the tag is
+       "fraction", singular - and answered "sorting" with one step while the
+       lessons say "sort".
+
+       But a bare reverse prefix is too much: it made "tally" match "tall"
+       and answer with Full and empty, Longer or shorter? and Pour and fill,
+       where the correct answer is that Grade 1 teaches no tallying. Every
+       case the reverse direction is FOR is a suffix inflection, so that is
+       what it allows - "sort"+ing, "fraction"+s - and "tall"+y is not one. */
+    var SUFFIX = { s: 1, es: 1, ing: 1, ed: 1 };
+    function starts(words, k) {
+      for (var i = 0; i < words.length; i++) {
+        var w = words[i];
+        if (w === k) return 2;
+        if (w.length > k.length && w.lastIndexOf(k, 0) === 0) return 1;
+        if (w.length >= 3 && k.length > w.length && k.lastIndexOf(w, 0) === 0
+            && SUFFIX[k.slice(w.length)]) return 1;
+      }
+      return 0;
+    }
+    function score(row, ks) {
+      var total = 0;
+      for (var i = 0; i < ks.length; i++) {
+        var k = ks[i];
+        var h = starts(row.wh, k);
+        var gh = h ? 0 : starts(row.wgh, k);
+        var g = (h || gh) ? 0 : starts(row.wg, k);
+        var t = (h || gh || g) ? 0 : starts(row.wt, k);
+        if (!h && !gh && !g && !t) return 0;   // every token must appear
+        total += h ? 12 + h : gh ? 8 + gh : g ? 4 + g : 1 + t;
+      }
+      return total;
+    }
+    /* WHAT THE QUERY MATCHED, in the step's own words. A bridged term is not
+       in the text - "addition" is why the bridge exists - so fall back to the
+       phrase the index recorded for that term ("adding"), and the panel then
+       marks the words that actually answered the query instead of rendering
+       an unmarked opening line. */
+    function target(row, k) {
+      var low = flat(row.t), p = low.indexOf(k);
+      if (p >= 0) return [p, k];
+      for (var name in row.gm) {
+        if (starts([name], k)) {
+          var w = flat(row.gm[name]), q = low.indexOf(w);
+          if (q >= 0) return [q, w];
+        }
+      }
+      return [-1, ""];
+    }
+    function snippet(row, ks) {
+      var low = flat(row.t), at = -1, hit = "";
+      for (var i = 0; i < ks.length; i++) {
+        var r = target(row, ks[i]), p = r[0];
+        if (p >= 0 && (at < 0 || p < at)) { at = p; hit = r[1]; }
+      }
+      if (at < 0) return esc(row.t.slice(0, 90));
+      var a = Math.max(0, at - 34), b = Math.min(row.t.length, at + 60);
+      var end = low.indexOf(" ", at + hit.length);
+      var word = row.t.slice(at, end > at && end < at + 24 ? end : at + hit.length);
+      return (a ? "\u2026" : "") + esc(row.t.slice(a, at)) + "<mark>" + esc(word) + "</mark>" +
+        esc(row.t.slice(at + word.length, b)) + (b < row.t.length ? "\u2026" : "");
+    }
+
+    function open(on) {
+      panel.hidden = !on;
+      box.setAttribute("aria-expanded", on ? "true" : "false");
+      if (!on) { sel = -1; }
+    }
+    function go(row) {
+      /* in THIS lesson: move the deck, and put the step in the URL without a
+         hashchange, so the address bar is shareable and nothing runs twice */
+      if (row.file === HERE && typeof show === "function") {
+        open(false);
+        show(row.i, true);
+        try { history.replaceState(null, "", query() + "#step-" + (row.i + 1)); } catch (e) {}
+        return;
+      }
+      location.href = row.file + query() + "#step-" + (row.i + 1);
+    }
+    function paint(ks) {
+      rows.sort(function (a, b) {
+        return b._s - a._s || a.unit - b.unit || a.i - b.i;
+      });
+      rows = rows.slice(0, 30);
+      list.innerHTML = rows.map(function (r, n) {
+        return '<button type="button" data-n="' + n + '">' +
+          '<span class="w">' + esc(r.title) + " \u00b7 Step " + (r.i + 1) + "</span>" +
+          '<span class="t">' + esc(r.h || "Step " + (r.i + 1)) + "</span>" +
+          '<span class="s">' + snippet(r, ks) + "</span></button>";
+      }).join("");
+      sel = -1;
+    }
+    function run() {
+      var ks = toks(box.value).filter(function (k) { return k.length > 1; });
+      if (!ks.length) { open(false); list.innerHTML = ""; say.textContent = ""; return; }
+      rows = [];
+      for (var i = 0; i < INDEX.length; i++) {
+        var s = score(INDEX[i], ks);
+        if (s) { INDEX[i]._s = s; rows.push(INDEX[i]); }
+      }
+      var n = rows.length;
+      paint(ks);
+      /* the count is the honest part: "no step" names what was searched, so a
+         word this grade never teaches reads as absent rather than broken */
+      say.textContent = n
+        ? n + (n === 1 ? " step" : " steps") + " in this grade" + (n > 30 ? " - showing 30" : "")
+        : "No step in " + "Grade 3 Computing" + " mentions \u201c" + box.value.trim() + "\u201d.";
+      open(true);
+    }
+
+    var wait = null;
+    box.addEventListener("input", function () {
+      clearTimeout(wait);
+      wait = setTimeout(function () { load(run); }, 90);
+    });
+    box.addEventListener("focus", function () { load(function () {}); });
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { open(false); box.blur(); return; }
+      var bs = list.querySelectorAll("button");
+      if (!bs.length) return;
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        sel = e.key === "ArrowDown"
+          ? (sel + 1) % bs.length
+          : (sel <= 0 ? bs.length - 1 : sel - 1);
+        for (var i = 0; i < bs.length; i++) bs[i].classList.toggle("sel", i === sel);
+        bs[sel].scrollIntoView({ block: "nearest" });
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        go(rows[sel < 0 ? 0 : sel]);
+      }
+    });
+    list.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-n]");
+      if (b) go(rows[+b.dataset.n]);
+    });
+    document.addEventListener("click", function (e) {
+      if (!panel.hidden && !panel.contains(e.target) && !box.closest(".eh-find").contains(e.target)) open(false);
+    });
+
+    /* ---- arriving on a deep link ----
+       Only a lesson page can act on one. show() is called now, BEFORE the
+       progress document hydrates, because __ehelRestore moves only a learner
+       who has not moved themselves - so this reads to it as a tap on Next and
+       the link is not overridden by the saved resume step. */
+    function fromHash() {
+      var m = /^#step-(\d+)$/.exec(location.hash || "");
+      if (!m || typeof show !== "function") return;
+      var n = +m[1] - 1;
+      if (n >= 0) show(n, false);
+    }
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
   })();
 
   })();

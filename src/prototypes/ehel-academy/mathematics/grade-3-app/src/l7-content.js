@@ -428,6 +428,18 @@
     () => { const h = rnd(8, 10), m = rnd(0, 3) * 10, gap = rnd(2, 5) * 10; const t = m + gap; return { q: "A bus leaves at " + h + ":" + two(m) + " and arrives at " + (h + Math.floor(t / 60)) + ":" + two(t % 60) + ". How long is the journey?", opts: [gap + " minutes", (gap + 10) + " minutes", (gap - 10) + " minutes"], a: gap + " minutes", why: "Count on from " + h + ":" + two(m) + " to the arrival time." }; },
     () => { return { q: "You are facing west and you turn to your right. Which way are you facing?", opts: ["north", "south", "east"], a: "north", why: "Going clockwise from west comes north." }; },
     () => { return { q: "At half past 8, where is the hour hand?", opts: ["between 8 and 9", "on the 8", "on the 6"], a: "between 8 and 9", why: "The hour hand creeps all the time, so by half past it is halfway to 9." }; },
+    /* 2026-09-12: two more, for 6 of 8 = 75% rather than 4 of 6 = 67%. They
+       test "How long did it take?" and "Which unit of time?", neither of which
+       the check had asked. The minutes avoid 30, where the distractor 60 − m
+       would repeat the answer. */
+    () => { const h = rnd(1, 9), m = [15, 20, 40, 45][rnd(0, 3)];
+      return { q: "A film starts at " + h + ":00 and ends at " + h + ":" + m + ". How long is it?", opts: [m + " minutes", (60 - m) + " minutes", h + " hours"], a: m + " minutes", why: "From " + h + ":00 to " + h + ":" + m + " is " + m + " minutes." }; },
+    () => { const U = [
+        { q: "Which unit would you use for how long a school lesson lasts?", a: "minutes", d: ["hours", "seconds"], w: "A lesson is about 40 minutes." },
+        { q: "Which unit would you use for how long you sleep at night?", a: "hours", d: ["minutes", "weeks"], w: "A night's sleep is about 9 hours." },
+        { q: "Which unit would you use for how long the school holidays last?", a: "weeks", d: ["minutes", "hours"], w: "The holidays run for several weeks." },
+        { q: "Which unit would you use for how old you are?", a: "years", d: ["days", "hours"], w: "Your age is counted in years." }][rnd(0, 3)];
+      return { q: U.q, opts: [U.a, U.d[0], U.d[1]], a: U.a, why: U.w }; },
   ];
 ;
   let qi = 0, got17 = 0, order17 = [];
@@ -436,8 +448,8 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 5) finish(7, "You have finished the check.");
-      else retryCheck($("fb17"), $("ch17"), got17, order17.length, 5, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
+      if (got17 >= 6) finish(7, "You have finished the check.");
+      else retryCheck($("fb17"), $("ch17"), got17, order17.length, 6, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
     const item = nextQ(order17[qi]);

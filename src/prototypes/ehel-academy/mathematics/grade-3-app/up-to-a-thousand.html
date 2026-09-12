@@ -2323,6 +2323,10 @@
     () => { const a = rnd(2, 8) * 100 + rnd(0, 99), b = Math.floor(a / 100) * 100 + rnd(0, 99); const s = a > b ? ">" : a < b ? "<" : "="; return { q: "Which sign goes between " + a + " and " + b + "?", opts: [">", "<", "="], a: s, why: a + " " + s + " " + b + "." }; },
     () => { const n = rnd(2, 8) * 100 + rnd(10, 99); const h = Math.floor(n / 100) * 100, t = Math.floor(n / 10) % 10 * 10, o = n % 10; return { q: "Which of these adds up to " + n + "?", opts: [h + " + " + t + " + " + o, h + " + " + (t + 10) + " + " + o, (h + 100) + " + " + t + " + " + o], a: h + " + " + t + " + " + o, why: n + " is " + h + " + " + t + " + " + o + "." }; },
     () => { const st = [10, 100][rnd(0, 1)]; const s = rnd(2, 7) * 100 + rnd(0, 9) * 10 + rnd(0, 9); return { q: "Count on in " + st + "s from " + s + ". What comes next?", opts: [s + st, s + st * 10, s + 1], a: s + st, why: s + " + " + st + " = " + (s + st) + "." }; },
+    /* 2026-09-12: an eighth question, so the pass mark (three quarters, rounded
+       up - _app.pass_mark) lands on 6 of 8 = 75% rather than 6 of 7 = 86%. It
+       tests "Ten times bigger", which the check had never asked about. */
+    () => { const n = rnd(12, 89); return { q: n + " × 10 = ?", opts: [n * 10, n * 100, n + 10], a: n * 10, why: "Every digit moves one place to the left, so " + n + " tens is " + (n * 10) + "." }; },
   ];
 ;
   let qi = 0, got18 = 0, order18 = [];

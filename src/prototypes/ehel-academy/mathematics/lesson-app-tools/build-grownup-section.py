@@ -103,7 +103,16 @@ def framework(stage):
 
 
 def matching(s, i):
-    """Index just past the bracket that closes the one at s[i], skipping strings."""
+    """Index just past the bracket that closes the one at s[i].
+
+    Strings are skipped, and so are COMMENTS - which they were not until
+    2026-09-12, when a comment reading "the square's side avoids 4" stopped a
+    Grade 3 build outright. The apostrophe opened a string that never closed,
+    so every bracket after it went uncounted and the walk raised "unbalanced"
+    hundreds of lines later, naming an offset in a generated file rather than
+    the prose that caused it. An apostrophe in a comment is ordinary English
+    and must not be able to break a build.
+    """
     pairs = {"[": "]", "(": ")", "{": "}"}
     stack, j, q = [], i, None
     while j < len(s):
@@ -114,6 +123,14 @@ def matching(s, i):
                 continue
             if c == q:
                 q = None
+        elif s[j:j + 2] == "/*":
+            k = s.find("*/", j + 2)
+            j = len(s) if k < 0 else k + 2
+            continue
+        elif s[j:j + 2] == "//":
+            k = s.find("\n", j)
+            j = len(s) if k < 0 else k
+            continue
         elif c in "\"'`":
             q = c
         elif c in pairs:

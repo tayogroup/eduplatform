@@ -340,6 +340,12 @@
     () => { const a = rnd(126, 498), b = rnd(126, 498); return { q: a + " + " + b + " = ?", opts: [a + b, a + b - 10, a + b + 10], a: a + b, why: "Work the ones, then the tens, then the hundreds: " + (a + b) + "." }; },
     () => { const a = rnd(320, 940), b = rnd(118, 285); return { q: a + " − " + b + " = ?", opts: [a - b, a - b - 10, a - b + 100], a: a - b, why: "Fetch a ten where the top digit is too small: " + (a - b) + "." }; },
     () => { const p = rnd(12, 48), c = 100 - p, r = rnd(11, 39); return { q: "Which two would you add first in " + p + " + " + r + " + " + c + "?", opts: [p + " and " + c, p + " and " + r, r + " and " + c], a: p + " and " + c, why: p + " + " + c + " = 100, which leaves an easy sum." }; },
+    /* 2026-09-12: two more, so the pass mark lands on 6 of 8 = 75% rather than
+       4 of 6 = 67%. They test "Giving change" and "Taking away with
+       regrouping", neither of which the check had asked about. */
+    () => { const c = rnd(12, 88); return { q: "You pay sh 100 for something costing sh " + c + ". How much change do you get?", opts: ["sh " + (100 - c), "sh " + (100 + c), "sh " + (c - 10)], a: "sh " + (100 - c), why: "100 take away " + c + " is " + (100 - c) + "." }; },
+    () => { const t = rnd(3, 8) * 100 + rnd(0, 3), u = 100 + rnd(1, 8) * 10 + rnd(5, 9);
+      return { q: "What is " + t + " − " + u + "?", opts: [t - u, t - u + 10, t - u - 10], a: t - u, why: "There are not enough ones, so exchange a ten first: " + t + " − " + u + " = " + (t - u) + "." }; },
   ];
 ;
   let qi = 0, got18 = 0, order18 = [];
@@ -353,8 +359,8 @@
       $("fb18").className = "fb good";
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
-      if (got18 >= 5) finish(8, "You have finished the check. Well done.");
-      else retryCheck($("fb18"), $("ch18"), got18, order18.length, 5, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
+      if (got18 >= 6) finish(8, "You have finished the check. Well done.");
+      else retryCheck($("fb18"), $("ch18"), got18, order18.length, 6, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
       return;
     }
     const item = nextQ(order18[qi]);

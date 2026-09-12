@@ -2246,6 +2246,11 @@
     () => { return { q: "A shape covers 12 squares on a grid. What is that called?", opts: ["its area", "its perimeter", "its symmetry"], a: "its area", why: "Area is the space inside; perimeter is the distance round the edge." }; },
     () => { return { q: "How many lines of symmetry does a square have?", opts: [4, 2, 1], a: 4, why: "Two through the sides and two through the corners." }; },
     () => { return { q: "A shape is reflected in a mirror line. What happens to its size?", opts: ["it stays the same", "it doubles", "it halves"], a: "it stays the same", why: "A reflection turns a shape round; it does not resize it." }; },
+    /* 2026-09-12: two more, for 6 of 8 = 75% rather than 4 of 6 = 67%. They
+       test "All the way round" and "Regular or irregular", which the check had
+       not asked about. The side avoids 4, where 2n and n+4 would collide. */
+    () => { const n = rnd(5, 9); return { q: "A square has sides of " + n + " cm. How far is it all the way round?", opts: [n * 4 + " cm", n * 2 + " cm", (n + 4) + " cm"], a: n * 4 + " cm", why: "Four equal sides: " + n + " + " + n + " + " + n + " + " + n + " = " + (n * 4) + " cm." }; },
+    () => { return { q: "A shape has 5 equal sides and 5 equal angles. What is it?", opts: ["a regular pentagon", "an irregular pentagon", "a regular hexagon"], a: "a regular pentagon", why: "Five sides makes a pentagon, and equal sides and angles make it regular." }; },
   ];
 ;
   let qi = 0, got17 = 0, order17 = [];
@@ -2254,8 +2259,8 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 5) finish(8, "You have finished the check.");
-      else retryCheck($("fb17"), $("ch17"), got17, order17.length, 5, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
+      if (got17 >= 6) finish(8, "You have finished the check.");
+      else retryCheck($("fb17"), $("ch17"), got17, order17.length, 6, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
     const item = nextQ(order17[qi]);

@@ -39,14 +39,59 @@ from _app import pass_mark  # noqa: E402
 WRITE = "--write" in sys.argv
 
 
+def scrub(t):
+    """Blank out comments and string bodies, keeping length and newlines.
+
+    The depth walk below counts brackets and commas, and it cannot tell code
+    from prose. A comment reading `it tests "Ten times bigger", which...` has a
+    comma at depth 0 and was counted as an item separator - so adding an
+    explanatory comment above an item silently added an item, and on
+    2026-09-12 that reported banks of 10 and 11 where there were 8. A string
+    holding a bracket does the same thing. Both are replaced by spaces before
+    anything is counted.
+    """
+    out, i, n = [], 0, len(t)
+    while i < n:
+        c = t[i]
+        two = t[i:i + 2]
+        if two == "/*":
+            j = t.find("*/", i + 2)
+            j = n if j < 0 else j + 2
+            out.append("".join(" " if ch != "\n" else "\n" for ch in t[i:j]))
+            i = j
+        elif two == "//":
+            j = t.find("\n", i)
+            j = n if j < 0 else j
+            out.append(" " * (j - i))
+            i = j
+        elif c in "\"'`":
+            j, quote = i + 1, c
+            while j < n:
+                if t[j] == "\\":
+                    j += 2
+                    continue
+                if t[j] == quote:
+                    j += 1
+                    break
+                j += 1
+            out.append(c + "".join(" " if ch != "\n" else "\n" for ch in t[i + 1:j - 1]) + c
+                       if j - 1 > i else c)
+            i = j
+        else:
+            out.append(c)
+            i += 1
+    return "".join(out)
+
+
 def qs_count(s):
     """How many questions the check bank holds.
 
     Counted by walking the bracket rather than by counting `q:`, because an
     item is an arrow function that may mention `q:` more than once - and by
     walking depth rather than splitting on commas, because every item is full
-    of them.
+    of them. Comments and strings are scrubbed first; see scrub().
     """
+    s = scrub(s)
     m = re.search(r"const QS = \[", s)
     if not m:
         return None

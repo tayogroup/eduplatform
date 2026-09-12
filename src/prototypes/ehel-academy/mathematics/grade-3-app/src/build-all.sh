@@ -71,4 +71,17 @@ for t in wire-accessibility self-host-fonts wire-quiet-notice add-warmup build-g
   python "../lesson-app-tools/$t.py" --app . --write > /dev/null || { echo "  FAILED: $t"; exit 1; }
   echo "  ok  $t"
 done
+# THE LESSON SEARCH, which nothing rebuilt until 2026-09-12 and which a rebuild
+# therefore DELETED. add-lesson-search.py had been run by hand over all four
+# grades and was wired into no build script, so the first rebuild of this one
+# stripped 271 lines from each of the eight lessons - the whole feature - and
+# would have shipped that. It takes no --write (it writes) and it must run
+# AFTER add-header-bars.py, which is where the bar it mounts into comes from.
+# It refuses if lesson-search.json is missing; build-lesson-search.py makes
+# that index and is deliberately NOT run here, because the index belongs to
+# whoever owns the feature and a stale index is far better than one rebuilt
+# from someone else's half-finished edit.
+python ../lesson-app-tools/add-lesson-search.py --app . > /dev/null || { echo "  FAILED: add-lesson-search"; exit 1; }
+echo "  ok  add-lesson-search"
+
 python ../lesson-app-tools/check-lessons.py | tail -3

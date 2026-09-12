@@ -116,17 +116,34 @@ heritage traditions to named classmates as their own work.
 
 Recorded the same way as Grades 1 to 3, in the same voice.
 
+| | |
+| --- | --- |
+| clips | 2,240 sentences in `media/tts/`; every Grade 1-3 clip was copied in first, 440 of them matched a Grade 4 sentence, and the 5,544 that did not were pruned afterwards |
+| cost | 77,798 characters sent (the `--dry` count exactly), no failures |
+| heard from recordings | 1,725 of 1,733 spoken lines in a full run with Explain pressed on every step (99.5%; gate floor 99%) |
+| lecture videos | 8, 50–65 s each, 13–18 WebVTT captions each, poster per lesson |
+
 ## Verification
 
 `check-lessons.py`, `check-coverage.py` (10/10 objectives, 78 relationships
 re-computed, every mark judged) and `check-narration.mjs --trace` exit 0.
 Driven in Chromium at 1100px (real strokes) and 375px (the keyboard route):
-all eight lessons end at 100% with every sticker, no console errors and no
-horizontal overflow; Stop for today keeps the next step; all eight
-make-at-home sheets print on two A4 pages; the starting check bands
-all-right as ready and all-wrong as not ready, with eight review links into
-Grade 3.
+all eight lessons end at 100% with every sticker and no console errors;
+1,725 of 1,733 spoken lines heard from recordings; Stop for today keeps the
+next step; all eight make-at-home sheets print on two A4 pages; the starting
+check bands all-right as ready and all-wrong as not ready, with eight review
+links into Grade 3.
+
+**One thing is not clean, and it is not this build's.** At 375px the pages
+overflow horizontally by 46px, and so does every other standalone app
+measured - science, computing, global-perspectives and art-and-design Grade 1
+alike - because bar 1's right-hand cluster needs 327px where 299px is free
+(search 141 + lesson picker 130 + audio 40 + gaps). It arrived with another
+session's lesson search and is in pages already live; the fix belongs in that
+tool's CSS, where it reaches all six subjects at once.
 
 ## Going live
 
-Not done. See [GO-LIVE.md](GO-LIVE.md) for the three steps.
+LIVE and routed, 2026-09-12: course `ehel-art-g04` (Moodle id 86),
+app at `app/art-and-design/grade-4-v2/`. See [GO-LIVE.md](GO-LIVE.md) for what
+was run and what is still open (enrolment).

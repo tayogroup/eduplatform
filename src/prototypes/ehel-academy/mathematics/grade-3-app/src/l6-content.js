@@ -284,11 +284,12 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 4) finish(7, "You have finished the check.");
-      else retryCheck($("fb17"), $("ch17"), got17, order17.length, 4, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
+      if (got17 >= 5) finish(7, "You have finished the check.");
+      else retryCheck($("fb17"), $("ch17"), got17, order17.length, 5, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
     const item = nextQ(order17[qi]);
+    $("sc17").textContent = "Question " + (qi + 1) + " of " + order17.length + " \u00b7 " + got17 + " right";
     $("q17").textContent = item.q; $("say17").textContent = item.q;
     offer("ch17", item.opts, item.a, (e) => {
       const b = e.target.closest(".choice"); if (!b) return;
@@ -299,7 +300,7 @@
       $("fb17").className = "fb " + (ok ? "good" : "");
       $("fb17").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
-      $("sc17").textContent = got17 + " right out of " + qi;
+      $("sc17").textContent = "Question " + qi + " of " + order17.length + " \u00b7 " + got17 + " right";
       setTimeout(round17, 2100);
     });
   }

@@ -19,6 +19,14 @@
 # what deploys and a deploy must not depend on a shell that can run bash.
 set -e
 cd "$(dirname "$0")"
+# THE CHECK'S RULES ARE FIXED IN THE SOURCES, BEFORE ANY LESSON IS BUILT.
+# fix-check-rules.py rewrites l*-content.js: the house pass mark (three
+# quarters, rounded up - _app.pass_mark, the same number Grades 1, 2 and 4 use)
+# and the "Question 3 of 10" counter every other grade already showed. It is
+# idempotent and refuses a lesson whose check it cannot identify, so a build
+# stops rather than half-patching one.
+python fix-check-rules.py --write > /dev/null || { echo "  FAILED: fix-check-rules"; exit 1; }
+
 build() { ./build.sh "$1" "$2" "../$3.html"; }
 build l1 "Up to a Thousand"              up-to-a-thousand
 build l2 "Adding, Taking Away and Money" adding-and-money

@@ -810,6 +810,18 @@
       <p class="fb" id="fbck" role="status" aria-live="polite"></p>
       <p class="score" id="scck"></p>
     </section>
+    <!-- how do you know -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+      <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
+      <div class="stage">
+        <p class="fb" id="clW" style="font-size:21px"></p>
+        <div class="choices" id="chW"></div>
+        <p class="fb" id="fbW"></p>
+        <p class="score" id="scW"></p>
+      </div>
+    </section>
+
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
@@ -2704,7 +2716,7 @@
     ["💧", "Pour and fill"],
     ["🌡️", "Read the numbers"],
     ["🐶", "Between, above, behind"],
-    ["✅", "Show what I know"],
+    ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
@@ -2717,6 +2729,114 @@
   $("restart").addEventListener("click", () => location.reload());
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
+  /* ==================================================================
+     CONVINCING - "presenting evidence to justify or challenge a
+     mathematical idea or solution" (Cambridge TWM.04). See
+     lesson-app-tools/add-reasoning-step.py: a true claim and three
+     reasons, only one of which does the work. It works out its own slide
+     index from the DOM, so it moved no other step.
+     ================================================================== */
+  (function () {
+    const BANK = [
+      [
+            "This shape is a triangle.",
+            "It has three straight sides.",
+            [
+                  "It is pointy.",
+                  "It is small."
+            ],
+            "Count the straight sides."
+      ],
+      [
+            "It is still a square when you turn it.",
+            "It still has four equal sides and four corners.",
+            [
+                  "It looks like a diamond now.",
+                  "It is still the same colour."
+            ],
+            "Turning a shape does not change its sides or its corners."
+      ],
+      [
+            "A ball is a solid shape.",
+            "You can pick it up and it takes up space.",
+            [
+                  "It is round.",
+                  "You can throw it."
+            ],
+            "Flat shapes are drawn on paper. Solid shapes you can hold."
+      ],
+      [
+            "The pencil is longer than the rubber.",
+            "Line them up at the same end and the pencil reaches further.",
+            [
+                  "Pencils are for writing.",
+                  "The rubber is pink."
+            ],
+            "Compare from the same starting line."
+      ],
+      [
+            "A big box can be lighter than a small box.",
+            "A big box of feathers weighs less than a small box of stones.",
+            [
+                  "Big things are always heavy.",
+                  "Boxes come in sizes."
+            ],
+            "Size does not tell you how heavy something is. You have to weigh it."
+      ],
+      [
+            "A jug is the right tool for measuring water.",
+            "It holds the water and has marks to read.",
+            [
+                  "It is made of plastic.",
+                  "It has a handle."
+            ],
+            "Choose the tool that measures the thing you need."
+      ]
+];
+    const host = document.getElementById("clW");
+    if (!host) return;
+    ["fbW", "scW", "clW"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && !el.hasAttribute("aria-live")) el.setAttribute("aria-live", "polite");
+    });
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    let got = 0, asked = 0, order = shuffle(BANK), qi = 0, live = false;
+    function paint() {
+      if (qi >= order.length) { order = shuffle(BANK); qi = 0; }
+      const it = order[qi];
+      document.getElementById("clW").textContent = it[0];
+      document.getElementById("sayW").textContent = it[0] + " Which reason really explains it?";
+      document.getElementById("chW").innerHTML = shuffle([it[1]].concat(it[2]))
+        .map((o) => '<button type="button" class="choice word" data-v="' + esc(o) + '">' + esc(o) + "</button>").join("");
+      document.getElementById("fbW").className = "fb";
+      document.getElementById("fbW").textContent = "";
+      live = true;
+    }
+    document.getElementById("chW").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = order[qi];
+      const ok = b.dataset.v === it[1];
+      [...document.getElementById("chW").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.v === it[1]) x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      asked++; if (ok) got++;
+      const fb = document.getElementById("fbW");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not that one. ") + it[3];
+      say(ok ? cheer() : it[3]);
+      document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
+      if (got >= 4) finish(SLOT, "");
+      qi++;
+      setTimeout(paint, 3400);
+    });
+    paint();
+  })();
+
   show(0, false);
 
   /* ================= the two header bars =================

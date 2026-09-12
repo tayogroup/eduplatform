@@ -54,6 +54,32 @@ class App(object):
         io.open(self.path(name), "w", encoding="utf-8", newline="").write(s)
 
 
+PASS_FRACTION = 0.75
+
+
+def pass_mark(total):
+    """How many of `total` check questions a learner must get right.
+
+    ONE rule for every check in every Maths grade: three quarters, rounded up.
+    It is here rather than in each build because the builds disagreed, and the
+    disagreement was invisible from inside any one of them - measured on the
+    live pages 2026-09-12, a Grade 3 child passed Measure It on 4 of 6 (67%)
+    while a Grade 1 child needed three quarters, and Grade 4 ranged from 67%
+    to 80% between lessons of the same grade. Grade 4's composer had said so
+    in a comment - "the authors do not agree on a ratio ... the source's own
+    standard is SCALED rather than replaced by a house rule" - which is the
+    honest description of a decision nobody had been asked to make.
+
+    Rounded UP so a short check cannot be passed on half of it: 6 questions
+    ask for 5, not 4. The number is written into the page at build time, so a
+    learner still reads "Get 5 right to finish" rather than a formula.
+    """
+    total = int(total)
+    if total < 1:
+        raise ValueError("a check with no questions has no pass mark")
+    return -(-total * 3 // 4)
+
+
 def load(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     root = None

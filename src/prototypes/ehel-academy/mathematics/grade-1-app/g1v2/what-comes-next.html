@@ -827,6 +827,18 @@
         <p class="score" id="sc10"></p>
       </div>
     </section>
+    <!-- how do you know -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+      <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
+      <div class="stage">
+        <p class="fb" id="clW" style="font-size:21px"></p>
+        <div class="choices" id="chW"></div>
+        <p class="fb" id="fbW"></p>
+        <p class="score" id="scW"></p>
+      </div>
+    </section>
+
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
@@ -2294,16 +2306,124 @@
     ["➖", "Missing number in taking away"],
     ["⚖️", "The same on both sides"],
     ["🤖", "The number machine"],
-    ["✅", "Show what I know"],
+    ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
-    const got = done.slice(0, 15).filter(Boolean).length;
-    $("fb11").className = "fb " + (got === 15 ? "good" : ""); $("fb11").textContent = got === 15 ? "All 15 stickers! You are a pattern star." : got + " of 15 stickers so far.";
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb11").className = "fb " + (got === STICKERS.length ? "good" : ""); $("fb11").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You are a pattern star." : got + " of " + STICKERS.length + " stickers so far.";
   }
   $("restart").addEventListener("click", () => location.reload());
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
+  /* ==================================================================
+     CONVINCING - "presenting evidence to justify or challenge a
+     mathematical idea or solution" (Cambridge TWM.04). See
+     lesson-app-tools/add-reasoning-step.py: a true claim and three
+     reasons, only one of which does the work. It works out its own slide
+     index from the DOM, so it moved no other step.
+     ================================================================== */
+  (function () {
+    const BANK = [
+      [
+            "The next shape is a circle.",
+            "The pattern goes square, circle, square, circle, so a circle comes next.",
+            [
+                  "Circles are round.",
+                  "There are lots of circles."
+            ],
+            "Find the part that repeats, then say what follows."
+      ],
+      [
+            "In 2, 4, 6, 8 the next number is 10.",
+            "Each number is two more than the one before.",
+            [
+                  "They are all even.",
+                  "10 comes after 8."
+            ],
+            "All even is true of every one of them, and the jump of two is what makes the next number."
+      ],
+      [
+            "This pattern repeats in threes.",
+            "Red, blue, green comes round again and again.",
+            [
+                  "There are three colours.",
+                  "The pattern is long."
+            ],
+            "The repeating part decides, not how many colours there are."
+      ],
+      [
+            "In 5, 10, 15 the jump is five.",
+            "Each number is five more than the one before.",
+            [
+                  "They all end in 5 or 0.",
+                  "There is a 5 in every number."
+            ],
+            "Take one number away from the next to find the jump."
+      ],
+      [
+            "This is a growing pattern.",
+            "Each step has one more than the step before.",
+            [
+                  "It gets longer.",
+                  "There are lots of blocks."
+            ],
+            "A growing pattern adds the same amount every time."
+      ],
+      [
+            "The missing number is 7.",
+            "The pattern counts on by one, and 7 sits between 6 and 8.",
+            [
+                  "7 is an odd number.",
+                  "7 is a good number."
+            ],
+            "Use the numbers on each side to find the missing one."
+      ]
+];
+    const host = document.getElementById("clW");
+    if (!host) return;
+    ["fbW", "scW", "clW"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && !el.hasAttribute("aria-live")) el.setAttribute("aria-live", "polite");
+    });
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    let got = 0, asked = 0, order = shuffle(BANK), qi = 0, live = false;
+    function paint() {
+      if (qi >= order.length) { order = shuffle(BANK); qi = 0; }
+      const it = order[qi];
+      document.getElementById("clW").textContent = it[0];
+      document.getElementById("sayW").textContent = it[0] + " Which reason really explains it?";
+      document.getElementById("chW").innerHTML = shuffle([it[1]].concat(it[2]))
+        .map((o) => '<button type="button" class="choice word" data-v="' + esc(o) + '">' + esc(o) + "</button>").join("");
+      document.getElementById("fbW").className = "fb";
+      document.getElementById("fbW").textContent = "";
+      live = true;
+    }
+    document.getElementById("chW").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = order[qi];
+      const ok = b.dataset.v === it[1];
+      [...document.getElementById("chW").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.v === it[1]) x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      asked++; if (ok) got++;
+      const fb = document.getElementById("fbW");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not that one. ") + it[3];
+      say(ok ? cheer() : it[3]);
+      document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
+      if (got >= 4) finish(SLOT, "");
+      qi++;
+      setTimeout(paint, 3400);
+    });
+    paint();
+  })();
+
   show(0, false);
 
   /* ================= the two header bars =================

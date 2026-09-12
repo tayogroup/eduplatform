@@ -353,11 +353,12 @@
       $("fb18").className = "fb good";
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
-      if (got18 >= 4) finish(8, "You have finished the check. Well done.");
-      else retryCheck($("fb18"), $("ch18"), got18, order18.length, 4, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
+      if (got18 >= 5) finish(8, "You have finished the check. Well done.");
+      else retryCheck($("fb18"), $("ch18"), got18, order18.length, 5, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
       return;
     }
     const item = nextQ(order18[qi]);
+    $("sc18").textContent = "Question " + (qi + 1) + " of " + order18.length + " \u00b7 " + got18 + " right";
     $("q18").textContent = item.q;
     $("say18").textContent = item.q;
     offer("ch18", item.opts, item.a, (e) => {
@@ -369,7 +370,7 @@
       $("fb18").className = "fb " + (ok ? "good" : "");
       $("fb18").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
-      $("sc18").textContent = got18 + " right out of " + qi;
+      $("sc18").textContent = "Question " + qi + " of " + order18.length + " \u00b7 " + got18 + " right";
       setTimeout(round18, 2000);
     });
   }

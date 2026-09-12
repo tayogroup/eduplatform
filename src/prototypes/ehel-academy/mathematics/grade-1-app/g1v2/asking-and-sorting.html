@@ -780,6 +780,18 @@
     </section>
 
     <!-- stickers -->
+    <!-- how do you know -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+      <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
+      <div class="stage">
+        <p class="fb" id="clW" style="font-size:21px"></p>
+        <div class="choices" id="chW"></div>
+        <p class="fb" id="fbW"></p>
+        <p class="score" id="scW"></p>
+      </div>
+    </section>
+
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
@@ -2188,18 +2200,126 @@
   const STICKERS = [
     ["🙋", "I asked everyone"], ["📝", "I can read a list"], ["📋", "I can fill a table"], ["📶", "I built a block graph"],
     ["📊", "I can read a graph"], ["🖼️", "I can read a pictogram"], ["⭕", "Sorting into a hoop"], ["🔗", "I can read a Venn diagram"],
-    ["🗂️", "A Carroll diagram"], ["❓", "Answering the question"], ["💭", "What we can say"], ["✅", "Show what I know"],
+    ["🗂️", "A Carroll diagram"], ["❓", "Answering the question"], ["💭", "What we can say"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
       (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
-    const got = done.slice(0, 12).filter(Boolean).length;
-    $("fbstick").className = "fb " + (got === 12 ? "good" : "");
-    $("fbstick").textContent = got === 12 ? "All 12 stickers! You are a data star." : got + " of 12 stickers so far.";
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fbstick").className = "fb " + (got === STICKERS.length ? "good" : "");
+    $("fbstick").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You are a data star." : got + " of " + STICKERS.length + " stickers so far.";
   }
   $("restart").addEventListener("click", () => location.reload());
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
+  /* ==================================================================
+     CONVINCING - "presenting evidence to justify or challenge a
+     mathematical idea or solution" (Cambridge TWM.04). See
+     lesson-app-tools/add-reasoning-step.py: a true claim and three
+     reasons, only one of which does the work. It works out its own slide
+     index from the DOM, so it moved no other step.
+     ================================================================== */
+  (function () {
+    const BANK = [
+      [
+            "More children chose red than blue.",
+            "The red tower has more blocks than the blue tower.",
+            [
+                  "Red is a bright colour.",
+                  "Red comes first on the graph."
+            ],
+            "Compare how tall the towers are, not the colour or the order."
+      ],
+      [
+            "Six children like cats.",
+            "There are six pictures in the cat row.",
+            [
+                  "Cats are popular.",
+                  "The cat row is long."
+            ],
+            "Count the pictures in that row."
+      ],
+      [
+            "This table shows what everyone said.",
+            "Every child's answer has its own mark in a row.",
+            [
+                  "The table is neat.",
+                  "Tables have lines."
+            ],
+            "A table holds one mark for each person who answered."
+      ],
+      [
+            "This shape does not belong in the hoop.",
+            "The hoop is for red shapes and this shape is blue.",
+            [
+                  "It is a different size.",
+                  "The hoop is full."
+            ],
+            "Check the sorting rule, not anything else about the shape."
+      ],
+      [
+            "This shape goes in the middle of the Venn diagram.",
+            "It is red and it is a circle, so it follows both rules.",
+            [
+                  "It is in the middle of the table.",
+                  "It is the biggest shape."
+            ],
+            "The middle is for the things that follow both rules at once."
+      ],
+      [
+            "Asking everyone gives a fair answer.",
+            "Every person in the class is counted once.",
+            [
+                  "Asking is fun.",
+                  "The class is big."
+            ],
+            "A fair count leaves nobody out."
+      ]
+];
+    const host = document.getElementById("clW");
+    if (!host) return;
+    ["fbW", "scW", "clW"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && !el.hasAttribute("aria-live")) el.setAttribute("aria-live", "polite");
+    });
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    let got = 0, asked = 0, order = shuffle(BANK), qi = 0, live = false;
+    function paint() {
+      if (qi >= order.length) { order = shuffle(BANK); qi = 0; }
+      const it = order[qi];
+      document.getElementById("clW").textContent = it[0];
+      document.getElementById("sayW").textContent = it[0] + " Which reason really explains it?";
+      document.getElementById("chW").innerHTML = shuffle([it[1]].concat(it[2]))
+        .map((o) => '<button type="button" class="choice word" data-v="' + esc(o) + '">' + esc(o) + "</button>").join("");
+      document.getElementById("fbW").className = "fb";
+      document.getElementById("fbW").textContent = "";
+      live = true;
+    }
+    document.getElementById("chW").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = order[qi];
+      const ok = b.dataset.v === it[1];
+      [...document.getElementById("chW").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.v === it[1]) x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      asked++; if (ok) got++;
+      const fb = document.getElementById("fbW");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not that one. ") + it[3];
+      say(ok ? cheer() : it[3]);
+      document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
+      if (got >= 4) finish(SLOT, "");
+      qi++;
+      setTimeout(paint, 3400);
+    });
+    paint();
+  })();
+
   show(0, false);
 
   /* ================= the two header bars =================

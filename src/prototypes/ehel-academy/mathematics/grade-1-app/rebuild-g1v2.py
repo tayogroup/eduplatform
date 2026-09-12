@@ -69,6 +69,10 @@ STEPS = [
     ("gate-and-explain-check.py", ["--write"]),
     ("add-warmup.py", ["--write"]),
     ("add-second-steps.py", ["--write"]),
+    # "How do you know?" - after the second steps, because it inserts itself
+    # before the sticker shelf and must see the final set of steps; before the
+    # emoji tools, which refuse a shelf whose faces repeat.
+    (T + "add-reasoning-step.py", ["--app", "g1v2", "--write"]),
     ("fix-turn-and-tree.py", ["--write"]),
     # two more from the same evening that never reached this list, found by
     # running it: step 1's "Mix them up" (1Nc.01), and focus mode

@@ -2520,8 +2520,8 @@
       $("stem10").textContent = "That is all of them.";
       $("choices10").innerHTML = "";
       $("score10").textContent = right10 + " out of " + Q10.length + " right.";
-      if (right10 >= 8) finish(10, "");
-      else retryCheck($("fb10"), $("choices10"), right10, Q10.length, 8, function () { c10 = 0; right10 = 0; round10(); });
+      if (right10 >= 9) finish(10, "");
+      else retryCheck($("fb10"), $("choices10"), right10, Q10.length, 9, function () { c10 = 0; right10 = 0; round10(); });
       return;
     }
     $("stem10").textContent = Q10[c10].q;

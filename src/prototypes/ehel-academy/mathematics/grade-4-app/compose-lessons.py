@@ -33,6 +33,11 @@ import os
 import re
 import sys
 
+# ONE pass mark for every check in every Maths grade - see _app.pass_mark.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                "..", "lesson-app-tools"))
+from _app import pass_mark  # noqa: E402
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 # out-key, title, source, ORDERED slide sequence, quiz items to keep
@@ -511,13 +516,19 @@ def compose(key, title, srckey, keep, keepq):
     # Each source ends its check with `if (rq >= 7) finish(...)` -- 7 of that
     # source's 10 -- and the recut left the 7 while cutting the quiz to four
     # questions, so in bignum, patterns and calc the check slide could not be
-    # finished at all: no dot, and no sticker for it either. The authors do not
-    # agree on a ratio (num 7/10, frac 6/8, time 6/11, stats 6/15), so the
-    # source's own standard is SCALED rather than replaced by a house rule.
+    # finished at all: no dot, and no sticker for it either.
+    #
+    # It used to SCALE the source's own number rather than impose a house rule,
+    # on the stated grounds that "the authors do not agree on a ratio (num
+    # 7/10, frac 6/8, time 6/11, stats 6/15)". That preserved the disagreement
+    # instead of the ratio: measured on the live pages 2026-09-12, Grade 4 asked
+    # for 67% in Shape and Measures and 80% in Parts of a Whole, and Grade 3 for
+    # 67% where Grade 1 asked three quarters. The ratio the authors did not
+    # agree on is exactly the thing a house rule is for, so _app.pass_mark is
+    # now the one definition and every grade computes from it.
     mth = re.search(r"if \((\w+) >= (\d+)\) finish\(\s*%d\s*," % (checkno - 1), chk)
     assert mth, "%s: cannot find the check slide's pass mark" % key
-    scaled = int(int(mth.group(2)) * len(picked) / float(len(items)) + 0.5)
-    scaled = max(2, min(len(picked), scaled))
+    scaled = pass_mark(len(picked))
     chk = chk[: mth.start(2)] + str(scaled) + chk[mth.end(2):]
     # ...and the same number where Try again says how many are needed
     # (fix-validation.py, 2026-09-11) - two copies of one mark must not disagree

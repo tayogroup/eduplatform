@@ -362,11 +362,12 @@
       $("q12").textContent = ""; $("ch12").innerHTML = "";
       $("fb12").className = "fb good"; $("fb12").textContent = "Finished! " + got12 + " out of " + order12.length + ".";
       $("sc12").textContent = "";
-      if (got12 >= 7) finish(11, "You have finished the check.");
-      else retryCheck($("fb12"), $("ch12"), got12, order12.length, 7, function () { qi = 0; got12 = 0; order12 = shuffle(QS); round12(); });
+      if (got12 >= 8) finish(11, "You have finished the check.");
+      else retryCheck($("fb12"), $("ch12"), got12, order12.length, 8, function () { qi = 0; got12 = 0; order12 = shuffle(QS); round12(); });
       return;
     }
     const item = nextQ(order12[qi]);
+    $("sc12").textContent = "Question " + (qi + 1) + " of " + order12.length + " \u00b7 " + got12 + " right";
     $("q12").textContent = item.q; $("say12").textContent = item.q;
     offer("ch12", item.opts, item.a, (e) => {
       const b = e.target.closest(".choice"); if (!b) return;
@@ -377,7 +378,7 @@
       $("fb12").className = "fb " + (ok ? "good" : "");
       $("fb12").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
-      $("sc12").textContent = got12 + " right out of " + qi;
+      $("sc12").textContent = "Question " + qi + " of " + order12.length + " \u00b7 " + got12 + " right";
       setTimeout(round12, 2000);
     });
   }

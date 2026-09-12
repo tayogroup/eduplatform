@@ -154,8 +154,18 @@ def read_lesson(name):
             sys.exit("  REFUSED: %s: read %d check items but the array holds %d"
                      % (name, len(keys), declared))
     else:
+        # THE SEQUENCE CHECK IS FOUND BY ITS finish INDEX, and that index moves
+        # when a step is added after it. "How do you know?" is inserted between
+        # the check and the sticker shelf (add-reasoning-step.py), which is the
+        # one place a step can go without moving any EXISTING index - but it
+        # does add one to the teaching count this reads, so on a page carrying
+        # it the check's own finish is one below the count. The lessons with a
+        # CHECK array are unaffected: they are found by the array's name.
         n = len(teaching)
-        b = re.search(r"finish:\s*%d\b.*?items:\s*\[(.*?)\n\s*\],?\n\s*\}\);" % n, s, re.S)
+        pat = r"finish:\s*%d\b.*?items:\s*\[(.*?)\n\s*\],?\n\s*\}\);"
+        b = re.search(pat % n, s, re.S)
+        if not b and 'id="clW"' in s:
+            b = re.search(pat % (n - 1), s, re.S)
         if not b:
             sys.exit("  REFUSED: %s has neither a CHECK array nor a sequence() check" % name)
         for item in re.finditer(r"\{\s*ask:\s*\"((?:[^\"\\]|\\.)*)\"(.*?)(?=\n\s{6}\{\s*ask:|\Z)",

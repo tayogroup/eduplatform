@@ -8062,7 +8062,9 @@
      follows the branch that input takes; then tries the other input and
      sees a different output from the same algorithm. */
   function branchAlgo(o) {
-    const el = o.el, rounds = o.rounds;
+    /* `word` labels the fork: IF at Stage 5, and at Stage 4 whatever the grade calls
+       asking a question about the input (the owner's decision, 2026-09-12) */
+    const el = o.el, rounds = o.rounds, word = o.word || "IF";
     let r = 0, score = 0;
     function start() {
       const rd = rounds[r], tried = new Set();
@@ -8075,7 +8077,7 @@
         const isLit = (st) => lit && lit.id === st.id && lit.label === st.label;
         $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(rd.task) + '</b></p><div class="branch">' +
           '<ol class="algo">' + (rd.before || []).map((st) => li(st, isLit(st))).join("") + "</ol>" +
-          '<div class="ifbox"><b>IF ' + esc(rd.question) + '</b><div class="arms"><div class="arm' + (input === rd.inputs[0].id ? " on" : "") + '"><i>' + esc(rd.inputs[0].label) + ':</i><ol class="algo small">' + rd.yes.map((st) => li(st, input === rd.inputs[0].id && isLit(st))).join("") + '</ol></div><div class="arm' + (input === rd.inputs[1].id ? " on" : "") + '"><i>' + esc(rd.inputs[1].label) + ':</i><ol class="algo small">' + rd.no.map((st) => li(st, input === rd.inputs[1].id && isLit(st))).join("") + "</ol></div></div></div>" +
+          '<div class="ifbox"><b>' + esc(word) + " " + esc(rd.question) + '</b><div class="arms"><div class="arm' + (input === rd.inputs[0].id ? " on" : "") + '"><i>' + esc(rd.inputs[0].label) + ':</i><ol class="algo small">' + rd.yes.map((st) => li(st, input === rd.inputs[0].id && isLit(st))).join("") + '</ol></div><div class="arm' + (input === rd.inputs[1].id ? " on" : "") + '"><i>' + esc(rd.inputs[1].label) + ':</i><ol class="algo small">' + rd.no.map((st) => li(st, input === rd.inputs[1].id && isLit(st))).join("") + "</ol></div></div></div>" +
           '<ol class="algo">' + (rd.after || []).map((st) => li(st, isLit(st))).join("") + "</ol></div>" +
           (input ? '<div class="actions">' + btns.map((st) => '<button type="button" class="tapcard act" data-id="' + esc(st.id) + '"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label) + "</button>").join("") + "</div>"
             : '<div class="chips">' + rd.inputs.map((x) => '<button type="button" class="chip' + (tried.has(x.id) ? " tried" : "") + '" data-input="' + esc(x.id) + '"' + (tried.has(x.id) ? " disabled" : "") + '>' + small(x.pic) + " " + esc(x.label) + "</button>").join("") + "</div>") + "</div>";

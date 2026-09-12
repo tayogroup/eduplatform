@@ -11,36 +11,36 @@ from _kit import explain, step, opt, q, s, part, word, home
 LESSON = {
     "slug": "inputs-decide-outputs",
     "title": "Inputs Decide Outputs",
-    "blurb": "Follow an algorithm with an IF in it and see one input take one branch and another input take the other, then write your own, and build algorithms with a repeat loop in them.",
+    "blurb": "Follow an algorithm that asks a question about its input and gives each answer its own steps, write one of your own, and build algorithms with a repeat loop in them.",
     "steps": [
-        step("context", "If this, then that", "\U0001F500", "If thinker", ["4CT.09"],
-             "An algorithm can have a fork in it: IF something is true, do these steps; otherwise do those. The input decides. Tap each one.",
+        step("context", "One question, two answers", "\U0001F500", "Question thinker", ["4CT.09"],
+             "An algorithm can ask a question about its input, and each answer has its own steps. The answer decides. Tap each one.",
              explain(
-                 ["A branch is a choice inside an algorithm. The same algorithm gives a different output for a different input."],
-                 ["IF it is raining, take an umbrella; otherwise take sunglasses. The weather is the input; what you carry is the output.",
-                  "IF the kettle has boiled, pour; otherwise wait. IF the answer is right, say well done; otherwise say try again."],
-                 ["Children think the algorithm changed.", "The algorithm is the same. The input changed, so it took the other branch."],
+                 ["A branch is a fork inside an algorithm: one question about the input, and a rule for each answer."],
+                 ["Is it raining? Yes: take an umbrella. No: take sunglasses. The weather is the input; what you carry is the output.",
+                  "Has the kettle boiled? Yes: pour. No: wait and check again. Is the answer right? Yes: say well done. No: say try again."],
+                 ["Children think the algorithm changed.", "The algorithm is the same. The input changed, so the question got a different answer."],
                  ["Tap all five."]),
              {"items": [
-                 {"pic": "\U0001F327️", "label": "IF it is raining", "say": "IF it is raining, take an umbrella; otherwise take sunglasses. Same algorithm, two outputs, and the weather decides."},
-                 {"pic": "\u2615", "label": "IF the kettle has boiled", "say": "IF the kettle has boiled, pour the water; otherwise wait a minute and check again."},
-                 {"pic": "✅", "label": "IF the answer is right", "say": "IF the answer is right, say well done; otherwise say try again. A quiz program has this branch in it."},
-                 {"pic": "\U0001F6AA", "label": "IF the door is locked", "say": "IF the door is locked, use the key; otherwise just push it open."},
-                 {"pic": "\U0001F3AE", "label": "IF the player presses jump", "say": "IF the player presses jump, the character jumps; otherwise it keeps running. The button press is the input."},
+                 {"pic": "\U0001F327️", "label": "Is it raining?", "say": "Is it raining? Yes: take an umbrella. No: take sunglasses. Same algorithm, two outputs, and the weather decides."},
+                 {"pic": "\u2615", "label": "Has the kettle boiled?", "say": "Has the kettle boiled? Yes: pour the water. No: wait a minute and check again."},
+                 {"pic": "✅", "label": "Is the answer right?", "say": "Is the answer right? Yes: say well done. No: say try again. A quiz program has this branch in it."},
+                 {"pic": "\U0001F6AA", "label": "Is the door locked?", "say": "Is the door locked? Yes: use the key. No: just push it open."},
+                 {"pic": "\U0001F3AE", "label": "Did the player press jump?", "say": "Did the player press jump? Yes: the character jumps. No: it keeps running. The button press is the input."},
              ], "need": 5,
-              "then": {"ask": "In 'IF it is raining, take an umbrella; otherwise take sunglasses', what is the INPUT?",
+              "then": {"ask": "In 'Is it raining? Yes: take an umbrella. No: take sunglasses', what is the INPUT?",
                        "opts": [opt("Whether it is raining", True), opt("The umbrella", False), opt("The sunglasses", False)],
-                       "why": "The input is the thing the IF looks at. The output is what you take."}},
+                       "why": "The input is the thing the question asks about. The output is what you take."}},
              "The input decides the branch."),
 
         step("branch", "Take the branch", "\U0001F500", "Branch follower", ["4CT.09"],
-             "Choose an input, then follow the algorithm through the branch that input takes. Then try the other input.",
+             "Choose an input, then follow the algorithm through the steps that input's answer takes. Then try the other input.",
              explain(
-                 ["Following a branch: do the steps before the IF, then ONLY the branch that matches the input, then the steps after."],
+                 ["Following a branch: do the steps before the question, then ONLY the steps for the answer the input gives, then the steps after."],
                  ["Raining: get dressed, take the umbrella, walk to school.", "Dry: get dressed, take sunglasses, walk to school. Same start, same end, different middle."],
                  ["Children do both branches.", "Only one branch runs. The other is skipped completely."],
                  ["Pick an input, follow the branch, then pick the other."]),
-             {"rounds": [
+             {"word": "Ask:", "rounds": [
                  {"task": "leave for school", "question": "is it raining?",
                   "inputs": [{"id": "yes", "label": "Yes, it is raining", "pic": "\U0001F327️"}, {"id": "no", "label": "No, it is sunny", "pic": "☀️"}],
                   "before": [s("dress", "Get dressed", "\U0001F455"), s("bag", "Pick up your bag", "\U0001F392")],
@@ -64,7 +64,7 @@ LESSON = {
                   "Test it with both answers. One algorithm, two inputs, two different outputs."],
                  ["Children put a step that happens for both answers inside one branch.", "If it happens whatever the answer, it goes outside the branches: first, or after."],
                  ["Choose the question, then tap a step and tap Put it here. Then Test it."]),
-             {"word": "IF", "rounds": [
+             {"word": "Ask:", "rounds": [
                  {"task": "borrow a library book", "question": "is the book on the shelf?",
                   "questions": ["is the book on the shelf?", "is it raining?", "is the book red?"],
                   "inputs": [{"id": "yes", "label": "Yes, it is on the shelf", "pic": "\U0001F4DA"}, {"id": "no", "label": "No, someone has it", "pic": "\U0001F6AB"}],
@@ -136,19 +136,19 @@ LESSON = {
              "Three quick questions.",
              explain(["Nothing new here."], ["Branches and loops you build."], [], ["Read, think, tap."]),
              {"items": [
-                 q("'IF it is raining take an umbrella, otherwise sunglasses.' It is sunny. The output is...", "☀️", "sunglasses", ["an umbrella", "both", "neither"], "The sunny input takes the otherwise branch."),
+                 q("'Is it raining? Yes: an umbrella. No: sunglasses.' It is sunny. The output is...", "☀️", "sunglasses", ["an umbrella", "both", "neither"], "The sunny input answers no, so it takes the no steps."),
                  q("Which step goes INSIDE 'repeat 3 times' for watering 3 plants?", "\U0001F501", "pour on a plant", ["get the can", "put the can away", "open the shed"], "It happens for every plant."),
-                 q("An algorithm with an IF gives...", "\U0001F500", "different outputs for different inputs", ["the same output always", "no output", "a random output"], "The input picks the branch."),
+                 q("An algorithm with a question in it gives...", "\U0001F500", "different outputs for different inputs", ["the same output always", "no output", "a random output"], "The answer picks the branch."),
              ]},
-             "If, loop, output."),
+             "Question, loop, output."),
 
         step("quiz", "Show what you know", "⭐", "Star computer scientist", ["4CT.05", "4CT.09", "4CT.10"],
              "Time to show what you know. Tap the answer.",
              explain(["No new ideas here."], ["Branches, inputs, outputs, and loops you build."], [], ["Read, look, tap."]),
              {"items": [
-                 q("The part of an algorithm where the input decides which steps run is...", "\U0001F500", "a branch, an IF", ["a loop", "a sub-routine", "an output"], "IF this, then that; otherwise the other."),
-                 q("In the quiz algorithm, a wrong answer as input gives which output?", "❌", "a cross and a hint", ["a tick and a point", "well done", "nothing"], "The wrong input takes the otherwise branch."),
-                 q("With input 'raining', which steps are SKIPPED?", "\U0001F327️", "the sunny branch: sunglasses and sun hat", ["get dressed", "walk to school", "the umbrella"], "Only one branch runs."),
+                 q("The part of an algorithm where the input decides which steps run is...", "\U0001F500", "a branch", ["a loop", "a sub-routine", "an output"], "One question about the input, and a rule for each answer."),
+                 q("In the quiz algorithm, a wrong answer as input gives which output?", "❌", "a cross and a hint", ["a tick and a point", "well done", "nothing"], "A wrong answer takes the no steps."),
+                 q("With input 'raining', which steps are SKIPPED?", "\U0001F327️", "the sunny steps: sunglasses and sun hat", ["get dressed", "walk to school", "the umbrella"], "Only one answer's steps run."),
                  q("To water 4 plants with the same loop as 3, you...", "\U0001F522", "change the count to 4", ["add a plant step", "remove the loop", "do it twice"], "The count is the only change."),
                  q("Repeat 5 times: pour, cook, plate. Then serve. How many steps unrolled?", "\U0001F95E", "16", ["4", "5", "15"], "Fifteen in the loop, plus serve."),
                  q("Which belongs OUTSIDE the pancake loop?", "\U0001F963", "mix the batter", ["pour batter in the pan", "cook and flip", "put it on the plate"], "Mixing happens once."),
@@ -161,19 +161,19 @@ LESSON = {
 
 
 LESSON["about"] = [
-    "Follow an algorithm with an IF branch and say how the input picks the output.",
+    "Follow an algorithm that asks a question about its input and say how the answer picks the output.",
     "Write an algorithm whose output depends on its input, and test it with both inputs.",
     "Build an algorithm with a repeat loop for a task that repeats.",
     "Decide which steps go inside a loop and which stay outside.",
 ]
 
 LESSON["lecture"] = [
-    part("\U0001F500", "The IF branch",
-         "An algorithm can fork: IF it is raining, put on a raincoat and take an umbrella; otherwise sunglasses and a hat. The steps before and after are the same for everyone; the middle depends on the input. Only one branch runs."),
+    part("\U0001F500", "One question, two answers",
+         "An algorithm can fork. It asks one question about its input - is it raining? - and each answer has its own steps: yes, a raincoat and an umbrella; no, sunglasses and a hat. The steps before and after are the same for everyone; the middle depends on the answer. Only one answer's steps run."),
     part("\U0001F4E4", "Inputs decide outputs",
          "The same algorithm gives a different output for a different input. Raining in, umbrella out. Sunny in, sunglasses out. A quiz program does the same: right answer in, a tick and a point; wrong answer in, a cross and a hint."),
     part("\u270D\uFE0F", "Writing a branch",
-         "To write an algorithm with a branch, first choose the question that decides it. Steps that happen whatever the answer go outside the branches, first or after; steps for one answer go in that answer's branch. Then test it with both answers: a step that turns up for the wrong answer is in the wrong place."),
+         "To write an algorithm with a branch, first choose the question that decides it. Steps that happen whatever the answer go outside the branches, first or after; steps for one answer go in that answer's branch. Then test it with both answers: a step that turns up for the wrong answer is in the wrong place. (Some languages write this with the words IF and ELSE. You meet those next year; here the question and its two answers are the whole idea.)"),
     part("\U0001F501", "Building a loop",
          "When a task does the same steps for every plant, or every place, or every pancake, those steps go inside a repeat loop with a count. Fill, pour, walk, repeat 3 times. What happens only once - getting the can, putting it away - stays outside."),
     part("\U0001F52E", "Checking it",
@@ -181,12 +181,12 @@ LESSON["lecture"] = [
 ]
 
 LESSON["words"] = [
-    word("branch", "\U0001F500", "A fork in an algorithm where the input decides which steps run.",
-         ["The raincoat is on the raining branch.", "An IF makes a branch."]),
-    word("condition", "❓", "The question an IF asks about the input.",
-         ["'Is it raining?' is the condition.", "A true condition takes the first branch."]),
-    word("otherwise", "↪️", "The branch taken when the condition is not true.",
-         ["Otherwise, take sunglasses.", "The otherwise branch ran."]),
+    word("branch", "\U0001F500", "A fork in an algorithm where the answer to a question decides which steps run.",
+         ["The raincoat is on the raining branch.", "A question makes two branches."]),
+    word("question", "❓", "What an algorithm asks about its input to decide which steps to run.",
+         ["'Is it raining?' is the question.", "The answer to the question picks the branch."]),
+    word("rule", "\U0001F4CB", "What an algorithm does for one answer: this answer, these steps.",
+         ["The rule for yes is: take an umbrella.", "Two answers, two rules."]),
     word("repeat", "\U0001F501", "To do the steps in a loop again.",
          ["Repeat 3 times.", "Put the repeating steps in the loop."]),
     word("count", "\U0001F522", "How many times a repeat loop goes round.",
@@ -195,8 +195,8 @@ LESSON["words"] = [
 
 LESSON["home"] = [
     home("Roll for the weather", "A dice, cards",
-         ["Write a leaving-the-house algorithm with an IF: odd is raining, even is sunny.",
-          "Roll the dice, then follow only the branch it gives you.",
+         ["Write a leaving-the-house algorithm with a question in the middle: odd is raining, even is sunny.",
+          "Roll the dice, answer the question, then follow only the steps for that answer.",
           "Roll again. Did the output change?"],
          "Same algorithm, different input, different output."),
     home("Build the loop", "Cards, a real job",

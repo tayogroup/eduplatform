@@ -99,7 +99,7 @@ UNPLUGGED = {
     "loopalgo": "Write a routine with a 'repeat 3 times' box in it on cards. The grown-up follows it EXACTLY, counting the turns out loud. Then write one with a 'forever' box and see who stops it.",
     "compare": "Write two ways of doing one job (two routes to school, two ways to tidy a room). Say which is best when you are in a hurry, which when you must not forget anything, and why.",
     "subroutine": "Write 'getting ready' as a main list that says 'do WASH', 'do DRESS', 'do BAG', and each of those as its own little list. Follow the main list, jumping into each little list and back.",
-    "branch": "Make an 'if it is raining' routine: the same start and end, a different middle. Roll a dice for the weather and follow the branch it gives you.",
+    "branch": "Make a routine with a question in the middle: the same start and end, and a different middle for each answer. Roll a dice for the weather - odd is raining, even is dry - and follow the middle that answer gives you.",
     "loopbuild": "Water the plants or lay the table, and write it as 'repeat N times' plus the steps in the box. Unroll it: how many steps is that really?",
     "branchbuild": "Write your own routine on cards with a question in the middle: what happens first every time, a different middle for each answer, and what happens after. Hand someone an answer card and see if they get the right output.",
     "comment": "Take a card program and write a short comment on each card saying what it is FOR. Give it to someone who has never seen it. Can they explain it back?",

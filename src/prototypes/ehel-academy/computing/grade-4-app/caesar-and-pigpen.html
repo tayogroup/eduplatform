@@ -2325,10 +2325,10 @@
             {
               "w": "branch",
               "pic": "🔀",
-              "meaning": "A fork in an algorithm where the input decides which steps run.",
+              "meaning": "A fork in an algorithm where the answer to a question decides which steps run.",
               "uses": [
                 "The raincoat is on the raining branch.",
-                "An IF makes a branch."
+                "A question makes two branches."
               ],
               "lesson": 4,
               "title": "Inputs Decide Outputs",
@@ -2417,18 +2417,6 @@
               "lesson": 1,
               "title": "Loops in Algorithms",
               "file": "loops-in-algorithms.html"
-            },
-            {
-              "w": "condition",
-              "pic": "❓",
-              "meaning": "The question an IF asks about the input.",
-              "uses": [
-                "'Is it raining?' is the condition.",
-                "A true condition takes the first branch."
-              ],
-              "lesson": 4,
-              "title": "Inputs Decide Outputs",
-              "file": "inputs-decide-outputs.html"
             },
             {
               "w": "contrast",
@@ -2911,18 +2899,6 @@
               "file": "software-sensors-and-files.html"
             },
             {
-              "w": "otherwise",
-              "pic": "↪️",
-              "meaning": "The branch taken when the condition is not true.",
-              "uses": [
-                "Otherwise, take sunglasses.",
-                "The otherwise branch ran."
-              ],
-              "lesson": 4,
-              "title": "Inputs Decide Outputs",
-              "file": "inputs-decide-outputs.html"
-            },
-            {
               "w": "output",
               "pic": "📤",
               "meaning": "What the program makes happen: the cat's jumps, its words, its size.",
@@ -3019,6 +2995,18 @@
               "file": "predict-and-compare.html"
             },
             {
+              "w": "question",
+              "pic": "❓",
+              "meaning": "What an algorithm asks about its input to decide which steps to run.",
+              "uses": [
+                "'Is it raining?' is the question.",
+                "The answer to the question picks the branch."
+              ],
+              "lesson": 4,
+              "title": "Inputs Decide Outputs",
+              "file": "inputs-decide-outputs.html"
+            },
+            {
               "w": "record",
               "pic": "➡️",
               "meaning": "One row of a table: everything about one thing.",
@@ -3065,6 +3053,18 @@
               "lesson": 3,
               "title": "Sub-routines",
               "file": "sub-routines.html"
+            },
+            {
+              "w": "rule",
+              "pic": "📋",
+              "meaning": "What an algorithm does for one answer: this answer, these steps.",
+              "uses": [
+                "The rule for yes is: take an umbrella.",
+                "Two answers, two rules."
+              ],
+              "lesson": 4,
+              "title": "Inputs Decide Outputs",
+              "file": "inputs-decide-outputs.html"
             },
             {
               "w": "script",
@@ -7753,7 +7753,9 @@
      follows the branch that input takes; then tries the other input and
      sees a different output from the same algorithm. */
   function branchAlgo(o) {
-    const el = o.el, rounds = o.rounds;
+    /* `word` labels the fork: IF at Stage 5, and at Stage 4 whatever the grade calls
+       asking a question about the input (the owner's decision, 2026-09-12) */
+    const el = o.el, rounds = o.rounds, word = o.word || "IF";
     let r = 0, score = 0;
     function start() {
       const rd = rounds[r], tried = new Set();
@@ -7766,7 +7768,7 @@
         const isLit = (st) => lit && lit.id === st.id && lit.label === st.label;
         $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(rd.task) + '</b></p><div class="branch">' +
           '<ol class="algo">' + (rd.before || []).map((st) => li(st, isLit(st))).join("") + "</ol>" +
-          '<div class="ifbox"><b>IF ' + esc(rd.question) + '</b><div class="arms"><div class="arm' + (input === rd.inputs[0].id ? " on" : "") + '"><i>' + esc(rd.inputs[0].label) + ':</i><ol class="algo small">' + rd.yes.map((st) => li(st, input === rd.inputs[0].id && isLit(st))).join("") + '</ol></div><div class="arm' + (input === rd.inputs[1].id ? " on" : "") + '"><i>' + esc(rd.inputs[1].label) + ':</i><ol class="algo small">' + rd.no.map((st) => li(st, input === rd.inputs[1].id && isLit(st))).join("") + "</ol></div></div></div>" +
+          '<div class="ifbox"><b>' + esc(word) + " " + esc(rd.question) + '</b><div class="arms"><div class="arm' + (input === rd.inputs[0].id ? " on" : "") + '"><i>' + esc(rd.inputs[0].label) + ':</i><ol class="algo small">' + rd.yes.map((st) => li(st, input === rd.inputs[0].id && isLit(st))).join("") + '</ol></div><div class="arm' + (input === rd.inputs[1].id ? " on" : "") + '"><i>' + esc(rd.inputs[1].label) + ':</i><ol class="algo small">' + rd.no.map((st) => li(st, input === rd.inputs[1].id && isLit(st))).join("") + "</ol></div></div></div>" +
           '<ol class="algo">' + (rd.after || []).map((st) => li(st, isLit(st))).join("") + "</ol></div>" +
           (input ? '<div class="actions">' + btns.map((st) => '<button type="button" class="tapcard act" data-id="' + esc(st.id) + '"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label) + "</button>").join("") + "</div>"
             : '<div class="chips">' + rd.inputs.map((x) => '<button type="button" class="chip' + (tried.has(x.id) ? " tried" : "") + '" data-input="' + esc(x.id) + '"' + (tried.has(x.id) ? " disabled" : "") + '>' + small(x.pic) + " " + esc(x.label) + "</button>").join("") + "</div>") + "</div>";

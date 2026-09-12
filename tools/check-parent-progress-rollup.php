@@ -214,7 +214,22 @@ foreach ([['ehel-math-g01', '/mathematics/grade-1-app/g1v2'], ['ehel-math-g02', 
     }
     check("$key: the map is its build's lessons", $map[$key] ?? null, $want);
 }
-check('a course on the shell alone is not in the map', isset($map['ehel-eng-g01']), false);
+// A course with NO standalone build stays out of the map. It used to name
+// ehel-eng-g01, which stopped being shell-only when English Grade 1 got a
+// build of its own; the map carries u-builds since 2026-09-12, so that
+// case was asserting the absence of something that must now be there.
+// English Grade 6 has no build at all.
+check('a course with no standalone build is not in the map', isset($map['ehel-eng-g06']), false);
+// The u-builds ARE in it now, titles and all: this is what names Art &
+// Design's units for a parent instead of a bare "Unit 3".
+check('a u-build is in the map, with its titles',
+    ($map['ehel-art-g01']['u03'] ?? null), 'Feel the Texture');
+check('a u-build label carries the name', pqpr_unit_label('u03', $map['ehel-art-g01'] ?? []),
+    'Unit 3: Feel the Texture');
+check('a u-unit with no title is still a bare number', pqpr_unit_label('u09', $map['ehel-art-g01'] ?? []),
+    'Unit 9');
+check('u rows still do not change a count', pqpr_course_units(3, 8, 0, 0, 8, $map['ehel-art-g01'] ?? []),
+    ['done' => 3, 'total' => 8]);
 check('an unreadable map is empty, which changes nothing', pqpr_standalone_lessons(__DIR__ . '/no-such-map.json'), []);
 
 echo "\n$pass passed, $fail failed\n";

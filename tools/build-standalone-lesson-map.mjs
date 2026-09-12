@@ -67,7 +67,12 @@ const courses = {};
 for (const file of configs.sort()) {
   const cfg = JSON.parse(fs.readFileSync(file, "utf8"));
   const prefix = cfg.progressUnitPrefix ?? "l";
-  if (prefix !== "l") continue;                 // English and Art & Design write the course's own uNN
+  /* u-prefixed builds are HERE TOO since 2026-09-12. English and Art &
+     Design write the course's own uNN, so they never needed this map to fix
+     a COUNT - the catalogue's unit count is already their lesson count. They
+     did need it for NAMES: without an entry every label fell back to a bare
+     "Unit 3", where an l-build reads "Lesson 3: Forward, Back, Left, Right".
+     The unit id keeps its own prefix, so nothing downstream has to guess. */
   const key = cfg.courseKey;
   const lessons = Array.isArray(cfg.lessons) ? cfg.lessons : [];
   if (!key || !lessons.length) continue;

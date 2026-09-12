@@ -46,7 +46,13 @@ const PQPR_GENERIC_LEVELS = ['primary', 'lower secondary', 'upper secondary'];
  */
 function pqpr_unit_label(string $unit, array $lessontitles = []): string {
     if (preg_match('/^u(\d+)$/', $unit, $m)) {
-        return 'Unit ' . (int)$m[1];
+        /* A u-build's unit IS the course's unit, so the word stays "Unit";
+           what was missing was its name. Art & Design and English are in
+           the lesson map since 2026-09-12, so a parent reads "Unit 3: Feel
+           the Texture" instead of a bare number. Still bare where no title
+           is known - a course not in the map, or a unit beyond its list. */
+        $title = trim((string)($lessontitles[$unit] ?? ''));
+        return 'Unit ' . (int)$m[1] . ($title !== '' ? ': ' . $title : '');
     }
     if (preg_match('/^l(\d+)$/', $unit, $m)) {
         $title = trim((string)($lessontitles[$unit] ?? ''));
@@ -79,7 +85,7 @@ function pqpr_standalone_lessons(?string $path = null): array {
         foreach ((array)($data['courses'] ?? []) as $key => $course) {
             foreach ((array)($course['lessons'] ?? []) as $lesson) {
                 $unit = (string)($lesson['unit'] ?? '');
-                if (preg_match('/^l\d+$/', $unit)) {
+                if (preg_match('/^[lu]\d+$/', $unit)) {
                     $map[(string)$key][$unit] = (string)($lesson['title'] ?? '');
                 }
             }

@@ -355,3 +355,16 @@ edge path fresh. All eight lessons were then played to the end on the live pages
 Chromium with the stored record: 0 console errors, every step stored and every
 lesson recorded complete, nothing ticked on a fresh open, and a reload after moving
 to step 4 opens step 4.
+
+## Rebuilt 2026-09-12 on the kit's fork label - NOT yet redeployed
+
+Grade 4 lesson 4 stopped saying IF (the owner's decision; Cambridge introduces
+selection at Stage 5), so the kit's follow-the-branch machine now takes its fork label
+as data with IF as its default. No lesson here draws that machine and no lesson data
+moved - all 47 lessons of the four grades rebuilt identical - so what changed in these
+pages is the embedded kit alone: one comment and one default.
+
+Rebuilt and re-driven (both gates green, 28/28, 16 keys; all eight lessons played to 100% in
+Chromium with nothing wider than 375 px). **The live pages are one kit line behind**:
+only Grade 4 was redeployed, because only Grade 4 was asked for. A redeploy here would
+change nothing a learner can see.

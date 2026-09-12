@@ -409,7 +409,8 @@ failure, no control under 44 px, the focus ring 4 px.
 Still open and the owner's: whether Stage 4 keeps the word IF, which Cambridge places
 at Stage 5 (5CT.06), or teaches 4CT.09 through input-to-output rules as Grade 3's
 machines do. The new activity works either way; only the label above its two branches
-would change.
+would change. Answered the same day: input-to-output rules, and the Stage 5
+words are gone from the grade. The section at the foot of this file says what moved.
 
 Verified: both gates green (39/39, 44 keys), every inline script parses, all fourteen
 lessons played to 100% with nothing wider than 375 px and again on the deployed
@@ -427,3 +428,30 @@ lesson recorded complete, nothing ticked on a fresh open, and a reload after mov
 to step 4 opens step 4. Lesson 4's new writing step is its third, so a record made
 on that lesson before today reads one step out from its sixth step on; how many such
 records exist is on the platform and cannot be read from here.
+
+## The owner's IF decision, deployed 2026-09-12
+
+Asked by this review and answered the same day. Stage 4 teaches 4CT.09 as a question
+about the input with a rule for each answer, the way Grade 3's machines do, and the
+words IF, otherwise and condition have left the grade: Cambridge introduces selection
+at Stage 5 (5CT.01, 5CT.03, 5CT.06).
+
+Lesson 4's fork now reads `Ask: is it raining?` over a yes side and a no side. Its
+opening step is One question, two answers, with its five examples written as questions;
+the follow and write steps, three check questions, three quiz questions, the lecture's
+first part and the dice home project follow the same wording; and its words are branch,
+question and rule where they were branch, condition and otherwise. One sentence of the
+lecture still names IF and ELSE - that some languages write a branch that way, and that
+the child meets them next year. That is the only mention left in the grade, and it is a
+signpost rather than teaching.
+
+The kit's follow-the-branch machine takes its fork label as data (`word`, default
+`IF`), so no other grade moved: all 47 lessons of the four grades rebuilt with
+identical data, and the teachers' page prints the unplugged version without IF too.
+
+Verified: both gates green (39/39, 44 keys), the mutation harness caught 23 of 23 with
+the pages it rewrote coming back byte-identical to a copy taken before it ran, and all
+fourteen lessons played to 100% in Chromium with nothing wider than 375 px and again on
+the deployed layout with the stored record and resume. Deployed the same day: 21 files
+uploaded, all verified on storage, every page byte-identical to HEAD in the encoding a
+browser is served, and every lesson played to the end again on the live pages.

@@ -71,7 +71,9 @@ for (const h of listed) {
   const named = "index." + crypto.createHash("sha1").update(body).digest("hex").slice(0, 10) + ".json";
   const namedPath = path.join(TTS, named);
   if (!fs.existsSync(namedPath) || !fs.readFileSync(namedPath).equals(body)) fail("media/tts/" + named + " is missing or differs from index.json - run narrate.mjs --index");
-  for (const file of [...cfg.lessons.map((l) => l.file), ...(cfg.extraPages || [])]) {
+  /* .html only: extraPages also lists lesson-search.json, which has no
+     spoken line in it (see narrate.mjs). */
+  for (const file of [...cfg.lessons.map((l) => l.file), ...(cfg.extraPages || [])].filter((f) => /\.html$/.test(f))) {
     const m = /const NARRATION_INDEX = "([^"]+)";/.exec(fs.readFileSync(path.join(APP, file), "utf8"));
     if (!m) fail(file + " carries no NARRATION_INDEX");
     else if (m[1] !== named) fail(file + " reads " + m[1] + ", not the current " + named + " - rebuild the pages");

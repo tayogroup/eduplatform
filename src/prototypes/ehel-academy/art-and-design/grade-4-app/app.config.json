@@ -1,0 +1,56 @@
+{
+  "_comment": "The Grade 4 Art & Design standalone lesson build, described for ../../mathematics/lesson-app-tools and built by ../lesson-kit. Order here IS the lesson number. Eight lessons against Cambridge Primary Art & Design 0067 Stage 4. Cambridge writes ONE progression text for Stages 3 and 4 together, word for word the same, so Grade 4 steps up by CONTENT, the way Grade 2 did from Grade 1 (see README.md :: The Stage 3 / Stage 4 line): it takes the parts of that text Grade 3 left - the print that becomes a collaborative textile, the parts of a model that come under stress, the photographic diary of a build, pen marks layered over a painting, comparing one subject across times and cultures, and reviewing work together as a group. Progress is written under u01..u08 beneath ehel-art-g04, whose catalogue entry is generated FROM this lesson list. objectiveFloors are recorded at the measured value after each build and may rise, not fall.",
+  "grade": 4,
+  "gradeLabel": "Grade 4",
+  "stage": 4,
+  "subject": "art-and-design",
+  "subjectLabel": "Art & Design",
+  "courseKey": "ehel-art-g04",
+  "progressUnitPrefix": "u",
+  "fromParam": "art4",
+  "backLabel": "Grade 4 Art & Design",
+  "hub": "g4-index.html",
+  "_startingCheck": "The readiness check before Lesson 1, over Grade 3's content: built by ../lesson-kit/build-check.py, linked from the hub, uploaded by deploy.mjs because it is in extraPages. Its review lessons are Grade 3's, linked in ../grade-3-v2/. It is not a lesson and reports nothing to the gradebook.",
+  "startingCheck": { "file": "starting-check.html", "data": "../data/placement/grade-4.json" },
+  "extraPages": ["lesson-search.json", "starting-check.html"],
+  "remote": "Ehel Primary/app/art-and-design/grade-4-v2",
+  "narrationFloor": 99,
+  "objectiveFloors": {
+    "1": 7,
+    "2": 7,
+    "3": 7,
+    "4": 8,
+    "5": 7,
+    "6": 6,
+    "7": 6,
+    "8": 6
+  },
+  "hubStrands": [
+    [
+      "Experiencing",
+      "Looking at a street and finding why the far end is small; looking closely at a cloth printed from a carved block, a jar painted in bands, a cast metal head and a wall painting from long ago; and asking what each artist used and who they made it for."
+    ],
+    [
+      "Making",
+      "Drawing what is really in front of us, with guide lines and measured sizes; mixing a colour until it matches; printing in two colours that line up; building a pot from coils and slabs; making a model stand up; and adding pen, paper and marks on top of a painting."
+    ],
+    [
+      "Reflecting",
+      "Judging our work against what it was for; giving a friend praise AND one piece of guidance; saying how another artist's work moved our own work on; and hanging an exhibition so other people can read it."
+    ],
+    [
+      "Thinking and Working Artistically",
+      "Showing that one idea can be made in more than one way; keeping a photo diary of a build and using it the next time; printing one tile that joins a whole class cloth; and getting a show ready together."
+    ]
+  ],
+  "lessons": [
+    { "file": "drawing-what-i-see.html", "title": "Drawing What I See" },
+    { "file": "mixing-to-match.html", "title": "Mixing to Match" },
+    { "file": "print-it-twice.html", "title": "Print It Twice" },
+    { "file": "coils-and-slabs.html", "title": "Coils and Slabs" },
+    { "file": "build-it-strong.html", "title": "Build It Strong" },
+    { "file": "layers-on-top.html", "title": "Layers on Top" },
+    { "file": "pictures-of-people.html", "title": "Pictures of People" },
+    { "file": "our-exhibition.html", "title": "Our Exhibition" }
+  ]
+}

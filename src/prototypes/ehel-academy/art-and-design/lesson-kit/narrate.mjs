@@ -92,7 +92,10 @@ if (TRACE) {
 const SPOKEN_KEYS = new Set(["why", "say", "fact", "done", "cap", "problem", "fixed"]);
 /* every page the build ships that speaks: the lessons, and the pages beside
    them that are not lessons (the starting check) */
-const PAGES = [...cfg.lessons.map((l) => l.file), ...(cfg.extraPages || [])];
+/* extraPages carries whatever deploy.mjs must upload beside the lessons,
+   and since 2026-09-12 that includes lesson-search.json (another session's
+   lesson search). Only a PAGE can be read for spoken lines. */
+const PAGES = [...cfg.lessons.map((l) => l.file), ...(cfg.extraPages || [])].filter((f) => /\.html$/.test(f));
 /* the marks step's keyboard route names marks out loud; its names and rivals
    are lib/art.js's own tables, lifted out rather than retyped */
 const MK = new Function(ART.slice(ART.indexOf("  const MARK_NAME = {"), ART.indexOf("  function markPts(")) + "; return { MARK_NAME, MARK_RIVALS };")();

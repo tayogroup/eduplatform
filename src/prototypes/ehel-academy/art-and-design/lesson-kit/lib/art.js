@@ -627,6 +627,228 @@
       '<g fill="#FFFFFF"><path d="M150 40 q30 -4 50 36 q-14 -6 -20 0 q-6 -10 -14 -6 q-4 -10 -12 -8 q-2 -12 -12 -14z"/>' +
       '<circle cx="186" cy="62" r="4"/><circle cx="176" cy="54" r="4"/><circle cx="164" cy="48" r="4"/></g>' +
       '<g fill="#F3E6D2" stroke="#5C3A1E" stroke-width="2"><path d="M40 196 q40 -14 80 0 l-8 8 h-64z"/><path d="M200 204 q34 -12 68 0 l-6 8 h-56z"/></g>' },
+    /* ---- added for Grade 4 (2026-09-12) ---- */
+    /* a street running away from you: ONE vanishing point on the horizon, and
+       everything getting smaller AND lifting towards it. The first draft stood
+       every house on the horizon line, so the picture had no recession at all
+       and contradicted the three rules Lesson 1 reads off it (review,
+       2026-09-12): the bases step UP the page now, and the near house carries
+       detail the far one does not. */
+    street: { label: "A street running away into the distance", draw: () => {
+      const HZ = 132;                                  /* the horizon: eye level */
+      let g = '<rect width="320" height="240" fill="#DCEAF6"/><rect x="0" y="' + HZ + '" width="320" height="' + (240 - HZ) + '" fill="#CFC9BE"/>';
+      g += '<path d="M0 240 L146 ' + HZ + ' L174 ' + HZ + ' L320 240z" fill="#8A8F94"/>';
+      for (let k = 0; k < 5; k++) {
+        const t0 = k / 5, t1 = t0 + 0.05;
+        const y0 = 240 - t0 * (240 - HZ), y1 = 240 - t1 * (240 - HZ);
+        const w0 = 10 - t0 * 8, w1 = 10 - t1 * 8;
+        g += '<path d="M' + (160 - w0) + ' ' + y0 + ' h' + (w0 * 2) + ' L' + (160 + w1) + ' ' + y1 + ' h' + (-w1 * 2) + 'z" fill="#F3EFE6"/>';
+      }
+      /* three houses down one side: each smaller, each standing FURTHER UP the
+         page, because its patch of ground is further away */
+      const house = (x, w, h, base, c, detail) => {
+        const top = base - h;
+        let s = '<rect x="' + x + '" y="' + top + '" width="' + w + '" height="' + h + '" fill="' + c + '" stroke="#5C3A1E" stroke-width="2"/>' +
+          '<path d="M' + (x - 4) + ' ' + top + ' L' + (x + w / 2) + ' ' + (top - h * 0.16) + ' L' + (x + w + 4) + ' ' + top + 'z" fill="#A9552B" stroke="#5C3A1E" stroke-width="2"/>';
+        if (detail === "near") {
+          s += '<rect x="' + (x + w * 0.1) + '" y="' + (top + h * 0.16) + '" width="' + (w * 0.22) + '" height="' + (h * 0.2) + '" fill="#9CC8F0" stroke="#5C3A1E" stroke-width="2"/>' +
+            '<rect x="' + (x + w * 0.42) + '" y="' + (top + h * 0.16) + '" width="' + (w * 0.22) + '" height="' + (h * 0.2) + '" fill="#9CC8F0" stroke="#5C3A1E" stroke-width="2"/>' +
+            '<rect x="' + (x + w * 0.74) + '" y="' + (top + h * 0.16) + '" width="' + (w * 0.22) + '" height="' + (h * 0.2) + '" fill="#9CC8F0" stroke="#5C3A1E" stroke-width="2"/>' +
+            '<g stroke="#5C3A1E" stroke-width="1.5"><path d="M' + (x + w * 0.1) + ' ' + (top + h * 0.26) + ' h' + (w * 0.22) + ' M' + (x + w * 0.21) + ' ' + (top + h * 0.16) + ' v' + (h * 0.2) + '"/>' +
+            '<path d="M' + (x + w * 0.42) + ' ' + (top + h * 0.26) + ' h' + (w * 0.22) + ' M' + (x + w * 0.53) + ' ' + (top + h * 0.16) + ' v' + (h * 0.2) + '"/></g>' +
+            '<rect x="' + (x + w * 0.38) + '" y="' + (base - h * 0.42) + '" width="' + (w * 0.24) + '" height="' + (h * 0.42) + '" fill="#8A4A1E" stroke="#5C3A1E" stroke-width="2"/>' +
+            '<circle cx="' + (x + w * 0.57) + '" cy="' + (base - h * 0.21) + '" r="2.2" fill="#F6C700"/>' +
+            '<rect x="' + (x + w * 0.43) + '" y="' + (base - h * 0.27) + '" width="' + (w * 0.14) + '" height="' + (h * 0.045) + '" fill="#3B3B3B"/>';
+        } else if (detail === "mid") {
+          s += '<rect x="' + (x + w * 0.16) + '" y="' + (top + h * 0.2) + '" width="' + (w * 0.26) + '" height="' + (h * 0.22) + '" fill="#9CC8F0" stroke="#5C3A1E" stroke-width="2"/>' +
+            '<rect x="' + (x + w * 0.56) + '" y="' + (top + h * 0.2) + '" width="' + (w * 0.26) + '" height="' + (h * 0.22) + '" fill="#9CC8F0" stroke="#5C3A1E" stroke-width="2"/>' +
+            '<rect x="' + (x + w * 0.4) + '" y="' + (base - h * 0.36) + '" width="' + (w * 0.2) + '" height="' + (h * 0.36) + '" fill="#8A4A1E" stroke="#5C3A1E" stroke-width="2"/>';
+        } else {
+          s += '<rect x="' + (x + w * 0.3) + '" y="' + (top + h * 0.24) + '" width="' + (w * 0.4) + '" height="' + (h * 0.26) + '" fill="#9CC8F0" stroke="#5C3A1E" stroke-width="1.5"/>';
+        }
+        return s;
+      };
+      const row = house(2, 74, 104, 232, "#F3E6D2", "near") + house(82, 46, 62, 178, "#EBD9C0", "mid") + house(130, 26, 34, 152, "#F3E6D2", "far");
+      g += row + '<g transform="translate(320 0) scale(-1 1)">' + row + "</g>";
+      /* the same lamp three times: shorter, and standing further up the page */
+      for (const [x, h, base] of [[86, 66, 226], [126, 38, 172], [146, 22, 148]]) {
+        g += '<rect x="' + x + '" y="' + (base - h) + '" width="' + Math.max(2, h / 22) + '" height="' + h + '" fill="#3B3B3B"/>' +
+          '<circle cx="' + (x + 1.5) + '" cy="' + (base - h) + '" r="' + (h / 11) + '" fill="#F6C700" stroke="#3B3B3B" stroke-width="1.5"/>';
+      }
+      g += '<path d="M0 ' + HZ + ' h320" stroke="#9BB0C4" stroke-width="1.5" stroke-dasharray="6 6"/>';
+      g += '<circle cx="160" cy="' + HZ + '" r="4.5" fill="#E0312B"/>';
+      return g;
+    } },
+    /* a cloth printed from a carved wooden block, one colour printed over
+       another, in the manner of the hand block printing of Rajasthan */
+    blockprint: { label: "A cloth printed with a carved wooden block", draw: () => {
+      let g = '<rect width="320" height="240" fill="#F7F1E3"/>';
+      const flower = (x, y, c, s) => {
+        let f = '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')" fill="' + c + '">';
+        for (let k = 0; k < 6; k++) f += '<ellipse cx="0" cy="-10" rx="4.5" ry="8" transform="rotate(' + (k * 60) + ')"/>';
+        return f + '<circle r="4"/></g>';
+      };
+      const grid = (fn) => { let s = ""; for (let r = 0; r < 5; r++) for (let c = 0; c < 7; c++) { const x = 30 + c * 42 + (r % 2 ? 21 : 0), y = 34 + r * 42; if (x < 292) s += fn(x, y); } return s; };
+      g += grid((x, y) => flower(x + 4, y + 4, "#C8102E", 1));      /* printed first */
+      g += grid((x, y) => flower(x, y, "#1B3A75", 1));              /* the dark block on top */
+      g += grid((x, y) => '<circle cx="' + x + '" cy="' + y + '" r="1.8" fill="#F7F1E3"/>');
+      g += '<rect x="6" y="6" width="308" height="228" fill="none" stroke="#1B3A75" stroke-width="6"/>' +
+        '<rect x="15" y="15" width="290" height="210" fill="none" stroke="#C8102E" stroke-width="2.5"/>';
+      return g;
+    } },
+    /* a tall two-handled jar with a painted band, in the manner of the
+       BLACK-FIGURE pottery of ancient Greece: the figures are the black shapes
+       and the clay is the background. (The first draft drew it the other way
+       round, which is red-figure - the opposite technique to the one the
+       lesson names four times. Review, 2026-09-12.) */
+    amphora: { label: "A tall jar with two handles and black painted figures", draw: () => {
+      let g = '<rect width="320" height="240" fill="#EFE3CF"/>';
+      const body = 'M160 22 q-13 0 -14 9 q-1 8 6 12 v10 q-44 22 -44 79 q0 44 34 62 l-6 20 h48 l-6 -20 q34 -18 34 -62 q0 -57 -44 -79 v-10 q7 -4 6 -12 q-1 -9 -14 -9z';
+      g += '<path d="' + body + '" fill="#D89A5C" stroke="#8A4A1E" stroke-width="3"/>';
+      g += '<path d="M146 30 h28" stroke="#8A4A1E" stroke-width="3"/>';   /* the open mouth */
+      g += '<path d="M140 206 h40 v10 h-40z" fill="#C08348" stroke="#8A4A1E" stroke-width="3"/>';
+      /* handles, joined to the jar at the neck and at the shoulder */
+      g += '<path d="M138 56 q-30 10 -28 32 q2 18 22 24" fill="none" stroke="#8A4A1E" stroke-width="8" stroke-linecap="round"/>' +
+        '<path d="M182 56 q30 10 28 32 q-2 18 -22 24" fill="none" stroke="#8A4A1E" stroke-width="8" stroke-linecap="round"/>';
+      /* the band: BLACK figures on the clay ground, with a line scratched through */
+      g += '<path d="M112 118 q48 -10 96 0" fill="none" stroke="#1B1B1B" stroke-width="3"/>' +
+        '<path d="M112 168 q48 10 96 0" fill="none" stroke="#1B1B1B" stroke-width="3"/>';
+      const figure = (x, lean) => '<g transform="translate(' + x + ' 0)' + (lean ? " scale(-1 1) translate(-" + 2 * x + " 0)" : "") + '" fill="#1B1B1B">' +
+        '<circle cx="0" cy="130" r="6"/>' +
+        '<path d="M-6 137 q6 -4 12 0 l3 16 h-18z"/>' +
+        '<path d="M-4 153 l-5 12 h5 l5 -9 l5 9 h5 l-5 -12z"/>' +
+        '<path d="M4 139 l14 -5 l2 4 l-15 6z"/></g>';
+      g += figure(136, false) + figure(160, false) + figure(184, true);
+      g += '<g stroke="#D89A5C" stroke-width="1.2" fill="none"><path d="M133 143 h6 M157 143 h6 M181 143 h6"/></g>';
+      /* a key border above the band */
+      for (let x = 116; x < 200; x += 14) g += '<path d="M' + x + ' 110 h10 v-7 h-7 v-4 h11" fill="none" stroke="#8A4A1E" stroke-width="2"/>';
+      return g;
+    } },
+    /* a model figure on a wire skeleton, the wire showing at the arms, a light
+       open head, and the card doubled where the model carries its weight */
+    armature: { label: "A model figure built on a wire skeleton", draw: () => {
+      let g = '<rect width="320" height="240" fill="#F7F1E3"/><rect x="0" y="198" width="320" height="42" fill="#E0D6C2"/>';
+      g += '<rect x="100" y="184" width="120" height="16" rx="3" fill="#B08A5A" stroke="#7A5A32" stroke-width="3"/>';
+      g += '<g fill="none" stroke="#8A8F94" stroke-width="5" stroke-linecap="round">' +
+        '<path d="M160 52 v60"/><path d="M160 70 l-40 22 M160 70 l40 22"/><path d="M160 112 l-20 72 M160 112 l20 72"/></g>';
+      g += '<circle cx="120" cy="92" r="5" fill="#8A8F94"/><circle cx="200" cy="92" r="5" fill="#8A8F94"/>';
+      g += '<path d="M160 62 q-24 4 -24 30 l4 26 q20 6 40 0 l4 -26 q0 -26 -24 -30z" fill="#E6D2B4" stroke="#8A6A3A" stroke-width="3"/>';
+      /* the head: an open loop of wire with a light paper ball, so the picture
+         shows WHY it is light (review, 2026-09-12) */
+      g += '<circle cx="160" cy="40" r="15" fill="none" stroke="#8A8F94" stroke-width="4"/>' +
+        '<circle cx="160" cy="40" r="10" fill="#FBF6EC" stroke="#C9BFA6" stroke-width="2"/>';
+      g += '<g stroke="#8A6A3A" stroke-width="3" fill="#C8A87A">' +
+        '<path d="M136 184 h18 l6 -66 h-14z"/><path d="M184 184 h-18 l-6 -66 h14z"/></g>' +
+        '<g stroke="#8A6A3A" stroke-width="7" fill="none" stroke-linecap="round"><path d="M139 181 v-26"/><path d="M181 181 v-26"/></g>';
+      return g;
+    } },
+    /* a painting with more on top of it: a wash, then pen marks - including
+       marks that cross the sun, so "the pen sits over it" is true - then a
+       strip of stuck-down paper */
+    mixedmedia: { label: "A painting with pen marks and stuck paper on top", draw: () => {
+      let g = '<rect width="320" height="240" fill="#FAFAF7"/>';
+      g += '<rect x="16" y="16" width="288" height="208" fill="#9CC8F0"/>' +
+        '<path d="M16 150 q60 -26 120 -8 q70 22 168 -10 v92 H16z" fill="#A6DBA0"/>' +
+        '<path d="M16 176 q80 -14 150 6 q80 20 138 -2 v44 H16z" fill="#3FA34D" opacity="0.8"/>' +
+        '<circle cx="252" cy="60" r="22" fill="#FBE99A"/>';
+      /* pen marks ON TOP of the paint - two of them drawn across the sun */
+      g += '<g fill="none" stroke="#1B1B1B" stroke-width="2.4" stroke-linecap="round">' +
+        '<path d="M44 194 v-34 M44 176 q-10 -8 -14 -18 M44 168 q10 -8 14 -18 M44 182 q-8 -6 -12 -14"/>' +
+        '<path d="M80 196 v-40 M80 178 q-11 -9 -15 -20 M80 168 q11 -9 15 -20"/>' +
+        '<path d="M112 198 q12 -20 26 0"/><path d="M125 198 v-14"/>' +
+        '<g stroke-dasharray="5 5"><path d="M16 150 q60 -26 120 -8 q70 22 168 -10"/></g>' +
+        '<path d="M228 60 h48 M252 36 v48" stroke-width="2"/>' +
+        '<path d="M206 96 q14 -12 28 0 M212 110 q14 -10 26 2"/>' +
+        '<path d="M150 206 h120 M150 214 h86" stroke-width="2"/></g>';
+      g += '<g transform="rotate(-4 96 70)"><path d="M28 44 h136 l-4 8 l6 8 l-8 8 l4 10 h-134 l4 -10 l-6 -8 l6 -8z" fill="#F5A3B7" stroke="#C8748A" stroke-width="1.5"/>' +
+        '<path d="M40 60 h100 M40 70 h74" stroke="#8A4A5A" stroke-width="2"/></g>';
+      return g;
+    } },
+    /* a cast head with a beaded collar, in the manner of the brass heads made
+       by the guild casters of Benin City, in what is now Nigeria. The eyes sit
+       about halfway down the head and the mouth clears the jaw, because
+       Lesson 7 measures a face on this picture (review, 2026-09-12). */
+    bronzehead: { label: "A cast metal head with a beaded collar", draw: () => {
+      let g = '<rect width="320" height="240" fill="#E9E4DA"/><ellipse cx="160" cy="228" rx="86" ry="10" fill="#C9C2B4"/>';
+      g += '<defs><linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C9922F"/><stop offset="0.55" stop-color="#96691A"/><stop offset="1" stop-color="#5E4210"/></linearGradient></defs>';
+      g += '<path d="M126 156 q34 -10 68 0 l14 68 q-48 12 -96 0z" fill="url(#brass)" stroke="#4A340C" stroke-width="3"/>';
+      for (let r = 0; r < 4; r++) {
+        const y = 168 + r * 15, half = 34 + r * 4.6;
+        g += '<path d="M' + (160 - half) + ' ' + y + ' q' + half + ' -9 ' + (half * 2) + ' 0" fill="none" stroke="#4A340C" stroke-width="2"/>';
+        for (let k = -half + 6; k <= half - 6; k += 11) g += '<circle cx="' + (160 + k) + '" cy="' + (y - 3 + Math.abs(k) * 0.06) + '" r="3.2" fill="#E0B450" stroke="#4A340C" stroke-width="1"/>';
+      }
+      /* the head: top at y=34, chin at y=150, so halfway down is y=92 */
+      g += '<path d="M160 34 q-38 0 -42 40 q-4 44 18 64 q24 20 48 0 q22 -20 18 -64 q-4 -40 -42 -40z" fill="url(#brass)" stroke="#4A340C" stroke-width="3"/>';
+      g += '<path d="M118 78 q6 -44 42 -44 q36 0 42 44 q-42 -14 -84 0z" fill="#A8761E" stroke="#4A340C" stroke-width="3"/>';
+      for (let r = 0; r < 3; r++) for (let x = 124 + (r % 2 ? 5 : 0); x < 198; x += 11) g += '<circle cx="' + x + '" cy="' + (50 + r * 11) + '" r="3.4" fill="#E0B450" stroke="#4A340C" stroke-width="1"/>';
+      /* ears, between the eye line and the bottom of the nose */
+      g += '<g fill="url(#brass)" stroke="#4A340C" stroke-width="2.5"><path d="M118 90 q-8 10 0 22 q6 4 8 -2z"/><path d="M202 90 q8 10 0 22 q-6 4 -8 -2z"/></g>';
+      /* eyes on the halfway line, nose, mouth clear of the jaw */
+      g += '<g fill="#3A2A08"><ellipse cx="141" cy="92" rx="12" ry="7.5"/><ellipse cx="179" cy="92" rx="12" ry="7.5"/></g>' +
+        '<g fill="#E6C97A"><circle cx="141" cy="92" r="3.2"/><circle cx="179" cy="92" r="3.2"/></g>' +
+        '<g fill="none" stroke="#4A340C" stroke-width="3" stroke-linecap="round">' +
+        '<path d="M128 79 q13 -8 26 -2 M166 77 q13 -6 26 2"/>' +
+        '<path d="M160 96 v18 q-7 5 -13 2"/>' +
+        '<path d="M146 128 q14 8 28 0"/>' +
+        '<path d="M134 70 v-7 M146 68 v-7 M174 68 v-7 M186 70 v-7"/></g>';
+      return g;
+    } },
+    /* a wall painting: the head sideways WITH a nose and a chin, the eye and
+       shoulders from the front, feet flat on the ground line, a band of
+       painted signs above - the manner of ancient Egyptian tomb painting */
+    profile: { label: "A wall painting of a figure, drawn sideways", draw: () => {
+      let g = '<rect width="320" height="240" fill="#E7D3A9"/>';
+      g += '<rect x="0" y="0" width="320" height="36" fill="#DCC28C"/><path d="M0 36 h320" stroke="#B89A5E" stroke-width="2"/>';
+      for (let x = 14; x < 310; x += 34) {
+        g += '<circle cx="' + x + '" cy="18" r="6.5" fill="none" stroke="#1B3A75" stroke-width="2.5"/>' +
+          '<path d="M' + (x + 13) + ' 9 v18 M' + (x + 9) + ' 13 h8" stroke="#8A1E1E" stroke-width="2.5" fill="none"/>' +
+          '<path d="M' + (x + 23) + ' 26 q5 -15 9 0z" fill="#1F5E2A"/>';
+      }
+      g += '<rect x="0" y="214" width="320" height="26" fill="#C8A86A"/>';
+      /* legs sideways, one striding in front of the other, with feet */
+      g += '<g fill="#C87A3A" stroke="#5C3A1E" stroke-width="3">' +
+        '<path d="M150 140 l-16 56 l-2 14 h14 l4 -14 l12 -52z"/>' +
+        '<path d="M168 140 l12 54 l4 16 h-16 l-6 -16 l-8 -52z"/>' +
+        '<path d="M128 210 h26 v6 h-30z"/><path d="M180 210 h26 v6 h-30z"/></g>';
+      g += '<path d="M160 78 q-30 4 -32 22 l-2 42 q34 8 68 0 l-2 -42 q-2 -18 -32 -22z" fill="#C87A3A" stroke="#5C3A1E" stroke-width="3"/>';
+      g += '<g fill="#C87A3A" stroke="#5C3A1E" stroke-width="3">' +
+        '<path d="M130 96 l-14 54 l10 4 l18 -52z"/>' +
+        '<path d="M190 96 l12 34 l24 4 l-2 10 l-34 -4 l-14 -38z"/></g>';
+      g += '<path d="M136 84 q24 -10 48 0 l-3 12 q-21 -8 -42 0z" fill="#2D6CDF" stroke="#1B3A75" stroke-width="2"/>';
+      /* the wig, then the face: forehead, NOSE, lip, CHIN, jaw back to the ear */
+      g += '<path d="M148 32 q-16 6 -16 24 q0 18 10 26 l2 12 h24 l-2 -14 q8 -8 8 -24 q0 -18 -14 -24z" fill="#2B2B2B"/>';
+      g += '<path d="M156 34 q20 2 21 19 l-1 7 l11 11 l-11 4 l-1 8 l-8 3 l2 10 h-19 l1 -14 q-13 -6 -13 -21 q0 -18 18 -22z" fill="#C87A3A" stroke="#5C3A1E" stroke-width="3"/>';
+      g += '<ellipse cx="166" cy="56" rx="6.5" ry="4.5" fill="#2B2B2B"/>' +
+        '<path d="M160 49 q8 -4 13 1" stroke="#2B2B2B" stroke-width="2.5" fill="none"/>' +
+        '<path d="M168 73 h8" stroke="#5C3A1E" stroke-width="2.5"/>';
+      return g;
+    } },
+    /* an exhibition wall: works hung so their middles are at a VISITOR's eye
+       height - the first draft hung them two visitor-heights up, on the page
+       that teaches eye height (review, 2026-09-12) */
+    gallery: { label: "An exhibition wall with framed work and labels", draw: () => {
+      let g = '<rect width="320" height="240" fill="#F3F1EC"/><rect x="0" y="196" width="320" height="44" fill="#DAD4C8"/>';
+      g += '<path d="M0 196 h320" stroke="#C3BCAE" stroke-width="3"/>';
+      const frame = (x, y, w, h, inner) => '<g><rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="#F7F1E3" stroke="#5C4A32" stroke-width="4"/>' +
+        '<svg x="' + (x + 8) + '" y="' + (y + 8) + '" width="' + (w - 16) + '" height="' + (h - 16) + '" viewBox="0 0 ' + (w - 16) + ' ' + (h - 16) + '">' + inner(w - 16, h - 16) + "</svg>" +
+        '<rect x="' + (x + w / 2 - 16) + '" y="' + (y + h + 6) + '" width="32" height="12" fill="#FFFFFF" stroke="#B8B0A0" stroke-width="1.5"/>' +
+        '<path d="M' + (x + w / 2 - 12) + ' ' + (y + h + 10) + ' h24 M' + (x + w / 2 - 12) + ' ' + (y + h + 14) + ' h16" stroke="#8A8F94" stroke-width="1.5"/></g>';
+      /* the visitors' eye height is y = 144, and that is where the middle of
+         every work sits */
+      g += frame(120, 116, 64, 56, (w, h) => '<rect width="' + w + '" height="' + h + '" fill="#9CC8F0"/><path d="M0 ' + h + ' q' + (w * 0.3) + ' -' + (h * 0.5) + ' ' + (w * 0.55) + ' -' + (h * 0.15) + ' q' + (w * 0.25) + ' ' + (h * 0.2) + ' ' + (w * 0.45) + ' -' + (h * 0.1) + ' V' + h + 'z" fill="#3FA34D"/><circle cx="' + (w - 12) + '" cy="11" r="6" fill="#F6C700"/>');
+      g += frame(204, 120, 58, 50, (w, h) => '<rect width="' + w + '" height="' + h + '" fill="#EFE3CF"/><path d="M' + (w / 2) + ' 8 q15 9 15 22 q0 18 -15 22 q-15 -4 -15 -22 q0 -13 15 -22z" fill="#E0312B"/>');
+      /* a plinth, with its own label, and a small sculpture at the same height */
+      g += '<rect x="26" y="150" width="44" height="46" fill="#E6E0D2" stroke="#B8B0A0" stroke-width="2"/>' +
+        '<path d="M48 118 q-14 10 -12 25 q2 9 12 9 q10 0 12 -9 q2 -15 -12 -25z" fill="#C8743F" stroke="#8A4A1E" stroke-width="2"/>' +
+        '<rect x="32" y="168" width="32" height="12" fill="#FFFFFF" stroke="#B8B0A0" stroke-width="1.5"/>' +
+        '<path d="M36 172 h24 M36 176 h16" stroke="#8A8F94" stroke-width="1.5"/>';
+      /* two visitors, standing clear of the works, at a real height */
+      const person = (x, c) => '<g fill="' + c + '"><circle cx="' + x + '" cy="132" r="13"/>' +
+        '<path d="M' + x + ' 146 q-18 3 -18 26 v50 h36 v-50 q0 -23 -18 -26z"/></g>';
+      g += person(92, "#46215E") + person(288, "#1B3A75");
+      g += '<g stroke="#8A8F94" stroke-width="2" stroke-dasharray="4 4"><path d="M106 144 h12 M264 144 h10"/></g>';
+      return g;
+    } },
   };
   const sceneSvgOf = (name, state, extra) => {
     const sc = SCENES[name]; if (!sc) return "";
@@ -989,6 +1211,10 @@
        asked of in Light and Shade - so its width must clear the thick
        threshold, the way the brush does */
     charcoal: { label: "Charcoal", pic: "\u{2B1B}", colour: "#2B2B2B", width: 12, cap: "round", sound: "rustle" },
+    /* PEN (Grade 4): the mark that goes ON TOP of dry paint - width 3,
+       so the `thin` check (width <= 4) passes for it as it does for the
+       pencil, and `thick` (>= 10) cannot */
+    pen: { label: "Pen", pic: "\u{1F58A}\u{FE0F}", colour: "#1B1B1B", width: 3, cap: "round", sound: "click" },
   };
   function strokeFeatures(pts, tool, session) {
     /* resample so a wobbling hand does not read as a hundred turns */

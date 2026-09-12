@@ -294,10 +294,20 @@ body.pqh-consumer-landing-page .drawer-toggles,
 body.pqh-consumer-landing-page .block-region,
 body.pqh-consumer-landing-page [data-region="drawer"],
 body.pqh-consumer-landing-page [data-region="right-hand-drawer"]{display:none!important}
+/* background:transparent is load-bearing, not tidying: Boost paints
+   #region-main{background-color:#fff}, and that is an in-flow block
+   background, so it covers BOTH the dark skin's body colour and its
+   .pqhclh-shell::before ground -- a fixed gradient at z-index:-1, which
+   paints before in-flow block backgrounds in the root stacking context.
+   Left white, the section eyebrows, headings and the empty-course line
+   are white-on-white; the cards, hero and nav carry their own dark
+   backgrounds and stay readable, which is why only the on-ground text
+   disappears. platform_landing.php, public_intake.php and
+   public_teacher_intake.php all carry the same clause on the same reset. */
 body.pqh-consumer-landing-page #page,
 body.pqh-consumer-landing-page #page-content,
 body.pqh-consumer-landing-page #region-main,
-body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
+body.pqh-consumer-landing-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important;background:transparent!important}
 .pqhcl-shell{min-height:100vh;background:#f4f8fb;color:#173044;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 .pqhcl-nav{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.94);border-bottom:1px solid rgba(23,48,68,.1);backdrop-filter:blur(10px)}
 .pqhcl-nav-inner{max-width:1180px;margin:0 auto;min-height:64px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}

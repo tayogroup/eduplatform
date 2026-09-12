@@ -2716,7 +2716,20 @@ a.{$prefix}-golive{text-decoration:none;display:inline-block}
    teacher_workspace.php so the board reads as a sibling of the pages the
    dashboard links, not a bare Moodle page. ---- */
 body.{$bodyclass} header,body.{$bodyclass} footer,body.{$bodyclass} nav.navbar,body.{$bodyclass} #page-header,body.{$bodyclass} #page-footer,body.{$bodyclass} .drawer,body.{$bodyclass} .drawer-toggles,body.{$bodyclass} .block-region,body.{$bodyclass} [data-region="drawer"],body.{$bodyclass} [data-region="right-hand-drawer"]{display:none!important}
-body.{$bodyclass} #page,body.{$bodyclass} #page-content,body.{$bodyclass} #region-main,body.{$bodyclass} .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
+/* background:transparent belongs on this reset, not just the margin/padding
+   clearing it started as. Boost paints #region-main{background-color:#fff},
+   an in-flow block background, so it covers BOTH the dark skin's body
+   colour and its .{$prefix}-shell::before ground -- a fixed gradient at
+   z-index:-1, which paints before in-flow block backgrounds in the root
+   stacking context. Measured on both boards before this line existed:
+   #region-main computed rgb(255,255,255) with body correctly navy under
+   it, so text sitting on the ground was #C3D3DF on white. The tiles and
+   header card carry their own --ea-card background and stayed readable,
+   which is why a board made almost entirely of cards still looked usable
+   and nothing reported it. Same clause consumer_landing.php,
+   platform_landing.php, public_intake.php and public_teacher_intake.php
+   each carry on their own copy of this reset. */
+body.{$bodyclass} #page,body.{$bodyclass} #page-content,body.{$bodyclass} #region-main,body.{$bodyclass} .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important;background:transparent!important}
 .{$prefix}-shell{min-height:100vh;background:var(--op-canvas);font-family:var(--op-font);color:var(--op-ink)}
 .{$prefix}-wrap{margin:0 auto}
 .{$prefix}-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:16px;padding:20px 22px;background:#fff;border:1px solid #e4e9ef;border-radius:14px}

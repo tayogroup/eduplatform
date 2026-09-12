@@ -153,6 +153,9 @@ $SUBJECTS = [
             2 => ['ehel-art-g02', RP_HOST . 'Ehel%20Primary/app/art-and-design/grade-2-v2/index.html'],
             // Grade 3 (built 2026-09-11): the same, for ehel-art-g03.
             3 => ['ehel-art-g03', RP_HOST . 'Ehel%20Primary/app/art-and-design/grade-3-v2/index.html'],
+            // Grade 4 (built 2026-09-12): the same, for ehel-art-g04. Cambridge
+            // 0067 runs to Stage 6; Stages 5-6 are not built, so there is no row.
+            4 => ['ehel-art-g04', RP_HOST . 'Ehel%20Primary/app/art-and-design/grade-4-v2/index.html'],
         ],
     ],
     'global-perspectives' => [

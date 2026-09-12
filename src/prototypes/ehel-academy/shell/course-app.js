@@ -637,7 +637,7 @@ export function createCourseApp(config) {
     select.id = "subject-select";
     // top-grade-picker for the styling that already exists (adding a rule to
     // course-ui.css would make five other subjects' bundles stale over a
-    // cosmetic change — see the shared-stylesheet coupling in CLAUDE.md);
+    // cosmetic change — see the shared-stylesheet coupling in docs/release-and-repo-history.md);
     // top-subject-picker so a later stylesheet can tell them apart.
     select.className = "top-grade-picker top-subject-picker";
     select.setAttribute("aria-label", "Choose subject");

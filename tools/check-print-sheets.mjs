@@ -6,7 +6,7 @@
 //   node tools/check-print-sheets.mjs --grade 4 --unit 1
 //
 // WHY THIS EXISTS. `printCursiveWorksheet` was the repo's only print path for a
-// long time, and the lesson it left is in CLAUDE.md: `break-inside: avoid`
+// long time, and the lesson it left is in english/CLAUDE.md: `break-inside: avoid`
 // cannot hold an element taller than the page, so a page counter that assumes
 // every item is unsplittable runs short. Three more print paths shipped in v390
 // — Core words by week, the Unit plan, the Grade plan — and nothing read any of

@@ -33,7 +33,8 @@ function loadBank() {
   // Bunny deploy and has no reason to connect the two, so say it.
   //
   // Every subject but English needs this file — see CLIP_SUBJECTS above — which
-  // is why the archive recipe in CLAUDE.md went years working for English and
+  // is why the archive recipe in docs/release-and-repo-history.md
+  // went years working for English and
   // died the first time a non-English subject was released through it.
   if (!fs.existsSync(PROMPT_FILE)) {
     throw new Error(

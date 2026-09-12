@@ -32,7 +32,7 @@
 // The lock file lives in the OS temp directory, NOT in the repo and NOT in the
 // release tree. That is load-bearing rather than incidental: releases here are
 // routinely run from a `git archive HEAD` tree in a fresh temp directory (see
-// CLAUDE.md), so two concurrent releases have two different repo roots and two
+// docs/release-and-repo-history.md), so two concurrent releases have two different repo roots and two
 // different copies of the manifest. A lock beside the manifest would be a lock
 // each session held against itself. The zone is the thing actually contended,
 // and it is the same string from any tree.

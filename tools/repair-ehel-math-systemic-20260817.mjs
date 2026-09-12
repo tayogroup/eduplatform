@@ -12,7 +12,7 @@
 //
 // The matching builder fixes are in tools/build-ehel-math-runtime.js, so a
 // rebuild does not reintroduce these. Note `build:math` needs --force and
-// discards in-place repairs (see CLAUDE.md), so both halves matter.
+// discards in-place repairs (see mathematics/CLAUDE.md), so both halves matter.
 //
 //   node tools/repair-ehel-math-systemic-20260817.mjs [--write] [--only rule,rule]
 //

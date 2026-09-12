@@ -39,7 +39,7 @@ const STAGES = fs.readdirSync(COMPUTING)
   .sort((a, b) => a - b);
 // --budget's VALUE is skipped here. Every bare integer was being read as a
 // stage, so `--budget 900` asked for stage 900 and the run refused to start —
-// which is the command this file's own usage line and CLAUDE.md both give for
+// which is the command this file's own usage line and computing/CLAUDE.md both give for
 // proving the pipeline cheaply. Worse than the refusal is the near miss: a
 // plausible budget like `--budget 5` matched a real stage, so the run silently
 // covered stage 5 as well, with no budget applied to it. This is the same skip

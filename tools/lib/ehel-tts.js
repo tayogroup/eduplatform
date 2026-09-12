@@ -297,7 +297,7 @@ function speakableLetterRanges(text) {
 // word — "Pistil" came back as "Pistol" on every trial (4/4), including the
 // full-sentence context, not just the bare word. Never guess a respelling:
 // generate short candidates, transcribe each one back, and keep only what the
-// model hears as the intended word (see CLAUDE.md, the "toe"->"tow" method).
+// model hears as the intended word (see english/CLAUDE.md, the "toe"->"tow" method).
 // "Pis til" (a space, not a hyphen) is what survived that test 4/4 times;
 // "Pisstil" also worked but visually contains "piss", wrong for a children's
 // course even though it is never displayed — this is sent to the API only,

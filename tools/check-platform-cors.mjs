@@ -163,7 +163,8 @@ function discoverEndpoints() {
   // bearer token and no credentials, which is why nothing above marks it.
   //
   // Its FILE is the thing to guard, not just its parse. A release cut from a
-  // `git archive` tree does not contain it — the recipe in CLAUDE.md pulls
+  // `git archive` tree does not contain it — the recipe in docs/release-and-repo-history.md
+  // pulls
   // `src/moodle/local_hubredirect` and nothing else — so on 2026-08-27 this
   // check ran inside a release and printed "Preflighting 6 endpoint(s)" over a
   // green tick. Six of seven, silently, at the exact moment an operator trusts

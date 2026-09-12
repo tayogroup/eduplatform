@@ -41,7 +41,7 @@ first, because editing the index by hand is exactly what the byte-compare
 catches. So those two assertions are defence in depth against a hand-edited
 index and are NOT established by this suite; the live evidence for the
 half-the-slides rule is the BUILDER refusing "counting" at 53 of 95 on its
-first run. Same shape as the capstone floor in CLAUDE.md, where only breaking
+first run. Same shape as the capstone floor in ehel-academy/CLAUDE.md, where only breaking
 the extractor AND rebuilding reaches the floor. Two of the twelve were also
 gate bugs rather than build bugs - see the listener and the message below.
 

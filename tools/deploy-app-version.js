@@ -461,7 +461,8 @@ async function tagAlreadyWritten(items, manifest) {
       //
       // The manifest is what tells them apart. Our own retry has the record —
       // we wrote it when the PUT succeeded — and somebody else's release does
-      // not. That is why the temp-tree recipe in CLAUDE.md copies the manifest
+      // not. That is why the temp-tree recipe in docs/release-and-repo-history.md
+      // copies the manifest
       // in and back out; a release tree without it fails this check, which is
       // the right outcome for a tree that cannot tell whose release it is
       // resuming.

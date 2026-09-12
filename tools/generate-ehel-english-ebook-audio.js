@@ -4,7 +4,7 @@
 //   node tools/generate-ehel-english-ebook-audio.js --grade 1      that grade's books
 //   node tools/generate-ehel-english-ebook-audio.js --grade 1 --limit 20
 //
-// WHY THIS EXISTS, and what it reverses. CLAUDE.md records the original
+// WHY THIS EXISTS, and what it reverses. english/CLAUDE.md records the original
 // decision: "Book narration is runtime TTS, not pre-rendered clips ... so a new
 // book costs nothing to generate." Owner decision 2026-09-08 to pre-render it
 // instead, and the arithmetic supports it rather than merely permitting it:

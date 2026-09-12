@@ -167,7 +167,8 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
         // Raised state inline rather than in a stylesheet class: course-ui.css is
         // imported by all six subjects and bundled into each release as
         // design-system.css, so one cosmetic rule there makes five other
-        // subjects' app tiers stale (CLAUDE.md, the shared-stylesheet coupling).
+        // subjects' app tiers stale (docs/release-and-repo-history.md,
+        // the shared-stylesheet coupling).
         // seb-session.js styles its injected controls the same way.
         button.style.background = up ? "#1a67a3" : "var(--card, #fff)";
         button.style.color = up ? "#fff" : "";

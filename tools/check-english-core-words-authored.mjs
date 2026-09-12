@@ -74,7 +74,7 @@ const CAST = [...new Set([
   "Amal", "Adam", "Grandma", "Grandpa", "Mum", "Dad", "Teacher",
   ...({ 2: ["Leo", "Nora", "Theo", "Sami", "Maya", "Leila", "Yasmin", "Idris"],
         // Theo, Nadia and Rami are below the derivation's threshold in the Grade 3
-        // readings but are named cast in the Grade 3 ebook kit (CLAUDE.md), so they
+        // readings but are named cast in the Grade 3 ebook kit (english/CLAUDE.md), so they
         // are not strangers to a Grade 3 child.
         3: ["Amal", "Yasmin", "Nora", "Sami", "Leo", "Hana", "Daniel", "Mina", "Maya", "Omar",
             "Theo", "Nadia", "Rami"],

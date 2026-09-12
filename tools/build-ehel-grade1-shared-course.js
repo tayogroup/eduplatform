@@ -36,7 +36,7 @@ const unitConfigs = {
 // These are authored rather than converted. A mechanical you/your-child rewrite
 // is what Global Perspectives tried on its own parent guide, and it produced
 // broken sentences, because a letter to a parent is not lesson text with an
-// adult frame around it (see CLAUDE.md). Every fact here comes from the source
+// adult frame around it (see global-perspectives/CLAUDE.md). Every fact here comes from the source
 // section it replaces.
 //
 // The first TWO sentences must stand alone: the overview page shows only those

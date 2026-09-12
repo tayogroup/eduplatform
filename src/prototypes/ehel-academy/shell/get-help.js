@@ -11,7 +11,7 @@
 //
 // The window defaults to two stages either side and widens to the whole
 // subject on request — a DEFAULT WITH AN OVERRIDE, never a hard cap (owner
-// decision 2026-08-24, recorded in CLAUDE.md): the child this product exists
+// decision 2026-08-24, recorded in ehel-academy/CLAUDE.md): the child this product exists
 // for is exactly the one whose gap is more than two grades deep.
 //
 // It searches the per-grade topic-index.json files that build-topic-index.mjs

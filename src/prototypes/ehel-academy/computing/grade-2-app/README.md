@@ -419,7 +419,7 @@ Chromium with the stored record: 0 console errors, every step stored and every
 lesson recorded complete, nothing ticked on a fresh open, and a reload after moving
 to step 4 opens step 4.
 
-## Rebuilt 2026-09-12 on the kit's fork label - NOT yet redeployed
+## Rebuilt and redeployed 2026-09-12 on the kit's fork label
 
 Grade 4 lesson 4 stopped saying IF (the owner's decision; Cambridge introduces
 selection at Stage 5), so the kit's follow-the-branch machine now takes its fork label
@@ -428,6 +428,9 @@ moved - all 47 lessons of the four grades rebuilt identical - so what changed in
 pages is the embedded kit alone: one comment and one default.
 
 Rebuilt and re-driven (both gates green, 31/31, 22 keys; all eleven lessons played to 100% in
-Chromium with nothing wider than 375 px). **The live pages are one kit line behind**:
-only Grade 4 was redeployed, because only Grade 4 was asked for. A redeploy here would
-change nothing a learner can see.
+Chromium with nothing wider than 375 px). Grade 4 was redeployed first, on its own; the
+owner then asked for these three, so every grade serves the same kit again. 18 files
+uploaded, all verified on storage, every page byte-identical to HEAD in the encoding a
+browser is served, and all eleven lessons played to the end again on the live pages with 0
+console errors. Nothing a learner can see changed - that is what a redeploy of a comment
+and a default is for.

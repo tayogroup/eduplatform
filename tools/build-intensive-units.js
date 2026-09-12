@@ -72,7 +72,13 @@ if (plan.levels.some((level) => level.eslFramework) && !eslIndex.size) {
 
 // Learner-facing sentence ceilings, in words, by Cambridge stage. A REPORT, not a
 // gate: a word count cannot tell a hard sentence from a list of four easy words.
-const REGISTER_CEILING = { 1: 12, 2: 15, 3: 18 };
+//
+// Stages 4-6 were added for Level 2 (A1 to A2). They must be STATED rather than
+// left to the `|| 18` fallback below: an unlisted stage silently inherits the
+// Stage 3 number, so an A2 unit would be measured against an A1 ceiling and
+// report every ordinary A2 sentence as over. The steps widen by the same three
+// words per stage the first three do.
+const REGISTER_CEILING = { 1: 12, 2: 15, 3: 18, 4: 21, 5: 24, 6: 27 };
 const registerReports = [];
 
 // No per-item audio descriptors. This course narrates through the shared

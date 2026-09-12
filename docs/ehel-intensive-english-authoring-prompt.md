@@ -10,7 +10,7 @@ Ehel Intensive English course, in a single pass, as the AUTHORED JSON that
 | Course level | Cambridge stages | ESL framework | CEFR teaching range | State |
 | --- | --- | --- | --- | --- |
 | Level 1 — Foundation | Primary Stages 1-3 | 0057 | Pre-A1 → A1 | Built on this prompt |
-| Level 2 | Primary Stages 4-6 | 0057 | A1 → A2 | Still the earlier B1 course; to be rebuilt on this prompt |
+| Level 2 — Independence | Primary Stages 4-6 | 0057 | A1 → A2 | Built on this prompt |
 | Level 3 | Lower Secondary 7-9 | 0876 | A2 → B1 | Not in the repo yet |
 | Level 4 | IGCSE first year | 0510/0511 | B1 → B2 | Not planned |
 | Level 5 | IGCSE final year | 0510/0511 | B2 | Not planned |
@@ -168,7 +168,7 @@ every id, sequence number, rubric, answer key and dictionary entry from it.
     { "title": "Colours", "words": [
       {
         "w": "red",                   // exactly as the plan writes it
-        "pos": "adjective",           // noun | verb | adjective | adverb | number | phrase | preposition | pronoun | question word | determiner | interjection
+        "pos": "adjective",           // noun | verb | adjective | adverb | number | phrase | preposition | pronoun | question word | determiner | conjunction | interjection
         "meaning": "The colour of blood and of a tomato.",   // simpler than the headword; never circular
         "example": "The bus is red.",
         "practice": ["My bag is red.", "Is the door red?", "The red cup is on the table.", "I like red."],  // 4-5, all different, none = example
@@ -262,6 +262,9 @@ Pre-A1 a long sentence is not harder, it is unreadable.
 | **Pre-A1** (Stage 1) | 2-8 words | ≤ 8 / 12 | be, have got, can, like, imperatives, this unit's pattern | 15-60 words |
 | **A1, developing** (Stage 2) | 4-10 words | ≤ 10 / 15 | + present simple, -ing, past simple from Unit 10 | 40-100 words |
 | **A1, consolidating** (Stage 3) | 5-12 words | ≤ 12 / 18 | + everything taught so far | 60-150 words |
+| **A1, extending** (Stage 4) | 6-14 words | ≤ 14 / 21 | + present perfect, going to, past continuous, have to, relative clauses | 100-200 words |
+| **A2, developing** (Stage 5) | 7-16 words | ≤ 16 / 24 | + for/since, zero conditional, participle adjectives, subordinate clauses | 150-280 words |
+| **A2, consolidating** (Stage 6) | 8-18 words | ≤ 18 / 27 | + reported speech, first conditional, simple passives, non-defining clauses | 200-350 words |
 
 6. **Show before you tell.** A rule is best laid out as examples in a column,
    not described. A worked example is lines the learner can follow with their
@@ -275,7 +278,8 @@ Pre-A1 a long sentence is not harder, it is unreadable.
 9. **The lecture script is heard** with the page in front of the learner, so it
    may run a little longer than a written line, but it uses the same words and
    the same short sentences. Stage 1: 900-1,800 characters. Stage 2:
-   1,500-2,600. Stage 3: 2,000-3,200.
+   1,500-2,600. Stage 3: 2,000-3,200. Stage 4: 2,400-3,600. Stage 5:
+   2,800-4,200. Stage 6: 3,200-4,800.
 10. **Adult.** Follow the canon: no toys and no playground framing, and the
     contexts are an adult's own day — work, the shops, the clinic, appointments,
     forms, travel, money. Assume an adult, but never a particular life: where a

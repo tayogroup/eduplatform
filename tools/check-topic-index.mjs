@@ -52,7 +52,28 @@ const TOPIC_FLOORS = {
   // Raised from 862 on 2026-09-11, when Level 1 was rebuilt on Cambridge 0057
   // (577 topics, against ~300 before). Left at 862, the new level could lose
   // every topic of a category and still clear the floor by 300.
-  "intensive-english": 1186,
+  //
+  // LOWERED from 1186 to 1154 on 2026-09-12, when Level 2 was rebuilt the same
+  // way. Lowering a floor is the move this gate exists to make suspicious, so
+  // the drop was accounted for section by section against the previous index
+  // before it was allowed — no section vanished, and all four deltas are
+  // content:
+  //
+  //   comprehension  40 -> 20   the old B1 units used two `section` values
+  //                             ("Reading" and "Document") and the index makes
+  //                             one topic per distinct value; the rebuilt units
+  //                             follow the authored schema, which specifies
+  //                             "Reading" throughout, so they now match Level 1
+  //   dictionary     99 -> 80   four vocabulary groups per unit, where the old
+  //                             course averaged five
+  //   grammar        69 -> 77   more grammar cards than the B1 course carried
+  //   reading        61 -> 60
+  //
+  // A floor that is merely lowered to whatever the new number happens to be is
+  // the formality this file warns about elsewhere. This one is the true count:
+  // 577 topics per level across two levels, so losing one category of one level
+  // now fails.
+  "intensive-english": 1154,
 };
 
 const failures = [];

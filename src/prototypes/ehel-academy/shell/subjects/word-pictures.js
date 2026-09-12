@@ -1085,14 +1085,42 @@ GRADE_WORD_PICTURES.ien1 = {
   table: "",           // 🍽️ is a place setting, and plate and dinner already use it
   often: "",           // 🔁 means repeat, which Unit 0 teaches
 };
+// Level 2 was rebuilt on Cambridge 0057 on 2026-09-12 (Stages 4-6, A1 to A2,
+// adult ESL), with a new 585-word vocabulary. The entries below were found the
+// way ien1's were: by printing every one of those words beside the picture this
+// function returns AND the meaning the unit actually authored, because the
+// authored meaning is the only thing that settles which sense is being taught.
+//
+// The seven entries this map held before were written for the earlier B1 course
+// (leak, monitor, circular, maintain, add, voice) and named words the rebuilt
+// level does not teach at all, so they are gone with the course they belonged
+// to. **One of them had stopped being stale and become WRONG**: `platform: "💻"`
+// was right for a B1 unit about media, where a platform is a thing you publish
+// on, and the new Level 2 teaches `platform` in Unit 13 beside departure,
+// arrival, gate and luggage. The shared map's 🚉 is the correct picture there,
+// so the override was replacing a right picture with a laptop beside a railway
+// platform. Deleting it is the whole fix.
+//
+// That is the lesson worth keeping, and it is the one the note above this block
+// only half states. That note warns that one subject's pass can break ANOTHER
+// subject's word. This is the same failure reached from inside: **a picture
+// override is a claim about a SENSE, and a sense belongs to a course that can
+// be replaced underneath it.** An override outlives the course that justified
+// it, goes on applying, and nothing reports the difference — so re-run the
+// audit whenever a level's vocabulary is rebuilt, not only when the shared map
+// is edited.
 GRADE_WORD_PICTURES.ien2 = {
-  leak: "",            // information released without authorisation, not water
-  monitor: "👀",       // to watch over time — the verb, not the screen
-  platform: "💻",      // a publishing platform, not the railway one
-  circular: "",        // circular reasoning, not the shape
-  maintain: "",        // to insist, not to keep in repair
-  add: "",             // to say something more, not arithmetic
-  voice: "",           // an author's voice, not the sound
+  // --- the shared map's sense is not the one this level teaches --------------
+  jam: "",             // a traffic jam; the map's 🍯 is the one you spread
+  block: "🏢",         // a block of flats — the map's 🛑 is the verb, to block
+  freeze: "🧊",        // water turning hard; the map's 🛑 is "stop where you are"
+  signal: "📶",        // the signal that carries a phone call, not a traffic light
+  scene: "",           // the place where something happened; 🎭 is a scene in a play
+  pump: "",            // "push water or air along"; 💓 says the heart, and the unit
+                       // teaches it of a machine
+  assemble: "",        // put the parts together; 👥 is assembling PEOPLE. 🔩 would
+                       // be honest but is already this level's picture for "metal",
+                       // and one picture on two words in one level teaches neither
 };
 
 /**

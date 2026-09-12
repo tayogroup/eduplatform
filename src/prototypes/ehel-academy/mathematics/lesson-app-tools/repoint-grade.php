@@ -104,12 +104,20 @@ $SUBJECTS = [
     // shell's own ehel-intensive-eng-l01 (shell/subjects/intensive-english.js,
     // config.courseKey), which is also what the catalogue publishes. Unlike
     // every other build in this table, its lessons ARE the shell course's
-    // units, 1:1 and numbered from zero, so THE UNIT PROBLEM does not apply:
-    // the standalone pages report u00..u19, the same ids the shell writes.
+    // units, 1:1, so THE UNIT PROBLEM does not apply: the standalone pages
+    // report the same ids the shell writes.
+    //
+    // The two levels number their units differently and both are correct.
+    // Level 1 starts at ZERO (u00 Letters and Sounds .. u19) and Level 2 at
+    // ONE (u01 .. u20), so the levels are NOT parallel and a reader checking
+    // one cannot infer the other. The `grade` key here is the CEFR level, not
+    // a school year -- the same field-name trap the Wehel allowance carries
+    // for this subject, where `grade` in the payload is a level too.
     'intensive-english' => [
         'entry' => RP_HOST . 'Ehel%20Primary/app/intensive-english/index.html',
         'targets' => [
             1 => ['ehel-intensive-eng-l01', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-1-v2/index.html'],
+            2 => ['ehel-intensive-eng-l02', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-2-v2/index.html'],
         ],
     ],
     'science' => [

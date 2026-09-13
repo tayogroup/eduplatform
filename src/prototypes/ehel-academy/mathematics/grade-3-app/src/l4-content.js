@@ -73,7 +73,7 @@
       say(ok ? cheer() : "The parts have to be equal");
       scoreLine("sc1", got1, asked1, 4);
       if (got1 >= 4) finish(0, "");
-      setTimeout(round1, 2000);
+      later(round1, 2000);
     };
     $("sh1").dataset.live = "1";
   }
@@ -124,7 +124,7 @@
         $("fb3").textContent = cheer() + " Different shapes, turned different ways - all of them " + fracName(n, d) + ". The shape does not decide the fraction; the size of the part does.";
         scoreLine("sc3", got3, asked3, 3);
         if (got3 >= 3) finish(2, "");
-        setTimeout(round3, 2600);
+        later(round3, 2600);
       }
     };
   }
@@ -151,7 +151,7 @@
       say(ok ? cheer() : fracName(n, d) + " of " + total + " is " + answer);
       scoreLine("sc4", got4, asked4, 4);
       if (got4 >= 4) finish(3, "");
-      setTimeout(round4, 2300);
+      later(round4, 2300);
     });
   }
   round4();
@@ -176,7 +176,7 @@
       say(ok ? cheer() : fracName(n, d) + " means " + n + " divided by " + d);
       scoreLine("sc5", got5, asked5, 3);
       if (got5 >= 3) finish(4, "");
-      setTimeout(round5, 2100);
+      later(round5, 2100);
     });
   }
   round5();
@@ -204,7 +204,7 @@
       say(ok ? cheer() : total + " divided by " + d + " is " + each + ", times " + n + " is " + answer);
       scoreLine("sc6", got6, asked6, 4);
       if (got6 >= 4) finish(5, "");
-      setTimeout(round6, 2400);
+      later(round6, 2400);
     });
   }
   round6();
@@ -234,7 +234,7 @@
       say(ok ? cheer() : fracName(n1, d1) + " is the same as " + fracName(n2, d2));
       scoreLine("sc7", got7, asked7, 4);
       if (got7 >= 4) finish(6, "");
-      setTimeout(round7, 2400);
+      later(round7, 2400);
     });
   }
   round7();
@@ -264,7 +264,7 @@
       say(ok ? cheer() : "The answer is " + fracName(answer, d));
       scoreLine("sc8", got8, asked8, 4);
       if (got8 >= 4) finish(7, "");
-      setTimeout(round8, 2400);
+      later(round8, 2400);
     });
   }
   round8();
@@ -312,7 +312,7 @@
       say(ok ? cheer() : "In order: " + right.replace(/</g, "then"));
       scoreLine("sc9", got9, asked9, 4);
       if (got9 >= 4) finish(8, "");
-      setTimeout(round9, 2600);
+      later(round9, 2600);
     });
   }
   function round9() {
@@ -343,7 +343,7 @@
       say(ok ? cheer() : why);
       scoreLine("sc9", got9, asked9, 4);
       if (got9 >= 4) finish(8, "");
-      setTimeout(round9, 2400);
+      later(round9, 2400);
     };
   }
   round9();
@@ -384,7 +384,7 @@
       $("fb10").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc10").textContent = "Question " + qi + " of " + order10.length + " \u00b7 " + got10 + " right";
-      setTimeout(round10, 2100);
+      later(round10, 2100);
     });
   }
   order10 = shuffle(QS);
@@ -523,11 +523,12 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();
 </script>

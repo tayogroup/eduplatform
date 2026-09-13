@@ -1146,7 +1146,6 @@
        bills per character. Same cap and same eviction as the app's. */
     const cache = new Map();
     const pending = new Map();
-    let chain = Promise.resolve();
     let playing = false;
 
     function ready() { return !!(ENDPOINT && el); }
@@ -1184,37 +1183,50 @@
       return request;
     }
 
+    /* Every clip belongs to the TURN it was asked for in, and stop() starts a
+       new turn. A clip still downloading when the lesson moves on is never
+       played, and one whose play() is still pending when stop() pauses it
+       does not report a failure. Both used to happen (measured 2026-09-13):
+       the late clip for a step the child had already left played over the
+       step they were on, and pausing a clip that had not quite started
+       rejected with AbortError, which the voice below read as "the endpoint
+       is down" and answered by reading the OLD line in the browser's voice
+       over the NEW clip. Queueing lines is the voice's job now, not this. */
+    let turn = 0;
+    const STOPPED = new Error("Stopped: the lesson moved on.");
+
     function stop() {
-      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
-      chain = Promise.resolve();
+      turn += 1;
+      try { el.onended = el.onerror = null; el.pause(); el.removeAttribute("src"); } catch (e) {}
       playing = false;
     }
 
-    function play(text, replace) {
+    /* One whole clip: resolves when it ends, rejects if it cannot be fetched
+       or played, rejects with STOPPED if stop() came first. */
+    function play(text) {
       if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
-      if (replace) stop();
-      const step = function () {
-        return clipUrl(text).then(function (src) {
-          return new Promise(function (done, fail) {
-            playing = true;
-            el.onended = function () { playing = false; done(); };
-            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
-            el.src = src;
-            const started = el.play();
-            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+      const mine = turn;
+      return clipUrl(text).then(function (src) {
+        if (mine !== turn) throw STOPPED;
+        return new Promise(function (done, fail) {
+          playing = true;
+          el.onended = function () { playing = false; done(); };
+          el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+          el.src = src;
+          const started = el.play();
+          if (started && started.catch) started.catch(function (e) {
+            if (mine !== turn) { fail(STOPPED); return; }
+            playing = false; fail(e);
           });
         });
-      };
-      /* a failed clip must not wedge everything queued behind it */
-      const run = chain.then(step, step);
-      chain = run.catch(function () {});
-      return run;
+      });
     }
 
     return {
       ready: ready,
       play: play,
       stop: stop,
+      stopped: function (e) { return e === STOPPED; },
       busy: function () { return playing; },
       endpoint: function () { return ENDPOINT; }
     };
@@ -1368,7 +1380,22 @@
     }
 
     /* ---- playing it ---- */
+    /* ONE voice at a time, one LINE at a time. `lines` holds what is waiting.
+       A line is read by the platform clip, or - only when that clip genuinely
+       fails - by the browser's voice, and the next line waits for whichever of
+       the two is reading it. stop() empties the queue and starts a new turn;
+       every callback carries the turn it began in, so nothing started before
+       a stop can sound after it.
+
+       What this replaced, measured in a browser on 2026-09-13. Cancelling the
+       browser voice fires "interrupted" on the old utterance a tick LATER; its
+       onerror ran next() against the queue the new line had just installed,
+       and the browser voice began reading the new line on top of the clip for
+       the same line - after which every tap read each line twice, once in
+       each voice. And a failed clip let the reaction queued behind it start
+       at once, over the browser voice still reading the line that failed. */
     let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    let lines = [], reading = false, turn = 0, lineDone = null, hushed = false;
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
     function mark(on) {
       speaking = on;
@@ -1396,77 +1423,114 @@
       return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
     }
 
-    /* The endpoint first, the browser's own voice if it refuses. A lesson that
-       goes quiet because a server was down is worse than one read by whatever
-       voice the device has. */
-    function viaPlatform(segs, replace) {
+    /* Wehel reads its replies aloud as well, and this page wires the tutor's
+       stop in as window.__ehelTutorQuiet. A line the lesson starts is what the
+       child has just asked for, so the tutor stops for it. */
+    function hushTutor() {
+      if (typeof window.__ehelTutorQuiet !== "function") return;
+      try { window.__ehelTutorQuiet(); } catch (e) {}
+    }
+
+    function pump() {
+      if (reading) return;
+      const segs = lines.shift();
+      if (!segs) { mark(false); return; }
+      reading = true;
+      const mine = turn;
+      const finished = function () {
+        if (mine !== turn) return;
+        reading = false;
+        pump();
+      };
+      const inBrowser = function () {
+        if (!SUPPORTED) { finished(); return; }
+        queue = segs; at = 0; lineDone = finished;
+        next(mine);
+      };
+      if (!PLATFORM_VOICE.ready()) { inBrowser(); return; }
+      /* The endpoint first, the browser's own voice if it refuses. A lesson that
+         goes quiet because a server was down is worse than one read by whatever
+         voice the device has. A clip stopped on purpose has not refused. */
       const line = spoken(segs);
-      if (!line) { mark(false); return; }
-      PLATFORM_VOICE.play(line, replace).then(function () {
-        if (!PLATFORM_VOICE.busy()) mark(false);
-      }, function () {
-        if (!SUPPORTED) { mark(false); return; }
-        queue = segs; at = 0; next();
+      if (!line) { finished(); return; }
+      PLATFORM_VOICE.play(line).then(finished, function (e) {
+        if (mine !== turn || PLATFORM_VOICE.stopped(e)) return;
+        inBrowser();
       });
     }
 
     function stop() {
+      turn += 1;
       clearTimeout(timer); timer = null; queue = []; at = 0;
+      lines = []; reading = false; lineDone = null;
       try { window.speechSynthesis.cancel(); } catch (e) {}
       PLATFORM_VOICE.stop();
       mark(false);
     }
-    function next() {
-      if (at >= queue.length) { mark(false); return; }
+    function next(mine) {
+      if (mine !== turn) return;
+      if (at >= queue.length) {
+        const then = lineDone;
+        queue = []; at = 0; lineDone = null;
+        if (then) then();
+        return;
+      }
       const seg = queue[at++];
-      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      if (seg.pause != null) { timer = setTimeout(function () { next(mine); }, seg.pause); return; }
       const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
-      if (!words) { next(); return; }
+      if (!words) { next(mine); return; }
       let u;
-      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { at = queue.length; next(mine); return; }
       if (voice) u.voice = voice;
       u.lang = (voice && voice.lang) || "en-GB";
       u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
       u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
-      u.onend = next;
+      /* one step per utterance, and only in the turn it belongs to: an engine
+         may report both error and end, and a cancelled one reports after the
+         next line already owns the queue */
+      let moved = false;
+      const onward = function () { if (moved) return; moved = true; next(mine); };
+      u.onend = onward;
       u.onstart = function () { window.__ehelHeard = Date.now(); };   /* ehel-quiet-notice */
-      u.onerror = next;
-      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+      u.onerror = onward;
+      try { window.speechSynthesis.speak(u); } catch (e) { onward(); }
     }
     function speak(x) {
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
       stop();
-      queue = flatten(ssml);
-      remember(queue);
-      at = 0;
-      if (!queue.length) return;
+      const segs = flatten(ssml);
+      remember(segs);
+      if (!segs.length) return;
+      hushTutor();
+      lines.push(segs);
       mark(true);
-      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
-      next();
+      pump();
     }
     /* queue rather than interrupt: a reaction should not cut off a sentence
-       the child is still listening to, unless that sentence is the old one */
+       the child is still listening to, unless that sentence is the old one.
+       A reaction is one of HER lines, so the voice toggle silences it. */
     function follow(x) {
+      if (hushed) return;
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
-      if (PLATFORM_VOICE.ready()) {
-        /* the endpoint plays whole clips, so a follow-up is the next clip in
-           the chain rather than more segments spliced into this one */
-        const segs = flatten(ssml);
-        remember(segs);
-        if (!speaking) mark(true);
-        viaPlatform(segs, false);
-        return;
-      }
-      if (!speaking) return speak(ssml);
-      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
-      remember(queue);
-      at = 0;
+      const segs = flatten(ssml);
+      remember(segs);
+      if (!segs.length) return;
+      if (reading || lines.length) lines.push([{ pause: 250 }].concat(segs));
+      else { hushTutor(); lines.push(segs); }
+      mark(true);
+      pump();
+    }
+    /* The voice toggle. Off stops her mid-line and keeps her reactions quiet;
+       Explain, which a child presses on purpose, still speaks. */
+    function hush(on) {
+      hushed = !!on;
+      if (hushed) stop();
     }
 
 
@@ -1483,7 +1547,7 @@
       return recent.join(' | ').indexOf(n) >= 0;
     }
     return {
-      speak: speak, follow: follow, stop: stop,
+      speak: speak, follow: follow, stop: stop, hush: hush,
       supported: SUPPORTED,
       voiceName: () => (voice ? voice.name : null),
       isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
@@ -1495,8 +1559,19 @@
     };
   })();
 
-  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
-  function say(text) { VOICE.speak(text); }
+  /* Every call site in this lesson already says say(...). It now goes to Sonia.
+
+     QUIET while the page first draws. Each activity builds its first round at
+     load and every round asks its question aloud: eleven lines for steps the
+     child has not reached, each a request to the paid voice endpoint and each
+     cutting off the last, with the late ones read over step 1 (measured
+     2026-09-13: 11 requests on a load with no tap at all). The count drops to
+     0 after show(0, false), the script's last line; later() raises it while a
+     round runs for a step the child has already left. */
+  let quiet = 1;
+  function say(text) { if (quiet) return; VOICE.speak(text); }
+  /* the tutor drawer stops the lesson when Wehel starts reading a reply */
+  window.__ehelVoiceStop = function () { VOICE.stop(); };
 
   /* ehel-g3-validation-fixes: a check below its pass mark shows how many are needed and a Try
      again button, instead of stopping with nothing to press. */
@@ -1837,7 +1912,18 @@
   const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+  /* One cheer per answer. The line on screen and the line spoken each called
+     cheer(), so a child could read "Super!" and hear "Brilliant!". The word is
+     kept until the task that picked it has finished, so every call made for
+     one answer agrees and the next answer picks again. */
+  let cheered = "";
+  const cheer = () => {
+    if (!cheered) {
+      cheered = ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+      setTimeout(() => { cheered = ""; }, 0);
+    }
+    return cheered;
+  };
 
 
   /* ---- deck ---- */
@@ -1906,6 +1992,19 @@
     });
   })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+  /* A round started on a timer belongs to the step it was set on. If the child
+     has moved on by the time it fires - the usual thing after a right answer -
+     it still draws the next question, so the step is ready when they come
+     back, but it does not read that question (or the step's "You can ..."
+     line) over the step they are looking at now. */
+  function later(fn, ms) {
+    const step = cur;
+    setTimeout(function () {
+      if (cur === step) { fn(); return; }
+      quiet += 1;
+      try { fn(); } finally { quiet -= 1; }
+    }, ms);
+  }
 
   /* ==================================================================
      ACCESSIBILITY
@@ -2028,7 +2127,7 @@
       say(ok ? cheer() + " " + words(n2) : n2 + " is " + words(n2));
       scoreLine("sc2", got2, asked2, 4);
       if (got2 >= 4) finish(1, "");
-      setTimeout(round2, 1600);
+      later(round2, 1600);
     });
   }
   round2();
@@ -2070,7 +2169,7 @@
         say(want.join(" plus ") + " makes " + n3);
         scoreLine("sc3", got3, asked3, 3);
         if (got3 >= 3) finish(2, "");
-        setTimeout(round3, 1900);
+        later(round3, 1900);
       }
     };
   }
@@ -2156,7 +2255,7 @@
       say(ok ? cheer() : seq6[2] + (step6 > 0 ? " add " : " take away ") + Math.abs(step6) + " is " + answer);
       scoreLine("sc6", got6, asked6, 4);
       if (got6 >= 4) finish(5, "");
-      setTimeout(round6, 1700);
+      later(round6, 1700);
     });
   }
   $("step6").addEventListener("click", (e) => {
@@ -2185,7 +2284,7 @@
       say(ok ? cheer() + " it ends in " + last + ", which is " + right : "It ends in " + last + ", so it is " + right);
       scoreLine("sc7", got7, asked7, 4);
       if (got7 >= 4) finish(6, "");
-      setTimeout(round7, 1700);
+      later(round7, 1700);
     };
   }
   round7();
@@ -2214,7 +2313,7 @@
       say(ok ? cheer() : a + " is " + (right === ">" ? "greater than " : right === "<" ? "less than " : "equal to ") + b);
       scoreLine("sc8", got8, asked8, 4);
       if (got8 >= 4) finish(7, "");
-      setTimeout(round8, 1700);
+      later(round8, 1700);
     };
   }
   round8();
@@ -2250,7 +2349,7 @@
         say("In order: " + taken9.join(", "));
         scoreLine("sc9", got9, asked9, 3);
         if (got9 >= 3) finish(8, "");
-        setTimeout(round9, 2000);
+        later(round9, 2000);
       }
     };
   }
@@ -2285,7 +2384,7 @@
       say(ok ? cheer() + " " + answer : n + " rounds to " + answer);
       scoreLine("sc10", got10, asked10, 4);
       if (got10 >= 4) finish(9, "");
-      setTimeout(round10, 2000);
+      later(round10, 2000);
     });
   }
   round10();
@@ -2309,7 +2408,7 @@
       say(ok ? cheer() + " there were " + real : "There were " + real + ", so " + near + " was closest");
       scoreLine("sc11", got11, asked11, 3);
       if (got11 >= 3) finish(10, "");
-      setTimeout(round11, 2200);
+      later(round11, 2200);
     });
   }
   round11();
@@ -2358,7 +2457,7 @@
       $("fb18").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc18").textContent = "Question " + qi + " of " + order18.length + " \u00b7 " + got18 + " right";
-      setTimeout(round18, 2000);
+      later(round18, 2000);
     });
   }
   order18 = shuffle(QS);
@@ -2507,12 +2606,13 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
   /* ================= the two header bars =================
      Everything here is answered by this page. The class controls are not
@@ -2567,7 +2667,11 @@
     say = function (t) { if (!muted) realSay(t); };
     $("ehAudio").addEventListener("click", function () {
       muted = !muted;
-      if (muted && window.VOICE && VOICE.stop) VOICE.stop();
+      /* VOICE is this script's own const, never a property of window, so the
+         old `window.VOICE &&` guard was always false and switching the voice
+         off left her talking. hush() stops her, and keeps her reactions to
+         answers quiet until the voice is switched back on. */
+      if (typeof VOICE !== "undefined" && VOICE.hush) VOICE.hush(muted);
       $("ehAudio").setAttribute("aria-pressed", muted ? "true" : "false");
       $("ehAudio").title = muted ? "Turn the voice on" : "Turn the voice off";
     });
@@ -2863,7 +2967,7 @@
   /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
      learner-controls.js holds the SAME singletons the shell mounts. */
   import { mountLearnerControls } from "./learner-controls.js";
-  import { mountWehelChat } from "./wehel.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
   /* Focus mode and the session bar. Imported for its side effect - it mounts
      itself, and mounts NOTHING unless the launch carries focusMode=1 or an
@@ -2965,6 +3069,22 @@
     drawer.querySelector("button").addEventListener("click", close);
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
     document.body.append(dock, drawer);
+
+    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
+       aloud by default and knew nothing of the lesson's voice, so a reply
+       could play over a line the lesson was reading. The lesson stops the
+       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
+       when the tutor starts reading - which the drawer shows as a Stop
+       button, .voice-button.is-playing. Only the moment that button APPEARS
+       counts: the panel repaints often, and repainting a reply already being
+       read must not cut off a line the lesson has just begun. */
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
   }
 </script>
 <!-- WIRE-JS-END -->

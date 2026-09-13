@@ -92,7 +92,7 @@
       say(ok ? cheer() : a + " times " + b + " is " + answer);
       scoreLine("sc3", got3, asked3, 8);
       if (got3 >= 8) finish(2, "");
-      setTimeout(round3, 1500);
+      later(round3, 1500);
     });
   }
   round3();
@@ -126,7 +126,7 @@
         $("fb4").textContent = cheer() + " One array, two times facts and two sharing facts - they are all the same fact.";
         scoreLine("sc4", got4, asked4, 2);
         if (got4 >= 2) finish(3, "");
-        setTimeout(round4, 2400);
+        later(round4, 2400);
       }
     };
   }
@@ -154,7 +154,7 @@
       say(ok ? cheer() : t * m + " plus " + o * m + " is " + answer);
       scoreLine("sc5", got5, asked5, 4);
       if (got5 >= 4) finish(4, "");
-      setTimeout(round5, 2100);
+      later(round5, 2100);
     });
   }
   round5();
@@ -179,7 +179,7 @@
       say(ok ? cheer() : n + " times " + m + " is " + answer);
       scoreLine("sc6", got6, asked6, 4);
       if (got6 >= 4) finish(5, "");
-      setTimeout(round6, 2200);
+      later(round6, 2200);
     });
   }
   round6();
@@ -209,7 +209,7 @@
       say(ok ? cheer() : total + " shared between " + g + " is " + each + (rem ? " remainder " + rem : ""));
       scoreLine("sc7", got7, asked7, 4);
       if (got7 >= 4) finish(6, "");
-      setTimeout(round7, 2400);
+      later(round7, 2400);
     });
   }
   round7();
@@ -240,7 +240,7 @@
         $("fb8").textContent = cheer() + " All " + want.length + " found" + (wrong8 ? ", with " + wrong8 + " to spare" : " with none wrong") + ". Multiples of " + w8 + " always end in " + (w8 === 10 ? "0" : w8 === 5 ? "0 or 5" : "0, 2, 4, 6 or 8") + ".";
         scoreLine("sc8", rounds8, rounds8, 2);
         if (rounds8 >= 2) finish(7, "");
-        setTimeout(round8, 2600);
+        later(round8, 2600);
       }
     };
   }
@@ -272,7 +272,7 @@
       say(ok ? cheer() : "The rule is " + right);
       scoreLine("sc9", got9, asked9, 4);
       if (got9 >= 4) finish(8, "");
-      setTimeout(round9, 2000);
+      later(round9, 2000);
     });
   }
   round9();
@@ -305,7 +305,7 @@
       say(ok ? cheer() : "Each one " + (grow ? "adds " : "takes away ") + step + ", so the next is " + answer);
       scoreLine("sc10", got10, asked10, 4);
       if (got10 >= 4) finish(9, "");
-      setTimeout(round10, 2200);
+      later(round10, 2200);
     });
   }
   round10();
@@ -335,7 +335,7 @@
       say(ok ? cheer() : why);
       scoreLine("sc11", got11, asked11, 4);
       if (got11 >= 4) finish(10, "");
-      setTimeout(round11, 2200);
+      later(round11, 2200);
     });
   }
   round11();
@@ -379,7 +379,7 @@
       $("fb12").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc12").textContent = "Question " + qi + " of " + order12.length + " \u00b7 " + got12 + " right";
-      setTimeout(round12, 2000);
+      later(round12, 2000);
     });
   }
   order12 = shuffle(QS);
@@ -518,11 +518,12 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();
 </script>

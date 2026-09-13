@@ -63,7 +63,7 @@
       say(ok ? cheer() : have + " and " + answer + " make " + target);
       scoreLine("sc12", got12, asked12, 4);
       if (got12 >= 4) finish(0, "");
-      setTimeout(round12, 1800);
+      later(round12, 1800);
     });
   }
   round12();
@@ -92,7 +92,7 @@
       say(a + " and " + b + " make one hundred, then add " + c + " to get " + total);
       scoreLine("sc13", got13, asked13, 3);
       if (got13 >= 3) finish(1, "");
-      setTimeout(round13, 2200);
+      later(round13, 2200);
     };
   }
   round13();
@@ -189,7 +189,7 @@
         scoreLine(scId, got, asked, target);
         if (got >= target) finish(slideIdx, "");
         col++;
-        setTimeout(() => {
+        later(() => {
           if (col > 2) {
             paint();
             const total = isAdd ? a + b : a - b;
@@ -225,7 +225,7 @@
       say(ok ? cheer() : money(v) + " is " + right);
       scoreLine("sc16", got16, asked16, 4);
       if (got16 >= 4) finish(4, "");
-      setTimeout(round16, 2000);
+      later(round16, 2000);
     });
   }
   round16();
@@ -252,7 +252,7 @@
       say(ok ? cheer() : "The change is " + change.toFixed(2));
       scoreLine("sc17", got17, asked17, 4);
       if (got17 >= 4) finish(5, "");
-      setTimeout(round17, 2400);
+      later(round17, 2400);
     });
   }
   round17();
@@ -289,7 +289,7 @@
         say(ok ? cheer() : why);
         scoreLine("scx21", got, asked, 4);
         if (got >= 4) finish(SLOT, "");
-        setTimeout(round, 3200);
+        later(round, 3200);
       });
     }
     const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx21").closest(".slide"));
@@ -325,7 +325,7 @@
         say(ok ? cheer() : why);
         scoreLine("scx22", got, asked, 4);
         if (got >= 4) finish(SLOT, "");
-        setTimeout(round, 3200);
+        later(round, 3200);
       });
     }
     const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx22").closest(".slide"));
@@ -377,7 +377,7 @@
       $("fb18").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc18").textContent = "Question " + qi + " of " + order18.length + " \u00b7 " + got18 + " right";
-      setTimeout(round18, 2000);
+      later(round18, 2000);
     });
   }
   order18 = shuffle(QS);
@@ -523,11 +523,12 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();
 </script>

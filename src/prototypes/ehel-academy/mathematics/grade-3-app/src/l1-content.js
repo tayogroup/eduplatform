@@ -92,7 +92,7 @@
       say(ok ? cheer() + " " + words(n2) : n2 + " is " + words(n2));
       scoreLine("sc2", got2, asked2, 4);
       if (got2 >= 4) finish(1, "");
-      setTimeout(round2, 1600);
+      later(round2, 1600);
     });
   }
   round2();
@@ -134,7 +134,7 @@
         say(want.join(" plus ") + " makes " + n3);
         scoreLine("sc3", got3, asked3, 3);
         if (got3 >= 3) finish(2, "");
-        setTimeout(round3, 1900);
+        later(round3, 1900);
       }
     };
   }
@@ -220,7 +220,7 @@
       say(ok ? cheer() : seq6[2] + (step6 > 0 ? " add " : " take away ") + Math.abs(step6) + " is " + answer);
       scoreLine("sc6", got6, asked6, 4);
       if (got6 >= 4) finish(5, "");
-      setTimeout(round6, 1700);
+      later(round6, 1700);
     });
   }
   $("step6").addEventListener("click", (e) => {
@@ -249,7 +249,7 @@
       say(ok ? cheer() + " it ends in " + last + ", which is " + right : "It ends in " + last + ", so it is " + right);
       scoreLine("sc7", got7, asked7, 4);
       if (got7 >= 4) finish(6, "");
-      setTimeout(round7, 1700);
+      later(round7, 1700);
     };
   }
   round7();
@@ -278,7 +278,7 @@
       say(ok ? cheer() : a + " is " + (right === ">" ? "greater than " : right === "<" ? "less than " : "equal to ") + b);
       scoreLine("sc8", got8, asked8, 4);
       if (got8 >= 4) finish(7, "");
-      setTimeout(round8, 1700);
+      later(round8, 1700);
     };
   }
   round8();
@@ -314,7 +314,7 @@
         say("In order: " + taken9.join(", "));
         scoreLine("sc9", got9, asked9, 3);
         if (got9 >= 3) finish(8, "");
-        setTimeout(round9, 2000);
+        later(round9, 2000);
       }
     };
   }
@@ -349,7 +349,7 @@
       say(ok ? cheer() + " " + answer : n + " rounds to " + answer);
       scoreLine("sc10", got10, asked10, 4);
       if (got10 >= 4) finish(9, "");
-      setTimeout(round10, 2000);
+      later(round10, 2000);
     });
   }
   round10();
@@ -373,7 +373,7 @@
       say(ok ? cheer() + " there were " + real : "There were " + real + ", so " + near + " was closest");
       scoreLine("sc11", got11, asked11, 3);
       if (got11 >= 3) finish(10, "");
-      setTimeout(round11, 2200);
+      later(round11, 2200);
     });
   }
   round11();
@@ -422,7 +422,7 @@
       $("fb18").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc18").textContent = "Question " + qi + " of " + order18.length + " \u00b7 " + got18 + " right";
-      setTimeout(round18, 2000);
+      later(round18, 2000);
     });
   }
   order18 = shuffle(QS);
@@ -571,11 +571,12 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();
 </script>

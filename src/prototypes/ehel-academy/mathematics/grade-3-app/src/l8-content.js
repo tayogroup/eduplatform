@@ -50,7 +50,7 @@
       say(ok ? cheer() : "That one needs data");
       scoreLine("sc1", got1, asked1, 3);
       if (got1 >= 3) finish(0, "");
-      setTimeout(round1, 2500);
+      later(round1, 2500);
     });
   }
   round1();
@@ -87,7 +87,7 @@
       say(ok ? cheer() : "It is " + answer);
       scoreLine("sc2", got2, asked2, 4);
       if (got2 >= 4) finish(1, "");
-      setTimeout(round2, 2600);
+      later(round2, 2600);
     });
   }
   round2();
@@ -119,7 +119,7 @@
       say(ok ? cheer() : "It is " + answer);
       scoreLine("sc3", got3, asked3, 4);
       if (got3 >= 4) finish(2, "");
-      setTimeout(round3, 2900);
+      later(round3, 2900);
     });
   }
   round3();
@@ -151,7 +151,7 @@
       say(ok ? cheer() : "It is " + answer);
       scoreLine("sc4", got4, asked4, 4);
       if (got4 >= 4) finish(3, "");
-      setTimeout(round4, 2500);
+      later(round4, 2500);
     });
   }
   round4();
@@ -178,7 +178,7 @@
       say(ok ? cheer() : "The answer is " + answer);
       scoreLine("sc7", got7, asked7, 4);
       if (got7 >= 4) finish(6, "");
-      setTimeout(round7, 2700);
+      later(round7, 2700);
     });
   }
   round7();
@@ -219,7 +219,7 @@
       say(ok ? cheer() : "It goes " + (zone === "both" ? "in the middle" : zone === "none" ? "outside both" : "in one hoop"));
       scoreLine("sc5", got5, asked5, 4);
       if (got5 >= 4) finish(4, "");
-      setTimeout(round5, 2900);
+      later(round5, 2900);
     };
   }
   round5();
@@ -249,7 +249,7 @@
       say(ok ? cheer() : "It goes in the " + (inA ? "" : "not ") + t.a + " row");
       scoreLine("sc6", got6, asked6, 4);
       if (got6 >= 4) finish(5, "");
-      setTimeout(round6, 3000);
+      later(round6, 3000);
     };
   }
   round6();
@@ -309,7 +309,7 @@
       say(ok ? cheer() : it.why);
       scoreLine("sc8c", got8c, asked8c, 4);
       if (got8c >= 4) finish(7, "");
-      setTimeout(round8c, 3200);
+      later(round8c, 3200);
     });
   }
   round8c();
@@ -346,7 +346,7 @@
       say(ok ? cheer() : cur8.a);
       scoreLine("sc8", got8, asked8, 5);
       if (got8 >= 5) finish(8, "");
-      setTimeout(round8, 2900);
+      later(round8, 2900);
     };
   }
   round8();
@@ -436,7 +436,7 @@
       $("fb10").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc10").textContent = "Question " + qi + " of " + order10.length + " \u00b7 " + got10 + " right";
-      setTimeout(round10, 2200);
+      later(round10, 2200);
     });
   }
   order10 = shuffle(QS);
@@ -575,11 +575,12 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();
 </script>

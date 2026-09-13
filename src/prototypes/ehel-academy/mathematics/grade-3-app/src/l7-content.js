@@ -67,7 +67,7 @@
       say(ok ? cheer() : "It is " + right);
       scoreLine("sc13", got13, asked13, 4);
       if (got13 >= 4) finish(0, "");
-      setTimeout(round13, 2500);
+      later(round13, 2500);
     });
   }
   round13();
@@ -106,7 +106,7 @@
       say(ok ? cheer() : it.t + " is measured in " + it.a);
       scoreLine("sc14", got14, asked14, 5);
       if (got14 >= 5) finish(1, "");
-      setTimeout(round14, 2700);
+      later(round14, 2700);
     });
   }
   function round14long() {
@@ -138,7 +138,7 @@
       say(ok ? cheer() : why);
       scoreLine("sc14", got14, asked14, 5);
       if (got14 >= 5) finish(1, "");
-      setTimeout(round14, 2700);
+      later(round14, 2700);
     });
   }
   function round14() {
@@ -168,7 +168,7 @@
       say(ok ? cheer() : "It is " + right);
       scoreLine("sc14", got14, asked14, 4);
       if (got14 >= 4) finish(1, "");
-      setTimeout(round14, 2700);
+      later(round14, 2700);
     });
   }
   round14();
@@ -219,7 +219,7 @@
       say(ok ? cheer() : "It is " + right);
       scoreLine("sc15", got15, asked15, 4);
       if (got15 >= 4) finish(2, "");
-      setTimeout(round15, 2800);
+      later(round15, 2800);
     });
   }
   round15();
@@ -253,7 +253,7 @@
           $("fb16").textContent = cheer() + " North is up, south is down, east is right and west is left - and they stay put whichever way you are facing.";
           scoreLine("sc16", got16, asked16, 3);
           if (got16 >= 3) finish(3, "");
-          setTimeout(round16, 2400);
+          later(round16, 2400);
         } else {
           $("fb16").className = "fb"; $("fb16").textContent = i + " of " + seq.length + " done.";
         }
@@ -299,7 +299,7 @@
         say(ok ? cheer() : why);
         scoreLine("scx71", got, asked, 4);
         if (got >= 4) finish(SLOT, "");
-        setTimeout(round, 2800);
+        later(round, 2800);
       });
     }
     const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx71").closest(".slide"));
@@ -344,7 +344,7 @@
         say(ok ? cheer() : why);
         scoreLine("scx72", got, asked, 4);
         if (got >= 4) finish(SLOT, "");
-        setTimeout(round, 3600);
+        later(round, 3600);
       });
     }
     const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx72").closest(".slide"));
@@ -413,7 +413,7 @@
         say(ok ? cheer() : why);
         scoreLine("scx73", got, asked, 4);
         if (got >= 4) finish(SLOT, "");
-        setTimeout(round, 3600);
+        later(round, 3600);
       });
     }
     const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx73").closest(".slide"));
@@ -465,7 +465,7 @@
       $("fb17").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc17").textContent = "Question " + qi + " of " + order17.length + " \u00b7 " + got17 + " right";
-      setTimeout(round17, 2100);
+      later(round17, 2100);
     });
   }
   order17 = shuffle(QS);
@@ -610,11 +610,12 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();
 </script>

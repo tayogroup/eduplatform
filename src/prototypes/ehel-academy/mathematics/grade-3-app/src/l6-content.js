@@ -66,7 +66,7 @@
         say(ok ? cheer() : why);
         scoreLine(scid, got, asked, target);
         if (got >= target) finish(idx, "");
-        setTimeout(round, 2300);
+        later(round, 2300);
       });
     }
     round();
@@ -139,7 +139,7 @@
       say(ok ? cheer() : "One mark is " + step + ", so the arrow is at " + answer);
       scoreLine("sc11", got11, asked11, 4);
       if (got11 >= 4) finish(3, "");
-      setTimeout(round11, 2800);
+      later(round11, 2800);
     });
   }
   round11();
@@ -170,7 +170,7 @@
       say(ok ? cheer() : "It is " + right);
       scoreLine("sc12", got12, asked12, 4);
       if (got12 >= 4) finish(4, "");
-      setTimeout(round12, 2500);
+      later(round12, 2500);
     };
   }
   round12();
@@ -208,7 +208,7 @@
         say(ok ? cheer() : why);
         scoreLine("scx61", got, asked, 4);
         if (got >= 4) finish(SLOT, "");
-        setTimeout(round, 3200);
+        later(round, 3200);
       });
     }
     const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx61").closest(".slide"));
@@ -261,7 +261,7 @@
         say(ok ? cheer() : why);
         scoreLine("scx62", got, asked, 4);
         if (got >= 4) finish(SLOT, "");
-        setTimeout(round, 3000);
+        later(round, 3000);
       });
     }
     const SLOT = [...document.querySelectorAll(".slide")].indexOf($("qx62").closest(".slide"));
@@ -306,7 +306,7 @@
       $("fb17").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc17").textContent = "Question " + qi + " of " + order17.length + " \u00b7 " + got17 + " right";
-      setTimeout(round17, 2100);
+      later(round17, 2100);
     });
   }
   order17 = shuffle(QS);
@@ -451,11 +451,12 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();
 </script>

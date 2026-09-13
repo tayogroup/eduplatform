@@ -55,7 +55,7 @@
       say(ok ? cheer() : n + " sides, so it is a " + name);
       scoreLine("sc1", got1, asked1, 4);
       if (got1 >= 4) finish(0, "");
-      setTimeout(round1, 2100);
+      later(round1, 2100);
     });
   }
   round1();
@@ -85,7 +85,7 @@
       say(ok ? cheer() : "The regular one has every side the same");
       scoreLine("sc2", got2, asked2, 3);
       if (got2 >= 3) finish(1, "");
-      setTimeout(round2, 2400);
+      later(round2, 2400);
     };
   }
   round2();
@@ -121,7 +121,7 @@
       say(ok ? cheer() : yes ? "Yes, it folds exactly" : "No, the halves do not match");
       scoreLine("sc3", got3, asked3, 5);
       if (got3 >= 5) finish(2, "");
-      setTimeout(round3, 2300);
+      later(round3, 2300);
     };
   }
   round3();
@@ -169,7 +169,7 @@
           $("fb4").textContent = cheer() + " Every square is the same distance from the mirror on both sides" + (slips ? ", though " + slips + " went astray on the way." : ".");
           scoreLine("sc4", got4, asked4, 2);
           if (got4 >= 2) finish(3, "");
-          setTimeout(round4, 2600);
+          later(round4, 2600);
         }
       } else {
         slips++; t.style.fill = "var(--bad-soft)";
@@ -221,7 +221,7 @@
       say(ok ? cheer() : "It is a " + s.name);
       scoreLine("sc5", got5, asked5, 4);
       if (got5 >= 4) finish(4, "");
-      setTimeout(round5, 2400);
+      later(round5, 2400);
     });
   }
   round5();
@@ -249,7 +249,7 @@
       say(ok ? cheer() : "The perimeter is " + answer + " centimetres");
       scoreLine("sc6", got6, asked6, 4);
       if (got6 >= 4) finish(5, "");
-      setTimeout(round6, 2300);
+      later(round6, 2300);
     });
   }
   round6();
@@ -285,7 +285,7 @@
       say(ok ? cheer() : "The area is " + answer + " squares");
       scoreLine("sc7", got7, asked7, 4);
       if (got7 >= 4) finish(6, "");
-      setTimeout(round7, 2300);
+      later(round7, 2300);
     });
   }
   round7();
@@ -331,7 +331,7 @@
     scoreLine("sc8d", got8d, asked8d, 3);
     if (got8d >= 3) finish(7, "");
     pickA = null;
-    setTimeout(round8d, 3000);
+    later(round8d, 3000);
   });
   $("clr8d").addEventListener("click", () => { pickA = null; paint8d(null); });
   round8d();
@@ -374,7 +374,7 @@
       $("fb17").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
       $("sc17").textContent = "Question " + qi + " of " + order17.length + " \u00b7 " + got17 + " right";
-      setTimeout(round17, 2100);
+      later(round17, 2100);
     });
   }
   order17 = shuffle(QS);
@@ -520,11 +520,12 @@
       document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
       if (got >= 4) finish(SLOT, "");
       qi++;
-      setTimeout(paint, 3400);
+      later(paint, 3400);
     });
     paint();
   })();
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();
 </script>

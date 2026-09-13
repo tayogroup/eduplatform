@@ -83,7 +83,7 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + spec.why;
       say((ok ? cheer() + " " : "") + spec.why);
       $(el.ch).removeEventListener("click", handler);
-      setTimeout(() => onDone(ok), 2600);
+      later(() => onDone(ok), 2600);
     };
     $(el.ch).addEventListener("click", handler);
   }
@@ -588,7 +588,7 @@
       $(el.score).textContent = heard.size + " of " + need + " heard";
       if (heard.size >= need) {
         reportAttempt(o.finish, heard.size, o.items.length, "things");
-        if (o.then) setTimeout(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
+        if (o.then) later(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
       }
     });
     $(el.ch).addEventListener("click", (e) => {
@@ -813,7 +813,7 @@
       SOUND.play("pop", 0.4);
       const line = "Moved. " + steps[k + 1].label + " now comes after " + steps[k].label.toLowerCase() + ".";
       $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
-      setTimeout(runFixed, 2600);
+      later(runFixed, 2600);
     }
     function fixPhase() {
       const round = rounds[r];
@@ -833,7 +833,7 @@
         k++;
         draw(steps.slice(0, k).map((s) => s.id), -1);
         if (k <= steps.length) { SOUND.play("pop", 0.3); $(el.fb).className = "fb good"; $(el.fb).textContent = "Step " + k + ": " + steps[k - 1].label + "."; }
-        if (k < steps.length) setTimeout(tick, 900);
+        if (k < steps.length) later(tick, 900);
         else {
           $(el.fb).textContent = rounds[r].done || "It works. " + rounds[r].goal + ".";
           say($(el.fb).textContent);
@@ -844,7 +844,7 @@
           }, 2400);
         }
       };
-      setTimeout(tick, 600);
+      later(tick, 600);
     }
     $(el.stage).addEventListener("click", (e) => {
       const b = e.target.closest(".algostep"); if (!b || lock || phase !== "find") return;
@@ -854,7 +854,7 @@
         b.classList.add("bug"); SOUND.play("ding", 0.4);
         const line = cheer() + " " + (round.why || "That step is the bug.");
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
-        setTimeout(round.fix ? fixPhase : autoSwap, 2600);
+        later(round.fix ? fixPhase : autoSwap, 2600);
       } else {
         missed = true; b.classList.add("wrong"); SOUND.play("error", 0.3);
         const line = "That step is fine: " + steps[k].label + ". Look for the one that does not belong, or is in the wrong place.";
@@ -953,7 +953,7 @@
       if (ok) {
         lock = true; if (!missed) score++;
         $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
-        setTimeout(() => applied(round, round.opts.find((c) => c.id === b.dataset.id)), 900);
+        later(() => applied(round, round.opts.find((c) => c.id === b.dataset.id)), 900);
       } else {
         missed = true; b.classList.add("wrong"); b.disabled = true; SOUND.play("error", 0.3);
         const line = "That would make something else. Try again.";
@@ -1058,9 +1058,9 @@
         draw(k);
         if (bumped) { $(el.fb).className = "fb bad"; $(el.fb).textContent = "Bump! Robo cannot go " + (bumped === "wall" ? "through the wall." : "off the edge."); }
         k++;
-        setTimeout(step, 560);
+        later(step, 560);
       };
-      setTimeout(step, 400);
+      later(step, 400);
     }
     function finished() {
       const lv = level();
@@ -1193,6 +1193,14 @@
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
       setTimeout(step, 300);
     }
+    /* finished() fires at the end of a Promise chain (sprite.run().then(...))
+       driven by the child's own Run tap, not by a fixed-delay timer - a
+       multi-step program can take several seconds to play out, long enough
+       for the child to move to another step before it resolves. later()
+       protects only the FIRST setTimeout that starts the chain, not every
+       leg of it, so the guard belongs here instead: sayHere() reads cur at
+       the moment finished() actually runs, whichever step that turns out
+       to be. */
     function finished() {
       const rd = round();
       running = false; draw(-1);
@@ -1200,7 +1208,7 @@
       if (rd.given) {
         const line = (predicted.ok ? cheer() + " You predicted it. " : "Look what it did. ") + "The program made the " + who() + " " + runWords(did) + ". " + rd.predict.why;
         if (predicted.ok) score++;
-        $(el.fb).className = "fb " + (predicted.ok ? "good" : "bad"); $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb " + (predicted.ok ? "good" : "bad"); $(el.fb).textContent = line; sayHere(o.finish, line);
         setTimeout(next, 3400);
         return;
       }
@@ -1210,26 +1218,26 @@
         /* 3P.02: without the reset the moves may be right and the place wrong */
         firstRun = false; SOUND.play("error", 0.3);
         const line = "The " + who() + " started where the last program left it, so it ended in the wrong place. A program that resets its objects first - a go home block at the top - starts from the same place every time. Put go home first and run again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
         return;
       }
       if (same && rd.mustRepeat && !usesRepeat(script)) {
         firstRun = false; SOUND.play("click", 0.3);
         const line = "It did the right thing, but the algorithm asked you to use a repeat block. Build it again with a repeat block.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
         return;
       }
       if (same) {
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
         const line = cheer() + " Your program did exactly what the algorithm said: " + runWords(did) + "." + (usesRepeat(script) ? " The repeat block did the repeating for you." : "");
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         setTimeout(next, 3200);
       } else {
         firstRun = false; SOUND.play("error", 0.3);
         const line = "Your program made the " + who() + " " + runWords(did) + ". The algorithm says " + rd.algorithm.join(", ").toLowerCase() + ". Change the blocks and run it again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       }
     }
     function next() {
@@ -1309,7 +1317,7 @@
       if (!left.length) {
         SOUND.play("tada", 0.5); phase = "done"; draw(-1);
         const line = cheer() + " Debugged! The program does what we wanted: " + runWords(expandProgram(program)) + ".";
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         r++;
         setTimeout(() => {
           if (r >= rounds.length) { reportScore(o.finish, score, rounds.reduce((n, x) => n + bugsOf(x).length * 2, 0)); endStep(o, "You debugged " + rounds.length + " programs. " + o.done); }
@@ -1324,7 +1332,7 @@
       phase = "find"; lock = false; missed = false; draw(-1); SOUND.play("error", 0.3);
       $(el.ask).innerHTML = (fixedSome ? "Better, but still not right. " : "That is not what we wanted. ") + "It did: <b>" + esc(runWords(expandProgram(program))) + "</b>. Which block is " + (fixedSome ? "the other bug" : "the bug") + "? Tap it.";
       const line = (fixedSome ? "Better, but still not right. " : "That is not what we wanted. ") + "The program made it " + runWords(expandProgram(program)) + ". Which block is " + (fixedSome ? "the other bug" : "the bug") + "? Tap it.";
-      $(el.fb).className = "fb bad"; $(el.fb).textContent = fixedSome ? "One bug fixed. There is another." : "Something is wrong."; say(line);
+      $(el.fb).className = "fb bad"; $(el.fb).textContent = fixedSome ? "One bug fixed. There is another." : "Something is wrong."; sayHere(o.finish, line);
     }
     function fixPhase() {
       const rd = round(), fx = fixOf(rd, bugNow);
@@ -1492,7 +1500,7 @@
       const b = e.target.closest("[data-way]"); if (!b || lock) return;
       lock = true; SOUND.play("whoosh", 0.4);
       const w = o.ways.find((x) => x.id === b.dataset.way);
-      setTimeout(() => {
+      later(() => {
         tried.add(w.id); SOUND.play("ding", 0.4); lock = false; draw(w.id);
         const line = "Sorted " + w.label + ". " + (w.say || "");
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
@@ -1561,7 +1569,7 @@
       reportAttempt(o.finish, linked.size, devs.length - 1, "devices");
       draw();
       if (linked.size >= devs.length - 1) {
-        setTimeout(() => {
+        later(() => {
           phase = "send"; draw();
           const l2 = "Every device is connected. That is a network. Now send something across it.";
           $(el.fb).className = "fb good"; $(el.fb).textContent = l2; say(l2);
@@ -1590,7 +1598,7 @@
         sending = [hops[h][0], hops[h][1], t.pic]; draw(); SOUND.play("send", 0.3);
         h++;
         if (h < hops.length) setTimeout(hop, 650);
-        else setTimeout(() => {
+        else later(() => {
           sending = null; draw(); SOUND.play("ding", 0.4);
           const line = t.say || (t.what + " went from the " + a.label + ", through the router, to the " + b.label + ".");
           $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
@@ -1802,13 +1810,13 @@
     },
     call: (box, api) => {
       box.innerHTML = '<div class="canvas call"><span class="cpic" aria-hidden="true">\u{1F475}\u{1F3FE}</span><b>Grandma</b><p class="pbubble" id="' + api.id + 'cb" hidden></p></div><div class="bigbtns"><button type="button" class="big small teal" id="' + api.id + 'ring">\u{1F4DE} Call</button></div>';
-      $(api.id + "ring").addEventListener("click", () => { SOUND.play("ring", 0.4); setTimeout(() => { const b = $(api.id + "cb"); if (b) { b.hidden = false; b.textContent = "Hello! How was school today?"; say("Hello! How was school today?"); } }, 1200); });
+      $(api.id + "ring").addEventListener("click", () => { SOUND.play("ring", 0.4); later(() => { const b = $(api.id + "cb"); if (b) { b.hidden = false; b.textContent = "Hello! How was school today?"; say("Hello! How was school today?"); } }, 1200); });
     },
     search: (box, api) => {
       box.innerHTML = '<div class="searchbox"><span class="q" id="' + api.id + 'q">|</span><button type="button" class="big small teal" id="' + api.id + 'go">Search lions</button></div><div class="result" id="' + api.id + 'res" hidden><b>\u{1F981} Lions</b><p>Lions live in Africa and India. A lion\'s roar can be heard five miles away.</p></div>';
       $(api.id + "go").addEventListener("click", () => {
         const q = $(api.id + "q"); let text = "", k = 0;
-        const t = setInterval(() => { text += "lions"[k]; q.textContent = text + "|"; SOUND.play("type", 0.4); k++; if (k >= 5) { clearInterval(t); setTimeout(() => { $(api.id + "res").hidden = false; SOUND.play("ding", 0.4); say("Lions live in Africa and India."); }, 500); } }, 150);
+        const t = setInterval(() => { text += "lions"[k]; q.textContent = text + "|"; SOUND.play("type", 0.4); k++; if (k >= 5) { clearInterval(t); later(() => { $(api.id + "res").hidden = false; SOUND.play("ding", 0.4); say("Lions live in Africa and India."); }, 500); } }, 150);
       });
     },
   };
@@ -2181,7 +2189,7 @@
         }
         counts[people[p].answer]++; drawCollect(true); SOUND.play("send", 0.25);
         p++;
-        setTimeout(tick, 900);
+        later(tick, 900);
       };
       $(el.ask).innerHTML = "Everyone answers on the form. Watch the table count.";
       tick();
@@ -2335,7 +2343,7 @@
         if (cut.size >= wasteful.length) {
           lock = true; draw();
           const kept = steps.filter((_, j) => !cut.has(j)).map((x) => x.id);
-          setTimeout(() => {
+          later(() => {
             $(el.fb).className = "fb"; $(el.fb).textContent = "Now watch the short algorithm do the whole task.";
             say("Now watch the short algorithm do the whole task.");
             paintScene($(el.stage + "sc"), o.scene, kept, 560, () => {
@@ -2387,7 +2395,7 @@
         $(el.fb).className = "fb good"; $(el.fb).textContent = steps[k].label + " happens " + run.times + " times."; say(steps[k].label + " happens " + run.times + " times.");
         if (got.size >= first.size) {
           lock = true;
-          setTimeout(() => {
+          later(() => {
             folded = true; draw(); SOUND.play("tada", 0.5);
             const words = steps.slice(run.start, run.start + run.length).map((s) => s.label).join(", ");
             const line = "Those steps repeat " + run.times + " times, so we can write them once: repeat " + run.times + " times, " + words + ".";
@@ -2522,7 +2530,7 @@
         let j = 0;
         const step = () => {
           draw(j, x, j >= rd.steps.length ? out : null);
-          if (j < rd.steps.length) { SOUND.play("click", 0.3); j++; setTimeout(step, 520); }
+          if (j < rd.steps.length) { SOUND.play("click", 0.3); j++; later(step, 520); }
           else {
             SOUND.play("ding", 0.4); tried.add(String(x)); lock = false; draw(rd.steps.length, x, out);
             const line = "Input " + x + ". Output " + out + ".";
@@ -2599,6 +2607,9 @@
       };
       setTimeout(step, 300);
     }
+    /* finished() fires at the end of a Promise chain (sprite.run().then(...)),
+       so a fixed-step setTimeout guard cannot cover every leg of it - see the
+       identical note on blockProgram's finished(). Gated here instead. */
     function finished() {
       const rd = round();
       running = false; draw(-1);
@@ -2607,7 +2618,7 @@
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
         const line = cheer() + " " + rd.program.length + " blocks became " + script.length + ", and the cat did exactly the same thing: " + runWords(expandProgram(script).filter((x) => x !== "wait")) + ".";
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         r++;
         setTimeout(() => {
@@ -2617,11 +2628,11 @@
       } else if (same) {
         firstRun = false; SOUND.play("click", 0.3);
         const line = "It still does the same thing, but " + script.length + " blocks can be fewer. It can be done in " + rd.expect.length + ". Look for a block that does nothing, or a run of the same block.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       } else {
         firstRun = false; SOUND.play("error", 0.3);
         const line = "Now it does something different: " + runWords(expandProgram(script).filter((x) => x !== "wait")) + ". A tidy program must do the SAME thing. Press Start again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       }
     }
     $(el.stage).addEventListener("click", (e) => {
@@ -2695,7 +2706,7 @@
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
         const line = cheer() + " " + sprites.map((_, k) => "The " + names[k] + " " + (expandProgram(scripts[k]).length ? runWords(expandProgram(scripts[k])) : "stayed still")).join(", while ") + " - all at the same time.";
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         r++;
         setTimeout(() => {
@@ -2706,7 +2717,7 @@
         firstRun = false; SOUND.play("error", 0.3);
         const bad = sprites.map((_, k) => k).filter((k) => !ok[k]);
         const line = "Not yet. " + bad.map((k) => "The " + names[k] + "'s algorithm says " + rd.scripts[k].algorithm.join(", ").toLowerCase() + (scripts[k].length ? ", but its program made it " + runWords(expandProgram(scripts[k])) : ", but it has no program")).join(". ") + ". Fix it and run again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       }
     }
     $(el.stage).addEventListener("click", (e) => {
@@ -2769,7 +2780,7 @@
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
         const line = cheer() + " The cat stopped right on the flower, " + rd.target + " squares along. Changing a number inside a block changed what the program did.";
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         r++;
         setTimeout(() => {
@@ -2779,7 +2790,7 @@
       } else {
         firstRun = false; SOUND.play("error", 0.3);
         const line = "The cat stopped " + end + " squares along. The flower is at " + rd.target + ". " + (end < rd.target ? "It needs to go further: make a number bigger." : "It went too far: make a number smaller.") + " Then run again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       }
     }
     $(el.stage).addEventListener("click", (e) => {
@@ -2887,9 +2898,9 @@
         }
         const idx = plan[k][0], id = plan[k][1];
         doOne(id); draw(idx); k++;
-        setTimeout(step, 800);
+        later(step, 800);
       };
-      SOUND.play("click", 0.3); setTimeout(step, 400);
+      SOUND.play("click", 0.3); later(step, 400);
     }
     function finished(cycles) {
       const rd = round();
@@ -3827,8 +3838,11 @@
           const ok = moves.length === want.length && moves.every((m, j) => m === want[j]);
           tested[id] = ok; draw(-1);
           const lab = inputs.find((x) => x.id === id).label;
-          if (ok) { $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + lab + ": the cat did " + runWords(moves) + ", as the algorithm said."; say($(el.fb).textContent); }
-          else { firstRun = false; $(el.fb).className = "fb bad"; $(el.fb).textContent = lab + ": the cat did " + runWords(moves) + ", but the algorithm says " + rd.scripts[id].algorithm.join(", ").toLowerCase() + ". Change that script and press " + lab + " again."; say($(el.fb).textContent); SOUND.play("error", 0.3); }
+          /* this branch fires at the end of a Promise chain (sprite.run().then(...)),
+             so a fixed-step setTimeout guard cannot cover every leg of it - see the
+             identical note on blockProgram's finished(). Gated here instead. */
+          if (ok) { $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + lab + ": the cat did " + runWords(moves) + ", as the algorithm said."; sayHere(o.finish, $(el.fb).textContent); }
+          else { firstRun = false; $(el.fb).className = "fb bad"; $(el.fb).textContent = lab + ": the cat did " + runWords(moves) + ", but the algorithm says " + rd.scripts[id].algorithm.join(", ").toLowerCase() + ". Change that script and press " + lab + " again."; sayHere(o.finish, $(el.fb).textContent); SOUND.play("error", 0.3); }
           if (inputs.every((x) => tested[x.id] === true)) {
             if (firstRun) score++; SOUND.play("tada", 0.5);
             $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
@@ -3912,13 +3926,16 @@
       const owner = []; for (let i = 0, m = 0; i < p.program.length; i++) { const n = REPEAT[p.program[i]]; if (n) { const next = p.program[i + 1]; if (next && !REPEAT[next]) { for (let j = 0; j < n; j++) owner[m++] = i; i++; } } else owner[m++] = i; }
       let i = 0;
       const step = () => {
+        /* this branch fires at the end of a Promise chain (sprite.run().then(...)),
+           so a fixed-step setTimeout guard cannot cover every leg of it - see the
+           identical note on blockProgram's finished(). Gated here instead. */
         if (i >= moves.length) {
           running = false;
           const want = expandProgram(p.expect), ok = moves.length === want.length && moves.every((m, j) => m === want[j]);
           status[pi] = ok;
           if (ok) {
             SOUND.play("ding", 0.4); draw(null);
-            $(el.fb).className = "fb good"; $(el.fb).textContent = p.name + " works: " + runWords(moves) + "."; say($(el.fb).textContent);
+            $(el.fb).className = "fb good"; $(el.fb).textContent = p.name + " works: " + runWords(moves) + "."; sayHere(o.finish, $(el.fb).textContent);
             if (status.every((s) => s === true)) {
               SOUND.play("tada", 0.5); score++;
               $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
@@ -3928,7 +3945,7 @@
           } else {
             SOUND.play("error", 0.3); phase = "find"; bugPart = pi; draw(null);
             const line = p.name + " goes wrong: it did " + runWords(moves) + ", but it should " + p.wants.toLowerCase() + ". The bug is in this part. Tap the wrong block.";
-            $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+            $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
           }
           return;
         }
@@ -4357,7 +4374,7 @@
         overlay.querySelector(".book-close").addEventListener("click", close);
         overlay.querySelector("#gameQuit").addEventListener("click", close);
       }
-      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
+      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); later(drawRound, 1000); }
       function endGame() {
         played.add(game.id);
         reportScore(o.finish, right, game.rounds.length, game.id, game.title);

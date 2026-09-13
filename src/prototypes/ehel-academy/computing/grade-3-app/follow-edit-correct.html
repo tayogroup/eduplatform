@@ -3829,7 +3829,6 @@
        bills per character. Same cap and same eviction as the app's. */
     const cache = new Map();
     const pending = new Map();
-    let chain = Promise.resolve();
     let playing = false;
 
     function ready() { return !!(ENDPOINT && el); }
@@ -3867,37 +3866,50 @@
       return request;
     }
 
+    /* Every clip belongs to the TURN it was asked for in, and stop() starts a
+       new turn. A clip still downloading when the lesson moves on is never
+       played, and one whose play() is still pending when stop() pauses it
+       does not report a failure. Both used to happen (measured 2026-09-13):
+       the late clip for a step the child had already left played over the
+       step they were on, and pausing a clip that had not quite started
+       rejected with AbortError, which the voice below read as "the endpoint
+       is down" and answered by reading the OLD line in the browser's voice
+       over the NEW clip. Queueing lines is the voice's job now, not this. */
+    let turn = 0;
+    const STOPPED = new Error("Stopped: the lesson moved on.");
+
     function stop() {
-      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
-      chain = Promise.resolve();
+      turn += 1;
+      try { el.onended = el.onerror = null; el.pause(); el.removeAttribute("src"); } catch (e) {}
       playing = false;
     }
 
-    function play(text, replace) {
+    /* One whole clip: resolves when it ends, rejects if it cannot be fetched
+       or played, rejects with STOPPED if stop() came first. */
+    function play(text) {
       if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
-      if (replace) stop();
-      const step = function () {
-        return clipUrl(text).then(function (src) {
-          return new Promise(function (done, fail) {
-            playing = true;
-            el.onended = function () { playing = false; done(); };
-            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
-            el.src = src;
-            const started = el.play();
-            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+      const mine = turn;
+      return clipUrl(text).then(function (src) {
+        if (mine !== turn) throw STOPPED;
+        return new Promise(function (done, fail) {
+          playing = true;
+          el.onended = function () { playing = false; done(); };
+          el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+          el.src = src;
+          const started = el.play();
+          if (started && started.catch) started.catch(function (e) {
+            if (mine !== turn) { fail(STOPPED); return; }
+            playing = false; fail(e);
           });
         });
-      };
-      /* a failed clip must not wedge everything queued behind it */
-      const run = chain.then(step, step);
-      chain = run.catch(function () {});
-      return run;
+      });
     }
 
     return {
       ready: ready,
       play: play,
       stop: stop,
+      stopped: function (e) { return e === STOPPED; },
       busy: function () { return playing; },
       endpoint: function () { return ENDPOINT; }
     };
@@ -4084,7 +4096,22 @@
     }
 
     /* ---- playing it ---- */
+    /* ONE voice at a time, one LINE at a time. `lines` holds what is waiting.
+       A line is read by the platform clip, or - only when that clip genuinely
+       fails - by the browser's voice, and the next line waits for whichever of
+       the two is reading it. stop() empties the queue and starts a new turn;
+       every callback carries the turn it began in, so nothing started before
+       a stop can sound after it.
+
+       What this replaced, measured in a browser on 2026-09-13. Cancelling the
+       browser voice fires "interrupted" on the old utterance a tick LATER; its
+       onerror ran next() against the queue the new line had just installed,
+       and the browser voice began reading the new line on top of the clip for
+       the same line - after which every tap read each line twice, once in
+       each voice. And a failed clip let the reaction queued behind it start
+       at once, over the browser voice still reading the line that failed. */
     let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    let lines = [], reading = false, turn = 0, lineDone = null, hushed = false;
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
     function mark(on) {
       speaking = on;
@@ -4112,76 +4139,113 @@
       return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
     }
 
-    /* The endpoint first, the browser's own voice if it refuses. A lesson that
-       goes quiet because a server was down is worse than one read by whatever
-       voice the device has. */
-    function viaPlatform(segs, replace) {
+    /* Wehel reads its replies aloud as well, and this page wires the tutor's
+       stop in as window.__ehelTutorQuiet. A line the lesson starts is what the
+       child has just asked for, so the tutor stops for it. */
+    function hushTutor() {
+      if (typeof window.__ehelTutorQuiet !== "function") return;
+      try { window.__ehelTutorQuiet(); } catch (e) {}
+    }
+
+    function pump() {
+      if (reading) return;
+      const segs = lines.shift();
+      if (!segs) { mark(false); return; }
+      reading = true;
+      const mine = turn;
+      const finished = function () {
+        if (mine !== turn) return;
+        reading = false;
+        pump();
+      };
+      const inBrowser = function () {
+        if (!SUPPORTED) { finished(); return; }
+        queue = segs; at = 0; lineDone = finished;
+        next(mine);
+      };
+      if (!PLATFORM_VOICE.ready()) { inBrowser(); return; }
+      /* The endpoint first, the browser's own voice if it refuses. A lesson that
+         goes quiet because a server was down is worse than one read by whatever
+         voice the device has. A clip stopped on purpose has not refused. */
       const line = spoken(segs);
-      if (!line) { mark(false); return; }
-      PLATFORM_VOICE.play(line, replace).then(function () {
-        if (!PLATFORM_VOICE.busy()) mark(false);
-      }, function () {
-        if (!SUPPORTED) { mark(false); return; }
-        queue = segs; at = 0; next();
+      if (!line) { finished(); return; }
+      PLATFORM_VOICE.play(line).then(finished, function (e) {
+        if (mine !== turn || PLATFORM_VOICE.stopped(e)) return;
+        inBrowser();
       });
     }
 
     function stop() {
+      turn += 1;
       clearTimeout(timer); timer = null; queue = []; at = 0;
+      lines = []; reading = false; lineDone = null;
       try { window.speechSynthesis.cancel(); } catch (e) {}
       PLATFORM_VOICE.stop();
       mark(false);
     }
-    function next() {
-      if (at >= queue.length) { mark(false); return; }
+    function next(mine) {
+      if (mine !== turn) return;
+      if (at >= queue.length) {
+        const then = lineDone;
+        queue = []; at = 0; lineDone = null;
+        if (then) then();
+        return;
+      }
       const seg = queue[at++];
-      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      if (seg.pause != null) { timer = setTimeout(function () { next(mine); }, seg.pause); return; }
       const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
-      if (!words) { next(); return; }
+      if (!words) { next(mine); return; }
       let u;
-      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { at = queue.length; next(mine); return; }
       if (voice) u.voice = voice;
       u.lang = (voice && voice.lang) || "en-GB";
       u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
       u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
-      u.onend = next;
-      u.onerror = next;
-      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+      /* one step per utterance, and only in the turn it belongs to: an engine
+         may report both error and end, and a cancelled one reports after the
+         next line already owns the queue */
+      let moved = false;
+      const onward = function () { if (moved) return; moved = true; next(mine); };
+      u.onend = onward;
+      u.onerror = onward;
+      try { window.speechSynthesis.speak(u); } catch (e) { onward(); }
     }
     function speak(x) {
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
       stop();
-      queue = flatten(ssml);
-      remember(queue);
-      at = 0;
-      if (!queue.length) return;
+      const segs = flatten(ssml);
+      remember(segs);
+      if (!segs.length) return;
+      hushTutor();
+      lines.push(segs);
       mark(true);
-      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
-      next();
+      pump();
     }
     /* queue rather than interrupt: a reaction should not cut off a sentence
-       the child is still listening to, unless that sentence is the old one */
+       the child is still listening to, unless that sentence is the old one.
+       A reaction is one of HER lines, so the voice toggle silences it. */
     function follow(x) {
+      if (hushed) return;
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
-      if (PLATFORM_VOICE.ready()) {
-        /* the endpoint plays whole clips, so a follow-up is the next clip in
-           the chain rather than more segments spliced into this one */
-        const segs = flatten(ssml);
-        remember(segs);
-        if (!speaking) mark(true);
-        viaPlatform(segs, false);
-        return;
-      }
-      if (!speaking) return speak(ssml);
-      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
-      remember(queue);
-      at = 0;
+      const segs = flatten(ssml);
+      remember(segs);
+      if (!segs.length) return;
+      if (reading || lines.length) lines.push([{ pause: 250 }].concat(segs));
+      else { hushTutor(); lines.push(segs); }
+      mark(true);
+      pump();
+    }
+    /* The voice toggle. Off stops her mid-line and keeps her reactions quiet;
+       Explain, which a child presses on purpose, still speaks. */
+    function hush(on) {
+      hushed = !!on;
+      if (hushed) stop();
     }
 
 
@@ -4198,7 +4262,7 @@
       return recent.join(' | ').indexOf(n) >= 0;
     }
     return {
-      speak: speak, follow: follow, stop: stop,
+      speak: speak, follow: follow, stop: stop, hush: hush,
       supported: SUPPORTED,
       voiceName: () => (voice ? voice.name : null),
       isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
@@ -4210,7 +4274,14 @@
     };
   })();
 
-  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  /* Every call site in this lesson already says say(...). It now goes to Sonia.
+
+     QUIET while the page first draws. Each activity builds its first round at
+     load and every round asks its question aloud: lines for steps the child
+     has not reached, each a request to the paid voice endpoint and each
+     cutting off the last, with the late ones read over step 1. The count
+     drops to 0 after show(0, false), the script's last line; later() raises
+     it while a round runs for a step the child has already left. */
   /* Silent while the deck paints -- see window.__ehelPainting in
      build-lessons.py. Every call site in this lesson goes through say(), so
      this is the one place the draw pass can be silenced without touching a
@@ -4557,7 +4628,18 @@
   const $ = (id) => document.getElementById(id);
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+  /* One cheer per answer. The line on screen and the line spoken each called
+     cheer(), so a child could read "Super!" and hear "Brilliant!". The word is
+     kept until the task that picked it has finished, so every call made for
+     one answer agrees and the next answer picks again. */
+  let cheered = "";
+  const cheer = () => {
+    if (!cheered) {
+      cheered = ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+      setTimeout(() => { cheered = ""; }, 0);
+    }
+    return cheered;
+  };
   const plain = (html) => String(html).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 
 
@@ -4620,6 +4702,22 @@
      on the step the child actually finished; only the voice asks whether that
      step is still the one showing, the way playHere() already does for clips. */
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg && cur === i) say(msg); }
+  /* The same problem finish() was fixed for above, generalised: a round or
+     sim step started on a timer belongs to the step it was set on. If the
+     child has moved on by the time it fires, it still runs - the sim still
+     advances, the next question still draws - but it does not SAY anything
+     about a step the child is not looking at. Reuses window.__ehelPainting,
+     the same flag say() already checks for the draw pass, since a stale
+     timer firing is exactly that: work happening off-screen, not a thing to
+     read aloud. */
+  function later(fn, ms) {
+    const step = cur;
+    setTimeout(function () {
+      if (cur === step) { fn(); return; }
+      window.__ehelPainting = true;
+      try { fn(); } finally { window.__ehelPainting = false; }
+    }, ms);
+  }
 
   /* Hand a score to the progress client, if this page has one.
      NAMING THE PIPELINE TOOL HERE BREAKS THE BUILD, which is why this comment
@@ -4801,7 +4899,7 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + spec.why;
       say((ok ? cheer() + " " : "") + spec.why);
       $(el.ch).removeEventListener("click", handler);
-      setTimeout(() => onDone(ok), 2600);
+      later(() => onDone(ok), 2600);
     };
     $(el.ch).addEventListener("click", handler);
   }
@@ -5306,7 +5404,7 @@
       $(el.score).textContent = heard.size + " of " + need + " heard";
       if (heard.size >= need) {
         reportAttempt(o.finish, heard.size, o.items.length, "things");
-        if (o.then) setTimeout(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
+        if (o.then) later(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
       }
     });
     $(el.ch).addEventListener("click", (e) => {
@@ -5531,7 +5629,7 @@
       SOUND.play("pop", 0.4);
       const line = "Moved. " + steps[k + 1].label + " now comes after " + steps[k].label.toLowerCase() + ".";
       $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
-      setTimeout(runFixed, 2600);
+      later(runFixed, 2600);
     }
     function fixPhase() {
       const round = rounds[r];
@@ -5551,7 +5649,7 @@
         k++;
         draw(steps.slice(0, k).map((s) => s.id), -1);
         if (k <= steps.length) { SOUND.play("pop", 0.3); $(el.fb).className = "fb good"; $(el.fb).textContent = "Step " + k + ": " + steps[k - 1].label + "."; }
-        if (k < steps.length) setTimeout(tick, 900);
+        if (k < steps.length) later(tick, 900);
         else {
           $(el.fb).textContent = rounds[r].done || "It works. " + rounds[r].goal + ".";
           say($(el.fb).textContent);
@@ -5562,7 +5660,7 @@
           }, 2400);
         }
       };
-      setTimeout(tick, 600);
+      later(tick, 600);
     }
     $(el.stage).addEventListener("click", (e) => {
       const b = e.target.closest(".algostep"); if (!b || lock || phase !== "find") return;
@@ -5572,7 +5670,7 @@
         b.classList.add("bug"); SOUND.play("ding", 0.4);
         const line = cheer() + " " + (round.why || "That step is the bug.");
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
-        setTimeout(round.fix ? fixPhase : autoSwap, 2600);
+        later(round.fix ? fixPhase : autoSwap, 2600);
       } else {
         missed = true; b.classList.add("wrong"); SOUND.play("error", 0.3);
         const line = "That step is fine: " + steps[k].label + ". Look for the one that does not belong, or is in the wrong place.";
@@ -5671,7 +5769,7 @@
       if (ok) {
         lock = true; if (!missed) score++;
         $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
-        setTimeout(() => applied(round, round.opts.find((c) => c.id === b.dataset.id)), 900);
+        later(() => applied(round, round.opts.find((c) => c.id === b.dataset.id)), 900);
       } else {
         missed = true; b.classList.add("wrong"); b.disabled = true; SOUND.play("error", 0.3);
         const line = "That would make something else. Try again.";
@@ -5776,9 +5874,9 @@
         draw(k);
         if (bumped) { $(el.fb).className = "fb bad"; $(el.fb).textContent = "Bump! Robo cannot go " + (bumped === "wall" ? "through the wall." : "off the edge."); }
         k++;
-        setTimeout(step, 560);
+        later(step, 560);
       };
-      setTimeout(step, 400);
+      later(step, 400);
     }
     function finished() {
       const lv = level();
@@ -5911,6 +6009,14 @@
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
       setTimeout(step, 300);
     }
+    /* finished() fires at the end of a Promise chain (sprite.run().then(...))
+       driven by the child's own Run tap, not by a fixed-delay timer - a
+       multi-step program can take several seconds to play out, long enough
+       for the child to move to another step before it resolves. later()
+       protects only the FIRST setTimeout that starts the chain, not every
+       leg of it, so the guard belongs here instead: sayHere() reads cur at
+       the moment finished() actually runs, whichever step that turns out
+       to be. */
     function finished() {
       const rd = round();
       running = false; draw(-1);
@@ -5918,7 +6024,7 @@
       if (rd.given) {
         const line = (predicted.ok ? cheer() + " You predicted it. " : "Look what it did. ") + "The program made the " + who() + " " + runWords(did) + ". " + rd.predict.why;
         if (predicted.ok) score++;
-        $(el.fb).className = "fb " + (predicted.ok ? "good" : "bad"); $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb " + (predicted.ok ? "good" : "bad"); $(el.fb).textContent = line; sayHere(o.finish, line);
         setTimeout(next, 3400);
         return;
       }
@@ -5928,26 +6034,26 @@
         /* 3P.02: without the reset the moves may be right and the place wrong */
         firstRun = false; SOUND.play("error", 0.3);
         const line = "The " + who() + " started where the last program left it, so it ended in the wrong place. A program that resets its objects first - a go home block at the top - starts from the same place every time. Put go home first and run again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
         return;
       }
       if (same && rd.mustRepeat && !usesRepeat(script)) {
         firstRun = false; SOUND.play("click", 0.3);
         const line = "It did the right thing, but the algorithm asked you to use a repeat block. Build it again with a repeat block.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
         return;
       }
       if (same) {
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
         const line = cheer() + " Your program did exactly what the algorithm said: " + runWords(did) + "." + (usesRepeat(script) ? " The repeat block did the repeating for you." : "");
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         setTimeout(next, 3200);
       } else {
         firstRun = false; SOUND.play("error", 0.3);
         const line = "Your program made the " + who() + " " + runWords(did) + ". The algorithm says " + rd.algorithm.join(", ").toLowerCase() + ". Change the blocks and run it again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       }
     }
     function next() {
@@ -6027,7 +6133,7 @@
       if (!left.length) {
         SOUND.play("tada", 0.5); phase = "done"; draw(-1);
         const line = cheer() + " Debugged! The program does what we wanted: " + runWords(expandProgram(program)) + ".";
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         r++;
         setTimeout(() => {
           if (r >= rounds.length) { reportScore(o.finish, score, rounds.reduce((n, x) => n + bugsOf(x).length * 2, 0)); endStep(o, "You debugged " + rounds.length + " programs. " + o.done); }
@@ -6042,7 +6148,7 @@
       phase = "find"; lock = false; missed = false; draw(-1); SOUND.play("error", 0.3);
       $(el.ask).innerHTML = (fixedSome ? "Better, but still not right. " : "That is not what we wanted. ") + "It did: <b>" + esc(runWords(expandProgram(program))) + "</b>. Which block is " + (fixedSome ? "the other bug" : "the bug") + "? Tap it.";
       const line = (fixedSome ? "Better, but still not right. " : "That is not what we wanted. ") + "The program made it " + runWords(expandProgram(program)) + ". Which block is " + (fixedSome ? "the other bug" : "the bug") + "? Tap it.";
-      $(el.fb).className = "fb bad"; $(el.fb).textContent = fixedSome ? "One bug fixed. There is another." : "Something is wrong."; say(line);
+      $(el.fb).className = "fb bad"; $(el.fb).textContent = fixedSome ? "One bug fixed. There is another." : "Something is wrong."; sayHere(o.finish, line);
     }
     function fixPhase() {
       const rd = round(), fx = fixOf(rd, bugNow);
@@ -6210,7 +6316,7 @@
       const b = e.target.closest("[data-way]"); if (!b || lock) return;
       lock = true; SOUND.play("whoosh", 0.4);
       const w = o.ways.find((x) => x.id === b.dataset.way);
-      setTimeout(() => {
+      later(() => {
         tried.add(w.id); SOUND.play("ding", 0.4); lock = false; draw(w.id);
         const line = "Sorted " + w.label + ". " + (w.say || "");
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
@@ -6279,7 +6385,7 @@
       reportAttempt(o.finish, linked.size, devs.length - 1, "devices");
       draw();
       if (linked.size >= devs.length - 1) {
-        setTimeout(() => {
+        later(() => {
           phase = "send"; draw();
           const l2 = "Every device is connected. That is a network. Now send something across it.";
           $(el.fb).className = "fb good"; $(el.fb).textContent = l2; say(l2);
@@ -6308,7 +6414,7 @@
         sending = [hops[h][0], hops[h][1], t.pic]; draw(); SOUND.play("send", 0.3);
         h++;
         if (h < hops.length) setTimeout(hop, 650);
-        else setTimeout(() => {
+        else later(() => {
           sending = null; draw(); SOUND.play("ding", 0.4);
           const line = t.say || (t.what + " went from the " + a.label + ", through the router, to the " + b.label + ".");
           $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
@@ -6520,13 +6626,13 @@
     },
     call: (box, api) => {
       box.innerHTML = '<div class="canvas call"><span class="cpic" aria-hidden="true">\u{1F475}\u{1F3FE}</span><b>Grandma</b><p class="pbubble" id="' + api.id + 'cb" hidden></p></div><div class="bigbtns"><button type="button" class="big small teal" id="' + api.id + 'ring">\u{1F4DE} Call</button></div>';
-      $(api.id + "ring").addEventListener("click", () => { SOUND.play("ring", 0.4); setTimeout(() => { const b = $(api.id + "cb"); if (b) { b.hidden = false; b.textContent = "Hello! How was school today?"; say("Hello! How was school today?"); } }, 1200); });
+      $(api.id + "ring").addEventListener("click", () => { SOUND.play("ring", 0.4); later(() => { const b = $(api.id + "cb"); if (b) { b.hidden = false; b.textContent = "Hello! How was school today?"; say("Hello! How was school today?"); } }, 1200); });
     },
     search: (box, api) => {
       box.innerHTML = '<div class="searchbox"><span class="q" id="' + api.id + 'q">|</span><button type="button" class="big small teal" id="' + api.id + 'go">Search lions</button></div><div class="result" id="' + api.id + 'res" hidden><b>\u{1F981} Lions</b><p>Lions live in Africa and India. A lion\'s roar can be heard five miles away.</p></div>';
       $(api.id + "go").addEventListener("click", () => {
         const q = $(api.id + "q"); let text = "", k = 0;
-        const t = setInterval(() => { text += "lions"[k]; q.textContent = text + "|"; SOUND.play("type", 0.4); k++; if (k >= 5) { clearInterval(t); setTimeout(() => { $(api.id + "res").hidden = false; SOUND.play("ding", 0.4); say("Lions live in Africa and India."); }, 500); } }, 150);
+        const t = setInterval(() => { text += "lions"[k]; q.textContent = text + "|"; SOUND.play("type", 0.4); k++; if (k >= 5) { clearInterval(t); later(() => { $(api.id + "res").hidden = false; SOUND.play("ding", 0.4); say("Lions live in Africa and India."); }, 500); } }, 150);
       });
     },
   };
@@ -6899,7 +7005,7 @@
         }
         counts[people[p].answer]++; drawCollect(true); SOUND.play("send", 0.25);
         p++;
-        setTimeout(tick, 900);
+        later(tick, 900);
       };
       $(el.ask).innerHTML = "Everyone answers on the form. Watch the table count.";
       tick();
@@ -7053,7 +7159,7 @@
         if (cut.size >= wasteful.length) {
           lock = true; draw();
           const kept = steps.filter((_, j) => !cut.has(j)).map((x) => x.id);
-          setTimeout(() => {
+          later(() => {
             $(el.fb).className = "fb"; $(el.fb).textContent = "Now watch the short algorithm do the whole task.";
             say("Now watch the short algorithm do the whole task.");
             paintScene($(el.stage + "sc"), o.scene, kept, 560, () => {
@@ -7105,7 +7211,7 @@
         $(el.fb).className = "fb good"; $(el.fb).textContent = steps[k].label + " happens " + run.times + " times."; say(steps[k].label + " happens " + run.times + " times.");
         if (got.size >= first.size) {
           lock = true;
-          setTimeout(() => {
+          later(() => {
             folded = true; draw(); SOUND.play("tada", 0.5);
             const words = steps.slice(run.start, run.start + run.length).map((s) => s.label).join(", ");
             const line = "Those steps repeat " + run.times + " times, so we can write them once: repeat " + run.times + " times, " + words + ".";
@@ -7240,7 +7346,7 @@
         let j = 0;
         const step = () => {
           draw(j, x, j >= rd.steps.length ? out : null);
-          if (j < rd.steps.length) { SOUND.play("click", 0.3); j++; setTimeout(step, 520); }
+          if (j < rd.steps.length) { SOUND.play("click", 0.3); j++; later(step, 520); }
           else {
             SOUND.play("ding", 0.4); tried.add(String(x)); lock = false; draw(rd.steps.length, x, out);
             const line = "Input " + x + ". Output " + out + ".";
@@ -7317,6 +7423,9 @@
       };
       setTimeout(step, 300);
     }
+    /* finished() fires at the end of a Promise chain (sprite.run().then(...)),
+       so a fixed-step setTimeout guard cannot cover every leg of it - see the
+       identical note on blockProgram's finished(). Gated here instead. */
     function finished() {
       const rd = round();
       running = false; draw(-1);
@@ -7325,7 +7434,7 @@
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
         const line = cheer() + " " + rd.program.length + " blocks became " + script.length + ", and the cat did exactly the same thing: " + runWords(expandProgram(script).filter((x) => x !== "wait")) + ".";
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         r++;
         setTimeout(() => {
@@ -7335,11 +7444,11 @@
       } else if (same) {
         firstRun = false; SOUND.play("click", 0.3);
         const line = "It still does the same thing, but " + script.length + " blocks can be fewer. It can be done in " + rd.expect.length + ". Look for a block that does nothing, or a run of the same block.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       } else {
         firstRun = false; SOUND.play("error", 0.3);
         const line = "Now it does something different: " + runWords(expandProgram(script).filter((x) => x !== "wait")) + ". A tidy program must do the SAME thing. Press Start again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       }
     }
     $(el.stage).addEventListener("click", (e) => {
@@ -7413,7 +7522,7 @@
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
         const line = cheer() + " " + sprites.map((_, k) => "The " + names[k] + " " + (expandProgram(scripts[k]).length ? runWords(expandProgram(scripts[k])) : "stayed still")).join(", while ") + " - all at the same time.";
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         r++;
         setTimeout(() => {
@@ -7424,7 +7533,7 @@
         firstRun = false; SOUND.play("error", 0.3);
         const bad = sprites.map((_, k) => k).filter((k) => !ok[k]);
         const line = "Not yet. " + bad.map((k) => "The " + names[k] + "'s algorithm says " + rd.scripts[k].algorithm.join(", ").toLowerCase() + (scripts[k].length ? ", but its program made it " + runWords(expandProgram(scripts[k])) : ", but it has no program")).join(". ") + ". Fix it and run again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       }
     }
     $(el.stage).addEventListener("click", (e) => {
@@ -7487,7 +7596,7 @@
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
         const line = cheer() + " The cat stopped right on the flower, " + rd.target + " squares along. Changing a number inside a block changed what the program did.";
-        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; sayHere(o.finish, line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         r++;
         setTimeout(() => {
@@ -7497,7 +7606,7 @@
       } else {
         firstRun = false; SOUND.play("error", 0.3);
         const line = "The cat stopped " + end + " squares along. The flower is at " + rd.target + ". " + (end < rd.target ? "It needs to go further: make a number bigger." : "It went too far: make a number smaller.") + " Then run again.";
-        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
       }
     }
     $(el.stage).addEventListener("click", (e) => {
@@ -7605,9 +7714,9 @@
         }
         const idx = plan[k][0], id = plan[k][1];
         doOne(id); draw(idx); k++;
-        setTimeout(step, 800);
+        later(step, 800);
       };
-      SOUND.play("click", 0.3); setTimeout(step, 400);
+      SOUND.play("click", 0.3); later(step, 400);
     }
     function finished(cycles) {
       const rd = round();
@@ -8545,8 +8654,11 @@
           const ok = moves.length === want.length && moves.every((m, j) => m === want[j]);
           tested[id] = ok; draw(-1);
           const lab = inputs.find((x) => x.id === id).label;
-          if (ok) { $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + lab + ": the cat did " + runWords(moves) + ", as the algorithm said."; say($(el.fb).textContent); }
-          else { firstRun = false; $(el.fb).className = "fb bad"; $(el.fb).textContent = lab + ": the cat did " + runWords(moves) + ", but the algorithm says " + rd.scripts[id].algorithm.join(", ").toLowerCase() + ". Change that script and press " + lab + " again."; say($(el.fb).textContent); SOUND.play("error", 0.3); }
+          /* this branch fires at the end of a Promise chain (sprite.run().then(...)),
+             so a fixed-step setTimeout guard cannot cover every leg of it - see the
+             identical note on blockProgram's finished(). Gated here instead. */
+          if (ok) { $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + lab + ": the cat did " + runWords(moves) + ", as the algorithm said."; sayHere(o.finish, $(el.fb).textContent); }
+          else { firstRun = false; $(el.fb).className = "fb bad"; $(el.fb).textContent = lab + ": the cat did " + runWords(moves) + ", but the algorithm says " + rd.scripts[id].algorithm.join(", ").toLowerCase() + ". Change that script and press " + lab + " again."; sayHere(o.finish, $(el.fb).textContent); SOUND.play("error", 0.3); }
           if (inputs.every((x) => tested[x.id] === true)) {
             if (firstRun) score++; SOUND.play("tada", 0.5);
             $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
@@ -8630,13 +8742,16 @@
       const owner = []; for (let i = 0, m = 0; i < p.program.length; i++) { const n = REPEAT[p.program[i]]; if (n) { const next = p.program[i + 1]; if (next && !REPEAT[next]) { for (let j = 0; j < n; j++) owner[m++] = i; i++; } } else owner[m++] = i; }
       let i = 0;
       const step = () => {
+        /* this branch fires at the end of a Promise chain (sprite.run().then(...)),
+           so a fixed-step setTimeout guard cannot cover every leg of it - see the
+           identical note on blockProgram's finished(). Gated here instead. */
         if (i >= moves.length) {
           running = false;
           const want = expandProgram(p.expect), ok = moves.length === want.length && moves.every((m, j) => m === want[j]);
           status[pi] = ok;
           if (ok) {
             SOUND.play("ding", 0.4); draw(null);
-            $(el.fb).className = "fb good"; $(el.fb).textContent = p.name + " works: " + runWords(moves) + "."; say($(el.fb).textContent);
+            $(el.fb).className = "fb good"; $(el.fb).textContent = p.name + " works: " + runWords(moves) + "."; sayHere(o.finish, $(el.fb).textContent);
             if (status.every((s) => s === true)) {
               SOUND.play("tada", 0.5); score++;
               $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
@@ -8646,7 +8761,7 @@
           } else {
             SOUND.play("error", 0.3); phase = "find"; bugPart = pi; draw(null);
             const line = p.name + " goes wrong: it did " + runWords(moves) + ", but it should " + p.wants.toLowerCase() + ". The bug is in this part. Tap the wrong block.";
-            $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+            $(el.fb).className = "fb bad"; $(el.fb).textContent = line; sayHere(o.finish, line);
           }
           return;
         }
@@ -9075,7 +9190,7 @@
         overlay.querySelector(".book-close").addEventListener("click", close);
         overlay.querySelector("#gameQuit").addEventListener("click", close);
       }
-      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
+      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); later(drawRound, 1000); }
       function endGame() {
         played.add(game.id);
         reportScore(o.finish, right, game.rounds.length, game.id, game.title);
@@ -9395,7 +9510,11 @@
     say = function (t) { if (!muted) realSay(t); };
     $("ehAudio").addEventListener("click", function () {
       muted = !muted;
-      if (muted && window.VOICE && VOICE.stop) VOICE.stop();
+      /* VOICE is this script's own const, never a property of window, so the
+         old `window.VOICE &&` guard was always false and switching the voice
+         off left her talking. hush() stops her, and keeps her reactions to
+         answers quiet until the voice is switched back on. */
+      if (typeof VOICE !== "undefined" && VOICE.hush) VOICE.hush(muted);
       $("ehAudio").setAttribute("aria-pressed", muted ? "true" : "false");
       $("ehAudio").title = muted ? "Turn the voice on" : "Turn the voice off";
     });
@@ -9691,7 +9810,7 @@
   /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
      learner-controls.js holds the SAME singletons the shell mounts. */
   import { mountLearnerControls } from "./learner-controls.js";
-  import { mountWehelChat } from "./wehel.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
   /* Focus mode and the session bar. Imported for its side effect - it mounts
      itself, and mounts NOTHING unless the launch carries focusMode=1 or an
@@ -9793,6 +9912,22 @@
     drawer.querySelector("button").addEventListener("click", close);
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
     document.body.append(dock, drawer);
+
+    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
+       aloud by default and knew nothing of the lesson's voice, so a reply
+       could play over a line the lesson was reading. The lesson stops the
+       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
+       when the tutor starts reading - which the drawer shows as a Stop
+       button, .voice-button.is-playing. Only the moment that button APPEARS
+       counts: the panel repaints often, and repainting a reply already being
+       read must not cut off a line the lesson has just begun. */
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
   }
 </script>
 <!-- WIRE-JS-END -->

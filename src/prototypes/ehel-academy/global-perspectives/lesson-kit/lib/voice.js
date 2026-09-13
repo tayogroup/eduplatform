@@ -83,7 +83,6 @@
        bills per character. Same cap and same eviction as the app's. */
     const cache = new Map();
     const pending = new Map();
-    let chain = Promise.resolve();
     let playing = false;
 
     function ready() { return !!(ENDPOINT && el); }
@@ -121,37 +120,50 @@
       return request;
     }
 
+    /* Every clip belongs to the TURN it was asked for in, and stop() starts a
+       new turn. A clip still downloading when the lesson moves on is never
+       played, and one whose play() is still pending when stop() pauses it
+       does not report a failure. Both used to happen (measured 2026-09-13):
+       the late clip for a step the child had already left played over the
+       step they were on, and pausing a clip that had not quite started
+       rejected with AbortError, which the voice below read as "the endpoint
+       is down" and answered by reading the OLD line in the browser's voice
+       over the NEW clip. Queueing lines is the voice's job now, not this. */
+    let turn = 0;
+    const STOPPED = new Error("Stopped: the lesson moved on.");
+
     function stop() {
-      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
-      chain = Promise.resolve();
+      turn += 1;
+      try { el.onended = el.onerror = null; el.pause(); el.removeAttribute("src"); } catch (e) {}
       playing = false;
     }
 
-    function play(text, replace) {
+    /* One whole clip: resolves when it ends, rejects if it cannot be fetched
+       or played, rejects with STOPPED if stop() came first. */
+    function play(text) {
       if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
-      if (replace) stop();
-      const step = function () {
-        return clipUrl(text).then(function (src) {
-          return new Promise(function (done, fail) {
-            playing = true;
-            el.onended = function () { playing = false; done(); };
-            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
-            el.src = src;
-            const started = el.play();
-            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+      const mine = turn;
+      return clipUrl(text).then(function (src) {
+        if (mine !== turn) throw STOPPED;
+        return new Promise(function (done, fail) {
+          playing = true;
+          el.onended = function () { playing = false; done(); };
+          el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+          el.src = src;
+          const started = el.play();
+          if (started && started.catch) started.catch(function (e) {
+            if (mine !== turn) { fail(STOPPED); return; }
+            playing = false; fail(e);
           });
         });
-      };
-      /* a failed clip must not wedge everything queued behind it */
-      const run = chain.then(step, step);
-      chain = run.catch(function () {});
-      return run;
+      });
     }
 
     return {
       ready: ready,
       play: play,
       stop: stop,
+      stopped: function (e) { return e === STOPPED; },
       busy: function () { return playing; },
       endpoint: function () { return ENDPOINT; }
     };
@@ -305,7 +317,22 @@
     }
 
     /* ---- playing it ---- */
+    /* ONE voice at a time, one LINE at a time. `lines` holds what is waiting.
+       A line is read by the platform clip, or - only when that clip genuinely
+       fails - by the browser's voice, and the next line waits for whichever of
+       the two is reading it. stop() empties the queue and starts a new turn;
+       every callback carries the turn it began in, so nothing started before
+       a stop can sound after it.
+
+       What this replaced, measured in a browser on 2026-09-13. Cancelling the
+       browser voice fires "interrupted" on the old utterance a tick LATER; its
+       onerror ran next() against the queue the new line had just installed,
+       and the browser voice began reading the new line on top of the clip for
+       the same line - after which every tap read each line twice, once in
+       each voice. And a failed clip let the reaction queued behind it start
+       at once, over the browser voice still reading the line that failed. */
     let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    let lines = [], reading = false, turn = 0, lineDone = null, hushed = false;
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
     function mark(on) {
       speaking = on;
@@ -333,76 +360,113 @@
       return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
     }
 
-    /* The endpoint first, the browser's own voice if it refuses. A lesson that
-       goes quiet because a server was down is worse than one read by whatever
-       voice the device has. */
-    function viaPlatform(segs, replace) {
+    /* Wehel reads its replies aloud as well, and this page wires the tutor's
+       stop in as window.__ehelTutorQuiet. A line the lesson starts is what the
+       child has just asked for, so the tutor stops for it. */
+    function hushTutor() {
+      if (typeof window.__ehelTutorQuiet !== "function") return;
+      try { window.__ehelTutorQuiet(); } catch (e) {}
+    }
+
+    function pump() {
+      if (reading) return;
+      const segs = lines.shift();
+      if (!segs) { mark(false); return; }
+      reading = true;
+      const mine = turn;
+      const finished = function () {
+        if (mine !== turn) return;
+        reading = false;
+        pump();
+      };
+      const inBrowser = function () {
+        if (!SUPPORTED) { finished(); return; }
+        queue = segs; at = 0; lineDone = finished;
+        next(mine);
+      };
+      if (!PLATFORM_VOICE.ready()) { inBrowser(); return; }
+      /* The endpoint first, the browser's own voice if it refuses. A lesson that
+         goes quiet because a server was down is worse than one read by whatever
+         voice the device has. A clip stopped on purpose has not refused. */
       const line = spoken(segs);
-      if (!line) { mark(false); return; }
-      PLATFORM_VOICE.play(line, replace).then(function () {
-        if (!PLATFORM_VOICE.busy()) mark(false);
-      }, function () {
-        if (!SUPPORTED) { mark(false); return; }
-        queue = segs; at = 0; next();
+      if (!line) { finished(); return; }
+      PLATFORM_VOICE.play(line).then(finished, function (e) {
+        if (mine !== turn || PLATFORM_VOICE.stopped(e)) return;
+        inBrowser();
       });
     }
 
     function stop() {
+      turn += 1;
       clearTimeout(timer); timer = null; queue = []; at = 0;
+      lines = []; reading = false; lineDone = null;
       try { window.speechSynthesis.cancel(); } catch (e) {}
       PLATFORM_VOICE.stop();
       mark(false);
     }
-    function next() {
-      if (at >= queue.length) { mark(false); return; }
+    function next(mine) {
+      if (mine !== turn) return;
+      if (at >= queue.length) {
+        const then = lineDone;
+        queue = []; at = 0; lineDone = null;
+        if (then) then();
+        return;
+      }
       const seg = queue[at++];
-      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      if (seg.pause != null) { timer = setTimeout(function () { next(mine); }, seg.pause); return; }
       const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
-      if (!words) { next(); return; }
+      if (!words) { next(mine); return; }
       let u;
-      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { at = queue.length; next(mine); return; }
       if (voice) u.voice = voice;
       u.lang = (voice && voice.lang) || "en-GB";
       u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
       u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
       /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
       u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
-      u.onend = next;
-      u.onerror = next;
-      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+      /* one step per utterance, and only in the turn it belongs to: an engine
+         may report both error and end, and a cancelled one reports after the
+         next line already owns the queue */
+      let moved = false;
+      const onward = function () { if (moved) return; moved = true; next(mine); };
+      u.onend = onward;
+      u.onerror = onward;
+      try { window.speechSynthesis.speak(u); } catch (e) { onward(); }
     }
     function speak(x) {
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
       stop();
-      queue = flatten(ssml);
-      remember(queue);
-      at = 0;
-      if (!queue.length) return;
+      const segs = flatten(ssml);
+      remember(segs);
+      if (!segs.length) return;
+      hushTutor();
+      lines.push(segs);
       mark(true);
-      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
-      next();
+      pump();
     }
     /* queue rather than interrupt: a reaction should not cut off a sentence
-       the child is still listening to, unless that sentence is the old one */
+       the child is still listening to, unless that sentence is the old one.
+       A reaction is one of HER lines, so the voice toggle silences it. */
     function follow(x) {
+      if (hushed) return;
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
-      if (PLATFORM_VOICE.ready()) {
-        /* the endpoint plays whole clips, so a follow-up is the next clip in
-           the chain rather than more segments spliced into this one */
-        const segs = flatten(ssml);
-        remember(segs);
-        if (!speaking) mark(true);
-        viaPlatform(segs, false);
-        return;
-      }
-      if (!speaking) return speak(ssml);
-      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
-      remember(queue);
-      at = 0;
+      const segs = flatten(ssml);
+      remember(segs);
+      if (!segs.length) return;
+      if (reading || lines.length) lines.push([{ pause: 250 }].concat(segs));
+      else { hushTutor(); lines.push(segs); }
+      mark(true);
+      pump();
+    }
+    /* The voice toggle. Off stops her mid-line and keeps her reactions quiet;
+       Explain, which a child presses on purpose, still speaks. */
+    function hush(on) {
+      hushed = !!on;
+      if (hushed) stop();
     }
 
 
@@ -419,7 +483,7 @@
       return recent.join(' | ').indexOf(n) >= 0;
     }
     return {
-      speak: speak, follow: follow, stop: stop,
+      speak: speak, follow: follow, stop: stop, hush: hush,
       supported: SUPPORTED,
       voiceName: () => (voice ? voice.name : null),
       isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),

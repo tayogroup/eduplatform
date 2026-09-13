@@ -322,7 +322,7 @@
       $(el.score).textContent = heard.size + " of " + need + " heard";
       if (heard.size >= need) {
         reportAttempt(o.finish, heard.size, o.items.length, "things");
-        if (o.then) setTimeout(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
+        if (o.then) later(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
       }
     });
     $(el.ch).addEventListener("click", (e) => {
@@ -619,6 +619,10 @@
       const person = people[p];
       if (chosen === person.answer) {
         lock = true; if (!missed) right++;
+        /* the pause before the next classmate is visible: until the next one
+           is drawn, the answers and Record it are greyed out rather than
+           looking live and ignoring a tap */
+        $(el.stage).querySelectorAll(".opt, #" + el.stage + "rec").forEach((b) => { b.disabled = true; });
         counts[chosen]++; SOUND.play("send", 0.4);
         const opt = options.find((x) => x.id === chosen);
         const line = "Recorded: " + person.name + ", " + opt.t + ". One more picture in the " + opt.t + " row.";
@@ -1151,7 +1155,7 @@
           if (ti >= rd.tasks.length) {
             lock = true; if (!missed) score++;
             log.push({ who: "you", text: rd.log || "You gave every job to the right person.", pic: rd.pic || "\u{1F4CB}", missed: missed });
-            setTimeout(() => { grow("Every job has the right person. " + (rd.why || "That is how a team gets a big job done.")); next(); }, 1400);
+            later(() => { grow("Every job has the right person. " + (rd.why || "That is how a team gets a big job done.")); next(); }, 1400);
           } else { $(el.ask).innerHTML = "<b>" + esc(rd.tasks[ti].t) + "</b>: who should do it?"; sayHere(o.finish, rd.tasks[ti].t + ": who should do it?"); }
         } else {
           missed = true; mb.classList.add("wrong"); SOUND.play("error", 0.3);
@@ -1169,7 +1173,7 @@
         if (taskDone.length === rd.steps.length) {
           lock = true; if (!missed) score++;
           log.push({ who: "you", text: rd.log || ("You " + lower1(rd.job)), pic: rd.pic || "\u{1F6E0}\ufe0f", missed: missed });
-          setTimeout(() => { grow(cheer() + " Your job is done: " + rd.job + ". " + f.name + " can carry on now. " + (rd.why || "")); next(); }, 1200);
+          later(() => { grow(cheer() + " Your job is done: " + rd.job + ". " + f.name + " can carry on now. " + (rd.why || "")); next(); }, 1200);
         }
       } else {
         missed = true; tb.classList.add("wrong"); SOUND.play("error", 0.3);
@@ -1977,7 +1981,7 @@
         overlay.querySelector(".book-close").addEventListener("click", close);
         overlay.querySelector("#gameQuit").addEventListener("click", close);
       }
-      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
+      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); later(drawRound, 1000); }
       function endGame() {
         played.add(game.id);
         reportScore(o.finish, right, game.rounds.length, game.id, game.title);

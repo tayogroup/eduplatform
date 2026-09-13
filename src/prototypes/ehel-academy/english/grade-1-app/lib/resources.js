@@ -309,7 +309,14 @@
           timers.push(setTimeout(() => {
             el2.style.transition = "stroke-dashoffset " + ms + "ms linear";
             el2.style.strokeDashoffset = 0;
-            if (st.say) { saying.textContent = st.say; say(st.say); }
+            /* A pen stroke is timed off the child's OWN tap on Write it, not
+               off a round the deck can silently restart - but nothing here
+               cancels the chain if the child navigates on mid-animation
+               (stop() only runs at the top of the NEXT draw()), so the same
+               cur check every other renderer's sayHere carries belongs here
+               too: draw the letter regardless, but only speak it on the step
+               that is still showing. */
+            if (st.say && cur === o.finish) { saying.textContent = st.say; say(st.say); }
           }, t));
           t += ms + (st.kind === "join" ? 40 : 160);
         });

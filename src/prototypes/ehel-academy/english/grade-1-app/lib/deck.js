@@ -14,7 +14,18 @@
   const $ = (id) => document.getElementById(id);
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+  /* One cheer per answer. The line on screen and the line spoken each called
+     cheer(), so a child could read "Super!" and hear "Brilliant!". The word is
+     kept until the task that picked it has finished, so every call made for
+     one answer agrees and the next answer picks again. */
+  let cheered = "";
+  const cheer = () => {
+    if (!cheered) {
+      cheered = ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+      setTimeout(() => { cheered = ""; }, 0);
+    }
+    return cheered;
+  };
   const plain = (html) => String(html).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 
 
@@ -50,6 +61,22 @@
      on the step the child actually finished; only the voice asks whether that
      step is still the one showing, the way playHere() already does for clips. */
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg && cur === i) say(msg); }
+  /* The same problem finish() was fixed for above, generalised: a round or
+     sim step started on a timer belongs to the step it was set on. If the
+     child has moved on by the time it fires, it still runs - the sim still
+     advances, the next question still draws - but it does not SAY anything
+     about a step the child is not looking at. Reuses window.__ehelPainting,
+     the same flag say() already checks for the draw pass, since a stale
+     timer firing is exactly that: work happening off-screen, not a thing to
+     read aloud. */
+  function later(fn, ms) {
+    const step = cur;
+    setTimeout(function () {
+      if (cur === step) { fn(); return; }
+      window.__ehelPainting = true;
+      try { fn(); } finally { window.__ehelPainting = false; }
+    }, ms);
+  }
 
   /* Hand a score to the progress client, if this page has one.
      NAMING THE PIPELINE TOOL HERE BREAKS THE BUILD, which is why this comment

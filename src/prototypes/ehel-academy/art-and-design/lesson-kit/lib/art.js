@@ -903,7 +903,7 @@
       $(el.score).textContent = heard.size + " of " + need + " heard";
       if (heard.size >= need) {
         reportAttempt(o.finish, heard.size, o.items.length, "things");
-        if (o.then) setTimeout(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
+        if (o.then) later(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
       }
     });
     $(el.ch).addEventListener("click", (e) => {
@@ -1383,10 +1383,34 @@
        stroke is laid down as if drawn (a dot counts as a dot), which is what
        makes "dots" - six strokes - one answer rather than six. Timers, not
        animation frames, so a hidden tab still finishes; instant under
-       reduced motion. */
+       reduced motion.
+
+       WHY THIS CANNOT USE THE SHARED later() DIRECTLY. later() re-reads cur
+       at the moment EACH call is made, which is exactly right for a fresh
+       setTimeout armed from a live click - but this chain re-arms ITSELF,
+       tick after tick, from inside the very callback later() is guarding.
+       The first stale tick is caught correctly: cur no longer matches, so it
+       runs under window.__ehelPainting. But that guarded call then calls
+       later(grow, 16) again to schedule its OWN next tick - and that inner
+       call captures cur FRESH, which by then already reads the stale value,
+       so it captures itself as its own baseline. Every tick after the first
+       compares cur to a number that always equals cur, staleness looks fixed
+       forever, and the animation's own then(s) - which hands off to judge(),
+       and to a bare say() - fires unguarded. Measured: a five-point line
+       took two ticks to grow; only the first was caught, and the one that
+       called judge() was not. One step, captured ONCE outside every tick,
+       is what makes the whole chain answer for the same step it started on. */
     function animate(list, toolName, then) {
       const svg = $(svgId);
       const quick = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const step = cur;
+      function schedule(fn, ms) {
+        setTimeout(function () {
+          if (cur === step) { fn(); return; }
+          window.__ehelPainting = true;
+          try { fn(); } finally { window.__ehelPainting = false; }
+        }, ms);
+      }
       let k = 0;
       function next() {
         const pts = list[k++], s = { tool: toolName, pts: [pts[0]] };
@@ -1394,11 +1418,11 @@
         SOUND.play(TOOLS[toolName].sound, 0.3);
         let i = 1;
         (function grow() {
-          if (i < pts.length) { i = quick ? pts.length : Math.min(pts.length, i + 6); s.pts = pts.slice(0, i); p.setAttribute("d", pathD(s.pts)); setTimeout(grow, 16); return; }
+          if (i < pts.length) { i = quick ? pts.length : Math.min(pts.length, i + 6); s.pts = pts.slice(0, i); p.setAttribute("d", pathD(s.pts)); schedule(grow, 16); return; }
           if (k >= list.length) { then(s); return; }
           strokes.push(s);
           if (strokeFeatures(s.pts, toolName, session).len < 14) session.dots++;
-          setTimeout(next, quick ? 0 : 140);
+          schedule(next, quick ? 0 : 140);
         })();
       }
       next();
@@ -2245,7 +2269,7 @@
         overlay.querySelector(".book-close").addEventListener("click", close);
         overlay.querySelector("#gameQuit").addEventListener("click", close);
       }
-      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
+      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); later(drawRound, 1000); }
       function endGame() {
         played.add(game.id);
         reportScore(o.finish, right, game.rounds.length, game.id, game.title);
@@ -2601,7 +2625,7 @@
       $(el.fb).className = "fb " + (ok ? "good" : "bad");
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.explanation;
       say((ok ? cheer() + " " : "") + it.explanation);
-      setTimeout(() => { i++; if (i < qs.length) ask(); else report(); }, 2800);
+      later(() => { i++; if (i < qs.length) ask(); else report(); }, 2800);
     });
     function report() {
       const r = results();

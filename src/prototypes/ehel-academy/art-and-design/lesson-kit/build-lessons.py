@@ -46,6 +46,7 @@ Then the shared pipeline, in this order (each step assumes the last):
     python $T/preload-platform.py       --app .
     python $T/wire-progress.py          --app .
     python $T/add-header-bars.py        --app .
+    python $T/add-lesson-search.py      --app .
     python $T/check-lessons.py          --app .
     python ../lesson-kit/check-coverage.py --app .
 

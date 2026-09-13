@@ -206,7 +206,11 @@ JS = """
     say = function (t) { if (!muted) realSay(t); };
     $("ehAudio").addEventListener("click", function () {
       muted = !muted;
-      if (muted && window.VOICE && VOICE.stop) VOICE.stop();
+      /* VOICE is this script's own const, never a property of window, so the
+         old `window.VOICE &&` guard was always false and switching the voice
+         off left her talking. hush() stops her, and keeps her reactions to
+         answers quiet until the voice is switched back on. */
+      if (typeof VOICE !== "undefined" && VOICE.hush) VOICE.hush(muted);
       $("ehAudio").setAttribute("aria-pressed", muted ? "true" : "false");
       $("ehAudio").title = muted ? "Turn the voice on" : "Turn the voice off";
     });

@@ -55,8 +55,14 @@ A_NEW = (A_OLD + '\n    /* ' + MARK + ': a clip that STARTS is sound the child h
          '    if (el) el.addEventListener("playing", function () { window.__ehelHeard = Date.now(); });')
 
 # 2. the browser voice: record when an utterance actually starts
-B_OLD = "u.onend = next;"
-B_NEW = ("u.onend = next;\n"
+#
+# The anchor used to be `u.onend = next;`, before the narration-overlap fix
+# (2026-09-13) gave onend its own guarded wrapper so a cancelled utterance
+# cannot fire next() twice - see u.onend = onward below. A build with the
+# older engine will refuse this hook rather than anchor on a line the fix
+# already changed; that is the guard doing its job, not a bug.
+B_OLD = "u.onend = onward;"
+B_NEW = ("u.onend = onward;\n"
          "      u.onstart = function () { window.__ehelHeard = Date.now(); };   /* " + MARK + " */")
 
 # 3. the notice itself, above the deck

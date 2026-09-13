@@ -161,7 +161,7 @@ JS = """
   /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
      learner-controls.js holds the SAME singletons the shell mounts. */
   import { mountLearnerControls } from "./learner-controls.js";
-  import { mountWehelChat } from "./wehel.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
   /* Focus mode and the session bar. Imported for its side effect - it mounts
      itself, and mounts NOTHING unless the launch carries focusMode=1 or an
@@ -263,6 +263,22 @@ JS = """
     drawer.querySelector("button").addEventListener("click", close);
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
     document.body.append(dock, drawer);
+
+    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
+       aloud by default and knew nothing of the lesson's voice, so a reply
+       could play over a line the lesson was reading. The lesson stops the
+       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
+       when the tutor starts reading - which the drawer shows as a Stop
+       button, .voice-button.is-playing. Only the moment that button APPEARS
+       counts: the panel repaints often, and repainting a reply already being
+       read must not cut off a line the lesson has just begun. */
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
   }
 </script>
 <!-- WIRE-JS-END -->

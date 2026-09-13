@@ -67,6 +67,21 @@ for t in wire-accessibility self-host-fonts wire-quiet-notice add-reasoning-step
   python "../lesson-app-tools/$t.py" --app . --write > /dev/null || { echo "  FAILED: $t"; exit 1; }
   echo "  ok  $t"
 done
+# THE LESSON SEARCH, which this build never ran and which a rebuild therefore
+# SILENTLY DROPPED - discovered 2026-09-13 the same way ../grade-3-app/src/
+# build-all.sh's own comment above describes for that grade: the committed
+# lesson pages carried the search box (live since 2026-09-12), this script
+# did not, and a clean rebuild removed it from all 8 lessons with nothing
+# saying so. Grade 3's build-all.sh already runs this step for the same
+# reason; Grade 4's did not. It takes no --write (it writes) and it must run
+# AFTER add-header-bars.py, which is where the bar it mounts into comes from -
+# already true here, since add-header-bars ran earlier in the wiring loop
+# above. It refuses if lesson-search.json is missing; build-lesson-search.py
+# makes that index and is deliberately NOT run here, because the index
+# belongs to whoever owns the feature and a stale index is far better than
+# one rebuilt from someone else's half-finished edit.
+python ../lesson-app-tools/add-lesson-search.py --app . > /dev/null || { echo "  FAILED: add-lesson-search"; exit 1; }
+echo "  ok  add-lesson-search"
 
 echo
 echo "gates:"

@@ -526,6 +526,7 @@
   $("again").addEventListener("click", () => { show(0, true); });
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
   /* ---- your turn: the six slides that only demonstrated ---- */
   const askShuffle3 = (correct, a, b) => { const o = shuffle([correct, a, b]); return { o: o, i: o.indexOf(correct) }; };

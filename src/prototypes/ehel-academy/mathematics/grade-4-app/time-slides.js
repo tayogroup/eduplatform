@@ -87,7 +87,7 @@
       $("fb2").textContent = "That is it — " + to12(t2) + " is " + to24(t2) + ".";
       $("fb2").className = "fb good";
       if (hit2 <= tgt2) { hit2 = tgt2 + 1; say(to12(t2) + " is the same moment as " + to24(t2)); }
-      if (tgt2 < TARGETS2.length - 1) { tgt2++; setTimeout(() => { $("fb2").className = "fb"; drawClock(); }, 1400); }
+      if (tgt2 < TARGETS2.length - 1) { tgt2++; later(() => { $("fb2").className = "fb"; drawClock(); }, 1400); }
       if (hit2 >= 3) finish(1, "");
     } else {
       $("fb2").className = "fb";
@@ -249,6 +249,7 @@
   $("again").addEventListener("click", () => { show(0, true); });
 
   show(0, false);
+  quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
   /* ---- your turn: the three slides that only demonstrated ---- */
   const askShuffle3 = (correct, a, b) => { const o = shuffle([correct, a, b]); return { o: o, i: o.indexOf(correct) }; };

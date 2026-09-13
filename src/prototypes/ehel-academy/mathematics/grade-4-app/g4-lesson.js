@@ -824,7 +824,7 @@
     const T = tasks2[ti2];
     if (T) {
       $("task2").textContent = "On Mount Kenya it is " + sg(T.from) + "°C. In the night it gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
-      if (temp2 === T.to) { $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); ti2++; if (ti2 >= tasks2.length) finish(1, "You can count below zero!"); else setTimeout(() => { temp2 = tasks2[ti2].from; $("fb2").textContent = ""; paint2(); say(tasks2[ti2].from + " degrees. " + $("task2").textContent); }, 2200); }
+      if (temp2 === T.to) { $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); ti2++; if (ti2 >= tasks2.length) finish(1, "You can count below zero!"); else later(() => { temp2 = tasks2[ti2].from; $("fb2").textContent = ""; paint2(); say(tasks2[ti2].from + " degrees. " + $("task2").textContent); }, 2200); }
       else { $("fb2").className = "fb"; $("fb2").textContent = temp2 < 0 ? "Below zero: minus " + (-temp2) : temp2 === 0 ? "Zero, the line between" : ""; }
     } else { $("task2").textContent = "All three done."; }
   }
@@ -853,7 +853,7 @@
     if (!ok) b.classList.add("wrong"); else right3++;
     const why = fmt(n3) + " is " + fmt(Math.min(rem, to3 - rem)) + " away from " + fmt(ans) + " but " + fmt(Math.max(rem, to3 - rem)) + " away from " + fmt(ans === hi ? lo : hi) + ". It rounds to " + fmt(ans) + ".";
     $("fb3").className = "fb " + (ok ? "good" : "bad"); $("fb3").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
-    r3++; setTimeout(round3, 2300);
+    r3++; later(round3, 2300);
   });
   round3();
 
@@ -889,7 +889,7 @@
     if (!ok) b.classList.add("wrong"); else right4++;
     stage4 = 3; paint4(); $("mul4").innerHTML = a4 + ' <span class="t">×</span> ' + b4 + " = " + ans;
     $("fb4").className = "fb " + (ok ? "good" : "bad"); $("fb4").textContent = (ok ? cheer() + " " : "") + a4 + " × " + b4 + " = " + ans + "."; say((ok ? cheer() + " " : "") + a4 + " times " + b4 + " is " + ans);
-    r4++; setTimeout(round4, 2300);
+    r4++; later(round4, 2300);
   });
   round4();
 
@@ -944,7 +944,7 @@
     if (!ok) b.classList.add("wrong"); else right6++;
     const n6 = quiz6.q.includes("factor") ? Number(quiz6.q.match(/factor of (\d+)/)[1]) : null;
     $("fb6").className = "fb " + (ok ? "good" : "bad"); $("fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + quiz6.a + " = " + (n6 / quiz6.a) + "." : quiz6.q.replace("?", "") + quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + quiz6.a);
-    if (right6 >= 4) finish(5, "Tables and factors: well done!"); setTimeout(ask6, 2000);
+    if (right6 >= 4) finish(5, "Tables and factors: well done!"); later(ask6, 2000);
   });
   paint6(); ask6();
 
@@ -975,7 +975,7 @@
     if (!ok) b.classList.add("wrong"); else right7++;
     const m = quiz7.a.match(/^0\.(\d)(\d)?$/); if (m) { shaded7 = Number(m[1]) * 10 + Number(m[2] || 0); } else if (/^\d+$/.test(quiz7.a)) shaded7 = Number(quiz7.a); paint7();
     $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + "It is " + quiz7.a + ". Look at the square."; say((ok ? cheer() + " " : "") + "It is " + quiz7.a);
-    if (right7 >= 3) finish(6, "Tenths and hundredths: well done!"); setTimeout(ask7, 2000);
+    if (right7 >= 3) finish(6, "Tenths and hundredths: well done!"); later(ask7, 2000);
   });
   paint7(); ask7();
 
@@ -1003,7 +1003,7 @@
     if (!ok) b.classList.add("wrong"); else right8++;
     $("sum8").innerHTML = $("sum8").innerHTML.replace("= ?", '= <span class="fraction"><span>' + s + "</span><span>" + d8 + "</span></span>");
     $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + a8 + " parts + " + b8 + " parts = " + s + " parts. " + a8 + "/" + d8 + " + " + b8 + "/" + d8 + " = " + ans + ". The bottom number stays " + d8 + "."; say((ok ? cheer() + " " : "") + a8 + " " + ordDen(d8) + " add " + b8 + " " + ordDen(d8) + " is " + s + " " + ordDen(d8));
-    $("score8").textContent = right8 + " of 3 right so far"; if (right8 >= 3) finish(7, "Adding fractions: well done!"); setTimeout(newSum8, 2400);
+    $("score8").textContent = right8 + " of 3 right so far"; if (right8 >= 3) finish(7, "Adding fractions: well done!"); later(newSum8, 2400);
   });
   newSum8();
 
@@ -1032,7 +1032,7 @@
     if (!ok) b.classList.add("wrong"); else right9++;
     w9 = quiz9.w; h9 = quiz9.h; paint9();
     $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + (quiz9.area ? "Area: " + quiz9.w + " × " + quiz9.h + " = " + quiz9.a + " squares." : "Perimeter: " + quiz9.w + " + " + quiz9.h + " + " + quiz9.w + " + " + quiz9.h + " = " + quiz9.a + "."); say((ok ? cheer() + " " : "") + "It is " + quiz9.a);
-    if (right9 >= 4) finish(8, "Perimeter and area: well done!"); setTimeout(ask9, 2200);
+    if (right9 >= 4) finish(8, "Perimeter and area: well done!"); later(ask9, 2200);
   });
   paint9(); ask9();
 
@@ -1062,7 +1062,7 @@
     $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === quiz10) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right10++;
     drawAngle(); $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "") + deg10 + "° is " + quiz10 + "."; say((ok ? cheer() + " " : "") + deg10 + " degrees is " + quiz10);
-    if (right10 >= 4) finish(9, "You know your angles!"); setTimeout(ask10, 2000);
+    if (right10 >= 4) finish(9, "You know your angles!"); later(ask10, 2000);
   });
   drawAngle(); ask10();
 
@@ -1087,7 +1087,7 @@
     drawGrid([{ x: target11.x, y: target11.y, cls: "good" }].concat(ok ? [] : [{ x, y, cls: "oops" }]));
     if (ok) right11++;
     $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = (ok ? cheer() + " " : "You tapped (" + x + ", " + y + "). ") + "(" + target11.x + ", " + target11.y + ") is " + target11.x + " along and " + target11.y + " up."; say((ok ? cheer() : "Not quite.") + " " + target11.x + " along, " + target11.y + " up");
-    if (right11 >= 4) finish(10, "Coordinates: well done!"); setTimeout(ask11, 2200);
+    if (right11 >= 4) finish(10, "Coordinates: well done!"); later(ask11, 2200);
   }
   $("coords11").addEventListener("click", (e) => pick11(e.target.closest(".pt")));
   $("coords11").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick11(e.target.closest(".pt")); } });
@@ -1120,7 +1120,7 @@
     $("ch12").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
     if (!ok) b.classList.add("wrong"); else right12++;
     $("fb12").className = "fb " + (ok ? "good" : "bad"); $("fb12").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
-    c12++; setTimeout(round12, 1300);
+    c12++; later(round12, 1300);
   });
   round12();
 

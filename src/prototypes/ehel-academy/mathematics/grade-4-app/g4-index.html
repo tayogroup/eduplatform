@@ -263,7 +263,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
 <header class="eh-bar1">
   <img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async">
   <span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span>
-  <div class="eh-b1right"><label class="eh-find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.4 15.4 21 21"></path></svg><input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Grade 4 Mathematics lessons" aria-controls="ehFound" aria-expanded="false"></label><select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="" selected>Jump to a lesson…</option><option value="big-numbers-below-zero.html">Big Numbers and Below Zero</option><option value="patterns-and-squares.html">Patterns and Square Numbers</option><option value="ways-to-calculate.html">Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-and-measures.html">Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select></div>
+  <div class="eh-b1right"><label class="eh-find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.4 15.4 21 21"></path></svg><input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Grade 4 Mathematics lessons" aria-controls="ehFound" aria-expanded="false"></label><select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="" selected>Jump to a lesson…</option><option value="tens-and-ones.html">Tens and Ones</option><option value="coins-and-change.html">Coins and Change</option><option value="fair-shares.html">Fair Shares</option><option value="patterns-that-grow.html">Patterns That Grow</option><option value="sides-and-corners.html">Sides and Corners</option><option value="which-way-from-here.html">Which Way From Here</option><option value="how-much-how-long.html">How Much, How Long</option><option value="half-past-quarter-to.html">Half Past, Quarter To</option><option value="count-it-chart-it.html">Count It, Chart It</option></select></div>
 </header>
 <div class="eh-found" id="ehFound" hidden><p class="eh-foundsay" id="ehFoundSay" role="status" aria-live="polite"></p><div id="ehFoundList"></div></div>
 <div class="wrap">
@@ -757,7 +757,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       var q = new URLSearchParams(location.search);
       q.delete("from");
       var rest = q.toString();
-      location.href = p.value + "?from=g4" + (rest ? "&" + rest : "");
+      location.href = p.value + "?from=g2" + (rest ? "&" + rest : "");
     });
   })();
 </script>
@@ -792,7 +792,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       var p = new URLSearchParams(location.search);
       p.delete("from");
       var rest = p.toString();
-      return "?from=g4" + (rest ? "&" + rest : "");
+      return "?from=g2" + (rest ? "&" + rest : "");
     }
 
     /* WAITERS, not an early return. The focus handler starts this fetch with

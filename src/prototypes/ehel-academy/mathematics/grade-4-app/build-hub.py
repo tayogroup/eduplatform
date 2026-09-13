@@ -113,7 +113,10 @@ head = (head
         .replace("<title>Grade 2 Mathematics</title>", "<title>Grade 4 Mathematics</title>")
         .replace("<h1>Grade 2 <em>Mathematics</em></h1>", "<h1>Grade 4 <em>Mathematics</em></h1>")
         .replace("Nine lessons, one for each part of the maths you learn this year.",
-                 "Eight lessons, one for each part of the maths you learn this year."))
+                 "Eight lessons, one for each part of the maths you learn this year.")
+        # add-lesson-search.py's own aria-label, added to g2-index.html after this
+        # substitution list was written - the two never drifted apart until now.
+        .replace("Search the Grade 2 Mathematics lessons", "Search the Grade 4 Mathematics lessons"))
 
 # The head carries a design comment explaining Grade 2's choices. Relabelling it would
 # leave prose arguing for nine cards above six, so it is replaced rather than patched.
@@ -149,6 +152,11 @@ assert not leftover, "a Grade 2 label survived into the Grade 4 hub: %s" % lefto
 # have survived - "These nine lessons cover all 48 objectives of Stage 2", on Grade 4.
 foot = re.sub(r"\s*<!-- GROWNUP:START.*?<!-- GROWNUP:END -->", "", foot, flags=re.S)
 foot = re.sub(r'\s*<p class="note">.*?</p>', "", foot, flags=re.S)
+# add-lesson-search.py's own "no results" message, inside a <script> - the
+# leftover check below deliberately skips script content (it is code, not
+# copy a learner reads), so this one is fixed by name rather than by the
+# assertion catching it.
+foot = foot.replace('"Grade 2 Mathematics"', '"Grade 4 Mathematics"')
 seen = re.sub(r"<script.*?</script>|<style.*?</style>|<!--.*?-->", " ", foot, flags=re.S)
 leftover = re.findall(r"Grade 2|Stage 2|Nine lessons|nine lessons", seen)
 assert not leftover, "Grade 2 text survived into the Grade 4 hub's foot: %s" % leftover

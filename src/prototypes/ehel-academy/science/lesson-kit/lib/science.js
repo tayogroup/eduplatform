@@ -550,7 +550,7 @@
       $(el.score).textContent = heard.size + " of " + need + " heard";
       if (heard.size >= need) {
         reportAttempt(o.finish, heard.size, o.items.length, "things");
-        if (o.then) setTimeout(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
+        if (o.then) later(question, 2400); else { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }
       }
     });
     $(el.ch).addEventListener("click", (e) => {
@@ -747,7 +747,7 @@
           results.push({ pic: it.pic, result: resultText, hit }); paintList();
           $(el.fb).className = "fb " + (hit ? "good" : "bad");
           $(el.fb).textContent = (hit ? "Your prediction was right! " : "Different from your prediction. ") + it.why;
-          setTimeout(() => say((hit ? "Your prediction was right. " : "That was different from your prediction. ") + it.why), 200);
+          later(() => say((hit ? "Your prediction was right. " : "That was different from your prediction. ") + it.why), 200);
           i++;
           setTimeout(() => {
             if (i >= items.length) {
@@ -825,7 +825,7 @@
         if (n >= ob.units) {
           lock = true;
           const line = ob.label[0].toUpperCase() + ob.label.slice(1) + " is " + ob.units + " " + o.unit.name + " " + (o.dim || "long") + ".";
-          $(el.fb).className = "fb good"; $(el.fb).textContent = line; setTimeout(() => say(line), 500);
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; later(() => say(line), 500);
           setTimeout(() => {
             $(el.fb).textContent = ""; k++; n = 0; lock = false;
             if (k >= o.objects.length) compare(); else draw();
@@ -2587,7 +2587,7 @@
         overlay.querySelector("#gameQuit").addEventListener("click", close);
         m.refocus();
       }
-      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
+      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); later(drawRound, 1000); }
       function endGame() {
         played.add(game.id);
         reportScore(o.finish, right, game.rounds.length, game.id, game.title);

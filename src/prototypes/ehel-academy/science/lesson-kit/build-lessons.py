@@ -37,8 +37,16 @@ Then the shared pipeline, in this order (each step assumes the last):
     python $T/preload-platform.py       --app .
     python $T/wire-progress.py          --app .
     python $T/add-header-bars.py        --app .
+    python $T/add-lesson-search.py      --app .
     python $T/check-lessons.py          --app .
     python ../lesson-kit/check-coverage.py --app .
+
+add-lesson-search.py was missing from this list until 2026-09-13 - the search
+box (live since 2026-09-12, added by hand) is dropped by a clean rebuild
+without it, exactly the trap mathematics/grade-3-app/src/build-all.sh's own
+comment names for the identical omission there. It refuses if
+lesson-search.json is missing and must run after add-header-bars.py, which is
+where the bar it mounts into comes from.
 
 This tool writes the page from scratch every time, so it must run BEFORE any
 of them; running it again over a wired page throws the wiring away.

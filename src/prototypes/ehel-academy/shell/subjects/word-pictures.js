@@ -1146,6 +1146,61 @@ GRADE_WORD_PICTURES.ien2 = {
   online: "",          // 🌐 is this level's `internet`, in that same group
 };
 
+// Level 3 was authored on 2026-09-16: Cambridge 0876 Stages 7-9, A2 to B1,
+// adult ESL, 571 words. Without this map it fell through to the SHARED one —
+// 87 of those words drew something and nothing was per-level — so the audit the
+// note above demands was run the same way: every word printed beside the
+// picture the function returns AND the meaning the unit actually authored.
+//
+// **Five of the entries below were recovered from git history, not invented.**
+// The earlier B1 course's overrides — platform, circular, maintain, add, voice
+// — were deleted with it when Level 2 was rebuilt, correctly, because the
+// rebuilt Level 2 does not teach those senses. Level 3 does: it is the course
+// that replaced that B1 material, so the judgements apply again almost word for
+// word. `platform: "💻"` is the clearest case, and it is the SAME entry the
+// note above describes as having become wrong for Level 2, right here again —
+// Level 2's platform is the railway one (Unit 13, beside departure and gate),
+// Level 3's is the one content is published on (Unit 16).
+//
+// That is the sharper form of the lesson above: an override is a claim about a
+// SENSE, and the same claim can be wrong for one level and right for the next.
+// It belongs to the level, never to the word.
+//
+// The rest close two failures, kept apart because they are not equally bad:
+// a glyph shared INSIDE one word group destroys the contrast the group exists
+// to teach, and a glyph shared anywhere in one LEVEL teaches neither word (the
+// `assemble`/`metal` reasoning in ien2 above).
+GRADE_WORD_PICTURES.ien3 = {
+  // --- the shared map's sense is not the one this level teaches --------------
+  // The five recovered from the B1 course, checked against Level 3's own
+  // authored meanings before being reinstated.
+  platform: "💻",      // "a service through which content reaches people" (u16);
+                       // the shared 🚉 is Level 2's railway platform
+  circular: "",        // circular reasoning (u19), not the shape
+  maintain: "",        // "to keep saying something is true, even under challenge"
+                       // (u07), not to keep in repair — the shared map says 🔧
+  add: "",             // "to say something further" (u09), not arithmetic
+  voice: "",           // "your own manner of saying things" (u20), not the sound
+  // Found by this level's own audit.
+  monitor: "",         // the VERB, "watch something over time" (u10); 🖥️ is the screen
+  observe: "",         // "to make a remark" (u09); 👀 is the other sense, watching
+  leak: "",            // "information released without permission" (u16), not water
+  candidate: "🙋🏾",     // "a person being considered for a job" (u04); the shared
+                       // 🗳️ is the election sense and this unit is not about voting
+  // --- two words in ONE WORD GROUP drew one glyph ----------------------------
+  warranty: "🛡️",      // was 📜, which is this group's `clause` (u15 Contracts)
+  reimburse: "💸",     // was 💰, this group's `compensation` (u15)
+  outlet: "🏢",        // the ORGANISATION that publishes; 📰 stays on `headline`,
+                       // which is the thing printed (u16)
+  pollutant: "🛢️",     // was ☣️, this group's `contamination` (u17 Environment)
+  habitat: "🏞️",       // was 🌿, this group's `ecosystem` (u17 Environment)
+  // --- two words in one LEVEL drew one glyph, in the same unit ---------------
+  gain: "",            // 📈 is this unit's `develop` (u03)
+  accelerate: "⏩",    // was 💨, this unit's `emissions` (u17)
+  referee: "",         // 🧑🏾‍💼 is this unit's `consultant` (u14), and a job referee
+                       // has no honest glyph the reader would read as one
+};
+
 /**
  * The picture for a word, or "" when there is no honest one.
  * Pass the grade number to get that grade's sense where the two differ.

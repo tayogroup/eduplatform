@@ -51,8 +51,8 @@ here. The plan entry said B2, blocked on "Grades 9-12 do not exist", until
 grades, and a B2 Level 3 would have recreated the exact gap the Level 2 rebuild
 closed.
 
-**Still owed on Level 3: the standalone app build and the deploy.** Narration is
-done (see below).
+**Still owed on Level 3: the deploy, and the routing step after it.** Narration
+and the standalone app are done — see "Level 3's standalone build" below.
 
 **Levels 4 (C1) and 5 (C2) were dropped on 2026-09-16** (owner). The course ENDS
 at B1, and the reason is in the plan's `whyTheCourseStopsAtB1`: the contract
@@ -228,4 +228,71 @@ Four things that cost a check:
   pregnancy (ien1); `interview` drew a radio microphone, and `online` and
   `festival` drew the same glyph as `internet` and `celebrate` INSIDE one word
   group (ien2). Blanks are honest; a wrong picture is not.
+
+## Level 3's standalone build (2026-09-17)
+
+```bash
+cd intensive-english/lesson-kit
+python build-lessons.py --app ../level-3-app    # 20 pages
+python build-hub.py     --app ../level-3-app    # the hub, after the lessons
+# then the shared pipeline, in ../../mathematics/lesson-app-tools/README.md order
+```
+
+`level-3-app/` — 20 pages plus `l3-index.html`, `app.config.json` and
+`lesson-search.json`, 23 files, the same shape as Levels 1 and 2. Both gates
+green (`check-lessons.py`, `check-lesson-search.py`, 420 indexed steps).
+
+- **`app.config.json` is what tells the kit which level it is building** —
+  `LEVEL = int(CFG["level"])`, not a flag — so the config has to exist before
+  `build-lessons.py` will run at all. Level 3's `levelLabel` is taken from the
+  built course manifest ("Level 3 — Threshold"), not invented, because that
+  manifest is learner-facing and already carries the ladder.
+- **Exactly six of the shared tools REFUSE here**, as they do on Levels 1 and 2:
+  `wire-accessibility` and `build-grownup-section` (deck shape),
+  `add-reasoning-step`, `add-explanations` and `add-warmup` (Maths content files
+  this build has none of), and `wire-quiet-notice` (anchor). `self-host-fonts`
+  is deliberately skipped. **That the refusals are harmless was CHECKED, not
+  assumed**: every marker those tools would add was counted across all three
+  builds, and the kit already provides `<main>`, `aria-live` and the skip link
+  in all 20 pages of all three, while the quiet notice is absent from Levels 1
+  and 2 too.
+- **A rebuild undoes the wiring.** `build-lessons.py` rewrites each page from
+  scratch, so every pipeline step has to run again after it — a page rebuilt
+  without re-wiring silently loses the launch parameters, and
+  `wire-platform-controls`'s own guard then mounts nothing with no error.
+- **The hub says "Primary Intensive English" and the lesson pages do not.**
+  `brandLine` fixed `add-header-bars.py`, which writes the lesson pages; the hub
+  is built by `build-hub.py` and never got it. It is identical on Levels 1 and 2,
+  both live and routed, so Level 3 matching them is the correct state and
+  changing it here alone would split the three. Pre-existing; not fixed.
+
+### The word pictures: there was no `ien3`, so the SHARED map answered
+
+Level 3's 571 words fell straight through to `WORD_PICTURES` — 87 drew
+something and not one was a per-level judgement. `GRADE_WORD_PICTURES.ien3`
+now exists and the audit is clean: 0 glyphs shared inside a word group, 0
+shared inside a unit, 78 words drawing a picture.
+
+**Five of its entries were recovered from git history rather than invented.**
+The earlier B1 course had overrides for `platform`, `circular`, `maintain`,
+`add` and `voice`, deleted — correctly — when Level 2 was rebuilt without those
+senses. Level 3 is the course that replaced that B1 material, so it teaches them
+again, and the judgements applied again almost word for word.
+
+`platform` is the case worth remembering. The note above `ien2` records it
+becoming WRONG for Level 2, whose platform is the railway one in Unit 13. Level
+3's is the one content is published on, in Unit 16, and the shared map's 🚉 put
+a railway platform beside it. **The same override is wrong for one level and
+right for the next**, which is the sharper form of that note: an override is a
+claim about a sense, and a sense belongs to a level, never to a word.
+
+The rest close two failures that are not equally bad — a glyph shared inside a
+word GROUP destroys the contrast the group exists to teach (`clause`/`warranty`,
+`compensation`/`reimburse`, `outlet`/`headline`, `pollutant`/`contamination`,
+`habitat`/`ecosystem`), while a glyph shared anywhere in one LEVEL teaches
+neither word (`develop`/`gain`, `emissions`/`accelerate`,
+`consultant`/`referee`). Four more were the shared map's other sense outright:
+`monitor` drew the screen for the verb, `observe` drew eyes for "to remark",
+`leak` drew water for an unauthorised disclosure, and `candidate` drew a ballot
+box for a job applicant.
 

@@ -86,7 +86,26 @@ if (plan.levels.some((level) => level.eslFramework) && !eslIndex.size) {
 // Stage 3 number, so an A2 unit would be measured against an A1 ceiling and
 // report every ordinary A2 sentence as over. The steps widen by the same three
 // words per stage the first three do.
-const REGISTER_CEILING = { 1: 12, 2: 15, 3: 18, 4: 21, 5: 24, 6: 27 };
+// Stages 7-9 were added for Level 3 (A2 to B1). They must be STATED: an
+// unlisted stage takes the `|| 18` fallback below, which is Stage 3's A1
+// ceiling, and every B1 sentence would be reported as over. Level 2 hit
+// exactly this when Stages 4-6 were added.
+const REGISTER_CEILING = { 1: 12, 2: 15, 3: 18, 4: 21, 5: 24, 6: 27, 7: 30, 8: 33, 9: 36 };
+
+// A plan source is one of two shapes: school English, `{grade, units[]}`, or a
+// unit of a previous intensive course kept in `archive/`, `{archive, unit}`,
+// which has no grade and no `units` array at all. Level 3 is built entirely
+// from the archive, and it found three separate sites that knew only the first
+// shape. This is the one place that knows about both — `long` picks the prose
+// form used in a unit's own provenance line over the compact form the manifest
+// carries.
+const describeSource = (sources, { long }) => (sources || []).map((s) => (
+  s.archive
+    ? (long ? `${s.archive} Unit ${s.unit}` : `${s.archive}/U${s.unit}`)
+    : (s.units || [])
+        .map((n) => (long ? `Grade ${s.grade} Unit ${n}` : `G${s.grade}U${n}`))
+        .join(long ? ", " : ",")
+)).join(long ? "; " : " ");
 const registerReports = [];
 const quizMixReports = [];
 
@@ -149,7 +168,7 @@ function buildUnit(authored) {
   const lid = level.id;
   const uid = `ien-${lid}-u${String(authored.unit).padStart(2, "0")}`;
   const id = (kind, n) => `${uid}-${kind}${String(n).padStart(2, "0")}`;
-  const sourceRef = (planUnit.source || []).map((s) => s.units.map((n) => `Grade ${s.grade} Unit ${n}`).join(", ")).join("; ");
+  const sourceRef = describeSource(planUnit.source, { long: true });
 
   // --- outcomes: the specification, and where both frameworks are checked ---
   const outcomes = (authored.outcomes || []).map((outcome, n) => {
@@ -865,7 +884,7 @@ for (const level of plan.levels) {
       ...(planUnit.stage ? { stage: planUnit.stage } : {}),
       ...(planUnit.capstone ? { capstone: true } : {}),
       patterns: (planUnit.patterns || []).length,
-      source: (planUnit.source || []).map((s) => s.units.map((n) => `G${s.grade}U${n}`).join(",")).join(" "),
+      source: describeSource(planUnit.source, { long: false }),
       vocabularyCount: content?.dictionaryLinks.length || 0,
       status: content ? content.unit.reviewStatus : "Planned — not yet authored",
     };

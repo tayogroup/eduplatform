@@ -266,6 +266,9 @@ Pre-A1 a long sentence is not harder, it is unreadable.
 | **A1, extending** (Stage 4) | 6-14 words | ≤ 14 / 21 | + present perfect, going to, past continuous, have to, relative clauses | 100-200 words |
 | **A2, developing** (Stage 5) | 7-16 words | ≤ 16 / 24 | + for/since, zero conditional, participle adjectives, subordinate clauses | 150-280 words |
 | **A2, consolidating** (Stage 6) | 8-18 words | ≤ 18 / 27 | + reported speech, first conditional, simple passives, non-defining clauses | 200-350 words |
+| **A2, extending** (Stage 7) | 9-20 words | ≤ 20 / 30 | + past continuous, defining and non-defining relative clauses, dependent prepositions, phrasal verbs | 250-420 words |
+| **B1, developing** (Stage 8) | 10-22 words | ≤ 22 / 33 | + past perfect, present perfect continuous, second conditional and wish, past modals | 300-500 words |
+| **B1, consolidating** (Stage 9) | 11-24 words | ≤ 24 / 36 | + third conditional, causatives, past modals for speculation, future continuous | 350-600 words |
 
 6. **Show before you tell.** A rule is best laid out as examples in a column,
    not described. A worked example is lines the learner can follow with their
@@ -280,7 +283,8 @@ Pre-A1 a long sentence is not harder, it is unreadable.
    may run a little longer than a written line, but it uses the same words and
    the same short sentences. Stage 1: 900-1,800 characters. Stage 2:
    1,500-2,600. Stage 3: 2,000-3,200. Stage 4: 2,400-3,600. Stage 5:
-   2,800-4,200. Stage 6: 3,200-4,800.
+   2,800-4,200. Stage 6: 3,200-4,800. Stage 7: 3,600-5,400. Stage 8:
+   4,000-6,000. Stage 9: 4,400-6,600.
 10. **Adult.** Follow the canon: no toys and no playground framing, and the
     contexts are an adult's own day — work, the shops, the clinic, appointments,
     forms, travel, money. Assume an adult, but never a particular life: where a

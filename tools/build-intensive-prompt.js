@@ -156,10 +156,72 @@ function prepareSource(raw) {
   };
 }
 
+// An ARCHIVED source is a previous course's AUTHORED unit, which is the shape an
+// author writes rather than the shape the builder emits: `groups` not
+// `vocabularyGroups`/`dictionaryLinks`, `comprehension[].q` not `.question`,
+// `speaking[].type` not `.activityType`. Level 3 is built from the B1 course
+// that was Level 2 until 2026-09-12, so it reads that way round.
+function prepareArchiveSource(raw) {
+  if (full) return raw;
+  return {
+    unitTitle: raw.title,
+    unitOverview: raw.overview,
+    vocabularyGroups: (raw.groups || []).map((group) => ({ title: group.title, size: (group.words || []).length })),
+    vocabulary: (raw.groups || []).flatMap((group) =>
+      (group.words || []).map((word) => ({
+        word: word.w,
+        group: group.title,
+        meaning: word.meaning,
+        example: word.example,
+        practice: (word.practice || []).slice(0, 2),
+      }))),
+    grammar: (raw.grammar || []).map((lesson) => ({
+      title: lesson.title,
+      practiceType: lesson.type,
+      explanation: lesson.explanation,
+      ruleAndExamples: lesson.rule,
+      commonMistake: lesson.mistake,
+      memoryTip: lesson.tip,
+      practice: lesson.practice,
+    })),
+    outcomes: (raw.outcomes || []).map((outcome) => ({
+      learningOutcome: outcome.outcome,
+      bloomLevel: outcome.bloom,
+      cambridgeObjectives: outcome.esl || outcome.cambridge || [],
+    })),
+    teacherNotes: (raw.teacherNotes || []).map((note) => ({ noteType: note.type, note: note.note })),
+    readingsCovered: (raw.readings || []).map((reading) => ({
+      title: reading.title,
+      type: reading.type,
+      words: String(reading.passage || "").trim().split(/\s+/).filter(Boolean).length,
+      opening: firstWords(reading.passage, 40),
+    })),
+    comprehensionCovered: (raw.comprehension || []).map((question) => question.q),
+    speakingCovered: (raw.speaking || []).map((task) => `${task.type}: ${task.title}`),
+    writingCovered: (raw.writing || []).map((task) => task.title),
+    activitiesCovered: (raw.activities || []).map((activity) => `${activity.type}: ${activity.title}`),
+    quizzesCovered: (raw.quizzes || []).map((question) => question.q),
+    liveSessionsCovered: [],
+  };
+}
+
 const sourceUnits = [];
 const stages = new Set();
 for (const source of unit.source || []) {
-  for (const number of source.units) {
+  if (source.archive) {
+    const file = path.join(ROOT, "inputs", "ehel-english-intensive-source", "archive",
+      source.archive, `l2-u${String(source.unit).padStart(2, "0")}.json`);
+    if (!fs.existsSync(file)) { console.error(`missing archived source: ${path.relative(ROOT, file)}`); continue; }
+    const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+    sourceUnits.push({
+      archive: source.archive,
+      sourceUnit: source.unit,
+      title: raw.title,
+      content: prepareArchiveSource(raw),
+    });
+    continue;
+  }
+  for (const number of source.units || []) {
     const file = path.join(ENGLISH, `grade-${source.grade}`, "data", "units", `unit-${number}.json`);
     if (!fs.existsSync(file)) { console.error(`missing source: ${path.relative(ROOT, file)}`); continue; }
     const raw = JSON.parse(fs.readFileSync(file, "utf8"));
@@ -167,6 +229,11 @@ for (const source of unit.source || []) {
     sourceUnits.push({ grade: source.grade, sourceUnit: number, title: raw.unit.unitTitle, content: prepareSource(raw) });
   }
 }
+
+// A source is either a school English unit (grade + unit) or a unit of a
+// previous course kept in `archive/`, which has no grade at all.
+const sourceLabel = (s) =>
+  s.archive ? `${s.archive}/U${s.sourceUnit}` : `G${s.grade}U${s.sourceUnit}`;
 
 // --- Cambridge objectives for the stages involved -----------------------------
 // A 0057 level cites the objectives of the UNIT's stage — 0057 as the contract,
@@ -296,7 +363,7 @@ if (leftover) { console.error(`Unfilled slots remain: ${[...new Set(leftover)].j
 const brief = [
   `<!-- Assembled by tools/build-intensive-prompt.js — do not edit by hand.`,
   `     Level ${level.number} (${(level.cefr || []).join("+")}) · Unit ${unit.number} · band ${cefrBand}`,
-  `     Source: ${sourceUnits.map((s) => `G${s.grade}U${s.sourceUnit}`).join(", ") || "none"}`,
+  `     Source: ${sourceUnits.map(sourceLabel).join(", ") || "none"}`,
   `     Cambridge stages cited: ${citeStages.join(", ") || "none"} (source grades: ${[...stages].sort((a, b) => a - b).join(", ") || "none"})`,
   `     Patterns to teach: ${(unit.patterns || []).length} · already taught: ${alreadyTaught.length}`,
   `-->`,
@@ -314,7 +381,7 @@ console.log(`${level.label} · ${unitLabel}`);
 console.log(`  CEFR band ............ ${cefrBand}`);
 console.log(`  patterns to teach .... ${(unit.patterns || []).length}`);
 console.log(`  already taught ....... ${alreadyTaught.length} (use, never re-teach)`);
-console.log(`  source units ......... ${sourceUnits.length}${sourceUnits.length ? ` (${sourceUnits.map((s) => `G${s.grade}U${s.sourceUnit}`).join(", ")})` : ""}`);
+console.log(`  source units ......... ${sourceUnits.length}${sourceUnits.length ? ` (${sourceUnits.map(sourceLabel).join(", ")})` : ""}`);
 console.log(`  Cambridge objectives . ${cambridge.reduce((sum, item) => sum + item.objectiveCount, 0)} across ${cambridge.map((item) => `${item.curriculumCode} stage ${item.stage}`).join(", ")}`);
 // Dense JSON runs near three characters to the token, so this is a rough floor
 // rather than the four-characters-per-token rule of thumb for prose.

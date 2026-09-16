@@ -5,7 +5,7 @@
 categorical data; 2MD.06 how data may help to solve problems; 2MD.01 the
 advantages of storing data on computers.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 PLAYGROUND = [
     {"label": "Monday", "pic": "\U0001F9D2", "value": 9},
@@ -256,3 +256,9 @@ tier(LESSON,
            ["the graph is wrong", "one must be taller really", "nobody chose either"],
            "A tie is a real answer. It means the question does not have one winner."),
      ])
+
+LESSON["talk"] = talk(
+    "Show them a graph from a newspaper or a phone. In pairs: what is it trying to tell "
+    "you, in one sentence?",
+    "Ask for one decision their own graph could help somebody make."
+)

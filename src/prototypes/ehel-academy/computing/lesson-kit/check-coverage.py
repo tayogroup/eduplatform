@@ -220,6 +220,9 @@ def main():
                          if st["kind"] not in ("overview", "lecture", "words", "games", "home", "quiz", "world", "resources")):
                 fail(entry["file"], "self-check %r names %s, which none of this lesson's own steps carries" % (c["t"][:40], c["code"]))
         selfcheck[n] = len(data.get("cando") or [])
+        tk = data.get("talk") or {}
+        if not (tk.get("opener") and tk.get("after")):
+            fail(entry["file"], "carries no pair of spoken prompts for the teachers' page")
         for k, st in enumerate(data["steps"], 1):
             d = st["data"]
             kind = st["kind"]

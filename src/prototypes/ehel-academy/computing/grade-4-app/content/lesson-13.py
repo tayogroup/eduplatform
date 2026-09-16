@@ -6,7 +6,7 @@ systems software; 4CS.03 data recorded by input devices, including sensors
 and data loggers; 4CS.04 information communicated by output devices; 4CS.05
 different types of file have different sizes.
 """
-from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "software-sensors-and-files",
@@ -295,3 +295,9 @@ tier(LESSON,
            ["it did not record much", "it deleted most of it", "loggers compress everything"],
            "A number takes almost no space. A single photo of the same greenhouse would be far bigger."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name a program you open, and something the computer runs that you never "
+    "open.",
+    "Ask why a video fills a phone and a whole book does not."
+)

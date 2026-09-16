@@ -6,7 +6,7 @@
 of using forms when collecting data; 4MD.03 the differences between data and
 information.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "data-and-information",
@@ -273,3 +273,9 @@ tier(LESSON,
            ["one report made the numbers up", "numbers cannot do that", "one of them is broken"],
            "Data does not interpret itself. Turning it into information is a choice somebody makes, and choices can differ."),
      ])
+
+LESSON["talk"] = talk(
+    "Write five numbers on the board with no labels. In pairs: what do they mean? Now tell "
+    "them what they are, and ask again.",
+    "Ask each pair for a set of numbers that could honestly be told two different ways."
+)

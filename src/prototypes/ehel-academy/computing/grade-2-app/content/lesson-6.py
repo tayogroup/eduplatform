@@ -6,7 +6,7 @@ physical computing device to enable it to reach a specific destination; with
 2CT.05 (predict where a program stops) and 2CT.01 (follow a linear
 algorithm). Robo on the grid keeps the floor robot's own rules.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "bee-bot-journeys",
@@ -229,3 +229,9 @@ tier(LESSON,
            ["start the whole thing again", "turn it round", "press Go twice"],
            "One square short means one forward missing. Find the smallest change that fixes it."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, describe the route from this room to the school gate using only forward and "
+    "turn.",
+    "Ask whose route was shortest, and whether shortest was the same as easiest to say."
+)

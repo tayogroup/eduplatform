@@ -6,7 +6,7 @@ produce the desired output; 3P.08 programmers use their mistakes to inform
 the programs they create; 3P.07 the benefits of working with others when
 creating programs.
 """
-from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "mistakes-make-programs-better",
@@ -233,3 +233,10 @@ tier(LESSON,
            ["to feel bad", "to show the teacher", "they do not"],
            "A recorded error is a lesson. That is what using your mistakes to inform the next program means."),
      ])
+
+LESSON["talk"] = talk(
+    "Tell them about a mistake you learned something from. In pairs: what did it teach you "
+    "that getting it right would not have?",
+    "Ask each pair to report one error in the useful form: what I expected, and what "
+    "actually happened."
+)

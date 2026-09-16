@@ -486,3 +486,25 @@ Mutation-tested 7 of 7 with the tree restored byte-identical.
 deliberately not deployed) lists all 274 questions this grade asks, 259 of them
 unfalsifiable from inside the build because the key is the object the question
 was generated from. Nobody has read them.
+
+### 2026-09-16, later - what the gap measurement closed
+
+Measuring what was LEFT after the pass above found two things worth closing and
+one defect. All three are position-safe; the 14 lessons still have the same
+steps in the same order.
+
+- **The two spoken prompts, on the teachers' page.** Across Stages 2 to 4 the
+  Cambridge books say "in pairs / in groups" 162 times and "discuss / explain to
+  somebody" 86 times, and this build presented none of it - a page cannot hear
+  an answer. Each lesson now carries an opener to run BEFORE any teaching
+  (Cambridge's `Get started!`) and one for once it is finished. They are printed
+  on the teachers' section and drawn nowhere else.
+- **The real block names.** Naming ScratchJr, Scratch and MakeCode closed
+  recognition, not transfer: Cambridge names 22 of 26 distinct Scratch blocks
+  and interface parts at Stage 3 and this build named 9. Each block lesson now
+  maps the blocks it actually uses onto Scratch's move 10 steps, change y by 50, go to x: 0 y: 0, wait 1 seconds and repeat, and MakeCode's on button A pressed, on shake, show icon and play tone. Blocks with no equivalent here
+  are deliberately still unnamed.
+- **The defect**: `LED` was in the Stage 4 fixture and taught nowhere, because
+  the gate matched required terms as SUBSTRINGS and `"led"` sits inside
+  `"count-controlled"`. Whole words now; 140 of 141 required strings had held
+  all along.

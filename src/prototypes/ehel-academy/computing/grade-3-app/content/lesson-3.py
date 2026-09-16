@@ -6,7 +6,7 @@ creation of algorithms; 3CT.05 predict the outcome of a change to an
 algorithm presented as a sequence of steps; 3CT.06 many tasks can be divided
 into smaller sections to make them easier to follow and to edit.
 """
-from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "think-it-through",
@@ -290,3 +290,9 @@ tier(LESSON,
            ["the algorithm is broken", "one of them is wrong", "swapping never changes anything"],
            "Predicting a change and being right is how you find out what really depends on what."),
      ])
+
+LESSON["talk"] = talk(
+    "In groups of three: how would you divide tidying this room between you? Agree the "
+    "sections before anybody starts.",
+    "Ask each group which section was hardest to hand over, and why."
+)

@@ -22,7 +22,7 @@ subject's own. If the Mathematics engine changes, re-copy `voice.js` and
 | `build-review-pack.py --app <dir>` | `review-pack.html`: every question the build asks, with its key and its explanation, UNFALSIFIABLE FIRST. Not in the deploy set — it is the working document for the human read the 146 to 259 authored keys per grade have never had |
 | `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single, and Robo's routes / table answers / fixes / race sums / chart keys RE-COMPUTED from the shipped data. Since 2026-09-16 it also carries the **Cambridge arm**: every entry of `computing/data/cambridge-stage-features.json` for this stage must be answered by the lesson that claims it, every lesson must carry at least three self-check claims, and both tier banks are checked for a single key and a reason |
 | `_rules.py` | the things the kit computes rather than trusts — Robo's Bee-Bot rules, the table arithmetic, the repeat expansion (`REPEATS`, `expand_program`; the builder refuses to run if `computing.js` disagrees about what `repeat2`/`3`/`4` mean), the race sums, and at Stage 3 the machine rules (`rule_output`), the numbered walk (`walk_end`), the 1 = a code (`code_word`, `decode_code`), the row filter (`filter_rows`), tidy-program equivalence (`same_effect`), the repeated run (`repeat_run`) and the spreadsheet state (`sheet_cells`), and at Stage 4 the loop unroll (`expand_loop`), the loop-algorithm walk (`flatten_algo`, forever loops go round `FOREVER_CYCLES` = 2 then stop), the sub-routine walk (`sub_expand`), the branch (`branch_run`), the best algorithm for a purpose (`best_algo`), the sort (`sort_rows`), the Caesar shift (`caesar_shift`) and the Pigpen grid (`pigpen_index`) — each mirrored name for name in `computing.js`; imported by the builder AND the gate so they cannot disagree |
-| `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `s()`, `choice()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in. Since 2026-09-16 also `cando()` (one "I can…" claim for the self-check), `world()` + `place()` (Computing world's Did-you-know fact and its real places), `label_ct()` (which computational-thinking move a step is, from `CT_MOVES`) and `tier()` (the support and extension banks) |
+| `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `s()`, `choice()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in. Since 2026-09-16 also `cando()` (one "I can…" claim for the self-check), `world()` + `place()` (Computing world's Did-you-know fact and its real places), `label_ct()` (which computational-thinking move a step is, from `CT_MOVES`) and `tier()` (the support and extension banks), and `talk()` (the two prompts a grown-up runs OUT LOUD, either side of the lesson, printed on the teachers' page and nowhere else) |
 | `_shell.py` | the unit shell: the seven steps drawn AROUND every lesson (overview, lecture, words, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree. A lesson's optional `LESSON["recap"]` (one line from the lesson before) and `LESSON["warmup"]` (1 to 3 `q()` items) ride on the overview |
 | `drive-lessons.mjs --app <dir>` | plays every step of every lesson to the end in Chromium from the page's own data and sweeps every step at 375 px; exit 0 only when every lesson ends at 100% with no errors. `--record` does the same on a copy of the DEPLOYED layout at the depth it is served from (`app/computing/<dir>/` under the config's `remote`: the hub as `index.html`, the five platform modules beside the pages, imports flattened, as `deploy.mjs` writes them, and the header crest at `app/shared/`) and then requires every step in the stored record, `completed` set, nothing ticked on a fresh open, and a reload after moving to step 4 to open step 4. `--only N` for one lesson |
 | `rebuild.sh` | the whole chain in the one order that works, for one grade. `T=<a git archive HEAD export of mathematics/lesson-app-tools> sh ../lesson-kit/rebuild.sh` builds against the COMMITTED shared tools — several sessions edit them at once |
@@ -116,6 +116,30 @@ format written into a content module that does not exist fails the build
 rather than the page.
 
 ## Rules that cost something to learn
+
+- **The half of Cambridge a page cannot present goes to the grown-up.**
+  Measured across Stages 2 to 4, the Learner's Books say "in pairs / in groups"
+  162 times and "discuss / explain to somebody" 86 times. A self-contained page
+  can present none of it: it cannot hear an answer and cannot know the talking
+  happened. `talk(opener, after)` is two prompts per lesson and they are drawn
+  ONLY on the printable teachers' section — the opener before any teaching
+  (Cambridge's `Get started!`, always a question to a pair), the other once the
+  lesson is done. They ride in the LESSON payload so the gate can see them, and
+  the gate requires both halves on every lesson. Nothing renders them to a
+  child.
+
+- **Name the REAL block, not just the real tool.** Naming ScratchJr, Scratch
+  and MakeCode closed recognition; it did not close transfer. Measured against
+  the books: Cambridge names 22 of 26 distinct Scratch blocks and interface
+  parts at Stage 3 and this build named 9. The "where these programs really
+  live" lecture part in each block lesson now maps every block the lesson
+  actually uses onto its real name (`move right` → `move 10 steps`, `go home` →
+  `go to x: 0 y: 0`, `when button A is pressed` → `on button A pressed`), which
+  took Stage 3 to 14 and Stage 4 to 17. **The rest are deliberately not named**:
+  `glide`, `next costume`, `set size to`, `play sound`, `backdrop` and `costume`
+  have no equivalent here, and naming a block a child never uses is worse than
+  leaving it out. `if … then` stays absent at Stage 3 because the owner left IF
+  to Stage 5.
 
 - **The self-check lives on the sticker shelf, and the shelf is not a step.**
   Cambridge closes every unit of all four Learner's Books with `What can you
@@ -228,6 +252,19 @@ rather than the page.
   leaves it (its arrival IS page load, so arrival is no cure), and
   Computing world ticks on arrival. Anything else that must tick without a
   tap goes through one of those two, never through a bare `finish()`.
+- **THE MUTATION HARNESS UNWIRES THE PAGES, so it runs BEFORE the final
+  rebuild and never after.** It calls `build-lessons.py` on every iteration,
+  and that writes each page from scratch - which throws away everything the
+  shared pipeline added. On 2026-09-16 it ran after the last `rebuild.sh` and
+  left all fourteen Grade 4 pages with no `wire-progress` and no
+  `wire-platform-controls` at all. Every gate stayed green: the objectives were
+  reached, the keys were single, the Cambridge fixture was answered, and the
+  pages would have deployed reporting NOTHING to the school. `--record` is what
+  found it, and the tell is unmistakable once seen - `header n/a`, `record 0/14
+  stored`, and a reload landing on step 1 instead of where the drive left off,
+  on every lesson at once. If the harness has run, run the pipeline again
+  before you believe anything about the pages.
+
 - **The plain drive cannot see the school's record; `--record` can.** The
   source tree has no platform modules (they 404 by design), so a drive there
   proves the dots tick and nothing about what reaches the school. Run

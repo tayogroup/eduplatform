@@ -5,7 +5,7 @@
 concise; 3CT.03 identify steps that are repeated within everyday tasks;
 3CT.01 edit linear algorithms.
 """
-from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "concise-algorithms",
@@ -272,3 +272,8 @@ tier(LESSON,
            ["it runs faster", "it uses less paper", "the computer prefers it"],
            "Fixing one step instead of five is the real saving, and it is the reason concise algorithms have fewer bugs."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, describe making toast in as few steps as you can without losing anything.",
+    "Ask which step was hardest to cut, and whether cutting it would have broken the job."
+)

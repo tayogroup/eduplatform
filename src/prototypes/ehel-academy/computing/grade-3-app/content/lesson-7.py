@@ -6,7 +6,7 @@ input device; 3P.10 programs for a physical computing device to produce
 outputs; 3P.09 test and debug; Computer Systems 3CS.05 computers can be
 programmed to control machines and other physical objects.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "press-shake-clap",
@@ -192,6 +192,15 @@ LESSON["warmup"] = [
 # sticker shelf, the tiers hang off the check step and score nothing, and
 # Computing world is a step that already existed and said it was empty.
 
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4DF", "Bitsy has a real cousin",
+         "Bitsy is not the only small board you can program. A real one called the micro:bit is "
+         "used in schools all over the world. It has two buttons, a light sensor and a grid of "
+         "little lights, the way Bitsy does. It is programmed with blocks in an app called "
+         "MakeCode. Your when button A is pressed is on button A pressed. Your when it is shaken "
+         "is on shake. Your show a heart is show icon. Your beep is play tone. Same jobs, real "
+         "names."),
+]
 label_ct(LESSON, "Control a machine", "Abstraction")
 
 LESSON["cando"] = [
@@ -230,3 +239,8 @@ tier(LESSON,
            ["sensors are cheaper", "timers are not allowed", "there is no difference"],
            "A timer heats an already-warm house. A sensor is an input about the real world."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name something at home that switches itself on. What is it sensing?",
+    "Ask each pair for one input and one output on a machine they use every day."
+)

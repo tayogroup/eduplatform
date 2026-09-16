@@ -6,7 +6,7 @@ error in algorithms for everyday tasks; 2CT.05 predict the outputs of
 algorithms; 2CT.01 follow and understand linear algorithms; 2CT.03 precise
 instructions.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, choice, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "bugs-and-predictions",
@@ -271,3 +271,9 @@ tier(LESSON,
            ["editing is slower", "new ones are always better", "you cannot edit"],
            "Everything except the wrong step has already been tested. Throwing it away throws that away too."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, predict out loud what happens if you put your shoes on before your socks. "
+    "Then do the same for making a cup of tea.",
+    "Ask each pair: when your prediction was wrong, was the algorithm wrong or were you?"
+)

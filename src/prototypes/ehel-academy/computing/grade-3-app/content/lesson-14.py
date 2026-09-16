@@ -6,7 +6,7 @@ machines and other physical objects; 3CS.06 common 'Internet of Things'
 devices in a familiar environment; 3CS.07 the role of robots in
 manufacturing.
 """
-from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "machines-things-and-robots",
@@ -286,3 +286,9 @@ tier(LESSON,
            ["it is cleverer than a person", "it never needs electricity", "it can decide what to build"],
            "Robots are not clever. They are exact and they never get tired, which is what repetitive work needs."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: which machines at home would you like to control from a phone, and which "
+    "would you not?",
+    "Ask for one job robots do better than people, and say why it is that job."
+)

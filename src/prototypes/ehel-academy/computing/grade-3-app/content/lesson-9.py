@@ -10,7 +10,7 @@ Until the Grade 3 validation (2026-09-11) categorical data was explained but
 never recorded or charted; the favourite-pet form and its three views, after
 the pets count, do both.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "data-problems",
@@ -290,3 +290,8 @@ tier(LESSON,
            ["to fill the page", "charts are always better", "tables are always better"],
            "Each answers a different question. Exactly how many came by bus? The table. Which way is most popular? The chart."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name a problem in this school that counting something would help solve.",
+    "Ask which way of showing the data answered their question fastest, and why that one."
+)

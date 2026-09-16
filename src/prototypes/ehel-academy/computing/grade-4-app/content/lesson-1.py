@@ -6,7 +6,7 @@ correct algorithms that use repetition, including indefinite (forever) loops;
 4CT.02 the same for iteration, including count-controlled loops; 4CT.03
 repetition makes algorithms more concise.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "loops-in-algorithms",
@@ -264,3 +264,9 @@ tier(LESSON,
            ["it runs three times faster", "it uses less battery", "there is no saving"],
            "Concise means fewer places for a mistake to hide. Fix the step inside the loop and all three turns are fixed."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, name something that repeats a set number of times, and something that "
+    "repeats until you stop it.",
+    "Ask what stops each kind of loop, and what happens when nothing does."
+)

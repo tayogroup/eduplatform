@@ -6,7 +6,7 @@ important; 1CT.02 identify single errors in algorithms for everyday tasks;
 1CT.07 suggest ways an algorithm can be changed to affect the outcome; with
 1CT.01 and 1CT.04.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "order-matters",
@@ -274,3 +274,10 @@ tier(LESSON,
            ["how much jam you used", "the name of the sandwich", "the colour of the plate"],
            "The top slice went on before the jam. Same steps, different order, different sandwich."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: is there any job at home where the order does not matter at all? Take three "
+    "suggestions and test each one out loud.",
+    "Ask for one step that could go in two different places, and one that could not. What "
+    "is the difference?"
+)

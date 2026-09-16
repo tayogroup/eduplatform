@@ -7,7 +7,7 @@ computers connected together around the world; 1DC.03 some devices are
 connected by wires and others are not; 1DC.04 there are times when the
 internet is not available.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "networks-and-the-internet",
@@ -299,3 +299,10 @@ tier(LESSON,
            ["it has a lot of wires", "it is very big", "it is in the sky"],
            "Your home network joins your school's network joins a hospital's network. All of them together are the internet."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name every thing at home that joins the wifi. Whoever has the longest list "
+    "reads it to the class.",
+    "Ask each pair for one thing that would stop working tonight if the internet went off, "
+    "and one thing that would not."
+)

@@ -6,7 +6,7 @@ outputs from different inputs; 4P.06 plan the instructions for objects
 within programs, identifying their inputs and outputs; 4P.07 test different
 parts of a program systematically to identify and debug errors.
 """
-from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "inputs-outputs-and-parts",
@@ -263,3 +263,9 @@ tier(LESSON,
            ["yes, test them all anyway", "no, never test part 3", "test part 1 again"],
            "A part that is given wrong input will look broken even when it is fine. Fix them in order."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: a string of lights will not work. How would you find the broken one without "
+    "checking every single bulb?",
+    "Ask which part they tested first, and why that one."
+)

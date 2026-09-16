@@ -7,7 +7,7 @@ programs that reset objects to their original state (initialisation); 3P.05
 making a change within a block of code, such as the number of steps a
 sprite moves; 3P.09 test and debug programs.
 """
-from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "tidy-programs",
@@ -196,8 +196,13 @@ LESSON["lecture"] = LESSON["lecture"] + [
          "The blocks here work like Scratch, the program most schools use at your age. In "
          "Scratch you drag blocks together under a hat block. You press the green flag. The "
          "sprite does what you said. It has a repeat block. It has a go-to block to reset a "
-         "sprite. It has blocks with numbers in them. All the things you are using now. If your "
-         "teacher opens Scratch, you already know how it thinks."),
+         "sprite. It has blocks with numbers in them. All the things you are using now. If "
+         "your teacher opens Scratch, you already know how it thinks. The hat block is called "
+         "when green flag clicked. Your blocks have Scratch names too. Move right is move 10 "
+         "steps. Jump is change y by 50. Spin is turn 90 degrees. Say hello is say Hello!. "
+         "Grow and shrink are change size by 10 and change size by -10. Go home is go to x: 0 "
+         "y: 0. Wait is wait 1 seconds. Repeat 3 times is repeat 3. Same jobs, real names."
+),
     part("\U0001F50A", "The number inside a block",
          "Some blocks have a number you can change without changing the block. Move has a number "
          "of steps. Wait has a number of seconds. Set volume has a number too. Volume is how "
@@ -250,3 +255,9 @@ tier(LESSON,
            ["add three more move blocks", "start the program again", "delete the move block"],
            "The block is right; only its number is wrong. Change the number and nothing else moves."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: is a shorter set of instructions always better? Find one case where it is "
+    "not.",
+    "Ask what they deleted, and how they knew it was safe to delete."
+)

@@ -5,7 +5,7 @@
 the desired output; 2P.05 the benefits of working with others when
 debugging; 2P.06 the benefits of testing regularly; with 2P.02.
 """
-from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "debugging-together",
@@ -242,3 +242,10 @@ tier(LESSON,
            ["give up", "put the old bug back", "change every block"],
            "Programs can have more than one bug. Run, look, fix, run again."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, describe a time somebody spotted a mistake you could not see. What made it "
+    "easier for them?",
+    "Ask each pair for one thing a good debugging partner does, and one thing they should "
+    "not do."
+)

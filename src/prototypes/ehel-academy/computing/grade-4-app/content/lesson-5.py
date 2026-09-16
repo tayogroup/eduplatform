@@ -6,7 +6,7 @@ develop programs with iteration; 4P.04 programs that produce a desired
 output, using the repeat command; 4P.01 add comments to blocks of code and
 explain their benefits.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "programs-with-loops",
@@ -212,7 +212,12 @@ LESSON["lecture"] = LESSON["lecture"] + [
          "exactly what you said. It has a repeat block with a number in it. It has a forever "
          "block. It has a place to write a comment beside any block. For a physical device, "
          "schools often use MakeCode. It looks almost the same. It sends the program to the "
-         "board instead of to a sprite. Both of them think the way this does."),
+         "board instead of to a sprite. Both of them think the way this does. Your blocks have "
+         "Scratch names. Move right is move 10 steps. Jump is change y by 50. Spin is turn 90 "
+         "degrees. Say hello is say Hello!. Go home is go to x: 0 y: 0. Wait is wait 1 "
+         "seconds. Repeat 4 times is repeat 4, and forever is forever. A comment goes beside "
+         "any block, just as it does here."
+),
 ]
 
 LESSON["words"] = LESSON["words"] + [
@@ -256,3 +261,9 @@ tier(LESSON,
            ["yes, it runs slower", "yes, it runs faster", "yes, it adds steps"],
            "Comments are invisible to the computer and essential to the people. That is exactly why they are safe to add."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, read each other something you wrote a while ago. Could you still tell why "
+    "you wrote it that way?",
+    "Ask for one comment worth writing, and one that would waste everybody's time."
+)

@@ -543,6 +543,11 @@ def grownups_for(n, lesson, codes, minutes, steps, stage):
     # to talk it through. On the page it is on the sticker shelf, where a
     # grown-up printing this section would never see it.
     cando = "".join("<li>%s</li>" % text(c["t"]) for c in (lesson.get("cando") or []))
+    # The half of Cambridge a self-contained page cannot present: it cannot
+    # hear an answer, so the talking is handed to the adult.
+    tk = lesson.get("talk") or {}
+    talk = ("<li><b>Before you start.</b> %s</li><li><b>Once they have finished.</b> %s</li>"
+            % (text(tk["opener"]), text(tk["after"]))) if tk else ""
     ct = "".join("<li><b>%s</b> <span class=\"key\">&middot; %s</span></li>" % (text(s["ct"]), text(s["title"]))
                  for s in lesson["steps"] if s.get("ct"))
     return (
@@ -553,11 +558,13 @@ def grownups_for(n, lesson, codes, minutes, steps, stage):
         '%s'
         '%s'
         '%s'
+        '%s'
         '        <h3>Answer keys</h3><ul>%s</ul>\n'
         '      </div>\n    </details>\n'
         % (n, text(lesson["title"]), steps, minutes, len(reached), stage, objectives, steplist,
            ('        <h3>Computational thinking in this lesson</h3><ul>%s</ul>\n' % ct) if ct else "",
            ('        <h3>Do it unplugged, for real</h3><ul>%s</ul>\n' % "".join(home)) if home else "",
+           ('        <h3>Talk about it, out loud, in pairs</h3><ul>%s</ul>\n' % talk) if talk else "",
            ('        <h3>What can you do? (talk these through at the end)</h3><ul>%s</ul>\n' % cando) if cando else "",
            "".join(keys)))
 

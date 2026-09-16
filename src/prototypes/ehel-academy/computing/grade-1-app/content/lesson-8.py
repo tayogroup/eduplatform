@@ -9,7 +9,7 @@ computers output information in many ways; 1CS.05 everyday devices use
 computers to control what they do; 1CS.06 what robots are and where they
 are found.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "computers-everywhere",
@@ -363,3 +363,9 @@ tier(LESSON,
            ["it is very big", "it has a computer inside", "it is neither"],
            "Tapping is an input. What it shows you is an output. The same piece of glass does both."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: how many computers are in this room? Agree a number before anybody counts, "
+    "then count.",
+    "Ask for one computer they had never thought of as a computer before today."
+)

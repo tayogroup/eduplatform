@@ -7,7 +7,7 @@ including a static object; 3P.07 the benefits of working with others when
 creating programs; 3P.08 programmers use their mistakes to inform the
 programs they create.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "many-things-at-once",
@@ -246,3 +246,9 @@ tier(LESSON,
            ["it is half the typing", "you can blame them", "two programs are better than one"],
            "You stop seeing your own mistakes very quickly. Somebody else sees them straight away."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, name three things in this room happening at the same time, none of them "
+    "waiting for the others.",
+    "Ask what would go wrong if the characters took turns instead of running together."
+)

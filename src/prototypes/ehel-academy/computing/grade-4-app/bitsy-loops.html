@@ -1487,6 +1487,10 @@
         "code": "4CS.01"
       }
     ],
+    "talk": {
+      "opener": "In pairs: name three things in this building that sense something and then decide.",
+      "after": "Ask where the program sits in sense, decide, act - and what would happen without it."
+    },
     "steps": [
       {
         "kind": "overview",
@@ -1591,6 +1595,11 @@
               "pic": "🖐️",
               "title": "Not a control system",
               "say": "A candle, a pencil, a bicycle: nothing senses and nothing decides. A radio you switch on by hand: a person decides every time. A control system decides by itself, from a sensor."
+            },
+            {
+              "pic": "📟",
+              "title": "Bitsy's blocks on a real board",
+              "say": "The micro:bit is programmed in an app called MakeCode, and its blocks do what yours do. When button A is pressed is on button A pressed. When it is shaken is on shake. Show a heart is show icon. All lights on is show leds. Beep is play tone. Repeat 4 times is repeat 4 times, and forever is forever. If somebody hands you a micro:bit, you already know the program you want."
             },
             {
               "pic": "💡",
@@ -9721,7 +9730,7 @@
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🌡️", "Sensor finder"], ["🌡️", "Sensor programmer"], ["🔁", "Loop programmer"], ["🎛️", "Control spotter"], ["🗂️", "Control sorter"], ["📝", "Bitsy checker"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 6 parts. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   tapCards(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Five inputs, two of them sensors." }, LESSON.steps[3].data));
   deviceProgram(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Two sensors, three programs: a fan and a night light." }, LESSON.steps[4].data));

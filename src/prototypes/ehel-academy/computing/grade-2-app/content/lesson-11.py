@@ -11,7 +11,7 @@ carried all six Computer Systems objectives in 21 steps, about 60 minutes.
 The six steps are unchanged; the quiz, about, lecture, words, home projects,
 recap and warm-up are this lesson's own.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "computers-devices-and-robots",
@@ -286,3 +286,9 @@ tier(LESSON,
            ["a desktop computer", "the biggest screen you can find", "a printer"],
            "Where you are decides the device. Portable and long-lasting beats powerful with nowhere to plug in."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name a robot from a film. What can it do that no real robot can?",
+    "Ask each pair for one job they would give a robot and one they would keep for a "
+    "person."
+)

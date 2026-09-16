@@ -5,7 +5,7 @@
 correct linear algorithms; 3CT.04 logical thinking is used in the creation of
 algorithms.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "follow-edit-correct",
@@ -274,3 +274,10 @@ tier(LESSON,
            ["the algorithm is wrong", "one of them is useless", "they must be swapped"],
            "Some steps depend on each other and some do not. Knowing which is which is the logical thinking."),
      ])
+
+LESSON["talk"] = talk(
+    "Read out a set of instructions with one step in the wrong place. In pairs: which step, "
+    "and how do you know?",
+    "Ask for a step whose position matters and one whose position does not. What makes the "
+    "difference?"
+)

@@ -1163,6 +1163,13 @@ def build(n, fname, lesson, codes, libs, css, voice, deck, computing, finder):
                    % (text(CT_MOVES[s["ct"]]), text(s["ct"]))) if s.get("ct") else "",
         }
 
+    # The two spoken prompts live on the teachers' page, so nothing here
+    # renders them - but a half-written pair would print one empty line on a
+    # page a grown-up is holding, so it is refused at build time like the rest.
+    tk = lesson.get("talk")
+    if tk is not None and not (isinstance(tk, dict) and tk.get("opener") and tk.get("after")):
+        sys.exit("REFUSED: lesson %d: talk() needs both an opener and an after" % n)
+
     # CAMBRIDGE'S "What can you do?", on the sticker shelf. Every unit of all
     # four Learner's Books closes with one and this build had none. The shelf
     # is not a step, so nothing here moves a saved place or reopens a check.
@@ -1198,6 +1205,9 @@ def build(n, fname, lesson, codes, libs, css, voice, deck, computing, finder):
         "lessonNo": n, "title": title,
         "objectives": sorted({c for s in steps for c in s["objectives"]}),
         "cando": lesson.get("cando") or [],
+        # Carried in the page so the gate can see it; it is DRAWN only on the
+        # printable teachers' page, because a page cannot hear an answer.
+        "talk": lesson.get("talk") or {},
         "steps": [{"kind": s["kind"], "title": s["title"], "objectives": s["objectives"],
                    "ct": s.get("ct") or "", "data": s["data"]} for s in steps],
     }

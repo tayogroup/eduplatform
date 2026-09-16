@@ -6,7 +6,7 @@ range of industries; 4CS.07 the role of robots in service industries,
 including delivery, public transport and health care; 4CS.01 where control
 systems are used.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "computer-scientists-and-service-robots",
@@ -242,3 +242,9 @@ tier(LESSON,
            ["the wheels", "the parcel", "the pavement"],
            "Sensors sense and wheels act. The control system is the deciding in the middle."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name a job that has nothing to do with computers. Then find the computer in "
+    "it.",
+    "Ask each pair for one job they would not give a robot, and make them say why."
+)

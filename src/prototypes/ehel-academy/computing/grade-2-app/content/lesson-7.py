@@ -7,7 +7,7 @@ statistical data that can be manually recorded; 2MD.05 the types of data a
 question may generate, statistical and non-statistical; 2MD.01 the
 advantages of storing data and information on computers.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "collecting-data",
@@ -310,3 +310,9 @@ tier(LESSON,
            ["how many children walk to school", "how tall each child is", "which fruit each child chose"],
            "Statistical data is collected from lots of people so it can be counted. One name about one person is not."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, agree one question worth asking the whole class and one that would be a "
+    "waste of time. Say why.",
+    "Ask each pair what they would do differently if they collected it all again tomorrow."
+)

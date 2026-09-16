@@ -5,7 +5,7 @@
 algorithms; 3CT.08 develop linear algorithms to produce an output based on an
 input; 3CT.04 logical thinking in the creation of algorithms.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "input-machines",
@@ -217,3 +217,9 @@ tier(LESSON,
            ["so it is faster", "so it uses less power", "it does not have to"],
            "A machine that gave different answers to the same question could not be checked or trusted."),
      ])
+
+LESSON["talk"] = talk(
+    "Play a guessing game. You are a machine with a secret rule: they give you a number, "
+    "you give one back. In pairs, work out the rule.",
+    "Ask how many numbers they needed before they were sure, and why one was never enough."
+)

@@ -6,7 +6,7 @@ algorithms that contain repetition; 4CT.04 compare and contrast algorithms
 for the same task to determine which best suits the purpose; 4CT.03
 repetition makes algorithms more concise.
 """
-from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "predict-and-compare",
@@ -213,3 +213,9 @@ tier(LESSON,
            ["to find out which is wrong", "there is no reason", "to make them the same"],
            "Both get there. Comparing tells you which one gets there the way you need."),
      ])
+
+LESSON["talk"] = talk(
+    "Two routes to the same place. In pairs: which is better? Make them say what better "
+    "means before they answer.",
+    "Ask for a purpose that would make the OTHER algorithm the right one."
+)

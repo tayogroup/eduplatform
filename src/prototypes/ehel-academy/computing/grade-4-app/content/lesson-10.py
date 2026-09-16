@@ -6,7 +6,7 @@ and clients in a network; 4DC.02 the differences between the World Wide Web
 and the internet; 4DC.03 the differences between wi-fi and ethernet,
 including speed, security and convenience.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "clients-servers-and-the-web",
@@ -289,3 +289,9 @@ tier(LESSON,
            ["it is prettier", "it uses no electricity", "it is the only one that works"],
            "Radio waves are shared with everyone nearby and go through walls badly. A cable is nobody else's."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: what is the difference between the internet and the web? Take every answer "
+    "before correcting any of them.",
+    "Ask each pair for one job a server does that their own device does not."
+)

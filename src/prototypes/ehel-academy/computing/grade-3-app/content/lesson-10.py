@@ -7,7 +7,7 @@ to their purpose - date, currency, text; 3MD.06 select data based on its
 characteristics to solve problems; 3MD.03 record data using computing
 devices.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "spreadsheets",
@@ -242,3 +242,8 @@ tier(LESSON,
            ["nothing at all", "they turn into money", "they disappear"],
            "As text, 10 March comes before 2 March, because text sorts letter by letter. Format decides what the data can do."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: where have you seen rows and columns outside a computer? Take three.",
+    "Ask what goes wrong if a date is stored as ordinary text."
+)

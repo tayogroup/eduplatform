@@ -6,7 +6,7 @@ algorithms; 2P.02 recreate algorithms as programs; 2P.03 develop programs to
 produce desired outputs, including the use of the repeat command; 2P.06 the
 benefits of regularly testing programs throughout their development.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "programs-and-repeats",
@@ -213,8 +213,10 @@ LESSON["lecture"] = LESSON["lecture"] + [
          "These blocks work like the ones in ScratchJr. ScratchJr is a real app for "
          "young children on a tablet. You choose a character. You choose a background. "
          "Then you drag blocks together to make it move, jump and speak. That is exactly "
-         "what you are doing here. Older children use Scratch. It has the same idea with "
-         "more blocks."),
+         "what you are doing here. The names change a little. Your repeat 3 times is a "
+         "loop block with a 3 in it. Your move right is a right arrow with a number. The "
+         "green flag at the top starts everything, the way Go does here. Older children "
+         "use Scratch. It has the same idea with more blocks."),
 ]
 
 LESSON["words"] = LESSON["words"] + [
@@ -258,3 +260,9 @@ tier(LESSON,
            ["it is faster", "the computer asks you to", "so it looks busy"],
            "Test at the end and the bug could be anywhere. Test as you go and it is in the block you just added."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, clap a pattern and get your partner to say how many times it repeated.",
+    "Ask for one everyday thing that repeats, and how many times it repeats before it "
+    "stops."
+)

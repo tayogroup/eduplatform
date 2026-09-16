@@ -7,7 +7,7 @@ tasks, such as drawing a picture or building a brick tower; 2CT.01 follow and
 understand linear algorithms; 2CT.04 identify the steps NEEDED to undertake a
 task.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "precise-instructions",
@@ -284,3 +284,9 @@ tier(LESSON,
            ["open the camera app", "point the camera", "press the button"],
            "The photo works at any charge. A step the task does not need is a step to leave out."),
      ])
+
+LESSON["talk"] = talk(
+    "Ask a pair to tell you how to draw a house, and draw exactly what they say, mistakes "
+    "and all.",
+    "Which instruction had to be changed most? Ask them to say the better version out loud."
+)

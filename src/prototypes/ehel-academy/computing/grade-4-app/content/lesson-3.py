@@ -6,7 +6,7 @@ different parts (sub-routines); 4CT.07 use decomposition to break tasks into
 parts represented as algorithms; 4CT.08 follow and understand algorithms that
 use a sub-routine.
 """
-from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "sub-routines",
@@ -230,3 +230,10 @@ tier(LESSON,
            ["the parts are shorter", "it misses steps out", "it does not stay short"],
            "The detail moves into the named parts. The main algorithm becomes a plan you can read in one go."),
      ])
+
+LESSON["talk"] = talk(
+    "In groups of three, break 'put on a school play' into four named parts. Nobody may use "
+    "the word 'and'.",
+    "Ask which part they would hand to somebody else, and what that person would need to be "
+    "told."
+)

@@ -7,7 +7,7 @@ computers; 1P.02 recreate algorithms as programs to perform simple tasks;
 programs to test whether they produce the desired result; with 1CT.05 and
 1CS.05 (the everyday things that run a program).
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "algorithm-to-program",
@@ -237,8 +237,11 @@ LESSON["lecture"] = LESSON["lecture"] + [
     part("\U0001F431", "Where real children build programs",
          "Your blocks are like the ones in ScratchJr. ScratchJr is a real program for "
          "young children on a tablet. In it you pick a character. You pick a background. "
-         "Then you join blocks together, just as you do here. Older children use one "
-         "called Scratch. If you meet either at school, you will know what to do."),
+         "Then you join blocks together, just as you do here. The pictures are a little "
+         "different. Your move right is a right arrow with a number in it. Your jump is "
+         "an up arrow. Your say hello is a speech bubble. Your go home is a little house. "
+         "Same jobs, different pictures. Older children use one called Scratch. If you "
+         "meet either at school, you will know what to do."),
 ]
 
 LESSON["words"] = LESSON["words"] + [
@@ -283,3 +286,10 @@ tier(LESSON,
            ["because it looks nice", "because the computer asks for it", "we do not"],
            "The algorithm is the plan. Without it you cannot tell whether the program did the right thing."),
      ])
+
+LESSON["talk"] = talk(
+    "Ask a pair to give you an instruction badly on purpose, and follow it exactly. What "
+    "went wrong, and whose fault was it?",
+    "In pairs: name one thing a computer does better than a person, and one thing it cannot "
+    "do at all."
+)

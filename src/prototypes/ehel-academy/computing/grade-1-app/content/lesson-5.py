@@ -6,7 +6,7 @@ programs to test whether they produce the desired result; 1P.06 identify why
 a program does not produce the desired result; 1P.07 'debugging' is the
 correction of errors in programs; with 1P.03 and 1CT.02.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, choice, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "bugs-and-debugging",
@@ -288,3 +288,9 @@ tier(LESSON,
            ["start the whole program again from nothing", "leave it", "fix the same one again"],
            "Run, look, fix, run again. One bug at a time is how programmers actually work."),
      ])
+
+LESSON["talk"] = talk(
+    "Tell them about a time something you made went wrong. In pairs: what is the FIRST "
+    "thing to do when something does not work?",
+    "Ask each pair to finish this sentence out loud: 'I knew it was wrong because...'"
+)

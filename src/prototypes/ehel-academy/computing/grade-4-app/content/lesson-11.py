@@ -5,7 +5,7 @@
 may occur as a result of a failure in a network; 4DC.05 identify where and
 why encryption is used in digital systems.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "when-networks-fail",
@@ -249,3 +249,9 @@ tier(LESSON,
            ["it makes it faster", "the school says so", "there is no reason to"],
            "A network is shared. Encryption assumes somebody might be listening, which is cheaper than finding out they were."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: what could you not do today if the school network stopped? What would still "
+    "be fine?",
+    "Ask why a stolen encrypted laptop is a smaller problem than a stolen unencrypted one."
+)

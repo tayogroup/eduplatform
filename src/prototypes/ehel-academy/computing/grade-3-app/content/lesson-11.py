@@ -6,7 +6,7 @@ in a familiar environment, including the school and home; 3DC.02 services
 available on familiar networks - digital files, printed documents, the World
 Wide Web; 3DC.03 the advantages and disadvantages of a network.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "networks-around-us",
@@ -274,3 +274,10 @@ tier(LESSON,
            ["the interactive smartboard", "the multifunction device", "the cable in the wall"],
            "Hardware is what you can touch. A service is what the network lets you do with it."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, list everything in this room that is on the school network. Do not let them "
+    "forget the board at the front.",
+    "Ask each pair for one advantage of sharing a network, and one thing that sharing "
+    "costs."
+)

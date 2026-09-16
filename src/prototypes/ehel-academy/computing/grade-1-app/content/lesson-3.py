@@ -6,7 +6,7 @@
 instructions are a program Robo runs), 1P.03 (predict where Robo will stop),
 1P.05 (run it to test whether it reached the flower) and 1CT.06.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "forward-back-left-right",
@@ -255,3 +255,9 @@ tier(LESSON,
            ["Robo goes through the wall", "Robo moves two squares", "Robo turns round"],
            "A bump ends the program. The second forward never happens."),
      ])
+
+LESSON["talk"] = talk(
+    "Stand one child by the door. In pairs, get them there using only forward, backwards, "
+    "left and right - no pointing and no 'over there'.",
+    "Which was harder to give, the turns or the steps? Ask them why."
+)

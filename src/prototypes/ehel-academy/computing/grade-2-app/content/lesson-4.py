@@ -5,7 +5,7 @@
 programs; with 2P.02 (recreate the algorithm for each object), 2P.06 (test as
 you build) and 2P.01.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "objects-and-plans",
@@ -229,3 +229,9 @@ tier(LESSON,
            ["there is no risk", "it runs slower", "the blocks disappear"],
            "Two untested plans means two places for the bug. Test each one as you build it."),
      ])
+
+LESSON["talk"] = talk(
+    "Two children, one job: getting the class lined up. In pairs, decide who does what "
+    "before anybody moves.",
+    "Ask why each character needs its own plan, instead of one long list for everybody."
+)

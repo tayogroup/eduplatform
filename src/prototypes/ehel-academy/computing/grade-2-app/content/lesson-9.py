@@ -8,7 +8,7 @@ wireless networks; 2DC.04 recognising when a network is and is not
 available; 2DC.05 network-connected devices share information, and there are
 risks.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "connected-devices",
@@ -338,3 +338,9 @@ tier(LESSON,
            ["nothing extra", "charge each other", "take photos"],
            "The tablet has the drawing and no way to print. The printer can print and has nothing to print. Together they can."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, name two devices that do something together that neither could do on its "
+    "own.",
+    "Ask each pair for one thing they would never share over a network, and why."
+)

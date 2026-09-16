@@ -6,7 +6,7 @@ a data table; 4MD.05 appropriate data types for a field; 4MD.04 sort data
 into a required order, ascending, descending and alphabetical; 4MD.06 use a
 database to answer a single question.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "databases",
@@ -260,3 +260,9 @@ tier(LESSON,
            ["one of them must be wrong", "it picks one at random", "it cannot sort at all"],
            "A tie is a real answer. Sorting does not invent a winner where the data does not have one."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: how is a contacts list on a phone laid out? What is a record, and what is a "
+    "field?",
+    "Ask what a wrongly typed field would break, and who would be the one to notice."
+)

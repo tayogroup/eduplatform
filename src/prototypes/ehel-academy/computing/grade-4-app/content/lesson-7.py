@@ -6,7 +6,7 @@ device to produce outputs from its input devices, including sensors; 4P.09
 programs for a physical device using count-controlled and forever loops;
 Computer Systems 4CS.01 identify examples where a control system is used.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "bitsy-loops",
@@ -188,6 +188,14 @@ LESSON["warmup"] = [
 # sticker shelf, the tiers hang off the check step and score nothing, and
 # Computing world is a step that already existed and said it was empty.
 
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4DF", "Bitsy's blocks on a real board",
+         "The micro:bit is programmed in an app called MakeCode, and its blocks do what yours do. "
+         "When button A is pressed is on button A pressed. When it is shaken is on shake. Show a "
+         "heart is show icon. All lights on is show leds. Beep is play tone. Repeat 4 times is "
+         "repeat 4 times, and forever is forever. If somebody hands you a micro:bit, you already "
+         "know the program you want."),
+]
 label_ct(LESSON, "Loops on the device", "Algorithmic thinking")
 
 LESSON["lecture"] = LESSON["lecture"] + [
@@ -240,3 +248,8 @@ tier(LESSON,
            "decide", ["sense", "act", "none of them"],
            "The sensor senses and the motor acts. The program is the deciding in the middle, and that is the control system."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name three things in this building that sense something and then decide.",
+    "Ask where the program sits in sense, decide, act - and what would happen without it."
+)

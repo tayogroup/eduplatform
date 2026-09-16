@@ -11,7 +11,7 @@ now. The page keeps its file name, hardware-software-and-robots.html, so the
 address the live course already knows serves this lesson rather than a stale
 copy of the old one.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "hardware-and-software",
@@ -307,3 +307,9 @@ tier(LESSON,
            ["it looks better", "it is cheaper to buy", "the law says so"],
            "Any input a machine can read itself is quicker than a person typing, and it does not make typing mistakes."),
      ])
+
+LESSON["talk"] = talk(
+    "Hold up a tablet. In pairs: name three parts you can touch and three things you "
+    "cannot.",
+    "Ask which feature of that tablet makes it easiest to use, and who it helps most."
+)

@@ -7,7 +7,7 @@ the roles they perform; 3CS.03 manual and automatic input devices; 3CS.04
 different types of file stored on a hard drive - text, audio, image, video,
 games.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "systems-inputs-and-files",
@@ -298,3 +298,9 @@ tier(LESSON,
            ["it is expensive", "it has a battery", "it holds books"],
            "A screen with no software shows nothing; software with no screen has nowhere to draw. A system is both."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name an input you do yourself, and one a machine does without you.",
+    "Ask each pair to name the hardware and the software in one device, and say what each "
+    "half does."
+)

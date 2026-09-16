@@ -6,7 +6,7 @@ making sure that information stays secret; 3DC.05 write and decode messages
 using very simple code, including converting letters to numbers (1 = a,
 2 = b, etc.).
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "secret-codes",
@@ -240,3 +240,9 @@ tier(LESSON,
            ["nothing changes", "the messages become plain text", "the cipher stops working for everyone"],
            "Without the key the ciphertext is just nonsense - which is the whole point of a cipher."),
      ])
+
+LESSON["talk"] = talk(
+    "Write a short coded message on the board. In pairs: can you read it? What would you "
+    "need?",
+    "Ask why the key matters more than the cipher."
+)

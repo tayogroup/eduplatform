@@ -5,7 +5,7 @@
 messages using the Caesar Cipher and the Pigpen Cipher; 4DC.05 where and
 why encryption is used.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "caesar-and-pigpen",
@@ -238,3 +238,8 @@ tier(LESSON,
            ["it works perfectly", "only one of them can read it", "the messages become plain text"],
            "The grid IS the key. Different key, different cipher, and the round trip does not come back."),
      ])
+
+LESSON["talk"] = talk(
+    "Put a Pigpen message on the board with no key. In pairs: how would you even start?",
+    "Ask which cipher was harder to break, and whether hard to read is the same as safe."
+)

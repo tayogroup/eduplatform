@@ -186,6 +186,85 @@ questions per grade that are unfalsifiable from inside the build, because the
 key IS the object the question was generated from. It is deliberately not in
 the deploy set.
 
+### What the gap measurement found, and what it cost (2026-09-16, later)
+
+Measuring the REMAINING distance to the books, after the depth pass had shipped,
+found a defect the pass itself had created and two closures worth making.
+
+**`LED` was not taught at Grade 4 and the gate said it was.** The word appeared
+zero times in the grade; the fixture entry claimed lesson 7 taught it and the
+word card was never written. It was green because the Cambridge arm tested each
+required string as a plain SUBSTRING, and `"led"` sits inside
+`"count-controlled"`. Re-run with word boundaries: **140 of 141 held, 1 did
+not**, and that 1 was the genuinely untaught term. `word_in()` now matches whole
+words with LETTER-only lookarounds, so `1 = a`, `micro:bit` and `sub-task` still
+work. The lesson now names Bitsy's twenty-five lights as LEDs — the kit's
+renderer has called that grid `LED` since it was written, and only the learner
+had not been told.
+
+**The measured shape of the remaining gap**, which is worth keeping because it
+is a POSITION rather than a backlog:
+
+| | |
+| --- | --- |
+| maker units / all units | S1 7/11 · S2 7/11 · S3 7/12 · **S4 12/12** |
+| share of book pages inside a maker unit | 64% · 65% · 60% · **100%** |
+| make-something steps here | 9 · 10 · 16 · 16 (of 59 · 69 · 90 · 87 own steps) |
+| "in pairs / in groups" in the books | S2 46 · S3 60 · S4 56 |
+| "discuss / explain to somebody" | S2 17 · S3 32 · S4 37 |
+| learner words, build as a share of book | S2 103% · S3 67% · S4 75% |
+
+Cambridge is a MAKING curriculum delivered by a teacher: most units are named
+"Be a game developer", "Be a musician", and the child builds one artefact across
+the unit in real software. This build is a practice curriculum delivered by a
+page, and it makes things only in its own simulators. That is the teaching-spine
+decision, seen from the content side; **do not read the 60-100% as a backlog.**
+
+**Two things WERE closed, both position-safe**: the two spoken prompts per
+lesson on the teachers' page, and the real block names beside this build's own.
+Both are in the kit README.
+
+**The thin-objective count is not the finding it looks like.** 33 objectives are
+carried by two teaching steps or fewer; **29 of those are a driven machine plus
+an eight-item sort or a keyed question**, which is not thin. Four have neither a
+question nor a sort under them — 1DC.01, 1MD.03, 2CT.04 and 4P.04 — and in each
+the child DOES the thing (builds the network, fills the form, orders the steps,
+builds the program) and is simply never asked about it in a step that names the
+code. Recorded as an asymmetry, not corrected: for "know how to record data
+using a form", filling the form IS the objective.
+
+**Three of the measurement's own instruments were wrong before they were
+right**, which is the reason its numbers are worth anything: a task regex
+compiled without `re.M` returned 1 everywhere; case-insensitive tool counting
+read "from scratch" as Scratch and "word" as Microsoft Word; and `^\s{0,3}`
+stepped off the line `re.M` had just anchored. The numbered-task count is
+**unusable and must not be quoted** — 72 / 513 / 43 across three stages is OCR
+layout loss, not curriculum. Only Stage 3's scan preserves list indentation, so
+only its figure (about 62 tasks per unit) is real.
+
+### The mutation harness leaves the pages unwired, and every gate stays green
+
+2026-09-16, found by `drive-lessons.mjs --record` and by nothing else. The
+harness calls `build-lessons.py` each iteration, and that writes every page
+from scratch - so it throws away everything the shared pipeline added. Run
+after the final `rebuild.sh`, it left all fourteen Grade 4 pages with no
+`wire-progress` and no `wire-platform-controls`.
+
+**Every gate was green.** All 39 objectives reached, every key single, the
+Cambridge fixture fully answered, `check-lessons.py` content, the page bytes
+perfectly valid. The pages would have deployed and reported NOTHING to the
+school - no progress, no resume, no percentage in the header - and nothing in
+the repo would have said so.
+
+The tell, on every lesson at once: `header n/a`, `record 0/14 stored, NOT
+complete`, and `reload lands on step 1` instead of where the drive left off.
+The cheap check is a grep: `wire-progress` and `wire-platform-controls` should
+appear in every lesson page of a grade, not just the hub.
+
+So: **the harness runs BEFORE the final rebuild, or the pipeline runs again
+after it.** And the drive that matters is the recorded one - a plain drive
+would have passed this, because the deck itself was perfect.
+
 ### Reviewed Computing scripts
 
 Same loop as Science, with its own tools. `export-ehel-computing-scripts.py` flattens every learner-facing line into one sheet per stage; the reviewed file comes back from OneDrive and lands in `computing/data/script-review.json`:

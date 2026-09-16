@@ -7,7 +7,7 @@ everyday tasks; 1CT.04 suggest sets of ordered instructions for simple tasks;
 1CT.06 the order matters; with 1P.01, that a computer follows algorithms too,
 written as code.
 """
-from _kit import explain, step, opt, q, s, part, word, home, swatch, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, part, word, home, swatch, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "what-is-an-algorithm",
@@ -282,3 +282,10 @@ tier(LESSON,
                              "Take out the bread. Put it in the toaster."],
            "Make it nice is not a step. A step has to say exactly what to do."),
      ])
+
+LESSON["talk"] = talk(
+    "Before anyone touches a screen: in pairs, tell each other exactly how you got dressed "
+    "this morning, in order. Stop them the moment a step is missing.",
+    "Ask each pair for one everyday algorithm they follow without thinking. Whose had the "
+    "most steps?"
+)

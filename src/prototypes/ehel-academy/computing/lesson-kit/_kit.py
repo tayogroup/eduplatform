@@ -218,3 +218,22 @@ def tier(lesson, support=(), extension=()):
         last["data"]["support"] = list(support)
     if extension:
         last["data"]["extension"] = list(extension)
+
+def talk(opener, after):
+    """The two prompts a grown-up runs OUT LOUD, either side of the lesson.
+
+    Cambridge opens every unit with `Get started!` - a question for a pair or a
+    small group, before any teaching - and its tasks are full of "discuss with
+    your partner" and "explain to a classmate". Measured across Stages 2 to 4
+    the books say "in pairs / in groups" 162 times and "discuss / explain to
+    somebody" 86 times, and a self-contained page can present none of it: it
+    cannot hear an answer and cannot know the talking happened.
+
+    So these live on the PRINTABLE teachers' page, not in the lesson. They are
+    the half of Cambridge the app hands back to the adult, which is what the
+    teaching-spine decision assumes somebody is doing.
+
+    opener  before any teaching: what do they already think?
+    after   once the lesson is done: what can they now say that they could not?
+    """
+    return {"opener": opener, "after": after}

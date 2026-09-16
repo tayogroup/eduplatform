@@ -6,7 +6,7 @@ different outputs based on different inputs; 4CT.10 develop algorithms that
 include repetition; 4CT.05 predict the outcome of algorithms containing
 repetition.
 """
-from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier, talk
 
 LESSON = {
     "slug": "inputs-decide-outputs",
@@ -259,3 +259,9 @@ tier(LESSON,
            ["it happens twice", "nothing", "the algorithm stops"],
            "Steps everybody needs go outside the branch. That is what testing both inputs shows you."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs: name a machine that asks you a question before it does anything. What does "
+    "each answer change?",
+    "Ask what they tested, and how they knew both ways round worked."
+)

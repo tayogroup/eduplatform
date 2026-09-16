@@ -6,7 +6,7 @@ different kinds of question in different ways; 1MD.02 computing devices help
 to sort and organise data; 1MD.03 record data manually with a form; 1MD.04
 questions a data table can answer, limited to categorical data.
 """
-from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier, talk
 
 FRUIT_ROWS = [
     {"label": "Apple", "pic": "\U0001F34E", "value": 2},
@@ -326,3 +326,9 @@ tier(LESSON,
            ["so it is quicker", "so nobody gets bored", "it does not matter"],
            "Different questions give answers you cannot add up. The same question makes the data fit together."),
      ])
+
+LESSON["talk"] = talk(
+    "In pairs, agree on one question you could ask everybody in this room. Take three and "
+    "decide together which would be easiest to count.",
+    "Ask what their table could NOT tell them, however long they looked at it."
+)

@@ -6666,6 +6666,74 @@ Example opening: “First, we are going to visit the museum. We will arrive at t
       try { window.__ehelTutorQuiet(); } catch (e) {}
     }
 
+    /* ==== ehel-narration-caption - see tools/add-narration-captions.py ====
+       The band under the instruction row, and the only speech that writes to it. */
+    let capEl = null;
+    function capFor(host) {
+      if (!host) return null;
+      let el = host.querySelector(":scope > .narr");
+      if (!el) {
+        el = document.createElement("div");
+        el.className = "narr";
+        el.innerHTML = '<span class="narr-k">What I am saying</span><span class="narr-t"></span>';
+        const bar = host.querySelector(":scope > .say");
+        if (bar && bar.parentNode) bar.parentNode.insertBefore(el, bar.nextSibling);
+        else host.insertBefore(el, host.firstChild);
+      }
+      return el;
+    }
+    function caption(text) {
+      if (!capEl) return;
+      const t = String(text == null ? "" : text).replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!t) return;
+      capEl.querySelector(".narr-t").textContent = t;
+      capEl.classList.add("on");
+    }
+    /* Hidden when speech is CUT OFF - a caption left behind by a stopped voice
+       describes something the child is no longer hearing. A line that ends on its
+       own keeps its last sentence on screen, to be read at leisure. */
+    function capClear() {
+      if (!capEl) return;
+      capEl.classList.remove("on");
+      capEl.querySelector(".narr-t").textContent = "";
+      capEl = null;
+    }
+    /* ONE CAPTION PER SENTENCE. The authored SSML puts several sentences in one
+       block in places, and a block of three landing at once is a wall of text to
+       a six-year-old. This drives the CLIP too: caption and audio must be the
+       same unit or they cannot stay in step.
+
+       A full stop only ends a sentence when whitespace or the end follows, so
+       "1.5" survives. Written as a walk rather than a regex lookbehind because a
+       lookbehind is a PARSE error on older Safari, and that would take the whole
+       lesson down rather than just the captions. */
+    function sentenceSegs(segs) {
+      const CLOSERS = "\"'”’)]";
+      const out = [];
+      for (const s of segs) {
+        const t = s.text == null ? "" : String(s.text);
+        if (!t) { out.push(s); continue; }
+        const parts = [];
+        let start = 0;
+        for (let i = 0; i < t.length; i++) {
+          const c = t.charAt(i);
+          if (c !== "." && c !== "!" && c !== "?" && c !== "…") continue;
+          let j = i + 1;
+          while (j < t.length && CLOSERS.indexOf(t.charAt(j)) >= 0) j++;
+          if (j < t.length && !/\s/.test(t.charAt(j))) continue;   /* 1.5, not a stop */
+          const piece = t.slice(start, j).trim();
+          if (piece) parts.push(piece);
+          start = j;
+          i = j - 1;
+        }
+        const tail = t.slice(start).trim();
+        if (tail) parts.push(tail);
+        if (parts.length < 2) { out.push(s); continue; }
+        for (const p of parts) out.push(Object.assign({}, s, { text: p }));
+      }
+      return out;
+    }
+
     function pump() {
       if (reading) return;
       const segs = lines.shift();
@@ -6686,6 +6754,30 @@ Example opening: “First, we are going to visit the museum. We will arrive at t
       /* The endpoint first, the browser's own voice if it refuses. A lesson that
          goes quiet because a server was down is worse than one read by whatever
          voice the device has. A clip stopped on purpose has not refused. */
+      /* ehel-narration-caption: a captioned line plays one sentence at a time,
+         because spoken(segs) below concatenates the whole explain into a single
+         clip and a single clip cannot say which sentence is playing. Uncaptioned
+         speech is untouched and still goes out as one clip. */
+      if (capEl) {
+        let k = 0;
+        const stepOn = function () {
+          if (mine !== turn) return;
+          if (k >= segs.length) { finished(); return; }
+          const seg = segs[k++];
+          if (seg.pause != null) { timer = setTimeout(stepOn, Math.min(seg.pause, 400)); return; }
+          const one = spoken([seg]);
+          if (!one) { stepOn(); return; }
+          caption(seg.text);
+          PLATFORM_VOICE.play(one).then(stepOn, function (e) {
+            if (mine !== turn || PLATFORM_VOICE.stopped(e)) return;
+            /* the endpoint gave up part way: read the REST in the browser voice
+               rather than dropping the child mid-explanation */
+            queue = segs.slice(k - 1); at = 0; lineDone = finished; next(mine);
+          });
+        };
+        stepOn();
+        return;
+      }
       const line = spoken(segs);
       if (!line) { finished(); return; }
       PLATFORM_VOICE.play(line).then(finished, function (e) {
@@ -6700,6 +6792,7 @@ Example opening: “First, we are going to visit the museum. We will arrive at t
       lines = []; reading = false; lineDone = null;
       try { window.speechSynthesis.cancel(); } catch (e) {}
       PLATFORM_VOICE.stop();
+      capClear();                             /* ehel-narration-caption */
       mark(false);
     }
     function next(mine) {
@@ -6714,6 +6807,7 @@ Example opening: “First, we are going to visit the museum. We will arrive at t
       if (seg.pause != null) { timer = setTimeout(function () { next(mine); }, seg.pause); return; }
       const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
       if (!words) { next(mine); return; }
+      caption(seg.text);                      /* ehel-narration-caption */
       let u;
       try { u = new SpeechSynthesisUtterance(words); } catch (e) { at = queue.length; next(mine); return; }
       if (voice) u.voice = voice;
@@ -6731,12 +6825,15 @@ Example opening: “First, we are going to visit the museum. We will arrive at t
       u.onerror = onward;
       try { window.speechSynthesis.speak(u); } catch (e) { onward(); }
     }
-    function speak(x) {
+    function speak(x, cap) {
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
       stop();
-      const segs = flatten(ssml);
+      /* ehel-narration-caption: AFTER stop(), which clears the last caption -
+         setting it before would hand pump() a target stop() had just nulled */
+      if (cap) capEl = cap;
+      const segs = cap ? sentenceSegs(flatten(ssml)) : flatten(ssml);
       remember(segs);
       if (!segs.length) return;
       hushTutor();
@@ -6780,8 +6877,18 @@ Example opening: “First, we are going to visit the museum. We will arrive at t
       if (n.length < 8) return false;
       return recent.join(' | ').indexOf(n) >= 0;
     }
+    /* ehel-narration-caption: the ONLY captioned entry point. Everything else
+       that speaks is already written on the screen. */
+    function explain(x, host) {
+      const el = capFor(host);
+      speak(x, el);
+      /* the band opens on the PRESS, not on the first clip - so the page shifts
+         while the child's finger is still on the button, never mid-activity */
+      const segs = sentenceSegs(flatten(wrap(x) || ""));
+      for (const s of segs) { if (s.text) { caption(s.text); break; } }
+    }
     return {
-      speak: speak, follow: follow, stop: stop, hush: hush,
+      speak: speak, explain: explain, follow: follow, stop: stop, hush: hush,
       supported: SUPPORTED,
       voiceName: () => (voice ? voice.name : null),
       isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
@@ -7097,7 +7204,7 @@ Example opening: “First, we are going to visit the museum. We will arrive at t
       b.setAttribute("aria-label", "Explain this step to me");
       b.addEventListener("click", () => {
         const ssml = explainerFor(host);
-        if (ssml) VOICE.speak(ssml);
+        if (ssml) VOICE.explain(ssml, host);   /* ehel-narration-caption */
       });
       return b;
     }
@@ -11192,3 +11299,15 @@ Example opening: “First, we are going to visit the museum. We will arrive at t
     if (added) report(lastAt);
   };
 </script>
+
+<style>/* ehel-narration-caption - the spoken explain, on screen one sentence at a time */
+  .narr { display: none; margin: 10px 0 14px; padding: 12px 16px; border: 1px solid var(--line);
+    border-left: 4px solid var(--teal); border-radius: 12px; background: var(--card);
+    color: var(--ink); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.45;
+    min-height: 3.1em; box-sizing: border-box; }
+  .narr.on { display: block; }
+  .narr .narr-k { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--muted); font-weight: 700; margin: 0 0 4px; }
+  @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
+  @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
+</style>

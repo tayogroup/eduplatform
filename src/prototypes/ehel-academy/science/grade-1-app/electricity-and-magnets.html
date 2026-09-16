@@ -2,24 +2,6 @@
 <html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="modulepreload" href="./learner-controls.js">
-<link rel="modulepreload" href="./wehel.js">
-<link rel="modulepreload" href="./course-shell.js">
-<link rel="modulepreload" href="./seb-session.js">
-<script>
-  /* preconnect to whichever platform the launch names: DNS and TLS happen
-     while the page parses, instead of in front of the first POST */
-  (function () {
-    try {
-      var ep = new URLSearchParams(location.search).get("pwsEndpoint");
-      if (!ep) return;
-      var origin = new URL(ep, location.href).origin;
-      var l = document.createElement("link");
-      l.rel = "preconnect"; l.href = origin; l.crossOrigin = "anonymous";
-      document.head.appendChild(l);
-    } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
-  })();
-</script>
 <title>Electricity and Magnets</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
@@ -689,272 +671,9 @@
 .sit-h { margin: 6px 0 10px; }
 .sit-card p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
 .sit-card .bigbtns { justify-content: center; gap: 10px; flex-wrap: wrap; }
-
-  /* --- the way back to the hub, drawn only when the learner arrived from it;
-         see lesson-app-tools/wire-navigation.py --- */
-  .lesson-back {
-    display: inline-flex; align-items: center; gap: 8px;
-    margin: 0 0 14px;
-    padding: 9px 17px 9px 13px;
-    border-radius: 999px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-family: "Inter", "Segoe UI", sans-serif;
-    font-size: 14px; font-weight: 700;
-    text-decoration: none;
-  }
-  .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
-
-  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
-     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
-     a page it had already wired, so three separate changes to this block --
-     the panel surfaces, the dark theme, the canned prompts -- reached nothing
-     already built, and each needed its own carry-across tool afterwards. */
-  /* --- a home for the class controls, and the tutor dock;
-         see lesson-app-tools/wire-platform-controls.py --- */
-  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
-  .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
-  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
-     with a z-index above everything, so in focus mode it lands squarely on
-     top of Ask Wehel. Lift both above it when it is there, and only then.
-     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
-     and it is half again as tall on a narrow screen as on a wide one; the
-     fallback is only for the instant before the first measurement. */
-  body:has(#seb-session-bar) .w-dock,
-  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
-  .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
-    align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
-    background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
-    padding: 12px 18px; box-shadow: var(--shadow); }
-  .w-dock[hidden] { display: none; }
-  .w-drawer { position: fixed; right: 14px; bottom: 14px; z-index: 71; width: min(420px, calc(100vw - 28px));
-    height: min(620px, calc(100vh - 28px)); background: var(--card); border: 1px solid var(--line);
-    border-radius: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
-  .w-drawer[hidden] { display: none; }
-  .w-drawer-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
-    border-bottom: 1px solid var(--line); font-weight: 800; }
-  .w-drawer-head button { margin-left: auto; border: 1px solid var(--line); background: var(--cell);
-    color: var(--ink); border-radius: 999px; width: 34px; height: 34px; font-size: 17px; cursor: pointer; }
-  .w-drawer-body { flex: 1 1 auto; min-height: 0; overflow: auto; }
-  .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
-    background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
-    font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
-
-  /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
-     The dock and the drawer above already use --card/--line/--ink, so before
-     this the drawer was a dark card containing a white sheet: shell/wehel.js
-     ships a light panel (--w-bg #fff, --w-ink #17324d) and these pages are
-     always dark -- the bare `:root` in their theme selector makes the dark
-     block unconditional, so there is no light case to preserve here.
-     wehel.js now NAMES its surfaces instead of repeating literals, every
-     default being the value it already had, so this block is the whole of the
-     change a page needs and the five shell subjects that also load the tutor
-     are untouched. Mapped by ROLE, not by hue: panel takes --card, anything
-     raised off it takes --cell, so the bubbles, prompt buttons, compose row
-     and timer stay readable against the panel rather than against the page. */
-  /* DOUBLED selector, and that is load-bearing: wehel.js injects PANEL_STYLE
-     with document.head.appendChild at mount, so its own `.wehel-panel{...}`
-     always comes after this stylesheet. At equal specificity the later rule
-     wins, so the single-class version of this block lost every declaration to
-     it and the panel stayed white -- which only rendering it showed. */
-  .wehel-panel.wehel-panel {
-    --w-bg: var(--card); --w-surface: var(--card); --w-ink: var(--ink);
-    --w-line: var(--line);
-    --w-teal: var(--teal); --w-teal-2: #2AA79B; --w-teal-soft: var(--teal-soft);
-    --w-bubble: var(--cell);
-    --w-prompt-bg: var(--cell); --w-prompt-line: var(--line);
-    /* NOT var(--teal) here. The page's teal on the prompt buttons' --cell
-       ground measures 4.28:1, under the 4.5 floor -- the one surface in the
-       panel that failed when this was measured rather than eyeballed. This
-       lighter teal is 6.27:1 on the same ground. It is a literal because the
-       palette has no light-teal token: --teal-soft is a dark fill (#143A4A),
-       and --good (#4FD1A0) is the green that means "correct" in this build,
-       which a row of suggestions must not borrow. */
-    --w-prompt-ink: #7FE0D6;
-    /* the strip along the top of the panel -- timer, Full screen, voice picker */
-    --w-row-a: rgba(255, 255, 255, 0.07); --w-row-b: rgba(255, 255, 255, 0.03);
-    --w-low-line: rgba(244, 201, 93, 0.55);
-    --w-compose-bg: var(--cell);
-    --w-timer-bg: var(--cell); --w-timer-track: var(--cell);
-    /* the learner's own turn: plum, the page's third accent, so a child can
-       tell their words from Wehel's at a glance without reading the label */
-    --w-user-a: rgba(183, 139, 209, 0.30); --w-user-b: rgba(183, 139, 209, 0.16);
-    --w-user-ink: var(--ink);
-    --w-user-avatar-a: var(--plum); --w-user-avatar-b: #8E5AA8;
-    /* time nearly up: the page's gold, not the light build's cream */
-    --w-warm: var(--gold); --w-low-ink: var(--gold);
-    --w-low-fill: rgba(244, 201, 93, 0.32); --w-low-track: rgba(244, 201, 93, 0.12);
-  }
-  .wehel-panel.wehel-panel .ai-compose input::placeholder { color: var(--muted); }
-
-  /* THE CLASS CHAT, same treatment and a different scope. learner-controls.js
-     draws that panel with INLINE styles -- deliberately, so a cosmetic rule in
-     course-ui.css cannot make five other subjects' app tiers stale -- and an
-     inline style cannot be overridden by a stylesheet. It reads --lc-* through
-     var() instead, so this retints it; and the panel is appended to <body>
-     rather than to the drawer, so these live at :root and not on a class.
-
-     The bug this fixes is not only the tint. Every bubble set a background and
-     NO colour, so the text inherited the page's --ink -- white -- and a child
-     read white on #f2f4f6. The compose input was the same, so typing was
-     invisible. The defaults in learner-controls.js are course-ui.css's own
-     --ink (#17324d), which is exactly what the light subjects inherit today. */
-  :root {
-    --lc-panel-bg: var(--card); --lc-panel-line: var(--line);
-    --lc-head-a: rgba(53, 191, 178, 0.22); --lc-head-b: rgba(53, 191, 178, 0.07);
-    --lc-head-ink: var(--ink); --lc-head-sub: var(--muted);
-    --lc-form-bg: var(--cell); --lc-form-line: var(--line);
-    --lc-field-bg: var(--cell); --lc-field-ink: var(--ink);
-    --lc-them-bg: var(--cell); --lc-them-ink: var(--ink);
-    /* the learner's own turn in plum, the same signal the tutor panel uses */
-    --lc-mine-bg: rgba(183, 139, 209, 0.30); --lc-mine-ink: var(--ink);
-    /* "only your teacher sees this" keeps its amber, restated for a dark ground */
-    --lc-private-bg: rgba(244, 201, 93, 0.18); --lc-private-line: rgba(244, 201, 93, 0.45);
-    --lc-private-ink: var(--gold);
-  }
-  /* WEHEL-THEME-END */
-  /* WIRE-CSS-END */
-
-  /* --- said on the learner's own screen when their work is not reaching the
-         school; see lesson-app-tools/wire-progress.py --- */
-  .progress-notice {
-    margin: 0 0 12px; padding: 10px 14px;
-    border-radius: 12px;
-    background: var(--bad-soft); border: 1px solid var(--bad);
-    color: var(--ink);
-    font-family: "Inter", "Segoe UI", sans-serif;
-    font-size: 14px; font-weight: 600;
-  }
-
-  /* ---- the two header bars, modelled on the English shell ---- */
-  .eh-bar1, .eh-bar2 { position: sticky; z-index: 40; display: flex; align-items: center; gap: 12px;
-    background: var(--card); border-bottom: 1px solid var(--line); }
-  .eh-bar1 { top: 0; padding: 8px 16px; }
-  .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
-  .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
-  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
-  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
-  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
-  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
-  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
-  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
-    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
-  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
-  /* --ink, not --muted. At 13.5px this is normal text and needs 4.5:1; on the
-     English Grade 1 palette --muted measured 4.04:1 on the --cell pill behind
-     it and failed. A fixed colour cannot fix that here - the five apps that
-     render this bar carry four different --muted values (#566669, #6B7F82,
-     #93AABE, #A4B7C8), so each would need its own answer.
-
-     --ink is the one that holds for all of them by construction: it is each
-     palette's own text colour against --card and --cell, which is what
-     .eh-brand and .eh-picker in this same bar already depend on. It also ends
-     an inconsistency rather than making one - this label was the ONLY text in
-     either bar not already drawn in --ink or --teal. */
-  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
-  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
-  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
-  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
-    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
-  .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; }
-  /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
-     writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
-     file owns the thresholds. A page without focus mode never shows it at all.
-     It is a PILL with a label, not a bare dot: the dot-only version measured
-     perfectly and could not be found on the page, and colour alone says nothing
-     to anyone who cannot separate red from green. */
-  .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
-    border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
-    font-size: 12.5px; font-weight: 800; }
-  .eh-focus i { width: 9px; height: 9px; border-radius: 999px; background: currentColor; display: block; }
-  .eh-focus.is-ok { background: var(--good, #3E9C63); color: var(--good-ink, #06231F); }
-  .eh-focus.is-warn { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
-  .eh-focus.is-bad { background: var(--bad, #D7584B); color: var(--bad-ink, #2A0A07); }
-  .eh-focus b { font-weight: 800; }
-  @media (max-width: 620px) { .eh-focus b { display: none; }
-    .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
-  .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
-  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
-    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
-    cursor: pointer; text-decoration: none; }
-  .eh-round.back { padding: 9px 13px; }
-  .eh-section { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap;
-    overflow: hidden; text-overflow: ellipsis; }
-  .eh-b2right { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
-  .eh-pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--card); color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
-    padding: 9px 15px; cursor: pointer; }
-  .eh-steps { position: sticky; top: 104px; z-index: 39; background: var(--card); border-bottom: 1px solid var(--line);
-    max-height: 55vh; overflow-y: auto; padding: 8px; }
-  .eh-steps button { display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
-    background: none; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--ink); }
-  .eh-steps button:hover { background: var(--cell); }
-  .eh-steps button.now { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 700; }
-  .eh-steps button.done::after { content: " \2713"; color: var(--good); font-weight: 700; }
-  .eh-steps button.now.done::after { color: var(--teal-ink, #06231F); }
-  .hero .eyebrow { display: none; }   /* the brand bar says Primary Mathematics now */
-  @media (max-width: 720px) {
-    .eh-progtext, .eh-brandtext { display: none; }
-    .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
-    .eh-picker { max-width: 130px; }
-  }
-
-  /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
-  .eh-find { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 0;
-    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 10px; }
-  .eh-find svg { width: 17px; height: 17px; color: var(--muted); flex: 0 0 auto; }
-  .eh-find input { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink);
-    background: none; border: 0; padding: 8px 0; width: 148px; min-width: 0; }
-  .eh-find input::placeholder { color: var(--muted); font-weight: 400; }
-  .eh-find input:focus { outline: none; }
-  .eh-find:focus-within { border-color: var(--teal); }
-  .eh-find input::-webkit-search-cancel-button { filter: grayscale(1) brightness(2); }
-  .eh-found { position: sticky; top: var(--eh-found-top, 104px); z-index: 41;
-    background: var(--card); border-bottom: 1px solid var(--line);
-    max-height: 62vh; overflow-y: auto; padding: 8px; }
-  .eh-foundsay { margin: 2px 6px 8px; font-size: 13px; font-weight: 700; color: var(--muted); }
-  .eh-found button { display: block; width: 100%; text-align: left; font: inherit;
-    background: none; border: none; border-radius: 10px; padding: 9px 12px; cursor: pointer; color: var(--ink); }
-  .eh-found button:hover, .eh-found button.sel { background: var(--cell); }
-  .eh-found button.sel { outline: 2px solid var(--teal); outline-offset: -2px; }
-  .eh-found .w { display: block; font-size: 12px; font-weight: 800; color: var(--teal);
-    text-transform: uppercase; letter-spacing: .04em; }
-  .eh-found .t { display: block; font-size: 16px; font-weight: 700; }
-  .eh-found .s { display: block; font-size: 13px; color: var(--muted); font-weight: 400;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .eh-found mark { background: var(--gold); color: #2A1F05; border-radius: 3px; padding: 0 2px; }
-  @media (max-width: 720px) {
-    .eh-find input { width: 96px; }
-    .eh-found { top: var(--eh-found-top-narrow, 100px); }
-  }
 </style>
 
 <a class="skip" href="#deck">Skip to the lesson</a>
-
-<header class="eh-bar1">
-  <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Science</i></span></a>
-  <div class="eh-prog" title="How much of this lesson you have finished">
-    <span class="eh-pct" id="ehPct">0%</span>
-    <span class="eh-progtext">Lesson progress</span>
-    <span class="eh-track"><i id="ehFill"></i></span>
-  </div>
-  <div class="eh-b1right">
-    <span id="ehFocus" hidden></span>
-    <label class="eh-find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.4 15.4 21 21"></path></svg><input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Grade 1 Science lessons" aria-controls="ehFound" aria-expanded="false"></label><select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="alive-or-never-alive.html">Alive or Never Alive</option><option value="parts-of-a-plant.html">Parts of a Plant</option><option value="my-body-and-my-senses.html">My Body and My Senses</option><option value="what-is-it-made-of.html">What Is It Made Of?</option><option value="pushes-pulls-and-floating.html">Pushes, Pulls and Floating</option><option value="sounds-near-and-far.html">Sounds Near and Far</option><option value="electricity-and-magnets.html" selected>Electricity and Magnets</option><option value="our-earth-our-sun.html">Our Earth, Our Sun</option></select>
-    <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
-  </div>
-</header>
-<nav class="eh-bar2" aria-label="Lesson">
-  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
-  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
-  <span class="eh-section">Electricity and Magnets</span>
-  <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
-</nav>
-<div class="eh-steps" id="ehSteps" hidden></div>
-<div class="eh-found" id="ehFound" hidden><p class="eh-foundsay" id="ehFoundSay" role="status" aria-live="polite"></p><div id="ehFoundList"></div></div>
 <div class="wrap">
   <header class="hero">
     <div>
@@ -1005,7 +724,7 @@
         <p class="score" id="score4"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Pe.01 1TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The test is simple: if the electricity went off, would this still work?</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A kettle: no electricity, no hot water. It needs it.</s><s>A spoon: works fine. It does not.</s><s>A hair dryer: needs it.</s><s>A ball: does not.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a toy car with a battery does not need electricity because there is no plug.</s><s>A battery gives electricity to torches and toys.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask: would it work if there was no electricity at all?</s></mstts:express-as>' data-say="Does this need electricity to work? Tap the right bin.">
+    <section class="slide" data-objectives="1Pe.01 1TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The test is simple: if the electricity went off, would this still work?</s><s>And there is something to look for: a plug on a lead, or a battery inside.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A kettle: no electricity, no hot water. It needs it. Look for its lead.</s><s>A spoon: works fine. It does not. No lead, no battery.</s><s>A hair dryer: needs it.</s><s>A ball: does not.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a toy car with a battery does not need electricity because there is no plug.</s><s>A battery gives electricity to torches and toys.</s><s>The other slip is thinking that anything which works at all must be electric.</s><s>A tap works, a bicycle works, a pencil works. None of them is electric.</s><s>Look for a lead or a battery. No lead and no battery means no electricity.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask: would it work if there was no electricity at all?</s></mstts:express-as>' data-say="Does this need electricity to work? Tap the right bin.">
       <div class="slide-head"><span class="n">5</span><h2>Electricity, or not?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Does this need <b>electricity</b> to work? Tap the right bin.</span></div>
       <div class="stage">
@@ -1035,9 +754,9 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Pe.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A magnet is a special object that pulls iron and steel.</s><s>It pulls some things towards it, and it does not even have to touch them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Hold a magnet near a paperclip.</s><s>The paperclip jumps across and sticks.</s><s>Hold it near a piece of paper.</s><s>Nothing happens.</s><s>Two magnets can pull together, or push each other away.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a magnet sticks to everything made of metal.</s><s>It sticks to iron and steel. It does not stick to kitchen foil.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and watch what the magnet does.</s></mstts:express-as>' data-say="A magnet pulls some things towards it without touching them. Press Next .">
+    <section class="slide" data-objectives="1Pe.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A magnet attracts iron and steel.</s><s>Attract means pull towards.</s><s>It pulls them towards itself, and it does not even have to touch them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Hold a magnet near a paperclip.</s><s>The paperclip jumps across to the magnet.</s><s>The magnet attracted it.</s><s>Hold the magnet near a piece of paper.</s><s>Nothing happens.</s><s>Paper is not magnetic.</s><s>Take the paperclip away again and it comes off easily.</s><s>Two magnets can attract each other, or push each other away.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>People often say a magnet sticks to things. Glue sticks.</s><s>A magnet attracts: it pulls a magnetic thing towards it, and lets go again.</s><s>And a magnet does not attract everything made of metal. Kitchen foil is metal, and the magnet does nothing to it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and watch what the magnet does.</s></mstts:express-as>' data-say="A magnet attracts some things. Attract means pull towards. Press Next .">
       <div class="slide-head"><span class="n">8</span><h2>What is a magnet?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">A magnet pulls some things towards it without touching them. Press <b>Next</b>.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">A magnet <b>attracts</b> some things. Attract means pull towards. Press <b>Next</b>.</span></div>
       <div class="stage">
         <div id="stage8"></div>
         <div class="choices" id="ch8"></div>
@@ -1045,9 +764,9 @@
         <p class="score" id="score8"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Pe.02 1TWSp.02 1TWSc.04 1TWSa.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The only way to know if a magnet sticks to something is to try it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the thing.</s><s>Predict: will it stick, or not?</s><s>Then bring the magnet up and watch.</s><s>A paperclip sticks.</s><s>A wooden block does not.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children predict that all metal sticks.</s><s>The iron nail and the steel tin lid stick, but kitchen foil does not. Test, do not guess.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Predict for each one, bring the magnet, and see if you were right.</s></mstts:express-as>' data-say="Will the magnet stick to the %s? Predict, then bring the magnet near and see.">
-      <div class="slide-head"><span class="n">9</span><h2>Will it stick?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Will the magnet stick to the %s? Predict, then bring the magnet near and see.</span></div>
+    <section class="slide" data-objectives="1Pe.02 1TWSp.02 1TWSc.04 1TWSa.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The only way to know whether a magnet attracts something is to try it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the thing.</s><s>Predict: attracted, or not attracted?</s><s>Then bring the magnet up and watch.</s><s>A paperclip is attracted.</s><s>A wooden block is not.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children predict that every metal is attracted.</s><s>The iron nail and the steel tin lid are, but kitchen foil is not. Test, do not guess.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Predict for each one, bring the magnet, and see if you were right.</s></mstts:express-as>' data-say="Will the magnet attract the %s? Predict, then bring the magnet near and see.">
+      <div class="slide-head"><span class="n">9</span><h2>Will the magnet attract it?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Will the magnet attract the %s? Predict, then bring the magnet near and see.</span></div>
       <div class="stage">
         <div id="stage9"></div>
         <div class="choices" id="ch9"></div>
@@ -1055,9 +774,9 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1TWSc.05 1Pe.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The table shows every result at once, so you can spot the pattern: which things stuck?</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Paperclip: stuck.</s><s>Wooden block: did not.</s><s>Tin lid: stuck.</s><s>Plastic cup: did not.</s><s>Look at the things that stuck: every one is steel or iron.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Fill in each row from what happened.</s></mstts:express-as>' data-say="Write the results in the table. Did the magnet stick to %s ?">
+    <section class="slide" data-objectives="1TWSc.05 1Pe.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The table shows every result at once, so you can spot the pattern: which things were attracted?</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Paperclip: attracted.</s><s>Wooden block: not attracted.</s><s>Tin lid: attracted.</s><s>Plastic cup: not attracted.</s><s>Look at the things the magnet attracted: every one is steel or iron.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Fill in each row from what happened.</s></mstts:express-as>' data-say="Write the results in the table. Did the magnet attract %s ?">
       <div class="slide-head"><span class="n">10</span><h2>Record the magnet test</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Write the results in the table. Did the magnet stick to <b>%s</b>?</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Write the results in the table. Did the magnet attract <b>%s</b>?</span></div>
       <div class="stage">
         <div id="stage10"></div>
         <div class="choices" id="ch10"></div>
@@ -1095,7 +814,7 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Pe.01 1Pe.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks about electricity, ask: would it work with the power off?</s><s>If it asks about magnets, remember: iron and steel stick.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+    <section class="slide" data-objectives="1Pe.01 1Pe.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks about electricity, ask: would it work with the power off?</s><s>If it asks about magnets, remember: a magnet attracts iron and steel, and nothing else.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">14</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Time to show what you know. Tap the answer.</span></div>
       <div class="stage">
@@ -1199,11 +918,11 @@
             "Say which things need electricity to work.",
             "Say where electricity comes from and how to stay safe with it.",
             "Say what a magnet does.",
-            "Predict and test which things a magnet sticks to."
+            "Predict and test which things a magnet attracts."
           ],
           "counts": {
             "steps": 16,
-            "words": 7,
+            "words": 8,
             "games": 3,
             "home": 3
           },
@@ -1296,12 +1015,12 @@
             {
               "pic": "🧲",
               "title": "What a magnet does",
-              "say": "A magnet pulls some things towards it. Bring it near a paperclip and the clip jumps across. Bring it near paper and nothing happens."
+              "say": "A magnet attracts some things. Attract means pull towards. Bring a magnet near a paperclip and the clip jumps across, before the magnet even touches it. Bring it near paper and nothing happens. People often say a magnet sticks to things, but glue sticks. A magnet attracts, and lets go again."
             },
             {
               "pic": "🔩",
               "title": "Iron and steel",
-              "say": "A magnet sticks to iron and steel. It does not stick to wood, plastic, paper or foil. Today you predict, then test, and see the pattern for yourself."
+              "say": "A magnet attracts iron and steel. It does not attract wood, plastic, paper or kitchen foil, and foil is metal, so not every metal is magnetic. Today you predict, then test, and see the pattern for yourself."
             }
           ]
         }
@@ -1361,16 +1080,25 @@
             {
               "w": "magnet",
               "pic": "🧲",
-              "meaning": "A special object that pulls iron and steel towards it.",
+              "meaning": "An object that attracts iron and steel. Magnets come in many shapes and colours.",
               "uses": [
                 "A fridge magnet holds up my drawing.",
                 "The magnet picked up the paperclips."
               ]
             },
             {
-              "w": "magnetic",
+              "w": "attract",
               "pic": "📎",
-              "meaning": "Sticks to a magnet.",
+              "meaning": "Pull towards. A magnet attracts a paperclip, and lets go again. Glue sticks; a magnet attracts.",
+              "uses": [
+                "The magnet attracted the nail.",
+                "Paper is not attracted to a magnet."
+              ]
+            },
+            {
+              "w": "magnetic",
+              "pic": "🔩",
+              "meaning": "A material a magnet attracts. Iron and steel are magnetic.",
               "uses": [
                 "A paperclip is magnetic.",
                 "Wood is not magnetic."
@@ -1378,8 +1106,8 @@
             },
             {
               "w": "steel",
-              "pic": "🔩",
-              "meaning": "A strong metal that magnets stick to.",
+              "pic": "🍳",
+              "meaning": "A strong metal that a magnet attracts.",
               "uses": [
                 "A tin lid is made of steel.",
                 "Steel paperclips are magnetic."
@@ -1531,7 +1259,10 @@
               "why": "A tap turns on and off, but it needs no electricity."
             }
           ]
-        }
+        },
+        "mis": [
+          "6.3-m2"
+        ]
       },
       {
         "kind": "demo",
@@ -1634,9 +1365,14 @@
               "say": "This is a magnet. It looks like an ordinary piece of metal, but it is special."
             },
             {
+              "pic": "🧲🔳⭕",
+              "cap": "Magnets come in many <b>shapes and colours</b>. All of them are magnets.",
+              "say": "Magnets come in many shapes. A bar, a ring, a flat disc, a little button on a fridge. Any colour at all. Every one of them is a magnet."
+            },
+            {
               "pic": "🧲📎",
-              "cap": "Bring it near a paperclip. The clip <b>jumps</b> to the magnet!",
-              "say": "Bring it near a paperclip. The clip jumps across and sticks, before the magnet even touches it.",
+              "cap": "Bring it near a paperclip. The clip <b>jumps</b> to the magnet. It is <b>attracted</b>.",
+              "say": "Bring it near a paperclip. The clip jumps across, before the magnet even touches it. The magnet attracted it.",
               "sound": "click"
             },
             {
@@ -1645,9 +1381,14 @@
               "say": "Bring it near a piece of paper. Nothing happens. Paper is not magnetic."
             },
             {
+              "pic": "🧲↔️📎",
+              "cap": "Pull the clip off. It <b>comes away easily</b>. Glue sticks; a magnet <b>attracts</b>.",
+              "say": "Now pull the paperclip off. It comes away easily. That is why we say attract and not stick. Glue sticks things together. A magnet attracts, and lets go again."
+            },
+            {
               "pic": "🧲🧲",
-              "cap": "Two magnets can <b>pull</b> together...",
-              "say": "Two magnets can pull together with a click.",
+              "cap": "Two magnets can <b>attract</b> each other...",
+              "say": "Two magnets can attract each other and pull together with a click.",
               "sound": "click"
             },
             {
@@ -1657,11 +1398,15 @@
               "sound": "pop"
             }
           ]
-        }
+        },
+        "mis": [
+          "6.5-m1",
+          "6.5-m2"
+        ]
       },
       {
         "kind": "predictEach",
-        "title": "Will it stick?",
+        "title": "Will the magnet attract it?",
         "objectives": [
           "1Pe.02",
           "1TWSp.02",
@@ -1671,16 +1416,16 @@
         "data": {
           "sim": "magnet",
           "tryLabel": "Bring the magnet near",
-          "ask": "Will the magnet stick to the %s?",
+          "ask": "Will the magnet attract the %s?",
           "choices": [
             {
               "id": "yes",
-              "t": "Sticks",
+              "t": "Attracted",
               "pic": "🧲"
             },
             {
               "id": "no",
-              "t": "Does not stick",
+              "t": "Not attracted",
               "pic": "🚫"
             }
           ],
@@ -1689,49 +1434,57 @@
               "pic": "📎",
               "label": "steel paperclip",
               "answer": "yes",
-              "why": "The steel paperclip jumped to the magnet."
+              "why": "The magnet attracted the steel paperclip. It jumped across.",
+              "said": "The magnet attracted the steel paperclip! It jumped across."
             },
             {
               "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"6\" y=\"20\" width=\"46\" height=\"26\" rx=\"4\" fill=\"#9A6A3A\" stroke=\"#6E4520\" stroke-width=\"2.5\"/><path d=\"M12 27h18 M16 34h24 M10 40h16\" stroke=\"#6E4520\" stroke-width=\"2\" stroke-linecap=\"round\"/><ellipse cx=\"52\" cy=\"33\" rx=\"8\" ry=\"13\" fill=\"#E2B878\" stroke=\"#6E4520\" stroke-width=\"2.5\"/><ellipse cx=\"52\" cy=\"33\" rx=\"4.5\" ry=\"7.5\" fill=\"none\" stroke=\"#B5834A\" stroke-width=\"1.5\"/><circle cx=\"52\" cy=\"33\" r=\"1.6\" fill=\"#B5834A\"/></svg>",
               "label": "wooden block",
               "answer": "no",
-              "why": "Wood is not magnetic. Nothing happened."
+              "why": "Wood is not magnetic. Nothing happened.",
+              "said": "The magnet did not attract the wooden block. Wood is not magnetic."
             },
             {
               "pic": "🥫",
               "label": "steel tin lid",
               "answer": "yes",
-              "why": "The steel tin lid stuck to the magnet."
+              "why": "The magnet attracted the steel tin lid.",
+              "said": "The magnet attracted the steel tin lid."
             },
             {
               "pic": "🥤",
               "label": "plastic cup",
               "answer": "no",
-              "why": "Plastic is not magnetic."
+              "why": "Plastic is not magnetic.",
+              "said": "The magnet did not attract the plastic cup. Plastic is not magnetic."
             },
             {
               "pic": "🍳",
               "label": "iron frying pan",
               "answer": "yes",
-              "why": "The iron frying pan stuck."
+              "why": "The magnet attracted the iron frying pan.",
+              "said": "The magnet attracted the iron frying pan."
             },
             {
               "pic": "📄",
               "label": "paper",
               "answer": "no",
-              "why": "Paper is not magnetic."
+              "why": "Paper is not magnetic.",
+              "said": "The magnet did not attract the paper. Paper is not magnetic."
             },
             {
               "pic": "🧯",
               "label": "kitchen foil",
               "answer": "no",
-              "why": "Kitchen foil is metal, but the magnet did not stick. Not all metals are magnetic!"
+              "why": "Kitchen foil is metal, but the magnet did not attract it. Not every metal is magnetic!",
+              "said": "The magnet did not attract the kitchen foil, even though foil is metal. Not every metal is magnetic."
             },
             {
               "pic": "🔩",
               "label": "iron nail",
               "answer": "yes",
-              "why": "The iron nail stuck fast."
+              "why": "The magnet attracted the iron nail.",
+              "said": "The magnet attracted the iron nail."
             }
           ]
         },
@@ -1748,17 +1501,17 @@
           "1Pe.02"
         ],
         "data": {
-          "ask": "Did the magnet stick to %s?",
+          "ask": "Did the magnet attract %s?",
           "columns": [
             "Thing",
-            "Did it stick?"
+            "Attracted?"
           ],
           "rows": [
             {
               "pic": "📎",
               "label": "the paperclip",
               "answer": "yes",
-              "why": "the paperclip jumped to the magnet."
+              "why": "the magnet attracted the paperclip and it jumped across."
             },
             {
               "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"6\" y=\"20\" width=\"46\" height=\"26\" rx=\"4\" fill=\"#9A6A3A\" stroke=\"#6E4520\" stroke-width=\"2.5\"/><path d=\"M12 27h18 M16 34h24 M10 40h16\" stroke=\"#6E4520\" stroke-width=\"2\" stroke-linecap=\"round\"/><ellipse cx=\"52\" cy=\"33\" rx=\"8\" ry=\"13\" fill=\"#E2B878\" stroke=\"#6E4520\" stroke-width=\"2.5\"/><ellipse cx=\"52\" cy=\"33\" rx=\"4.5\" ry=\"7.5\" fill=\"none\" stroke=\"#B5834A\" stroke-width=\"1.5\"/><circle cx=\"52\" cy=\"33\" r=\"1.6\" fill=\"#B5834A\"/></svg>",
@@ -1770,7 +1523,7 @@
               "pic": "🥫",
               "label": "the steel tin lid",
               "answer": "yes",
-              "why": "the tin lid stuck."
+              "why": "the magnet attracted the tin lid."
             },
             {
               "pic": "🥤",
@@ -1782,13 +1535,13 @@
               "pic": "🧯",
               "label": "the kitchen foil",
               "answer": "no",
-              "why": "the kitchen foil did not stick, even though it is metal."
+              "why": "the magnet did not attract the kitchen foil, even though it is metal."
             }
           ],
           "choices": [
             {
               "id": "yes",
-              "t": "Yes, it stuck",
+              "t": "Yes, attracted",
               "pic": "🧲"
             },
             {
@@ -1978,11 +1731,11 @@
                     ],
                     [
                       "magnet",
-                      "A special object that pulls iron and steel towards it."
+                      "An object that attracts iron and steel. Magnets come in many shapes and colours."
                     ],
                     [
-                      "magnetic",
-                      "Sticks to a magnet."
+                      "attract",
+                      "Pull towards. A magnet attracts a paperclip, and lets go again. Glue sticks; a magnet attracts."
                     ]
                   ]
                 }
@@ -2010,19 +1763,19 @@
                   "answer": "socket"
                 },
                 {
-                  "prompt": "A special object that pulls iron and steel towards it.",
+                  "prompt": "An object that attracts iron and steel. Magnets come in many shapes and colours.",
                   "clue": "It starts with m. 🧲",
                   "answer": "magnet"
                 },
                 {
-                  "prompt": "Sticks to a magnet.",
-                  "clue": "It starts with m. 📎",
-                  "answer": "magnetic"
+                  "prompt": "Pull towards. A magnet attracts a paperclip, and lets go again. Glue sticks; a magnet attracts.",
+                  "clue": "It starts with a. 📎",
+                  "answer": "attract"
                 },
                 {
-                  "prompt": "A strong metal that magnets stick to.",
-                  "clue": "It starts with s. 🔩",
-                  "answer": "steel"
+                  "prompt": "A material a magnet attracts. Iron and steel are magnetic.",
+                  "clue": "It starts with m. 🔩",
+                  "answer": "magnetic"
                 }
               ]
             }
@@ -2050,12 +1803,12 @@
               "title": "Magnet hunt",
               "materials": "A fridge magnet and a tray of small things: a paperclip, a wooden spoon, a plastic cup, a key, kitchen foil, a coin, a nail",
               "steps": [
-                "Before each one, say: will it stick?",
+                "Before each one, say: will the magnet attract it?",
                 "Hold the magnet close to it.",
-                "Some keys and coins stick and some do not. Test them!",
-                "Sort them into sticks and does not stick."
+                "Some keys and coins are attracted and some are not. Test them!",
+                "Sort them into attracted and not attracted."
               ],
-              "look": "The pattern: iron and steel stick, and nothing else. Keep the magnet away from phones and bank cards.",
+              "look": "The pattern: the magnet attracts iron and steel, and nothing else. Keep the magnet away from phones and bank cards.",
               "n": 1
             },
             {
@@ -2205,7 +1958,7 @@
                   "ok": false
                 }
               ],
-              "why": "Steel paperclips are magnetic. The clip jumps across."
+              "why": "Steel paperclips are magnetic. The magnet attracts the clip and it jumps across."
             },
             {
               "ask": "A magnet is held near a wooden block. What happens?",
@@ -2216,7 +1969,7 @@
                   "ok": true
                 },
                 {
-                  "t": "the block sticks",
+                  "t": "the block is attracted",
                   "ok": false
                 },
                 {
@@ -2225,6 +1978,67 @@
                 }
               ],
               "why": "Wood is not magnetic."
+            },
+            {
+              "ask": "What does <b>attract</b> mean?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🧲</div>",
+              "opts": [
+                {
+                  "t": "pull towards",
+                  "ok": true
+                },
+                {
+                  "t": "stick with glue",
+                  "ok": false
+                },
+                {
+                  "t": "push away",
+                  "ok": false
+                },
+                {
+                  "t": "melt",
+                  "ok": false
+                }
+              ],
+              "why": "Attract means pull towards. A magnet attracts a paperclip: it pulls the clip towards itself."
+            },
+            {
+              "ask": "Which one is a magnet?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🧲</div>",
+              "opts": [
+                {
+                  "t": "all of them: a bar, a ring and a little fridge button",
+                  "ok": true
+                },
+                {
+                  "t": "only the red horseshoe one",
+                  "ok": false
+                },
+                {
+                  "t": "only the big heavy one",
+                  "ok": false
+                }
+              ],
+              "why": "Magnets come in many shapes and colours. The shape does not make it a magnet."
+            },
+            {
+              "ask": "Why do we say a magnet <b>attracts</b> a paperclip, and not that it sticks to it?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">📎</div>",
+              "opts": [
+                {
+                  "t": "because the clip comes off again easily",
+                  "ok": true
+                },
+                {
+                  "t": "because magnets are made of glue",
+                  "ok": false
+                },
+                {
+                  "t": "because the clip is heavy",
+                  "ok": false
+                }
+              ],
+              "why": "Glue sticks things together for good. A magnet attracts, and lets go again."
             },
             {
               "ask": "Long ago, with no electricity, people lit their homes with...",
@@ -2348,16 +2162,25 @@
             {
               "w": "magnet",
               "pic": "🧲",
-              "meaning": "A special object that pulls iron and steel towards it.",
+              "meaning": "An object that attracts iron and steel. Magnets come in many shapes and colours.",
               "uses": [
                 "A fridge magnet holds up my drawing.",
                 "The magnet picked up the paperclips."
               ]
             },
             {
-              "w": "magnetic",
+              "w": "attract",
               "pic": "📎",
-              "meaning": "Sticks to a magnet.",
+              "meaning": "Pull towards. A magnet attracts a paperclip, and lets go again. Glue sticks; a magnet attracts.",
+              "uses": [
+                "The magnet attracted the nail.",
+                "Paper is not attracted to a magnet."
+              ]
+            },
+            {
+              "w": "magnetic",
+              "pic": "🔩",
+              "meaning": "A material a magnet attracts. Iron and steel are magnetic.",
               "uses": [
                 "A paperclip is magnetic.",
                 "Wood is not magnetic."
@@ -2365,8 +2188,8 @@
             },
             {
               "w": "steel",
-              "pic": "🔩",
-              "meaning": "A strong metal that magnets stick to.",
+              "pic": "🍳",
+              "meaning": "A strong metal that a magnet attracts.",
               "uses": [
                 "A tin lid is made of steel.",
                 "Steel paperclips are magnetic."
@@ -2397,6 +2220,18 @@
               "lesson": 1,
               "title": "Alive or Never Alive",
               "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "attract",
+              "pic": "📎",
+              "meaning": "Pull towards. A magnet attracts a paperclip, and lets go again. Glue sticks; a magnet attracts.",
+              "uses": [
+                "The magnet attracted the nail.",
+                "Paper is not attracted to a magnet."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
             },
             {
               "w": "battery",
@@ -2581,7 +2416,7 @@
             {
               "w": "magnet",
               "pic": "🧲",
-              "meaning": "A special object that pulls iron and steel towards it.",
+              "meaning": "An object that attracts iron and steel. Magnets come in many shapes and colours.",
               "uses": [
                 "A fridge magnet holds up my drawing.",
                 "The magnet picked up the paperclips."
@@ -2592,8 +2427,8 @@
             },
             {
               "w": "magnetic",
-              "pic": "📎",
-              "meaning": "Sticks to a magnet.",
+              "pic": "🔩",
+              "meaning": "A material a magnet attracts. Iron and steel are magnetic.",
               "uses": [
                 "A paperclip is magnetic.",
                 "Wood is not magnetic."
@@ -2952,8 +2787,8 @@
             },
             {
               "w": "steel",
-              "pic": "🔩",
-              "meaning": "A strong metal that magnets stick to.",
+              "pic": "🍳",
+              "meaning": "A strong metal that a magnet attracts.",
               "uses": [
                 "A tin lid is made of steel.",
                 "Steel paperclips are magnetic."
@@ -3481,6 +3316,74 @@
       try { window.__ehelTutorQuiet(); } catch (e) {}
     }
 
+    /* ==== ehel-narration-caption - see tools/add-narration-captions.py ====
+       The band under the instruction row, and the only speech that writes to it. */
+    let capEl = null;
+    function capFor(host) {
+      if (!host) return null;
+      let el = host.querySelector(":scope > .narr");
+      if (!el) {
+        el = document.createElement("div");
+        el.className = "narr";
+        el.innerHTML = '<span class="narr-k">What I am saying</span><span class="narr-t"></span>';
+        const bar = host.querySelector(":scope > .say");
+        if (bar && bar.parentNode) bar.parentNode.insertBefore(el, bar.nextSibling);
+        else host.insertBefore(el, host.firstChild);
+      }
+      return el;
+    }
+    function caption(text) {
+      if (!capEl) return;
+      const t = String(text == null ? "" : text).replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!t) return;
+      capEl.querySelector(".narr-t").textContent = t;
+      capEl.classList.add("on");
+    }
+    /* Hidden when speech is CUT OFF - a caption left behind by a stopped voice
+       describes something the child is no longer hearing. A line that ends on its
+       own keeps its last sentence on screen, to be read at leisure. */
+    function capClear() {
+      if (!capEl) return;
+      capEl.classList.remove("on");
+      capEl.querySelector(".narr-t").textContent = "";
+      capEl = null;
+    }
+    /* ONE CAPTION PER SENTENCE. The authored SSML puts several sentences in one
+       block in places, and a block of three landing at once is a wall of text to
+       a six-year-old. This drives the CLIP too: caption and audio must be the
+       same unit or they cannot stay in step.
+
+       A full stop only ends a sentence when whitespace or the end follows, so
+       "1.5" survives. Written as a walk rather than a regex lookbehind because a
+       lookbehind is a PARSE error on older Safari, and that would take the whole
+       lesson down rather than just the captions. */
+    function sentenceSegs(segs) {
+      const CLOSERS = "\"'”’)]";
+      const out = [];
+      for (const s of segs) {
+        const t = s.text == null ? "" : String(s.text);
+        if (!t) { out.push(s); continue; }
+        const parts = [];
+        let start = 0;
+        for (let i = 0; i < t.length; i++) {
+          const c = t.charAt(i);
+          if (c !== "." && c !== "!" && c !== "?" && c !== "…") continue;
+          let j = i + 1;
+          while (j < t.length && CLOSERS.indexOf(t.charAt(j)) >= 0) j++;
+          if (j < t.length && !/\s/.test(t.charAt(j))) continue;   /* 1.5, not a stop */
+          const piece = t.slice(start, j).trim();
+          if (piece) parts.push(piece);
+          start = j;
+          i = j - 1;
+        }
+        const tail = t.slice(start).trim();
+        if (tail) parts.push(tail);
+        if (parts.length < 2) { out.push(s); continue; }
+        for (const p of parts) out.push(Object.assign({}, s, { text: p }));
+      }
+      return out;
+    }
+
     function pump() {
       if (reading) return;
       const segs = lines.shift();
@@ -3501,6 +3404,30 @@
       /* The endpoint first, the browser's own voice if it refuses. A lesson that
          goes quiet because a server was down is worse than one read by whatever
          voice the device has. A clip stopped on purpose has not refused. */
+      /* ehel-narration-caption: a captioned line plays one sentence at a time,
+         because spoken(segs) below concatenates the whole explain into a single
+         clip and a single clip cannot say which sentence is playing. Uncaptioned
+         speech is untouched and still goes out as one clip. */
+      if (capEl) {
+        let k = 0;
+        const stepOn = function () {
+          if (mine !== turn) return;
+          if (k >= segs.length) { finished(); return; }
+          const seg = segs[k++];
+          if (seg.pause != null) { timer = setTimeout(stepOn, Math.min(seg.pause, 400)); return; }
+          const one = spoken([seg]);
+          if (!one) { stepOn(); return; }
+          caption(seg.text);
+          PLATFORM_VOICE.play(one).then(stepOn, function (e) {
+            if (mine !== turn || PLATFORM_VOICE.stopped(e)) return;
+            /* the endpoint gave up part way: read the REST in the browser voice
+               rather than dropping the child mid-explanation */
+            queue = segs.slice(k - 1); at = 0; lineDone = finished; next(mine);
+          });
+        };
+        stepOn();
+        return;
+      }
       const line = spoken(segs);
       if (!line) { finished(); return; }
       PLATFORM_VOICE.play(line).then(finished, function (e) {
@@ -3515,6 +3442,7 @@
       lines = []; reading = false; lineDone = null;
       try { window.speechSynthesis.cancel(); } catch (e) {}
       PLATFORM_VOICE.stop();
+      capClear();                             /* ehel-narration-caption */
       mark(false);
     }
     function next(mine) {
@@ -3529,6 +3457,7 @@
       if (seg.pause != null) { timer = setTimeout(function () { next(mine); }, seg.pause); return; }
       const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
       if (!words) { next(mine); return; }
+      caption(seg.text);                      /* ehel-narration-caption */
       let u;
       try { u = new SpeechSynthesisUtterance(words); } catch (e) { at = queue.length; next(mine); return; }
       if (voice) u.voice = voice;
@@ -3546,12 +3475,15 @@
       u.onerror = onward;
       try { window.speechSynthesis.speak(u); } catch (e) { onward(); }
     }
-    function speak(x) {
+    function speak(x, cap) {
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
       stop();
-      const segs = flatten(ssml);
+      /* ehel-narration-caption: AFTER stop(), which clears the last caption -
+         setting it before would hand pump() a target stop() had just nulled */
+      if (cap) capEl = cap;
+      const segs = cap ? sentenceSegs(flatten(ssml)) : flatten(ssml);
       remember(segs);
       if (!segs.length) return;
       hushTutor();
@@ -3595,8 +3527,18 @@
       if (n.length < 8) return false;
       return recent.join(' | ').indexOf(n) >= 0;
     }
+    /* ehel-narration-caption: the ONLY captioned entry point. Everything else
+       that speaks is already written on the screen. */
+    function explain(x, host) {
+      const el = capFor(host);
+      speak(x, el);
+      /* the band opens on the PRESS, not on the first clip - so the page shifts
+         while the child's finger is still on the button, never mid-activity */
+      const segs = sentenceSegs(flatten(wrap(x) || ""));
+      for (const s of segs) { if (s.text) { caption(s.text); break; } }
+    }
     return {
-      speak: speak, follow: follow, stop: stop, hush: hush,
+      speak: speak, explain: explain, follow: follow, stop: stop, hush: hush,
       supported: SUPPORTED,
       voiceName: () => (voice ? voice.name : null),
       isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
@@ -3912,7 +3854,7 @@
       b.setAttribute("aria-label", "Explain this step to me");
       b.addEventListener("click", () => {
         const ssml = explainerFor(host);
-        if (ssml) VOICE.speak(ssml);
+        if (ssml) VOICE.explain(ssml, host);   /* ehel-narration-caption */
       });
       return b;
     }
@@ -3995,34 +3937,7 @@
     if (cur === slides.length - 1) paintStickers();
     if (speak) say(slides[cur].dataset.say);
     window.scrollTo({ top: 0, behavior: "smooth" });
-    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }
   }
-  /* RESUME ON REOPEN. The stored record already knew which steps were
-     done and where the learner was; until this hook every reopened
-     lesson drew an empty dot rail and step 1. Called once, after the
-     progress document hydrates, and only if the learner has not already
-     moved off step 1 on their own - hydrate is asynchronous and a child
-     who tapped Next is not to be yanked back. show() is looked up by
-     name at call time, so every wrapper the build or the pipeline puts
-     around it (the header bar\x27s percentage, a step\x27s arrival line)
-     runs exactly as it does for a tap on a dot. */
-  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
-     a step that finishes when it is DRAWN marks itself done at load, before
-     the record arrives, and read as the learner having touched the page it
-     kept every reopened English lesson on step 1 (measured 2026-09-11). */
-  let ehelInteracted = false;
-  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
-    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
-  window.__ehelRestore = function (doneIdx, resumeIdx) {
-    const untouched = cur === 0 && !ehelInteracted;
-    let changed = false;
-    for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
-    if (changed) paintDots();
-    const target = Number.isInteger(resumeIdx) && resumeIdx > 0 && resumeIdx < slides.length
-      ? resumeIdx : done.findIndex((d, i) => !d && i < done.length - 1);
-    if (untouched && target > 0) show(target, false);
-    else if (changed) show(cur, false);
-  };
   $("next").addEventListener("click", () => show(cur + 1, true));
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
@@ -4036,7 +3951,7 @@
      2.13s into "Words: home and classroom"). The tick and the dots still land
      on the step the child actually finished; only the voice asks whether that
      step is still the one showing, the way playHere() already does for clips. */
-  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg && cur === i) say(msg); }
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg && cur === i) say(msg); }
   /* The same problem finish() was fixed for above, generalised: a round or
      sim step started on a timer belongs to the step it was set on. If the
      child has moved on by the time it fires, it still runs - the sim still
@@ -4541,7 +4456,12 @@
             setTimeout(() => {
               if (item.answer === "yes") { it.style.transform = "translateX(-40px)"; SOUND.play("click", 0.6); }
               else SOUND.play("pop", 0.3);
-              setTimeout(() => { api.say(item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it."); r(); }, 500);
+              /* `said` lets a lesson supply its own sentence. Stage 1 needs it:
+                 Cambridge names "magnets stick to things" as a misconception to
+                 correct (attract is its own Stage 1 glossary word), and the
+                 fallback below is the wording Grade 3 already ships, so a grade
+                 that sets nothing rebuilds byte-identical. */
+              setTimeout(() => { api.say(item.said || (item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it.")); r(); }, 500);
             }, 950);
           }, 40);
         });
@@ -6999,9 +6919,9 @@
   sortBins(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "If it would stop when the power goes off, it needs electricity." }, LESSON.steps[4].data));
   demo(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Only plugs in sockets. Away from water. Tell a grown-up. Three rules." }, LESSON.steps[5].data));
   tapCards(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "What people knew has changed, and life changed with it." }, LESSON.steps[6].data));
-  demo(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "A magnet pulls some things, pushes some magnets, and ignores the rest." }, LESSON.steps[7].data));
-  predictEach(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "A magnet sticks to iron and steel, and to nothing else you tried." }, LESSON.steps[8].data));
-  recordTable(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "Your table shows the pattern: iron and steel stick." }, LESSON.steps[9].data));
+  demo(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "A magnet attracts iron and steel, pushes some magnets, and ignores the rest." }, LESSON.steps[7].data));
+  predictEach(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "A magnet attracts iron and steel, and nothing else you tried." }, LESSON.steps[8].data));
+  recordTable(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "Your table shows the pattern: the magnet attracts iron and steel." }, LESSON.steps[9].data));
   tapCards(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "Science shows how what we do affects the world, and how to do better." }, LESSON.steps[10].data));
   gameZone(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[11].data));
   homeProjects(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Science at home. That is the best kind." }, LESSON.steps[12].data));
@@ -7012,707 +6932,5 @@
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);
 
-
-  /* ================= the two header bars =================
-     Everything here is answered by this page. The class controls are not
-     painted here - they mount themselves into .top-actions on bar 2, and only
-     when the server confirms a teacher is watching. */
-  (function () {
-    const earnable = slides.length - 1;            // teaching slides + the check
-    const pctEl = $("ehPct"), fillEl = $("ehFill");
-    function ehPaint() {
-      const n = done.slice(0, earnable).filter(Boolean).length;
-      const p = earnable ? Math.round((n / earnable) * 100) : 0;
-      pctEl.textContent = p + "%";
-      fillEl.style.width = p + "%";
-      const box = $("ehSteps");
-      if (box && !box.hidden) ehSteps();
-    }
-    function ehSteps() {
-      $("ehSteps").innerHTML = slides.map(function (s, i) {
-        const h = s.querySelector("h2");
-        return '<button type="button" data-i="' + i + '" class="' +
-          (i === cur ? "now " : "") + (done[i] ? "done" : "") + '">' +
-          (i + 1) + ". " + (h ? h.textContent : "Step " + (i + 1)) + "</button>";
-      }).join("");
-    }
-    $("ehSteps").addEventListener("click", function (e) {
-      const b = e.target.closest("button[data-i]");
-      if (!b) return;
-      show(+b.dataset.i, true);
-      $("ehSteps").hidden = true;
-      $("ehMenu").setAttribute("aria-expanded", "false");
-    });
-    $("ehMenu").addEventListener("click", function () {
-      const box = $("ehSteps"), open = box.hidden;
-      if (open) ehSteps();
-      box.hidden = !open;
-      $("ehMenu").setAttribute("aria-expanded", open ? "true" : "false");
-    });
-    $("ehPicker").addEventListener("change", function (e) {
-      if (e.target.value) location.href = e.target.value + location.search;
-    });
-    $("ehFull").addEventListener("click", function () {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
-    });
-    document.addEventListener("fullscreenchange", function () {
-      $("ehFull").innerHTML = document.fullscreenElement ? "\u26f6 Leave full screen" : "\u26f6 Full screen";
-    });
-    /* the voice toggle mutes what SHE says; it does not touch the Listen
-       buttons, which a child presses on purpose */
-    let muted = false;
-    const realSay = say;
-    say = function (t) { if (!muted) realSay(t); };
-    $("ehAudio").addEventListener("click", function () {
-      muted = !muted;
-      /* VOICE is this script's own const, never a property of window, so the
-         old `window.VOICE &&` guard was always false and switching the voice
-         off left her talking. hush() stops her, and keeps her reactions to
-         answers quiet until the voice is switched back on. */
-      if (typeof VOICE !== "undefined" && VOICE.hush) VOICE.hush(muted);
-      $("ehAudio").setAttribute("aria-pressed", muted ? "true" : "false");
-      $("ehAudio").title = muted ? "Turn the voice on" : "Turn the voice off";
-    });
-    /* every completion repaints the rail, so that is where the pill hangs */
-    const realPaintDots = paintDots;
-    paintDots = function () { realPaintDots(); ehPaint(); };
-    const realShow = show;
-    show = function (i, speak) { realShow(i, speak); ehPaint(); };
-    ehPaint();
-  })();
-
-  
-  /* ================= the lesson search ================= ehel-lesson-search
-     One body, two hosts - see add-lesson-search.py. Everything it knows comes
-     from lesson-search.json, which is derived from these very pages. */
-  (function () {
-    var box = document.getElementById("ehFind");
-    var panel = document.getElementById("ehFound");
-    var say = document.getElementById("ehFoundSay");
-    var list = document.getElementById("ehFoundList");
-    if (!box || !panel || !say || !list) return;
-
-    var HERE = (location.pathname.split("/").pop() || "");
-    var INDEX = null, STATE = "cold", sel = -1, rows = [];
-    var esc = function (s) {
-      return String(s).replace(/[&<>"]/g, function (c) {
-        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-      });
-    };
-    /* the curly apostrophe is normalised in the index too, so o’clock and
-       o'clock are one word to both sides */
-    var flat = function (s) { return String(s).replace(/\u2019/g, "'").toLowerCase(); };
-    var toks = function (s) { return flat(s).match(/[a-z0-9']+/g) || []; };
-
-    /* KEEP THE LAUNCH PARAMETERS. ?from is ours and is put back; everything
-       else - pwsToken, pwsEndpoint, studentid - belongs to the launch and a
-       result that dropped it would report nothing to the school. */
-    function query() {
-      var p = new URLSearchParams(location.search);
-      p.delete("from");
-      var rest = p.toString();
-      return "?from=sci1" + (rest ? "&" + rest : "");
-    }
-
-    /* WAITERS, not an early return. The focus handler starts this fetch with
-       nothing to do on arrival, and the first keystroke lands while it is
-       still in flight - so a `if (STATE === "loading") return` DROPS that
-       query's callback and the panel never opens. Measured: typing "addition"
-       on a cold field, index fetched 200, nothing rendered. */
-    var waiting = [];
-    function load(then) {
-      if (STATE === "ready") { then(); return; }
-      waiting.push(then);
-      if (STATE === "loading") return;
-      STATE = "loading";
-      fetch("lesson-search.json", { credentials: "omit" })
-        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-        .then(function (doc) {
-          INDEX = [];
-          (doc.lessons || []).forEach(function (l) {
-            (l.steps || []).forEach(function (s) {
-              INDEX.push({
-                file: l.file, title: l.title, unit: l.u, i: s.i, h: s.h, t: s.t,
-                wh: toks(s.h), wt: toks(s.t),
-                wgh: toks(s.gh || ""), wg: toks(s.g || ""),
-                gm: s.gm || {}
-              });
-            });
-          });
-          STATE = "ready";
-          var q = waiting; waiting = [];
-          q.forEach(function (f) { f(); });
-        })
-        .catch(function () {
-          STATE = "cold";
-          waiting = [];
-          /* honest rather than silent: the field stays, and says why it
-             cannot answer, because the usual cause is a page opened before
-             the index landed and a reload fixes it */
-          say.textContent = "The lesson list could not be loaded. Try again in a moment.";
-          list.innerHTML = "";
-          open(true);
-        });
-    }
-
-    /* every token must START a word somewhere. Four tiers, best first:
-         the step's HEADING says it                       ("Adding")
-         the heading IMPLIES it                           ("Adding" -> addition)
-         a sentence in the step implies it                (a mention)
-         the step's own words say it somewhere
-       The middle tier is what puts Adding and Taking Away above a counting
-       step that happens to say "add" once - see build-lesson-search.py. */
-    /* BOTH directions, or the plural of a term finds nothing. Measured: the
-       one-way version (content word starts with the query) answered
-       "fractions" with "No step in Grade 1 Mathematics mentions fractions"
-       while Halves and Wholes IS the fractions lesson - the tag is
-       "fraction", singular - and answered "sorting" with one step while the
-       lessons say "sort".
-
-       But a bare reverse prefix is too much: it made "tally" match "tall"
-       and answer with Full and empty, Longer or shorter? and Pour and fill,
-       where the correct answer is that Grade 1 teaches no tallying. Every
-       case the reverse direction is FOR is a suffix inflection, so that is
-       what it allows - "sort"+ing, "fraction"+s - and "tall"+y is not one. */
-    var SUFFIX = { s: 1, es: 1, ing: 1, ed: 1 };
-    function starts(words, k) {
-      for (var i = 0; i < words.length; i++) {
-        var w = words[i];
-        if (w === k) return 2;
-        if (w.length > k.length && w.lastIndexOf(k, 0) === 0) return 1;
-        if (w.length >= 3 && k.length > w.length && k.lastIndexOf(w, 0) === 0
-            && SUFFIX[k.slice(w.length)]) return 1;
-      }
-      return 0;
-    }
-    function score(row, ks) {
-      var total = 0;
-      for (var i = 0; i < ks.length; i++) {
-        var k = ks[i];
-        var h = starts(row.wh, k);
-        var gh = h ? 0 : starts(row.wgh, k);
-        var g = (h || gh) ? 0 : starts(row.wg, k);
-        var t = (h || gh || g) ? 0 : starts(row.wt, k);
-        if (!h && !gh && !g && !t) return 0;   // every token must appear
-        total += h ? 12 + h : gh ? 8 + gh : g ? 4 + g : 1 + t;
-      }
-      return total;
-    }
-    /* WHAT THE QUERY MATCHED, in the step's own words. A bridged term is not
-       in the text - "addition" is why the bridge exists - so fall back to the
-       phrase the index recorded for that term ("adding"), and the panel then
-       marks the words that actually answered the query instead of rendering
-       an unmarked opening line. */
-    function target(row, k) {
-      var low = flat(row.t), p = low.indexOf(k);
-      if (p >= 0) return [p, k];
-      for (var name in row.gm) {
-        if (starts([name], k)) {
-          var w = flat(row.gm[name]), q = low.indexOf(w);
-          if (q >= 0) return [q, w];
-        }
-      }
-      return [-1, ""];
-    }
-    function snippet(row, ks) {
-      var low = flat(row.t), at = -1, hit = "";
-      for (var i = 0; i < ks.length; i++) {
-        var r = target(row, ks[i]), p = r[0];
-        if (p >= 0 && (at < 0 || p < at)) { at = p; hit = r[1]; }
-      }
-      if (at < 0) return esc(row.t.slice(0, 90));
-      var a = Math.max(0, at - 34), b = Math.min(row.t.length, at + 60);
-      var end = low.indexOf(" ", at + hit.length);
-      var word = row.t.slice(at, end > at && end < at + 24 ? end : at + hit.length);
-      return (a ? "\u2026" : "") + esc(row.t.slice(a, at)) + "<mark>" + esc(word) + "</mark>" +
-        esc(row.t.slice(at + word.length, b)) + (b < row.t.length ? "\u2026" : "");
-    }
-
-    function open(on) {
-      panel.hidden = !on;
-      box.setAttribute("aria-expanded", on ? "true" : "false");
-      if (!on) { sel = -1; }
-    }
-    function go(row) {
-      /* in THIS lesson: move the deck, and put the step in the URL without a
-         hashchange, so the address bar is shareable and nothing runs twice */
-      if (row.file === HERE && typeof show === "function") {
-        open(false);
-        show(row.i, true);
-        try { history.replaceState(null, "", query() + "#step-" + (row.i + 1)); } catch (e) {}
-        return;
-      }
-      location.href = row.file + query() + "#step-" + (row.i + 1);
-    }
-    function paint(ks) {
-      rows.sort(function (a, b) {
-        return b._s - a._s || a.unit - b.unit || a.i - b.i;
-      });
-      rows = rows.slice(0, 30);
-      list.innerHTML = rows.map(function (r, n) {
-        return '<button type="button" data-n="' + n + '">' +
-          '<span class="w">' + esc(r.title) + " \u00b7 Step " + (r.i + 1) + "</span>" +
-          '<span class="t">' + esc(r.h || "Step " + (r.i + 1)) + "</span>" +
-          '<span class="s">' + snippet(r, ks) + "</span></button>";
-      }).join("");
-      sel = -1;
-    }
-    function run() {
-      var ks = toks(box.value).filter(function (k) { return k.length > 1; });
-      if (!ks.length) { open(false); list.innerHTML = ""; say.textContent = ""; return; }
-      rows = [];
-      for (var i = 0; i < INDEX.length; i++) {
-        var s = score(INDEX[i], ks);
-        if (s) { INDEX[i]._s = s; rows.push(INDEX[i]); }
-      }
-      var n = rows.length;
-      paint(ks);
-      /* the count is the honest part: "no step" names what was searched, so a
-         word this grade never teaches reads as absent rather than broken */
-      say.textContent = n
-        ? n + (n === 1 ? " step" : " steps") + " in this grade" + (n > 30 ? " - showing 30" : "")
-        : "No step in " + "Grade 1 Science" + " mentions \u201c" + box.value.trim() + "\u201d.";
-      open(true);
-    }
-
-    var wait = null;
-    box.addEventListener("input", function () {
-      clearTimeout(wait);
-      wait = setTimeout(function () { load(run); }, 90);
-    });
-    box.addEventListener("focus", function () { load(function () {}); });
-    box.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") { open(false); box.blur(); return; }
-      var bs = list.querySelectorAll("button");
-      if (!bs.length) return;
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-        e.preventDefault();
-        sel = e.key === "ArrowDown"
-          ? (sel + 1) % bs.length
-          : (sel <= 0 ? bs.length - 1 : sel - 1);
-        for (var i = 0; i < bs.length; i++) bs[i].classList.toggle("sel", i === sel);
-        bs[sel].scrollIntoView({ block: "nearest" });
-      } else if (e.key === "Enter") {
-        e.preventDefault();
-        go(rows[sel < 0 ? 0 : sel]);
-      }
-    });
-    list.addEventListener("click", function (e) {
-      var b = e.target.closest("button[data-n]");
-      if (b) go(rows[+b.dataset.n]);
-    });
-    document.addEventListener("click", function (e) {
-      if (!panel.hidden && !panel.contains(e.target) && !box.closest(".eh-find").contains(e.target)) open(false);
-    });
-
-    /* ---- arriving on a deep link ----
-       Only a lesson page can act on one. show() is called now, BEFORE the
-       progress document hydrates, because __ehelRestore moves only a learner
-       who has not moved themselves - so this reads to it as a tap on Next and
-       the link is not overridden by the saved resume step. */
-    function fromHash() {
-      var m = /^#step-(\d+)$/.exec(location.hash || "");
-      if (!m || typeof show !== "function") return;
-      var n = +m[1] - 1;
-      if (n >= 0) show(n, false);
-    }
-    fromHash();
-    window.addEventListener("hashchange", fromHash);
-  })();
-
-  })();
-</script>
-
-<script>
-  /* wire-navigation.py :: back
-     Only when ?from=sci1: a lesson opened on its own has nowhere to go back to. */
-  (function () {
-    if (new URLSearchParams(location.search).get("from") !== "sci1") return;
-    var wrap = document.querySelector(".wrap");
-    if (!wrap) return;
-    var back = document.createElement("a");
-    back.className = "lesson-back";
-    back.href = "index.html";
-    back.innerHTML = '<span aria-hidden="true">\u2190</span> Grade 1 Science';
-    wrap.insertBefore(back, wrap.firstChild);
-  })();
-</script>
-
-<script>
-  /* wire-navigation.py :: carry
-     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
-     the class controls and Wehel do not mount at all - they guard on them and
-     return, so the symptom is silence rather than an error. Applied to every
-     same-directory link so a control added later cannot reintroduce the gap.
-     Done at run time because the values are only known then. */
-  (function () {
-    var q = new URLSearchParams(location.search);
-    q.delete("from");
-    if (!q.toString()) return;
-    document.querySelectorAll("a[href]").forEach(function (a) {
-      var href = a.getAttribute("href");
-      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
-      var base = href.split("?")[0];
-      var own = new URLSearchParams(href.split("?")[1] || "");
-      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
-      a.setAttribute("href", base + "?" + own.toString());
-    });
-  })();
-</script>
-
-<!-- WIRE-JS-START -->
-<script type="module">
-  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
-     learner-controls.js holds the SAME singletons the shell mounts. */
-  import { mountLearnerControls } from "./learner-controls.js";
-  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
-  import { escapeHtml } from "./course-shell.js";
-  /* Focus mode and the session bar. Imported for its side effect - it mounts
-     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
-     exitUrl, which is why an ordinary launch and every local run see no
-     change. It is what writes course_focus_break / course_left_early, so
-     without it the live group board's away state can never fire for a learner
-     in this build. */
-  import "./seb-session.js";
-
-  const q = new URLSearchParams(location.search);
-  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
-  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
-
-  let toastEl = null;
-  function toast(message) {
-    if (toastEl) toastEl.remove();
-    toastEl = document.createElement("div");
-    toastEl.className = "w-toast";
-    toastEl.textContent = message;
-    document.body.appendChild(toastEl);
-    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
-  }
-
-  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
-        .top-actions and mount ONLY when the server says a teacher is watching,
-        so nothing appears to a child working alone. */
-  try {
-    mountLearnerControls({
-      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l07",
-    });
-  } catch (e) { console.error("learner controls:", e); }
-
-  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
-     stylesheet. Measured rather than assumed: the bar wraps, so its height is
-     a property of the screen. Re-measured on resize because its clock changes
-     width every second and its buttons re-flow. */
-  (function () {
-    const seb = document.getElementById("seb-session-bar");
-    if (!seb) return;                       /* no focus mode, nothing to avoid */
-    const lift = () => document.documentElement.style
-      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
-    lift();
-    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
-  })();
-
-  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
-        the day's allowance, and a lesson nobody opens the tutor on should not
-        spend a request. */
-  if (launchToken) {
-    const dock = document.createElement("button");
-    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
-    const drawer = document.createElement("div");
-    drawer.className = "w-drawer"; drawer.hidden = true;
-    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
-    let panel = null;
-    function open() {
-      drawer.hidden = false; dock.hidden = true;
-      if (panel) return;
-      try {
-        panel = mountWehelChat({
-          container: drawer.querySelector(".w-drawer-body"),
-          meta: {
-            subject: "science", subjectLabel: "Science", grade: 1,
-            unitNo: 7, unitTitle: "Electricity and Magnets",
-            learnerCategory: q.get("category") || "",
-          },
-          store: {},
-          ui: { escapeHtml, toast },
-          tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Electricity and Magnets\u2026",
-          /* The chips a young learner presses, written as the sentence they
-             would have said. Four, because a row a six-year-old scans has to
-             be short and a fifth makes the other four less likely to be read.
-
-             "Give me a hint" is the one that carries a teaching stance: it
-             says "not the answer" in the message itself, so pressing it cannot
-             turn the tutor into an answer machine even before the prompt file
-             has its say.
-
-             True of every app this tool wires - Grade 1 English and the four
-             Mathematics builds - which is why none of them names a word, a
-             sentence or a number. */
-          quickPrompts: [
-            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
-            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
-            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
-            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
-          ],
-        });
-      } catch (e) {
-        console.error("wehel:", e);
-        drawer.hidden = true; dock.hidden = false;
-        toast("Wehel is not available on this page.");
-      }
-    }
-    function close() { drawer.hidden = true; dock.hidden = false; }
-    dock.addEventListener("click", open);
-    drawer.querySelector("button").addEventListener("click", close);
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
-    document.body.append(dock, drawer);
-
-    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
-       aloud by default and knew nothing of the lesson's voice, so a reply
-       could play over a line the lesson was reading. The lesson stops the
-       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
-       when the tutor starts reading - which the drawer shows as a Stop
-       button, .voice-button.is-playing. Only the moment that button APPEARS
-       counts: the panel repaints often, and repainting a reply already being
-       read must not cut off a line the lesson has just begun. */
-    window.__ehelTutorQuiet = stopBrowserSpeech;
-    let tutorReading = false;
-    new MutationObserver(() => {
-      const now = !!drawer.querySelector(".voice-button.is-playing");
-      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
-      tutorReading = now;
-    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
-  }
-</script>
-<!-- WIRE-JS-END -->
-
-<script type="module">
-  /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
-     THE UNIT PROBLEM for why this writes lNN and not uNN. */
-  import { createProgressClient } from "./progress-client.js";
-
-  const q = new URLSearchParams(location.search);
-  const endpoint = (q.get("pwsEndpoint") || "").trim();
-  const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
-
-  const COURSE = "ehel-sci-g01";
-  const UNIT = "l07";
-  const STUDENT = q.get("studentid") || "local";
-
-  /* Without a launch endpoint the backend is "local": everything still
-     reduces into localStorage so resume works, and nothing is sent. That is
-     the same rule the shell follows, and it is why opening a lesson as a file
-     or an artifact costs nothing and reports nothing. */
-  const ws = createProgressClient({
-    course: COURSE, student: STUDENT,
-    backend: endpoint ? "remote" : "local",
-    endpoint: endpoint || undefined,
-    token: token || undefined,
-    /* A blocked or expired write path is INVISIBLE otherwise - the throw is
-       caught, the events queue, and the learner is told nothing while their
-       work stops reaching the school. Said on the learner's own screen
-       because the server cannot tell a blocked learner from a closed tab. */
-    onAuthLost: () => notice("Your session has expired. Your work is saved on this device \u2014 open the lesson again from your class page."),
-    onDeliveryFailing: () => notice(navigator.onLine
-      ? "Your work is saved here, but it is not reaching your school right now."
-      : "You are offline. Your work is saved here and will be sent when you are back."),
-    onDeliveryRecovered: () => clearNotice(),
-  });
-
-  const emit = (e) => { try { ws.emit(e); } catch (_) { /* never break the lesson */ } };
-
-  let noticeEl = null;
-  function notice(text) {
-    if (!noticeEl) {
-      noticeEl = document.createElement("p");
-      noticeEl.className = "progress-notice";
-      noticeEl.setAttribute("role", "status");
-      document.querySelector(".wrap")?.prepend(noticeEl);
-    }
-    noticeEl.textContent = text;
-  }
-  function clearNotice() { if (noticeEl) { noticeEl.remove(); noticeEl = null; } }
-
-  const slides = [...document.querySelectorAll(".slide")];
-  /* The lesson's own arithmetic: show() prints "Step n of slides.length - 1",
-     so the last slide is the sticker shelf and not a step. Read from the
-     lesson rather than counted here, so the two cannot disagree. */
-  const STEPS = Math.max(1, slides.length - 1);
-  const sectionId = (i) => "step-" + String(i + 1).padStart(2, "0");
-  const labelOf = (i) => (slides[i]?.querySelector("h2")?.textContent || "").trim() || sectionId(i);
-
-  const doneIds = new Set();
-  let unitSent = false;
-
-  /* WHERE the learner is, which is not what sectionsDone says: a learner
-     stuck twenty minutes into the next step is exactly the one a supervising
-     teacher needs to see. `resumeLabel` rides beside the id because a board
-     printing "step-04" shows a teacher a word that appears nowhere on the
-     child's screen. */
-  /* Activity-level participation, {section: {answered, total}}, and the words
-     the learner has shown they know. Both ride on progress.summary because the
-     reducer keeps them there and nowhere else; both are whole-map
-     last-write-wins, so every summary sends everything known so far rather
-     than a delta that could strand a count.
-
-     The server caps `attempted` at 20 sections and requires
-     ^[a-z0-9][a-z0-9_-]{0,39}$ - no dots, no slashes - so ids are kept in that
-     shape here rather than being rejected silently there. */
-  const attempted = {};
-  const known = new Set();
-  let lastAt = 0;
-
-  /* WHAT THE RECORD ALREADY HOLDS FOR THIS UNIT, read once at load.
-
-     Both maps above are REPLACED by the reducer, not merged, and both start
-     empty on every page load - so without this the first participation event
-     of a new session deletes every section reported in an earlier one. A child
-     who read four books on Monday and answered one question on Tuesday would
-     have Monday erased by Tuesday's first tick.
-
-     It is kept SEPARATE from the live maps rather than copied into them,
-     because hydrate is asynchronous and a report can fire before it lands.
-     Merged at send time, an early report sends a partial map and the next one
-     repairs it; a seed would simply have missed the window. If hydrate cannot
-     be reached at all the baseline stays empty, which is the behaviour without
-     it. */
-  let baseAttempted = {};
-  let baseKnown = [];
-  /* step-NN -> the slide's 0-based index; anything else -> -1 */
-  const indexOf = (id) => {
-    const m = /^step-(\d{2})$/.exec(String(id || ""));
-    return m ? Number(m[1]) - 1 : -1;
-  };
-  (async () => {
-    try {
-      const doc = await ws.hydrate();
-      const u = doc && doc.units && doc.units[UNIT];
-      if (!u) return;
-      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
-      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
-      /* RESUME. The sections the record says are done are done - seeded into
-         doneIds too, so unit.completed still fires on the day the LAST step
-         is finished even if the first seven were finished last week - and
-         the deck is told to tick them and open where the learner was. Without
-         this a child who closed the tab reopened to an empty dot rail and
-         step 1, while the school's record said otherwise; measured on the
-         Science build on 2026-09-10, and true of every build this tool wires. */
-      const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
-      for (const i of doneIdx) doneIds.add(sectionId(i));
-      const resumeIdx = indexOf(u.resume);
-      if (window.__ehelRestore && (doneIdx.length || resumeIdx > 0)) {
-        try { window.__ehelRestore(doneIdx, resumeIdx); } catch (_) { /* never break the lesson */ }
-      }
-    } catch (_) { /* never break the lesson */ }
-  })();
-
-
-  function report(i) {
-    lastAt = i;
-    const ev = {
-      type: "progress.summary", unit: UNIT,
-      sectionsDone: [...doneIds],
-      resume: sectionId(i), resumeLabel: labelOf(i),
-      xp: doneIds.size,
-    };
-    /* This session's answers WIN over the stored ones for the same section -
-       a child who re-does a step is telling us something newer. */
-    const allAttempted = { ...baseAttempted, ...attempted };
-    const allKnown = new Set([...baseKnown, ...known]);
-    if (Object.keys(allAttempted).length) ev.attempted = allAttempted;
-    if (allKnown.size) ev.knownWords = [...allKnown];
-    emit(ev);
-    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
-  }
-
-  window.__ehelStep = function (i, done) {
-    const id = sectionId(i);
-    if (!doneIds.has(id)) {
-      doneIds.add(id);
-      emit({ type: "section.completed", unit: UNIT, section: id, title: labelOf(i) });
-    }
-    if (!unitSent && doneIds.size >= STEPS) {
-      unitSent = true;
-      emit({ type: "unit.completed", unit: UNIT, sectionsDone: [...doneIds], total: STEPS });
-    }
-    report(i);
-  };
-  window.__ehelAt = function (i) { lastAt = i; report(i); };
-
-  /* A SCORE, where a step actually produces one.
-     checkpoint.result is the only event the reducer turns into something a
-     teacher or a parent can read as a mark - the portal's quiz tables and the
-     gradebook are both fed from it - and nothing here emitted it, so every
-     scored step reported that it was DONE and never how it went.
-
-     ADDITIVE ON PURPOSE. A lesson that never calls this behaves exactly as it
-     did, which is what makes it safe in a tool three builds share.
-
-     ONLY WHERE THERE IS A REAL DENOMINATOR. `total` must be the number of
-     questions asked; a step that cannot say how many it asked must not call
-     this, because a score with an invented denominator is a mark nobody
-     measured. Play is deliberately excluded for the same reason the rollup
-     drops the Quran app's `games` star counts: a game is for practising. */
-  window.__ehelScore = function (i, right, total, sub, subTitle) {
-    const n = Number(total) || 0;
-    const got = Math.max(0, Math.min(Number(right) || 0, n));
-    if (!n) return;
-    /* `sub` gives ONE ACTIVITY INSIDE A STEP its own row - a single game out
-       of the twelve, say. The reducer keys checkpoints by this string and does
-       not validate it, so it is normalised here: lower case, hyphens only, and
-       short enough to read in a portal table. */
-    const key = sub
-      ? sectionId(i) + "-" + String(sub).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 28)
-      : sectionId(i);
-    emit({
-      type: "checkpoint.result", unit: UNIT, section: key,
-      title: subTitle ? labelOf(i) + ": " + subTitle : labelOf(i),
-      score: Math.round((got / n) * 100), correct: got, total: n,
-    });
-    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
-  };
-
-  /* PARTICIPATION where there is no score to give. "8 of 12 activities
-     ticked" is a real fact about a learner and is not a mark; sending it as a
-     checkpoint would put a percentage on work nobody assessed, which is the
-     thing the rollup already refuses to do for the Quran app's game stars. */
-  window.__ehelAttempt = function (i, answered, total, noun) {
-    const n = Number(total) || 0;
-    if (!n) return;
-    /* WHAT THIS IS CALLED, and what the two numbers count. The section id is a
-       POSITION here - `step-08` - and the same position is a different
-       activity in each app sharing this pipeline, so no reader of the stored
-       document can name it. `labelOf(i)` is the caption the learner is looking
-       at, the same one resumeLabel carries for the same reason: a surface
-       printing the id names a section nobody can find.
-
-       The noun is passed by the call site because only it knows: books, words,
-       rules, seconds. Both are optional and the server bounds them. */
-    attempted[sectionId(i)] = {
-      answered: Math.max(0, Math.min(Number(answered) || 0, n)),
-      total: n,
-      label: labelOf(i),
-      ...(noun ? { noun: String(noun) } : {}),
-    };
-    report(i);
-  };
-
-  /* Words the learner has shown they know, by tapping the right one when it
-     was said or pictured. A set, so hearing the same word in two steps counts
-     once, and the summary sends the whole list because the reducer replaces
-     rather than merges. */
-  window.__ehelKnown = function (words) {
-    const list = Array.isArray(words) ? words : [words];
-    let added = false;
-    for (const w of list) {
-      const t = String(w || "").trim().toLowerCase();
-      if (t && !known.has(t)) { known.add(t); added = true; }
-    }
-    // `cur` belongs to the deck's IIFE and this block is a separate module,
-    // so it is not in scope here - reading it would throw. The last position
-    // the deck told us about is, and that is the honest answer anyway.
-    if (added) report(lastAt);
-  };
+})();
 </script>

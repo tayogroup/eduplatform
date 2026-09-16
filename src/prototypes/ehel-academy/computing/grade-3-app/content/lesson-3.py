@@ -144,7 +144,7 @@ LESSON = {
              "Three quick questions.",
              explain(["Nothing new here."], ["Logic, prediction, sections."], [], ["Read, think, tap."]),
              {"items": [
-                 q("Why does toast come before butter?", "\U0001F35E", "butter in the toaster would melt and burn, so the toast is made first", ["butter is yellow", "no reason", "toast is heavier"], "A logical reason places the step."),
+                 q("Why does toast come before butter?", "\U0001F35E", "butter in the toaster would melt and burn, so the toast is made first", ["butter is yellow and toast is brown", "no reason: the order does not matter", "toast is heavier, so it goes first"], "A logical reason places the step."),
                  q("Predicting a change means...", "\U0001F52E", "saying what will happen before you try it", ["trying it and then looking", "guessing at random", "changing every step"], "Think the changed steps through first."),
                  q("Dividing a big task into sections makes it...", "\U0001F9E9", "easier to follow and easier to edit", ["longer", "impossible", "harder to share"], "Short sections, one change in one place."),
              ]},
@@ -283,7 +283,7 @@ tier(LESSON,
      extension=[
          q("Why divide a task into sub-tasks at all?", "\U0001F9E9",
            "each part is easier to follow, easier to fix and can be given to someone else",
-           ["it makes the job longer", "the computer needs it", "it looks organised"],
+           ["it makes the job longer, and longer is better", "a computer cannot read a task unless it is split", "it looks organised on the page, which is the point"],
            "Smaller parts are easier to understand, easier to fix, and can be shared out. The job itself is the same size."),
          q("You swap two steps and the result does not change. What does that tell you?", "\U0001F504",
            "those two steps did not depend on each other",

@@ -353,3 +353,68 @@ rather than the page.
   as a second `class="…"` inside the attribute string, which the parser
   ignores, so the running block was never highlighted at Stages 1 and 2
   either. Pass `"now"` as the third argument.
+- **`check-question-shape.py` is in `rebuild.sh`, and it went in at zero.** It
+  decides the part of a question read that a machine can: a duplicated option, an
+  explanation that names a wrong option and nothing else, a key three times the
+  length of every distractor, an unmarked negative stem, a stem whose sum
+  disagrees with its key, an all-of-these. It is not a substitute for reading the
+  keys - that was done once, by hand, over all 914, and a read cannot be re-run
+  on every build. It is there so that questions written AFTER the read cannot
+  reintroduce what the read cleared. Anything it reports is therefore new.
+
+  It took three rounds of repair before its findings meant anything, and every
+  false positive is worth knowing because each is a plausible way to write this
+  check wrong: `bag()` had "no" and "a" as stopwords, so "with no wire" matched
+  "with a wire" - the two opposite answers to one question; a set comparison
+  called "jump, jump, spin" and "spin, jump, jump" duplicates, in questions whose
+  whole point is the order; stripping punctuation made £6.50, 6:50 and 6/50 the
+  same option; NEGATIVE-STEM fired on scenarios ("the video will not play") and
+  ALL-OF-THESE on distractors. **Check the finding before believing the gate** -
+  the same rule this kit already learned about mutations.
+
+- **The 46 LENGTH-TELL findings were one defect written 46 times, and the fix is
+  not to shorten the key.** In each, the key was the only option that was a
+  sentence and the distractors were two-word nouns - "the beds", "a bug", "any
+  toy" - so a child could score without reading the stem. The key is the option
+  that has to TEACH, so it stays; the distractors were rewritten into full
+  statements of real misconceptions. 132 rewrites. Length stops being a signal,
+  and a child who now picks wrong has picked a wrong IDEA the explanation can
+  answer.
+
+- **`.eh-b1right` exists in SEVEN copies and only two of them were right.** The
+  lesson pages' bar (`add-header-bars.py`) declared it `flex: 0 0 auto`, which
+  was correct when that file was written - a brand, a progress track and two
+  small controls always fitted. `add-lesson-search.py` then injected a 141px
+  search field INTO that container rather than drawing its own bar, and a
+  no-shrink flex item sizes to max-content whatever the viewport does. Measured
+  at 375x812: **44px off the right of every lesson page in every subject**,
+  carrying the voice toggle off-screen, and 47px on the hub, which also has a
+  Back button.
+
+  Three things to know before touching it again. **`min-width: 0` is load-bearing
+  beside the flex** - a flex item's floor is its min-content width, so the flex
+  alone shrinks nothing. **The flex alone is not a fix**: measured, it clears the
+  overflow by collapsing the search input to ZERO and the 40px voice toggle to
+  22px, so `.eh-icon` needs `flex: 0 0 auto` to hold its tap target. And at 375px
+  five things genuinely do not fit, so one has to go: the picker is dropped below
+  480px because bar 2 already prints the lesson title and its Menu reaches the
+  hub, which lists every lesson - whereas nothing else on a narrow page reports
+  progress (`.eh-steps` is `display: none` there). That last part was checked in
+  the browser after being asserted wrongly from the CSS.
+
+  Fixed here in `computing/lesson-kit/build-hub.py` and in the shared
+  `mathematics/lesson-app-tools/add-header-bars.py`. **Four copies are still
+  `0 0 auto` and are other subjects' lanes**, left alone deliberately:
+  `art-and-design/lesson-kit/build-hub.py`,
+  `global-perspectives/lesson-kit/build-hub.py`,
+  `science/lesson-kit/build-hub.py`, and the stale per-app
+  `mathematics/grade-1-app/add-header-bars.py`.
+
+  Be exact about what that leaves, because the two halves recover differently
+  and it was nearly written down wrong. Those subjects' **lesson pages** take
+  the fix for free the next time they rebuild - they get their bar from the
+  shared tool. Their **hubs** do not: each hub's CSS is its own subject's
+  `build-hub.py`, so every hub keeps the overflow until somebody edits that
+  file in that lane. Verified on the currently built pages, 2026-09-16: science,
+  global-perspectives and art-and-design all still read `flex: 0 0 auto` on both
+  their hub and their lesson pages.

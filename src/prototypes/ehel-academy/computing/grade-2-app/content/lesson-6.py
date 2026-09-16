@@ -107,7 +107,7 @@ LESSON = {
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
-                 q("How do you give a floor robot its program?", "\U0001F41D", "press the buttons on its back, in order", ["shout at it", "draw on it", "push it along"], "Every press is remembered as one instruction."),
+                 q("How do you give a floor robot its program?", "\U0001F41D", "press the buttons on its back, in order", ["shout the directions at it", "draw the route on it with a pen", "push it along the route yourself"], "Every press is remembered as one instruction."),
                  q("What does GO do?", "\u25B6\uFE0F", "runs all the remembered presses in order", ["forgets everything", "turns the robot round", "makes it go faster"], "GO runs the program."),
                  q("What does CLEAR do?", "\U0001F5D1️", "wipes the remembered presses", ["cleans the floor", "runs the program", "turns left"], "CLEAR empties the memory for a new program."),
                  q("The robot faces up. Forward, forward, turn right. Which way does it face now?", "↻", "right", ["up", "left", "down"], "Two forwards do not change the facing; the right turn does."),
@@ -235,3 +235,25 @@ LESSON["talk"] = talk(
     "turn.",
     "Ask whose route was shortest, and whether shortest was the same as easiest to say."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4BE", "Why you clear it first",
+         "A floor robot remembers every button you press. It keeps them until you clear "
+         "it. If you do not clear it, your new steps are added to the old ones. The "
+         "robot sets off doing both. That is why a journey that worked yesterday goes "
+         "wrong today. The robot is not confused. It is doing just what is in its "
+         "memory. Clear first. Then program."),
+    part("\U0001F463", "One press, one square",
+         "Each press of the forward button moves the robot one square. Each press of a "
+         "turn button spins it a quarter turn. A turn does not move it at all. So a "
+         "journey of four squares needs four presses. Count the squares on the mat "
+         "first. Then press that many times."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("button", "\U0001F518", "A part you press to give one instruction.",
+         ["Press the forward button twice.", "Each button adds one step to the program."]),
+    word("memory", "\U0001F4BE", "Where a device keeps the program you gave it.",
+         ["The robot keeps your steps in its memory.", "Clear the memory before you start again."]),
+]

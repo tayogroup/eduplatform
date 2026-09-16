@@ -110,9 +110,9 @@ LESSON = {
              "Three quick questions.",
              explain(["Nothing new here."], ["When blocks, inputs, outputs, machines."], [], ["Read, think, tap."]),
              {"items": [
-                 q("A device program starts with...", "\U0001F170️", "a when block that names the input", ["a beep", "the lights", "the end"], "Nothing starts before the input."),
+                 q("A device program starts with...", "\U0001F170️", "a when block that names the input", ["a beep to say it is ready", "the lights coming on by themselves", "the end block, working backwards"], "Nothing starts before the input."),
                  q("The program says 'when button A is pressed'. You shake Bitsy. What happens?", "\U0001F4F3", "nothing: the program is waiting for A", ["a heart appears", "it beeps", "the motor turns"], "The wrong input starts nothing."),
-                 q("A program turning a motor to open a door is an example of...", "\U0001F6AA", "a computer controlling a physical object", ["a game", "a spreadsheet", "a network"], "Programs can control real things."),
+                 q("A program turning a motor to open a door is an example of...", "\U0001F6AA", "a computer controlling a physical object", ["a game where you open doors", "a spreadsheet with a door in it", "a network of doors talking to each other"], "Programs can control real things."),
              ]},
              "When, input, output, machine."),
 
@@ -236,7 +236,7 @@ tier(LESSON,
            "If the program is listening for the wrong input, the output blocks never run at all."),
          q("Why does a heating system use a sensor instead of a timer?", "\U0001F321\ufe0f",
            "a sensor knows how cold it actually is; a timer only knows what time it is",
-           ["sensors are cheaper", "timers are not allowed", "there is no difference"],
+           ["sensors are cheaper than timers to buy", "timers are not allowed in a heating system", "there is no difference: both switch it on"],
            "A timer heats an already-warm house. A sensor is an input about the real world."),
      ])
 
@@ -244,3 +244,22 @@ LESSON["talk"] = talk(
     "In pairs: name something at home that switches itself on. What is it sensing?",
     "Ask each pair for one input and one output on a machine they use every day."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\u2699\ufe0f", "Sense, decide, act",
+         "Every control system has the same three parts. Something senses: a button, a "
+         "sensor, a microphone. Something decides: the program says what to do. "
+         "Something acts: a light, a motor, a speaker. Name those three parts in any "
+         "automatic thing and you have understood it. Try it on a street light. Try it "
+         "on a shop door that opens as you walk up."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("input", "\U0001F4E5", "Something that goes into a device: a press, a shake, a sound.",
+         ["Button A is an input.", "The sensor sends its reading in as an input."]),
+    word("output", "\U0001F4E4", "Something a device sends out: a light, a sound, a movement.",
+         ["The beep is an output.", "The motor turning is an output."]),
+    word("system", "\u2699\ufe0f", "A sensor, a program that decides, and an output, working together.",
+         ["A door that opens by itself is a system.", "Sense, decide, act: that is a system."]),
+]

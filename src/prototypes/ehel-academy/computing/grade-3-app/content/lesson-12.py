@@ -104,7 +104,7 @@ LESSON = {
              "Three quick questions.",
              explain(["Nothing new here."], ["Why ciphers, and the 1 = a code."], [], ["Read, think, tap."]),
              {"items": [
-                 q("A cipher keeps a message secret by...", "\U0001F512", "changing it so only someone with the key can read it", ["hiding the paper", "shouting it", "deleting it"], "Seen but not read."),
+                 q("A cipher keeps a message secret by...", "\U0001F512", "changing it so only someone with the key can read it", ["hiding the paper where nobody will look", "shouting it so only friends hear", "deleting it so nobody can read it"], "Seen but not read."),
                  q("In the 1 = a code, what is the letter d?", "\U0001F522", "4", ["3", "5", "26"], "a is 1, b is 2, c is 3, d is 4."),
                  q("Decode 2 5 4.", "\U0001F6CF️", "bed", ["bad", "bee", "cat"], "b 2, e 5, d 4."),
              ]},
@@ -246,3 +246,18 @@ LESSON["talk"] = talk(
     "need?",
     "Ask why the key matters more than the cipher."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F50D", "Why a simple cipher can be broken",
+         "The same letter always becomes the same number. That makes this cipher easy to "
+         "use. It is also its weakness. Count the numbers in a long coded message. The "
+         "one that turns up most is probably e. In English, e is the commonest letter. "
+         "Somebody can start there and work out the rest. They never needed the key. A "
+         "cipher is only as strong as the guessing it leaves."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("message", "\u2709\ufe0f", "The words somebody wants to send to somebody else.",
+         ["Write the message, then encode it.", "The message passes through many computers."]),
+]

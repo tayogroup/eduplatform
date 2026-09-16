@@ -289,3 +289,19 @@ LESSON["talk"] = talk(
     "Ask each pair for one everyday algorithm they follow without thinking. Whose had the "
     "most steps?"
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F501", "The same steps, every time",
+         "An algorithm gives the same answer every time. Clean your teeth the same way "
+         "on Monday. Do it again on Friday. Your teeth get clean both times. That is why "
+         "we write algorithms down. Anybody can pick one up and follow it. They all get "
+         "the same result. Steps that did something new each time would help nobody."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("computer", "\U0001F5A5\ufe0f", "A machine that follows a program to do a job.",
+         ["A tablet is a computer.", "A computer does just what its steps say."]),
+    word("rule", "\U0001F4CF", "Something that is always true, that tells you what to do.",
+         ["The rule is: shoes off at the door.", "An algorithm follows its rules every time."]),
+]

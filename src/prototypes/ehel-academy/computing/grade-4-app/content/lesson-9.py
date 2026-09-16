@@ -266,3 +266,20 @@ LESSON["talk"] = talk(
     "field?",
     "Ask what a wrongly typed field would break, and who would be the one to notice."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4C7", "Rows are records, columns are fields",
+         "A database table is read two ways. One ROW is a record. It holds everything "
+         "about one thing: Amal's name, age, pet and club. One COLUMN is a field. It "
+         "holds one fact about everybody: every child's age, down the page. Sorting "
+         "rearranges whole records, so each child keeps their own pet. Filtering hides "
+         "the records that do not match. Neither one changes what is inside a cell."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("database", "\U0001F4C7", "An organised collection of data you can search and sort.",
+         ["The school keeps a database of every child.", "A database can be on paper or on a computer."]),
+    word("sort", "\U0001F522", "To put records in order by one field.",
+         ["Sort by age, youngest first.", "Sorting adds no records and removes none."]),
+]

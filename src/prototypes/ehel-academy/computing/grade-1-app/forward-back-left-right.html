@@ -1166,11 +1166,25 @@
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
+     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
+     progress track and two small controls always fitted. The search field then
+     went INTO this container (add-lesson-search.py injects it rather than
+     drawing its own bar on a lesson page), and a no-shrink container sizes to
+     max-content whatever the viewport does - so at 375px the group ran 44px
+     off the right of every lesson page in every subject, carrying the voice
+     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
+     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
+     the two into agreement.
+
+     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
+     min-content width by default, which for this group is the whole search
+     field plus the picker, so the flex alone would shrink nothing. */
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; }
+    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1211,6 +1225,21 @@
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
+  }
+  /* At 375px five things do not fit, so one has to go, and making the group
+     shrinkable alone is not a fix - measured, it collapses the search input to
+     ZERO width and leaves a 24px stub. The picker is the one to drop, because
+     both of its jobs are already on screen one row below: bar 2 prints the
+     lesson title, and its Menu goes to the hub, which lists every lesson. The
+     progress track is NOT droppable for the same test - nothing else on a
+     narrow page reports progress (.eh-steps is display:none there), and the
+     pill beside it reads a real percentage.
+
+     Measured on a Computing lesson page at 375x812: 44px of overflow before,
+     0 after, with the voice toggle at its full 40px and the search field at
+     133px. */
+  @media (max-width: 480px) {
+    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1517,7 +1546,7 @@
           ],
           "counts": {
             "steps": 14,
-            "words": 8,
+            "words": 10,
             "games": 4,
             "home": 3
           },
@@ -1608,6 +1637,16 @@
               "pic": "🔧",
               "title": "Test it, fix it",
               "say": "If Robo stops in the wrong place, the program is not right yet. Change it: add a turn, take away a forward. Press Go again. Testing and fixing is what programmers do all day."
+            },
+            {
+              "pic": "🔮",
+              "title": "Reading a program before you run it",
+              "say": "You do not have to press go to know what will happen. Put your finger on the start square. Move it one square for each arrow, the way Robo would. Where does your finger stop? That is called predicting. If it stops in the wrong place, you have found the problem. And Robo has not even moved yet."
+            },
+            {
+              "pic": "↩️",
+              "title": "A turn is not a move",
+              "say": "A turn arrow spins Robo on the spot. It stays on the same square. It just faces a new way. A move arrow sends it forward one square. Children often count a turn as a square. Then Robo stops one square short every time. Turn, then move. They are two different jobs."
             }
           ]
         }
@@ -1694,6 +1733,24 @@
               "uses": [
                 "Robo moves on a grid.",
                 "Count the squares on the grid."
+              ]
+            },
+            {
+              "w": "predict",
+              "pic": "🔮",
+              "meaning": "To say what will happen before it happens.",
+              "uses": [
+                "Predict where Robo will stop.",
+                "Follow the arrows in your head and predict."
+              ]
+            },
+            {
+              "w": "test",
+              "pic": "✅",
+              "meaning": "To run something and see if it does what you wanted.",
+              "uses": [
+                "Test the program by pressing go.",
+                "Test it, then fix what went wrong."
               ]
             }
           ]
@@ -2302,6 +2359,23 @@
                       "A machine that follows a program."
                     ]
                   ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "program",
+                      "A list of instructions a computer or a robot runs."
+                    ],
+                    [
+                      "grid",
+                      "Squares in rows, like a chessboard."
+                    ],
+                    [
+                      "predict",
+                      "To say what will happen before it happens."
+                    ]
+                  ]
                 }
               ]
             },
@@ -2779,6 +2853,24 @@
                 "Robo moves on a grid.",
                 "Count the squares on the grid."
               ]
+            },
+            {
+              "w": "predict",
+              "pic": "🔮",
+              "meaning": "To say what will happen before it happens.",
+              "uses": [
+                "Predict where Robo will stop.",
+                "Follow the arrows in your head and predict."
+              ]
+            },
+            {
+              "w": "test",
+              "pic": "✅",
+              "meaning": "To run something and see if it does what you wanted.",
+              "uses": [
+                "Test the program by pressing go.",
+                "Test it, then fix what went wrong."
+              ]
             }
           ],
           "finder": [
@@ -2879,6 +2971,30 @@
               "file": "algorithm-to-program.html"
             },
             {
+              "w": "column",
+              "pic": "⬇️",
+              "meaning": "A line of a table that goes down.",
+              "uses": [
+                "The pet column tells you every pet.",
+                "One column, one kind of fact."
+              ],
+              "lesson": 6,
+              "title": "Data Detectives",
+              "file": "data-detectives.html"
+            },
+            {
+              "w": "computer",
+              "pic": "🖥️",
+              "meaning": "A machine that follows a program to do a job.",
+              "uses": [
+                "A tablet is a computer.",
+                "A computer does just what its steps say."
+              ],
+              "lesson": 1,
+              "title": "What Is an Algorithm?",
+              "file": "what-is-an-algorithm.html"
+            },
+            {
               "w": "computer",
               "pic": "💻",
               "meaning": "A machine that runs programs.",
@@ -2925,6 +3041,18 @@
               "lesson": 8,
               "title": "Computers Everywhere",
               "file": "computers-everywhere.html"
+            },
+            {
+              "w": "count",
+              "pic": "🔢",
+              "meaning": "To find how many.",
+              "uses": [
+                "Count how many chose cats.",
+                "The count tells you which one won."
+              ],
+              "lesson": 6,
+              "title": "Data Detectives",
+              "file": "data-detectives.html"
             },
             {
               "w": "data",
@@ -3207,6 +3335,18 @@
               "pic": "🔮",
               "meaning": "To say what will happen before it happens.",
               "uses": [
+                "Predict where Robo will stop.",
+                "Follow the arrows in your head and predict."
+              ],
+              "lesson": 3,
+              "title": "Forward, Back, Left, Right",
+              "file": "forward-back-left-right.html"
+            },
+            {
+              "w": "predict",
+              "pic": "🔮",
+              "meaning": "To say what will happen before it happens.",
+              "uses": [
                 "Predict what the cat will do.",
                 "My prediction was right."
               ],
@@ -3335,6 +3475,30 @@
               "file": "networks-and-the-internet.html"
             },
             {
+              "w": "row",
+              "pic": "➡️",
+              "meaning": "A line of a table that goes across.",
+              "uses": [
+                "Each child has one row.",
+                "Read across the row to find their answer."
+              ],
+              "lesson": 6,
+              "title": "Data Detectives",
+              "file": "data-detectives.html"
+            },
+            {
+              "w": "rule",
+              "pic": "📏",
+              "meaning": "Something that is always true, that tells you what to do.",
+              "uses": [
+                "The rule is: shoes off at the door.",
+                "An algorithm follows its rules every time."
+              ],
+              "lesson": 1,
+              "title": "What Is an Algorithm?",
+              "file": "what-is-an-algorithm.html"
+            },
+            {
               "w": "run",
               "pic": "🏃",
               "meaning": "To make the computer do the program.",
@@ -3441,6 +3605,18 @@
               "lesson": 1,
               "title": "What Is an Algorithm?",
               "file": "what-is-an-algorithm.html"
+            },
+            {
+              "w": "test",
+              "pic": "✅",
+              "meaning": "To run something and see if it does what you wanted.",
+              "uses": [
+                "Test the program by pressing go.",
+                "Test it, then fix what went wrong."
+              ],
+              "lesson": 3,
+              "title": "Forward, Back, Left, Right",
+              "file": "forward-back-left-right.html"
             },
             {
               "w": "test",
@@ -9462,7 +9638,7 @@
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🧭", "Four directions"], ["🤖", "Robo's rules"], ["🌸", "Robo driver"], ["🔮", "Robo predictor"], ["🗂️", "Left and right"], ["🧭", "Direction givers"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 7 parts. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   tapCards(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Forward, backwards, turn left, turn right. Four instructions." }, LESSON.steps[3].data));
   demo(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Robo faces a way, moves one square at a time, and runs the program you give it." }, LESSON.steps[4].data));

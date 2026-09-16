@@ -120,7 +120,7 @@ LESSON = {
                  q("A wait block that does nothing for the job is...", "⏳", "an unused command: delete it", ["needed", "a repeat", "an input"], "Unused commands come out."),
                  q("Removing a wait and folding three jumps into a repeat makes the program...", "\U0001F9F9", "shorter, and it still does the same thing", ["do something different", "longer", "run backwards"], "Tidy means same job, fewer blocks."),
                  q("The cat was left two squares along by the last program. To start from the beginning you...", "\U0001F3E0", "put a go home block first", ["move it by hand", "delete the cat", "add more jumps"], "Reset the object first: initialisation."),
-                 q("What does 'initialisation' mean?", "\U0001F504", "putting things back to their starting state at the start of a program", ["the end of a program", "a bug", "a kind of sprite"], "Initialise means set up at the start."),
+                 q("What does 'initialisation' mean?", "\U0001F504", "putting things back to their starting state at the start of a program", ["putting everything away at the end of a program", "a bug that happens when a program starts", "a kind of sprite that appears first"], "Initialise means set up at the start."),
                  q("Move right 1, jump, move right 1 stops at square 2. To stop at 3, change...", "\U0001F522", "one move number from 1 to 2", ["jump to spin", "nothing", "both numbers to 4"], "Change a number inside a block."),
                  q("After you fix a bug you should...", "▶️", "run the program again to test the fix", ["stop", "delete the program", "add a wait block"], "A fix is tested by running it."),
                  q("Which program is clear and concise?", "✅", "repeat 3 times jump, say hello", ["jump, jump, jump, wait, say hello, wait", "wait, wait, wait", "jump, wait, jump, wait, jump"], "No unused blocks, duplicates combined."),
@@ -196,12 +196,13 @@ LESSON["lecture"] = LESSON["lecture"] + [
          "The blocks here work like Scratch, the program most schools use at your age. In "
          "Scratch you drag blocks together under a hat block. You press the green flag. The "
          "sprite does what you said. It has a repeat block. It has a go-to block to reset a "
-         "sprite. It has blocks with numbers in them. All the things you are using now. If "
-         "your teacher opens Scratch, you already know how it thinks. The hat block is called "
-         "when green flag clicked. Your blocks have Scratch names too. Move right is move 10 "
-         "steps. Jump is change y by 50. Spin is turn 90 degrees. Say hello is say Hello!. "
-         "Grow and shrink are change size by 10 and change size by -10. Go home is go to x: 0 "
-         "y: 0. Wait is wait 1 seconds. Repeat 3 times is repeat 3. Same jobs, real names."
+         "sprite. It has blocks with numbers in them. All the things you are using now. Your "
+         "blocks have Scratch names too. The hat block is called when green flag clicked. "
+         "Move right is move 10 steps. Jump is change y by 50. Spin is turn 90 degrees. Say "
+         "hello is say Hello!. Grow and shrink are change size by 10 and change size by -10. "
+         "Go home is go to x: 0 y: 0. Wait is wait 1 seconds. Repeat 3 times is repeat 3. "
+         "Same jobs, real names. If your teacher opens Scratch, you already know how it "
+         "thinks."
 ),
     part("\U0001F50A", "The number inside a block",
          "Some blocks have a number you can change without changing the block. Move has a number "

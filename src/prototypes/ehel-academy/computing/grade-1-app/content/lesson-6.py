@@ -332,3 +332,21 @@ LESSON["talk"] = talk(
     "decide together which would be easiest to count.",
     "Ask what their table could NOT tell them, however long they looked at it."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F5C2\ufe0f", "Across and down",
+         "A table has rows and columns. Rows go across. Columns go down. One row holds "
+         "everything about one child. One column holds one fact about everybody. Want to "
+         "know what Amal likes? Read along Amal's row. Want to know what the class "
+         "likes? Read down that column. Knowing which way to read is most of the job."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("row", "\u27A1\ufe0f", "A line of a table that goes across.",
+         ["Each child has one row.", "Read across the row to find their answer."]),
+    word("column", "\u2B07\ufe0f", "A line of a table that goes down.",
+         ["The pet column tells you every pet.", "One column, one kind of fact."]),
+    word("count", "\U0001F522", "To find how many.",
+         ["Count how many chose cats.", "The count tells you which one won."]),
+]

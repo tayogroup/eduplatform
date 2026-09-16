@@ -123,7 +123,7 @@ LESSON = {
                  q("'20 June' should be formatted as...", "\U0001F4C5", "date", ["currency", "number", "picture"], "It is a date."),
                  q("Formatting a money column as currency means...", "\U0001F4B7", "the amounts show as pounds and pence and can be added", ["the numbers disappear", "they become dates", "nothing changes"], "Format for the purpose."),
                  q("Filtering 'age is more than 7' selects...", "\U0001F50D", "only the rows where the age is 8 or more", ["every row", "only age 7", "the names beginning with A"], "Select by characteristic."),
-                 q("Putting a number into cell C4 on a tablet is...", "✏️", "recording data in a spreadsheet", ["drawing", "a network", "a bug"], "Data entered into a cell."),
+                 q("Putting a number into cell C4 on a tablet is...", "✏️", "recording data in a spreadsheet", ["drawing a picture on the screen", "a network joining two tablets", "a bug in the spreadsheet program"], "Data entered into a cell."),
              ]},
              "That is the whole lesson finished. You can find, fill, format and filter a spreadsheet."),
     ],
@@ -247,3 +247,19 @@ LESSON["talk"] = talk(
     "In pairs: where have you seen rows and columns outside a computer? Take three.",
     "Ask what goes wrong if a date is stored as ordinary text."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\u2795", "Adding a range up",
+         "A number column is formatted as a number for a reason. The sheet can then add "
+         "it. Choose the range B2 to B7. Ask for the total. The sheet adds those six "
+         "cells for you. Change one of them and the total changes on its own. A paper "
+         "table cannot do that. The answer keeps itself right."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("total", "\u2795", "What you get when you add a range of cells up.",
+         ["The total of B2 to B7 is 34.", "Put the total at the foot of the column."]),
+    word("sort", "\U0001F522", "To put the rows in order by one column.",
+         ["Sort by age, smallest first.", "Sorting moves whole rows, so nobody loses their data."]),
+]

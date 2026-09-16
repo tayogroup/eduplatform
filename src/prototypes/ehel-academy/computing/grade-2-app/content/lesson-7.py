@@ -178,7 +178,7 @@ LESSON = {
                  q("How tall you are is what kind of data?", "\U0001F4CF", "a measurement", ["a count", "a category", "an opinion"], "Measured in centimetres."),
                  q("Which of these can a form record?", "\U0001F4DD", "counts, measurements and categories", ["only stories", "nothing", "only pictures"], "All three kinds of statistical data go into a form."),
                  q("Juice spills on the paper table. What about the computer copy?", "\U0001F4BB", "it is still there", ["it is soaked too", "it disappears", "it turns to juice"], "The juice only reached the paper. The computer's copy was not touched."),
-                 q("What can a computer do with data that paper cannot?", "\U0001F50E", "search, copy, send and count it in a blink", ["hold it", "fold it", "nothing"], "That is why data is stored on computers."),
+                 q("What can a computer do with data that paper cannot?", "\U0001F50E", "search, copy, send and count it in a blink", ["hold it without any electricity", "fold it up and put it in a pocket", "nothing a piece of paper cannot do"], "That is why data is stored on computers."),
              ]},
              "That is the whole lesson finished. You can collect data, and you know what kind you are collecting."),
     ],

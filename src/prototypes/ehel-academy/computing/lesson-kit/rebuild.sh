@@ -11,10 +11,18 @@
 # runs after the content is final and before add-lesson-search.py mounts the
 # box that reads it.
 #
-# Stops at the first failure. The two gates at the end are the ones that decide
-# whether this build ships: check-lessons.py (the shared pipeline's own) and
-# check-coverage.py (the curriculum gate, including the Cambridge Learner's
-# Book arm).
+# Stops at the first failure. The three gates at the end are the ones that
+# decide whether this build ships: check-lessons.py (the shared pipeline's own),
+# check-coverage.py (the curriculum gate, including the Cambridge Learner's Book
+# arm) and check-question-shape.py (the defect classes a human read looks for
+# that a machine can decide - a duplicated option, an explanation naming the
+# wrong one, a key three times the length of every distractor).
+#
+# That last one is here because the read it partly replaces was done ONCE, by
+# hand, over all 914 questions, and a read cannot be re-done on every build. It
+# went in at zero findings across all four grades, so anything it reports is a
+# question authored after it - which is the only kind of finding a gate wired in
+# after the fact can honestly claim.
 #
 # T is the SHARED pipeline directory and it is overridable ON PURPOSE. Several
 # sessions edit this tree at once, and on 2026-09-16 two of those shared tools
@@ -49,4 +57,5 @@ python ${S:-$T}/build-lesson-search.py --app .
 python $T/add-lesson-search.py       --app .
 python $T/check-lessons.py           --app .
 python $K/check-coverage.py          --app .
+python $K/check-question-shape.py    --app .
 python $K/build-review-pack.py       --app .

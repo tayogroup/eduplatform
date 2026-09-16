@@ -127,7 +127,7 @@ LESSON = {
                  q("You cannot see the bug. What is a good thing to do?", "\U0001F465", "ask a friend to look", ["hide the program", "give up", "delete everything"], "Fresh eyes find what tired eyes miss."),
                  q("Explaining each block out loud helps you...", "\U0001F5E3️", "hear the block that is wrong", ["run faster", "make the cat bigger", "add more blocks"], "You hear 'spin' when the goal says 'jump'."),
                  q("Which is the BAD debugging habit?", "\U0001F6AB", "changing three blocks at once without running", ["running after every fix", "asking a friend", "explaining out loud"], "If it still fails you cannot tell which change was wrong."),
-                 q("A program goes wrong. Where is the bug?", "\U0001F4BB", "in the program: the computer did what it was told", ["in the computer", "in the cat", "nowhere"], "The computer did exactly what the program said."),
+                 q("A program goes wrong. Where is the bug?", "\U0001F4BB", "in the program: the computer did what it was told", ["in the computer: it made a mistake", "in the cat: it did not want to move", "nowhere: programs go wrong by themselves"], "The computer did exactly what the program said."),
                  q("What does debugging mean?", "\U0001F527", "finding and fixing bugs so the program does what we wanted", ["writing a new program", "drawing insects", "switching off"], "Debugging is finding and fixing the errors."),
              ]},
              "That is the whole lesson finished. You can debug, and you know why two heads are better than one."),
@@ -239,7 +239,7 @@ tier(LESSON,
            "You stop skimming and start reading. That is the whole trick."),
          q("You fixed the bug and the program still does the wrong thing. What now?", "\U0001F527",
            "run it again and look at what it does now - there is another bug",
-           ["give up", "put the old bug back", "change every block"],
+           ["give up: two bugs cannot be fixed", "put the old bug back so it works again", "change every block until something works"],
            "Programs can have more than one bug. Run, look, fix, run again."),
      ])
 

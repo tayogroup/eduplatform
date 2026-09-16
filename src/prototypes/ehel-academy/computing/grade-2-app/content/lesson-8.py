@@ -122,7 +122,7 @@ LESSON = {
                  [],
                  ["Think about what happened to the paper table, then tap."]),
              {"label": "Question", "items": [
-                 q("The class list on paper got wet. What about the copy on the computer?", "\U0001F4A7", "still there, and it can be printed again", ["also wet", "gone for ever", "half wet"], "The water only reached the paper. The copy on the computer is still there."),
+                 q("The class list on paper got wet. What about the copy on the computer?", "\U0001F4A7", "still there, and it can be printed again", ["also wet, because it is the same list", "gone for ever, like the paper one", "half wet, because half was saved"], "The water only reached the paper. The copy on the computer is still there."),
                  q("You need to find one name out of 500. Which is faster?", "\U0001F50E", "the computer searches it in a blink", ["reading the paper list", "they are the same", "asking everyone"], "Searching is what computers are best at."),
                  q("Two classes need the same table. On a computer you can...", "\U0001F4CB", "copy it in a blink", ["write it out twice", "share one piece of paper", "not do it"], "Copying is instant."),
                  q("You want to turn the table into a graph. Which is faster?", "\U0001F4CA", "the computer draws it in a blink", ["drawing it by hand with a ruler", "they take the same time", "graphs cannot be made"], "Presenting data is a computer's job."),
@@ -262,3 +262,21 @@ LESSON["talk"] = talk(
     "you, in one sentence?",
     "Ask for one decision their own graph could help somebody make."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4CA", "Why a picture beats a list",
+         "A list of forty answers is hard to read. Draw the same forty answers as bars. "
+         "Now you can read it in a second. The tallest bar is the most popular. The "
+         "shortest is the least. You can see it without counting. A chart holds no more "
+         "data than the list did. It just makes the answer easy to see."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("row", "\u27A1\ufe0f", "A line of a table that goes across.",
+         ["One row for each child.", "Read across the row."]),
+    word("count", "\U0001F522", "To find how many.",
+         ["Count the ticks in each row.", "The count is what goes into the graph."]),
+    word("chart", "\U0001F4CA", "A picture of data, drawn so you can compare it.",
+         ["The chart shows cats are most popular.", "A chart makes the biggest one easy to see."]),
+]

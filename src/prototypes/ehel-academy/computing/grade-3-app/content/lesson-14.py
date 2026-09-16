@@ -52,7 +52,7 @@ LESSON = {
                  {"pic": "\U0001F50C", "label": "smart plug", "say": "A smart plug. Any lamp plugged into it can be switched on and off from a phone, or on a timer."},
              ], "need": 6,
               "then": {"ask": "What makes a bulb an Internet of Things device?",
-                       "opts": [opt("A small computer inside it that connects to the internet", True), opt("It is very bright", False), opt("It is expensive", False)],
+                       "opts": [opt("A small computer inside it that connects to the internet", True), opt("It is very bright and can change colour", False), opt("It is expensive and comes in a smart box", False)],
                        "why": "Things plus computer plus internet: the Internet of Things."}},
              "Ordinary things, connected."),
 
@@ -138,7 +138,7 @@ LESSON = {
              explain(["Nothing new here."], ["Controlled machines, connected things, factory robots."], [], ["Read, think, tap."]),
              {"items": [
                  q("Which machine is controlled by a program?", "\U0001F9FA", "a washing machine", ["a bicycle", "a broom", "scissors"], "A program runs the cycle."),
-                 q("A smart bulb is an Internet of Things device because...", "\U0001F4A1", "it has a computer inside that connects to the internet", ["it is bright", "it is round", "it is new"], "Thing plus computer plus internet."),
+                 q("A smart bulb is an Internet of Things device because...", "\U0001F4A1", "it has a computer inside that connects to the internet", ["it is brighter than an ordinary bulb", "it is round instead of a long tube", "it is new, and new things are smart"], "Thing plus computer plus internet."),
                  q("Why does a factory use a robot to weld?", "\U0001F3ED", "it is exact and can repeat the same weld all day", ["robots are cheap toys", "people cannot weld", "it is fun"], "Exact and repeated: a robot's job."),
              ]},
              "Controlled, connected, manufacturing."),
@@ -149,12 +149,12 @@ LESSON = {
              {"items": [
                  q("A lift going to floor 3 when you press 3 is...", "\U0001F3E2", "a machine controlled by a program", ["magic", "a person pulling", "a network"], "A program moves it."),
                  q("Which has NO program inside?", "\U0001F527", "a hand whisk", ["traffic lights", "a washing machine", "an automatic door"], "Mechanical only."),
-                 q("What does 'smart' mean in 'smart plug'?", "\U0001F50C", "connected to the internet, with a computer inside", ["clever", "expensive", "small"], "Smart means connected."),
+                 q("What does 'smart' mean in 'smart plug'?", "\U0001F50C", "connected to the internet, with a computer inside", ["clever enough to think for itself", "expensive, because good things cost more", "small enough to fit in one socket"], "Smart means connected."),
                  q("Which is an Internet of Things device?", "\U0001F310", "a doorbell that shows the visitor on your phone", ["a candle", "a teddy bear", "an old bell on a wire"], "Computer inside, connected."),
                  q("Manufacturing means...", "\U0001F3ED", "making things in a factory", ["driving a car", "shopping", "a kind of robot"], "Making things."),
                  q("Which job on the car line is a person's?", "\U0001F469‍\U0001F527", "programming and checking the robots", ["welding every car by hand", "lifting the engine", "painting in the fumes"], "People program, check and fix."),
                  q("A factory robot's motors are its...", "⚙️", "outputs", ["inputs", "program", "network"], "Motors move: output."),
-                 q("Why is painting a job for a robot?", "\U0001F3A8", "the fumes are dangerous for a person and the robot paints evenly", ["robots like colours", "people cannot paint", "paint is heavy"], "Dangerous and exact."),
+                 q("Why is painting a job for a robot?", "\U0001F3A8", "the fumes are dangerous for a person and the robot paints evenly", ["robots like colours more than people do", "people cannot paint a car at all", "paint is heavy to carry up a ladder"], "Dangerous and exact."),
              ]},
              "That is the whole lesson finished. You know the machines a program controls, the things that connect, and the robots that build."),
     ],

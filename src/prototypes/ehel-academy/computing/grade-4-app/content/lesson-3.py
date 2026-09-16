@@ -122,13 +122,13 @@ LESSON = {
              "Time to show what you know. Tap the answer.",
              explain(["No new ideas here."], ["Think about decomposition, sub-routines and following a call."], [], ["Read, look, tap."]),
              {"items": [
-                 q("A sub-routine is...", "\U0001F4E6", "a named part of an algorithm, written as its own algorithm", ["a mistake", "the last step", "a kind of input"], "Named and separate."),
+                 q("A sub-routine is...", "\U0001F4E6", "a named part of an algorithm, written as its own algorithm", ["a mistake that splits an algorithm in two", "the last step of a long algorithm", "a kind of input an algorithm asks for"], "Named and separate."),
                  q("Which is a call to a sub-routine?", "\U0001F4CB", "do BREAKFAST", ["pour the milk", "repeat 4 times", "if it rains"], "'do NAME' runs the sub-routine."),
                  q("'Pour the cereal' belongs in which sub-routine?", "\U0001F33E", "BREAKFAST", ["WASH", "BAG", "DRESS"], "Decomposition groups steps that belong together."),
                  q("Why write WASH once as a sub-routine instead of in every routine?", "\U0001F501", "so it can be reused and changed in one place", ["to make each routine longer", "because it is a rule", "so it runs faster"], "One copy, many calls."),
                  q("You are following the main algorithm and reach 'do DRESS'. You...", "↪️", "do all of DRESS's steps, then carry on after the call", ["skip it", "stop", "start the main algorithm again"], "Into the sub-routine and back."),
                  q("The main algorithm for a school morning has five lines. Behind them are...", "\U0001F9E9", "all the steps of the sub-routines it calls", ["nothing", "five steps in total", "only the last step"], "Decomposition hides detail, it does not remove it."),
-                 q("Who benefits from sub-routines when two people write one algorithm?", "\U0001F91D", "both: each can write a sub-routine and the main joins them", ["nobody", "only the teacher", "only the computer"], "Sub-routines share the work."),
+                 q("Who benefits from sub-routines when two people write one algorithm?", "\U0001F91D", "both: each can write a sub-routine and the main joins them", ["nobody: two people cannot share one algorithm", "only the teacher, who has to read it", "only the computer, which runs it faster"], "Sub-routines share the work."),
              ]},
              "That is the whole lesson finished. You decompose a task into sub-routines and follow the calls."),
     ],
@@ -237,3 +237,20 @@ LESSON["talk"] = talk(
     "Ask which part they would hand to somebody else, and what that person would need to be "
     "told."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\u267B\ufe0f", "Write it once, use it twice",
+         "A sub-routine is not about tidiness. It is that you write the steps ONCE. Say "
+         "WASH is needed in three places. A sub-routine means three calls to one list of "
+         "steps. Without it you copy the same steps out three times. And when the "
+         "washing changes, you change one list, not three. That is also three chances "
+         "not to miss one."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("algorithm", "\U0001F4CB", "A set of steps that does a job.",
+         ["A sub-routine is an algorithm of its own.", "The main algorithm calls the others."]),
+    word("reuse", "\u267B\ufe0f", "To use the same sub-routine more than once.",
+         ["Write WASH once and reuse it.", "Reuse saves writing the same steps twice."]),
+]

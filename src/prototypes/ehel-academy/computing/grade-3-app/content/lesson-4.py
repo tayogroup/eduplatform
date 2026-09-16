@@ -102,7 +102,7 @@ LESSON = {
              {"items": [
                  q("A search engine's input is...", "\U0001F50D", "the word you type in", ["the list of results", "the computer", "the mouse"], "What goes in is the input."),
                  q("The doubling machine gets 9. What comes out?", "⚙️", "18", ["9", "11", "81"], "9 added to itself is 18."),
-                 q("Same machine, different input. The output is...", "\U0001F4E4", "different, because the steps worked on a different input", ["always the same", "nothing", "a bug"], "The steps do not change; the input does."),
+                 q("Same machine, different input. The output is...", "\U0001F4E4", "different, because the steps worked on a different input", ["always the same, because the steps are the same", "nothing, because a machine only takes one input", "a bug, because the output should never change"], "The steps do not change; the input does."),
              ]},
              "Inputs, steps, outputs."),
 
@@ -111,7 +111,7 @@ LESSON = {
              explain(["No new ideas here."], ["Think about inputs, machines and outputs."], [], ["Read, look, tap."]),
              {"items": [
                  q("What is the input to a recipe?", "\U0001F373", "the ingredients", ["the oven timer", "the finished cake", "the plate"], "The ingredients are what the recipe works on."),
-                 q("In 'make a cup of squash', which is the OUTPUT?", "\U0001F379", "the cup of squash, ready to drink", ["the bottle", "stir it", "the tap"], "The output is the result."),
+                 q("In 'make a cup of squash', which is the OUTPUT?", "\U0001F379", "the cup of squash, ready to drink", ["the bottle of squash on the side", "stir it until it is mixed", "the tap you get the water from"], "The output is the result."),
                  q("The add-3 machine gets 20. What comes out?", "➕", "23", ["20", "3", "60"], "20 plus 3."),
                  q("The letter counter gets 'dog'. What comes out?", "\U0001F524", "3", ["dog", "1", "4"], "d-o-g: three letters."),
                  q("An algorithm that produces an output from an input has...", "⚙️", "an input, steps in order, and an output", ["only an output", "no steps", "a random answer"], "In, steps, out."),
@@ -223,3 +223,27 @@ LESSON["talk"] = talk(
     "you give one back. In pairs, work out the rule.",
     "Ask how many numbers they needed before they were sure, and why one was never enough."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4CF", "Finding the rule from what comes out",
+         "Sometimes nobody tells you the rule. You are shown a machine and have to work "
+         "it out. Put 4 in and 12 comes out. Add 8 fits that. Times 3 fits it too. So "
+         "try another. Put 5 in and 15 comes out. Now add 8 is beaten. Times 3 survives. "
+         "One pair of numbers is never enough, because more than one rule can fit it."),
+    part("\u27A1\ufe0f", "Straight through, no choices",
+         "These machines are linear. Input goes in. One step follows another. Output "
+         "comes out. Nothing in the middle asks a question. Nothing sends you down a "
+         "different path. That is what makes them easy to follow with your finger. It is "
+         "what makes them easy to predict. Later you will meet algorithms that do ask "
+         "questions. Those can take two different routes from the same input."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("rule", "\U0001F4CF", "What a machine does to its input to make its output.",
+         ["The rule is: add 3.", "Test a rule twice before you trust it."]),
+    word("linear", "\u27A1\ufe0f", "One step after another, with no choices on the way.",
+         ["A linear algorithm runs straight through.", "Input, step, step, step, output."]),
+    word("predict", "\U0001F52E", "To say what will come out before you try it.",
+         ["Predict the output for 10.", "Follow the steps in your head and predict."]),
+]

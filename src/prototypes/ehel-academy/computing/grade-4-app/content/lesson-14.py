@@ -30,7 +30,7 @@ LESSON = {
                  {"pic": "\U0001F697", "label": "in a car company", "say": "In a car company. Computer scientists write the programs that help a car brake in time, park itself, and, in some cities already, drive itself."},
              ], "need": 6,
               "then": {"ask": "What does a computer scientist do in an industry?",
-                       "opts": [opt("Designs the programs and systems that solve that industry's problems", True), opt("Mends the keyboards", False), opt("Sells computers", False)],
+                       "opts": [opt("Designs the programs and systems that solve that industry's problems", True), opt("Mends the keyboards when they break", False), opt("Sells computers to the people who work there", False)],
                        "why": "Wherever a problem can be solved with a program, a computer scientist builds it."}},
              "Programs solve problems in every industry."),
 
@@ -72,7 +72,7 @@ LESSON = {
                  {"pic": "\U0001F52C", "label": "a surgical robot", "sub": "health care", "say": "A surgical robot. A surgeon controls arms that hold tiny instruments steadier than any hand, through a cut the size of a keyhole."},
              ], "need": 6,
               "then": {"ask": "What makes all of these robots?",
-                       "opts": [opt("A program controls the machine, using sensors to see and motors to act", True), opt("They look like people", False), opt("They are all on wheels", False)],
+                       "opts": [opt("A program controls the machine, using sensors to see and motors to act", True), opt("They all look a bit like people", False), opt("They all move around on wheels or tracks", False)],
                        "why": "A robot is a machine controlled by a program. Its shape depends on its job."}},
              "Delivery, transport, health care: robots that serve."),
 
@@ -130,8 +130,8 @@ LESSON = {
              explain(["No new ideas here."], ["Where computer scientists work, what service robots do, and what a control system is."], [], ["Read, look, tap."]),
              {"items": [
                  q("Where do computer scientists work?", "\U0001F469\U0001F4BB", "in almost every industry", ["only at computer companies", "only in schools", "nowhere"], "Wherever a program can solve a problem."),
-                 q("In a hospital a computer scientist might build...", "\U0001F3E5", "the system that keeps patient records safe and finds them fast", ["the beds", "the meals", "the uniforms"], "Records, safe and fast."),
-                 q("In a bank a computer scientist designs...", "\U0001F3E6", "the encryption and checks that keep money safe", ["the building", "the coins", "the queue"], "Money moves as data."),
+                 q("In a hospital a computer scientist might build...", "\U0001F3E5", "the system that keeps patient records safe and finds them fast", ["the beds the patients sleep in", "the meals the kitchen sends up", "the uniforms the nurses wear"], "Records, safe and fast."),
+                 q("In a bank a computer scientist designs...", "\U0001F3E6", "the encryption and checks that keep money safe", ["the building the bank is in", "the coins that go in the machine", "the queue people stand in to wait"], "Money moves as data."),
                  q("A service robot is...", "\U0001F916", "a machine a program controls, doing a job for people", ["a person in a costume", "any machine with wheels", "a toy"], "Program-controlled, serving."),
                  q("Which robot works in health care?", "\U0001F3E5", "a surgical robot holding instruments steady", ["a delivery drone", "a driverless train", "a warehouse robot"], "In the operating theatre."),
                  q("A delivery robot crosses when the light is green because...", "\U0001F6A6", "its sensors saw green and its program decided to go", ["someone pushed it", "it always crosses", "the light pushed it"], "Sense, decide, act."),
@@ -235,11 +235,11 @@ tier(LESSON,
      extension=[
          q("Why does a hospital employ a computer scientist?", "\U0001F9E0",
            "there is more data than people can read, and software can sort it",
-           ["to fix the printers", "to play games", "they do not"],
+           ["to fix the printers when they jam", "to play games with the children waiting", "they do not: a hospital has no computers"],
            "Scans, records, appointments, test results. Somebody has to write the software that makes sense of it."),
          q("A delivery robot crosses a road on its own. Which part is the control system?", "\U0001F916",
            "the program deciding, between the sensors and the wheels",
-           ["the wheels", "the parcel", "the pavement"],
+           ["the wheels, which do the moving", "the parcel it is carrying to the door", "the pavement it follows to the crossing"],
            "Sensors sense and wheels act. The control system is the deciding in the middle."),
      ])
 

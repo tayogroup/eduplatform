@@ -1166,11 +1166,25 @@
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
+     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
+     progress track and two small controls always fitted. The search field then
+     went INTO this container (add-lesson-search.py injects it rather than
+     drawing its own bar on a lesson page), and a no-shrink container sizes to
+     max-content whatever the viewport does - so at 375px the group ran 44px
+     off the right of every lesson page in every subject, carrying the voice
+     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
+     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
+     the two into agreement.
+
+     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
+     min-content width by default, which for this group is the whole search
+     field plus the picker, so the flex alone would shrink nothing. */
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; }
+    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1211,6 +1225,21 @@
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
+  }
+  /* At 375px five things do not fit, so one has to go, and making the group
+     shrinkable alone is not a fix - measured, it collapses the search input to
+     ZERO width and leaves a 24px stub. The picker is the one to drop, because
+     both of its jobs are already on screen one row below: bar 2 prints the
+     lesson title, and its Menu goes to the hub, which lists every lesson. The
+     progress track is NOT droppable for the same test - nothing else on a
+     narrow page reports progress (.eh-steps is display:none there), and the
+     pill beside it reads a real percentage.
+
+     Measured on a Computing lesson page at 375x812: 44px of overflow before,
+     0 after, with the voice toggle at its full 40px and the search field at
+     133px. */
+  @media (max-width: 480px) {
+    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1500,7 +1529,7 @@
           ],
           "counts": {
             "steps": 13,
-            "words": 5,
+            "words": 7,
             "games": 3,
             "home": 2
           },
@@ -1585,6 +1614,11 @@
               "pic": "🎯",
               "title": "The purpose decides",
               "say": "There is no best algorithm on its own. For fewest steps, the short cut. For speed, the bus. For staying dry, the bus again. For no money and no mud, the main road. The purpose chooses; your job is to read it and compare."
+            },
+            {
+              "pic": "⚖️",
+              "title": "Shorter is not the same as better",
+              "say": "When you compare two algorithms, it is tempting to pick the shorter one. But shorter only wins if it still does the job. An algorithm that leaves a step out is shorter and wrong. So compare against the PURPOSE first. Does each one do what was asked? Only then compare the steps, the time and the cost."
             }
           ]
         }
@@ -1643,6 +1677,24 @@
               "uses": [
                 "The purpose is to stay dry.",
                 "Choose for the purpose."
+              ]
+            },
+            {
+              "w": "loop",
+              "pic": "🔁",
+              "meaning": "A part of an algorithm that runs more than once.",
+              "uses": [
+                "The loop repeats three times.",
+                "Unroll the loop to count the steps."
+              ]
+            },
+            {
+              "w": "algorithm",
+              "pic": "📋",
+              "meaning": "A set of steps that does a job.",
+              "uses": [
+                "Compare the two algorithms.",
+                "The shorter algorithm is not always the better one."
               ]
             }
           ]
@@ -2210,6 +2262,23 @@
                       "To look at two or more things and find how they are alike and different."
                     ]
                   ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "contrast",
+                      "To point out how things differ."
+                    ],
+                    [
+                      "purpose",
+                      "What you need the algorithm to do well."
+                    ],
+                    [
+                      "loop",
+                      "A part of an algorithm that runs more than once."
+                    ]
+                  ]
                 }
               ]
             },
@@ -2243,6 +2312,11 @@
                   "prompt": "What you need the algorithm to do well.",
                   "clue": "It starts with p. 🎯",
                   "answer": "purpose"
+                },
+                {
+                  "prompt": "A part of an algorithm that runs more than once.",
+                  "clue": "It starts with l. 🔁",
+                  "answer": "loop"
                 }
               ]
             }
@@ -2375,15 +2449,15 @@
                   "ok": true
                 },
                 {
-                  "t": "choosing the longest",
+                  "t": "choosing the longest one, because it does more",
                   "ok": false
                 },
                 {
-                  "t": "counting the letters",
+                  "t": "counting the letters in each one",
                   "ok": false
                 },
                 {
-                  "t": "picking your favourite",
+                  "t": "picking your favourite and using that",
                   "ok": false
                 }
               ],
@@ -2620,9 +2694,51 @@
                 "The purpose is to stay dry.",
                 "Choose for the purpose."
               ]
+            },
+            {
+              "w": "loop",
+              "pic": "🔁",
+              "meaning": "A part of an algorithm that runs more than once.",
+              "uses": [
+                "The loop repeats three times.",
+                "Unroll the loop to count the steps."
+              ]
+            },
+            {
+              "w": "algorithm",
+              "pic": "📋",
+              "meaning": "A set of steps that does a job.",
+              "uses": [
+                "Compare the two algorithms.",
+                "The shorter algorithm is not always the better one."
+              ]
             }
           ],
           "finder": [
+            {
+              "w": "algorithm",
+              "pic": "📋",
+              "meaning": "A set of steps that does a job.",
+              "uses": [
+                "Compare the two algorithms.",
+                "The shorter algorithm is not always the better one."
+              ],
+              "lesson": 2,
+              "title": "Predict and Compare",
+              "file": "predict-and-compare.html"
+            },
+            {
+              "w": "algorithm",
+              "pic": "📋",
+              "meaning": "A set of steps that does a job.",
+              "uses": [
+                "A sub-routine is an algorithm of its own.",
+                "The main algorithm calls the others."
+              ],
+              "lesson": 3,
+              "title": "Sub-routines",
+              "file": "sub-routines.html"
+            },
             {
               "w": "application software",
               "pic": "🎨",
@@ -2898,6 +3014,18 @@
               "lesson": 8,
               "title": "Data and Information",
               "file": "data-and-information.html"
+            },
+            {
+              "w": "database",
+              "pic": "📇",
+              "meaning": "An organised collection of data you can search and sort.",
+              "uses": [
+                "The school keeps a database of every child.",
+                "A database can be on paper or on a computer."
+              ],
+              "lesson": 9,
+              "title": "Databases",
+              "file": "databases.html"
             },
             {
               "w": "debugging",
@@ -3296,6 +3424,18 @@
               "file": "loops-in-algorithms.html"
             },
             {
+              "w": "loop",
+              "pic": "🔁",
+              "meaning": "A part of an algorithm that runs more than once.",
+              "uses": [
+                "The loop repeats three times.",
+                "Unroll the loop to count the steps."
+              ],
+              "lesson": 2,
+              "title": "Predict and Compare",
+              "file": "predict-and-compare.html"
+            },
+            {
               "w": "main algorithm",
               "pic": "📋",
               "meaning": "The top-level algorithm that calls the sub-routines.",
@@ -3536,6 +3676,18 @@
               "file": "sub-routines.html"
             },
             {
+              "w": "reuse",
+              "pic": "♻️",
+              "meaning": "To use the same sub-routine more than once.",
+              "uses": [
+                "Write WASH once and reuse it.",
+                "Reuse saves writing the same steps twice."
+              ],
+              "lesson": 3,
+              "title": "Sub-routines",
+              "file": "sub-routines.html"
+            },
+            {
               "w": "rule",
               "pic": "📋",
               "meaning": "What an algorithm does for one answer: this answer, these steps.",
@@ -3630,6 +3782,18 @@
               "lesson": 12,
               "title": "Caesar and Pigpen",
               "file": "caesar-and-pigpen.html"
+            },
+            {
+              "w": "sort",
+              "pic": "🔢",
+              "meaning": "To put records in order by one field.",
+              "uses": [
+                "Sort by age, youngest first.",
+                "Sorting adds no records and removes none."
+              ],
+              "lesson": 9,
+              "title": "Databases",
+              "file": "databases.html"
             },
             {
               "w": "sub-routine",
@@ -9731,7 +9895,7 @@
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🔮", "Loop predictor"], ["🔁", "Repeat finder"], ["⚖️", "Algorithm comparer"], ["⚖️", "Contrast thinker"], ["📝", "Compare checker"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 4 parts. Now do it yourself." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   robotGrid(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Three looped programs, predicted before Go." }, LESSON.steps[3].data));
   loopSpot(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Twenty-two steps became seven with a loop." }, LESSON.steps[4].data));

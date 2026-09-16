@@ -113,7 +113,7 @@ LESSON = {
                  q("The Pigpen key is...", "#️⃣", "the grids that give each letter a shape", ["a shift number", "a password", "a pig"], "The grid is the key."),
                  q("The difference between 'a' and 'j' in Pigpen is...", "\U0001F518", "a dot in the pen", ["a bigger box", "a colour", "nothing"], "The second grid is dotted."),
                  q("A cipher is only as secret as...", "\U0001F511", "its key", ["its length", "its colour", "the paper"], "Whoever has the key can read it."),
-                 q("Encryption in your browser is different from Caesar's because...", "\U0001F310", "its keys are far too many to try one by one", ["it uses no key", "it shifts by 3", "it is on paper"], "25 shifts can be tried; modern keys cannot."),
+                 q("Encryption in your browser is different from Caesar's because...", "\U0001F310", "its keys are far too many to try one by one", ["it uses no key at all", "it shifts every letter by 3", "it is written on paper, not on a screen"], "25 shifts can be tried; modern keys cannot."),
              ]},
              "That is the whole lesson finished. You write and read Caesar and Pigpen, and know why the key matters."),
     ],

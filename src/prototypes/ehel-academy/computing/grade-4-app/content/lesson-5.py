@@ -135,7 +135,7 @@ LESSON = {
                  q("Each time round a repeat block is called...", "\U0001F504", "an iteration", ["a comment", "an input", "a bug"], "Iteration means one time round."),
                  q("Grow, grow, grow folds into...", "\U0001F9F9", "repeat 3 times, grow", ["repeat 3 times, jump", "grow", "wait, grow"], "Same block three times: repeat 3, grow."),
                  q("Can jump, spin, jump be folded into one repeat?", "❓", "no: the blocks are not all the same", ["yes: repeat 3 times, jump", "yes: repeat 2 times, spin", "yes: repeat 3 times, spin"], "Only the same block back to back folds."),
-                 q("A comment beside a block is for...", "\U0001F4AC", "people reading the program", ["the computer", "the cat", "making it run faster"], "The computer ignores it."),
+                 q("A comment beside a block is for...", "\U0001F4AC", "people reading the program", ["the computer", "the cat", "making it run faster"], "People read it. The computer skips it."),
                  q("The best comment beside 'wait' is...", "⏳", "'give the player time to read the message'", ["'wait'", "'the cat jumps'", "'block 3'"], "It says why."),
                  q("A comment says 'jump three times' and the block says repeat 2 times. That is...", "\U0001F41B", "a bug you have just found", ["fine", "a faster program", "a new comment"], "Comments help you spot bugs."),
              ]},
@@ -191,7 +191,7 @@ LESSON["home"] = [
 # Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
 LESSON["recap"] = "Last time you followed and wrote algorithms that give different outputs for different inputs, and built algorithms with a repeat loop in them."
 LESSON["warmup"] = [
-    q("You write a note on your drawing: 'the red square is the door'. Who is the note for?", "\U0001F4DD", "anyone who looks at the drawing later, even you", ["nobody", "the pencil", "the paper"], "A note that says what a part is for helps the next reader. In a program it is called a comment."),
+    q("You write a note on your drawing: 'the red square is the door'. Who is the note for?", "\U0001F4DD", "anyone who looks at the drawing later, even you", ["nobody: a note on a drawing does nothing", "the pencil, so it knows what to draw", "the paper, so it remembers the shape"], "A note that says what a part is for helps the next reader. In a program it is called a comment."),
     q("Robo must go forward 5 squares. With a repeat block and a move forward block, which number goes in the repeat?", "\U0001F501", "5", ["1", "4", "10"], "The number in the repeat says how many times the block after it happens."),
 ]
 
@@ -210,13 +210,14 @@ LESSON["lecture"] = LESSON["lecture"] + [
          "The blocks here work like Scratch, which is what most schools use at your age. In "
          "Scratch you drag blocks under a hat block. You press the green flag. The sprite does "
          "exactly what you said. It has a repeat block with a number in it. It has a forever "
-         "block. It has a place to write a comment beside any block. For a physical device, "
-         "schools often use MakeCode. It looks almost the same. It sends the program to the "
-         "board instead of to a sprite. Both of them think the way this does. Your blocks have "
-         "Scratch names. Move right is move 10 steps. Jump is change y by 50. Spin is turn 90 "
-         "degrees. Say hello is say Hello!. Go home is go to x: 0 y: 0. Wait is wait 1 "
-         "seconds. Repeat 4 times is repeat 4, and forever is forever. A comment goes beside "
-         "any block, just as it does here."
+         "block. It has a place to write a comment beside any block, just as this does. For a "
+         "physical device, schools often use MakeCode. It looks almost the same, but it sends "
+         "the program to the board instead of to a sprite. Your blocks have Scratch names. "
+         "Move right is move 10 steps. Jump is change y by 50. Spin is turn 90 degrees. Say "
+         "hello is say Hello!. Go home is go to x: 0 y: 0. Wait is wait 1 seconds. Repeat 4 "
+         "times is repeat 4, and forever is forever. Same jobs, real names. Both of them think "
+         "the way this one does, so when your teacher opens Scratch or MakeCode you already "
+         "know how it works."
 ),
 ]
 

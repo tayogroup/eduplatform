@@ -149,7 +149,7 @@ LESSON = {
              {"items": [
                  q("A device that ASKS for a page is a...", "\U0001F4F1", "client", ["server", "router", "cable"], "Clients ask."),
                  q("How many clients can one server answer?", "\U0001F465", "many at once", ["one", "two", "none"], "One server, many clients."),
-                 q("The internet is...", "\U0001F5FA️", "the network of networks joining the world", ["one web page", "a browser", "only email"], "The roads."),
+                 q("The internet is...", "\U0001F5FA️", "the network of networks joining the world", ["one very big web page everyone shares", "a browser you open to look at pages", "only email, travelling between schools"], "The roads."),
                  q("Which uses the internet but is NOT the web?", "\U0001F4E7", "an email", ["a website", "a link", "a page with a www address"], "No pages, no browser."),
                  q("Which is a CONVENIENCE of wi-fi?", "\U0001F4F6", "no cable, so it works anywhere in range", ["it is the fastest", "walls make it stronger", "strangers cannot join"], "Freedom to move."),
                  q("Which is a SECURITY point for ethernet?", "\U0001F6E1️", "you must plug in to join, so outsiders cannot", ["anyone in range can try", "it needs no password", "it is slow"], "A cable keeps strangers out."),

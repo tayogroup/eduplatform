@@ -295,7 +295,7 @@ tier(LESSON,
            "Anything a machine reads itself is quicker and does not mistype. That is why shops and airports use them."),
          q("What makes an e-reader a SYSTEM rather than just hardware?", "\U0001F4D6",
            "the hardware and the software only work together",
-           ["it is expensive", "it has a battery", "it holds books"],
+           ["it is expensive, so it must be a system", "it has a battery instead of a plug", "it holds books, and books are information"],
            "A screen with no software shows nothing; software with no screen has nowhere to draw. A system is both."),
      ])
 

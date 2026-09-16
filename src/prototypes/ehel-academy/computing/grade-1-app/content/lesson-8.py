@@ -220,7 +220,7 @@ LESSON = {
                  q("Which of these is an INPUT?", "⬇️", "a keyboard", ["a screen", "a printer", "a speaker"], "Letters go in through a keyboard. Input."),
                  q("Which of these is an OUTPUT?", "⬆️", "a printer", ["a mouse", "a microphone", "a camera"], "Words come out on paper. Output."),
                  q("Which of these has a computer inside, controlling it?", "\U0001F4BB", "a washing machine", ["a wooden spoon", "a candle", "a book"], "A computer inside a washing machine controls fill, wash and spin."),
-                 q("What is a robot?", "\U0001F916", "a machine with a computer inside, programmed to move and do a job", ["any toy", "a person in a costume", "a very fast bicycle"], "Computer inside, programmed to move and do a job."),
+                 q("What is a robot?", "\U0001F916", "a machine with a computer inside, programmed to move and do a job", ["any toy that moves when you push it", "a person in a costume made of metal", "a very fast bicycle with lights on it"], "Computer inside, programmed to move and do a job."),
                  q("Where might you find a robot?", "\U0001F3ED", "in a factory, building cars", ["inside a candle", "in a book", "nowhere; robots are only in films"], "Robots work in factories, hospitals, warehouses and even on Mars."),
                  q("A touchscreen is...", "\U0001F446", "both an input and an output", ["only an input", "only an output", "neither"], "You tap it (in) and it shows you things (out)."),
              ]},

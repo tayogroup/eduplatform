@@ -234,13 +234,17 @@ PAGE = """<!doctype html>
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
     background: var(--teal); color: #06231F; font: inherit; font-size: 15px; font-weight: 700;
     padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
   @media (max-width: 720px) { .eh-progtext, .eh-brandtext { display: none; } .eh-picker { max-width: 130px; } }
+  /* The hub drops the picker on a phone for the same reason the lesson pages do
+     (see add-header-bars.py): the group cannot fit, and the picker is the one
+     thing here that is pure duplication - this page IS the list of lessons. */
+  @media (max-width: 480px) { .eh-picker { display: none; } }
 </style>
 
 <header class="eh-bar1">

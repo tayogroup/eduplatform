@@ -1166,11 +1166,25 @@
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
+     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
+     progress track and two small controls always fitted. The search field then
+     went INTO this container (add-lesson-search.py injects it rather than
+     drawing its own bar on a lesson page), and a no-shrink container sizes to
+     max-content whatever the viewport does - so at 375px the group ran 44px
+     off the right of every lesson page in every subject, carrying the voice
+     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
+     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
+     the two into agreement.
+
+     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
+     min-content width by default, which for this group is the whole search
+     field plus the picker, so the flex alone would shrink nothing. */
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; }
+    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1211,6 +1225,21 @@
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
+  }
+  /* At 375px five things do not fit, so one has to go, and making the group
+     shrinkable alone is not a fix - measured, it collapses the search input to
+     ZERO width and leaves a 24px stub. The picker is the one to drop, because
+     both of its jobs are already on screen one row below: bar 2 prints the
+     lesson title, and its Menu goes to the hub, which lists every lesson. The
+     progress track is NOT droppable for the same test - nothing else on a
+     narrow page reports progress (.eh-steps is display:none there), and the
+     pill beside it reads a real percentage.
+
+     Measured on a Computing lesson page at 375x812: 44px of overflow before,
+     0 after, with the voice toggle at its full 40px and the search field at
+     133px. */
+  @media (max-width: 480px) {
+    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1542,15 +1571,15 @@
                   "ok": true
                 },
                 {
-                  "t": "nobody",
+                  "t": "nobody: a note on a drawing does nothing",
                   "ok": false
                 },
                 {
-                  "t": "the pencil",
+                  "t": "the pencil, so it knows what to draw",
                   "ok": false
                 },
                 {
-                  "t": "the paper",
+                  "t": "the paper, so it remembers the shape",
                   "ok": false
                 }
               ],
@@ -1617,7 +1646,7 @@
             {
               "pic": "🐱",
               "title": "Where these programs really live",
-              "say": "The blocks here work like Scratch, which is what most schools use at your age. In Scratch you drag blocks under a hat block. You press the green flag. The sprite does exactly what you said. It has a repeat block with a number in it. It has a forever block. It has a place to write a comment beside any block. For a physical device, schools often use MakeCode. It looks almost the same. It sends the program to the board instead of to a sprite. Both of them think the way this does. Your blocks have Scratch names. Move right is move 10 steps. Jump is change y by 50. Spin is turn 90 degrees. Say hello is say Hello!. Go home is go to x: 0 y: 0. Wait is wait 1 seconds. Repeat 4 times is repeat 4, and forever is forever. A comment goes beside any block, just as it does here."
+              "say": "The blocks here work like Scratch, which is what most schools use at your age. In Scratch you drag blocks under a hat block. You press the green flag. The sprite does exactly what you said. It has a repeat block with a number in it. It has a forever block. It has a place to write a comment beside any block, just as this does. For a physical device, schools often use MakeCode. It looks almost the same, but it sends the program to the board instead of to a sprite. Your blocks have Scratch names. Move right is move 10 steps. Jump is change y by 50. Spin is turn 90 degrees. Say hello is say Hello!. Go home is go to x: 0 y: 0. Wait is wait 1 seconds. Repeat 4 times is repeat 4, and forever is forever. Same jobs, real names. Both of them think the way this one does, so when your teacher opens Scratch or MakeCode you already know how it works."
             }
           ]
         }
@@ -2457,7 +2486,7 @@
                   "ok": false
                 }
               ],
-              "why": "The computer ignores it."
+              "why": "People read it. The computer skips it."
             },
             {
               "ask": "The best comment beside 'wait' is...",
@@ -2679,6 +2708,30 @@
             }
           ],
           "finder": [
+            {
+              "w": "algorithm",
+              "pic": "📋",
+              "meaning": "A set of steps that does a job.",
+              "uses": [
+                "Compare the two algorithms.",
+                "The shorter algorithm is not always the better one."
+              ],
+              "lesson": 2,
+              "title": "Predict and Compare",
+              "file": "predict-and-compare.html"
+            },
+            {
+              "w": "algorithm",
+              "pic": "📋",
+              "meaning": "A set of steps that does a job.",
+              "uses": [
+                "A sub-routine is an algorithm of its own.",
+                "The main algorithm calls the others."
+              ],
+              "lesson": 3,
+              "title": "Sub-routines",
+              "file": "sub-routines.html"
+            },
             {
               "w": "application software",
               "pic": "🎨",
@@ -2954,6 +3007,18 @@
               "lesson": 8,
               "title": "Data and Information",
               "file": "data-and-information.html"
+            },
+            {
+              "w": "database",
+              "pic": "📇",
+              "meaning": "An organised collection of data you can search and sort.",
+              "uses": [
+                "The school keeps a database of every child.",
+                "A database can be on paper or on a computer."
+              ],
+              "lesson": 9,
+              "title": "Databases",
+              "file": "databases.html"
             },
             {
               "w": "debugging",
@@ -3352,6 +3417,18 @@
               "file": "loops-in-algorithms.html"
             },
             {
+              "w": "loop",
+              "pic": "🔁",
+              "meaning": "A part of an algorithm that runs more than once.",
+              "uses": [
+                "The loop repeats three times.",
+                "Unroll the loop to count the steps."
+              ],
+              "lesson": 2,
+              "title": "Predict and Compare",
+              "file": "predict-and-compare.html"
+            },
+            {
               "w": "main algorithm",
               "pic": "📋",
               "meaning": "The top-level algorithm that calls the sub-routines.",
@@ -3592,6 +3669,18 @@
               "file": "sub-routines.html"
             },
             {
+              "w": "reuse",
+              "pic": "♻️",
+              "meaning": "To use the same sub-routine more than once.",
+              "uses": [
+                "Write WASH once and reuse it.",
+                "Reuse saves writing the same steps twice."
+              ],
+              "lesson": 3,
+              "title": "Sub-routines",
+              "file": "sub-routines.html"
+            },
+            {
               "w": "rule",
               "pic": "📋",
               "meaning": "What an algorithm does for one answer: this answer, these steps.",
@@ -3686,6 +3775,18 @@
               "lesson": 12,
               "title": "Caesar and Pigpen",
               "file": "caesar-and-pigpen.html"
+            },
+            {
+              "w": "sort",
+              "pic": "🔢",
+              "meaning": "To put records in order by one field.",
+              "uses": [
+                "Sort by age, youngest first.",
+                "Sorting adds no records and removes none."
+              ],
+              "lesson": 9,
+              "title": "Databases",
+              "file": "databases.html"
             },
             {
               "w": "sub-routine",

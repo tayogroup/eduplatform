@@ -261,3 +261,24 @@ LESSON["talk"] = talk(
     "left and right - no pointing and no 'over there'.",
     "Which was harder to give, the turns or the steps? Ask them why."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F52E", "Reading a program before you run it",
+         "You do not have to press go to know what will happen. Put your finger on the "
+         "start square. Move it one square for each arrow, the way Robo would. Where "
+         "does your finger stop? That is called predicting. If it stops in the wrong "
+         "place, you have found the problem. And Robo has not even moved yet."),
+    part("\u21A9\ufe0f", "A turn is not a move",
+         "A turn arrow spins Robo on the spot. It stays on the same square. It just "
+         "faces a new way. A move arrow sends it forward one square. Children often "
+         "count a turn as a square. Then Robo stops one square short every time. Turn, "
+         "then move. They are two different jobs."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("predict", "\U0001F52E", "To say what will happen before it happens.",
+         ["Predict where Robo will stop.", "Follow the arrows in your head and predict."]),
+    word("test", "\u2705", "To run something and see if it does what you wanted.",
+         ["Test the program by pressing go.", "Test it, then fix what went wrong."]),
+]

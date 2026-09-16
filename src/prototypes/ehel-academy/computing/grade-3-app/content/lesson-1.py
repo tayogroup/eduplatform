@@ -267,7 +267,7 @@ tier(LESSON,
      extension=[
          q("Why does an algorithm say WHY a step is where it is, not just what to do?", "\U0001F9E0",
            "so the next person editing it does not move a step that has to stay",
-           ["to make it longer", "so it reads nicely", "it never does"],
+           ["to make it longer so it looks like more work", "so it reads nicely, like a story", "it never does: an algorithm only says what to do"],
            "A reason is what stops somebody helpfully reordering the one step that must not move."),
          q("Two steps could go in either order without changing the result. What does that tell you?", "\U0001F504",
            "nothing depends on which one happens first",

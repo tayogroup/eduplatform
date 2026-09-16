@@ -116,7 +116,7 @@ LESSON = {
              explain(["Nothing new here."], ["What a failure breaks, where encryption is used."], [], ["Read, think, tap."]),
              {"items": [
                  q("The router at school fails. Which still works?", "\U0001F4F4", "writing a story on the laptop", ["printing it", "opening the shared folder", "a video call"], "It needs no other device."),
-                 q("Encryption makes data...", "\U0001F512", "unreadable to anyone without the key", ["invisible", "faster", "bigger"], "Scrambled, not hidden."),
+                 q("Encryption makes data...", "\U0001F512", "unreadable to anyone without the key", ["invisible, so nobody can see it", "faster, so it arrives sooner", "bigger, so it is harder to steal"], "Scrambled, not hidden."),
                  q("Which needs encrypting?", "\U0001F4B3", "a card number", ["the weather", "a bus timetable", "the lunch menu"], "Money must stay secret."),
              ]},
              "Broken links, scrambled data."),

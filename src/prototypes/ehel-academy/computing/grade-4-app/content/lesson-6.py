@@ -28,7 +28,7 @@ LESSON = {
                  {"pic": "⌨️", "label": "press the space bar", "say": "Press the space bar. Its script makes the cat hide. Four inputs, four different outputs."},
              ], "need": 4,
               "then": {"ask": "Pressing A makes the cat jump and pressing B makes it spin. What decides which happens?",
-                       "opts": [opt("The input: which key was pressed", True), opt("The cat", False), opt("Luck", False)],
+                       "opts": [opt("The input: which key was pressed", True), opt("The cat, which picks what to do", False), opt("Luck: it is different every time", False)],
                        "why": "Each input has its own script. The input picks the output."}},
              "Each input runs its own script."),
 
@@ -197,7 +197,7 @@ LESSON["home"] = [
 # Carried by the overview: a line from the lesson before, and a warm-up that is never marked.
 LESSON["recap"] = "Last time you built programs with a repeat block, folded a long program into a short one that does the same thing, and wrote comments that say what each block is for."
 LESSON["warmup"] = [
-    q("A torch will not light. What is the best way to find the problem?", "\U0001F526", "check one part at a time: the batteries, then the bulb, then the switch", ["throw it away", "shake it harder", "check nothing and hope"], "Testing one part at a time shows exactly which part is broken."),
+    q("A torch will not light. What is the best way to find the problem?", "\U0001F526", "check one part at a time: the batteries, then the bulb, then the switch", ["throw it away and buy a new torch", "shake it harder until it comes on", "change every part at once and see"], "Testing one part at a time shows exactly which part is broken."),
     q("A doorbell: what goes in, and what comes out?", "\U0001F514", "a press on the button goes in; a ding-dong comes out", ["a ding-dong goes in; a press comes out", "the door goes in; the house comes out", "nothing goes in"], "Press in, sound out: every object has an input and an output."),
 ]
 

@@ -105,7 +105,7 @@ LESSON = {
                  q("To predict a looped program you...", "\U0001F52E", "unroll the loop in your head, that many times", ["do the body once", "guess", "press Go first"], "Unroll, then predict."),
                  q("'Repeat 2 times: forward, forward, turn right.' After the loop, Robo has turned...", "↻", "twice", ["once", "four times", "never"], "One turn per time round."),
                  q("Which makes the pancake algorithm concise?", "✂️", "writing the five pancake steps once inside repeat 4 times", ["writing them twenty times", "leaving out flipping", "making one pancake"], "Repetition written once."),
-                 q("Comparing algorithms means...", "⚖️", "looking at their steps, time, cost and outcome against the purpose", ["choosing the longest", "counting the letters", "picking your favourite"], "Compare on what matters."),
+                 q("Comparing algorithms means...", "⚖️", "looking at their steps, time, cost and outcome against the purpose", ["choosing the longest one, because it does more", "counting the letters in each one", "picking your favourite and using that"], "Compare on what matters."),
                  q("The short cut has the fewest steps. For 'getting there quickest' it is...", "\U0001F333", "not necessarily best: the bus is quicker", ["always best", "the only option", "the slowest"], "Fewest steps is not quickest."),
                  q("If the purpose is 'stay dry in the rain', which fact matters most?", "\U0001F327️", "whether the route is muddy or covered", ["how many letters are in its name", "the colour of the bus", "nothing"], "The purpose picks the fact."),
                  q("Robo starts facing up and runs 'repeat 2 times: forward, forward'. Where is it?", "⬆️", "4 squares up from where it started", ["2 squares up", "where it started", "4 squares to the right"], "Four forwards, all facing up."),
@@ -219,3 +219,19 @@ LESSON["talk"] = talk(
     "means before they answer.",
     "Ask for a purpose that would make the OTHER algorithm the right one."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\u2696\ufe0f", "Shorter is not the same as better",
+         "When you compare two algorithms, it is tempting to pick the shorter one. But "
+         "shorter only wins if it still does the job. An algorithm that leaves a step "
+         "out is shorter and wrong. So compare against the PURPOSE first. Does each one "
+         "do what was asked? Only then compare the steps, the time and the cost."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("loop", "\U0001F501", "A part of an algorithm that runs more than once.",
+         ["The loop repeats three times.", "Unroll the loop to count the steps."]),
+    word("algorithm", "\U0001F4CB", "A set of steps that does a job.",
+         ["Compare the two algorithms.", "The shorter algorithm is not always the better one."]),
+]

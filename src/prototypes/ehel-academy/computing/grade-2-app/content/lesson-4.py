@@ -108,7 +108,7 @@ LESSON = {
                  [],
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
-                 q("What is an object in a program?", "\U0001F431", "a thing that can be given its own instructions", ["a bug", "a kind of block", "the screen"], "A cat, a dog, a ball: each can have its own blocks."),
+                 q("What is an object in a program?", "\U0001F431", "a thing that can be given its own instructions", ["a bug that stops the program running", "a kind of block you drag into the program", "the screen the program is shown on"], "A cat, a dog, a ball: each can have its own blocks."),
                  q("The cat and the dog are on the same stage. How many programs?", "\U0001F431\U0001F436", "one for each object", ["one for both", "none", "ten"], "Each object gets its own program."),
                  q("What should you do BEFORE building an object's blocks?", "\U0001F914", "plan what that object should do", ["run the program", "delete the object", "nothing"], "Plan first, then build."),
                  q("The tree in the program does not move. How many blocks does it need?", "\U0001F333", "none", ["one", "three", "the same as the cat"], "An object that does nothing needs no plan."),
@@ -235,3 +235,19 @@ LESSON["talk"] = talk(
     "before anybody moves.",
     "Ask why each character needs its own plan, instead of one long list for everybody."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F3AD", "Every object has its own program",
+         "A stage can hold several objects at once. Each one carries its own blocks. The "
+         "cat has a program. The ball has a program. They run side by side. So when "
+         "something goes wrong, ask WHICH object is doing it. Then check that object's "
+         "blocks. Leave the others alone."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("block", "\U0001F9E9", "A piece you drag in to give one instruction.",
+         ["Drag the jump block in.", "Blocks snap together in order."]),
+    word("bug", "\U0001F41B", "A mistake in a program.",
+         ["The bug made the cat spin.", "One bug can stop the whole program."]),
+]

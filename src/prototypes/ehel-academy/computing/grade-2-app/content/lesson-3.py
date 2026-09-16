@@ -266,3 +266,19 @@ LESSON["talk"] = talk(
     "Ask for one everyday thing that repeats, and how many times it repeats before it "
     "stops."
 )
+
+# --- deepened ---
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4CB", "The plan and the program",
+         "An algorithm is the plan. It is the steps, written for a person. A program is "
+         "the same steps built out of blocks. Now a computer can run them. Write the "
+         "algorithm first, in words. Then build it. That way you solve one problem at a "
+         "time. First what the steps are. Then how to say them in blocks."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("algorithm", "\U0001F4CB", "A set of steps that does a job.",
+         ["Write the algorithm first.", "The program is the algorithm a computer can run."]),
+    word("bug", "\U0001F41B", "A mistake in a program.",
+         ["There is a bug: the cat goes the wrong way.", "Find the bug and fix it."]),
+]

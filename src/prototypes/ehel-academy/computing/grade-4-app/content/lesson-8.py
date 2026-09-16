@@ -110,7 +110,7 @@ LESSON = {
                  {"pic": "\U0001F3AF", "label": "used", "say": "Used. Most children walk, so the school asks for a safe crossing outside the gate, and one bike rack is enough."},
              ], "need": 4,
               "then": {"ask": "'Walk, bus, car, walk' is data. Which of these is INFORMATION made from it?",
-                       "opts": [opt("Most of these children walk to school", True), opt("Walk", False), opt("Bus, car", False)],
+                       "opts": [opt("Most of these children walk to school", True), opt("Walk, written down four times", False), opt("Bus and car, copied from the list", False)],
                        "why": "Information is the meaning you get when data is organised."}},
              "Data is facts; information is meaning."),
 

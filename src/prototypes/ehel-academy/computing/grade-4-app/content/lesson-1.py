@@ -122,7 +122,7 @@ LESSON = {
              explain(["Nothing new here."], ["Repeat loops, forever loops, concise."], [], ["Read, think, tap."]),
              {"items": [
                  q("Repeat 4 times: brush top, brush bottom. How many brushing steps happen?", "\U0001F9B7", "8", ["2", "4", "16"], "Two steps, four turns."),
-                 q("What ends a forever loop?", "♾️", "something outside it, like a switch or a person pressing stop", ["its count", "its last step", "nothing can"], "A forever loop has no count."),
+                 q("What ends a forever loop?", "♾️", "something outside it, like a switch or a person pressing stop", ["its count, when it reaches the number", "its last step, once every step has run", "nothing can: a forever loop runs for ever"], "A forever loop has no count."),
                  q("A wrong step INSIDE a repeat loop...", "\U0001F41B", "goes wrong every time round", ["goes wrong once", "does not matter", "stops the loop"], "It is repeated with the rest."),
              ]},
              "Count, stop, concise."),

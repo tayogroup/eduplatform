@@ -28,7 +28,7 @@ LESSON = {
                  {"pic": "\U0001F4C2", "label": "systems: the file manager", "say": "The file manager. Systems software that keeps every file in its folder and finds it again."},
              ], "need": 5,
               "then": {"ask": "What does systems software do?",
-                       "opts": [opt("Runs the computer itself so applications can work", True), opt("Draws pictures", False), opt("Plays games", False)],
+                       "opts": [opt("Runs the computer itself so applications can work", True), opt("Draws the pictures you see on screen", False), opt("Plays the games you install on it", False)],
                        "why": "Applications do jobs for you; systems software runs the machine underneath."}},
              "Applications do jobs; systems software runs the machine."),
 
@@ -288,7 +288,7 @@ tier(LESSON,
      extension=[
          q("What does system software do that an application cannot?", "\u2699\ufe0f",
            "start the computer and share it out between the applications",
-           ["draw pictures", "play games", "write documents"],
+           ["draw a picture an application could not draw", "play a game without an application", "write a document with no program open"],
            "Applications do jobs for you. System software runs the machine so the applications can run at all."),
          q("A data logger runs for a week and its file is tiny. Why?", "\U0001F4CA",
            "it is only recording numbers, and numbers are a very small file format",

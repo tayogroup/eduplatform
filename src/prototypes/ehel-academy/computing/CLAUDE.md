@@ -242,6 +242,73 @@ stepped off the line `re.M` had just anchored. The numbered-task count is
 layout loss, not curriculum. Only Stage 3's scan preserves list indentation, so
 only its figure (about 62 tasks per unit) is real.
 
+### A person has now read every key, and what that did and did not settle (2026-09-16)
+
+The previous section ended "**no human has read the keys**". That is now done:
+all **914** questions across the four grades, read one at a time against
+`review-pack.html`. **No key is wrong.** Every arithmetic claim, every Caesar
+shift, every Pigpen pen, every Robo route and every data-table count that could
+be checked by hand was checked and held.
+
+What the read found instead was the shape of the questions, and most of it was
+mechanisable - which is the useful part, because a read cannot be re-run on
+every build. `check-question-shape.py` now runs inside `rebuild.sh` and decides
+the machine-decidable half: a duplicated option, an explanation that names a
+wrong option and affirms nothing, a key three times the length of every
+distractor, an unmarked negative stem, a stem whose sum disagrees with its key,
+an all-of-these. **It went in at zero findings on all four grades**, so anything
+it ever reports is a question authored after the read - the only thing a gate
+wired in after the fact can honestly claim.
+
+Two classes of real finding came out of it:
+
+- **One explanation ruled out and never affirmed.** Grade 4 Lesson 5, "A comment
+  beside a block is for... = people reading the program", explained as "The
+  computer ignores it." - which names the distractor and says nothing about the
+  key. Now "People read it. The computer skips it."
+- **46 questions could be answered without reading the stem.** The key was the
+  only option that was a sentence; the distractors were two-word nouns. The fix
+  is NOT to shorten the key - the key is the option that teaches - so all 132
+  distractors were rewritten into full statements of real misconceptions ("the
+  beds the patients sleep in", "any toy that moves when you push it"). The
+  measured trap: making the container shrink is not enough on its own, and
+  neither is trusting the first version of the checker - see the kit README for
+  the four false-positive classes it had to be repaired through.
+
+**What the read did NOT settle**: it was one person reading for correctness and
+shape, not a teacher reading for whether the question is worth asking. 879 of
+the 914 remain unfalsifiable from inside the build - the key IS the object the
+question was generated from - so the review packs are still the review surface,
+and a teacher's read is still owed. Same position as Science Grade 1.
+
+### The fourteen thinnest lessons, and why thin was the right word
+
+Measured per grade against that grade's own median lesson: Grade 3's *Input
+Machines* ran 2445 words where the median was 2947, on 4 lecture parts and 5
+word cards where 6 and 7 are normal. **Every objective was already reached** -
+`check-coverage.py` was green throughout - so this was never coverage. It was
+how much explaining a child gets for the same objective.
+
+The additions are checkable rather than decorative: **every word card added is a
+term the lesson already used in its own teaching text and never defined.**
+Measured on the built payload, the *Databases* lesson never said what a database
+is; *Input Machines* leaned on "rule" fourteen times with no card; *Press, Shake,
+Clap* said input or output 157 times having carded neither. 31 cards and 17
+lecture parts across 14 lessons; the worst gap closed from -17% to -10% and
+nothing is now worse than -10%, against four lessons at -12% or worse before.
+
+**The new prose was measured and was wrong the first time, in the same way as
+last time.** It came out at F-K 5.31 and 13.8 words a sentence, against builds
+that run 3.88-5.17 at 9.4-11.1 - harder than the lessons it was joining, and in
+Grade 1 by a year and a half. Re-said in shorter sentences with nothing cut: F-K
+2.70 at 7.3 words a sentence, 58 words lighter. **Write the prose, then measure
+it against the build it joins** - the intention to write simply is not evidence
+that you did.
+
+All of it is position-safe, verified the only way that counts here: the `const
+LESSON` payloads diffed against HEAD, with **no step count, kind or title
+changed in any of the 47 lessons**.
+
 ### The mutation harness leaves the pages unwired, and every gate stays green
 
 2026-09-16, found by `drive-lessons.mjs --record` and by nothing else. The

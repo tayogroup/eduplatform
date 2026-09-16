@@ -279,7 +279,7 @@ tier(LESSON,
      extension=[
          q("You MEANT the cat to spin but you put a jump block in. Whose mistake is it?", "\U0001F431",
            "mine - the computer did what my program said",
-           ["the computer's", "the cat's", "nobody's"],
+           ["the computer's - it chose the wrong block", "the cat's - it should have spun anyway", "nobody's - programs just go wrong"],
            "A computer cannot think for itself. If it did the wrong thing, the program said the wrong thing."),
          q("Why do we write the algorithm BEFORE we build the program?", "\U0001F4DD",
            "so we already know what the program should do",

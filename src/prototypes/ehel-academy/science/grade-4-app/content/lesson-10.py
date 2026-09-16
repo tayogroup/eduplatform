@@ -7,7 +7,7 @@ components make a lamp brighter or dimmer; 4Pe.04 conductors and
 insulators; with 4TWSp.03, 4TWSp.05, 4TWSa.01, 4TWSa.03, 4TWSc.03,
 4TWSc.06, 4TWSc.08 and 4SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "circuits-and-switches",
@@ -25,8 +25,11 @@ LESSON = {
              {"sim": "seriesCircuit",
               "predict": {"ask": "Adding a second <b>cell</b> will make the lamp...",
                           "opts": [opt("brighter", True), opt("dimmer", False), opt("go out", False)]},
+              "plan": {"ask": "How shall we find out what a second cell does? Which way is fair?",
+                        "opts": [opt("The same lamp and the same wires, changing only the number of cells", True), opt("A brighter lamp with the second cell", False), opt("Two cells and two lamps at once", False)],
+                        "why": "Only the cells may change. Swap the lamp as well and you will not know which change made the difference."},
               "runAsk": "Add a cell. Add a lamp. Open the switch, then close it. Watch the lamps. With a real circuit, you would open the switch before adding or taking out anything.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to the <b>lamp</b>?",
                            "opts": [opt("A second cell made the lamp brighter; a second lamp made them dimmer; the open switch turned them off", True), opt("Nothing changed, whatever you added or switched", False), opt("More cells made the lamp dimmer, and the switch did nothing", False)],
                            "why": "Cells push. Lamps share the push. A switch is a gap you control."},
               "conclude": {"ask": "Why does opening the switch turn every lamp off?",
@@ -70,7 +73,15 @@ LESSON = {
                   {"pic": icon("coin"), "label": "coin", "answer": "cond", "why": "the lamp lit. Metal conducts."},
                   {"pic": icon("lollystick"), "label": "wooden lolly stick", "answer": "ins", "why": "the lamp stayed off. Wood insulates."},
               ],
-              "choices": [{"id": "cond", "t": "conductor", "pic": "\U0001F4A1"}, {"id": "ins", "t": "insulator", "pic": "\U0001F6AB"}]},
+              "choices": [{"id": "cond", "t": "conductor", "pic": "\U0001F4A1"}, {"id": "ins", "t": "insulator", "pic": "\U0001F6AB"}],
+              "read": [
+                  {"ask": "Read your table. Which materials let the electricity through?",
+                   "opts": [opt("the metal ones", True), opt("all four of them", False), opt("none of them", False)],
+                   "why": "The conductors are the metals. Plastic and wood are insulators."},
+                  {"ask": "What do all the conductors in your table have in common?",
+                   "opts": [opt("they are all metals", True), opt("they are all shiny", False), opt("they are all hard", False)],
+                   "why": "Glass is hard and shiny and conducts nothing. Being a metal is what matters."},
+              ]},
              "Metals: conductors. The rest: insulators."),
 
         step("demo", "A switch is a gap you control", "\U0001F39A️", "Switches", ["4Pe.02", "4Pe.01"],
@@ -135,8 +146,13 @@ LESSON = {
                  q("Your hands are wet. What should you do before you touch a switch?", "\U0001F4A7", "dry them first", ["touch it quickly", "wipe them on the wire"], "Water can carry electricity. Dry hands, always."),
                  q("A wire in your circuit is getting hot. What should you do?", "\U0001F525", "disconnect the cell and tell an adult", ["keep going", "hold the wire tightly"], "A hot wire is a risk. Break the circuit and get help."),
                  q("Why should you never push anything into a plug socket?", "\U0001F50C", "the electricity there is strong enough to kill", ["it wastes electricity", "it makes the lights flicker"], "Mains electricity is dangerous. Only plugs go into sockets."),
+                 q("Your circuit lights a lamp with nothing plugged into a wall. How?", "\U0001F4A1", "the electricity is in the circuit itself", ["a hidden wire runs to the mains", "the lamp stored it up earlier"],
+                   "Electricity does not have to come from the mains. A cell and a complete loop of wire are enough."),
+                 q("Is the electricity in your class circuit the same as the electricity at home?", "\U0001F50C", "No - the mains push is hundreds of times bigger", ["Yes, electricity is all the same", "Yes, but the wires at home are thicker"],
+                   "A cell gives a small, safe push. That is why a cell cannot hurt you and the mains can kill you."),
              ]},
-             "You know the risks, and how to stay safe with electricity."),
+             "You know the risks, and how to stay safe with electricity.",
+             mis=["6.1-m2", "6.3-m1"]),
 
         step("questions", "Circuit check", "✅", "Circuit check", ["4Pe.01", "4Pe.02", "4Pe.03", "4Pe.04"],
              "Tap the answer.",
@@ -151,8 +167,13 @@ LESSON = {
                  q("Two lamps on one cell, instead of one. Each lamp is...", "\U0001F4A1", "dimmer", ["brighter", "the same"], "The push is shared."),
                  q("Which material is a conductor?", "\U0001F4A1", "a steel key", ["a plastic ruler", "a rubber balloon"], "Metal conducts."),
                  q("Why are wires covered in plastic?", "\U0001F50C", "plastic is an insulator, so the electricity stays in the wire", ["to make the wires look bright and colourful", "because plastic conducts electricity well"], "Safety."),
+                 q("What does the cell do in a circuit?", "\U0001F50B", "it pushes the electricity that is already in the wire", ["it makes the electricity", "it stores up the lamp's light"],
+                   "The electricity is inside the copper wire all along. What the cell gives it is the push."),
+                 q("Why must the wire run all the way back to the cell?", "\U0001F501", "so there is a complete loop for the cell to push round", ["so the lamp does not get too bright", "so the electricity has somewhere to rest"],
+                   "The path has to go from one end of the cell to the other. Stop it at the lamp and nothing moves at all."),
              ]},
-             "You know your circuits."),
+             "You know your circuits.",
+             mis=["6.1-m1", "6.1-m3"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Pe.01", "4Pe.02", "4Pe.03", "4Pe.04", "4TWSc.03"],
              "Time to show what you know. Tap the answer.",
@@ -173,8 +194,23 @@ LESSON = {
                  q("Before testing a coin, you touch the two wire ends together and the lamp lights. Why check that first?", "\U0001F914", "to show the circuit works, so a dark lamp means an insulator", ["to make the lamp brighter for the coin", "to use up some of the cell first"], "If the lamp lights with the gap closed, the circuit works. Then a lamp that stays dark with the coin in the gap can only mean the coin does not conduct."),
                  q("The circuit worked before. If the lamp stays dark with a rubber in the gap, what does that show?", "\U0001F4A1", "rubber is an insulator", ["rubber is a conductor", "the cell is too big"], "The circuit was working. So the rubber stopped the electricity."),
                  q("Why do electricians wear rubber gloves?", "\U0001F9E4", "rubber is an insulator, so electricity cannot pass into their hands", ["rubber gloves keep their hands warm", "rubber conducts electricity well"], "An insulator does not let electricity through."),
-             ]},
-             "That is the whole lesson finished. You know how circuits work."),
+                 q("Tap water is clean and safe to drink. Is it pure?", "\U0001F6B0", "No - it has other substances dissolved in it", ["Yes, clean water is pure water", "Yes, or it would not be safe to drink"],
+                   "Safe to drink is not the same as pure - and those dissolved substances are exactly why tap water conducts electricity."),
+             ],
+              "support": [
+                 q("Is copper a conductor or an insulator?", "\U0001F50C", "a conductor", ["an insulator"],
+                   "Metals conduct electricity."),
+                 q("Will a lamp light if there is a break in the circuit?", "\U0001F4A1", "No", ["Yes"],
+                   "The loop must be complete."),
+              ],
+              "extension": [
+                 q("Why is a bird safe sitting on a bare power line?", "\U0001F426", "the electricity has no loop through it to the ground", ["birds cannot feel electricity", "the line is switched off in the daytime"],
+                   "Electricity needs a complete path. Both the bird's feet are on the same wire, so there is no loop through the bird."),
+                 q("A torch with two cells has gone dim. You swap just ONE cell for a fresh one. What happens?", "\U0001F526", "a little brighter, but not as bright as two fresh cells", ["as bright as new, because one fresh cell is enough", "nothing changes at all"],
+                   "In a series circuit the two cells push together. One tired cell still holds the whole loop back."),
+              ]},
+             "That is the whole lesson finished. You know how circuits work.",
+             mis=["6.2-m1"]),
     ],
 }
 
@@ -218,6 +254,21 @@ LESSON["words"] = [
          ["Copper is a conductor.", "A key is a conductor."]),
     word("insulator", icon("glass"), "A material that does not let electricity through.",
          ["Plastic is an insulator.", "Insulators keep you safe from wires."]),
+    word("lamp", "\U0001F4A1", "The little light in a circuit. Scientists say lamp, not bulb.",
+         ["The lamp lights when the circuit is complete.", "Two lamps on one cell are dimmer than one."]),
+    word("series circuit", "\U0001F501", "A circuit where everything sits in one single loop, one after another.",
+         ["In a series circuit the electricity has only one path.", "Add a lamp to a series circuit and both go dimmer."]),
+]
+
+LESSON["cando"] = [
+    cando("I know that a device stops working if there is a break in the circuit.", "4Pe.01"),
+    cando("I can explain how a switch opens and closes a circuit.", "4Pe.02"),
+    cando("I can say what makes a lamp brighter or dimmer in a series circuit.", "4Pe.03"),
+    cando("I can name good conductors and good insulators.", "4Pe.04"),
+    cando("I know that most metals are good conductors.", "4Pe.04"),
+    cando("I can choose the right equipment for a test.", "4TWSc.03"),
+    cando("I can work safely, and say what the risks are.", "4TWSp.05"),
+    cando("I can record my results in a table.", "4TWSc.08"),
 ]
 
 LESSON["home"] = [

@@ -6,7 +6,7 @@ leg bones, arm bones); 4Bs.02 bones move because pairs of muscles contract
 and relax; 4Bs.03 what skeletons do; with 4Bp.04, 4TWSp.03, 4TWSa.03 and
 4SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 BONES = [
     {"id": "skull", "label": "skull", "say": "The skull. A hard case of bone that protects your brain."},
@@ -61,14 +61,18 @@ LESSON = {
              {"sim": "muscles",
               "predict": {"ask": "When the <b>biceps</b> contracts, the arm will...",
                           "opts": [opt("bend at the elbow", True), opt("straighten", False), opt("not move", False)]},
+              "plan": {"ask": "How shall we find out what each muscle does? Which way is fair?",
+                        "opts": [opt("Feel one muscle at a time while the arm bends, then while it straightens", True), opt("Feel both muscles at once and guess which is which", False), opt("Bend the arm as hard and fast as you can", False)],
+                        "why": "One muscle, one movement, one thing at a time. Feel both at once and you cannot tell which is pulling."},
               "runAsk": "Contract the biceps, then contract the triceps. Watch both muscles.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to the <b>two muscles</b>?",
                            "opts": [opt("The biceps got short and fat and pulled the arm up; the triceps relaxed. Then they swapped", True), opt("Both muscles contracted at once", False), opt("The muscles pushed the bone", False)],
                            "why": "One contracts and pulls, the other relaxes and stretches. Then they swap. That is a pair of muscles."},
               "conclude": {"ask": "Why do muscles work in pairs?",
                            "opts": [opt("A muscle can only pull, so a partner is needed to pull the bone back", True), opt("One muscle is a spare", False), opt("Bones are heavy", False)],
                            "why": "Pull, never push. Every bone that moves has a pair of muscles pulling it both ways."}},
-             "Muscles pull, never push. So they work in pairs."),
+             "Muscles pull, never push. So they work in pairs.",
+             mis=["1.3-m1"]),
 
         step("diagram", "Label a diagram of the skeleton", "✏️", "Skeleton diagram", ["4Bs.01"],
              "Label the diagram. Tap a label, then tap the bone it belongs to.",
@@ -111,8 +115,13 @@ LESSON = {
                  q("What does a muscle do when it contracts?", "\U0001F4AA\U0001F3FE", "gets shorter and pulls", ["gets longer and pushes", "nothing"], "Pull, never push."),
                  q("When the biceps contracts, the triceps...", "\U0001F504", "relaxes", ["contracts too", "disappears"], "A pair: one pulls, one rests."),
                  q("Which of these is not a job of the skeleton?", "\U0001F6E1️", "pumping blood", ["protecting organs", "supporting the body", "giving shape"], "The heart pumps blood; bones protect it."),
+                 q("Are your bones living?", "\U0001F9B4", "Yes. They grow, and a broken one mends itself.", ["No, bones are like stones", "Only while you are still a child"],
+                   "Your bones are far bigger than they were when you were a baby, so they have grown - and growing is a life process."),
+                 q("Layla says a skeleton is only there to hold you up. Is she right?", "\U0001F480", "Only partly - it also protects you, and it lets you move", ["Yes, holding you up is all it does", "No, protecting you is its only job"],
+                   "Three jobs, not one: support, protection - the skull round your brain, the ribs round your heart - and movement, because muscles pull on bones."),
              ]},
-             "You know your bones and muscles."),
+             "You know your bones and muscles.",
+             mis=["1.1-m1", "1.2-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Bs.01", "4Bs.02", "4Bs.03"],
              "Time to show what you know. Tap the answer.",
@@ -133,7 +142,19 @@ LESSON = {
                  q("You put seven labels on the skeleton. What did you make?", "✏️", "a labelled diagram", ["a physical model", "an X-ray"], "Labels on a drawing."),
                  q("Why does your arm need two muscles, the biceps and the triceps?", "\U0001F4AA", "a muscle can only pull, so one pulls the arm bent and the other pulls it straight", ["one muscle works while the other rests all day", "two muscles make the arm twice as long"], "Muscles pull and never push. So they work in pairs."),
                  q("A cycle helmet does the same job as one of your bones. Which bone, and why?", "\u26D1\uFE0F", "the skull, because both protect the brain", ["the spine, because both are long", "the rib cage, because both are round"], "The skull is a hard case round the brain. A helmet adds another one."),
-             ]},
+             ],
+              "support": [
+                 q("Which bone protects your brain?", "\U0001F480", "the skull", ["the hip"],
+                   "The skull is a hard case round the brain."),
+                 q("Can a muscle push?", "\U0001F4AA", "No", ["Yes"],
+                   "A muscle can only pull. That is why they come in pairs."),
+              ],
+              "extension": [
+                 q("An insect has no bones at all. How does it move?", "\U0001F41C", "its muscles pull on a hard case on the outside", ["it has no muscles either", "it is pushed along by the air"],
+                   "An exoskeleton is a skeleton on the outside. The muscles are inside it, pulling on it - the same idea, turned inside out."),
+                 q("An astronaut spends a year in space with almost no weight to carry. What happens to their bones?", "\U0001F680", "they get weaker, because bones need to be worked", ["they get stronger, because nothing presses on them", "nothing changes at all"],
+                   "Bones are living and they respond to use. Astronauts exercise for hours a day to slow it down."),
+              ]},
              "That is the whole lesson finished. You know your skeleton."),
     ],
 }
@@ -178,6 +199,21 @@ LESSON["words"] = [
          ["The biceps contracts to bend the arm.", "Feel your muscle contract."]),
     word("relax", "\U0001F60C", "When a muscle stops pulling and gets longer and thinner again.",
          ["The triceps relaxes while the biceps pulls.", "Let your arm relax."]),
+    word("bone", "\U0001F9B4", "A hard living part of your skeleton. It grows, and it mends if it breaks.",
+         ["The longest bone is in your thigh.", "A bone is living, not like a stone."]),
+    word("joint", "\U0001F91D", "A place where two bones meet and can move.",
+         ["Your elbow is a joint.", "Muscles pull the bones at a joint."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name the important bones in my body.", "4Bs.01"),
+    cando("I can say what a skeleton does: it supports me, protects me and lets me move.", "4Bs.03"),
+    cando("I can explain how a pair of muscles moves a bone.", "4Bs.02"),
+    cando("I know a muscle can only pull, never push.", "4Bs.02"),
+    cando("I can say why moving about keeps me healthy.", "4Bp.04"),
+    cando("I can name people whose work uses bone and muscle science.", "4SIC.04"),
+    cando("I can say whether my results supported my prediction.", "4TWSa.01"),
+    cando("I can make a conclusion from my results.", "4TWSa.03"),
 ]
 
 LESSON["home"] = [

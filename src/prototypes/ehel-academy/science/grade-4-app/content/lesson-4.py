@@ -7,7 +7,7 @@ and consumers as herbivores, omnivores, carnivores, predators and prey;
 4TWSm.02 use a model to show relationships; 4TWSm.03 draw a food chain
 as a diagram; with 4TWSc.01 and 4Pf.03.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "energy-for-life",
@@ -115,8 +115,11 @@ LESSON = {
                  q("An animal that eats both plants and animals is...", "\U0001F43B", "an omnivore", ["a herbivore", "a carnivore"], "Omni means all."),
                  q("An animal that hunts others is called...", "\U0001F989", "a predator", ["prey", "a producer"], "The hunter."),
                  q("Why do you need to eat?", "\U0001F37D️", "for the energy to grow, move and stay healthy", ["to keep your teeth busy all day", "you do not need to eat at all"], "Food is your energy."),
+                 q("In grass \u2192 zebra \u2192 lion, what is the arrow really showing?", "\u27A1\uFE0F", "which way the energy travels", ["which animal is the bigger of the two", "which animal came first"],
+                   "Living things eat in order to GET energy, so the arrow follows the energy: from the thing eaten to the eater."),
              ]},
-             "You know where energy for life comes from."),
+             "You know where energy for life comes from.",
+             mis=["2.4-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Bp.03", "4Be.03", "4TWSm.02"],
              "Time to show what you know. Tap the answer.",
@@ -132,12 +135,24 @@ LESSON = {
                  q("A bear eats berries and fish. It is a...", "\U0001F43B", "omnivore", ["herbivore", "carnivore"], "Both."),
                  q("In the chain seeds → mouse → owl, the mouse is the...", "\U0001F989", "prey", ["predator", "producer"], "Hunted by the owl. The arrow points to the eater."),
                  q("Can an animal be both predator and prey?", "\U0001F438", "yes, a frog eats flies and herons eat frogs", ["no, an animal is only ever one of them", "only fish can be both at once"], "Most middle links are both."),
-                 q("What did the food chain you built show?", "\U0001F527", "who eats whom in grass, rabbit and fox", ["how big a real fox grows each year", "how fast a real rabbit can run away"], "A model of a relationship."),
+                 q("What did the food chain you built show?", "\U0001F527", "which way the energy goes, from grass to rabbit to fox", ["how big a real fox grows each year", "how fast a real rabbit can run away"], "A model of a relationship."),
                  q("Where did the fox's energy come from, in the very beginning?", "☀️", "the Sun, through the grass and the rabbit", ["the fox made it from nothing", "the soil, through the fox's feet"], "Light, then plant, then rabbit, then fox."),
                  q("In the chain grass → rabbit → fox, what would happen to the foxes if all the grass died?", "\U0001F914", "they would go hungry, because the rabbits would have nothing to eat", ["nothing, because foxes do not eat grass", "they would have more rabbits to eat"], "Every link needs the one before it. No grass, no rabbits, so no food for the foxes in this chain."),
                  q("Why is the grass, not the rabbit, at the start of the chain grass \u2192 rabbit \u2192 fox?", "\U0001F331", "grass makes its own food using light; the rabbit has to eat", ["grass is smaller than the rabbit", "the rabbit is the predator in the chain"], "A chain starts with a producer. Grass makes food from light. The rabbit gets its energy by eating the grass."),
                  q("In the chain seeds \u2192 mouse \u2192 owl, what would happen to the mice if all the owls were gone?", "\U0001F42D", "there would be more mice at first, because nothing eats them", ["there would be fewer mice, because owls feed them", "the mice would start to eat seeds and owls"], "The owl is the mouse's predator. Take it away and more mice survive."),
-             ]},
+             ],
+              "support": [
+                 q("In grass \u2192 rabbit \u2192 fox, which is the producer?", "\U0001F33F", "the grass", ["the fox"],
+                   "A producer makes its own food."),
+                 q("What does a herbivore eat?", "\U0001F430", "plants", ["meat"],
+                   "Herbivores eat plants only."),
+              ],
+              "extension": [
+                 q("Foxes eat rabbits, and also birds and beetles. Why is one food chain not the whole story?", "\U0001F578\uFE0F", "most animals eat several things, so the chains cross into a web", ["a fox only ever eats rabbits", "the other chains do not matter"],
+                   "A food chain follows one path. Real animals eat many different things, so the chains join up into a food web."),
+                 q("An omnivore eats both plants and animals. Why might that be an advantage?", "\U0001F43B", "if one food runs short, it can eat the other", ["it needs less energy than other animals", "it can make its own food as well"],
+                   "A fussy eater depends on one link in the chain. An omnivore has more than one way to get its energy."),
+              ]},
              "That is the whole lesson finished. You know where the energy for life comes from."),
     ],
 }
@@ -182,6 +197,22 @@ LESSON["words"] = [
          ["The mouse is the owl's prey.", "Rabbits are prey to foxes."]),
     word("relationship", "\U0001F517", "The way two things are connected. A food chain shows who eats whom.",
          ["The model shows the relationship between the fox and the rabbit.", "Arrows show the relationship."]),
+    word("food chain", "\u27A1\uFE0F", "A line of living things, each eaten by the next, that shows which way the energy goes.",
+         ["Grass, rabbit, fox is a food chain.", "The arrow shows the energy going to the eater."]),
+    word("producer", "\U0001F33F", "A plant. It makes its own food from sunlight, so every food chain starts with one.",
+         ["The grass is the producer.", "A producer needs no other living thing to feed it."]),
+    word("consumer", "\U0001F98A", "An animal. It cannot make its own food, so it has to eat another living thing.",
+         ["A fox is a consumer.", "Every animal in a food chain is a consumer."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe a food chain using the words producer and consumer.", "4Be.03"),
+    cando("I can sort consumers into herbivores, carnivores and omnivores.", "4Be.03"),
+    cando("I know that a food-chain arrow shows which way the energy goes.", "4Be.03"),
+    cando("I know that plants get their energy from sunlight.", "4Bp.03"),
+    cando("I know that energy is needed for anything to happen at all.", "4Pf.03"),
+    cando("I can make a model that shows how things are connected.", "4TWSm.02"),
+    cando("I can draw a diagram of something real.", "4TWSm.03"),
 ]
 
 LESSON["home"] = [

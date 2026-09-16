@@ -7,7 +7,7 @@ is needed for any movement or action; 4Pf.04 some energy is transferred to
 the surroundings as sound, light or heat; with 4TWSp.03, 4TWSa.01,
 4TWSa.03, 4TWSa.04 and 4TWSc.08.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "energy-everywhere",
@@ -44,14 +44,18 @@ LESSON = {
              {"sim": "energyDrop",
               "predict": {"ask": "What will happen to the bounces?",
                           "opts": [opt("Each bounce will be lower than the last", True), opt("Every bounce will be the same height", False), opt("The bounces will get higher", False)]},
+              "plan": {"ask": "How shall we find out how the bounce height changes? Which way is fair?",
+                        "opts": [opt("Drop the same ball from the same height onto the same floor, and measure every bounce", True), opt("Drop it from a different height each time", False), opt("Drop it once and measure only the first bounce", False)],
+                        "why": "Same ball, same height, same floor - then the only thing left to change is the bounce number, which is what you are studying."},
               "runAsk": "Press Drop the ball three times. Read each bounce height on the marked scale, and watch the bars.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to each <b>bounce</b>?",
                            "opts": [opt("Each bounce was lower; the movement energy fell as the sound and warmth rose", True), opt("Every bounce was the same", False), opt("The ball bounced higher each time", False)],
                            "why": "The ball's movement energy was transferred, bounce by bounce, into sound you heard and a little warmth in the ball and floor."},
               "conclude": {"ask": "Where did the ball's energy go?",
                            "opts": [opt("It was transferred to the surroundings as sound and heat; none was destroyed", True), opt("It was used up and disappeared", False), opt("It stayed in the ball", False)],
                            "why": "Energy cannot be destroyed. It was transferred out of the ball's movement into the room."}},
-             "Energy is never lost. It is transferred, often as sound and heat."),
+             "Energy is never lost. It is transferred, often as sound and heat.",
+             mis=["2.3-m1"]),
 
         step("record", "Record the bounces", "\U0001F4CB", "Bounce table", ["4TWSc.08", "4Pf.04"],
              "Fill in the table. How high was the <b>%s</b>?",
@@ -67,7 +71,15 @@ LESSON = {
                   {"pic": "2️⃣", "label": "second bounce", "answer": "2", "why": "the second reached two: some energy had gone into sound and heat."},
                   {"pic": "3️⃣", "label": "third bounce", "answer": "1", "why": "the third reached one mark."},
               ],
-              "choices": [{"id": "3", "t": "3 marks", "pic": "📏"}, {"id": "2", "t": "2 marks", "pic": "📏"}, {"id": "1", "t": "1 mark", "pic": "📏"}]},
+              "choices": [{"id": "3", "t": "3 marks", "pic": "📏"}, {"id": "2", "t": "2 marks", "pic": "📏"}, {"id": "1", "t": "1 mark", "pic": "📏"}],
+              "read": [
+                  {"ask": "Read your table. Which bounce was the highest?",
+                   "opts": [opt("the first", True), opt("the second", False), opt("the third", False)],
+                   "why": "Each bounce is lower than the one before it."},
+                  {"ask": "Each bounce is lower than the last. Where is the energy going?",
+                   "opts": [opt("into sound and warmth, and into the floor", True), opt("it is being destroyed", False), opt("into making the ball heavier", False)],
+                   "why": "You hear each bounce - that is some of the energy leaving as sound. None of it is destroyed."},
+              ]},
              "Three, two, one. Each bounce lower."),
 
         step("graph", "Chart the bounces", "\U0001F4CA", "Bounce chart", ["4TWSa.04", "4TWSa.02", "4Pf.04"],
@@ -81,7 +93,15 @@ LESSON = {
               "columns": [{"pic": "1️⃣", "label": "first", "value": 3}, {"pic": "2️⃣", "label": "second", "value": 2}, {"pic": "3️⃣", "label": "third", "value": 1}],
               "pattern": {"ask": "What is the pattern?",
                           "opts": [opt("Each bounce is lower than the one before, as energy is transferred away", True), opt("Each bounce is higher", False), opt("There is no pattern", False)],
-                          "why": "A falling staircase: three, two, one. Energy leaving the ball each bounce."}},
+                          "why": "A falling staircase: three, two, one. Energy leaving the ball each bounce."},
+              "read": [
+                  {"ask": "Read the chart. How many marks lower was the third bounce than the first?",
+                   "opts": [opt("two marks", True), opt("one mark", False), opt("the third was higher", False)],
+                   "why": "Three marks, then two, then one. Each bounce loses energy as sound and warmth, so each bar is shorter."},
+                  {"ask": "If you let it bounce ten times, what would the chart look like?",
+                   "opts": [opt("the bars would keep getting shorter until it stopped", True), opt("the bars would level out and stay the same", False), opt("the bars would start growing again", False)],
+                   "why": "It loses energy at every bounce, so it never gets back to where it started and in the end it stops."},
+              ]},
              "A falling staircase: energy transferred away each bounce."),
 
         step("demo", "Energy on the move", "\U0001F504", "Transfers", ["4Pf.02", "4Pf.03", "4Pf.04"],
@@ -129,8 +149,11 @@ LESSON = {
                  q("Each bounce of the ball was lower because...", "⚽", "energy was transferred to sound and heat", ["the ball got heavier", "the ball got tired"], "Transferred, not lost."),
                  q("A lamp gets warm. Why?", "\U0001F4A1", "some energy leaks to the surroundings as heat", ["the bulb must be broken", "light makes things colder"], "Every transfer leaks."),
                  q("What does every movement need?", "\U0001F3C3\U0001F3FE", "energy", ["light", "sound"], "No energy, no action."),
+                 q("Could you hold a handful of energy?", "\u26A1", "No - things HAVE energy, and it is not made of stuff", ["Yes, there is some in a battery", "Yes, with the right gloves"],
+                   "You cannot put energy in a jar. You see what it does - movement, heat, light, sound - and that is how you know it is there."),
              ]},
-             "You know where energy goes."),
+             "You know where energy goes.",
+             mis=["2.1-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Pf.01", "4Pf.02", "4Pf.03", "4Pf.04", "4TWSa.04"],
              "Time to show what you know. Tap the answer.",
@@ -151,8 +174,21 @@ LESSON = {
                  q("A wind-up toy runs until it stops. Where did the energy stored in its spring go?", "\U0001F914", "into movement, then sound and heat in the room", ["it was destroyed when the toy stopped", "it went back into the key"], "Energy is never destroyed. The spring's stored energy became movement, and the movement leaked away as sound and heat."),
                  q("Predict: a ball is dropped from higher up. How will its first bounce change?", "\u26BD", "it bounces higher, because it started with more energy", ["it bounces lower, because it falls further", "it bounces the same, because it is the same ball"], "Higher up, the ball has more stored energy to begin with."),
                  q("Why does your hand get warm when you rub it on a table?", "\u270B", "some energy of the movement is transferred as heat", ["the table makes new energy", "the energy of the movement is destroyed"], "Energy is never made or destroyed. The movement's energy becomes heat."),
-             ]},
-             "That is the whole lesson finished. Energy is everywhere, and it is never lost."),
+             ],
+              "support": [
+                 q("Does a moving ball have energy?", "\U0001F3D0", "Yes", ["No"],
+                   "Anything moving has energy."),
+                 q("Can energy be destroyed?", "\u26A1", "No", ["Yes"],
+                   "It can only be passed on or spread out."),
+              ],
+              "extension": [
+                 q("Someone says they have built a wheel that spins for ever with nothing pushing it. Why can that not work?", "\u2699\uFE0F", "a little energy leaves as sound and heat every turn, so it must slow down", ["the wheel would need to be much bigger", "it would work, but only out in space"],
+                   "Every transfer leaks a little energy into the surroundings. Nothing keeps all of it, so nothing can run for ever."),
+                 q("A phone battery goes flat. What has really happened?", "\U0001F50B", "its stored energy has been passed on to light, sound and heat", ["the energy inside it was used up and destroyed", "the energy leaked out of the case"],
+                   "'Flat' is everyday language, not science. The energy went into the screen, the speaker and the warmth of the phone in your hand."),
+              ]},
+             "That is the whole lesson finished. Energy is everywhere, and it is never lost.",
+             mis=["2.1-m2", "2.2-m1"]),
     ],
 }
 
@@ -196,6 +232,17 @@ LESSON["words"] = [
          ["The thud was sound energy.", "A drum makes sound energy."]),
     word("heat", "\U0001F525", "Energy in warm things. It passes from hot to cold.",
          ["Heat leaks from the bulb.", "A hot cup has heat energy."]),
+]
+
+LESSON["cando"] = [
+    cando("I know that energy is in everything, and in sound, light and heat.", "4Pf.01"),
+    cando("I know that energy cannot be made or destroyed, only passed on.", "4Pf.02"),
+    cando("I know that nothing happens at all without energy.", "4Pf.03"),
+    cando("I know that some energy always spreads out into the surroundings.", "4Pf.04"),
+    cando("I can find a pattern in my results.", "4TWSa.02"),
+    cando("I can present my results in a table and a bar chart.", "4TWSa.04"),
+    cando("I can say how science is used where I live.", "4SIC.02"),
+    cando("I can talk about the good and bad effects of using science.", "4SIC.05"),
 ]
 
 LESSON["home"] = [

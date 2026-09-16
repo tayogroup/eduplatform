@@ -6,7 +6,7 @@ safely; 4Bp.02 plants and animals get infectious diseases, and vaccinations
 prevent some; 4Bp.04 movement keeps humans healthy; with 4SIC.02,
 4SIC.03 (use science to support a point) and 4SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "staying-healthy",
@@ -143,8 +143,21 @@ LESSON = {
                  q("What would happen if nobody in a town was vaccinated against measles?", "\U0001F914", "measles could spread from person to person much more easily", ["measles would disappear by itself", "everyone would be protected anyway"], "A vaccine trains each body to fight the germ. If nobody is protected, the germ can pass easily from one person to the next."),
                  q("If 9 out of 10 people who took a new medicine got better, what does that show?", "\U0001F4CA", "the medicine helped most of the people who took it", ["the medicine works for everybody", "the medicine is a vaccine"], "It was tested and counted. It helped 9, but not all 10."),
                  q("What would happen to your leg muscles if you sat still for weeks?", "\U0001F9B5", "they would get weaker and smaller", ["they would get stronger", "they would turn into bone"], "Muscles that work get stronger. Muscles that never work get weaker."),
-             ]},
-             "That is the whole lesson finished. You know how to stay healthy and how to prove it."),
+             ],
+              "support": [
+                 q("Who should give you medicine?", "\U0001F48A", "a grown-up who looks after you", ["anyone who offers it"],
+                   "Never take medicine yourself."),
+                 q("Can a dog catch an infectious disease?", "\U0001F436", "Yes", ["No"],
+                   "Animals get infectious diseases too, and can be vaccinated."),
+              ],
+              "extension": [
+                 q("A vaccination is given to someone who is NOT ill. What is the point?", "\U0001F489", "it teaches the body to fight that disease before it ever arrives", ["it cures an illness they already have", "it makes them slightly ill on purpose, for a day"],
+                   "A medicine treats an illness you have. A vaccination prepares you for one you have not got - which is why it is given to healthy people."),
+                 q("Most people in a town are vaccinated. Why does that help the few who are not?", "\U0001F3D8\uFE0F", "the disease has almost nobody left to spread through", ["it makes the air cleaner for them", "it has no effect on them at all"],
+                   "An infectious disease needs to pass from person to person. Take away most of the stepping stones and it cannot travel."),
+              ]},
+             "That is the whole lesson finished. You know how to stay healthy and how to prove it.",
+             mis=["1.5-m1"]),
     ],
 }
 
@@ -188,6 +201,17 @@ LESSON["words"] = [
          ["Use evidence to back up your point.", "The doctors' measurements are evidence."]),
     word("opinion", "\U0001F4AC", "What somebody thinks or likes. It has not been tested.",
          ["That is your opinion.", "An opinion is not evidence."]),
+    word("disease", "\U0001F912", "An illness. An infectious one can pass from one living thing to another.",
+         ["A cold is an infectious disease.", "Plants can catch diseases too."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say what a medicine is for, and how to use one safely.", "4Bp.01"),
+    cando("I know that plants and animals can catch infectious diseases.", "4Bp.02"),
+    cando("I know that a vaccination can stop some infectious diseases.", "4Bp.02"),
+    cando("I can say why moving about matters for my health.", "4Bp.04"),
+    cando("I can use science to back up what I say in an argument.", "4SIC.03"),
+    cando("I can say how science is used where I live.", "4SIC.02"),
 ]
 
 LESSON["home"] = [

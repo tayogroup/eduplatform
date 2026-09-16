@@ -7,7 +7,7 @@ core; 4ESp.02 the features of volcanoes, found at breaks in the crust;
 model is not the whole truth; 4TWSm.02 a model showing scale; with
 4TWSc.07 and 4SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LAYERS = [
     {"id": "crust", "label": "crust", "say": "The crust: the thin, hard, rocky outside. We live on it. It is thinner, compared with the Earth, than the skin on an apple."},
@@ -76,7 +76,7 @@ LESSON = {
               "items": [
                   {"ask": "What is the pocket of melted rock under a volcano called?", "opts": [opt("the magma chamber", True), opt("the crater", False), opt("the cone", False)], "why": "The card says magma chamber."},
                   {"ask": "What is the opening at the top of a volcano?", "opts": [opt("the crater", True), opt("the vent", False), opt("the mantle", False)], "why": "The vent is the pipe; the crater is the opening at the top."},
-                  {"ask": "What gives a volcano its cone shape?", "opts": [opt("layer on layer of cooled lava", True), opt("wind", False), opt("rain", False)], "why": "The card says cooled lava builds the cone."},
+                  {"ask": "What gives a cone-shaped volcano its shape?", "opts": [opt("layer on layer of cooled lava", True), opt("wind", False), opt("rain", False)], "why": "The card says cooled lava builds the cone."},
                   {"ask": "Where are most of the world's volcanoes?", "opts": [opt("in a ring round the Pacific Ocean, along the plate edges", True), opt("at the North Pole", False), opt("spread evenly everywhere", False)], "why": "The Ring of Fire, along the breaks in the crust."},
               ]},
              "Magma chamber, vent, crater, cone, ash. You found every answer."),
@@ -131,8 +131,13 @@ LESSON = {
                  q("Where do volcanoes form?", "\U0001F30B", "at breaks in the crust", ["anywhere at all", "only at the poles"], "Where magma can get through."),
                  q("What is lava?", "\U0001F30B", "melted rock that has reached the surface", ["cold rock deep under the ground", "a kind of very hot water"], "Magma, once it is out."),
                  q("What is an earthquake?", "\U0001F3DA️", "a sudden movement of the crust", ["an underground explosion", "a big volcano"], "Plates slipping."),
+                 q("Is every volcano a cone-shaped mountain?", "\U0001F30B", "No - runny lava spreads out into a broad, low dome", ["Yes, every volcano is a cone", "Yes, unless it has stopped erupting"],
+                   "The Hawaiian volcanoes pour out lava so runny that it flows away flat and wide. The shape depends on the lava."),
+                 q("How does a tsunami start?", "\U0001F30A", "an earthquake or an eruption under the sea", ["a very strong wind", "the tide going out too far"],
+                   "The sea floor jolts, and that push sends a huge wave across the ocean. A tsunami is caused BY an earthquake, not separate from one."),
              ]},
-             "You know what is under your feet."),
+             "You know what is under your feet.",
+             mis=["4.2-m1", "4.3-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4ESp.01", "4ESp.02", "4ESp.03", "4TWSm.02", "4SIC.01"],
              "Time to show what you know. Tap the answer.",
@@ -153,8 +158,21 @@ LESSON = {
                  q("Why are earthquakes and volcanoes often found in the same places?", "\U0001F914", "both happen at breaks in the crust, where plates meet", ["every earthquake is caused by a volcano", "those places are closest to the Sun"], "Plates meeting make the breaks in the crust, and both happen there."),
                  q("Why is an apple a good model of the Earth's layers?", "\U0001F34E", "its thin skin, thick flesh and core are like the crust, mantle and core", ["an apple is round and red like the Earth", "an apple has lava inside it"], "The model shows the idea of the layers. It leaves the rest out."),
                  q("Why does a volcano get taller after each eruption?", "\U0001F30B", "the lava cools into new rock and adds a layer", ["the crust under it grows", "the magma pushes the top up for ever"], "Layer on layer of cooled lava builds the mountain."),
-             ]},
-             "That is the whole lesson finished. You know the inside of the Earth."),
+             ],
+              "support": [
+                 q("What is the thin outside layer of the Earth called?", "\U0001F30D", "the crust", ["the core"],
+                   "Crust, mantle, core - outside in."),
+                 q("Where do most volcanoes happen?", "\U0001F30B", "where the crust is broken", ["in the middle of the oceans only"],
+                   "At the breaks between the moving plates."),
+              ],
+              "extension": [
+                 q("Could a new volcano appear in the middle of a plate, far from any edge?", "\U0001F30B", "rarely - where a hot spot melts through, as at Hawaii", ["never, volcanoes only ever form at plate edges", "yes, equally likely anywhere at all"],
+                   "Most volcanoes sit along the plate edges. A few sit over a hot spot in the middle of a plate, and Hawaii is the famous one."),
+                 q("What makes the huge plates of the crust move at all?", "\U0001F5FA\uFE0F", "the hot rock of the mantle creeps very slowly underneath them", ["the wind pushes them along", "earthquakes shove them from behind"],
+                   "The mantle is hot rock that can flow, very slowly indeed. The plates ride on top of it, moving a few centimetres a year."),
+              ]},
+             "That is the whole lesson finished. You know the inside of the Earth.",
+             mis=["4.1-m1"]),
     ],
 }
 
@@ -198,6 +216,20 @@ LESSON["words"] = [
          ["The plates move very slowly.", "Earthquakes happen where plates meet."]),
     word("earthquake", "\U0001F3DA️", "A sudden movement of the crust that shakes the ground.",
          ["An earthquake cracked the road.", "Plates slipping cause an earthquake."]),
+    word("volcano", "\U0001F30B", "An opening in the Earth's crust where molten rock comes out.",
+         ["A volcano lets magma out of the crust.", "Most volcanoes are along the edges of the plates."]),
+    word("tsunami", "\U0001F30A", "A huge wave caused by an earthquake or an eruption under the sea.",
+         ["An earthquake under the sea can start a tsunami.", "A tsunami is caused by the sea floor jolting."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe the Earth as a crust, a mantle and a core.", "4ESp.01"),
+    cando("I can describe what a volcano is like, and say where volcanoes are found.", "4ESp.02"),
+    cando("I know that an earthquake happens when part of the crust moves suddenly.", "4ESp.03"),
+    cando("I can say what a model of the Earth leaves out.", "4TWSm.01"),
+    cando("I can use a model to show scale.", "4TWSm.02"),
+    cando("I can look an answer up in a book or a fact card.", "4TWSc.07"),
+    cando("I can say how people found out what is inside the Earth.", "4SIC.01"),
 ]
 
 LESSON["home"] = [

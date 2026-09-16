@@ -7,7 +7,7 @@ habitats; 4Be.02 plants and animals can survive outside their habitats;
 4SIC.02 science in the local area; 4SIC.05 positive and negative effects of
 science and technology nearby; with 4TWSc.01.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "habitats-and-survival",
@@ -136,8 +136,11 @@ LESSON = {
                  q("Can a pet goldfish survive in a bowl?", "\U0001F41F", "yes, if a person feeds it and keeps the water clean", ["no, a fish can never live in a bowl", "only if the bowl is filled with sea water"], "A person gives it food and clean water."),
                  q("Why can a zoo keep a seal far from the sea?", "\U0001F9AD", "it copies the habitat with a pool", ["seals do not need water", "it cannot"], "The zoo copies what the sea gives it."),
                  q("Why would a fish not survive in a desert?", "\U0001F3DC️", "its gills need water to breathe", ["it would get too cold", "it would"], "No water, no breathing."),
+                 q("Has a giraffe always had a long neck?", "\U0001F992", "No - animals change, very slowly, over a huge stretch of time", ["Yes, animals have always looked as they do now", "Yes, giraffes stretch their own necks"],
+                   "A polar bear and a brown bear are close relatives and only one ended up white. Changes like that take hundreds of thousands of years."),
              ]},
-             "You know what suits an animal to its habitat."),
+             "You know what suits an animal to its habitat.",
+             mis=["4.4-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Be.01", "4Be.02", "4SIC.05", "4TWSp.01"],
              "Time to show what you know. Tap the answer.",
@@ -158,7 +161,19 @@ LESSON = {
                  q("Why should you never let a pet goldfish go in a pond or river?", "\U0001F914", "it can survive there and eat food the wild animals need", ["it would turn into a different kind of fish", "goldfish cannot swim in moving water"], "Goldfish often survive in the wild and spread. They take food from the animals that live there."),
                  q("If you find 20 woodlice in a damp patch and 2 in a dry patch of the same size, at the same time, what does that show?", icon("woodlouse"), "more woodlice live in damp places", ["woodlice like dry places best", "damp or dry makes no difference"], "Only the dampness was different. Far more were in the damp patch."),
                  q("Which is the fair test of whether more birds visit the feeder in the morning?", "\U0001F426", "watch the same feeder for ten minutes in the morning and ten in the afternoon", ["watch for ten minutes in the morning and an hour in the afternoon", "watch one feeder in the morning and a different one in the afternoon"], "Same feeder, same length of time. Only the time of day changes."),
-             ]},
+             ],
+              "support": [
+                 q("Where does a camel live?", "\U0001F42A", "a hot, dry desert", ["the Arctic ice"],
+                   "A camel suits a desert habitat."),
+                 q("Could a polar bear live in a desert?", "\u2744\uFE0F", "No", ["Yes"],
+                   "Its thick fur and fat suit the cold, not the heat."),
+              ],
+              "extension": [
+                 q("A houseplant from a rainforest lives happily in a classroom. What does that show?", "\U0001FAB4", "a living thing can survive outside its habitat if it is given what it needs", ["the classroom is a rainforest", "the plant has changed into a new kind"],
+                   "A habitat is where a living thing is FOUND naturally. Give it the right warmth, light and water and it can live elsewhere."),
+                 q("A new road is cut through a forest. Name two things that changes for the animals.", "\U0001F6E3\uFE0F", "less forest to live in, and the two halves are cut off from each other", ["only the noise changes", "nothing changes, they can cross it"],
+                   "Habitat is lost AND split. A population divided in two is more fragile than one large one."),
+              ]},
              "That is the whole lesson finished. You know what suits a living thing to its home."),
     ],
 }
@@ -203,6 +218,16 @@ LESSON["words"] = [
          ["Streetlights are technology.", "Technology can help or harm habitats."]),
     word("investigate", "\U0001F50D", "To find out the answer to a question by observing, counting or testing.",
          ["We investigated where woodlice live.", "Can you investigate that question?"]),
+]
+
+LESSON["cando"] = [
+    cando("I know that different animals suit different habitats.", "4Be.01"),
+    cando("I know that a plant or animal can survive somewhere that is not its habitat.", "4Be.02"),
+    cando("I can sort living things by where they live.", "4TWSc.01"),
+    cando("I can look an answer up in a book or a fact card.", "4TWSc.07"),
+    cando("I can ask my own question about a habitat.", "4TWSp.01"),
+    cando("I can talk about how what people do helps or harms the environment.", "4SIC.05"),
+    cando("I can use science to back up a point I want to make.", "4SIC.03"),
 ]
 
 LESSON["home"] = [

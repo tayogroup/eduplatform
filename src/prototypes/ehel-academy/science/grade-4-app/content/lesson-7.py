@@ -7,7 +7,7 @@ new substances, a chemical reaction; 4TWSp.05 risks and staying safe;
 4TWSc.06 practical work carried out safely (the reaction experiment); with 4TWSp.03, 4TWSa.01,
 4TWSa.03, 4TWSc.01 and 4TWSc.08.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "changes-and-reactions",
@@ -40,8 +40,11 @@ LESSON = {
              {"sim": "reaction",
               "predict": {"ask": "Which one will make a <b>new</b> substance?",
                           "opts": [opt("Vinegar added to bicarbonate of soda", True), opt("Sand added to water", False), opt("Both", False)]},
+              "plan": {"ask": "How shall we find out whether a new substance was made? Which way is fair?",
+                        "opts": [opt("Try to get the first substances back again", True), opt("Look at the colour and decide", False), opt("Smell it and decide", False)],
+                        "why": "That is the test that settles it. If you can separate them again, nothing new was made; if you cannot, a reaction happened."},
               "runAsk": "Goggles on, beakers on the tray. Press both buttons, pour slowly, and watch each beaker closely from the side, not from above.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened in the <b>two beakers</b>?",
                            "opts": [opt("The sand just sank in the water; the vinegar and bicarbonate fizzed and made a gas", True), opt("Both beakers fizzed", False), opt("Nothing happened in either", False)],
                            "why": "The sand and water stayed sand and water. The vinegar and bicarbonate reacted and made a gas that was not there before."},
               "conclude": {"ask": "How do you know a chemical reaction happened in the second beaker?",
@@ -87,7 +90,15 @@ LESSON = {
                   {"pic": "\U0001F9C2", "label": "salt dissolving", "answer": "yes", "why": "let the water dry and the salt is left behind. Physical."},
                   {"pic": "\U0001F373", "label": "egg frying", "answer": "no", "why": "a cooked egg stays cooked. Chemical."},
               ],
-              "choices": [{"id": "yes", "t": "yes, it can be undone", "pic": "\U0001F504"}, {"id": "no", "t": "no, new substances were made", "pic": "\U0001F6D1"}]},
+              "choices": [{"id": "yes", "t": "yes, it can be undone", "pic": "\U0001F504"}, {"id": "no", "t": "no, new substances were made", "pic": "\U0001F6D1"}],
+              "read": [
+                  {"ask": "Read your table. How many of the changes could be undone?",
+                   "opts": [opt("two", True), opt("all four", False), opt("none of them", False)],
+                   "why": "Melting and dissolving can be undone. Burning and rusting cannot."},
+                  {"ask": "Look at the two that could NOT be undone. What had happened to those?",
+                   "opts": [opt("a new substance had been made", True), opt("they had been heated more", False), opt("they were the heaviest ones", False)],
+                   "why": "That is the test for a chemical reaction: a new substance, and no way back."},
+              ]},
              "The same substance back: physical. New substances made: chemical."),
 
         step("sort", "Plan to stay safe", "⚠️", "Risk planner", ["4TWSp.05"],
@@ -124,8 +135,11 @@ LESSON = {
                  q("What is the sign of a chemical reaction?", "\U0001F525", "a new substance is made", ["it gets wet", "it gets smaller"], "Something that was not there before."),
                  q("Vinegar on bicarbonate fizzes. What is the fizz?", "\U0001F9EA", "a gas being made by the reaction", ["air escaping", "the vinegar boiling"], "A new substance."),
                  q("Which of these cannot be undone?", "↩️", "baking a cake", ["melting chocolate", "freezing water"], "New substances were made."),
+                 q("You melt a square of chocolate. Is it still chocolate?", "\U0001F36B", "Yes - melting changes the form, not the substance", ["No, heating always makes a new substance", "No, it is a different material now"],
+                   "It still tastes of chocolate, and it sets back into chocolate as it cools."),
              ]},
-             "You know changes and reactions."),
+             "You know changes and reactions.",
+             mis=["3.3-m1", "3.4-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Cc.01", "4Cc.02", "4Cc.03", "4TWSp.05"],
              "Time to show what you know. Tap the answer.",
@@ -146,7 +160,19 @@ LESSON = {
                  q("Why is burning wood a chemical reaction, but melting chocolate is not?", "\U0001FAB5", "burning makes new substances; melting does not", ["burning is much hotter than melting", "wood is much harder than chocolate"], "Ash and smoke are new substances. Melted chocolate is still chocolate."),
                  q("What will happen if you put melted chocolate in the fridge?", "\U0001F36B", "it goes solid again, because melting can be undone", ["it stays runny, because melting cannot be undone", "it turns into a new substance"], "Melting is a physical change. Cool the chocolate and it sets again."),
                  q("If salt stirred into water seems to vanish, how could you show it is still there?", "\U0001F9C2", "let the water dry up, and the salt is left behind", ["stir it faster until it fizzes", "shine a torch through the water"], "Dissolving is a physical change. The salt was there all along."),
-             ]},
+             ],
+              "support": [
+                 q("Can melted chocolate be turned back into solid chocolate?", "\U0001F36B", "Yes", ["No"],
+                   "Melting is a physical change; it can be undone."),
+                 q("Can burnt wood be turned back into wood?", "\U0001F525", "No", ["Yes"],
+                   "Burning is a chemical reaction. It makes new substances."),
+              ],
+              "extension": [
+                 q("Rusting takes months and burning takes seconds. Are both chemical reactions?", "\U0001F529", "Yes - speed has nothing to do with it", ["No, a reaction must be fast", "No, rusting is only dirt"],
+                   "What makes it a reaction is that a NEW substance forms and you cannot get the old one back. Rust is a new substance; it just takes its time."),
+                 q("A candle burns away to almost nothing. Where did it go?", "\U0001F56F\uFE0F", "into new substances in the air, which you cannot see", ["it was destroyed completely", "it turned into the light"],
+                   "Nothing is destroyed. The wax reacted with the air and the new substances floated away as gases."),
+              ]},
              "That is the whole lesson finished. You know a change from a reaction."),
     ],
 }
@@ -191,6 +217,16 @@ LESSON["words"] = [
          ["A splash in the eye is a risk.", "Plan for every risk."]),
     word("goggles", "\U0001F97D", "Eye protection worn for practical work.",
          ["Goggles on before you pour.", "Goggles stop splashes."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe melting and freezing using particles.", "4Cc.01"),
+    cando("I know that a change of state is a physical change, not a new substance.", "4Cc.02"),
+    cando("I know that a reaction makes one or more NEW substances.", "4Cc.03"),
+    cando("I can tell a physical change from a chemical reaction.", "4Cc.03"),
+    cando("I can record what happened in a table.", "4TWSc.08"),
+    cando("I can say what the risks are and how to stay safe.", "4TWSp.05"),
+    cando("I can make a conclusion from my results.", "4TWSa.03"),
 ]
 
 LESSON["home"] = [

@@ -7,7 +7,7 @@ test; 4TWSc.04 repeated measurements give more reliable data; 4TWSc.05
 standard units; 4TWSc.03 choose equipment; 4TWSa.04 a dot plot; with
 4TWSp.01, 4TWSp.03, 4TWSa.01, 4TWSa.02, 4TWSa.03 and 4TWSc.08.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "the-paper-spinner",
@@ -81,8 +81,11 @@ LESSON = {
              {"sim": "spinner", "big": True,
               "predict": {"ask": "Which spinner will take <b>longer</b> to fall?",
                           "opts": [opt("The one with bigger wings", True), opt("The one with smaller wings", False), opt("Both will take exactly the same time", False)]},
+              "plan": {"ask": "You drop each spinner three times, not once. Why?",
+                        "opts": [opt("one drop could be a fluke, and three lets you spot an odd one", True), opt("three drops make the spinner fall more slowly", False), opt("it wastes less paper than one drop", False)],
+                        "why": "Repeated measurements are what make a result trustworthy. If one of the three is far off the others, you know to look again."},
               "runAsk": "Drop the small spinner and time it, three times. Then drop the spinner with bigger wings and time it, three times.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened across the <b>three drops</b>?",
                            "opts": [opt("Small wings: 2.1, 2.3 and 2.0 seconds. Bigger wings: 2.8, 3.0 and 2.7 seconds", True), opt("All six drops took exactly 2.1 seconds", False), opt("The bigger wings fell faster every time", False)],
                            "why": "Each spinner's three times were close together, and the bigger wings took longer every time: about 2.8 seconds, against about 2.1."},
               "conclude": {"ask": "What is the answer to our question: does a spinner with bigger wings fall more slowly?",
@@ -104,7 +107,15 @@ LESSON = {
                   {"pic": "2️⃣", "label": "drop 2", "answer": "23", "why": "the second took 2.3 seconds."},
                   {"pic": "3️⃣", "label": "drop 3", "answer": "20", "why": "the third took 2.0 seconds."},
               ],
-              "choices": [{"id": "21", "t": "2.1 s", "pic": "⏱️"}, {"id": "23", "t": "2.3 s", "pic": "⏱️"}, {"id": "20", "t": "2.0 s", "pic": "⏱️"}]},
+              "choices": [{"id": "21", "t": "2.1 s", "pic": "⏱️"}, {"id": "23", "t": "2.3 s", "pic": "⏱️"}, {"id": "20", "t": "2.0 s", "pic": "⏱️"}],
+              "read": [
+                  {"ask": "Read your table. Were your three drops all exactly the same time?",
+                   "opts": [opt("No - close, but not identical", True), opt("Yes, all exactly the same", False), opt("No, completely different", False)],
+                   "why": "Real measurements vary a little every time. That is exactly why you take more than one."},
+                  {"ask": "Your three times are 2.1, 2.3 and 2.0 seconds. What would you report as the result?",
+                   "opts": [opt("about 2.1 seconds, the middle of the three", True), opt("2.3 seconds, the biggest of the three", False), opt("all three, because there is no single answer", False)],
+                   "why": "With repeated readings you take the middle one, or the average. A single reading could be the odd one out."},
+              ]},
              "2.1, 2.3, 2.0. A table in standard units."),
 
         step("graph", "Plot the drops", "\U0001F4CA", "Dot plot", ["4TWSa.04", "4TWSa.02", "4TWSc.04"],
@@ -118,7 +129,15 @@ LESSON = {
               "columns": [{"pic": "⏱️", "label": "2.0 s", "value": 1}, {"pic": "⏱️", "label": "2.1 s", "value": 1}, {"pic": "⏱️", "label": "2.2 s", "value": 0}, {"pic": "⏱️", "label": "2.3 s", "value": 1}],
               "pattern": {"ask": "Read the dot plot. What does it show?",
                           "opts": [opt("The three drops cluster close to 2.1 seconds, so about 2.1 is the reliable time", True), opt("The three drops were spread out all over the place", False), opt("Only one drop was made, so there is nothing to compare", False)],
-                          "why": "Dots that sit close together are repeats agreeing with each other."}},
+                          "why": "Dots that sit close together are repeats agreeing with each other."},
+              "read": [
+                  {"ask": "Read the dot plot. Which time did not come up at all?",
+                   "opts": [opt("2.2 seconds", True), opt("2.0 seconds", False), opt("2.3 seconds", False)],
+                   "why": "Every other column has a dot in it. The 2.2 second column is the empty one."},
+                  {"ask": "Your drops spread from 2.0 to 2.3 seconds. What does that spread tell you?",
+                   "opts": [opt("measuring is never perfectly exact, so repeats matter", True), opt("the spinner changed shape between drops", False), opt("one of the drops must have been cheated", False)],
+                   "why": "Three careful drops of the same spinner still differ a little. That is why scientists repeat a measurement instead of trusting one."},
+              ]},
              "A dot plot shows every repeat. The cluster is the answer."),
 
         step("questions", "Investigation check", "✅", "Enquiry check", ["4TWSp.02", "4TWSp.04", "4TWSc.04", "4TWSc.05", "4TWSa.04"],
@@ -157,7 +176,19 @@ LESSON = {
                  q("Why must both spinners be dropped from the same height?", "\U0001F914", "so the wings are the only thing that changes", ["so the stopwatch can start on time", "because higher drops are not allowed"], "Change one thing only. A different height would change the time too, and you could not tell which change did it."),
                  q("Predict: a spinner with even bigger wings is dropped from the same height. What will its time be?", "\u23F1\uFE0F", "longer, because bigger wings fall more slowly", ["shorter, because bigger wings fall faster", "exactly the same as the others"], "Our results showed bigger wings fall more slowly."),
                  q("If one drop gives a time you doubt, what should you do?", "\U0001F914", "repeat that drop to check it", ["change the size of the wings", "keep it and ignore the other drops"], "A repeat shows whether the odd time was a mistake."),
-             ]},
+             ],
+              "support": [
+                 q("You drop a spinner three times instead of once. Is that better?", "\U0001F4CF", "Yes", ["No"],
+                   "Repeats show whether one result was a fluke."),
+                 q("Should you change two things at once in a fair test?", "\u2696\uFE0F", "No", ["Yes"],
+                   "Change one, or you cannot tell which one mattered."),
+              ],
+              "extension": [
+                 q("Your three readings are 2.1, 2.2 and 4.8 seconds. What should you do about the 4.8?", "\U0001F914", "check it - something probably went wrong on that drop", ["include it, because all readings count equally", "throw away all three and start the whole test again"],
+                   "That is what repeats are FOR. A reading far from the others is a signal to look at what happened, not something to average in quietly."),
+                 q("Two groups test the same spinner and get 2.1 s and 2.6 s. Who is wrong?", "\U0001F465", "perhaps neither - they may have dropped it from different heights", ["the second group must have miscounted", "the first group, because their time is shorter"],
+                   "Different answers usually mean something was not kept the same. That is why a fair test lists the variables before it starts."),
+              ]},
              "That is the whole lesson finished, and the whole of Grade 4 Science. You can run a fair test from question to conclusion."),
     ],
 }
@@ -202,6 +233,19 @@ LESSON["words"] = [
          ["The dot plot showed a cluster at 2.1.", "Draw a dot plot of the drops."]),
     word("conclusion", "\U0001F4DD", "What the results tell you about the question you asked.",
          ["Our conclusion: bigger wings make a spinner fall more slowly.", "A conclusion comes from the results."]),
+]
+
+LESSON["cando"] = [
+    cando("I can ask a scientific question that can be investigated.", "4TWSp.01"),
+    cando("I can name the five types of scientific enquiry.", "4TWSp.02"),
+    cando("I can say which variables must be kept the same for a fair test.", "4TWSp.04"),
+    cando("I can explain why repeating a measurement gives a more trustworthy result.", "4TWSc.04"),
+    cando("I can measure in standard units, and say why they beat hand spans.", "4TWSc.05"),
+    cando("I can choose the right equipment and use it properly.", "4TWSc.03"),
+    cando("I can record my results in a table.", "4TWSc.08"),
+    cando("I can present my results as a bar chart or a dot plot.", "4TWSa.04"),
+    cando("I can describe a pattern in my results.", "4TWSa.02"),
+    cando("I can make a conclusion and link it to the question I asked.", "4TWSa.03"),
 ]
 
 LESSON["home"] = [

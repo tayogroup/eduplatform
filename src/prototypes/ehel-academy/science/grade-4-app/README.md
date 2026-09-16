@@ -83,3 +83,87 @@ so a page is 13 to 15 steps plus the sticker shelf.
 
 Not done: a teacher's read, a screen-reader session, the school's own devices,
 watching children use it — the same open rows as the Grade 1 validation.
+
+## The Cambridge Stage 4 depth pass (2026-09-17)
+
+The pass Grades 1–3 had, completing Science Grades 1–4. Nothing moved a step:
+**188 steps, and all thirteen sequences byte-identical to the shipped pages**,
+because progress is stored by position.
+
+**The source material took two attempts to get right, and that is worth
+recording.** A first set of Stage 4 books was the **Hodder** series (Amery &
+Feasey) — no "Common misconceptions" tables anywhere, no "Look what I can do!"
+blocks, its Success criteria OCR-truncated mid-sentence, and its Learner's Book
+and Workbook image-only with no text layer at all. On that material this pass
+could not have been done. The book that made it possible is
+`Science 4 Teacher resources.pdf` — **Cambridge Primary Science Teacher's
+Resource 4, Baxter & Dilley**, the same CUP series as Stages 1–3, with the
+three-column tables in the same shape.
+
+**26 of the book's 28 topics carry a table**; 6.4 Switches and 6.5 Changing the
+number of components carry none, which is Cambridge's own choice, not an
+extraction failure.
+
+**THIS GRADE ALREADY ANSWERED TEN OF THE 29, and the build proved it.** Grades
+1–3 were authored before their fixtures existed, so nearly every row needed a
+new question. Here the builder's game guard refused the first attempt outright:
+lesson 1's quiz already asks *"Can a muscle push a bone?"* with the key *"no,
+muscles can only pull"*, which **is** Cambridge's 1.3-m1. So the overlap was
+measured first — every fixture row against every stem **and key** in its target
+lesson — and each row judged by reading the match rather than trusting the
+number. 19 got a new question; 10 are **cited on the step that already answers
+them**. The fixture asks "is this answered?", never "did you add a question?".
+
+**Two taught misconceptions, both found by that reading** — the serious kind,
+where the error sits in the material rather than merely going unanswered:
+
+- **Lesson 4.** Cambridge 2.4 is that a food-chain arrow reads as "eats"
+  instead of as the flow of energy. The lesson's prose pairs them properly, but
+  its **quiz key** was *"who eats whom in grass, rabbit and fox"* with energy
+  omitted — and the key is the one place a child is tested. Reworded.
+- **Lesson 11.** *"What gives a volcano its cone shape?"* presupposes that
+  volcanoes **are** cones, which is Cambridge 4.2 word for word. Reworded to
+  ask about a cone-shaped one, with the Hawaiian counterexample added.
+
+| | before | after |
+| --- | --- | --- |
+| misconceptions answered and gated | 0 | 29 / 29 |
+| questions | 274 | 365 |
+| word cards | 91 | 105 |
+| self-check claims | 0 | 95 |
+| unscored tier items | 0 | 52 |
+| `plan` phases | 0 | 8 |
+| `conclude` phases RENDERED | 0 (8 authored, all dead) | 8 |
+| table and chart read-offs | 0 | 12 |
+| learner words / words per sentence | 37,412 / 10.74 | 44,776 / 10.95 |
+
+Highest Flesch-Kincaid fell from 5.62 to 5.49 (Energy Everywhere both times)
+while the volume grew by a fifth.
+
+**Two deliverables have a weaker basis here than in Grades 1–3, stated rather
+than glossed.** No Stage 4 book supplied carries a glossary or a self-check
+list, so the 95 self-check claims are written from the **0097 Stage 4 objective
+statements** rather than from Cambridge's own wording, and the vocabulary pass
+is 14 cards rather than Grade 3's 39 — the candidate list came from those same
+statements, which are prose, so the measurement is noisy (its top hits were
+"show", "because", "answer"). Against that weaker net Grade 4's existing 91
+cards proved good already, and lessons 2, 7 and 13 had no gap at all. The 14
+are words an objective is **literally written in** that the lesson never
+defined: `producer`, `consumer` and `food chain` (4Be.03), `solid` and `liquid`
+(4Cm.01), `lamp` (said 100 times, never defined) and `series circuit`
+(4Pe.03), `volcano` (4ESp.02, in a lesson about volcanoes), and one each for
+bones, joints, disease, straight lines and orbits.
+
+**Verified**: both gates green; 63 of 63 Stage 4 objectives; 29 of 29
+misconceptions; 188 steps, 0 moved; four floors raised to their measured
+values, none lowered; five mutations, five distinct failure lines, all thirteen
+modules verified back byte-identical. In a browser on the built pages, served
+on a port other than 4287: all eight experiments compute six phases, the
+support bank fires on a wrong answer with its eyebrow on its own line and
+"EXTRA HELP – NOT MARKED" beneath, and the self-check rows resolve to four
+different steps. Zero paid TTS calls; the only failed requests are the five
+platform sidecars that exist solely on the deployed tier.
+
+**Serve these pages on any port EXCEPT 4287.** `lib/voice.js` treats
+`localhost:4287` as the dev twin and posts every narration line to
+`/api/elevenlabs-tts`, which bills per character.

@@ -240,3 +240,103 @@ A fresh reviewer read the fixed modules and the changed kit parts on 2026-09-11 
 - SIMS.reaction: "a MIXTURE", "a NEW substance" in capitals.
 - SCENES.volcano: a cone stands before any eruption.
 - SIMS.foodChain: "then the foxes have nothing to eat" with no qualifier.
+
+---
+
+## Appendix: the Cambridge Stage 4 depth pass, 2026-09-17
+
+**An appendix, not a new version.** The areas above are NOT re-scored; that
+needs a full re-review, and no teacher has read the content this pass added.
+
+### The source material took two attempts
+
+A first set of Stage 4 books was the **Hodder** series (Amery & Feasey): no
+"Common misconceptions" tables, no "Look what I can do!" blocks, Success
+criteria OCR-truncated mid-sentence, and the Learner's Book and Workbook
+image-only with no text layer at all. On that material this pass could not have
+been done, and it was reported as blocked rather than attempted thinly.
+
+`Science 4 Teacher resources.pdf` is **Cambridge Primary Science Teacher's
+Resource 4 (Baxter & Dilley)** - the same CUP series as Stages 1-3 - and
+carries the three-column tables in the same shape. 26 of its 28 topics have
+one; 6.4 and 6.5 have none, which is Cambridge's choice.
+
+### The finding that changed the shape of the pass
+
+**Grade 4 already answered ten of the 29.** Grades 1-3 were authored before
+their fixtures existed. Here the BUILDER refused the first attempt: lesson 1's
+quiz already asks "Can a muscle push a bone?" keyed "no, muscles can only
+pull", which IS Cambridge 1.3-m1, and the game guard caught the duplicate the
+moment a second was added.
+
+So the overlap was measured first - every fixture row against every stem AND
+key in its target lesson - and each row judged by reading the match, not the
+number. 19 rows got a question; 10 are cited on a step that already answers
+them. Two rows turned out to have the misconception sitting in the MATERIAL:
+
+- lesson 4's quiz key said a food chain shows "who eats whom" with no mention
+  of energy, which is Cambridge 2.4 in an answer key
+- lesson 11 asked "What gives a volcano its cone shape?", which presupposes
+  they are cones - Cambridge 4.2 word for word
+
+Both reworded. Neither would have been found by adding 29 questions blindly.
+
+### Areas this pass bears on
+
+| # | Area | evidence now | still open |
+| --- | --- | --- | --- |
+| 3 | Content Depth and Coverage | 29 of 29 Stage 4 misconceptions gated; questions 274 -> 365; all eight experiments now run Cambridge's five moves, `plan` new and `conclude` live for the first time | - |
+| 4 | Content Accuracy | two taught misconceptions fixed; no key named the wrong option in 365 | a teacher's read |
+| 10 | Question and Assessment Quality | 91 new questions, 74 of 365 now judgement items; 15 defects found by reading every key, all 15 fixed | a teacher's read - `review-pack.html` exists for it |
+| 11 | Assessment Balance | 12 read-offs on the four tables and two charts; 52 unscored tier items | - |
+| 6 | Grade-Level Appropriateness | 37,412 -> 44,776 learner words; highest Flesch-Kincaid 5.62 -> 5.49, Energy Everywhere both times | - |
+| 19 | Language and Reading Level | 91 -> 105 word cards. WEAKER BASIS than Grades 1-3: no Stage 4 glossary exists in any book supplied, so candidates came from the 0097 objective statements, which are prose | a human proofread |
+| 22 | Learner Progress and Completion | all thirteen step sequences IDENTICAL to the shipped pages, read out of both payloads as JSON: 188 steps, 0 moved | saved-record re-check |
+| 27 | Bugs, syntax and errors | both gates green; five mutations, five distinct failure lines, tree verified restored | - |
+
+### Eight of my own extension items restated their lesson. Again.
+
+The Grade 3 read found twelve of twenty-six and the lesson was written into
+memory. Grade 4 has EIGHT of twenty-six - better, and the same failure. The
+honest reading is that writing the memo did not fix it; **checking** did.
+
+The five lessons whose extensions were written against a dumped stem list (2,
+3, 5, 12, 13) are all clean. All eight defects are in lessons where the item
+was written from the topic and checked afterwards. The worst restated their
+lesson's own questions almost verbatim:
+
+- lesson 11's asked "Nobody has ever been to the middle of the Earth. How do we
+  know?" - already #7 AND #22
+- lesson 11's second asked why volcanoes and earthquakes share places - already
+  #23
+- lesson 9's asked why you can see a book - already #5 and #11
+- lesson 10's asked why a wire is metal inside and plastic outside - already
+  #25; and why two lamps are dimmer - already #23 and #29
+
+**The rule, restated because it keeps needing to be:** dump the lesson's stems
+and write the differentiation item against that list. The replacements were
+chosen that way - a food web, ice floating, perpetual motion, a torch beam in
+dust, a bird on a power line, one fresh cell of two, a hot-spot volcano, and
+what moves the plates.
+
+### Read-off answers checked against the data, and three were wrong
+
+Written first, checked second, three corrected before they shipped: lesson 13's
+real drop times are 2.1 / 2.3 / 2.0 s, not the 2.1 / 2.2 / 2.1 the draft
+asserted; its dot plot has THREE columns tied at one and one at zero, so "which
+time came up most often" has no answer at all (rewritten to ask which time did
+not come up); and lesson 8's chart drop is exactly two marks, which a child can
+read off, rather than the draft's vaguer "more than half".
+
+### Two things this appendix must not be read as claiming
+
+- **No teacher has read it.** A person read all 365 keys and fixed 15 things.
+  That is not a teacher's read, and no gate can be: this build authors its own
+  questions rather than taking them from a Cambridge booklet, so
+  `check-science-answer-keys.mjs` has no printed key to compare with.
+- **Two deliverables are weaker here than in Grades 1-3** and are marked so
+  above: the self-check claims come from the objective statements rather than
+  Cambridge's own wording, and the vocabulary pass is 14 cards against Grade
+  3's 39. Both because no Stage 4 book supplied carries a glossary or a
+  self-check list. If a CUP Learner's Book 4 ever arrives, both can be redone
+  properly and `minimumCovered` only goes up.

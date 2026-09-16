@@ -5,7 +5,7 @@
 4Bs.04 some animals have an exoskeleton; 4TWSc.02 use a key to identify
 living things; with 4TWSc.01 and 4TWSc.07.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 KEY = [
     {"id": "legs", "q": "Does it have legs?", "yes": "six", "no": "shell"},
@@ -113,8 +113,13 @@ LESSON = {
                  q("What is an exoskeleton?", "\U0001F980", "a hard skeleton covering the outside of the body", ["a backbone inside the body", "a kind of shellfish that lives in the sea"], "Exo means outside."),
                  q("Which group of animals has an exoskeleton?", "\U0001F6E1️", "insects", ["mammals", "birds"], "Insects, spiders, crabs."),
                  q("What does a key do?", "\U0001F511", "identifies a creature through yes-or-no questions", ["opens a door into the classroom", "counts the legs for you"], "You answer. The key names it."),
+                 q("A tortoise has a hard shell. Vertebrate, or invertebrate?", "\U0001F422", "a vertebrate - it has a backbone inside the shell", ["an invertebrate, because it has a shell", "neither, because the shell is its skeleton"],
+                   "A snail's shell goes with having no backbone, but a tortoise has both. The shell tells you nothing - look for the backbone."),
+                 q("A snake has no legs at all. Vertebrate, or invertebrate?", "\U0001F40D", "a vertebrate - a long backbone of hundreds of bones", ["an invertebrate, because it has no legs", "an invertebrate, because it is so bendy"],
+                   "Legs tell you nothing either. A snake's backbone has more bones in it than yours."),
              ]},
-             "You know backbones and keys."),
+             "You know backbones and keys.",
+             mis=["1.4-m1", "1.4-m2"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Bs.04", "4Bs.05", "4TWSc.02", "4TWSc.07"],
              "Time to show what you know. Tap the answer.",
@@ -135,7 +140,19 @@ LESSON = {
                  q("Where did you find the facts about moulting?", "\U0001F4DA", "in a fact card, a secondary source", ["by guessing what might happen", "by watching a crab for a year"], "You looked it up."),
                  q("A minibeast has fourteen legs. What will the key say?", "\U0001F511", "woodlouse: it has legs, but not six or eight", ["spider: it has more than six legs", "snail: it lives under stones"], "Legs, yes. Six? No. Eight? No. The key ends at woodlouse."),
                  q("A whale is huge and lives in the sea. What would you check to find out if it is a vertebrate?", "\U0001F40B", "whether it has a backbone inside", ["how big it is", "whether it lives in water"], "Size and home are not the test. A backbone is. A whale has one."),
-             ]},
+             ],
+              "support": [
+                 q("Does a fish have a backbone?", "\U0001F41F", "Yes", ["No"],
+                   "A fish is a vertebrate."),
+                 q("Does a worm have a backbone?", "\U0001FAB1", "No", ["Yes"],
+                   "A worm is an invertebrate."),
+              ],
+              "extension": [
+                 q("A crab's skeleton is on the OUTSIDE. What must it do to grow bigger?", "\U0001F980", "shed the old case and grow a new, larger one", ["stretch the case as it grows", "grow a second case inside"],
+                   "A hard case cannot stretch. That is the price of an exoskeleton: the animal is soft and defenceless until the new one hardens."),
+                 q("Why is a backbone made of many small bones instead of one long one?", "\U0001F9B4", "so it can bend, and still hold you up", ["so it is lighter to carry", "so it can grow more quickly"],
+                   "One solid rod could not bend at all. Many small bones with joints between them give you both strength and movement."),
+              ]},
              "That is the whole lesson finished. Backbone, no backbone, or a skeleton outside."),
     ],
 }
@@ -180,6 +197,14 @@ LESSON["words"] = [
          ["Use the key to name the minibeast.", "The key asked how many legs it had."]),
     word("identify", "\U0001F50D", "To work out what something is.",
          ["We identified the beetle with a key.", "Can you identify this bird?"]),
+]
+
+LESSON["cando"] = [
+    cando("I can tell a vertebrate from an invertebrate by looking for a backbone.", "4Bs.05"),
+    cando("I know that some animals have their skeleton on the outside.", "4Bs.04"),
+    cando("I can sort animals into groups by looking at them.", "4TWSc.01"),
+    cando("I can use a key to identify an animal.", "4TWSc.02"),
+    cando("I can record what I found in a table.", "4TWSc.07"),
 ]
 
 LESSON["home"] = [

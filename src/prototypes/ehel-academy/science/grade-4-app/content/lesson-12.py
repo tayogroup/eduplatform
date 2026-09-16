@@ -7,7 +7,7 @@ movement, day and night, and changing shadows; 4ESs.02 the planets;
 comets; 4TWSm.02 a model showing scale; with 4TWSp.03, 4TWSa.01, 4TWSa.03
 and 4SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "the-solar-system",
@@ -24,14 +24,18 @@ LESSON = {
              {"sim": "dayNight",
               "predict": {"ask": "What makes the Sun seem to move across the sky?",
                           "opts": [opt("The Earth spinning on its axis", True), opt("The Sun flying round the Earth", False), opt("The clouds pushing it", False)]},
+              "plan": {"ask": "How shall we find out whether it is the Sun or the Earth that moves? Which way is fair?",
+                        "opts": [opt("Model it: keep the lamp still and turn the globe, then see if it matches what we see", True), opt("Watch the Sun all day and decide", False), opt("Turn the lamp round the globe and call it done", False)],
+                        "why": "A model lets you try one idea at a time. Turn the globe and the Sun seems to cross the sky - exactly what happens."},
               "runAsk": "Press Spin on six hours, four times. Watch where you are.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened as you <b>turned the Earth</b>?",
                            "opts": [opt("As the Earth turned, my side faced the Sun, then turned away: day, then night, and the Sun seemed to move", True), opt("The Sun moved round the Earth while the Earth stayed still", False), opt("Nothing changed; it stayed day all the time", False)],
                            "why": "One spin, one day. The Sun stayed still. You turned past it."},
               "conclude": {"ask": "Why do shadows change through the day?",
                            "opts": [opt("The Earth's spin changes where the Sun appears in the sky, so the shadow swings round and changes length", True), opt("Shadows move about on their own", False), opt("The Sun comes much closer to the Earth at midday", False)],
                            "why": "Where the Sun appears decides where a shadow falls. The spin moves it."}},
-             "The Earth spins. That makes day and night, the Sun's path, and the moving shadows."),
+             "The Earth spins. That makes day and night, the Sun's path, and the moving shadows.",
+             mis=["5.5-m1"]),
 
         step("order", "The planets, from the Sun", "\U0001FA90", "Planet order", ["4ESs.02", "4ESs.03"],
              "Eight planets go round the Sun. Tap them in order, nearest to the Sun first.",
@@ -65,9 +69,9 @@ LESSON = {
                  {"pic": "\U0001FAA8", "label": "asteroids", "sub": "lumps of rock", "say": "Asteroids are lumps of rock, some as small as a house, some hundreds of kilometres across. Most go round the Sun in a belt between Mars and Jupiter."},
                  {"pic": "☄️", "label": "comets", "sub": "ice with a tail", "say": "Comets are balls of ice and dust from the cold edge of the Solar System. When one swings near the Sun, the ice turns to gas and streams out as a glowing tail."},
              ], "need": 4,
-              "then": {"ask": "What is at the centre of the Solar System?",
-                       "opts": [opt("the Sun, a star", True), opt("the Earth", False), opt("Jupiter", False)],
-                       "why": "Everything goes round the Sun."}},
+              "then": {"ask": "Is the Sun a planet or a star?",
+                       "opts": [opt("a star", True), opt("a planet", False), opt("both at once", False)],
+                       "why": "A star is a huge ball of hot gas that makes its own light. A planet makes none - it only shines back the light of a star."}},
              "A star, planets, asteroids and comets: a planetary system."),
 
         step("demo", "A model to scale", "\U0001F4CF", "Scale model", ["4TWSm.02", "4ESs.02"],
@@ -117,8 +121,11 @@ LESSON = {
                  q("Which planet is third from the Sun?", "\U0001F522", "Earth", ["Mars", "Venus"], "Mercury, Venus, Earth."),
                  q("What is at the centre of the Solar System?", "\U0001F30C", "the Sun", ["the Earth", "Jupiter"], "A star."),
                  q("A ball of ice that grows a tail near the Sun is...", "✨", "a comet", ["an asteroid", "a planet"], "Ice and dust."),
+                 q("Does the Earth make its own light?", "\U0001F30E", "No - it only reflects the light of the Sun", ["Yes, that is why it glows when seen from space", "Yes, its hot core makes the light"],
+                   "A photograph from space shows HALF the Earth lit and half of it dark. If it made its own light, all of it would glow."),
              ]},
-             "You know your Solar System."),
+             "You know your Solar System.",
+             mis=["5.4-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4ESs.01", "4ESs.02", "4ESs.03", "4ESs.04", "4TWSm.02", "4SIC.01"],
              "Time to show what you know. Tap the answer.",
@@ -139,7 +146,19 @@ LESSON = {
                  q("It is midday where you are. Why is it night on the far side of the Earth?", "\U0001F914", "that side is turned away from the Sun", ["the Sun has gone behind the Moon", "the Sun switches off there"], "The Earth spins. The half facing the Sun has day; the half turned away has night."),
                  q("In the football model, why must the Earth be tiny and far away?", "\u26BD", "the Sun is far bigger than the Earth, and a long way from it", ["the Earth is bigger than the Sun", "the model gets the sizes wrong on purpose"], "A model to scale keeps the sizes and the distances right."),
                  q("Why do the stars seem to move across the sky during the night?", "\U0001F31F", "the Earth is spinning, so we turn past them", ["the stars go round the Earth every night", "the wind blows them along"], "Like the Sun by day, the stars only seem to move. It is the Earth that turns."),
-             ]},
+             ],
+              "support": [
+                 q("What is at the centre of the Solar System?", "\u2600\uFE0F", "the Sun", ["the Earth"],
+                   "The Sun, a star."),
+                 q("How long does the Earth take to spin round once?", "\U0001F30D", "one day", ["one year"],
+                   "One spin, one day and night."),
+              ],
+              "extension": [
+                 q("If the Earth stopped spinning but kept going round the Sun, what would a day be like?", "\U0001F311", "half the year in daylight and half in darkness", ["exactly the same as now", "there would be no day or night at all"],
+                   "Day and night come from the SPIN. Stop it and only the journey round the Sun is left, so one side would face the Sun for months."),
+                 q("A comet grows a tail only when it comes near the Sun. Why?", "\u2604\uFE0F", "the Sun's heat turns its ice into gas and dust that streams away", ["the tail is scorch marks from the heat", "it collects dust as it speeds up"],
+                   "A comet is ice and dust. Far out it is a dull lump; near the Sun the ice turns to gas and the Sun blows it out into a tail."),
+              ]},
              "That is the whole lesson finished. You know your place in the Solar System."),
     ],
 }
@@ -184,6 +203,19 @@ LESSON["words"] = [
          ["A comet's tail glows.", "Comets come from the edge of the Solar System."]),
     word("scale", "\U0001F4CF", "Shrinking everything by the same amount, so sizes and distances stay true to each other.",
          ["A scale model of the Solar System needs a whole field.", "The football and peppercorn are to scale."]),
+    word("orbit", "\U0001F30E", "The path one thing takes as it goes round another.",
+         ["The Earth's orbit round the Sun takes a year.", "The Moon is in orbit round the Earth."]),
+]
+
+LESSON["cando"] = [
+    cando("I can explain why the Earth's spin makes the Sun seem to move, and makes day and night.", "4ESs.01"),
+    cando("I can name the planets of the Solar System.", "4ESs.02"),
+    cando("I know that the Sun is at the centre.", "4ESs.03"),
+    cando("I know a planetary system holds stars, planets, asteroids and comets.", "4ESs.04"),
+    cando("I can use a model to show scale.", "4TWSm.02"),
+    cando("I can make a prediction and check it.", "4TWSp.03"),
+    cando("I can make a conclusion from my results.", "4TWSa.03"),
+    cando("I can say how our picture of the sky has changed over time.", "4SIC.01"),
 ]
 
 LESSON["home"] = [

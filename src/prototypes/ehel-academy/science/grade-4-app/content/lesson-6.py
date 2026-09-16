@@ -7,7 +7,7 @@ even in a solid; 4Cp.01 the particle model explains the properties of solids
 and liquids; 4Cp.02 powders can behave like liquids; 4TWSm.01 a model is
 not the whole truth; with 4TWSp.03, 4TWSa.01 and 4TWSa.03.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "particles",
@@ -39,8 +39,11 @@ LESSON = {
              {"sim": "particles",
               "predict": {"ask": "When the solid is heated enough, its particles will...",
                           "opts": [opt("break out of their rows and slide past each other", True), opt("stop moving", False), opt("disappear", False)]},
+              "plan": {"ask": "How shall we find out what heat does to the particles? Which way is fair?",
+                        "opts": [opt("Watch the same substance as it warms, and change nothing else", True), opt("Heat one substance and cool a different one", False), opt("Heat it once, very fast, and look at the end only", False)],
+                        "why": "Only the heat may change. Watching all the way through is how you see the particles speed up and break free."},
               "runAsk": "Press Heat it twice, watch the particles, then press Cool it.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to the <b>particles</b>?",
                            "opts": [opt("Heated, the particles vibrated harder, then broke out of their rows and slid: it melted. Cooled, they locked back into rows", True), opt("The particles stopped moving when heated", False), opt("New particles appeared", False)],
                            "why": "Heat is energy for the particles. Enough of it and they leave their rows: melting. Take it away and they return: freezing."},
               "conclude": {"ask": "Why does a liquid flow when a solid does not?",
@@ -111,8 +114,13 @@ LESSON = {
                  q("Do the particles in ice move?", "\U0001F9CA", "yes, they vibrate all the time", ["no, they are frozen still", "only when it melts"], "Always moving."),
                  q("Water is one pure kind of stuff. It is a...", "\U0001F4A7", "substance", ["material", "particle"], "One pure stuff."),
                  q("Why does sand pour?", "\U0001F3D6️", "its solid grains roll over each other", ["it is a liquid", "its particles are liquid"], "Grains slide, not particles."),
+                 q("What is in the gaps between the particles in a solid?", "\U0001F9F1", "nothing at all", ["air", "tiny drops of water"],
+                   "Air is made of particles too, and they are far too big to fit in those gaps. In a solid the particles are touching."),
+                 q("Is there water in every liquid?", "\U0001F6E2\uFE0F", "No - cooking oil and syrup have none in them", ["Yes, every liquid has water in it", "Yes, or it could not be poured"],
+                   "Anything that flows and can be poured is a liquid. Some simply pour more slowly than others."),
              ]},
-             "You know the particle model."),
+             "You know the particle model.",
+             mis=["3.1-m1", "3.2-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Cm.01", "4Cm.02", "4Cm.03", "4Cp.01", "4Cp.02", "4TWSm.01"],
              "Time to show what you know. Tap the answer.",
@@ -133,7 +141,19 @@ LESSON = {
                  q("A bar of chocolate is put in a fridge. What happens to its particles?", "\U0001F914", "they move less, but they never stop", ["they stop moving completely", "they break out of their rows and slide"], "Cooling takes energy away, so the particles move less. They never stop moving, even in a solid."),
                  q("Why can you pour water, but not a brick?", "\U0001F9F1", "water particles slide past each other; a brick's are held in rows", ["water has no particles at all", "a brick's particles are much bigger than water's"], "Liquid particles slide. Solid particles stay in their rows, so a solid keeps its shape."),
                  q("Why does the particle model draw particles as big coloured balls?", "\U0001F52C", "so we can see the idea; real particles are far too small to see", ["real particles are coloured balls", "particles are as big as marbles"], "A model shows the idea clearly. It gets the size and colour wrong on purpose."),
-             ]},
+             ],
+              "support": [
+                 q("Do the particles in a solid touch each other?", "\U0001F9F1", "Yes", ["No, there is air between them"],
+                   "They touch, and there is nothing in the gaps."),
+                 q("Can a liquid be poured?", "\U0001F4A7", "Yes", ["No"],
+                   "Liquid particles slide past each other, so it flows."),
+              ],
+              "extension": [
+                 q("Ice floats on water. What does that tell you about the particles in ice?", "\u2744\uFE0F", "they are spread slightly further apart than in liquid water", ["they are packed much more tightly than in water", "there are fewer of them in ice than in water"],
+                   "Almost every substance is denser as a solid. Water is the odd one out, which is why ice floats and why a pond freezes from the top down."),
+                 q("A balloon left in a warm room slowly gets bigger. What are the particles doing?", "\U0001F388", "moving faster, so they push harder on the skin", ["multiplying, so there are more of them", "growing bigger themselves"],
+                   "Warming gives particles more movement, not more size and not more of them. Faster particles hit the skin harder and more often."),
+              ]},
              "That is the whole lesson finished. You know what everything is made of."),
     ],
 }
@@ -178,6 +198,20 @@ LESSON["words"] = [
          ["Flour is a powder.", "A powder pours because its grains roll."]),
     word("melt", "\U0001F525", "To change from a solid to a liquid when heated.",
          ["Ice melts into water.", "When it melts, the particles leave their rows."]),
+    word("solid", "\U0001F9F1", "A substance whose particles are packed together and held in place, so it keeps its shape.",
+         ["A brick is a solid.", "The particles in a solid still vibrate on the spot."]),
+    word("liquid", "\U0001F4A7", "A substance whose particles touch but can slide past each other, so it flows.",
+         ["Water is a liquid.", "A liquid takes the shape of whatever holds it."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe the particle model for a solid and for a liquid.", "4Cm.01"),
+    cando("I can say the difference between a material, a substance and a particle.", "4Cm.02"),
+    cando("I know that particles never stop moving, even inside a solid.", "4Cm.03"),
+    cando("I can use particles to explain why a solid keeps its shape and a liquid flows.", "4Cp.01"),
+    cando("I can explain how a powder can pour like a liquid and still be a solid.", "4Cp.02"),
+    cando("I can say what a model leaves out.", "4TWSm.01"),
+    cando("I can make a prediction and check it.", "4TWSp.03"),
 ]
 
 LESSON["home"] = [

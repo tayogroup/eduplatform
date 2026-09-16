@@ -690,6 +690,38 @@
 .sit-card p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
 .sit-card .bigbtns { justify-content: center; gap: 10px; flex-wrap: wrap; }
 
+  /* ---- the tier eyebrow. deck.js writes
+       <span class="qbook">One step at a time</span> + the question
+     when it offers the support or the extension bank. `qbook` is ENGLISH's
+     class - it came over with deck.js and is defined in English's stylesheet,
+     never in this one - so here the span stayed inline and the label ran into
+     the first word of the question: "One step at a timeWhich animal has
+     feathers?". It shipped that way in Grade 1 on 2026-09-16 and no gate could
+     see it; it was found by answering a question wrongly in the browser. ---- */
+  .qbook { display: block; margin: 0 0 4px; font-size: 14px; font-weight: 800;
+    letter-spacing: .05em; text-transform: uppercase; color: var(--gold); }
+
+  /* ---- the self-check on the sticker shelf: Cambridge's "Look what I can
+     do!", which closes every one of its topics at each stage (25 at Stage 1,
+     26 at Stage 2). It sits on the SHELF and not in a step, so nothing here
+     moves a saved place. No new hue: the heading is the taught-thing teal and
+     "Show me" is a ghost button. ---- */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+  .cando li > span { font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .candogo { flex: none; border: 2px solid var(--line); background: transparent; color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; font-family: inherit; font-weight: 700; font-size: 14px;
+    cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  .candogo:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1121,6 +1153,19 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="cando">
+          <h3>Look what I can do!</h3>
+          <p class="candonote">Read each one. Can you do it? If you are not sure, press <b>Show me</b>.</p>
+          <ul>
+          <li><span>I know that light travels in straight lines, and I can draw that as a ray diagram.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I know that light reflects off surfaces, not only off mirrors.</span><button type="button" class="candogo" data-go="4">Show me</button></li>
+          <li><span>I can explain how I see something that makes no light of its own.</span><button type="button" class="candogo" data-go="4">Show me</button></li>
+          <li><span>I can sort things into light sources and things that only reflect.</span><button type="button" class="candogo" data-go="7">Show me</button></li>
+          <li><span>I can draw a diagram of something real.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I can say how people's ideas about light have changed.</span><button type="button" class="candogo" data-go="8">Show me</button></li>
+          <li><span>I can make a prediction and see whether I was right.</span><button type="button" class="candogo" data-go="4">Show me</button></li>
+          </ul>
+        </div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1193,7 +1238,7 @@
           ],
           "counts": {
             "steps": 15,
-            "words": 7,
+            "words": 8,
             "games": 4,
             "home": 3
           },
@@ -1374,6 +1419,15 @@
                 "Evidence changed the idea of seeing.",
                 "Scientists look for evidence."
               ]
+            },
+            {
+              "w": "straight line",
+              "pic": "📐",
+              "meaning": "The only path light travels along. It never bends round a corner.",
+              "uses": [
+                "Light travels in straight lines.",
+                "A ray diagram draws light as straight lines."
+              ]
             }
           ]
         }
@@ -1449,9 +1503,27 @@
               }
             ]
           },
+          "plan": {
+            "ask": "How shall we find out where the reflected ray goes? Which way is fair?",
+            "opts": [
+              {
+                "t": "Keep the mirror still and shine the ray in at the same angle each time",
+                "ok": true
+              },
+              {
+                "t": "Move the mirror and the torch together",
+                "ok": false
+              },
+              {
+                "t": "Shine it in the dark and remember where it went",
+                "ok": false
+              }
+            ],
+            "why": "One thing at a time, and mark where the ray lands rather than trusting your memory."
+          },
           "runAsk": "Turn the mirror until the ray reaches the eye. Then put the book in the way.",
           "happened": {
-            "ask": "What happened?",
+            "ask": "What happened to the <b>ray</b>?",
             "opts": [
               {
                 "t": "The ray bounced off the mirror in a straight line and, at the right angle, reached the eye; the book blocked it",
@@ -1810,9 +1882,32 @@
                 }
               ],
               "why": "No light in, no seeing."
+            },
+            {
+              "ask": "Can you see your face in still, clear water?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">💧</div>",
+              "opts": [
+                {
+                  "t": "Yes - light reflects off far more things than mirrors",
+                  "ok": true
+                },
+                {
+                  "t": "No, only a mirror reflects light",
+                  "ok": false
+                },
+                {
+                  "t": "No, because water is see-through",
+                  "ok": false
+                }
+              ],
+              "why": "A window, a polished spoon and still water all reflect light. A mirror is simply the best at it."
             }
           ]
-        }
+        },
+        "mis": [
+          "5.3-m1",
+          "5.1-m1"
+        ]
       },
       {
         "kind": "games",
@@ -1886,6 +1981,16 @@
                   ],
                   "answer": "no light reaches your eye",
                   "explanation": "No light in, no seeing."
+                },
+                {
+                  "prompt": "Can you see your face in still, clear water?",
+                  "choices": [
+                    "Yes - light reflects off far more things than mirrors",
+                    "No, only a mirror reflects light",
+                    "No, because water is see-through"
+                  ],
+                  "answer": "Yes - light reflects off far more things than mirrors",
+                  "explanation": "A window, a polished spoon and still water all reflect light. A mirror is simply the best at it."
                 }
               ]
             },
@@ -2324,8 +2429,83 @@
               ],
               "why": "A mirror reflects light. Tilt it and the straight beam goes a new way."
             }
+          ],
+          "support": [
+            {
+              "ask": "Does light travel in straight lines?",
+              "pic": "🔦",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No, it bends round corners",
+                  "ok": false
+                }
+              ],
+              "why": "Always straight. That is why there are shadows."
+            },
+            {
+              "ask": "Can you see in a room with no light at all?",
+              "pic": "🌑",
+              "opts": [
+                {
+                  "t": "No",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, after a while",
+                  "ok": false
+                }
+              ],
+              "why": "Seeing needs light reaching your eye."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "You can see a torch beam in a dusty room, but not in clean air. Why?",
+              "pic": "💨",
+              "opts": [
+                {
+                  "t": "the light bounces off the dust into your eye",
+                  "ok": true
+                },
+                {
+                  "t": "dust makes the light brighter",
+                  "ok": false
+                },
+                {
+                  "t": "clean air blocks the light",
+                  "ok": false
+                }
+              ],
+              "why": "You only ever see light that enters your eye. In clean air the beam goes straight past you; dust scatters some of it sideways, to you."
+            },
+            {
+              "ask": "A mirror gives a clear picture and a white wall does not, though both reflect. Why?",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"29\" y=\"47\" width=\"6\" height=\"14\" rx=\"2\" fill=\"#8C6A43\"/><ellipse cx=\"32\" cy=\"27\" rx=\"19\" ry=\"23\" fill=\"#8C6A43\"/><ellipse cx=\"32\" cy=\"27\" rx=\"15\" ry=\"19\" fill=\"#CFE8F5\"/><path d=\"M24 22 L32 12 M25 31 L38 15\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\"/></svg>",
+              "opts": [
+                {
+                  "t": "the mirror is smooth, so the light stays in order",
+                  "ok": true
+                },
+                {
+                  "t": "the wall reflects no light at all",
+                  "ok": false
+                },
+                {
+                  "t": "the mirror makes its own light",
+                  "ok": false
+                }
+              ],
+              "why": "A rough surface scatters the light in all directions, so the picture is broken up. A smooth one keeps the rays in the same arrangement."
+            }
           ]
-        }
+        },
+        "mis": [
+          "5.2-m1"
+        ]
       },
       {
         "kind": "world",
@@ -2408,6 +2588,15 @@
                 "Evidence changed the idea of seeing.",
                 "Scientists look for evidence."
               ]
+            },
+            {
+              "w": "straight line",
+              "pic": "📐",
+              "meaning": "The only path light travels along. It never bends round a corner.",
+              "uses": [
+                "Light travels in straight lines.",
+                "A ray diagram draws light as straight lines."
+              ]
             }
           ],
           "finder": [
@@ -2446,6 +2635,18 @@
               "lesson": 2,
               "title": "Backbone or Not?",
               "file": "backbone-or-not.html"
+            },
+            {
+              "w": "bone",
+              "pic": "🦴",
+              "meaning": "A hard living part of your skeleton. It grows, and it mends if it breaks.",
+              "uses": [
+                "The longest bone is in your thigh.",
+                "A bone is living, not like a stone."
+              ],
+              "lesson": 1,
+              "title": "Bones and Muscles",
+              "file": "bones-and-muscles.html"
             },
             {
               "w": "break",
@@ -2568,6 +2769,18 @@
               "file": "circuits-and-switches.html"
             },
             {
+              "w": "consumer",
+              "pic": "🦊",
+              "meaning": "An animal. It cannot make its own food, so it has to eat another living thing.",
+              "uses": [
+                "A fox is a consumer.",
+                "Every animal in a food chain is a consumer."
+              ],
+              "lesson": 4,
+              "title": "Energy for Life",
+              "file": "energy-for-life.html"
+            },
+            {
               "w": "contract",
               "pic": "💪🏾",
               "meaning": "When a muscle gets shorter and fatter and pulls.",
@@ -2602,6 +2815,18 @@
               "lesson": 11,
               "title": "Inside the Earth",
               "file": "inside-the-earth.html"
+            },
+            {
+              "w": "disease",
+              "pic": "🤒",
+              "meaning": "An illness. An infectious one can pass from one living thing to another.",
+              "uses": [
+                "A cold is an infectious disease.",
+                "Plants can catch diseases too."
+              ],
+              "lesson": 3,
+              "title": "Staying Healthy",
+              "file": "staying-healthy.html"
             },
             {
               "w": "dose",
@@ -2736,6 +2961,18 @@
               "file": "habitats-and-survival.html"
             },
             {
+              "w": "food chain",
+              "pic": "➡️",
+              "meaning": "A line of living things, each eaten by the next, that shows which way the energy goes.",
+              "uses": [
+                "Grass, rabbit, fox is a food chain.",
+                "The arrow shows the energy going to the eater."
+              ],
+              "lesson": 4,
+              "title": "Energy for Life",
+              "file": "energy-for-life.html"
+            },
+            {
               "w": "germ",
               "pic": "🦠",
               "meaning": "A tiny living thing that can cause disease.",
@@ -2856,6 +3093,18 @@
               "file": "habitats-and-survival.html"
             },
             {
+              "w": "joint",
+              "pic": "🤝",
+              "meaning": "A place where two bones meet and can move.",
+              "uses": [
+                "Your elbow is a joint.",
+                "Muscles pull the bones at a joint."
+              ],
+              "lesson": 1,
+              "title": "Bones and Muscles",
+              "file": "bones-and-muscles.html"
+            },
+            {
               "w": "key",
               "pic": "🔑",
               "meaning": "A set of yes-or-no questions that identifies a living thing.",
@@ -2866,6 +3115,18 @@
               "lesson": 2,
               "title": "Backbone or Not?",
               "file": "backbone-or-not.html"
+            },
+            {
+              "w": "lamp",
+              "pic": "💡",
+              "meaning": "The little light in a circuit. Scientists say lamp, not bulb.",
+              "uses": [
+                "The lamp lights when the circuit is complete.",
+                "Two lamps on one cell are dimmer than one."
+              ],
+              "lesson": 10,
+              "title": "Circuits and Switches",
+              "file": "circuits-and-switches.html"
             },
             {
               "w": "lava",
@@ -2890,6 +3151,18 @@
               "lesson": 9,
               "title": "Light and Seeing",
               "file": "light-and-seeing.html"
+            },
+            {
+              "w": "liquid",
+              "pic": "💧",
+              "meaning": "A substance whose particles touch but can slide past each other, so it flows.",
+              "uses": [
+                "Water is a liquid.",
+                "A liquid takes the shape of whatever holds it."
+              ],
+              "lesson": 6,
+              "title": "Particles",
+              "file": "particles.html"
             },
             {
               "w": "magma",
@@ -3024,6 +3297,18 @@
               "file": "staying-healthy.html"
             },
             {
+              "w": "orbit",
+              "pic": "🌎",
+              "meaning": "The path one thing takes as it goes round another.",
+              "uses": [
+                "The Earth's orbit round the Sun takes a year.",
+                "The Moon is in orbit round the Earth."
+              ],
+              "lesson": 12,
+              "title": "The Solar System",
+              "file": "the-solar-system.html"
+            },
+            {
               "w": "particle",
               "pic": "🟢",
               "meaning": "One of the tiny bits everything is made of, far too small to see.",
@@ -3102,6 +3387,18 @@
               "uses": [
                 "The mouse is the owl's prey.",
                 "Rabbits are prey to foxes."
+              ],
+              "lesson": 4,
+              "title": "Energy for Life",
+              "file": "energy-for-life.html"
+            },
+            {
+              "w": "producer",
+              "pic": "🌿",
+              "meaning": "A plant. It makes its own food from sunlight, so every food chain starts with one.",
+              "uses": [
+                "The grass is the producer.",
+                "A producer needs no other living thing to feed it."
               ],
               "lesson": 4,
               "title": "Energy for Life",
@@ -3252,6 +3549,18 @@
               "file": "the-solar-system.html"
             },
             {
+              "w": "series circuit",
+              "pic": "🔁",
+              "meaning": "A circuit where everything sits in one single loop, one after another.",
+              "uses": [
+                "In a series circuit the electricity has only one path.",
+                "Add a lamp to a series circuit and both go dimmer."
+              ],
+              "lesson": 10,
+              "title": "Circuits and Switches",
+              "file": "circuits-and-switches.html"
+            },
+            {
               "w": "skeleton",
               "pic": "🦴",
               "meaning": "All the bones of a body, joined together.",
@@ -3286,6 +3595,18 @@
               "lesson": 12,
               "title": "The Solar System",
               "file": "the-solar-system.html"
+            },
+            {
+              "w": "solid",
+              "pic": "🧱",
+              "meaning": "A substance whose particles are packed together and held in place, so it keeps its shape.",
+              "uses": [
+                "A brick is a solid.",
+                "The particles in a solid still vibrate on the spot."
+              ],
+              "lesson": 6,
+              "title": "Particles",
+              "file": "particles.html"
             },
             {
               "w": "sound",
@@ -3346,6 +3667,18 @@
               "lesson": 8,
               "title": "Energy Everywhere",
               "file": "energy-everywhere.html"
+            },
+            {
+              "w": "straight line",
+              "pic": "📐",
+              "meaning": "The only path light travels along. It never bends round a corner.",
+              "uses": [
+                "Light travels in straight lines.",
+                "A ray diagram draws light as straight lines."
+              ],
+              "lesson": 9,
+              "title": "Light and Seeing",
+              "file": "light-and-seeing.html"
             },
             {
               "w": "substance",
@@ -3456,6 +3789,18 @@
               "file": "energy-everywhere.html"
             },
             {
+              "w": "tsunami",
+              "pic": "🌊",
+              "meaning": "A huge wave caused by an earthquake or an eruption under the sea.",
+              "uses": [
+                "An earthquake under the sea can start a tsunami.",
+                "A tsunami is caused by the sea floor jolting."
+              ],
+              "lesson": 11,
+              "title": "Inside the Earth",
+              "file": "inside-the-earth.html"
+            },
+            {
               "w": "vaccine",
               "pic": "💉",
               "meaning": "A harmless piece of a germ, given to train the body to fight the real one.",
@@ -3502,6 +3847,18 @@
               "lesson": 6,
               "title": "Particles",
               "file": "particles.html"
+            },
+            {
+              "w": "volcano",
+              "pic": "🌋",
+              "meaning": "An opening in the Earth's crust where molten rock comes out.",
+              "uses": [
+                "A volcano lets magma out of the crust.",
+                "Most volcanoes are along the edges of the plates."
+              ],
+              "lesson": 11,
+              "title": "Inside the Earth",
+              "file": "inside-the-earth.html"
             }
           ],
           "teaches": [
@@ -4657,6 +5014,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -4702,9 +5073,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -4712,14 +5122,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();
@@ -5117,7 +5534,12 @@
             setTimeout(() => {
               if (item.answer === "yes") { it.style.transform = "translateX(-40px)"; SOUND.play("click", 0.6); }
               else SOUND.play("pop", 0.3);
-              setTimeout(() => { api.say(item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it."); r(); }, 500);
+              /* `said` lets a lesson supply its own sentence. Stage 1 needs it:
+                 Cambridge names "magnets stick to things" as a misconception to
+                 correct (attract is its own Stage 1 glossary word), and the
+                 fallback below is the wording Grade 3 already ships, so a grade
+                 that sets nothing rebuilds byte-identical. */
+              setTimeout(() => { api.say(item.said || (item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it.")); r(); }, 500);
             }, 950);
           }, 40);
         });
@@ -5342,8 +5764,20 @@
   function experiment(o) {
     const el = o.el, sim = SIMS[o.sim];
     let predicted = null, score = 0, lock = false;
+    /* The phases are NUMBERED FROM THE ONES THIS STEP ACTUALLY HAS, because two
+       of the five are optional: `plan` (Stage 1, the second clause of 1TWSp.01 -
+       "talk about how to find answers") and `conclude` (Stage 3, 3TWSa.03). A
+       step with neither reads 1 Predict, 2 Try it, 3 What happened?, 4 Did it
+       match? exactly as before, so Grades 2-4 rebuild byte-identical. The order
+       is Cambridge's own five-move method from the Learner's Book back matter:
+       question, predict, plan, observe, conclude. */
+    const PHASES = ["Predict"].concat(o.plan ? ["How to find out"] : [],
+                                      ["Try it", "What happened?", "Did it match?"],
+                                      o.conclude ? ["Conclude"] : []);
+    const phName = (n) => (PHASES.indexOf(n) + 1) + " · " + n;
+    const outOf = 2 + (o.plan ? 1 : 0) + (o.conclude ? 1 : 0);
     const stage = $(el.stage);
-    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">1 · Predict</span>' +
+    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">' + phName("Predict") + '</span>' +
       '<div class="sim" id="' + el.stage + 'sim"></div><div class="simrow" id="' + el.stage + 'ctl"></div></div>';
     const box = $(el.stage + "sim"), ctl = $(el.stage + "ctl"), ph = $(el.stage + "ph");
     /* data: the step's own data, so a sim can be given its own objects -
@@ -5355,29 +5789,39 @@
       $(el.ch).innerHTML = shuffle(opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '" data-t="' + esc(c.t) + '">' + c.t + "</button>").join("");
     }
     function askPredict() {
-      ph.textContent = "1 · Predict"; $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
+      ph.textContent = phName("Predict"); $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
       $(el.score).textContent = "What do you think will happen?";
     }
+    /* Cambridge's third move: talk about WHAT TO DO to find the answer. One
+       way is fair and the others change more than one thing at a time, which is
+       the Stage 1 fair-test idea the Teacher's Resource says children read as
+       "fair for the learners". */
+    function askPlan() {
+      phase = "plan";
+      ph.textContent = phName("How to find out"); $(el.ask).innerHTML = o.plan.ask; choices(o.plan.opts);
+      $(el.score).textContent = "How shall we find out?"; lock = false;
+      sayHere(o.finish, plain(o.plan.ask));
+    }
     function runIt() {
-      ph.textContent = "2 · Try it"; $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
+      ph.textContent = phName("Try it"); $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
       $(el.ch).innerHTML = ""; $(el.score).textContent = "Press the button and watch";
       sayHere(o.finish, plain(o.runAsk || "Now let us try it. Press the button and watch carefully."));
       sim.run(box, api).then(() => setTimeout(askHappened, 1800));
     }
     function askHappened() {
       phase = "happened";
-      ph.textContent = "3 · What happened?"; $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
+      ph.textContent = phName("What happened?"); $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
       $(el.score).textContent = "Say what you saw"; lock = false;
       sayHere(o.finish, plain(o.happened.ask));
     }
     function askConclude() {
       phase = "conclude";
-      ph.textContent = "5 · Conclude"; $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
+      ph.textContent = phName("Conclude"); $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
       $(el.score).textContent = "What does this tell us?"; lock = false;
       sayHere(o.finish, plain(o.conclude.ask));
     }
     function askMatched() {
-      ph.textContent = "4 · Did it match?";
+      ph.textContent = phName("Did it match?");
       $(el.ask).innerHTML = "You predicted: <b>" + esc(predicted.t) + "</b>. Did it match what happened?";
       $(el.ch).innerHTML = '<button type="button" class="choice text" data-m="1">Yes, it matched my prediction</button><button type="button" class="choice text" data-m="0">No, something different happened</button>';
       $(el.score).textContent = "Scientists always check"; lock = false;
@@ -5394,7 +5838,16 @@
         b.classList.add("right");
         $(el.fb).className = "fb"; $(el.fb).textContent = "Your prediction: " + predicted.t + ". Let us find out!";
         say("You predict: " + predicted.t + ". A prediction is a good guess before you try. Let us find out!");
+        if (o.plan) { phase = "plan"; setTimeout(() => { $(el.fb).textContent = ""; askPlan(); }, 2600); return; }
         phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 2600);
+      } else if (phase === "plan") {
+        const ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong"); else score++;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not quite. ") + o.plan.why;
+        say($(el.fb).textContent);
+        phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 3000);
       } else if (phase === "happened") {
         const ok = b.dataset.ok === "1";
         $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
@@ -5414,7 +5867,7 @@
            about the question. Without one, the step ends here as before. */
         if (o.conclude) { setTimeout(() => { $(el.fb).textContent = ""; askConclude(); }, 3200); return; }
         phase = "done";
-        reportScore(o.finish, score, 2);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3200);
       } else if (phase === "conclude") {
         const ok = b.dataset.ok === "1";
@@ -5423,7 +5876,7 @@
         $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Think about what you saw. ") + o.conclude.why;
         say($(el.fb).textContent);
         phase = "done";
-        reportScore(o.finish, score, 3);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3400);
       }
     });
@@ -5494,7 +5947,7 @@
   /* ---- record what happened in a simple table ----------------------- */
   function recordTable(o) {
     const el = o.el;
-    let row = 0, right = 0, lock = false;
+    let row = 0, right = 0, lock = false, q = 0, phase = "fill";
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec"><thead><tr><th>' + esc(o.columns[0]) + "</th><th>" + esc(o.columns[1]) + "</th></tr></thead><tbody>" +
         o.rows.map((r, k) => '<tr><td><span class="rowlab">' + picHtml(r.pic, "pic") + esc(r.label) + '</span></td><td><button type="button" class="cell' + (k === row ? " now" : "") + (r.filled ? " filled " + (r.ok ? "right" : "") : "") + '" data-k="' + k + '"' + (k !== row ? " disabled" : "") + ">" + (r.filled ? esc(r.filled) : (k === row ? "tap to fill in" : "…")) + "</button></td></tr>").join("") + "</tbody></table></div>";
@@ -5507,8 +5960,38 @@
       $(el.score).textContent = "Row " + (row + 1) + " of " + o.rows.length;
       sayHere(o.finish, plain(o.ask.replace("%s", r.label)));
     }
+    function askRead() {
+      phase = "read"; lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+      $(el.score).textContent = "Reading your table: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
+      if (phase === "read") {
+        lock = true;
+        const it = o.read[q], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (ok) right++; else b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Look at your table again. ") + it.why;
+        say($(el.fb).textContent);
+        q++;
+        setTimeout(() => {
+          $(el.fb).textContent = ""; $(el.fb).className = "fb";
+          if (q < o.read.length) { askRead(); return; }
+          $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+          const total = o.rows.length + o.read.length;
+          const line = "Your table is complete, and you read it. You got " + right + " of " + total + " first time. " + o.done;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+          reportScore(o.finish, right, total);
+          finish(o.finish, line);
+        }, 2800);
+        return;
+      }
       lock = true;
       const r = o.rows[row], ok = b.dataset.c === r.answer, chosen = o.choices.find((c) => c.id === b.dataset.c) || {};
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.c === r.answer) c.classList.add("right"); });
@@ -5521,11 +6004,15 @@
       setTimeout(() => {
         $(el.fb).textContent = ""; $(el.fb).className = "fb";
         if (row >= o.rows.length) {
+          /* Cambridge reads a table as well as filling one in, so the finished
+             table stays on screen while these run - see `read` in the header. */
+          if (o.read && o.read.length && q < o.read.length) { askRead(); return; }
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.ask).innerHTML = "Your table is complete.";
-          const line = "Your table is complete. You recorded " + right + " of " + o.rows.length + " first time. " + o.done;
+          const total = o.rows.length + ((o.read && o.read.length) || 0);
+          const line = "Your table is complete. You got " + right + " of " + total + " first time. " + o.done;
           $(el.fb).className = "fb good"; $(el.fb).textContent = line;
-          reportScore(o.finish, right, o.rows.length);
+          reportScore(o.finish, right, total);
           finish(o.finish, line);
         } else offer();
       }, 2600);
@@ -5780,7 +6267,13 @@
   function blockGraph(o) {
     const el = o.el, cols = o.columns, count = cols.map(() => 0);
     const maxV = Math.max.apply(null, cols.map((c) => c.value));
-    let asked = false, lock = false;
+    /* `read` is an optional LIST of further questions asked after `pattern`,
+       with the graph still on screen. Stage 2 wants it: 2TWSa.02 is "identify
+       simple patterns in results" and 2TWSa.03 is "present and INTERPRET
+       results using tables and block graphs", and one question per graph is
+       thin for an objective about interpreting. A step with no `read` behaves
+       exactly as before, so Grades 3-4 rebuild byte-identical. */
+    let asked = false, lock = false, q = 0, phase = "build", score = 0;
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small"><thead><tr><th>' + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
         cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + (o.unit ? " " + esc(o.unit) : "") + "</span></td></tr>").join("") + "</tbody></table>" +
@@ -5793,7 +6286,7 @@
       $(el.score).textContent = done + " of " + cols.length + " columns built";
     }
     function askPattern() {
-      asked = true;
+      asked = true; phase = "pattern";
       $(el.ask).innerHTML = o.pattern.ask;
       $(el.ch).classList.add("stack");
       $(el.ch).innerHTML = shuffle(o.pattern.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
@@ -5817,10 +6310,28 @@
       const ok = b.dataset.ok === "1";
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong");
-      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + o.pattern.why; say($(el.fb).textContent);
-      reportScore(o.finish, ok ? 1 : 0, 1);
-      setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 2800);
+      const src = phase === "read" ? o.read[q] : o.pattern;
+      if (ok) score++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + src.why; say($(el.fb).textContent);
+      const total = 1 + ((o.read && o.read.length) || 0);
+      if (phase === "read") q++;
+      const more = o.read && o.read.length && (phase === "pattern" ? 0 : q) < o.read.length;
+      setTimeout(() => {
+        if (more) { phase = "read"; askRead(); return; }
+        reportScore(o.finish, score, total);
+        $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done);
+      }, 2800);
     });
+    function askRead() {
+      lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.score).textContent = "Reading the graph: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     draw();
   }
 
@@ -7565,6 +8076,18 @@
   const restart = $("restart");
   if (restart) restart.addEventListener("click", () => location.reload());
 
+  /* Cambridge's "Look what I can do!" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
+
 
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Science words"], ["📏", "Straight lines"], ["<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"29\" y=\"47\" width=\"6\" height=\"14\" rx=\"2\" fill=\"#8C6A43\"/><ellipse cx=\"32\" cy=\"27\" rx=\"19\" ry=\"23\" fill=\"#8C6A43\"/><ellipse cx=\"32\" cy=\"27\" rx=\"15\" ry=\"19\" fill=\"#CFE8F5\"/><path d=\"M24 22 L32 12 M25 31 L38 15\" stroke=\"#fff\" stroke-width=\"3\" stroke-linecap=\"round\"/></svg>", "Mirror bounce"], ["👁️", "How we see"], ["✏️", "Ray diagram"], ["🗂️", "Source sort"], ["📜", "Seeing long ago"], ["✅", "Light check"], ["🎮", "I played the games"], ["🏠", "Science at home"], ["⭐", "Star scientist"], ["🌍", "Science world"], ["🗂️", "My resources"]];
 
@@ -8291,15 +8814,3 @@
     if (added) report(lastAt);
   };
 </script>
-
-<style>/* ehel-narration-caption - the spoken explain, on screen one sentence at a time */
-  .narr { display: none; margin: 10px 0 14px; padding: 12px 16px; border: 1px solid var(--line);
-    border-left: 4px solid var(--teal); border-radius: 12px; background: var(--card);
-    color: var(--ink); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.45;
-    min-height: 3.1em; box-sizing: border-box; }
-  .narr.on { display: block; }
-  .narr .narr-k { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
-    color: var(--muted); font-weight: 700; margin: 0 0 4px; }
-  @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
-  @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
-</style>

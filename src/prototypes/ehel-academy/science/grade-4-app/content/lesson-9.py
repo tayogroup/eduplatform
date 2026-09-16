@@ -6,7 +6,7 @@ diagrams; 4Ps.02 light reflects off surfaces; 4Ps.03 how we see things that
 are not light sources; 4TWSm.03 draw a ray diagram (the first demo); with 4TWSp.03, 4TWSa.01,
 4TWSa.03, 4TWSc.01 and 4SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 RAY = [
     {"id": "source", "label": "light source", "say": "The light source: the torch. Every ray starts here."},
@@ -47,8 +47,11 @@ LESSON = {
              {"sim": "rayMirror",
               "predict": {"ask": "When the ray hits the mirror, it will...",
                           "opts": [opt("bounce off in a new straight line", True), opt("stop dead", False), opt("bend round in a curve", False)]},
+              "plan": {"ask": "How shall we find out where the reflected ray goes? Which way is fair?",
+                        "opts": [opt("Keep the mirror still and shine the ray in at the same angle each time", True), opt("Move the mirror and the torch together", False), opt("Shine it in the dark and remember where it went", False)],
+                        "why": "One thing at a time, and mark where the ray lands rather than trusting your memory."},
               "runAsk": "Turn the mirror until the ray reaches the eye. Then put the book in the way.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to the <b>ray</b>?",
                            "opts": [opt("The ray bounced off the mirror in a straight line and, at the right angle, reached the eye; the book blocked it", True), opt("The ray stopped dead when it hit the mirror", False), opt("The ray curved round the book and still reached the eye", False)],
                            "why": "Light reflects off a mirror in a straight line. When that line reaches the eye, you see the torch in the mirror. Block the line and you cannot see the torch in the mirror, though you can still see the book, by the light it reflects."},
               "conclude": {"ask": "How do you see the torch in the mirror?",
@@ -136,8 +139,11 @@ LESSON = {
                  q("How do you see a book?", "\U0001F4D5", "light reflects off it into your eye", ["your eye sends a beam to it", "the book glows"], "Reflected light arriving at the eye."),
                  q("What does the arrow on a ray show?", "➡️", "which way the light travels", ["how bright it is", "the colour"], "Direction, away from the source."),
                  q("Why can you see nothing in a totally dark room?", "\U0001F311", "no light reaches your eye", ["your eyes are closed", "the room is too big"], "No light in, no seeing."),
+                 q("Can you see your face in still, clear water?", "\U0001F4A7", "Yes - light reflects off far more things than mirrors", ["No, only a mirror reflects light", "No, because water is see-through"],
+                   "A window, a polished spoon and still water all reflect light. A mirror is simply the best at it."),
              ]},
-             "You know how light travels and how you see."),
+             "You know how light travels and how you see.",
+             mis=["5.3-m1", "5.1-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Ps.01", "4Ps.02", "4Ps.03", "4TWSm.03", "4SIC.01"],
              "Time to show what you know. Tap the answer.",
@@ -158,8 +164,21 @@ LESSON = {
                  q("A mirror looks bright in a sunny room. How could you test whether it is a light source?", "\U0001F914", "look for it in a totally dark room", ["shine a torch on it", "look at it in the sunshine"], "A source would glow in the dark. A mirror only reflects, so in the dark you cannot see it."),
                  q("White paper and black paper lie side by side in a dim room. Which is easier to see, and why?", "\U0001F4C4", "the white paper, because it reflects more light into your eye", ["the black paper, because it makes its own light", "both the same, because neither is a light source"], "Neither makes light. White reflects more of it, so more reaches your eye."),
                  q("You shine a torch at a mirror. What happens to the beam if you tilt the mirror?", "\U0001F526", "it bounces off in a new direction, still in a straight line", ["it bends round in a curve", "it stops being light"], "A mirror reflects light. Tilt it and the straight beam goes a new way."),
-             ]},
-             "That is the whole lesson finished. You know how you see."),
+             ],
+              "support": [
+                 q("Does light travel in straight lines?", "\U0001F526", "Yes", ["No, it bends round corners"],
+                   "Always straight. That is why there are shadows."),
+                 q("Can you see in a room with no light at all?", "\U0001F311", "No", ["Yes, after a while"],
+                   "Seeing needs light reaching your eye."),
+              ],
+              "extension": [
+                 q("You can see a torch beam in a dusty room, but not in clean air. Why?", "\U0001F4A8", "the light bounces off the dust into your eye", ["dust makes the light brighter", "clean air blocks the light"],
+                   "You only ever see light that enters your eye. In clean air the beam goes straight past you; dust scatters some of it sideways, to you."),
+                 q("A mirror gives a clear picture and a white wall does not, though both reflect. Why?", "\U0001FA9E", "the mirror is smooth, so the light stays in order", ["the wall reflects no light at all", "the mirror makes its own light"],
+                   "A rough surface scatters the light in all directions, so the picture is broken up. A smooth one keeps the rays in the same arrangement."),
+              ]},
+             "That is the whole lesson finished. You know how you see.",
+             mis=["5.2-m1"]),
     ],
 }
 
@@ -203,6 +222,18 @@ LESSON["words"] = [
          ["A pale surface reflects most of the light that hits it.", "A shiny surface reflects neatly."]),
     word("evidence", "\U0001F52C", "Facts from enquiry that show whether an idea is right.",
          ["Evidence changed the idea of seeing.", "Scientists look for evidence."]),
+    word("straight line", "\U0001F4D0", "The only path light travels along. It never bends round a corner.",
+         ["Light travels in straight lines.", "A ray diagram draws light as straight lines."]),
+]
+
+LESSON["cando"] = [
+    cando("I know that light travels in straight lines, and I can draw that as a ray diagram.", "4Ps.01"),
+    cando("I know that light reflects off surfaces, not only off mirrors.", "4Ps.02"),
+    cando("I can explain how I see something that makes no light of its own.", "4Ps.03"),
+    cando("I can sort things into light sources and things that only reflect.", "4TWSc.01"),
+    cando("I can draw a diagram of something real.", "4TWSm.03"),
+    cando("I can say how people's ideas about light have changed.", "4SIC.01"),
+    cando("I can make a prediction and see whether I was right.", "4TWSa.01"),
 ]
 
 LESSON["home"] = [

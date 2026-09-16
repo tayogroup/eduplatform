@@ -12,12 +12,9 @@
         "Pre-A1",
         "A1",
         "A2",
-        "B1",
-        "B2",
-        "C1",
-        "C2"
+        "B1"
       ],
-      "structure": "Level 1 (Stages 1-3) runs Pre-A1 to A1 and Level 2 (Stages 4-6) A1 to A2, following the owner's planning note of 2026-09-11. Both were rebuilt on that model: Level 1 on 2026-09-11 and Level 2 on 2026-09-12. Level 2's three bands are A1 extending towards A2 (Stage 4), then A2 developing and A2 consolidating - so Stage 4 claims no more than A1, because the level starts where Level 1 ends."
+      "structure": "Three levels, and the course ENDS at B1. Level 1 (0057 Stages 1-3) runs Pre-A1 to A1, Level 2 (0057 Stages 4-6) A1 to A2, and Level 3 (0876 Stages 7-9) A2 to B1. Each opens where the one below it exits, which is the property the 2026-09-12 rebuild existed to restore — before it, Level 1 exited at A1 and Level 2 opened at B1, so nothing taught the two levels between them. See whyTheCourseStopsAtB1."
     },
     "cambridge": {
       "name": "Cambridge Primary English as a Second Language 0057; Cambridge Primary English 0058; Cambridge Lower Secondary English 0861",
@@ -3817,38 +3814,10 @@
       "blockedBy": "Needs src/curriculum/cambridge-english-0876.json, which does not exist. 0876 is Cambridge Lower Secondary English as a Second Language, Stages 7-9 — the sibling of the 0057 that Levels 1 and 2 are built on, and the framework this level's contract has to cite. The extractor is tools/extract-cambridge-esl-framework.py, which produced 0057 from the official syllabus PDF and writes the same JSON shape; it needs the 0876 PDF. 0861 is in the repo and is NOT a substitute: it is Lower Secondary English as a first language, which is why 0057 was chosen over 0058 for Levels 1 and 2. (The earlier note here said Level 3 was blocked because grades 9-12 are not in the repository. That was true of the B2 course this entry used to describe, and stopped being the reason when Level 3 was reassigned to A2-B1.)",
       "units": [],
       "source": "inputs/ehel-english-intensive-source/archive/level-2-b1-2026-08 — the B1 to B1+ course that was Level 2 until 2026-09-12: 20 authored units, 571 words, reviewed and signed off. Benchmark for the rebuild is Interchange 3 (B1 to B1+), whose syllabus matches it closely: relative clauses, gerund phrases as subjects, the past perfect, indirect requests, participles as adjectives.",
-      "note": "Correcting this entry leaves a NEW gap above it, of the same kind: Level 3 would exit at B1 and Level 4 opens at C1, so nothing teaches B1 to B2. Levels 4 and 5 are untouched here because only Level 3 was agreed (2026-09-16); they need the same look."
-    },
-    {
-      "number": 4,
-      "id": "l4",
-      "label": "Level 4 — Advanced",
-      "cefr": [
-        "C1"
-      ],
-      "cefrName": "Advanced",
-      "status": "Planned — no source material identified",
-      "sourceGrades": [],
-      "exitDescriptor": "Can use English flexibly for complex, demanding purposes and grasp implicit meaning in long, involved texts. Expected by many postgraduate courses and by roles built on persuasion or writing.",
-      "blockedBy": "C1 sits above the school curriculum this course compresses. Grades 9-12 will not reach it on their own — Level 4 needs its own source material (academic writing, extended argument, register control), which does not exist here and was not part of the grade 1-12 plan.",
-      "units": []
-    },
-    {
-      "number": 5,
-      "id": "l5",
-      "label": "Level 5 — Proficient",
-      "cefr": [
-        "C2"
-      ],
-      "cefrName": "Proficient",
-      "status": "Planned — confirm demand before building",
-      "sourceGrades": [],
-      "exitDescriptor": "Can understand almost everything read or heard and express fine shades of meaning precisely, at near-native command.",
-      "blockedBy": "Needs its own source material, as Level 4 does.",
-      "note": "Worth a commercial decision before it is built. C2 is rarely set as a minimum requirement by anyone — it marks the top of the scale rather than an entry point — so a five-level course may sell on completeness while almost nobody enrols in Level 5. Levels 2 and 3 (B1 and B2) are where the demand sits.",
-      "units": []
+      "note": "This is the LAST level. Levels 4 (C1) and 5 (C2) were dropped on 2026-09-16 — see whyTheCourseStopsAtB1 — so nothing sits above this one and there is no gap above it to leave open."
     }
   ],
   "teachingLanguage": "English. The course is monolingual: it explains English in English, at a level the learner can already read, so it works for a class with no shared first language.",
-  "selfTeaching": "The course must be completable with no teacher present. Every exercise carries a learner-facing answer key, every task that would need a partner has a solo alternative, every practice is preceded by a worked example, and the learner diagnoses their own errors rather than waiting to be corrected. A teacher, where one exists, is an accelerator and never a dependency."
+  "selfTeaching": "The course must be completable with no teacher present. Every exercise carries a learner-facing answer key, every task that would need a partner has a solo alternative, every practice is preceded by a worked example, and the learner diagnoses their own errors rather than waiting to be corrected. A teacher, where one exists, is an accelerator and never a dependency.",
+  "whyTheCourseStopsAtB1": "Owner, 2026-09-16. Levels 4 (C1) and 5 (C2) were planned and are now dropped, for two reasons that point the same way.\n\nTHE DESIGN STOPS FIRST. This course's contract is that every Cambridge objective of a level's stages is placed in exactly one unit and cited by an outcome, and the build fails a unit that does not. That needs a per-stage objective framework. Cambridge's ESL frameworks in that shape are Primary 0057 (Stages 1-6) and Lower Secondary 0876 (Stages 7-9), and they stop there: every framework file in src/curriculum stops at stage 9. Above it the Cambridge ESL route is IGCSE, a qualification syllabus rather than per-stage objectives, so a Level 4 could not be built the way Levels 1 to 3 are. It would need a different framework or none, and a level with no contract is the one thing this plan is designed to prevent.\n\nTHE DEMAND IS LOWER, and this was already written down. Level 5's own note said C2 is rarely set as a minimum requirement by anyone — it marks the top of the scale rather than an entry point — so a five-level course may sell on completeness while almost nobody enrols in the top level. That note then named 'Levels 2 and 3 (B1 and B2)' as where the demand sits, which stopped being true when the 2026-09-12 rebuild renumbered the ladder. Read against the ladder as it now stands, the same argument says the demand sits at Level 3 — which is exactly the level that is built, reviewed and waiting on one missing framework file.\n\nA learner who needs B2 or above is past what this course teaches, and is better served by being told so than by an empty level in the list."
 }

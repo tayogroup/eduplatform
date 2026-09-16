@@ -471,7 +471,26 @@ function itemsForUnit(unit, grade) {
       const id = `${r.readingId}${revision}`;
       return {
         id, ref: r, title: r.title,
-        text: narration(r.passageScript),
+        // `narrationScript` is what the VOICE reads where it differs from what
+        // the page SHOWS -- the same separation speechSpelling gives a
+        // dictionary word, for the same reason: make the voice say the right
+        // thing without changing the text a child is looking at.
+        //
+        // It exists for STRUCTURED non-fiction. narration() collapses every run
+        // of whitespace to one space, which is right for prose because a story's
+        // paragraphs all end in a full stop, and wrong for a text whose lines
+        // are headings, labels or chart rows. Measured on the Grade 1 clips
+        // recorded 2026-09-16: "door - you come in here" + "chair - you sit on
+        // this" came back as "Door, you come in here, chair. You sit on this
+        // book." -- the labels shifted by one, so a child heard "you sit on this
+        // book" and "you read this pencil". The contents page paired the school
+        // with page two. The audio contradicted the page.
+        //
+        // Only readings that set it are affected, and no reading did before
+        // Grade 1's ten non-fiction texts, so every existing clip's fingerprint
+        // is untouched. audit-ehel-english-sentence-audio.py prefers the same
+        // field, or it would compare the clip against the wrong text.
+        text: narration(r.narrationScript || r.passageScript),
         source: `./${dir}/${id}.mp3`,
         output: path.join(ENGLISH, dir, `${id}.mp3`),
       };

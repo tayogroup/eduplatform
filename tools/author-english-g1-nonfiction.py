@@ -686,6 +686,47 @@ def orphaned_headings(script, per_page=4):
     return bad
 
 
+ENDS_A_SENTENCE = (".", "!", "?", '"', "”", ":", ";", ",")
+
+
+def narration_script(passage):
+    """What the VOICE should read, where that differs from what the page shows.
+
+    narration() in generate-ehel-english-audio.js collapses every run of
+    whitespace to a single space. That is right for a story, whose paragraphs all
+    end in a full stop, and wrong for these ten: their lines are headings,
+    labels, chart rows and contents entries, and none of them ends in
+    punctuation, so the flattened script runs them together.
+
+    Measured on the first recording of these clips (2026-09-16), by transcribing
+    what came back:
+
+        page:  door - you come in here / chair - you sit on this / book - ...
+        heard: "Door, you come in here, chair. You sit on this book. You read
+                this pencil."
+
+    The labels had shifted by one, so a child heard "you sit on this book" -- the
+    exact opposite of the lesson, which is that a label names ONE thing. The
+    contents page paired the school with page two. The audio contradicted the
+    page, and the clips were word-perfect against their script: the script itself
+    was the defect.
+
+    Two rules, applied to the SPOKEN copy only:
+
+      - leader dots become a comma. "The shop ....... page 2" is a visual device
+        for the eye to travel along; read aloud it wants a pause, not seven dots.
+      - a paragraph that does not already end a sentence gains a full stop, so
+        the flattening leaves a boundary where the page had a line break.
+    """
+    out = []
+    for para in paragraphs(passage):
+        para = re.sub(r"\s*\.{3,}\s*", ", ", para)
+        if not para.endswith(ENDS_A_SENTENCE):
+            para += "."
+        out.append(para)
+    return "\n\n".join(out)
+
+
 def load(path):
     with io.open(path, encoding="utf-8") as fh:
         return json.load(fh)
@@ -750,6 +791,10 @@ def build(spec, unit):
         "theme": "non-fiction text types and their features",
         "setting": "Home, online lesson or Grade 1 classroom",
         "passageScript": spec["passage"],
+        # What the page shows and what the voice reads are not the same text
+        # here -- see narration_script(). The generator, the transcription audit
+        # and the integrity check all prefer this field where a reading sets one.
+        "narrationScript": narration_script(spec["passage"]),
         "audioRequired": True,
         # available:false is this course's recorded state for "narration is
         # owed". source_of() returns "" for it, so nothing plays and nothing is
@@ -854,10 +899,35 @@ def build(spec, unit):
 def main(argv):
     dry = "--dry" in argv
     report = "--report" in argv
+    fix_narration = "--fix-narration" in argv
     for a in argv[1:]:
-        if a not in ("--dry", "--report"):
+        if a not in ("--dry", "--report", "--fix-narration"):
             sys.stderr.write("REFUSED: unknown argument %r\n" % a)
             return 2
+
+    if fix_narration:
+        # Bring already-applied units up to date with narration_script(). The
+        # ten readings were authored, and recorded, before the field existed.
+        changed = 0
+        for spec in TEXTS:
+            path = unit_path(spec["unit"])
+            unit = load(path)
+            reading = next((r for r in unit["readings"] if r.get("title") == spec["title"]), None)
+            if not reading:
+                sys.stderr.write("REFUSED: unit %d has no reading titled %r\n"
+                                 % (spec["unit"], spec["title"]))
+                return 1
+            want = narration_script(reading["passageScript"])
+            if reading.get("narrationScript") == want:
+                continue
+            reading["narrationScript"] = want
+            if not dry:
+                save(path, unit)
+            changed += 1
+            print("unit %-2d %s" % (spec["unit"], reading["readingId"]))
+        print("\n%d reading(s) %s a narrationScript."
+              % (changed, "would gain" if dry else "gained"))
+        return 0
 
     if report:
         owed = []

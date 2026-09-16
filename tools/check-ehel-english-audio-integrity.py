@@ -208,7 +208,12 @@ def main():
         for filename in sorted(os.listdir(units)):
             unit = json.load(open(os.path.join(units, filename), encoding='utf-8'))
             for r in unit.get('readings', []):
-                account(grade, 'readings', r.get('audio'), r.get('passageScript'),
+                # narrationScript where a reading sets one -- the duration check
+                # compares against the text that was actually SENT, not the text
+                # on the page. See the readings branch of
+                # generate-ehel-english-audio.js.
+                account(grade, 'readings', r.get('audio'),
+                        r.get('narrationScript') or r.get('passageScript'),
                         f"g{grade} {r['readingId']}")
             for x in unit.get('grammar', []):
                 account(grade, 'grammar', x.get('audio'),

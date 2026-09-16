@@ -467,7 +467,16 @@ def clips_for_grade(grade: int, categories=("sentences",)):
             if "readings" in wanted:
                 for item in unit.get("readings", []):
                     if _live(item.get("audio")):
-                        yield ("readings", name, item["readingId"], item.get("passageScript"), _mp3(item["audio"]))
+                        # narrationScript is what the generator actually sent where a
+                        # reading sets it (structured non-fiction: headings, labels,
+                        # chart rows, contents lines -- see the readings branch of
+                        # generate-ehel-english-audio.js). Comparing such a clip with
+                        # passageScript would report every one of them as saying a
+                        # different sentence, which is this tool reporting on text
+                        # nobody recorded.
+                        yield ("readings", name, item["readingId"],
+                               item.get("narrationScript") or item.get("passageScript"),
+                               _mp3(item["audio"]))
             for item in unit.get("grammar", []):
                 if "grammar" in wanted and _live(item.get("audio")):
                     yield ("grammar", name, item["grammarId"],

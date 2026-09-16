@@ -68,6 +68,10 @@ STEPS = [
     (T + "self-host-fonts.py", ["--app", "g1v2", "--write"]),
     ("gate-and-explain-check.py", ["--write"]),
     ("add-warmup.py", ["--write"]),
+    # the warm-up's second question, drawn from lessons already finished. Straight
+    # after the warm-up, whose runner it appends itself to, and after
+    # wire-progress.py above, whose `const UNIT` and hydrate block it needs.
+    ("add-spiral-warmup.py", ["--write"]),
     ("add-second-steps.py", ["--write"]),
     # "Spot the mistake" - critiquing and improving, from the Cambridge Stage 1
     # books. After the second steps because it appends one more teaching step and

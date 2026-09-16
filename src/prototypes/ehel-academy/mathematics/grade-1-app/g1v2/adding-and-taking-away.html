@@ -2032,6 +2032,75 @@
       fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
     });
   })();
+
+  /* ---- ehel-spiral: the warm-up's second question, drawn from lessons already
+     FINISHED - see add-spiral-warmup.py. Cambridge's volume comes from the
+     spiral, and nothing here re-asked an earlier lesson. Like the warm-up above
+     it: not a step, no sticker, no dot, no score. */
+  const SPIRAL = [
+    { from: "l01", q: "Which number is odd: 6, 7 or 10?", opts: [7, 6, 10], a: 7, why: "7 things cannot all go into pairs - one is always left over." },
+    { from: "l01", q: "Which is the biggest: 9, 12 or 11?", opts: [12, 9, 11], a: 12, why: "Count them in order: 9, 11, 12. The biggest comes last." },
+    { from: "l01", q: "You have 5 counters and take all 5 away. How many are left?", opts: [0, 5, 1], a: 0, why: "None left is zero." },
+    { from: "l02", q: "What goes with 6 to make 10?", opts: [4, 3, 16], a: 4, why: "6 and 4 make 10. That is a pair that makes 10." },
+    { from: "l02", q: "Double 5 is...", opts: [10, 7, 15], a: 10, why: "Double means the same number twice: 5 and 5 make 10." },
+    { from: "l02", q: "8 take away 3 is...", opts: [5, 11, 4], a: 5, why: "Count back from 8: 7, 6, 5." },
+    { from: "l03", q: "Half of 8 is...", opts: [4, 2, 16], a: 4, why: "8 split into two equal parts is 4 and 4." },
+    { from: "l03", q: "Two halves make...", opts: ["a whole", "a half", "two wholes"], a: "a whole", why: "Put the two equal parts back together and you have the whole thing again." },
+    { from: "l03", q: "Share 6 sweets fairly between 2 people. How many each?", opts: [3, 6, 2], a: 3, why: "6 shared into two equal parts is 3 each." },
+    { from: "l04", q: "Count in twos: 4, 6, 8. What comes next?", opts: [10, 9, 12], a: 10, why: "Counting in twos goes up by 2 each time, so 8 and 2 more is 10." },
+    { from: "l04", q: "3 and how many more make 7?", opts: [4, 3, 10], a: 4, why: "3 and 4 make 7." },
+    { from: "l04", q: "Count back: 9, 8, 7. What comes next?", opts: [6, 8, 10], a: 6, why: "Counting back goes down by 1 each time." },
+    { from: "l05", q: "How many sides has a square?", opts: [4, 3, 5], a: 4, why: "A square has 4 straight sides, all the same length." },
+    { from: "l05", q: "Which shape has no corners?", opts: ["circle", "square", "triangle"], a: "circle", why: "A circle is one curved line all the way round, so it has no corners." },
+    { from: "l05", q: "Which holds more: a jug or a cup?", opts: ["the jug", "the cup", "the same"], a: "the jug", why: "You can pour a cup into a jug and there is still room." },
+    { from: "l06", q: "What day comes after Monday?", opts: ["Tuesday", "Sunday", "Friday"], a: "Tuesday", why: "The week goes Monday, Tuesday, Wednesday." },
+    { from: "l06", q: "How many months are in a year?", opts: [12, 7, 10], a: 12, why: "There are 12 months, from January to December." },
+    { from: "l06", q: "The short hand is on 3 and the long hand is on 12. What time is it?", opts: ["3 o'clock", "12 o'clock", "half past 3"], a: "3 o'clock", why: "The short hand tells you the hour, and the long hand on 12 means o'clock." },
+    { from: "l07", q: "4 people said mango and 2 said banana. Which had more?", opts: ["mango", "banana", "the same"], a: "mango", why: "4 is more than 2, so mango had more." },
+    { from: "l07", q: "One hoop is for red things. One hoop is for squares. Where does a red square go?", opts: ["in both hoops", "in the red hoop only", "outside both hoops"], a: "in both hoops", why: "A red square is red and it is a square, so it belongs where the two hoops cross." },
+    { from: "l07", q: "A block graph shows 5 blocks for cats and 3 for dogs. How many more cats?", opts: [2, 8, 3], a: 2, why: "5 take away 3 is 2, so there are 2 more cats." }
+  ];
+  const SPIRAL_TITLES = { l01: "Counting to Twenty", l02: "Adding and Taking Away", l03: "Halves and Wholes", l04: "What Comes Next", l05: "Shapes and Sizes", l06: "Days, Months and Clocks", l07: "Asking and Sorting" };
+  /* Called from the page's hydrate block with the whole course record. Until it
+     answers there is no spiral question, which is also what a child on their
+     first lesson correctly sees. */
+  window.__ehelSpiral = function (units, here) {
+    const w = document.getElementById("ehWarm");
+    if (!w || w.querySelector(".eh-spiral")) return;          /* once only */
+    const pool = SPIRAL.filter(function (it) {
+      const u = units && units[it.from];
+      return it.from !== here && u && u.completed === true;
+    });
+    if (!pool.length) return;
+    const it = pool[Math.floor(Math.random() * pool.length)];
+    const box = document.createElement("div");
+    box.className = "eh-spiral";
+    box.innerHTML = '<p class="eh-warm-h">And one from before</p>'
+      + '<div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button>'
+      + '<span class="eh-spiral-q"></span></div>'
+      + '<div class="choices eh-spiral-ch"></div>'
+      + '<p class="fb" role="status" aria-live="polite"></p>';
+    box.querySelector(".eh-spiral-q").textContent = it.q;
+    /* bound here, not by the page-wide .speak wiring, which ran at load */
+    box.querySelector(".speak").addEventListener("click", function () { say(it.q); });
+    const ch = box.querySelector(".eh-spiral-ch"), fb = box.querySelector(".fb");
+    ch.innerHTML = shuffle(it.opts.slice()).map(function (o) {
+      return '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>";
+    }).join("");
+    ch.addEventListener("click", function (e) {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(it.a);
+      ch.querySelectorAll(".choice").forEach(function (c) {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(it.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + it.why
+        + " That was in " + SPIRAL_TITLES[it.from] + ".";
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+    w.appendChild(box);
+  };
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   /* ehel-always-true: the claim under test, kept on screen while it is tested */
   const atClaim = (who, idea) => '<div class="at-claim"><p class="at-k">The idea we are testing</p>' +
@@ -3564,6 +3633,10 @@
     try {
       const doc = await ws.hydrate();
       const u = doc && doc.units && doc.units[UNIT];
+      /* ehel-spiral: the whole record, not this unit - a child at the top of
+         lesson 3 with lessons 1 and 2 behind them has no `u` yet. */
+      try { if (window.__ehelSpiral) window.__ehelSpiral(doc && doc.units, UNIT); }
+      catch (_) { /* never break the lesson */ }
       if (!u) return;
       if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
       if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
@@ -3890,4 +3963,9 @@
   .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
   .kit[open] > summary::after { content: "\2013"; }
   .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-spiral - see add-spiral-warmup.py */
+  .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
+  .eh-spiral .eh-spiral-ch { margin-top: 12px; }
 </style>

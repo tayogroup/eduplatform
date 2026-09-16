@@ -52,15 +52,30 @@ for f in FILES:
     syn = "ok" if not syn_fail else "PARSE FAIL (%s)" % "; ".join(syn_fail)[:120]
 
     # 2 badges run 1..n with no gaps
-    badges = [int(x) for x in re.findall(r'<span class="n">(\d+)</span>', s)]
-    n_teach = len(slides) - 2      # the check page and sticker page carry no badge
-    seq = "ok" if badges == list(range(1, n_teach + 1)) else "BADGES %s want 1..%d" % (badges[:9], n_teach)
+    #
+    # The teaching count is COUNTED from the numbered badges, not derived as
+    # "slides minus the two at the end". It was the latter, and add-reasoning-step.py
+    # (2026-09-12) put a third unnumbered slide - How do you know?, badge "?" -
+    # between the check and the sticker shelf, so this read every lesson as one
+    # teaching step short and all seven have failed here ever since. A count that
+    # has to be told how many slides do not count goes stale the next time one is
+    # added; the badge itself says which kind a slide is.
+    all_badges = re.findall(r'<span class="n">(.*?)</span>', s)
+    badges = [int(x) for x in all_badges if x.isdigit()]
+    n_teach = len(badges)
+    glyphs = [x for x in all_badges if not x.isdigit()]
+    seq = "ok" if badges == list(range(1, n_teach + 1)) and len(all_badges) == len(slides) \
+        else "BADGES %s want 1..%d, %d badges for %d slides (%s)" % (
+            badges[:9], n_teach, len(all_badges), len(slides), " ".join(glyphs))
 
     # 3 finish() indices used
     fins = sorted(set(int(x) for x in re.findall(r"finish\((\d+)", js)))
     # done[] spans the teaching slides plus the check page; blocks legitimately
     # differ in whether they call finish() with a literal, so only the range binds
-    lim = len(slides) - 2
+    # 0..n_teach-1 are the teaching slides and n_teach is the check. The reasoning
+    # step finds its own slot at run time (indexOf on .slide), so it contributes no
+    # literal here and must not widen the range.
+    lim = n_teach
     fin = "ok" if (fins and min(fins) >= 0 and max(fins) <= lim) else "finish=%s out of 0..%d" % (fins, lim)
 
     # 4 stickers parallel to done[]

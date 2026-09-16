@@ -683,6 +683,26 @@
       <div class="bigbtns"><button type="button" class="big small teal" id="ss6nx" hidden>Next question</button></div>
       <p class="score" id="ss6sc"></p>
     </section>
+<!-- 7  1Gt.01  Spot the mistake -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Today you are the checker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Somebody has done some maths and told you what they think.</s><s>Sometimes they are right and sometimes they have slipped.</s><s>Do it yourself first, then look at what they said.</s><s>If it does not match, work out WHICH part went wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often tap the first answer that sounds like a mistake.</s><s>Look again before you tap.</s><s>And some of these are right.</s><s>Saying right when it is right is just as clever as finding a mistake.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read what they say, work it out yourself, and tap what went wrong.</s></mstts:express-as>' data-say="Read what each child says. Work it out yourself. Then tap what went wrong.">
+      <div class="slide-head"><span class="n">7</span><h2>Spot the mistake</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sm7say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
+      <div class="stage" id="sm7st"></div>
+      <div class="choices" id="sm7ch"></div>
+      <p class="fb" id="sm7fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="sm7nx" hidden>Next question</button></div>
+      <p class="score" id="sm7sc"></p>
+    </section>
+<!-- 8  1Gt.02  Story problems -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A story problem is maths hiding inside a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to the whole story first, right to the end.</s><s>Then ask yourself one question.</s><s>Am I putting things together, or taking them away?</s><s>Putting together means adding.</s><s>Taking away, or finding how many more, means subtracting.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often grab the two numbers and add them, whatever the story said.</s><s>That is why the story comes first and the numbers come second.</s><s>Say the story back to yourself in your own words before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So listen to the story, decide what is happening, then tap your answer.</s></mstts:express-as>' data-say="Listen to the whole story. Work out the answer. Then tap it.">
+      <div class="slide-head"><span class="n">8</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wp8say">Read the story, work out the answer, then tap it.</span></div>
+      <div class="stage" id="wp8st"></div>
+      <div class="choices" id="wp8ch"></div>
+      <p class="fb" id="wp8fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="wp8nx" hidden>Next story</button></div>
+      <p class="score" id="wp8sc"></p>
+    </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows a shape, count the sides or ask whether you could hold it.</s><s>If it asks about size, compare the two things.</s><s>If it shows a clock, find the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayck">Tap the answer.</span></div>
@@ -703,12 +723,13 @@
       </div>
     </section>
 
-<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s><s>Then tell me which parts you can do.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned. Then tell me which parts you can do.">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite"></p>
+        <div class="sc-wrap" id="selfcheck"></div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Start again</button></div>
       </div>
     </section>
@@ -1666,6 +1687,9 @@
     });
   })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+  /* ehel-spot-the-mistake: the claim being judged, in the mouth of the child who made it */
+  const smSays = (who, what) => '<div class="sm-bubble"><p class="sm-what">' + what +
+    '</p><p class="sm-who">' + who + '</p></div>';
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
      it still draws the next question, so the step is ready when they come
@@ -2167,6 +2191,10 @@
     { q: "Which is the <b>shortest</b>?", pic: "", opts: ["a second", "an hour", "a week"], a: "a second", why: "A second is the shortest of the three. A week is the longest." },
     { q: "The long hand is on <b>12</b> and the short hand is on <b>3</b>. What time is it?", pic: "", opts: ["3 o'clock", "half past 3", "12 o'clock"], a: "3 o'clock", why: "The long hand on 12 means o'clock, and the short hand says which hour." },
     { q: "The long hand is on <b>6</b> and the short hand is just past <b>4</b>. What time is it?", pic: "", opts: ["half past 4", "6 o'clock", "4 o'clock"], a: "half past 4", why: "The long hand on 6 means half past, and the short hand is just past 4." },
+    /* ehel-days-check-8 - see grade-1-app/lengthen-days-check.py */
+    { q: "Which <b>month</b> comes after March?", pic: "", opts: ["April", "February", "May"], a: "April", why: "The months go January, February, March, April. April comes straight after March." },
+    { q: "Which day comes <b>before</b> Wednesday?", pic: "", opts: ["Tuesday", "Thursday", "Monday"], a: "Tuesday", why: "The week goes Monday, Tuesday, Wednesday. Tuesday is the day before Wednesday." },
+    { q: "Which is <b>longer</b>: a minute or an hour?", pic: "", opts: ["an hour", "a minute", "they are the same"], a: "an hour", why: "An hour is much longer than a minute. Sixty minutes make one hour." },
   ];
   let qc = 0, rightc = 0, lockc = false;
   function askCheck() {
@@ -2195,7 +2223,7 @@
         $("fbck").className = "fb good";
         $("fbck").textContent = "You got " + rightc + " out of " + CHECK.length + "!";
         say("You got " + rightc + " out of " + CHECK.length + "!");
-        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(6, "Well done!");
+        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(8, "Well done!");
         else retryCheck($("fbck"), $("chck"), rightc, CHECK.length, function () { qc = 0; rightc = 0; askCheck(); });
       } else askCheck();
     }, 2800);
@@ -2252,6 +2280,123 @@
     done: "You can find o'clock and half past on a clock.",
   });
 
+  /* ---- 7: spot the mistake - critiquing and improving, from the Cambridge Stage 1 books ---- */
+  secondStep({
+    el: { say: $("sm7say"), stage: $("sm7st"), ch: $("sm7ch"), fb: $("sm7fb"), score: $("sm7sc"), next: $("sm7nx") },
+    label: "Mistake",
+    items: [
+      /* LB Practise, Unit 6 - some activities take years and some take minutes */
+      { ask: "Hodan says a baby grows into a child in about 3 minutes. What went wrong?",
+        pic: smSays("Hodan", "A baby grows into a child in about 3 minutes."),
+        opts: [{ t: "Growing up takes years, not minutes", ok: true }, { t: "It takes about 3 hours" }, { t: "She is right" }],
+        why: "A minute is short, about as long as cleaning your teeth. Growing up takes years." },
+      /* 0096 1Gt.03 - the short hand is the hour hand */
+      { ask: "Amina says the long hand on the clock tells you the hour. What went wrong?",
+        pic: smSays("Amina", "The long hand tells you the hour."),
+        opts: [{ t: "The SHORT hand tells you the hour", ok: true }, { t: "Both hands tell you the hour" }, { t: "The long hand tells you the day" }],
+        why: "The short hand points at the hour. The long hand shows the minutes, and at o'clock it points straight up at 12." },
+      /* 0096 1Gt.03 - at half past the hour hand sits between two numbers */
+      { ask: "The short hand is between 3 and 4, and the long hand points straight down at 6. Musa says half past 4. What went wrong?",
+        pic: smSays("Musa", "The short hand is between 3 and 4 and the long hand points down. It is half past 4."),
+        opts: [{ t: "It is half past 3, the hour it has passed", ok: true }, { t: "It is half past 6" }, { t: "It is 4 o'clock" }],
+        why: "At half past, the short hand sits between two numbers. You say the hour it has already gone past, so this is half past 3." },
+      /* 0096 1Gt.02 - the days of the week in order */
+      { ask: "Ali says the day after Sunday is Saturday. What went wrong?",
+        pic: smSays("Ali", "The day after Sunday is Saturday."),
+        opts: [{ t: "After Sunday the week starts again with Monday", ok: true }, { t: "The day after Sunday is Friday" }, { t: "He is right" }],
+        why: "Saturday comes BEFORE Sunday. After Sunday the week begins again with Monday." },
+      /* LB Practise, Unit 6 - matching the unit of time to the length of the activity */
+      { ask: "Kiki says a whole school day lasts about one minute. What went wrong?",
+        pic: smSays("Kiki", "A whole school day lasts about one minute."),
+        opts: [{ t: "A school day lasts hours, not one minute", ok: true }, { t: "A school day lasts about one week" }, { t: "She is right" }],
+        why: "One minute is very short. A whole school day takes many hours." },
+      /* 0096 1Gt.02 - one item in every step is right */
+      { ask: "Amina says there are 12 months in a year. Is she right?",
+        pic: smSays("Amina", "There are 12 months in a year."),
+        opts: [{ t: "Yes, she is right", ok: true }, { t: "No, there are 7" }, { t: "No, there are 10" }],
+        why: "There are 12 months in a year, from January to December. 7 is the number of DAYS in a week." },
+    ],
+    finish: 6,
+    done: "You can check somebody else and say what went wrong.",
+  });
+
+  /* ---- 8: story problems - one-step problems in the Cambridge Stage 1 shape ---- */
+  secondStep({
+    el: { say: $("wp8say"), stage: $("wp8st"), ch: $("wp8ch"), fb: $("wp8fb"), score: $("wp8sc"), next: $("wp8nx") },
+    label: "Story",
+    items: [
+      { ask: "Today is Monday. Amina visits her aunt tomorrow. Which day does Amina visit her aunt?",
+        opts: [{ t: "Tuesday", ok: true }, { t: "Sunday" }, { t: "Wednesday" }],
+        why: "Tomorrow is the day after today. The day after Monday is Tuesday." },
+      { ask: "School starts at 8 o'clock. Where does the short hand point at 8 o'clock?",
+        opts: [{ t: "at the 8", ok: true }, { t: "at the 12" }, { t: "at the 6" }],
+        why: "The short hand tells the hour, so at 8 o'clock it points at the 8. The long hand points at the 12." },
+      { ask: "Musa brushes his teeth. Does that take about a minute or about a day?",
+        opts: [{ t: "about a minute", ok: true }, { t: "about a day" }, { t: "about a year" }],
+        why: "A minute is short, and brushing your teeth is a quick job." },
+      { ask: "Hodan was born in the first month of the year. Which month was Hodan born in?",
+        opts: [{ t: "January", ok: true }, { t: "December" }, { t: "June" }],
+        why: "The year starts with January and ends with December." },
+      { ask: "The long hand points straight down at the 6. The short hand is between the 2 and the 3. What time is it?",
+        opts: [{ t: "half past 2", ok: true }, { t: "half past 3" }, { t: "half past 6" }],
+        why: "The long hand down at 6 means half past. The short hand has passed the 2, so it is half past 2." },
+      { ask: "Kiki goes to sleep on Saturday night. Which day does Kiki wake up on?",
+        opts: [{ t: "Sunday", ok: true }, { t: "Friday" }, { t: "Monday" }],
+        why: "Sunday comes after Saturday." },
+    ],
+    finish: 7,
+    done: "You can find the maths inside a story.",
+  });
+
+  /* ==== ehel-self-check - see grade-1-app/add-self-check.py ====
+     The Workbook closes every Stage 1 unit with this: a three-way scale and a
+     list of "I can..." statements the child marks themselves. It sits on the
+     sticker shelf rather than in a step of its own, so no progress position
+     moves. Nothing here is scored, stored anywhere but this browser, or sent
+     to the school - it is the child's own claim, and the only thing it does
+     with the answer is offer the step that teaches it. */
+  const SELFCHECK = [
+    { say: "I can name the 7 days of the week in order.", step: 0, title: "Days of the week" },
+    { say: "I can name the 12 months of the year.", step: 1, title: "Months of the year" },
+    { say: "I can say whether something takes a short time or a long time.", step: 2, title: "Short times and long times" },
+    { say: "I can read a clock at o'clock.", step: 3, title: "Telling the time" },
+    { say: "I can read a clock at half past.", step: 5, title: "Find the clock" }
+  ];
+  const SC_KEY = "ehel-selfcheck-days-months-and-clocks-v1";
+  function scLoad() {
+    try { return JSON.parse(localStorage.getItem(SC_KEY) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function scSave(m) {
+    try { localStorage.setItem(SC_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function scPaint() {
+    const host = $("selfcheck"); if (!host) return;
+    const marks = scLoad();
+    host.innerHTML = '<p class="sc-head">Self-check</p><p class="sc-sub">See how much you know</p>' +
+      SELFCHECK.map((it, i) => {
+        const got = marks[i];
+        const opts = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I cannot do this yet"]].map((o) =>
+          '<button type="button" data-i="' + i + '" data-v="' + o[0] + '" aria-pressed="' +
+          (got === o[0] ? "true" : "false") + '">' + o[1] + "</button>").join("");
+        const back = (got && got !== "yes")
+          ? '<p class="sc-back"><button type="button" class="sc-go" data-step="' + it.step +
+            '">Go back to step ' + (it.step + 1) + ": " + it.title + "</button></p>"
+          : "";
+        return '<div class="sc-item"><p class="sc-say">' + it.say +
+          '</p><div class="sc-opts">' + opts + "</div>" + back + "</div>";
+      }).join("");
+  }
+  $("selfcheck").addEventListener("click", (e) => {
+    const go = e.target.closest(".sc-go");
+    if (go) { show(Number(go.dataset.step), true); return; }
+    const b = e.target.closest("button[data-v]"); if (!b) return;
+    const marks = scLoad();
+    marks[Number(b.dataset.i)] = b.dataset.v;
+    scSave(marks);
+    scPaint();
+  });
+  scPaint();
+
   /* ---- stickers ---- */
   const STICKERS = [
     ["📅", "Days of the week"],
@@ -2260,7 +2405,7 @@
     ["⏰", "Telling the time"],
     ["⏱️", "How long it takes"],
     ["🕞", "Find the clock"],
-    ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
+    ["🕵️", "Spot the mistake"], ["🎯", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
@@ -3163,4 +3308,36 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
+</style>
+
+<style>/* ehel-spot-the-mistake - see add-spot-the-mistake.py */
+  .sm-bubble { max-width: min(92%, 460px); margin: 0 auto; background: var(--card); border: 4px solid var(--line);
+    border-radius: 22px; padding: 16px 20px 12px; }
+  .sm-what { margin: 0; font-size: clamp(19px, 4.4vw, 24px); line-height: 1.35; color: var(--ink); }
+  .sm-who { margin: 8px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px;
+    color: var(--muted); text-align: right; }
+  .choice.ss-w { height: auto; min-height: 64px; padding: 10px 16px; font-size: 22px; line-height: 1.25; }
+</style>
+
+<style>/* ehel-story-problems - see add-story-problems.py */
+  /* the story is read from the instruction line; the stage stays empty on purpose */
+  #wp8st:empty { display: none; }
+</style>
+
+<style>/* ehel-self-check - see add-self-check.py */
+  .sc-wrap { margin: 22px auto 0; max-width: 620px; text-align: left; }
+  .sc-head { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 22px; color: var(--ink);
+    margin: 0 0 2px; }
+  .sc-sub { margin: 0 0 14px; font-size: 17px; color: var(--muted); }
+  .sc-item { border-top: 2px solid var(--line); padding: 12px 0 10px; }
+  .sc-say { margin: 0 0 8px; font-size: 19px; line-height: 1.35; color: var(--ink); }
+  .sc-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sc-opts button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 9px 14px; min-height: 44px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--card); color: var(--ink); cursor: pointer; }
+  .sc-opts button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #06231F; }
+  .sc-back { margin: 9px 0 0; }
+  .sc-back button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 8px 14px; min-height: 44px; border-radius: 12px; border: 2px dashed var(--accent);
+    background: transparent; color: var(--ink); cursor: pointer; }
 </style>

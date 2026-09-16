@@ -82,6 +82,14 @@ python ../lesson-app-tools/self-host-fonts.py --app g1v2 --write     # no reques
 python gate-and-explain-check.py --write               # 75% to complete; every check answer explained
 python add-warmup.py --write                           # a recap and one question at the top of step 1
 python add-second-steps.py --write                     # a second step for 17 single-slide objectives
+# the 2026-09-16 pass against the Cambridge Stage 1 books. Order matters: the
+# first installs secondStep() in the three lessons that never had it, the second
+# refuses a lesson without it, and the last resolves each statement to the step
+# that teaches it, so every step must already be on the page.
+python add-spot-the-mistake.py --write                 # critiquing and improving, one named Cambridge error per item
+python add-story-problems.py --write                   # one-step word problems in the Cambridge Stage 1 shape
+python lengthen-days-check.py --write                  # Days asked 5 questions on three objectives; now 8
+python add-self-check.py --write                       # the Workbook's "I can..." page, on the sticker shelf
 python fix-turn-and-tree.py --write                    # the turning circle's dot, the short tree
 python show-conservation.py --write                    # step 1's "Mix them up": the count does not change (1Nc.01)
 python ../lesson-app-tools/apply-focus-mode.py g1v2/<the seven lessons>   # focus mode and the session bar
@@ -118,6 +126,23 @@ CDN, and `deploy.mjs` sends only the pages and the shell modules. The two
 that name them - and do not fetch a font URL through the edge to see whether it
 is there: a miss is cached, and the key in `.env` cannot purge it.
 
+**THE FULL RE-DERIVE DOES NOT RUN TODAY, and it is not the content's fault.**
+Measured 2026-09-16: `rebuild-g1v2.py` stops at `wire-quiet-notice.py`, which
+refuses all seven lessons with "anchor not found exactly once: browser voice
+hook". That tool was updated by the narration work in `bb4b7d9f6`, while the
+FIVE-lesson build it composes from — `../up-to-twenty.html` and its siblings,
+last touched in `a11f7f822` — still carries the older voice engine. So the tool
+has moved ahead of its own input. It is the mirror image of the lesson below:
+there, a patcher had already been applied and could not be improved; here, the
+improvement landed on the tool and never reached the build it starts from.
+Fixing it means bringing the five-lesson rollback build forward, which belongs
+to whoever owns the narration change.
+
+What still works, and what was used instead on 2026-09-16: running the content
+patchers in their listed order over a copy of the COMMITTED `g1v2/` reproduces
+the working tree byte for byte in all seven lessons. That is the reproducibility
+claim this toolchain can currently support.
+
 **What a re-derive changes.** Run for real on 2026-09-11, `rebuild-g1v2.py`
 brings the hub back byte-identical and every lesson back different in four
 known ways - none of which is work being lost:
@@ -147,23 +172,44 @@ reason, until 2026-09-11.
 
 ## What the checks do and do not establish
 
-`validate-against-framework.py` reports **36/36** (measured 2026-09-11, repo
-copies), per slide, with one clause marked `OK*` as taught only ALOUD: 1Nc.01's
-conservation of number is in the Explain script of Counting's steps 3 and 10,
-and never on the screen or in an activity. The shared `check-answer-keys.py`
-reads **239** questions across the seven lessons, verifies **139** and finds
-none wrong. Both are mutation-tested; a gate nobody has watched fail is not
-known to work.
+`validate-against-framework.py` reports **36/36** (re-measured 2026-09-16, repo
+copies), per slide, every clause on screen — the `OK*` that used to sit against
+1Nc.01, taught only ALOUD, was closed by `show-conservation.py`. The shared
+`check-answer-keys.py` reads **315** questions across the seven lessons,
+verifies **152** and finds none wrong. Both are mutation-tested; a gate nobody
+has watched fail is not known to work.
 
 Neither says the teaching is good. Coverage means every objective has a home,
 not that the explanation is correct, well pitched, or free of error.
 
-**100 of the 239 questions cannot be verified by any tool.** "Which shape
+**163 of the 315 questions cannot be verified by any tool.** "Which shape
 has no corners?" has no computable answer, so those are reported as unchecked
 rather than counted as passes — coverage that cannot be falsified is not
-evidence. A wrong key among them reaches a child in silence. That needs a human
-reading, and this build has never had one: English has a reviewed-scripts
-workbook process for exactly this and Grade 1 Maths has nothing equivalent.
+evidence. A wrong key among them reaches a child in silence.
+
+**There is a review pack for exactly that now**, which is what English has had
+and this build did not:
+
+```bash
+python build-review-pack.py --out <somewhere>/g1-review-pack.html
+```
+
+One page, every question in the build — the words a child sees, every option,
+which one is keyed right, and the explanation they are given — with the
+unverifiable ones FIRST, because those are the ones a human read is the only
+check on. It is not a gate and cannot fail. It lists 328 where the checker
+counts 315: a few stems are asked more than once with a different picture each
+time, and each copy is its own thing to read.
+
+**The proportion that cannot be checked went UP with the 2026-09-16 content**
+(100 of 239 to 163 of 315), and that is worth knowing rather than glossing:
+"Ali gives 3 crayons away, what went wrong?" is keyed to a diagnosis, not a
+number, so no arithmetic can confirm it. The story problems were written to be
+computable wherever the answer is a number, and `check-answer-keys.py` gained a
+word-problem rule so that they are — it reads combine, take-away, difference,
+one-more and needs, each refusing unless it accounts for every number in the
+question. The critique steps stay unverifiable by construction and are the
+first thing in the review pack.
 
 Three failure modes were found in the validators themselves and every one
 under-reported — taught content read as missing, because the extractor took

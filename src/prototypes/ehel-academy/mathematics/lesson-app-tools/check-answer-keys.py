@@ -72,7 +72,7 @@ RULE_FUNCS = {
     "fraction_answer", "units_answer", "clock_answer", "turn_answer",
     "pattern_answer", "chart_answer", "stage34_number", "stage34_shape",
     "stage34_place", "stage34_time", "named_chart_answer", "beads_answer",
-    "calc_answer", "words_answer", "term_rule_answer", "estimate_answer", "stage3_runtime",
+    "calc_answer", "story_answer", "words_answer", "term_rule_answer", "estimate_answer", "stage3_runtime",
     "fraction_notation", "chart_claim", "sorting_logic", "sample_answer",
     "part_square_answer",
 }
@@ -2006,6 +2006,55 @@ def nums(t):
     return [int(x) for x in re.findall(r"(?<![\w.])\d+(?![\w.])", t)]
 
 
+def story_answer(low, t, opts):
+    """A one-step word problem, answered by the arithmetic its story describes.
+
+    Prose problems were the largest class this file could not read: "Gran buys 4
+    mangoes and 11 oranges. How many fruits does Gran buy in total?" has its
+    numbers in a sentence rather than a sum, so every rule above declines and a
+    wrong key would never be caught. Grade 1's own pre-existing questions were in
+    that state too ("One plate has 4 oranges and one has 5...").
+
+    EVERY SHAPE BELOW OBEYS THIS FILE'S FIRST RULE: the expression must account
+    for every number in the question. Each one takes exactly the two numbers the
+    story states and refuses if the text holds any other, so a problem this rule
+    has half-understood declines instead of answering.
+
+    Stage 1 only, by construction: one step, both numbers whole, and a
+    subtraction that would go below zero is refused rather than answered.
+    """
+    have = nums(t)
+    if len(have) != 2:
+        return None
+    a, b = have
+    hi, lo = max(a, b), min(a, b)
+    ask_many = re.search(r"how (?:many|much)\b", low)
+
+    # DIFFERENCE: "How many more pebbles does Kiki have than Hodan?"
+    if ask_many and re.search(r"how many more\b.*\bthan\b|what is the difference", low):
+        return pick(opts, float(hi - lo), amount)
+    # NEEDS: "Kiki needs 10 bottle tops. She has 6. How many more does she need?"
+    if ask_many and re.search(r"\bneeds?\b", low) and re.search(r"how many more\b|how many .* (?:need|to get)", low):
+        return pick(opts, float(hi - lo), amount)
+    # ONE MORE THAN: "Amina has 1 more apple than Musa. Musa has 6 apples."
+    # The comparison is stated BEFORE the known amount, which is Cambridge's own
+    # ordering and the reason this is not the difference shape above.
+    m = re.search(r"has (\d+) more \w+ than (\w+)\.\s*\2 has (\d+)", low)
+    if m and ask_many:
+        return pick(opts, float(int(m.group(1)) + int(m.group(3))), amount)
+    # TAKE AWAY: "Ali has 8 crayons. He gives 3 to his brother. How many left?"
+    if ask_many and re.search(r"\b(gives?|gave|eats?|ate|drops?|spends?|loses?|"
+                              r"takes away|fly away|flies away|drive away|walk away)\b", low) \
+            and re.search(r"\bleft\b|\bremain", low):
+        return pick(opts, float(a - b), amount) if a >= b else None
+    # COMBINE: "4 mangoes and 11 oranges ... in total / altogether"
+    if ask_many and re.search(r"\band\b", low) \
+            and re.search(r"\bin total\b|\baltogether\b|\bin all\b", low) \
+            and not re.search(r"\bmore\b|\bleft\b|\bthan\b|\beach\b|\bhalf\b", low):
+        return pick(opts, float(a + b), amount)
+    return None
+
+
 def calc_answer(low, t, opts):
     """Stage 4's "ways to calculate": the METHOD questions, answered by arithmetic.
 
@@ -2483,6 +2532,22 @@ def expected(q, opts, item, js=""):
         return got
     if re.search(r"\bestimate|\broughly\b|\bguess\b|\babout how", low):
         return None                                   # deliberately not exact
+    # CRITIQUING IS EXCLUDED, FOR THE SAME REASON AS ESTIMATING: the key is not
+    # the arithmetic. "Musa shares 8 mangoes. He gives 5 and 3 and says it is
+    # fair. What went wrong?" is keyed to a DIAGNOSIS - "5 and 3 are not the
+    # same" - and the numbers in it belong to the scenario, so deriving 4 from
+    # them and comparing reports a correct key as wrong. That is the one failure
+    # this file exists to avoid.
+    #
+    # Two conditions, because either alone is too loose: the question must ask
+    # what went wrong or whether somebody is right, AND no option may be a
+    # number. A critique question whose options ARE numbers is answerable by
+    # arithmetic and stays in - "Ali writes 5 add 12 is 16. What went wrong?"
+    # with options 17/16/15 is checked exactly as before.
+    if re.search(r"what went wrong|where is (?:the|her|his) mistake|which line is wrong"
+                 r"|is (?:he|she|that|it) right\b|whose .*\bis wrong\b", low) \
+            and not any(isinstance(norm(o), int) for o in opts):
+        return None                                   # a diagnosis, not a quantity
     m = re.search(r"round\s+([\d,]+)\s+to the nearest\s+([\d,]+|ten|hundred|thousand)", low)
     if m and not re.search(r"[+\-*/×]", m.group(1)):
         n = int(m.group(1).replace(",", ""))
@@ -2604,6 +2669,9 @@ def expected(q, opts, item, js=""):
         if got is not None:
             return got
     got = named_chart_answer(low, opts, js)
+    if got is not None:
+        return got
+    got = story_answer(low, t, opts)
     if got is not None:
         return got
     got = calc_answer(low, t, opts)

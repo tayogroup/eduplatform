@@ -69,6 +69,20 @@ STEPS = [
     ("gate-and-explain-check.py", ["--write"]),
     ("add-warmup.py", ["--write"]),
     ("add-second-steps.py", ["--write"]),
+    # "Spot the mistake" - critiquing and improving, from the Cambridge Stage 1
+    # books. After the second steps because it appends one more teaching step and
+    # moves the check again, and before the reasoning step and the emoji tools for
+    # the reasons each of them gives below.
+    ("add-spot-the-mistake.py", ["--write"]),
+    # "Story problems" - one-step word problems in the Cambridge Stage 1 shape.
+    # After spot-the-mistake because it REQUIRES the secondStep runner that tool
+    # installs in the three lessons that had none, and refuses a lesson without it.
+    ("add-story-problems.py", ["--write"]),
+    # Days, Months and Clocks asked 5 questions on three objectives, so its 75%
+    # rule landed on 4 of 5 - 80%, the harshest check in the build. Three more
+    # questions put it on 6 of 8. The pass mark is computed from CHECK.length, so
+    # nothing else moves.
+    ("lengthen-days-check.py", ["--write"]),
     # "How do you know?" - after the second steps, because it inserts itself
     # before the sticker shelf and must see the final set of steps; before the
     # emoji tools, which refuse a shelf whose faces repeat.
@@ -83,6 +97,10 @@ STEPS = [
     # redraw, and before the hub, whose answer keys quote a picture
     ("replace-new-emoji.py", ["--write"]),
     (T + "replace-new-emoji-all-grades.py", ["--only", "grade-1-app/", "--write"]),
+    # the Workbook's end-of-unit self-check, on the sticker shelf. LAST of the
+    # content tools: it resolves each statement to the step that teaches it by
+    # reading the page, so every step must already be on it.
+    ("add-self-check.py", ["--write"]),
     ("build-grownup-section.py", ["--write"]),
 ]
 

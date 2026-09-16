@@ -1021,6 +1021,26 @@
       <div class="bigbtns"><button type="button" class="big small teal" id="ss20nx" hidden>Next question</button></div>
       <p class="fb" id="ss20sc" style="font-size:18px;color:var(--muted)"></p>
     </section>
+<!-- 21  1Nc.01  Spot the mistake -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Today you are the checker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Somebody has done some maths and told you what they think.</s><s>Sometimes they are right and sometimes they have slipped.</s><s>Do it yourself first, then look at what they said.</s><s>If it does not match, work out WHICH part went wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often tap the first answer that sounds like a mistake.</s><s>Look again before you tap.</s><s>And some of these are right.</s><s>Saying right when it is right is just as clever as finding a mistake.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read what they say, work it out yourself, and tap what went wrong.</s></mstts:express-as>' data-say="Read what each child says. Work it out yourself. Then tap what went wrong.">
+      <div class="slide-head"><span class="n">21</span><h2>Spot the mistake</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sm21say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
+      <div class="stage" id="sm21st"></div>
+      <div class="choices" id="sm21ch"></div>
+      <p class="fb" id="sm21fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="sm21nx" hidden>Next question</button></div>
+      <p class="score" id="sm21sc"></p>
+    </section>
+<!-- 22  1Nc.01  Story problems -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A story problem is maths hiding inside a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to the whole story first, right to the end.</s><s>Then ask yourself one question.</s><s>Am I putting things together, or taking them away?</s><s>Putting together means adding.</s><s>Taking away, or finding how many more, means subtracting.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often grab the two numbers and add them, whatever the story said.</s><s>That is why the story comes first and the numbers come second.</s><s>Say the story back to yourself in your own words before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So listen to the story, decide what is happening, then tap your answer.</s></mstts:express-as>' data-say="Listen to the whole story. Work out the answer. Then tap it.">
+      <div class="slide-head"><span class="n">22</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wp22say">Read the story, work out the answer, then tap it.</span></div>
+      <div class="stage" id="wp22st"></div>
+      <div class="choices" id="wp22ch"></div>
+      <p class="fb" id="wp22fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="wp22nx" hidden>Next story</button></div>
+      <p class="score" id="wp22sc"></p>
+    </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows counters, count them.</s><s>If it asks which is bigger, use the number line.</s><s>If it shows a clock, look at the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Tap the answer.</span></div>
@@ -1044,12 +1064,13 @@
       </div>
     </section>
 
-<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s><s>Then tell me which parts you can do.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned. Then tell me which parts you can do.">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb13" role="status" aria-live="polite"></p>
+        <div class="sc-wrap" id="selfcheck"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2003,6 +2024,9 @@
     });
   })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+  /* ehel-spot-the-mistake: the claim being judged, in the mouth of the child who made it */
+  const smSays = (who, what) => '<div class="sm-bubble"><p class="sm-what">' + what +
+    '</p><p class="sm-who">' + who + '</p></div>';
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
      it still draws the next question, so the step is ready when they come
@@ -2847,7 +2871,7 @@
       $("q12").textContent = ""; $("pic12").innerHTML = ""; $("ch12").innerHTML = "";
       $("fb12").className = "fb good"; $("fb12").innerHTML = "You got <b>" + right12 + "</b> out of " + CHECK.length + "!";
       $("score12").textContent = right12 === CHECK.length ? "Every single one!" : right12 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Try the steps again, then come back.";
-      if (right12 >= Math.ceil(CHECK.length * 0.75)) { finish(20, "You got " + right12 + " out of " + CHECK.length + "."); return; }
+      if (right12 >= Math.ceil(CHECK.length * 0.75)) { finish(22, "You got " + right12 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb12"), $("ch12"), right12, CHECK.length, function () { c12 = 0; right12 = 0; round12(); }); return;
     }
     const q = CHECK[c12];
@@ -2975,6 +2999,124 @@
     done: "You can say places in a line, from 1st to 10th.",
   });
 
+  /* ---- 21: spot the mistake - critiquing and improving, from the Cambridge Stage 1 books ---- */
+  secondStep({
+    el: { say: $("sm21say"), stage: $("sm21st"), ch: $("sm21ch"), fb: $("sm21fb"), score: $("sm21sc"), next: $("sm21nx") },
+    label: "Mistake",
+    items: [
+      /* TG p92, Unit 10 Differentiation - counting on includes the start number */
+      { ask: "Musa starts at 5 and counts on 3. He says the answer is 7. What went wrong?",
+        pic: smSays("Musa", "I start at 5 and count on 3. I get 7."),
+        opts: [{ t: "He counted the 5 as his first jump", ok: true }, { t: "He counted back instead of on" }, { t: "He made 4 jumps instead of 3" }],
+        why: "Counting on 3 from 5 is three jumps: 6, 7, 8. The 5 is where you start, not a jump. The answer is 8." },
+      /* LB p125 Explore, Unit 13 - number bibs are names, not positions */
+      { ask: "The runners wear numbers on their shirts. Amina says the runner wearing 1 must have finished first. What went wrong?",
+        pic: smSays("Amina", "The runner wearing number 1 must have finished first."),
+        opts: [{ t: "The number is only a name for that runner", ok: true }, { t: "Number 1 always finishes first" }, { t: "The runner wearing 1 finished last" }],
+        why: "A number on a shirt is like a name. It does not say who came first. First, second and third tell you the order." },
+      /* RTG p67, Unit 13 - Jack has put 13 in the wrong place */
+      { ask: "Hodan puts these in order: 11, 12, 15, 13, 16. Where is her mistake?",
+        pic: smSays("Hodan", "In order: 11, 12, 15, 13, 16."),
+        opts: [{ t: "13 is in the wrong place", ok: true }, { t: "11 is in the wrong place" }, { t: "There is no mistake" }],
+        why: "After 12 comes 13, then 14, then 15. Hodan put 13 after 15 instead of before it." },
+      /* TG p11 and Unit 9 Practise - read a ten frame by its structure, not by counting from 1 */
+      { ask: "The top row of the ten frame is full, and there is one more counter below it. Kiki says 5. What went wrong?",
+        pic: smSays("Kiki", "The top row is full and there is one more. That is 5."),
+        opts: [{ t: "She forgot the one below the full row", ok: true }, { t: "A full row is 4, not 5" }, { t: "She counted the empty boxes too" }],
+        why: "A full top row is always 5. One more below makes 6." },
+      /* TG Unit 14 Assessment ideas - some of the examples must be right */
+      { ask: "Ali says 17 is 1 ten and 7 ones. Is he right?",
+        pic: smSays("Ali", "17 is 1 ten and 7 ones."),
+        opts: [{ t: "Yes, he is right", ok: true }, { t: "No, it is 7 tens and 1 one" }, { t: "No, it is 1 ten and 8 ones" }],
+        why: "17 is one ten and seven ones, so Ali is right. Saying so when it is right is good checking too." },
+      /* 0096 1Nc.05 - even and odd as every other number, not as size */
+      { ask: "Musa says 9 is even because it is a big number. What went wrong?",
+        pic: smSays("Musa", "9 is even, because 9 is a big number."),
+        opts: [{ t: "Even is about pairs, not about size", ok: true }, { t: "9 is even, so he is right" }, { t: "Even means the number is small" }],
+        why: "Put 9 into pairs and one is left over, so 9 is odd. Being big or small does not decide it." },
+    ],
+    finish: 20,
+    done: "You can check somebody else and say what went wrong.",
+  });
+
+  /* ---- 22: story problems - one-step problems in the Cambridge Stage 1 shape ---- */
+  secondStep({
+    el: { say: $("wp22say"), stage: $("wp22st"), ch: $("wp22ch"), fb: $("wp22fb"), score: $("wp22sc"), next: $("wp22nx") },
+    label: "Story",
+    items: [
+      { ask: "There are 8 goats in the pen. 1 more goat walks in. How many goats are in the pen now?",
+        opts: [{ t: "9", ok: true }, { t: "8" }, { t: "10" }],
+        why: "One more than 8 is 9. Counting on 1 means the very next number." },
+      { ask: "Five children stand in a line. Hodan is third in the line. How many children are in front of Hodan?",
+        opts: [{ t: "2", ok: true }, { t: "3" }, { t: "4" }],
+        why: "Third means two children came first, so 2 children are in front of Hodan." },
+      { ask: "Ali has one bag of ten beans and 6 loose beans. How many beans does Ali have?",
+        opts: [{ t: "16", ok: true }, { t: "7" }, { t: "10" }],
+        why: "One ten and 6 ones is 16. The ten stays whole and the 6 are counted on." },
+      { ask: "Amina has 12 shells. Kiki has 15 shells. Who has more shells?",
+        opts: [{ t: "Kiki", ok: true }, { t: "Amina" }, { t: "They have the same" }],
+        why: "15 comes after 12 when you count, so 15 is more. Kiki has more shells." },
+      { ask: "There are 2 baskets. Each basket holds 10 oranges. How many oranges are there altogether?",
+        opts: [{ t: "20", ok: true }, { t: "12" }, { t: "2" }],
+        why: "Counting in tens: 10, then 20. Two tens make 20 oranges." },
+      { ask: "Musa had 4 sweets. He eats all 4 sweets. How many sweets does Musa have left?",
+        opts: [{ t: "0", ok: true }, { t: "4" }, { t: "1" }],
+        why: "None at all is zero. We write it 0." },
+    ],
+    finish: 21,
+    done: "You can find the maths inside a story.",
+  });
+
+  /* ==== ehel-self-check - see grade-1-app/add-self-check.py ====
+     The Workbook closes every Stage 1 unit with this: a three-way scale and a
+     list of "I can..." statements the child marks themselves. It sits on the
+     sticker shelf rather than in a step of its own, so no progress position
+     moves. Nothing here is scored, stored anywhere but this browser, or sent
+     to the school - it is the child's own claim, and the only thing it does
+     with the answer is offer the step that teaches it. */
+  const SELFCHECK = [
+    { say: "I can count up to 20 things, touching each one once.", step: 0, title: "Count to 10" },
+    { say: "I can say how many I see without counting them.", step: 1, title: "See how many" },
+    { say: "I can count in twos and in tens.", step: 7, title: "Counting in twos" },
+    { say: "I can say whether a number is odd or even.", step: 8, title: "Odd and even" },
+    { say: "I can read and write numbers up to 20.", step: 4, title: "Write the number" },
+    { say: "I can put numbers in order and say which is more.", step: 10, title: "Put them in order" }
+  ];
+  const SC_KEY = "ehel-selfcheck-counting-to-twenty-v1";
+  function scLoad() {
+    try { return JSON.parse(localStorage.getItem(SC_KEY) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function scSave(m) {
+    try { localStorage.setItem(SC_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function scPaint() {
+    const host = $("selfcheck"); if (!host) return;
+    const marks = scLoad();
+    host.innerHTML = '<p class="sc-head">Self-check</p><p class="sc-sub">See how much you know</p>' +
+      SELFCHECK.map((it, i) => {
+        const got = marks[i];
+        const opts = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I cannot do this yet"]].map((o) =>
+          '<button type="button" data-i="' + i + '" data-v="' + o[0] + '" aria-pressed="' +
+          (got === o[0] ? "true" : "false") + '">' + o[1] + "</button>").join("");
+        const back = (got && got !== "yes")
+          ? '<p class="sc-back"><button type="button" class="sc-go" data-step="' + it.step +
+            '">Go back to step ' + (it.step + 1) + ": " + it.title + "</button></p>"
+          : "";
+        return '<div class="sc-item"><p class="sc-say">' + it.say +
+          '</p><div class="sc-opts">' + opts + "</div>" + back + "</div>";
+      }).join("");
+  }
+  $("selfcheck").addEventListener("click", (e) => {
+    const go = e.target.closest(".sc-go");
+    if (go) { show(Number(go.dataset.step), true); return; }
+    const b = e.target.closest("button[data-v]"); if (!b) return;
+    const marks = scLoad();
+    marks[Number(b.dataset.i)] = b.dataset.v;
+    scSave(marks);
+    scPaint();
+  });
+  scPaint();
+
   /* ---- 13: stickers ---- */
   const STICKERS = [
     ["🔟", "I can count to 10"],
@@ -2997,7 +3139,7 @@
     ["🍽️", "Zero means empty"],
     ["🐸", "Every other number"],
     ["🦓", "Places in a line"],
-    ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
+    ["🕵️", "Spot the mistake"], ["🎯", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
@@ -3924,4 +4066,35 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
+</style>
+
+<style>/* ehel-spot-the-mistake - see add-spot-the-mistake.py */
+  .sm-bubble { max-width: min(92%, 460px); margin: 0 auto; background: var(--card); border: 4px solid var(--line);
+    border-radius: 22px; padding: 16px 20px 12px; }
+  .sm-what { margin: 0; font-size: clamp(19px, 4.4vw, 24px); line-height: 1.35; color: var(--ink); }
+  .sm-who { margin: 8px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px;
+    color: var(--muted); text-align: right; }
+</style>
+
+<style>/* ehel-story-problems - see add-story-problems.py */
+  /* the story is read from the instruction line; the stage stays empty on purpose */
+  #wp22st:empty { display: none; }
+</style>
+
+<style>/* ehel-self-check - see add-self-check.py */
+  .sc-wrap { margin: 22px auto 0; max-width: 620px; text-align: left; }
+  .sc-head { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 22px; color: var(--ink);
+    margin: 0 0 2px; }
+  .sc-sub { margin: 0 0 14px; font-size: 17px; color: var(--muted); }
+  .sc-item { border-top: 2px solid var(--line); padding: 12px 0 10px; }
+  .sc-say { margin: 0 0 8px; font-size: 19px; line-height: 1.35; color: var(--ink); }
+  .sc-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sc-opts button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 9px 14px; min-height: 44px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--card); color: var(--ink); cursor: pointer; }
+  .sc-opts button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #06231F; }
+  .sc-back { margin: 9px 0 0; }
+  .sc-back button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 8px 14px; min-height: 44px; border-radius: 12px; border: 2px dashed var(--accent);
+    background: transparent; color: var(--ink); cursor: pointer; }
 </style>

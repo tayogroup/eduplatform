@@ -35,18 +35,24 @@ the level it genuinely belongs to.
 `tools/extract-cambridge-esl-framework.py`, run on the official text PDF — the
 owner's OneDrive copy is a page capture with no text layer.
 
-**Level 3 is the LAST level, and it is blocked on ONE FILE.**
-`src/curriculum/cambridge-english-0876.json` does not exist. Nothing in
-`src/curriculum` mentions 0876 at all — only this file, the plan, the two
-manifests built from it and the authoring prompt do, and none of those is a
-framework.
-`tools/extract-cambridge-esl-framework.py` already writes the right shape (it
-produced 0057); it needs the official 0876 PDF. **`0861` is in the repo and is
-not a substitute**: it is Lower Secondary English as a FIRST language, the same
-distinction that made 0057 the choice over 0058 here. The plan entry said B2,
-blocked on "Grades 9-12 do not exist", until 2026-09-16 — stale from the era
-when Level 3 meant a B2 course cut from school grades, and a B2 Level 3 would
-have recreated the exact gap the Level 2 rebuild closed.
+**Level 3 is the LAST level, and it is BUILT** (`3b2fd1974`, 2026-09-16). 20
+units on Cambridge **0876** Stages 7-9, **A2 to B1**, 159/159 objectives cited,
+571 words, gate green. Stage 7 is A2 (units 1-7), Stages 8-9 are B1. The whole
+course is 60 units. Sources in
+`inputs/ehel-english-intensive-source/authored/l3-u01..20.json`.
+
+It was blocked on ONE FILE until the owner supplied the 0876 PDF that same day:
+`src/curriculum/cambridge-english-0876.json` now exists, written by
+`tools/extract-cambridge-esl-framework.py` (the same tool that produced 0057).
+**`0861` is in the repo and is not a substitute**: it is Lower Secondary English
+as a FIRST language, the same distinction that made 0057 the choice over 0058
+here. The plan entry said B2, blocked on "Grades 9-12 do not exist", until
+2026-09-16 — stale from the era when Level 3 meant a B2 course cut from school
+grades, and a B2 Level 3 would have recreated the exact gap the Level 2 rebuild
+closed.
+
+**Still owed on Level 3: the standalone app build and the deploy.** Narration is
+done (see below).
 
 **Levels 4 (C1) and 5 (C2) were dropped on 2026-09-16** (owner). The course ENDS
 at B1, and the reason is in the plan's `whyTheCourseStopsAtB1`: the contract

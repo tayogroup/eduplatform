@@ -8,7 +8,13 @@
 //   node tools/generate-ehel-intensive-audio.js --dry
 //   node tools/generate-ehel-intensive-audio.js [category ...] [level ...] [--dry] [--budget N] [--force]
 //
-// Categories: lecture readings grammar words wordSentences
+// Categories: lecture readings grammar words wordSentences speaking
+// (the list is narration.CATEGORIES; `speaking` was missing here, so this
+// comment under-reported a bare run's bill by the largest category but one)
+//
+// --delivery alice is what words and wordSentences are recorded with in this
+// course, at the owner's request (05d6a069d). The default `standard` is right
+// for lecture, readings, grammar and speaking.
 //
 // What each category narrates lives in lib/ehel-intensive-narration.js, which
 // mirrors the voiceButton() calls in shell/subjects/intensive-english.js. It is
@@ -46,7 +52,18 @@ const args = process.argv.slice(2);
 const cats = args.filter((a) => ALL_CATS.includes(a));
 const catList = cats.length ? cats : ALL_CATS;
 const levels = args.filter((a) => /^[1-5]$/.test(a)).map(Number);
-const levelList = levels.length ? levels : [1, 2];
+// The default used to be the literal [1, 2], written when those were the only
+// levels. Level 3 shipped on 2026-09-16 and a bare run silently narrated two
+// thirds of the course — no error, just a category table that never mentioned
+// the missing level. Discovered from the level-N directories instead, the same
+// way hashesForLevel/hashGradeMap in lib/ehel-intensive-narration.js already
+// find them, so a new level is narrated by existing.
+const builtLevels = () => fs.readdirSync(COURSE)
+  .map((e) => e.match(/^level-(\d+)$/))
+  .filter((m) => m && fs.existsSync(path.join(COURSE, m[0], "data", "units")))
+  .map((m) => Number(m[1]))
+  .sort((a, b) => a - b);
+const levelList = levels.length ? levels : builtLevels();
 const dry = args.includes("--dry");
 const force = args.includes("--force");
 const budgetArg = args.indexOf("--budget");

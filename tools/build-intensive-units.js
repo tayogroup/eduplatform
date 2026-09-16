@@ -819,11 +819,29 @@ console.log(`\n${built.length} unit(s) built, gate green.`);
 // --- manifests + master dictionary -------------------------------------------
 // Regenerated from whatever is on disk, so a single-unit rebuild never shrinks a
 // level, and the manifest never claims content that has not been authored.
-const levelSummaries = plan.levels.map((level) => ({
-  number: level.number, id: level.id, label: level.label,
-  cefr: level.cefr || [], unitCount: level.units.length,
-  status: level.units.length ? "Open" : (level.status || "Planned"),
-}));
+// `unitCount` and `status` are about what is BUILT, not about what is planned.
+// They used to read `level.units.length`, which is the plan's placed units, and
+// that was indistinguishable from the built count for as long as every planned
+// level had an empty `units` array. Level 3 is the first level to be fully
+// placed and not yet authored, and it made the two diverge: the manifest the
+// shell app FETCHES announced "Level 3 — Threshold, 20 units, Open" while no
+// unit of it existed. A learner would have been offered a course with nothing
+// in it. `plannedUnits` keeps the other number, which is worth having.
+const builtUnitCount = (level) => {
+  const dir = path.join(COURSE_ROOT, `level-${level.number}`, "data", "units");
+  if (!fs.existsSync(dir)) return 0;
+  return fs.readdirSync(dir).filter((name) => /^unit-\d+\.json$/.test(name)).length;
+};
+const levelSummaries = plan.levels.map((level) => {
+  const built = builtUnitCount(level);
+  return {
+    number: level.number, id: level.id, label: level.label,
+    cefr: level.cefr || [],
+    unitCount: built,
+    plannedUnits: level.units.length,
+    status: built ? "Open" : (level.status || "Planned"),
+  };
+});
 
 for (const level of plan.levels) {
   if (!level.units.length) continue;

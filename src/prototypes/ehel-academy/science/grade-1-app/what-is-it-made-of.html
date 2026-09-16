@@ -2,6 +2,24 @@
 <html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="modulepreload" href="./learner-controls.js">
+<link rel="modulepreload" href="./wehel.js">
+<link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
+<script>
+  /* preconnect to whichever platform the launch names: DNS and TLS happen
+     while the page parses, instead of in front of the first POST */
+  (function () {
+    try {
+      var ep = new URLSearchParams(location.search).get("pwsEndpoint");
+      if (!ep) return;
+      var origin = new URL(ep, location.href).origin;
+      var l = document.createElement("link");
+      l.rel = "preconnect"; l.href = origin; l.crossOrigin = "anonymous";
+      document.head.appendChild(l);
+    } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
+  })();
+</script>
 <title>What Is It Made Of?</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
@@ -671,9 +689,292 @@
 .sit-h { margin: 6px 0 10px; }
 .sit-card p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
 .sit-card .bigbtns { justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+  /* ---- the self-check on the sticker shelf (Cambridge's "Look what I can
+     do!", which closes all 25 of its Stage 1 topics). It sits on the SHELF and
+     not in a step, so nothing here moves a saved place. No new hue: the heading
+     is the taught-thing teal and "Show me" is a ghost button. ---- */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+  .cando li > span { font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .candogo { flex: none; border: 2px solid var(--line); background: transparent; color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; font-family: inherit; font-weight: 700; font-size: 14px;
+    cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  .candogo:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+
+  /* --- the way back to the hub, drawn only when the learner arrived from it;
+         see lesson-app-tools/wire-navigation.py --- */
+  .lesson-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
+
+  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
+     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
+     a page it had already wired, so three separate changes to this block --
+     the panel surfaces, the dark theme, the canned prompts -- reached nothing
+     already built, and each needed its own carry-across tool afterwards. */
+  /* --- a home for the class controls, and the tutor dock;
+         see lesson-app-tools/wire-platform-controls.py --- */
+  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
+  .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
+  .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
+    align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
+    background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
+    padding: 12px 18px; box-shadow: var(--shadow); }
+  .w-dock[hidden] { display: none; }
+  .w-drawer { position: fixed; right: 14px; bottom: 14px; z-index: 71; width: min(420px, calc(100vw - 28px));
+    height: min(620px, calc(100vh - 28px)); background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+  .w-drawer[hidden] { display: none; }
+  .w-drawer-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+    border-bottom: 1px solid var(--line); font-weight: 800; }
+  .w-drawer-head button { margin-left: auto; border: 1px solid var(--line); background: var(--cell);
+    color: var(--ink); border-radius: 999px; width: 34px; height: 34px; font-size: 17px; cursor: pointer; }
+  .w-drawer-body { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
+    background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
+    font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
+     The dock and the drawer above already use --card/--line/--ink, so before
+     this the drawer was a dark card containing a white sheet: shell/wehel.js
+     ships a light panel (--w-bg #fff, --w-ink #17324d) and these pages are
+     always dark -- the bare `:root` in their theme selector makes the dark
+     block unconditional, so there is no light case to preserve here.
+     wehel.js now NAMES its surfaces instead of repeating literals, every
+     default being the value it already had, so this block is the whole of the
+     change a page needs and the five shell subjects that also load the tutor
+     are untouched. Mapped by ROLE, not by hue: panel takes --card, anything
+     raised off it takes --cell, so the bubbles, prompt buttons, compose row
+     and timer stay readable against the panel rather than against the page. */
+  /* DOUBLED selector, and that is load-bearing: wehel.js injects PANEL_STYLE
+     with document.head.appendChild at mount, so its own `.wehel-panel{...}`
+     always comes after this stylesheet. At equal specificity the later rule
+     wins, so the single-class version of this block lost every declaration to
+     it and the panel stayed white -- which only rendering it showed. */
+  .wehel-panel.wehel-panel {
+    --w-bg: var(--card); --w-surface: var(--card); --w-ink: var(--ink);
+    --w-line: var(--line);
+    --w-teal: var(--teal); --w-teal-2: #2AA79B; --w-teal-soft: var(--teal-soft);
+    --w-bubble: var(--cell);
+    --w-prompt-bg: var(--cell); --w-prompt-line: var(--line);
+    /* NOT var(--teal) here. The page's teal on the prompt buttons' --cell
+       ground measures 4.28:1, under the 4.5 floor -- the one surface in the
+       panel that failed when this was measured rather than eyeballed. This
+       lighter teal is 6.27:1 on the same ground. It is a literal because the
+       palette has no light-teal token: --teal-soft is a dark fill (#143A4A),
+       and --good (#4FD1A0) is the green that means "correct" in this build,
+       which a row of suggestions must not borrow. */
+    --w-prompt-ink: #7FE0D6;
+    /* the strip along the top of the panel -- timer, Full screen, voice picker */
+    --w-row-a: rgba(255, 255, 255, 0.07); --w-row-b: rgba(255, 255, 255, 0.03);
+    --w-low-line: rgba(244, 201, 93, 0.55);
+    --w-compose-bg: var(--cell);
+    --w-timer-bg: var(--cell); --w-timer-track: var(--cell);
+    /* the learner's own turn: plum, the page's third accent, so a child can
+       tell their words from Wehel's at a glance without reading the label */
+    --w-user-a: rgba(183, 139, 209, 0.30); --w-user-b: rgba(183, 139, 209, 0.16);
+    --w-user-ink: var(--ink);
+    --w-user-avatar-a: var(--plum); --w-user-avatar-b: #8E5AA8;
+    /* time nearly up: the page's gold, not the light build's cream */
+    --w-warm: var(--gold); --w-low-ink: var(--gold);
+    --w-low-fill: rgba(244, 201, 93, 0.32); --w-low-track: rgba(244, 201, 93, 0.12);
+  }
+  .wehel-panel.wehel-panel .ai-compose input::placeholder { color: var(--muted); }
+
+  /* THE CLASS CHAT, same treatment and a different scope. learner-controls.js
+     draws that panel with INLINE styles -- deliberately, so a cosmetic rule in
+     course-ui.css cannot make five other subjects' app tiers stale -- and an
+     inline style cannot be overridden by a stylesheet. It reads --lc-* through
+     var() instead, so this retints it; and the panel is appended to <body>
+     rather than to the drawer, so these live at :root and not on a class.
+
+     The bug this fixes is not only the tint. Every bubble set a background and
+     NO colour, so the text inherited the page's --ink -- white -- and a child
+     read white on #f2f4f6. The compose input was the same, so typing was
+     invisible. The defaults in learner-controls.js are course-ui.css's own
+     --ink (#17324d), which is exactly what the light subjects inherit today. */
+  :root {
+    --lc-panel-bg: var(--card); --lc-panel-line: var(--line);
+    --lc-head-a: rgba(53, 191, 178, 0.22); --lc-head-b: rgba(53, 191, 178, 0.07);
+    --lc-head-ink: var(--ink); --lc-head-sub: var(--muted);
+    --lc-form-bg: var(--cell); --lc-form-line: var(--line);
+    --lc-field-bg: var(--cell); --lc-field-ink: var(--ink);
+    --lc-them-bg: var(--cell); --lc-them-ink: var(--ink);
+    /* the learner's own turn in plum, the same signal the tutor panel uses */
+    --lc-mine-bg: rgba(183, 139, 209, 0.30); --lc-mine-ink: var(--ink);
+    /* "only your teacher sees this" keeps its amber, restated for a dark ground */
+    --lc-private-bg: rgba(244, 201, 93, 0.18); --lc-private-line: rgba(244, 201, 93, 0.45);
+    --lc-private-ink: var(--gold);
+  }
+  /* WEHEL-THEME-END */
+  /* WIRE-CSS-END */
+
+  /* --- said on the learner's own screen when their work is not reaching the
+         school; see lesson-app-tools/wire-progress.py --- */
+  .progress-notice {
+    margin: 0 0 12px; padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--bad-soft); border: 1px solid var(--bad);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+  }
+
+  /* ---- the two header bars, modelled on the English shell ---- */
+  .eh-bar1, .eh-bar2 { position: sticky; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); }
+  .eh-bar1 { top: 0; padding: 8px 16px; }
+  .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
+  .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  /* --ink, not --muted. At 13.5px this is normal text and needs 4.5:1; on the
+     English Grade 1 palette --muted measured 4.04:1 on the --cell pill behind
+     it and failed. A fixed colour cannot fix that here - the five apps that
+     render this bar carry four different --muted values (#566669, #6B7F82,
+     #93AABE, #A4B7C8), so each would need its own answer.
+
+     --ink is the one that holds for all of them by construction: it is each
+     palette's own text colour against --card and --cell, which is what
+     .eh-brand and .eh-picker in this same bar already depend on. It also ends
+     an inconsistency rather than making one - this label was the ONLY text in
+     either bar not already drawn in --ink or --teal. */
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+    color: var(--ink); font-size: 17px; cursor: pointer; }
+  /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
+     writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
+     file owns the thresholds. A page without focus mode never shows it at all.
+     It is a PILL with a label, not a bare dot: the dot-only version measured
+     perfectly and could not be found on the page, and colour alone says nothing
+     to anyone who cannot separate red from green. */
+  .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+    border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
+    font-size: 12.5px; font-weight: 800; }
+  .eh-focus i { width: 9px; height: 9px; border-radius: 999px; background: currentColor; display: block; }
+  .eh-focus.is-ok { background: var(--good, #3E9C63); color: var(--good-ink, #06231F); }
+  .eh-focus.is-warn { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
+  .eh-focus.is-bad { background: var(--bad, #D7584B); color: var(--bad-ink, #2A0A07); }
+  .eh-focus b { font-weight: 800; }
+  @media (max-width: 620px) { .eh-focus b { display: none; }
+    .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
+  .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
+    cursor: pointer; text-decoration: none; }
+  .eh-round.back { padding: 9px 13px; }
+  .eh-section { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; }
+  .eh-b2right { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
+  .eh-pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 15px; cursor: pointer; }
+  .eh-steps { position: sticky; top: 104px; z-index: 39; background: var(--card); border-bottom: 1px solid var(--line);
+    max-height: 55vh; overflow-y: auto; padding: 8px; }
+  .eh-steps button { display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
+    background: none; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--ink); }
+  .eh-steps button:hover { background: var(--cell); }
+  .eh-steps button.now { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 700; }
+  .eh-steps button.done::after { content: " \2713"; color: var(--good); font-weight: 700; }
+  .eh-steps button.now.done::after { color: var(--teal-ink, #06231F); }
+  .hero .eyebrow { display: none; }   /* the brand bar says Primary Mathematics now */
+  @media (max-width: 720px) {
+    .eh-progtext, .eh-brandtext { display: none; }
+    .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
+    .eh-picker { max-width: 130px; }
+  }
+
+  /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
+  .eh-find { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 0;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 10px; }
+  .eh-find svg { width: 17px; height: 17px; color: var(--muted); flex: 0 0 auto; }
+  .eh-find input { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink);
+    background: none; border: 0; padding: 8px 0; width: 148px; min-width: 0; }
+  .eh-find input::placeholder { color: var(--muted); font-weight: 400; }
+  .eh-find input:focus { outline: none; }
+  .eh-find:focus-within { border-color: var(--teal); }
+  .eh-find input::-webkit-search-cancel-button { filter: grayscale(1) brightness(2); }
+  .eh-found { position: sticky; top: var(--eh-found-top, 104px); z-index: 41;
+    background: var(--card); border-bottom: 1px solid var(--line);
+    max-height: 62vh; overflow-y: auto; padding: 8px; }
+  .eh-foundsay { margin: 2px 6px 8px; font-size: 13px; font-weight: 700; color: var(--muted); }
+  .eh-found button { display: block; width: 100%; text-align: left; font: inherit;
+    background: none; border: none; border-radius: 10px; padding: 9px 12px; cursor: pointer; color: var(--ink); }
+  .eh-found button:hover, .eh-found button.sel { background: var(--cell); }
+  .eh-found button.sel { outline: 2px solid var(--teal); outline-offset: -2px; }
+  .eh-found .w { display: block; font-size: 12px; font-weight: 800; color: var(--teal);
+    text-transform: uppercase; letter-spacing: .04em; }
+  .eh-found .t { display: block; font-size: 16px; font-weight: 700; }
+  .eh-found .s { display: block; font-size: 13px; color: var(--muted); font-weight: 400;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .eh-found mark { background: var(--gold); color: #2A1F05; border-radius: 3px; padding: 0 2px; }
+  @media (max-width: 720px) {
+    .eh-find input { width: 96px; }
+    .eh-found { top: var(--eh-found-top-narrow, 100px); }
+  }
 </style>
 
 <a class="skip" href="#deck">Skip to the lesson</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Science</i></span></a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <span id="ehFocus" hidden></span>
+    <label class="eh-find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.4 15.4 21 21"></path></svg><input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Grade 1 Science lessons" aria-controls="ehFound" aria-expanded="false"></label><select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="alive-or-never-alive.html">Alive or Never Alive</option><option value="parts-of-a-plant.html">Parts of a Plant</option><option value="my-body-and-my-senses.html">My Body and My Senses</option><option value="what-is-it-made-of.html" selected>What Is It Made Of?</option><option value="pushes-pulls-and-floating.html">Pushes, Pulls and Floating</option><option value="sounds-near-and-far.html">Sounds Near and Far</option><option value="electricity-and-magnets.html">Electricity and Magnets</option><option value="our-earth-our-sun.html">Our Earth, Our Sun</option></select>
+    <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
+  </div>
+</header>
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">What Is It Made Of?</span>
+  <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden><p class="eh-foundsay" id="ehFoundSay" role="status" aria-live="polite"></p><div id="ehFoundList"></div></div>
 <div class="wrap">
   <header class="hero">
     <div>
@@ -714,7 +1015,7 @@
         <p class="score" id="score3"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Cm.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Everything around you is made from a material.</s><s>Wood, metal, plastic, glass, rock, paper and fabric are seven materials you see every day.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the spoon.</s><s>It is made of metal.</s><s>Tap the chair.</s><s>It is made of wood, which comes from trees.</s><s>Tap the window.</s><s>It is made of glass, so you can see through it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the spoon is made of spoon.</s><s>Spoon is what it is. Metal is what it is made of.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every object and say the material out loud.</s></mstts:express-as>' data-say="Tap each object. Hear what material it is made from.">
+    <section class="slide" data-objectives="1Cm.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Everything around you is made from a material.</s><s>Wood, metal, plastic, glass, rock, paper and fabric are seven materials you see every day.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the spoon.</s><s>It is made of metal.</s><s>Tap the chair.</s><s>It is made of wood, which comes from trees.</s><s>Tap the window.</s><s>It is made of glass, so you can see through it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the spoon is made of spoon.</s><s>Spoon is what it is. Metal is what it is made of.</s><s>And there is a slip about the word itself. Outside science, material often means cloth.</s><s>Somebody buying cloth to make a dress asks for material.</s><s>In science the word is much bigger than that. Material means whatever a thing is made of.</s><s>Wood is a material. Metal is a material. Glass, rock and paper are materials. Cloth is only one of them, and in science we call it fabric.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every object and say the material out loud.</s></mstts:express-as>' data-say="Tap each object. Hear what material it is made from.">
       <div class="slide-head"><span class="n">4</span><h2>What is it made of?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Tap each object. Hear what <b>material</b> it is made from.</span></div>
       <div class="stage">
@@ -744,7 +1045,7 @@
         <p class="score" id="score6"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Cm.01 1TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sorting by material means putting together everything made of the same stuff.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil and a chair look different, but both are wood.</s><s>A coin and a nail are both metal.</s><s>Look at the object and ask: what is it made from?</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children sort by colour or by what the thing is for.</s><s>Here we sort only by material.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look, decide the material, then tap its bin.</s></mstts:express-as>' data-say="Which material is this object made from? Tap the right bin.">
+    <section class="slide" data-objectives="1Cm.01 1TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sorting by material means putting together everything made of the same stuff.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil and a chair look different, but both are wood.</s><s>A coin and a nail are both metal.</s><s>Look at the object and ask: what is it made from?</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children sort by colour or by what the thing is for.</s><s>Here we sort only by material.</s><s>When you sort by a property instead, there is a rule that keeps it tidy.</s><s>Pick one pair and keep it for the whole sort. Bendy or stiff. Rough or smooth. Hard or soft.</s><s>If you make a red group and then a bendy group, a red bendy balloon belongs in both at once, and the sort falls apart.</s><s>One more thing about the word hard. It has two meanings, and they are nothing to do with each other.</s><s>Hard can mean not easy, like a hard sum. In science here, hard means not soft.</s><s>A stone is hard. A sponge is soft. Neither of them is difficult.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look, decide the material, then tap its bin.</s></mstts:express-as>' data-say="Which material is this object made from? Tap the right bin.">
       <div class="slide-head"><span class="n">7</span><h2>Sort by material</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Which material is this object made from? Tap the right bin.</span></div>
       <div class="stage">
@@ -774,7 +1075,7 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Cc.01 1TWSp.02 1TWSc.04 1TWSa.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You can change some materials by squashing, bending, twisting or stretching them.</s><s>Other materials will not change at all.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Predict: will the stone change shape when you squash it?</s><s>Then try two actions on the clay, two on the elastic band, and two on the stone, and watch.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think everything changes if you push hard enough.</s><s>A stone stays a stone however hard you squash it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your prediction, then press the action buttons and watch what each material does.</s></mstts:express-as>' data-say="Can we change a material&#39;s shape with our hands? Predict first, then try clay, an elastic band and a stone.">
+    <section class="slide" data-objectives="1Cc.01 1TWSp.02 1TWSc.04 1TWSa.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You can change some materials by squashing, bending, twisting or stretching them.</s><s>Other materials will not change at all.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Predict: will the stone change shape when you squash it?</s><s>Then try two actions on the clay, two on the elastic band, and two on the stone, and watch.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think everything changes if you push hard enough.</s><s>A stone stays a stone however hard you squash it.</s><s>Three more things worth knowing before you start.</s><s>A bendy material is not always a stretchy one. Paper bends, twists and squashes into a ball, and it does not stretch at all. Try each change on its own.</s><s>Next, the word elastic. It does not mean anything you can stretch.</s><s>Elastic means it goes back to the shape it was. Squash a sponge and it springs back, so a sponge is elastic. Squash paper into a ball and it stays a ball, so paper is not.</s><s>Last, a fair test. It does not mean taking turns so it is fair for the children.</s><s>It means fair to the things being tested: pull each one the same way, and change only one thing at a time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your prediction, then press the action buttons and watch what each material does.</s></mstts:express-as>' data-say="Can we change a material&#39;s shape with our hands? Predict first, then try clay, an elastic band and a stone.">
       <div class="slide-head"><span class="n">10</span><h2>Squash, bend, twist, stretch</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Can we change a material's shape with our hands? Predict first, then try clay, an elastic band and a stone.</span></div>
       <div class="stage">
@@ -860,6 +1161,19 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="cando">
+          <h3>Look what I can do!</h3>
+          <p class="candonote">Read each one. Can you do it? If you are not sure, press <b>Show me</b>.</p>
+          <ul>
+          <li><span>I can name seven or more materials.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I can say the difference between an object and a material.</span><button type="button" class="candogo" data-go="4">Show me</button></li>
+          <li><span>I can name some properties of a material.</span><button type="button" class="candogo" data-go="7">Show me</button></li>
+          <li><span>I can say that one material has many properties at once.</span><button type="button" class="candogo" data-go="7">Show me</button></li>
+          <li><span>I can put materials into groups, keeping to one pair of properties.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can say which materials change shape when you push or pull them.</span><button type="button" class="candogo" data-go="9">Show me</button></li>
+          <li><span>I can use the testing equipment properly.</span><button type="button" class="candogo" data-go="7">Show me</button></li>
+          </ul>
+        </div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -938,7 +1252,7 @@
           ],
           "counts": {
             "steps": 17,
-            "words": 7,
+            "words": 14,
             "games": 5,
             "home": 3
           },
@@ -1125,6 +1439,69 @@
                 "Being shiny is a property of metal.",
                 "Each test finds one property."
               ]
+            },
+            {
+              "w": "flexible",
+              "pic": "🧵",
+              "meaning": "Bends easily without breaking.",
+              "uses": [
+                "A scarf is flexible.",
+                "A plastic ruler is a little bit flexible."
+              ]
+            },
+            {
+              "w": "rigid",
+              "pic": "🧱",
+              "meaning": "Cannot bend. The opposite of flexible.",
+              "uses": [
+                "A brick is rigid.",
+                "The metal spoon is rigid, so it does not bend."
+              ]
+            },
+            {
+              "w": "rubber",
+              "pic": "➰",
+              "meaning": "A very flexible, waterproof material. Balloons, tyres and elastic bands are made of it.",
+              "uses": [
+                "An elastic band is made of rubber.",
+                "Rubber boots keep your feet dry."
+              ]
+            },
+            {
+              "w": "weak",
+              "pic": "📄",
+              "meaning": "Breaks or tears easily. The opposite of strong.",
+              "uses": [
+                "Wet paper is weak.",
+                "A weak thread snaps when you pull it."
+              ]
+            },
+            {
+              "w": "threads",
+              "pic": "🧵",
+              "meaning": "The thin strands that fabric is made from. Look closely at a sock and you can see them.",
+              "uses": [
+                "Fabric is made of tiny threads.",
+                "A thread came loose from my jumper."
+              ]
+            },
+            {
+              "w": "recycle",
+              "pic": "♻️",
+              "meaning": "To turn a used material into something new instead of throwing it away.",
+              "uses": [
+                "We recycle paper and plastic.",
+                "This bottle was made from recycled plastic."
+              ]
+            },
+            {
+              "w": "waste",
+              "pic": "🗑️",
+              "meaning": "Something thrown away because nobody wants it any more.",
+              "uses": [
+                "Put the waste in the bin.",
+                "We make less waste when we recycle."
+              ]
             }
           ]
         }
@@ -1187,7 +1564,10 @@
             }
           ],
           "need": 8
-        }
+        },
+        "mis": [
+          "3.1-m1"
+        ]
       },
       {
         "kind": "demo",
@@ -1223,7 +1603,10 @@
               "say": "And one object can be made of several materials. A toy can have plastic, fabric and metal in it."
             }
           ]
-        }
+        },
+        "mis": [
+          "3.2-m2"
+        ]
       },
       {
         "kind": "sort",
@@ -1401,7 +1784,11 @@
               "why": "Socks are made of fabric."
             }
           ]
-        }
+        },
+        "mis": [
+          "3.3-m1",
+          "3.3-m2"
+        ]
       },
       {
         "kind": "tester",
@@ -1735,7 +2122,10 @@
         "sittingBreak": {
           "minutes": 25,
           "hub": "g1-index.html"
-        }
+        },
+        "mis": [
+          "3.2-m1"
+        ]
       },
       {
         "kind": "experiment",
@@ -1765,6 +2155,24 @@
               }
             ]
           },
+          "plan": {
+            "ask": "How shall we find out which materials change shape? Which way is <b>fair</b>?",
+            "opts": [
+              {
+                "t": "Try the same actions on each material, one at a time",
+                "ok": true
+              },
+              {
+                "t": "Squash the clay and stretch the elastic band",
+                "ok": false
+              },
+              {
+                "t": "Ask a grown-up which ones will change",
+                "ok": false
+              }
+            ],
+            "why": "To compare materials fairly, do the SAME thing to each one. Different actions on different materials tells you nothing."
+          },
           "runAsk": "Press two actions on each material. Watch what changes and what does not.",
           "happened": {
             "ask": "What happened when you squashed the stone?",
@@ -1783,8 +2191,31 @@
               }
             ],
             "why": "Clay and the elastic band changed shape. The stone did not change at all."
+          },
+          "conclude": {
+            "ask": "So what did we find out?",
+            "opts": [
+              {
+                "t": "Some materials change shape when you push or pull them, and some do not",
+                "ok": true
+              },
+              {
+                "t": "Every material changes shape if you push hard enough",
+                "ok": false
+              },
+              {
+                "t": "No material ever changes shape",
+                "ok": false
+              }
+            ],
+            "why": "Clay and the elastic band changed. The stone did not. So it depends on the material."
           }
-        }
+        },
+        "mis": [
+          "3.4-m1",
+          "3.4-m2",
+          "3.4-m3"
+        ]
       },
       {
         "kind": "record",
@@ -1829,6 +2260,44 @@
               "id": "no",
               "t": "No, it stayed the same",
               "pic": "❌"
+            }
+          ],
+          "read": [
+            {
+              "ask": "Look at your table. Which material did <b>not</b> change shape?",
+              "opts": [
+                {
+                  "t": "the stone",
+                  "ok": true
+                },
+                {
+                  "t": "the clay",
+                  "ok": false
+                },
+                {
+                  "t": "the elastic band",
+                  "ok": false
+                }
+              ],
+              "why": "The stone's row is the only No in your table."
+            },
+            {
+              "ask": "Two rows say Yes and one says No. What does your table tell you?",
+              "opts": [
+                {
+                  "t": "some materials change shape and some do not",
+                  "ok": true
+                },
+                {
+                  "t": "every material changes shape",
+                  "ok": false
+                },
+                {
+                  "t": "no material changes shape",
+                  "ok": false
+                }
+              ],
+              "why": "Two Yes rows and one No row. So it depends on the material."
             }
           ]
         }
@@ -2227,6 +2696,40 @@
                       "Water does not go through it."
                     ]
                   ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "property",
+                      "Something a material is like: hard, soft, bendy, shiny, waterproof."
+                    ],
+                    [
+                      "flexible",
+                      "Bends easily without breaking."
+                    ],
+                    [
+                      "rigid",
+                      "Cannot bend. The opposite of flexible."
+                    ]
+                  ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "rubber",
+                      "A very flexible, waterproof material. Balloons, tyres and elastic bands are made of it."
+                    ],
+                    [
+                      "weak",
+                      "Breaks or tears easily. The opposite of strong."
+                    ],
+                    [
+                      "threads",
+                      "The thin strands that fabric is made from. Look closely at a sock and you can see them."
+                    ]
+                  ]
                 }
               ]
             },
@@ -2532,6 +3035,211 @@
                 }
               ],
               "why": "A cup has to hold a drink. A sponge soaks up water, so it cannot hold one."
+            },
+            {
+              "ask": "In science, what does the word <b>material</b> mean?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🧱</div>",
+              "opts": [
+                {
+                  "t": "anything a thing is made of",
+                  "ok": true
+                },
+                {
+                  "t": "only cloth for making clothes",
+                  "ok": false
+                },
+                {
+                  "t": "only hard things",
+                  "ok": false
+                }
+              ],
+              "why": "Outside science, material often means cloth. In science it means wood, metal, glass, rock, paper - whatever a thing is made of."
+            },
+            {
+              "ask": "A sponge is soft. Is it smooth?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🧽</div>",
+              "opts": [
+                {
+                  "t": "No. It is soft, and its surface is full of holes.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, soft and smooth are the same",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, all soft things are smooth",
+                  "ok": false
+                }
+              ],
+              "why": "Soft means it squashes. Smooth means no bumps. A sponge squashes and is very bumpy."
+            },
+            {
+              "ask": "Paper can be squashed, twisted and bent. Can it be stretched?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">📄</div>",
+              "opts": [
+                {
+                  "t": "No. A bendy material is not always a stretchy one.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, everything bendy stretches",
+                  "ok": false
+                },
+                {
+                  "t": "Only if it is wet",
+                  "ok": false
+                }
+              ],
+              "why": "Test each change on its own. Paper does three of the four and not the fourth."
+            },
+            {
+              "ask": "Squash a sponge and it springs back. Squash paper into a ball and it stays a ball. Which one is <b>elastic</b>?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🧽</div>",
+              "opts": [
+                {
+                  "t": "the sponge, because it goes back to its old shape",
+                  "ok": true
+                },
+                {
+                  "t": "the paper, because you changed it",
+                  "ok": false
+                },
+                {
+                  "t": "both of them",
+                  "ok": false
+                }
+              ],
+              "why": "Elastic means it goes back to the shape it was. Anything you can merely stretch is not automatically elastic."
+            },
+            {
+              "ask": "Sami says a fair test means the children take turns fairly. Is he right?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">⚖️</div>",
+              "opts": [
+                {
+                  "t": "No. It means being fair to the things you are testing.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, everyone must have a turn",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, the teacher decides",
+                  "ok": false
+                }
+              ],
+              "why": "Taking turns is kind, and it is not what a fair test means. Pull each elastic band the same way, and change only one thing."
+            },
+            {
+              "ask": "Your teacher says a stone is hard. What does <b>hard</b> mean here?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\"><svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M8 46 L14 27 L29 15 L46 18 L57 33 L53 49 L35 56 L15 53 Z\" fill=\"#8F8F8F\" stroke=\"#555\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><path d=\"M14 27 L29 15 L46 18 L38 30 L21 32 Z\" fill=\"#B9B9B9\"/><path d=\"M38 30 L57 33 L53 49 L35 56 Z\" fill=\"#6F6F6F\"/><path d=\"M22 40 l5 3 M42 40 l4 -2\" stroke=\"#5E5E5E\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg></div>",
+              "opts": [
+                {
+                  "t": "not soft",
+                  "ok": true
+                },
+                {
+                  "t": "not easy",
+                  "ok": false
+                },
+                {
+                  "t": "very heavy",
+                  "ok": false
+                }
+              ],
+              "why": "Hard has two meanings. A hard sum is not easy; a hard stone is not soft. In science here it means not soft."
+            },
+            {
+              "ask": "Nora sorts by colour, then makes a bendy group. Why does that go wrong?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🗂️</div>",
+              "opts": [
+                {
+                  "t": "a red bendy balloon belongs in both groups at once",
+                  "ok": true
+                },
+                {
+                  "t": "she used too many groups",
+                  "ok": false
+                },
+                {
+                  "t": "nothing goes wrong",
+                  "ok": false
+                }
+              ],
+              "why": "Pick one pair and keep it for the whole sort: bendy or stiff, rough or smooth, hard or soft."
+            }
+          ],
+          "support": [
+            {
+              "ask": "What is a window made of?",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"9\" y=\"7\" width=\"46\" height=\"48\" rx=\"3\" fill=\"#7A5A3A\"/><rect x=\"13\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"13\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><path d=\"M16 26 L26 14 M36 26 L44 16 M16 47 L24 37\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\".85\"/><rect x=\"5\" y=\"54\" width=\"54\" height=\"5\" rx=\"2\" fill=\"#5E432A\"/></svg>",
+              "opts": [
+                {
+                  "t": "glass",
+                  "ok": true
+                },
+                {
+                  "t": "wood",
+                  "ok": false
+                }
+              ],
+              "why": "Glass is see-through, which is why windows are made of it."
+            },
+            {
+              "ask": "You squash a ball of clay. Does it change shape?",
+              "pic": "🟤",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "Clay is easy to squash into a new shape."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "A sponge and a piece of paper are both squashed. The sponge springs back and the paper stays crumpled. Which is elastic?",
+              "pic": "🧽",
+              "opts": [
+                {
+                  "t": "the sponge",
+                  "ok": true
+                },
+                {
+                  "t": "the paper",
+                  "ok": false
+                },
+                {
+                  "t": "both of them",
+                  "ok": false
+                }
+              ],
+              "why": "Elastic means it goes back to the shape it was. The sponge does; the paper does not."
+            },
+            {
+              "ask": "You want to know which of three fabrics is roughest. What makes it a fair test?",
+              "pic": "🧵",
+              "opts": [
+                {
+                  "t": "feel all three the same way, with the same finger",
+                  "ok": true
+                },
+                {
+                  "t": "feel the one you like best twice",
+                  "ok": false
+                },
+                {
+                  "t": "ask three different friends, one each",
+                  "ok": false
+                }
+              ],
+              "why": "A fair test is fair to the THINGS being tested. Feel each one the same way."
             }
           ]
         }
@@ -2617,6 +3325,69 @@
                 "Being shiny is a property of metal.",
                 "Each test finds one property."
               ]
+            },
+            {
+              "w": "flexible",
+              "pic": "🧵",
+              "meaning": "Bends easily without breaking.",
+              "uses": [
+                "A scarf is flexible.",
+                "A plastic ruler is a little bit flexible."
+              ]
+            },
+            {
+              "w": "rigid",
+              "pic": "🧱",
+              "meaning": "Cannot bend. The opposite of flexible.",
+              "uses": [
+                "A brick is rigid.",
+                "The metal spoon is rigid, so it does not bend."
+              ]
+            },
+            {
+              "w": "rubber",
+              "pic": "➰",
+              "meaning": "A very flexible, waterproof material. Balloons, tyres and elastic bands are made of it.",
+              "uses": [
+                "An elastic band is made of rubber.",
+                "Rubber boots keep your feet dry."
+              ]
+            },
+            {
+              "w": "weak",
+              "pic": "📄",
+              "meaning": "Breaks or tears easily. The opposite of strong.",
+              "uses": [
+                "Wet paper is weak.",
+                "A weak thread snaps when you pull it."
+              ]
+            },
+            {
+              "w": "threads",
+              "pic": "🧵",
+              "meaning": "The thin strands that fabric is made from. Look closely at a sock and you can see them.",
+              "uses": [
+                "Fabric is made of tiny threads.",
+                "A thread came loose from my jumper."
+              ]
+            },
+            {
+              "w": "recycle",
+              "pic": "♻️",
+              "meaning": "To turn a used material into something new instead of throwing it away.",
+              "uses": [
+                "We recycle paper and plastic.",
+                "This bottle was made from recycled plastic."
+              ]
+            },
+            {
+              "w": "waste",
+              "pic": "🗑️",
+              "meaning": "Something thrown away because nobody wants it any more.",
+              "uses": [
+                "Put the waste in the bin.",
+                "We make less waste when we recycle."
+              ]
             }
           ],
           "finder": [
@@ -2669,6 +3440,18 @@
               "file": "electricity-and-magnets.html"
             },
             {
+              "w": "blonde",
+              "pic": "👱",
+              "meaning": "Yellow hair.",
+              "uses": [
+                "Nora has blonde hair.",
+                "Three children in the class are blonde."
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
               "w": "ear",
               "pic": "👂🏾",
               "meaning": "The part of your body that hears.",
@@ -2687,6 +3470,18 @@
               "uses": [
                 "Earth is round.",
                 "Earth is mostly covered in water."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "earthworms",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><path d=\"M7 44 C13 29 24 29 28 40 S42 51 46 38 S54 25 58 29\" stroke=\"#D98A8A\" stroke-width=\"10\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M7 44 C13 29 24 29 28 40 S42 51 46 38 S54 25 58 29\" stroke=\"#B86A6A\" stroke-width=\"10\" fill=\"none\" stroke-dasharray=\"1.5 6\"/><circle cx=\"57\" cy=\"28\" r=\"1.4\" fill=\"#1B1B1B\"/></svg>",
+              "meaning": "Long, thin animals that live in soil. They make the soil better for plants.",
+              "uses": [
+                "Earthworms live in the soil.",
+                "We found three earthworms under the stone."
               ],
               "lesson": 8,
               "title": "Our Earth, Our Sun",
@@ -2715,6 +3510,18 @@
               "lesson": 1,
               "title": "Alive or Never Alive",
               "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "flexible",
+              "pic": "🧵",
+              "meaning": "Bends easily without breaking.",
+              "uses": [
+                "A scarf is flexible.",
+                "A plastic ruler is a little bit flexible."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
             },
             {
               "w": "float",
@@ -2753,6 +3560,30 @@
               "file": "pushes-pulls-and-floating.html"
             },
             {
+              "w": "freeze",
+              "pic": "❄️",
+              "meaning": "What happens when water gets very cold and turns to ice.",
+              "uses": [
+                "Water freezes when it is very cold.",
+                "The puddle froze overnight."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "gills",
+              "pic": "🐟",
+              "meaning": "The parts a fish breathes with. A fish takes in air from the water through its gills.",
+              "uses": [
+                "A fish has gills instead of lungs.",
+                "You can see the gills behind its head."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
               "w": "grow",
               "pic": "📈",
               "meaning": "To get bigger and change over time.",
@@ -2789,6 +3620,18 @@
               "file": "what-is-it-made-of.html"
             },
             {
+              "w": "healthy",
+              "pic": "🍎",
+              "meaning": "Good for your body. Healthy food helps you grow.",
+              "uses": [
+                "An apple is a healthy snack.",
+                "Running about keeps you healthy."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
               "w": "hearing",
               "pic": "👂🏾",
               "meaning": "The sense that uses your ears.",
@@ -2811,6 +3654,18 @@
               "lesson": 8,
               "title": "Our Earth, Our Sun",
               "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "investigation",
+              "pic": "🧪",
+              "meaning": "A test you do to answer a question. You predict, you try it, and you say what happened.",
+              "uses": [
+                "Our investigation showed that a plant needs light.",
+                "We did an investigation with two plants."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
             },
             {
               "w": "leaf",
@@ -2861,6 +3716,18 @@
               "file": "electricity-and-magnets.html"
             },
             {
+              "w": "mains",
+              "pic": "🔌",
+              "meaning": "The strong electricity that comes into a building through wires, to the sockets in the wall.",
+              "uses": [
+                "A kettle uses mains electricity.",
+                "Only a plug goes into the mains."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
+            },
+            {
               "w": "material",
               "pic": "🧱",
               "meaning": "What a thing is made of, like wood, metal or glass.",
@@ -2897,6 +3764,18 @@
               "file": "what-is-it-made-of.html"
             },
             {
+              "w": "model",
+              "pic": "🌍",
+              "meaning": "A small copy of something, or a drawing of it, that helps you see how it works.",
+              "uses": [
+                "A globe is a model of Earth.",
+                "We made a model of a plant out of paper."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
               "w": "need",
               "pic": "💧",
               "meaning": "Something you must have to stay alive.",
@@ -2914,11 +3793,35 @@
               "meaning": "Not alive now, and not alive ever. It does not grow, need food or have young.",
               "uses": [
                 "A stone was never alive.",
-                "A spoon was never alive."
+                "A cup was never alive."
               ],
               "lesson": 1,
               "title": "Alive or Never Alive",
               "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "non-living",
+              "pic": "🗻",
+              "meaning": "Not alive. Some non-living things used to be alive, like a fallen leaf, and some never were, like a rock.",
+              "uses": [
+                "A rock is non-living.",
+                "Sort the pictures into living and non-living."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "non-magnetic",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"6\" y=\"20\" width=\"46\" height=\"26\" rx=\"4\" fill=\"#9A6A3A\" stroke=\"#6E4520\" stroke-width=\"2.5\"/><path d=\"M12 27h18 M16 34h24 M10 40h16\" stroke=\"#6E4520\" stroke-width=\"2\" stroke-linecap=\"round\"/><ellipse cx=\"52\" cy=\"33\" rx=\"8\" ry=\"13\" fill=\"#E2B878\" stroke=\"#6E4520\" stroke-width=\"2.5\"/><ellipse cx=\"52\" cy=\"33\" rx=\"4.5\" ry=\"7.5\" fill=\"none\" stroke=\"#B5834A\" stroke-width=\"1.5\"/><circle cx=\"52\" cy=\"33\" r=\"1.6\" fill=\"#B5834A\"/></svg>",
+              "meaning": "A material a magnet does not attract. Wood, plastic, paper and water are non-magnetic.",
+              "uses": [
+                "Wood is non-magnetic.",
+                "Kitchen foil is metal and still non-magnetic."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
             },
             {
               "w": "object",
@@ -2931,6 +3834,18 @@
               "lesson": 4,
               "title": "What Is It Made Of?",
               "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "observe",
+              "pic": "🔍",
+              "meaning": "To look very carefully to find something out. Scientists observe before they say anything.",
+              "uses": [
+                "Observe the plant every day.",
+                "I observed that the leaves went yellow."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
             },
             {
               "w": "planet",
@@ -2981,6 +3896,18 @@
               "file": "electricity-and-magnets.html"
             },
             {
+              "w": "practical",
+              "pic": "🧤",
+              "meaning": "A hands-on piece of science. You do it yourself instead of just reading about it.",
+              "uses": [
+                "Today's practical is planting a bean.",
+                "Wash your hands after a practical."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
               "w": "predict",
               "pic": "🔮",
               "meaning": "To say what you think will happen, before you test it.",
@@ -3029,6 +3956,18 @@
               "file": "pushes-pulls-and-floating.html"
             },
             {
+              "w": "quarry",
+              "pic": "⛏️",
+              "meaning": "A big hole where people dig rock out of the ground, to build with.",
+              "uses": [
+                "The stones for that wall came from a quarry.",
+                "A quarry is a very noisy place."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
               "w": "quiet",
               "pic": "🤫",
               "meaning": "A small sound, hard to hear.",
@@ -3039,6 +3978,30 @@
               "lesson": 6,
               "title": "Sounds Near and Far",
               "file": "sounds-near-and-far.html"
+            },
+            {
+              "w": "recycle",
+              "pic": "♻️",
+              "meaning": "To turn a used material into something new instead of throwing it away.",
+              "uses": [
+                "We recycle paper and plastic.",
+                "This bottle was made from recycled plastic."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "rigid",
+              "pic": "🧱",
+              "meaning": "Cannot bend. The opposite of flexible.",
+              "uses": [
+                "A brick is rigid.",
+                "The metal spoon is rigid, so it does not bend."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
             },
             {
               "w": "rock",
@@ -3075,6 +4038,30 @@
               "lesson": 2,
               "title": "Parts of a Plant",
               "file": "parts-of-a-plant.html"
+            },
+            {
+              "w": "rubber",
+              "pic": "➰",
+              "meaning": "A very flexible, waterproof material. Balloons, tyres and elastic bands are made of it.",
+              "uses": [
+                "An elastic band is made of rubber.",
+                "Rubber boots keep your feet dry."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "science report",
+              "pic": "📃",
+              "meaning": "What a scientist writes to tell other people what they found out.",
+              "uses": [
+                "We wrote a science report about the globe catches.",
+                "A science report says what you did and what happened."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
             },
             {
               "w": "seed",
@@ -3257,6 +4244,18 @@
               "file": "my-body-and-my-senses.html"
             },
             {
+              "w": "threads",
+              "pic": "🧵",
+              "meaning": "The thin strands that fabric is made from. Look closely at a sock and you can see them.",
+              "uses": [
+                "Fabric is made of tiny threads.",
+                "A thread came loose from my jumper."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
               "w": "touch",
               "pic": "✋🏾",
               "meaning": "The sense that uses your skin, to feel things.",
@@ -3267,6 +4266,42 @@
               "lesson": 3,
               "title": "My Body and My Senses",
               "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "twins",
+              "pic": "👯",
+              "meaning": "Two children born on the same day to the same mother. Some twins look alike and some do not.",
+              "uses": [
+                "Lina and Hana are twins.",
+                "A brother and a sister can be twins."
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "unhealthy",
+              "pic": "🍰",
+              "meaning": "Not good for your body if you have a lot of it. A treat, not an every-day food.",
+              "uses": [
+                "Sweets are unhealthy if you eat a lot.",
+                "One cake is fine; a cake every day is unhealthy."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "used to be alive",
+              "pic": "🍂",
+              "meaning": "Not alive now, but it was once. It grew, or it came from something that grew.",
+              "uses": [
+                "A fallen leaf used to be alive.",
+                "A wooden spoon came from a tree, so it used to be alive."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
             },
             {
               "w": "vibrate",
@@ -3281,12 +4316,36 @@
               "file": "sounds-near-and-far.html"
             },
             {
+              "w": "waste",
+              "pic": "🗑️",
+              "meaning": "Something thrown away because nobody wants it any more.",
+              "uses": [
+                "Put the waste in the bin.",
+                "We make less waste when we recycle."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
               "w": "waterproof",
               "pic": "☔",
               "meaning": "Water does not go through it.",
               "uses": [
                 "A raincoat is waterproof.",
                 "Paper is not waterproof. It goes soggy."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "weak",
+              "pic": "📄",
+              "meaning": "Breaks or tears easily. The opposite of strong.",
+              "uses": [
+                "Wet paper is weak.",
+                "A weak thread snaps when you pull it."
               ],
               "lesson": 4,
               "title": "What Is It Made Of?",
@@ -4372,7 +5431,34 @@
     if (cur === slides.length - 1) paintStickers();
     if (speak) say(slides[cur].dataset.say);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }
   }
+  /* RESUME ON REOPEN. The stored record already knew which steps were
+     done and where the learner was; until this hook every reopened
+     lesson drew an empty dot rail and step 1. Called once, after the
+     progress document hydrates, and only if the learner has not already
+     moved off step 1 on their own - hydrate is asynchronous and a child
+     who tapped Next is not to be yanked back. show() is looked up by
+     name at call time, so every wrapper the build or the pipeline puts
+     around it (the header bar\x27s percentage, a step\x27s arrival line)
+     runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
+  window.__ehelRestore = function (doneIdx, resumeIdx) {
+    const untouched = cur === 0 && !ehelInteracted;
+    let changed = false;
+    for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
+    if (changed) paintDots();
+    const target = Number.isInteger(resumeIdx) && resumeIdx > 0 && resumeIdx < slides.length
+      ? resumeIdx : done.findIndex((d, i) => !d && i < done.length - 1);
+    if (untouched && target > 0) show(target, false);
+    else if (changed) show(cur, false);
+  };
   $("next").addEventListener("click", () => show(cur + 1, true));
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
@@ -4386,7 +5472,7 @@
      2.13s into "Words: home and classroom"). The tick and the dots still land
      on the step the child actually finished; only the voice asks whether that
      step is still the one showing, the way playHere() already does for clips. */
-  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg && cur === i) say(msg); }
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg && cur === i) say(msg); }
   /* The same problem finish() was fixed for above, generalised: a round or
      sim step started on a timer belongs to the step it was set on. If the
      child has moved on by the time it fires, it still runs - the sim still
@@ -4431,6 +5517,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -4476,9 +5576,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -4486,14 +5625,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();
@@ -5121,8 +6267,20 @@
   function experiment(o) {
     const el = o.el, sim = SIMS[o.sim];
     let predicted = null, score = 0, lock = false;
+    /* The phases are NUMBERED FROM THE ONES THIS STEP ACTUALLY HAS, because two
+       of the five are optional: `plan` (Stage 1, the second clause of 1TWSp.01 -
+       "talk about how to find answers") and `conclude` (Stage 3, 3TWSa.03). A
+       step with neither reads 1 Predict, 2 Try it, 3 What happened?, 4 Did it
+       match? exactly as before, so Grades 2-4 rebuild byte-identical. The order
+       is Cambridge's own five-move method from the Learner's Book back matter:
+       question, predict, plan, observe, conclude. */
+    const PHASES = ["Predict"].concat(o.plan ? ["How to find out"] : [],
+                                      ["Try it", "What happened?", "Did it match?"],
+                                      o.conclude ? ["Conclude"] : []);
+    const phName = (n) => (PHASES.indexOf(n) + 1) + " · " + n;
+    const outOf = 2 + (o.plan ? 1 : 0) + (o.conclude ? 1 : 0);
     const stage = $(el.stage);
-    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">1 · Predict</span>' +
+    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">' + phName("Predict") + '</span>' +
       '<div class="sim" id="' + el.stage + 'sim"></div><div class="simrow" id="' + el.stage + 'ctl"></div></div>';
     const box = $(el.stage + "sim"), ctl = $(el.stage + "ctl"), ph = $(el.stage + "ph");
     /* data: the step's own data, so a sim can be given its own objects -
@@ -5134,29 +6292,39 @@
       $(el.ch).innerHTML = shuffle(opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '" data-t="' + esc(c.t) + '">' + c.t + "</button>").join("");
     }
     function askPredict() {
-      ph.textContent = "1 · Predict"; $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
+      ph.textContent = phName("Predict"); $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
       $(el.score).textContent = "What do you think will happen?";
     }
+    /* Cambridge's third move: talk about WHAT TO DO to find the answer. One
+       way is fair and the others change more than one thing at a time, which is
+       the Stage 1 fair-test idea the Teacher's Resource says children read as
+       "fair for the learners". */
+    function askPlan() {
+      phase = "plan";
+      ph.textContent = phName("How to find out"); $(el.ask).innerHTML = o.plan.ask; choices(o.plan.opts);
+      $(el.score).textContent = "How shall we find out?"; lock = false;
+      sayHere(o.finish, plain(o.plan.ask));
+    }
     function runIt() {
-      ph.textContent = "2 · Try it"; $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
+      ph.textContent = phName("Try it"); $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
       $(el.ch).innerHTML = ""; $(el.score).textContent = "Press the button and watch";
       sayHere(o.finish, plain(o.runAsk || "Now let us try it. Press the button and watch carefully."));
       sim.run(box, api).then(() => setTimeout(askHappened, 1800));
     }
     function askHappened() {
       phase = "happened";
-      ph.textContent = "3 · What happened?"; $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
+      ph.textContent = phName("What happened?"); $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
       $(el.score).textContent = "Say what you saw"; lock = false;
       sayHere(o.finish, plain(o.happened.ask));
     }
     function askConclude() {
       phase = "conclude";
-      ph.textContent = "5 · Conclude"; $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
+      ph.textContent = phName("Conclude"); $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
       $(el.score).textContent = "What does this tell us?"; lock = false;
       sayHere(o.finish, plain(o.conclude.ask));
     }
     function askMatched() {
-      ph.textContent = "4 · Did it match?";
+      ph.textContent = phName("Did it match?");
       $(el.ask).innerHTML = "You predicted: <b>" + esc(predicted.t) + "</b>. Did it match what happened?";
       $(el.ch).innerHTML = '<button type="button" class="choice text" data-m="1">Yes, it matched my prediction</button><button type="button" class="choice text" data-m="0">No, something different happened</button>';
       $(el.score).textContent = "Scientists always check"; lock = false;
@@ -5173,7 +6341,16 @@
         b.classList.add("right");
         $(el.fb).className = "fb"; $(el.fb).textContent = "Your prediction: " + predicted.t + ". Let us find out!";
         say("You predict: " + predicted.t + ". A prediction is a good guess before you try. Let us find out!");
+        if (o.plan) { phase = "plan"; setTimeout(() => { $(el.fb).textContent = ""; askPlan(); }, 2600); return; }
         phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 2600);
+      } else if (phase === "plan") {
+        const ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong"); else score++;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not quite. ") + o.plan.why;
+        say($(el.fb).textContent);
+        phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 3000);
       } else if (phase === "happened") {
         const ok = b.dataset.ok === "1";
         $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
@@ -5193,7 +6370,7 @@
            about the question. Without one, the step ends here as before. */
         if (o.conclude) { setTimeout(() => { $(el.fb).textContent = ""; askConclude(); }, 3200); return; }
         phase = "done";
-        reportScore(o.finish, score, 2);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3200);
       } else if (phase === "conclude") {
         const ok = b.dataset.ok === "1";
@@ -5202,7 +6379,7 @@
         $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Think about what you saw. ") + o.conclude.why;
         say($(el.fb).textContent);
         phase = "done";
-        reportScore(o.finish, score, 3);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3400);
       }
     });
@@ -5273,7 +6450,7 @@
   /* ---- record what happened in a simple table ----------------------- */
   function recordTable(o) {
     const el = o.el;
-    let row = 0, right = 0, lock = false;
+    let row = 0, right = 0, lock = false, q = 0, phase = "fill";
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec"><thead><tr><th>' + esc(o.columns[0]) + "</th><th>" + esc(o.columns[1]) + "</th></tr></thead><tbody>" +
         o.rows.map((r, k) => '<tr><td><span class="rowlab">' + picHtml(r.pic, "pic") + esc(r.label) + '</span></td><td><button type="button" class="cell' + (k === row ? " now" : "") + (r.filled ? " filled " + (r.ok ? "right" : "") : "") + '" data-k="' + k + '"' + (k !== row ? " disabled" : "") + ">" + (r.filled ? esc(r.filled) : (k === row ? "tap to fill in" : "…")) + "</button></td></tr>").join("") + "</tbody></table></div>";
@@ -5286,8 +6463,38 @@
       $(el.score).textContent = "Row " + (row + 1) + " of " + o.rows.length;
       sayHere(o.finish, plain(o.ask.replace("%s", r.label)));
     }
+    function askRead() {
+      phase = "read"; lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+      $(el.score).textContent = "Reading your table: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
+      if (phase === "read") {
+        lock = true;
+        const it = o.read[q], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (ok) right++; else b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Look at your table again. ") + it.why;
+        say($(el.fb).textContent);
+        q++;
+        setTimeout(() => {
+          $(el.fb).textContent = ""; $(el.fb).className = "fb";
+          if (q < o.read.length) { askRead(); return; }
+          $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+          const total = o.rows.length + o.read.length;
+          const line = "Your table is complete, and you read it. You got " + right + " of " + total + " first time. " + o.done;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+          reportScore(o.finish, right, total);
+          finish(o.finish, line);
+        }, 2800);
+        return;
+      }
       lock = true;
       const r = o.rows[row], ok = b.dataset.c === r.answer, chosen = o.choices.find((c) => c.id === b.dataset.c) || {};
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.c === r.answer) c.classList.add("right"); });
@@ -5300,11 +6507,15 @@
       setTimeout(() => {
         $(el.fb).textContent = ""; $(el.fb).className = "fb";
         if (row >= o.rows.length) {
+          /* Cambridge reads a table as well as filling one in, so the finished
+             table stays on screen while these run - see `read` in the header. */
+          if (o.read && o.read.length && q < o.read.length) { askRead(); return; }
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.ask).innerHTML = "Your table is complete.";
-          const line = "Your table is complete. You recorded " + right + " of " + o.rows.length + " first time. " + o.done;
+          const total = o.rows.length + ((o.read && o.read.length) || 0);
+          const line = "Your table is complete. You got " + right + " of " + total + " first time. " + o.done;
           $(el.fb).className = "fb good"; $(el.fb).textContent = line;
-          reportScore(o.finish, right, o.rows.length);
+          reportScore(o.finish, right, total);
           finish(o.finish, line);
         } else offer();
       }, 2600);
@@ -7344,6 +8555,18 @@
   const restart = $("restart");
   if (restart) restart.addEventListener("click", () => location.reload());
 
+  /* Cambridge's "Look what I can do!" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
+
 
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Science words"], ["🥄", "Materials"], ["🏷️", "Object vs material"], ["🗂️", "Sorted it"], ["🧱", "Material sorter"], ["🔬", "Material tester"], ["🗣️", "Describe it"], ["🧪", "Shape changer"], ["📝", "Recorded it"], ["🏠", "Right material"], ["🎮", "I played the games"], ["🏠", "Science at home"], ["⭐", "Star scientist"], ["🌍", "Science world"], ["🗂️", "My resources"]];
 
@@ -7368,5 +8591,707 @@
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);
 
-})();
+
+  /* ================= the two header bars =================
+     Everything here is answered by this page. The class controls are not
+     painted here - they mount themselves into .top-actions on bar 2, and only
+     when the server confirms a teacher is watching. */
+  (function () {
+    const earnable = slides.length - 1;            // teaching slides + the check
+    const pctEl = $("ehPct"), fillEl = $("ehFill");
+    function ehPaint() {
+      const n = done.slice(0, earnable).filter(Boolean).length;
+      const p = earnable ? Math.round((n / earnable) * 100) : 0;
+      pctEl.textContent = p + "%";
+      fillEl.style.width = p + "%";
+      const box = $("ehSteps");
+      if (box && !box.hidden) ehSteps();
+    }
+    function ehSteps() {
+      $("ehSteps").innerHTML = slides.map(function (s, i) {
+        const h = s.querySelector("h2");
+        return '<button type="button" data-i="' + i + '" class="' +
+          (i === cur ? "now " : "") + (done[i] ? "done" : "") + '">' +
+          (i + 1) + ". " + (h ? h.textContent : "Step " + (i + 1)) + "</button>";
+      }).join("");
+    }
+    $("ehSteps").addEventListener("click", function (e) {
+      const b = e.target.closest("button[data-i]");
+      if (!b) return;
+      show(+b.dataset.i, true);
+      $("ehSteps").hidden = true;
+      $("ehMenu").setAttribute("aria-expanded", "false");
+    });
+    $("ehMenu").addEventListener("click", function () {
+      const box = $("ehSteps"), open = box.hidden;
+      if (open) ehSteps();
+      box.hidden = !open;
+      $("ehMenu").setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    $("ehPicker").addEventListener("change", function (e) {
+      if (e.target.value) location.href = e.target.value + location.search;
+    });
+    $("ehFull").addEventListener("click", function () {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    });
+    document.addEventListener("fullscreenchange", function () {
+      $("ehFull").innerHTML = document.fullscreenElement ? "\u26f6 Leave full screen" : "\u26f6 Full screen";
+    });
+    /* the voice toggle mutes what SHE says; it does not touch the Listen
+       buttons, which a child presses on purpose */
+    let muted = false;
+    const realSay = say;
+    say = function (t) { if (!muted) realSay(t); };
+    $("ehAudio").addEventListener("click", function () {
+      muted = !muted;
+      /* VOICE is this script's own const, never a property of window, so the
+         old `window.VOICE &&` guard was always false and switching the voice
+         off left her talking. hush() stops her, and keeps her reactions to
+         answers quiet until the voice is switched back on. */
+      if (typeof VOICE !== "undefined" && VOICE.hush) VOICE.hush(muted);
+      $("ehAudio").setAttribute("aria-pressed", muted ? "true" : "false");
+      $("ehAudio").title = muted ? "Turn the voice on" : "Turn the voice off";
+    });
+    /* every completion repaints the rail, so that is where the pill hangs */
+    const realPaintDots = paintDots;
+    paintDots = function () { realPaintDots(); ehPaint(); };
+    const realShow = show;
+    show = function (i, speak) { realShow(i, speak); ehPaint(); };
+    ehPaint();
+  })();
+
+  
+  /* ================= the lesson search ================= ehel-lesson-search
+     One body, two hosts - see add-lesson-search.py. Everything it knows comes
+     from lesson-search.json, which is derived from these very pages. */
+  (function () {
+    var box = document.getElementById("ehFind");
+    var panel = document.getElementById("ehFound");
+    var say = document.getElementById("ehFoundSay");
+    var list = document.getElementById("ehFoundList");
+    if (!box || !panel || !say || !list) return;
+
+    var HERE = (location.pathname.split("/").pop() || "");
+    var INDEX = null, STATE = "cold", sel = -1, rows = [];
+    var esc = function (s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    };
+    /* the curly apostrophe is normalised in the index too, so o’clock and
+       o'clock are one word to both sides */
+    var flat = function (s) { return String(s).replace(/\u2019/g, "'").toLowerCase(); };
+    var toks = function (s) { return flat(s).match(/[a-z0-9']+/g) || []; };
+
+    /* KEEP THE LAUNCH PARAMETERS. ?from is ours and is put back; everything
+       else - pwsToken, pwsEndpoint, studentid - belongs to the launch and a
+       result that dropped it would report nothing to the school. */
+    function query() {
+      var p = new URLSearchParams(location.search);
+      p.delete("from");
+      var rest = p.toString();
+      return "?from=sci1" + (rest ? "&" + rest : "");
+    }
+
+    /* WAITERS, not an early return. The focus handler starts this fetch with
+       nothing to do on arrival, and the first keystroke lands while it is
+       still in flight - so a `if (STATE === "loading") return` DROPS that
+       query's callback and the panel never opens. Measured: typing "addition"
+       on a cold field, index fetched 200, nothing rendered. */
+    var waiting = [];
+    function load(then) {
+      if (STATE === "ready") { then(); return; }
+      waiting.push(then);
+      if (STATE === "loading") return;
+      STATE = "loading";
+      fetch("lesson-search.json", { credentials: "omit" })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (doc) {
+          INDEX = [];
+          (doc.lessons || []).forEach(function (l) {
+            (l.steps || []).forEach(function (s) {
+              INDEX.push({
+                file: l.file, title: l.title, unit: l.u, i: s.i, h: s.h, t: s.t,
+                wh: toks(s.h), wt: toks(s.t),
+                wgh: toks(s.gh || ""), wg: toks(s.g || ""),
+                gm: s.gm || {}
+              });
+            });
+          });
+          STATE = "ready";
+          var q = waiting; waiting = [];
+          q.forEach(function (f) { f(); });
+        })
+        .catch(function () {
+          STATE = "cold";
+          waiting = [];
+          /* honest rather than silent: the field stays, and says why it
+             cannot answer, because the usual cause is a page opened before
+             the index landed and a reload fixes it */
+          say.textContent = "The lesson list could not be loaded. Try again in a moment.";
+          list.innerHTML = "";
+          open(true);
+        });
+    }
+
+    /* every token must START a word somewhere. Four tiers, best first:
+         the step's HEADING says it                       ("Adding")
+         the heading IMPLIES it                           ("Adding" -> addition)
+         a sentence in the step implies it                (a mention)
+         the step's own words say it somewhere
+       The middle tier is what puts Adding and Taking Away above a counting
+       step that happens to say "add" once - see build-lesson-search.py. */
+    /* BOTH directions, or the plural of a term finds nothing. Measured: the
+       one-way version (content word starts with the query) answered
+       "fractions" with "No step in Grade 1 Mathematics mentions fractions"
+       while Halves and Wholes IS the fractions lesson - the tag is
+       "fraction", singular - and answered "sorting" with one step while the
+       lessons say "sort".
+
+       But a bare reverse prefix is too much: it made "tally" match "tall"
+       and answer with Full and empty, Longer or shorter? and Pour and fill,
+       where the correct answer is that Grade 1 teaches no tallying. Every
+       case the reverse direction is FOR is a suffix inflection, so that is
+       what it allows - "sort"+ing, "fraction"+s - and "tall"+y is not one. */
+    var SUFFIX = { s: 1, es: 1, ing: 1, ed: 1 };
+    function starts(words, k) {
+      for (var i = 0; i < words.length; i++) {
+        var w = words[i];
+        if (w === k) return 2;
+        if (w.length > k.length && w.lastIndexOf(k, 0) === 0) return 1;
+        if (w.length >= 3 && k.length > w.length && k.lastIndexOf(w, 0) === 0
+            && SUFFIX[k.slice(w.length)]) return 1;
+      }
+      return 0;
+    }
+    function score(row, ks) {
+      var total = 0;
+      for (var i = 0; i < ks.length; i++) {
+        var k = ks[i];
+        var h = starts(row.wh, k);
+        var gh = h ? 0 : starts(row.wgh, k);
+        var g = (h || gh) ? 0 : starts(row.wg, k);
+        var t = (h || gh || g) ? 0 : starts(row.wt, k);
+        if (!h && !gh && !g && !t) return 0;   // every token must appear
+        total += h ? 12 + h : gh ? 8 + gh : g ? 4 + g : 1 + t;
+      }
+      return total;
+    }
+    /* WHAT THE QUERY MATCHED, in the step's own words. A bridged term is not
+       in the text - "addition" is why the bridge exists - so fall back to the
+       phrase the index recorded for that term ("adding"), and the panel then
+       marks the words that actually answered the query instead of rendering
+       an unmarked opening line. */
+    function target(row, k) {
+      var low = flat(row.t), p = low.indexOf(k);
+      if (p >= 0) return [p, k];
+      for (var name in row.gm) {
+        if (starts([name], k)) {
+          var w = flat(row.gm[name]), q = low.indexOf(w);
+          if (q >= 0) return [q, w];
+        }
+      }
+      return [-1, ""];
+    }
+    function snippet(row, ks) {
+      var low = flat(row.t), at = -1, hit = "";
+      for (var i = 0; i < ks.length; i++) {
+        var r = target(row, ks[i]), p = r[0];
+        if (p >= 0 && (at < 0 || p < at)) { at = p; hit = r[1]; }
+      }
+      if (at < 0) return esc(row.t.slice(0, 90));
+      var a = Math.max(0, at - 34), b = Math.min(row.t.length, at + 60);
+      var end = low.indexOf(" ", at + hit.length);
+      var word = row.t.slice(at, end > at && end < at + 24 ? end : at + hit.length);
+      return (a ? "\u2026" : "") + esc(row.t.slice(a, at)) + "<mark>" + esc(word) + "</mark>" +
+        esc(row.t.slice(at + word.length, b)) + (b < row.t.length ? "\u2026" : "");
+    }
+
+    function open(on) {
+      panel.hidden = !on;
+      box.setAttribute("aria-expanded", on ? "true" : "false");
+      if (!on) { sel = -1; }
+    }
+    function go(row) {
+      /* in THIS lesson: move the deck, and put the step in the URL without a
+         hashchange, so the address bar is shareable and nothing runs twice */
+      if (row.file === HERE && typeof show === "function") {
+        open(false);
+        show(row.i, true);
+        try { history.replaceState(null, "", query() + "#step-" + (row.i + 1)); } catch (e) {}
+        return;
+      }
+      location.href = row.file + query() + "#step-" + (row.i + 1);
+    }
+    function paint(ks) {
+      rows.sort(function (a, b) {
+        return b._s - a._s || a.unit - b.unit || a.i - b.i;
+      });
+      rows = rows.slice(0, 30);
+      list.innerHTML = rows.map(function (r, n) {
+        return '<button type="button" data-n="' + n + '">' +
+          '<span class="w">' + esc(r.title) + " \u00b7 Step " + (r.i + 1) + "</span>" +
+          '<span class="t">' + esc(r.h || "Step " + (r.i + 1)) + "</span>" +
+          '<span class="s">' + snippet(r, ks) + "</span></button>";
+      }).join("");
+      sel = -1;
+    }
+    function run() {
+      var ks = toks(box.value).filter(function (k) { return k.length > 1; });
+      if (!ks.length) { open(false); list.innerHTML = ""; say.textContent = ""; return; }
+      rows = [];
+      for (var i = 0; i < INDEX.length; i++) {
+        var s = score(INDEX[i], ks);
+        if (s) { INDEX[i]._s = s; rows.push(INDEX[i]); }
+      }
+      var n = rows.length;
+      paint(ks);
+      /* the count is the honest part: "no step" names what was searched, so a
+         word this grade never teaches reads as absent rather than broken */
+      say.textContent = n
+        ? n + (n === 1 ? " step" : " steps") + " in this grade" + (n > 30 ? " - showing 30" : "")
+        : "No step in " + "Grade 1 Science" + " mentions \u201c" + box.value.trim() + "\u201d.";
+      open(true);
+    }
+
+    var wait = null;
+    box.addEventListener("input", function () {
+      clearTimeout(wait);
+      wait = setTimeout(function () { load(run); }, 90);
+    });
+    box.addEventListener("focus", function () { load(function () {}); });
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { open(false); box.blur(); return; }
+      var bs = list.querySelectorAll("button");
+      if (!bs.length) return;
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        sel = e.key === "ArrowDown"
+          ? (sel + 1) % bs.length
+          : (sel <= 0 ? bs.length - 1 : sel - 1);
+        for (var i = 0; i < bs.length; i++) bs[i].classList.toggle("sel", i === sel);
+        bs[sel].scrollIntoView({ block: "nearest" });
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        go(rows[sel < 0 ? 0 : sel]);
+      }
+    });
+    list.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-n]");
+      if (b) go(rows[+b.dataset.n]);
+    });
+    document.addEventListener("click", function (e) {
+      if (!panel.hidden && !panel.contains(e.target) && !box.closest(".eh-find").contains(e.target)) open(false);
+    });
+
+    /* ---- arriving on a deep link ----
+       Only a lesson page can act on one. show() is called now, BEFORE the
+       progress document hydrates, because __ehelRestore moves only a learner
+       who has not moved themselves - so this reads to it as a tap on Next and
+       the link is not overridden by the saved resume step. */
+    function fromHash() {
+      var m = /^#step-(\d+)$/.exec(location.hash || "");
+      if (!m || typeof show !== "function") return;
+      var n = +m[1] - 1;
+      if (n >= 0) show(n, false);
+    }
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+  })();
+
+  })();
+</script>
+
+<script>
+  /* wire-navigation.py :: back
+     Only when ?from=sci1: a lesson opened on its own has nowhere to go back to. */
+  (function () {
+    if (new URLSearchParams(location.search).get("from") !== "sci1") return;
+    var wrap = document.querySelector(".wrap");
+    if (!wrap) return;
+    var back = document.createElement("a");
+    back.className = "lesson-back";
+    back.href = "index.html";
+    back.innerHTML = '<span aria-hidden="true">\u2190</span> Grade 1 Science';
+    wrap.insertBefore(back, wrap.firstChild);
+  })();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>
+
+<!-- WIRE-JS-START -->
+<script type="module">
+  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
+     learner-controls.js holds the SAME singletons the shell mounts. */
+  import { mountLearnerControls } from "./learner-controls.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
+  import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
+
+  const q = new URLSearchParams(location.search);
+  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
+
+  let toastEl = null;
+  function toast(message) {
+    if (toastEl) toastEl.remove();
+    toastEl = document.createElement("div");
+    toastEl.className = "w-toast";
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
+  }
+
+  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
+        .top-actions and mount ONLY when the server says a teacher is watching,
+        so nothing appears to a child working alone. */
+  try {
+    mountLearnerControls({
+      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
+      progressUnit: "l04",
+    });
+  } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
+
+  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
+        the day's allowance, and a lesson nobody opens the tutor on should not
+        spend a request. */
+  if (launchToken) {
+    const dock = document.createElement("button");
+    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
+    const drawer = document.createElement("div");
+    drawer.className = "w-drawer"; drawer.hidden = true;
+    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
+    let panel = null;
+    function open() {
+      drawer.hidden = false; dock.hidden = true;
+      if (panel) return;
+      try {
+        panel = mountWehelChat({
+          container: drawer.querySelector(".w-drawer-body"),
+          meta: {
+            subject: "science", subjectLabel: "Science", grade: 1,
+            unitNo: 4, unitTitle: "What Is It Made Of?",
+            learnerCategory: q.get("category") || "",
+          },
+          store: {},
+          ui: { escapeHtml, toast },
+          tutorLabel: "Wehel Tutor",
+          placeholder: "Ask about What Is It Made Of?\u2026",
+          /* The chips a young learner presses, written as the sentence they
+             would have said. Four, because a row a six-year-old scans has to
+             be short and a fifth makes the other four less likely to be read.
+
+             "Give me a hint" is the one that carries a teaching stance: it
+             says "not the answer" in the message itself, so pressing it cannot
+             turn the tutor into an answer machine even before the prompt file
+             has its say.
+
+             True of every app this tool wires - Grade 1 English and the four
+             Mathematics builds - which is why none of them names a word, a
+             sentence or a number. */
+          quickPrompts: [
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
+            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
+          ],
+        });
+      } catch (e) {
+        console.error("wehel:", e);
+        drawer.hidden = true; dock.hidden = false;
+        toast("Wehel is not available on this page.");
+      }
+    }
+    function close() { drawer.hidden = true; dock.hidden = false; }
+    dock.addEventListener("click", open);
+    drawer.querySelector("button").addEventListener("click", close);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
+    document.body.append(dock, drawer);
+
+    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
+       aloud by default and knew nothing of the lesson's voice, so a reply
+       could play over a line the lesson was reading. The lesson stops the
+       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
+       when the tutor starts reading - which the drawer shows as a Stop
+       button, .voice-button.is-playing. Only the moment that button APPEARS
+       counts: the panel repaints often, and repainting a reply already being
+       read must not cut off a line the lesson has just begun. */
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  }
+</script>
+<!-- WIRE-JS-END -->
+
+<script type="module">
+  /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
+     THE UNIT PROBLEM for why this writes lNN and not uNN. */
+  import { createProgressClient } from "./progress-client.js";
+
+  const q = new URLSearchParams(location.search);
+  const endpoint = (q.get("pwsEndpoint") || "").trim();
+  const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+
+  const COURSE = "ehel-sci-g01";
+  const UNIT = "l04";
+  const STUDENT = q.get("studentid") || "local";
+
+  /* Without a launch endpoint the backend is "local": everything still
+     reduces into localStorage so resume works, and nothing is sent. That is
+     the same rule the shell follows, and it is why opening a lesson as a file
+     or an artifact costs nothing and reports nothing. */
+  const ws = createProgressClient({
+    course: COURSE, student: STUDENT,
+    backend: endpoint ? "remote" : "local",
+    endpoint: endpoint || undefined,
+    token: token || undefined,
+    /* A blocked or expired write path is INVISIBLE otherwise - the throw is
+       caught, the events queue, and the learner is told nothing while their
+       work stops reaching the school. Said on the learner's own screen
+       because the server cannot tell a blocked learner from a closed tab. */
+    onAuthLost: () => notice("Your session has expired. Your work is saved on this device \u2014 open the lesson again from your class page."),
+    onDeliveryFailing: () => notice(navigator.onLine
+      ? "Your work is saved here, but it is not reaching your school right now."
+      : "You are offline. Your work is saved here and will be sent when you are back."),
+    onDeliveryRecovered: () => clearNotice(),
+  });
+
+  const emit = (e) => { try { ws.emit(e); } catch (_) { /* never break the lesson */ } };
+
+  let noticeEl = null;
+  function notice(text) {
+    if (!noticeEl) {
+      noticeEl = document.createElement("p");
+      noticeEl.className = "progress-notice";
+      noticeEl.setAttribute("role", "status");
+      document.querySelector(".wrap")?.prepend(noticeEl);
+    }
+    noticeEl.textContent = text;
+  }
+  function clearNotice() { if (noticeEl) { noticeEl.remove(); noticeEl = null; } }
+
+  const slides = [...document.querySelectorAll(".slide")];
+  /* The lesson's own arithmetic: show() prints "Step n of slides.length - 1",
+     so the last slide is the sticker shelf and not a step. Read from the
+     lesson rather than counted here, so the two cannot disagree. */
+  const STEPS = Math.max(1, slides.length - 1);
+  const sectionId = (i) => "step-" + String(i + 1).padStart(2, "0");
+  const labelOf = (i) => (slides[i]?.querySelector("h2")?.textContent || "").trim() || sectionId(i);
+
+  const doneIds = new Set();
+  let unitSent = false;
+
+  /* WHERE the learner is, which is not what sectionsDone says: a learner
+     stuck twenty minutes into the next step is exactly the one a supervising
+     teacher needs to see. `resumeLabel` rides beside the id because a board
+     printing "step-04" shows a teacher a word that appears nowhere on the
+     child's screen. */
+  /* Activity-level participation, {section: {answered, total}}, and the words
+     the learner has shown they know. Both ride on progress.summary because the
+     reducer keeps them there and nowhere else; both are whole-map
+     last-write-wins, so every summary sends everything known so far rather
+     than a delta that could strand a count.
+
+     The server caps `attempted` at 20 sections and requires
+     ^[a-z0-9][a-z0-9_-]{0,39}$ - no dots, no slashes - so ids are kept in that
+     shape here rather than being rejected silently there. */
+  const attempted = {};
+  const known = new Set();
+  let lastAt = 0;
+
+  /* WHAT THE RECORD ALREADY HOLDS FOR THIS UNIT, read once at load.
+
+     Both maps above are REPLACED by the reducer, not merged, and both start
+     empty on every page load - so without this the first participation event
+     of a new session deletes every section reported in an earlier one. A child
+     who read four books on Monday and answered one question on Tuesday would
+     have Monday erased by Tuesday's first tick.
+
+     It is kept SEPARATE from the live maps rather than copied into them,
+     because hydrate is asynchronous and a report can fire before it lands.
+     Merged at send time, an early report sends a partial map and the next one
+     repairs it; a seed would simply have missed the window. If hydrate cannot
+     be reached at all the baseline stays empty, which is the behaviour without
+     it. */
+  let baseAttempted = {};
+  let baseKnown = [];
+  /* step-NN -> the slide's 0-based index; anything else -> -1 */
+  const indexOf = (id) => {
+    const m = /^step-(\d{2})$/.exec(String(id || ""));
+    return m ? Number(m[1]) - 1 : -1;
+  };
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (!u) return;
+      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
+      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+      /* RESUME. The sections the record says are done are done - seeded into
+         doneIds too, so unit.completed still fires on the day the LAST step
+         is finished even if the first seven were finished last week - and
+         the deck is told to tick them and open where the learner was. Without
+         this a child who closed the tab reopened to an empty dot rail and
+         step 1, while the school's record said otherwise; measured on the
+         Science build on 2026-09-10, and true of every build this tool wires. */
+      const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
+      for (const i of doneIdx) doneIds.add(sectionId(i));
+      const resumeIdx = indexOf(u.resume);
+      if (window.__ehelRestore && (doneIdx.length || resumeIdx > 0)) {
+        try { window.__ehelRestore(doneIdx, resumeIdx); } catch (_) { /* never break the lesson */ }
+      }
+    } catch (_) { /* never break the lesson */ }
+  })();
+
+
+  function report(i) {
+    lastAt = i;
+    const ev = {
+      type: "progress.summary", unit: UNIT,
+      sectionsDone: [...doneIds],
+      resume: sectionId(i), resumeLabel: labelOf(i),
+      xp: doneIds.size,
+    };
+    /* This session's answers WIN over the stored ones for the same section -
+       a child who re-does a step is telling us something newer. */
+    const allAttempted = { ...baseAttempted, ...attempted };
+    const allKnown = new Set([...baseKnown, ...known]);
+    if (Object.keys(allAttempted).length) ev.attempted = allAttempted;
+    if (allKnown.size) ev.knownWords = [...allKnown];
+    emit(ev);
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  }
+
+  window.__ehelStep = function (i, done) {
+    const id = sectionId(i);
+    if (!doneIds.has(id)) {
+      doneIds.add(id);
+      emit({ type: "section.completed", unit: UNIT, section: id, title: labelOf(i) });
+    }
+    if (!unitSent && doneIds.size >= STEPS) {
+      unitSent = true;
+      emit({ type: "unit.completed", unit: UNIT, sectionsDone: [...doneIds], total: STEPS });
+    }
+    report(i);
+  };
+  window.__ehelAt = function (i) { lastAt = i; report(i); };
+
+  /* A SCORE, where a step actually produces one.
+     checkpoint.result is the only event the reducer turns into something a
+     teacher or a parent can read as a mark - the portal's quiz tables and the
+     gradebook are both fed from it - and nothing here emitted it, so every
+     scored step reported that it was DONE and never how it went.
+
+     ADDITIVE ON PURPOSE. A lesson that never calls this behaves exactly as it
+     did, which is what makes it safe in a tool three builds share.
+
+     ONLY WHERE THERE IS A REAL DENOMINATOR. `total` must be the number of
+     questions asked; a step that cannot say how many it asked must not call
+     this, because a score with an invented denominator is a mark nobody
+     measured. Play is deliberately excluded for the same reason the rollup
+     drops the Quran app's `games` star counts: a game is for practising. */
+  window.__ehelScore = function (i, right, total, sub, subTitle) {
+    const n = Number(total) || 0;
+    const got = Math.max(0, Math.min(Number(right) || 0, n));
+    if (!n) return;
+    /* `sub` gives ONE ACTIVITY INSIDE A STEP its own row - a single game out
+       of the twelve, say. The reducer keys checkpoints by this string and does
+       not validate it, so it is normalised here: lower case, hyphens only, and
+       short enough to read in a portal table. */
+    const key = sub
+      ? sectionId(i) + "-" + String(sub).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 28)
+      : sectionId(i);
+    emit({
+      type: "checkpoint.result", unit: UNIT, section: key,
+      title: subTitle ? labelOf(i) + ": " + subTitle : labelOf(i),
+      score: Math.round((got / n) * 100), correct: got, total: n,
+    });
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  };
+
+  /* PARTICIPATION where there is no score to give. "8 of 12 activities
+     ticked" is a real fact about a learner and is not a mark; sending it as a
+     checkpoint would put a percentage on work nobody assessed, which is the
+     thing the rollup already refuses to do for the Quran app's game stars. */
+  window.__ehelAttempt = function (i, answered, total, noun) {
+    const n = Number(total) || 0;
+    if (!n) return;
+    /* WHAT THIS IS CALLED, and what the two numbers count. The section id is a
+       POSITION here - `step-08` - and the same position is a different
+       activity in each app sharing this pipeline, so no reader of the stored
+       document can name it. `labelOf(i)` is the caption the learner is looking
+       at, the same one resumeLabel carries for the same reason: a surface
+       printing the id names a section nobody can find.
+
+       The noun is passed by the call site because only it knows: books, words,
+       rules, seconds. Both are optional and the server bounds them. */
+    attempted[sectionId(i)] = {
+      answered: Math.max(0, Math.min(Number(answered) || 0, n)),
+      total: n,
+      label: labelOf(i),
+      ...(noun ? { noun: String(noun) } : {}),
+    };
+    report(i);
+  };
+
+  /* Words the learner has shown they know, by tapping the right one when it
+     was said or pictured. A set, so hearing the same word in two steps counts
+     once, and the summary sends the whole list because the reducer replaces
+     rather than merges. */
+  window.__ehelKnown = function (words) {
+    const list = Array.isArray(words) ? words : [words];
+    let added = false;
+    for (const w of list) {
+      const t = String(w || "").trim().toLowerCase();
+      if (t && !known.has(t)) { known.add(t); added = true; }
+    }
+    // `cur` belongs to the deck's IIFE and this block is a separate module,
+    // so it is not in scope here - reading it would throw. The last position
+    // the deck told us about is, and that is the honest answer anyway.
+    if (added) report(lastAt);
+  };
 </script>

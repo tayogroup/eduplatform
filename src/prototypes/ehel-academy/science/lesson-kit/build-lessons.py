@@ -128,6 +128,24 @@ def stage_codes():
     return {o["code"]: o["text"] for o in stage}
 
 
+# The misconceptions Cambridge names for this stage. A step cites ids from here
+# in `mis`; the builder refuses an id the fixture does not hold, and
+# check-coverage.py fails an id no step claims. The file is optional - a stage
+# nobody has extracted yet builds as it always did, with no citations possible.
+MISCONCEPTIONS_PATH = os.path.join(ACADEMY, "science", "data",
+                                   "cambridge-stage%d-misconceptions.json" % STAGE)
+
+
+def stage_misconceptions():
+    if not os.path.isfile(MISCONCEPTIONS_PATH):
+        return None
+    doc = load_json(MISCONCEPTIONS_PATH)
+    return {m["id"]: m for m in doc.get("misconceptions", [])}
+
+
+MIS = stage_misconceptions()
+
+
 def js_keys(src, name):
     """The keys of `const NAME = { key: {...}, ... };` in lib/science.js.
 
@@ -190,6 +208,16 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
     for c in s["objectives"]:
         if c not in codes:
             sys.exit("REFUSED: %s names %s, which 0097 does not publish for Stage %d" % (where, c, STAGE))
+    for mid in s.get("mis") or ():
+        if MIS is None:
+            sys.exit("REFUSED: %s cites misconception %r, but %s is missing"
+                     % (where, mid, MISCONCEPTIONS_PATH))
+        if mid not in MIS:
+            sys.exit("REFUSED: %s cites misconception %r, which the Stage %d fixture does not hold"
+                     % (where, mid, STAGE))
+        if int(MIS[mid]["lesson"]) != n:
+            sys.exit("REFUSED: %s cites misconception %r, which the fixture assigns to lesson %d"
+                     % (where, mid, int(MIS[mid]["lesson"])))
     d = s["data"]
     kind = s["kind"]
     if kind in ("explore", "context"):
@@ -218,6 +246,13 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
         one_ok(d["happened"]["opts"], where + " what-happened")
         if not d["happened"].get("why"):
             sys.exit("REFUSED: %s what-happened has no why" % where)
+        # the optional plan and conclude phases (Cambridge's third and fifth
+        # moves); each needs a single key and a reason, like every other choice
+        for extra in ("plan", "conclude"):
+            if d.get(extra):
+                one_ok(d[extra]["opts"], where + " " + extra)
+                if not d[extra].get("why"):
+                    sys.exit("REFUSED: %s %s has no why" % (where, extra))
         if d.get("conclude"):
             one_ok(d["conclude"]["opts"], where + " conclusion")
             if not d["conclude"].get("why"):
@@ -370,6 +405,13 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
             one_ok(it["opts"], where + " %r" % it["ask"])
             if not it.get("why"):
                 sys.exit("REFUSED: %s %r has no why" % (where, it["ask"]))
+        # the optional differentiation banks (Cambridge's Focus / Practice /
+        # Challenge). They are not scored, but a wrong key is still wrong.
+        for tier in ("support", "extension"):
+            for it in d.get(tier) or []:
+                one_ok(it["opts"], where + " " + tier + " %r" % it["ask"][:40])
+                if not it.get("why"):
+                    sys.exit("REFUSED: %s %s item %r has no why" % (where, tier, it["ask"][:40]))
 
 
 # ----------------------------------------------------------------------
@@ -409,7 +451,7 @@ STICKER_SLIDE = """    <section class="slide" data-explain='%(explain)s' data-sa
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
-        <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
+%(cando)s        <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
 """
@@ -538,7 +580,32 @@ def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, de
             "explain": ssml_attr(s["explain"]), "say": attr(say).replace('"', "&quot;"),
             "objectives": " ".join(s["objectives"]),
         }
-    body += STICKER_SLIDE % {"explain": ssml_attr(
+    cando_html = ""
+    if lesson.get("cando"):
+        rows = []
+        for c in lesson["cando"]:
+            # Resolve the claim to a step rather than trusting a written number.
+            # Search the lesson's OWN steps, not the expanded list: _shell.expand
+            # gives the overview, lecture, words, games and home steps the whole
+            # lesson's codes, so the first match in the expanded list is always
+            # the overview - which is where all 53 claims pointed on the first
+            # attempt. `core = list(lesson["steps"])` keeps the same dicts, so
+            # index() on identity is exact.
+            own = next((st for st in lesson["steps"] if c["code"] in st["objectives"]), None)
+            if own is None:
+                sys.exit("REFUSED: lesson %d self-check %r names %s, which none of this lesson's own steps carries"
+                         % (n, c["t"][:40], c["code"]))
+            where = steps.index(own)
+            rows.append('          <li><span>%s</span><button type="button" class="candogo" data-go="%d">Show me</button></li>'
+                        % (text(c["t"]), where))
+        cando_html = (
+            '        <div class="cando">\n'
+            '          <h3>Look what I can do!</h3>\n'
+            '          <p class="candonote">Read each one. Can you do it?'
+            ' If you are not sure, press <b>Show me</b>.</p>\n'
+            '          <ul>\n' + "\n".join(rows) + '\n          </ul>\n'
+            '        </div>\n')
+    body += STICKER_SLIDE % {"cando": cando_html, "explain": ssml_attr(
         '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s>'
         '<s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as>'
         '<break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>')}
@@ -547,7 +614,8 @@ def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, de
         "lessonNo": n, "title": title,
         "objectives": sorted({c for s in steps for c in s["objectives"]}),
         "steps": [dict({"kind": s["kind"], "title": s["title"], "objectives": s["objectives"], "data": s["data"]},
-                       **({"sittingBreak": s["sittingBreak"]} if s.get("sittingBreak") else {})) for s in steps],
+                       **({"sittingBreak": s["sittingBreak"]} if s.get("sittingBreak") else {}),
+                       **({"mis": s["mis"]} if s.get("mis") else {})) for s in steps],
     }
     stickers = [[s["icon"], s["sticker"]] for s in steps]
     all_codes = sorted({c for s in steps for c in s["objectives"]})

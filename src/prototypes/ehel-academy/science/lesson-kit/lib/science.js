@@ -390,7 +390,12 @@
             setTimeout(() => {
               if (item.answer === "yes") { it.style.transform = "translateX(-40px)"; SOUND.play("click", 0.6); }
               else SOUND.play("pop", 0.3);
-              setTimeout(() => { api.say(item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it."); r(); }, 500);
+              /* `said` lets a lesson supply its own sentence. Stage 1 needs it:
+                 Cambridge names "magnets stick to things" as a misconception to
+                 correct (attract is its own Stage 1 glossary word), and the
+                 fallback below is the wording Grade 3 already ships, so a grade
+                 that sets nothing rebuilds byte-identical. */
+              setTimeout(() => { api.say(item.said || (item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it.")); r(); }, 500);
             }, 950);
           }, 40);
         });
@@ -615,8 +620,20 @@
   function experiment(o) {
     const el = o.el, sim = SIMS[o.sim];
     let predicted = null, score = 0, lock = false;
+    /* The phases are NUMBERED FROM THE ONES THIS STEP ACTUALLY HAS, because two
+       of the five are optional: `plan` (Stage 1, the second clause of 1TWSp.01 -
+       "talk about how to find answers") and `conclude` (Stage 3, 3TWSa.03). A
+       step with neither reads 1 Predict, 2 Try it, 3 What happened?, 4 Did it
+       match? exactly as before, so Grades 2-4 rebuild byte-identical. The order
+       is Cambridge's own five-move method from the Learner's Book back matter:
+       question, predict, plan, observe, conclude. */
+    const PHASES = ["Predict"].concat(o.plan ? ["How to find out"] : [],
+                                      ["Try it", "What happened?", "Did it match?"],
+                                      o.conclude ? ["Conclude"] : []);
+    const phName = (n) => (PHASES.indexOf(n) + 1) + " · " + n;
+    const outOf = 2 + (o.plan ? 1 : 0) + (o.conclude ? 1 : 0);
     const stage = $(el.stage);
-    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">1 · Predict</span>' +
+    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">' + phName("Predict") + '</span>' +
       '<div class="sim" id="' + el.stage + 'sim"></div><div class="simrow" id="' + el.stage + 'ctl"></div></div>';
     const box = $(el.stage + "sim"), ctl = $(el.stage + "ctl"), ph = $(el.stage + "ph");
     /* data: the step's own data, so a sim can be given its own objects -
@@ -628,29 +645,39 @@
       $(el.ch).innerHTML = shuffle(opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '" data-t="' + esc(c.t) + '">' + c.t + "</button>").join("");
     }
     function askPredict() {
-      ph.textContent = "1 · Predict"; $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
+      ph.textContent = phName("Predict"); $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
       $(el.score).textContent = "What do you think will happen?";
     }
+    /* Cambridge's third move: talk about WHAT TO DO to find the answer. One
+       way is fair and the others change more than one thing at a time, which is
+       the Stage 1 fair-test idea the Teacher's Resource says children read as
+       "fair for the learners". */
+    function askPlan() {
+      phase = "plan";
+      ph.textContent = phName("How to find out"); $(el.ask).innerHTML = o.plan.ask; choices(o.plan.opts);
+      $(el.score).textContent = "How shall we find out?"; lock = false;
+      sayHere(o.finish, plain(o.plan.ask));
+    }
     function runIt() {
-      ph.textContent = "2 · Try it"; $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
+      ph.textContent = phName("Try it"); $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
       $(el.ch).innerHTML = ""; $(el.score).textContent = "Press the button and watch";
       sayHere(o.finish, plain(o.runAsk || "Now let us try it. Press the button and watch carefully."));
       sim.run(box, api).then(() => setTimeout(askHappened, 1800));
     }
     function askHappened() {
       phase = "happened";
-      ph.textContent = "3 · What happened?"; $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
+      ph.textContent = phName("What happened?"); $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
       $(el.score).textContent = "Say what you saw"; lock = false;
       sayHere(o.finish, plain(o.happened.ask));
     }
     function askConclude() {
       phase = "conclude";
-      ph.textContent = "5 · Conclude"; $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
+      ph.textContent = phName("Conclude"); $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
       $(el.score).textContent = "What does this tell us?"; lock = false;
       sayHere(o.finish, plain(o.conclude.ask));
     }
     function askMatched() {
-      ph.textContent = "4 · Did it match?";
+      ph.textContent = phName("Did it match?");
       $(el.ask).innerHTML = "You predicted: <b>" + esc(predicted.t) + "</b>. Did it match what happened?";
       $(el.ch).innerHTML = '<button type="button" class="choice text" data-m="1">Yes, it matched my prediction</button><button type="button" class="choice text" data-m="0">No, something different happened</button>';
       $(el.score).textContent = "Scientists always check"; lock = false;
@@ -667,7 +694,16 @@
         b.classList.add("right");
         $(el.fb).className = "fb"; $(el.fb).textContent = "Your prediction: " + predicted.t + ". Let us find out!";
         say("You predict: " + predicted.t + ". A prediction is a good guess before you try. Let us find out!");
+        if (o.plan) { phase = "plan"; setTimeout(() => { $(el.fb).textContent = ""; askPlan(); }, 2600); return; }
         phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 2600);
+      } else if (phase === "plan") {
+        const ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong"); else score++;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not quite. ") + o.plan.why;
+        say($(el.fb).textContent);
+        phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 3000);
       } else if (phase === "happened") {
         const ok = b.dataset.ok === "1";
         $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
@@ -687,7 +723,7 @@
            about the question. Without one, the step ends here as before. */
         if (o.conclude) { setTimeout(() => { $(el.fb).textContent = ""; askConclude(); }, 3200); return; }
         phase = "done";
-        reportScore(o.finish, score, 2);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3200);
       } else if (phase === "conclude") {
         const ok = b.dataset.ok === "1";
@@ -696,7 +732,7 @@
         $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Think about what you saw. ") + o.conclude.why;
         say($(el.fb).textContent);
         phase = "done";
-        reportScore(o.finish, score, 3);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3400);
       }
     });
@@ -767,7 +803,7 @@
   /* ---- record what happened in a simple table ----------------------- */
   function recordTable(o) {
     const el = o.el;
-    let row = 0, right = 0, lock = false;
+    let row = 0, right = 0, lock = false, q = 0, phase = "fill";
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec"><thead><tr><th>' + esc(o.columns[0]) + "</th><th>" + esc(o.columns[1]) + "</th></tr></thead><tbody>" +
         o.rows.map((r, k) => '<tr><td><span class="rowlab">' + picHtml(r.pic, "pic") + esc(r.label) + '</span></td><td><button type="button" class="cell' + (k === row ? " now" : "") + (r.filled ? " filled " + (r.ok ? "right" : "") : "") + '" data-k="' + k + '"' + (k !== row ? " disabled" : "") + ">" + (r.filled ? esc(r.filled) : (k === row ? "tap to fill in" : "…")) + "</button></td></tr>").join("") + "</tbody></table></div>";
@@ -780,8 +816,38 @@
       $(el.score).textContent = "Row " + (row + 1) + " of " + o.rows.length;
       sayHere(o.finish, plain(o.ask.replace("%s", r.label)));
     }
+    function askRead() {
+      phase = "read"; lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+      $(el.score).textContent = "Reading your table: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
+      if (phase === "read") {
+        lock = true;
+        const it = o.read[q], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (ok) right++; else b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Look at your table again. ") + it.why;
+        say($(el.fb).textContent);
+        q++;
+        setTimeout(() => {
+          $(el.fb).textContent = ""; $(el.fb).className = "fb";
+          if (q < o.read.length) { askRead(); return; }
+          $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+          const total = o.rows.length + o.read.length;
+          const line = "Your table is complete, and you read it. You got " + right + " of " + total + " first time. " + o.done;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+          reportScore(o.finish, right, total);
+          finish(o.finish, line);
+        }, 2800);
+        return;
+      }
       lock = true;
       const r = o.rows[row], ok = b.dataset.c === r.answer, chosen = o.choices.find((c) => c.id === b.dataset.c) || {};
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.c === r.answer) c.classList.add("right"); });
@@ -794,11 +860,15 @@
       setTimeout(() => {
         $(el.fb).textContent = ""; $(el.fb).className = "fb";
         if (row >= o.rows.length) {
+          /* Cambridge reads a table as well as filling one in, so the finished
+             table stays on screen while these run - see `read` in the header. */
+          if (o.read && o.read.length && q < o.read.length) { askRead(); return; }
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.ask).innerHTML = "Your table is complete.";
-          const line = "Your table is complete. You recorded " + right + " of " + o.rows.length + " first time. " + o.done;
+          const total = o.rows.length + ((o.read && o.read.length) || 0);
+          const line = "Your table is complete. You got " + right + " of " + total + " first time. " + o.done;
           $(el.fb).className = "fb good"; $(el.fb).textContent = line;
-          reportScore(o.finish, right, o.rows.length);
+          reportScore(o.finish, right, total);
           finish(o.finish, line);
         } else offer();
       }, 2600);
@@ -2837,3 +2907,15 @@
   }
   const restart = $("restart");
   if (restart) restart.addEventListener("click", () => location.reload());
+
+  /* Cambridge's "Look what I can do!" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });

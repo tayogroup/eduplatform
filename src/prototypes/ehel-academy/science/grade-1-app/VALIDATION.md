@@ -64,3 +64,62 @@ Change status at 2026-09-11: **16** areas need no change or are done, **5** have
 ## Verdict
 
 Grade 1 is fit to teach and matches what learners see. What remains are the four human checks.
+
+---
+
+## Appendix: the Cambridge depth pass, 2026-09-16
+
+**This is an appendix, not a version 5.** The 27 areas above are NOT re-scored:
+that needs the full re-review, and no human has read the content this pass
+added. What follows is what changed and what was measured, so a future v5 has
+its input.
+
+Against the three Cambridge Primary Science Stage 1 books. Owner chose
+position-safety, stop-at-verified-in-repo, and the app as the teaching spine
+alongside a teacher.
+
+### The two findings that were defects rather than gaps
+
+Cambridge's Teacher's Resource names 48 misconceptions across its 24 topics, and
+this build was **teaching two of them as its own content**: lesson 7 said
+`stick` 43 times and `attract` zero (TR 6.5 names "magnets stick to things" as
+the thing to correct, and `attract` is a Stage 1 glossary word), and lesson 2
+said `sunlight` 13 times and `artificial` zero (TR 1.3 names "plants must have
+light from the Sun"). Both are fixed.
+
+### Areas this pass bears on, with the new evidence
+
+| # | Area | was | evidence now | still open |
+| --- | --- | --- | --- | --- |
+| 3 | Content Depth and Coverage | 5 | 48 of 48 Cambridge Stage 1 misconceptions answered and gated; questions 141 -> 239; the enquiry method now has all five of Cambridge's moves, not three | - |
+| 4 | Content Accuracy | 4 | the two taught misconceptions corrected; every one of the 48 now has a step that answers it | a teacher's read |
+| 10 | Question and Assessment Quality | 4 | 98 new questions, 38 of the 239 now judgement items; the gate still proves one key each | a teacher's read of 239 keys - `review-pack.html` exists for it |
+| 11 | Assessment Balance | 4 | reasoning is no longer only in the experiments: read-off questions on all 8 tables, plan and conclude phases, 32 unscored tier items | - |
+| 6 | Grade-Level Appropriateness | 4 | 18,508 -> 28,145 learner words at 9.04 -> 9.25 words/sentence; highest Flesch-Kincaid 4.73 -> 4.85, lesson 7 both times | - |
+| 19 | Language and Reading Level | 4 | 25 new glossary words carded; reading demand flat (above) | a human proofread |
+| 22 | Learner Progress and Completion | 5 | the step-kind sequence of all 8 lessons is IDENTICAL before and after, read out of the built pages; two titles changed on purpose | saved-record re-check |
+| 27 | Bugs, syntax and errors | 4 | both gates green; the new misconception arm mutation-tested 4/4 with the tree restored byte-identical; every new bank driven right and wrong in a browser | - |
+
+### Measured in the browser, on the local build
+
+Three-bin sort: 13 items, a deliberate wrong answer caught with Cambridge's own
+correction and the right bin marked, finished 12 of 13. Experiment: all six
+phases in order (`1 Predict, 2 How to find out, 3 Try it, 4 What happened?,
+5 Did it match?, 6 Conclude`), a wrong plan answered with the fair-test
+correction. Record step: 2 table rows then 2 read-off questions, scoring out of
+4, the table staying on screen. Quiz tiers: a wrong core answer brought the
+support bank ("One step at a time", two options, unmarked) and returned to the
+core bank; a clean 13 of 13 brought the extension bank ("Try a harder one")
+after the step had already finished. Self-check: 8 claims on lesson 1's shelf,
+and "Show me" on the used-to-be-alive claim landed on the three-bin sort with
+the dot rail following. **Zero paid TTS calls** across every drive.
+
+### Two things this appendix must not be read as claiming
+
+- **No human has read any of it.** 239 questions, 0 of which any gate can prove
+  RIGHT: Stage 1 ships no Practice booklet, so `check-science-answer-keys.mjs`
+  has no printed key to compare with and never will.
+- **A pre-existing 46px overflow at 375px on step 1 is NOT from this pass.** It
+  is the shared header bar's right-hand group (`.eh-b1right`, 327px pushed to
+  right=421) and it measures identically on Grade 2 and Grade 3 pages that this
+  pass never rebuilt.

@@ -5,7 +5,7 @@
 light and water (the light half); with 1TWSp.01, 1TWSp.02, 1TWSc.02,
 1TWSc.03, 1TWSc.04, 1TWSc.05, 1TWSa.01 and 1SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, cando, icon
 
 PLANT_PARTS = [
     {"id": "roots", "label": "roots", "say": "The roots hide in the soil. They hold the plant steady and drink up water."},
@@ -43,18 +43,26 @@ LESSON = {
                  ["A flowering plant has four main parts: roots, stem, leaves and flower."],
                  ["The roots are at the bottom, in the soil.", "The stem is the tall stalk in the middle.",
                   "The leaves are the flat green parts that stick out from the stem.", "The flower is the colourful part at the top."],
-                 ["Children tap a leaf when asked for the stem, because the leaf is joined to it.", "The stem is the stalk itself, not what grows out of it."],
+                 ["Children tap a leaf when asked for the stem, because the leaf is joined to it.", "The stem is the stalk itself, not what grows out of it.",
+                  "Two more slips, both about the word plant.", "Children say the whole thing is a flower.", "The flower is only one part of it.",
+                  "And children think plant means the small ones in pots.", "A tree is a plant. Grass is a plant. A bush is a plant.",
+                  "Every green living thing that makes its own food is a plant, however big it is."],
                  ["Listen for the part, look for it, then tap it."]),
              {"figure": "plant", "ask": "Tap the %s.", "parts": PLANT_PARTS},
-             "Roots, stem, leaves and flower. You can find them all."),
+             "Roots, stem, leaves and flower. You can find them all.",
+             mis=["1.2-m1", "1.2-m3"]),
 
         step("explore", "What does each part do?", "\U0001F9E0", "Part jobs", ["1Bs.01"],
              "Every part has a job. Tap each one to hear it.",
              explain(
                  ["Each part of a plant does a different job, and the plant needs all four."],
-                 ["Roots hold the plant in the soil and drink water.", "The stem carries that water up to the leaves.",
-                  "Leaves catch sunlight and make the plant's food.", "The flower makes seeds for new plants."],
-                 ["Children think plants eat soil.", "Plants make their own food in their leaves, using sunlight. The soil gives them water and something to hold on to."],
+                 ["Roots hold the plant in the soil and drink water.", "Water goes in through the roots, never through the leaves.",
+                  "The stem carries that water up to the leaves.",
+                  "Leaves catch light and make the plant's food.", "The flower makes seeds for new plants."],
+                 ["Children think plants eat soil.", "Plants make their own food in their leaves, using light. The soil gives them water and something to hold on to.",
+                  "Some children think the roots suck up the plant's food.", "The roots take in water. The food is made up in the leaves.",
+                  "And shops sell bottles called plant food.", "A plant does not need it to live, because it makes its own. Plant food only helps it stay healthy.",
+                  "One more: children think the water goes in through the leaves, because that is where the watering can points.", "It soaks into the soil and the roots drink it."],
                  ["Tap all four and say each job out loud."]),
              {"items": [
                  {"pic": icon("roots"), "label": "roots", "sub": "hold and drink", "say": "The roots hold the plant in the soil and drink up water, like straws."},
@@ -62,7 +70,8 @@ LESSON = {
                  {"pic": "\U0001F343", "label": "leaves", "sub": "make food from sunlight", "say": "The leaves catch sunlight and use it to make the plant's food."},
                  {"pic": "\U0001F33C", "label": "flower", "sub": "makes seeds", "say": "The flower makes seeds. Each seed can grow into a new plant."},
              ], "need": 4},
-             "Roots drink, the stem carries, leaves make food, the flower makes seeds."),
+             "Roots drink, the stem carries, leaves make food, the flower makes seeds.",
+             mis=["1.2-m2", "1.3-m2", "1.4-m2"]),
 
         step("questions", "Which part?", "✅", "Which part?", ["1Bs.01"],
              "Which part of the plant does the job? Tap it.",
@@ -79,25 +88,42 @@ LESSON = {
                  q("Which part holds the plant up tall?", "\U0001F33F", "stem", ["roots", "flower", "leaves"], "The stem is the stalk that holds the plant up."),
                  q("Which part is hidden under the soil?", icon("soil"), "roots", ["flower", "leaves", "stem"], "The roots grow down into the soil."),
                  q("Which part is usually the most colourful?", "\U0001F3A8", "flower", ["roots", "stem", "leaves"], "Flowers are colourful to attract bees and other insects."),
+                 q("You water a plant. Which part takes the water in?", "\U0001F4A7", "the roots", ["the leaves", "the flower"], "The water soaks into the soil, and the roots drink it up. Water does not go in through the leaves."),
+                 q("Which of these is a <b>plant</b>?", "\U0001F333", "all of them: a tree, some grass and a daisy", ["only the daisy", "only the tree"], "A tree is a plant. Grass is a plant. A daisy is a plant. They are all green living things that make their own food."),
+                 q("Where does a plant get its food?", "\U0001F343", "it makes its own, in its leaves", ["it eats the soil", "a grown-up feeds it", "it drinks it through the roots"], "A plant makes its own food in its leaves, using light. The roots take in water, not food."),
              ]},
              "You know the parts of a plant and what each one does."),
 
         step("experiment", "Does a plant need light?", "\U0001F9EA", "Light test", ["1Bp.03", "1TWSp.02", "1TWSc.04", "1TWSa.01"],
              "Two plants. One <b>by the window</b>, one <b>in a dark cupboard</b>. Both get water. Predict first!",
              explain(
-                 ["This is a fair test.", "Both plants get water. Only one thing is different: the light."],
+                 ["This is a fair test.", "Both plants get water. Only one thing is different: the light.",
+                  "Plants need <b>light</b>. It does not have to come from the Sun."],
                  ["Predict first: what will happen to the plant in the dark?",
                   "Then wait a day at a time and look at both.", "At the end, say what happened and whether it matched your prediction."],
-                 ["Children think that because both plants have water, both will be fine.", "Water is not enough. Leaves need light to make food."],
+                 ["Children think that because both plants have water, both will be fine.", "Water is not enough. Leaves need light to make food.",
+                  "And children think the light must come from the Sun.", "It does not.",
+                  "A plant under a bright lamp grows well, which is how plants grow indoors and in shops with no window near them."],
                  ["Tap your prediction, then press Wait a day and watch the plant in the cupboard."]),
              {"sim": "plantLight",
               "predict": {"ask": "What do you think will happen to the plant in the <b>dark cupboard</b>?",
                           "opts": [opt("It will go pale and droopy", True), opt("It will grow big and green", False), opt("It will stay the same", False)]},
+              "plan": {"ask": "How shall we find out whether a plant needs light? Which way is <b>fair</b>?",
+                       "opts": [opt("Two plants the same. One by the window, one in a dark cupboard. Both get water", True),
+                                opt("One by the window with water, one in the cupboard with no water", False),
+                                opt("One by the window today, and a different plant next week", False)],
+                       "why": "A fair test changes ONE thing. Both plants get water, so the only difference is the light."},
               "runAsk": "Press Wait a day. Look at the plant in the dark cupboard.",
               "happened": {"ask": "What happened to the plant in the dark?",
                            "opts": [opt("It went pale, thin and droopy", True), opt("It grew greener than the window plant", False), opt("Nothing changed", False)],
-                           "why": "Without light the plant went pale and droopy, even with water. Plants need light and water."}},
-             "Plants need light and water. Both."),
+                           "why": "Without light the plant went pale and droopy, even with water. Plants need light and water."},
+              "conclude": {"ask": "So what did we find out?",
+                           "opts": [opt("Plants need light as well as water", True),
+                                    opt("Plants only need water", False),
+                                    opt("Plants grow better in the dark", False)],
+                           "why": "Both plants had water. Only the one with light stayed green. So a plant needs light too."}},
+             "Plants need light and water. Both.",
+             mis=["1.3-m1"]),
 
         step("record", "My plant diary", "\U0001F4D3", "Plant diary", ["1TWSc.05", "1Bs.01"],
              "A plant diary is a table. Fill in what you saw on <b>%s</b>.",
@@ -116,7 +142,17 @@ LESSON = {
                   {"pic": "7️⃣", "label": "day 7", "answer": "leaves", "why": "on day seven the leaves had opened."},
               ],
               "choices": [{"id": "seed", "t": "a seed", "pic": "\U0001F330"}, {"id": "root", "t": "a root", "pic": icon("roots")},
-                          {"id": "shoot", "t": "a shoot", "pic": "\U0001F331"}, {"id": "leaves", "t": "leaves", "pic": "\U0001F33F"}]},
+                          {"id": "shoot", "t": "a shoot", "pic": "\U0001F331"}, {"id": "leaves", "t": "leaves", "pic": "\U0001F33F"}],
+              "read": [
+                  {"ask": "Look at your diary. On which day did the <b>root</b> appear?",
+                   "opts": [opt("day 3", True), opt("day 1", False), opt("day 7", False)],
+                   "why": "Your diary shows the root on day three."},
+                  {"ask": "Your diary reads: seed, root, shoot, leaves. What does that tell you?",
+                   "opts": [opt("the root grows before the shoot", True),
+                            opt("the leaves grow first", False),
+                            opt("everything grows on the same day", False)],
+                   "why": "Read the days in order and the root comes first, before anything you can see above the soil."},
+              ]},
              "Your plant diary is complete."),
 
         step("measure", "How tall is the plant?", "\U0001F4CF", "Measured it", ["1TWSc.03"],
@@ -202,7 +238,7 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("Which part holds the plant in the soil?", icon("roots"), "roots", ["leaves", "flower", "stem"], "The roots grow down into the soil and hold the plant steady."),
-                 q("Which part makes food using sunlight?", "☀️", "leaves", ["roots", "stem", "flower"], "The green leaves catch sunlight to make food."),
+                 q("Which part makes food using light?", "☀️", "leaves", ["roots", "stem", "flower"], "The green leaves catch light and make food."),
                  q("A new plant grows from a...", "\U0001F330", "seed", ["stone", "shell", "flower"], "A seed holds a tiny new plant inside it."),
                  q("What do plants need to stay alive?", "\U0001F331", "light and water", ["sweets and toys", "only soil", "only air"], "Plants need light and water. You tested both."),
                  q("Which part carries water up to the leaves?", "\U0001F33F", "the stem", ["the flower", "the roots", "the petals"], "The stem carries water from the roots up to the leaves."),
@@ -210,7 +246,22 @@ LESSON = {
                  q("Which grew first from the seed?", "\U0001F331", "the root", ["the flower", "the leaves", "the stem"], "The root grows down first, to drink water."),
                  q("A seedling is 3 cubes tall and a sunflower is 8 cubes tall. Which is taller?", "\U0001F4CF", "the sunflower", ["the seedling", "they are the same"], "8 is more than 3, so the sunflower is taller."),
                  q("What would happen to a plant if all its roots were cut off?", "\U0001F33F", "It could not take in water, so it would droop", ["It would grow faster", "It would make more flowers"], "The roots take in water for the plant. With no roots it gets no water, and a plant with no water droops."),
-             ]},
+                 q("A plant stands in a room with no window, under a bright lamp all day. What happens?", "\U0001F4A1", "it grows well, because a lamp gives light", ["it goes pale, because light must come from the Sun", "it dies at once"], "Plants need light. The light does not have to come from the Sun. A bright lamp works, which is how plants grow indoors."),
+                 q("Sofia says the whole plant is called a flower. Is she right?", "\U0001F33C", "No, the flower is only one part of the plant", ["Yes, plants are called flowers", "Yes, if it is a small plant"], "The flower is one part, like the roots and the stem. The whole thing is a plant."),
+             ],
+              "support": [
+                 q("Which part of the plant is in the soil?", "\U0001F331", "the roots", ["the flower"],
+                   "The roots grow down into the soil."),
+                 q("Do plants need light?", "☀️", "Yes", ["No"],
+                   "You tested it. The plant in the dark cupboard went pale and droopy."),
+              ],
+              "extension": [
+                 q("A plant is put in a cupboard with a bright lamp switched on all day and night. What happens?", "\U0001F4A1", "it grows, because it has light and water", ["it goes pale, because a cupboard is always dark", "it dies, because there is no Sun"],
+                   "It is the LIGHT a plant needs, not the Sun in particular. A lamp gives light."),
+                 q("Two plants get the same water and the same light. One grows in a tiny pot and one in a big pot. Is that a fair test of whether pot size matters?", "\U0001FAB4", "Yes, because only the pot is different", ["No, pots are never fair", "No, you must change the water too"],
+                   "A fair test changes ONE thing. Here only the pot changes, so it is fair."),
+              ]
+             },
              "That is the whole lesson finished. You know a plant from root to flower."),
     ],
 }
@@ -258,6 +309,22 @@ LESSON["words"] = [
          ["The shoot came up on day five.", "A shoot grows towards the light."]),
     word("measure", "\U0001F4CF", "To find out how long, tall or heavy something is.",
          ["We measure the plant in cubes.", "Measure it again next week."]),
+    word("investigation", "\U0001F9EA", "A test you do to answer a question. You predict, you try it, and you say what happened.",
+         ["Our investigation showed that a plant needs light.", "We did an investigation with two plants."]),
+    word("practical", "\U0001F9E4", "A hands-on piece of science. You do it yourself instead of just reading about it.",
+         ["Today's practical is planting a bean.", "Wash your hands after a practical."]),
+    word("model", "\U0001F30D", "A small copy of something, or a drawing of it, that helps you see how it works.",
+         ["A globe is a model of Earth.", "We made a model of a plant out of paper."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name the roots, stem, leaves and flower of a plant.", "1Bs.01"),
+    cando("I can say what each part of a plant does.", "1Bs.01"),
+    cando("I can say what happens to a plant with no light.", "1Bp.03"),
+    cando("I can measure how tall a plant is in cubes.", "1TWSc.03"),
+    cando("I can keep a diary of what I saw, day by day.", "1TWSc.05"),
+    cando("I can use the science tools safely.", "1TWSc.02"),
+    cando("I can name people who use science in their work.", "1SIC.03"),
 ]
 
 LESSON["home"] = [

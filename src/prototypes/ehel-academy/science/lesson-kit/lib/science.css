@@ -389,3 +389,23 @@
 .sit-h { margin: 6px 0 10px; }
 .sit-card p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
 .sit-card .bigbtns { justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+  /* ---- the self-check on the sticker shelf (Cambridge's "Look what I can
+     do!", which closes all 25 of its Stage 1 topics). It sits on the SHELF and
+     not in a step, so nothing here moves a saved place. No new hue: the heading
+     is the taught-thing teal and "Show me" is a ghost button. ---- */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+  .cando li > span { font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .candogo { flex: none; border: 2px solid var(--line); background: transparent; color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; font-family: inherit; font-weight: 700; font-size: 14px;
+    cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  .candogo:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }

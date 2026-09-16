@@ -6,7 +6,7 @@ objects; 1Pf.02 pushes and pulls as forces; 1Pf.03 some objects float and
 some sink; with 1TWSp.01, 1TWSp.02, 1TWSc.01, 1TWSc.03, 1TWSc.04, 1TWSc.05,
 1TWSa.01 and 1SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, cando, icon
 
 LESSON = {
     "slug": "pushes-pulls-and-floating",
@@ -19,7 +19,11 @@ LESSON = {
                  ["Things move in different ways, and there is a word for each way."],
                  ["A ball rolls.", "A swing swings backwards and forwards.", "A top spins round and round.",
                   "A snail slides slowly.", "A kite flies up in the wind.", "A door swings open on its hinges."],
-                 ["Children say everything just moves.", "Scientists say how it moves: rolls, slides, spins, swings, bounces."],
+                 ["Children say everything just moves.", "Scientists say how it moves: rolls, slides, spins, swings, bounces.",
+                  "And here is the big one. Children think round things move by themselves, because they are round.",
+                  "They do not. A ball on the floor sits there for ever until something pushes or pulls it.",
+                  "Even a ball rolling down a slope is being pulled - the Earth is pulling it down.",
+                  "Nothing starts moving on its own. Something always pushes or pulls it first."],
                  ["Tap every picture and say the moving word out loud."]),
              {"items": [
                  {"pic": "⚽", "label": "ball", "sub": "rolls", "say": "A ball rolls along the ground, turning over and over."},
@@ -30,8 +34,10 @@ LESSON = {
                  {"pic": "\U0001F3C0", "label": "basketball", "sub": "bounces", "say": "A basketball bounces up when it hits the ground."},
                  {"pic": "\U0001F6F7", "label": "sledge", "sub": "slides", "say": "A sledge slides down the slope without turning over."},
                  {"pic": "\U0001F6AA", "label": "door", "sub": "swings", "say": "A door swings open and shut on its hinges."},
-             ], "need": 8},
-             "Rolls, swings, spins, slides, flies, bounces. Moving words."),
+                 {"pic": "⚽\U0001F6D1", "label": "a ball on the floor", "sub": "stays still", "say": "Here is a ball just sitting on the floor. It is round, and it is not moving. It will stay there all day until somebody pushes or pulls it. Round things do not move by themselves."},
+             ], "need": 9},
+             "Rolls, swings, spins, slides, flies, bounces. And nothing moves until it is pushed or pulled.",
+             mis=["6.1-m1"]),
 
         step("sort", "Push or pull?", "\U0001F5C2️", "Push or pull", ["1Pf.02", "1TWSc.01"],
              "A push moves a thing <b>away</b> from you. A pull brings it <b>towards</b> you. Which is this?",
@@ -39,7 +45,10 @@ LESSON = {
                  ["A push and a pull are both forces.", "A force is what makes something start moving, stop, or change direction."],
                  ["Kicking a ball sends it away from you: that is a push.", "Opening a drawer brings it towards you: that is a pull.",
                   "Pressing a doorbell: a push.", "Tugging a rope: a pull."],
-                 ["Children think a push has to be hard.", "A gentle tap on a doorbell is still a push."],
+                 ["Children think a push has to be hard.", "A gentle tap on a doorbell is still a push.",
+                  "Children think a force you can hardly feel is not a force at all.",
+                  "Here is a way to check it. Try turning the page of a book using no force at all.", "You cannot. It is impossible.",
+                  "Even moving something as light as a page needs a push.", "Tiny pushes and tiny pulls are forces too."],
                  ["Ask: does it go away from me, or come towards me?"]),
              {"ask": "Push, or pull?",
               "bins": [{"id": "push", "label": "Push", "pic": "\U0001F449"}, {"id": "pull", "label": "Pull", "pic": "\U0001F448"}],
@@ -52,8 +61,11 @@ LESSON = {
                   {"pic": "\U0001F415", "label": "pulling a dog back on its lead", "bin": "pull", "why": "The lead pulls the dog back towards you."},
                   {"pic": icon("swing"), "label": "pushing a swing", "bin": "push", "why": "You push the swing away and it swings back."},
                   {"pic": "\U0001F6AA", "label": "pulling a door open", "bin": "pull", "why": "You pull the door towards you to open it."},
+                  {"pic": "\U0001F4D6", "label": "turning the page of a book", "bin": "push", "why": "Your finger pushes the page over. It is a tiny push, and it is still a push - try turning a page with no force at all!"},
+                  {"pic": "\U0001F9F9", "label": "sliding a sheet of paper along the table", "bin": "push", "why": "A very small push, and still a push. Paper does not slide by itself."},
               ]},
-             "Pushes and pulls are forces. They make things move."),
+             "Pushes and pulls are forces. Even the tiny ones.",
+             mis=["6.2-m1", "6.3-m1"]),
 
         step("experiment", "Push gently, push hard", "\U0001F9EA", "Big push", ["1Pf.02", "1Pf.01", "1TWSp.02", "1TWSc.03", "1TWSa.01"],
              "Does a bigger push move the ball further? Predict, then push the ball two ways and count the steps.",
@@ -66,10 +78,20 @@ LESSON = {
              {"sim": "pushBall",
               "predict": {"ask": "What do you think a <b>hard</b> push will do, compared with a gentle one?",
                           "opts": [opt("The ball will roll further", True), opt("The ball will roll the same distance", False), opt("The ball will roll a shorter way", False)]},
+              "plan": {"ask": "How shall we find out whether a bigger push moves it further? Which way is <b>fair</b>?",
+                       "opts": [opt("The same ball, on the same floor. Push it gently, then hard", True),
+                                opt("Push a small ball gently and a big ball hard", False),
+                                opt("Push one ball on the carpet and one on the tiles", False)],
+                       "why": "A fair test changes ONE thing. Keep the ball and the floor the same, and change only the push."},
               "runAsk": "Press <b>Push gently</b>, then <b>Push hard</b>. Count the steps each time.",
               "happened": {"ask": "What happened with the hard push?",
                            "opts": [opt("The ball rolled further, nine steps instead of three", True), opt("The ball rolled the same three steps", False), opt("The ball did not move", False)],
-                           "why": "The gentle push moved the ball three steps. The hard push moved it nine. A bigger force, a bigger move."}},
+                           "why": "The gentle push moved the ball three steps. The hard push moved it nine. A bigger force, a bigger move."},
+              "conclude": {"ask": "So what did we find out?",
+                           "opts": [opt("A bigger push makes a thing move further", True),
+                                    opt("The size of the push makes no difference", False),
+                                    opt("A gentle push moves a thing further", False)],
+                           "why": "Same ball, same floor, three steps then nine. The only thing that changed was the push."}},
              "A bigger push makes a bigger move."),
 
         step("demo", "Stop it, turn it", "\U0001F6D1", "Stop and turn", ["1Pf.01", "1Pf.02"],
@@ -95,7 +117,12 @@ LESSON = {
                  ["Some things float on top of water.", "Some things sink to the bottom.", "The only way to be sure is to try it."],
                  ["Look at the thing.", "Predict: float or sink?", "Then drop it in and watch.",
                   "An apple floats.", "A stone sinks.", "Sometimes a big thing floats and a small thing sinks, so predictions can surprise you."],
-                 ["Children think heavy things always sink and light things always float.", "A big wooden log floats. A tiny coin sinks. Test, do not guess."],
+                 ["Children think heavy things always sink and light things always float.", "A big wooden log floats. A tiny coin sinks. Test, do not guess.",
+                  "Children also think small things float because they are small.", "Size is not what decides it either.",
+                  "A huge ship floats, and a tiny glass marble sinks like a stone.",
+                  "Some think things only float in deep water.", "The same things float in a shallow tray with barely any water in it. Depth does not decide it.",
+                  "And the last one. Some things float LOW, only just under the top of the water.",
+                  "That is still floating. A thing has only sunk when it reaches the bottom."],
                  ["Predict for each one, drop it in, and see if you were right."]),
              {"sim": "floatSink", "tryLabel": "Drop it in", "ask": "Will the %s float or sink?",
               "choices": [{"id": "float", "t": "Float", "pic": "⬆️"}, {"id": "sink", "t": "Sink", "pic": "⬇️"}],
@@ -108,8 +135,11 @@ LESSON = {
                   {"pic": "\U0001FA99", "label": "coin", "answer": "sink", "why": "A coin is metal. It sinks."},
                   {"pic": "\U0001F9F4", "label": "empty plastic bottle", "answer": "float", "why": "An empty bottle with its lid on floats. It is full of air."},
                   {"pic": "\U0001F9F1", "label": "brick", "answer": "sink", "why": "A brick sinks to the bottom."},
+                  {"pic": "\U0001F6A2", "label": "big metal ship", "answer": "float", "why": "A ship is enormous and made of metal, and it floats. Being big does not make a thing sink."},
+                  {"pic": "\U0001F52E", "label": "tiny glass marble", "answer": "sink", "why": "The marble is tiny and it sinks straight to the bottom. Being small does not make a thing float."},
               ]},
-             "Some things float, some things sink, and testing is how you know."),
+             "Some things float, some things sink. Not because they are big or small.",
+             mis=["6.4-m1", "6.4-m2", "6.4-m3"]),
 
         step("record", "Record the results", "\U0001F4DD", "Results table", ["1TWSc.05", "1Pf.03"],
              "Write your results in the table. Did <b>%s</b> float or sink?",
@@ -127,7 +157,19 @@ LESSON = {
                   {"pic": "\U0001FA99", "label": "the coin", "answer": "sink", "why": "the coin sank."},
                   {"pic": "\U0001FAB5", "label": "the log", "answer": "float", "why": "the wooden log floated."},
               ],
-              "choices": [{"id": "float", "t": "Float", "pic": "⬆️"}, {"id": "sink", "t": "Sink", "pic": "⬇️"}]},
+              "choices": [{"id": "float", "t": "Float", "pic": "⬆️"}, {"id": "sink", "t": "Sink", "pic": "⬇️"}],
+              "read": [
+                  {"ask": "Read your table. How many things <b>floated</b>?",
+                   "opts": [opt("3: the apple, the leaf and the log", True),
+                            opt("2: the apple and the leaf", False),
+                            opt("5: all of them", False)],
+                   "why": "Count the Float rows in your table: apple, leaf, log. Three of them."},
+                  {"ask": "The log is big and heavy and it floated. The coin is small and it sank. What does your table show?",
+                   "opts": [opt("how big a thing is does not decide whether it floats", True),
+                            opt("big things always float", False),
+                            opt("small things always float", False)],
+                   "why": "Your own results disagree with size deciding it. A big log floated and a small coin sank."},
+              ]},
              "Your results are written down."),
 
         step("context", "Pushes and pulls all around us", "\U0001F6B2", "Everyday forces", ["1SIC.02", "1Pf.02"],
@@ -181,7 +223,25 @@ LESSON = {
                  q("A ball rolls towards you. You put your hand in front. What happens?", "✋", "it stops", ["it goes faster", "it floats", "it spins"], "A push back against a moving thing stops it."),
                  q("How does a spinning top move?", "\U0001F300", "it spins round and round", ["it slides", "it bounces", "it flies"], "A top spins."),
                  q("Omar pushed the same ball twice. It rolled further the second time. Why?", "⚽", "He pushed it harder the second time", ["The ball changed colour", "The ball was tired the first time"], "It was the same ball, so the push made the difference. A bigger push makes a bigger move."),
-             ]},
+                 q("A ball sits still on the floor. What will make it move?", "⚽", "a push or a pull", ["nothing - round things move by themselves", "waiting long enough"], "Nothing moves on its own. Even a ball rolling down a slope is being pulled down by the Earth."),
+                 q("A huge metal ship floats and a tiny glass marble sinks. What does that show?", "\U0001F6A2", "being big or small does not decide it", ["small things always float", "big things always float"], "Size does not decide whether a thing floats. You tested a ship and a marble."),
+                 q("An apple floats in a deep tank. What happens in a shallow tray of water?", "\U0001F34E", "it floats there too", ["it sinks, because the water is shallow", "nothing happens"], "How deep the water is does not decide it. The same things float in a shallow tray."),
+                 q("Something floats just below the top of the water, not touching the bottom. Has it sunk?", "\U0001F30A", "No. It is floating low.", ["Yes, because no part is above the water", "Yes, because you cannot see it"], "A thing has only sunk when it reaches the bottom. Some things float low."),
+                 q("Sofia says a tiny push is not really a force. Is she right?", "\U0001F4D6", "No. Try turning a page with no force at all - you cannot.", ["Yes, you have to feel it for it to be a force", "Yes, only hard pushes are forces"], "Even moving something as light as a page needs a push. Tiny forces are forces."),
+             ],
+              "support": [
+                 q("You kick a ball away from you. Is that a push or a pull?", "⚽", "a push", ["a pull"],
+                   "A push sends a thing away from you."),
+                 q("Does a stone float?", "\U0001FAA8", "No, it sinks", ["Yes, it floats"],
+                   "A stone sinks straight to the bottom."),
+              ],
+              "extension": [
+                 q("A big wooden log floats. A small metal key sinks. So what DOES decide whether a thing floats?", "\U0001F30A", "something other than its size - you have to test it", ["how big it is", "how new it is"],
+                   "Your own results rule out size. At Stage 1 the honest answer is: test it and see."),
+                 q("A ball rolls down a slope on its own. Is a force acting on it?", "\U0001F6F7", "Yes. The Earth is pulling it down the slope.", ["No, round things roll by themselves", "No, because nobody touched it"],
+                   "Nothing starts moving without a push or a pull. On a slope, the pull comes from the Earth."),
+              ]
+             },
              "That is the whole lesson finished. You know pushes, pulls, floating and sinking."),
     ],
 }
@@ -229,6 +289,15 @@ LESSON["words"] = [
          ["I predict the leaf will float.", "Predict first, then test."]),
     word("roll", "\u26BD", "To move by turning over and over.",
          ["The ball rolls down the hill.", "Round things roll."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say how things move: roll, slide, spin, swing, bounce.", "1Pf.01"),
+    cando("I can say that a push and a pull are forces.", "1Pf.02"),
+    cando("I can test which things float and which sink.", "1Pf.03"),
+    cando("I can measure how far something moved.", "1TWSc.03"),
+    cando("I can write my results in a table and read the pattern.", "1TWSc.05"),
+    cando("I can ask a science question about the sea.", "1TWSp.01"),
 ]
 
 LESSON["home"] = [

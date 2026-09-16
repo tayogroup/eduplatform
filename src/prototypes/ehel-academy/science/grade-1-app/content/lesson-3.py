@@ -6,7 +6,7 @@ senses, what they detect and which body part; 1Bp.04 how humans are similar
 to and different from each other; with 1TWSp.01, 1TWSc.01, 1TWSc.03,
 1TWSc.05 and 1SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 BODY_PARTS = [
     {"id": "head", "label": "head", "say": "Your head is at the top. Your brain is inside it."},
@@ -60,7 +60,10 @@ LESSON = {
              explain(
                  ["A sense is a way your body finds out about the world.", "You have five, and each one uses a different part of you."],
                  ["Your eyes see.", "Your ears hear.", "Your nose smells.", "Your tongue tastes.", "Your skin feels, and it is all over your body, so your hands feel and so do your feet."],
-                 ["Children think touch is only in the fingers.", "Skin covers your whole body. You can feel a stone with your foot."],
+                 ["Children think touch is only in the fingers.", "Skin covers your whole body. You can feel a stone with your foot.",
+                  "Here is a way to prove it. Ask a friend to draw a letter on your back with one finger, while you look the other way.",
+                  "Guess the letter. You can, and there is not a single finger of yours involved.",
+                  "Your hands feel the most, because they have the most feeling in them. They are not the only part that feels."],
                  ["Press Next for each sense and touch the body part it uses."]),
              {"frames": [
                  {"pic": "\U0001F441️", "cap": "<b>Sight.</b> Your eyes see colours, shapes and light.", "say": "Sight. Your eyes see colours, shapes and light. Close them and it goes dark."},
@@ -68,8 +71,10 @@ LESSON = {
                  {"pic": "\U0001F443", "cap": "<b>Smell.</b> Your nose smells bread, smoke and flowers.", "say": "Smell. Your nose smells bread baking, smoke, and flowers."},
                  {"pic": "\U0001F445", "cap": "<b>Taste.</b> Your tongue tastes sweet, salty and sour.", "say": "Taste. Your tongue tastes sweet, salty and sour things."},
                  {"pic": "✋", "cap": "<b>Touch.</b> Your skin feels hot, cold, rough and smooth.", "say": "Touch. Your skin feels hot, cold, rough and smooth. Your skin is all over you."},
+                 {"pic": "\U0001F9D2✍️", "cap": "Touch is <b>all</b> your skin, not just your hands. Try a letter drawn on your <b>back</b>!", "say": "Touch is not only your hands. Ask a friend to draw a letter on your back with one finger, while you look away. You can guess the letter, and you did not use your hands at all."},
              ]},
-             "Eyes, ears, nose, tongue, skin. Five senses."),
+             "Eyes, ears, nose, tongue, skin. Five senses, and touch is all your skin.",
+             mis=["5.2-m1"]),
 
         step("questions", "Which sense is it?", "\U0001F9E0", "Sense detective", ["1Bs.02"],
              "Something is happening. Which body part tells you about it? Tap it.",
@@ -114,25 +119,35 @@ LESSON = {
                  ["All people are the same in some ways and different in others."],
                  ["Everybody here has two eyes, one nose, two arms and two legs.", "That is the same.",
                   "But one has curly hair and one has straight hair.", "One is taller.", "One wears glasses.", "Those are differences."],
-                 ["Children think different means better or worse.", "It does not. It just means not the same."],
+                 ["Children think different means better or worse.", "It does not. It just means not the same.",
+                  "And children find the differences much faster than the things that are the same.",
+                  "So look hard for the same things. There are far more of them.",
+                  "Two eyes. Two ears. One nose. A mouth. Teeth. Hair. Skin. A heart beating inside.",
+                  "Everybody in your class has all of those. The differences are the small part."],
                  ["Tap each friend and listen for what is the same and what is different."]),
              {"items": [
                  {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "say": "Amal has curly black hair and brown eyes. Two eyes, one nose, two hands, like most people."},
                  {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "say": "Sami is the tallest. He has short hair and brown eyes. Two eyes, one nose, two hands, like most people."},
                  {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "say": "Nora is the shortest and wears glasses. Two eyes, one nose, two hands, like most people."},
                  {"pic": "\U0001F466\U0001F3FF", "label": "Omar", "say": "Omar has a gap where a tooth fell out. Two eyes, one nose, two hands, like most people."},
-             ], "need": 4,
+                 {"pic": "\U0001F46F", "label": "Lina and Hana, twins", "say": "Lina and Hana are twins. That means they were born on the same day, to the same mother. These two look very alike. But not all twins do! Some twins look no more alike than any brother and sister, and a brother and a sister can be twins."},
+             ], "need": 5,
               "then": {"ask": "What is the <b>same</b> about all four friends?",
                        "opts": [opt("They all have two eyes, one nose and two hands", True), opt("They are all the same height", False), opt("They all wear glasses", False)],
                        "why": "Most people have the same body parts. Height, hair and glasses are differences."}},
-             "The same body parts, but nobody is exactly the same."),
+             "The same body parts, but nobody is exactly the same.",
+             mis=["5.3-m1", "5.3-m3"]),
 
         step("sort", "Everyone, or not everyone?", "\U0001F5C2️", "Sorted people", ["1Bp.04", "1TWSc.01"],
              "Does <b>everyone</b> have this, or only <b>some people</b>? Tap the right bin.",
              explain(
                  ["Some things are true of every person.", "Other things are true of some people and not others."],
                  ["Everyone has a nose.", "Only some people have curly hair.", "Everyone has skin.", "Only some people wear glasses."],
-                 ["Children put brown eyes in Everyone because everyone they know has brown eyes.", "Some people have blue or green eyes."],
+                 ["Children put brown eyes in Everyone because everyone they know has brown eyes.", "Some people have blue or green eyes.",
+                  "There is a sorting rule to learn here too, and grown-up scientists use it.",
+                  "Pick one thing to sort by, and keep it for the whole sort.",
+                  "If you start sorting by hair colour and then switch to boys and girls, a boy with black hair belongs in two groups at once.",
+                  "The way to catch it: give each of your groups a name. If the names do not match up, you changed what you were sorting by."],
                  ["For each one ask: does every person in the world have this?"]),
              {"ask": "Everyone, or only some people?",
               "bins": [{"id": "all", "label": "Everyone", "pic": "\U0001F465"}, {"id": "some", "label": "Some people", "pic": "\U0001F9D1"}],
@@ -146,7 +161,8 @@ LESSON = {
                   {"pic": "\U0001F9B7", "label": "a missing tooth", "bin": "some", "why": "Only some children have a tooth missing right now."},
                   {"pic": "\U0001FAC0", "label": "a heart", "bin": "all", "why": "Every person has a heart, beating inside them."},
               ]},
-             "Everyone shares some things. The details are different."),
+             "Everyone shares some things. The details are different.",
+             mis=["5.3-m2"]),
 
         step("measure", "How tall? Measure in hands", "\U0001F590️", "Hand spans", ["1TWSc.03", "1Bp.04"],
              "Measure <b>%s</b> in hand spans. Press to lay down a hand each time.",
@@ -154,7 +170,11 @@ LESSON = {
                  ["You can measure how tall a friend is with your hands, one hand span at a time."],
                  ["Put a hand at the feet. That is one.", "Put the next hand just above it. Two.", "Keep going to the top of the head.",
                   "The number of hands is how tall they are, in hand spans."],
-                 ["Children leave gaps between the hands, or overlap them.", "Each hand starts exactly where the last one ended."],
+                 ["Children leave gaps between the hands, or overlap them.", "Each hand starts exactly where the last one ended.",
+                  "And here is why we measure at all instead of just looking.",
+                  "The loudest person in a room, or the one with the biggest character, often seems like the tallest.",
+                  "They often are not. Stand two people back to back and measure, and you find out who really is.",
+                  "Measuring settles it. Guessing does not."],
                  ["Measure all three friends, then say who is tallest."]),
              {"ask": "How tall is %s in hand spans? Lay down hands from feet to head.",
               "unit": {"name": "hand spans", "singular": "hand span", "pic": "\U0001F590️", "button": "Lay down a hand"},
@@ -166,7 +186,8 @@ LESSON = {
               "compare": {"ask": "Amal is 9 hands, Sami is 10 hands, Nora is 8 hands. Who is tallest?",
                           "opts": [opt("Sami", True), opt("Amal", False), opt("Nora", False)],
                           "why": "10 hands is the most, so Sami is the tallest."}},
-             "You measured your friends in hand spans."),
+             "You measured your friends in hand spans. Measuring settles it.",
+             mis=["5.1-m1"]),
 
         step("record", "Write down the heights", "\U0001F4DD", "Height table", ["1TWSc.05"],
              "Put each friend's height into the table. How tall was <b>%s</b>?",
@@ -182,7 +203,18 @@ LESSON = {
                   {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "answer": "10", "why": "Sami measured 10 hand spans."},
                   {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "answer": "8", "why": "Nora measured 8 hand spans."},
               ],
-              "choices": [{"id": "8", "t": "8 hands", "pic": "\u0038\uFE0F\u20E3"}, {"id": "9", "t": "9 hands", "pic": "\u0039\uFE0F\u20E3"}, {"id": "10", "t": "10 hands", "pic": "\U0001F51F"}]},
+              "choices": [{"id": "8", "t": "8 hands", "pic": "\u0038\uFE0F\u20E3"}, {"id": "9", "t": "9 hands", "pic": "\u0039\uFE0F\u20E3"}, {"id": "10", "t": "10 hands", "pic": "\U0001F51F"}],
+              "read": [
+                  {"ask": "Read your table. How tall was <b>Nora</b>?",
+                   "opts": [opt("8 hand spans", True), opt("9 hand spans", False), opt("10 hand spans", False)],
+                   "why": "Nora's row says 8 hand spans."},
+                  {"ask": "Using only your table: who is the <b>tallest</b>?",
+                   "opts": [opt("Sami, at 10 hand spans", True), opt("Amal, at 9 hand spans", False), opt("Nora, at 8 hand spans", False)],
+                   "why": "10 is the biggest number in the table, and it is on Sami's row."},
+                  {"ask": "How many hand spans <b>taller</b> is Sami than Nora?",
+                   "opts": [opt("2 hand spans", True), opt("1 hand span", False), opt("8 hand spans", False)],
+                   "why": "Sami is 10 and Nora is 8. Ten take away eight leaves two."},
+              ]},
              "Three heights, written down in a table."),
 
         step("context", "How does that work?", "\U0001F453", "How it works", ["1SIC.02", "1Bs.02"],
@@ -236,7 +268,25 @@ LESSON = {
                  q("What does every person have?", "\U0001F465", "a head and a body", ["curly hair", "glasses", "a missing tooth"], "Every person has a head and a body. Curly hair, glasses and a missing tooth are things only some people have."),
                  q("Sami is 10 hand spans tall and Nora is 8. Who is shorter?", "\U0001F590️", "Nora", ["Sami", "they are the same"], "8 is less than 10, so Nora is shorter."),
                  q("Why would it be hard to find the marble in the feely bag if you wore thick gloves?", "\U0001F9E4", "The gloves stop your skin feeling the shape", ["The gloves make your ears quiet", "The gloves make the marble melt"], "You feel with your skin. Thick gloves cover the skin on your hands, so you cannot feel the shape as well."),
-             ]},
+                 q("A friend draws a letter on your back with one finger. Can you tell which letter?", "✍️", "Yes, because all your skin can feel touch", ["No, only hands can feel", "Only if you look at your back"], "Your hands feel the most, but every bit of your skin feels touch."),
+                 q("Which is easier to find between two children: the things that are the same, or the things that are different?", "\U0001F46B", "the things that are the same - there are far more of them", ["the differences, because there are more of them", "neither, they are the same number"], "Two eyes, two ears, a nose, a mouth, teeth, hair, skin, a heart. Everyone shares nearly everything. The differences are the small part."),
+                 q("Lina and Hana are twins. Must they look the same?", "\U0001F46F", "No. Some twins look alike and some do not.", ["Yes, all twins look the same", "Yes, unless one has short hair"], "Twins were born on the same day to the same mother. That is all it means. A brother and a sister can be twins."),
+                 q("Ali sorts the class by hair colour, then puts the rest into boys and girls. What went wrong?", "\U0001F5C2️", "He changed what he was sorting by half way through", ["Nothing, that is a good sort", "He should have used three groups"], "A boy with black hair now belongs in two groups at once. Pick one thing and keep it for the whole sort - naming each group shows you the mistake."),
+                 q("Who is taller: the child with the loudest voice, or the child who measures more hand spans?", "\U0001F590️", "the one who measures more hand spans", ["the one with the loudest voice", "you cannot tell either way"], "A loud voice or a big character can make somebody seem taller. Measuring settles it."),
+             ],
+              "support": [
+                 q("Which part do you see with?", "\U0001F441️", "my eyes", ["my ears"],
+                   "Eyes see. That is the sense of sight."),
+                 q("Does everybody have a nose?", "\U0001F443", "Yes", ["No"],
+                   "Every person has a nose. It is one of the things everybody shares."),
+              ],
+              "extension": [
+                 q("You want to know who is tallest in your class. What is the best way to find out?", "\U0001F590️", "stand back to back and measure", ["ask the loudest person", "guess by looking"],
+                   "Measuring settles it. A loud voice can make somebody seem taller than they are."),
+                 q("You sort your class into a black hair group and a brown hair group. Where does a child with blonde hair go?", "\U0001F471", "nowhere yet - the groups need a third one, or a different question", ["in the black hair group", "in whichever group has fewer children"],
+                   "A good sort has a place for everybody. If somebody fits no group, the groups are not finished."),
+              ]
+             },
              "That is the whole lesson finished. You know your body and your senses."),
     ],
 }
@@ -284,6 +334,20 @@ LESSON["words"] = [
          ["Touch tells me the ice is cold.", "In the feely bag, only touch could help."]),
     word("hand span", "\u270B", "The distance from your thumb to your little finger, stretched wide.",
          ["Nora is eight hand spans tall.", "We measured the table in hand spans."]),
+    word("twins", "\U0001F46F", "Two children born on the same day to the same mother. Some twins look alike and some do not.",
+         ["Lina and Hana are twins.", "A brother and a sister can be twins."]),
+    word("blonde", "\U0001F471", "Yellow hair.",
+         ["Nora has blonde hair.", "Three children in the class are blonde."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name many parts of my body.", "1Bs.03"),
+    cando("I can name the five senses and say what each one tells me.", "1Bs.02"),
+    cando("I can say how people are the same as each other.", "1Bp.04"),
+    cando("I can say how people are different from each other.", "1Bp.04"),
+    cando("I can measure how tall somebody is in hand spans.", "1TWSc.03"),
+    cando("I can write measurements in a table and read them back.", "1TWSc.05"),
+    cando("I can say how something I use every day works.", "1SIC.02"),
 ]
 
 LESSON["home"] = [

@@ -6,7 +6,7 @@ quieter as it travels from its source; with 1Bs.02 (the ear), 1TWSp.02,
 1TWSc.01, 1TWSc.02, 1TWSc.03, 1TWSc.04, 1TWSc.05, 1TWSa.01, 1SIC.02 and
 1SIC.03. The sounds are synthesised on the page - tap a drum and it thuds.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, cando, icon
 
 LESSON = {
     "slug": "sounds-near-and-far",
@@ -19,7 +19,12 @@ LESSON = {
                  ["Every sound comes from somewhere.", "The thing making the sound is called the source."],
                  ["Tap the drum. Boom. The drum is the source.", "Tap the bird. Tweet. The bird is the source.",
                   "Your ears hear the sound, but the source is the thing that made it."],
-                 ["Children say the sound comes from their ears.", "Ears hear it. The drum makes it."],
+                 ["Children say the sound comes from their ears.", "Ears hear it. The drum makes it.",
+                  "Three more slips, and they are all about where sound can go.",
+                  "Children think sound cannot go round a corner.", "It can. You hear somebody in the next room without seeing them.",
+                  "Children think sound only travels through air.", "It travels through a wall, and through water too. A swimmer under the water still hears.",
+                  "And children think a sound only goes to the person listening.", "A sound spreads out everywhere at once.",
+                  "Stand a whole class in a circle round a bell and every single one of them hears it."],
                  ["Tap every picture, listen, and say what the source is."]),
              {"items": [
                  {"pic": "\U0001F941", "label": "drum", "sound": "drum", "say": "Boom. The drum is the source of that sound."},
@@ -30,8 +35,12 @@ LESSON = {
                  {"pic": "\U0001F431", "label": "cat", "sound": "cat", "say": "Miaow. The cat is the source."},
                  {"pic": "\U0001F327️", "label": "rain", "sound": "rain", "say": "Pitter patter. The rain is the source."},
                  {"pic": icon("whistle"), "label": "whistle", "sound": "whistle", "say": "Wheee. The whistle is the source."},
-             ], "need": 8},
-             "Every sound has a source. Your ears find it."),
+                 {"pic": "\U0001F6AA", "label": "a dog behind a door", "sound": "dog", "say": "Woof. You cannot see the dog, and you can still hear it. Sound goes round corners and through an open door."},
+                 {"pic": "\U0001F9F1", "label": "a radio through a wall", "sound": "hum", "say": "Music from the next room, straight through the wall. Sound does not only travel through air. It travels through a solid wall too."},
+                 {"pic": "\U0001F3CA", "label": "a splash heard underwater", "sound": "splash", "say": "Splash. Put your head under the water in the bath and you can still hear. Sound travels through water as well."},
+             ], "need": 11},
+             "Every sound has a source. Your ears find it, even round a corner.",
+             mis=["2.1-m1", "2.1-m2", "2.1-m3"]),
 
         step("sort", "Who or what made it?", "\U0001F5C2️", "Sound sorter", ["1Ps.01", "1TWSc.01"],
              "Was that sound made by an <b>animal or person</b>, or by a <b>thing</b>? Tap the right bin.",
@@ -60,7 +69,11 @@ LESSON = {
                  ["A sound happens when something shakes very fast.", "Scientists call that fast shaking vibrating."],
                  ["Pluck an elastic band and watch it.", "It goes blurry because it is shaking, and you hear a twang.",
                   "Hit a drum and touch the skin: you can feel it shaking.", "Hum, and put your hand on your throat: it buzzes."],
-                 ["Children think the sound is in the air by itself.", "Stop the band shaking with your finger and the sound stops too."],
+                 ["Children think the sound is in the air by itself.", "Stop the band shaking with your finger and the sound stops too.",
+                  "Two slips about quiet sounds. Children think a quiet sound is not really a sound at all.",
+                  "It is. The very softest tap on a drum is a sound, and so is paper sliding across a table.",
+                  "And children think you only hear something if you are listening for it.",
+                  "You do not. A sound in the night can wake you up, and that proves your ears work even while you are asleep."],
                  ["Press Next, listen, and try the throat one for real."]),
              {"frames": [
                  {"pic": "➰", "cap": "Pluck an elastic band. It <b>shakes</b> and you hear a twang.", "say": "Pluck an elastic band. It shakes so fast it looks blurry, and you hear a twang.", "sound": "pluck"},
@@ -68,8 +81,11 @@ LESSON = {
                  {"pic": "\U0001F41D", "cap": "A bee's wings <b>shake</b> very fast. Buzz!", "say": "A bee's wings shake very fast. That is the buzz.", "sound": "buzz"},
                  {"pic": "\U0001F5E3️", "cap": "Hum. Put your hand on your throat. It <b>shakes</b>!", "say": "Now hum, and put your hand flat on your throat. Feel it shaking? That is your voice.", "sound": "hum"},
                  {"pic": "✋➰", "cap": "Stop the shaking and the sound <b>stops</b>.", "say": "Touch the elastic band to stop it shaking, and the sound stops too. No shaking, no sound."},
+                 {"pic": "\U0001F449\U0001F941", "cap": "The <b>softest</b> tap on the drum is <b>still a sound</b>.", "say": "Now tap the drum as softly as you possibly can. Listen. That is still a sound. A quiet sound is a sound.", "sound": "thud"},
+                 {"pic": "\U0001F4A4\U0001F442", "cap": "Your ears work <b>even when you are asleep</b>.", "say": "Have you ever been woken up by a noise in the night? You were not listening for it. That shows your ears keep working even while you sleep."},
              ]},
-             "Sound is made when something shakes very fast."),
+             "Sound is made when something shakes very fast. Even the quiet ones.",
+             mis=["2.2-m1", "2.2-m2"]),
 
         step("experiment", "Near and far", "\U0001F9EA", "Near and far", ["1Ps.02", "1TWSp.02", "1TWSc.03", "1TWSc.04", "1TWSa.01"],
              "What happens to a sound as you walk away from it? Predict, then ring the bell and step back.",
@@ -77,16 +93,31 @@ LESSON = {
                  ["As you get further from the source, the sound gets quieter."],
                  ["Predict first.", "Then ring the bell right next to it and listen.", "Take a step back and ring it again.",
                   "Keep going, six steps.", "Watch the loudness meter and listen to the bell."],
-                 ["Children think a bell is just as loud from anywhere.", "Try it. Six steps away it is much quieter."],
+                 ["Children think a bell is just as loud from anywhere.", "Try it. Six steps away it is much quieter.",
+                  "Now the important part, and it is easy to get the wrong way round.",
+                  "The bell is rung exactly the same every time. It does not make a quieter sound when you are far away.",
+                  "The sound gets quieter on its way to you. It spreads out as it travels, so less of it reaches your ear.",
+                  "So a far-away sound is not a small sound. It is an ordinary sound that has had a long way to come."],
                  ["Tap your prediction, then ring, step back, ring, step back."]),
              {"sim": "soundFar",
               "predict": {"ask": "What do you think the bell will sound like when you are <b>six steps away</b>?",
                           "opts": [opt("Quieter than when I am next to it", True), opt("Louder than when I am next to it", False), opt("Exactly the same", False)]},
+              "plan": {"ask": "How shall we find out what happens to a sound as you move away? Which way is <b>fair</b>?",
+                       "opts": [opt("Ring the same bell the same way each time, and change only how far away you stand", True),
+                                opt("Ring the bell gently close up and hard from far away", False),
+                                opt("Use a bell close up and a drum from far away", False)],
+                       "why": "A fair test changes ONE thing: the distance. Ring the bell the same each time, or you will not know what made the difference."},
               "runAsk": "Ring the bell. Take a step back. Ring it again. Keep going to six steps.",
               "happened": {"ask": "What happened to the bell's sound as you walked away?",
                            "opts": [opt("It got quieter with every step", True), opt("It got louder", False), opt("It stayed the same", False)],
-                           "why": "The further you were from the bell, the quieter it sounded. Sound gets quieter as it travels away from its source."}},
-             "Sound gets quieter the further it travels."),
+                           "why": "The further you were from the bell, the quieter it sounded. The bell was rung the same every time - the sound got quieter on its way to you."},
+              "conclude": {"ask": "So what did we find out?",
+                           "opts": [opt("A sound gets quieter as it travels away from its source", True),
+                                    opt("A bell rings more quietly for people who are far away", False),
+                                    opt("Sound cannot reach you at all if you are far away", False)],
+                           "why": "The bell was rung exactly the same every time. What changed was how far the sound had to travel to reach you."}},
+             "Sound gets quieter the further it travels. The bell did not change.",
+             mis=["2.3-m1"]),
 
         step("record", "How loud was it?", "\U0001F4DD", "Loudness table", ["1TWSc.05", "1Ps.02"],
              "Record how loud the bell was at each distance. How loud was it <b>%s</b>?",
@@ -102,7 +133,17 @@ LESSON = {
                   {"pic": "3️⃣", "label": "3 steps away", "answer": "medium", "why": "three steps away it was medium."},
                   {"pic": "6️⃣", "label": "6 steps away", "answer": "quiet", "why": "six steps away it was quiet."},
               ],
-              "choices": [{"id": "loud", "t": "Loud", "pic": "\U0001F50A"}, {"id": "medium", "t": "Medium", "pic": "\U0001F509"}, {"id": "quiet", "t": "Quiet", "pic": "\U0001F508"}]},
+              "choices": [{"id": "loud", "t": "Loud", "pic": "\U0001F50A"}, {"id": "medium", "t": "Medium", "pic": "\U0001F509"}, {"id": "quiet", "t": "Quiet", "pic": "\U0001F508"}],
+              "read": [
+                  {"ask": "Read your table. How loud was the bell at <b>6 steps</b>?",
+                   "opts": [opt("quiet", True), opt("loud", False), opt("medium", False)],
+                   "why": "The 6 steps row of your table says quiet."},
+                  {"ask": "Read the three rows in order: loud, medium, quiet. What is the <b>pattern</b>?",
+                   "opts": [opt("the further away, the quieter it gets", True),
+                            opt("the further away, the louder it gets", False),
+                            opt("there is no pattern", False)],
+                   "why": "1 step loud, 3 steps medium, 6 steps quiet. Every extra step makes it quieter."},
+              ]},
              "Loud, medium, quiet. Your table shows the sound fading."),
 
         step("explore", "Use the sound makers safely", "\U0001F3B6", "Safe ears", ["1TWSc.02", "1TWSc.04"],
@@ -161,7 +202,26 @@ LESSON = {
                  q("A sound hurts your ears. What should you do?", "\U0001F442", "cover your ears and move away", ["get closer", "shout louder"], "Loud sounds can hurt ears. Move away from the source."),
                  q("Stop an elastic band shaking with your finger. What happens to the sound?", "✋", "it stops", ["it gets louder", "it gets higher"], "No shaking, no sound."),
                  q("Why do you have to stand close to hear a whisper?", "\U0001F92B", "A whisper is quiet, and sound gets quieter as it travels", ["Whispers only go up to the sky", "Ears only work when you are close"], "A whisper starts quiet, and every step away makes it quieter still. Close up, it has not faded yet."),
-             ]},
+                 q("A dog barks behind a closed door. Can you hear it?", "\U0001F6AA", "Yes. Sound goes round corners and through doors.", ["No, you must see a thing to hear it", "No, sound only goes in straight lines"], "You hear things you cannot see all day long. Sound spreads out and goes round corners."),
+                 q("You put your head under the water in the bath. Can you hear?", "\U0001F6C0", "Yes. Sound travels through water too.", ["No, sound only travels through air", "No, water makes you deaf"], "Sound travels through water and through solid walls, not only through air."),
+                 q("Ten children stand in a ring around a bell. Who hears it?", "\U0001F514", "all ten of them", ["only the closest one", "only the one who is listening"], "A sound spreads out everywhere at once. Everyone in the ring hears it."),
+                 q("You tap a drum as softly as you can. Is that a sound?", "\U0001F941", "Yes. A quiet sound is still a sound.", ["No, it is too quiet to be a sound", "Only if somebody hears it"], "Even the very softest tap is a sound. Quiet sounds are sounds."),
+                 q("A noise in the night wakes you up. What does that show?", "\U0001F4A4", "your ears work even when you are asleep", ["you were listening in your sleep", "the noise was inside your dream"], "You were not listening for it, and you still heard it. Ears do not switch off."),
+                 q("Zara rings a bell. Arun is far away and says it was a quiet bell. Is he right?", "\U0001F514", "No. The bell rang the same; the sound got quieter on the way to him.", ["Yes, the bell rings quietly for far-away people", "Yes, bells get tired"], "The source made the same sound. Sound spreads out as it travels, so less of it reached Arun's ear."),
+             ],
+              "support": [
+                 q("What do you hear with?", "\U0001F442", "my ears", ["my eyes"],
+                   "Ears hear. That is the sense of hearing."),
+                 q("You walk away from a ringing bell. Does it get louder or quieter?", "\U0001F514", "quieter", ["louder"],
+                   "You tested it. Every step away made the bell quieter."),
+              ],
+              "extension": [
+                 q("You hear a drum from the next room, through a closed door. What does that tell you?", "\U0001F6AA", "sound goes round corners and through solid things", ["the drum must be very close", "sound only travels in straight lines"],
+                   "Sound spreads out. It goes round corners, through doors and through walls."),
+                 q("Two children stand the same distance from a bell. One is reading a book and not listening. Who hears it?", "\U0001F4D6", "both of them", ["only the one who is listening", "neither of them"],
+                   "Your ears do not switch off. A sound in the night can wake you when you are asleep."),
+              ]
+             },
              "That is the whole lesson finished. You know where sounds come from."),
     ],
 }
@@ -207,6 +267,15 @@ LESSON["words"] = [
          ["The drum skin vibrates.", "Feel your throat vibrate when you hum."]),
     word("ear", "\U0001F442\U0001F3FE", "The part of your body that hears.",
          ["I hear with my ears.", "Cover your ears if it is too loud."]),
+]
+
+LESSON["cando"] = [
+    cando("I can find sources of sound.", "1Ps.01"),
+    cando("I can say what happens to a sound as it travels away from its source.", "1Ps.02"),
+    cando("I can say which part of me hears.", "1Bs.02"),
+    cando("I can use sound makers safely and look after my ears.", "1TWSc.02"),
+    cando("I can record how loud a sound was at each distance.", "1TWSc.05"),
+    cando("I can say whether what happened was what I predicted.", "1TWSa.01"),
 ]
 
 LESSON["home"] = [

@@ -237,3 +237,100 @@ Added on 2026-09-10 and verified the same day: 136 steps in all, about 345
 minutes by the hub's estimate; 55 science words; both gates green; the seven
 shell steps driven to completion in the browser on Lesson 1 and looked at on
 Lesson 4; no horizontal overflow at 375px on any step of Lesson 3.
+
+## The Cambridge depth pass (2026-09-16)
+
+Asked to strengthen Grade 1 against the three Cambridge Primary Science Stage 1
+books (Learner's Book 1, Workbook 1, Teacher's Resource 1). Owner chose:
+**nothing that moves a step position**, **stop at verified in the repo** (no
+commit, no push, no deploy), and the app is **the teaching spine alongside a
+teacher**, not the whole year's course.
+
+### Why position-safety decided the shape
+
+Grade 1 is live and routed, and progress is stored by step POSITION
+(`step-NN`, under `ehel-sci-g01` / `l01..l08`). A new step silently re-points
+every saved place after it. So everything here lands as items, phases, banks or
+shelf content INSIDE the 136 existing steps. Proof, not assurance: the step-kind
+sequence of all eight lessons is identical before and after, extracted from the
+built pages. Two step TITLES changed, both deliberately - "Sort them into two
+bins" became "three bins", and "Will it stick?" became "Will the magnet attract
+it?".
+
+### What Cambridge actually contains, and what was missing
+
+24 topics, and per topic the Teacher's Resource carries a **Common
+misconceptions** table: **48 named misconceptions** with how to spot each one
+and how to overcome it. That is the richest seam in the three books, and the
+build had no systematic answer to it. Also counted: 25 `Look what I can do!`
+self-checks (~90 statements), Focus / Practice / Challenge on all 24 Workbook
+topics, and a 154-word glossary.
+
+**Two of the 48 were being taught AS THE CONTENT**, which is why this was not
+simply an addition exercise:
+
+- Lesson 7 said `stick` 43 times and `attract` **zero** times, while Teacher's
+  Resource 6.5 names "magnets stick to things" as the thing to correct and
+  `attract - pull towards something` is a Stage 1 glossary word.
+- Lesson 2 said `sunlight` 13 times and `artificial` zero, while Teacher's
+  Resource 1.3 names "plants must have light from the Sun" as the misconception,
+  overcome by a plant thriving under a lamp.
+
+### What landed
+
+| | |
+| --- | --- |
+| the two taught misconceptions | fixed; lesson 7 now teaches `attract`, with `stick` demoted to the thing a child is corrected out of ("glue sticks; a magnet attracts") |
+| `../data/cambridge-stage1-misconceptions.json` | all 48, each with its topic, a plain-English statement of the false idea, this repo's summary of the corrective move, and the lesson that must answer it |
+| the misconception arm of `check-coverage.py` | fails an entry no step claims, a citation the fixture does not hold, a citation assigned to another lesson, and a coverage count below the recorded floor. Mutation-tested 4 ways, tree restored byte-identical |
+| ~20 unanswered misconceptions | answered, in Cambridge's own terms, inside existing steps - the float/sink set and the sound set are the densest |
+| the three-way alive sort | lesson 1 sorts into living / used to be alive / never alive, which is Learner's Book 1.1's own three-way ask. `sortBins` takes any number of bins and Grade 1 already shipped a six-bin sort, so this needed no new step |
+| the two missing enquiry moves | every Stage 1 experiment gained a **plan** ("which way is fair?") and the kit's existing **conclude**. Cambridge's method has five moves; the build had three of them |
+| read-off questions | all eight record tables now ask questions off the table the child just filled, the table staying on screen - Cambridge reads a tally in Check your progress and colours bricks in Workbook 1.4 |
+| the self-check | Cambridge's `Look what I can do!`, 53 claims, **on the sticker shelf** so no step position moves. Each claim's "Show me" is resolved by the builder to the first step of that lesson carrying its objective |
+| differentiation | support and extension banks on each lesson's quiz. Support narrows (two options) on the first wrong answer; extension widens after a clean finish. Neither is scored and `finish()` still fires at the end of the core bank |
+| the 24 absent glossary words | carded, each in the lesson that teaches the thing |
+| `build-review-pack.py` | `review-pack.html`: all 239 questions, judgement items first, because no gate can prove a Stage 1 key is RIGHT |
+
+Measured, before and after: **136 steps both times**; questions 141 -> 239;
+sort items 80 -> 82; word cards 55 -> 80; misconceptions answered 0 -> 48 of 48;
+self-check claims 0 -> 53; differentiation items 0 -> 32. Learner-facing text
+18,508 -> 28,145 words at 9.04 -> 9.25 words per sentence, highest
+Flesch-Kincaid 4.73 -> 4.85 (lesson 7 both times) - half again as much content
+at the same reading demand.
+
+### What will bite
+
+- **`cando` resolves against the lesson's OWN steps, not the expanded list.**
+  `_shell.expand` gives the overview, lecture, words, games and home steps the
+  whole lesson's codes, so searching the expanded list sends every claim to the
+  overview - which is where all 53 pointed on the first attempt.
+- **A record step's `read` block and an experiment's `plan`/`conclude` live in
+  the step's DATA dict**, not as `step()` arguments: the renderer receives
+  `LESSON.steps[i].data`.
+- **The experiment's phase numbers are computed from the phases the step
+  actually has.** Verified for all four shapes: a step with neither optional
+  phase still reads 1-4 out of 2, and one with `conclude` alone still reads
+  "5 &middot; Conclude" out of 3, so Grades 2-4 are unchanged.
+- **`SIMS.magnet` takes an optional `said`** so Stage 1 can say "attracted"
+  where Grade 3 still says "sticks". Without it the old sentence is used, so
+  Grade 3 rebuilds byte-identical.
+- **Science's `lib/deck.js` now diverges from English's copy.** The README used
+  to say it was lifted verbatim; the tier banks live in `sequence()` there.
+- **`rebuild.sh` takes `T` from the environment.** Build against a `git archive
+  HEAD` export of `mathematics/lesson-app-tools` when that directory holds
+  another session's uncommitted work, which it did on 2026-09-16.
+- `OSError: [Errno 22]` on a page write is routine on this machine. Re-run the
+  whole chain, never one lesson.
+
+### What was deliberately NOT done
+
+- **A chart the child BUILDS.** Cambridge's Workbook 1.4 has them colour bricks
+  for a plant's height; a `graph` step at Stage 1 would be a new step, so
+  deliverable 8 of the agreed prompt was withdrawn. Reading data landed; drawing
+  it did not. Recorded as a decision, not an oversight.
+- **A 27-area re-score.** `VALIDATION.md` is still version 4 plus an appendix.
+  A version 5 needs the full re-review, and no human has read this content.
+- **Grades 2-4.** Untouched, and not rebuilt. The kit changes are inert without
+  opt-in data: 36 pages across Grades 2, 3 and 4 were rebuilt into a scratch
+  copy and every LESSON payload is identical.

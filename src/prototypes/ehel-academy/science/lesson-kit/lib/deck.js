@@ -105,6 +105,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -150,9 +164,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -160,14 +213,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();

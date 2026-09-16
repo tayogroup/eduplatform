@@ -7,7 +7,7 @@ on; 1ESs.02 the Sun is a source of heat and light and one of many stars;
 with 1TWSp.01, 1TWSp.02, 1TWSc.01, 1TWSc.04, 1TWSc.05, 1TWSa.01, 1SIC.01
 and 1SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, cando, icon
 
 LESSON = {
     "slug": "our-earth-our-sun",
@@ -20,7 +20,12 @@ LESSON = {
                  ["We live on a planet.", "A planet is a huge round ball in space, and ours is called Earth."],
                  ["Start at your house.", "Zoom out and you see your town.", "Zoom out more and you see your whole country.",
                   "Zoom out again and you see the whole Earth: a round ball, blue and green, floating in space.", "Everyone you know lives on it."],
-                 ["Children think the Earth is flat because the ground looks flat.", "It is so big that a little piece of it looks flat. From space it is round."],
+                 ["Children think the Earth is flat because the ground looks flat.", "It is so big that a little piece of it looks flat. From space it is round.",
+                  "Children also think the Earth is small, about the size of the places they know.",
+                  "It is enormous. Fly in a plane for a whole day and you still cross only a part of it.",
+                  "Find where you live on a globe: it is a tiny speck.",
+                  "One more thing, about the word. Earth is the name of our planet, and earth also means the soil you dig in the garden.",
+                  "Two different things with one word, which is confusing. So say planet Earth for the world, and soil for the garden."],
                  ["Press Next and watch the picture get further away."]),
              {"button": "Zoom out ▶", "frames": [
                  {"scene": {"id": "zoom", "state": 0}, "cap": "Your <b>house</b>.", "say": "Here is your house."},
@@ -29,7 +34,8 @@ LESSON = {
                  {"scene": {"id": "zoom", "state": 3}, "cap": "Zoom out: the whole <b>Earth</b>. A round planet in space. We all live on it.", "say": "Zoom out one more time. The whole Earth. A round planet floating in space, and every person you know lives on it."},
                  {"scene": {"id": "globe", "state": 0}, "cap": "Earth is <b>blue</b> and <b>green</b>. Blue is water, green is land.", "say": "Look at the colours. Blue is water. Green is land. There is a lot of blue."},
              ]},
-             "Earth is the planet we live on. It is round, and mostly blue."),
+             "Earth is the planet we live on. It is round, enormous, and mostly blue.",
+             mis=["4.1-m1", "4.1-m2", "4.1-m3"]),
 
         step("experiment", "Mostly water?", "\U0001F9EA", "Globe catch", ["1ESp.01", "1TWSp.02", "1TWSc.04", "1TWSa.01"],
              "Is Earth mostly water or mostly land? Predict, then catch the globe ten times and see where your finger lands.",
@@ -42,10 +48,20 @@ LESSON = {
              {"sim": "globeCatch",
               "predict": {"ask": "Which do you think there is <b>more</b> of on Earth?",
                           "opts": [opt("More water than land", True), opt("More land than water", False), opt("Exactly the same amount", False)]},
+              "plan": {"ask": "How shall we find out whether Earth is mostly water? Which way is <b>fair</b>?",
+                       "opts": [opt("Catch the globe lots of times without looking, and count where your finger lands", True),
+                                opt("Aim your finger at the sea every time", False),
+                                opt("Catch it once and count that", False)],
+                       "why": "If you aim, you decide the answer instead of finding it out. And one catch could be luck - many catches show the pattern."},
               "runAsk": "Press Catch it! ten times. Water or land under your finger?",
               "happened": {"ask": "What happened in your ten catches?",
                            "opts": [opt("More landed on water than on land", True), opt("More landed on land than on water", False), opt("Every catch landed on land", False)],
-                           "why": "Seven catches landed on water and three on land. Earth is mostly covered in water."}},
+                           "why": "Seven catches landed on water and three on land. Earth is mostly covered in water."},
+              "conclude": {"ask": "So what did we find out?",
+                           "opts": [opt("Most of Earth is covered in water", True),
+                                    opt("Most of Earth is land", False),
+                                    opt("Earth has the same amount of land and water", False)],
+                           "why": "Seven of the ten catches landed on water. More water than land, every time you try it."}},
              "Earth is mostly covered in water."),
 
         step("record", "Count the catches", "\U0001F4DD", "Tally table", ["1TWSc.05", "1ESp.01"],
@@ -61,7 +77,20 @@ LESSON = {
                   {"pic": "\U0001F4A7", "label": "water", "answer": "7", "why": "seven catches landed on water."},
                   {"pic": "⛰️", "label": "land", "answer": "3", "why": "three catches landed on land."},
               ],
-              "choices": [{"id": "3", "t": "3", "pic": "3️⃣"}, {"id": "5", "t": "5", "pic": "5️⃣"}, {"id": "7", "t": "7", "pic": "7️⃣"}]},
+              "choices": [{"id": "3", "t": "3", "pic": "3️⃣"}, {"id": "5", "t": "5", "pic": "5️⃣"}, {"id": "7", "t": "7", "pic": "7️⃣"}],
+              "read": [
+                  {"ask": "Read your tally. How many catches landed on <b>land</b>?",
+                   "opts": [opt("3", True), opt("7", False), opt("5", False)],
+                   "why": "The land row of your tally says 3."},
+                  {"ask": "Add up both rows. How many catches <b>altogether</b>?",
+                   "opts": [opt("10", True), opt("7", False), opt("3", False)],
+                   "why": "Seven on water and three on land. Seven and three make ten, which is every catch."},
+                  {"ask": "Your tally says 7 water and 3 land. What does that tell you about Earth?",
+                   "opts": [opt("most of Earth is covered in water", True),
+                            opt("most of Earth is land", False),
+                            opt("Earth is half land and half water", False)],
+                   "why": "7 is more than 3, so more of the globe is water."},
+              ]},
              "Seven water, three land. That is most of Earth."),
 
         step("demo", "Dig into the land", "⛏️", "Rock and soil", ["1ESp.02"],
@@ -85,7 +114,12 @@ LESSON = {
              explain(
                  ["The land and the sea are made of rock, soil and water."],
                  ["A pebble is rock.", "A mountain is a huge piece of rock.", "The soil in a flower pot is soil.", "The sea is water."],
-                 ["Children think sand is soil.", "Sand is tiny bits of rock, ground up by the sea."],
+                 ["Children think sand is soil.", "Sand is tiny bits of rock, ground up by the sea.",
+                  "And sand IS rock, which surprises people. Look at it with a magnifying glass and you see tiny rocky grains with sharp shiny edges.",
+                  "Rock does not have to be a big lump to be rock.",
+                  "The other thing children say is that soil is just dirt, and worth nothing.",
+                  "Soil is precious. Seeds grow in it, and every bit of food you have ever eaten came from a plant, or from an animal that ate plants.",
+                  "No soil, no food. It is one of the most valuable things on the planet."],
                  ["Look at each one and decide: rock, soil or water?"]),
              {"ask": "Rock, soil, or water?",
               "bins": [{"id": "rock", "label": "Rock", "pic": "\U0001FAA8"}, {"id": "soil", "label": "Soil", "pic": icon("soil")}, {"id": "water", "label": "Water", "pic": "\U0001F4A7"}],
@@ -99,7 +133,8 @@ LESSON = {
                   {"pic": "\U0001F3D6️", "label": "sand", "bin": "rock", "why": "Sand is tiny bits of rock, ground up by the sea."},
                   {"pic": "\U0001F3DE️", "label": "lake", "bin": "water", "why": "A lake is water."},
               ]},
-             "Rock, soil and water. That is the surface of Earth."),
+             "Rock, soil and water. That is the surface of Earth - and soil is precious.",
+             mis=["4.3-m1", "4.4-m1"]),
 
         step("demo", "The Sun brings light and heat", "☀️", "Sunrise", ["1ESs.02"],
              "Press <b>Next</b> and watch the Sun come up. What does it bring?",
@@ -129,10 +164,20 @@ LESSON = {
              {"sim": "sunShade",
               "predict": {"ask": "Which cup of water do you think will get <b>warmer</b>?",
                           "opts": [opt("The cup in the sun", True), opt("The cup in the shade", False), opt("Both will stay exactly the same", False)]},
+              "plan": {"ask": "How shall we find out whether the Sun makes things warm? Which way is <b>fair</b>?",
+                       "opts": [opt("Two cups with the same water. One in the sun, one in the shade, on the same day", True),
+                                opt("A cup of cold water in the sun and a cup of warm water in the shade", False),
+                                opt("One cup in the sun today and one in the shade tomorrow", False)],
+                       "why": "A fair test changes ONE thing: the sun or the shade. Start both cups the same, on the same day."},
               "runAsk": "Press Wait an hour, three times. Watch the red lines on the thermometers.",
               "happened": {"ask": "What happened after three hours?",
                            "opts": [opt("The cup in the sun got much warmer than the cup in the shade", True), opt("The cup in the shade got warmer", False), opt("Both stayed cold", False)],
-                           "why": "The water in the sun got warm. The water in the shade stayed cool. The Sun's heat warmed it."}},
+                           "why": "The water in the sun got warm. The water in the shade stayed cool. The Sun's heat warmed it."},
+              "conclude": {"ask": "So what did we find out?",
+                           "opts": [opt("The Sun gives heat, and it warms things up", True),
+                                    opt("The Sun only gives light, not heat", False),
+                                    opt("Shade makes water warmer", False)],
+                           "why": "Both cups started the same. Only the one in the sun got warm, so the heat came from the Sun."}},
              "The Sun's heat warms things. The shade stays cooler."),
 
         step("demo", "The Sun is a star", "⭐", "Star Sun", ["1ESs.02", "1ESs.01"],
@@ -141,7 +186,12 @@ LESSON = {
                  ["The Sun is a star.", "The stars you see at night are suns too, but very, very far away."],
                  ["At night the sky is full of tiny lights: stars.", "Each one is a huge ball of hot, glowing gas like our Sun, but so far away it looks tiny.",
                   "Our Sun looks big and bright because it is the nearest star to Earth."],
-                 ["Children think the Sun and the stars are different kinds of thing.", "They are the same kind of thing. Ours is just close."],
+                 ["Children think the Sun and the stars are different kinds of thing.", "They are the same kind of thing. Ours is just close.",
+                  "Now be careful the other way round: not every bright light in the night sky is a star.",
+                  "The Moon is bright and is not a star. A plane crossing the sky is not a star.",
+                  "The planets look like bright dots and they are not stars either.",
+                  "And the last one, the biggest surprise. The Sun looks as if it walks across the sky all day.",
+                  "It does not move at all. The Earth is turning round, and that is what makes the Sun look as if it is moving."],
                  ["Press Next and see."]),
              {"frames": [
                  {"scene": {"id": "sky", "state": 0}, "cap": "Night. The sky is full of tiny lights: <b>stars</b>.", "say": "At night the sky is full of tiny lights. Those are stars."},
@@ -149,7 +199,8 @@ LESSON = {
                  {"scene": {"id": "sky", "state": 2}, "cap": "The Sun is a star too. It looks big because it is the <b>nearest</b> one.", "say": "The Sun is a star too. It looks big and bright only because it is the nearest star to Earth."},
                  {"pic": "\U0001F30D☀️", "cap": "Earth is our planet. The Sun is our star. It gives us light and heat.", "say": "Earth is our planet. The Sun is our star. It gives us light and heat every day."},
              ]},
-             "The Sun is a star, and the nearest one to us."),
+             "The Sun is a star, and the nearest one to us. And it is the Earth that turns.",
+             mis=["4.2-m1", "4.2-m2"]),
 
         step("context", "Long ago, and the people who look up", "\U0001F52D", "Sky watchers", ["1SIC.01", "1SIC.03"],
              "Long ago people thought different things about the Earth and the Sun. Tap each picture.",
@@ -203,7 +254,26 @@ LESSON = {
                  q("What is the Sun?", "⭐", "a star, the nearest one to Earth", ["a planet", "a cloud", "a big lamp"], "The Sun is a star. The others look small because they are far away."),
                  q("Long ago some people thought the Earth was flat. How do we know it is round?", "\U0001F6F0️", "photographs from space show it", ["because the ground is bumpy", "because the Sun is round"], "Science changed what people knew."),
                  q("On a hot day, why does it feel cooler in the shade of a tree?", "\U0001F333", "The tree stops the Sun's heat reaching you", ["The tree is made of ice", "The shade makes it night time"], "The Sun gives heat. In the shade, the tree is in the way, so less of the Sun's heat reaches you."),
-             ]},
+                 q("How big is planet Earth?", "\U0001F30D", "so big that a plane flies all day and crosses only part of it", ["about as big as your country", "about as big as your city"], "Find where you live on a globe and it is a tiny speck. Earth is enormous."),
+                 q("Which word means the planet, and which means the stuff in the garden?", "⛏️", "planet Earth is the world; soil is what you dig", ["they are the same thing", "Earth is the garden and soil is the world"], "One word, two meanings. Say planet Earth for the world and soil for the garden, and nobody gets confused."),
+                 q("You see a bright light moving slowly across the night sky. Is it a star?", "✈️", "probably not - it could be a plane, the Moon or a planet", ["yes, every bright light in the sky is a star", "yes, if it is very bright"], "The Moon, planes and the planets are all bright and none of them is a star."),
+                 q("The Sun looks as if it moves across the sky all day. What is really moving?", "\U0001F30D", "the Earth, which is turning round", ["the Sun, which walks across the sky", "the clouds carry the Sun along"], "The Sun stays still. The Earth turns, and that makes the Sun look as if it is moving."),
+                 q("Arun says soil is just dirt and no use to anybody. Is he right?", icon("soil"), "No. Seeds grow in soil, and all our food comes from plants.", ["Yes, soil is only dirt", "Yes, unless it is wet"], "No soil, no plants, no food. Soil is one of the most precious things on the planet."),
+                 q("Is sand rock?", "\U0001F3D6️", "Yes. Sand is rock broken into tiny grains.", ["No, only big lumps are rock", "No, sand is a kind of soil"], "Look at sand through a magnifying glass and you see tiny rocky grains with sharp, shiny edges."),
+             ],
+              "support": [
+                 q("What is the planet we live on called?", "\U0001F30D", "Earth", ["the Sun"],
+                   "We live on planet Earth."),
+                 q("Is most of Earth water or land?", "\U0001F30A", "water", ["land"],
+                   "Seven of your ten catches landed on water."),
+              ],
+              "extension": [
+                 q("The Sun looks as if it crosses the sky each day. A friend says the Sun is walking across. What would you say?", "☀️", "the Sun stays still and the Earth is turning", ["the Sun really does walk across", "the clouds carry the Sun along"],
+                   "The Earth turns round once a day, and that makes the Sun appear to move."),
+                 q("Sand feels nothing like a mountain. Why is sand still rock?", "\U0001F3D6️", "it is rock broken into tiny grains", ["it is a kind of soil", "it is not rock at all"],
+                   "Under a magnifying glass sand shows tiny rocky grains with sharp, shiny edges."),
+              ]
+             },
              "That is the whole lesson finished. You know your Earth and your Sun."),
     ],
 }
@@ -251,6 +321,23 @@ LESSON["words"] = [
          ["I can see a star.", "The Sun is our nearest star."]),
     word("heat", "\U0001F321\uFE0F", "Warmth. The Sun gives us heat.",
          ["Feel the heat of the Sun.", "The shade has less heat."]),
+    word("quarry", "⛏️", "A big hole where people dig rock out of the ground, to build with.",
+         ["The stones for that wall came from a quarry.", "A quarry is a very noisy place."]),
+    word("earthworms", "\U0001FAB1", "Long, thin animals that live in soil. They make the soil better for plants.",
+         ["Earthworms live in the soil.", "We found three earthworms under the stone."]),
+    word("freeze", "❄️", "What happens when water gets very cold and turns to ice.",
+         ["Water freezes when it is very cold.", "The puddle froze overnight."]),
+    word("science report", "📃", "What a scientist writes to tell other people what they found out.",
+         ["We wrote a science report about the globe catches.", "A science report says what you did and what happened."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say that Earth is the planet we live on.", "1ESs.01"),
+    cando("I can say that most of Earth is covered in water.", "1ESp.01"),
+    cando("I can say that land is made of rock and soil.", "1ESp.02"),
+    cando("I can say that the Sun gives light and heat, and that it is a star.", "1ESs.02"),
+    cando("I can fill in a tally table and add it up.", "1TWSc.05"),
+    cando("I can ask a science question about the sky.", "1TWSp.01"),
 ]
 
 LESSON["home"] = [

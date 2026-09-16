@@ -43,7 +43,7 @@ def explain(calm, friendly, watch, go):
     return out
 
 
-def step(kind, title, icon, sticker, objectives, ask, explain_ssml, data, done, say=None, note=""):
+def step(kind, title, icon, sticker, objectives, ask, explain_ssml, data, done, say=None, note="", mis=()):
     """One step of a lesson.
 
     kind        which renderer draws it (see KINDS in build-lessons.py)
@@ -58,11 +58,14 @@ def step(kind, title, icon, sticker, objectives, ask, explain_ssml, data, done, 
     done        the line spoken when the step is finished
     say         what the voice says on arrival, if not the plain `ask`
     note        an italic line under the stage, for practice-not-marked notes
+    mis         ids from <subject>/data/cambridge-stage<N>-misconceptions.json
+                that this step answers - the builder refuses an id the fixture
+                does not hold, and check-coverage.py fails an id no step claims
     """
     return {
         "kind": kind, "title": title, "icon": icon, "sticker": sticker,
         "objectives": list(objectives), "ask": ask, "explain": explain_ssml,
-        "data": data, "done": done, "say": say, "note": note,
+        "data": data, "done": done, "say": say, "note": note, "mis": list(mis),
     }
 
 
@@ -85,6 +88,21 @@ def part(pic, title, say):
 def word(w, pic, meaning, uses):
     """A science word: the word, its picture, what it means, and sentences that use it."""
     return {"w": w, "pic": pic, "meaning": meaning, "uses": list(uses)}
+
+
+def cando(text, code):
+    """One "I can..." claim for the self-check on the sticker shelf.
+
+    Cambridge closes all 25 of its Stage 1 topics with a `Look what I can do!`
+    list. `code` is the objective the claim is about; the builder resolves it to
+    the FIRST step of this lesson that carries that code and puts a "show me"
+    button beside the claim, so the route is derived rather than a step number
+    written down - a step number would rot the moment anything moved.
+
+    It lives on the shelf, which is not a step, so nothing here moves a saved
+    place.
+    """
+    return {"t": text, "code": code}
 
 
 def home(title, materials, steps, look):

@@ -181,7 +181,14 @@ PAGE = """<!doctype html>
   .hubhead { padding: 26px 4px 18px; }
   .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
   .hubhead h1 em { font-style: normal; color: var(--teal); }
-  .hubhead p { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
+  /* :not(.eyebrow) because .hubhead holds TWO paragraphs and this rule is for
+     the description. Without it this out-specifies .eyebrow (0,1,1 beats
+     0,1,0) and draws the 13px teal label at 19px muted with 0.12em tracking.
+     Measured on the live Grade 1 hub before this: font-size 19px, colour
+     rgb(147,170,190) - the description's size and the description's grey.
+     Computing's name is short enough that it never overflowed; Global
+     Perspectives' ran 100px off the page on the same rule. */
+  .hubhead p:not(.eyebrow) { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
   .card { display: flex; flex-direction: column; gap: 10px; padding: 20px;
     border-radius: 22px; border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88);

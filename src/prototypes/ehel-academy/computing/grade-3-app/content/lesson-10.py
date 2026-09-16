@@ -120,7 +120,7 @@ LESSON = {
                  q("Columns are named with...", "\U0001F1E6", "letters", ["numbers", "colours", "names"], "A, B, C across the top."),
                  q("Rows are named with...", "1️⃣", "numbers", ["letters", "shapes", "dates"], "1, 2, 3 down the side."),
                  q("Which cell is in column B, row 4?", "\U0001F3AF", "B4", ["4B", "B1", "D2"], "Column letter, then row number."),
-                 q("'20 June' should be formatted as...", "\U0001F4C5", "date", ["currency", "number", "picture"], "It is a date."),
+                 q("'20 June' should be formatted as...", "\U0001F4C5", "date", ["currency", "number", "picture"], "Format it as a date and the sheet can put it in date order. As text it would sort by its letters."),
                  q("Formatting a money column as currency means...", "\U0001F4B7", "the amounts show as pounds and pence and can be added", ["the numbers disappear", "they become dates", "nothing changes"], "Format for the purpose."),
                  q("Filtering 'age is more than 7' selects...", "\U0001F50D", "only the rows where the age is 8 or more", ["every row", "only age 7", "the names beginning with A"], "Select by characteristic."),
                  q("Putting a number into cell C4 on a tablet is...", "✏️", "recording data in a spreadsheet", ["drawing a picture on the screen", "a network joining two tablets", "a bug in the spreadsheet program"], "Data entered into a cell."),

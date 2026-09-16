@@ -281,6 +281,63 @@ the 914 remain unfalsifiable from inside the build - the key IS the object the
 question was generated from - so the review packs are still the review surface,
 and a teacher's read is still owed. Same position as Science Grade 1.
 
+### The TEACHER read: six edits in 914, and two instruments with wrong premises
+
+The correctness read asked "is the key right" and found nothing wrong. This one
+asked the different question - "is this worth asking" - and the yield was
+**six edits out of 914**. That is the finding, not a disappointment: the banks
+hold up when read for teaching.
+
+**One extension was the core question again.** Grade 1 Lesson 7 asked "The
+internet is off. Which of these still works?" in the core quiz and "The internet
+is off AT HOME. Which of these still works?" in the extension - same key idea,
+same discrimination, three internet-needing distractors each time. A child who
+can do the core gets the extension free. Replaced with the distinction the
+lesson draws and never tested: the school's own NETWORK working while the
+INTERNET is off. This is the defect class Science Grade 3 shipped twelve of;
+Computing had one.
+
+**Five explanations restated the key instead of explaining it.** The test that
+matters is what the child who chose WRONG learns: "Making things." beside a key
+of "making things in a factory" drops the very word that rules out shopping.
+The house standard here is already high - "Add 8 works for 4 but not for 5. Only
+times 3 fits both, which is why you test a rule twice" - and these fell below
+it. Deliberately NOT changed: the many short Grade 1 explanations that restate a
+definition ("A bug is a mistake in a program."). Naming the term in a full
+sentence is a teaching move at that age, and in a warm-up the `why` is often the
+first time the word is used at all.
+
+**Two of the four machine checks I built had premises that were simply wrong,
+and both produced confident nonsense.** Worth keeping, because both sounded
+reasonable when written:
+
+| check | premise | result |
+| --- | --- | --- |
+| DEAD-OPTION | a distractor whose words appear nowhere in the lesson is one nobody picks | **482 findings, none real.** A good distractor is SUPPOSED to sit outside the taught vocabulary - "a kind of animal" against "algorithm" is exactly right for a Grade 1 warm-up |
+| WORD-MATCH | a key sharing a distinctive word with the stem can be picked without understanding | **122 findings, nearly none real.** A scenario question's key must refer back to the scenario: "You pour the milk before you get the bowl" / "the milk goes on the table" is coherence, not a cue |
+| TIER-ECHO | a tier question restating a core one is not differentiation | real, after repair - see below |
+| TAUTOLOGY | a `why` adding no word beyond the key teaches nothing | about half real; a place to look, never a verdict |
+
+**TIER-ECHO needed two repairs, and the second is the part worth knowing.** Its
+overlap metric divided by the SHORTER bag, which reads 100% whenever one stem
+has a single content word left - so "An algorithm is a..." and "What is an
+algorithm?" were called the same question, when they are a definition and a
+recognition task. Jaccard with a minimum bag size fixed that (47 findings down
+to 2). The second repair was conceptual: **a SUPPORT question restating the core
+more simply is correct design, not a defect** - it is the second way in. Only an
+EXTENSION that restates is a defect. Applying the check to both tiers is what
+produced most of the remaining noise.
+
+**And the prose went in too hard for the third time in this pass.** Two of the
+six new explanations measured F-K 4.81 (15.0 words a sentence) into a Grade 1
+build of 3.88, and 6.94 into a Grade 3 build of 4.70. Re-said: 2.31 and 3.72.
+Three times now. **Write it, measure it against the build it joins, then ship
+it** - the intention to write simply has never once been evidence.
+
+**Still owed, and now precisely:** a real teacher's read, by somebody who
+teaches this age. Mine was a careful reader applying a teacher's questions, and
+the review packs remain the surface for the real thing.
+
 ### The fourteen thinnest lessons, and why thin was the right word
 
 Measured per grade against that grade's own median lesson: Grade 3's *Input

@@ -151,7 +151,7 @@ LESSON = {
                  q("Which has NO program inside?", "\U0001F527", "a hand whisk", ["traffic lights", "a washing machine", "an automatic door"], "Mechanical only."),
                  q("What does 'smart' mean in 'smart plug'?", "\U0001F50C", "connected to the internet, with a computer inside", ["clever enough to think for itself", "expensive, because good things cost more", "small enough to fit in one socket"], "Smart means connected."),
                  q("Which is an Internet of Things device?", "\U0001F310", "a doorbell that shows the visitor on your phone", ["a candle", "a teddy bear", "an old bell on a wire"], "Computer inside, connected."),
-                 q("Manufacturing means...", "\U0001F3ED", "making things in a factory", ["driving a car", "shopping", "a kind of robot"], "Making things."),
+                 q("Manufacturing means...", "\U0001F3ED", "making things in a factory", ["driving a car", "shopping", "a kind of robot"], "Making things in a factory. Lots of them, mostly by machine."),
                  q("Which job on the car line is a person's?", "\U0001F469‍\U0001F527", "programming and checking the robots", ["welding every car by hand", "lifting the engine", "painting in the fumes"], "People program, check and fix."),
                  q("A factory robot's motors are its...", "⚙️", "outputs", ["inputs", "program", "network"], "Motors move: output."),
                  q("Why is painting a job for a robot?", "\U0001F3A8", "the fumes are dangerous for a person and the robot paints evenly", ["robots like colours more than people do", "people cannot paint a car at all", "paint is heavy to carry up a ladder"], "Dangerous and exact."),

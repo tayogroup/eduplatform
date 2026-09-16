@@ -126,7 +126,7 @@ LESSON = {
              explain(["Nothing new here."], ["Hardware, services, advantages and disadvantages."], [], ["Read, think, tap."]),
              {"items": [
                  q("Which is networked hardware?", "\U0001F5A7", "the switch every cable goes into", ["a torch", "a pocket calculator", "a pencil"], "The switch joins the network up."),
-                 q("Printing from a tablet to the school printer uses which service?", "\U0001F5A8️", "printed documents", ["the World Wide Web", "video calls", "no service"], "The printing service."),
+                 q("Printing from a tablet to the school printer uses which service?", "\U0001F5A8️", "printed documents", ["the World Wide Web", "video calls", "no service"], "Your tablet has no cable to the printer. The network carries the document across to it."),
                  q("Which is a DISADVANTAGE of a network?", "\U0001F44E", "when it is down, nobody can save or print", ["everyone can share files", "one printer serves everyone", "you can reach the web"], "Everything depends on it."),
              ]},
              "Hardware, services, both sides."),

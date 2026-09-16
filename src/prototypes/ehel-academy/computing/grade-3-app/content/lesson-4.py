@@ -100,7 +100,7 @@ LESSON = {
              "Three quick questions.",
              explain(["Nothing new here."], ["Inputs, steps, outputs, and what a machine does with a new input."], [], ["Read, think, tap."]),
              {"items": [
-                 q("A search engine's input is...", "\U0001F50D", "the word you type in", ["the list of results", "the computer", "the mouse"], "What goes in is the input."),
+                 q("A search engine's input is...", "\U0001F50D", "the word you type in", ["the list of results", "the computer", "the mouse"], "The list of results is what comes OUT. The word you type is what goes in."),
                  q("The doubling machine gets 9. What comes out?", "⚙️", "18", ["9", "11", "81"], "9 added to itself is 18."),
                  q("Same machine, different input. The output is...", "\U0001F4E4", "different, because the steps worked on a different input", ["always the same, because the steps are the same", "nothing, because a machine only takes one input", "a bug, because the output should never change"], "The steps do not change; the input does."),
              ]},

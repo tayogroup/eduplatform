@@ -104,25 +104,11 @@ CSS = """
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -163,21 +149,6 @@ CSS = """
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 """
 

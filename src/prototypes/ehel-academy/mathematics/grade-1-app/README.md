@@ -186,13 +186,13 @@ two textual variants and none of them should carry the risk.
 copies), per slide, every clause on screen — the `OK*` that used to sit against
 1Nc.01, taught only ALOUD, was closed by `show-conservation.py`. The shared
 `check-answer-keys.py` reads **403** questions across the seven lessons,
-verifies **160** and finds none wrong. Both are mutation-tested; a gate nobody
+verifies **173** and finds none wrong. Both are mutation-tested; a gate nobody
 has watched fail is not known to work.
 
 Neither says the teaching is good. Coverage means every objective has a home,
 not that the explanation is correct, well pitched, or free of error.
 
-**243 of the 403 questions cannot be verified by any tool.** "Which shape
+**230 of the 403 questions cannot be verified by any tool.** "Which shape
 has no corners?" has no computable answer, so those are reported as unchecked
 rather than counted as passes — coverage that cannot be falsified is not
 evidence. A wrong key among them reaches a child in silence.

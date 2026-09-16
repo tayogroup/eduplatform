@@ -72,7 +72,7 @@ RULE_FUNCS = {
     "fraction_answer", "units_answer", "clock_answer", "turn_answer",
     "pattern_answer", "chart_answer", "stage34_number", "stage34_shape",
     "stage34_place", "stage34_time", "named_chart_answer", "beads_answer",
-    "calc_answer", "story_answer", "words_answer", "term_rule_answer", "estimate_answer", "stage3_runtime",
+    "calc_answer", "story_answer", "sequence_answer", "words_answer", "term_rule_answer", "estimate_answer", "stage3_runtime",
     "fraction_notation", "chart_claim", "sorting_logic", "sample_answer",
     "part_square_answer",
 }
@@ -2016,6 +2016,91 @@ def nums(t):
     return [int(x) for x in re.findall(r"(?<![\w.])\d+(?![\w.])", t)]
 
 
+def sequence_answer(low, t, opts):
+    """Stage 1's counting and pattern questions, answered by continuing them.
+
+    These were the largest readable class left unchecked - 243 of Grade 1's 403
+    keys rested on the author alone, and a good share of them were sequences a
+    rule can simply finish: "Count back: 3, 2, 1, and then?", "0, 2, 4, 6, 8.
+    What comes next?", "Start at 6 and count on 3." Each one verified here is one
+    fewer a teacher has to read by hand, which is the only reason this exists.
+
+    Every arm keeps this file's first rule - the expression must account for
+    EVERY number in the question - and declines rather than guesses.
+    """
+    # nums() REFUSES A DIGIT FOLLOWED BY A FULL STOP, which is right for "1.5"
+    # and wrong for "2, 4, 6." - the last term of a sequence is almost always the
+    # last word of its sentence, so nums() read that run as 2, 4 and this rule
+    # declined every sequence it was written for. Local to here: widening nums()
+    # itself would move ground under every other rule in the file.
+    def seq_nums(s):
+        return [int(x) for x in re.findall(r"(?<![\w.])(\d+)(?!\d|\.\d)", s)]
+
+    have = seq_nums(t)
+
+    # A NUMBER SEQUENCE, CONTINUED. Three terms at least, one constant step. The
+    # run is taken from after a colon or "says" where there is one, because
+    # "Start at 0 and say every other number: 0, 2, 4, 6, 8" states its first
+    # term twice and a run read straight off the sentence stalls at 0, 0.
+    if re.search(r"comes next|and then\?|what is next", low):
+        tail = re.split(r":|\bsays\b", t)[-1] if re.search(r":|\bsays\b", t) else t
+        run = seq_nums(tail)
+        if len(run) < 3:
+            run = have
+        # every number the question states must be in the run, or it is carrying
+        # something the run does not explain
+        if len(run) >= 3 and all(n in run for n in have):
+            d = run[1] - run[0]
+            if d != 0 and all(run[i + 1] - run[i] == d for i in range(len(run) - 1)):
+                nxt = run[-1] + d
+                if 0 <= nxt <= 100:
+                    return pick(opts, float(nxt), amount) or nxt
+
+    # START AT m AND COUNT ON/BACK n. The off-by-one this catches is the one
+    # Cambridge's own Unit 10 note names: counting the square you start on.
+    m = re.search(r"start(?:ing)? at (\d+)[^.?]*?count(?:ing)? (on|back)(?: in ones)? (\d+)", low)
+    if m and len(have) == 2:
+        a, way, b = int(m.group(1)), m.group(2), int(m.group(3))
+        v = a + b if way == "on" else a - b
+        if 0 <= v <= 100:
+            return pick(opts, float(v), amount) or v
+
+    # A REPEATING PATTERN OF WORDS, CONTINUED. The smallest unit that explains
+    # the whole run wins; if none does, it is not a repeating pattern and this
+    # declines - a growing pattern must not be answered as a repeating one.
+    m = re.search(r"([a-z]+(?:\s*,\s*[a-z]+){2,})\s*\.\s*what (?:colour|color|shape|one|word) comes next", low)
+    if m:
+        seq = [w.strip() for w in m.group(1).split(",") if w.strip()]
+        for k in range(1, len(seq) // 2 + 1):
+            unit = seq[:k]
+            if all(seq[i] == unit[i % k] for i in range(len(seq))):
+                nxt = unit[len(seq) % k]
+                hit = [o for o in opts if str(norm(o)).strip().lower() == nxt]
+                return hit[0] if len(hit) == 1 else None
+
+    # WHICH IS MORE / FEWER, of two amounts named in the question.
+    m = re.search(r"which is (fewer|less|more|bigger|smaller|larger)[:,]?\s*(.+?)\s+or\s+(.+?)\s*\?", low)
+    if m:
+        want_big = m.group(1) in ("more", "bigger", "larger")
+        a, b = m.group(2).strip(), m.group(3).strip()
+        na, nb = seq_nums(a), seq_nums(b)
+        if len(na) == 1 and len(nb) == 1 and na[0] != nb[0] and len(have) == 2:
+            keep = a if (na[0] > nb[0]) == want_big else b
+            hit = [o for o in opts if str(norm(o)).strip().lower() == keep]
+            if len(hit) == 1:
+                return hit[0]
+            return pick(opts, float(nums(keep)[0]), amount)
+
+    # WHICH OF THESE IS ODD / EVEN - the numbers are in the OPTIONS, so the
+    # question itself must carry none, or it is a different question.
+    m = re.search(r"which (?:of these )?(?:numbers? )?is (odd|even)", low)
+    if m and not have:
+        want_odd = m.group(1) == "odd"
+        hit = [o for o in opts if isinstance(norm(o), int) and (norm(o) % 2 == 1) == want_odd]
+        return hit[0] if len(hit) == 1 else None
+    return None
+
+
 def story_answer(low, t, opts):
     """A one-step word problem, answered by the arithmetic its story describes.
 
@@ -2688,6 +2773,9 @@ def expected(q, opts, item, js=""):
         if got is not None:
             return got
     got = named_chart_answer(low, opts, js)
+    if got is not None:
+        return got
+    got = sequence_answer(low, t, opts)
     if got is not None:
         return got
     got = story_answer(low, t, opts)

@@ -53,20 +53,28 @@ for (const code of ["0058", "0861"]) {
     for (const objective of objectives) cambridgeIndex.set(objective.code, objective);
   }
 }
+// The ESL side is 0057 (Stages 1-6) and 0876 (Stages 7-9). They share this one
+// index because they CANNOT collide — different stage digits, so no code string
+// exists in both, measured. The separation that matters is the one above: 0876
+// and 0861 both publish Stages 7-9 and both use the tag `Wc`, so 7Wc.01 is
+// "Content: write short texts which describe people, places and objects" in the
+// ESL framework and "Creation of texts: write confidently in a range of genres
+// of fiction and types of poems" in the literacy one. Six codes collide that way
+// (7/8/9 Wc.01 and Wc.02). One map would resolve them in whichever framework
+// loaded last.
 const eslIndex = new Map();
-{
-  const file = path.join(ROOT, "src", "curriculum", "cambridge-english-0057.json");
-  if (fs.existsSync(file)) {
-    const framework = JSON.parse(fs.readFileSync(file, "utf8"));
-    for (const objectives of Object.values(framework.objectivesByStage)) {
-      for (const objective of objectives) eslIndex.set(objective.code, objective);
-    }
+for (const code of ["0057", "0876"]) {
+  const file = path.join(ROOT, "src", "curriculum", `cambridge-english-${code}.json`);
+  if (!fs.existsSync(file)) continue;
+  const framework = JSON.parse(fs.readFileSync(file, "utf8"));
+  for (const objectives of Object.values(framework.objectivesByStage)) {
+    for (const objective of objectives) eslIndex.set(objective.code, objective);
   }
 }
 // A level on the 0057 model cannot be checked without the framework, and a
 // check that cannot read its reference must not pass quietly.
 if (plan.levels.some((level) => level.eslFramework) && !eslIndex.size) {
-  console.error("src/curriculum/cambridge-english-0057.json is missing or empty, and a level in the plan is built on it.");
+  console.error("No ESL framework could be read from src/curriculum (0057, 0876), and a level in the plan is built on one.");
   process.exit(2);
 }
 

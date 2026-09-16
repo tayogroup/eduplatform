@@ -3809,12 +3809,1786 @@
         "B1"
       ],
       "cefrName": "A2 to B1",
-      "status": "Planned — blocked on the Cambridge 0876 framework",
+      "status": "Planned — units placed, not yet authored",
       "exitDescriptor": "Exits at a secure B1. Can follow the main points of clear speech on familiar matters, deal with most situations that come up while travelling or at work, narrate an event, and write connected text on familiar topics, giving reasons and explanations.",
-      "blockedBy": "Needs src/curriculum/cambridge-english-0876.json, which does not exist. 0876 is Cambridge Lower Secondary English as a Second Language, Stages 7-9 — the sibling of the 0057 that Levels 1 and 2 are built on, and the framework this level's contract has to cite. The extractor is tools/extract-cambridge-esl-framework.py, which produced 0057 from the official syllabus PDF and writes the same JSON shape; it needs the 0876 PDF. 0861 is in the repo and is NOT a substitute: it is Lower Secondary English as a first language, which is why 0057 was chosen over 0058 for Levels 1 and 2. (The earlier note here said Level 3 was blocked because grades 9-12 are not in the repository. That was true of the B2 course this entry used to describe, and stopped being the reason when Level 3 was reassigned to A2-B1.)",
-      "units": [],
+      "units": [
+        {
+          "number": 1,
+          "title": "Telling My Story",
+          "stage": 7,
+          "context": "Level 3 opens where most people are asked to speak first: an account of their own life. That is harder than it sounds, because a life is not a sequence of events but a set of turning points, and English marks the difference. This unit gives you the prepositions that follow adjectives, the form for habits that have stopped, and the time expressions that hold a long narrative together. It ends with two personal statements about the same life, one that works and one that does not.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 1
+            }
+          ],
+          "patterns": [
+            "Adjective + preposition",
+            "Used to",
+            "Ordering a life story"
+          ],
+          "esl": {
+            "use": [
+              "7Ug.03",
+              "7Ug.05",
+              "7Ug.09",
+              "7Us.04",
+              "7Uv.01"
+            ],
+            "skills": [
+              "7Rd.01",
+              "7Sc.01",
+              "7Sor.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Adjectives that take a preposition",
+              "words": [
+                "keen",
+                "aware",
+                "capable",
+                "proud",
+                "ashamed",
+                "disappointed"
+              ]
+            },
+            {
+              "title": "The stages of a life",
+              "words": [
+                "childhood",
+                "upbringing",
+                "generation",
+                "background",
+                "milestone",
+                "turning point"
+              ]
+            },
+            {
+              "title": "Change over time",
+              "words": [
+                "gradually",
+                "eventually",
+                "previously",
+                "originally",
+                "nowadays",
+                "meanwhile"
+              ]
+            },
+            {
+              "title": "What shaped you",
+              "words": [
+                "influence",
+                "opportunity",
+                "circumstance",
+                "challenge",
+                "achievement",
+                "regret"
+              ]
+            },
+            {
+              "title": "Telling it well",
+              "words": [
+                "recall",
+                "reflect",
+                "admit",
+                "realise",
+                "appreciate"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Saying It Precisely",
+          "stage": 7,
+          "context": "Levels 1 and 2 taught you to compare two things and name the best of several. This unit is about precision rather than comparison: the fixed order English uses when several adjectives stack up, the forms for describing how well something is done, and the class of adjectives that already mean extremely and therefore cannot be made stronger. It ends with two product descriptions of the same object, because precision is most visible where somebody is trying to avoid it.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 2
+            }
+          ],
+          "patterns": [
+            "Ordering two or more adjectives",
+            "Comparative and superlative adverbs",
+            "Gradable and non-gradable adjectives"
+          ],
+          "esl": {
+            "use": [
+              "7Ug.12",
+              "7Us.05",
+              "7Uv.02"
+            ],
+            "skills": [
+              "7Ld.01",
+              "7Rd.02",
+              "7Sc.02",
+              "7Sor.02"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Opinion and size",
+              "words": [
+                "stunning",
+                "enormous",
+                "tiny",
+                "vast",
+                "slight",
+                "considerable"
+              ]
+            },
+            {
+              "title": "Shape, age and colour",
+              "words": [
+                "rectangular",
+                "oval",
+                "ancient",
+                "modern",
+                "pale",
+                "vivid"
+              ]
+            },
+            {
+              "title": "Origin and material",
+              "words": [
+                "imported",
+                "local",
+                "wooden",
+                "metal",
+                "plastic",
+                "woollen"
+              ]
+            },
+            {
+              "title": "Adjectives that cannot be made stronger",
+              "words": [
+                "freezing",
+                "boiling",
+                "exhausted",
+                "furious",
+                "delighted",
+                "impossible"
+              ]
+            },
+            {
+              "title": "The degree words they take",
+              "words": [
+                "absolutely",
+                "completely",
+                "utterly",
+                "entirely",
+                "slightly"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Experience and Change",
+          "stage": 7,
+          "context": "This is the largest grammar unit in Level 3 and it fills the biggest gap left by Levels 1 and 2. The present perfect is the form English uses to connect the past to now, and without it you have to work around any statement about experience, duration or change. Four cards: the form, the two words that measure it, the continuous version, and — last, deliberately — the comparison with the past simple you already have.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 3
+            }
+          ],
+          "patterns": [
+            "The present perfect: form and use",
+            "For and since",
+            "The present perfect continuous",
+            "Present perfect versus past simple"
+          ],
+          "esl": {
+            "use": [
+              "7Ug.04",
+              "7Ug.06",
+              "7Us.06",
+              "7Uv.03"
+            ],
+            "skills": [
+              "7Ld.02",
+              "7Rd.03",
+              "7Rm.01",
+              "7Sc.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Change and development",
+              "words": [
+                "develop",
+                "expand",
+                "decline",
+                "transform",
+                "adapt",
+                "adjust"
+              ]
+            },
+            {
+              "title": "How long",
+              "words": [
+                "duration",
+                "period",
+                "decade",
+                "era",
+                "temporary",
+                "permanent"
+              ]
+            },
+            {
+              "title": "Experience gained",
+              "words": [
+                "qualify",
+                "accomplish",
+                "master",
+                "gain",
+                "acquire",
+                "pursue"
+              ]
+            },
+            {
+              "title": "Recent and ongoing",
+              "words": [
+                "recent",
+                "ongoing",
+                "current",
+                "former",
+                "latest",
+                "constant"
+              ]
+            },
+            {
+              "title": "The words that go with the perfect",
+              "words": [
+                "so far",
+                "ever since",
+                "up to now",
+                "lately",
+                "already"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Packing More Into a Sentence",
+          "stage": 7,
+          "context": "Levels 1 and 2 kept sentences short because you had no way to join a description to a noun. This unit gives you that, and it is the largest single jump in what you can express: relative clauses let one sentence carry what previously took three. It also covers the comma rule, which is not decoration — in a relative clause a comma changes what the sentence means. It ends with a contract clause and its plain-English rewrite.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 4
+            }
+          ],
+          "patterns": [
+            "Defining relative clauses",
+            "Non-defining clauses and the comma",
+            "Where and whose",
+            "Complex noun phrases"
+          ],
+          "esl": {
+            "use": [
+              "7Ug.01",
+              "7Ug.02",
+              "7Uv.04"
+            ],
+            "skills": [
+              "7Ld.03",
+              "7Lm.01",
+              "7Rd.04",
+              "7Rm.02",
+              "7Sc.04",
+              "7Wca.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Defining and identifying",
+              "words": [
+                "define",
+                "identify",
+                "specify",
+                "indicate",
+                "refer",
+                "distinguish"
+              ]
+            },
+            {
+              "title": "Kinds and parts",
+              "words": [
+                "category",
+                "type",
+                "feature",
+                "element",
+                "aspect",
+                "component"
+              ]
+            },
+            {
+              "title": "People by role",
+              "words": [
+                "applicant",
+                "candidate",
+                "client",
+                "supplier",
+                "resident",
+                "participant"
+              ]
+            },
+            {
+              "title": "Places and things",
+              "words": [
+                "premises",
+                "facility",
+                "venue",
+                "site",
+                "item",
+                "device"
+              ]
+            },
+            {
+              "title": "Precision",
+              "words": [
+                "precise",
+                "vague",
+                "ambiguous",
+                "explicit",
+                "implicit"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "If and Unless",
+          "stage": 7,
+          "context": "Conditionals are where English does something that looks illogical until you see the system: it uses a past tense to talk about the present, and a present tense to talk about the future. This unit covers the three you need, in order of distance from reality, plus the one word that catches almost everybody. It ends with an insurance policy, because a policy is nothing but conditions and the whole of it turns on which one you meet.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 5
+            }
+          ],
+          "patterns": [
+            "The zero conditional",
+            "The first conditional",
+            "The second conditional",
+            "Unless"
+          ],
+          "esl": {
+            "use": [
+              "7Ug.07",
+              "7Ug.08",
+              "7Us.01",
+              "7Uv.05"
+            ],
+            "skills": [
+              "7Ro.01",
+              "7Sc.05",
+              "7Wc.01",
+              "7Wca.02",
+              "7Wor.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Cause and consequence",
+              "words": [
+                "consequence",
+                "outcome",
+                "effect",
+                "impact",
+                "trigger",
+                "prevent"
+              ]
+            },
+            {
+              "title": "How likely",
+              "words": [
+                "likely",
+                "unlikely",
+                "probable",
+                "inevitable",
+                "possibility",
+                "chance"
+              ]
+            },
+            {
+              "title": "Stating a condition",
+              "words": [
+                "condition",
+                "provided",
+                "otherwise",
+                "assuming",
+                "suppose",
+                "depend"
+              ]
+            },
+            {
+              "title": "Risk and caution",
+              "words": [
+                "warn",
+                "threaten",
+                "ensure",
+                "secure",
+                "backup",
+                "contingency"
+              ]
+            },
+            {
+              "title": "Deciding",
+              "words": [
+                "consider",
+                "weigh",
+                "hesitate",
+                "commit",
+                "alternative"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Joining Ideas",
+          "stage": 7,
+          "context": "Levels 1 and 2 gave you because and so, which join a reason to a result. This unit gives you the rest of the system, and the practical difficulty is not meaning but punctuation: three groups of connectors mean similar things and attach to sentences in three different ways. Getting that wrong produces the most common punctuation error in English writing. It ends with a paragraph rewritten three times, because connectors are where writing stops being a list of sentences.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 6
+            }
+          ],
+          "patterns": [
+            "Subordinating conjunctions",
+            "Connective adverbs and the comma splice",
+            "Although, while and whereas"
+          ],
+          "esl": {
+            "use": [
+              "7Us.02"
+            ],
+            "skills": [
+              "7Lo.01",
+              "7So.01",
+              "7Wc.02",
+              "7Wca.03",
+              "7Wor.02"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Adding to a point",
+              "words": [
+                "furthermore",
+                "moreover",
+                "besides",
+                "additionally",
+                "likewise",
+                "similarly"
+              ]
+            },
+            {
+              "title": "Contrasting",
+              "words": [
+                "however",
+                "nevertheless",
+                "nonetheless",
+                "conversely",
+                "despite",
+                "regardless"
+              ]
+            },
+            {
+              "title": "Concluding",
+              "words": [
+                "therefore",
+                "thus",
+                "hence",
+                "consequently",
+                "accordingly",
+                "overall"
+              ]
+            },
+            {
+              "title": "Ordering an argument",
+              "words": [
+                "firstly",
+                "initially",
+                "subsequently",
+                "ultimately",
+                "thereafter",
+                "lastly"
+              ]
+            },
+            {
+              "title": "Qualifying a claim",
+              "words": [
+                "admittedly",
+                "arguably",
+                "indeed",
+                "notably",
+                "particularly"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "title": "Opinions and Disagreement",
+          "stage": 7,
+          "context": "Disagreeing in a second language is where fluent people most often sound rude by accident, and the reason is almost never grammar. This unit separates fact from opinion, gives you the frames English uses to mark a view as a view, and covers the concession move that makes a disagreement sound considered. It ends with the same disagreement written twice, because the difference between the two is entirely in the framing.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 7
+            }
+          ],
+          "patterns": [
+            "Fact and opinion",
+            "Opinion frames, from tentative to firm",
+            "Agreeing and disagreeing",
+            "Tone: hedging and directness"
+          ],
+          "esl": {
+            "use": [
+              "7Ug.10",
+              "7Ug.11",
+              "7Us.03"
+            ],
+            "skills": [
+              "7Wca.04",
+              "7Wor.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Stating a view",
+              "words": [
+                "claim",
+                "assert",
+                "maintain",
+                "insist",
+                "propose",
+                "contend"
+              ]
+            },
+            {
+              "title": "Belief and doubt",
+              "words": [
+                "believe",
+                "doubt",
+                "convinced",
+                "sceptical",
+                "assume",
+                "suspect"
+              ]
+            },
+            {
+              "title": "Agreeing",
+              "words": [
+                "concur",
+                "endorse",
+                "accept",
+                "support",
+                "acknowledge",
+                "share"
+              ]
+            },
+            {
+              "title": "Disagreeing",
+              "words": [
+                "dispute",
+                "object",
+                "contradict",
+                "refute",
+                "disagree",
+                "reservation"
+              ]
+            },
+            {
+              "title": "Fact and opinion",
+              "words": [
+                "fact",
+                "evidence",
+                "assumption",
+                "bias",
+                "subjective"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "title": "Building Words",
+          "stage": 8,
+          "context": "This is the unit with the best return on effort in Level 3. Every other unit gives you words; this one gives you a method for producing words you were never taught, and for reading words you have never seen. English builds meaning out of parts, and once you can see the parts, a large vocabulary stops being something you memorise and starts being something you assemble.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 8
+            }
+          ],
+          "patterns": [
+            "Negative prefixes",
+            "Adjective suffixes",
+            "Compound nouns",
+            "Abstract nouns and unpacking them"
+          ],
+          "esl": {
+            "use": [
+              "8Us.04",
+              "8Uv.01"
+            ],
+            "skills": [
+              "8Rd.01",
+              "8Sc.01",
+              "8Sor.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Words with negative prefixes",
+              "words": [
+                "unable",
+                "dishonest",
+                "inaccurate",
+                "irregular",
+                "illegal",
+                "impatient"
+              ]
+            },
+            {
+              "title": "Other prefixes",
+              "words": [
+                "rewrite",
+                "misunderstand",
+                "overestimate",
+                "underestimate",
+                "preview",
+                "outperform"
+              ]
+            },
+            {
+              "title": "Adjectives built with suffixes",
+              "words": [
+                "flexible",
+                "visible",
+                "sensible",
+                "hazardous",
+                "ambitious",
+                "cautious"
+              ]
+            },
+            {
+              "title": "Compound nouns",
+              "words": [
+                "workload",
+                "workforce",
+                "database",
+                "timescale",
+                "feedback",
+                "turnover"
+              ]
+            },
+            {
+              "title": "Abstract nouns",
+              "words": [
+                "efficiency",
+                "reliability",
+                "flexibility",
+                "awareness",
+                "responsibility"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "title": "Reporting What People Said",
+          "stage": 8,
+          "context": "Reported speech has a reputation for being mechanical, and the mechanism is real: tenses shift back, pronouns change, time words move. But the mechanism is the easy half. The harder half is that the verb you choose to report with — said, claimed, admitted, insisted — tells the reader what you think, and choosing it carelessly is how you take a side without noticing. It ends with one statement reported three ways.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 9
+            }
+          ],
+          "patterns": [
+            "Reported statements: the shift",
+            "Reported questions",
+            "Reported commands and requests",
+            "Said, told, time words, and the verb that judges"
+          ],
+          "esl": {
+            "use": [
+              "8Ug.08",
+              "8Ug.12",
+              "8Us.05",
+              "8Uv.02"
+            ],
+            "skills": [
+              "8Ld.01",
+              "8Rd.02",
+              "8Sc.02",
+              "8Sor.02"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Neutral reporting verbs",
+              "words": [
+                "state",
+                "mention",
+                "report",
+                "note",
+                "add",
+                "observe"
+              ]
+            },
+            {
+              "title": "Reporting verbs that carry a judgement",
+              "words": [
+                "deny",
+                "complain",
+                "boast",
+                "urge",
+                "reassure",
+                "confess"
+              ]
+            },
+            {
+              "title": "Reporting requests and orders",
+              "words": [
+                "order",
+                "instruct",
+                "request",
+                "advise",
+                "forbid",
+                "permit"
+              ]
+            },
+            {
+              "title": "Accuracy in reporting",
+              "words": [
+                "quote",
+                "paraphrase",
+                "verbatim",
+                "gist",
+                "misquote",
+                "attribute"
+              ]
+            },
+            {
+              "title": "Sources",
+              "words": [
+                "source",
+                "witness",
+                "spokesperson",
+                "statement",
+                "allegation"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "title": "The Passive Voice",
+          "stage": 8,
+          "context": "The passive is one form applied across every tense you have, so learning it once gives you nine or ten new structures at no extra cost. It is also the most criticised construction in English, usually unfairly — it does three jobs nothing else does, and one job it should not be doing. This unit covers the mechanism, the four reasons to use it, and the fourth of them, which is hiding who acted.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 10
+            }
+          ],
+          "patterns": [
+            "The passive: the mechanism",
+            "The passive with modals and the perfect",
+            "The passive in a process, and the two-object passive",
+            "When the passive is hiding somebody"
+          ],
+          "esl": {
+            "use": [
+              "8Ug.02",
+              "8Ug.03",
+              "8Ug.04",
+              "8Ug.09",
+              "8Uv.03"
+            ],
+            "skills": [
+              "8Ld.02",
+              "8Rd.03",
+              "8Rm.01",
+              "8Sc.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Process verbs",
+              "words": [
+                "manufacture",
+                "distribute",
+                "inspect",
+                "dispatch",
+                "install",
+                "dismantle"
+              ]
+            },
+            {
+              "title": "Official actions",
+              "words": [
+                "approve",
+                "reject",
+                "authorise",
+                "suspend",
+                "withdraw",
+                "issue"
+              ]
+            },
+            {
+              "title": "Handling and storage",
+              "words": [
+                "store",
+                "transfer",
+                "allocate",
+                "discard",
+                "recycle",
+                "seal"
+              ]
+            },
+            {
+              "title": "Investigation",
+              "words": [
+                "investigate",
+                "examine",
+                "verify",
+                "trace",
+                "monitor",
+                "audit"
+              ]
+            },
+            {
+              "title": "Outcomes",
+              "words": [
+                "finding",
+                "breach",
+                "sanction",
+                "remedy",
+                "compliance"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "title": "Narrating the Past",
+          "stage": 8,
+          "context": "Levels 1 and 2 gave you the past simple, which puts events in a line. This unit gives you the two forms that break the line: the past continuous, which sets a scene, and the past perfect, which reaches back behind the story you are telling. Together they let you narrate something complicated without telling it strictly in order. It ends with two witness statements about the same two minutes.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 11
+            }
+          ],
+          "patterns": [
+            "The past continuous, and when, while, until",
+            "Past simple versus past continuous",
+            "The past perfect",
+            "Participle clauses"
+          ],
+          "esl": {
+            "use": [
+              "8Ug.05",
+              "8Ug.06",
+              "8Ug.07",
+              "8Uv.04"
+            ],
+            "skills": [
+              "8Ld.03",
+              "8Lm.01",
+              "8Rd.04",
+              "8Rm.02",
+              "8Sc.04",
+              "8Wca.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Setting the scene",
+              "words": [
+                "surroundings",
+                "atmosphere",
+                "silence",
+                "darkness",
+                "distance",
+                "edge"
+              ]
+            },
+            {
+              "title": "Sudden events",
+              "words": [
+                "interrupt",
+                "collapse",
+                "burst",
+                "slam",
+                "crash",
+                "shatter"
+              ]
+            },
+            {
+              "title": "Reactions",
+              "words": [
+                "freeze",
+                "panic",
+                "glance",
+                "rush",
+                "pause",
+                "gasp"
+              ]
+            },
+            {
+              "title": "Time relations",
+              "words": [
+                "simultaneously",
+                "beforehand",
+                "momentarily",
+                "briefly",
+                "instantly",
+                "abruptly"
+              ]
+            },
+            {
+              "title": "The shape of an account",
+              "words": [
+                "incident",
+                "sequence",
+                "aftermath",
+                "climax",
+                "account"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "title": "Verb Patterns",
+          "stage": 8,
+          "context": "This unit is about what comes after a verb, and it is the area where a learner's English most often stops sounding like a learner's. Some verbs take to, some take -ing, a few take both with different meanings, and several hundred take a small word that changes what they mean entirely. There is no rule for most of it, which is worth saying plainly — but there are patterns, and there is a way of learning the rest that actually works.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 12
+            }
+          ],
+          "patterns": [
+            "To or -ing after a verb",
+            "-ing forms as subject and object",
+            "Phrasal verbs",
+            "Adjective plus infinitive"
+          ],
+          "esl": {
+            "use": [
+              "8Ug.11",
+              "8Us.01",
+              "8Uv.05"
+            ],
+            "skills": [
+              "8Ld.04",
+              "8Ro.01",
+              "8Sc.05",
+              "8Wc.01",
+              "8Wca.02",
+              "8Wor.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Verbs that take -ing",
+              "words": [
+                "enjoy",
+                "risk",
+                "resent",
+                "tolerate",
+                "contemplate",
+                "recommend"
+              ]
+            },
+            {
+              "title": "Verbs that take to",
+              "words": [
+                "intend",
+                "strive",
+                "aim",
+                "tend",
+                "fail",
+                "deserve"
+              ]
+            },
+            {
+              "title": "Phrasal verbs: getting things done",
+              "words": [
+                "carry out",
+                "set up",
+                "take on",
+                "put off",
+                "call off",
+                "sort out"
+              ]
+            },
+            {
+              "title": "Phrasal verbs: finding and dealing",
+              "words": [
+                "look into",
+                "deal with",
+                "come across",
+                "bring up",
+                "point out",
+                "run out"
+              ]
+            },
+            {
+              "title": "Adjectives that take an infinitive",
+              "words": [
+                "reluctant",
+                "eager",
+                "bound",
+                "liable",
+                "prone"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "title": "Certainty and Possibility",
+          "stage": 8,
+          "context": "Levels 1 and 2 used modals to talk about rules — what you have to do, what you must not do. This unit uses the same words for something completely different: working out what is true. Must, might and can't stop being about obligation and start being about deduction, and the same three words then reach backwards to talk about what should have happened. It ends with an investigation report where every conclusion is a deduction.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 13
+            }
+          ],
+          "patterns": [
+            "Modals of deduction",
+            "Past modals",
+            "Could and might: options and hedges"
+          ],
+          "esl": {
+            "use": [
+              "8Ug.10",
+              "8Ug.13",
+              "8Us.02"
+            ],
+            "skills": [
+              "8Lo.01",
+              "8So.01",
+              "8Wc.02",
+              "8Wca.03",
+              "8Wor.02"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Degrees of certainty",
+              "words": [
+                "certainly",
+                "presumably",
+                "apparently",
+                "seemingly",
+                "allegedly",
+                "supposedly"
+              ]
+            },
+            {
+              "title": "Evidence and inference",
+              "words": [
+                "deduce",
+                "infer",
+                "imply",
+                "presume",
+                "speculate",
+                "rule out"
+              ]
+            },
+            {
+              "title": "Hindsight",
+              "words": [
+                "hindsight",
+                "oversight",
+                "blunder",
+                "misjudge",
+                "foresee",
+                "anticipate"
+              ]
+            },
+            {
+              "title": "Blame and defence",
+              "words": [
+                "accountable",
+                "negligent",
+                "justify",
+                "mitigate",
+                "exonerate",
+                "blame"
+              ]
+            },
+            {
+              "title": "How possible",
+              "words": [
+                "conceivable",
+                "plausible",
+                "feasible",
+                "remote",
+                "slim"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "title": "Work, Careers and Applying",
+          "stage": 8,
+          "context": "This unit is about the documents and conversations that decide whether you get work. Level 2 Unit 1 gave you the language of describing your work; this one gives you the language of applying for one — the suffixes that name professions, the compressed register of a CV, and the structure that turns an interview answer from a claim into evidence. It ends with the same answer given twice, once as an assertion and once with evidence.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 14
+            }
+          ],
+          "patterns": [
+            "Profession suffixes",
+            "The register of a CV",
+            "Answering with evidence"
+          ],
+          "esl": {
+            "use": [
+              "8Ug.01",
+              "8Ug.14",
+              "8Us.03"
+            ],
+            "skills": [
+              "8Wca.04",
+              "8Wor.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "People named by their work",
+              "words": [
+                "technician",
+                "electrician",
+                "consultant",
+                "analyst",
+                "specialist",
+                "practitioner"
+              ]
+            },
+            {
+              "title": "On a CV",
+              "words": [
+                "profile",
+                "referee",
+                "portfolio",
+                "credential",
+                "placement",
+                "secondment"
+              ]
+            },
+            {
+              "title": "What you actually did",
+              "words": [
+                "coordinate",
+                "oversee",
+                "streamline",
+                "implement",
+                "negotiate",
+                "liaise"
+              ]
+            },
+            {
+              "title": "Results you can name",
+              "words": [
+                "exceed",
+                "surpass",
+                "sustain",
+                "retain",
+                "generate",
+                "minimise"
+              ]
+            },
+            {
+              "title": "In the interview",
+              "words": [
+                "competency",
+                "scenario",
+                "rapport",
+                "articulate",
+                "concise"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "title": "Money, Enterprise and Being a Customer",
+          "stage": 9,
+          "context": "Level 2 Units 17 and 18 gave you complain and fault. This unit is the level above: the expressions English uses to measure uncountable things, the vocabulary of price and contract, and the structure of a complaint that gets a remedy rather than an apology. It ends with two complaints about the same problem, one of which was paid and one of which was not.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 15
+            }
+          ],
+          "patterns": [
+            "Partitive expressions",
+            "Price, value and contract",
+            "A complaint that gets a remedy"
+          ],
+          "esl": {
+            "use": [
+              "9Ug.01",
+              "9Ug.13",
+              "9Uv.02"
+            ],
+            "skills": [
+              "9Rm.02",
+              "9Sc.05",
+              "9Wc.01",
+              "9Wor.01"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Measuring what you cannot count",
+              "words": [
+                "portion",
+                "batch",
+                "bundle",
+                "quantity",
+                "proportion",
+                "fraction"
+              ]
+            },
+            {
+              "title": "Price and payment",
+              "words": [
+                "invoice",
+                "instalment",
+                "surcharge",
+                "markup",
+                "margin",
+                "premium"
+              ]
+            },
+            {
+              "title": "Contracts",
+              "words": [
+                "clause",
+                "terms",
+                "liability",
+                "warranty",
+                "void",
+                "binding"
+              ]
+            },
+            {
+              "title": "When it goes wrong",
+              "words": [
+                "defective",
+                "substandard",
+                "overcharge",
+                "discrepancy",
+                "grievance",
+                "redress"
+              ]
+            },
+            {
+              "title": "Asking for a remedy",
+              "words": [
+                "compensation",
+                "replacement",
+                "reimburse",
+                "escalate",
+                "ombudsman"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 16,
+          "title": "Media, Technology and Judging a Source",
+          "stage": 9,
+          "context": "Unit 9 taught you that the reporting verb carries the writer's judgement. This unit is about the layer above that: attribution that names nobody at all. Sources say, it is understood, critics argue — constructions that sound authoritative and can be entirely empty. It also covers the small words that pair and contrast, the markers that manage a conversation, and a method for judging whether a source is worth believing.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 16
+            }
+          ],
+          "patterns": [
+            "Attribution that names nobody",
+            "Both, either and neither",
+            "Discourse markers",
+            "Judging a source"
+          ],
+          "esl": {
+            "use": [
+              "9Ug.02",
+              "9Ug.03",
+              "9Ug.12",
+              "9Uv.03"
+            ],
+            "skills": [
+              "9Lo.01",
+              "9Ro.01",
+              "9Wc.02",
+              "9Wca.01",
+              "9Wor.02"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Where information comes from",
+              "words": [
+                "outlet",
+                "headline",
+                "byline",
+                "coverage",
+                "circulation",
+                "readership"
+              ]
+            },
+            {
+              "title": "Unnamed sources",
+              "words": [
+                "unnamed",
+                "anonymous",
+                "insider",
+                "leak",
+                "briefing",
+                "rumour"
+              ]
+            },
+            {
+              "title": "Judging a source",
+              "words": [
+                "credible",
+                "corroborate",
+                "independent",
+                "vested",
+                "agenda",
+                "slant"
+              ]
+            },
+            {
+              "title": "How it reaches you",
+              "words": [
+                "platform",
+                "algorithm",
+                "feed",
+                "notification",
+                "subscriber",
+                "archive"
+              ]
+            },
+            {
+              "title": "Managing a conversation",
+              "words": [
+                "actually",
+                "mind you",
+                "in fact",
+                "granted",
+                "frankly"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 17,
+          "title": "Environment and Resources",
+          "stage": 9,
+          "context": "This unit teaches the register of careful claims. Environmental and scientific writing is full of hedges, causal chains and citations, and all three exist for the same reason: the claims are probabilistic, the causes are indirect, and the evidence belongs to somebody else. Learning to read that register tells you how confident a writer actually is. Learning to write it lets you make claims you can defend.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 17
+            }
+          ],
+          "patterns": [
+            "Hedging a claim",
+            "Cause, correlation and chains",
+            "Citing a source"
+          ],
+          "esl": {
+            "use": [
+              "9Ug.04",
+              "9Ug.09",
+              "9Us.01"
+            ],
+            "skills": [
+              "9Ld.01",
+              "9Lo.02",
+              "9Rd.01",
+              "9Ro.02",
+              "9Sc.01",
+              "9So.01",
+              "9Sor.01",
+              "9Wca.02",
+              "9Wor.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Resources",
+              "words": [
+                "renewable",
+                "finite",
+                "scarce",
+                "abundant",
+                "consumption",
+                "depletion"
+              ]
+            },
+            {
+              "title": "Environment",
+              "words": [
+                "emissions",
+                "pollutant",
+                "habitat",
+                "biodiversity",
+                "ecosystem",
+                "contamination"
+              ]
+            },
+            {
+              "title": "Cause and effect",
+              "words": [
+                "contribute",
+                "accelerate",
+                "offset",
+                "exacerbate",
+                "alleviate",
+                "counteract"
+              ]
+            },
+            {
+              "title": "Measuring",
+              "words": [
+                "threshold",
+                "baseline",
+                "trend",
+                "correlation",
+                "projection",
+                "indicator"
+              ]
+            },
+            {
+              "title": "Hedging",
+              "words": [
+                "appear",
+                "estimate",
+                "approximately",
+                "broadly",
+                "tentative"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "title": "Writing Formally",
+          "stage": 9,
+          "context": "Formality in English is not a single dial. It is several independent choices — vocabulary, contractions, sentence length, how directly you ask — and getting one wrong while getting the others right is what makes a document read oddly. This unit separates them, covers the conventions of the three documents you are most likely to need, and settles a rule about prepositions that has been misapplied for three hundred years.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 18
+            }
+          ],
+          "patterns": [
+            "The five dials",
+            "The letter, the email and the report",
+            "Prepositions at the end"
+          ],
+          "esl": {
+            "use": [
+              "9Ug.05",
+              "9Ug.07",
+              "9Us.02"
+            ],
+            "skills": [
+              "9Ld.02",
+              "9Rd.02",
+              "9Sc.02",
+              "9Sor.02",
+              "9Wca.03"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Openings and closings",
+              "words": [
+                "sincerely",
+                "faithfully",
+                "enclosed",
+                "herewith",
+                "undersigned",
+                "correspondence"
+              ]
+            },
+            {
+              "title": "Formal verbs",
+              "words": [
+                "enquire",
+                "notify",
+                "forward",
+                "append",
+                "comply",
+                "refrain"
+              ]
+            },
+            {
+              "title": "Parts of a report",
+              "words": [
+                "summary",
+                "methodology",
+                "appendix",
+                "recommendation",
+                "scope",
+                "remit"
+              ]
+            },
+            {
+              "title": "Very formal connectors",
+              "words": [
+                "hereby",
+                "whereby",
+                "therein",
+                "aforementioned",
+                "notwithstanding",
+                "pursuant"
+              ]
+            },
+            {
+              "title": "Talking about register",
+              "words": [
+                "colloquial",
+                "register",
+                "jargon",
+                "verbose",
+                "plain"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 19,
+          "title": "Making an Argument",
+          "stage": 9,
+          "context": "The last teaching unit of the course, and it assembles most of what came before. An argument has three parts and almost everybody supplies two of them. This unit names the missing one, covers the devices that make an argument persuasive and the line at which they stop being honest, and teaches the move that separates a considered position from a stubborn one — engaging with the strongest version of the other side.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 19
+            }
+          ],
+          "patterns": [
+            "Claim, evidence, warrant",
+            "Persuasive devices and their limits",
+            "Rebutting a counter-argument"
+          ],
+          "esl": {
+            "use": [
+              "9Ug.10",
+              "9Ug.14",
+              "9Ug.15",
+              "9Us.03"
+            ],
+            "skills": [
+              "9Ld.03",
+              "9Rd.03",
+              "9Sc.03",
+              "9Wca.04"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "The parts of an argument",
+              "words": [
+                "premise",
+                "warrant",
+                "thesis",
+                "rationale",
+                "proposition",
+                "standpoint"
+              ]
+            },
+            {
+              "title": "Kinds of reasoning",
+              "words": [
+                "analogy",
+                "precedent",
+                "generalisation",
+                "exception",
+                "principle",
+                "criterion"
+              ]
+            },
+            {
+              "title": "Persuasive devices",
+              "words": [
+                "rhetoric",
+                "emphasis",
+                "repetition",
+                "anecdote",
+                "appeal",
+                "understatement"
+              ]
+            },
+            {
+              "title": "Where arguments fail",
+              "words": [
+                "fallacy",
+                "circular",
+                "oversimplify",
+                "misrepresent",
+                "cherry-pick",
+                "strawman"
+              ]
+            },
+            {
+              "title": "Rebutting",
+              "words": [
+                "rebut",
+                "concede",
+                "moderate",
+                "counter",
+                "undermine"
+              ]
+            }
+          ]
+        },
+        {
+          "number": 20,
+          "title": "Level 3 Capstone — My English Voice",
+          "stage": 9,
+          "context": "The last unit of the course. It maps Level 3, assembles it into three pieces of real work, and teaches one thing that is not in any other unit: how to decide what to learn next when nobody is telling you. Level 3 exists in the plan and not yet on the page, so from here you are your own syllabus — and that is a skill rather than a misfortune.",
+          "source": [
+            {
+              "archive": "level-2-b1-2026-08",
+              "unit": 20
+            }
+          ],
+          "patterns": [
+            "Everything in Level 3, applied",
+            "Building your own syllabus"
+          ],
+          "esl": {
+            "use": [
+              "9Ug.06",
+              "9Ug.08",
+              "9Ug.11",
+              "9Uv.01"
+            ],
+            "skills": [
+              "9Ld.04",
+              "9Lm.01",
+              "9Rd.04",
+              "9Rm.01",
+              "9Sc.04"
+            ]
+          },
+          "vocabulary": [
+            {
+              "title": "Your own voice",
+              "words": [
+                "voice",
+                "idiom",
+                "fluency",
+                "accuracy",
+                "authenticity"
+              ]
+            },
+            {
+              "title": "Deciding what to learn",
+              "words": [
+                "priority",
+                "gap",
+                "plateau",
+                "deliberate",
+                "syllabus"
+              ]
+            },
+            {
+              "title": "Keeping going",
+              "words": [
+                "habit",
+                "consistency",
+                "momentum",
+                "immersion",
+                "exposure"
+              ]
+            },
+            {
+              "title": "Where you are",
+              "words": [
+                "proficiency",
+                "competence",
+                "benchmark",
+                "autonomy",
+                "transition"
+              ]
+            }
+          ]
+        }
+      ],
       "source": "inputs/ehel-english-intensive-source/archive/level-2-b1-2026-08 — the B1 to B1+ course that was Level 2 until 2026-09-12: 20 authored units, 571 words, reviewed and signed off. Benchmark for the rebuild is Interchange 3 (B1 to B1+), whose syllabus matches it closely: relative clauses, gerund phrases as subjects, the past perfect, indirect requests, participles as adjectives.",
-      "note": "This is the LAST level. Levels 4 (C1) and 5 (C2) were dropped on 2026-09-16 — see whyTheCourseStopsAtB1 — so nothing sits above this one and there is no gap above it to leave open."
+      "note": "This is the LAST level: the course ends at B1 (see whyTheCourseStopsAtB1). 0876 SPIRALS harder than 0057 did — the present perfect, reported speech, the passive and the conditionals each appear in Stages 7, 8 AND 9 with a wider range each time — so every pattern here must name its INCREMENT, or two units get near-identical card titles and the duplication gate goes red. That cost Level 2 a redraft; see intensive-english/CLAUDE.md.",
+      "eslFramework": "0876",
+      "cambridgeStages": [
+        7,
+        8,
+        9
+      ],
+      "cefrBands": [
+        {
+          "stage": 7,
+          "cefr": "A2",
+          "cefrName": "A2, extending towards B1",
+          "units": [
+            1,
+            7
+          ],
+          "canDo": "Follow the main points of clear speech on familiar matters, describe experiences and events, and write connected text on familiar topics."
+        },
+        {
+          "stage": 8,
+          "cefr": "B1",
+          "cefrName": "B1, developing",
+          "units": [
+            8,
+            14
+          ],
+          "canDo": "Report what others said, describe a process, narrate a sequence of past events, and give reasons and explanations for opinions and plans."
+        },
+        {
+          "stage": 9,
+          "cefr": "B1",
+          "cefrName": "B1, consolidating",
+          "units": [
+            15,
+            20
+          ],
+          "canDo": "Deal with most situations that arise while travelling or at work, build an argument, judge a source, and write clear connected text on a range of familiar topics."
+        }
+      ],
+      "exitAssessment": "A B1 check across the four skills at the end of Unit 20, reported per skill, never as one grade.",
+      "contextsNote": "Each unit's `context` is the archived course's own overview, repointed at this ladder: it was written when these units were Level 2 sitting on the OLD Level 1 (A1-A2). Capability claims survived that move; the two that named a unit number did not and were corrected against the rebuilt levels. Treat a context as a brief to check, not as verified prose — an author should confirm any prerequisite it claims before relying on it."
     }
   ],
   "teachingLanguage": "English. The course is monolingual: it explains English in English, at a level the learner can already read, so it works for a class with no shared first language.",

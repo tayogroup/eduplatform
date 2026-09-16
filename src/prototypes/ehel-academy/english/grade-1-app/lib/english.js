@@ -1048,8 +1048,19 @@
           body + "</div></div></div>" +
           '<div class="book-reader-bottom">' +
           '<button type="button" class="big small ghost" id="readBack"' + (page === 0 ? " disabled" : "") + ">&#9664; Back</button>" +
-          '<button type="button" class="big small teal" id="readListen">' +
-          (player ? "\u23F8 Pause" : "\u{1F50A} Listen") + "</button>" +
+          /* NO LISTEN BUTTON WHERE THERE IS NO RECORDING. source_of() in
+             build-lessons.py returns "" for a descriptor marked
+             available:false, and listen() then reaches playClip(it.audio, "")
+             - an EMPTY spoken fallback, so nothing plays and nothing is billed
+             to the runtime voice. That is the right behaviour and it leaves a
+             control that does nothing when a child presses it.
+             Until 2026-09-16 no Grade 1 reading was ever unrecorded, so the
+             state could not occur; the ten non-fiction texts added that day are
+             text-only by decision, so it can. A no-op everywhere else. */
+          (it.audio
+            ? '<button type="button" class="big small teal" id="readListen">' +
+              (player ? "\u23F8 Pause" : "\u{1F50A} Listen") + "</button>"
+            : "") +
           '<span class="page-pips" aria-label="Page ' + (page + 1) + " of " + it.pages.length + '">' +
           it.pages.map((_, i) => '<i class="pip' + (i === page ? " on" : (i < page ? " done" : "")) + '"></i>').join("") +
           "</span>" +
@@ -1062,7 +1073,8 @@
         if (back) back.addEventListener("click", () => { page--; render(false); });
         const next = overlay.querySelector("#readNext");
         if (next) next.addEventListener("click", () => { page++; render(false); });
-        overlay.querySelector("#readListen").addEventListener("click", listen);
+        const listenBtn = overlay.querySelector("#readListen");
+        if (listenBtn) listenBtn.addEventListener("click", listen);
         const done = overlay.querySelector("#readDone");
         if (done) done.addEventListener("click", () => {
           read[k] = true;

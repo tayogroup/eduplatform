@@ -19,11 +19,13 @@ subject's own. If the Mathematics engine changes, re-copy `voice.js` and
 | --- | --- |
 | `build-lessons.py --app <dir>` | writes `<slug>.html` per lesson from the content; refuses a bad objective code, a quiz with no single key, a sort into a missing bin, a Robo solution that misses, a table key the rows disagree with, a debug fix that does not make the expected program (every fix of a multi-bug round), a race keyed to the wrong sum, a chart keyed against its own columns, a `mustRepeat` round whose expected program has no repeat, a precise option no drawing has, a label part no figure has, and a survey where every way works |
 | `build-hub.py --app <dir>` | writes the hub: cards with step counts and time estimates, the strands panel, the printable teachers-and-parents section with the unplugged version of every activity and the answer keys |
-| `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single, and Robo's routes / table answers / fixes / race sums / chart keys RE-COMPUTED from the shipped data |
+| `build-review-pack.py --app <dir>` | `review-pack.html`: every question the build asks, with its key and its explanation, UNFALSIFIABLE FIRST. Not in the deploy set — it is the working document for the human read the 146 to 259 authored keys per grade have never had |
+| `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single, and Robo's routes / table answers / fixes / race sums / chart keys RE-COMPUTED from the shipped data. Since 2026-09-16 it also carries the **Cambridge arm**: every entry of `computing/data/cambridge-stage-features.json` for this stage must be answered by the lesson that claims it, every lesson must carry at least three self-check claims, and both tier banks are checked for a single key and a reason |
 | `_rules.py` | the things the kit computes rather than trusts — Robo's Bee-Bot rules, the table arithmetic, the repeat expansion (`REPEATS`, `expand_program`; the builder refuses to run if `computing.js` disagrees about what `repeat2`/`3`/`4` mean), the race sums, and at Stage 3 the machine rules (`rule_output`), the numbered walk (`walk_end`), the 1 = a code (`code_word`, `decode_code`), the row filter (`filter_rows`), tidy-program equivalence (`same_effect`), the repeated run (`repeat_run`) and the spreadsheet state (`sheet_cells`), and at Stage 4 the loop unroll (`expand_loop`), the loop-algorithm walk (`flatten_algo`, forever loops go round `FOREVER_CYCLES` = 2 then stop), the sub-routine walk (`sub_expand`), the branch (`branch_run`), the best algorithm for a purpose (`best_algo`), the sort (`sort_rows`), the Caesar shift (`caesar_shift`) and the Pigpen grid (`pigpen_index`) — each mirrored name for name in `computing.js`; imported by the builder AND the gate so they cannot disagree |
-| `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `s()`, `choice()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in |
+| `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `s()`, `choice()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in. Since 2026-09-16 also `cando()` (one "I can…" claim for the self-check), `world()` + `place()` (Computing world's Did-you-know fact and its real places), `label_ct()` (which computational-thinking move a step is, from `CT_MOVES`) and `tier()` (the support and extension banks) |
 | `_shell.py` | the unit shell: the seven steps drawn AROUND every lesson (overview, lecture, words, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree. A lesson's optional `LESSON["recap"]` (one line from the lesson before) and `LESSON["warmup"]` (1 to 3 `q()` items) ride on the overview |
 | `drive-lessons.mjs --app <dir>` | plays every step of every lesson to the end in Chromium from the page's own data and sweeps every step at 375 px; exit 0 only when every lesson ends at 100% with no errors. `--record` does the same on a copy of the DEPLOYED layout at the depth it is served from (`app/computing/<dir>/` under the config's `remote`: the hub as `index.html`, the five platform modules beside the pages, imports flattened, as `deploy.mjs` writes them, and the header crest at `app/shared/`) and then requires every step in the stored record, `completed` set, nothing ticked on a fresh open, and a reload after moving to step 4 to open step 4. `--only N` for one lesson |
+| `rebuild.sh` | the whole chain in the one order that works, for one grade. `T=<a git archive HEAD export of mathematics/lesson-app-tools> sh ../lesson-kit/rebuild.sh` builds against the COMMITTED shared tools — several sessions edit them at once |
 | `lib/lesson.css` | the Mathematics design system, verbatim via the Science kit's copy |
 | `lib/computing.css` | this kit's own styles; no new hue |
 | `lib/voice.js`, `lib/deck.js` | lifted verbatim (the deck **unwired** — see the Grade 1 README) |
@@ -85,7 +87,8 @@ codes the builder accepts and which the gate demands.
 | `parttest` | `partTest` | runs a program part by part, finds the part that fails, taps the wrong block in it, picks the fix, runs the part again; at least one part per round has a bug and the fix must make the part's `expect` (4P.07) |
 | `datasort` | `dataSort` | picks a field and a direction (ascending / descending, alphabetical for text) and sorts the table, then answers who is first or last; `sort_rows` decides and a tie at the checked end is refused (4MD.04) |
 | `tableparts` | `tableParts` | taps a whole record (row), a whole field (column) or one piece of data (cell) as asked; every task kind must appear (4MD.07) |
-| `questions` / `quiz` | `sequence` | the Mathematics build's own, with pictures |
+| `questions` / `quiz` | `sequence` | the Mathematics build's own, with pictures. A step may carry `support` and `extension` banks (`tier()`) — Cambridge's "Go further" and "Challenge yourself!". Support arrives on the first wrong core answer and narrows the task; extension is offered after the core bank to a child who finished with at most one slip. **Neither is scored and `finish()` still fires at the end of the CORE bank**, which is what makes them position-safe on a live grade |
+| `world` (shell) | `computingWorld` | the "Did you know?" fact, two to four tappable places where this computing is at work, and one thing to go and look at (`world()`). It said "not built yet" in all 47 lessons until 2026-09-16. A lesson that authors no `world` still gets the placeholder |
 | `overview` … `resources` (shell) | as in Science | the unit shell |
 
 Scenes: `dress`, `sandwich`, `teeth`, `handwash`, `tower`, `plant`, `catfeed`,
@@ -113,6 +116,37 @@ format written into a content module that does not exist fails the build
 rather than the page.
 
 ## Rules that cost something to learn
+
+- **The self-check lives on the sticker shelf, and the shelf is not a step.**
+  Cambridge closes every unit of all four Learner's Books with `What can you
+  do?`; this build had nothing. `LESSON["cando"]` is a list of `cando(text,
+  code)` claims and the builder resolves each one to the FIRST step of the
+  lesson carrying that code, so "Show me" is derived rather than a written
+  step number. **Resolve against `lesson["steps"]`, never the expanded list** —
+  `_shell.expand` gives the overview, lecture, words, games and home steps the
+  whole lesson's codes, so every claim would point at the overview. That is the
+  Science kit's mistake, made once there and not repeated here.
+
+- **A Cambridge entry is checked against the lesson's TEACHING text, which
+  excludes a wrong answer's words — and excludes the resources drawer.**
+  `check-coverage.py :: teaching_text` skips the `t` of any option that is not
+  keyed, so a term that appears only as a distractor does not count as taught.
+  It also skips the `resources` step entirely, and that one was found by a
+  mutation surviving: the drawer carries `finder`, every word of every lesson
+  in the grade, so counting it made every lesson's text contain every other
+  lesson's vocabulary and "lesson 10 teaches wireless" was satisfied by lesson
+  1. Fixing it immediately turned up a real gap the leak had been hiding
+  (Stage 2 `function`, the word 2CS.01 is written in).
+
+- **Check the mutation before believing the gate.** Three of this arm's first
+  seven mutations "survived" and all three were the harness: a
+  `replace(term, x, 1)` that left five copies, a case-sensitive replace that
+  left sentence-initial "Wireless", and a fixture edit keyed by string that
+  landed on another stage's entry. The harness now replaces case-insensitively,
+  asserts the term is gone before running the gate, and edits the fixture
+  through JSON keyed by entry id. 7 of 7 caught after that, plus two builder
+  refusals (an unknown computational-thinking move, a tier question with a
+  repeated option).
 
 - **A letter standing alone is spoken in capitals** (Grade 3 validation,
   2026-09-11). `letterNames()` in `lib/voice.js` hands the voice "A is 1"

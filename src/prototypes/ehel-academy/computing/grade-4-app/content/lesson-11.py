@@ -5,7 +5,7 @@
 may occur as a result of a failure in a network; 4DC.05 identify where and
 why encryption is used in digital systems.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "when-networks-fail",
@@ -188,3 +188,64 @@ LESSON["warmup"] = [
     q("The card machine in a shop loses its network. What might the shop have to do?", "\U0001F4B3", "take cash until the network is back", ["close for ever", "give everything away", "nothing: cards still work"], "Card payments need the network; cash does not."),
     q("Why do you whisper a secret instead of shouting it across the playground?", "\U0001F92B", "so only the person it is for can hear it", ["so everyone hears it", "whispering is louder", "secrets must be shouted"], "Keeping a message to the person it is for is what encryption does for data."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Where encryption is used", "Evaluation")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F6E1\ufe0f", "Why anyone bothers to encrypt",
+         "Cybercrime is crime done through computers and networks. Stealing data. Locking "
+         "somebody's files and demanding money. Pretending to be a bank to get a password. "
+         "Encryption is the main defence. A thief takes a laptop full of encrypted records. They "
+         "have taken a brick. The data is there and unreadable. That is why hospitals, banks and "
+         "schools encrypt anything about a person."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("cybercrime", "\U0001F6E1\ufe0f", "A crime done through computers and networks.",
+         ["Stealing data is cybercrime.", "Encryption is a defence against cybercrime."]),
+]
+
+LESSON["cando"] = [
+    cando("I can identify what goes wrong when a network fails.", "4DC.04"),
+    cando("I can say where encryption is used and why.", "4DC.05"),
+    cando("I know what cybercrime is and how encryption defends against it.", "4DC.05"),
+]
+
+LESSON["world"] = world(
+    "In 2017 a single piece of malware spread across the world in a day. It stopped "
+    "hospitals, factories and railways. Nothing was stolen. The damage was simply that "
+    "the networks stopped working, which shows how much depends on them.",
+    [place("\U0001F3E5", "A hospital",
+           "When the network fails, records cannot be read and appointments cannot be seen. Everything waits."),
+     place("\u26FD", "A petrol station",
+           "No network means no card payments. The fuel is still there and nobody can buy it."),
+     place("\U0001F6EB", "An airport",
+           "Check-in, bag tags and boarding all run on the network. One failure and the queue reaches the car park.")],
+    "Ask a grown-up what they could not do today if the internet stopped. Then ask what would still be fine.")
+
+tier(LESSON,
+     support=[
+         q("Encryption keeps a message...", "\U0001F510", "secret from anyone without the key", ["shorter"],
+           "Encrypted data is unreadable to anyone who does not have the key."),
+         q("The school network fails. What stops working?", "\u26A0\ufe0f",
+           "printing, shared files and the web", ["the lights"],
+           "Anything that needs another computer stops. Things already on your own device carry on."),
+     ],
+     extension=[
+         q("A thief steals a laptop full of ENCRYPTED patient records. How bad is it?", "\U0001F510",
+           "the laptop is lost but the records cannot be read",
+           ["the records are lost for ever", "the records are readable straight away", "encryption makes no difference"],
+           "That is exactly what encryption is for. Without the key the file is noise."),
+         q("Why encrypt a message that is only going across your own school?", "\U0001F914",
+           "you cannot be sure who else is listening on the way",
+           ["it makes it faster", "the school says so", "there is no reason to"],
+           "A network is shared. Encryption assumes somebody might be listening, which is cheaper than finding out they were."),
+     ])

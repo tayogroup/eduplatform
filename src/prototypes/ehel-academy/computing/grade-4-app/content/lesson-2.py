@@ -6,7 +6,7 @@ algorithms that contain repetition; 4CT.04 compare and contrast algorithms
 for the same task to determine which best suits the purpose; 4CT.03
 repetition makes algorithms more concise.
 """
-from _kit import explain, step, opt, q, s, part, word, home
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "predict-and-compare",
@@ -165,3 +165,51 @@ LESSON["warmup"] = [
     q("Robo moves forward 2 squares, then does the same again. How many squares has it gone?", "\U0001F916", "4", ["2", "3", "6"], "2 squares, two times over: 4 squares."),
     q("A party is tomorrow. An invitation by post takes 3 days; a message takes a minute. Which way suits the purpose?", "\u2709\uFE0F", "the message", ["the post", "neither", "they are just as good"], "It must arrive before tomorrow, so the quick way suits the purpose."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Which algorithm is best?", "Evaluation")
+
+LESSON["cando"] = [
+    cando("I can predict the outcome of an algorithm that contains repetition.", "4CT.05"),
+    cando("I know repetition can make an algorithm more concise.", "4CT.03"),
+    cando("I can compare two algorithms for the same task and say which suits a purpose.", "4CT.04"),
+]
+
+LESSON["world"] = world(
+    "Two route apps can send two cars different ways to the same place, and both be "
+    "right. One is trying to be quickest, the other shortest - different purposes, so a "
+    "different algorithm wins.",
+    [place("\U0001F5FA\ufe0f", "A route app",
+           "Fastest, shortest, no motorways, avoid tolls. The same map, four algorithms, four answers."),
+     place("\U0001F4E6", "A delivery firm",
+           "Fewest miles or earliest finish? Which algorithm is best depends on what the firm is paying for."),
+     place("\U0001F3E5", "A hospital",
+           "Sort the waiting list by arrival time, or by how ill people are? The purpose decides.")],
+    "Ask a grown-up to plan the same journey twice, once for quickest and once for cheapest. Compare the two.")
+
+tier(LESSON,
+     support=[
+         q("Algorithm A has 12 steps and B has 5. They do the same job. Which is more concise?", "\u2702\ufe0f",
+           "B", ["A"],
+           "Concise means fewer steps for the same result."),
+         q("To predict an algorithm means to say what it will do...", "\U0001F52E",
+           "before you run it", ["after you run it"],
+           "Predict first, then run and check."),
+     ],
+     extension=[
+         q("Algorithm A takes 5 minutes and 20 steps; B takes 9 minutes and 6 steps. Which is best?", "\u2696\ufe0f",
+           "it depends what you are trying to do",
+           ["A, it is faster", "B, it is shorter", "neither is any good"],
+           "In a hurry, A. Explaining it to somebody, B. Best only means anything once you know the purpose."),
+         q("Why compare two algorithms at all, if both of them work?", "\U0001F914",
+           "because working is not the same as best suited to the job",
+           ["to find out which is wrong", "there is no reason", "to make them the same"],
+           "Both get there. Comparing tells you which one gets there the way you need."),
+     ])

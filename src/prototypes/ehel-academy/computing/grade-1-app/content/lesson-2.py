@@ -6,7 +6,7 @@ important; 1CT.02 identify single errors in algorithms for everyday tasks;
 1CT.07 suggest ways an algorithm can be changed to affect the outcome; with
 1CT.01 and 1CT.04.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, swatch
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "order-matters",
@@ -228,3 +228,49 @@ LESSON["warmup"] = [
     q("You pour the milk before you get the bowl. What happens?", "\U0001F95B", "the milk goes on the table", ["a perfect breakfast", "the bowl fills itself", "nothing at all"], "Steps in the wrong order give a silly result."),
     q("Which is the right order for washing your hands?", "\U0001F9FC", "wet, soap, rub, rinse, dry", ["dry, rinse, soap, wet", "rub, dry, wet, soap", "soap, dry, rinse, wet"], "Wet, soap, rub, rinse, dry. The order matters."),
 ]
+
+# ---- Cambridge Learner's Book 1, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Find the bug", "Logical thinking")
+
+LESSON["cando"] = [
+    cando("I know the order of the steps changes what happens.", "1CT.06"),
+    cando("I can find the one step that is wrong in an algorithm.", "1CT.02"),
+    cando("I can follow an algorithm step by step.", "1CT.01"),
+    cando("I can change an algorithm to change what happens.", "1CT.07"),
+]
+
+LESSON["world"] = world(
+    "In 1999 a spacecraft was lost at Mars. One team used one kind of unit. "
+    "The other team used a different one. Nobody noticed. A whole mission, "
+    "ended by one wrong step.",
+    [place("\U0001F680", "A rocket launch",
+           "The countdown is an algorithm. Every step is checked by two people, because one wrong step is the whole rocket."),
+     place("\U0001F3E5", "An operating theatre",
+           "Before an operation the team reads a checklist aloud together. It was invented because steps were being missed."),
+     place("\U0001F6A6", "A crossing",
+           "Stop, look, listen, then cross. Do those in the wrong order and you are already in the road.")],
+    "Watch a grown-up unlock the front door. Ask them to do the steps in the wrong order and see what happens.")
+
+tier(LESSON,
+     support=[
+         q("Socks and shoes. Which goes on FIRST?", "\U0001F9E6", "socks", ["shoes"],
+           "Socks first, then shoes. The other way round, the socks end up on the outside."),
+         q("A bug is...", "\U0001F41B", "a mistake in the steps", ["a kind of computer"],
+           "A bug is a mistake. Find it, and you can fix it."),
+     ],
+     extension=[
+         q("An algorithm has FIVE steps and step 2 is wrong. How many steps do you need to change?", "\U0001F527",
+           "one", ["all five", "two", "none"],
+           "Only the wrong one. Finding which step is wrong is the hard part; changing it is easy."),
+         q("You change ONE step of the jam sandwich algorithm and now the jam is on the outside. What did you change?", "\U0001F35E",
+           "when the top slice goes on",
+           ["how much jam you used", "the name of the sandwich", "the colour of the plate"],
+           "The top slice went on before the jam. Same steps, different order, different sandwich."),
+     ])

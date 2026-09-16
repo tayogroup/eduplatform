@@ -6,7 +6,7 @@ input device; 3P.10 programs for a physical computing device to produce
 outputs; 3P.09 test and debug; Computer Systems 3CS.05 computers can be
 programmed to control machines and other physical objects.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "press-shake-clap",
@@ -183,3 +183,50 @@ LESSON["warmup"] = [
     q("You press a button on a toy and it lights up. The press is the...", "\U0001F518", "input", ["output", "battery", "box"], "The press goes in; the light comes out."),
     q("Which of these has a small computer inside it running a program?", "\U0001F9FA", "a washing machine", ["a wooden spoon", "a pebble", "a paper cup"], "A program inside runs each wash."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Control a machine", "Abstraction")
+
+LESSON["cando"] = [
+    cando("I can build a program for a physical device that produces an output.", "3P.10"),
+    cando("I can make a program produce an output from an input device.", "3P.06"),
+    cando("I can test and debug until the device does what I wanted.", "3P.09"),
+    cando("I know computers can be programmed to control machines.", "3CS.05"),
+]
+
+LESSON["world"] = world(
+    "The micro:bit is a small programmable board, about the size of a matchbox. In one "
+    "year it was given free to a million children in one country. It has buttons, a light "
+    "sensor and a grid of little lights. It is programmed with blocks like yours.",
+    [place("\U0001F6A6", "Traffic lights",
+           "A program watches the sensors in the road and decides when each light changes. Nobody is sitting there pressing buttons."),
+     place("\U0001F3E0", "A central heating system",
+           "A sensor reads the temperature and a program decides whether the boiler goes on. That is input and output."),
+     place("\U0001F3E2", "A lift",
+           "Which buttons were pressed goes in; which floor to go to and which door to open comes out.")],
+    "Find something at home that switches itself on or off - a fridge, a heater, a security light. What is its input?")
+
+tier(LESSON,
+     support=[
+         q("Pressing button A is...", "\u2B07\ufe0f", "an input", ["an output"],
+           "You put something in by pressing. That is an input."),
+         q("The lights on the board showing a heart is...", "\u2B06\ufe0f", "an output", ["an input"],
+           "The device shows you something. That is an output."),
+     ],
+     extension=[
+         q("Your program shows a heart when you press A, but nothing happens. What do you check FIRST?", "\U0001F50D",
+           "whether the hat block is the right input",
+           ["whether the batteries are new", "whether the room is warm", "nothing - start again"],
+           "If the program is listening for the wrong input, the output blocks never run at all."),
+         q("Why does a heating system use a sensor instead of a timer?", "\U0001F321\ufe0f",
+           "a sensor knows how cold it actually is; a timer only knows what time it is",
+           ["sensors are cheaper", "timers are not allowed", "there is no difference"],
+           "A timer heats an already-warm house. A sensor is an input about the real world."),
+     ])

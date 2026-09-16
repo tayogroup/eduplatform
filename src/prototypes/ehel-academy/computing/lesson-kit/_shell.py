@@ -190,19 +190,41 @@ def expand(n, lesson, code_text, finder, cfg):
               {"items": [dict(h, n=i + 1) for i, h in enumerate(home)]},
               "Unplugged computing at home. That is the best kind.")
 
-    world = step("world", "Computing world", "\U0001F30D", "Computing world", [],
-                 "Where this computing is out in the real world. This part is still being built.",
-                 explain(
-                     ["Computing world is not built yet."],
-                     ["It will show where this lesson's computing is out in the real world.",
-                      "Places you can visit, people who use it, and things you can go and look at."],
-                     ["There is nothing to do here yet.", "It ticks itself off."],
-                     ["Press Next."]),
-                 {"title": lesson["title"],
-                  "soon": ["Real places where this computing happens.",
-                           "People who use it every day at work.",
-                           "Things near you to go and look at."]},
-                 "Computing world is on its way.")
+    # COMPUTING WORLD. Until 2026-09-16 this step's whole content was "this
+    # part is still being built", in all 47 lessons of all four grades, and a
+    # child earned a sticker for reading it. It is the natural home for the
+    # "Did you know?" box all four Cambridge Learner's Books carry and for the
+    # real-world context they run throughout. A lesson that authors `world`
+    # gets it; one that does not keeps the placeholder, so a half-authored
+    # grade still builds. It still ticks on arrival and is still not a check,
+    # so no position and no stored record moves.
+    w = lesson.get("world")
+    if w:
+        world = step("world", "Computing world", "\U0001F30D", "Computing world", [],
+                     "Where this computing is out in the real world.",
+                     explain(
+                         ["This is the world outside the screen."],
+                         ["One surprising true thing, then the real places where this computing is at work.",
+                          "Tap a card to hear what happens there."],
+                         ["Nothing here is marked.", "It ticks itself off."],
+                         ["Have a look, then press Next."]),
+                     {"title": lesson["title"], "fact": w["fact"],
+                      "places": w["places"], "look": w["look"]},
+                     "That is this computing, out in the world.")
+    else:
+        world = step("world", "Computing world", "\U0001F30D", "Computing world", [],
+                     "Where this computing is out in the real world. This part is still being built.",
+                     explain(
+                         ["Computing world is not built yet."],
+                         ["It will show where this lesson's computing is out in the real world.",
+                          "Places you can visit, people who use it, and things you can go and look at."],
+                         ["There is nothing to do here yet.", "It ticks itself off."],
+                         ["Press Next."]),
+                     {"title": lesson["title"],
+                      "soon": ["Real places where this computing happens.",
+                               "People who use it every day at work.",
+                               "Things near you to go and look at."]},
+                     "Computing world is on its way.")
 
     res = step("resources", "Student resources", "\U0001F5C2️", "My resources", [],
                "Your word list, the word finder, your home projects, and a page for your grown-up.",

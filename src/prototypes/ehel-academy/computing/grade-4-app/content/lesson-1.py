@@ -6,7 +6,7 @@ correct algorithms that use repetition, including indefinite (forever) loops;
 4CT.02 the same for iteration, including count-controlled loops; 4CT.03
 repetition makes algorithms more concise.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, swatch
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "loops-in-algorithms",
@@ -195,3 +195,72 @@ LESSON["warmup"] = [
     q("You do this 4 times: clap, clap, clap, stamp. How many claps is that?", "\U0001F44F", "12", ["3", "4", "7"], "3 claps each time, and 4 times round: 3 times 4 is 12."),
     q("A fan spins round and round. What makes it stop?", "\U0001F300", "someone switches it off", ["it stops by itself after 10 turns", "it gets tired", "it runs out of turns"], "It has no count: it goes round until something stops it."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Repetition makes it concise", "Pattern recognition")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F522", "The counter is what makes a loop stop",
+         "A count-controlled loop has something you cannot see: a counter. The counter starts at "
+         "one and goes up by one every time round. When the counter reaches the number in the "
+         "repeat block, the loop stops. The algorithm carries on. A forever loop has no counter "
+         "at all. That is exactly why it has no end of its own."),
+    part("\u23F3", "A third kind of loop, waiting for you",
+         "You have met two kinds of loop. There is a third, and you will meet it in Scratch: a "
+         "condition-controlled loop. It has no count, but it does have an end. It goes round and "
+         "round until something becomes true. Repeat until the down arrow is pressed. Repeat "
+         "until the sprite touches the edge. Count-controlled stops after a number, "
+         "condition-controlled stops when something happens, and forever does not stop at all."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("counter", "\U0001F522", "What keeps count of the turns round a loop.",
+         ["The counter goes up by one each turn.", "When the counter reaches 4 the loop stops."]),
+    word("condition-controlled", "\u23F3", "A loop that goes round until something becomes true.",
+         ["Repeat until the key is pressed is condition-controlled.", "A condition-controlled loop has no count."]),
+]
+
+LESSON["cando"] = [
+    cando("I can follow, understand and correct algorithms with forever loops.", "4CT.01"),
+    cando("I can follow algorithms that use count-controlled loops.", "4CT.02"),
+    cando("I know repetition makes an algorithm more concise.", "4CT.03"),
+    cando("I can say what stops a loop, and what a forever loop needs.", "4CT.01"),
+]
+
+LESSON["world"] = world(
+    "A forever loop is not a mistake - most of the software you use is one. A game "
+    "redraws the screen forever, until you quit. A phone checks for messages forever, "
+    "until you switch it off. The bug is a forever loop with no way out, not a forever "
+    "loop itself.",
+    [place("\U0001F6A6", "Traffic lights",
+           "Red, red and amber, green, amber, round for ever, until somebody switches the junction off."),
+     place("\u231A", "A watch",
+           "A digital watch counts seconds in a loop that has run since the day it was made."),
+     place("\U0001F3AE", "A game",
+           "Read the controller, move everything, draw the screen. Sixty times a second, for as long as you play.")],
+    "Find something at home that repeats a fixed number of times and something that repeats until you stop it.")
+
+tier(LESSON,
+     support=[
+         q("repeat 4 - clap. How many claps?", "\U0001F44F", "4", ["1"],
+           "The counter goes 1, 2, 3, 4 and then the loop stops."),
+         q("A forever loop stops when...", "\U0001F6D1", "something outside stops it", ["it has had enough"],
+           "A forever loop has no counter, so nothing inside it can end it."),
+     ],
+     extension=[
+         q("Which loop goes round until something becomes true, with no count?", "\u23F3",
+           "a condition-controlled loop",
+           ["a count-controlled loop", "a forever loop", "there is no such loop"],
+           "Count-controlled stops after a number. Condition-controlled stops when something happens. Forever does not stop."),
+         q("Nine steps become a repeat 3 with three steps inside. What is the real saving?", "\u2702\ufe0f",
+           "there is one place to fix instead of three",
+           ["it runs three times faster", "it uses less battery", "there is no saving"],
+           "Concise means fewer places for a mistake to hide. Fix the step inside the loop and all three turns are fixed."),
+     ])

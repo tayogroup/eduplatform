@@ -957,6 +957,50 @@
   .codecell svg { color: var(--ink); }
   .stopbtn { border-color: var(--bad); }
 
+  /* ---- WHICH COMPUTATIONAL-THINKING MOVE THIS STEP IS (2026-09-16) --------
+     Cambridge labels one task per unit as computational thinking and says
+     which skill it exercises. This build did all of them and named none. The
+     chip is not a step and not a control, so nothing moves; `title` carries
+     the plain-English gloss for a grown-up reading over a shoulder. The
+     slide head wraps so a long title and a chip never squeeze each other. */
+  .slide-head { flex-wrap: wrap; }
+  /* --plum on --card measured 4.30:1 in the dark theme, under the 4.5 this
+     size needs, so the WORD is --ink (the colour the design system picked for
+     reading) and the plum is the border. 13px is the kit's label floor. */
+  .ctchip { flex: 0 0 auto; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink);
+    background: var(--card); border: 2px solid var(--plum); border-radius: 999px; padding: 4px 10px; }
+
+  /* ---- CAMBRIDGE'S "What can you do?", on the sticker shelf ---------------
+     Every unit of all four Learner's Books closes with one. It lives on the
+     shelf, which is not a step, so nothing here moves a saved place. "Show
+     me" is 44px like every other control in this build. */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 8px 10px 8px 14px; }
+  .cando li > span { font-size: 16px; font-weight: 700; line-height: 1.35; }
+  .candogo { flex: 0 0 auto; min-height: 44px; border: 2px solid var(--line); background: var(--card);
+    color: var(--ink); border-radius: 999px; padding: 8px 16px; font-family: inherit; font-weight: 800;
+    font-size: 14px; cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 12px; }
+    .candogo { width: 100%; }
+  }
+
+  /* ---- COMPUTING WORLD: the "Did you know?" panel and what to go and look at.
+     This step said "not built yet" in all 47 lessons until 2026-09-16. */
+  .dyk { width: 100%; border: 3px solid var(--gold); border-radius: 18px; background: var(--card);
+    padding: 12px 16px; text-align: left; }
+  .dyk-h { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .dyk p { margin: 0; font-size: 18px; line-height: 1.5; }
+  .worldlook { margin: 2px 0 0; font-size: 17px; line-height: 1.5; color: var(--ink); max-width: 34em; }
+  .world .cardsgrid { width: 100%; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -972,6 +1016,116 @@
     text-decoration: none;
   }
   .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
+
+  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
+     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
+     a page it had already wired, so three separate changes to this block --
+     the panel surfaces, the dark theme, the canned prompts -- reached nothing
+     already built, and each needed its own carry-across tool afterwards. */
+  /* --- a home for the class controls, and the tutor dock;
+         see lesson-app-tools/wire-platform-controls.py --- */
+  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
+  .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
+  .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
+    align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
+    background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
+    padding: 12px 18px; box-shadow: var(--shadow); }
+  .w-dock[hidden] { display: none; }
+  .w-drawer { position: fixed; right: 14px; bottom: 14px; z-index: 71; width: min(420px, calc(100vw - 28px));
+    height: min(620px, calc(100vh - 28px)); background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+  .w-drawer[hidden] { display: none; }
+  .w-drawer-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+    border-bottom: 1px solid var(--line); font-weight: 800; }
+  .w-drawer-head button { margin-left: auto; border: 1px solid var(--line); background: var(--cell);
+    color: var(--ink); border-radius: 999px; width: 34px; height: 34px; font-size: 17px; cursor: pointer; }
+  .w-drawer-body { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
+    background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
+    font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
+     The dock and the drawer above already use --card/--line/--ink, so before
+     this the drawer was a dark card containing a white sheet: shell/wehel.js
+     ships a light panel (--w-bg #fff, --w-ink #17324d) and these pages are
+     always dark -- the bare `:root` in their theme selector makes the dark
+     block unconditional, so there is no light case to preserve here.
+     wehel.js now NAMES its surfaces instead of repeating literals, every
+     default being the value it already had, so this block is the whole of the
+     change a page needs and the five shell subjects that also load the tutor
+     are untouched. Mapped by ROLE, not by hue: panel takes --card, anything
+     raised off it takes --cell, so the bubbles, prompt buttons, compose row
+     and timer stay readable against the panel rather than against the page. */
+  /* DOUBLED selector, and that is load-bearing: wehel.js injects PANEL_STYLE
+     with document.head.appendChild at mount, so its own `.wehel-panel{...}`
+     always comes after this stylesheet. At equal specificity the later rule
+     wins, so the single-class version of this block lost every declaration to
+     it and the panel stayed white -- which only rendering it showed. */
+  .wehel-panel.wehel-panel {
+    --w-bg: var(--card); --w-surface: var(--card); --w-ink: var(--ink);
+    --w-line: var(--line);
+    --w-teal: var(--teal); --w-teal-2: #2AA79B; --w-teal-soft: var(--teal-soft);
+    --w-bubble: var(--cell);
+    --w-prompt-bg: var(--cell); --w-prompt-line: var(--line);
+    /* NOT var(--teal) here. The page's teal on the prompt buttons' --cell
+       ground measures 4.28:1, under the 4.5 floor -- the one surface in the
+       panel that failed when this was measured rather than eyeballed. This
+       lighter teal is 6.27:1 on the same ground. It is a literal because the
+       palette has no light-teal token: --teal-soft is a dark fill (#143A4A),
+       and --good (#4FD1A0) is the green that means "correct" in this build,
+       which a row of suggestions must not borrow. */
+    --w-prompt-ink: #7FE0D6;
+    /* the strip along the top of the panel -- timer, Full screen, voice picker */
+    --w-row-a: rgba(255, 255, 255, 0.07); --w-row-b: rgba(255, 255, 255, 0.03);
+    --w-low-line: rgba(244, 201, 93, 0.55);
+    --w-compose-bg: var(--cell);
+    --w-timer-bg: var(--cell); --w-timer-track: var(--cell);
+    /* the learner's own turn: plum, the page's third accent, so a child can
+       tell their words from Wehel's at a glance without reading the label */
+    --w-user-a: rgba(183, 139, 209, 0.30); --w-user-b: rgba(183, 139, 209, 0.16);
+    --w-user-ink: var(--ink);
+    --w-user-avatar-a: var(--plum); --w-user-avatar-b: #8E5AA8;
+    /* time nearly up: the page's gold, not the light build's cream */
+    --w-warm: var(--gold); --w-low-ink: var(--gold);
+    --w-low-fill: rgba(244, 201, 93, 0.32); --w-low-track: rgba(244, 201, 93, 0.12);
+  }
+  .wehel-panel.wehel-panel .ai-compose input::placeholder { color: var(--muted); }
+
+  /* THE CLASS CHAT, same treatment and a different scope. learner-controls.js
+     draws that panel with INLINE styles -- deliberately, so a cosmetic rule in
+     course-ui.css cannot make five other subjects' app tiers stale -- and an
+     inline style cannot be overridden by a stylesheet. It reads --lc-* through
+     var() instead, so this retints it; and the panel is appended to <body>
+     rather than to the drawer, so these live at :root and not on a class.
+
+     The bug this fixes is not only the tint. Every bubble set a background and
+     NO colour, so the text inherited the page's --ink -- white -- and a child
+     read white on #f2f4f6. The compose input was the same, so typing was
+     invisible. The defaults in learner-controls.js are course-ui.css's own
+     --ink (#17324d), which is exactly what the light subjects inherit today. */
+  :root {
+    --lc-panel-bg: var(--card); --lc-panel-line: var(--line);
+    --lc-head-a: rgba(53, 191, 178, 0.22); --lc-head-b: rgba(53, 191, 178, 0.07);
+    --lc-head-ink: var(--ink); --lc-head-sub: var(--muted);
+    --lc-form-bg: var(--cell); --lc-form-line: var(--line);
+    --lc-field-bg: var(--cell); --lc-field-ink: var(--ink);
+    --lc-them-bg: var(--cell); --lc-them-ink: var(--ink);
+    /* the learner's own turn in plum, the same signal the tutor panel uses */
+    --lc-mine-bg: rgba(183, 139, 209, 0.30); --lc-mine-ink: var(--ink);
+    /* "only your teacher sees this" keeps its amber, restated for a dark ground */
+    --lc-private-bg: rgba(244, 201, 93, 0.18); --lc-private-line: rgba(244, 201, 93, 0.45);
+    --lc-private-ink: var(--gold);
+  }
+  /* WEHEL-THEME-END */
+  /* WIRE-CSS-END */
 
   /* --- said on the learner's own screen when their work is not reaching the
          school; see lesson-app-tools/wire-progress.py --- */
@@ -1087,116 +1241,6 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
-
-  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
-     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
-     a page it had already wired, so three separate changes to this block --
-     the panel surfaces, the dark theme, the canned prompts -- reached nothing
-     already built, and each needed its own carry-across tool afterwards. */
-  /* --- a home for the class controls, and the tutor dock;
-         see lesson-app-tools/wire-platform-controls.py --- */
-  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
-  .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
-  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
-     with a z-index above everything, so in focus mode it lands squarely on
-     top of Ask Wehel. Lift both above it when it is there, and only then.
-     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
-     and it is half again as tall on a narrow screen as on a wide one; the
-     fallback is only for the instant before the first measurement. */
-  body:has(#seb-session-bar) .w-dock,
-  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
-  .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
-    align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
-    background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
-    padding: 12px 18px; box-shadow: var(--shadow); }
-  .w-dock[hidden] { display: none; }
-  .w-drawer { position: fixed; right: 14px; bottom: 14px; z-index: 71; width: min(420px, calc(100vw - 28px));
-    height: min(620px, calc(100vh - 28px)); background: var(--card); border: 1px solid var(--line);
-    border-radius: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
-  .w-drawer[hidden] { display: none; }
-  .w-drawer-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
-    border-bottom: 1px solid var(--line); font-weight: 800; }
-  .w-drawer-head button { margin-left: auto; border: 1px solid var(--line); background: var(--cell);
-    color: var(--ink); border-radius: 999px; width: 34px; height: 34px; font-size: 17px; cursor: pointer; }
-  .w-drawer-body { flex: 1 1 auto; min-height: 0; overflow: auto; }
-  .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
-    background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
-    font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
-
-  /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
-     The dock and the drawer above already use --card/--line/--ink, so before
-     this the drawer was a dark card containing a white sheet: shell/wehel.js
-     ships a light panel (--w-bg #fff, --w-ink #17324d) and these pages are
-     always dark -- the bare `:root` in their theme selector makes the dark
-     block unconditional, so there is no light case to preserve here.
-     wehel.js now NAMES its surfaces instead of repeating literals, every
-     default being the value it already had, so this block is the whole of the
-     change a page needs and the five shell subjects that also load the tutor
-     are untouched. Mapped by ROLE, not by hue: panel takes --card, anything
-     raised off it takes --cell, so the bubbles, prompt buttons, compose row
-     and timer stay readable against the panel rather than against the page. */
-  /* DOUBLED selector, and that is load-bearing: wehel.js injects PANEL_STYLE
-     with document.head.appendChild at mount, so its own `.wehel-panel{...}`
-     always comes after this stylesheet. At equal specificity the later rule
-     wins, so the single-class version of this block lost every declaration to
-     it and the panel stayed white -- which only rendering it showed. */
-  .wehel-panel.wehel-panel {
-    --w-bg: var(--card); --w-surface: var(--card); --w-ink: var(--ink);
-    --w-line: var(--line);
-    --w-teal: var(--teal); --w-teal-2: #2AA79B; --w-teal-soft: var(--teal-soft);
-    --w-bubble: var(--cell);
-    --w-prompt-bg: var(--cell); --w-prompt-line: var(--line);
-    /* NOT var(--teal) here. The page's teal on the prompt buttons' --cell
-       ground measures 4.28:1, under the 4.5 floor -- the one surface in the
-       panel that failed when this was measured rather than eyeballed. This
-       lighter teal is 6.27:1 on the same ground. It is a literal because the
-       palette has no light-teal token: --teal-soft is a dark fill (#143A4A),
-       and --good (#4FD1A0) is the green that means "correct" in this build,
-       which a row of suggestions must not borrow. */
-    --w-prompt-ink: #7FE0D6;
-    /* the strip along the top of the panel -- timer, Full screen, voice picker */
-    --w-row-a: rgba(255, 255, 255, 0.07); --w-row-b: rgba(255, 255, 255, 0.03);
-    --w-low-line: rgba(244, 201, 93, 0.55);
-    --w-compose-bg: var(--cell);
-    --w-timer-bg: var(--cell); --w-timer-track: var(--cell);
-    /* the learner's own turn: plum, the page's third accent, so a child can
-       tell their words from Wehel's at a glance without reading the label */
-    --w-user-a: rgba(183, 139, 209, 0.30); --w-user-b: rgba(183, 139, 209, 0.16);
-    --w-user-ink: var(--ink);
-    --w-user-avatar-a: var(--plum); --w-user-avatar-b: #8E5AA8;
-    /* time nearly up: the page's gold, not the light build's cream */
-    --w-warm: var(--gold); --w-low-ink: var(--gold);
-    --w-low-fill: rgba(244, 201, 93, 0.32); --w-low-track: rgba(244, 201, 93, 0.12);
-  }
-  .wehel-panel.wehel-panel .ai-compose input::placeholder { color: var(--muted); }
-
-  /* THE CLASS CHAT, same treatment and a different scope. learner-controls.js
-     draws that panel with INLINE styles -- deliberately, so a cosmetic rule in
-     course-ui.css cannot make five other subjects' app tiers stale -- and an
-     inline style cannot be overridden by a stylesheet. It reads --lc-* through
-     var() instead, so this retints it; and the panel is appended to <body>
-     rather than to the drawer, so these live at :root and not on a class.
-
-     The bug this fixes is not only the tint. Every bubble set a background and
-     NO colour, so the text inherited the page's --ink -- white -- and a child
-     read white on #f2f4f6. The compose input was the same, so typing was
-     invisible. The defaults in learner-controls.js are course-ui.css's own
-     --ink (#17324d), which is exactly what the light subjects inherit today. */
-  :root {
-    --lc-panel-bg: var(--card); --lc-panel-line: var(--line);
-    --lc-head-a: rgba(53, 191, 178, 0.22); --lc-head-b: rgba(53, 191, 178, 0.07);
-    --lc-head-ink: var(--ink); --lc-head-sub: var(--muted);
-    --lc-form-bg: var(--cell); --lc-form-line: var(--line);
-    --lc-field-bg: var(--cell); --lc-field-ink: var(--ink);
-    --lc-them-bg: var(--cell); --lc-them-ink: var(--ink);
-    /* the learner's own turn in plum, the same signal the tutor panel uses */
-    --lc-mine-bg: rgba(183, 139, 209, 0.30); --lc-mine-ink: var(--ink);
-    /* "only your teacher sees this" keeps its amber, restated for a dark ground */
-    --lc-private-bg: rgba(244, 201, 93, 0.18); --lc-private-line: rgba(244, 201, 93, 0.45);
-    --lc-private-ink: var(--gold);
-  }
-  /* WEHEL-THEME-END */
-  /* WIRE-CSS-END */
 </style>
 
 <a class="skip" href="#deck">Skip to the lesson</a>
@@ -1273,7 +1317,7 @@
       </div>
     </section>
     <section class="slide" data-objectives="2P.07 2P.05 2P.06" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Run it first and watch. Then find the block that went wrong. Fix it. Then RUN IT AGAIN.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Some programs have two bugs.</s><s>After the first fix, the program is better but still wrong.</s><s>Only running it again shows you that.</s><s>If you cannot see the bug, press Ask, and your friend gives you a hint.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children fix one bug and press Next without running.</s><s>A fix you have not tested is a guess.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Run, find, fix, run again. Ask a friend if you are stuck.</s></mstts:express-as>' data-say="Press Run . Find the bug and fix it. Some programs have TWO bugs, so run it again after every fix. A friend is there if you get stuck.">
-      <div class="slide-head"><span class="n">5</span><h2>Find the bug, fix it, run it again</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Find the bug, fix it, run it again</h2><span class="ctchip" title="working out what must be true">Logical thinking</span></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Press <b>Run</b>. Find the bug and fix it. Some programs have TWO bugs, so run it again after every fix. A friend is there if you get stuck.</span></div>
       <div class="stage">
         <div id="stage5"></div>
@@ -1342,9 +1386,9 @@
         <p class="score" id="score11"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the world outside the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One surprising true thing, then the real places where this computing is at work.</s><s>Tap a card to hear what happens there.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look, then press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world.">
       <div class="slide-head"><span class="n">12</span><h2>Computing world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Where this computing is out in the real world. This part is still being built.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Where this computing is out in the real world.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
@@ -1368,6 +1412,15 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="cando">
+          <h3>What can you do?</h3>
+          <p class="candonote">Read each one. Can you do it? If you are not sure, press <b>Show me</b>.</p>
+          <ul>
+          <li><span>I know why working with someone else helps when debugging.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I can debug a program so it gives the output I wanted.</span><button type="button" class="candogo" data-go="4">Show me</button></li>
+          <li><span>I know the benefit of testing a program as I build it.</span><button type="button" class="candogo" data-go="4">Show me</button></li>
+          </ul>
+        </div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1410,6 +1463,20 @@
       "2P.06",
       "2P.07"
     ],
+    "cando": [
+      {
+        "t": "I know why working with someone else helps when debugging.",
+        "code": "2P.05"
+      },
+      {
+        "t": "I can debug a program so it gives the output I wanted.",
+        "code": "2P.07"
+      },
+      {
+        "t": "I know the benefit of testing a program as I build it.",
+        "code": "2P.06"
+      }
+    ],
     "steps": [
       {
         "kind": "overview",
@@ -1419,6 +1486,7 @@
           "2P.07",
           "2P.06"
         ],
+        "ct": "",
         "data": {
           "about": [
             "Debug a program so that it runs and does what we wanted.",
@@ -1491,6 +1559,7 @@
           "2P.07",
           "2P.06"
         ],
+        "ct": "",
         "data": {
           "parts": [
             {
@@ -1529,6 +1598,7 @@
           "2P.07",
           "2P.06"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -1594,6 +1664,7 @@
         "objectives": [
           "2P.05"
         ],
+        "ct": "",
         "data": {
           "frames": [
             {
@@ -1630,6 +1701,7 @@
           "2P.05",
           "2P.06"
         ],
+        "ct": "Logical thinking",
         "data": {
           "sprite": "🐶",
           "rounds": [
@@ -1879,6 +1951,7 @@
           "2P.05",
           "2P.06"
         ],
+        "ct": "",
         "data": {
           "ask": "Good debugging habit, or not?",
           "bins": [
@@ -1951,6 +2024,7 @@
         "objectives": [
           "2P.05"
         ],
+        "ct": "",
         "data": {
           "label": "Question",
           "items": [
@@ -2056,6 +2130,7 @@
           "2P.05",
           "2P.07"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2108,6 +2183,7 @@
           "2P.07",
           "2P.06"
         ],
+        "ct": "",
         "data": {
           "games": [
             {
@@ -2334,6 +2410,7 @@
           "2P.07",
           "2P.06"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2380,6 +2457,7 @@
           "2P.05",
           "2P.06"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2566,6 +2644,86 @@
               ],
               "why": "Debugging is finding and fixing the errors."
             }
+          ],
+          "support": [
+            {
+              "ask": "Debugging means...",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🐛</div>",
+              "opts": [
+                {
+                  "t": "finding and fixing the mistake",
+                  "ok": true
+                },
+                {
+                  "t": "switching it off",
+                  "ok": false
+                }
+              ],
+              "why": "Find the bug, then fix it."
+            },
+            {
+              "ask": "Your friend is stuck on a bug. What is the most useful thing you can do?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">👥</div>",
+              "opts": [
+                {
+                  "t": "look at it with them",
+                  "ok": true
+                },
+                {
+                  "t": "tell them to start again",
+                  "ok": false
+                }
+              ],
+              "why": "A second pair of eyes sees what the first pair has stopped noticing."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "Why does explaining your program out loud help you find bugs?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">💬</div>",
+              "opts": [
+                {
+                  "t": "saying each step makes you notice the one that does not make sense",
+                  "ok": true
+                },
+                {
+                  "t": "it makes the computer listen",
+                  "ok": false
+                },
+                {
+                  "t": "it is faster",
+                  "ok": false
+                },
+                {
+                  "t": "it does not help",
+                  "ok": false
+                }
+              ],
+              "why": "You stop skimming and start reading. That is the whole trick."
+            },
+            {
+              "ask": "You fixed the bug and the program still does the wrong thing. What now?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🔧</div>",
+              "opts": [
+                {
+                  "t": "run it again and look at what it does now - there is another bug",
+                  "ok": true
+                },
+                {
+                  "t": "give up",
+                  "ok": false
+                },
+                {
+                  "t": "put the old bug back",
+                  "ok": false
+                },
+                {
+                  "t": "change every block",
+                  "ok": false
+                }
+              ],
+              "why": "Programs can have more than one bug. Run, look, fix, run again."
+            }
           ]
         }
       },
@@ -2573,19 +2731,35 @@
         "kind": "world",
         "title": "Computing world",
         "objectives": [],
+        "ct": "",
         "data": {
           "title": "Debugging Together",
-          "soon": [
-            "Real places where this computing happens.",
-            "People who use it every day at work.",
-            "Things near you to go and look at."
-          ]
+          "fact": "Programmers have a trick called rubber duck debugging. You explain your program out loud, line by line, to a rubber duck on the desk. Saying it out loud makes you notice the wrong step yourself. And the duck never interrupts.",
+          "places": [
+            {
+              "pic": "💼",
+              "title": "A software office",
+              "say": "Two programmers often share one screen. One types, one watches, and they swap. Two pairs of eyes find more bugs."
+            },
+            {
+              "pic": "🏥",
+              "title": "A hospital",
+              "say": "Before an operation the team says the plan out loud together so that anyone can say: wait, that is not right."
+            },
+            {
+              "pic": "✈️",
+              "title": "A cockpit",
+              "say": "One pilot reads the checklist and the other does it. Neither does both, on purpose."
+            }
+          ],
+          "look": "Explain your homework out loud to a toy before you show it to anyone. See whether you spot a mistake yourself."
         }
       },
       {
         "kind": "resources",
         "title": "Student resources",
         "objectives": [],
+        "ct": "",
         "data": {
           "words": [
             {
@@ -2679,6 +2853,30 @@
               "lesson": 9,
               "title": "Connected Devices",
               "file": "connected-devices.html"
+            },
+            {
+              "w": "backup",
+              "pic": "💾",
+              "meaning": "A second copy of data, kept in case the first one is lost.",
+              "uses": [
+                "The school keeps a backup of our work.",
+                "Make a backup before you change it."
+              ],
+              "lesson": 7,
+              "title": "Collecting Data",
+              "file": "collecting-data.html"
+            },
+            {
+              "w": "barcode",
+              "pic": "🏷️",
+              "meaning": "Stripes a scanner reads instead of somebody typing the number.",
+              "uses": [
+                "The till reads the barcode.",
+                "A barcode reader is an input device."
+              ],
+              "lesson": 10,
+              "title": "Hardware and Software",
+              "file": "hardware-software-and-robots.html"
             },
             {
               "w": "block",
@@ -2849,6 +3047,18 @@
               "file": "computers-devices-and-robots.html"
             },
             {
+              "w": "edit",
+              "pic": "✏️",
+              "meaning": "To change what is already there, instead of starting again.",
+              "uses": [
+                "Edit the algorithm: swap step 3.",
+                "You can edit a program without rewriting it."
+              ],
+              "lesson": 2,
+              "title": "Bugs and Predictions",
+              "file": "bugs-and-predictions.html"
+            },
+            {
               "w": "explain",
               "pic": "🗣️",
               "meaning": "To say clearly what something does.",
@@ -2879,6 +3089,18 @@
               "uses": [
                 "Robots with feelings belong in fiction.",
                 "Fiction is fun, but it is not real."
+              ],
+              "lesson": 11,
+              "title": "Computers, Devices and Robots",
+              "file": "computers-devices-and-robots.html"
+            },
+            {
+              "w": "fictional",
+              "pic": "📖",
+              "meaning": "Made up for a story.",
+              "uses": [
+                "A fictional robot talks and has feelings.",
+                "Robots in films are fictional."
               ],
               "lesson": 11,
               "title": "Computers, Devices and Robots",
@@ -2931,6 +3153,18 @@
               "lesson": 6,
               "title": "Bee-Bot Journeys",
               "file": "bee-bot-journeys.html"
+            },
+            {
+              "w": "function",
+              "pic": "⚙️",
+              "meaning": "The job a piece of hardware or software does.",
+              "uses": [
+                "The function of a keyboard is to put letters in.",
+                "Say what each part's function is."
+              ],
+              "lesson": 10,
+              "title": "Hardware and Software",
+              "file": "hardware-software-and-robots.html"
             },
             {
               "w": "GO",
@@ -3015,6 +3249,18 @@
               "lesson": 1,
               "title": "Precise Instructions",
               "file": "precise-instructions.html"
+            },
+            {
+              "w": "malware",
+              "pic": "⚠️",
+              "meaning": "A program written on purpose to do harm.",
+              "uses": [
+                "Malware can hide inside a file.",
+                "Do not open a file from someone you do not know."
+              ],
+              "lesson": 9,
+              "title": "Connected Devices",
+              "file": "connected-devices.html"
             },
             {
               "w": "measurement",
@@ -3113,6 +3359,18 @@
               "file": "debugging-together.html"
             },
             {
+              "w": "personal information",
+              "pic": "🔒",
+              "meaning": "The things that say who you are and where you live.",
+              "uses": [
+                "Your address is personal information.",
+                "Keep personal information off the network."
+              ],
+              "lesson": 9,
+              "title": "Connected Devices",
+              "file": "connected-devices.html"
+            },
+            {
               "w": "plan",
               "pic": "📋",
               "meaning": "To decide what should happen before you build it.",
@@ -3123,6 +3381,18 @@
               "lesson": 4,
               "title": "Objects and Plans",
               "file": "objects-and-plans.html"
+            },
+            {
+              "w": "portable",
+              "pic": "🎒",
+              "meaning": "Small and light enough to carry with you.",
+              "uses": [
+                "A tablet is portable.",
+                "A desktop computer is not portable."
+              ],
+              "lesson": 11,
+              "title": "Computers, Devices and Robots",
+              "file": "computers-devices-and-robots.html"
             },
             {
               "w": "precise",
@@ -3305,6 +3575,18 @@
               "file": "programs-and-repeats.html"
             },
             {
+              "w": "ScratchJr",
+              "pic": "🐱",
+              "meaning": "A real app for building block programs on a tablet.",
+              "uses": [
+                "We made our cat move in ScratchJr.",
+                "ScratchJr has a repeat block too."
+              ],
+              "lesson": 3,
+              "title": "Programs and Repeats",
+              "file": "programs-and-repeats.html"
+            },
+            {
               "w": "sensor",
               "pic": "📡",
               "meaning": "A part that lets a robot notice something, like a bump.",
@@ -3447,6 +3729,18 @@
               "lesson": 6,
               "title": "Bee-Bot Journeys",
               "file": "bee-bot-journeys.html"
+            },
+            {
+              "w": "user-friendly",
+              "pic": "👍",
+              "meaning": "Easy to use without being taught.",
+              "uses": [
+                "Big buttons make a tablet user-friendly.",
+                "A user-friendly app needs no instructions."
+              ],
+              "lesson": 10,
+              "title": "Hardware and Software",
+              "file": "hardware-software-and-robots.html"
             },
             {
               "w": "vague",
@@ -4651,6 +4945,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -4696,9 +5004,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -4706,14 +5053,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();
@@ -9026,23 +9380,72 @@
     paintGrid();
   }
 
-  /* ---- Computing world: a placeholder that says it is one ---- */
+  /* ---- Computing world: where this computing is, outside the screen ----
+     Until 2026-09-16 this drew a placeholder saying it was not built yet, in
+     all 47 lessons of all four grades. It now carries the two things every
+     Cambridge Learner's Book runs throughout: a "Did you know?" fact and the
+     real places this computing is at work. A lesson with no `fact` still gets
+     the placeholder, so a half-authored grade builds.
+
+     It is still not a check and still ticks on arrival, so no stored record
+     and no step position moves. */
   function computingWorld(o) {
     const el = o.el;
     $(el.stage).className = "stagewide";
+    if (!o.fact) {
+      $(el.stage).innerHTML =
+        '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
+        '<h3 class="lec-h">Computing world is being built</h3>' +
+        '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
+        '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+        '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
+      $(el.score).textContent = "coming soon";
+      ONSHOW[o.finish] = () => finish(o.finish);
+      return;
+    }
+    const places = o.places || [];
     $(el.stage).innerHTML =
-      '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
-      '<h3 class="lec-h">Computing world is being built</h3>' +
-      '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
-      '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
-      '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
-    $(el.score).textContent = "coming soon";
+      '<div class="world">' +
+      '<div class="dyk"><span class="dyk-h">Did you know?</span><p>' + esc(o.fact) + "</p></div>" +
+      '<h3 class="lec-h">Where this computing is at work</h3>' +
+      '<div class="cardsgrid">' + places.map((pl, k) =>
+        '<button type="button" class="tapcard" data-k="' + k + '"><span class="cpic" aria-hidden="true">'
+        + small(pl.pic) + "</span>" + esc(pl.title) + "</button>").join("") + "</div>" +
+      '<p class="worldlook"><b>Go and look:</b> ' + esc(o.look) + "</p>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'w">&#128266; Read it to me</button></div>' +
+      "</div>";
+    $(el.score).textContent = places.length + " places";
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard");
+      if (!b) return;
+      const pl = places[Number(b.dataset.k)];
+      $(el.stage).querySelectorAll(".tapcard.now").forEach((c) => c.classList.remove("now"));
+      b.classList.add("heard", "now");
+      say(pl.say);
+      $(el.fb).className = "fb";
+      $(el.fb).innerHTML = "<b>" + esc(pl.title) + "</b> \u2014 " + esc(pl.say);
+    });
+    $(el.stage + "w").addEventListener("click", () =>
+      say("Did you know? " + o.fact + " " + places.map((pl) => pl.title + ". " + pl.say).join(" ")
+          + " Go and look. " + o.look));
     /* On arrival, not at page load - see unitOverview. At draw time this
        ticked the step before the child had seen it, where nothing could
        report it: a fresh lesson opened at 13%, and the stored record was
        one step short for ever. */
     ONSHOW[o.finish] = () => finish(o.finish);
   }
+
+  /* Cambridge's "What can you do?" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */
   function gameZone(o) {
@@ -9353,7 +9756,7 @@
   gameZone(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[8].data));
   homeProjects(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[9].data));
   sequence(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "That is the whole lesson finished. You can debug, and you know why two heads are better than one." }, LESSON.steps[10].data));
-  computingWorld(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "Computing world is on its way." }, LESSON.steps[11].data));
+  computingWorld(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "That is this computing, out in the world." }, LESSON.steps[11].data));
   resources(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Your resources are always here." }, LESSON.steps[12].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
@@ -9708,6 +10111,133 @@
   })();
 </script>
 
+<!-- WIRE-JS-START -->
+<script type="module">
+  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
+     learner-controls.js holds the SAME singletons the shell mounts. */
+  import { mountLearnerControls } from "./learner-controls.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
+  import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
+
+  const q = new URLSearchParams(location.search);
+  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
+
+  let toastEl = null;
+  function toast(message) {
+    if (toastEl) toastEl.remove();
+    toastEl = document.createElement("div");
+    toastEl.className = "w-toast";
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
+  }
+
+  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
+        .top-actions and mount ONLY when the server says a teacher is watching,
+        so nothing appears to a child working alone. */
+  try {
+    mountLearnerControls({
+      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
+      progressUnit: "l05",
+    });
+  } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
+
+  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
+        the day's allowance, and a lesson nobody opens the tutor on should not
+        spend a request. */
+  if (launchToken) {
+    const dock = document.createElement("button");
+    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
+    const drawer = document.createElement("div");
+    drawer.className = "w-drawer"; drawer.hidden = true;
+    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
+    let panel = null;
+    function open() {
+      drawer.hidden = false; dock.hidden = true;
+      if (panel) return;
+      try {
+        panel = mountWehelChat({
+          container: drawer.querySelector(".w-drawer-body"),
+          meta: {
+            subject: "computing", subjectLabel: "Computing", grade: 2,
+            unitNo: 5, unitTitle: "Debugging Together",
+            learnerCategory: q.get("category") || "",
+          },
+          store: {},
+          ui: { escapeHtml, toast },
+          tutorLabel: "Wehel Tutor",
+          placeholder: "Ask about Debugging Together\u2026",
+          /* The chips a young learner presses, written as the sentence they
+             would have said. Four, because a row a six-year-old scans has to
+             be short and a fifth makes the other four less likely to be read.
+
+             "Give me a hint" is the one that carries a teaching stance: it
+             says "not the answer" in the message itself, so pressing it cannot
+             turn the tutor into an answer machine even before the prompt file
+             has its say.
+
+             True of every app this tool wires - Grade 1 English and the four
+             Mathematics builds - which is why none of them names a word, a
+             sentence or a number. */
+          quickPrompts: [
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
+            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
+          ],
+        });
+      } catch (e) {
+        console.error("wehel:", e);
+        drawer.hidden = true; dock.hidden = false;
+        toast("Wehel is not available on this page.");
+      }
+    }
+    function close() { drawer.hidden = true; dock.hidden = false; }
+    dock.addEventListener("click", open);
+    drawer.querySelector("button").addEventListener("click", close);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
+    document.body.append(dock, drawer);
+
+    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
+       aloud by default and knew nothing of the lesson's voice, so a reply
+       could play over a line the lesson was reading. The lesson stops the
+       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
+       when the tutor starts reading - which the drawer shows as a Stop
+       button, .voice-button.is-playing. Only the moment that button APPEARS
+       counts: the panel repaints often, and repainting a reply already being
+       read must not cut off a line the lesson has just begun. */
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  }
+</script>
+<!-- WIRE-JS-END -->
+
 <script type="module">
   /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
      THE UNIT PROBLEM for why this writes lNN and not uNN. */
@@ -9936,142 +10466,3 @@
     if (added) report(lastAt);
   };
 </script>
-
-<!-- WIRE-JS-START -->
-<script type="module">
-  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
-     learner-controls.js holds the SAME singletons the shell mounts. */
-  import { mountLearnerControls } from "./learner-controls.js";
-  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
-  import { escapeHtml } from "./course-shell.js";
-  /* Focus mode and the session bar. Imported for its side effect - it mounts
-     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
-     exitUrl, which is why an ordinary launch and every local run see no
-     change. It is what writes course_focus_break / course_left_early, so
-     without it the live group board's away state can never fire for a learner
-     in this build. */
-  import "./seb-session.js";
-
-  const q = new URLSearchParams(location.search);
-  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
-  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
-
-  let toastEl = null;
-  function toast(message) {
-    if (toastEl) toastEl.remove();
-    toastEl = document.createElement("div");
-    toastEl.className = "w-toast";
-    toastEl.textContent = message;
-    document.body.appendChild(toastEl);
-    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
-  }
-
-  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
-        .top-actions and mount ONLY when the server says a teacher is watching,
-        so nothing appears to a child working alone. */
-  try {
-    mountLearnerControls({
-      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l05",
-    });
-  } catch (e) { console.error("learner controls:", e); }
-
-  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
-     stylesheet. Measured rather than assumed: the bar wraps, so its height is
-     a property of the screen. Re-measured on resize because its clock changes
-     width every second and its buttons re-flow. */
-  (function () {
-    const seb = document.getElementById("seb-session-bar");
-    if (!seb) return;                       /* no focus mode, nothing to avoid */
-    const lift = () => document.documentElement.style
-      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
-    lift();
-    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
-  })();
-
-  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
-        the day's allowance, and a lesson nobody opens the tutor on should not
-        spend a request. */
-  if (launchToken) {
-    const dock = document.createElement("button");
-    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
-    const drawer = document.createElement("div");
-    drawer.className = "w-drawer"; drawer.hidden = true;
-    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
-    let panel = null;
-    function open() {
-      drawer.hidden = false; dock.hidden = true;
-      if (panel) return;
-      try {
-        panel = mountWehelChat({
-          container: drawer.querySelector(".w-drawer-body"),
-          meta: {
-            subject: "computing", subjectLabel: "Computing", grade: 2,
-            unitNo: 5, unitTitle: "Debugging Together",
-            learnerCategory: q.get("category") || "",
-          },
-          store: {},
-          ui: { escapeHtml, toast },
-          tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Debugging Together\u2026",
-          /* The chips a young learner presses, written as the sentence they
-             would have said. Four, because a row a six-year-old scans has to
-             be short and a fifth makes the other four less likely to be read.
-
-             "Give me a hint" is the one that carries a teaching stance: it
-             says "not the answer" in the message itself, so pressing it cannot
-             turn the tutor into an answer machine even before the prompt file
-             has its say.
-
-             True of every app this tool wires - Grade 1 English and the four
-             Mathematics builds - which is why none of them names a word, a
-             sentence or a number. */
-          quickPrompts: [
-            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
-            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
-            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
-            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
-          ],
-        });
-      } catch (e) {
-        console.error("wehel:", e);
-        drawer.hidden = true; dock.hidden = false;
-        toast("Wehel is not available on this page.");
-      }
-    }
-    function close() { drawer.hidden = true; dock.hidden = false; }
-    dock.addEventListener("click", open);
-    drawer.querySelector("button").addEventListener("click", close);
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
-    document.body.append(dock, drawer);
-
-    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
-       aloud by default and knew nothing of the lesson's voice, so a reply
-       could play over a line the lesson was reading. The lesson stops the
-       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
-       when the tutor starts reading - which the drawer shows as a Stop
-       button, .voice-button.is-playing. Only the moment that button APPEARS
-       counts: the panel repaints often, and repainting a reply already being
-       read must not cut off a line the lesson has just begun. */
-    window.__ehelTutorQuiet = stopBrowserSpeech;
-    let tutorReading = false;
-    new MutationObserver(() => {
-      const now = !!drawer.querySelector(".voice-button.is-playing");
-      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
-      tutorReading = now;
-    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
-  }
-</script>
-<!-- WIRE-JS-END -->
-
-<style>/* ehel-narration-caption - the spoken explain, on screen one sentence at a time */
-  .narr { display: none; margin: 10px 0 14px; padding: 12px 16px; border: 1px solid var(--line);
-    border-left: 4px solid var(--teal); border-radius: 12px; background: var(--card);
-    color: var(--ink); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.45;
-    min-height: 3.1em; box-sizing: border-box; }
-  .narr.on { display: block; }
-  .narr .narr-k { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
-    color: var(--muted); font-weight: 700; margin: 0 0 4px; }
-  @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
-  @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
-</style>

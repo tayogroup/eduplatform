@@ -7,7 +7,7 @@ everyday tasks; 1CT.04 suggest sets of ordered instructions for simple tasks;
 1CT.06 the order matters; with 1P.01, that a computer follows algorithms too,
 written as code.
 """
-from _kit import explain, step, opt, q, s, part, word, home, swatch
+from _kit import explain, step, opt, q, s, part, word, home, swatch, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "what-is-an-algorithm",
@@ -231,3 +231,54 @@ LESSON["warmup"] = [
     q("What do you think an algorithm is?", "\U0001F9E9", "a set of steps to do a job", ["a kind of animal", "a colour", "a song"], "An algorithm is a set of steps to do a job."),
     q("To make toast, what do you do first?", "\U0001F35E", "take a slice of bread", ["spread the butter", "eat it", "wait for it to pop up"], "The bread comes first. Every job has a first step."),
 ]
+
+# ---- Cambridge Learner's Book 1, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Put the steps in order: plant a seed", "Algorithmic thinking")
+
+LESSON["cando"] = [
+    cando("I know an algorithm is a set of instructions for a task.", "1CT.05"),
+    cando("I can follow the steps in an algorithm.", "1CT.01"),
+    cando("I can put the steps of a task in the right order.", "1CT.04"),
+    cando("I know the order of the steps matters.", "1CT.06"),
+    cando("I know an algorithm can be made into code for a computer.", "1P.01"),
+]
+
+LESSON["world"] = world(
+    "The word algorithm comes from a person's name. Al-Khwarizmi lived "
+    "more than a thousand years ago. He wrote his methods down, one step "
+    "at a time, so that other people could follow them.",
+    [place("\U0001F373", "A kitchen",
+           "Every recipe is an algorithm. Do the steps in the wrong order and the cake comes out wrong."),
+     place("\U0001F691", "An ambulance crew",
+           "Paramedics follow the same checked steps every time, because in a hurry is exactly when a step gets missed."),
+     place("\u2708\ufe0f", "A pilot",
+           "Before every take-off a pilot reads a checklist out loud. It is an algorithm, and nobody skips it.")],
+    "Look at the washing instructions on the label inside your coat. That is an algorithm, printed in tiny pictures.")
+
+tier(LESSON,
+     support=[
+         q("An algorithm is a...", "\U0001F4DD", "set of steps for doing something",
+           ["kind of animal", "computer"],
+           "An algorithm is just a set of steps, written in order."),
+         q("You want to clean your teeth. Which comes FIRST?", "\U0001F9F4",
+           "put toothpaste on the brush", ["put the brush away"],
+           "You put the toothpaste on first. Then you brush."),
+     ],
+     extension=[
+         q("Two people follow the SAME algorithm for making toast. What should happen?", "\U0001F35E",
+           "they both get the same result",
+           ["they each get something different", "only the first one works", "nothing happens"],
+           "That is why we write algorithms down. Same steps, same result, every time."),
+         q("Which of these would NOT work as an algorithm?", "\u2753",
+           "Make it nice.", ["Put on your left shoe. Put on your right shoe.",
+                             "Open the tap. Wash your hands. Close the tap.",
+                             "Take out the bread. Put it in the toaster."],
+           "Make it nice is not a step. A step has to say exactly what to do."),
+     ])

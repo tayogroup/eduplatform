@@ -6,7 +6,7 @@ programs to test whether they produce the desired result; 1P.06 identify why
 a program does not produce the desired result; 1P.07 'debugging' is the
 correction of errors in programs; with 1P.03 and 1CT.02.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home
+from _kit import explain, step, opt, q, s, choice, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "bugs-and-debugging",
@@ -239,3 +239,52 @@ LESSON["warmup"] = [
     q("What do you think a bug in a program is?", "\U0001F41B", "a mistake in the program", ["an insect on the screen", "a very fast program", "a new game"], "A bug is a mistake in a program."),
     q("The cat was meant to jump, but it spun round. What went wrong?", "\U0001F431", "the program had the wrong block", ["the cat was tired", "the screen was dirty", "nothing went wrong"], "A wrong block makes the wrong thing happen."),
 ]
+
+# ---- Cambridge Learner's Book 1, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Run it, find the bug, fix it", "Logical thinking")
+
+LESSON["cando"] = [
+    cando("I know a program can have errors in it.", "1P.04"),
+    cando("I know that debugging means correcting the errors in a program.", "1P.07"),
+    cando("I can run a program to test whether it does what I wanted.", "1P.05"),
+    cando("I can work out why a program did the wrong thing.", "1P.06"),
+    cando("I can find the one step that is wrong.", "1CT.02"),
+]
+
+LESSON["world"] = world(
+    "The first computer bug really was a bug. In 1947 a moth got stuck inside "
+    "a huge computer. It stopped the computer working. The engineers taped "
+    "the moth into their notebook. They wrote: first actual case of bug "
+    "being found.",
+    [place("\U0001F3E6", "A bank",
+           "Programs that move money are tested over and over before anyone uses them, because a bug there costs real money."),
+     place("\U0001F3AE", "A games studio",
+           "Whole teams are paid to play games before you can buy them, looking for bugs on purpose."),
+     place("\U0001F681", "An air ambulance",
+           "Software that flies has to be tested until nobody can make it go wrong. That testing takes longer than the writing.")],
+    "Next time a grown-up says an app is not working, ask them what it did instead of what it should have done. That is the first question a programmer asks.")
+
+tier(LESSON,
+     support=[
+         q("A bug is...", "\U0001F41B", "a mistake in a program", ["a kind of computer"],
+           "A bug is a mistake in the program, not in the machine."),
+         q("Debugging means...", "\U0001F527", "fixing the mistake", ["switching the computer off"],
+           "Debug means take the bug out."),
+     ],
+     extension=[
+         q("Your program runs and nothing goes wrong on screen. Is it definitely right?", "\u2705",
+           "no - it might still do the wrong thing in a case you have not tried",
+           ["yes, running means right", "yes, if it did not stop", "only if it was quick"],
+           "Running is not the same as being right. That is why you test it against what you WANTED."),
+         q("Two bugs are in one program. You fix one and run it. What should you do next?", "\U0001F41B",
+           "look at what it does now and find the next one",
+           ["start the whole program again from nothing", "leave it", "fix the same one again"],
+           "Run, look, fix, run again. One bug at a time is how programmers actually work."),
+     ])

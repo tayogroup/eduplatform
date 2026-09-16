@@ -957,120 +957,49 @@
   .codecell svg { color: var(--ink); }
   .stopbtn { border-color: var(--bad); }
 
-  /* --- said on the learner's own screen when their work is not reaching the
-         school; see lesson-app-tools/wire-progress.py --- */
-  .progress-notice {
-    margin: 0 0 12px; padding: 10px 14px;
-    border-radius: 12px;
-    background: var(--bad-soft); border: 1px solid var(--bad);
-    color: var(--ink);
-    font-family: "Inter", "Segoe UI", sans-serif;
-    font-size: 14px; font-weight: 600;
+  /* ---- WHICH COMPUTATIONAL-THINKING MOVE THIS STEP IS (2026-09-16) --------
+     Cambridge labels one task per unit as computational thinking and says
+     which skill it exercises. This build did all of them and named none. The
+     chip is not a step and not a control, so nothing moves; `title` carries
+     the plain-English gloss for a grown-up reading over a shoulder. The
+     slide head wraps so a long title and a chip never squeeze each other. */
+  .slide-head { flex-wrap: wrap; }
+  /* --plum on --card measured 4.30:1 in the dark theme, under the 4.5 this
+     size needs, so the WORD is --ink (the colour the design system picked for
+     reading) and the plum is the border. 13px is the kit's label floor. */
+  .ctchip { flex: 0 0 auto; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink);
+    background: var(--card); border: 2px solid var(--plum); border-radius: 999px; padding: 4px 10px; }
+
+  /* ---- CAMBRIDGE'S "What can you do?", on the sticker shelf ---------------
+     Every unit of all four Learner's Books closes with one. It lives on the
+     shelf, which is not a step, so nothing here moves a saved place. "Show
+     me" is 44px like every other control in this build. */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 8px 10px 8px 14px; }
+  .cando li > span { font-size: 16px; font-weight: 700; line-height: 1.35; }
+  .candogo { flex: 0 0 auto; min-height: 44px; border: 2px solid var(--line); background: var(--card);
+    color: var(--ink); border-radius: 999px; padding: 8px 16px; font-family: inherit; font-weight: 800;
+    font-size: 14px; cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 12px; }
+    .candogo { width: 100%; }
   }
 
-  /* ---- the two header bars, modelled on the English shell ---- */
-  .eh-bar1, .eh-bar2 { position: sticky; z-index: 40; display: flex; align-items: center; gap: 12px;
-    background: var(--card); border-bottom: 1px solid var(--line); }
-  .eh-bar1 { top: 0; padding: 8px 16px; }
-  .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
-  .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
-  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
-  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
-  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
-  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
-  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
-  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
-    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
-  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
-  /* --ink, not --muted. At 13.5px this is normal text and needs 4.5:1; on the
-     English Grade 1 palette --muted measured 4.04:1 on the --cell pill behind
-     it and failed. A fixed colour cannot fix that here - the five apps that
-     render this bar carry four different --muted values (#566669, #6B7F82,
-     #93AABE, #A4B7C8), so each would need its own answer.
-
-     --ink is the one that holds for all of them by construction: it is each
-     palette's own text colour against --card and --cell, which is what
-     .eh-brand and .eh-picker in this same bar already depend on. It also ends
-     an inconsistency rather than making one - this label was the ONLY text in
-     either bar not already drawn in --ink or --teal. */
-  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
-  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
-  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
-  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
-    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
-  .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; }
-  /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
-     writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
-     file owns the thresholds. A page without focus mode never shows it at all.
-     It is a PILL with a label, not a bare dot: the dot-only version measured
-     perfectly and could not be found on the page, and colour alone says nothing
-     to anyone who cannot separate red from green. */
-  .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
-    border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
-    font-size: 12.5px; font-weight: 800; }
-  .eh-focus i { width: 9px; height: 9px; border-radius: 999px; background: currentColor; display: block; }
-  .eh-focus.is-ok { background: var(--good, #3E9C63); color: var(--good-ink, #06231F); }
-  .eh-focus.is-warn { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
-  .eh-focus.is-bad { background: var(--bad, #D7584B); color: var(--bad-ink, #2A0A07); }
-  .eh-focus b { font-weight: 800; }
-  @media (max-width: 620px) { .eh-focus b { display: none; }
-    .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
-  .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
-  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
-    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
-    cursor: pointer; text-decoration: none; }
-  .eh-round.back { padding: 9px 13px; }
-  .eh-section { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap;
-    overflow: hidden; text-overflow: ellipsis; }
-  .eh-b2right { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
-  .eh-pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--card); color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
-    padding: 9px 15px; cursor: pointer; }
-  .eh-steps { position: sticky; top: 104px; z-index: 39; background: var(--card); border-bottom: 1px solid var(--line);
-    max-height: 55vh; overflow-y: auto; padding: 8px; }
-  .eh-steps button { display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
-    background: none; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--ink); }
-  .eh-steps button:hover { background: var(--cell); }
-  .eh-steps button.now { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 700; }
-  .eh-steps button.done::after { content: " \2713"; color: var(--good); font-weight: 700; }
-  .eh-steps button.now.done::after { color: var(--teal-ink, #06231F); }
-  .hero .eyebrow { display: none; }   /* the brand bar says Primary Mathematics now */
-  @media (max-width: 720px) {
-    .eh-progtext, .eh-brandtext { display: none; }
-    .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
-    .eh-picker { max-width: 130px; }
-  }
-
-  /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
-  .eh-find { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 0;
-    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 10px; }
-  .eh-find svg { width: 17px; height: 17px; color: var(--muted); flex: 0 0 auto; }
-  .eh-find input { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink);
-    background: none; border: 0; padding: 8px 0; width: 148px; min-width: 0; }
-  .eh-find input::placeholder { color: var(--muted); font-weight: 400; }
-  .eh-find input:focus { outline: none; }
-  .eh-find:focus-within { border-color: var(--teal); }
-  .eh-find input::-webkit-search-cancel-button { filter: grayscale(1) brightness(2); }
-  .eh-found { position: sticky; top: var(--eh-found-top, 104px); z-index: 41;
-    background: var(--card); border-bottom: 1px solid var(--line);
-    max-height: 62vh; overflow-y: auto; padding: 8px; }
-  .eh-foundsay { margin: 2px 6px 8px; font-size: 13px; font-weight: 700; color: var(--muted); }
-  .eh-found button { display: block; width: 100%; text-align: left; font: inherit;
-    background: none; border: none; border-radius: 10px; padding: 9px 12px; cursor: pointer; color: var(--ink); }
-  .eh-found button:hover, .eh-found button.sel { background: var(--cell); }
-  .eh-found button.sel { outline: 2px solid var(--teal); outline-offset: -2px; }
-  .eh-found .w { display: block; font-size: 12px; font-weight: 800; color: var(--teal);
-    text-transform: uppercase; letter-spacing: .04em; }
-  .eh-found .t { display: block; font-size: 16px; font-weight: 700; }
-  .eh-found .s { display: block; font-size: 13px; color: var(--muted); font-weight: 400;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .eh-found mark { background: var(--gold); color: #2A1F05; border-radius: 3px; padding: 0 2px; }
-  @media (max-width: 720px) {
-    .eh-find input { width: 96px; }
-    .eh-found { top: var(--eh-found-top-narrow, 100px); }
-  }
+  /* ---- COMPUTING WORLD: the "Did you know?" panel and what to go and look at.
+     This step said "not built yet" in all 47 lessons until 2026-09-16. */
+  .dyk { width: 100%; border: 3px solid var(--gold); border-radius: 18px; background: var(--card);
+    padding: 12px 16px; text-align: left; }
+  .dyk-h { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .dyk p { margin: 0; font-size: 18px; line-height: 1.5; }
+  .worldlook { margin: 2px 0 0; font-size: 17px; line-height: 1.5; color: var(--ink); max-width: 34em; }
+  .world .cardsgrid { width: 100%; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -1197,6 +1126,121 @@
   }
   /* WEHEL-THEME-END */
   /* WIRE-CSS-END */
+
+  /* --- said on the learner's own screen when their work is not reaching the
+         school; see lesson-app-tools/wire-progress.py --- */
+  .progress-notice {
+    margin: 0 0 12px; padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--bad-soft); border: 1px solid var(--bad);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+  }
+
+  /* ---- the two header bars, modelled on the English shell ---- */
+  .eh-bar1, .eh-bar2 { position: sticky; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); }
+  .eh-bar1 { top: 0; padding: 8px 16px; }
+  .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
+  .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  /* --ink, not --muted. At 13.5px this is normal text and needs 4.5:1; on the
+     English Grade 1 palette --muted measured 4.04:1 on the --cell pill behind
+     it and failed. A fixed colour cannot fix that here - the five apps that
+     render this bar carry four different --muted values (#566669, #6B7F82,
+     #93AABE, #A4B7C8), so each would need its own answer.
+
+     --ink is the one that holds for all of them by construction: it is each
+     palette's own text colour against --card and --cell, which is what
+     .eh-brand and .eh-picker in this same bar already depend on. It also ends
+     an inconsistency rather than making one - this label was the ONLY text in
+     either bar not already drawn in --ink or --teal. */
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+    color: var(--ink); font-size: 17px; cursor: pointer; }
+  /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
+     writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
+     file owns the thresholds. A page without focus mode never shows it at all.
+     It is a PILL with a label, not a bare dot: the dot-only version measured
+     perfectly and could not be found on the page, and colour alone says nothing
+     to anyone who cannot separate red from green. */
+  .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+    border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
+    font-size: 12.5px; font-weight: 800; }
+  .eh-focus i { width: 9px; height: 9px; border-radius: 999px; background: currentColor; display: block; }
+  .eh-focus.is-ok { background: var(--good, #3E9C63); color: var(--good-ink, #06231F); }
+  .eh-focus.is-warn { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
+  .eh-focus.is-bad { background: var(--bad, #D7584B); color: var(--bad-ink, #2A0A07); }
+  .eh-focus b { font-weight: 800; }
+  @media (max-width: 620px) { .eh-focus b { display: none; }
+    .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
+  .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
+    cursor: pointer; text-decoration: none; }
+  .eh-round.back { padding: 9px 13px; }
+  .eh-section { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; }
+  .eh-b2right { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
+  .eh-pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 15px; cursor: pointer; }
+  .eh-steps { position: sticky; top: 104px; z-index: 39; background: var(--card); border-bottom: 1px solid var(--line);
+    max-height: 55vh; overflow-y: auto; padding: 8px; }
+  .eh-steps button { display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
+    background: none; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--ink); }
+  .eh-steps button:hover { background: var(--cell); }
+  .eh-steps button.now { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 700; }
+  .eh-steps button.done::after { content: " \2713"; color: var(--good); font-weight: 700; }
+  .eh-steps button.now.done::after { color: var(--teal-ink, #06231F); }
+  .hero .eyebrow { display: none; }   /* the brand bar says Primary Mathematics now */
+  @media (max-width: 720px) {
+    .eh-progtext, .eh-brandtext { display: none; }
+    .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
+    .eh-picker { max-width: 130px; }
+  }
+
+  /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
+  .eh-find { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 0;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0 10px; }
+  .eh-find svg { width: 17px; height: 17px; color: var(--muted); flex: 0 0 auto; }
+  .eh-find input { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink);
+    background: none; border: 0; padding: 8px 0; width: 148px; min-width: 0; }
+  .eh-find input::placeholder { color: var(--muted); font-weight: 400; }
+  .eh-find input:focus { outline: none; }
+  .eh-find:focus-within { border-color: var(--teal); }
+  .eh-find input::-webkit-search-cancel-button { filter: grayscale(1) brightness(2); }
+  .eh-found { position: sticky; top: var(--eh-found-top, 104px); z-index: 41;
+    background: var(--card); border-bottom: 1px solid var(--line);
+    max-height: 62vh; overflow-y: auto; padding: 8px; }
+  .eh-foundsay { margin: 2px 6px 8px; font-size: 13px; font-weight: 700; color: var(--muted); }
+  .eh-found button { display: block; width: 100%; text-align: left; font: inherit;
+    background: none; border: none; border-radius: 10px; padding: 9px 12px; cursor: pointer; color: var(--ink); }
+  .eh-found button:hover, .eh-found button.sel { background: var(--cell); }
+  .eh-found button.sel { outline: 2px solid var(--teal); outline-offset: -2px; }
+  .eh-found .w { display: block; font-size: 12px; font-weight: 800; color: var(--teal);
+    text-transform: uppercase; letter-spacing: .04em; }
+  .eh-found .t { display: block; font-size: 16px; font-weight: 700; }
+  .eh-found .s { display: block; font-size: 13px; color: var(--muted); font-weight: 400;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .eh-found mark { background: var(--gold); color: #2A1F05; border-radius: 3px; padding: 0 2px; }
+  @media (max-width: 720px) {
+    .eh-find input { width: 96px; }
+    .eh-found { top: var(--eh-found-top-narrow, 100px); }
+  }
 </style>
 
 <a class="skip" href="#deck">Skip to the lesson</a>
@@ -1283,7 +1327,7 @@
       </div>
     </section>
     <section class="slide" data-objectives="2CS.05" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A phone fits in a pocket and works anywhere.</s><s>A laptop is for typing a lot, at a desk or on your knees.</s><s>A desktop stays in one place with a big screen.</s><s>A smart speaker is for hands that are busy.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>On the bus: the phone.</s><s>Writing a long story: the laptop.</s><s>Cooking with messy hands: ask the speaker.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read where they are and what they need, then tap the device.</s></mstts:express-as>' data-say="People choose a device to suit where they are and what they are doing. Which device fits?">
-      <div class="slide-head"><span class="n">6</span><h2>Which device for the job?</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Which device for the job?</h2><span class="ctchip" title="judging which way is better">Evaluation</span></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">People choose a device to suit where they are and what they are doing. Which device fits?</span></div>
       <div class="stage">
         <div id="stage6"></div>
@@ -1352,9 +1396,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the world outside the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One surprising true thing, then the real places where this computing is at work.</s><s>Tap a card to hear what happens there.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look, then press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world.">
       <div class="slide-head"><span class="n">13</span><h2>Computing world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Where this computing is out in the real world. This part is still being built.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Where this computing is out in the real world.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -1378,6 +1422,15 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="cando">
+          <h3>What can you do?</h3>
+          <p class="candonote">Read each one. Can you do it? If you are not sure, press <b>Show me</b>.</p>
+          <ul>
+          <li><span>I can name tasks a computer does better than a person.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I know people choose different devices for different places and jobs.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can compare robots in stories with real robots that do a job.</span><button type="button" class="candogo" data-go="7">Show me</button></li>
+          </ul>
+        </div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1420,6 +1473,20 @@
       "2CS.05",
       "2CS.06"
     ],
+    "cando": [
+      {
+        "t": "I can name tasks a computer does better than a person.",
+        "code": "2CS.04"
+      },
+      {
+        "t": "I know people choose different devices for different places and jobs.",
+        "code": "2CS.05"
+      },
+      {
+        "t": "I can compare robots in stories with real robots that do a job.",
+        "code": "2CS.06"
+      }
+    ],
     "steps": [
       {
         "kind": "overview",
@@ -1429,6 +1496,7 @@
           "2CS.05",
           "2CS.06"
         ],
+        "ct": "",
         "data": {
           "about": [
             "Say which jobs a computer does better than a person, and which need a person.",
@@ -1437,7 +1505,7 @@
           ],
           "counts": {
             "steps": 14,
-            "words": 6,
+            "words": 8,
             "games": 5,
             "home": 3
           },
@@ -1500,6 +1568,7 @@
           "2CS.05",
           "2CS.06"
         ],
+        "ct": "",
         "data": {
           "parts": [
             {
@@ -1521,6 +1590,16 @@
               "pic": "🤖",
               "title": "Story robots and real robots",
               "say": "In stories, robots have feelings, find things funny and act like people. Real robots have a program and a job: an arm that welds cars, a vacuum that turns when it bumps, a rover on Mars. A real robot notices the world with sensors, not feelings."
+            },
+            {
+              "pic": "🎒",
+              "title": "Portable, or powerful",
+              "say": "Portable means small and light enough to carry with you. A phone is portable and goes in a pocket. A desktop computer is not portable and stays on a desk. That is the choice people make. A portable device goes where you go. A bigger one does more once you get there. Which is better depends on the job."
+            },
+            {
+              "pic": "🤖",
+              "title": "Fictional robots and real ones",
+              "say": "A fictional robot is one made up for a story. It talks. It has feelings. It decides things for itself. A real robot does one job, over and over, because a program tells it to. Real robots are more boring than the ones in films. They are also much more useful."
             }
           ]
         }
@@ -1533,6 +1612,7 @@
           "2CS.05",
           "2CS.06"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -1588,6 +1668,24 @@
                 "Robots with feelings belong in fiction.",
                 "Fiction is fun, but it is not real."
               ]
+            },
+            {
+              "w": "portable",
+              "pic": "🎒",
+              "meaning": "Small and light enough to carry with you.",
+              "uses": [
+                "A tablet is portable.",
+                "A desktop computer is not portable."
+              ]
+            },
+            {
+              "w": "fictional",
+              "pic": "📖",
+              "meaning": "Made up for a story.",
+              "uses": [
+                "A fictional robot talks and has feelings.",
+                "Robots in films are fictional."
+              ]
             }
           ]
         }
@@ -1598,6 +1696,7 @@
         "objectives": [
           "2CS.04"
         ],
+        "ct": "",
         "data": {
           "rounds": [
             {
@@ -1672,6 +1771,7 @@
         "objectives": [
           "2CS.04"
         ],
+        "ct": "",
         "data": {
           "ask": "Computer job, or people job?",
           "bins": [
@@ -1744,6 +1844,7 @@
         "objectives": [
           "2CS.05"
         ],
+        "ct": "Evaluation",
         "data": {
           "ways": [
             {
@@ -1823,6 +1924,7 @@
         "objectives": [
           "2CS.05"
         ],
+        "ct": "",
         "data": {
           "label": "Question",
           "items": [
@@ -1927,6 +2029,7 @@
         "objectives": [
           "2CS.06"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -1993,6 +2096,7 @@
         "objectives": [
           "2CS.06"
         ],
+        "ct": "",
         "data": {
           "ask": "Story robot, or real robot?",
           "bins": [
@@ -2067,6 +2171,7 @@
           "2CS.05",
           "2CS.06"
         ],
+        "ct": "",
         "data": {
           "games": [
             {
@@ -2373,6 +2478,7 @@
           "2CS.05",
           "2CS.06"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2419,6 +2525,7 @@
           "2CS.05",
           "2CS.06"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2605,6 +2712,86 @@
               ],
               "why": "A real robot notices the world with sensors, and its program says what to do next."
             }
+          ],
+          "support": [
+            {
+              "ask": "Who adds up a thousand numbers faster?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🖥️</div>",
+              "opts": [
+                {
+                  "t": "the computer",
+                  "ok": true
+                },
+                {
+                  "t": "the person",
+                  "ok": false
+                }
+              ],
+              "why": "Computers are very fast and never get tired. That is what they are for."
+            },
+            {
+              "ask": "A robot in a film that has feelings is...",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">📖</div>",
+              "opts": [
+                {
+                  "t": "fictional",
+                  "ok": true
+                },
+                {
+                  "t": "real",
+                  "ok": false
+                }
+              ],
+              "why": "Fictional means made up for a story."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "Which job would you NOT give a computer?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🤝</div>",
+              "opts": [
+                {
+                  "t": "comforting a friend who is upset",
+                  "ok": true
+                },
+                {
+                  "t": "adding up a thousand numbers",
+                  "ok": false
+                },
+                {
+                  "t": "checking a list for the same word",
+                  "ok": false
+                },
+                {
+                  "t": "doing the same movement a thousand times",
+                  "ok": false
+                }
+              ],
+              "why": "Computers are fast and tireless and have no idea how anybody feels. That job is a person's."
+            },
+            {
+              "ask": "You are going camping for a week with no plug sockets. Which device?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">⛺</div>",
+              "opts": [
+                {
+                  "t": "a portable one with a long battery",
+                  "ok": true
+                },
+                {
+                  "t": "a desktop computer",
+                  "ok": false
+                },
+                {
+                  "t": "the biggest screen you can find",
+                  "ok": false
+                },
+                {
+                  "t": "a printer",
+                  "ok": false
+                }
+              ],
+              "why": "Where you are decides the device. Portable and long-lasting beats powerful with nowhere to plug in."
+            }
           ]
         }
       },
@@ -2612,19 +2799,35 @@
         "kind": "world",
         "title": "Computing world",
         "objectives": [],
+        "ct": "",
         "data": {
           "title": "Computers, Devices and Robots",
-          "soon": [
-            "Real places where this computing happens.",
-            "People who use it every day at work.",
-            "Things near you to go and look at."
-          ]
+          "fact": "The word robot comes from a play written in 1920. It meant forced work. Every robot in a story since has been somebody's idea. Real robots were built afterwards. They turned out nothing like them.",
+          "places": [
+            {
+              "pic": "🏭",
+              "title": "A car factory",
+              "say": "Robot arms weld and paint. They do one movement thousands of times, exactly the same, and never get bored."
+            },
+            {
+              "pic": "🌋",
+              "title": "A volcano",
+              "say": "Robots are sent where people cannot survive: inside volcanoes, under the sea, into damaged reactors."
+            },
+            {
+              "pic": "🏥",
+              "title": "An operating theatre",
+              "say": "A surgeon moves the controls and a robot arm copies the movement, smaller and steadier than a hand can."
+            }
+          ],
+          "look": "Think of a robot from a film. Write down one thing it does that no real robot can do."
         }
       },
       {
         "kind": "resources",
         "title": "Student resources",
         "objectives": [],
+        "ct": "",
         "data": {
           "words": [
             {
@@ -2680,6 +2883,24 @@
                 "Robots with feelings belong in fiction.",
                 "Fiction is fun, but it is not real."
               ]
+            },
+            {
+              "w": "portable",
+              "pic": "🎒",
+              "meaning": "Small and light enough to carry with you.",
+              "uses": [
+                "A tablet is portable.",
+                "A desktop computer is not portable."
+              ]
+            },
+            {
+              "w": "fictional",
+              "pic": "📖",
+              "meaning": "Made up for a story.",
+              "uses": [
+                "A fictional robot talks and has feelings.",
+                "Robots in films are fictional."
+              ]
             }
           ],
           "finder": [
@@ -2718,6 +2939,30 @@
               "lesson": 9,
               "title": "Connected Devices",
               "file": "connected-devices.html"
+            },
+            {
+              "w": "backup",
+              "pic": "💾",
+              "meaning": "A second copy of data, kept in case the first one is lost.",
+              "uses": [
+                "The school keeps a backup of our work.",
+                "Make a backup before you change it."
+              ],
+              "lesson": 7,
+              "title": "Collecting Data",
+              "file": "collecting-data.html"
+            },
+            {
+              "w": "barcode",
+              "pic": "🏷️",
+              "meaning": "Stripes a scanner reads instead of somebody typing the number.",
+              "uses": [
+                "The till reads the barcode.",
+                "A barcode reader is an input device."
+              ],
+              "lesson": 10,
+              "title": "Hardware and Software",
+              "file": "hardware-software-and-robots.html"
             },
             {
               "w": "block",
@@ -2888,6 +3133,18 @@
               "file": "computers-devices-and-robots.html"
             },
             {
+              "w": "edit",
+              "pic": "✏️",
+              "meaning": "To change what is already there, instead of starting again.",
+              "uses": [
+                "Edit the algorithm: swap step 3.",
+                "You can edit a program without rewriting it."
+              ],
+              "lesson": 2,
+              "title": "Bugs and Predictions",
+              "file": "bugs-and-predictions.html"
+            },
+            {
               "w": "explain",
               "pic": "🗣️",
               "meaning": "To say clearly what something does.",
@@ -2918,6 +3175,18 @@
               "uses": [
                 "Robots with feelings belong in fiction.",
                 "Fiction is fun, but it is not real."
+              ],
+              "lesson": 11,
+              "title": "Computers, Devices and Robots",
+              "file": "computers-devices-and-robots.html"
+            },
+            {
+              "w": "fictional",
+              "pic": "📖",
+              "meaning": "Made up for a story.",
+              "uses": [
+                "A fictional robot talks and has feelings.",
+                "Robots in films are fictional."
               ],
               "lesson": 11,
               "title": "Computers, Devices and Robots",
@@ -2970,6 +3239,18 @@
               "lesson": 6,
               "title": "Bee-Bot Journeys",
               "file": "bee-bot-journeys.html"
+            },
+            {
+              "w": "function",
+              "pic": "⚙️",
+              "meaning": "The job a piece of hardware or software does.",
+              "uses": [
+                "The function of a keyboard is to put letters in.",
+                "Say what each part's function is."
+              ],
+              "lesson": 10,
+              "title": "Hardware and Software",
+              "file": "hardware-software-and-robots.html"
             },
             {
               "w": "GO",
@@ -3054,6 +3335,18 @@
               "lesson": 1,
               "title": "Precise Instructions",
               "file": "precise-instructions.html"
+            },
+            {
+              "w": "malware",
+              "pic": "⚠️",
+              "meaning": "A program written on purpose to do harm.",
+              "uses": [
+                "Malware can hide inside a file.",
+                "Do not open a file from someone you do not know."
+              ],
+              "lesson": 9,
+              "title": "Connected Devices",
+              "file": "connected-devices.html"
             },
             {
               "w": "measurement",
@@ -3152,6 +3445,18 @@
               "file": "debugging-together.html"
             },
             {
+              "w": "personal information",
+              "pic": "🔒",
+              "meaning": "The things that say who you are and where you live.",
+              "uses": [
+                "Your address is personal information.",
+                "Keep personal information off the network."
+              ],
+              "lesson": 9,
+              "title": "Connected Devices",
+              "file": "connected-devices.html"
+            },
+            {
               "w": "plan",
               "pic": "📋",
               "meaning": "To decide what should happen before you build it.",
@@ -3162,6 +3467,18 @@
               "lesson": 4,
               "title": "Objects and Plans",
               "file": "objects-and-plans.html"
+            },
+            {
+              "w": "portable",
+              "pic": "🎒",
+              "meaning": "Small and light enough to carry with you.",
+              "uses": [
+                "A tablet is portable.",
+                "A desktop computer is not portable."
+              ],
+              "lesson": 11,
+              "title": "Computers, Devices and Robots",
+              "file": "computers-devices-and-robots.html"
             },
             {
               "w": "precise",
@@ -3344,6 +3661,18 @@
               "file": "programs-and-repeats.html"
             },
             {
+              "w": "ScratchJr",
+              "pic": "🐱",
+              "meaning": "A real app for building block programs on a tablet.",
+              "uses": [
+                "We made our cat move in ScratchJr.",
+                "ScratchJr has a repeat block too."
+              ],
+              "lesson": 3,
+              "title": "Programs and Repeats",
+              "file": "programs-and-repeats.html"
+            },
+            {
               "w": "sensor",
               "pic": "📡",
               "meaning": "A part that lets a robot notice something, like a bump.",
@@ -3486,6 +3815,18 @@
               "lesson": 6,
               "title": "Bee-Bot Journeys",
               "file": "bee-bot-journeys.html"
+            },
+            {
+              "w": "user-friendly",
+              "pic": "👍",
+              "meaning": "Easy to use without being taught.",
+              "uses": [
+                "Big buttons make a tablet user-friendly.",
+                "A user-friendly app needs no instructions."
+              ],
+              "lesson": 10,
+              "title": "Hardware and Software",
+              "file": "hardware-software-and-robots.html"
             },
             {
               "w": "vague",
@@ -4690,6 +5031,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -4735,9 +5090,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -4745,14 +5139,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();
@@ -9065,23 +9466,72 @@
     paintGrid();
   }
 
-  /* ---- Computing world: a placeholder that says it is one ---- */
+  /* ---- Computing world: where this computing is, outside the screen ----
+     Until 2026-09-16 this drew a placeholder saying it was not built yet, in
+     all 47 lessons of all four grades. It now carries the two things every
+     Cambridge Learner's Book runs throughout: a "Did you know?" fact and the
+     real places this computing is at work. A lesson with no `fact` still gets
+     the placeholder, so a half-authored grade builds.
+
+     It is still not a check and still ticks on arrival, so no stored record
+     and no step position moves. */
   function computingWorld(o) {
     const el = o.el;
     $(el.stage).className = "stagewide";
+    if (!o.fact) {
+      $(el.stage).innerHTML =
+        '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
+        '<h3 class="lec-h">Computing world is being built</h3>' +
+        '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
+        '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+        '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
+      $(el.score).textContent = "coming soon";
+      ONSHOW[o.finish] = () => finish(o.finish);
+      return;
+    }
+    const places = o.places || [];
     $(el.stage).innerHTML =
-      '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
-      '<h3 class="lec-h">Computing world is being built</h3>' +
-      '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
-      '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
-      '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
-    $(el.score).textContent = "coming soon";
+      '<div class="world">' +
+      '<div class="dyk"><span class="dyk-h">Did you know?</span><p>' + esc(o.fact) + "</p></div>" +
+      '<h3 class="lec-h">Where this computing is at work</h3>' +
+      '<div class="cardsgrid">' + places.map((pl, k) =>
+        '<button type="button" class="tapcard" data-k="' + k + '"><span class="cpic" aria-hidden="true">'
+        + small(pl.pic) + "</span>" + esc(pl.title) + "</button>").join("") + "</div>" +
+      '<p class="worldlook"><b>Go and look:</b> ' + esc(o.look) + "</p>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'w">&#128266; Read it to me</button></div>' +
+      "</div>";
+    $(el.score).textContent = places.length + " places";
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard");
+      if (!b) return;
+      const pl = places[Number(b.dataset.k)];
+      $(el.stage).querySelectorAll(".tapcard.now").forEach((c) => c.classList.remove("now"));
+      b.classList.add("heard", "now");
+      say(pl.say);
+      $(el.fb).className = "fb";
+      $(el.fb).innerHTML = "<b>" + esc(pl.title) + "</b> \u2014 " + esc(pl.say);
+    });
+    $(el.stage + "w").addEventListener("click", () =>
+      say("Did you know? " + o.fact + " " + places.map((pl) => pl.title + ". " + pl.say).join(" ")
+          + " Go and look. " + o.look));
     /* On arrival, not at page load - see unitOverview. At draw time this
        ticked the step before the child had seen it, where nothing could
        report it: a fresh lesson opened at 13%, and the stored record was
        one step short for ever. */
     ONSHOW[o.finish] = () => finish(o.finish);
   }
+
+  /* Cambridge's "What can you do?" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */
   function gameZone(o) {
@@ -9382,7 +9832,7 @@
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🏁", "Sum racer"], ["🧮", "Job sorter"], ["📱", "Device chooser"], ["🤔", "Device detective"], ["🤖", "Robot comparer"], ["🗂️", "Fiction or real"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 4 parts. Now do it yourself." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 6 parts. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   race(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "The computer wins the sums. You win the kindness." }, LESSON.steps[3].data));
   sortBins(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Speed and memory: the computer. Care, fairness and kindness: people." }, LESSON.steps[4].data));
@@ -9393,7 +9843,7 @@
   gameZone(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[9].data));
   homeProjects(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[10].data));
   sequence(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "That is the whole lesson finished. You know what computers do best, how to choose a device, and a story robot from a real one." }, LESSON.steps[11].data));
-  computingWorld(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Computing world is on its way." }, LESSON.steps[12].data));
+  computingWorld(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "That is this computing, out in the world." }, LESSON.steps[12].data));
   resources(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Your resources are always here." }, LESSON.steps[13].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
@@ -9711,6 +10161,170 @@
   })();
 </script>
 
+<script>
+  /* wire-navigation.py :: back
+     Only when ?from=comp2: a lesson opened on its own has nowhere to go back to. */
+  (function () {
+    if (new URLSearchParams(location.search).get("from") !== "comp2") return;
+    var wrap = document.querySelector(".wrap");
+    if (!wrap) return;
+    var back = document.createElement("a");
+    back.className = "lesson-back";
+    back.href = "index.html";
+    back.innerHTML = '<span aria-hidden="true">\u2190</span> Grade 2 Computing';
+    wrap.insertBefore(back, wrap.firstChild);
+  })();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>
+
+<!-- WIRE-JS-START -->
+<script type="module">
+  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
+     learner-controls.js holds the SAME singletons the shell mounts. */
+  import { mountLearnerControls } from "./learner-controls.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
+  import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
+
+  const q = new URLSearchParams(location.search);
+  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
+
+  let toastEl = null;
+  function toast(message) {
+    if (toastEl) toastEl.remove();
+    toastEl = document.createElement("div");
+    toastEl.className = "w-toast";
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
+  }
+
+  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
+        .top-actions and mount ONLY when the server says a teacher is watching,
+        so nothing appears to a child working alone. */
+  try {
+    mountLearnerControls({
+      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
+      progressUnit: "l11",
+    });
+  } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
+
+  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
+        the day's allowance, and a lesson nobody opens the tutor on should not
+        spend a request. */
+  if (launchToken) {
+    const dock = document.createElement("button");
+    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
+    const drawer = document.createElement("div");
+    drawer.className = "w-drawer"; drawer.hidden = true;
+    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
+    let panel = null;
+    function open() {
+      drawer.hidden = false; dock.hidden = true;
+      if (panel) return;
+      try {
+        panel = mountWehelChat({
+          container: drawer.querySelector(".w-drawer-body"),
+          meta: {
+            subject: "computing", subjectLabel: "Computing", grade: 2,
+            unitNo: 11, unitTitle: "Computers, Devices and Robots",
+            learnerCategory: q.get("category") || "",
+          },
+          store: {},
+          ui: { escapeHtml, toast },
+          tutorLabel: "Wehel Tutor",
+          placeholder: "Ask about Computers, Devices and Robots\u2026",
+          /* The chips a young learner presses, written as the sentence they
+             would have said. Four, because a row a six-year-old scans has to
+             be short and a fifth makes the other four less likely to be read.
+
+             "Give me a hint" is the one that carries a teaching stance: it
+             says "not the answer" in the message itself, so pressing it cannot
+             turn the tutor into an answer machine even before the prompt file
+             has its say.
+
+             True of every app this tool wires - Grade 1 English and the four
+             Mathematics builds - which is why none of them names a word, a
+             sentence or a number. */
+          quickPrompts: [
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
+            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
+          ],
+        });
+      } catch (e) {
+        console.error("wehel:", e);
+        drawer.hidden = true; dock.hidden = false;
+        toast("Wehel is not available on this page.");
+      }
+    }
+    function close() { drawer.hidden = true; dock.hidden = false; }
+    dock.addEventListener("click", open);
+    drawer.querySelector("button").addEventListener("click", close);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
+    document.body.append(dock, drawer);
+
+    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
+       aloud by default and knew nothing of the lesson's voice, so a reply
+       could play over a line the lesson was reading. The lesson stops the
+       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
+       when the tutor starts reading - which the drawer shows as a Stop
+       button, .voice-button.is-playing. Only the moment that button APPEARS
+       counts: the panel repaints often, and repainting a reply already being
+       read must not cut off a line the lesson has just begun. */
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  }
+</script>
+<!-- WIRE-JS-END -->
+
 <script type="module">
   /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
      THE UNIT PROBLEM for why this writes lNN and not uNN. */
@@ -9939,179 +10553,3 @@
     if (added) report(lastAt);
   };
 </script>
-
-<script>
-  /* wire-navigation.py :: back
-     Only when ?from=comp2: a lesson opened on its own has nowhere to go back to. */
-  (function () {
-    if (new URLSearchParams(location.search).get("from") !== "comp2") return;
-    var wrap = document.querySelector(".wrap");
-    if (!wrap) return;
-    var back = document.createElement("a");
-    back.className = "lesson-back";
-    back.href = "index.html";
-    back.innerHTML = '<span aria-hidden="true">\u2190</span> Grade 2 Computing';
-    wrap.insertBefore(back, wrap.firstChild);
-  })();
-</script>
-
-<script>
-  /* wire-navigation.py :: carry
-     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
-     the class controls and Wehel do not mount at all - they guard on them and
-     return, so the symptom is silence rather than an error. Applied to every
-     same-directory link so a control added later cannot reintroduce the gap.
-     Done at run time because the values are only known then. */
-  (function () {
-    var q = new URLSearchParams(location.search);
-    q.delete("from");
-    if (!q.toString()) return;
-    document.querySelectorAll("a[href]").forEach(function (a) {
-      var href = a.getAttribute("href");
-      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
-      var base = href.split("?")[0];
-      var own = new URLSearchParams(href.split("?")[1] || "");
-      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
-      a.setAttribute("href", base + "?" + own.toString());
-    });
-  })();
-</script>
-
-<!-- WIRE-JS-START -->
-<script type="module">
-  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
-     learner-controls.js holds the SAME singletons the shell mounts. */
-  import { mountLearnerControls } from "./learner-controls.js";
-  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
-  import { escapeHtml } from "./course-shell.js";
-  /* Focus mode and the session bar. Imported for its side effect - it mounts
-     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
-     exitUrl, which is why an ordinary launch and every local run see no
-     change. It is what writes course_focus_break / course_left_early, so
-     without it the live group board's away state can never fire for a learner
-     in this build. */
-  import "./seb-session.js";
-
-  const q = new URLSearchParams(location.search);
-  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
-  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
-
-  let toastEl = null;
-  function toast(message) {
-    if (toastEl) toastEl.remove();
-    toastEl = document.createElement("div");
-    toastEl.className = "w-toast";
-    toastEl.textContent = message;
-    document.body.appendChild(toastEl);
-    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
-  }
-
-  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
-        .top-actions and mount ONLY when the server says a teacher is watching,
-        so nothing appears to a child working alone. */
-  try {
-    mountLearnerControls({
-      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l11",
-    });
-  } catch (e) { console.error("learner controls:", e); }
-
-  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
-     stylesheet. Measured rather than assumed: the bar wraps, so its height is
-     a property of the screen. Re-measured on resize because its clock changes
-     width every second and its buttons re-flow. */
-  (function () {
-    const seb = document.getElementById("seb-session-bar");
-    if (!seb) return;                       /* no focus mode, nothing to avoid */
-    const lift = () => document.documentElement.style
-      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
-    lift();
-    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
-  })();
-
-  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
-        the day's allowance, and a lesson nobody opens the tutor on should not
-        spend a request. */
-  if (launchToken) {
-    const dock = document.createElement("button");
-    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
-    const drawer = document.createElement("div");
-    drawer.className = "w-drawer"; drawer.hidden = true;
-    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
-    let panel = null;
-    function open() {
-      drawer.hidden = false; dock.hidden = true;
-      if (panel) return;
-      try {
-        panel = mountWehelChat({
-          container: drawer.querySelector(".w-drawer-body"),
-          meta: {
-            subject: "computing", subjectLabel: "Computing", grade: 2,
-            unitNo: 11, unitTitle: "Computers, Devices and Robots",
-            learnerCategory: q.get("category") || "",
-          },
-          store: {},
-          ui: { escapeHtml, toast },
-          tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Computers, Devices and Robots\u2026",
-          /* The chips a young learner presses, written as the sentence they
-             would have said. Four, because a row a six-year-old scans has to
-             be short and a fifth makes the other four less likely to be read.
-
-             "Give me a hint" is the one that carries a teaching stance: it
-             says "not the answer" in the message itself, so pressing it cannot
-             turn the tutor into an answer machine even before the prompt file
-             has its say.
-
-             True of every app this tool wires - Grade 1 English and the four
-             Mathematics builds - which is why none of them names a word, a
-             sentence or a number. */
-          quickPrompts: [
-            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
-            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
-            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
-            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
-          ],
-        });
-      } catch (e) {
-        console.error("wehel:", e);
-        drawer.hidden = true; dock.hidden = false;
-        toast("Wehel is not available on this page.");
-      }
-    }
-    function close() { drawer.hidden = true; dock.hidden = false; }
-    dock.addEventListener("click", open);
-    drawer.querySelector("button").addEventListener("click", close);
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
-    document.body.append(dock, drawer);
-
-    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
-       aloud by default and knew nothing of the lesson's voice, so a reply
-       could play over a line the lesson was reading. The lesson stops the
-       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
-       when the tutor starts reading - which the drawer shows as a Stop
-       button, .voice-button.is-playing. Only the moment that button APPEARS
-       counts: the panel repaints often, and repainting a reply already being
-       read must not cut off a line the lesson has just begun. */
-    window.__ehelTutorQuiet = stopBrowserSpeech;
-    let tutorReading = false;
-    new MutationObserver(() => {
-      const now = !!drawer.querySelector(".voice-button.is-playing");
-      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
-      tutorReading = now;
-    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
-  }
-</script>
-<!-- WIRE-JS-END -->
-
-<style>/* ehel-narration-caption - the spoken explain, on screen one sentence at a time */
-  .narr { display: none; margin: 10px 0 14px; padding: 12px 16px; border: 1px solid var(--line);
-    border-left: 4px solid var(--teal); border-radius: 12px; background: var(--card);
-    color: var(--ink); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.45;
-    min-height: 3.1em; box-sizing: border-box; }
-  .narr.on { display: block; }
-  .narr .narr-k { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
-    color: var(--muted); font-weight: 700; margin: 0 0 4px; }
-  @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
-  @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
-</style>

@@ -434,3 +434,48 @@ uploaded, all verified on storage, every page byte-identical to HEAD in the enco
 browser is served, and all eleven lessons played to the end again on the live pages with 0
 console errors. Nothing a learner can see changed - that is what a redeploy of a comment
 and a default is for.
+
+## 2026-09-16 - the Cambridge Learner's Book pass
+
+Asked to bring Grades 1 to 4 up to or past the depth of the four Cambridge
+Primary Computing Learner's Books. The coverage gate was already green here -
+every Stage 2 objective reached - so this was a depth and register job, not a
+coverage one, measured against Learner's Book 2.
+
+**What the book carried that this grade did not**: the `What can you do?`
+self-check every unit closes with, the `Did you know?` box, the tiered practice
+(`Go further`, `Challenge yourself!`), and the vocabulary - six of the 26 Stage 2 glossary terms appeared nowhere in the build. The
+`Computing world` step said "not built yet" in every lesson.
+
+**What landed, all of it position-safe.** This grade is live and routed, so a
+new teaching step would shift every stored section id after it and a child's
+saved record would tick the wrong dots. Nothing moved: all eleven lessons
+rebuild with the same step count, the same kinds in the same order and the same
+titles, verified by diffing the `const LESSON` payloads against HEAD.
+
+- **40 self-check claims** on the sticker shelf, which is not a step. Each one
+  resolves to the first step of its lesson carrying that objective, so `Show me`
+  is derived rather than a written step number.
+- **22 support and 22 extension questions** on the lessons' check steps.
+  Support narrows the task and arrives on the first wrong core answer;
+  extension widens it and is offered after the core bank to a child who
+  finished with at most one slip. **Neither is scored and `finish()` still
+  fires at the end of the core bank.**
+- **Computing world built in every lesson**: a Did-you-know fact, two to four
+  tappable places where this computing is at work, and one thing to go and
+  look at.
+- **9 new word cards** plus the lecture text that uses them - backup, barcode, fictional, function, malware, personal information, portable and user-friendly.
+- **One computational-thinking move named per lesson** (`label_ct`), the way
+  Cambridge labels one task per unit, as a chip beside the step heading.
+
+**The gate that holds it**: `computing/data/cambridge-stage-features.json` holds
+24 Stage 2 entries, each naming the lesson that must answer it and the
+strings that must appear in *that lesson's* teaching text - which excludes the
+words of a wrong answer, and excludes the resources drawer. `check-coverage.py`
+reads it and also requires at least three self-check claims per lesson.
+Mutation-tested 7 of 7 with the tree restored byte-identical.
+
+**Still open**: `review-pack.html` (built by `../lesson-kit/build-review-pack.py`,
+deliberately not deployed) lists all 227 questions this grade asks, 220 of them
+unfalsifiable from inside the build because the key is the object the question
+was generated from. Nobody has read them.

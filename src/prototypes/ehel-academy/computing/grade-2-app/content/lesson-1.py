@@ -7,7 +7,7 @@ tasks, such as drawing a picture or building a brick tower; 2CT.01 follow and
 understand linear algorithms; 2CT.04 identify the steps NEEDED to undertake a
 task.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, swatch
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "precise-instructions",
@@ -238,3 +238,49 @@ LESSON["warmup"] = [
     q("A friend says 'meet me somewhere'. What is wrong with that?", "\U0001F5FA\uFE0F", "you do not know where to go", ["nothing, it is clear", "it is too loud", "it is too short"], "Somewhere could be anywhere. A good instruction says exactly where."),
     q("To wash your face, which step do you NOT need?", "\U0001F9FC", "tie your shoelaces", ["wet the cloth", "wipe your face", "dry it with a towel"], "Shoelaces have nothing to do with washing your face."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Only the steps you need: take a photo", "Abstraction")
+
+LESSON["cando"] = [
+    cando("I know an algorithm has to be precise.", "2CT.03"),
+    cando("I can write instructions exact enough to draw a picture.", "2CT.06"),
+    cando("I can follow a linear algorithm and understand it.", "2CT.01"),
+    cando("I can work out which steps a task actually needs.", "2CT.04"),
+]
+
+LESSON["world"] = world(
+    "A machine that cuts out clothes is given numbers, not words. Not cut a bit "
+    "off. Cut 4 centimetres. A machine has no idea how much a bit is.",
+    [place("\U0001F3ED", "A factory",
+           "A cutting machine is told exact numbers. Say it loosely and you waste a whole roll of cloth."),
+     place("\U0001F3E5", "A pharmacy",
+           "A medicine label says exactly how much and exactly how often. Nearly right is not right at all."),
+     place("\U0001F9F1", "A building site",
+           "A plan gives every measurement. Two builders working from the same plan must build the same wall.")],
+    "Ask a grown-up for a recipe and count how many of its steps use an exact number.")
+
+tier(LESSON,
+     support=[
+         q("Which instruction is precise?", "\U0001F4CF", "Move forward 3 steps", ["Move forward a bit"],
+           "A number makes it precise. A bit could be anything."),
+         q("A computer follows instructions...", "\U0001F916", "exactly as they are written", ["however it likes"],
+           "A computer has no idea what you meant. Only what you said."),
+     ],
+     extension=[
+         q("Two children follow the same precise algorithm to draw a house. What should you see?", "\U0001F3E0",
+           "two drawings that are the same",
+           ["two very different drawings", "one drawing", "nothing at all"],
+           "That is the test of a precise algorithm: anybody following it gets the same result."),
+         q("Which step does taking a photo NOT need?", "\U0001F4F7",
+           "charge the battery to exactly 100%",
+           ["open the camera app", "point the camera", "press the button"],
+           "The photo works at any charge. A step the task does not need is a step to leave out."),
+     ])

@@ -6,7 +6,7 @@ a data table; 4MD.05 appropriate data types for a field; 4MD.04 sort data
 into a required order, ascending, descending and alphabetical; 4MD.06 use a
 database to answer a single question.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "databases",
@@ -213,3 +213,50 @@ LESSON["warmup"] = [
     q("A class list is in alphabetical order. Who comes first: Zara or Amal?", "\U0001F524", "Amal", ["Zara", "they come together", "neither"], "In alphabetical order, names that start with A come first."),
     q("A table of pets shows only the dogs after you choose 'dog'. What did you use?", "\U0001F415", "a filter", ["a sort", "a password", "a delete key"], "A filter hides the rows that do not match."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Which data type?", "Abstraction")
+
+LESSON["cando"] = [
+    cando("I can identify the data, the records and the fields in a table.", "4MD.07"),
+    cando("I can choose the right data type for a field.", "4MD.05"),
+    cando("I can sort data into order, up, down or alphabetically.", "4MD.04"),
+    cando("I can use a database to answer one question.", "4MD.06"),
+]
+
+LESSON["world"] = world(
+    "A library catalogue is a database that has been running for longer than computers "
+    "have existed. On cards it had a record per book and a field per line. On a computer "
+    "it has exactly the same shape. It can be sorted in a second instead of a week.",
+    [place("\U0001F4DA", "A library",
+           "One record per book. Title, author, year, shelf. The question is always: which records match?"),
+     place("\U0001F3E5", "A hospital",
+           "One record per patient. Getting the data type wrong on a date of birth is not a small mistake."),
+     place("\U0001F6D2", "A shop",
+           "One record per product, with a number field for the price so the till can add it up.")],
+    "Ask a grown-up to show you their contacts list. Every person is a record and every line is a field.")
+
+tier(LESSON,
+     support=[
+         q("One row about one person is a...", "\U0001F4C7", "record", ["field"],
+           "A record is a whole row: everything about one thing."),
+         q("A price field should be which data type?", "\U0001F4B0", "a number", ["text"],
+           "Prices get added up and compared, so they have to be numbers."),
+     ],
+     extension=[
+         q("Dates stored as text sort into a strange order. Why?", "\U0001F4C5",
+           "text sorts letter by letter, so 10 March comes before 2 March",
+           ["dates cannot be sorted", "the computer is broken", "text sorts randomly"],
+           "The data type decides what the data can do. Wrong type, wrong order, and nothing looks broken."),
+         q("Two people tie for the highest score. What can the database tell you?", "\u2696\ufe0f",
+           "that two records share the top value",
+           ["one of them must be wrong", "it picks one at random", "it cannot sort at all"],
+           "A tie is a real answer. Sorting does not invent a winner where the data does not have one."),
+     ])

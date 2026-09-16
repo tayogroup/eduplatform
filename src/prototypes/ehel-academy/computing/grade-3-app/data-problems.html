@@ -957,6 +957,50 @@
   .codecell svg { color: var(--ink); }
   .stopbtn { border-color: var(--bad); }
 
+  /* ---- WHICH COMPUTATIONAL-THINKING MOVE THIS STEP IS (2026-09-16) --------
+     Cambridge labels one task per unit as computational thinking and says
+     which skill it exercises. This build did all of them and named none. The
+     chip is not a step and not a control, so nothing moves; `title` carries
+     the plain-English gloss for a grown-up reading over a shoulder. The
+     slide head wraps so a long title and a chip never squeeze each other. */
+  .slide-head { flex-wrap: wrap; }
+  /* --plum on --card measured 4.30:1 in the dark theme, under the 4.5 this
+     size needs, so the WORD is --ink (the colour the design system picked for
+     reading) and the plum is the border. 13px is the kit's label floor. */
+  .ctchip { flex: 0 0 auto; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink);
+    background: var(--card); border: 2px solid var(--plum); border-radius: 999px; padding: 4px 10px; }
+
+  /* ---- CAMBRIDGE'S "What can you do?", on the sticker shelf ---------------
+     Every unit of all four Learner's Books closes with one. It lives on the
+     shelf, which is not a step, so nothing here moves a saved place. "Show
+     me" is 44px like every other control in this build. */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 8px 10px 8px 14px; }
+  .cando li > span { font-size: 16px; font-weight: 700; line-height: 1.35; }
+  .candogo { flex: 0 0 auto; min-height: 44px; border: 2px solid var(--line); background: var(--card);
+    color: var(--ink); border-radius: 999px; padding: 8px 16px; font-family: inherit; font-weight: 800;
+    font-size: 14px; cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 12px; }
+    .candogo { width: 100%; }
+  }
+
+  /* ---- COMPUTING WORLD: the "Did you know?" panel and what to go and look at.
+     This step said "not built yet" in all 47 lessons until 2026-09-16. */
+  .dyk { width: 100%; border: 3px solid var(--gold); border-radius: 18px; background: var(--card);
+    padding: 12px 16px; text-align: left; }
+  .dyk-h { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .dyk p { margin: 0; font-size: 18px; line-height: 1.5; }
+  .worldlook { margin: 2px 0 0; font-size: 17px; line-height: 1.5; color: var(--ink); max-width: 34em; }
+  .world .cardsgrid { width: 100%; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1293,7 +1337,7 @@
       </div>
     </section>
     <section class="slide" data-objectives="3MD.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A digital tool can show the same data in different ways.</s><s>A table gives exact numbers. A bar chart shows the biggest at a glance. A pictogram shows one picture per thing, so you can count them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Which is most common? The bar chart shows it fastest.</s><s>Exactly how many children have two pets? The table says.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think one view is right and the others wrong.</s><s>They are all the same data. Each view is good for a different question.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open all three, then answer.</s></mstts:express-as>' data-say="Here is the pet data. Open the table, the bar chart and the pictogram, then answer from whichever view you like.">
-      <div class="slide-head"><span class="n">7</span><h2>The same data, three ways</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>The same data, three ways</h2><span class="ctchip" title="keeping what matters and leaving out the rest">Abstraction</span></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Here is the pet data. Open the table, the bar chart and the pictogram, then answer from whichever view you like.</span></div>
       <div class="stage">
         <div id="stage7"></div>
@@ -1372,9 +1416,9 @@
         <p class="score" id="score14"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the world outside the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One surprising true thing, then the real places where this computing is at work.</s><s>Tap a card to hear what happens there.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look, then press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world.">
       <div class="slide-head"><span class="n">15</span><h2>Computing world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Where this computing is out in the real world. This part is still being built.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Where this computing is out in the real world.</span></div>
       <div class="stage">
         <div id="stage15"></div>
         <div class="choices" id="ch15"></div>
@@ -1398,6 +1442,15 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="cando">
+          <h3>What can you do?</h3>
+          <p class="candonote">Read each one. Can you do it? If you are not sure, press <b>Show me</b>.</p>
+          <ul>
+          <li><span>I can find problems that collecting data would help solve.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I can record data using a computing device.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can show the same data in more than one way.</span><button type="button" class="candogo" data-go="6">Show me</button></li>
+          </ul>
+        </div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1440,6 +1493,20 @@
       "3MD.02",
       "3MD.03"
     ],
+    "cando": [
+      {
+        "t": "I can find problems that collecting data would help solve.",
+        "code": "3MD.01"
+      },
+      {
+        "t": "I can record data using a computing device.",
+        "code": "3MD.03"
+      },
+      {
+        "t": "I can show the same data in more than one way.",
+        "code": "3MD.02"
+      }
+    ],
     "steps": [
       {
         "kind": "overview",
@@ -1449,6 +1516,7 @@
           "3MD.03",
           "3MD.02"
         ],
+        "ct": "",
         "data": {
           "about": [
             "Spot a problem that can be solved by collecting and reading data.",
@@ -1458,7 +1526,7 @@
           ],
           "counts": {
             "steps": 16,
-            "words": 6,
+            "words": 7,
             "games": 3,
             "home": 2
           },
@@ -1521,6 +1589,7 @@
           "3MD.03",
           "3MD.02"
         ],
+        "ct": "",
         "data": {
           "parts": [
             {
@@ -1542,6 +1611,11 @@
               "pic": "🤔",
               "title": "Which view?",
               "say": "Choose the view for the question. Exactly how many? The table. Which is biggest? The bar chart. Count them by eye? The pictogram. Interpreting data is reading the right view."
+            },
+            {
+              "pic": "🔢",
+              "title": "Two kinds of data: named, and numerical",
+              "say": "Some data is a name: red, blue, dog, cat, walked, came by bus. You cannot add those up, only count how many of each. Other data is numerical. It is a number you counted or measured: how many pets, how tall, how many minutes. Numerical data can be added, put in order and averaged. Knowing which kind you have collected decides what you can do with it afterwards."
             }
           ]
         }
@@ -1554,6 +1628,7 @@
           "3MD.03",
           "3MD.02"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -1609,6 +1684,15 @@
                 "Count the pictures in the pictogram.",
                 "A pictogram is easy to count."
               ]
+            },
+            {
+              "w": "numerical",
+              "pic": "🔢",
+              "meaning": "Data that is a number you counted or measured.",
+              "uses": [
+                "How many pets is numerical data.",
+                "You can put numerical data in order."
+              ]
             }
           ]
         }
@@ -1619,6 +1703,7 @@
         "objectives": [
           "3MD.01"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -1674,6 +1759,7 @@
         "objectives": [
           "3MD.01"
         ],
+        "ct": "",
         "data": {
           "ask": "Can collecting data solve it?",
           "bins": [
@@ -1746,6 +1832,7 @@
         "objectives": [
           "3MD.03"
         ],
+        "ct": "",
         "data": {
           "question": "How many pets do you have?",
           "columns": [
@@ -1832,6 +1919,7 @@
         "objectives": [
           "3MD.02"
         ],
+        "ct": "Abstraction",
         "data": {
           "title": "How many pets?",
           "columns_label": "pets",
@@ -1932,6 +2020,7 @@
         "objectives": [
           "3MD.03"
         ],
+        "ct": "",
         "data": {
           "question": "Which pet would you most like?",
           "columns": [
@@ -2018,6 +2107,7 @@
         "objectives": [
           "3MD.02"
         ],
+        "ct": "",
         "data": {
           "title": "Which pet would you most like?",
           "columns_label": "pet",
@@ -2119,6 +2209,7 @@
         "objectives": [
           "3MD.02"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2166,6 +2257,7 @@
           "3MD.02",
           "3MD.03"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2271,6 +2363,7 @@
           "3MD.03",
           "3MD.02"
         ],
+        "ct": "",
         "data": {
           "games": [
             {
@@ -2459,6 +2552,7 @@
           "3MD.03",
           "3MD.02"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2494,6 +2588,7 @@
           "3MD.02",
           "3MD.03"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2657,6 +2752,86 @@
               ],
               "why": "Count what the problem needs."
             }
+          ],
+          "support": [
+            {
+              "ask": "How many pets do you have? What kind of data is the answer?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🔢</div>",
+              "opts": [
+                {
+                  "t": "numerical - it is a number",
+                  "ok": true
+                },
+                {
+                  "t": "a colour",
+                  "ok": false
+                }
+              ],
+              "why": "You counted it, so it is numerical."
+            },
+            {
+              "ask": "Which shows which pet is most popular fastest?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">📊</div>",
+              "opts": [
+                {
+                  "t": "a bar chart",
+                  "ok": true
+                },
+                {
+                  "t": "a list of names",
+                  "ok": false
+                }
+              ],
+              "why": "The tallest bar answers it without counting."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "Which of these is NOT numerical data?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">❓</div>",
+              "opts": [
+                {
+                  "t": "the colour of each child's coat",
+                  "ok": true
+                },
+                {
+                  "t": "how many books each child read",
+                  "ok": false
+                },
+                {
+                  "t": "how tall each child is",
+                  "ok": false
+                },
+                {
+                  "t": "how many minutes each child walked",
+                  "ok": false
+                }
+              ],
+              "why": "Colour is a name, not a number. You can count how many of each, but you cannot add colours up."
+            },
+            {
+              "ask": "Why show the same data as a table AND a chart?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">📋</div>",
+              "opts": [
+                {
+                  "t": "the table gives the exact numbers and the chart shows the shape",
+                  "ok": true
+                },
+                {
+                  "t": "to fill the page",
+                  "ok": false
+                },
+                {
+                  "t": "charts are always better",
+                  "ok": false
+                },
+                {
+                  "t": "tables are always better",
+                  "ok": false
+                }
+              ],
+              "why": "Each answers a different question. Exactly how many came by bus? The table. Which way is most popular? The chart."
+            }
           ]
         }
       },
@@ -2664,19 +2839,35 @@
         "kind": "world",
         "title": "Computing world",
         "objectives": [],
+        "ct": "",
         "data": {
           "title": "Data Problems",
-          "soon": [
-            "Real places where this computing happens.",
-            "People who use it every day at work.",
-            "Things near you to go and look at."
-          ]
+          "fact": "The same numbers can be drawn to tell two different stories. Start a bar chart at fifty instead of zero. A small difference then looks enormous. That is why people who work with data are taught to look at the axis first.",
+          "places": [
+            {
+              "pic": "📰",
+              "title": "A newspaper",
+              "say": "The same figures appear as a chart in one paper and a table in another. Readers see different things."
+            },
+            {
+              "pic": "🏥",
+              "title": "A hospital",
+              "say": "A chart of one patient over a week shows a direction that no single reading could."
+            },
+            {
+              "pic": "⚽",
+              "title": "A sports club",
+              "say": "The same season, as a table of results or a graph of goals over time, answers two different questions."
+            }
+          ],
+          "look": "Find a chart on a phone or in a newspaper. Look at the numbers up the side before you look at the bars."
         }
       },
       {
         "kind": "resources",
         "title": "Student resources",
         "objectives": [],
+        "ct": "",
         "data": {
           "words": [
             {
@@ -2732,6 +2923,15 @@
                 "Count the pictures in the pictogram.",
                 "A pictogram is easy to count."
               ]
+            },
+            {
+              "w": "numerical",
+              "pic": "🔢",
+              "meaning": "Data that is a number you counted or measured.",
+              "uses": [
+                "How many pets is numerical data.",
+                "You can put numerical data in order."
+              ]
             }
           ],
           "finder": [
@@ -2772,6 +2972,18 @@
               "file": "systems-inputs-and-files.html"
             },
             {
+              "w": "backup",
+              "pic": "💾",
+              "meaning": "The second copy of your work that the network keeps for you.",
+              "uses": [
+                "The school network makes a backup every night.",
+                "A backup means a broken computer loses nothing."
+              ],
+              "lesson": 11,
+              "title": "Networks Around Us",
+              "file": "networks-around-us.html"
+            },
+            {
               "w": "bar chart",
               "pic": "📊",
               "meaning": "A chart where a taller bar means a bigger count.",
@@ -2782,6 +2994,18 @@
               "lesson": 9,
               "title": "Data Problems",
               "file": "data-problems.html"
+            },
+            {
+              "w": "biometric",
+              "pic": "👆",
+              "meaning": "An input taken from your body, like a fingerprint or a face.",
+              "uses": [
+                "A fingerprint reader is a biometric input.",
+                "Biometric inputs need no password."
+              ],
+              "lesson": 13,
+              "title": "Systems, Inputs and Files",
+              "file": "systems-inputs-and-files.html"
             },
             {
               "w": "bug",
@@ -2844,6 +3068,18 @@
               "file": "secret-codes.html"
             },
             {
+              "w": "ciphertext",
+              "pic": "🔐",
+              "meaning": "The message after the cipher has been applied.",
+              "uses": [
+                "The ciphertext looks like nonsense.",
+                "Only the key turns ciphertext back."
+              ],
+              "lesson": 12,
+              "title": "Secret Codes",
+              "file": "secret-codes.html"
+            },
+            {
               "w": "column",
               "pic": "🇦",
               "meaning": "A line of cells going down, named with a letter.",
@@ -2854,6 +3090,30 @@
               "lesson": 10,
               "title": "Spreadsheets",
               "file": "spreadsheets.html"
+            },
+            {
+              "w": "computer virus",
+              "pic": "☣️",
+              "meaning": "A program that copies itself from computer to computer and does harm.",
+              "uses": [
+                "A computer virus can spread across a network.",
+                "One computer virus can reach every machine."
+              ],
+              "lesson": 11,
+              "title": "Networks Around Us",
+              "file": "networks-around-us.html"
+            },
+            {
+              "w": "computer-controlled",
+              "pic": "🎛️",
+              "meaning": "A machine that does what a program tells it.",
+              "uses": [
+                "A washing machine is computer-controlled.",
+                "Traffic lights are computer-controlled."
+              ],
+              "lesson": 14,
+              "title": "Machines, Things and Robots",
+              "file": "machines-things-and-robots.html"
             },
             {
               "w": "concise",
@@ -2940,6 +3200,18 @@
               "file": "mistakes-make-programs-better.html"
             },
             {
+              "w": "decision",
+              "pic": "❓",
+              "meaning": "A point where the answer to a question decides what happens next.",
+              "uses": [
+                "Is it raining? That is a decision.",
+                "A decision sends the algorithm one way or the other."
+              ],
+              "lesson": 3,
+              "title": "Think It Through",
+              "file": "think-it-through.html"
+            },
+            {
               "w": "decode",
               "pic": "🔓",
               "meaning": "To turn a coded message back into words.",
@@ -3024,6 +3296,18 @@
               "file": "tidy-programs.html"
             },
             {
+              "w": "e-reader",
+              "pic": "📖",
+              "meaning": "A device made for one job - reading - with hardware and software working together.",
+              "uses": [
+                "An e-reader holds hundreds of books.",
+                "The e-reader's software remembers the page."
+              ],
+              "lesson": 13,
+              "title": "Systems, Inputs and Files",
+              "file": "systems-inputs-and-files.html"
+            },
+            {
               "w": "edit",
               "pic": "✏️",
               "meaning": "To change an algorithm on purpose, to make something different.",
@@ -3058,6 +3342,18 @@
               "lesson": 12,
               "title": "Secret Codes",
               "file": "secret-codes.html"
+            },
+            {
+              "w": "error",
+              "pic": "⚠️",
+              "meaning": "The proper name for a mistake in a program.",
+              "uses": [
+                "The error was in step 4.",
+                "Debugging means finding the error and correcting it."
+              ],
+              "lesson": 8,
+              "title": "Mistakes Make Programs Better",
+              "file": "mistakes-make-programs-better.html"
             },
             {
               "w": "file",
@@ -3166,6 +3462,18 @@
               "lesson": 4,
               "title": "Input Machines",
               "file": "input-machines.html"
+            },
+            {
+              "w": "interactive smartboard",
+              "pic": "📺",
+              "meaning": "The big screen at the front, joined to the network like a computer.",
+              "uses": [
+                "The teacher writes on the interactive smartboard.",
+                "An interactive smartboard is networked hardware."
+              ],
+              "lesson": 11,
+              "title": "Networks Around Us",
+              "file": "networks-around-us.html"
             },
             {
               "w": "Internet of Things",
@@ -3300,6 +3608,30 @@
               "file": "press-shake-clap.html"
             },
             {
+              "w": "multifunction",
+              "pic": "🖨️",
+              "meaning": "One machine that does several jobs - printing, scanning and copying.",
+              "uses": [
+                "The multifunction device prints and scans.",
+                "One multifunction machine replaces three."
+              ],
+              "lesson": 11,
+              "title": "Networks Around Us",
+              "file": "networks-around-us.html"
+            },
+            {
+              "w": "numerical",
+              "pic": "🔢",
+              "meaning": "Data that is a number you counted or measured.",
+              "uses": [
+                "How many pets is numerical data.",
+                "You can put numerical data in order."
+              ],
+              "lesson": 9,
+              "title": "Data Problems",
+              "file": "data-problems.html"
+            },
+            {
               "w": "object",
               "pic": "🐱",
               "meaning": "A thing on the stage that a program controls.",
@@ -3360,6 +3692,18 @@
               "file": "data-problems.html"
             },
             {
+              "w": "plain text",
+              "pic": "📄",
+              "meaning": "The message before the cipher is applied - the words as anybody would read them.",
+              "uses": [
+                "Plain text goes in one end.",
+                "Turn the ciphertext back into plain text."
+              ],
+              "lesson": 12,
+              "title": "Secret Codes",
+              "file": "secret-codes.html"
+            },
+            {
               "w": "predict",
               "pic": "🔮",
               "meaning": "To say what will happen before it happens.",
@@ -3370,6 +3714,18 @@
               "lesson": 3,
               "title": "Think It Through",
               "file": "think-it-through.html"
+            },
+            {
+              "w": "range",
+              "pic": "📐",
+              "meaning": "A block of cells from one cell to another, like B2 to B7.",
+              "uses": [
+                "Select the range B2 to B7.",
+                "Format the whole range as money."
+              ],
+              "lesson": 10,
+              "title": "Spreadsheets",
+              "file": "spreadsheets.html"
             },
             {
               "w": "repeat",
@@ -3384,6 +3740,18 @@
               "file": "concise-algorithms.html"
             },
             {
+              "w": "repetitive",
+              "pic": "🔁",
+              "meaning": "The same thing over and over again.",
+              "uses": [
+                "Welding a car is repetitive work.",
+                "Robots are good at repetitive jobs."
+              ],
+              "lesson": 14,
+              "title": "Machines, Things and Robots",
+              "file": "machines-things-and-robots.html"
+            },
+            {
               "w": "reset",
               "pic": "🔄",
               "meaning": "To put something back the way it started.",
@@ -3394,6 +3762,18 @@
               "lesson": 5,
               "title": "Tidy Programs",
               "file": "tidy-programs.html"
+            },
+            {
+              "w": "RFID",
+              "pic": "💳",
+              "meaning": "A tag a reader can pick up without touching it.",
+              "uses": [
+                "A bus pass has an RFID chip in it.",
+                "The shop label has RFID inside."
+              ],
+              "lesson": 13,
+              "title": "Systems, Inputs and Files",
+              "file": "systems-inputs-and-files.html"
             },
             {
               "w": "robot",
@@ -3430,6 +3810,18 @@
               "lesson": 8,
               "title": "Mistakes Make Programs Better",
               "file": "mistakes-make-programs-better.html"
+            },
+            {
+              "w": "Scratch",
+              "pic": "🐱",
+              "meaning": "The program most schools use for building block programs.",
+              "uses": [
+                "We made the sprite move in Scratch.",
+                "Scratch has a repeat block."
+              ],
+              "lesson": 5,
+              "title": "Tidy Programs",
+              "file": "tidy-programs.html"
             },
             {
               "w": "script",
@@ -3516,6 +3908,18 @@
               "file": "machines-things-and-robots.html"
             },
             {
+              "w": "smart device",
+              "pic": "💡",
+              "meaning": "An everyday thing with a computer and a connection in it.",
+              "uses": [
+                "A smart light can be switched on from a phone.",
+                "A smart device joins the network."
+              ],
+              "lesson": 14,
+              "title": "Machines, Things and Robots",
+              "file": "machines-things-and-robots.html"
+            },
+            {
               "w": "spreadsheet",
               "pic": "📑",
               "meaning": "A grid of cells for holding and working with data.",
@@ -3538,6 +3942,18 @@
               "lesson": 6,
               "title": "Many Things at Once",
               "file": "many-things-at-once.html"
+            },
+            {
+              "w": "sub-task",
+              "pic": "🧩",
+              "meaning": "One smaller section of a bigger task.",
+              "uses": [
+                "Tidying the books is one sub-task.",
+                "Each sub-task is easier to fix on its own."
+              ],
+              "lesson": 3,
+              "title": "Think It Through",
+              "file": "think-it-through.html"
             },
             {
               "w": "switch",
@@ -3606,6 +4022,18 @@
               "uses": [
                 "The wait block is unused here.",
                 "Delete unused commands."
+              ],
+              "lesson": 5,
+              "title": "Tidy Programs",
+              "file": "tidy-programs.html"
+            },
+            {
+              "w": "volume",
+              "pic": "🔊",
+              "meaning": "How loud a sound is - a number you can change inside a block.",
+              "uses": [
+                "Set the volume to 40.",
+                "Change the volume by 5 each time."
               ],
               "lesson": 5,
               "title": "Tidy Programs",
@@ -4802,6 +5230,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -4847,9 +5289,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -4857,14 +5338,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();
@@ -9177,23 +9665,72 @@
     paintGrid();
   }
 
-  /* ---- Computing world: a placeholder that says it is one ---- */
+  /* ---- Computing world: where this computing is, outside the screen ----
+     Until 2026-09-16 this drew a placeholder saying it was not built yet, in
+     all 47 lessons of all four grades. It now carries the two things every
+     Cambridge Learner's Book runs throughout: a "Did you know?" fact and the
+     real places this computing is at work. A lesson with no `fact` still gets
+     the placeholder, so a half-authored grade builds.
+
+     It is still not a check and still ticks on arrival, so no stored record
+     and no step position moves. */
   function computingWorld(o) {
     const el = o.el;
     $(el.stage).className = "stagewide";
+    if (!o.fact) {
+      $(el.stage).innerHTML =
+        '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
+        '<h3 class="lec-h">Computing world is being built</h3>' +
+        '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
+        '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+        '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
+      $(el.score).textContent = "coming soon";
+      ONSHOW[o.finish] = () => finish(o.finish);
+      return;
+    }
+    const places = o.places || [];
     $(el.stage).innerHTML =
-      '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
-      '<h3 class="lec-h">Computing world is being built</h3>' +
-      '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
-      '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
-      '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
-    $(el.score).textContent = "coming soon";
+      '<div class="world">' +
+      '<div class="dyk"><span class="dyk-h">Did you know?</span><p>' + esc(o.fact) + "</p></div>" +
+      '<h3 class="lec-h">Where this computing is at work</h3>' +
+      '<div class="cardsgrid">' + places.map((pl, k) =>
+        '<button type="button" class="tapcard" data-k="' + k + '"><span class="cpic" aria-hidden="true">'
+        + small(pl.pic) + "</span>" + esc(pl.title) + "</button>").join("") + "</div>" +
+      '<p class="worldlook"><b>Go and look:</b> ' + esc(o.look) + "</p>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'w">&#128266; Read it to me</button></div>' +
+      "</div>";
+    $(el.score).textContent = places.length + " places";
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard");
+      if (!b) return;
+      const pl = places[Number(b.dataset.k)];
+      $(el.stage).querySelectorAll(".tapcard.now").forEach((c) => c.classList.remove("now"));
+      b.classList.add("heard", "now");
+      say(pl.say);
+      $(el.fb).className = "fb";
+      $(el.fb).innerHTML = "<b>" + esc(pl.title) + "</b> \u2014 " + esc(pl.say);
+    });
+    $(el.stage + "w").addEventListener("click", () =>
+      say("Did you know? " + o.fact + " " + places.map((pl) => pl.title + ". " + pl.say).join(" ")
+          + " Go and look. " + o.look));
     /* On arrival, not at page load - see unitOverview. At draw time this
        ticked the step before the child had seen it, where nothing could
        report it: a fresh lesson opened at 13%, and the stored record was
        one step short for ever. */
     ONSHOW[o.finish] = () => finish(o.finish);
   }
+
+  /* Cambridge's "What can you do?" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */
   function gameZone(o) {
@@ -9494,7 +10031,7 @@
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🔍", "Problem spotter"], ["🗂️", "Data or not sorter"], ["📝", "Data recorder"], ["📊", "View comparer"], ["📝", "Category recorder"], ["📊", "Category viewer"], ["📊", "View chooser"], ["📝", "Data checker"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 4 parts. Now do it yourself." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   tapCards(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Collect, then interpret." }, LESSON.steps[3].data));
   sortBins(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Counts, mosts and whens: data problems." }, LESSON.steps[4].data));
@@ -9507,7 +10044,7 @@
   gameZone(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[11].data));
   homeProjects(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[12].data));
   sequence(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "That is the whole lesson finished. You know which problems data solves, how to record it, and three ways to show it." }, LESSON.steps[13].data));
-  computingWorld(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Computing world is on its way." }, LESSON.steps[14].data));
+  computingWorld(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "That is this computing, out in the world." }, LESSON.steps[14].data));
   resources(Object.assign({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, finish: 15, done: "Your resources are always here." }, LESSON.steps[15].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
@@ -10217,15 +10754,3 @@
     if (added) report(lastAt);
   };
 </script>
-
-<style>/* ehel-narration-caption - the spoken explain, on screen one sentence at a time */
-  .narr { display: none; margin: 10px 0 14px; padding: 12px 16px; border: 1px solid var(--line);
-    border-left: 4px solid var(--teal); border-radius: 12px; background: var(--card);
-    color: var(--ink); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.45;
-    min-height: 3.1em; box-sizing: border-box; }
-  .narr.on { display: block; }
-  .narr .narr-k { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
-    color: var(--muted); font-weight: 700; margin: 0 0 4px; }
-  @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
-  @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
-</style>

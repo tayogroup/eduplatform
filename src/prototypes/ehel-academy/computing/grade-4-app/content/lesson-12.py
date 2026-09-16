@@ -5,7 +5,7 @@
 messages using the Caesar Cipher and the Pigpen Cipher; 4DC.05 where and
 why encryption is used.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "caesar-and-pigpen",
@@ -172,3 +172,69 @@ LESSON["warmup"] = [
     q("In the code where 1 is A and 2 is B, what does 3 stand for?", "\U0001F522", "C", ["D", "Z", "B"], "Count along the alphabet: 1 A, 2 B, 3 C."),
     q("Which letter comes 3 after D in the alphabet?", "\u27A1\uFE0F", "G", ["E", "F", "H"], "D, then E, F, G: three along."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "The key is everything", "Algorithmic thinking")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4C4", "The round trip has four names",
+         "Every cipher makes the same journey and each stage has a name. You start with plain "
+         "text - the message as anybody would read it. You encrypt it using the key, and what "
+         "comes out is ciphertext. It travels. At the other end somebody uses the key to decrypt "
+         "it. The ciphertext becomes plain text again. Plain text, encrypt, ciphertext, decrypt, "
+         "plain text. The Caesar cipher and the Pigpen cipher are two different rules doing "
+         "exactly that same round trip."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("plain text", "\U0001F4C4", "The message before it is encrypted.",
+         ["Plain text is what anybody could read.", "Decrypting gives you the plain text back."]),
+    word("ciphertext", "\U0001F510", "The message after it has been encrypted.",
+         ["The ciphertext looks like nonsense.", "Ciphertext travels safely."]),
+    word("decrypt", "\U0001F511", "To turn ciphertext back into plain text.",
+         ["Use the key to decrypt the message.", "Only the right key can decrypt it."]),
+]
+
+LESSON["cando"] = [
+    cando("I can write and decode messages using the Caesar cipher.", "4DC.06"),
+    cando("I can write and decode messages using the Pigpen cipher.", "4DC.06"),
+    cando("I know where and why encryption is used.", "4DC.05"),
+]
+
+LESSON["world"] = world(
+    "The Pigpen cipher is hundreds of years old and was used by people who carved it into "
+    "gravestones. The Caesar cipher is older still. Both can now be broken by a computer "
+    "in far less than a second. That is why real encryption uses keys with hundreds of "
+    "digits.",
+    [place("\U0001F3DB\ufe0f", "A museum",
+           "Pigpen symbols are carved on old stones. A key that was once secret is now printed in books."),
+     place("\U0001F4BB", "A code-breaking team",
+           "A computer tries all 25 Caesar shifts in a moment. A cipher is only strong while the key is hard to guess."),
+     place("\U0001F4AC", "A messaging app",
+           "Modern encryption uses keys so long that trying them all would take longer than the age of the universe.")],
+    "Write a short message in Pigpen and leave it for someone. Do not give them the key and see how they get on.")
+
+tier(LESSON,
+     support=[
+         q("With a Caesar shift of 1, what does a become?", "\U0001F524", "b", ["z"],
+           "A shift of 1 moves every letter one place along the alphabet."),
+         q("Turning ciphertext back into plain text is called...", "\U0001F511", "decrypting", ["encrypting"],
+           "Encrypt on the way out, decrypt on the way back."),
+     ],
+     extension=[
+         q("A Caesar cipher has only 25 shifts. Why does that matter?", "\u26A0\ufe0f",
+           "somebody can simply try all of them",
+           ["25 is a lot", "it makes it faster to write", "it does not matter"],
+           "A cipher is only as strong as the number of keys somebody would have to try. 25 is not many."),
+         q("Two people use Pigpen but draw the grid differently. What happens?", "\U0001F510",
+           "neither can read the other's message",
+           ["it works perfectly", "only one of them can read it", "the messages become plain text"],
+           "The grid IS the key. Different key, different cipher, and the round trip does not come back."),
+     ])

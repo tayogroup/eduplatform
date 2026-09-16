@@ -7,7 +7,7 @@ computers; 1P.02 recreate algorithms as programs to perform simple tasks;
 programs to test whether they produce the desired result; with 1CT.05 and
 1CS.05 (the everyday things that run a program).
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "algorithm-to-program",
@@ -216,3 +216,70 @@ LESSON["warmup"] = [
     q("How does a computer know what to do?", "\U0001F4BB", "someone writes the steps for it", ["it guesses", "it reads your mind", "it asks the cat"], "People write the steps for a computer, as code."),
     q("Steps written for a computer to run are called...", "\U0001F9E9", "a program", ["a picture", "a song", "a sandwich"], "Steps written for a computer are a program."),
 ]
+
+# ---- Cambridge Learner's Book 1, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Build the program", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F916", "A computer cannot think for itself",
+         "Here is the most important thing about a computer. A computer cannot think "
+         "for itself. It does exactly what it is told. It does it in the order it is "
+         "told, even when that is silly. Say your program says jump when you meant "
+         "spin. The computer jumps. It is not being naughty. It is not broken. It is "
+         "doing what the program says."),
+    part("\U0001F431", "Where real children build programs",
+         "Your blocks are like the ones in ScratchJr. ScratchJr is a real program for "
+         "young children on a tablet. In it you pick a character. You pick a background. "
+         "Then you join blocks together, just as you do here. Older children use one "
+         "called Scratch. If you meet either at school, you will know what to do."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("ScratchJr", "\U0001F431", "A real program for building block programs on a tablet.",
+         ["We build our programs in ScratchJr.", "ScratchJr blocks join together like ours."]),
+]
+
+LESSON["cando"] = [
+    cando("I know an algorithm can be made into code a computer runs.", "1P.01"),
+    cando("I can build a program from an algorithm.", "1P.02"),
+    cando("I can run a program to test it.", "1P.05"),
+    cando("I can say what a program will do before I run it.", "1P.03"),
+    cando("I know a computer cannot think for itself.", "1P.01"),
+]
+
+LESSON["world"] = world(
+    "Computers do exactly what they are told. So programmers spend more time "
+    "being precise than typing. The first person to write a program was Ada "
+    "Lovelace, in 1843. No machine could run it for another hundred years.",
+    [place("\U0001F4F1", "A phone",
+           "Every app on a phone is a program somebody wrote, block by block or line by line."),
+     place("\U0001F3AE", "A games studio",
+           "A game is a very big program. When a character moves the wrong way, somebody has to find the block that says so."),
+     place("\U0001F3E2", "A lift",
+           "The lift in a tall building runs a program: which floor was pressed first, which is nearest, which door to open.")],
+    "Ask a grown-up to show you ScratchJr or Scratch on a tablet. The blocks will look familiar.")
+
+tier(LESSON,
+     support=[
+         q("A program is...", "\u25B6\ufe0f", "an algorithm a computer can run", ["a kind of computer"],
+           "Write the steps down and you have an algorithm. Give them to a computer and you have a program."),
+         q("Your program says JUMP. What does the computer do?", "\U0001F43F\ufe0f", "jumps", ["spins"],
+           "It does exactly what the program says, every time."),
+     ],
+     extension=[
+         q("You MEANT the cat to spin but you put a jump block in. Whose mistake is it?", "\U0001F431",
+           "mine - the computer did what my program said",
+           ["the computer's", "the cat's", "nobody's"],
+           "A computer cannot think for itself. If it did the wrong thing, the program said the wrong thing."),
+         q("Why do we write the algorithm BEFORE we build the program?", "\U0001F4DD",
+           "so we already know what the program should do",
+           ["because it looks nice", "because the computer asks for it", "we do not"],
+           "The algorithm is the plan. Without it you cannot tell whether the program did the right thing."),
+     ])

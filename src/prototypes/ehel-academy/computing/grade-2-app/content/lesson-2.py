@@ -6,7 +6,7 @@ error in algorithms for everyday tasks; 2CT.05 predict the outputs of
 algorithms; 2CT.01 follow and understand linear algorithms; 2CT.03 precise
 instructions.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home
+from _kit import explain, step, opt, q, s, choice, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "bugs-and-predictions",
@@ -210,3 +210,64 @@ LESSON["warmup"] = [
     q("You have 2 stickers and get 3 more. How many do you have now?", "\U0001F31F", "5", ["2", "3", "23"], "Two, then three more, is five. Following each step tells you the answer."),
     q("A washing-up algorithm says: dry the plate, then wash it. What is that?", "\U0001F37D\uFE0F", "a bug: a step in the wrong place", ["the right order", "a picture", "a song"], "You wash first, then dry. A right step in the wrong place is a bug."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Predict the output", "Logical thinking")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F527", "Find it, then edit it",
+         "You found the wrong step. Do not throw the algorithm away. Edit it. To edit "
+         "means to change what is already there. Swap one step for a better one. Or move "
+         "a step to where it belongs. Everything else stays as it was. That is why "
+         "finding WHICH step is wrong matters so much. Once you know, the edit is small."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("edit", "\u270F\ufe0f", "To change what is already there, instead of starting again.",
+         ["Edit the algorithm: swap step 3.", "You can edit a program without rewriting it."]),
+]
+
+LESSON["cando"] = [
+    cando("I can predict what an algorithm will produce.", "2CT.05"),
+    cando("I can follow and understand a linear algorithm.", "2CT.01"),
+    cando("I can find a single error in an algorithm and correct it.", "2CT.02"),
+    cando("I know an algorithm is a precise set of instructions.", "2CT.03"),
+]
+
+LESSON["world"] = world(
+    "In 1999 a spacecraft called the Mars Climate Orbiter was lost. One team "
+    "wrote its numbers in one kind of unit. Another team read them in a "
+    "different one. Nobody checked. The whole mission ended on one wrong step.",
+    [place("\U0001F680", "Mission control",
+           "Every instruction sent to a spacecraft is read back and checked by a second person before it is sent."),
+     place("\U0001F683", "A railway",
+           "Signal software is tested by predicting every outcome first, then running it to see whether the prediction was right."),
+     place("\U0001F3E6", "A bank",
+           "Before new software touches real money, people predict what it should do and then check every case.")],
+    "Ask a grown-up to read you a recipe with one step in the wrong place. Can you spot which one before they finish?")
+
+tier(LESSON,
+     support=[
+         q("To predict the output means...", "\U0001F52E", "to say what will happen before it happens",
+           ["to watch what happened"],
+           "Predict first, then run it and see whether you were right."),
+         q("You found the wrong step. What do you do?", "\u270F\ufe0f", "edit it", ["throw the whole algorithm away"],
+           "Edit means change the one thing that is wrong and keep the rest."),
+     ],
+     extension=[
+         q("You predicted the cat would end at the tree and it ended at the pond. What does that tell you?", "\U0001F431",
+           "either my prediction or the algorithm is wrong, and I need to find out which",
+           ["the computer is broken", "the prediction was pointless", "nothing at all"],
+           "A prediction that misses is the most useful thing in computing. It tells you exactly where to look."),
+         q("Why edit an algorithm instead of writing a new one?", "\u270F\ufe0f",
+           "the rest of it already works",
+           ["editing is slower", "new ones are always better", "you cannot edit"],
+           "Everything except the wrong step has already been tested. Throwing it away throws that away too."),
+     ])

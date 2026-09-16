@@ -7,7 +7,7 @@ to their purpose - date, currency, text; 3MD.06 select data based on its
 characteristics to solve problems; 3MD.03 record data using computing
 devices.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "spreadsheets",
@@ -182,3 +182,63 @@ LESSON["warmup"] = [
     q("A table has rows going across and what going down?", "\U0001F4CB", "columns", ["circles", "chapters", "wheels"], "Rows go across; columns go down."),
     q("How is six pounds fifty written as money?", "\U0001F4B7", "£6.50", ["650", "6:50", "6/50"], "Money has a £ sign, then the pounds, a dot and the pence."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Pick out the rows you need", "Logical thinking")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4D0", "A range is a block of cells",
+         "One cell has a name made of its column letter and its row number: B4. A range is a "
+         "block of cells from one to another. You write it with a colon. B2:B7 means every cell "
+         "from B2 down to B7. Use a range when you want to do something to a lot of cells at "
+         "once. Format them all as money. Add them all up. It saves clicking on each one."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("range", "\U0001F4D0", "A block of cells from one cell to another, like B2 to B7.",
+         ["Select the range B2 to B7.", "Format the whole range as money."]),
+]
+
+LESSON["cando"] = [
+    cando("I know a spreadsheet is rows and columns of cells, and data goes in the cells.", "3MD.04"),
+    cando("I can record data on a computing device.", "3MD.03"),
+    cando("I can format a cell for its purpose - date, currency or text.", "3MD.05"),
+    cando("I can pick out the data I need by its characteristics.", "3MD.06"),
+]
+
+LESSON["world"] = world(
+    "Spreadsheets are the most used business software in the world. The famous mistake is "
+    "always the same one. Somebody selected the wrong range. The total left out the last "
+    "few rows, and nobody noticed.",
+    [place("\U0001F3E6", "An office",
+           "Budgets, wages and orders live in spreadsheets. One wrong range and the total is quietly wrong."),
+     place("\U0001F3E5", "A clinic",
+           "Appointments are held as rows: a date column formatted as a date, a name column as text."),
+     place("\U0001F3EB", "A school office",
+           "Every class list is a table of rows and columns. Picking out one class is choosing the rows that match.")],
+    "Ask a grown-up to show you a spreadsheet. Find a cell name like C7 and see what is in it.")
+
+tier(LESSON,
+     support=[
+         q("A cell is where a...", "\U0001F4CA", "row and a column meet", ["chart goes"],
+           "Column B, row 4, gives the cell B4."),
+         q("Money in a cell should be formatted as...", "\U0001F4B0", "currency", ["a date"],
+           "Currency formatting shows it as money, with the right number of decimal places."),
+     ],
+     extension=[
+         q("What does the range B2:B7 mean?", "\U0001F4D0",
+           "every cell from B2 down to B7",
+           ["just B2 and B7", "the whole of column B", "rows 2 to 7 of every column"],
+           "The colon means from here to there. B2:B7 is six cells, all in column B."),
+         q("You format a date column as text by mistake. What goes wrong?", "\U0001F4C5",
+           "the dates will not sort into order properly",
+           ["nothing at all", "they turn into money", "they disappear"],
+           "As text, 10 March comes before 2 March, because text sorts letter by letter. Format decides what the data can do."),
+     ])

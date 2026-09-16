@@ -6,7 +6,7 @@ produce the desired output; 3P.08 programmers use their mistakes to inform
 the programs they create; 3P.07 the benefits of working with others when
 creating programs.
 """
-from _kit import explain, step, opt, q, choice, part, word, home
+from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "mistakes-make-programs-better",
@@ -173,3 +173,63 @@ LESSON["warmup"] = [
     q("Your friend spots a bug in your program. What is the best thing to say?", "\U0001F91D", "thank you, let us fix it together", ["that is not a bug", "go away", "I will start again from nothing"], "A partner who spots a bug is helping."),
     q("Can a program have more than one bug?", "\U0001F41E", "yes, and each one needs finding and fixing", ["no, never", "only if the tablet is new", "only if it has no blocks"], "Fix one, run it again, and look for the next."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Two bugs, and a partner", "Logical thinking")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\u26A0\ufe0f", "A bug, written down, is an error",
+         "Programmers say bug when they are talking to each other. Written down properly, a "
+         "mistake is called an error. An error is the mistake in the program; debugging is "
+         "finding it and putting it right. The two words go together: you report an error, and "
+         "then you debug it. Every professional program ever written has had errors in it. The "
+         "good ones are the ones where somebody kept looking."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("error", "\u26A0\ufe0f", "The proper name for a mistake in a program.",
+         ["The error was in step 4.", "Debugging means finding the error and correcting it."]),
+]
+
+LESSON["cando"] = [
+    cando("I can test and debug a program so it produces what I wanted.", "3P.09"),
+    cando("I know programmers use their mistakes to make better programs.", "3P.08"),
+    cando("I know the benefits of working with other people on a program.", "3P.07"),
+]
+
+LESSON["world"] = world(
+    "The first computer error on record was an actual insect. In 1947 a moth was found "
+    "jammed inside a machine at Harvard. The engineers taped it into the logbook. Beside "
+    "it they wrote: first actual case of bug being found.",
+    [place("\U0001F4BC", "A software company",
+           "Every error found is written down with what was expected and what happened. The list is how the next version gets better."),
+     place("\U0001F3E5", "A hospital",
+           "Mistakes are reported without blaming anyone, because a mistake nobody reports is a mistake that happens again."),
+     place("\u2708\ufe0f", "An airline",
+           "Pilots file reports on near misses. The whole industry learns from one crew's bad day.")],
+    "Next time you get something wrong, write down what you expected and what actually happened. That is a bug report.")
+
+tier(LESSON,
+     support=[
+         q("Another word for a bug in a program is...", "\u26A0\ufe0f", "an error", ["a battery"],
+           "A bug written down properly is called an error."),
+         q("Debugging means...", "\U0001F527", "finding the error and correcting it", ["making more errors"],
+           "Find it, then fix it."),
+     ],
+     extension=[
+         q("The most useful thing to write in a bug report is...", "\U0001F4DD",
+           "what I expected and what actually happened",
+           ["that it is broken", "how annoyed I am", "how long it took"],
+           "Expected against actual is what lets somebody else find the error. It is broken tells them nothing."),
+         q("Why do programmers keep a list of the errors they have made?", "\U0001F9E0",
+           "because the same kind of error tends to happen again",
+           ["to feel bad", "to show the teacher", "they do not"],
+           "A recorded error is a lesson. That is what using your mistakes to inform the next program means."),
+     ])

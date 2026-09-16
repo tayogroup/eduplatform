@@ -656,3 +656,47 @@
   .codecell small svg { color: var(--good); }
   .codecell svg { color: var(--ink); }
   .stopbtn { border-color: var(--bad); }
+
+  /* ---- WHICH COMPUTATIONAL-THINKING MOVE THIS STEP IS (2026-09-16) --------
+     Cambridge labels one task per unit as computational thinking and says
+     which skill it exercises. This build did all of them and named none. The
+     chip is not a step and not a control, so nothing moves; `title` carries
+     the plain-English gloss for a grown-up reading over a shoulder. The
+     slide head wraps so a long title and a chip never squeeze each other. */
+  .slide-head { flex-wrap: wrap; }
+  /* --plum on --card measured 4.30:1 in the dark theme, under the 4.5 this
+     size needs, so the WORD is --ink (the colour the design system picked for
+     reading) and the plum is the border. 13px is the kit's label floor. */
+  .ctchip { flex: 0 0 auto; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink);
+    background: var(--card); border: 2px solid var(--plum); border-radius: 999px; padding: 4px 10px; }
+
+  /* ---- CAMBRIDGE'S "What can you do?", on the sticker shelf ---------------
+     Every unit of all four Learner's Books closes with one. It lives on the
+     shelf, which is not a step, so nothing here moves a saved place. "Show
+     me" is 44px like every other control in this build. */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 8px 10px 8px 14px; }
+  .cando li > span { font-size: 16px; font-weight: 700; line-height: 1.35; }
+  .candogo { flex: 0 0 auto; min-height: 44px; border: 2px solid var(--line); background: var(--card);
+    color: var(--ink); border-radius: 999px; padding: 8px 16px; font-family: inherit; font-weight: 800;
+    font-size: 14px; cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 12px; }
+    .candogo { width: 100%; }
+  }
+
+  /* ---- COMPUTING WORLD: the "Did you know?" panel and what to go and look at.
+     This step said "not built yet" in all 47 lessons until 2026-09-16. */
+  .dyk { width: 100%; border: 3px solid var(--gold); border-radius: 18px; background: var(--card);
+    padding: 12px 16px; text-align: left; }
+  .dyk-h { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .dyk p { margin: 0; font-size: 18px; line-height: 1.5; }
+  .worldlook { margin: 2px 0 0; font-size: 17px; line-height: 1.5; color: var(--ink); max-width: 34em; }
+  .world .cardsgrid { width: 100%; }

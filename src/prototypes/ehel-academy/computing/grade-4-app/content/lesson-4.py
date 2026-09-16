@@ -6,7 +6,7 @@ different outputs based on different inputs; 4CT.10 develop algorithms that
 include repetition; 4CT.05 predict the outcome of algorithms containing
 repetition.
 """
-from _kit import explain, step, opt, q, s, part, word, home
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "inputs-decide-outputs",
@@ -212,3 +212,50 @@ LESSON["warmup"] = [
     q("When the bell rings you line up; when it is quiet you keep working. The bell rings. What do you do?", "\U0001F3EB", "line up", ["keep working", "go home", "sing a song"], "What you hear decides what you do: one input, one output."),
     q("At a crossing the red person means stop. The green person means...", "\U0001F6B6", "cross, with care", ["stop", "turn round", "run as fast as you can"], "What the light shows decides what you do."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Write the branch", "Logical thinking")
+
+LESSON["cando"] = [
+    cando("I can build an algorithm that gives different outputs for different inputs.", "4CT.09"),
+    cando("I can build an algorithm that includes repetition.", "4CT.10"),
+    cando("I can predict the outcome of an algorithm that contains repetition.", "4CT.05"),
+]
+
+LESSON["world"] = world(
+    "A ticket machine is one long chain of branches. Child or adult? Single or return? "
+    "Today or later? Every answer sends you down a different path. The machine has been "
+    "written so that every path ends with a ticket.",
+    [place("\U0001F3E6", "A cash machine",
+           "Is there enough in the account? One question, two very different endings."),
+     place("\U0001F321\ufe0f", "A thermostat",
+           "Is it colder than 20 degrees? Then heat. Otherwise do nothing. A branch, running all day."),
+     place("\U0001F69C", "A packing line",
+           "Is this apple too small? Then send it down the other chute. The line never stops to think about it.")],
+    "Watch somebody use a ticket machine. Count the questions it asks before it prints anything.")
+
+tier(LESSON,
+     support=[
+         q("A branch is a point where the algorithm...", "\u2753", "goes one of two ways", ["stops"],
+           "The answer to the question decides which way it goes."),
+         q("You test your branch with only ONE input. What have you missed?", "\u2696\ufe0f",
+           "the other way it could go", ["nothing"],
+           "Both arms have to be tested. A branch you only tested one way is half tested."),
+     ],
+     extension=[
+         q("Both arms of your branch give the same output. What does that mean?", "\U0001F914",
+           "the question is not deciding anything",
+           ["it is working perfectly", "one arm is missing", "the input is wrong"],
+           "If the answer does not change the outcome, the branch is doing nothing at all."),
+         q("You put a step inside the yes arm that should be after the whole branch. What goes wrong?", "\U0001F41B",
+           "it only happens for one of the two inputs",
+           ["it happens twice", "nothing", "the algorithm stops"],
+           "Steps everybody needs go outside the branch. That is what testing both inputs shows you."),
+     ])

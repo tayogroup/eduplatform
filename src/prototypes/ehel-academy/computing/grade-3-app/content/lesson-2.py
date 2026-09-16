@@ -5,7 +5,7 @@
 concise; 3CT.03 identify steps that are repeated within everyday tasks;
 3CT.01 edit linear algorithms.
 """
-from _kit import explain, step, opt, q, s, part, word, home
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "concise-algorithms",
@@ -225,3 +225,50 @@ LESSON["warmup"] = [
     q("Two algorithms do the same job. One has 5 steps and one has 9. Which is quicker to follow?", "\u2702\uFE0F", "the one with 5 steps", ["the one with 9 steps", "both take just as long", "neither can be followed"], "Fewer steps for the same job is quicker to follow."),
     q("Clap, stamp, clap, stamp, clap, stamp. Which steps come round again?", "\U0001F44F", "clap, stamp", ["clap, clap", "stamp, jump", "none of them"], "Clap, stamp comes round three times, back to back."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Find the steps that repeat: three plants", "Pattern recognition")
+
+LESSON["cando"] = [
+    cando("I know an efficient algorithm is a concise one.", "3CT.02"),
+    cando("I can follow, understand, edit and correct a linear algorithm.", "3CT.01"),
+    cando("I can find the steps that repeat inside an everyday task.", "3CT.03"),
+]
+
+LESSON["world"] = world(
+    "A delivery company changed one rule in its route algorithm. Wherever possible, do "
+    "not turn across the traffic. It saved millions of litres of fuel. Fewer waits, less "
+    "fuel, fewer crashes - from one step being written more carefully.",
+    [place("\U0001F69A", "A delivery round",
+           "Software plans the order of the stops. A shorter route is less fuel and an earlier finish, every single day."),
+     place("\U0001F3ED", "A production line",
+           "Engineers watch for a movement being repeated and build a machine that does that one movement."),
+     place("\U0001F3C3", "A relay team",
+           "Coaches film the changeover and cut out every movement that does not move the baton forward.")],
+    "Watch someone lay the table for four. Count how many times the same few steps happen.")
+
+tier(LESSON,
+     support=[
+         q("Concise means...", "\u2702\ufe0f", "short, with nothing wasted", ["as long as possible"],
+           "Concise is short without losing anything you need."),
+         q("Water plant 1, water plant 2, water plant 3. What repeats?", "\U0001F331",
+           "watering a plant", ["nothing"],
+           "The same step happens three times, with a different plant each time."),
+     ],
+     extension=[
+         q("An algorithm is shorter but it no longer does the job. Is it more efficient?", "\u274C",
+           "no - an algorithm that does not work is not efficient at all",
+           ["yes, it is shorter", "yes, if it is much shorter", "it depends how short"],
+           "Efficient means fewest steps that still do the job. Drop a step you needed and you have not saved anything."),
+         q("Which is the best reason to write a repeated run as one repeat?", "\U0001F501",
+           "it is shorter to read and there is only one place to fix it",
+           ["it runs faster", "it uses less paper", "the computer prefers it"],
+           "Fixing one step instead of five is the real saving, and it is the reason concise algorithms have fewer bugs."),
+     ])

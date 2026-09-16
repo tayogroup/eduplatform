@@ -336,6 +336,16 @@ def keys_for(s):
     if k in ("quiz", "questions"):
         out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
             "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(it["ask"])), text(ok_text(it["opts"]))) for it in d["items"])))
+        # Cambridge's "Go further" and "Challenge yourself!". Neither is
+        # marked, and a grown-up has no other way to see what the child was
+        # given - the support bank only appears after a wrong answer and the
+        # extension bank only after a clean run.
+        for tier, label in (("support", "Extra help (not marked; shown after a wrong answer)"),
+                            ("extension", "Extra challenge (not marked; offered after a clean run)")):
+            if d.get(tier):
+                out.append("<li><b>%s &mdash; %s</b><ol>%s</ol></li>" % (text(s["title"]), label, "".join(
+                    "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>"
+                    % (text(plain(it["ask"])), text(ok_text(it["opts"]))) for it in d[tier])))
     elif k == "sort":
         bins = {b["id"]: b["label"] for b in d["bins"]}
         groups = {}
@@ -529,16 +539,26 @@ def grownups_for(n, lesson, codes, minutes, steps, stage):
     keys = []
     for s in lesson["steps"]:
         keys.extend(keys_for(s))
+    # Cambridge closes every unit with "What can you do?" and expects a teacher
+    # to talk it through. On the page it is on the sticker shelf, where a
+    # grown-up printing this section would never see it.
+    cando = "".join("<li>%s</li>" % text(c["t"]) for c in (lesson.get("cando") or []))
+    ct = "".join("<li><b>%s</b> <span class=\"key\">&middot; %s</span></li>" % (text(s["ct"]), text(s["title"]))
+                 for s in lesson["steps"] if s.get("ct"))
     return (
         '    <details class="gu"><summary>Lesson %d: %s<small>%d steps &middot; about %d minutes &middot; %d objectives</small></summary>\n'
         '      <div class="body">\n'
         '        <h3>What it teaches (Cambridge Primary Computing 0059, Stage %d)</h3><ul>%s</ul>\n'
         '        <h3>The steps</h3><ol>%s</ol>\n'
         '%s'
+        '%s'
+        '%s'
         '        <h3>Answer keys</h3><ul>%s</ul>\n'
         '      </div>\n    </details>\n'
         % (n, text(lesson["title"]), steps, minutes, len(reached), stage, objectives, steplist,
+           ('        <h3>Computational thinking in this lesson</h3><ul>%s</ul>\n' % ct) if ct else "",
            ('        <h3>Do it unplugged, for real</h3><ul>%s</ul>\n' % "".join(home)) if home else "",
+           ('        <h3>What can you do? (talk these through at the end)</h3><ul>%s</ul>\n' % cando) if cando else "",
            "".join(keys)))
 
 

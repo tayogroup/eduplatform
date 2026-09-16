@@ -10,7 +10,7 @@ Until the Grade 3 validation (2026-09-11) categorical data was explained but
 never recorded or charted; the favourite-pet form and its three views, after
 the pets count, do both.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "data-problems",
@@ -229,3 +229,64 @@ LESSON["warmup"] = [
     q("To find out which fruit most of the class likes, you could...", "\U0001F34E", "ask each child and keep a tally", ["guess", "ask one friend", "eat all the fruit"], "Asking everyone and tallying is collecting data."),
     q("On a bar chart, what does a taller bar mean?", "\U0001F4CA", "a bigger number", ["a smaller number", "a newer bar", "a different colour"], "The taller the bar, the bigger the count."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "The same data, three ways", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F522", "Two kinds of data: named, and numerical",
+         "Some data is a name: red, blue, dog, cat, walked, came by bus. You cannot add those "
+         "up, only count how many of each. Other data is numerical. It is a number you counted "
+         "or measured: how many pets, how tall, how many minutes. Numerical data can be added, "
+         "put in order and averaged. Knowing which kind you have collected decides what you can "
+         "do with it afterwards."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("numerical", "\U0001F522", "Data that is a number you counted or measured.",
+         ["How many pets is numerical data.", "You can put numerical data in order."]),
+]
+
+LESSON["cando"] = [
+    cando("I can find problems that collecting data would help solve.", "3MD.01"),
+    cando("I can record data using a computing device.", "3MD.03"),
+    cando("I can show the same data in more than one way.", "3MD.02"),
+]
+
+LESSON["world"] = world(
+    "The same numbers can be drawn to tell two different stories. Start a bar chart at "
+    "fifty instead of zero. A small difference then looks enormous. That is why people "
+    "who work with data are taught to look at the axis first.",
+    [place("\U0001F4F0", "A newspaper",
+           "The same figures appear as a chart in one paper and a table in another. Readers see different things."),
+     place("\U0001F3E5", "A hospital",
+           "A chart of one patient over a week shows a direction that no single reading could."),
+     place("\u26BD", "A sports club",
+           "The same season, as a table of results or a graph of goals over time, answers two different questions.")],
+    "Find a chart on a phone or in a newspaper. Look at the numbers up the side before you look at the bars.")
+
+tier(LESSON,
+     support=[
+         q("How many pets do you have? What kind of data is the answer?", "\U0001F522",
+           "numerical - it is a number", ["a colour"],
+           "You counted it, so it is numerical."),
+         q("Which shows which pet is most popular fastest?", "\U0001F4CA", "a bar chart", ["a list of names"],
+           "The tallest bar answers it without counting."),
+     ],
+     extension=[
+         q("Which of these is NOT numerical data?", "\u2753",
+           "the colour of each child's coat",
+           ["how many books each child read", "how tall each child is", "how many minutes each child walked"],
+           "Colour is a name, not a number. You can count how many of each, but you cannot add colours up."),
+         q("Why show the same data as a table AND a chart?", "\U0001F4CB",
+           "the table gives the exact numbers and the chart shows the shape",
+           ["to fill the page", "charts are always better", "tables are always better"],
+           "Each answers a different question. Exactly how many came by bus? The table. Which way is most popular? The chart."),
+     ])

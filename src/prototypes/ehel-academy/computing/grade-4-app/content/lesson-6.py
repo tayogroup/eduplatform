@@ -6,7 +6,7 @@ outputs from different inputs; 4P.06 plan the instructions for objects
 within programs, identifying their inputs and outputs; 4P.07 test different
 parts of a program systematically to identify and debug errors.
 """
-from _kit import explain, step, opt, q, choice, part, word, home
+from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "inputs-outputs-and-parts",
@@ -200,3 +200,66 @@ LESSON["warmup"] = [
     q("A torch will not light. What is the best way to find the problem?", "\U0001F526", "check one part at a time: the batteries, then the bulb, then the switch", ["throw it away", "shake it harder", "check nothing and hope"], "Testing one part at a time shows exactly which part is broken."),
     q("A doorbell: what goes in, and what comes out?", "\U0001F514", "a press on the button goes in; a ding-dong comes out", ["a ding-dong goes in; a press comes out", "the door goes in; the house comes out", "nothing goes in"], "Press in, sound out: every object has an input and an output."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Test it part by part", "Decomposition")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F50D", "Debugging systematically",
+         "There is a bad way to find a bug and a good one. The bad way is changing things until "
+         "it works, which sometimes works and teaches you nothing. The good way is debugging "
+         "systematically. Split the program into parts. Run one part. Check its result against "
+         "what you expected. Move on only when that part is right. The error has nowhere to "
+         "hide. You are never testing more than one thing at a time."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("debugging", "\U0001F41B", "Finding the error in a program and correcting it.",
+         ["Debugging part by part is quicker.", "Debugging systematically means testing one part at a time."]),
+    word("systematically", "\U0001F4CB", "In a planned order, so nothing is missed.",
+         ["Test the parts systematically.", "Working systematically finds the error faster."]),
+]
+
+LESSON["cando"] = [
+    cando("I can develop a program that gives different outputs from different inputs.", "4P.05"),
+    cando("I can plan each object in a program with its inputs and outputs.", "4P.06"),
+    cando("I can test the parts of a program one at a time to find an error.", "4P.07"),
+]
+
+LESSON["world"] = world(
+    "Engineers call it bisecting: if the bug is somewhere in a hundred steps, test step "
+    "fifty. Now you know which half it is in. Seven tests and you have found it - instead "
+    "of a hundred.",
+    [place("\U0001F4A1", "An electrician",
+           "A dead circuit is tested in halves, not wire by wire. Each test throws away half the possibilities."),
+     place("\U0001F697", "A garage",
+           "A mechanic tests one system at a time - fuel, spark, air - rather than taking the whole engine apart."),
+     place("\U0001F52C", "A laboratory",
+           "An experiment changes one thing at a time. Change two and you cannot tell which one did it.")],
+    "Next time a string of lights will not work, ask a grown-up how they find the broken one.")
+
+tier(LESSON,
+     support=[
+         q("Your program has three parts. Which do you test first?", "\U0001F522",
+           "the first part, on its own", ["all three together"],
+           "One part at a time means you know exactly where the error is."),
+         q("Debugging means...", "\U0001F41B", "finding the error and correcting it", ["adding more parts"],
+           "Find it, then fix it."),
+     ],
+     extension=[
+         q("Why is debugging systematically better than changing things until it works?", "\U0001F4CB",
+           "you find out WHERE the error is, instead of hoping",
+           ["it is more fun", "it takes longer", "there is no difference"],
+           "Changing things at random can accidentally work and leave the real error in place. Systematic testing cannot."),
+         q("Part 2 fails. Do you need to test part 3?", "\u26A0\ufe0f",
+           "fix part 2 first - part 3 gets the wrong thing handed to it",
+           ["yes, test them all anyway", "no, never test part 3", "test part 1 again"],
+           "A part that is given wrong input will look broken even when it is fine. Fix them in order."),
+     ])

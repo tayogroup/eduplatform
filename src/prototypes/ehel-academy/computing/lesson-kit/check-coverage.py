@@ -31,14 +31,25 @@ import os
 import re
 import sys
 
+# A gate that crashes reports drift it never measured. Windows consoles are
+# cp1252 by default and this prints emoji - the picture-age check exists to
+# name the glyph it is refusing, so it cannot print it as a question mark and
+# it cannot die trying either.
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
 KIT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, KIT)
+from _kit import CT_MOVES  # noqa: E402
 from _rules import (REPEATS, best_algo, branch_home, branch_run, caesar_shift, code_word, decode_code, expand_loop,  # noqa: E402
                     filter_rows, flatten_algo, repeat_run, rule_output, run_robot, same_effect, sheet_cells,
                     sort_rows, sub_expand, sum_answer, table_answer, walk_end)
 
 REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-computing-0059.json")
+CAMBRIDGE = os.path.join(os.path.dirname(KIT), "data", "cambridge-stage-features.json")
 HERE = os.path.abspath(sys.argv[sys.argv.index("--app") + 1] if "--app" in sys.argv else os.getcwd())
 LESSON_RE = re.compile(r"\n  const LESSON = (\{.*?\n  \});\n", re.S)
 
@@ -86,6 +97,45 @@ def too_new(text):
     return out
 
 
+# ---- what a lesson TEACHES, as text ----------------------------------------
+# Everything a child reads or is read, EXCEPT the text of an option that is not
+# the right answer. A Cambridge keyword that appears only as a distractor has
+# not been taught, and a check that accepted one would be green about the
+# opposite of what it is for.
+_TEXT_KEYS = ("ask", "why", "label", "meaning", "cap", "say", "title", "sticker", "note",
+              "done", "look", "materials", "w", "sub", "goal", "algorithm", "fact",
+              "reason", "hint", "blurb", "name", "text", "prompt", "explanation")
+
+
+def teaching_text(node, out):
+    """Walk a LESSON payload, collecting the learner-facing strings."""
+    if isinstance(node, dict):
+        is_opt = "t" in node and "ok" in node
+        if is_opt and not node.get("ok"):
+            return                      # a wrong option teaches nothing
+        if is_opt:
+            out.append(str(node["t"]))
+        for k, v in node.items():
+            if isinstance(v, str):
+                if k in _TEXT_KEYS:
+                    out.append(v)
+            else:
+                teaching_text(v, out)
+    elif isinstance(node, list):
+        for v in node:
+            teaching_text(v, out)
+
+
+def load_cambridge(stage):
+    """The stage's fixture entries, or None when the fixture is not there."""
+    if not os.path.isfile(CAMBRIDGE):
+        return None
+    doc = json.load(io.open(CAMBRIDGE, encoding="utf-8"))
+    rows = doc.get("entries", {}).get(str(stage)) or []
+    floor = int((doc.get("minimumCovered") or {}).get(str(stage), 0))
+    return rows, floor
+
+
 def main():
     if not os.path.isfile(FRAMEWORK):
         print("  cannot run: %s is missing" % FRAMEWORK); sys.exit(2)
@@ -114,6 +164,8 @@ def main():
         return sum(1 for o in opts if o.get("ok")) == 1 and len({o["t"] for o in opts}) == len(opts)
 
     reached = {c: [] for c in codes}
+    taught, selfcheck = {}, {}
+    tiers = {"support": 0, "extension": 0}
     pages = 0
     for n, entry in enumerate(cfg["lessons"], 1):
         path = os.path.join(HERE, entry["file"])
@@ -141,9 +193,33 @@ def main():
             data = json.loads(m.group(1))
         except ValueError as e:
             fail(entry["file"], "LESSON block is not JSON: %s" % e); continue
+        # THE STUDENT-RESOURCES DRAWER IS NOT THIS LESSON'S TEACHING. It carries
+        # `finder` - every word of every lesson in the grade - so counting it
+        # would make every lesson's text contain every other lesson's
+        # vocabulary, and "lesson 10 teaches wireless" would be satisfied by
+        # lesson 1. Found by a mutation that reassigned an entry to lesson 1
+        # and was not caught.
+        words = []
+        for st in data["steps"]:
+            if st["kind"] == "resources":
+                continue
+            teaching_text(st, words)
+        taught[n] = "\n".join(words).lower()
+        # The self-check Cambridge closes every unit with. It lives on the
+        # sticker shelf, so it moves no position - but a claim that resolves
+        # to nothing is a "Show me" button that goes to step 0.
+        for c in data.get("cando") or []:
+            if c.get("code") not in codes:
+                fail(entry["file"], "self-check %r names %s, not a Stage %d code" % (c.get("t", "")[:40], c.get("code"), stage))
+            elif not any(c["code"] in st["objectives"] for st in data["steps"]
+                         if st["kind"] not in ("overview", "lecture", "words", "games", "home", "quiz", "world", "resources")):
+                fail(entry["file"], "self-check %r names %s, which none of this lesson's own steps carries" % (c["t"][:40], c["code"]))
+        selfcheck[n] = len(data.get("cando") or [])
         for k, st in enumerate(data["steps"], 1):
             d = st["data"]
             kind = st["kind"]
+            if st.get("ct") and st["ct"] not in CT_MOVES:
+                fail(entry["file"], "step %d is labelled %r, which is not a computational-thinking move" % (k, st["ct"]))
             if kind == "overview":
                 for it in d.get("warmup") or []:
                     if not one_key(it["opts"]) or not it.get("why"):
@@ -154,6 +230,14 @@ def main():
                         fail(entry["file"], "step %d %r does not have exactly one key (or repeats an option)" % (k, it["ask"]))
                     if not it.get("why"):
                         fail(entry["file"], "step %d %r has no explanation" % (k, it["ask"]))
+                # Cambridge's "Go further" and "Challenge yourself!". Neither
+                # bank is scored, so the only thing that can be wrong with one
+                # is the question itself.
+                for tier in ("support", "extension"):
+                    for it in d.get(tier) or []:
+                        if not one_key(it["opts"]) or not it.get("why"):
+                            fail(entry["file"], "step %d %s %r does not have exactly one key and an explanation" % (k, tier, it["ask"]))
+                    tiers[tier] += len(d.get(tier) or [])
             elif kind == "sort":
                 bins = {b["id"] for b in d["bins"]}
                 for it in d["items"]:
@@ -397,6 +481,46 @@ def main():
     if pages < len(cfg["lessons"]):
         print("  cannot run: %d of %d pages" % (pages, len(cfg["lessons"]))); sys.exit(2)
 
+    # ---- THE CAMBRIDGE ARM -------------------------------------------------
+    # Every entry of the stage's fixture names the lesson that must answer it
+    # and the strings that must appear in that lesson's teaching text. A
+    # missing fixture is NOT a pass: a gate that cannot read its target and
+    # says nothing is green about nothing.
+    cam = load_cambridge(stage)
+    if cam is None:
+        print("  cannot run: %s is missing" % CAMBRIDGE); sys.exit(2)
+    rows, floor = cam
+    if not rows:
+        print("  cannot run: the Cambridge fixture publishes no Stage %d" % stage); sys.exit(2)
+    covered = 0
+    print("\n  Cambridge Learner's Book %d - what the book carries\n" % stage)
+    for e in rows:
+        ln = e["lesson"]
+        if not 1 <= ln <= len(cfg["lessons"]):
+            fail("cambridge", "%s is assigned to lesson %d, which this app does not have" % (e["id"], ln))
+            continue
+        if e["objective"] not in codes:
+            fail("cambridge", "%s names %s, not a Stage %d code" % (e["id"], e["objective"], stage))
+            continue
+        text_ = taught.get(ln, "")
+        missing = [m for m in e["must"] if m.lower() not in text_]
+        if missing:
+            fail("cambridge", "%s (%s) - lesson %d never says %s"
+                 % (e["id"], e["says"][:52], ln, ", ".join(repr(m) for m in missing)))
+        else:
+            covered += 1
+            print("  ok    %-22s L%-2d %-8s %s" % (e["id"], ln, e["objective"], e["says"][:58]))
+    if covered < floor:
+        fail("cambridge", "%d of %d entries answered, below the recorded floor of %d" % (covered, len(rows), floor))
+
+    # The self-check closes every unit of every Cambridge book, so every lesson
+    # here needs one. Counted per lesson, because one lesson quietly losing its
+    # claims keeps every other check green.
+    thin = [n for n in range(1, len(cfg["lessons"]) + 1) if selfcheck.get(n, 0) < 3]
+    if thin:
+        fail("cambridge", "lesson(s) %s carry fewer than 3 self-check claims"
+             % ", ".join(str(n) for n in thin))
+
     print("\n  Cambridge Primary Computing 0059 - Stage %d\n" % stage)
     for c, o in codes.items():
         where = reached[c]
@@ -408,7 +532,11 @@ def main():
     if bad:
         print("  %d finding(s)\n" % len(bad)); sys.exit(1)
     print("  all %d Stage %d objectives are reached, every key is single, every sort bin exists,\n"
-          "  and %d keys were re-computed from the shipped data (Robo's routes, table answers, fixes, machines, ciphers, filters, loops, sorts)\n" % (len(codes), stage, computed))
+          "  and %d keys were re-computed from the shipped data (Robo's routes, table answers, fixes, machines, ciphers, filters, loops, sorts).\n"
+          "  All %d Cambridge Learner's Book %d entries are answered by the lesson that claims them;\n"
+          "  %d self-check claims, %d support and %d extension questions across %d lessons.\n"
+          % (len(codes), stage, computed, covered, stage,
+             sum(selfcheck.values()), tiers["support"], tiers["extension"], len(cfg["lessons"])))
     sys.exit(0)
 
 

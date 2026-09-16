@@ -9,7 +9,7 @@ computers output information in many ways; 1CS.05 everyday devices use
 computers to control what they do; 1CS.06 what robots are and where they
 are found.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "computers-everywhere",
@@ -292,3 +292,74 @@ LESSON["warmup"] = [
     q("What makes a robot move and do its job?", "\U0001F916", "a computer inside it, following a program", ["a battery all on its own", "magic", "a person hiding inside"], "A computer inside tells a robot what to do."),
     q("A keyboard puts letters into a computer. A screen shows things...", "\U0001F5A5️", "out of the computer", ["into the computer", "under the computer", "nowhere"], "Information goes in through a keyboard and comes out on a screen."),
 ]
+
+# ---- Cambridge Learner's Book 1, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Is there a computer inside?", "Pattern recognition")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F5A5\ufe0f", "What every computer does",
+         "Big or small, a computer does the same three things. It takes data in. It "
+         "does something to the data. It gives a result. A calculator takes the numbers "
+         "in. It adds them. It gives you the answer. A washing machine takes in the "
+         "button you pressed. It runs the wash. It gives you clean clothes."),
+    part("\U0001F5B1\ufe0f", "Kinds of computer, biggest to smallest",
+         "A desktop computer has four parts you can see. They are the tower, the "
+         "monitor, the keyboard and the mouse. You cannot carry a desktop. A laptop is "
+         "smaller, and you can carry it. A tablet is smaller again. You touch its screen "
+         "instead of using a mouse. A smartphone is smaller still. It fits in a pocket "
+         "and it makes phone calls. All four are computers."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("desktop", "\U0001F5A5\ufe0f", "A computer that stays on a desk. You cannot carry it around.",
+         ["The desktop computer has a tower under the desk.", "A desktop is bigger than a laptop."]),
+    word("monitor", "\U0001F4FA", "The screen of a desktop computer.",
+         ["The monitor shows what the computer is doing.", "Look at the monitor, not the keyboard."]),
+    word("smartphone", "\U0001F4F1", "A small computer that fits in a pocket and makes phone calls.",
+         ["A smartphone is a computer too.", "The smartphone has a touchscreen."]),
+]
+
+LESSON["cando"] = [
+    cando("I know computers are used for lots of different things.", "1CS.01"),
+    cando("I know one computer can run many different programs.", "1CS.02"),
+    cando("I can name ways of putting information into a computer.", "1CS.03"),
+    cando("I can name ways a computer gives information out.", "1CS.04"),
+    cando("I know lots of everyday things have a computer controlling them.", "1CS.05"),
+    cando("I know what a robot is and where robots are found.", "1CS.06"),
+]
+
+LESSON["world"] = world(
+    "An ordinary kitchen has more computers in it than the whole world had in "
+    "1960. You never see most of them. One is in the microwave. One is in "
+    "the washing machine. One is in the clock.",
+    [place("\U0001F697", "A car",
+           "A modern car has dozens of small computers in it - for the brakes, the lights, the engine and the windows."),
+     place("\U0001F3ED", "A factory",
+           "Robot arms weld and paint cars. They do the same movement thousands of times and never get tired."),
+     place("\U0001F680", "Mars",
+           "There are robots on Mars right now, driving slowly about, taking pictures and testing rocks.")],
+    "Count the screens in your home. Beside each one, ask: is there a computer in there, or is it just a picture?")
+
+tier(LESSON,
+     support=[
+         q("Which of these is a computer?", "\U0001F4BB", "a tablet", ["a chair"],
+           "A tablet takes data in, does something with it and gives you a result. That is a computer."),
+         q("A keyboard puts letters IN. Is that an input or an output?", "\u2B07\ufe0f", "an input", ["an output"],
+           "In goes through an input. Out comes through an output."),
+     ],
+     extension=[
+         q("A desktop, a laptop, a tablet and a smartphone. Which is easiest to carry?", "\U0001F4F1",
+           "the smartphone", ["the desktop", "the laptop", "they are all the same"],
+           "They get smaller and easier to carry in that order: desktop, laptop, tablet, smartphone."),
+         q("A touchscreen is BOTH an input and an output. Why?", "\U0001F446",
+           "you tap it to put things in, and it shows you things back",
+           ["it is very big", "it has a computer inside", "it is neither"],
+           "Tapping is an input. What it shows you is an output. The same piece of glass does both."),
+     ])

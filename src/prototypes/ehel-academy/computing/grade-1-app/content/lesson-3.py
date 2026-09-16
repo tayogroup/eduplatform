@@ -6,7 +6,7 @@
 instructions are a program Robo runs), 1P.03 (predict where Robo will stop),
 1P.05 (run it to test whether it reached the flower) and 1CT.06.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "forward-back-left-right",
@@ -208,3 +208,50 @@ LESSON["warmup"] = [
     q("Which of these words tells you which way to go?", "\U0001F9ED", "left", ["banana", "happy", "blue"], "Left, right, forward and backwards tell you which way to go."),
     q("Walking forward means walking...", "\U0001F6B6", "the way you are facing", ["backwards", "round in a circle", "nowhere"], "Forward is the way you are facing."),
 ]
+
+# ---- Cambridge Learner's Book 1, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Where will Robo stop?", "Algorithmic thinking")
+
+LESSON["cando"] = [
+    cando("I can give directions using forward, backwards, left and right.", "1CT.03"),
+    cando("I can turn an algorithm into a program for Robo.", "1P.02"),
+    cando("I can run a program to see whether it does what I wanted.", "1P.05"),
+    cando("I can predict where a program will stop before I run it.", "1P.03"),
+]
+
+LESSON["world"] = world(
+    "A robot vacuum cleaner has no map of your house. It drives forward. It "
+    "bumps into something. It turns and goes again. Those are the four "
+    "instructions you are giving Robo.",
+    [place("\U0001F69C", "A farm",
+           "A tractor can steer itself down a field by satellite, forward and back, straighter than a person can."),
+     place("\U0001F3ED", "A warehouse",
+           "Robots slide under a shelf, lift it, and carry it to a packer. Forward, left, right, all day."),
+     place("\U0001F9ED", "A ship",
+           "Before satellites, sailors steered by counting how far forward and which way they turned. It is the same idea.")],
+    "Stand a grown-up in the middle of the room and get them to the door using only forward, backwards, left and right.")
+
+tier(LESSON,
+     support=[
+         q("Robo is facing up the grid. You press forward. Where does Robo go?", "\u2B06\ufe0f",
+           "one square up", ["one square down"],
+           "Forward means one square the way Robo is facing."),
+         q("Which button turns Robo without moving it?", "\u21A9\ufe0f", "left", ["forward"],
+           "Left and right turn Robo on the spot. Forward and backwards move it."),
+     ],
+     extension=[
+         q("Robo faces right. You press LEFT twice. Which way is Robo facing now?", "\u2B05\ufe0f",
+           "left", ["right", "up", "down"],
+           "Two left turns is a half turn. Robo ends up facing the opposite way."),
+         q("Robo is one square from the wall, facing it. Your program says forward, forward. What happens?", "\U0001F9F1",
+           "Robo moves one square, bumps into the wall and stops",
+           ["Robo goes through the wall", "Robo moves two squares", "Robo turns round"],
+           "A bump ends the program. The second forward never happens."),
+     ])

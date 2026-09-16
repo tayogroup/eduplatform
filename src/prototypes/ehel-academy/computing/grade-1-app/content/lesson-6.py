@@ -6,7 +6,7 @@ different kinds of question in different ways; 1MD.02 computing devices help
 to sort and organise data; 1MD.03 record data manually with a form; 1MD.04
 questions a data table can answer, limited to categorical data.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 FRUIT_ROWS = [
     {"label": "Apple", "pic": "\U0001F34E", "value": 2},
@@ -278,3 +278,51 @@ LESSON["warmup"] = [
     q("Which of these is data?", "\U0001F4CA", "how many children like apples", ["a hug", "a dream", "a sneeze"], "Data is facts and numbers we collect."),
     q("Six friends choose a favourite fruit. How can we find out which fruit is the favourite?", "\U0001F34E", "count their answers", ["guess", "ask the fruit", "pick the red one"], "Counting the answers tells us which fruit most friends chose."),
 ]
+
+# ---- Cambridge Learner's Book 1, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "The sorting machine", "Pattern recognition")
+
+LESSON["cando"] = [
+    cando("I know a computer can answer different kinds of question.", "1MD.01"),
+    cando("I can record data using a form.", "1MD.03"),
+    cando("I can answer a question using a data table.", "1MD.04"),
+    cando("I know a computer can sort and organise data for me.", "1MD.02"),
+]
+
+LESSON["world"] = world(
+    "A supermarket till does not read the name of what you buy. It reads a "
+    "barcode: thin and thick stripes. Then it looks the price up. Data goes "
+    "in and information comes out, hundreds of times an hour.",
+    [place("\U0001F3E5", "A hospital",
+           "Every time a nurse takes a temperature it goes on a chart. The chart is data, and it shows whether you are getting better."),
+     place("\U0001F326\ufe0f", "A weather station",
+           "Weather stations record rain and temperature every hour. That is how anyone can say what the weather usually does in June."),
+     place("\U0001F6D2", "A shop",
+           "A shop counts what it sells so it knows what to order again. Bread every day; sun hats in summer.")],
+    "Find a barcode on something in your kitchen. Count how many thick stripes it has.")
+
+tier(LESSON,
+     support=[
+         q("Data means...", "\U0001F4CA", "numbers, words or pictures we collect", ["a kind of computer"],
+           "Data is what you collect. It can be numbers, words, pictures or sounds."),
+         q("Six children said their favourite fruit. Where would you put the answers?", "\U0001F34E",
+           "in a table", ["in the bin"],
+           "A table keeps the answers where you can count them."),
+     ],
+     extension=[
+         q("Your table says how many children chose each fruit. Which question can it NOT answer?", "\U0001F34C",
+           "Which fruit tastes best?",
+           ["Which fruit did most children choose?", "How many chose apple?", "Did anyone choose pear?"],
+           "The table only knows what people chose. It cannot know which one tastes best - that is not in the data."),
+         q("You ask everyone the same question and write every answer down. Why the SAME question?", "\u2753",
+           "so the answers can be counted together",
+           ["so it is quicker", "so nobody gets bored", "it does not matter"],
+           "Different questions give answers you cannot add up. The same question makes the data fit together."),
+     ])

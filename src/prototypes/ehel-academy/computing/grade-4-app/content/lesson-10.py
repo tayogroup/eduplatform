@@ -6,7 +6,7 @@ and clients in a network; 4DC.02 the differences between the World Wide Web
 and the internet; 4DC.03 the differences between wi-fi and ethernet,
 including speed, security and convenience.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "clients-servers-and-the-web",
@@ -212,3 +212,80 @@ LESSON["warmup"] = [
     q("You open a website. Where do its page and pictures come from?", "\U0001F310", "a computer far away that stores them and sends them", ["your screen makes them up", "the keyboard", "the mouse"], "Websites are stored on computers far away that send them when you ask."),
     q("Which connects a laptop to a network with no wire?", "\U0001F4F6", "wi-fi", ["a USB stick", "a power cable", "a keyboard"], "Wi-fi joins a network through the air."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "The school network", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F5A5\ufe0f", "Five kinds of server, one idea",
+         "A server is a computer whose job is to serve other computers. Big networks have "
+         "several. Each one has its own job. A file server keeps everybody's files. An "
+         "application server runs programs so that other computers do not have to. A web server "
+         "holds web pages and hands them out. A print server takes documents from every "
+         "classroom and queues them for one printer. A mail server passes messages between "
+         "people. All five do the same thing: wait to be asked, then answer."),
+    part("\U0001F4F6", "Wires, and no wires",
+         "Ethernet joins computers with a cable. Wi-fi is wireless: no wire at all. It carries "
+         "your data on radio waves. Those are the same waves that bring music to a radio. A wire "
+         "is faster, steadier and harder for anyone else to listen to. Wireless goes where you "
+         "go. That is the whole trade, and it is why a school has both."),
+    part("\U0001F517", "The web is made of hyperlinks",
+         "The internet is the wires, the routers and the joins - the road. The World Wide Web is "
+         "one of the things carried on it. It is pages held on web servers. Your browser asks "
+         "for them. What makes it a web, rather than a pile of pages, is the hyperlink. A "
+         "hyperlink is words you press to jump to another page. That page may be on another "
+         "server, in another country."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("wireless", "\U0001F4F6", "Joined with no wire at all.",
+         ["Wi-fi is a wireless connection.", "A wireless device can move about."]),
+    word("radio wave", "\U0001F4E1", "What wi-fi carries your data on.",
+         ["Wi-fi sends data on radio waves.", "Radio waves go through walls, but not very well."]),
+    word("hyperlink", "\U0001F517", "Words you press to go to another page.",
+         ["Press the hyperlink to open the next page.", "The web is pages joined by hyperlinks."]),
+]
+
+LESSON["cando"] = [
+    cando("I can explain what servers and clients do on a network.", "4DC.01"),
+    cando("I can describe the differences between wi-fi and ethernet.", "4DC.03"),
+    cando("I can describe the difference between the World Wide Web and the internet.", "4DC.02"),
+]
+
+LESSON["world"] = world(
+    "The World Wide Web was invented in 1989. One person, working at a physics "
+    "laboratory, gave it away rather than selling it. The internet already existed for "
+    "twenty years before it. They are two different things, and almost everybody mixes "
+    "them up.",
+    [place("\U0001F3EB", "A school",
+           "A file server for the work, a print server for the one printer, and a web server somewhere else entirely."),
+     place("\U0001F3E2", "An office",
+           "Desks are on ethernet because it is faster and steadier. Meeting rooms are wireless because people move."),
+     place("\U0001F30D", "A data centre",
+           "Rows of web servers, waiting to be asked for a page. That is all a web server ever does.")],
+    "Look at the back of the box where the internet comes into your home. Count the sockets for wires, then find the wifi name.")
+
+tier(LESSON,
+     support=[
+         q("The computer that asks is the...", "\U0001F4BB", "client", ["server"],
+           "Clients ask. Servers answer."),
+         q("Wi-fi joins devices...", "\U0001F4F6", "with no wire", ["with a cable"],
+           "Wireless means no wire. Ethernet is the one with the cable."),
+     ],
+     extension=[
+         q("Which server hands out web pages?", "\U0001F310",
+           "the web server",
+           ["the file server", "the print server", "the mail server"],
+           "Each server has one job. File servers keep files, print servers queue printing, web servers hand out pages."),
+         q("Why is a wired connection often better for a desk computer?", "\U0001F50C",
+           "it is faster, steadier and harder for anyone else to listen to",
+           ["it is prettier", "it uses no electricity", "it is the only one that works"],
+           "Radio waves are shared with everyone nearby and go through walls badly. A cable is nobody else's."),
+     ])

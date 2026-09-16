@@ -119,6 +119,73 @@ preserve for a traffic jam, a stop sign for a block of flats and again for
 freezing water, a traffic light for a phone signal, two people for assembling
 parts, theatre masks for the place something happened, a heartbeat for a pump).
 
+### The Cambridge Learner's Book arm on the standalone builds (2026-09-16)
+
+Grades 1-4 already reached **every** 0059 objective of their stage before this
+pass - `check-coverage.py` was green on all four. What they did not have was
+what the four Cambridge Primary Computing Learner's Books carry AROUND the
+objectives, and the measurement that made the case is worth keeping:
+
+| Cambridge feature | occurrences S1/S2/S3/S4 | what the build had |
+| --- | --- | --- |
+| Get started, You will learn, Warm up | 3/12/15/9 and 3/6/14/7 | the overview and a 2-question warm-up on all 47 lessons |
+| Learn, Practise | 29/71/104/54 | the lecture, the demos and 731 questions |
+| **Go further, Challenge yourself!** | 4/8/16/3 and 4/13/15/7 | **nothing** |
+| **What can you do?** | 4/12/15/9 | **nothing** |
+| **Did you know?** | 4/12/16/10 | **nothing** |
+| Keywords / Glossary | 26/37/54 terms | 47/62/75/73 word cards, **29 Cambridge terms absent entirely** |
+| real-world context | throughout | **"Computing world is not built yet", in all 47 lessons** |
+
+Three findings from that pass, each of which cost something:
+
+- **The register fell as the stage rose.** Grade 3 said "mistake" 306 times and
+  "error" NEVER, while 3P.09 is written as "test and debug" and *error* is a
+  Stage 3 Cambridge glossary word. Grade 4 owns 4P.07 - "identify and debug
+  errors" - and said *debug* **once**, against 25/32/41 in Grades 1-3. Counting
+  a synonym is not the same as counting the term the syllabus is written in.
+- **Grade 4 was the thinnest build** (5-7 of its own teaching steps per lesson)
+  against the densest Cambridge book. The deck's furniture hides this: every
+  lesson looks 13-15 steps long because seven of them are the shell.
+- **Coverage green is not depth green, and nothing in the repo could see the
+  difference** until the fixture existed.
+
+`computing/data/cambridge-stage-features.json` is that fixture - 118 entries,
+each naming the ONE lesson that must answer it and the literal strings that
+must appear in *that lesson's* teaching text. `check-coverage.py` grew the arm
+that reads it, plus a floor of three self-check claims per lesson and a
+single-key check on both tier banks. **Mutation-tested 7 of 7**, tree restored
+byte-identical, plus two builder refusals (an unknown computational-thinking
+move, a tier question with a repeated option).
+
+**Everything the pass added is position-safe, and that was the design
+constraint rather than a nicety** - all four grades are live and routed, so a
+new teaching step would shift every stored section id after it and a child's
+saved record would tick the wrong dots. So: the self-check went on the sticker
+shelf (not a step), the tiers hang off the check step and `finish()` still
+fires at the end of the CORE bank, Computing world filled a step that already
+existed, and the vocabulary went into word cards and lecture parts. **All 47
+lessons rebuild with the same step count, the same kinds in the same order and
+the same titles** - verified by diffing the `const LESSON` payloads against
+HEAD, which is the right instrument here because the shared pipeline rewrites
+the page bytes.
+
+Two traps met on the way, both already in the kit README and both worth knowing
+from here:
+
+- **The student-resources drawer is not the lesson's teaching.** It carries
+  `finder` - every word of every lesson in the grade - so a gate that reads the
+  whole payload thinks every lesson teaches every word. A mutation reassigning
+  an entry to lesson 1 survived because of it, and fixing it immediately
+  exposed a real gap the leak had hidden.
+- **Check the mutation before believing the gate.** Three of the first seven
+  "survivors" were the harness, not the arm.
+
+Still open and stated plainly: **no human has read the keys.**
+`build-review-pack.py` writes `review-pack.html` per grade - 146/220/259/254
+questions per grade that are unfalsifiable from inside the build, because the
+key IS the object the question was generated from. It is deliberately not in
+the deploy set.
+
 ### Reviewed Computing scripts
 
 Same loop as Science, with its own tools. `export-ehel-computing-scripts.py` flattens every learner-facing line into one sheet per stage; the reviewed file comes back from OneDrive and lands in `computing/data/script-review.json`:

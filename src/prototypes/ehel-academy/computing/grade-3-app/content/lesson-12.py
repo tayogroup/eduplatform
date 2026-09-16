@@ -6,7 +6,7 @@ making sure that information stays secret; 3DC.05 write and decode messages
 using very simple code, including converting letters to numbers (1 = a,
 2 = b, etc.).
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "secret-codes",
@@ -178,3 +178,65 @@ LESSON["warmup"] = [
     q("Should you tell a stranger your password?", "\U0001F511", "no, a password stays secret", ["yes, if they ask nicely", "yes, if they are online", "only if they guess it"], "A password is kept secret, even from friends."),
     q("How many letters are in the alphabet?", "\U0001F524", "26", ["10", "24", "100"], "From the first letter to the last, the alphabet has 26 letters."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Write and decode", "Algorithmic thinking")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4C4", "Plain text in, ciphertext out",
+         "A message has two forms and a proper name for each. Before you do anything to it, it "
+         "is plain text - the words as anybody would read them. You apply the rule. What comes "
+         "out is ciphertext. It is the same message, unreadable to anyone without the rule. "
+         "Apply the rule the other way and the ciphertext becomes plain text again. Plain text, "
+         "rule, ciphertext, rule, plain text: the message goes out and comes back."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("plain text", "\U0001F4C4", "The message before the cipher is applied - the words as anybody would read them.",
+         ["Plain text goes in one end.", "Turn the ciphertext back into plain text."]),
+    word("ciphertext", "\U0001F510", "The message after the cipher has been applied.",
+         ["The ciphertext looks like nonsense.", "Only the key turns ciphertext back."]),
+]
+
+LESSON["cando"] = [
+    cando("I know a cipher is a way of keeping information secret.", "3DC.04"),
+    cando("I can write a message using the code where 1 is a and 2 is b.", "3DC.05"),
+    cando("I can decode a message that was written in that code.", "3DC.05"),
+]
+
+LESSON["world"] = world(
+    "Ciphers are older than computers by thousands of years. A Roman general shifted "
+    "every letter of his messages along the alphabet. A captured messenger then carried "
+    "nothing anyone could read. That same shift is still the first cipher anybody learns.",
+    [place("\U0001F3E6", "Online banking",
+           "Everything between your device and the bank is turned into ciphertext on the way. Anyone watching sees nonsense."),
+     place("\U0001F4AC", "A messaging app",
+           "Messages leave your phone as ciphertext and become plain text again only on your friend's phone."),
+     place("\U0001F3E5", "A hospital",
+           "Patient records are kept as ciphertext, so a stolen laptop is a stolen brick rather than a stolen file.")],
+    "Look at a web address on a phone. The little padlock means plain text is being turned into ciphertext before it leaves.")
+
+tier(LESSON,
+     support=[
+         q("In the 1 = a code, what number is b?", "\U0001F522", "2", ["1"],
+           "a is 1, so b is 2."),
+         q("The message before you put it into cipher is called...", "\U0001F4C4", "plain text", ["ciphertext"],
+           "Plain text is the readable one. Ciphertext is the scrambled one."),
+     ],
+     extension=[
+         q("What turns ciphertext back into plain text?", "\U0001F511",
+           "applying the rule the other way",
+           ["reading it slowly", "writing it out again", "nothing can"],
+           "The rule works both ways. That is exactly why keeping the rule secret matters."),
+         q("Two people use the same cipher but one of them loses the key. What happens?", "\U0001F510",
+           "they can still send ciphertext but cannot read what comes back",
+           ["nothing changes", "the messages become plain text", "the cipher stops working for everyone"],
+           "Without the key the ciphertext is just nonsense - which is the whole point of a cipher."),
+     ])

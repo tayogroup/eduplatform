@@ -7,7 +7,7 @@ the roles they perform; 3CS.03 manual and automatic input devices; 3CS.04
 different types of file stored on a hard drive - text, audio, image, video,
 games.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "systems-inputs-and-files",
@@ -227,3 +227,74 @@ LESSON["warmup"] = [
     q("The keyboard is hardware. The writing app is...", "\U0001F4BF", "software", ["hardware", "a cable", "a battery"], "Programs are software; the parts you can touch are hardware."),
     q("A door opens by itself when you walk up to it. What noticed you?", "\U0001F6AA", "a sensor", ["the door handle", "a key", "a password"], "A sensor is an input that works without anyone pressing it."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Manual or automatic input?", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F446", "Automatic inputs that read you",
+         "A manual input is one you do: typing, tapping, clicking. An automatic input collects "
+         "itself. Some read your body: a fingerprint or a face. Those are called biometric "
+         "inputs. They measure something about you, not something you know. Others read a tag. "
+         "RFID is a small chip in a card or a label. A reader picks it up without touching it. "
+         "That is how a bus pass works when you wave it."),
+    part("\U0001F4D6", "Hardware and software, working as one system",
+         "An e-reader is a good example of a system. The hardware is a screen, a battery and a "
+         "few buttons. The software turns a file into a page and remembers where you stopped. "
+         "Neither half is any use on its own. A screen with no software shows nothing. Software "
+         "with no screen has nowhere to put the page. Together they do one job well."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("biometric", "\U0001F446", "An input taken from your body, like a fingerprint or a face.",
+         ["A fingerprint reader is a biometric input.", "Biometric inputs need no password."]),
+    word("RFID", "\U0001F4B3", "A tag a reader can pick up without touching it.",
+         ["A bus pass has an RFID chip in it.", "The shop label has RFID inside."]),
+    word("e-reader", "\U0001F4D6", "A device made for one job - reading - with hardware and software working together.",
+         ["An e-reader holds hundreds of books.", "The e-reader's software remembers the page."]),
+]
+
+LESSON["cando"] = [
+    cando("I know hardware and software combine to make a working system.", "3CS.01"),
+    cando("I know the difference between hardware and software and what each does.", "3CS.02"),
+    cando("I can name manual and automatic input devices.", "3CS.03"),
+    cando("I can name the types of file a computer stores.", "3CS.04"),
+]
+
+LESSON["world"] = world(
+    "The first program ever held in a computer's own memory ran in 1948. It was at the "
+    "University of Manchester, on a machine nicknamed Baby. It took 52 minutes to find "
+    "its answer and it filled a room. Before that, a computer had to be rewired by hand "
+    "to change what it did.",
+    [place("\U0001F3EA", "A shop",
+           "Card readers, barcode scanners and RFID tags put data in without anybody typing a thing."),
+     place("\U0001F6EB", "An airport",
+           "A passport gate reads your face and compares it with the chip in the passport. Two automatic inputs at once."),
+     place("\U0001F4DA", "A library",
+           "Books carry RFID tags, so a whole trolley can be checked in without opening a single cover.")],
+    "Find a card at home with a chip or a wave symbol on it. That is RFID, waiting to be read.")
+
+tier(LESSON,
+     support=[
+         q("Typing on a keyboard is which kind of input?", "\u2328\ufe0f", "manual", ["automatic"],
+           "You do it yourself, so it is manual."),
+         q("A fingerprint reader is a...", "\U0001F446", "biometric input", ["output device"],
+           "It reads something about your body, so it is biometric."),
+     ],
+     extension=[
+         q("Why is an automatic input often better than typing?", "\u26A1",
+           "it is faster and it does not make typing mistakes",
+           ["it is more fun", "it needs no power", "it is always cheaper"],
+           "Anything a machine reads itself is quicker and does not mistype. That is why shops and airports use them."),
+         q("What makes an e-reader a SYSTEM rather than just hardware?", "\U0001F4D6",
+           "the hardware and the software only work together",
+           ["it is expensive", "it has a battery", "it holds books"],
+           "A screen with no software shows nothing; software with no screen has nowhere to draw. A system is both."),
+     ])

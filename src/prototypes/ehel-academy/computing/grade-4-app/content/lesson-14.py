@@ -6,7 +6,7 @@ range of industries; 4CS.07 the role of robots in service industries,
 including delivery, public transport and health care; 4CS.01 where control
 systems are used.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "computer-scientists-and-service-robots",
@@ -194,3 +194,51 @@ LESSON["warmup"] = [
     q("Who uses computers to forecast tomorrow's weather?", "\u26C5", "scientists at a weather centre", ["a baker", "a hairdresser", "a bus driver"], "Weather scientists run programs on huge amounts of data to make a forecast."),
     q("A robot carries meals round a hospital by itself. What stops it bumping into people?", "\U0001F916", "sensors that notice what is in front of it", ["a louder horn and nothing else", "a new coat of paint", "a longer battery and nothing else"], "Sensors let it notice people and stop or go round them: sense, decide, act."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Which industry needs this?", "Evaluation")
+
+LESSON["cando"] = [
+    cando("I can describe what computer scientists do in different industries.", "4CS.06"),
+    cando("I can describe what service robots do in delivery, transport and health care.", "4CS.07"),
+    cando("I can identify where a control system is being used.", "4CS.01"),
+]
+
+LESSON["world"] = world(
+    "Computer scientists are almost never employed by computer companies. They work in "
+    "hospitals, farms, museums, banks and football clubs. Anywhere with more data than "
+    "people can read. Anywhere with a job that has to be done exactly the same way every "
+    "time.",
+    [place("\U0001F3E5", "Health care",
+           "Software reads scans and flags the ones a doctor should look at first. The doctor still decides."),
+     place("\U0001F69A", "Delivery",
+           "Small robots carry parcels along pavements, and software works out the order of the stops."),
+     place("\U0001F69C", "Farming",
+           "Sensors in a field decide which patch needs water. Less water, bigger crop, written by a programmer.")],
+    "Ask a grown-up what a computer does in their job. There will be one, even if it is not obvious.")
+
+tier(LESSON,
+     support=[
+         q("A robot that carries meals round a hospital works in...", "\U0001F3E5",
+           "health care", ["a bank"],
+           "Service robots do jobs for people: delivery, transport and health care."),
+         q("A control system senses, decides and...", "\u2699\ufe0f", "acts", ["sleeps"],
+           "Sense, decide, act. That is every control system there is."),
+     ],
+     extension=[
+         q("Why does a hospital employ a computer scientist?", "\U0001F9E0",
+           "there is more data than people can read, and software can sort it",
+           ["to fix the printers", "to play games", "they do not"],
+           "Scans, records, appointments, test results. Somebody has to write the software that makes sense of it."),
+         q("A delivery robot crosses a road on its own. Which part is the control system?", "\U0001F916",
+           "the program deciding, between the sensors and the wheels",
+           ["the wheels", "the parcel", "the pavement"],
+           "Sensors sense and wheels act. The control system is the deciding in the middle."),
+     ])

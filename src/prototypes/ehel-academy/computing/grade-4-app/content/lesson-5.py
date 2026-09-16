@@ -6,7 +6,7 @@ develop programs with iteration; 4P.04 programs that produce a desired
 output, using the repeat command; 4P.01 add comments to blocks of code and
 explain their benefits.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "programs-with-loops",
@@ -194,3 +194,65 @@ LESSON["warmup"] = [
     q("You write a note on your drawing: 'the red square is the door'. Who is the note for?", "\U0001F4DD", "anyone who looks at the drawing later, even you", ["nobody", "the pencil", "the paper"], "A note that says what a part is for helps the next reader. In a program it is called a comment."),
     q("Robo must go forward 5 squares. With a repeat block and a move forward block, which number goes in the repeat?", "\U0001F501", "5", ["1", "4", "10"], "The number in the repeat says how many times the block after it happens."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Fold it into a loop", "Pattern recognition")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F431", "Where these programs really live",
+         "The blocks here work like Scratch, which is what most schools use at your age. In "
+         "Scratch you drag blocks under a hat block. You press the green flag. The sprite does "
+         "exactly what you said. It has a repeat block with a number in it. It has a forever "
+         "block. It has a place to write a comment beside any block. For a physical device, "
+         "schools often use MakeCode. It looks almost the same. It sends the program to the "
+         "board instead of to a sprite. Both of them think the way this does."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("Scratch", "\U0001F431", "The program most schools use for building block programs.",
+         ["We built the animation in Scratch.", "Scratch has a repeat block and a forever block."]),
+]
+
+LESSON["cando"] = [
+    cando("I can develop a program with repetition in it.", "4P.02"),
+    cando("I can develop a program that uses iteration.", "4P.03"),
+    cando("I can use the repeat command to produce the output I wanted.", "4P.04"),
+    cando("I can add comments to code and say why they help.", "4P.01"),
+]
+
+LESSON["world"] = world(
+    "Programmers read far more code than they write. Often it is code they wrote "
+    "themselves months ago and no longer remember. A comment is a note to that future "
+    "person, and the future person is usually you.",
+    [place("\U0001F4BC", "A software team",
+           "Somebody new has to understand code written years ago by somebody who has left. The comments are all they have."),
+     place("\U0001F6F0\ufe0f", "A space agency",
+           "Flight software is read and re-read for decades. Every line has to explain itself."),
+     place("\U0001F3E5", "A hospital",
+           "Software that handles medicines is checked line by line by people who did not write it.")],
+    "Ask a grown-up to find something they wrote a year ago. Can they still tell why they wrote it that way?")
+
+tier(LESSON,
+     support=[
+         q("repeat 5 - move. How many moves?", "\u27A1\ufe0f", "5", ["1"],
+           "The block inside runs once for every turn of the loop."),
+         q("A comment is...", "\U0001F4AC", "a note for people who read the code", ["an extra block that runs"],
+           "The computer ignores comments. They are for people."),
+     ],
+     extension=[
+         q("What makes a comment useful?", "\U0001F4AC",
+           "it says WHY the block is there, not what it obviously does",
+           ["it repeats the block in words", "it is very long", "it names the programmer"],
+           "Move 10 steps followed by a comment saying move 10 steps helps nobody. Why 10 does."),
+         q("Does adding comments change what the program does?", "\u274C",
+           "no - the computer ignores them completely",
+           ["yes, it runs slower", "yes, it runs faster", "yes, it adds steps"],
+           "Comments are invisible to the computer and essential to the people. That is exactly why they are safe to add."),
+     ])

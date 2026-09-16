@@ -7,7 +7,7 @@ computers connected together around the world; 1DC.03 some devices are
 connected by wires and others are not; 1DC.04 there are times when the
 internet is not available.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "networks-and-the-internet",
@@ -252,3 +252,50 @@ LESSON["warmup"] = [
     q("How can a message get to Grandma far away?", "\U0001F48C", "it travels through the internet", ["it walks there", "it hides in a sock", "it cannot get there"], "Messages travel between computers through the internet."),
     q("Which of these connects with a wire?", "\U0001F50C", "a printer with a cable", ["a phone on wi-fi", "a smart watch", "a tablet on wi-fi"], "Some devices connect with a wire and some with no wire."),
 ]
+
+# ---- Cambridge Learner's Book 1, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Build a network", "Abstraction")
+
+LESSON["cando"] = [
+    cando("I know some devices can join together to make a network.", "1DC.01"),
+    cando("I know some devices join with wires and some without.", "1DC.03"),
+    cando("I know the internet is many computers joined around the world.", "1DC.02"),
+    cando("I know there are times when the internet is not there.", "1DC.04"),
+]
+
+LESSON["world"] = world(
+    "Most of the internet is not in the sky. It runs along cables on the "
+    "bottom of the sea. There are hundreds of them. Some are thinner than "
+    "your arm. They carry messages as flashes of light.",
+    [place("\U0001F30A", "The sea bed",
+           "Ships lay the cables that join the continents. When one is cut, a whole country can slow down."),
+     place("\U0001F3EB", "Your school",
+           "Every computer in the school is joined to the same network, which is how a printer down the corridor can print your work."),
+     place("\U0001F6F0\ufe0f", "Space",
+           "Where there are no cables - a ship at sea, a village on a mountain - the internet arrives by satellite instead.")],
+    "Find the box where the internet comes into your home. Count the little lights on it and ask a grown-up what they mean.")
+
+tier(LESSON,
+     support=[
+         q("A network is...", "\U0001F5A5\ufe0f", "devices joined to each other", ["one computer on its own"],
+           "Join two or more devices and you have a network."),
+         q("Does a tablet need a wire to join a network?", "\U0001F4F6", "no", ["yes, always"],
+           "A tablet joins without a wire. A desktop computer often uses one."),
+     ],
+     extension=[
+         q("The internet is off at home. Which of these still works?", "\U0001F4F5",
+           "a drawing app already on the tablet",
+           ["a video call to Grandma", "searching for pictures of lions", "sending an email"],
+           "Anything that needs to reach another computer needs the internet. A drawing app is already on your tablet."),
+         q("Why is the internet called a NETWORK of networks?", "\U0001F310",
+           "it joins lots of smaller networks together",
+           ["it has a lot of wires", "it is very big", "it is in the sky"],
+           "Your home network joins your school's network joins a hospital's network. All of them together are the internet."),
+     ])

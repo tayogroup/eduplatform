@@ -957,6 +957,50 @@
   .codecell svg { color: var(--ink); }
   .stopbtn { border-color: var(--bad); }
 
+  /* ---- WHICH COMPUTATIONAL-THINKING MOVE THIS STEP IS (2026-09-16) --------
+     Cambridge labels one task per unit as computational thinking and says
+     which skill it exercises. This build did all of them and named none. The
+     chip is not a step and not a control, so nothing moves; `title` carries
+     the plain-English gloss for a grown-up reading over a shoulder. The
+     slide head wraps so a long title and a chip never squeeze each other. */
+  .slide-head { flex-wrap: wrap; }
+  /* --plum on --card measured 4.30:1 in the dark theme, under the 4.5 this
+     size needs, so the WORD is --ink (the colour the design system picked for
+     reading) and the plum is the border. 13px is the kit's label floor. */
+  .ctchip { flex: 0 0 auto; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink);
+    background: var(--card); border: 2px solid var(--plum); border-radius: 999px; padding: 4px 10px; }
+
+  /* ---- CAMBRIDGE'S "What can you do?", on the sticker shelf ---------------
+     Every unit of all four Learner's Books closes with one. It lives on the
+     shelf, which is not a step, so nothing here moves a saved place. "Show
+     me" is 44px like every other control in this build. */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 8px 10px 8px 14px; }
+  .cando li > span { font-size: 16px; font-weight: 700; line-height: 1.35; }
+  .candogo { flex: 0 0 auto; min-height: 44px; border: 2px solid var(--line); background: var(--card);
+    color: var(--ink); border-radius: 999px; padding: 8px 16px; font-family: inherit; font-weight: 800;
+    font-size: 14px; cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 12px; }
+    .candogo { width: 100%; }
+  }
+
+  /* ---- COMPUTING WORLD: the "Did you know?" panel and what to go and look at.
+     This step said "not built yet" in all 47 lessons until 2026-09-16. */
+  .dyk { width: 100%; border: 3px solid var(--gold); border-radius: 18px; background: var(--card);
+    padding: 12px 16px; text-align: left; }
+  .dyk-h { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .dyk p { margin: 0; font-size: 18px; line-height: 1.5; }
+  .worldlook { margin: 2px 0 0; font-size: 17px; line-height: 1.5; color: var(--ink); max-width: 34em; }
+  .world .cardsgrid { width: 100%; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1293,7 +1337,7 @@
       </div>
     </section>
     <section class="slide" data-objectives="4P.07" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Testing systematically means testing one part at a time, so you know exactly which part has the bug.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Part 1: reset. Part 2: the jumps. Part 3: the greeting. Run part 1: fine. Run part 2: it spins instead of jumping. The bug is in part 2.</s><s>Fix that block, run part 2 again, then run the whole thing.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children run the whole program, see it go wrong, and guess.</s><s>Run the parts one at a time. The part that fails holds the bug.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Run each part, find the one that fails, fix, run again.</s></mstts:express-as>' data-say="The program is in named parts. Run each part on its own to see which one goes wrong, fix the block in that part, and run the part again.">
-      <div class="slide-head"><span class="n">7</span><h2>Test it part by part</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Test it part by part</h2><span class="ctchip" title="breaking a task into smaller parts">Decomposition</span></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">The program is in named parts. Run each part on its own to see which one goes wrong, fix the block in that part, and run the part again.</span></div>
       <div class="stage">
         <div id="stage7"></div>
@@ -1352,9 +1396,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Computing world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s computing is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world. This part is still being built.">
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the world outside the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One surprising true thing, then the real places where this computing is at work.</s><s>Tap a card to hear what happens there.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look, then press Next.</s></mstts:express-as>' data-say="Where this computing is out in the real world.">
       <div class="slide-head"><span class="n">13</span><h2>Computing world</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Where this computing is out in the real world. This part is still being built.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Where this computing is out in the real world.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -1378,6 +1422,15 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="cando">
+          <h3>What can you do?</h3>
+          <p class="candonote">Read each one. Can you do it? If you are not sure, press <b>Show me</b>.</p>
+          <ul>
+          <li><span>I can develop a program that gives different outputs from different inputs.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I can plan each object in a program with its inputs and outputs.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can test the parts of a program one at a time to find an error.</span><button type="button" class="candogo" data-go="6">Show me</button></li>
+          </ul>
+        </div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1420,6 +1473,20 @@
       "4P.06",
       "4P.07"
     ],
+    "cando": [
+      {
+        "t": "I can develop a program that gives different outputs from different inputs.",
+        "code": "4P.05"
+      },
+      {
+        "t": "I can plan each object in a program with its inputs and outputs.",
+        "code": "4P.06"
+      },
+      {
+        "t": "I can test the parts of a program one at a time to find an error.",
+        "code": "4P.07"
+      }
+    ],
     "steps": [
       {
         "kind": "overview",
@@ -1429,6 +1496,7 @@
           "4P.06",
           "4P.07"
         ],
+        "ct": "",
         "data": {
           "about": [
             "Give one sprite a different script for each input.",
@@ -1438,7 +1506,7 @@
           ],
           "counts": {
             "steps": 14,
-            "words": 5,
+            "words": 7,
             "games": 4,
             "home": 2
           },
@@ -1501,6 +1569,7 @@
           "4P.06",
           "4P.07"
         ],
+        "ct": "",
         "data": {
           "parts": [
             {
@@ -1522,6 +1591,11 @@
               "pic": "🔄",
               "title": "Fix, then run again",
               "say": "Fix the block in the failing part and run that part again. Only when every part passes does the whole program pass. Two bugs in two parts are found one at a time, which is far easier than finding both at once."
+            },
+            {
+              "pic": "🔍",
+              "title": "Debugging systematically",
+              "say": "There is a bad way to find a bug and a good one. The bad way is changing things until it works, which sometimes works and teaches you nothing. The good way is debugging systematically. Split the program into parts. Run one part. Check its result against what you expected. Move on only when that part is right. The error has nowhere to hide. You are never testing more than one thing at a time."
             }
           ]
         }
@@ -1534,6 +1608,7 @@
           "4P.06",
           "4P.07"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -1580,6 +1655,24 @@
                 "Test systematically.",
                 "A systematic test finds the failing part."
               ]
+            },
+            {
+              "w": "debugging",
+              "pic": "🐛",
+              "meaning": "Finding the error in a program and correcting it.",
+              "uses": [
+                "Debugging part by part is quicker.",
+                "Debugging systematically means testing one part at a time."
+              ]
+            },
+            {
+              "w": "systematically",
+              "pic": "📋",
+              "meaning": "In a planned order, so nothing is missed.",
+              "uses": [
+                "Test the parts systematically.",
+                "Working systematically finds the error faster."
+              ]
             }
           ]
         }
@@ -1590,6 +1683,7 @@
         "objectives": [
           "4P.05"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -1640,6 +1734,7 @@
         "objectives": [
           "4P.05"
         ],
+        "ct": "",
         "data": {
           "inputs": [
             {
@@ -1747,6 +1842,7 @@
         "objectives": [
           "4P.06"
         ],
+        "ct": "",
         "data": {
           "rounds": [
             {
@@ -1881,6 +1977,7 @@
         "objectives": [
           "4P.07"
         ],
+        "ct": "Decomposition",
         "data": {
           "sprite": "🐱",
           "rounds": [
@@ -2046,6 +2143,7 @@
           "4P.06",
           "4P.07"
         ],
+        "ct": "",
         "data": {
           "ask": "Input, output, or part?",
           "bins": [
@@ -2125,6 +2223,7 @@
           "4P.06",
           "4P.07"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2207,6 +2306,7 @@
           "4P.06",
           "4P.07"
         ],
+        "ct": "",
         "data": {
           "games": [
             {
@@ -2360,6 +2460,23 @@
                       "The blocks that run for one input."
                     ]
                   ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "plan",
+                      "To decide an object's input and output before building it."
+                    ],
+                    [
+                      "systematic",
+                      "Done in order, one part at a time, missing nothing."
+                    ],
+                    [
+                      "debugging",
+                      "Finding the error in a program and correcting it."
+                    ]
+                  ]
                 }
               ]
             },
@@ -2403,6 +2520,7 @@
           "4P.06",
           "4P.07"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2438,6 +2556,7 @@
           "4P.06",
           "4P.07"
         ],
+        "ct": "",
         "data": {
           "items": [
             {
@@ -2601,6 +2720,86 @@
               ],
               "why": "A fix is tested by running it."
             }
+          ],
+          "support": [
+            {
+              "ask": "Your program has three parts. Which do you test first?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🔢</div>",
+              "opts": [
+                {
+                  "t": "the first part, on its own",
+                  "ok": true
+                },
+                {
+                  "t": "all three together",
+                  "ok": false
+                }
+              ],
+              "why": "One part at a time means you know exactly where the error is."
+            },
+            {
+              "ask": "Debugging means...",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🐛</div>",
+              "opts": [
+                {
+                  "t": "finding the error and correcting it",
+                  "ok": true
+                },
+                {
+                  "t": "adding more parts",
+                  "ok": false
+                }
+              ],
+              "why": "Find it, then fix it."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "Why is debugging systematically better than changing things until it works?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">📋</div>",
+              "opts": [
+                {
+                  "t": "you find out WHERE the error is, instead of hoping",
+                  "ok": true
+                },
+                {
+                  "t": "it is more fun",
+                  "ok": false
+                },
+                {
+                  "t": "it takes longer",
+                  "ok": false
+                },
+                {
+                  "t": "there is no difference",
+                  "ok": false
+                }
+              ],
+              "why": "Changing things at random can accidentally work and leave the real error in place. Systematic testing cannot."
+            },
+            {
+              "ask": "Part 2 fails. Do you need to test part 3?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">⚠️</div>",
+              "opts": [
+                {
+                  "t": "fix part 2 first - part 3 gets the wrong thing handed to it",
+                  "ok": true
+                },
+                {
+                  "t": "yes, test them all anyway",
+                  "ok": false
+                },
+                {
+                  "t": "no, never test part 3",
+                  "ok": false
+                },
+                {
+                  "t": "test part 1 again",
+                  "ok": false
+                }
+              ],
+              "why": "A part that is given wrong input will look broken even when it is fine. Fix them in order."
+            }
           ]
         }
       },
@@ -2608,19 +2807,35 @@
         "kind": "world",
         "title": "Computing world",
         "objectives": [],
+        "ct": "",
         "data": {
           "title": "Inputs, Outputs and Parts",
-          "soon": [
-            "Real places where this computing happens.",
-            "People who use it every day at work.",
-            "Things near you to go and look at."
-          ]
+          "fact": "Engineers call it bisecting: if the bug is somewhere in a hundred steps, test step fifty. Now you know which half it is in. Seven tests and you have found it - instead of a hundred.",
+          "places": [
+            {
+              "pic": "💡",
+              "title": "An electrician",
+              "say": "A dead circuit is tested in halves, not wire by wire. Each test throws away half the possibilities."
+            },
+            {
+              "pic": "🚗",
+              "title": "A garage",
+              "say": "A mechanic tests one system at a time - fuel, spark, air - rather than taking the whole engine apart."
+            },
+            {
+              "pic": "🔬",
+              "title": "A laboratory",
+              "say": "An experiment changes one thing at a time. Change two and you cannot tell which one did it."
+            }
+          ],
+          "look": "Next time a string of lights will not work, ask a grown-up how they find the broken one."
         }
       },
       {
         "kind": "resources",
         "title": "Student resources",
         "objectives": [],
+        "ct": "",
         "data": {
           "words": [
             {
@@ -2666,6 +2881,24 @@
               "uses": [
                 "Test systematically.",
                 "A systematic test finds the failing part."
+              ]
+            },
+            {
+              "w": "debugging",
+              "pic": "🐛",
+              "meaning": "Finding the error in a program and correcting it.",
+              "uses": [
+                "Debugging part by part is quicker.",
+                "Debugging systematically means testing one part at a time."
+              ]
+            },
+            {
+              "w": "systematically",
+              "pic": "📋",
+              "meaning": "In a planned order, so nothing is missed.",
+              "uses": [
+                "Test the parts systematically.",
+                "Working systematically finds the error faster."
               ]
             }
           ],
@@ -2725,6 +2958,18 @@
               "uses": [
                 "Caesar's cipher shifts letters.",
                 "Pigpen is a cipher of shapes."
+              ],
+              "lesson": 12,
+              "title": "Caesar and Pigpen",
+              "file": "caesar-and-pigpen.html"
+            },
+            {
+              "w": "ciphertext",
+              "pic": "🔐",
+              "meaning": "The message after it has been encrypted.",
+              "uses": [
+                "The ciphertext looks like nonsense.",
+                "Ciphertext travels safely."
               ],
               "lesson": 12,
               "title": "Caesar and Pigpen",
@@ -2791,6 +3036,18 @@
               "file": "loops-in-algorithms.html"
             },
             {
+              "w": "condition-controlled",
+              "pic": "⏳",
+              "meaning": "A loop that goes round until something becomes true.",
+              "uses": [
+                "Repeat until the key is pressed is condition-controlled.",
+                "A condition-controlled loop has no count."
+              ],
+              "lesson": 1,
+              "title": "Loops in Algorithms",
+              "file": "loops-in-algorithms.html"
+            },
+            {
               "w": "contrast",
               "pic": "↔️",
               "meaning": "To point out how things differ.",
@@ -2851,6 +3108,30 @@
               "file": "bitsy-loops.html"
             },
             {
+              "w": "counter",
+              "pic": "🔢",
+              "meaning": "What keeps count of the turns round a loop.",
+              "uses": [
+                "The counter goes up by one each turn.",
+                "When the counter reaches 4 the loop stops."
+              ],
+              "lesson": 1,
+              "title": "Loops in Algorithms",
+              "file": "loops-in-algorithms.html"
+            },
+            {
+              "w": "cybercrime",
+              "pic": "🛡️",
+              "meaning": "A crime done through computers and networks.",
+              "uses": [
+                "Stealing data is cybercrime.",
+                "Encryption is a defence against cybercrime."
+              ],
+              "lesson": 11,
+              "title": "When Networks Fail",
+              "file": "when-networks-fail.html"
+            },
+            {
               "w": "data",
               "pic": "🔢",
               "meaning": "Raw facts: numbers, words, readings.",
@@ -2899,6 +3180,18 @@
               "file": "data-and-information.html"
             },
             {
+              "w": "debugging",
+              "pic": "🐛",
+              "meaning": "Finding the error in a program and correcting it.",
+              "uses": [
+                "Debugging part by part is quicker.",
+                "Debugging systematically means testing one part at a time."
+              ],
+              "lesson": 6,
+              "title": "Inputs, Outputs and Parts",
+              "file": "inputs-outputs-and-parts.html"
+            },
+            {
               "w": "decode",
               "pic": "🔍",
               "meaning": "To turn code back into plain letters.",
@@ -2921,6 +3214,18 @@
               "lesson": 3,
               "title": "Sub-routines",
               "file": "sub-routines.html"
+            },
+            {
+              "w": "decrypt",
+              "pic": "🔑",
+              "meaning": "To turn ciphertext back into plain text.",
+              "uses": [
+                "Use the key to decrypt the message.",
+                "Only the right key can decrypt it."
+              ],
+              "lesson": 12,
+              "title": "Caesar and Pigpen",
+              "file": "caesar-and-pigpen.html"
             },
             {
               "w": "delivery",
@@ -3007,6 +3312,18 @@
               "file": "databases.html"
             },
             {
+              "w": "file format",
+              "pic": "📁",
+              "meaning": "The kind of file - text, image, audio or video - which decides its size.",
+              "uses": [
+                "A video file format is much bigger.",
+                "The file format tells you what is inside."
+              ],
+              "lesson": 13,
+              "title": "Software, Sensors and Files",
+              "file": "software-sensors-and-files.html"
+            },
+            {
               "w": "filter",
               "pic": "🔍",
               "meaning": "A test that keeps only the records that match it.",
@@ -3091,6 +3408,18 @@
               "file": "computer-scientists-and-service-robots.html"
             },
             {
+              "w": "hyperlink",
+              "pic": "🔗",
+              "meaning": "Words you press to go to another page.",
+              "uses": [
+                "Press the hyperlink to open the next page.",
+                "The web is pages joined by hyperlinks."
+              ],
+              "lesson": 10,
+              "title": "Clients, Servers and the Web",
+              "file": "clients-servers-and-the-web.html"
+            },
+            {
               "w": "indefinite",
               "pic": "❓",
               "meaning": "Without a set number.",
@@ -3137,6 +3466,18 @@
               "lesson": 6,
               "title": "Inputs, Outputs and Parts",
               "file": "inputs-outputs-and-parts.html"
+            },
+            {
+              "w": "instant messaging",
+              "pic": "💬",
+              "meaning": "Information sent and shown the moment it arrives.",
+              "uses": [
+                "Instant messaging shows the message at once.",
+                "Instant messaging needs a network."
+              ],
+              "lesson": 13,
+              "title": "Software, Sensors and Files",
+              "file": "software-sensors-and-files.html"
             },
             {
               "w": "internet",
@@ -3319,6 +3660,18 @@
               "file": "caesar-and-pigpen.html"
             },
             {
+              "w": "plain text",
+              "pic": "📄",
+              "meaning": "The message before it is encrypted.",
+              "uses": [
+                "Plain text is what anybody could read.",
+                "Decrypting gives you the plain text back."
+              ],
+              "lesson": 12,
+              "title": "Caesar and Pigpen",
+              "file": "caesar-and-pigpen.html"
+            },
+            {
               "w": "plan",
               "pic": "📋",
               "meaning": "To decide an object's input and output before building it.",
@@ -3379,6 +3732,30 @@
               "file": "inputs-decide-outputs.html"
             },
             {
+              "w": "radio wave",
+              "pic": "📡",
+              "meaning": "What wi-fi carries your data on.",
+              "uses": [
+                "Wi-fi sends data on radio waves.",
+                "Radio waves go through walls, but not very well."
+              ],
+              "lesson": 10,
+              "title": "Clients, Servers and the Web",
+              "file": "clients-servers-and-the-web.html"
+            },
+            {
+              "w": "raw data",
+              "pic": "📊",
+              "meaning": "Facts as they were collected, before anybody has made sense of them.",
+              "uses": [
+                "21, 19, 24 is raw data.",
+                "Raw data becomes information when you know what it is about."
+              ],
+              "lesson": 8,
+              "title": "Data and Information",
+              "file": "data-and-information.html"
+            },
+            {
               "w": "record",
               "pic": "➡️",
               "meaning": "One row of a table: everything about one thing.",
@@ -3437,6 +3814,18 @@
               "lesson": 4,
               "title": "Inputs Decide Outputs",
               "file": "inputs-decide-outputs.html"
+            },
+            {
+              "w": "Scratch",
+              "pic": "🐱",
+              "meaning": "The program most schools use for building block programs.",
+              "uses": [
+                "We built the animation in Scratch.",
+                "Scratch has a repeat block and a forever block."
+              ],
+              "lesson": 5,
+              "title": "Programs with Loops",
+              "file": "programs-with-loops.html"
             },
             {
               "w": "script",
@@ -3523,12 +3912,36 @@
               "file": "sub-routines.html"
             },
             {
+              "w": "system software",
+              "pic": "⚙️",
+              "meaning": "The software that runs the computer itself, like the operating system.",
+              "uses": [
+                "The operating system is system software.",
+                "System software starts before anything else."
+              ],
+              "lesson": 13,
+              "title": "Software, Sensors and Files",
+              "file": "software-sensors-and-files.html"
+            },
+            {
               "w": "systematic",
               "pic": "🧪",
               "meaning": "Done in order, one part at a time, missing nothing.",
               "uses": [
                 "Test systematically.",
                 "A systematic test finds the failing part."
+              ],
+              "lesson": 6,
+              "title": "Inputs, Outputs and Parts",
+              "file": "inputs-outputs-and-parts.html"
+            },
+            {
+              "w": "systematically",
+              "pic": "📋",
+              "meaning": "In a planned order, so nothing is missed.",
+              "uses": [
+                "Test the parts systematically.",
+                "Working systematically finds the error faster."
               ],
               "lesson": 6,
               "title": "Inputs, Outputs and Parts",
@@ -3559,6 +3972,18 @@
               "file": "bitsy-loops.html"
             },
             {
+              "w": "touch sensor",
+              "pic": "👆",
+              "meaning": "An input device that notices being touched.",
+              "uses": [
+                "The touch sensor records where you pressed.",
+                "A touchscreen has a touch sensor in it."
+              ],
+              "lesson": 13,
+              "title": "Software, Sensors and Files",
+              "file": "software-sensors-and-files.html"
+            },
+            {
               "w": "unroll",
               "pic": "📜",
               "meaning": "To write out a loop as its plain steps.",
@@ -3571,12 +3996,36 @@
               "file": "predict-and-compare.html"
             },
             {
+              "w": "voice note",
+              "pic": "🗣️",
+              "meaning": "Information an output device gives back as sound.",
+              "uses": [
+                "She sent a voice note instead of typing.",
+                "A voice note is an output."
+              ],
+              "lesson": 13,
+              "title": "Software, Sensors and Files",
+              "file": "software-sensors-and-files.html"
+            },
+            {
               "w": "wi-fi",
               "pic": "📶",
               "meaning": "Joining a network by radio, with no cable.",
               "uses": [
                 "The tablet is on wi-fi.",
                 "Wi-fi needs a password."
+              ],
+              "lesson": 10,
+              "title": "Clients, Servers and the Web",
+              "file": "clients-servers-and-the-web.html"
+            },
+            {
+              "w": "wireless",
+              "pic": "📶",
+              "meaning": "Joined with no wire at all.",
+              "uses": [
+                "Wi-fi is a wireless connection.",
+                "A wireless device can move about."
               ],
               "lesson": 10,
               "title": "Clients, Servers and the Web",
@@ -4749,6 +5198,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -4794,9 +5257,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -4804,14 +5306,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();
@@ -9124,23 +9633,72 @@
     paintGrid();
   }
 
-  /* ---- Computing world: a placeholder that says it is one ---- */
+  /* ---- Computing world: where this computing is, outside the screen ----
+     Until 2026-09-16 this drew a placeholder saying it was not built yet, in
+     all 47 lessons of all four grades. It now carries the two things every
+     Cambridge Learner's Book runs throughout: a "Did you know?" fact and the
+     real places this computing is at work. A lesson with no `fact` still gets
+     the placeholder, so a half-authored grade builds.
+
+     It is still not a check and still ticks on arrival, so no stored record
+     and no step position moves. */
   function computingWorld(o) {
     const el = o.el;
     $(el.stage).className = "stagewide";
+    if (!o.fact) {
+      $(el.stage).innerHTML =
+        '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
+        '<h3 class="lec-h">Computing world is being built</h3>' +
+        '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
+        '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+        '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
+      $(el.score).textContent = "coming soon";
+      ONSHOW[o.finish] = () => finish(o.finish);
+      return;
+    }
+    const places = o.places || [];
     $(el.stage).innerHTML =
-      '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
-      '<h3 class="lec-h">Computing world is being built</h3>' +
-      '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
-      '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
-      '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
-    $(el.score).textContent = "coming soon";
+      '<div class="world">' +
+      '<div class="dyk"><span class="dyk-h">Did you know?</span><p>' + esc(o.fact) + "</p></div>" +
+      '<h3 class="lec-h">Where this computing is at work</h3>' +
+      '<div class="cardsgrid">' + places.map((pl, k) =>
+        '<button type="button" class="tapcard" data-k="' + k + '"><span class="cpic" aria-hidden="true">'
+        + small(pl.pic) + "</span>" + esc(pl.title) + "</button>").join("") + "</div>" +
+      '<p class="worldlook"><b>Go and look:</b> ' + esc(o.look) + "</p>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'w">&#128266; Read it to me</button></div>' +
+      "</div>";
+    $(el.score).textContent = places.length + " places";
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard");
+      if (!b) return;
+      const pl = places[Number(b.dataset.k)];
+      $(el.stage).querySelectorAll(".tapcard.now").forEach((c) => c.classList.remove("now"));
+      b.classList.add("heard", "now");
+      say(pl.say);
+      $(el.fb).className = "fb";
+      $(el.fb).innerHTML = "<b>" + esc(pl.title) + "</b> \u2014 " + esc(pl.say);
+    });
+    $(el.stage + "w").addEventListener("click", () =>
+      say("Did you know? " + o.fact + " " + places.map((pl) => pl.title + ". " + pl.say).join(" ")
+          + " Go and look. " + o.look));
     /* On arrival, not at page load - see unitOverview. At draw time this
        ticked the step before the child had seen it, where nothing could
        report it: a fresh lesson opened at 13%, and the stored record was
        one step short for ever. */
     ONSHOW[o.finish] = () => finish(o.finish);
   }
+
+  /* Cambridge's "What can you do?" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */
   function gameZone(o) {
@@ -9441,7 +9999,7 @@
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["📥", "Input spotter"], ["🎮", "Input programmer"], ["📋", "Object planner"], ["🧪", "Part tester"], ["🗂️", "Program sorter"], ["📝", "Part checker"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 4 parts. Now do it yourself." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   tapCards(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Each input runs its own script." }, LESSON.steps[3].data));
   inputProgram(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Two inputs, two scripts, two outputs." }, LESSON.steps[4].data));
@@ -9452,7 +10010,7 @@
   gameZone(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[9].data));
   homeProjects(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "Unplugged computing at home. That is the best kind." }, LESSON.steps[10].data));
   sequence(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "That is the whole lesson finished. You script inputs, plan objects and test parts." }, LESSON.steps[11].data));
-  computingWorld(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "Computing world is on its way." }, LESSON.steps[12].data));
+  computingWorld(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "That is this computing, out in the world." }, LESSON.steps[12].data));
   resources(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Your resources are always here." }, LESSON.steps[13].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
@@ -10162,15 +10720,3 @@
     if (added) report(lastAt);
   };
 </script>
-
-<style>/* ehel-narration-caption - the spoken explain, on screen one sentence at a time */
-  .narr { display: none; margin: 10px 0 14px; padding: 12px 16px; border: 1px solid var(--line);
-    border-left: 4px solid var(--teal); border-radius: 12px; background: var(--card);
-    color: var(--ink); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.45;
-    min-height: 3.1em; box-sizing: border-box; }
-  .narr.on { display: block; }
-  .narr .narr-k { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
-    color: var(--muted); font-weight: 700; margin: 0 0 4px; }
-  @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
-  @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
-</style>

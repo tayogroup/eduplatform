@@ -5,7 +5,7 @@
 algorithms; 3CT.08 develop linear algorithms to produce an output based on an
 input; 3CT.04 logical thinking in the creation of algorithms.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "input-machines",
@@ -173,3 +173,47 @@ LESSON["warmup"] = [
     q("A machine adds 3 to any number you put in. You put in 2. What comes out?", "\U0001F522", "5", ["2", "3", "23"], "2 in, add 3, 5 out."),
     q("In a recipe, what goes in at the start?", "\U0001F95A", "the ingredients", ["the finished cake", "the clean plates", "the washing-up"], "The ingredients go in; the cake comes out."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Build a number machine", "Abstraction")
+
+LESSON["cando"] = [
+    cando("I can identify the inputs to an algorithm.", "3CT.07"),
+    cando("I can build an algorithm that turns an input into an output.", "3CT.08"),
+    cando("I know logical thinking is used to create algorithms.", "3CT.04"),
+]
+
+LESSON["world"] = world(
+    "A vending machine is an input-and-output machine you can watch working. Money and a "
+    "number go in. One item and some change come out. The rule in between never varies.",
+    [place("\U0001F3E6", "A cash machine",
+           "Card and number in; cash, a receipt and a new balance out. Same input, same output, every time."),
+     place("\U0001F4EC", "A sorting office",
+           "A postcode goes in as a picture and a bin number comes out. One rule, thousands of letters an hour."),
+     place("\U0001F6E3\ufe0f", "A toll road",
+           "A number plate goes in, a charge comes out. Nobody is deciding anything - a rule is being applied.")],
+    "Look at a vending machine or a ticket machine. Say out loud what goes in and what comes out.")
+
+tier(LESSON,
+     support=[
+         q("The input is...", "\u2B07\ufe0f", "what goes into the machine", ["what comes out"],
+           "Input in, output out."),
+         q("The rule is add 2. You put in 5. What comes out?", "\u2795", "7", ["3"],
+           "5 add 2 is 7. The rule does the same thing to whatever you give it."),
+     ],
+     extension=[
+         q("Put 4 in and 12 comes out. Put 5 in and 15 comes out. What is the rule?", "\u2716\ufe0f",
+           "multiply by 3", ["add 8", "add 10", "multiply by 2"],
+           "Add 8 works for 4 but not for 5. Only times 3 fits both, which is why you test a rule twice."),
+         q("Why must the same input always give the same output?", "\U0001F501",
+           "so you can trust the machine and work out what it will do",
+           ["so it is faster", "so it uses less power", "it does not have to"],
+           "A machine that gave different answers to the same question could not be checked or trusted."),
+     ])

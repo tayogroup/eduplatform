@@ -6,7 +6,7 @@ physical computing device to enable it to reach a specific destination; with
 2CT.05 (predict where a program stops) and 2CT.01 (follow a linear
 algorithm). Robo on the grid keeps the floor robot's own rules.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "bee-bot-journeys",
@@ -182,3 +182,50 @@ LESSON["warmup"] = [
     q("A floor robot moves forward. How far does it go each time?", "\U0001F41D", "one square", ["across the whole room", "it jumps", "it does not move"], "A floor robot moves one square for every forward press."),
     q("A robot turns left, then goes forward. Where does it end up?", "↩️", "one square to its left", ["one square straight ahead", "one square behind it", "where it started"], "The turn spins it to face left, then forward moves it one square that way."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Where will the robot stop?", "Algorithmic thinking")
+
+LESSON["cando"] = [
+    cando("I can enter directions into a floor robot to reach a place.", "2P.08"),
+    cando("I can follow and understand a linear algorithm.", "2CT.01"),
+    cando("I can predict what an algorithm will produce.", "2CT.05"),
+]
+
+LESSON["world"] = world(
+    "A floor robot has no memory of where it is in the room. It only knows the "
+    "instructions you gave it, in order. That is why pressing Go twice runs "
+    "the whole journey twice.",
+    [place("\U0001F3ED", "A warehouse",
+           "Floor robots carry shelves to the packers. They follow a route of forward and turn, exactly like yours."),
+     place("\U0001F3E5", "A hospital",
+           "Some hospitals have robots that take meals and clean laundry along the corridors at night."),
+     place("\U0001F69C", "A field",
+           "A tractor steers itself by satellite up one row and down the next: forward, turn, forward, turn.")],
+    "Mark a start and a finish on the floor with two socks and give a grown-up the journey as a list before they move.")
+
+tier(LESSON,
+     support=[
+         q("The robot is facing the shop. Which button takes it there?", "\u2B06\ufe0f", "forward", ["left"],
+           "Forward moves it the way it is already facing."),
+         q("What does the Go button do?", "\u25B6\ufe0f", "runs the whole list of instructions",
+           ["runs one instruction"],
+           "The robot does all of them, in order, from the start."),
+     ],
+     extension=[
+         q("You forgot to clear the last journey before adding a new one. What happens?", "\U0001F41B",
+           "it does the old journey and then the new one",
+           ["it does only the new one", "nothing happens", "it goes backwards"],
+           "The instructions stack up. Clearing first is part of the algorithm."),
+         q("The robot should end on the school and ends one square short. What is the smallest fix?", "\U0001F3EB",
+           "add one forward at the end",
+           ["start the whole thing again", "turn it round", "press Go twice"],
+           "One square short means one forward missing. Find the smallest change that fixes it."),
+     ])

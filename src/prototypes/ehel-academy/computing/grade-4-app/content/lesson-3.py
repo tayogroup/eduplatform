@@ -6,7 +6,7 @@ different parts (sub-routines); 4CT.07 use decomposition to break tasks into
 parts represented as algorithms; 4CT.08 follow and understand algorithms that
 use a sub-routine.
 """
-from _kit import explain, step, opt, q, s, part, word, home
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "sub-routines",
@@ -185,3 +185,48 @@ LESSON["warmup"] = [
     q("A recipe card says 'make the sauce', and the sauce steps are on a card of their own. Why keep them apart?", "\U0001F35D", "so any recipe that needs sauce can use the same card", ["so nobody finds them", "to make the recipe longer", "because sauce is not cooking"], "Steps with their own name can be used again wherever they are needed."),
     q("A dance repeats one part, 'spin and clap', four times. The dance card could...", "\U0001F483", "give that part a name, write it once, and say its name each time", ["write the part out four times", "leave that part out", "be danced faster"], "Name a part once, then call it by its name wherever it comes."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Which sub-routine does it belong to?", "Decomposition")
+
+LESSON["cando"] = [
+    cando("I know decomposition means breaking a task into parts.", "4CT.06"),
+    cando("I can use decomposition to break a task into algorithms.", "4CT.07"),
+    cando("I can follow an algorithm that calls a sub-routine.", "4CT.08"),
+]
+
+LESSON["world"] = world(
+    "Almost no large program is written as one long list. It is written as hundreds of "
+    "named parts, most of them by different people. The main program is little more than "
+    "a list of which part to call next.",
+    [place("\U0001F680", "A space mission",
+           "Launch, orbit, descent and landing are separate procedures, written and tested apart, then called in order."),
+     place("\U0001F4BC", "A software team",
+           "One team writes the part that takes the payment and another writes the part that sends the email. Neither reads the other's."),
+     place("\U0001F3AC", "A film crew",
+           "Camera, sound, lighting and costume each do one named job. The director calls them together.")],
+    "Ask a grown-up to describe their job as four named parts. That is decomposition.")
+
+tier(LESSON,
+     support=[
+         q("Decomposition means...", "\U0001F9E9", "breaking a task into parts", ["making it longer"],
+           "One big job becomes several smaller named ones."),
+         q("A sub-routine is...", "\U0001F4DE", "a named part you can call", ["a kind of computer"],
+           "You write it once and call it whenever you need it."),
+     ],
+     extension=[
+         q("A sub-routine is called three times. How many times is it WRITTEN?", "\u270F\ufe0f",
+           "once", ["three times", "six times", "not at all"],
+           "That is the point of a sub-routine. Written once, called as often as you like, fixed in one place."),
+         q("Why does the main algorithm stay short when you use sub-routines?", "\U0001F4CB",
+           "it only says which part happens next, not how each part works",
+           ["the parts are shorter", "it misses steps out", "it does not stay short"],
+           "The detail moves into the named parts. The main algorithm becomes a plan you can read in one go."),
+     ])

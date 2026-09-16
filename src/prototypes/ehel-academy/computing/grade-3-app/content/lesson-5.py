@@ -7,7 +7,7 @@ programs that reset objects to their original state (initialisation); 3P.05
 making a change within a block of code, such as the number of steps a
 sprite moves; 3P.09 test and debug programs.
 """
-from _kit import explain, step, opt, q, choice, part, word, home
+from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "tidy-programs",
@@ -180,3 +180,73 @@ LESSON["warmup"] = [
     q("A program says: grow, grow, grow, grow. How could it be shorter?", "\U0001F501", "repeat 4 times, grow", ["grow", "shrink 4 times", "stop"], "One repeat block does the same job with fewer blocks."),
     q("You run a program and it does the wrong thing. What do you do next?", "\U0001F41B", "find the bug, fix it and run it again", ["delete the whole program", "run it again without changing anything", "switch the tablet off"], "Test, fix, and test again."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Make it shorter", "Pattern recognition")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F431", "Where these programs really live",
+         "The blocks here work like Scratch, the program most schools use at your age. In "
+         "Scratch you drag blocks together under a hat block. You press the green flag. The "
+         "sprite does what you said. It has a repeat block. It has a go-to block to reset a "
+         "sprite. It has blocks with numbers in them. All the things you are using now. If your "
+         "teacher opens Scratch, you already know how it thinks."),
+    part("\U0001F50A", "The number inside a block",
+         "Some blocks have a number you can change without changing the block. Move has a number "
+         "of steps. Wait has a number of seconds. Set volume has a number too. Volume is how "
+         "loud a sound is. It runs from 0 for silent to 100 for as loud as it goes. Change that "
+         "one number and the program does something different. Everything else stays as it was. "
+         "It is the smallest change you can make."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("Scratch", "\U0001F431", "The program most schools use for building block programs.",
+         ["We made the sprite move in Scratch.", "Scratch has a repeat block."]),
+    word("volume", "\U0001F50A", "How loud a sound is - a number you can change inside a block.",
+         ["Set the volume to 40.", "Change the volume by 5 each time."]),
+]
+
+LESSON["cando"] = [
+    cando("I can edit a program to make it clear and concise.", "3P.01"),
+    cando("I can test and debug a program until it does what I wanted.", "3P.09"),
+    cando("I can reset objects to where they started.", "3P.02"),
+    cando("I can change a number inside a block to change what happens.", "3P.05"),
+]
+
+LESSON["world"] = world(
+    "Programmers have a saying: the best code is the code you deleted. Fewer blocks means "
+    "fewer places for a bug to hide. So tidying a working program is real work, not "
+    "decoration.",
+    [place("\U0001F4BC", "A software team",
+           "Time is set aside just for tidying code that already works, because the next change will be easier."),
+     place("\U0001F3AE", "A games studio",
+           "A game has to redraw the screen sixty times a second. Every block that does nothing is a block in the way."),
+     place("\U0001F6F0\ufe0f", "A satellite",
+           "Code that flies has a hard memory limit. If it does not fit, something has to be made shorter.")],
+    "Find the volume control on a speaker at home. Watch the number change and listen to what the number means.")
+
+tier(LESSON,
+     support=[
+         q("Two blocks do nothing at all. What should you do?", "\U0001F5D1\ufe0f", "delete them", ["keep them"],
+           "A block that does nothing is a block in the way."),
+         q("The sprite starts wherever it finished last time. What block fixes that?", "\U0001F3E0",
+           "a go home block at the start", ["another move block"],
+           "Resetting at the start means the program does the same thing every run."),
+     ],
+     extension=[
+         q("You made the program shorter and it now does something different. Is that a good tidy-up?", "\u274C",
+           "no - a tidy program has to do exactly the same thing",
+           ["yes, it is shorter", "yes, if it is much shorter", "it does not matter"],
+           "Tidying means same result, fewer blocks. Change the result and you have not tidied, you have broken it."),
+         q("The cat stops two steps short of the flower. Which is the smallest change?", "\U0001F3AF",
+           "change the number inside the move block",
+           ["add three more move blocks", "start the program again", "delete the move block"],
+           "The block is right; only its number is wrong. Change the number and nothing else moves."),
+     ])

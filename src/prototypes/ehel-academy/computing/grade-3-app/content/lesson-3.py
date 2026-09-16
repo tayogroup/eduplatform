@@ -6,7 +6,7 @@ creation of algorithms; 3CT.05 predict the outcome of a change to an
 algorithm presented as a sequence of steps; 3CT.06 many tasks can be divided
 into smaller sections to make them easier to follow and to edit.
 """
-from _kit import explain, step, opt, q, s, part, word, home
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "think-it-through",
@@ -222,3 +222,71 @@ LESSON["warmup"] = [
     q("Why does the oven go on before the cake goes in?", "\U0001F525", "so it is hot when the cake goes in", ["so the cake can hide", "it does not matter", "to cool the kitchen"], "Order matters: a step gets things ready for the next one."),
     q("A big job like tidying your whole room is easier if you...", "\U0001F9E9", "split it into small parts: toys, books, clothes", ["do it all at once with your eyes shut", "leave it until next year", "tidy one sock"], "Small sections are easier to follow."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Divide the task into sections", "Decomposition")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F9E9", "Sections have a name: sub-tasks",
+         "When you divide a job into sections, each section is called a sub-task. Tidying your "
+         "room is one task; the books, the clothes and the floor are three sub-tasks. Each "
+         "sub-task is small enough to hold in your head. Small enough to finish. Small enough to "
+         "fix on its own when it goes wrong. You can even give a sub-task to somebody else. You "
+         "could never do that with the whole job at once."),
+    part("\u2753", "A decision is a place where it could go two ways",
+         "Logical thinking is mostly about decisions. A decision is a point in an algorithm. "
+         "There, the answer to a question decides what happens next. Is it raining? Then take a "
+         "coat. Is the bin full? Then empty it. You already make dozens of decisions a day "
+         "without noticing. Writing one down turns it into an algorithm."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("sub-task", "\U0001F9E9", "One smaller section of a bigger task.",
+         ["Tidying the books is one sub-task.", "Each sub-task is easier to fix on its own."]),
+    word("decision", "\u2753", "A point where the answer to a question decides what happens next.",
+         ["Is it raining? That is a decision.", "A decision sends the algorithm one way or the other."]),
+]
+
+LESSON["cando"] = [
+    cando("I know logical thinking is used to create algorithms.", "3CT.04"),
+    cando("I can predict what one change to an algorithm will do.", "3CT.05"),
+    cando("I can divide a task into smaller sections to make it easier.", "3CT.06"),
+]
+
+LESSON["world"] = world(
+    "The computer that guided astronauts to the Moon had very little memory. A single "
+    "photo on a phone today takes up more. It worked because the job was broken into "
+    "small named parts. Each part did one thing. Each was tested on its own.",
+    [place("\U0001F680", "A space mission",
+           "Launch, orbit, descent, landing. Each part is planned and rehearsed separately, then joined up."),
+     place("\U0001F3D7\ufe0f", "A building site",
+           "Foundations, walls, roof, wiring. Different teams, different weeks, one building."),
+     place("\U0001F3AC", "A film crew",
+           "A film is shot scene by scene and out of order. Nobody films a whole film in one go.")],
+    "Ask a grown-up how they plan a big job. Listen for the moment they break it into parts.")
+
+tier(LESSON,
+     support=[
+         q("Tidying your room. Which is a sub-task?", "\U0001F9F9", "putting the books away",
+           ["tidying the whole room"],
+           "A sub-task is one section of the bigger job."),
+         q("Is it raining? Take a coat. That question is a...", "\u2753", "decision", ["result"],
+           "A decision is where the answer changes what happens next."),
+     ],
+     extension=[
+         q("Why divide a task into sub-tasks at all?", "\U0001F9E9",
+           "each part is easier to follow, easier to fix and can be given to someone else",
+           ["it makes the job longer", "the computer needs it", "it looks organised"],
+           "Smaller parts are easier to understand, easier to fix, and can be shared out. The job itself is the same size."),
+         q("You swap two steps and the result does not change. What does that tell you?", "\U0001F504",
+           "those two steps did not depend on each other",
+           ["the algorithm is broken", "one of them is wrong", "swapping never changes anything"],
+           "Predicting a change and being right is how you find out what really depends on what."),
+     ])

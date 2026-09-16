@@ -6,7 +6,7 @@ algorithms; 2P.02 recreate algorithms as programs; 2P.03 develop programs to
 produce desired outputs, including the use of the repeat command; 2P.06 the
 benefits of regularly testing programs throughout their development.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "programs-and-repeats",
@@ -197,3 +197,64 @@ LESSON["warmup"] = [
     q("Jump, jump, jump. What is a shorter way to say it?", "\U0001F501", "jump three times", ["jump", "stop", "jump once, then stop"], "Saying 'three times' repeats the jump. That is what a repeat block does."),
     q("You press Run. What does the computer do?", "▶️", "it follows the program's blocks, one at a time", ["it guesses", "it switches off", "it makes up its own blocks"], "Run tells the computer to follow the program, block by block."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "The repeat block", "Pattern recognition")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F431", "Where children really build these programs",
+         "These blocks work like the ones in ScratchJr. ScratchJr is a real app for "
+         "young children on a tablet. You choose a character. You choose a background. "
+         "Then you drag blocks together to make it move, jump and speak. That is exactly "
+         "what you are doing here. Older children use Scratch. It has the same idea with "
+         "more blocks."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("ScratchJr", "\U0001F431", "A real app for building block programs on a tablet.",
+         ["We made our cat move in ScratchJr.", "ScratchJr has a repeat block too."]),
+]
+
+LESSON["cando"] = [
+    cando("I know a program tells a computer how to run an algorithm.", "2P.01"),
+    cando("I can turn an algorithm into a program.", "2P.02"),
+    cando("I can use the repeat block to get the output I want.", "2P.03"),
+    cando("I know why testing a program as I build it helps.", "2P.06"),
+]
+
+LESSON["world"] = world(
+    "Scratch and ScratchJr are named after scratching. That is the way a DJ "
+    "moves a record back and forth under the needle. The idea is the same. "
+    "Take pieces that already exist. Put them together in a new order.",
+    [place("\U0001F3B5", "A recording studio",
+           "Music software repeats a drum pattern hundreds of times. Nobody plays it hundreds of times - one loop does it."),
+     place("\U0001F3AC", "An animation studio",
+           "A walking character is a few drawings repeated over and over. Repetition is what makes it look like walking."),
+     place("\U0001F3ED", "A bottling plant",
+           "Fill, cap, label, move on. The same few steps repeated all day, which is exactly what a repeat block is for.")],
+    "Watch a cartoon character walk and count how many steps go by before the picture repeats itself.")
+
+tier(LESSON,
+     support=[
+         q("A program is...", "\u25B6\ufe0f", "an algorithm written so a computer can run it",
+           ["a kind of computer"],
+           "The algorithm is the plan. The program is the plan in a form the computer can run."),
+         q("repeat 3 - jump. How many jumps?", "\U0001F430", "3", ["1"],
+           "Repeat 3 does the next block three times."),
+     ],
+     extension=[
+         q("Which program does the SAME thing as: jump, jump, jump, jump?", "\U0001F501",
+           "repeat 4 - jump", ["repeat 3 - jump", "repeat 4 - spin", "jump, spin, jump, spin"],
+           "Four jumps written out, or repeat 4 with one jump. Same output, fewer blocks."),
+         q("Why test your program after every block instead of only at the end?", "\u2705",
+           "if it goes wrong you know which block did it",
+           ["it is faster", "the computer asks you to", "so it looks busy"],
+           "Test at the end and the bug could be anywhere. Test as you go and it is in the block you just added."),
+     ])

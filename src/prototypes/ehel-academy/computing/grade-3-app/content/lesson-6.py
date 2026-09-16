@@ -7,7 +7,7 @@ including a static object; 3P.07 the benefits of working with others when
 creating programs; 3P.08 programmers use their mistakes to inform the
 programs they create.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "many-things-at-once",
@@ -198,3 +198,51 @@ LESSON["warmup"] = [
     q("In a cartoon, can two characters move at the same time?", "\U0001F3AC", "yes, both at once", ["no, only one can ever move", "only if one is asleep", "only in black and white"], "Programs can run more than one thing at once, too."),
     q("Who can help you find a mistake you cannot see?", "\U0001F46B", "a partner looking with fresh eyes", ["nobody, ever", "the mistake itself", "a louder speaker"], "A second pair of eyes often spots what you missed."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Cat and dog together", "Decomposition")
+
+LESSON["cando"] = [
+    cando("I can make more than one algorithm run at the same time.", "3P.03"),
+    cando("I can build a program with more than one object, including a static one.", "3P.04"),
+    cando("I know the benefits of working with other people on a program.", "3P.07"),
+    cando("I know programmers use their mistakes to make better programs.", "3P.08"),
+]
+
+LESSON["world"] = world(
+    "In a video game everything is running at once: the player, every enemy, the clock "
+    "and the music. None of them waits for the others. Each one is its own small program, "
+    "all started by the same green flag.",
+    [place("\U0001F3AE", "A games studio",
+           "Each character has its own script. They run together, which is why the game feels alive."),
+     place("\U0001F3BC", "An orchestra",
+           "Every player reads their own part at the same time, and the parts were written to fit together."),
+     place("\U0001F3ED", "A production line",
+           "Several machines work at once on different parts of the same car. Waiting for each other would take all day.")],
+    "Watch a busy street for a minute. Count how many things are happening at the same time, none of them waiting.")
+
+tier(LESSON,
+     support=[
+         q("Two scripts start on the same green flag. When do they run?", "\U0001F3C1",
+           "at the same time", ["one after the other"],
+           "Each object has its own script and they all start together."),
+         q("A static object is one that...", "\U0001F33B", "does not move", ["moves fastest"],
+           "A static object is there to be seen, not to move."),
+     ],
+     extension=[
+         q("Why does a static object need a script at all?", "\U0001F33B",
+           "to make sure it looks right and is in the right place when the program starts",
+           ["it does not need one, ever", "so it can move", "to make it bigger"],
+           "It still needs to show itself, and to be where it should be at the start. It just has no move blocks."),
+         q("What is the best reason to build a program with somebody else?", "\U0001F465",
+           "they notice things you have stopped noticing",
+           ["it is half the typing", "you can blame them", "two programs are better than one"],
+           "You stop seeing your own mistakes very quickly. Somebody else sees them straight away."),
+     ])

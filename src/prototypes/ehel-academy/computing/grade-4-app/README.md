@@ -455,3 +455,48 @@ fourteen lessons played to 100% in Chromium with nothing wider than 375 px and a
 the deployed layout with the stored record and resume. Deployed the same day: 21 files
 uploaded, all verified on storage, every page byte-identical to HEAD in the encoding a
 browser is served, and every lesson played to the end again on the live pages.
+
+## 2026-09-16 - the Cambridge Learner's Book pass
+
+Asked to bring Grades 1 to 4 up to or past the depth of the four Cambridge
+Primary Computing Learner's Books. The coverage gate was already green here -
+every Stage 4 objective reached - so this was a depth and register job, not a
+coverage one, measured against Learner's Book 4.
+
+**What the book carried that this grade did not**: the `What can you do?`
+self-check every unit closes with, the `Did you know?` box, the tiered practice
+(`Go further`, `Challenge yourself!`), and the vocabulary - nine of the 54 Stage 4 glossary terms appeared nowhere in the build, and the register had collapsed - this grade owns 4P.07 and said 'debug' once, against 25, 32 and 41 in Grades 1 to 3. The
+`Computing world` step said "not built yet" in every lesson.
+
+**What landed, all of it position-safe.** This grade is live and routed, so a
+new teaching step would shift every stored section id after it and a child's
+saved record would tick the wrong dots. Nothing moved: all fourteen lessons
+rebuild with the same step count, the same kinds in the same order and the same
+titles, verified by diffing the `const LESSON` payloads against HEAD.
+
+- **46 self-check claims** on the sticker shelf, which is not a step. Each one
+  resolves to the first step of its lesson carrying that objective, so `Show me`
+  is derived rather than a written step number.
+- **28 support and 28 extension questions** on the lessons' check steps.
+  Support narrows the task and arrives on the first wrong core answer;
+  extension widens it and is offered after the core bank to a child who
+  finished with at most one slip. **Neither is scored and `finish()` still
+  fires at the end of the core bank.**
+- **Computing world built in every lesson**: a Did-you-know fact, two to four
+  tappable places where this computing is at work, and one thing to go and
+  look at.
+- **16 new word cards** plus the lecture text that uses them - the five server roles (file, application, web, print and mail), plain text, ciphertext and decrypt, wireless and radio wave, hyperlink, LED, cybercrime, counter, the condition-controlled loop, system software, touch sensor, voice note, instant messaging, file format and raw data.
+- **One computational-thinking move named per lesson** (`label_ct`), the way
+  Cambridge labels one task per unit, as a chip beside the step heading.
+
+**The gate that holds it**: `computing/data/cambridge-stage-features.json` holds
+35 Stage 4 entries, each naming the lesson that must answer it and the
+strings that must appear in *that lesson's* teaching text - which excludes the
+words of a wrong answer, and excludes the resources drawer. `check-coverage.py`
+reads it and also requires at least three self-check claims per lesson.
+Mutation-tested 7 of 7 with the tree restored byte-identical.
+
+**Still open**: `review-pack.html` (built by `../lesson-kit/build-review-pack.py`,
+deliberately not deployed) lists all 262 questions this grade asks, 254 of them
+unfalsifiable from inside the build because the key is the object the question
+was generated from. Nobody has read them.

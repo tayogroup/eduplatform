@@ -6,7 +6,7 @@ systems software; 4CS.03 data recorded by input devices, including sensors
 and data loggers; 4CS.04 information communicated by output devices; 4CS.05
 different types of file have different sizes.
 """
-from _kit import explain, step, opt, q, s, part, word, home
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "software-sensors-and-files",
@@ -215,3 +215,83 @@ LESSON["warmup"] = [
     q("Which usually takes up more space on a tablet: a photo or a short note?", "\U0001F4F7", "the photo", ["the note", "they are always the same size", "neither takes any space"], "A picture holds far more data than a few words of text."),
     q("A weather station records the temperature every hour all night, with nobody there. What is recording it?", "\U0001F4C8", "a data logger with a temperature sensor", ["a person with a pencil", "the moon", "a printer"], "A data logger records a sensor's readings by itself, over time."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "File sizes", "Evaluation")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\u2699\ufe0f", "System software runs the computer itself",
+         "Application software is what you open to do a job: a browser, a paint program, a game. "
+         "System software is different - it runs the computer itself and you never open it. The "
+         "operating system is system software. It starts the machine. It shares the memory out. "
+         "It puts what you type where it should go. It lets the applications talk to the "
+         "hardware. Without applications a computer does nothing useful. Without system software "
+         "it does not start."),
+    part("\U0001F446", "What sensors record and what outputs say back",
+         "Input devices record data. A touch sensor notices being touched and records where. A "
+         "data logger records a reading over and over on its own, for hours. Output devices "
+         "communicate information back, and not always as a picture. A voice note is information "
+         "given as sound. Instant messaging is information shown the moment it arrives."),
+    part("\U0001F4C1", "File format decides the size",
+         "The file format is the kind of file: text, image, audio or video. The format is what "
+         "decides how big it is. A page of text is tiny. A photo is thousands of times bigger. A "
+         "minute of video is bigger again. Nothing about the screen changes; the format is "
+         "simply carrying far more."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("system software", "\u2699\ufe0f", "The software that runs the computer itself, like the operating system.",
+         ["The operating system is system software.", "System software starts before anything else."]),
+    word("touch sensor", "\U0001F446", "An input device that notices being touched.",
+         ["The touch sensor records where you pressed.", "A touchscreen has a touch sensor in it."]),
+    word("voice note", "\U0001F5E3\ufe0f", "Information an output device gives back as sound.",
+         ["She sent a voice note instead of typing.", "A voice note is an output."]),
+    word("instant messaging", "\U0001F4AC", "Information sent and shown the moment it arrives.",
+         ["Instant messaging shows the message at once.", "Instant messaging needs a network."]),
+    word("file format", "\U0001F4C1", "The kind of file - text, image, audio or video - which decides its size.",
+         ["A video file format is much bigger.", "The file format tells you what is inside."]),
+]
+
+LESSON["cando"] = [
+    cando("I know what application software and system software each do.", "4CS.02"),
+    cando("I can name data that input devices record, including sensors and data loggers.", "4CS.03"),
+    cando("I can name information that output devices communicate.", "4CS.04"),
+    cando("I know different types of file have different sizes.", "4CS.05"),
+]
+
+LESSON["world"] = world(
+    "A whole novel as plain text is smaller than one photograph of its cover. Text is "
+    "just letters. A photo is millions of separate coloured dots, and every one of them "
+    "has to be stored.",
+    [place("\U0001F4F1", "A phone",
+           "Storage fills up with video and photos, almost never with text. That is the file format, not the phone."),
+     place("\U0001F326\ufe0f", "A weather station",
+           "A data logger records temperature every minute for a year and the whole file is still small. Numbers are tiny."),
+     place("\U0001F3AC", "A film studio",
+           "One minute of high quality video is bigger than every document in a school. Video is the greediest format there is.")],
+    "Look at the file sizes on a phone or a computer. Compare a note, a photo and a video of the same thing.")
+
+tier(LESSON,
+     support=[
+         q("A paint program is which kind of software?", "\U0001F3A8", "application software", ["system software"],
+           "You open it to do a job, so it is an application."),
+         q("Which file is biggest?", "\U0001F4C1", "a video", ["a short text note"],
+           "Video is the biggest format of all. Text is the smallest."),
+     ],
+     extension=[
+         q("What does system software do that an application cannot?", "\u2699\ufe0f",
+           "start the computer and share it out between the applications",
+           ["draw pictures", "play games", "write documents"],
+           "Applications do jobs for you. System software runs the machine so the applications can run at all."),
+         q("A data logger runs for a week and its file is tiny. Why?", "\U0001F4CA",
+           "it is only recording numbers, and numbers are a very small file format",
+           ["it did not record much", "it deleted most of it", "loggers compress everything"],
+           "A number takes almost no space. A single photo of the same greenhouse would be far bigger."),
+     ])

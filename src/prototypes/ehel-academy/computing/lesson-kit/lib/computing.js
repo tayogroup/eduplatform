@@ -4305,23 +4305,72 @@
     paintGrid();
   }
 
-  /* ---- Computing world: a placeholder that says it is one ---- */
+  /* ---- Computing world: where this computing is, outside the screen ----
+     Until 2026-09-16 this drew a placeholder saying it was not built yet, in
+     all 47 lessons of all four grades. It now carries the two things every
+     Cambridge Learner's Book runs throughout: a "Did you know?" fact and the
+     real places this computing is at work. A lesson with no `fact` still gets
+     the placeholder, so a half-authored grade builds.
+
+     It is still not a check and still ticks on arrival, so no stored record
+     and no step position moves. */
   function computingWorld(o) {
     const el = o.el;
     $(el.stage).className = "stagewide";
+    if (!o.fact) {
+      $(el.stage).innerHTML =
+        '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
+        '<h3 class="lec-h">Computing world is being built</h3>' +
+        '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
+        '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+        '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
+      $(el.score).textContent = "coming soon";
+      ONSHOW[o.finish] = () => finish(o.finish);
+      return;
+    }
+    const places = o.places || [];
     $(el.stage).innerHTML =
-      '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
-      '<h3 class="lec-h">Computing world is being built</h3>' +
-      '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
-      '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
-      '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
-    $(el.score).textContent = "coming soon";
+      '<div class="world">' +
+      '<div class="dyk"><span class="dyk-h">Did you know?</span><p>' + esc(o.fact) + "</p></div>" +
+      '<h3 class="lec-h">Where this computing is at work</h3>' +
+      '<div class="cardsgrid">' + places.map((pl, k) =>
+        '<button type="button" class="tapcard" data-k="' + k + '"><span class="cpic" aria-hidden="true">'
+        + small(pl.pic) + "</span>" + esc(pl.title) + "</button>").join("") + "</div>" +
+      '<p class="worldlook"><b>Go and look:</b> ' + esc(o.look) + "</p>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'w">&#128266; Read it to me</button></div>' +
+      "</div>";
+    $(el.score).textContent = places.length + " places";
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard");
+      if (!b) return;
+      const pl = places[Number(b.dataset.k)];
+      $(el.stage).querySelectorAll(".tapcard.now").forEach((c) => c.classList.remove("now"));
+      b.classList.add("heard", "now");
+      say(pl.say);
+      $(el.fb).className = "fb";
+      $(el.fb).innerHTML = "<b>" + esc(pl.title) + "</b> \u2014 " + esc(pl.say);
+    });
+    $(el.stage + "w").addEventListener("click", () =>
+      say("Did you know? " + o.fact + " " + places.map((pl) => pl.title + ". " + pl.say).join(" ")
+          + " Go and look. " + o.look));
     /* On arrival, not at page load - see unitOverview. At draw time this
        ticked the step before the child had seen it, where nothing could
        report it: a fresh lesson opened at 13%, and the stored record was
        one step short for ever. */
     ONSHOW[o.finish] = () => finish(o.finish);
   }
+
+  /* Cambridge's "What can you do?" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
 
   /* ---- the game zone: the lesson's own games, derived by the builder ---- */
   function gameZone(o) {

@@ -6,7 +6,7 @@
 of using forms when collecting data; 4MD.03 the differences between data and
 information.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "data-and-information",
@@ -212,3 +212,64 @@ LESSON["warmup"] = [
     q("A school keeps every child's name and class on cards in a box. Where else could it keep them?", "\U0001F5C2\uFE0F", "in a database on a computer", ["in a song", "on the ceiling", "nowhere else"], "The same records can be kept on paper or in a digital database."),
     q("A form asks 'How do you get to school?' and gives boxes to tick. Why boxes?", "\U0001F4CB", "so every answer is given the same way and is quick to count", ["to make the form longer", "so nobody can answer", "because boxes look nice"], "Tick boxes keep answers tidy and quick to count."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Data, or information?", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4CA", "Raw data on its own says nothing",
+         "21, 19, 24, 22, 30. That is raw data - facts as they were collected, before anybody "
+         "has done anything with them. On their own they mean nothing at all. Say they are the "
+         "temperatures in a classroom at nine o'clock on five days, and the last one was the day "
+         "the heating stuck on, and now they are information. Information is raw data that has "
+         "been given a meaning.")
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("raw data", "\U0001F4CA", "Facts as they were collected, before anybody has made sense of them.",
+         ["21, 19, 24 is raw data.", "Raw data becomes information when you know what it is about."]),
+]
+
+LESSON["cando"] = [
+    cando("I know the difference between a paper database and a digital one.", "4MD.01"),
+    cando("I know the advantages and disadvantages of using forms to collect data.", "4MD.02"),
+    cando("I can tell the difference between data and information.", "4MD.03"),
+]
+
+LESSON["world"] = world(
+    "Telescopes now collect more raw data in a night than a person could read in a "
+    "lifetime. None of it is information until a program has sorted it and somebody has "
+    "asked it a question.",
+    [place("\U0001F52D", "An observatory",
+           "Terabytes of numbers arrive every night. Software turns them into one picture somebody can look at."),
+     place("\U0001F3E5", "A hospital",
+           "A heart monitor records a number every second. The information is the shape those numbers make."),
+     place("\U0001F326\ufe0f", "A weather service",
+           "Thousands of readings an hour from all over the country become one forecast you can read in a second.")],
+    "Find a row of numbers at home - a receipt, a bill, a scoreboard. What would you need to know to turn it into information?")
+
+tier(LESSON,
+     support=[
+         q("21, 19, 24 with nothing else. Is that data or information?", "\U0001F4CA",
+           "raw data", ["information"],
+           "Raw data is the numbers. Information is the numbers plus what they mean."),
+         q("A form makes everybody answer...", "\U0001F4DD", "the same questions", ["whatever they like"],
+           "That is why form answers can be counted together."),
+     ],
+     extension=[
+         q("What is the main DISADVANTAGE of collecting data with a form?", "\u26A0\ufe0f",
+           "you only get answers to the questions you thought to ask",
+           ["it is slow", "the answers cannot be counted", "people cannot read it"],
+           "A form is fast and tidy, and that is the cost: whatever you left out is simply not there."),
+         q("Same numbers, two reports, opposite conclusions. How?", "\U0001F914",
+           "the same raw data can be given different meanings",
+           ["one report made the numbers up", "numbers cannot do that", "one of them is broken"],
+           "Data does not interpret itself. Turning it into information is a choice somebody makes, and choices can differ."),
+     ])

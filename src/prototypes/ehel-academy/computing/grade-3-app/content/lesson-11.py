@@ -6,7 +6,7 @@ in a familiar environment, including the school and home; 3DC.02 services
 available on familiar networks - digital files, printed documents, the World
 Wide Web; 3DC.03 the advantages and disadvantages of a network.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "networks-around-us",
@@ -202,3 +202,75 @@ LESSON["warmup"] = [
     q("Your class prints from ten tablets to one printer. What joins them?", "\U0001F5A8\uFE0F", "a network", ["a battery", "a spreadsheet", "a pencil"], "A network lets many devices share one printer."),
     q("Which of these can a school network share?", "\U0001F3EB", "files and printers", ["chairs and desks", "lunchboxes", "the playground"], "A network shares the things computers use: files, printers, the web."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Services on the network", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F5A5\ufe0f", "The networked hardware around you",
+         "Look around a classroom and count what is on the network. The computers. The "
+         "interactive smartboard at the front. That is the big screen the teacher writes on. It "
+         "is a computer on the network like any other. And the multifunction device by the door. "
+         "One machine prints, scans and copies. Everybody shares it, instead of three machines "
+         "in three rooms."),
+    part("\U0001F6E1\ufe0f", "What a network costs you",
+         "A network shares things, and that cuts both ways. It shares a printer. It shares the "
+         "World Wide Web. It shares a backup of your work. A backup is the second copy the "
+         "school keeps, so a broken computer does not lose your term. But it can also share a "
+         "computer virus. That is a program that copies itself from machine to machine and does "
+         "harm. And when the network stops, everybody stops at once, not just one person."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("interactive smartboard", "\U0001F4FA", "The big screen at the front, joined to the network like a computer.",
+         ["The teacher writes on the interactive smartboard.", "An interactive smartboard is networked hardware."]),
+    word("multifunction", "\U0001F5A8\ufe0f", "One machine that does several jobs - printing, scanning and copying.",
+         ["The multifunction device prints and scans.", "One multifunction machine replaces three."]),
+    word("backup", "\U0001F4BE", "The second copy of your work that the network keeps for you.",
+         ["The school network makes a backup every night.", "A backup means a broken computer loses nothing."]),
+    word("computer virus", "\u2623\ufe0f", "A program that copies itself from computer to computer and does harm.",
+         ["A computer virus can spread across a network.", "One computer virus can reach every machine."]),
+]
+
+LESSON["cando"] = [
+    cando("I can identify the networked hardware at my school and at home.", "3DC.01"),
+    cando("I can name the services a network offers.", "3DC.02"),
+    cando("I know the advantages and the disadvantages of a network.", "3DC.03"),
+]
+
+LESSON["world"] = world(
+    "The World Wide Web and the internet are not the same thing. The internet is the "
+    "wires and the joins. The web is one of the things carried on it. It came more than "
+    "twenty years later, from one person, who gave it away for free.",
+    [place("\U0001F3EB", "A school",
+           "One printer, one backup, one connection to the web, shared by hundreds of people."),
+     place("\U0001F3E5", "A hospital",
+           "Records live on the network so any ward can read them - which is also why they are guarded so carefully."),
+     place("\U0001F6E1\ufe0f", "A security team",
+           "Their whole job is watching for a computer virus arriving and stopping it before it spreads.")],
+    "Count the networked machines in one room at your school. Do not forget the board at the front.")
+
+tier(LESSON,
+     support=[
+         q("The printer everyone shares is on the...", "\U0001F5A8\ufe0f", "network", ["moon"],
+           "Sharing a printer is one of the things a network is for."),
+         q("A backup is...", "\U0001F4BE", "a second copy kept safe", ["the only copy"],
+           "If the first copy is lost, the backup still has your work."),
+     ],
+     extension=[
+         q("What is the biggest disadvantage of putting everything on one network?", "\u26A0\ufe0f",
+           "when it stops, everybody stops at once",
+           ["it costs a little more", "the wires are untidy", "there is no disadvantage"],
+           "Sharing is the advantage and the disadvantage. One failure, or one computer virus, reaches everybody."),
+         q("Which of these is a SERVICE the network offers, not a piece of hardware?", "\U0001F310",
+           "getting to the World Wide Web",
+           ["the interactive smartboard", "the multifunction device", "the cable in the wall"],
+           "Hardware is what you can touch. A service is what the network lets you do with it."),
+     ])

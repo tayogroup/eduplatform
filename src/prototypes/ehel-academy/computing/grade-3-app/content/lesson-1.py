@@ -5,7 +5,7 @@
 correct linear algorithms; 3CT.04 logical thinking is used in the creation of
 algorithms.
 """
-from _kit import explain, step, opt, q, s, choice, part, word, home, swatch
+from _kit import explain, step, opt, q, s, choice, part, word, home, swatch, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "follow-edit-correct",
@@ -227,3 +227,50 @@ LESSON["warmup"] = [
     q("What is an algorithm?", "\U0001F4CB", "steps in order that get a job done", ["a kind of robot", "a picture", "a song"], "An algorithm is the steps, in order, that get a job done."),
     q("One step in an algorithm is wrong. What is that called?", "\U0001F41B", "a bug", ["a feature", "a loop", "a key"], "A mistake in an algorithm or a program is a bug."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Why is each step where it is?", "Logical thinking")
+
+LESSON["cando"] = [
+    cando("I can follow, understand, edit and correct a linear algorithm.", "3CT.01"),
+    cando("I know logical thinking is what an algorithm is built from.", "3CT.04"),
+    cando("I can say why each step is where it is.", "3CT.04"),
+]
+
+LESSON["world"] = world(
+    "Air traffic controllers work from written procedures that are edited after every "
+    "incident, anywhere in the world. Nothing is rewritten from scratch. One step at a "
+    "time is changed, and the reason is recorded beside it.",
+    [place("\u2708\ufe0f", "An airport tower",
+           "Every instruction is in a fixed order for a reason. The order was worked out from things that went wrong before."),
+     place("\U0001F3E5", "A pharmacy",
+           "Check the name, check the dose, check the date, hand it over. Take out one check and the whole point is gone."),
+     place("\U0001F9EA", "A laboratory",
+           "A scientist follows a written method so that anybody else can repeat the experiment and get the same answer.")],
+    "Find a set of instructions at home - flat-pack furniture, a game, a recipe - and find one step that must come before another.")
+
+tier(LESSON,
+     support=[
+         q("A linear algorithm is one where the steps...", "\u27A1\ufe0f",
+           "happen one after another, in order", ["can happen in any order"],
+           "Linear means in a line: step one, then two, then three."),
+         q("To edit an algorithm means to...", "\u270F\ufe0f", "change part of it", ["delete all of it"],
+           "Edit the one part that is wrong and keep the rest."),
+     ],
+     extension=[
+         q("Why does an algorithm say WHY a step is where it is, not just what to do?", "\U0001F9E0",
+           "so the next person editing it does not move a step that has to stay",
+           ["to make it longer", "so it reads nicely", "it never does"],
+           "A reason is what stops somebody helpfully reordering the one step that must not move."),
+         q("Two steps could go in either order without changing the result. What does that tell you?", "\U0001F504",
+           "nothing depends on which one happens first",
+           ["the algorithm is wrong", "one of them is useless", "they must be swapped"],
+           "Some steps depend on each other and some do not. Knowing which is which is the logical thinking."),
+     ])

@@ -7,7 +7,7 @@ statistical data that can be manually recorded; 2MD.05 the types of data a
 question may generate, statistical and non-statistical; 2MD.01 the
 advantages of storing data and information on computers.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "collecting-data",
@@ -248,3 +248,65 @@ LESSON["warmup"] = [
     q("We want to know which colour most children like. What should we do?", "\U0001F3A8", "ask everyone and count the answers", ["guess", "ask the paint", "pick our own favourite"], "Data is what people actually say. Counting it gives the answer."),
     q("Which question gives an answer you can count?", "\U0001F522", "how many pencils are in your pencil case?", ["what is your favourite dream?", "tell me a story", "why is the sky nice?"], "'How many' gives a number you can count."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "A count, a measurement, or a category?", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4BE", "A computer keeps a backup",
+         "Here is something paper cannot do. A computer can make a backup. A backup is a "
+         "second copy of your data, kept somewhere else. Spill water on a paper chart and "
+         "it is gone for ever. If the school computer breaks, the backup still has "
+         "everybody's work. That is one of the biggest reasons for keeping data on "
+         "computers."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("backup", "\U0001F4BE", "A second copy of data, kept in case the first one is lost.",
+         ["The school keeps a backup of our work.", "Make a backup before you change it."]),
+]
+
+LESSON["cando"] = [
+    cando("I know the advantages of keeping data on a computer.", "2MD.01"),
+    cando("I can collect data with a computing device for a purpose.", "2MD.03"),
+    cando("I can name kinds of data that can be recorded on a device.", "2MD.04"),
+    cando("I know which questions give statistical data and which do not.", "2MD.05"),
+]
+
+LESSON["world"] = world(
+    "Every ten years many countries count everybody who lives there. It is "
+    "called a census. The answers decide where new schools and hospitals get "
+    "built. The first ones were written on paper. They took years to count.",
+    [place("\U0001F3E5", "A hospital",
+           "Every temperature and every heartbeat is recorded. The row of numbers shows whether someone is getting better."),
+     place("\U0001F326\ufe0f", "A weather station",
+           "Rain and temperature are recorded every hour, for years, with a backup kept somewhere else."),
+     place("\U0001F6D2", "A supermarket",
+           "Tills count what was sold. That is how the shop knows to order more bread on a Friday.")],
+    "Ask a grown-up where the photos on their phone are backed up. See if they know.")
+
+tier(LESSON,
+     support=[
+         q("Which question gives data you can count?", "\U0001F522",
+           "How many pets do you have?", ["What is the nicest pet?"],
+           "Counting needs a number. Nicest is an opinion."),
+         q("A backup is...", "\U0001F4BE", "a second copy kept safe", ["the first copy"],
+           "If the first copy is lost, the backup still has it."),
+     ],
+     extension=[
+         q("Paper chart or computer? Which can do something the other cannot?", "\U0001F4BE",
+           "the computer - it can be backed up and sorted in a moment",
+           ["the paper - it never needs power", "neither", "they are exactly the same"],
+           "Paper does not need power, which is real. But only the computer can copy, sort and search in a second."),
+         q("Which of these is NOT statistical data?", "\u2753",
+           "what my best friend is called",
+           ["how many children walk to school", "how tall each child is", "which fruit each child chose"],
+           "Statistical data is collected from lots of people so it can be counted. One name about one person is not."),
+     ])

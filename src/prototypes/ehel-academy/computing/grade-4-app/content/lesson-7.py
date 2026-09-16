@@ -6,7 +6,7 @@ device to produce outputs from its input devices, including sensors; 4P.09
 programs for a physical device using count-controlled and forever loops;
 Computer Systems 4CS.01 identify examples where a control system is used.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "bitsy-loops",
@@ -179,3 +179,49 @@ LESSON["warmup"] = [
     q("A heater switches itself on when the room gets cold. What tells it the room is cold?", "\U0001F321\uFE0F", "a temperature sensor", ["a light sensor", "a clock", "a loudspeaker"], "A temperature sensor measures how warm or cold it is."),
     q("Street lights come on by themselves at dusk. Which sensor are they using?", "\U0001F306", "a light sensor", ["a sound sensor", "a temperature sensor", "none: someone switches each one on"], "A light sensor measures how bright it is; when it gets dark, the lights come on."),
 ]
+
+# ---- Cambridge Learner's Book 4, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Loops on the device", "Algorithmic thinking")
+
+LESSON["cando"] = [
+    cando("I can program a physical device to produce outputs from its inputs.", "4P.08"),
+    cando("I can use count-controlled and forever loops on a physical device.", "4P.09"),
+    cando("I can spot where a control system is being used.", "4CS.01"),
+]
+
+LESSON["world"] = world(
+    "A greenhouse can run itself. A sensor reads the temperature. A program decides. A "
+    "motor opens a window. There is no person in the loop at all. That is a control "
+    "system, and it is the same three parts every time: sense, decide, act.",
+    [place("\U0001F3E0", "Central heating",
+           "Sense the temperature, decide whether it is below the setting, switch the boiler. All day, forever."),
+     place("\U0001F6A6", "A pelican crossing",
+           "Sense the button, wait, change the lights, wait, change them back. A loop that never ends."),
+     place("\U0001F3ED", "A bottling plant",
+           "Sense the bottle arriving, fill it, cap it, move on. Thousands of times a shift.")],
+    "Find a light at home that switches itself on in the dark. What is it sensing, and what does it do about it?")
+
+tier(LESSON,
+     support=[
+         q("A sensor on a device is an...", "\u2B07\ufe0f", "input", ["output"],
+           "A sensor measures something and puts it in. That is an input."),
+         q("forever - light on, light off. What does it do?", "\U0001F4A1",
+           "flashes until you stop it", ["flashes once"],
+           "Forever repeats everything after it, with no count to end it."),
+     ],
+     extension=[
+         q("Why does a forever loop on a real device need a stop button?", "\U0001F6D1",
+           "nothing inside the loop can end it",
+           ["it runs out of power", "it stops after five turns", "it does not need one"],
+           "A forever loop has no counter. Without a way out from the outside, it never ends."),
+         q("Sense, decide, act. Which part is the PROGRAM?", "\U0001F9E0",
+           "decide", ["sense", "act", "none of them"],
+           "The sensor senses and the motor acts. The program is the deciding in the middle, and that is the control system."),
+     ])

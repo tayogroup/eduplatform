@@ -52,6 +52,7 @@ import os
 import re
 import sys
 
+from _kit import CT_MOVES
 from _shell import META_KINDS, expand, finder_words
 
 KIT = os.path.dirname(os.path.abspath(__file__))
@@ -965,6 +966,18 @@ def check_step(n, k, s, codes, libs):
     elif kind == "resources":
         if not d["finder"]:
             sys.exit("REFUSED: %s has an empty word finder" % where)
+    elif kind == "world":
+        # Either the real thing or the placeholder, never half of one.
+        if d.get("fact"):
+            if not 2 <= len(d.get("places") or []) <= 4:
+                sys.exit("REFUSED: %s: Computing world takes 2 to 4 places" % where)
+            for pl in d["places"]:
+                if not (pl.get("pic") and pl.get("title") and pl.get("say")):
+                    sys.exit("REFUSED: %s: a Computing world card needs a pic, a title and something to say" % where)
+            if not d.get("look"):
+                sys.exit("REFUSED: %s: Computing world needs one thing to go and look at" % where)
+        elif not d.get("soon"):
+            sys.exit("REFUSED: %s: Computing world has neither content nor the placeholder" % where)
     elif kind in ("questions", "quiz"):
         if len(d["items"]) < (6 if kind == "quiz" else 3):
             sys.exit("REFUSED: %s has only %d questions" % (where, len(d["items"])))
@@ -972,6 +985,18 @@ def check_step(n, k, s, codes, libs):
             one_ok(it["opts"], where + " %r" % it["ask"])
             if not it.get("why"):
                 sys.exit("REFUSED: %s %r has no why" % (where, it["ask"]))
+        # DIFFERENTIATION - Cambridge's "Go further" and "Challenge yourself!".
+        # Neither bank is scored and finish() still fires at the end of the
+        # core bank, so no step, position or completed check moves. A step
+        # with neither behaves exactly as it did.
+        for tier in ("support", "extension"):
+            bank = d.get(tier) or []
+            if tier in d and not 1 <= len(bank) <= 4:
+                sys.exit("REFUSED: %s: a %s bank is 1 to 4 questions (has %d)" % (where, tier, len(bank)))
+            for it in bank:
+                one_ok(it["opts"], where + " %s %r" % (tier, it["ask"]))
+                if not it.get("why"):
+                    sys.exit("REFUSED: %s %s %r has no why" % (where, tier, it["ask"]))
 
 
 # ----------------------------------------------------------------------
@@ -994,7 +1019,7 @@ def plain(html):
 
 
 SLIDE = """    <section class="slide" data-objectives="%(objectives)s" data-explain='%(explain)s' data-say="%(say)s">
-      <div class="slide-head"><span class="n">%(n)d</span><h2>%(title)s</h2></div>
+      <div class="slide-head"><span class="n">%(n)d</span><h2>%(title)s</h2>%(ct)s</div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask%(n)d">%(ask)s</span></div>
       <div class="stage">
         <div id="stage%(n)d"></div>
@@ -1011,7 +1036,7 @@ STICKER_SLIDE = """    <section class="slide" data-explain='%(explain)s' data-sa
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
-        <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
+%(cando)s        <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
 """
@@ -1106,10 +1131,12 @@ def bootstrap(steps):
 def prepare_quiz_pics(step):
     """sequence() takes `pic` as HTML; the content writes an emoji."""
     if step["kind"] in ("questions", "quiz"):
-        for it in step["data"]["items"]:
-            p = it.get("pic") or ""
-            if p and not p.strip().startswith("<"):
-                it["pic"] = '<div class="askpic" aria-hidden="true">' + text(p) + "</div>"
+        banks = [step["data"]["items"]] + [step["data"][t] for t in ("support", "extension") if step["data"].get(t)]
+        for bank in banks:
+            for it in bank:
+                p = it.get("pic") or ""
+                if p and not p.strip().startswith("<"):
+                    it["pic"] = '<div class="askpic" aria-hidden="true">' + text(p) + "</div>"
     return step
 
 
@@ -1132,8 +1159,37 @@ def build(n, fname, lesson, codes, libs, css, voice, deck, computing, finder):
             "note": ('        <p class="reviewnote">' + text(s["note"]) + "</p>\n") if s.get("note") else "",
             "explain": ssml_attr(s["explain"]), "say": attr(say).replace('"', "&quot;"),
             "objectives": " ".join(s["objectives"]),
+            "ct": ('<span class="ctchip" title="%s">%s</span>'
+                   % (text(CT_MOVES[s["ct"]]), text(s["ct"]))) if s.get("ct") else "",
         }
-    body += STICKER_SLIDE % {"explain": ssml_attr(
+
+    # CAMBRIDGE'S "What can you do?", on the sticker shelf. Every unit of all
+    # four Learner's Books closes with one and this build had none. The shelf
+    # is not a step, so nothing here moves a saved place or reopens a check.
+    cando_html = ""
+    if lesson.get("cando"):
+        rows = []
+        for c in lesson["cando"]:
+            # Resolve the claim to a step rather than trusting a written
+            # number. Search the lesson's OWN steps, not the expanded list:
+            # _shell.expand gives the overview, lecture, words, games and home
+            # steps the whole lesson's codes, so the first match in the
+            # expanded list would always be the overview. steps.index(own)
+            # works on identity because expand() keeps the same dicts.
+            own = next((st for st in lesson["steps"] if c["code"] in st["objectives"]), None)
+            if own is None:
+                sys.exit("REFUSED: lesson %d self-check %r names %s, which none of this lesson's own steps carries"
+                         % (n, c["t"][:40], c["code"]))
+            rows.append('          <li><span>%s</span><button type="button" class="candogo" data-go="%d">Show me</button></li>'
+                        % (text(c["t"]), steps.index(own)))
+        cando_html = (
+            '        <div class="cando">\n'
+            '          <h3>What can you do?</h3>\n'
+            '          <p class="candonote">Read each one. Can you do it?'
+            ' If you are not sure, press <b>Show me</b>.</p>\n'
+            '          <ul>\n' + "\n".join(rows) + '\n          </ul>\n'
+            '        </div>\n')
+    body += STICKER_SLIDE % {"cando": cando_html, "explain": ssml_attr(
         '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s>'
         '<s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as>'
         '<break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>')}
@@ -1141,7 +1197,9 @@ def build(n, fname, lesson, codes, libs, css, voice, deck, computing, finder):
     data = {
         "lessonNo": n, "title": title,
         "objectives": sorted({c for s in steps for c in s["objectives"]}),
-        "steps": [{"kind": s["kind"], "title": s["title"], "objectives": s["objectives"], "data": s["data"]} for s in steps],
+        "cando": lesson.get("cando") or [],
+        "steps": [{"kind": s["kind"], "title": s["title"], "objectives": s["objectives"],
+                   "ct": s.get("ct") or "", "data": s["data"]} for s in steps],
     }
     stickers = [[s["icon"], s["sticker"]] for s in steps]
     all_codes = sorted({c for s in steps for c in s["objectives"]})

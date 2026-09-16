@@ -1,0 +1,1225 @@
+{
+ "framework": "Cambridge Primary Computing 0059",
+ "source": "Cambridge Primary Computing Learner's Books 1-4, Hodder Education 2022-23 (Birbal, Gookool, Koon Koon, Mohammed, Taylor). Stage 1 is the 23-page sample, so Stage 1's list is drawn from its keywords plus the Stage 2 book's 'Do you remember?' lists rather than from a glossary.",
+ "read": "2026-09-16",
+ "note": "Each entry names the ONE lesson of the standalone build that must answer it and the literal strings that must appear in that lesson's TEACHING text - which excludes the text of options that are not the right answer, so a word that appears only as a distractor does not count as taught. `kind` is `vocabulary` for a term the book carries in its glossary or a Keywords box, and `depth` for something the book teaches that this build did not. Raising an entry's demands is fine; deleting one needs a reason in the commit message.",
+ "minimumCovered": {
+  "1": 24,
+  "2": 24,
+  "3": 35,
+  "4": 35
+ },
+ "entries": {
+  "1": [
+   {
+    "id": "s1-v-algorithm",
+    "kind": "vocabulary",
+    "says": "algorithm: a set of instructions for a task or a problem",
+    "lesson": 1,
+    "objective": "1CT.05",
+    "must": [
+     "algorithm"
+    ]
+   },
+   {
+    "id": "s1-v-instructions",
+    "kind": "vocabulary",
+    "says": "instructions: how something should be done",
+    "lesson": 1,
+    "objective": "1CT.05",
+    "must": [
+     "instruction"
+    ]
+   },
+   {
+    "id": "s1-v-task",
+    "kind": "vocabulary",
+    "says": "task: the thing the algorithm is for",
+    "lesson": 1,
+    "objective": "1CT.05",
+    "must": [
+     "task"
+    ]
+   },
+   {
+    "id": "s1-v-order",
+    "kind": "vocabulary",
+    "says": "order: which step comes first",
+    "lesson": 2,
+    "objective": "1CT.06",
+    "must": [
+     "order"
+    ]
+   },
+   {
+    "id": "s1-v-program",
+    "kind": "vocabulary",
+    "says": "program: instructions a computer follows",
+    "lesson": 4,
+    "objective": "1P.01",
+    "must": [
+     "program"
+    ]
+   },
+   {
+    "id": "s1-v-code",
+    "kind": "vocabulary",
+    "says": "code: the blocks a program is built from",
+    "lesson": 4,
+    "objective": "1P.01",
+    "must": [
+     "code"
+    ]
+   },
+   {
+    "id": "s1-v-bug",
+    "kind": "vocabulary",
+    "says": "bug: a mistake in a program",
+    "lesson": 5,
+    "objective": "1P.04",
+    "must": [
+     "bug"
+    ]
+   },
+   {
+    "id": "s1-v-debugging",
+    "kind": "vocabulary",
+    "says": "debugging: correcting the errors in a program",
+    "lesson": 5,
+    "objective": "1P.07",
+    "must": [
+     "debugging"
+    ]
+   },
+   {
+    "id": "s1-v-data",
+    "kind": "vocabulary",
+    "says": "data: numbers, words, pictures, sounds or videos",
+    "lesson": 6,
+    "objective": "1MD.01",
+    "must": [
+     "data"
+    ]
+   },
+   {
+    "id": "s1-v-information",
+    "kind": "vocabulary",
+    "says": "information: what the data tells you",
+    "lesson": 6,
+    "objective": "1MD.01",
+    "must": [
+     "information"
+    ]
+   },
+   {
+    "id": "s1-v-network",
+    "kind": "vocabulary",
+    "says": "network: devices joined to each other",
+    "lesson": 7,
+    "objective": "1DC.01",
+    "must": [
+     "network"
+    ]
+   },
+   {
+    "id": "s1-v-internet",
+    "kind": "vocabulary",
+    "says": "internet: computers joined all around the world",
+    "lesson": 7,
+    "objective": "1DC.02",
+    "must": [
+     "internet"
+    ]
+   },
+   {
+    "id": "s1-v-app",
+    "kind": "vocabulary",
+    "says": "app: another name for a program",
+    "lesson": 8,
+    "objective": "1CS.02",
+    "must": [
+     "app"
+    ]
+   },
+   {
+    "id": "s1-v-input",
+    "kind": "vocabulary",
+    "says": "input: information going in to a computer",
+    "lesson": 8,
+    "objective": "1CS.03",
+    "must": [
+     "input"
+    ]
+   },
+   {
+    "id": "s1-v-output",
+    "kind": "vocabulary",
+    "says": "output: information the computer gives back",
+    "lesson": 8,
+    "objective": "1CS.04",
+    "must": [
+     "output"
+    ]
+   },
+   {
+    "id": "s1-v-robot",
+    "kind": "vocabulary",
+    "says": "robot: a machine a program controls",
+    "lesson": 8,
+    "objective": "1CS.06",
+    "must": [
+     "robot"
+    ]
+   },
+   {
+    "id": "s1-v-desktop",
+    "kind": "vocabulary",
+    "says": "desktop computer: the one you cannot carry",
+    "lesson": 8,
+    "objective": "1CS.01",
+    "must": [
+     "desktop"
+    ]
+   },
+   {
+    "id": "s1-v-monitor",
+    "kind": "vocabulary",
+    "says": "monitor: the screen of a desktop computer",
+    "lesson": 8,
+    "objective": "1CS.01",
+    "must": [
+     "monitor"
+    ]
+   },
+   {
+    "id": "s1-v-smartphone",
+    "kind": "vocabulary",
+    "says": "smartphone: a small computer that makes phone calls",
+    "lesson": 8,
+    "objective": "1CS.01",
+    "must": [
+     "smartphone"
+    ]
+   },
+   {
+    "id": "s1-d-machine",
+    "kind": "depth",
+    "says": "A computer takes data in, does something to it, and gives a result",
+    "lesson": 8,
+    "objective": "1CS.01",
+    "must": [
+     "takes data in",
+     "gives a result"
+    ]
+   },
+   {
+    "id": "s1-d-parts",
+    "kind": "depth",
+    "says": "The four parts of a desktop computer system: tower, monitor, keyboard, mouse",
+    "lesson": 8,
+    "objective": "1CS.01",
+    "must": [
+     "tower",
+     "monitor",
+     "keyboard",
+     "mouse"
+    ]
+   },
+   {
+    "id": "s1-d-carry",
+    "kind": "depth",
+    "says": "Desktop, laptop, tablet, smartphone - each smaller and easier to carry than the last",
+    "lesson": 8,
+    "objective": "1CS.01",
+    "must": [
+     "desktop",
+     "laptop",
+     "tablet",
+     "smartphone",
+     "carry"
+    ]
+   },
+   {
+    "id": "s1-d-nothink",
+    "kind": "depth",
+    "says": "A computer cannot think for itself. It does exactly what it is told",
+    "lesson": 4,
+    "objective": "1P.01",
+    "must": [
+     "cannot think for itself"
+    ]
+   },
+   {
+    "id": "s1-d-scratchjr",
+    "kind": "depth",
+    "says": "Name the real tool: ScratchJr is where a child at this stage builds these block programs",
+    "lesson": 4,
+    "objective": "1P.02",
+    "must": [
+     "ScratchJr"
+    ]
+   }
+  ],
+  "2": [
+   {
+    "id": "s2-v-precise",
+    "kind": "vocabulary",
+    "says": "precise: exact, with nothing left to guess",
+    "lesson": 1,
+    "objective": "2CT.03",
+    "must": [
+     "precise"
+    ]
+   },
+   {
+    "id": "s2-v-edit",
+    "kind": "vocabulary",
+    "says": "edit: change what is already there",
+    "lesson": 2,
+    "objective": "2CT.02",
+    "must": [
+     "edit"
+    ]
+   },
+   {
+    "id": "s2-v-bug",
+    "kind": "vocabulary",
+    "says": "bug: the one step that is wrong",
+    "lesson": 2,
+    "objective": "2CT.02",
+    "must": [
+     "bug"
+    ]
+   },
+   {
+    "id": "s2-v-program",
+    "kind": "vocabulary",
+    "says": "program: how a computer runs an algorithm",
+    "lesson": 3,
+    "objective": "2P.01",
+    "must": [
+     "program"
+    ]
+   },
+   {
+    "id": "s2-v-repeat",
+    "kind": "vocabulary",
+    "says": "repeat: do the next block again, a set number of times",
+    "lesson": 3,
+    "objective": "2P.03",
+    "must": [
+     "repeat"
+    ]
+   },
+   {
+    "id": "s2-v-debug",
+    "kind": "vocabulary",
+    "says": "debug: find the error and correct it",
+    "lesson": 5,
+    "objective": "2P.07",
+    "must": [
+     "debug"
+    ]
+   },
+   {
+    "id": "s2-v-backup",
+    "kind": "vocabulary",
+    "says": "backup: a second copy of data, kept in case the first is lost",
+    "lesson": 7,
+    "objective": "2MD.01",
+    "must": [
+     "backup"
+    ]
+   },
+   {
+    "id": "s2-v-category",
+    "kind": "vocabulary",
+    "says": "category: a group things are sorted into",
+    "lesson": 7,
+    "objective": "2MD.03",
+    "must": [
+     "category"
+    ]
+   },
+   {
+    "id": "s2-v-present",
+    "kind": "vocabulary",
+    "says": "present: show data so it can be read at a glance",
+    "lesson": 8,
+    "objective": "2MD.02",
+    "must": [
+     "present"
+    ]
+   },
+   {
+    "id": "s2-v-malware",
+    "kind": "vocabulary",
+    "says": "malware: a program written to do harm",
+    "lesson": 9,
+    "objective": "2DC.05",
+    "must": [
+     "malware"
+    ]
+   },
+   {
+    "id": "s2-v-personal",
+    "kind": "vocabulary",
+    "says": "personal information: what says who you are and where you live",
+    "lesson": 9,
+    "objective": "2DC.05",
+    "must": [
+     "personal information"
+    ]
+   },
+   {
+    "id": "s2-v-function",
+    "kind": "vocabulary",
+    "says": "function: the job a piece of hardware or software does",
+    "lesson": 10,
+    "objective": "2CS.01",
+    "must": [
+     "function"
+    ]
+   },
+   {
+    "id": "s2-v-icon",
+    "kind": "vocabulary",
+    "says": "icon: the little picture you press to open a program",
+    "lesson": 10,
+    "objective": "2CS.02",
+    "must": [
+     "icon"
+    ]
+   },
+   {
+    "id": "s2-v-friendly",
+    "kind": "vocabulary",
+    "says": "user-friendly: easy to use without being taught",
+    "lesson": 10,
+    "objective": "2CS.02",
+    "must": [
+     "user-friendly"
+    ]
+   },
+   {
+    "id": "s2-v-inputdev",
+    "kind": "vocabulary",
+    "says": "input device: hardware that puts data in",
+    "lesson": 10,
+    "objective": "2CS.03",
+    "must": [
+     "input device"
+    ]
+   },
+   {
+    "id": "s2-v-outputdev",
+    "kind": "vocabulary",
+    "says": "output device: hardware that gives information out",
+    "lesson": 10,
+    "objective": "2CS.03",
+    "must": [
+     "output device"
+    ]
+   },
+   {
+    "id": "s2-v-barcode",
+    "kind": "vocabulary",
+    "says": "barcode: stripes a scanner reads instead of typing",
+    "lesson": 10,
+    "objective": "2CS.03",
+    "must": [
+     "barcode"
+    ]
+   },
+   {
+    "id": "s2-v-portable",
+    "kind": "vocabulary",
+    "says": "portable: small enough to carry with you",
+    "lesson": 11,
+    "objective": "2CS.05",
+    "must": [
+     "portable"
+    ]
+   },
+   {
+    "id": "s2-v-fictional",
+    "kind": "vocabulary",
+    "says": "fictional: made up for a story",
+    "lesson": 11,
+    "objective": "2CS.06",
+    "must": [
+     "fictional"
+    ]
+   },
+   {
+    "id": "s2-d-mars",
+    "kind": "depth",
+    "says": "A bug is not only a school thing: a units mix-up in a spacecraft's program lost the whole mission",
+    "lesson": 2,
+    "objective": "2CT.02",
+    "must": [
+     "spacecraft"
+    ]
+   },
+   {
+    "id": "s2-d-scratchjr",
+    "kind": "depth",
+    "says": "Name the real tool: ScratchJr is where a child at this stage builds these programs",
+    "lesson": 3,
+    "objective": "2P.02",
+    "must": [
+     "ScratchJr"
+    ]
+   },
+   {
+    "id": "s2-d-backupwhy",
+    "kind": "depth",
+    "says": "Data on a computer can be copied, found again in a moment, and backed up",
+    "lesson": 7,
+    "objective": "2MD.01",
+    "must": [
+     "backup"
+    ]
+   },
+   {
+    "id": "s2-d-risks",
+    "kind": "depth",
+    "says": "What sharing over a network can cost: malware, and personal information reaching someone you do not know",
+    "lesson": 9,
+    "objective": "2DC.05",
+    "must": [
+     "malware",
+     "personal information"
+    ]
+   },
+   {
+    "id": "s2-d-friendlyhow",
+    "kind": "depth",
+    "says": "What makes a device user-friendly: an icon you recognise, a touchscreen, big clear buttons",
+    "lesson": 10,
+    "objective": "2CS.02",
+    "must": [
+     "user-friendly",
+     "icon"
+    ]
+   }
+  ],
+  "3": [
+   {
+    "id": "s3-v-efficient",
+    "kind": "vocabulary",
+    "says": "efficient: gets there in the fewest steps",
+    "lesson": 2,
+    "objective": "3CT.02",
+    "must": [
+     "efficient"
+    ]
+   },
+   {
+    "id": "s3-v-concise",
+    "kind": "vocabulary",
+    "says": "concise: short, with nothing repeated a loop could do",
+    "lesson": 2,
+    "objective": "3CT.02",
+    "must": [
+     "concise"
+    ]
+   },
+   {
+    "id": "s3-v-logical",
+    "kind": "vocabulary",
+    "says": "logical thinking: working out what must be true",
+    "lesson": 3,
+    "objective": "3CT.04",
+    "must": [
+     "logical thinking"
+    ]
+   },
+   {
+    "id": "s3-v-decision",
+    "kind": "vocabulary",
+    "says": "decision: the point where an algorithm chooses",
+    "lesson": 3,
+    "objective": "3CT.04",
+    "must": [
+     "decision"
+    ]
+   },
+   {
+    "id": "s3-v-subtask",
+    "kind": "vocabulary",
+    "says": "sub-task: one smaller section of a bigger task",
+    "lesson": 3,
+    "objective": "3CT.06",
+    "must": [
+     "sub-task"
+    ]
+   },
+   {
+    "id": "s3-v-reset",
+    "kind": "vocabulary",
+    "says": "reset: put an object back where it started",
+    "lesson": 5,
+    "objective": "3P.02",
+    "must": [
+     "reset"
+    ]
+   },
+   {
+    "id": "s3-v-volume",
+    "kind": "vocabulary",
+    "says": "volume: how loud, and a number you can change inside a block",
+    "lesson": 5,
+    "objective": "3P.05",
+    "must": [
+     "volume"
+    ]
+   },
+   {
+    "id": "s3-v-static",
+    "kind": "vocabulary",
+    "says": "static object: one that is in the program and never moves",
+    "lesson": 6,
+    "objective": "3P.04",
+    "must": [
+     "static object"
+    ]
+   },
+   {
+    "id": "s3-v-error",
+    "kind": "vocabulary",
+    "says": "error: what a bug is called when you write it down",
+    "lesson": 8,
+    "objective": "3P.09",
+    "must": [
+     "error"
+    ]
+   },
+   {
+    "id": "s3-v-numerical",
+    "kind": "vocabulary",
+    "says": "numerical data: data that is counted or measured, not named",
+    "lesson": 9,
+    "objective": "3MD.03",
+    "must": [
+     "numerical"
+    ]
+   },
+   {
+    "id": "s3-v-format",
+    "kind": "vocabulary",
+    "says": "format: telling a cell what kind of thing it holds",
+    "lesson": 10,
+    "objective": "3MD.05",
+    "must": [
+     "format"
+    ]
+   },
+   {
+    "id": "s3-v-range",
+    "kind": "vocabulary",
+    "says": "range: a block of cells from one to another",
+    "lesson": 10,
+    "objective": "3MD.06",
+    "must": [
+     "range"
+    ]
+   },
+   {
+    "id": "s3-v-smartboard",
+    "kind": "vocabulary",
+    "says": "interactive smartboard: the classroom screen that is on the network",
+    "lesson": 11,
+    "objective": "3DC.01",
+    "must": [
+     "interactive smartboard"
+    ]
+   },
+   {
+    "id": "s3-v-multifunction",
+    "kind": "vocabulary",
+    "says": "multifunction device: one machine that prints, scans and copies",
+    "lesson": 11,
+    "objective": "3DC.02",
+    "must": [
+     "multifunction"
+    ]
+   },
+   {
+    "id": "s3-v-services",
+    "kind": "vocabulary",
+    "says": "services: what a network lets you do - files, printing, the web",
+    "lesson": 11,
+    "objective": "3DC.02",
+    "must": [
+     "services"
+    ]
+   },
+   {
+    "id": "s3-v-backup",
+    "kind": "vocabulary",
+    "says": "backup: the copy the school's network keeps for you",
+    "lesson": 11,
+    "objective": "3DC.02",
+    "must": [
+     "backup"
+    ]
+   },
+   {
+    "id": "s3-v-virus",
+    "kind": "vocabulary",
+    "says": "computer virus: a program that spreads from computer to computer and does harm",
+    "lesson": 11,
+    "objective": "3DC.03",
+    "must": [
+     "computer virus"
+    ]
+   },
+   {
+    "id": "s3-v-www",
+    "kind": "vocabulary",
+    "says": "World Wide Web: the pages you read, carried by the internet",
+    "lesson": 11,
+    "objective": "3DC.02",
+    "must": [
+     "World Wide Web"
+    ]
+   },
+   {
+    "id": "s3-v-cipher",
+    "kind": "vocabulary",
+    "says": "cipher: a way of writing that keeps a message secret",
+    "lesson": 12,
+    "objective": "3DC.04",
+    "must": [
+     "cipher"
+    ]
+   },
+   {
+    "id": "s3-v-plaintext",
+    "kind": "vocabulary",
+    "says": "plain text: the message before it is put into cipher",
+    "lesson": 12,
+    "objective": "3DC.04",
+    "must": [
+     "plain text"
+    ]
+   },
+   {
+    "id": "s3-v-ciphertext",
+    "kind": "vocabulary",
+    "says": "ciphertext: the message after the cipher has been applied",
+    "lesson": 12,
+    "objective": "3DC.04",
+    "must": [
+     "ciphertext"
+    ]
+   },
+   {
+    "id": "s3-v-manual",
+    "kind": "vocabulary",
+    "says": "manual input: a person puts the data in",
+    "lesson": 13,
+    "objective": "3CS.03",
+    "must": [
+     "manual"
+    ]
+   },
+   {
+    "id": "s3-v-automatic",
+    "kind": "vocabulary",
+    "says": "automatic input: the device collects the data itself",
+    "lesson": 13,
+    "objective": "3CS.03",
+    "must": [
+     "automatic"
+    ]
+   },
+   {
+    "id": "s3-v-biometric",
+    "kind": "vocabulary",
+    "says": "biometric: an input taken from your body - a fingerprint, a face",
+    "lesson": 13,
+    "objective": "3CS.03",
+    "must": [
+     "biometric"
+    ]
+   },
+   {
+    "id": "s3-v-rfid",
+    "kind": "vocabulary",
+    "says": "RFID: a tag a reader picks up without touching it",
+    "lesson": 13,
+    "objective": "3CS.03",
+    "must": [
+     "RFID"
+    ]
+   },
+   {
+    "id": "s3-v-ereader",
+    "kind": "vocabulary",
+    "says": "e-reader: hardware and software together, for one job - reading",
+    "lesson": 13,
+    "objective": "3CS.01",
+    "must": [
+     "e-reader"
+    ]
+   },
+   {
+    "id": "s3-v-iot",
+    "kind": "vocabulary",
+    "says": "Internet of Things: everyday things joined to the internet",
+    "lesson": 14,
+    "objective": "3CS.06",
+    "must": [
+     "Internet of Things"
+    ]
+   },
+   {
+    "id": "s3-v-smartdev",
+    "kind": "vocabulary",
+    "says": "smart device: an everyday thing with a computer and a connection in it",
+    "lesson": 14,
+    "objective": "3CS.06",
+    "must": [
+     "smart device"
+    ]
+   },
+   {
+    "id": "s3-v-controlled",
+    "kind": "vocabulary",
+    "says": "computer-controlled device: a machine a program tells what to do",
+    "lesson": 14,
+    "objective": "3CS.05",
+    "must": [
+     "computer-controlled"
+    ]
+   },
+   {
+    "id": "s3-v-repetitive",
+    "kind": "vocabulary",
+    "says": "repetitive: the same thing over and over, which is what robots are for",
+    "lesson": 14,
+    "objective": "3CS.07",
+    "must": [
+     "repetitive"
+    ]
+   },
+   {
+    "id": "s3-d-pipeline",
+    "kind": "depth",
+    "says": "Plain text goes in, the rule is applied, ciphertext comes out - and the same rule brings it back",
+    "lesson": 12,
+    "objective": "3DC.04",
+    "must": [
+     "plain text",
+     "ciphertext"
+    ]
+   },
+   {
+    "id": "s3-d-scratch",
+    "kind": "depth",
+    "says": "Name the real tool: Scratch is where a child at this stage edits and tidies these programs",
+    "lesson": 5,
+    "objective": "3P.01",
+    "must": [
+     "Scratch"
+    ]
+   },
+   {
+    "id": "s3-d-netdisadv",
+    "kind": "depth",
+    "says": "The cost of a network: a computer virus travels along it, and when the server stops everyone stops",
+    "lesson": 11,
+    "objective": "3DC.03",
+    "must": [
+     "computer virus"
+    ]
+   },
+   {
+    "id": "s3-d-firstsw",
+    "kind": "depth",
+    "says": "The first program held in a computer's own memory ran in 1948, in Manchester",
+    "lesson": 13,
+    "objective": "3CS.02",
+    "must": [
+     "1948"
+    ]
+   },
+   {
+    "id": "s3-d-errorword",
+    "kind": "depth",
+    "says": "A bug written down is an error; correcting it is debugging",
+    "lesson": 8,
+    "objective": "3P.09",
+    "must": [
+     "error",
+     "debugging"
+    ]
+   }
+  ],
+  "4": [
+   {
+    "id": "s4-v-iteration",
+    "kind": "vocabulary",
+    "says": "iteration: one turn round a loop",
+    "lesson": 1,
+    "objective": "4CT.02",
+    "must": [
+     "iteration"
+    ]
+   },
+   {
+    "id": "s4-v-counter",
+    "kind": "vocabulary",
+    "says": "counter: what keeps the count of the turns",
+    "lesson": 1,
+    "objective": "4CT.02",
+    "must": [
+     "counter"
+    ]
+   },
+   {
+    "id": "s4-v-condition",
+    "kind": "vocabulary",
+    "says": "condition-controlled loop: one that goes round until something becomes true",
+    "lesson": 1,
+    "objective": "4CT.01",
+    "must": [
+     "condition-controlled"
+    ]
+   },
+   {
+    "id": "s4-v-decomposition",
+    "kind": "vocabulary",
+    "says": "decomposition: breaking a task into parts",
+    "lesson": 3,
+    "objective": "4CT.06",
+    "must": [
+     "decomposition"
+    ]
+   },
+   {
+    "id": "s4-v-subroutine",
+    "kind": "vocabulary",
+    "says": "sub-routine: a named part you can call from the main algorithm",
+    "lesson": 3,
+    "objective": "4CT.08",
+    "must": [
+     "sub-routine"
+    ]
+   },
+   {
+    "id": "s4-v-comment",
+    "kind": "vocabulary",
+    "says": "comment: a note in the code for the people who read it",
+    "lesson": 5,
+    "objective": "4P.01",
+    "must": [
+     "comment"
+    ]
+   },
+   {
+    "id": "s4-v-debugging",
+    "kind": "vocabulary",
+    "says": "debugging: finding the error and correcting it, part by part",
+    "lesson": 6,
+    "objective": "4P.07",
+    "must": [
+     "debugging"
+    ]
+   },
+   {
+    "id": "s4-v-led",
+    "kind": "vocabulary",
+    "says": "LED: the little light a physical computing device switches on",
+    "lesson": 7,
+    "objective": "4P.08",
+    "must": [
+     "LED"
+    ]
+   },
+   {
+    "id": "s4-v-rawdata",
+    "kind": "vocabulary",
+    "says": "raw data: the facts before anyone has made sense of them",
+    "lesson": 8,
+    "objective": "4MD.03",
+    "must": [
+     "raw data"
+    ]
+   },
+   {
+    "id": "s4-v-database",
+    "kind": "vocabulary",
+    "says": "database: data kept so it can be searched and sorted",
+    "lesson": 9,
+    "objective": "4MD.01",
+    "must": [
+     "database"
+    ]
+   },
+   {
+    "id": "s4-v-datatype",
+    "kind": "vocabulary",
+    "says": "data type: what kind of thing a field holds",
+    "lesson": 9,
+    "objective": "4MD.05",
+    "must": [
+     "data type"
+    ]
+   },
+   {
+    "id": "s4-v-server",
+    "kind": "vocabulary",
+    "says": "server: the computer that stores, finds and sends",
+    "lesson": 10,
+    "objective": "4DC.01",
+    "must": [
+     "server"
+    ]
+   },
+   {
+    "id": "s4-v-client",
+    "kind": "vocabulary",
+    "says": "client: the computer that asks",
+    "lesson": 10,
+    "objective": "4DC.01",
+    "must": [
+     "client"
+    ]
+   },
+   {
+    "id": "s4-v-wireless",
+    "kind": "vocabulary",
+    "says": "wireless: joined with no wire at all",
+    "lesson": 10,
+    "objective": "4DC.03",
+    "must": [
+     "wireless"
+    ]
+   },
+   {
+    "id": "s4-v-radio",
+    "kind": "vocabulary",
+    "says": "radio wave: what wi-fi carries the data on",
+    "lesson": 10,
+    "objective": "4DC.03",
+    "must": [
+     "radio wave"
+    ]
+   },
+   {
+    "id": "s4-v-ethernet",
+    "kind": "vocabulary",
+    "says": "ethernet: joined by a cable",
+    "lesson": 10,
+    "objective": "4DC.03",
+    "must": [
+     "ethernet"
+    ]
+   },
+   {
+    "id": "s4-v-hyperlink",
+    "kind": "vocabulary",
+    "says": "hyperlink: the words you press to go to another page",
+    "lesson": 10,
+    "objective": "4DC.02",
+    "must": [
+     "hyperlink"
+    ]
+   },
+   {
+    "id": "s4-v-browser",
+    "kind": "vocabulary",
+    "says": "browser: the program that asks a web server for a page",
+    "lesson": 10,
+    "objective": "4DC.02",
+    "must": [
+     "browser"
+    ]
+   },
+   {
+    "id": "s4-v-encryption",
+    "kind": "vocabulary",
+    "says": "encryption: putting a message into cipher so only the right person can read it",
+    "lesson": 11,
+    "objective": "4DC.05",
+    "must": [
+     "encryption"
+    ]
+   },
+   {
+    "id": "s4-v-cybercrime",
+    "kind": "vocabulary",
+    "says": "cybercrime: a crime done through computers and networks",
+    "lesson": 11,
+    "objective": "4DC.04",
+    "must": [
+     "cybercrime"
+    ]
+   },
+   {
+    "id": "s4-v-plaintext",
+    "kind": "vocabulary",
+    "says": "plain text: the message before it is encrypted",
+    "lesson": 12,
+    "objective": "4DC.06",
+    "must": [
+     "plain text"
+    ]
+   },
+   {
+    "id": "s4-v-ciphertext",
+    "kind": "vocabulary",
+    "says": "ciphertext: the message after it is encrypted",
+    "lesson": 12,
+    "objective": "4DC.06",
+    "must": [
+     "ciphertext"
+    ]
+   },
+   {
+    "id": "s4-v-decrypt",
+    "kind": "vocabulary",
+    "says": "decrypt: turn the ciphertext back into plain text",
+    "lesson": 12,
+    "objective": "4DC.06",
+    "must": [
+     "decrypt"
+    ]
+   },
+   {
+    "id": "s4-v-systemsw",
+    "kind": "vocabulary",
+    "says": "system software: the software that runs the computer itself",
+    "lesson": 13,
+    "objective": "4CS.02",
+    "must": [
+     "system software"
+    ]
+   },
+   {
+    "id": "s4-v-logger",
+    "kind": "vocabulary",
+    "says": "data logger: a device that records readings on its own, over time",
+    "lesson": 13,
+    "objective": "4CS.03",
+    "must": [
+     "data logger"
+    ]
+   },
+   {
+    "id": "s4-v-touch",
+    "kind": "vocabulary",
+    "says": "touch sensor: an input that notices being touched",
+    "lesson": 13,
+    "objective": "4CS.03",
+    "must": [
+     "touch sensor"
+    ]
+   },
+   {
+    "id": "s4-v-voicenote",
+    "kind": "vocabulary",
+    "says": "voice note: information an output device gives back as sound",
+    "lesson": 13,
+    "objective": "4CS.04",
+    "must": [
+     "voice note"
+    ]
+   },
+   {
+    "id": "s4-v-messaging",
+    "kind": "vocabulary",
+    "says": "instant messaging: information sent and shown at once",
+    "lesson": 13,
+    "objective": "4CS.04",
+    "must": [
+     "instant messaging"
+    ]
+   },
+   {
+    "id": "s4-v-fileformat",
+    "kind": "vocabulary",
+    "says": "file format: the kind of file, which decides how big it is",
+    "lesson": 13,
+    "objective": "4CS.05",
+    "must": [
+     "file format"
+    ]
+   },
+   {
+    "id": "s4-d-threeloops",
+    "kind": "depth",
+    "says": "Three kinds of loop, not two: count-controlled, condition-controlled, and forever",
+    "lesson": 1,
+    "objective": "4CT.01",
+    "must": [
+     "count-controlled",
+     "condition-controlled",
+     "forever"
+    ]
+   },
+   {
+    "id": "s4-d-serverroles",
+    "kind": "depth",
+    "says": "The five jobs a server does: file, application, web, print and mail",
+    "lesson": 10,
+    "objective": "4DC.01",
+    "must": [
+     "file server",
+     "application server",
+     "web server",
+     "print server",
+     "mail server"
+    ]
+   },
+   {
+    "id": "s4-d-wifi",
+    "kind": "depth",
+    "says": "Wi-fi carries data on radio waves and ethernet on a cable, and that is the speed and the security",
+    "lesson": 10,
+    "objective": "4DC.03",
+    "must": [
+     "radio wave",
+     "wireless",
+     "ethernet"
+    ]
+   },
+   {
+    "id": "s4-d-pipeline",
+    "kind": "depth",
+    "says": "Plain text, encrypt, ciphertext, decrypt, plain text - the whole round trip",
+    "lesson": 12,
+    "objective": "4DC.06",
+    "must": [
+     "plain text",
+     "ciphertext",
+     "decrypt"
+    ]
+   },
+   {
+    "id": "s4-d-scratch",
+    "kind": "depth",
+    "says": "Name the real tools: Scratch for the block programs, MakeCode for the device",
+    "lesson": 5,
+    "objective": "4P.02",
+    "must": [
+     "Scratch"
+    ]
+   },
+   {
+    "id": "s4-d-debugpart",
+    "kind": "depth",
+    "says": "Testing systematically means running one part at a time, so the error has nowhere to hide",
+    "lesson": 6,
+    "objective": "4P.07",
+    "must": [
+     "debugging",
+     "systematically"
+    ]
+   }
+  ]
+ }
+}

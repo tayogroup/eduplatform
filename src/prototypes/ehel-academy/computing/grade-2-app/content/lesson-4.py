@@ -5,7 +5,7 @@
 programs; with 2P.02 (recreate the algorithm for each object), 2P.06 (test as
 you build) and 2P.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "objects-and-plans",
@@ -181,3 +181,51 @@ LESSON["warmup"] = [
     q("A game has a cat and a dog. Must they both do the same thing?", "\U0001F431", "no, each can have its own plan", ["yes, always", "only the dog can move", "only on Mondays"], "Each object in a program can have its own instructions."),
     q("Before you build something, it helps to...", "\U0001F4DD", "make a plan", ["start without thinking", "close your eyes", "build it twice"], "A plan says what you will build before you build it."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Who needs which blocks?", "Decomposition")
+
+LESSON["cando"] = [
+    cando("I can plan the instructions for each object in a program.", "2P.04"),
+    cando("I can turn an algorithm into a program.", "2P.02"),
+    cando("I know why I should test a program while I am building it.", "2P.06"),
+    cando("I know a program tells the computer how to run an algorithm.", "2P.01"),
+]
+
+LESSON["world"] = world(
+    "In a cartoon, every character has its own list of instructions. They all "
+    "start at the same moment. Nobody writes one huge list for everybody. "
+    "Each character is planned on its own. Then they are played together.",
+    [place("\U0001F3AD", "A theatre",
+           "Every actor learns their own part. The play works because the parts were planned separately and rehearsed together."),
+     place("\U0001F3AE", "A games studio",
+           "In a game each character has its own script. The player, the enemy and the door all run at once."),
+     place("\U0001F3BB", "An orchestra",
+           "Every musician reads their own line of music, and the lines are written to fit together.")],
+    "Watch any cartoon and pick one character. Ignore everyone else and describe only what that one does.")
+
+tier(LESSON,
+     support=[
+         q("Two characters are in your program. How many plans do you need?", "\U0001F431",
+           "one for each", ["one for both"],
+           "Each object gets its own instructions."),
+         q("The dog needs to bark. Which block?", "\U0001F436", "say", ["jump"],
+           "Say is the block that makes a sound or shows words."),
+     ],
+     extension=[
+         q("The cat needs to move and the flower does not. What goes in the flower's plan?", "\U0001F33B",
+           "only the blocks the flower actually needs",
+           ["all the cat's blocks too", "nothing at all, ever", "the same blocks as the cat"],
+           "Planning per object means each one gets what it needs and nothing else."),
+         q("You built both plans and only ran them at the very end. What is the risk?", "\u26A0\ufe0f",
+           "if something is wrong you do not know which plan did it",
+           ["there is no risk", "it runs slower", "the blocks disappear"],
+           "Two untested plans means two places for the bug. Test each one as you build it."),
+     ])

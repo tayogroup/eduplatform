@@ -8,7 +8,7 @@ wireless networks; 2DC.04 recognising when a network is and is not
 available; 2DC.05 network-connected devices share information, and there are
 risks.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "connected-devices",
@@ -273,3 +273,68 @@ LESSON["warmup"] = [
     q("Which of these can connect to the internet?", "\U0001F4F6", "a tablet", ["a pencil", "a cushion", "a spoon"], "A tablet has a computer inside, so it can connect."),
     q("A tablet shows no wi-fi bars. What does that usually mean?", "\U0001F4F5", "it is not connected to a network", ["it is fully charged", "it is very happy", "it is switched off"], "No bars usually means no network is reaching it."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Wired network, or wireless network?", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F512", "What you keep to yourself",
+         "Some things are personal information. Your full name and address. Your "
+         "birthday. Your school. A photo of where you live. A password. Share those over a "
+         "network and you cannot take them back. Some files sent over a network are "
+         "malware. Malware is a program written on purpose to do harm. It hides inside "
+         "something that looks fine. So never open a file from someone you do not know. "
+         "And ask a grown-up before you share anything about yourself."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("malware", "\u26A0\ufe0f", "A program written on purpose to do harm.",
+         ["Malware can hide inside a file.", "Do not open a file from someone you do not know."]),
+    word("personal information", "\U0001F512", "The things that say who you are and where you live.",
+         ["Your address is personal information.", "Keep personal information off the network."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name devices that can join a network and the internet.", "2DC.01"),
+    cando("I know two devices together can do what neither can alone.", "2DC.02"),
+    cando("I know the difference between a wired and a wireless network.", "2DC.03"),
+    cando("I can tell when a network is there and when it is not.", "2DC.04"),
+    cando("I know devices share information, and that sharing has risks.", "2DC.05"),
+]
+
+LESSON["world"] = world(
+    "A wireless network does not send your message through the air as sound. It "
+    "sends it as radio. That is the same kind of wave that carries music to a "
+    "car radio. It is just faster, and much quieter.",
+    [place("\U0001F3E5", "A hospital",
+           "A doctor's tablet asks the network for your record. The record itself stays on one protected computer."),
+     place("\U0001F3EB", "Your school",
+           "The school network shares one printer between every classroom, and keeps everyone's work in one place."),
+     place("\U0001F6E1\ufe0f", "A security team",
+           "People are paid to watch for malware arriving on a network and stop it before it spreads.")],
+    "Count the devices in your home that join the wifi. Ask a grown-up which ones use a wire instead.")
+
+tier(LESSON,
+     support=[
+         q("A wireless network joins devices...", "\U0001F4F6", "with no wire", ["with a wire"],
+           "Wireless means no wire. Wired means a cable."),
+         q("Somebody you do not know sends you a file. What do you do?", "\u26A0\ufe0f",
+           "tell a grown-up and do not open it", ["open it to see what it is"],
+           "A file from a stranger can carry malware. Ask first."),
+     ],
+     extension=[
+         q("Which of these is personal information?", "\U0001F512",
+           "my address", ["my favourite colour", "the name of my pet dinosaur toy", "how many books I read"],
+           "Personal information says who you are or where you live. A favourite colour does not."),
+         q("A printer and a tablet on the same network. What can they do together?", "\U0001F5A8\ufe0f",
+           "print your drawing, which neither could do alone",
+           ["nothing extra", "charge each other", "take photos"],
+           "The tablet has the drawing and no way to print. The printer can print and has nothing to print. Together they can."),
+     ])

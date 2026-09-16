@@ -11,7 +11,7 @@ carried all six Computer Systems objectives in 21 steps, about 60 minutes.
 The six steps are unchanged; the quiz, about, lecture, words, home projects,
 recap and warm-up are this lesson's own.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "computers-devices-and-robots",
@@ -219,3 +219,70 @@ LESSON["warmup"] = [
     q("Who adds 38 and 45 faster: a person, or a calculator?", "\U0001F9EE", "a calculator", ["a person, every time", "neither can do it", "they always take the same time"], "A calculator adds in a blink, with no mistakes."),
     q("Robots in films often have feelings. Do real robots?", "\U0001F916", "no, they follow a program", ["yes, like people do", "only happy ones", "only the big ones"], "A real robot has sensors and a program, not feelings."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Which device for the job?", "Evaluation")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F392", "Portable, or powerful",
+         "Portable means small and light enough to carry with you. A phone is portable "
+         "and goes in a pocket. A desktop computer is not portable and stays on a desk. "
+         "That is the choice people make. A portable device goes where you go. A bigger "
+         "one does more once you get there. Which is better depends on the job."),
+    part("\U0001F916", "Fictional robots and real ones",
+         "A fictional robot is one made up for a story. It talks. It has feelings. It "
+         "decides things for itself. A real robot does one job, over and over, because a "
+         "program tells it to. Real robots are more boring than the ones in films. They "
+         "are also much more useful."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("portable", "\U0001F392", "Small and light enough to carry with you.",
+         ["A tablet is portable.", "A desktop computer is not portable."]),
+    word("fictional", "\U0001F4D6", "Made up for a story.",
+         ["A fictional robot talks and has feelings.", "Robots in films are fictional."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name tasks a computer does better than a person.", "2CS.04"),
+    cando("I know people choose different devices for different places and jobs.", "2CS.05"),
+    cando("I can compare robots in stories with real robots that do a job.", "2CS.06"),
+]
+
+LESSON["world"] = world(
+    "The word robot comes from a play written in 1920. It meant forced work. "
+    "Every robot in a story since has been somebody's idea. Real robots were "
+    "built afterwards. They turned out nothing like them.",
+    [place("\U0001F3ED", "A car factory",
+           "Robot arms weld and paint. They do one movement thousands of times, exactly the same, and never get bored."),
+     place("\U0001F30B", "A volcano",
+           "Robots are sent where people cannot survive: inside volcanoes, under the sea, into damaged reactors."),
+     place("\U0001F3E5", "An operating theatre",
+           "A surgeon moves the controls and a robot arm copies the movement, smaller and steadier than a hand can.")],
+    "Think of a robot from a film. Write down one thing it does that no real robot can do.")
+
+tier(LESSON,
+     support=[
+         q("Who adds up a thousand numbers faster?", "\U0001F5A5\ufe0f", "the computer", ["the person"],
+           "Computers are very fast and never get tired. That is what they are for."),
+         q("A robot in a film that has feelings is...", "\U0001F4D6", "fictional", ["real"],
+           "Fictional means made up for a story."),
+     ],
+     extension=[
+         q("Which job would you NOT give a computer?", "\U0001F91D",
+           "comforting a friend who is upset",
+           ["adding up a thousand numbers", "checking a list for the same word",
+            "doing the same movement a thousand times"],
+           "Computers are fast and tireless and have no idea how anybody feels. That job is a person's."),
+         q("You are going camping for a week with no plug sockets. Which device?", "\u26FA",
+           "a portable one with a long battery",
+           ["a desktop computer", "the biggest screen you can find", "a printer"],
+           "Where you are decides the device. Portable and long-lasting beats powerful with nowhere to plug in."),
+     ])

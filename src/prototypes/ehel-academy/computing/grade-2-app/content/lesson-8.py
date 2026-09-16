@@ -5,7 +5,7 @@
 categorical data; 2MD.06 how data may help to solve problems; 2MD.01 the
 advantages of storing data on computers.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 PLAYGROUND = [
     {"label": "Monday", "pic": "\U0001F9D2", "value": 9},
@@ -210,3 +210,49 @@ LESSON["warmup"] = [
     q("Which is quicker to read: a list of numbers, or a picture of them?", "\U0001F5BC\uFE0F", "a picture, like a graph", ["a list, always", "they are the same", "neither"], "A graph shows the answer at a glance."),
     q("The class has 10 juice cartons but 12 children. What does the data tell us?", "\U0001F964", "we need 2 more cartons", ["we have too many", "nothing at all", "juice is orange"], "The numbers show the problem, and the answer: two more."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Use the data to solve a problem", "Logical thinking")
+
+LESSON["cando"] = [
+    cando("I can present categorical data using a computing device.", "2MD.02"),
+    cando("I can use data to help solve a problem.", "2MD.06"),
+    cando("I know why data is stored on computers.", "2MD.01"),
+]
+
+LESSON["world"] = world(
+    "In 1854 a doctor in London drew every case of an illness onto a street "
+    "map. The dots gathered around one water pump. He had the handle taken "
+    "off. The outbreak stopped. Drawing the data is what showed him the answer.",
+    [place("\U0001F3E5", "Public health",
+           "Cases are still put on maps today. A cluster of dots shows a problem before anyone can explain it."),
+     place("\U0001F6B8", "A road safety team",
+           "Crashes are plotted on a map of the town. Where the dots pile up is where the crossing gets built."),
+     place("\u26BD", "A sports team",
+           "Every shot is plotted on a picture of the pitch. The picture shows where the goals come from.")],
+    "Look at a graph in a newspaper or on a phone. What is the one thing it is trying to show you?")
+
+tier(LESSON,
+     support=[
+         q("Six children chose apple. How tall is the apple column?", "\U0001F34E", "6", ["1"],
+           "The column is as tall as the number that chose it."),
+         q("Which shows the answer fastest?", "\U0001F4CA", "a graph", ["a long list of names"],
+           "A graph lets you see the biggest one without counting."),
+     ],
+     extension=[
+         q("Your graph shows most children walk to school. What problem could that data help solve?", "\U0001F6B8",
+           "where the school needs a safe crossing",
+           ["which fruit to buy", "what colour to paint the hall", "how many computers to order"],
+           "Data helps with the problem it is about. Walking to school is about the route, not the fruit."),
+         q("Two columns are exactly the same height. What can you say?", "\U0001F4CA",
+           "there is no single most popular one",
+           ["the graph is wrong", "one must be taller really", "nobody chose either"],
+           "A tie is a real answer. It means the question does not have one winner."),
+     ])

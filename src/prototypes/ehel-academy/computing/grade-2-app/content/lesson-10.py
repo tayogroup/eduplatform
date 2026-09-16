@@ -11,7 +11,7 @@ now. The page keeps its file name, hardware-software-and-robots.html, so the
 address the live course already knows serves this lesson rather than a stale
 copy of the old one.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "hardware-and-software",
@@ -231,3 +231,79 @@ LESSON["warmup"] = [
     q("Is a game something you can touch?", "\U0001F3AE", "no, a game is a program", ["yes, you can hold it", "only the big ones", "only when it is switched on"], "A game is software: a program. You can touch the tablet it runs on."),
     q("You talk to a tablet and it hears you. What does it hear you with?", "\U0001F3A4", "a microphone", ["the charger", "the screen", "the printer"], "A microphone lets your voice into the tablet."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Made to be easy", "Abstraction")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F44D", "Made so anybody can use it",
+         "A device is user-friendly when you can pick it up and use it without being "
+         "taught. Big buttons you can hit with a finger. An icon that looks like the thing "
+         "it does. An icon is the little picture you press to open a program: an envelope "
+         "for mail, a camera for photos. A touchscreen you point at, instead of a mouse "
+         "you have to learn. Designers work hard on this. You only notice it when it is "
+         "missing."),
+    part("\u2699\ufe0f", "Every part has a function",
+         "The function of something is the job it does. The function of a keyboard is to "
+         "put letters in. The function of a speaker is to give sound out. The function of "
+         "a paint program is to let you draw. Name each part and say its function. That is "
+         "how you explain a computer to somebody else."),
+    part("\U0001F3F7\ufe0f", "Input devices that read instead of typing",
+         "Not every input device has keys. A barcode reader looks at the stripes on a "
+         "packet. It puts the number straight into the till. That is faster than typing, "
+         "and it never mistypes. A microphone puts your voice in. A camera puts a picture "
+         "in. All of them are input devices: hardware that puts data into a computer."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("function", "\u2699\ufe0f", "The job a piece of hardware or software does.",
+         ["The function of a keyboard is to put letters in.", "Say what each part's function is."]),
+    word("user-friendly", "\U0001F44D", "Easy to use without being taught.",
+         ["Big buttons make a tablet user-friendly.", "A user-friendly app needs no instructions."]),
+    word("barcode", "\U0001F3F7\ufe0f", "Stripes a scanner reads instead of somebody typing the number.",
+         ["The till reads the barcode.", "A barcode reader is an input device."]),
+]
+
+LESSON["cando"] = [
+    cando("I can use the right words for what hardware and software do.", "2CS.01"),
+    cando("I can name features that make a device easy to use.", "2CS.02"),
+    cando("I know the difference between input devices and output devices.", "2CS.03"),
+]
+
+LESSON["world"] = world(
+    "The first computer mouse was a wooden box. It had one button and two little "
+    "wheels underneath. It was built in 1964. It took years before anyone "
+    "believed people would want one.",
+    [place("\U0001F6D2", "A checkout",
+           "The barcode reader is an input device and the receipt printer is an output device, working a metre apart."),
+     place("\U0001F3E6", "A cash machine",
+           "Big buttons, few choices, clear pictures. It is used by everybody, so it has to be user-friendly."),
+     place("\u267F", "An accessible office",
+           "Some people use their voice, a switch or their eyes as the input device. The computer does not mind which.")],
+    "Find a barcode at home and look at the stripes. Thick, thin, thick - that pattern is the number.")
+
+tier(LESSON,
+     support=[
+         q("Hardware is...", "\U0001F5A5\ufe0f", "the parts you can touch", ["the programs"],
+           "Hardware you can touch. Software you cannot."),
+         q("A screen shows you things. Is it an input or an output device?", "\u2B06\ufe0f",
+           "an output device", ["an input device"],
+           "Information coming OUT of the computer means an output device."),
+     ],
+     extension=[
+         q("What makes a device user-friendly?", "\U0001F44D",
+           "you can use it without being taught",
+           ["it is expensive", "it has the most buttons", "it is the newest one"],
+           "Big buttons, clear icons, a screen you point at. User-friendly means you do not need a lesson first."),
+         q("Why does a shop use a barcode reader instead of typing the number?", "\U0001F3F7\ufe0f",
+           "it is faster and it does not mistype",
+           ["it looks better", "it is cheaper to buy", "the law says so"],
+           "Any input a machine can read itself is quicker than a person typing, and it does not make typing mistakes."),
+     ])

@@ -5,7 +5,7 @@
 the desired output; 2P.05 the benefits of working with others when
 debugging; 2P.06 the benefits of testing regularly; with 2P.02.
 """
-from _kit import explain, step, opt, q, choice, part, word, home
+from _kit import explain, step, opt, q, choice, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "debugging-together",
@@ -194,3 +194,51 @@ LESSON["warmup"] = [
     q("You are stuck on a hard puzzle. Who could help?", "\U0001F91D", "a friend, who sees it with fresh eyes", ["nobody, ever", "the puzzle", "a sleeping cat"], "A friend sees what you have stopped seeing."),
     q("When a program does not do what we wanted, it has...", "\U0001F41B", "a bug", ["a sticker", "a song", "a nap"], "A mistake in a program is called a bug."),
 ]
+
+# ---- Cambridge Learner's Book 2, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "Find the bug, fix it, run it again", "Logical thinking")
+
+LESSON["cando"] = [
+    cando("I know why working with someone else helps when debugging.", "2P.05"),
+    cando("I can debug a program so it gives the output I wanted.", "2P.07"),
+    cando("I know the benefit of testing a program as I build it.", "2P.06"),
+]
+
+LESSON["world"] = world(
+    "Programmers have a trick called rubber duck debugging. You explain your "
+    "program out loud, line by line, to a rubber duck on the desk. Saying it "
+    "out loud makes you notice the wrong step yourself. And the duck never "
+    "interrupts.",
+    [place("\U0001F4BC", "A software office",
+           "Two programmers often share one screen. One types, one watches, and they swap. Two pairs of eyes find more bugs."),
+     place("\U0001F3E5", "A hospital",
+           "Before an operation the team says the plan out loud together so that anyone can say: wait, that is not right."),
+     place("\u2708\ufe0f", "A cockpit",
+           "One pilot reads the checklist and the other does it. Neither does both, on purpose.")],
+    "Explain your homework out loud to a toy before you show it to anyone. See whether you spot a mistake yourself.")
+
+tier(LESSON,
+     support=[
+         q("Debugging means...", "\U0001F41B", "finding and fixing the mistake", ["switching it off"],
+           "Find the bug, then fix it."),
+         q("Your friend is stuck on a bug. What is the most useful thing you can do?", "\U0001F465",
+           "look at it with them", ["tell them to start again"],
+           "A second pair of eyes sees what the first pair has stopped noticing."),
+     ],
+     extension=[
+         q("Why does explaining your program out loud help you find bugs?", "\U0001F4AC",
+           "saying each step makes you notice the one that does not make sense",
+           ["it makes the computer listen", "it is faster", "it does not help"],
+           "You stop skimming and start reading. That is the whole trick."),
+         q("You fixed the bug and the program still does the wrong thing. What now?", "\U0001F527",
+           "run it again and look at what it does now - there is another bug",
+           ["give up", "put the old bug back", "change every block"],
+           "Programs can have more than one bug. Run, look, fix, run again."),
+     ])

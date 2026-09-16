@@ -6,7 +6,7 @@ machines and other physical objects; 3CS.06 common 'Internet of Things'
 devices in a familiar environment; 3CS.07 the role of robots in
 manufacturing.
 """
-from _kit import explain, step, opt, q, s, part, word, home
+from _kit import explain, step, opt, q, s, part, word, home, cando, place, world, label_ct, tier
 
 LESSON = {
     "slug": "machines-things-and-robots",
@@ -216,3 +216,73 @@ LESSON["warmup"] = [
     q("Which of these can talk to the internet?", "\U0001F50A", "a smart speaker", ["a wooden chair", "a paper map", "a pencil case"], "A smart speaker has a computer inside and joins the internet."),
     q("A robot in a car factory does the same job all day. How?", "\U0001F916", "it follows its program exactly, again and again", ["it does whatever it feels like", "it asks a friend each time", "it guesses"], "A factory robot follows its program for one job."),
 ]
+
+# ---- Cambridge Learner's Book 3, 2026-09-16 --------------------------------
+# What the book carries that this lesson did not: the "What can you do?"
+# self-check every unit closes with, the "Did you know?" box and the real
+# world behind it, and the tiered practice ("Go further", "Challenge
+# yourself!"). Everything here is position-safe: the self-check lives on the
+# sticker shelf, the tiers hang off the check step and score nothing, and
+# Computing world is a step that already existed and said it was empty.
+
+label_ct(LESSON, "A robot builds a car", "Pattern recognition")
+
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4A1", "Everyday things with a computer inside",
+         "A computer-controlled device is any machine that does what a program tells it. A "
+         "washing machine. A microwave. Traffic lights. A smart device goes one step further. It "
+         "has a computer AND a connection. So it can be told what to do from somewhere else. A "
+         "smart light you switch on from a phone downstairs is a smart device. The lamp beside "
+         "it, with a switch, is not."),
+    part("\U0001F501", "What robots are actually for",
+         "Factory robots are used for work that is repetitive - the same movement, over and over, "
+         "thousands of times a day. People are bad at repetitive work: we get tired, we get bored, "
+         "and we stop being exactly accurate. A robot arm is exact on the ten thousandth weld as "
+         "on the first. It is not cleverer than a person. It just never varies.")
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("computer-controlled", "\U0001F39B\ufe0f", "A machine that does what a program tells it.",
+         ["A washing machine is computer-controlled.", "Traffic lights are computer-controlled."]),
+    word("smart device", "\U0001F4A1", "An everyday thing with a computer and a connection in it.",
+         ["A smart light can be switched on from a phone.", "A smart device joins the network."]),
+    word("repetitive", "\U0001F501", "The same thing over and over again.",
+         ["Welding a car is repetitive work.", "Robots are good at repetitive jobs."]),
+]
+
+LESSON["cando"] = [
+    cando("I know computers can be programmed to control machines.", "3CS.05"),
+    cando("I can spot Internet of Things devices around me.", "3CS.06"),
+    cando("I can explain what robots do in manufacturing.", "3CS.07"),
+]
+
+LESSON["world"] = world(
+    "The first industrial robot went to work in a car factory in 1961. Its job was "
+    "lifting hot metal parts. Dangerous, heavy, and exactly the same every time. That is "
+    "the sort of job robots were invented for.",
+    [place("\U0001F3ED", "A car factory",
+           "Robot arms weld, paint and lift. The same movement, thousands of times, to the same millimetre."),
+     place("\U0001F4E6", "A warehouse",
+           "Packing robots do the repetitive lifting while people do the parts that need deciding."),
+     place("\U0001F3E0", "A home",
+           "Smart lights, smart speakers and smart meters are all everyday things with a computer and a connection.")],
+    "Count the machines at home that switch themselves on or off. Which of them could also be told what to do from a phone?")
+
+tier(LESSON,
+     support=[
+         q("A washing machine that runs a wash program is...", "\U0001F39B\ufe0f",
+           "computer-controlled", ["a robot"],
+           "A program controls it, but it does not move about doing a job."),
+         q("Repetitive means...", "\U0001F501", "the same thing over and over", ["very difficult"],
+           "Repetitive work is exactly what robots are best at."),
+     ],
+     extension=[
+         q("A lamp with a switch, or a lamp you turn on from your phone. Which is a smart device?", "\U0001F4A1",
+           "the one you turn on from your phone",
+           ["the one with a switch", "both of them", "neither"],
+           "A smart device has a computer AND a connection. A switch is just a switch."),
+         q("Why use a robot for welding rather than a person?", "\U0001F527",
+           "it is exactly as accurate on the ten thousandth weld as on the first",
+           ["it is cleverer than a person", "it never needs electricity", "it can decide what to build"],
+           "Robots are not clever. They are exact and they never get tired, which is what repetitive work needs."),
+     ])

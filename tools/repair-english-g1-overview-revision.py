@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Rename the ten Grade 1 overview-outcomes clips so a re-recording actually reaches a child.
+"""Rename overview-outcomes clips so a re-recording actually reaches a child.
+
+Grade 1 by default; `--grade 4` for the Stage 4 pass. The filename keeps the
+`g1` in it because renaming a shipped tool is a bigger change than teaching it a
+second grade, and every caller in the history doc names it this way.
 
 WHY
 ===
@@ -11,6 +15,11 @@ rather than wrong, and invisible to everything except
 
 The owner asked for them to be recorded (2026-09-16), reversing the
 author-text-only decision for these clips alone.
+
+**The same thing happened at Grade 4 on 2026-09-17**, for the same reason and
+found the same way: `author-english-g4-stage4-thin-claims.py` added an outcome to
+units 5, 6, 8 and 10, and the staleness checker named exactly those four. The
+fix is identical, which is why this tool grew a grade rather than a sibling.
 
 WHY A RENAME AND NOT JUST A RE-RECORD
 =====================================
@@ -50,15 +59,27 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-UNITS = os.path.join(ROOT, "src", "prototypes", "ehel-academy", "english",
-                     "grade-1", "data", "units")
-
 PANEL = "outcomes"
 NEW = "e"
-# The value each unit must currently hold. Asserting the BEFORE state is what
-# stops this running twice with different letters, or running against units some
-# other repair has already moved.
-EXPECTED = {6: "rv"}          # every other unit: no revision at all
+
+# WHICH UNITS, AND WHAT EACH MUST CURRENTLY HOLD, PER GRADE. Asserting the BEFORE
+# state is what stops this running twice with different letters, or running
+# against units some other repair has already moved. A grade with no entry is
+# REFUSED rather than defaulted: guessing what revision a grade's clips already
+# carry is exactly how two repairs end up fighting over one filename.
+#
+# Grade 4 was added 2026-09-17: it gained four outcomes (units 5, 6, 8 and 10)
+# and its spoken overviews went stale for the same reason Grade 1's did - the
+# outcomes panel enumerates them. None of the four carried a revision.
+GRADES = {
+    1: {"units": list(range(1, 11)), "expected": {6: "rv"}},
+    4: {"units": [5, 6, 8, 10], "expected": {}},
+}
+
+
+def units_dir(grade):
+    return os.path.join(ROOT, "src", "prototypes", "ehel-academy", "english",
+                        "grade-%d" % grade, "data", "units")
 
 
 def load(path):
@@ -74,15 +95,26 @@ def save(path, obj):
 def main(argv):
     dry = "--dry" in argv
     ids_only = "--ids" in argv
-    for a in argv[1:]:
+    grade = 1
+    args = argv[1:]
+    if "--grade" in args:
+        i = args.index("--grade")
+        grade = int(args[i + 1])
+        del args[i:i + 2]
+    for a in args:
         if a not in ("--dry", "--ids"):
             sys.stderr.write("REFUSED: unknown argument %r\n" % a)
             return 2
+    if grade not in GRADES:
+        sys.stderr.write("REFUSED: no recorded before-state for grade %d. Add one to GRADES "
+                         "rather than guessing what its clips already carry.\n" % grade)
+        return 2
+    expected = GRADES[grade]["expected"]
 
     rows = []
     done = 0
-    for n in range(1, 11):
-        path = os.path.join(UNITS, "unit-%d.json" % n)
+    for n in GRADES[grade]["units"]:
+        path = os.path.join(units_dir(grade), "unit-%d.json" % n)
         unit = load(path)
         uid = unit["unit"]["unitId"]
         panel = (unit.get("overviewAudio") or {}).get(PANEL)
@@ -95,11 +127,11 @@ def main(argv):
             done += 1
             rows.append((n, "%s-overview-%s%s" % (uid, PANEL, NEW), "already"))
             continue
-        if have != EXPECTED.get(n):
+        if have != expected.get(n):
             sys.stderr.write(
                 "REFUSED: unit %d overviewAudio.%s carries audioRevision %r, expected %r. "
                 "Something else moved it; resolve by hand.\n"
-                % (n, PANEL, have, EXPECTED.get(n)))
+                % (n, PANEL, have, expected.get(n)))
             return 1
 
         new_id = "%s-overview-%s%s" % (uid, PANEL, NEW)
@@ -124,8 +156,8 @@ def main(argv):
           % (len(rows) - done, done, NEW, " (--dry: nothing written)" if dry else ""))
     if not dry and len(rows) - done:
         print("\nNow record them, and ONLY them:")
-        print("  node tools/generate-ehel-english-audio.js overview 1 --only \\\n    %s"
-              % ",".join(r[1] for r in rows))
+        print("  node tools/generate-ehel-english-audio.js overview %d --only \\\n    %s"
+              % (grade, ",".join(r[1] for r in rows)))
     return 0
 
 

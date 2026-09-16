@@ -6,7 +6,7 @@
 Sun and Moon as approximately spherical; 3TWSm.02 make and use a physical
 model; with 3TWSp.02, 3TWSp.03, 3TWSa.03 and 3SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "the-moon",
@@ -40,10 +40,13 @@ LESSON = {
              {"sim": "moonPhases",
               "predict": {"ask": "Over a month, what will the Moon do?",
                           "opts": [opt("More of it will look lit each night, then less", True), opt("Look exactly the same every night", False), opt("Disappear for good", False)]},
+              "plan": {"ask": "How shall we find out how the Moon changes? Which way is fair?",
+                        "opts": [opt("Look at the same time of night, every few nights, and draw what you see", True), opt("Look once at the start of the month and once at the end", False), opt("Look whenever you remember, and try to recall the last one", False)],
+                        "why": "Watching the same thing over time is one of the five enquiries. Two looks miss the pattern in between, and remembering is not recording."},
               "runAsk": "Press Three days later, eight times, and watch the Moon change.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to the <b>lit part</b> night after night?",
                            "opts": [opt("More of it was lit each night until it was full, then less each night, back to new", True), opt("It stayed a full circle all month", False), opt("It changed colour", False)],
-                           "why": "New, crescent, half, gibbous, full, and back again. A regular pattern, about four weeks long."},
+                           "why": "New, crescent, half, gibbous, full, and back again. Growing is called <b>waxing</b> and shrinking is called <b>waning</b>. A regular pattern, about four weeks long."},
               "conclude": {"ask": "Does the Moon really change shape?",
                            "opts": [opt("No. It is always a sphere; we see different amounts of its sunlit side", True), opt("Yes, it grows and shrinks", False), opt("Yes, it is a different Moon each week", False)],
                            "why": "The Moon is a ball lit by the Sun. As it goes round the Earth, we see more or less of the lit half."}},
@@ -110,8 +113,17 @@ LESSON = {
                  q("How long does the Moon take to go round the Earth once?", "\U0001F319", "about a month", ["one day", "one year"], "About four weeks."),
                  q("Which phase comes after the new Moon?", "\U0001F312", "a crescent", ["a full Moon", "a half Moon"], "A thin curve first."),
                  q("Why does the Moon seem to change shape?", "\U0001F315", "we see different amounts of its sunlit side", ["it really grows and shrinks", "clouds cover it"], "Always a ball, differently lit."),
+                 q("The Sun and the Moon look about the same size in the sky. Are they?", "\u2600\uFE0F", "No. The Sun is enormous and very far away.", ["Yes, that is why they look the same", "Yes, the Moon is slightly bigger"],
+                   "The Sun is more than a hundred times wider than the Earth; the Moon is a quarter of the Earth's width. Distance makes them look alike."),
+                 q("Would an astronaut on the Moon float away?", "\U0001F680", "No. The Moon's gravity pulls them back down, more gently.", ["Yes, there is no gravity on the Moon", "Yes, unless they hold on"],
+                   "Astronauts walk and jump on the Moon and come down again. The Moon's gravity is weaker than the Earth's, not missing."),
+                 q("Can you ever see the Moon in the daytime?", "\U0001F319", "Yes. It is often up in the day, just harder to spot.", ["No, the Moon only comes up at night", "Only during an eclipse"],
+                   "Look for a pale Moon in a blue sky. It is there far more often than people notice."),
+                 q("The Moon looks like a thin crescent tonight. Has it changed shape?", "\U0001F311", "No. It is always a ball; we see only the lit part.", ["Yes, the Moon changes shape each week", "Yes, the Earth's shadow cuts it"],
+                   "How much of the lit half faces us changes. In a daytime crescent you can often make out the dark part too."),
              ]},
-             "You know your Moon."),
+             "You know your Moon.",
+             mis=["6.1-m1", "6.1-m2", "6.2-m1", "6.3-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3ESs.01", "3ESs.02", "3ESs.03", "3TWSm.02", "3SIC.01"],
              "Time to show what you know. Tap the answer.",
@@ -132,7 +144,19 @@ LESSON = {
                  q("In the lamp-and-ball model, why does the ball sometimes look like a crescent?", "\U0001F312", "you can see only a thin part of its lit half", ["the ball has shrunk", "the lamp is broken"], "The ball is always a ball. Where it is decides how much of the lit half you can see."),
                  q("The Moon takes about a month to go round the Earth. If you watch it for two months, how many full Moons will you see?", "\U0001F315", "about two", ["about one", "about sixty"], "One trip round the Earth, one full Moon. Two months, two trips."),
                  q("In the lamp-and-ball model, what does the lamp stand for, and why?", "\U0001F4A1", "the Sun, because it gives the light", ["the Moon, because it is round", "the Earth, because we live on it"], "The lamp lights the ball, as the Sun lights the Moon."),
-             ]},
+             ],
+              "support": [
+                 q("Is the Moon a ball or a flat disc?", "\u26AA", "a ball", ["a flat disc"],
+                   "The Moon is spherical, like the Earth."),
+                 q("Does the Moon make its own light?", "\U0001F319", "No", ["Yes"],
+                   "The Moon shines back the Sun's light."),
+              ],
+              "extension": [
+                 q("The same side of the Moon always faces us. So what had nobody ever seen until a spacecraft went round it?", "\U0001F6F0\uFE0F", "the far side of the Moon", ["the lit side of the Moon", "the Moon's craters"],
+                   "The Moon turns once for each trip round the Earth, so one face is always towards us. The far side was first photographed in 1959."),
+                 q("A model of the Moon's phases uses a ball and a lamp. What does it get right that a drawing cannot?", "\U0001F315", "that the lit part changes because of WHERE you look from", ["the colour of the Moon", "how far away the Moon is"],
+                   "Walk round the lit ball and the shape you see changes, with nothing about the ball changing. That is the whole idea."),
+              ]},
              "That is the whole lesson finished, and the whole of Grade 3 Science."),
     ],
 }
@@ -177,6 +201,28 @@ LESSON["words"] = [
          ["The Moon's orbit round the Earth takes a month.", "We drew the orbit as a dotted line."]),
     word("spin", "\U0001F30D", "To turn round on the spot. The Earth spins once a day.",
          ["The Earth spins, so we get day and night.", "Spin the globe slowly."]),
+    word("spherical", "\u26AA", "Shaped like a ball.",
+         ["The Earth is spherical.", "The Sun and the Moon are spherical too."]),
+    word("crater", "\U0001F311", "A dent in the surface of a moon or a planet, made by a rock from space.",
+         ["The Moon is covered in craters.", "A crater is a hole made by a rock hitting the surface."]),
+    word("gibbous", "\U0001F314", "The phase when we can see more than half of the lit Moon, but not all of it.",
+         ["A gibbous Moon is bigger than a half Moon.", "Gibbous comes between half and full."]),
+    word("waxing", "\U0001F312", "Growing. More of the Moon is lit each night.",
+         ["A waxing Moon is getting bigger.", "The Moon waxes from new to full."]),
+    word("waning", "\U0001F318", "Shrinking. Less of the Moon is lit each night.",
+         ["A waning Moon is getting smaller.", "The Moon wanes from full back to new."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe the shape of the Earth, the Sun and the Moon.", "3ESs.03"),
+    cando("I can describe how the Moon moves.", "3ESs.02"),
+    cando("I can describe the phases of the Moon.", "3ESs.01"),
+    cando("I can explain why the Moon seems to change shape when it does not.", "3ESs.01"),
+    cando("I can learn science from a model, and say what the model leaves out.", "3TWSm.02"),
+    cando("I can make a model of something I cannot hold.", "3TWSm.03"),
+    cando("I can name the five types of scientific enquiry.", "3TWSp.02"),
+    cando("I can record what I saw in a table.", "3TWSa.03"),
+    cando("I can say how people's ideas about the sky have changed.", "3SIC.01"),
 ]
 
 LESSON["home"] = [

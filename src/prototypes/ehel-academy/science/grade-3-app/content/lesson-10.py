@@ -7,7 +7,7 @@ from a source is blocked; 3Ps.03 the size of a shadow depends on where the
 object and the light source are; with 3TWSp.03, 3TWSa.03, 3TWSc.01,
 3TWSp.01 and 3SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "light-and-shadows",
@@ -82,8 +82,11 @@ LESSON = {
              {"sim": "shadowSize",
               "predict": {"ask": "When the toy moves <b>nearer the torch</b>, the shadow will...",
                           "opts": [opt("Get bigger", True), opt("Get smaller", False), opt("Stay the same size", False)]},
+              "plan": {"ask": "How shall we find out what changes the size of the shadow? Which way is fair?",
+                        "opts": [opt("Keep the torch and the wall still, and move only the toy", True), opt("Move the toy and the torch at the same time", False), opt("Swap the toy for a bigger one as you move it", False)],
+                        "why": "One thing at a time. Move the torch as well and you will not know which move changed the shadow."},
               "runAsk": "Move the toy nearer the torch, then nearer the wall. Watch the shadow.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to the <b>size of the shadow</b>?",
                            "opts": [opt("Nearer the torch, the shadow grew. Nearer the wall, it shrank", True), opt("The shadow stayed the same", False), opt("Nearer the torch, the shadow shrank", False)],
                            "why": "Near the torch the toy blocks more of the light, so the shadow on the wall is big. Near the wall it blocks less, so the shadow is small."},
               "conclude": {"ask": "What changes the size of a shadow?",
@@ -148,8 +151,17 @@ LESSON = {
                  q("No light gets through. The material is...", "\U0001F311", "opaque", ["transparent", "translucent"], "Blocked completely."),
                  q("What is a shadow?", "\U0001F464", "a dark shape where an object blocks the light", ["light the object gives out", "a reflection"], "Blocked light."),
                  q("To make a shadow bigger, move the object...", "\U0001F9F8", "nearer the light source", ["nearer the wall", "nowhere; it cannot change"], "Nearer the torch, bigger shadow."),
+                 q("Can you tell the colour of someone's shirt from their shadow?", "\U0001F464", "No. A shadow has no colour and no detail.", ["Yes, the shadow shows the colours", "Yes, if the Sun is bright"],
+                   "A shadow is one flat dark shape, because it is simply where the light could not reach."),
+                 q("You jump in the sunshine. What does your shadow do?", "\U0001F45F", "stays down on the ground", ["jumps with you, joined to your feet", "disappears while you are in the air"],
+                   "Nothing is joined to anything. Lift an object off the floor and its shadow stays on the floor too."),
+                 q("Do you always have a shadow, with the Sun just lighting it up?", "\u2600\uFE0F", "No. With no light there is no shadow at all.", ["Yes, it is always there", "Yes, it hides in the dark"],
+                   "A light MAKES a shadow, it does not show up one that was already there. Stand where no light reaches you and there is none."),
+                 q("You turn a cup round in front of a torch. What happens to its shadow?", "\U0001F56F\uFE0F", "it changes shape as the cup turns", ["it stays the same shape", "it gets darker but keeps its shape"],
+                   "A shadow is the shape of the thing as the light meets it. Turn the cup and the shape changes."),
              ]},
-             "You know light and shadows."),
+             "You know light and shadows.",
+             mis=["3.1-m1", "3.1-m2", "3.1-m3", "3.2-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Ps.01", "3Ps.02", "3Ps.03", "3SIC.01"],
              "Time to show what you know. Tap the answer.",
@@ -170,8 +182,27 @@ LESSON = {
                  q("Why does a clear window make almost no shadow?", "\U0001FA9F", "light goes straight through it, so almost nothing is blocked", ["windows are too cold", "windows are too big"], "A shadow needs something that blocks the light. Transparent glass lets it through."),
                  q("What will happen to the shadow if you move the torch further away from the toy?", "\U0001F526", "the shadow gets smaller", ["the shadow gets bigger", "the shadow disappears"], "It is like moving the toy nearer the wall: the shadow shrinks."),
                  q("Why do blackout curtains keep a bedroom dark on a summer morning?", "\U0001F6CF\uFE0F", "they are opaque, so no light gets through", ["they are transparent, so light goes straight through", "they are translucent, so the light is only blurred"], "Opaque materials block all the light."),
-             ]},
-             "That is the whole lesson finished. You know how light and shadows work."),
+                 q("Is a pair of green sunglasses transparent?", "\U0001F453", "Yes. You can see through them.", ["No, transparent things have no colour", "No, they are translucent"],
+                   "Coloured glass lets light through and you can see through it. It colours the light rather than stopping it."),
+                 q("Is clean water transparent?", "\U0001F95B", "Yes. Water is a material, and clean water is see-through.", ["No, only solid things can be transparent", "No, water is not a material"],
+                   "You can read through a glass of clean water. Dirty water you cannot - which shows the difference is in the water."),
+                 q("Tracing paper lets light through, but you cannot see a clear picture. What is it?", "\U0001F4C4", "translucent", ["transparent", "glowing"],
+                   "Translucent means light gets through but scatters. Tracing paper and frosted glass are translucent, and neither one glows."),
+             ],
+              "support": [
+                 q("Can you see through a brick wall?", "\U0001F9F1", "No", ["Yes"],
+                   "A brick is opaque: it blocks the light."),
+                 q("Does a shadow form in front of the light or behind the object?", "\U0001F464", "behind the object", ["in front of the light"],
+                   "The object blocks the light, so the shadow is on the far side."),
+              ],
+              "extension": [
+                 q("Two torches shine on one toy from different places. How many shadows?", "\U0001F526", "two, one from each torch", ["one, but a bigger one", "none, the two lights cancel out"],
+                   "Each light source makes its own shadow. A footballer under four floodlights has four faint shadows."),
+                 q("Frosted glass lets light through, and you cannot see through it. What is going on?", "\U0001FA9F", "the rough surface scatters the light in all directions", ["the glass blocks most of the light", "the glass is coloured"],
+                   "Translucent is a third answer between transparent and opaque: the light gets through but its picture is broken up."),
+              ]},
+             "That is the whole lesson finished. You know how light and shadows work.",
+             mis=["3.3-m1", "3.3-m2", "3.4-m1"]),
     ],
 }
 
@@ -215,6 +246,23 @@ LESSON["words"] = [
          ["The book blocks the light.", "An opaque object blocks light completely."]),
     word("sundial", "\U0001F55B", "A clock that tells the time from the shadow of a stick in the Sun.",
          ["People used a sundial long ago.", "The sundial's shadow moves as the Sun seems to move."]),
+    word("blocked", "\u26D4", "Stopped from getting through.",
+         ["An opaque material blocks the light.", "A shadow is where light is blocked."]),
+    word("frosted", "\U0001FA9F", "Made rough so that light gets through but you cannot see a clear picture.",
+         ["Frosted glass is translucent.", "A frosted window lets light in and keeps the room private."]),
+    word("scatter", "\u2728", "To send light off in all directions.",
+         ["Translucent materials scatter the light.", "Tracing paper scatters light, so the picture is blurred."]),
+]
+
+LESSON["cando"] = [
+    cando("I can investigate how light passes through some materials and is blocked by others.", "3Ps.01"),
+    cando("I know that a shadow forms when something blocks the light.", "3Ps.02"),
+    cando("I can explain what changes the size of a shadow.", "3Ps.03"),
+    cando("I can talk about transparent, translucent and opaque materials.", "3Ps.01"),
+    cando("I can sort materials by how much light they let through.", "3TWSc.01"),
+    cando("I can make a prediction and see whether I was right.", "3TWSa.01"),
+    cando("I can ask my own question about light.", "3TWSp.01"),
+    cando("I can say how people's ideas about light have changed.", "3SIC.01"),
 ]
 
 LESSON["home"] = [

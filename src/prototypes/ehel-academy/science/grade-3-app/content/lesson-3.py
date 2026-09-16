@@ -5,7 +5,7 @@
 birds, amphibians and insects; with 3TWSc.01 (sort and classify), 3TWSc.05
 (a secondary source), 3TWSm.01 (a diagram is a kind of model) and 3SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 INSECT = [
     {"id": "head", "label": "head", "say": "The head, with the eyes and the mouth."},
@@ -32,7 +32,7 @@ LESSON = {
              {"items": [
                  {"pic": "\U0001F41F", "label": "fish", "sub": "scales, fins, gills", "say": "Fish have scales and fins, and they breathe through gills, so they live in water."},
                  {"pic": "\U0001F438", "label": "amphibians", "sub": "smooth damp skin", "say": "Amphibians have smooth, damp skin. They start life in water, as tadpoles, and later live on land too. Frogs, toads and newts."},
-                 {"pic": "\U0001F98E", "label": "reptiles", "sub": "dry, scaly skin", "say": "Reptiles have dry, scaly skin, and most lay their eggs on land. Snakes, lizards, tortoises and crocodiles."},
+                 {"pic": "\U0001F98E", "label": "reptiles", "sub": "dry, scaly skin", "say": "Reptiles have dry, scaly skin, and most lay their eggs on land. They are cold-blooded, which means their bodies warm up and cool down with the place they are in. Snakes, lizards, tortoises and crocodiles."},
                  {"pic": "\U0001F426", "label": "birds", "sub": "feathers, beak, eggs", "say": "Birds have feathers and a beak, and they lay eggs. Every bird has feathers, even the ones that cannot fly."},
                  {"pic": "\U0001F415", "label": "mammals", "sub": "fur or hair, milk", "say": "Mammals have fur or hair, and they feed their babies milk. Dogs, whales, bats, and you."},
                  {"pic": "\U0001F41C", "label": "insects", "sub": "six legs, three parts", "say": "Insects have six legs and a body in three parts: head, thorax and abdomen. Ants, bees, beetles and butterflies."},
@@ -113,8 +113,11 @@ LESSON = {
                  q("Which group breathes through gills all its life?", "\U0001F41F", "fish", ["amphibians", "reptiles"], "Gills are how fish breathe."),
                  q("A frog's smooth damp skin makes it a...", "\U0001F438", "amphibian", ["reptile", "fish"], "Smooth damp skin, and a tadpole start."),
                  q("A snake's dry scales make it a...", "\U0001F40D", "reptile", ["fish", "amphibian"], "Dry, scaly skin."),
+                 q("Is a spider an insect?", "\U0001F577\uFE0F", "No. Count the legs: a spider has eight.", ["Yes, it is small with lots of legs", "Yes, all small crawling animals are insects"],
+                   "An insect has six legs and three body parts. A spider has eight legs, and its group is called the arachnids."),
              ]},
-             "You can put animals in their groups."),
+             "You can put animals in their groups.",
+             mis=["4.2-m2"]),
 
         step("context", "People who work with animal groups", "\U0001F469\U0001F3FE‍\U0001F52C", "Animal jobs", ["3SIC.03"],
              "Knowing the groups is part of many jobs. Tap each one.",
@@ -153,7 +156,19 @@ LESSON = {
                  q("A dolphin lives in the sea and feeds its baby milk. Why is it not a fish?", "\U0001F42C", "feeding its young milk makes it a mammal", ["it is too big to be a fish", "it lives in the sea"], "Group by features, not by where it lives. Milk makes a dolphin a mammal."),
                  q("A whale shark lives in the sea and breathes with gills all its life. Which group is it, and why?", "\U0001F988", "a fish, because it breathes with gills all its life", ["a mammal, because its name says whale", "an amphibian, because it lives in water"], "Gills all its life make it a fish, whatever its name."),
                  q("An animal has dry scales and lays eggs on land. Why is it not an amphibian?", "\U0001F95A", "amphibians have smooth damp skin and lay eggs in water", ["amphibians are always green", "amphibians never lay eggs"], "Dry scales and eggs on land are what a reptile has."),
-             ]},
+             ],
+              "support": [
+                 q("How many legs has an insect?", "\U0001F41C", "six", ["eight"],
+                   "Six legs and three body parts make an insect."),
+                 q("Does a fish have fur?", "\U0001F41F", "No", ["Yes"],
+                   "A fish has scales, not fur."),
+              ],
+              "extension": [
+                 q("A platypus has fur, feeds its young on milk, and lays eggs. Which group?", "\U0001F9A6", "a mammal - the fur and the milk decide it", ["a bird, because it lays eggs", "a reptile, because it lays eggs"],
+                   "Most mammals do not lay eggs, and a few do. Fur and milk are what put an animal in the mammal group."),
+                 q("Why do scientists sort animals into groups at all, instead of just naming each one?", "\U0001F5C2\uFE0F", "the group tells you a lot about an animal you have never met", ["there are too many names to remember", "so the animals know where they belong"],
+                   "Told that an animal is an amphibian, you already know its skin is damp and it started life in water. That is what a group is for."),
+              ]},
              "That is the whole lesson finished. You can sort any animal into its group."),
     ],
 }
@@ -198,6 +213,20 @@ LESSON["words"] = [
          ["All six legs join the thorax.", "Label the thorax on the diagram."]),
     word("secondary source", "\U0001F4DA", "Information somebody else found out and wrote down, like a fact card or a book.",
          ["I found the answer in a secondary source.", "A fact card is a secondary source."]),
+    word("bird", "\U0001F426", "An animal with feathers, a beak and two wings. Birds lay eggs.",
+         ["A bird has feathers and a beak.", "All birds lay eggs."]),
+    word("fish", "\U0001F41F", "An animal with scales and fins that lives in water and breathes through gills.",
+         ["A fish has fins and scales.", "A fish breathes through its gills."]),
+    word("cold-blooded", "\U0001F98E", "Its body warms up and cools down with the place it is in.",
+         ["A reptile is cold-blooded.", "A lizard lies in the sun to get warm, because it is cold-blooded."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name the features that mark out a fish, a bird, a mammal, an insect, an amphibian and a reptile.", "3Bs.02"),
+    cando("I can sort animals into their groups by looking at them.", "3TWSc.01"),
+    cando("I can look an answer up in a book or a fact card.", "3TWSc.05"),
+    cando("I can read a labelled diagram and say what it shows.", "3TWSm.01"),
+    cando("I can name people whose work is science about animals.", "3SIC.03"),
 ]
 
 LESSON["home"] = [

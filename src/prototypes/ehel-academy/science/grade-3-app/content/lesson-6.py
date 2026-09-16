@@ -5,7 +5,7 @@
 animals are consumers; 3TWSm.02 make and use a physical model; 3TWSm.03 a
 diagram; with 3Bp.02, 3TWSc.01 and 3SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "food-chains",
@@ -113,8 +113,13 @@ LESSON = {
                  q("What is an animal in a food chain called?", "\U0001F407", "a consumer", ["a producer", "a plant"], "Animals consume: they eat."),
                  q("Where does the grass get its food?", "☀️", "it makes it from sunlight", ["it eats insects", "the rabbit gives it some"], "Producers make food from light."),
                  q("Take the grass out of grass, rabbit, fox. Who is affected?", "\U0001F6A7", "the rabbit and the fox", ["only the rabbit", "nobody"], "No grass, no rabbits, no food for the fox."),
+                 q("In the food chain grass \u2192 mouse \u2192 owl, which way does the arrow point?", "\u27A1\uFE0F", "from the thing eaten to the eater", ["from the eater to the thing it eats", "either way, it does not matter"],
+                   "The arrow shows which way the food and its energy travel. Grass to mouse, mouse to owl."),
+                 q("You wake up feeling full of energy. Did sleeping give you the energy?", "\U0001F634", "No. Sleep rests you; energy comes from food.", ["Yes, sleep gives you energy", "Yes, that is what sleep is for"],
+                   "Sleep is important and it rests your body, but it gives you no energy. Energy comes from what you eat."),
              ]},
-             "You know how a food chain works."),
+             "You know how a food chain works.",
+             mis=["4.3-m1", "4.3-m2"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Be.01", "3TWSm.03", "3SIC.04"],
              "Time to show what you know. Tap the answer.",
@@ -135,7 +140,19 @@ LESSON = {
                  q("Why does every food chain start with a plant?", "\U0001F331", "only plants can make their own food, from sunlight", ["plants are the smallest living things", "plants are always green"], "Animals have to eat. A plant makes its own food, so the food in every chain starts there."),
                  q("In grass \u2192 rabbit \u2192 fox, what would happen to the grass if all the rabbits went away?", "\U0001F407", "more grass would grow, because nothing would eat it", ["the grass would die, because rabbits feed it", "the grass would turn into a consumer"], "The rabbit eats the grass. With no rabbits, the grass is left alone."),
                  q("Leaf \u2192 caterpillar \u2192 bird \u2192 cat. If more cats come and eat lots of birds, what happens to the caterpillars?", "\U0001F408", "there will be more caterpillars, because fewer birds eat them", ["there will be fewer caterpillars, because cats eat them", "nothing, because cats do not eat caterpillars"], "Fewer birds means fewer caterpillars get eaten."),
-             ]},
+             ],
+              "support": [
+                 q("In grass \u2192 rabbit \u2192 fox, what does the rabbit eat?", "\U0001F430", "grass", ["the fox"],
+                   "The arrow points from the grass to the rabbit."),
+                 q("Is a plant a producer?", "\U0001F33F", "Yes", ["No"],
+                   "A plant makes its own food, so it is the producer."),
+              ],
+              "extension": [
+                 q("A field holds thousands of grass plants, hundreds of rabbits and two foxes. Why so few foxes?", "\U0001F98A", "each step up the chain passes on less food, so fewer can live there", ["foxes like to live alone", "the rabbits chase the foxes away"],
+                   "It takes a great many grass plants to feed one rabbit, and many rabbits to feed one fox. The further up a food chain you go, the fewer there are."),
+                 q("A dead leaf falls in autumn, and by spring it has gone. Where did it go?", "\U0001F342", "tiny living things in the soil fed on it", ["it dried up into nothing", "the wind blew it all away"],
+                   "Nothing in nature is wasted. Small living things break a dead leaf down and the goodness goes back into the soil, ready for the next plant."),
+              ]},
              "That is the whole lesson finished. You know who eats whom."),
     ],
 }
@@ -180,6 +197,20 @@ LESSON["words"] = [
          ["Snails eat pondweed.", "Pondweed makes its food from sunlight."]),
     word("heron", "\U0001F9A2", "A tall grey bird that eats frogs and fish.",
          ["The heron is the last link in the pond chain.", "A heron stands very still to hunt."]),
+    word("caterpillar", "\U0001F41B", "The young stage of a butterfly or a moth. It eats leaves.",
+         ["The caterpillar eats the leaf.", "A caterpillar is a consumer: it eats a living thing."]),
+    word("fall", "\U0001F342", "To move downwards, because gravity pulls.",
+         ["The leaf falls to the ground.", "A fallen leaf feeds the animals in the soil."]),
+]
+
+LESSON["cando"] = [
+    cando("I can read, draw and write a food chain.", "3Be.01"),
+    cando("I know that the plant is the producer and the animals are consumers.", "3Be.01"),
+    cando("I can say which way the arrows point, and why.", "3Be.01"),
+    cando("I can say where a living thing gets its energy.", "3Bp.02"),
+    cando("I can use a diagram to show the steps in a food chain.", "3TWSm.03"),
+    cando("I can make a model of a food chain.", "3TWSm.02"),
+    cando("I can talk about how what people do affects living things.", "3SIC.04"),
 ]
 
 LESSON["home"] = [

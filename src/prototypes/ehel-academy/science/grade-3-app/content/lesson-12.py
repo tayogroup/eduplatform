@@ -6,7 +6,7 @@ and oil, gas and metals come from rocks; 3ESp.02 fossils are the impressions
 or remains of things that were once alive; with 3TWSc.05, 3TWSc.01, 3SIC.03
 and 3SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "rocks-and-fossils",
@@ -125,8 +125,15 @@ LESSON = {
                  q("What is glass made from?", "\U0001FA9F", "sand", ["wood", "wool"], "Melted sand."),
                  q("What is a fossil?", "\U0001F41F", "the shape or remains of something once alive, kept in rock", ["a shiny stone", "a kind of metal"], "Once alive, kept in rock."),
                  q("What is plastic made from?", "\U0001F9F4", "oil", ["sand", "wool"], "Oil, from rock."),
+                 q("Wool comes from a sheep. Does it come from planet Earth?", "\U0001F411", "Yes. Follow it back: the sheep ate plants, and the plants grew here.", ["No, it comes from an animal, not the Earth", "Only the washing water does"],
+                   "A plant makes its food from water, air and sunlight. Every animal material starts with the Earth."),
+                 q("Is the air part of planet Earth?", "\U0001F32C\uFE0F", "Yes. It is a layer of gases held on by the Earth's gravity.", ["No, the air is above the Earth", "No, air is not a material"],
+                   "The air is as much part of the planet as the rock is. Gravity holds it in place."),
+                 q("How long ago did the animal in a fossil live?", "\U0001F995", "millions of years ago", ["a few years ago", "about a hundred years ago"],
+                   "The animals in fossils are nothing like the ones alive now, and they were buried for a very long time."),
              ]},
-             "You know where things come from."),
+             "You know where things come from.",
+             mis=["2.5-m1", "2.5-m2", "4.4-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3ESp.01", "3ESp.02", "3TWSc.05", "3SIC.04"],
              "Time to show what you know. Tap the answer.",
@@ -147,8 +154,25 @@ LESSON = {
                  q("Plastic is made in a factory. Why do we say it comes from rock?", "\U0001F9F4", "it is made from oil, and oil is pumped out of rock", ["plastic grows on trees", "factories are made of rock"], "Follow it back: plastic, then oil, then rock deep underground."),
                  q("Why is a fossil of a jellyfish very rare?", "\U0001F30A", "a jellyfish has no hard parts, and soft parts rot away", ["jellyfish never lived in the sea", "jellyfish are too big to be fossils"], "Hard parts last. A jellyfish is soft all through."),
                  q("If nobody recycled metal cans, what would happen?", "\u267B\uFE0F", "more rock would be dug up to make new metal", ["metal would grow on trees", "old cans would turn back into rock"], "Metal comes from rock. Recycling means less digging."),
-             ]},
-             "That is the whole lesson finished. You know where every material began."),
+                 q("Is a fossil the actual animal?", "\U0001F41A", "No. It is a shape left in rock.", ["Yes, it is the animal turned to stone", "Yes, it is the animal's skin"],
+                   "Press a shell into clay and lift it out: the shape you see is not the shell. A fossil is a print of part of the animal."),
+                 q("Yusuf heard that some fossils were faked, so he says they all are. Is he right?", "\U0001F994", "No. A few fakes were made; there are many thousands of real ones.", ["Yes, all fossils are fake", "Yes, unless a museum made them"],
+                   "Real fossils in museums all over the world are how we know what used to live here."),
+             ],
+              "support": [
+                 q("Where does rock come from?", "\U0001FAA8", "the Earth", ["a factory"],
+                   "Rock is dug out of the ground."),
+                 q("Is a fossil older than you?", "\U0001F995", "Yes, far older", ["No"],
+                   "Fossils are millions of years old."),
+              ],
+              "extension": [
+                 q("A fossil of a sea creature is found on top of a mountain. How?", "\U0001F41A", "that rock was once under the sea, and the land has risen since", ["somebody carried it up there", "the creature climbed the mountain"],
+                   "Rock carries the story of where it formed. Mountains are pushed up over millions of years, fossils and all."),
+                 q("Two fossils are found, one in a deep rock layer and one near the surface. Which animal lived first?", "\U0001F9F1", "the one in the deep layer", ["the one near the surface", "you cannot tell from the layers"],
+                   "Layers pile up over time, so the deepest is the oldest. A fossil's layer tells you roughly when it lived."),
+              ]},
+             "That is the whole lesson finished. You know where every material began.",
+             mis=["4.4-m2", "4.4-m3"]),
     ],
 }
 
@@ -192,6 +216,22 @@ LESSON["words"] = [
          ["A palaeontologist found a dinosaur bone.", "Palaeontologists use brushes and small hammers."]),
     word("recycle", "♻️", "To make something used into something new, so less has to be taken from the Earth.",
          ["We recycle cans and glass.", "Recycling means less digging."]),
+    word("impression", "\U0001F41A", "A shape pressed into something and left behind.",
+         ["A fossil is an impression of a living thing.", "Press a shell into clay and it leaves an impression."]),
+    word("layer", "\U0001F9F1", "An amount of material covering a surface, with more on top of it.",
+         ["The rock is made of layers.", "The deepest layer is the oldest."]),
+    word("petrol", "\u26FD", "A liquid fuel made from oil. Cars burn it.",
+         ["Petrol comes from oil.", "Oil is taken out of the ground and made into petrol."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name the source of all the materials we use.", "3ESp.01"),
+    cando("I can say where oil, natural gas and metal are found.", "3ESp.01"),
+    cando("I can explain that a fossil is an impression, or the remains, of something once alive.", "3ESp.02"),
+    cando("I can look an answer up in a book or on a fact card.", "3TWSc.05"),
+    cando("I can sort materials by where they come from.", "3TWSc.01"),
+    cando("I can say what the risks are and how to stay safe.", "3TWSp.04"),
+    cando("I can talk about how taking materials out of the Earth affects the world.", "3SIC.04"),
 ]
 
 LESSON["home"] = [

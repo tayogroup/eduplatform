@@ -275,6 +275,18 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
                 sys.exit("REFUSED: %s row %r answers %r" % (where, r["label"], r["answer"]))
         if len(d["columns"]) != 2 or "%s" not in d["ask"]:
             sys.exit("REFUSED: %s needs two columns and an ask with %%s" % where)
+        # The read-off list, checked the same way the graph branch checks its
+        # own. It was NOT checked here until 2026-09-16, and the hole is worth
+        # recording: `read` was added to recordTable in the Grade 1 pass and to
+        # blockGraph in the Grade 2 pass, and only the SECOND one got its
+        # validation. Eighteen read-off items across three live grades had
+        # never had their keys or explanations looked at by any gate. Found by
+        # a mutation that SURVIVED - a record read-off stripped of its `why`
+        # built and shipped green.
+        for it in d.get("read") or []:
+            one_ok(it["opts"], where + " read-off %r" % it["ask"][:40])
+            if not it.get("why"):
+                sys.exit("REFUSED: %s read-off %r has no why" % (where, it["ask"][:40]))
     elif kind == "measure":
         for ob in d["objects"]:
             if not 1 <= ob["units"] <= 12:

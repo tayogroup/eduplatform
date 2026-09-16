@@ -690,6 +690,38 @@
 .sit-card p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
 .sit-card .bigbtns { justify-content: center; gap: 10px; flex-wrap: wrap; }
 
+  /* ---- the tier eyebrow. deck.js writes
+       <span class="qbook">One step at a time</span> + the question
+     when it offers the support or the extension bank. `qbook` is ENGLISH's
+     class - it came over with deck.js and is defined in English's stylesheet,
+     never in this one - so here the span stayed inline and the label ran into
+     the first word of the question: "One step at a timeWhich animal has
+     feathers?". It shipped that way in Grade 1 on 2026-09-16 and no gate could
+     see it; it was found by answering a question wrongly in the browser. ---- */
+  .qbook { display: block; margin: 0 0 4px; font-size: 14px; font-weight: 800;
+    letter-spacing: .05em; text-transform: uppercase; color: var(--gold); }
+
+  /* ---- the self-check on the sticker shelf: Cambridge's "Look what I can
+     do!", which closes every one of its topics at each stage (25 at Stage 1,
+     26 at Stage 2). It sits on the SHELF and not in a step, so nothing here
+     moves a saved place. No new hue: the heading is the taught-thing teal and
+     "Show me" is a ghost button. ---- */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+  .cando li > span { font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .candogo { flex: none; border: 2px solid var(--line); background: transparent; color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; font-family: inherit; font-weight: 700; font-size: 14px;
+    cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  .candogo:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1111,6 +1143,20 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="cando">
+          <h3>Look what I can do!</h3>
+          <p class="candonote">Read each one. Can you do it? If you are not sure, press <b>Show me</b>.</p>
+          <ul>
+          <li><span>I can name two solids, two liquids and two gases.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I can describe how a solid and a liquid are different.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can sort materials into solid, liquid and gas.</span><button type="button" class="candogo" data-go="4">Show me</button></li>
+          <li><span>I can measure in standard units and say why they are better.</span><button type="button" class="candogo" data-go="7">Show me</button></li>
+          <li><span>I can choose the right equipment for a test.</span><button type="button" class="candogo" data-go="8">Show me</button></li>
+          <li><span>I can say which type of enquiry I am doing.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can say what the risks are and how to stay safe.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I can record my results in a table.</span><button type="button" class="candogo" data-go="7">Show me</button></li>
+          </ul>
+        </div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1185,7 +1231,7 @@
           ],
           "counts": {
             "steps": 14,
-            "words": 7,
+            "words": 9,
             "games": 4,
             "home": 3
           },
@@ -1368,6 +1414,24 @@
                 "The water was eight centimetres deep.",
                 "There are a hundred centimetres in a metre."
               ]
+            },
+            {
+              "w": "equipment",
+              "pic": "🧪",
+              "meaning": "The things you choose to use to do a test.",
+              "uses": [
+                "Choose your equipment before you start.",
+                "A measuring jug is a piece of equipment."
+              ]
+            },
+            {
+              "w": "oxygen",
+              "pic": "🌬️",
+              "meaning": "One of the gases in the air. Your body needs it.",
+              "uses": [
+                "Oxygen is a gas.",
+                "You cannot see oxygen, and it is still there."
+              ]
             }
           ]
         }
@@ -1546,9 +1610,27 @@
               }
             ]
           },
+          "plan": {
+            "ask": "How shall we find out whether each one keeps its shape? Which way is fair?",
+            "opts": [
+              {
+                "t": "Put each one into the same container in turn and watch what its shape does",
+                "ok": true
+              },
+              {
+                "t": "Put the water in a glass and the block in a box",
+                "ok": false
+              },
+              {
+                "t": "Just look at them and decide",
+                "ok": false
+              }
+            ],
+            "why": "Same container each time, so the only difference is the material. Looking without testing is guessing."
+          },
           "runAsk": "Press all three buttons and watch what each material does.",
           "happened": {
-            "ask": "What happened?",
+            "ask": "What happened to each <b>shape</b>?",
             "opts": [
               {
                 "t": "The water took the shape of the glass, the block kept its shape, the air spread out",
@@ -1844,9 +1926,51 @@
                 }
               ],
               "why": "To see small things: a lens."
+            },
+            {
+              "ask": "Sugar pours and takes the shape of the pot. Is sugar a liquid?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🧂</div>",
+              "opts": [
+                {
+                  "t": "No. It is a heap of tiny solid pieces.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, anything that pours is a liquid",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, because it changes shape",
+                  "ok": false
+                }
+              ],
+              "why": "Look at one grain through a magnifying glass and it keeps its own shape. A heap of solids can pour, and every piece is still a solid."
+            },
+            {
+              "ask": "Is all gas dangerous?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">💨</div>",
+              "opts": [
+                {
+                  "t": "No. Oxygen is a gas, and you are breathing it now.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, every gas is dangerous",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, unless you cannot smell it",
+                  "ok": false
+                }
+              ],
+              "why": "'Gas' names the one that burns in a cooker AND the oxygen that keeps you alive. Some gases are dangerous and some are not."
             }
           ]
-        }
+        },
+        "mis": [
+          "2.1-m1",
+          "2.1-m2"
+        ]
       },
       {
         "kind": "games",
@@ -1921,6 +2045,26 @@
                   ],
                   "answer": "a hand lens",
                   "explanation": "To see small things: a lens."
+                },
+                {
+                  "prompt": "Sugar pours and takes the shape of the pot. Is sugar a liquid?",
+                  "choices": [
+                    "No. It is a heap of tiny solid pieces.",
+                    "Yes, anything that pours is a liquid",
+                    "Yes, because it changes shape"
+                  ],
+                  "answer": "No. It is a heap of tiny solid pieces.",
+                  "explanation": "Look at one grain through a magnifying glass and it keeps its own shape. A heap of solids can pour, and every piece is still a solid."
+                },
+                {
+                  "prompt": "Is all gas dangerous?",
+                  "choices": [
+                    "No. Oxygen is a gas, and you are breathing it now.",
+                    "Yes, every gas is dangerous",
+                    "Yes, unless you cannot smell it"
+                  ],
+                  "answer": "No. Oxygen is a gas, and you are breathing it now.",
+                  "explanation": "'Gas' names the one that burns in a cooker AND the oxygen that keeps you alive. Some gases are dangerous and some are not."
                 }
               ]
             },
@@ -2051,6 +2195,23 @@
                       "A unit of measurement that is the same size for everyone, like a centimetre or a litre."
                     ]
                   ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "centimetre",
+                      "A standard unit for measuring length. About the width of a fingernail."
+                    ],
+                    [
+                      "equipment",
+                      "The things you choose to use to do a test."
+                    ],
+                    [
+                      "oxygen",
+                      "One of the gases in the air. Your body needs it."
+                    ]
+                  ]
                 }
               ]
             },
@@ -2084,6 +2245,11 @@
                   "prompt": "To move along and spread, the way a liquid does.",
                   "clue": "It starts with f. 🌊",
                   "answer": "flow"
+                },
+                {
+                  "prompt": "One of the gases in the air. Your body needs it.",
+                  "clue": "It starts with o. 🌬️",
+                  "answer": "oxygen"
                 }
               ]
             }
@@ -2365,6 +2531,78 @@
               ],
               "why": "A liquid flows. Play dough stays in its shape until you squash it again."
             }
+          ],
+          "support": [
+            {
+              "ask": "Is water a liquid?",
+              "pic": "💧",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "Water flows and takes the shape of its container."
+            },
+            {
+              "ask": "Does a brick keep its own shape?",
+              "pic": "🧱",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "A solid keeps its shape."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "Why can you smell dinner from another room?",
+              "pic": "🌬️",
+              "opts": [
+                {
+                  "t": "the smell is a gas, and a gas spreads out through all the space it can reach",
+                  "ok": true
+                },
+                {
+                  "t": "the smell is a liquid running along the floor",
+                  "ok": false
+                },
+                {
+                  "t": "your nose can reach that far",
+                  "ok": false
+                }
+              ],
+              "why": "A gas spreads out to fill whatever holds it. That is why a smell gets everywhere and a spilt drink stays in one place."
+            },
+            {
+              "ask": "A balloon full of air feels like nothing, and the air still takes up room. How do you know?",
+              "pic": "🎈",
+              "opts": [
+                {
+                  "t": "the balloon is bigger than it was, so something is in it",
+                  "ok": true
+                },
+                {
+                  "t": "you can see the air inside",
+                  "ok": false
+                },
+                {
+                  "t": "the balloon gets heavier to hold",
+                  "ok": false
+                }
+              ],
+              "why": "A gas fills the space it is in. You cannot see it, and you can see what it does."
+            }
           ]
         }
       },
@@ -2449,6 +2687,24 @@
                 "The water was eight centimetres deep.",
                 "There are a hundred centimetres in a metre."
               ]
+            },
+            {
+              "w": "equipment",
+              "pic": "🧪",
+              "meaning": "The things you choose to use to do a test.",
+              "uses": [
+                "Choose your equipment before you start.",
+                "A measuring jug is a piece of equipment."
+              ]
+            },
+            {
+              "w": "oxygen",
+              "pic": "🌬️",
+              "meaning": "One of the gases in the air. Your body needs it.",
+              "uses": [
+                "Oxygen is a gas.",
+                "You cannot see oxygen, and it is still there."
+              ]
             }
           ],
           "finder": [
@@ -2463,6 +2719,18 @@
               "lesson": 4,
               "title": "Growing Up",
               "file": "growing-up.html"
+            },
+            {
+              "w": "aluminium",
+              "pic": "🥄",
+              "meaning": "A very light metal. It is NOT magnetic.",
+              "uses": [
+                "Foil is made of aluminium.",
+                "A magnet does nothing to aluminium."
+              ],
+              "lesson": 11,
+              "title": "Magnets",
+              "file": "magnets.html"
             },
             {
               "w": "amphibian",
@@ -2489,6 +2757,18 @@
               "file": "magnets.html"
             },
             {
+              "w": "baby",
+              "pic": "👶",
+              "meaning": "An animal soon after it is born.",
+              "uses": [
+                "A baby grows into a child.",
+                "A baby elephant is called a calf."
+              ],
+              "lesson": 4,
+              "title": "Growing Up",
+              "file": "growing-up.html"
+            },
+            {
               "w": "bar chart",
               "pic": "📊",
               "meaning": "A graph with bars against a scale, to compare results.",
@@ -2499,6 +2779,18 @@
               "lesson": 9,
               "title": "Gravity and Friction",
               "file": "gravity-and-friction.html"
+            },
+            {
+              "w": "bird",
+              "pic": "🐦",
+              "meaning": "An animal with feathers, a beak and two wings. Birds lay eggs.",
+              "uses": [
+                "A bird has feathers and a beak.",
+                "All birds lay eggs."
+              ],
+              "lesson": 3,
+              "title": "Animal Groups",
+              "file": "animal-groups.html"
             },
             {
               "w": "block",
@@ -2513,6 +2805,30 @@
               "file": "light-and-shadows.html"
             },
             {
+              "w": "blocked",
+              "pic": "⛔",
+              "meaning": "Stopped from getting through.",
+              "uses": [
+                "An opaque material blocks the light.",
+                "A shadow is where light is blocked."
+              ],
+              "lesson": 10,
+              "title": "Light and Shadows",
+              "file": "light-and-shadows.html"
+            },
+            {
+              "w": "blood",
+              "pic": "🩸",
+              "meaning": "The red liquid that carries air, food and waste round your body.",
+              "uses": [
+                "The heart pumps blood.",
+                "Blood carries oxygen to every part of you."
+              ],
+              "lesson": 5,
+              "title": "Inside Your Body",
+              "file": "inside-your-body.html"
+            },
+            {
               "w": "brain",
               "pic": "🧠",
               "meaning": "The organ in your head that thinks, remembers and controls your body.",
@@ -2523,6 +2839,30 @@
               "lesson": 5,
               "title": "Inside Your Body",
               "file": "inside-your-body.html"
+            },
+            {
+              "w": "caterpillar",
+              "pic": "🐛",
+              "meaning": "The young stage of a butterfly or a moth.",
+              "uses": [
+                "A caterpillar hatches out of an egg.",
+                "The caterpillar is the same animal as the butterfly."
+              ],
+              "lesson": 4,
+              "title": "Growing Up",
+              "file": "growing-up.html"
+            },
+            {
+              "w": "caterpillar",
+              "pic": "🐛",
+              "meaning": "The young stage of a butterfly or a moth. It eats leaves.",
+              "uses": [
+                "The caterpillar eats the leaf.",
+                "A caterpillar is a consumer: it eats a living thing."
+              ],
+              "lesson": 6,
+              "title": "Food Chains",
+              "file": "food-chains.html"
             },
             {
               "w": "centimetre",
@@ -2547,6 +2887,30 @@
               "lesson": 4,
               "title": "Growing Up",
               "file": "growing-up.html"
+            },
+            {
+              "w": "classifying",
+              "pic": "🗂️",
+              "meaning": "Sorting things into groups by what they are like.",
+              "uses": [
+                "Classifying means putting things into groups.",
+                "We classified them as living, once alive or never alive."
+              ],
+              "lesson": 1,
+              "title": "Living, Once Alive, Never Alive",
+              "file": "living-once-alive-never-alive.html"
+            },
+            {
+              "w": "cold-blooded",
+              "pic": "🦎",
+              "meaning": "Its body warms up and cools down with the place it is in.",
+              "uses": [
+                "A reptile is cold-blooded.",
+                "A lizard lies in the sun to get warm, because it is cold-blooded."
+              ],
+              "lesson": 3,
+              "title": "Animal Groups",
+              "file": "animal-groups.html"
             },
             {
               "w": "compass",
@@ -2583,6 +2947,18 @@
               "lesson": 6,
               "title": "Food Chains",
               "file": "food-chains.html"
+            },
+            {
+              "w": "crater",
+              "pic": "🌑",
+              "meaning": "A dent in the surface of a moon or a planet, made by a rock from space.",
+              "uses": [
+                "The Moon is covered in craters.",
+                "A crater is a hole made by a rock hitting the surface."
+              ],
+              "lesson": 13,
+              "title": "The Moon",
+              "file": "the-moon.html"
             },
             {
               "w": "crescent",
@@ -2645,6 +3021,18 @@
               "file": "living-once-alive-never-alive.html"
             },
             {
+              "w": "equipment",
+              "pic": "🧪",
+              "meaning": "The things you choose to use to do a test.",
+              "uses": [
+                "Choose your equipment before you start.",
+                "A measuring jug is a piece of equipment."
+              ],
+              "lesson": 7,
+              "title": "Solids, Liquids and Gases",
+              "file": "solids-liquids-and-gases.html"
+            },
+            {
               "w": "fair test",
               "pic": "⚖️",
               "meaning": "An enquiry where you change one thing and keep everything else the same.",
@@ -2655,6 +3043,18 @@
               "lesson": 1,
               "title": "Living, Once Alive, Never Alive",
               "file": "living-once-alive-never-alive.html"
+            },
+            {
+              "w": "fall",
+              "pic": "🍂",
+              "meaning": "To move downwards, because gravity pulls.",
+              "uses": [
+                "The leaf falls to the ground.",
+                "A fallen leaf feeds the animals in the soil."
+              ],
+              "lesson": 6,
+              "title": "Food Chains",
+              "file": "food-chains.html"
             },
             {
               "w": "feature",
@@ -2681,6 +3081,18 @@
               "file": "mixtures.html"
             },
             {
+              "w": "fish",
+              "pic": "🐟",
+              "meaning": "An animal with scales and fins that lives in water and breathes through gills.",
+              "uses": [
+                "A fish has fins and scales.",
+                "A fish breathes through its gills."
+              ],
+              "lesson": 3,
+              "title": "Animal Groups",
+              "file": "animal-groups.html"
+            },
+            {
               "w": "flow",
               "pic": "🌊",
               "meaning": "To move along and spread, the way a liquid does.",
@@ -2691,6 +3103,18 @@
               "lesson": 7,
               "title": "Solids, Liquids and Gases",
               "file": "solids-liquids-and-gases.html"
+            },
+            {
+              "w": "flower",
+              "pic": "🌷",
+              "meaning": "The part of a plant where seeds are made.",
+              "uses": [
+                "A flower makes the seeds.",
+                "The flower is one part of the plant, not the whole plant."
+              ],
+              "lesson": 2,
+              "title": "Flowering Plants",
+              "file": "flowering-plants.html"
             },
             {
               "w": "food chain",
@@ -2741,6 +3165,18 @@
               "file": "gravity-and-friction.html"
             },
             {
+              "w": "frosted",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"9\" y=\"7\" width=\"46\" height=\"48\" rx=\"3\" fill=\"#7A5A3A\"/><rect x=\"13\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"13\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><path d=\"M16 26 L26 14 M36 26 L44 16 M16 47 L24 37\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\".85\"/><rect x=\"5\" y=\"54\" width=\"54\" height=\"5\" rx=\"2\" fill=\"#5E432A\"/></svg>",
+              "meaning": "Made rough so that light gets through but you cannot see a clear picture.",
+              "uses": [
+                "Frosted glass is translucent.",
+                "A frosted window lets light in and keeps the room private."
+              ],
+              "lesson": 10,
+              "title": "Light and Shadows",
+              "file": "light-and-shadows.html"
+            },
+            {
               "w": "full Moon",
               "pic": "🌕",
               "meaning": "The phase when the whole face of the Moon is lit.",
@@ -2751,6 +3187,18 @@
               "lesson": 13,
               "title": "The Moon",
               "file": "the-moon.html"
+            },
+            {
+              "w": "funnel",
+              "pic": "🚰",
+              "meaning": "A cone that guides a liquid into a narrow opening. It does not separate anything by itself.",
+              "uses": [
+                "A funnel holds the filter paper.",
+                "A funnel only guides the liquid; the paper does the separating."
+              ],
+              "lesson": 8,
+              "title": "Mixtures",
+              "file": "mixtures.html"
             },
             {
               "w": "gas",
@@ -2765,6 +3213,18 @@
               "file": "solids-liquids-and-gases.html"
             },
             {
+              "w": "gibbous",
+              "pic": "🌔",
+              "meaning": "The phase when we can see more than half of the lit Moon, but not all of it.",
+              "uses": [
+                "A gibbous Moon is bigger than a half Moon.",
+                "Gibbous comes between half and full."
+              ],
+              "lesson": 13,
+              "title": "The Moon",
+              "file": "the-moon.html"
+            },
+            {
               "w": "gravity",
               "pic": "🌍",
               "meaning": "The force that pulls everything towards the centre of the Earth.",
@@ -2775,6 +3235,30 @@
               "lesson": 9,
               "title": "Gravity and Friction",
               "file": "gravity-and-friction.html"
+            },
+            {
+              "w": "grip",
+              "pic": "👟",
+              "meaning": "How well a surface holds on instead of slipping.",
+              "uses": [
+                "A rubber sole grips the floor.",
+                "Friction gives a shoe its grip."
+              ],
+              "lesson": 9,
+              "title": "Gravity and Friction",
+              "file": "gravity-and-friction.html"
+            },
+            {
+              "w": "hatch",
+              "pic": "🐣",
+              "meaning": "To break out of an egg.",
+              "uses": [
+                "A chick hatches out of its egg.",
+                "The caterpillar hatched after five days."
+              ],
+              "lesson": 4,
+              "title": "Growing Up",
+              "file": "growing-up.html"
             },
             {
               "w": "healthy",
@@ -2813,6 +3297,18 @@
               "file": "food-chains.html"
             },
             {
+              "w": "impression",
+              "pic": "🐚",
+              "meaning": "A shape pressed into something and left behind.",
+              "uses": [
+                "A fossil is an impression of a living thing.",
+                "Press a shell into clay and it leaves an impression."
+              ],
+              "lesson": 12,
+              "title": "Rocks and Fossils",
+              "file": "rocks-and-fossils.html"
+            },
+            {
               "w": "insect",
               "pic": "🐜",
               "meaning": "An animal with six legs and a body in three parts.",
@@ -2825,6 +3321,18 @@
               "file": "animal-groups.html"
             },
             {
+              "w": "insoluble",
+              "pic": "🏖️",
+              "meaning": "It does NOT dissolve in a liquid.",
+              "uses": [
+                "Sand is insoluble in water.",
+                "An insoluble solid can be caught in a filter."
+              ],
+              "lesson": 8,
+              "title": "Mixtures",
+              "file": "mixtures.html"
+            },
+            {
               "w": "intestine",
               "pic": "🌀",
               "meaning": "The long coiled tube that takes the goodness out of food.",
@@ -2835,6 +3343,54 @@
               "lesson": 5,
               "title": "Inside Your Body",
               "file": "inside-your-body.html"
+            },
+            {
+              "w": "iron",
+              "pic": "🔩",
+              "meaning": "A strong metal. It is one of the few metals a magnet pulls.",
+              "uses": [
+                "A nail is made of iron.",
+                "Iron is magnetic; copper is not."
+              ],
+              "lesson": 9,
+              "title": "Gravity and Friction",
+              "file": "gravity-and-friction.html"
+            },
+            {
+              "w": "iron",
+              "pic": "🔩",
+              "meaning": "A strong metal that a magnet pulls.",
+              "uses": [
+                "An iron nail is magnetic.",
+                "Steel is made from iron, so steel is magnetic too."
+              ],
+              "lesson": 11,
+              "title": "Magnets",
+              "file": "magnets.html"
+            },
+            {
+              "w": "layer",
+              "pic": "🧱",
+              "meaning": "An amount of material covering a surface, with more on top of it.",
+              "uses": [
+                "The rock is made of layers.",
+                "The deepest layer is the oldest."
+              ],
+              "lesson": 12,
+              "title": "Rocks and Fossils",
+              "file": "rocks-and-fossils.html"
+            },
+            {
+              "w": "leaf",
+              "pic": "🍃",
+              "meaning": "The flat green part of a plant. It makes the plant's food using light.",
+              "uses": [
+                "A leaf makes food from light.",
+                "Leaves grow out of the stem."
+              ],
+              "lesson": 2,
+              "title": "Flowering Plants",
+              "file": "flowering-plants.html"
             },
             {
               "w": "life cycle",
@@ -3005,6 +3561,18 @@
               "file": "the-moon.html"
             },
             {
+              "w": "muscle",
+              "pic": "💪",
+              "meaning": "A part of your body that pulls to make you move.",
+              "uses": [
+                "A muscle pulls your bones.",
+                "Your heart is a muscle that never stops."
+              ],
+              "lesson": 5,
+              "title": "Inside Your Body",
+              "file": "inside-your-body.html"
+            },
+            {
               "w": "natural gas",
               "pic": "🔥",
               "meaning": "A gas trapped in rocks underground, piped to houses for cooking and heating.",
@@ -3015,6 +3583,18 @@
               "lesson": 12,
               "title": "Rocks and Fossils",
               "file": "rocks-and-fossils.html"
+            },
+            {
+              "w": "never alive",
+              "pic": "🔑",
+              "meaning": "It has never been alive. It was never part of a living thing.",
+              "uses": [
+                "A metal key is never alive.",
+                "Rock and plastic are never alive."
+              ],
+              "lesson": 1,
+              "title": "Living, Once Alive, Never Alive",
+              "file": "living-once-alive-never-alive.html"
             },
             {
               "w": "newton",
@@ -3137,6 +3717,30 @@
               "file": "inside-your-body.html"
             },
             {
+              "w": "oxygen",
+              "pic": "🌬️",
+              "meaning": "The gas in the air that your body needs to stay alive.",
+              "uses": [
+                "Your lungs take oxygen out of the air.",
+                "Oxygen is a gas, and plants make it."
+              ],
+              "lesson": 5,
+              "title": "Inside Your Body",
+              "file": "inside-your-body.html"
+            },
+            {
+              "w": "oxygen",
+              "pic": "🌬️",
+              "meaning": "One of the gases in the air. Your body needs it.",
+              "uses": [
+                "Oxygen is a gas.",
+                "You cannot see oxygen, and it is still there."
+              ],
+              "lesson": 7,
+              "title": "Solids, Liquids and Gases",
+              "file": "solids-liquids-and-gases.html"
+            },
+            {
               "w": "palaeontologist",
               "pic": "👩🏾‍🔬",
               "meaning": "A scientist who studies fossils.",
@@ -3159,6 +3763,18 @@
               "lesson": 9,
               "title": "Gravity and Friction",
               "file": "gravity-and-friction.html"
+            },
+            {
+              "w": "petrol",
+              "pic": "⛽",
+              "meaning": "A liquid fuel made from oil. Cars burn it.",
+              "uses": [
+                "Petrol comes from oil.",
+                "Oil is taken out of the ground and made into petrol."
+              ],
+              "lesson": 12,
+              "title": "Rocks and Fossils",
+              "file": "rocks-and-fossils.html"
             },
             {
               "w": "phase",
@@ -3293,6 +3909,18 @@
               "file": "animal-groups.html"
             },
             {
+              "w": "research",
+              "pic": "📚",
+              "meaning": "Finding an answer by looking it up, instead of by testing.",
+              "uses": [
+                "I did some research in a book.",
+                "Research is one of the five enquiries."
+              ],
+              "lesson": 1,
+              "title": "Living, Once Alive, Never Alive",
+              "file": "living-once-alive-never-alive.html"
+            },
+            {
               "w": "risk",
               "pic": "⚠️",
               "meaning": "Something that could hurt someone.",
@@ -3317,6 +3945,18 @@
               "file": "flowering-plants.html"
             },
             {
+              "w": "scatter",
+              "pic": "✨",
+              "meaning": "To send light off in all directions.",
+              "uses": [
+                "Translucent materials scatter the light.",
+                "Tracing paper scatters light, so the picture is blurred."
+              ],
+              "lesson": 10,
+              "title": "Light and Shadows",
+              "file": "light-and-shadows.html"
+            },
+            {
               "w": "secondary source",
               "pic": "📚",
               "meaning": "Information somebody else found out and wrote down, like a fact card or a book.",
@@ -3327,6 +3967,18 @@
               "lesson": 3,
               "title": "Animal Groups",
               "file": "animal-groups.html"
+            },
+            {
+              "w": "seeds",
+              "pic": "🌰",
+              "meaning": "The small hard parts made in a flower. A new plant grows from a seed.",
+              "uses": [
+                "Seeds are made in the flower.",
+                "A baby plant grows out of a seed."
+              ],
+              "lesson": 2,
+              "title": "Flowering Plants",
+              "file": "flowering-plants.html"
             },
             {
               "w": "separate",
@@ -3377,12 +4029,48 @@
               "file": "solids-liquids-and-gases.html"
             },
             {
+              "w": "soluble",
+              "pic": "🧂",
+              "meaning": "It dissolves in a liquid.",
+              "uses": [
+                "Salt is soluble in water.",
+                "Sugar is soluble too."
+              ],
+              "lesson": 8,
+              "title": "Mixtures",
+              "file": "mixtures.html"
+            },
+            {
+              "w": "south pole",
+              "pic": "🧲",
+              "meaning": "The other end of a magnet, often coloured blue.",
+              "uses": [
+                "The south pole is at the other end.",
+                "A north pole and a south pole attract."
+              ],
+              "lesson": 11,
+              "title": "Magnets",
+              "file": "magnets.html"
+            },
+            {
               "w": "sphere",
               "pic": "🌍",
               "meaning": "A ball shape.",
               "uses": [
                 "The Earth is a sphere.",
                 "The Moon is a smaller sphere."
+              ],
+              "lesson": 13,
+              "title": "The Moon",
+              "file": "the-moon.html"
+            },
+            {
+              "w": "spherical",
+              "pic": "⚪",
+              "meaning": "Shaped like a ball.",
+              "uses": [
+                "The Earth is spherical.",
+                "The Sun and the Moon are spherical too."
               ],
               "lesson": 13,
               "title": "The Moon",
@@ -3531,6 +4219,42 @@
               "lesson": 10,
               "title": "Light and Shadows",
               "file": "light-and-shadows.html"
+            },
+            {
+              "w": "waning",
+              "pic": "🌘",
+              "meaning": "Shrinking. Less of the Moon is lit each night.",
+              "uses": [
+                "A waning Moon is getting smaller.",
+                "The Moon wanes from full back to new."
+              ],
+              "lesson": 13,
+              "title": "The Moon",
+              "file": "the-moon.html"
+            },
+            {
+              "w": "waxing",
+              "pic": "🌒",
+              "meaning": "Growing. More of the Moon is lit each night.",
+              "uses": [
+                "A waxing Moon is getting bigger.",
+                "The Moon waxes from new to full."
+              ],
+              "lesson": 13,
+              "title": "The Moon",
+              "file": "the-moon.html"
+            },
+            {
+              "w": "weight",
+              "pic": "⚖️",
+              "meaning": "The pull of gravity on a thing. It is measured in newtons.",
+              "uses": [
+                "The forcemeter reads the weight in newtons.",
+                "Weight is a force; grams measure mass."
+              ],
+              "lesson": 9,
+              "title": "Gravity and Friction",
+              "file": "gravity-and-friction.html"
             },
             {
               "w": "wilt",
@@ -4702,6 +5426,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -4747,9 +5485,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -4757,14 +5534,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();
@@ -5162,7 +5946,12 @@
             setTimeout(() => {
               if (item.answer === "yes") { it.style.transform = "translateX(-40px)"; SOUND.play("click", 0.6); }
               else SOUND.play("pop", 0.3);
-              setTimeout(() => { api.say(item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it."); r(); }, 500);
+              /* `said` lets a lesson supply its own sentence. Stage 1 needs it:
+                 Cambridge names "magnets stick to things" as a misconception to
+                 correct (attract is its own Stage 1 glossary word), and the
+                 fallback below is the wording Grade 3 already ships, so a grade
+                 that sets nothing rebuilds byte-identical. */
+              setTimeout(() => { api.say(item.said || (item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it.")); r(); }, 500);
             }, 950);
           }, 40);
         });
@@ -5387,8 +6176,20 @@
   function experiment(o) {
     const el = o.el, sim = SIMS[o.sim];
     let predicted = null, score = 0, lock = false;
+    /* The phases are NUMBERED FROM THE ONES THIS STEP ACTUALLY HAS, because two
+       of the five are optional: `plan` (Stage 1, the second clause of 1TWSp.01 -
+       "talk about how to find answers") and `conclude` (Stage 3, 3TWSa.03). A
+       step with neither reads 1 Predict, 2 Try it, 3 What happened?, 4 Did it
+       match? exactly as before, so Grades 2-4 rebuild byte-identical. The order
+       is Cambridge's own five-move method from the Learner's Book back matter:
+       question, predict, plan, observe, conclude. */
+    const PHASES = ["Predict"].concat(o.plan ? ["How to find out"] : [],
+                                      ["Try it", "What happened?", "Did it match?"],
+                                      o.conclude ? ["Conclude"] : []);
+    const phName = (n) => (PHASES.indexOf(n) + 1) + " · " + n;
+    const outOf = 2 + (o.plan ? 1 : 0) + (o.conclude ? 1 : 0);
     const stage = $(el.stage);
-    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">1 · Predict</span>' +
+    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">' + phName("Predict") + '</span>' +
       '<div class="sim" id="' + el.stage + 'sim"></div><div class="simrow" id="' + el.stage + 'ctl"></div></div>';
     const box = $(el.stage + "sim"), ctl = $(el.stage + "ctl"), ph = $(el.stage + "ph");
     /* data: the step's own data, so a sim can be given its own objects -
@@ -5400,29 +6201,39 @@
       $(el.ch).innerHTML = shuffle(opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '" data-t="' + esc(c.t) + '">' + c.t + "</button>").join("");
     }
     function askPredict() {
-      ph.textContent = "1 · Predict"; $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
+      ph.textContent = phName("Predict"); $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
       $(el.score).textContent = "What do you think will happen?";
     }
+    /* Cambridge's third move: talk about WHAT TO DO to find the answer. One
+       way is fair and the others change more than one thing at a time, which is
+       the Stage 1 fair-test idea the Teacher's Resource says children read as
+       "fair for the learners". */
+    function askPlan() {
+      phase = "plan";
+      ph.textContent = phName("How to find out"); $(el.ask).innerHTML = o.plan.ask; choices(o.plan.opts);
+      $(el.score).textContent = "How shall we find out?"; lock = false;
+      sayHere(o.finish, plain(o.plan.ask));
+    }
     function runIt() {
-      ph.textContent = "2 · Try it"; $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
+      ph.textContent = phName("Try it"); $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
       $(el.ch).innerHTML = ""; $(el.score).textContent = "Press the button and watch";
       sayHere(o.finish, plain(o.runAsk || "Now let us try it. Press the button and watch carefully."));
       sim.run(box, api).then(() => setTimeout(askHappened, 1800));
     }
     function askHappened() {
       phase = "happened";
-      ph.textContent = "3 · What happened?"; $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
+      ph.textContent = phName("What happened?"); $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
       $(el.score).textContent = "Say what you saw"; lock = false;
       sayHere(o.finish, plain(o.happened.ask));
     }
     function askConclude() {
       phase = "conclude";
-      ph.textContent = "5 · Conclude"; $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
+      ph.textContent = phName("Conclude"); $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
       $(el.score).textContent = "What does this tell us?"; lock = false;
       sayHere(o.finish, plain(o.conclude.ask));
     }
     function askMatched() {
-      ph.textContent = "4 · Did it match?";
+      ph.textContent = phName("Did it match?");
       $(el.ask).innerHTML = "You predicted: <b>" + esc(predicted.t) + "</b>. Did it match what happened?";
       $(el.ch).innerHTML = '<button type="button" class="choice text" data-m="1">Yes, it matched my prediction</button><button type="button" class="choice text" data-m="0">No, something different happened</button>';
       $(el.score).textContent = "Scientists always check"; lock = false;
@@ -5439,7 +6250,16 @@
         b.classList.add("right");
         $(el.fb).className = "fb"; $(el.fb).textContent = "Your prediction: " + predicted.t + ". Let us find out!";
         say("You predict: " + predicted.t + ". A prediction is a good guess before you try. Let us find out!");
+        if (o.plan) { phase = "plan"; setTimeout(() => { $(el.fb).textContent = ""; askPlan(); }, 2600); return; }
         phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 2600);
+      } else if (phase === "plan") {
+        const ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong"); else score++;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not quite. ") + o.plan.why;
+        say($(el.fb).textContent);
+        phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 3000);
       } else if (phase === "happened") {
         const ok = b.dataset.ok === "1";
         $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
@@ -5459,7 +6279,7 @@
            about the question. Without one, the step ends here as before. */
         if (o.conclude) { setTimeout(() => { $(el.fb).textContent = ""; askConclude(); }, 3200); return; }
         phase = "done";
-        reportScore(o.finish, score, 2);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3200);
       } else if (phase === "conclude") {
         const ok = b.dataset.ok === "1";
@@ -5468,7 +6288,7 @@
         $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Think about what you saw. ") + o.conclude.why;
         say($(el.fb).textContent);
         phase = "done";
-        reportScore(o.finish, score, 3);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3400);
       }
     });
@@ -5539,7 +6359,7 @@
   /* ---- record what happened in a simple table ----------------------- */
   function recordTable(o) {
     const el = o.el;
-    let row = 0, right = 0, lock = false;
+    let row = 0, right = 0, lock = false, q = 0, phase = "fill";
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec"><thead><tr><th>' + esc(o.columns[0]) + "</th><th>" + esc(o.columns[1]) + "</th></tr></thead><tbody>" +
         o.rows.map((r, k) => '<tr><td><span class="rowlab">' + picHtml(r.pic, "pic") + esc(r.label) + '</span></td><td><button type="button" class="cell' + (k === row ? " now" : "") + (r.filled ? " filled " + (r.ok ? "right" : "") : "") + '" data-k="' + k + '"' + (k !== row ? " disabled" : "") + ">" + (r.filled ? esc(r.filled) : (k === row ? "tap to fill in" : "…")) + "</button></td></tr>").join("") + "</tbody></table></div>";
@@ -5552,8 +6372,38 @@
       $(el.score).textContent = "Row " + (row + 1) + " of " + o.rows.length;
       sayHere(o.finish, plain(o.ask.replace("%s", r.label)));
     }
+    function askRead() {
+      phase = "read"; lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+      $(el.score).textContent = "Reading your table: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
+      if (phase === "read") {
+        lock = true;
+        const it = o.read[q], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (ok) right++; else b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Look at your table again. ") + it.why;
+        say($(el.fb).textContent);
+        q++;
+        setTimeout(() => {
+          $(el.fb).textContent = ""; $(el.fb).className = "fb";
+          if (q < o.read.length) { askRead(); return; }
+          $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+          const total = o.rows.length + o.read.length;
+          const line = "Your table is complete, and you read it. You got " + right + " of " + total + " first time. " + o.done;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+          reportScore(o.finish, right, total);
+          finish(o.finish, line);
+        }, 2800);
+        return;
+      }
       lock = true;
       const r = o.rows[row], ok = b.dataset.c === r.answer, chosen = o.choices.find((c) => c.id === b.dataset.c) || {};
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.c === r.answer) c.classList.add("right"); });
@@ -5566,11 +6416,15 @@
       setTimeout(() => {
         $(el.fb).textContent = ""; $(el.fb).className = "fb";
         if (row >= o.rows.length) {
+          /* Cambridge reads a table as well as filling one in, so the finished
+             table stays on screen while these run - see `read` in the header. */
+          if (o.read && o.read.length && q < o.read.length) { askRead(); return; }
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.ask).innerHTML = "Your table is complete.";
-          const line = "Your table is complete. You recorded " + right + " of " + o.rows.length + " first time. " + o.done;
+          const total = o.rows.length + ((o.read && o.read.length) || 0);
+          const line = "Your table is complete. You got " + right + " of " + total + " first time. " + o.done;
           $(el.fb).className = "fb good"; $(el.fb).textContent = line;
-          reportScore(o.finish, right, o.rows.length);
+          reportScore(o.finish, right, total);
           finish(o.finish, line);
         } else offer();
       }, 2600);
@@ -5825,7 +6679,13 @@
   function blockGraph(o) {
     const el = o.el, cols = o.columns, count = cols.map(() => 0);
     const maxV = Math.max.apply(null, cols.map((c) => c.value));
-    let asked = false, lock = false;
+    /* `read` is an optional LIST of further questions asked after `pattern`,
+       with the graph still on screen. Stage 2 wants it: 2TWSa.02 is "identify
+       simple patterns in results" and 2TWSa.03 is "present and INTERPRET
+       results using tables and block graphs", and one question per graph is
+       thin for an objective about interpreting. A step with no `read` behaves
+       exactly as before, so Grades 3-4 rebuild byte-identical. */
+    let asked = false, lock = false, q = 0, phase = "build", score = 0;
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small"><thead><tr><th>' + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
         cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + (o.unit ? " " + esc(o.unit) : "") + "</span></td></tr>").join("") + "</tbody></table>" +
@@ -5838,7 +6698,7 @@
       $(el.score).textContent = done + " of " + cols.length + " columns built";
     }
     function askPattern() {
-      asked = true;
+      asked = true; phase = "pattern";
       $(el.ask).innerHTML = o.pattern.ask;
       $(el.ch).classList.add("stack");
       $(el.ch).innerHTML = shuffle(o.pattern.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
@@ -5862,10 +6722,28 @@
       const ok = b.dataset.ok === "1";
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong");
-      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + o.pattern.why; say($(el.fb).textContent);
-      reportScore(o.finish, ok ? 1 : 0, 1);
-      setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 2800);
+      const src = phase === "read" ? o.read[q] : o.pattern;
+      if (ok) score++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + src.why; say($(el.fb).textContent);
+      const total = 1 + ((o.read && o.read.length) || 0);
+      if (phase === "read") q++;
+      const more = o.read && o.read.length && (phase === "pattern" ? 0 : q) < o.read.length;
+      setTimeout(() => {
+        if (more) { phase = "read"; askRead(); return; }
+        reportScore(o.finish, score, total);
+        $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done);
+      }, 2800);
     });
+    function askRead() {
+      lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.score).textContent = "Reading the graph: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     draw();
   }
 
@@ -7610,6 +8488,18 @@
   const restart = $("restart");
   if (restart) restart.addEventListener("click", () => location.reload());
 
+  /* Cambridge's "Look what I can do!" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
+
 
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Science words"], ["🧊", "Three states"], ["🗂️", "State sorter"], ["🧪", "State tester"], ["🔍", "Property tests"], ["📏", "Centimetres"], ["🧰", "Right tool"], ["🎮", "I played the games"], ["🏠", "Science at home"], ["⭐", "Star scientist"], ["🌍", "Science world"], ["🗂️", "My resources"]];
 
@@ -8335,15 +9225,3 @@
     if (added) report(lastAt);
   };
 </script>
-
-<style>/* ehel-narration-caption - the spoken explain, on screen one sentence at a time */
-  .narr { display: none; margin: 10px 0 14px; padding: 12px 16px; border: 1px solid var(--line);
-    border-left: 4px solid var(--teal); border-radius: 12px; background: var(--card);
-    color: var(--ink); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.45;
-    min-height: 3.1em; box-sizing: border-box; }
-  .narr.on { display: block; }
-  .narr .narr-k { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
-    color: var(--muted); font-weight: 700; margin: 0 0 4px; }
-  @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
-  @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
-</style>

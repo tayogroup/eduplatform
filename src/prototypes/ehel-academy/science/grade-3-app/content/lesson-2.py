@@ -6,7 +6,7 @@
 with 3TWSp.03 (predict), 3TWSa.01 (did the results support it), 3TWSa.03
 (a conclusion), 3TWSc.06 (record in a table) and 3TWSp.02.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 PARTS = [
     {"id": "roots", "label": "roots", "say": "The roots. They anchor the plant in the soil and take in water and minerals."},
@@ -60,8 +60,11 @@ LESSON = {
              {"sim": "plantWarm",
               "predict": {"ask": "What will happen to the plant in the <b>cold</b> after five days?",
                           "opts": [opt("It will stop growing and droop", True), opt("It will grow just as well", False), opt("It will grow faster", False)]},
+              "plan": {"ask": "How shall we find out whether a plant needs warmth? Which way is fair?",
+                        "opts": [opt("Two of the same plant, same water, same light - only the warmth different", True), opt("One plant somewhere cold with no water, one somewhere warm with water", False), opt("One plant somewhere cold, and no other plant to compare it with", False)],
+                        "why": "A fair test changes ONE thing. Change the warmth AND the water and you cannot tell which one did it."},
               "runAsk": "Press Wait a day, five times. Watch both plants.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to the <b>two plants</b>?",
                            "opts": [opt("The warm plant stayed healthy; the cold plant drooped and its leaves went yellow", True), opt("Both plants stayed healthy", False), opt("The cold plant grew taller", False)],
                            "why": "Same water, same light. Only the cold was different, and the cold plant drooped. Temperature matters."},
               "conclude": {"ask": "What does this tell us?",
@@ -82,7 +85,15 @@ LESSON = {
                   {"pic": "☀️", "label": "warm plant", "answer": "healthy", "why": "the warm plant, with water and light, stayed healthy and green."},
                   {"pic": "❄️", "label": "cold plant", "answer": "drooping", "why": "the cold plant drooped and went yellow, even with the same water and light."},
               ],
-              "choices": [{"id": "healthy", "t": "healthy and green", "pic": "\U0001F331"}, {"id": "drooping", "t": "drooping and yellow", "pic": "\U0001F940"}]},
+              "choices": [{"id": "healthy", "t": "healthy and green", "pic": "\U0001F331"}, {"id": "drooping", "t": "drooping and yellow", "pic": "\U0001F940"}],
+              "read": [
+                  {"ask": "Read your table. Which plant is still healthy?",
+                   "opts": [opt("the warm one", True), opt("the cold one", False), opt("both of them", False)],
+                   "why": "The warm row says healthy and the cold row says drooping."},
+                  {"ask": "Both plants had the same water and the same light. So what made the difference?",
+                   "opts": [opt("the warmth", True), opt("the water", False), opt("nothing - plants just droop sometimes", False)],
+                   "why": "Only one thing was different between the two plants, so only one thing can be the cause. That is what a fair test buys you."},
+              ]},
              "Two rows, two results, one difference: the temperature."),
 
         step("demo", "Three things a plant needs", "\U0001F4A7", "Plant needs", ["3Bp.03"],
@@ -114,8 +125,17 @@ LESSON = {
                  q("Which part makes seeds?", "\U0001F33C", "the flower", ["the stem", "the roots"], "The flower's job is seeds."),
                  q("A plant has water and light but is kept somewhere very cold. What happens?", "❄️", "it droops and stops growing", ["it grows well", "it grows faster"], "You saw it. Too cold, and a plant is not healthy."),
                  q("Which three things does a plant need to be healthy?", "\U0001F331", "water, light and the right temperature", ["water, sugar and music", "light, soil and wind"], "Water, light, temperature."),
+                 q("A plant in the garden has deep red leaves. Is it a plant?", "\U0001F33F", "Yes. Leaves come in many colours.", ["No, plants have green leaves", "Only if it turns green later"],
+                   "Green is the commonest leaf colour, not a rule. Red, purple and silver leaves are leaves just the same."),
+                 q("Is a mushroom a plant?", "\U0001F344", "No. It has no roots, stem, leaves or flower.", ["Yes, it grows out of the ground", "Yes, it is green inside"],
+                   "Mushrooms and seaweed look a little like plants, but they have none of a plant's parts, so scientists put them in their own groups."),
+                 q("Omar points at a rose bush and says 'that flower'. What is the flower?", "\U0001F338", "one part of the plant, the part that makes seeds", ["the whole plant", "another word for a plant"],
+                   "A plant has roots, a stem, leaves AND a flower. The flower is one part of it."),
+                 q("What is a flower FOR?", "\U0001F41D", "making seeds, so new plants can grow", ["looking pretty for people", "keeping the plant warm"],
+                   "A flower's job is making seeds. People enjoying them is a lucky extra."),
              ]},
-             "You know your plants."),
+             "You know your plants.",
+             mis=["1.2-m1", "1.2-m2", "1.2-m3", "1.2-m4"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Bs.01", "3Bp.03", "3TWSa.01", "3TWSa.03"],
              "Time to show what you know. Tap the answer.",
@@ -136,8 +156,27 @@ LESSON = {
                  q("The flower's job is...", "\U0001F33C", "making seeds", ["making food", "holding the plant up"], "Seeds for new plants."),
                  q("What would happen to a plant if its roots were cut off?", "\U0001F331", "it could not take in water, so it would droop", ["it would grow more flowers", "nothing, because roots have no job"], "Roots take in water from the soil. Without them the plant dries out."),
                  q("You want to test if a plant needs light. Which is the fair test?", "\U0001F4A1", "two plants with the same water and warmth, one in the light and one in the dark", ["one plant in the light with water, one in the dark with no water", "one plant in the light, looked at only once"], "Change only the light. Keep everything else the same."),
-             ]},
-             "That is the whole lesson finished. You know what a plant needs and what its parts do."),
+                 q("Does a plant make its food all through the night?", "\U0001F312", "No. A leaf needs light, so it makes food in the daytime.", ["Yes, all day and all night", "Yes, but only slowly"],
+                   "No light, no food made. That is why a plant in a dark cupboard goes pale and weak."),
+                 q("Sara says the Moon gives plants light to make food at night. Is she right?", "\U0001F319", "No. Moonlight is far too weak, and some nights there is none.", ["Yes, moonlight is enough", "Yes, on bright nights"],
+                   "Moonlight is sunlight bounced back off the Moon, and only a tiny amount of it. A plant cannot make food by it."),
+                 q("Is a plant healthier the more water you give it?", "\U0001F4A7", "No. Most plants want damp soil, not wet soil.", ["Yes, water it several times a day", "Yes, as long as it is warm too"],
+                   "It does not rain every day, and most plants are fine for a day or two between waterings. Too much water and the roots rot."),
+             ],
+              "support": [
+                 q("Which part of a plant takes in water?", "\U0001F331", "the roots", ["the flower"],
+                   "Roots take in water from the soil."),
+                 q("Does a plant need light?", "\u2600\uFE0F", "Yes", ["No"],
+                   "A leaf uses light to make the plant's food."),
+              ],
+              "extension": [
+                 q("Celery left standing in red water has red lines up its stalk. What does that show?", "\U0001F331", "water travels up inside the stem", ["the stem is made of red threads", "the dye painted the outside"],
+                   "The stem carries water from the roots up to the leaves. The dye rides along with it and shows you the path."),
+                 q("Why does a plant grown on a windowsill lean towards the glass?", "\U0001FA9F", "it grows towards the light, because its leaves need it", ["the glass pulls it", "it is falling over"],
+                   "A plant grows towards light. That is worth knowing: the leaf is where the food is made."),
+              ]},
+             "That is the whole lesson finished. You know what a plant needs and what its parts do.",
+             mis=["1.3-m1", "1.3-m2", "1.4-m1"]),
     ],
 }
 
@@ -181,6 +220,22 @@ LESSON["words"] = [
          ["My prediction was that the cold plant would droop.", "Make a prediction, then test it."]),
     word("conclusion", "\U0001F4DD", "What your results tell you about the question you asked.",
          ["My conclusion is that plants need warmth.", "A conclusion comes from the results."]),
+    word("leaf", "\U0001F343", "The flat green part of a plant. It makes the plant's food using light.",
+         ["A leaf makes food from light.", "Leaves grow out of the stem."]),
+    word("flower", "\U0001F337", "The part of a plant where seeds are made.",
+         ["A flower makes the seeds.", "The flower is one part of the plant, not the whole plant."]),
+    word("seeds", "\U0001F330", "The small hard parts made in a flower. A new plant grows from a seed.",
+         ["Seeds are made in the flower.", "A baby plant grows out of a seed."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say what the leaf, the flower, the stem and the root each do.", "3Bs.01"),
+    cando("I know that a plant needs light, water and the right temperature.", "3Bp.03"),
+    cando("I know that a new plant grows from a seed.", "3Bs.01"),
+    cando("I can make a prediction and say afterwards whether it was right.", "3TWSp.03"),
+    cando("I can say whether my results support my prediction.", "3TWSa.01"),
+    cando("I can make a conclusion from my results.", "3TWSa.03"),
+    cando("I can record what I saw in a table.", "3TWSc.06"),
 ]
 
 LESSON["home"] = [

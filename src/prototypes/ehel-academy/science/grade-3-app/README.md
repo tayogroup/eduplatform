@@ -87,3 +87,89 @@ Every lesson carries its own 7 to 9 steps inside the seven-step unit shell
 
 Not done: a teacher's read, a screen-reader session, the school's own devices,
 watching children use it — the same open rows as the Grade 1 validation.
+
+## The Cambridge Stage 3 depth pass (2026-09-16)
+
+The same pass Grades 1 and 2 had, against the Stage 3 pack: Learner's Book 3,
+Teacher's Resource 3, Workbook 3, and the Teacher's Guide 3 — **which has no
+text layer at all** (153 pages of page images, 3.8 KB of extractable text), so
+nothing could be read from it. The other three extracted cleanly and the
+Teacher's Resource is the misconceptions source in any case.
+
+Nothing moved a step: **187 steps, and all thirteen sequences byte-identical to
+the shipped pages**, because progress is stored by position.
+
+**This grade had TWO defects waiting, found during the Grade 2 pass and written
+down then.** Grade 3 authors a `conclude` question on all eight of its
+experiments, and the old renderer ignored every one — `lib/science.js` computes
+the phase list now, so waking them made two things visible for the first time:
+lesson 9 has two experiments and both asked the bare "What happened?", and its
+first `conclude` asked "What does a forcemeter measure?", word for word the
+lesson's own practice question. Both are fixed, and the other five experiments'
+observation questions are now named after the thing the child watched rather
+than using the harness's generic prompt.
+
+**Cambridge's misconceptions are a fixture and a gate.**
+`../data/cambridge-stage3-misconceptions.json` holds 43, one per row of the
+"Common misconceptions" table in each of the 25 topics. There is no second
+source — Stage 3 ships no Ready to Go Lessons — so unlike Stage 2 there are no
+`rtg-NN` ids. Its `_excluded` block records the three rows that are NOT in it:
+Cambridge defers the filter-paper-and-particles one itself ("particles… not
+introduced in the curriculum until Stage 4"), and two are the same row printed
+twice.
+
+| | before | after |
+| --- | --- | --- |
+| misconceptions answered and gated | 0 | 43 / 43 |
+| questions | 253 | 368 |
+| word cards | 91 | 130 |
+| self-check claims | 0 | 94 |
+| unscored tier items | 0 | 52 |
+| `plan` phases | 0 | 8 |
+| `conclude` phases RENDERED | 0 (8 authored, all dead) | 8 |
+| table and chart read-offs | 0 | 12 |
+| learner words / words per sentence | 36,741 / 10.97 | 49,363 / **10.83** |
+
+Reading demand fell while the volume grew by a third: the highest
+Flesch-Kincaid went from 5.02 to 4.90, on Growing Up both times.
+
+**Three words the objectives are written in, that the lessons did not say.**
+`cold-blooded` (3Bs.02 is "the distinguishing features of different groups of
+animals", and Cambridge defines amphibian and reptile with it) had 0 uses;
+`waxing` and `waning` had 0 each in the lesson that teaches the Moon's phases.
+All three are now used where the idea is taught and carded. `insoluble`
+(3Cp.04), `impression` (3ESp.02) and `spherical` (3ESs.03) were each said once
+and never defined, so they get a card and needed no new use.
+
+**The 39 new word cards were measured, not guessed**: the Learner's Book 3
+glossary has 115 entries, 69 had no card here, and 35 of those are words the
+lessons already say. Lessons 6 and 7 get two cards each and lesson 13 gets
+five, because that is what the measurement gave.
+
+**A gate hole, found by a mutation that survived.** A `record` step's read-off
+list was never validated, though a `graph` step's was: `read` was added to
+`recordTable` in the Grade 1 pass and to `blockGraph` in the Grade 2 pass, and
+only the second one got its four lines of validation. Eighteen read-off items
+across three live grades had never had their keys or explanations checked by
+anything. `build-lessons.py` checks both now, and all three grades pass it — so
+the eighteen were in fact sound, which is luck rather than process.
+
+**The 368 keys were read by a person, and 17 things changed.** No key named the
+wrong option. Twelve of the seventeen were **extension items I had written that
+restated something the lesson already asks** — see the validation appendix, it
+is the most useful thing this pass learned about its own authoring.
+
+**Verified in the browser** on the built pages, served on a port other than
+4287: all six experiment phases in order, `1 Predict, 2 How to find out,
+3 Try it, 4 What happened?, 5 Did it match?, 6 Conclude`, with the conclude
+answered; the support bank firing on a wrong answer with its eyebrow on its own
+line; nine self-check rows on Gravity and Friction pointing at five different
+steps. Zero JS errors, and the only failed requests are the five platform
+sidecars that exist only on the deployed tier.
+
+**Serve these pages on any port EXCEPT 4287.** `lib/voice.js` treats
+`localhost:4287` as the dev twin and posts every narration line to
+`/api/elevenlabs-tts`, which bills per character. On any other port with no
+`?pwsEndpoint`/`?pwsToken` the endpoint resolves to `""` and nothing is
+requested — which the network log confirms. `npm run preview:src` is the 4287
+one.

@@ -5,7 +5,7 @@
 each does; 3TWSm.01 diagrams and physical models; 3TWSm.02 make and use a
 physical model; with 3SIC.02 and 3SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 ORGANS = [
     {"id": "brain", "label": "brain", "say": "The brain, inside your head. It thinks, remembers, and tells every other part what to do."},
@@ -88,8 +88,13 @@ LESSON = {
                  q("Food goes into a stretchy bag that churns it. Which organ?", "\U0001F372", "the stomach", ["the brain", "the lungs"], "The stomach breaks food down."),
                  q("Which organ is a long coiled tube?", "\U0001F300", "the intestine", ["the heart", "the brain"], "The intestine takes the goodness out."),
                  q("The bottle-and-balloon lungs are which kind of model?", "\U0001F388", "a physical model", ["a diagram", "not a model"], "You can make it and touch it."),
+                 q("Where is your stomach?", "\U0001F37D\uFE0F", "one organ, a bag just below the heart", ["the whole lower half of your body", "everywhere your tummy feels full"],
+                   "The stomach is one organ, higher up than most people think. Most of the room lower down is taken by the intestines."),
+                 q("Is a lung just an empty bag of air?", "\u2764\uFE0F", "No. It is spongy, with blood all through it.", ["Yes, it fills and empties like a balloon", "Yes, it is hollow inside"],
+                   "A lung is full of tiny spaces and packed with blood vessels. That is how oxygen gets out of the air and into your blood."),
              ]},
-             "You know your organs."),
+             "You know your organs.",
+             mis=["4.1-m1", "4.1-m2"]),
 
         step("context", "Science that looks inside", "\U0001FA7A", "Body science", ["3SIC.02", "3SIC.03"],
              "Doctors use science to look at your organs without opening you up. Tap each one.",
@@ -128,7 +133,19 @@ LESSON = {
                  q("What would happen in the lung model if you never pulled the bottom balloon down?", "\U0001F388", "the lung balloon would stay empty", ["the lung balloon would fill up", "the bottle would melt"], "Pulling the bottom balloon down is what makes the lung balloon fill, just as your breathing muscle does."),
                  q("What would happen if food could not get from the stomach to the intestine?", "\U0001F35E", "the goodness from food could not get into the blood", ["you would stop breathing at once", "the food would go to the brain"], "The goodness from food goes into your blood in the intestine."),
                  q("Real lungs are not balloons. Why is the bottle-and-balloon model still useful?", "\U0001F388", "it shows the idea: the breathing muscle pulls down and the lungs fill with air", ["it looks exactly like real lungs", "real lungs are made of plastic"], "A model shows an idea clearly and leaves the rest out."),
-             ]},
+             ],
+              "support": [
+                 q("Which organ pumps your blood?", "\u2764\uFE0F", "the heart", ["the brain"],
+                   "The heart is a muscle that pumps blood."),
+                 q("What do your lungs take in?", "\U0001F32C\uFE0F", "air", ["food"],
+                   "Lungs take oxygen out of the air."),
+              ],
+              "extension": [
+                 q("You run up a hill and your heart beats faster. Why?", "\U0001F3C3", "your muscles need more oxygen, so the blood has to move faster", ["your heart is getting tired", "your blood is getting thinner"],
+                   "Working muscles need more oxygen. The heart pumps faster to deliver it, which is why you breathe harder too."),
+                 q("Why is the heart placed between the two lungs?", "\u2764\uFE0F", "so blood can pick up air from the lungs and go straight out to the body", ["so the ribs can protect only the heart", "so you can hear it beating"],
+                   "Blood goes from the heart to the lungs for oxygen and straight back to be pumped round the body. A short trip, made over and over."),
+              ]},
              "That is the whole lesson finished. You know what is inside you."),
     ],
 }
@@ -173,6 +190,21 @@ LESSON["words"] = [
          ["The intestine is coiled up below the stomach.", "Goodness passes through the intestine into the blood."]),
     word("pump", "\U0001F4A7", "Something that pushes a liquid or a gas along. The heart is a pump.",
          ["The heart pumps blood.", "A bicycle pump pushes air."]),
+    word("blood", "\U0001FA78", "The red liquid that carries air, food and waste round your body.",
+         ["The heart pumps blood.", "Blood carries oxygen to every part of you."]),
+    word("muscle", "\U0001F4AA", "A part of your body that pulls to make you move.",
+         ["A muscle pulls your bones.", "Your heart is a muscle that never stops."]),
+    word("oxygen", "\U0001F32C\uFE0F", "The gas in the air that your body needs to stay alive.",
+         ["Your lungs take oxygen out of the air.", "Oxygen is a gas, and plants make it."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name some important organs in the human body.", "3Bs.03"),
+    cando("I can say what the heart, the lungs, the brain and the stomach each do.", "3Bs.03"),
+    cando("I can make and use a model of a part of the body.", "3TWSm.02"),
+    cando("I can draw a diagram to show where an organ is.", "3TWSm.03"),
+    cando("I can say what a model shows and what it leaves out.", "3TWSm.01"),
+    cando("I can explain how science helps a doctor.", "3SIC.02"),
 ]
 
 LESSON["home"] = [

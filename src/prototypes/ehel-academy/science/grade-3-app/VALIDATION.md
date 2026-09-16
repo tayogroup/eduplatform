@@ -273,3 +273,99 @@ L13
 
 ### Across lessons
 - sortBins (answer key): several items share the picture of their correct bin, so a child can match pictures: L1:44 vs 46/48; L3:54-55 vs 57/58/63; L6:71 vs 73/74/77; L7:43 vs 45/46; L8:60 vs 64; L10:46 vs 51. Give those bins pictures that no item in that step uses.
+
+---
+
+## Appendix C: the Cambridge Stage 3 depth pass, 2026-09-16
+
+**An appendix, not a version 3.** The 27 areas above are NOT re-scored; that
+needs the full re-review, and no teacher has read the content this pass added.
+What follows is what changed and what was measured, so a future v3 has its
+input.
+
+Against the Stage 3 pack. One of the four books, the **Teacher's Guide 3, has
+no text layer** — 153 pages of images, 3.8 KB of extractable text — so nothing
+was read from it. Said plainly because "we used all four books" would not be
+true.
+
+### The two defects this grade was already carrying
+
+Both were found during the GRADE 2 pass and recorded in its validation
+appendix, because Grade 3 authors `conclude` on all eight of its experiments
+and the renderer ignored every one until this pass. Waking dead data is what
+made them visible:
+
+- Lesson 9 has two experiments and both asked the bare "What happened?", so a
+  child met the identical stem twice in one lesson.
+- Lesson 9's first `conclude` asked "What does a forcemeter measure?" — word
+  for word the lesson's own practice question. A conclude that re-asks a
+  definition is not a conclusion; the investigation hung three things on a
+  spring and read 2, 3 and 5 newtons, and that is what there was to conclude.
+
+### Areas this pass bears on, with the new evidence
+
+| # | Area | was | evidence now | still open |
+| --- | --- | --- | --- | --- |
+| 3 | Content Depth and Coverage | 5 | 43 of 43 Stage 3 misconceptions answered and gated; questions 253 -> 368; all eight experiments now render Cambridge's five moves, with `plan` new and `conclude` live for the first time | - |
+| 4 | Content Accuracy | 4 | the two dead-data defects fixed; three words the objectives are written in (`cold-blooded`, `waxing`, `waning`) now said where the idea is taught; the key read found no key naming the wrong option | a teacher's read |
+| 10 | Question and Assessment Quality | 4 | 115 new questions, 65 of the 368 now judgement items; 17 defects found by reading every key and all 17 fixed | a teacher's read - `review-pack.html` exists for it |
+| 11 | Assessment Balance | 4 | 12 read-off questions on the tables and the bar chart, asked with the data on screen; 52 unscored tier items | - |
+| 6 | Grade-Level Appropriateness | 4 | 36,741 -> 49,363 learner words at 10.97 -> 10.83 words per sentence; highest Flesch-Kincaid 5.02 -> 4.90, Growing Up both times - the demand FELL as the volume grew by a third | - |
+| 19 | Language and Reading Level | 4 | 91 -> 130 word cards, chosen by measurement: the Learner's Book glossary has 115 entries, 69 had no card, 35 of those are words the lessons already say | a human proofread |
+| 22 | Learner Progress and Completion | 4 | the step sequence of all thirteen lessons is IDENTICAL to the shipped pages, read out of both payloads as JSON: 187 steps, 0 moved | saved-record re-check |
+| 27 | Bugs, syntax and errors | 4 | both gates green; five mutations, five distinct failure lines, tree verified restored; ONE REAL GATE HOLE CLOSED (below) | - |
+
+### The gate hole, and the harness fault that nearly hid it
+
+A mutation SURVIVED: a `record` read-off stripped of its explanation built and
+shipped green. The `graph` branch of `check_step` validated its read-off list
+and the `record` branch never had — `read` was added to `recordTable` in the
+Grade 1 pass and to `blockGraph` in the Grade 2 pass, and only the second one
+got its validation. **Eighteen read-off items across three live grades had
+never had their keys or explanations looked at by any gate.** Closed;
+all three grades pass the new check, so the eighteen were sound — luck, not
+process.
+
+The harness also lied once, and the tell is worth keeping. Two mutations
+reported the same failure line, naming a misconception id the second one never
+wrote. Cause: `build-lessons.py` loads each lesson through
+`spec_from_file_location`, which reuses `content/__pycache__/*.pyc` when the
+source's mtime **and size** are unchanged — and every mutation here is a
+same-size rewrite (`mis=["1.1-m1"]` for `mis=["6.3-m1"]`), so two inside one
+mtime tick make the builder load the previous mutation's bytecode. The harness
+clears the cache before every run now. Identical failure lines across different
+mutations is the same tell the Wehel harness left behind.
+
+### What the key read found about its own author
+
+Seventeen defects, and **twelve were extension items this pass had written that
+restate something the lesson already asks.** Lesson 11's asked what must be
+true when two magnets repel, which the quiz asks outright. Lesson 13's asked
+whether the Sun and Moon are really the same size, which is one of this pass's
+own misconception questions four screens earlier. Lesson 3 had four whale-and-
+bat items between the explore step, the quiz and the two extensions.
+
+The gate caught exactly ONE of the twelve, lesson 6's, at the 0.6 Jaccard line.
+The other eleven paraphrase rather than repeat.
+
+The cause is worth naming because it will recur: each extension was written
+from the lesson's TOPIC rather than from its existing 20 to 30 questions, and
+on a bank that size the topic is already covered. **Write a differentiation
+item against the question list, not against the subject.** The replacements
+were chosen that way and are things no core item touches - how numbers thin out
+along a food chain, induced magnetism in a paperclip chain, the far side of the
+Moon, which fossil layer is older, friction making heat.
+
+### Two things this appendix must not be read as claiming
+
+- **No teacher has read it.** A person read all 368 keys and fixed 17 things.
+  That is not a teacher's read, and no gate can make it: this build authors its
+  own questions rather than taking them from a Cambridge booklet, so
+  `check-science-answer-keys.mjs` has no printed key to compare with.
+- **Grade 4 is NOT rebuilt, and that is a decision.** It authors `plan` and
+  `conclude` data the old renderer ignores, exactly as Grade 3 did, so
+  rebuilding it would make those phases appear for the first time - a content
+  change to a live grade this pass was not asked about. It also trips the
+  repeated-question arm on one pre-existing defect: lesson 12's explore
+  follow-up and a practice item both ask "What is at the centre of the Solar
+  System?". That wants fixing before Grade 4 is next rebuilt.

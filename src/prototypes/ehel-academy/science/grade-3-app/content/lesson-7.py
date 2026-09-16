@@ -6,7 +6,7 @@ differences between solids and liquids; 3TWSc.03 standard units and why
 they beat non-standard ones; 3TWSc.02 choose equipment; with 3TWSc.01,
 3TWSc.06, 3TWSp.03 and 3TWSa.03.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "solids-liquids-and-gases",
@@ -65,8 +65,11 @@ LESSON = {
              {"sim": "states",
               "predict": {"ask": "What will the <b>water</b> do when you pour it into the glass?",
                           "opts": [opt("Take the shape of the glass", True), opt("Keep its own shape", False), opt("Spread out into the air", False)]},
+              "plan": {"ask": "How shall we find out whether each one keeps its shape? Which way is fair?",
+                        "opts": [opt("Put each one into the same container in turn and watch what its shape does", True), opt("Put the water in a glass and the block in a box", False), opt("Just look at them and decide", False)],
+                        "why": "Same container each time, so the only difference is the material. Looking without testing is guessing."},
               "runAsk": "Press all three buttons and watch what each material does.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to each <b>shape</b>?",
                            "opts": [opt("The water took the shape of the glass, the block kept its shape, the air spread out", True), opt("All three kept their shape", False), opt("The block took the shape of the glass", False)],
                            "why": "Liquid flows into the shape of its container. Solid keeps its shape. Gas spreads out."},
               "conclude": {"ask": "What is the difference between a solid and a liquid?",
@@ -124,8 +127,13 @@ LESSON = {
                  q("You want to know how hot the water is. Which equipment?", "\U0001F321️", "a thermometer, in degrees", ["scales", "a ruler"], "Temperature: a thermometer."),
                  q("You want to know how heavy a stone is. Which equipment?", "\U0001FAA8", "scales, in grams", ["a measuring jug", "a hand lens"], "Mass: scales."),
                  q("You want to see the grains of sand up close. Which equipment?", "\U0001F3D6️", "a hand lens", ["a thermometer", "scales"], "To see small things: a lens."),
+                 q("Sugar pours and takes the shape of the pot. Is sugar a liquid?", "\U0001F9C2", "No. It is a heap of tiny solid pieces.", ["Yes, anything that pours is a liquid", "Yes, because it changes shape"],
+                   "Look at one grain through a magnifying glass and it keeps its own shape. A heap of solids can pour, and every piece is still a solid."),
+                 q("Is all gas dangerous?", "\U0001F4A8", "No. Oxygen is a gas, and you are breathing it now.", ["Yes, every gas is dangerous", "Yes, unless you cannot smell it"],
+                   "'Gas' names the one that burns in a cooker AND the oxygen that keeps you alive. Some gases are dangerous and some are not."),
              ]},
-             "The right tool for the measurement, and a standard unit to measure in."),
+             "The right tool for the measurement, and a standard unit to measure in.",
+             mis=["2.1-m1", "2.1-m2"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Cm.01", "3Cp.01", "3TWSc.03", "3TWSc.02"],
              "Time to show what you know. Tap the answer.",
@@ -146,7 +154,19 @@ LESSON = {
                  q("You pour milk from a tall glass onto a flat plate. Why does its shape change?", "\U0001F95B", "milk is a liquid, so it takes the shape of its container", ["the plate squashes it", "milk is a solid"], "A liquid has no shape of its own. It flows into the shape of whatever holds it."),
                  q("Why does the air fill the whole balloon, not just the bottom of it?", "\U0001F388", "air is a gas, so it spreads out to fill all the space", ["air is heavy, so it sinks to the bottom", "the balloon pushes the air up to the top"], "A gas spreads out to fill whatever holds it."),
                  q("You can squash play dough into a new shape. Why is it still a solid?", "\U0001F3A8", "because it keeps whatever shape you give it and does not flow", ["because it is a bright colour", "because it can be squashed"], "A liquid flows. Play dough stays in its shape until you squash it again."),
-             ]},
+             ],
+              "support": [
+                 q("Is water a liquid?", "\U0001F4A7", "Yes", ["No"],
+                   "Water flows and takes the shape of its container."),
+                 q("Does a brick keep its own shape?", "\U0001F9F1", "Yes", ["No"],
+                   "A solid keeps its shape."),
+              ],
+              "extension": [
+                 q("Why can you smell dinner from another room?", "\U0001F32C\uFE0F", "the smell is a gas, and a gas spreads out through all the space it can reach", ["the smell is a liquid running along the floor", "your nose can reach that far"],
+                   "A gas spreads out to fill whatever holds it. That is why a smell gets everywhere and a spilt drink stays in one place."),
+                 q("A balloon full of air feels like nothing, and the air still takes up room. How do you know?", "\U0001F388", "the balloon is bigger than it was, so something is in it", ["you can see the air inside", "the balloon gets heavier to hold"],
+                   "A gas fills the space it is in. You cannot see it, and you can see what it does."),
+              ]},
              "That is the whole lesson finished. You know your solids, liquids and gases."),
     ],
 }
@@ -191,6 +211,21 @@ LESSON["words"] = [
          ["A centimetre is a standard unit.", "Use standard units so others can check your results."]),
     word("centimetre", "\U0001F4CF", "A standard unit for measuring length. About the width of a fingernail.",
          ["The water was eight centimetres deep.", "There are a hundred centimetres in a metre."]),
+    word("equipment", "\U0001F9EA", "The things you choose to use to do a test.",
+         ["Choose your equipment before you start.", "A measuring jug is a piece of equipment."]),
+    word("oxygen", "\U0001F32C\uFE0F", "One of the gases in the air. Your body needs it.",
+         ["Oxygen is a gas.", "You cannot see oxygen, and it is still there."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name two solids, two liquids and two gases.", "3Cm.01"),
+    cando("I can describe how a solid and a liquid are different.", "3Cp.01"),
+    cando("I can sort materials into solid, liquid and gas.", "3TWSc.01"),
+    cando("I can measure in standard units and say why they are better.", "3TWSc.03"),
+    cando("I can choose the right equipment for a test.", "3TWSc.02"),
+    cando("I can say which type of enquiry I am doing.", "3TWSp.03"),
+    cando("I can say what the risks are and how to stay safe.", "3TWSp.04"),
+    cando("I can record my results in a table.", "3TWSc.06"),
 ]
 
 LESSON["home"] = [

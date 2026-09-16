@@ -6,7 +6,7 @@ processes plants and animals share (nutrition, growth, movement,
 reproduction); 3TWSp.02 the five types of scientific enquiry; with
 3TWSp.01, 3TWSc.01 and 3SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "living-once-alive-never-alive",
@@ -172,8 +172,11 @@ LESSON = {
                  q("A metal key is...", "\U0001F511", "never alive", ["living", "once alive"], "Metal comes from rock. It never lived."),
                  q("You want to know which paper towel soaks up the most water. Which enquiry?", "\U0001F4A7", "a fair test", ["research", "observing over time"], "Same amount of water, different towels: change one thing."),
                  q("Making more of your own kind is called...", "\U0001F423", "reproduction", ["nutrition", "movement"], "Reproduction: eggs, babies, seeds."),
+                 q("Amina says a flame is alive, because it moves and it grows.", "\U0001F525", "No. Moving is only one of the four life processes.", ["Yes, it moves and grows so it is alive", "Yes, but only while it is burning"],
+                   "A flame does not feed, grow or make young ones. Check all four life processes, not just one of them."),
              ]},
-             "You know what living things do."),
+             "You know what living things do.",
+             mis=["1.1-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Bp.01", "3Bp.02", "3TWSp.02", "3SIC.03"],
              "Time to show what you know. Tap the answer.",
@@ -194,7 +197,19 @@ LESSON = {
                  q("You time a snail on wet ground, then on dry ground. Why use the same snail both times?", "\U0001F40C", "so only the ground changes, and the test is fair", ["so the snail does not get lonely", "because snails are slow"], "Change one thing only. A different snail might just be a faster snail."),
                  q("A toy robot moves and makes sounds. Why is it not a living thing?", "\U0001F916", "it cannot feed, grow or make more robots by itself", ["it is too small to be alive", "it moves too slowly to be alive"], "Moving is not enough. A living thing does all four life processes."),
                  q("You want to find out if dogs with longer legs run faster. Which type of enquiry is that?", "\U0001F415", "pattern seeking: look at lots of dogs for a pattern", ["observing over time: watch one dog grow", "identifying and classifying: sort dogs by colour"], "You compare lots of dogs and look for a pattern between legs and speed."),
-             ]},
+             ],
+              "support": [
+                 q("Is a tree alive?", "\U0001F333", "Yes", ["No"],
+                   "A tree grows, needs water and makes seeds."),
+                 q("Is a stone alive?", "\U0001FAA8", "No", ["Yes"],
+                   "A stone never grows, feeds or makes young."),
+              ],
+              "extension": [
+                 q("A seed sits in a packet for a year and does nothing. Is it alive?", "\U0001F330", "Yes - it is alive and waiting for water and warmth", ["No, it is doing nothing", "No, it is once alive"],
+                   "A dry seed is alive but resting. Give it water and warmth and it grows, which a once-alive thing never would."),
+                 q("Cotton and wool are once alive. So is a wooden spoon. What do all three have in common?", "\U0001F9F6", "each one came from something that was living", ["each one was made in a factory", "each one is soft"],
+                   "Once alive means it came from a living thing. Wool from a sheep, cotton from a plant, wood from a tree."),
+              ]},
              "That is the whole lesson finished. You know what makes something alive."),
     ],
 }
@@ -239,6 +254,22 @@ LESSON["words"] = [
          ["A fair test is one type of enquiry.", "Which enquiry answers your question?"]),
     word("fair test", "⚖️", "An enquiry where you change one thing and keep everything else the same.",
          ["In a fair test, only the water changes.", "Time both snails the same way, so it is a fair test."]),
+    word("never alive", "\U0001F511", "It has never been alive. It was never part of a living thing.",
+         ["A metal key is never alive.", "Rock and plastic are never alive."]),
+    word("research", "\U0001F4DA", "Finding an answer by looking it up, instead of by testing.",
+         ["I did some research in a book.", "Research is one of the five enquiries."]),
+    word("classifying", "\U0001F5C2\uFE0F", "Sorting things into groups by what they are like.",
+         ["Classifying means putting things into groups.", "We classified them as living, once alive or never alive."]),
+]
+
+LESSON["cando"] = [
+    cando("I can tell the difference between living, once alive and never alive.", "3Bp.01"),
+    cando("I can use the four life processes to say whether something is alive.", "3Bp.01"),
+    cando("I can name the life processes that plants and animals share.", "3Bp.02"),
+    cando("I can name the five types of scientific enquiry.", "3TWSp.02"),
+    cando("I can sort things into groups and say why.", "3TWSc.01"),
+    cando("I can ask a scientific question that can be investigated.", "3TWSp.01"),
+    cando("I can name people who use science at work.", "3SIC.03"),
 ]
 
 LESSON["home"] = [

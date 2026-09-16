@@ -5,7 +5,7 @@
 (humans, birds, frogs, butterflies); 3TWSm.01 different types of model
 (diagrams and physical models); with 3TWSc.01 and 3TWSc.06.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "growing-up",
@@ -113,7 +113,15 @@ LESSON = {
                   {"pic": "\U0001F438", "label": "frog", "answer": "months", "why": "frogspawn to froglet: a few months."},
                   {"pic": "\U0001F9D1\U0001F3FE", "label": "human", "answer": "years", "why": "a person takes many years to become an adult."},
               ],
-              "choices": [{"id": "weeks", "t": "a few weeks", "pic": "\U0001F4C5"}, {"id": "months", "t": "a few months", "pic": "\U0001F5D3️"}, {"id": "years", "t": "many years", "pic": "\U0001F382"}]},
+              "choices": [{"id": "weeks", "t": "a few weeks", "pic": "\U0001F4C5"}, {"id": "months", "t": "a few months", "pic": "\U0001F5D3️"}, {"id": "years", "t": "many years", "pic": "\U0001F382"}],
+              "read": [
+                  {"ask": "Read your table. Which animal takes the longest to grow up?",
+                   "opts": [opt("the human", True), opt("the butterfly", False), opt("the frog", False)],
+                   "why": "Weeks for the butterfly, months for the frog, years for the human."},
+                  {"ask": "Put your three rows in order, quickest first. What is the pattern?",
+                   "opts": [opt("the bigger the animal, the longer it takes", True), opt("the smaller the animal, the longer it takes", False), opt("there is no pattern", False)],
+                   "why": "Butterfly, frog, human: weeks, months, years. Bigger animals generally take longer to grow up."},
+              ]},
              "Weeks, months, years. Every animal grows up at its own speed."),
 
         step("questions", "Growing up check", "✅", "Growing check", ["3Bp.04", "3TWSm.01"],
@@ -129,8 +137,11 @@ LESSON = {
                  q("Which baby looks like a small version of its parent?", "\U0001F423", "a chick", ["a tadpole", "a caterpillar"], "A chick is a small bird."),
                  q("A globe is which kind of model?", "\U0001F30D", "a physical model", ["a diagram", "not a model"], "You can hold it and turn it."),
                  q("A drawing of the butterfly's life cycle with labels is...", "✏️", "a diagram", ["a physical model", "a photograph"], "Labels on a drawing: a diagram."),
+                 q("A caterpillar and a butterfly. How many animals is that?", "\U0001F98B", "one animal, at two stages of its life", ["two different animals", "three, counting the egg as another one"],
+                   "Some animals change shape completely as they grow, like a tadpole into a frog. It is one animal all the way through."),
              ]},
-             "You know how animals grow up."),
+             "You know how animals grow up.",
+             mis=["4.2-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Bp.04", "3TWSm.01", "3TWSc.06"],
              "Time to show what you know. Tap the answer.",
@@ -151,7 +162,19 @@ LESSON = {
                  q("A caterpillar and a butterfly look nothing alike. Why do we say they are the same kind of animal?", "\U0001F41B", "the caterpillar grows and changes into the butterfly", ["they live on the same leaf", "they are both green"], "It is one life: egg, caterpillar, chrysalis, butterfly."),
                  q("A tadpole has just grown its back legs. Predict what will happen next.", "\U0001F914", "its front legs grow, then its tail shrinks", ["it turns back into frogspawn", "it grows wings"], "Back legs, then front legs, then the tail shrinks and it becomes a froglet."),
                  q("Why is a physical model better than a diagram for showing how a skeleton's joints bend?", "\U0001F9B4", "you can hold it and move the joints", ["a physical model always has labels", "a diagram cannot show bones at all"], "A diagram is flat. A physical model can be turned and moved."),
-             ]},
+             ],
+              "support": [
+                 q("What hatches out of a butterfly's egg?", "\U0001F41B", "a caterpillar", ["a butterfly"],
+                   "Egg, caterpillar, chrysalis, butterfly."),
+                 q("Does a kitten drink milk?", "\U0001F431", "Yes", ["No"],
+                   "Mammals feed their young on milk."),
+              ],
+              "extension": [
+                 q("A frog lays hundreds of eggs and a human has one baby at a time. Why the difference?", "\U0001F438", "most frogspawn is eaten before it grows up, so a frog needs a great many", ["frogs are better parents", "human babies are bigger"],
+                   "An animal that guards and feeds its young can have very few. One that leaves its eggs has to lay hundreds for a few to survive."),
+                 q("A chick looks much like a small hen, but a caterpillar looks nothing like a butterfly. Why the difference?", "\U0001F423", "some animals change shape as they grow and some only get bigger", ["the chick is older than the caterpillar", "hens have no life cycle"],
+                   "Both are life cycles. In some the young is a small version of the adult; in others it is a completely different shape."),
+              ]},
              "That is the whole lesson finished. You know how animals grow up."),
     ],
 }
@@ -196,6 +219,20 @@ LESSON["words"] = [
          ["A life cycle diagram has arrows.", "Label your diagram."]),
     word("physical model", "\U0001F9F1", "A model you can touch and hold, like a globe or a toy skeleton.",
          ["A globe is a physical model.", "We made a physical model of a frog."]),
+    word("caterpillar", "\U0001F41B", "The young stage of a butterfly or a moth.",
+         ["A caterpillar hatches out of an egg.", "The caterpillar is the same animal as the butterfly."]),
+    word("hatch", "\U0001F423", "To break out of an egg.",
+         ["A chick hatches out of its egg.", "The caterpillar hatched after five days."]),
+    word("baby", "\U0001F476", "An animal soon after it is born.",
+         ["A baby grows into a child.", "A baby elephant is called a calf."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe and compare how different animals grow up.", "3Bp.04"),
+    cando("I can put the stages of a life cycle in order.", "3Bp.04"),
+    cando("I can use a diagram to show how a life cycle works.", "3TWSm.01"),
+    cando("I can sort animals by the way they grow up.", "3TWSc.01"),
+    cando("I can record what I found in a table.", "3TWSc.06"),
 ]
 
 LESSON["home"] = [

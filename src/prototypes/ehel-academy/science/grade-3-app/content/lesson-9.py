@@ -7,7 +7,7 @@ surfaces makes movement harder; 3Pf.04 smooth and rough surfaces give
 different amounts of friction; 3TWSa.02 patterns in results; 3TWSa.04 bar
 charts; with 3TWSp.03, 3TWSc.06, 3TWSa.01, 3TWSa.03 and 3SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "gravity-and-friction",
@@ -24,13 +24,16 @@ LESSON = {
              {"sim": "forcemeter",
               "predict": {"ask": "Which will stretch the spring the most?",
                           "opts": [opt("The big book", True), opt("The apple", False), opt("They will all stretch it the same", False)]},
+              "plan": {"ask": "How shall we find out whether a heavier thing pulls harder? Which way is fair?",
+                        "opts": [opt("Hang each thing on the same forcemeter, one at a time, and read the newtons", True), opt("Use a different forcemeter for each thing", False), opt("Hold all three on the hook at once", False)],
+                        "why": "Same forcemeter, one thing at a time. Three at once gives you one number for all three, which answers nothing."},
               "runAsk": "Hang each thing on the hook and read the newtons.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to the <b>spring</b>?",
                            "opts": [opt("The book stretched it most: five newtons. The apple least: two", True), opt("Everything read two newtons", False), opt("The apple stretched it most", False)],
                            "why": "Two, three, five newtons. The heavier the thing, the harder gravity pulls it down."},
-              "conclude": {"ask": "What does a forcemeter measure?",
-                           "opts": [opt("The size of a force, in newtons", True), opt("How long something is", False), opt("How hot something is", False)],
-                           "why": "A forcemeter measures force. The force here was gravity pulling each thing down."}},
+              "conclude": {"ask": "So what did we find out about heavier things?",
+                           "opts": [opt("Gravity pulls harder on a heavier thing, so the spring stretches further", True), opt("The spring stretches the same however heavy the thing is", False), opt("A heavier thing gives a smaller number of newtons", False)],
+                           "why": "Two newtons for the apple, three for the shoe, five for the book. A bigger pull stretches the spring further, and that is what the scale reads."}},
              "A forcemeter measures force in newtons. Gravity is the force pulling things down."),
 
         step("demo", "Which way is down?", "\U0001F30D", "Gravity", ["3Pf.02"],
@@ -59,8 +62,11 @@ LESSON = {
              {"sim": "friction",
               "predict": {"ask": "Where will the block slide <b>furthest</b>?",
                           "opts": [opt("On the ice", True), opt("On the carpet", False), opt("The same on all three", False)]},
+              "plan": {"ask": "How shall we find out which surface makes the most friction? Which way is fair?",
+                        "opts": [opt("The same block and the same push, changing only the surface", True), opt("A heavier block on the carpet and a lighter one on the ice", False), opt("A hard push on the ice and a gentle push on the carpet", False)],
+                        "why": "Only the surface may change. Change the push or the block as well and you cannot say what made the difference."},
               "runAsk": "Press Push on each surface. Watch where the block stops.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to <b>how far it slid</b>?",
                            "opts": [opt("Ice: 9 marks. Wood: 6. Carpet: 2. The rougher the surface, the sooner it stopped", True), opt("It slid the same on all three", False), opt("It slid furthest on the carpet", False)],
                            "why": "Nine, six, two. The rough carpet made the most friction and stopped the block fastest."},
               "conclude": {"ask": "What does this tell us about friction?",
@@ -82,7 +88,15 @@ LESSON = {
                   {"pic": "\U0001FAB5", "label": "smooth wood", "answer": "6", "why": "on the wood it slid six marks."},
                   {"pic": "\U0001F9F6", "label": "rough carpet", "answer": "2", "why": "on the carpet it slid only two marks: the most friction."},
               ],
-              "choices": [{"id": "9", "t": "9 marks", "pic": "9️⃣"}, {"id": "6", "t": "6 marks", "pic": "6️⃣"}, {"id": "2", "t": "2 marks", "pic": "2️⃣"}]},
+              "choices": [{"id": "9", "t": "9 marks", "pic": "9️⃣"}, {"id": "6", "t": "6 marks", "pic": "6️⃣"}, {"id": "2", "t": "2 marks", "pic": "2️⃣"}],
+              "read": [
+                  {"ask": "Read your table. How many marks did the block slide on the smooth wood?",
+                   "opts": [opt("six", True), opt("nine", False), opt("two", False)],
+                   "why": "The smooth wood row says six marks - between the ice and the carpet."},
+                  {"ask": "Ice 9, wood 6, carpet 2. What is the pattern?",
+                   "opts": [opt("the rougher the surface, the shorter the slide", True), opt("the rougher the surface, the longer the slide", False), opt("the surface makes no difference", False)],
+                   "why": "Roughest surface, shortest slide. More friction means the block stops sooner."},
+              ]},
              "Nine, six, two. A table you can compare."),
 
         step("graph", "Draw a bar chart", "\U0001F4CA", "Bar chart", ["3TWSa.04", "3TWSa.02", "3Pf.04"],
@@ -96,7 +110,15 @@ LESSON = {
               "columns": [{"pic": "\U0001F9CA", "label": "ice", "value": 9}, {"pic": "\U0001FAB5", "label": "wood", "value": 6}, {"pic": "\U0001F9F6", "label": "carpet", "value": 2}],
               "pattern": {"ask": "Read the bar chart. What is the pattern?",
                           "opts": [opt("The smoother the surface, the further the block slides", True), opt("The rougher the surface, the further it slides", False), opt("There is no pattern", False)],
-                          "why": "Ice, the smoothest, has the tallest bar. Carpet, the roughest, the shortest. Smoother surface, less friction, longer slide."}},
+                          "why": "Ice, the smoothest, has the tallest bar. Carpet, the roughest, the shortest. Smoother surface, less friction, longer slide."},
+              "read": [
+                  {"ask": "How many more marks did the block slide on the ice than on the carpet?",
+                   "opts": [opt("seven", True), opt("two", False), opt("nine", False)],
+                   "why": "Nine marks on the ice and two on the carpet. Nine take away two leaves seven."},
+                  {"ask": "Which would you choose for a slide in a playground?",
+                   "opts": [opt("a smooth surface, because there is less friction", True), opt("a rough surface, because there is less friction", False), opt("it makes no difference", False)],
+                   "why": "Less friction means you slide further. The chart says smooth surfaces give the longest slide."},
+              ]},
              "A bar chart shows the pattern: smoother surface, longer slide."),
 
         step("context", "Friction at work", "\U0001F6B2", "Useful friction", ["3SIC.02", "3Pf.03"],
@@ -131,8 +153,15 @@ LESSON = {
                  q("What is friction?", "\U0001F9F6", "a force between surfaces that rub, which makes moving harder", ["a kind of magnet", "a pull from the Moon"], "Surfaces rubbing."),
                  q("Which surface gives the most friction?", "\U0001F9F6", "rough carpet", ["smooth ice", "polished wood"], "Rough means more friction."),
                  q("The block slid furthest on the ice because...", "\U0001F9CA", "ice is smooth and gives little friction", ["ice is cold", "ice pushed it"], "Smooth surface, less friction."),
+                 q("A ball rolls and a book does not. Is that because the ball is round?", "\u26BD", "Only partly. Both need a push first.", ["Yes, round things move on their own", "Yes, the shape is the whole reason"],
+                   "Put a ball and a book on a table and neither moves. Being round means the ball keeps going longer once pushed, not that it starts itself."),
+                 q("A rolling ball slows down on flat ground. Is anything pushing it?", "\U0001F3D0", "Yes - the ground and the air push back on it.", ["No, moving things slow down by themselves", "No, it just runs out of go"],
+                   "Something always pushes back. A bicycle slows because the brakes push the wheels; a ball slows because the ground and the air push against it."),
+                 q("What do grams and kilograms measure?", "\u2696\uFE0F", "mass - how much material a thing is made of", ["weight", "the pull of gravity"],
+                   "Weight is the pull of gravity on a thing, and a forcemeter reads it in newtons. Grams and kilograms are mass."),
              ]},
-             "You know your forces."),
+             "You know your forces.",
+             mis=["5.1-m1", "5.1-m2", "5.1-m3"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Pf.01", "3Pf.02", "3Pf.03", "3Pf.04", "3TWSa.02", "3TWSa.04"],
              "Time to show what you know. Tap the answer.",
@@ -153,8 +182,25 @@ LESSON = {
                  q("You want to find out which shoe grips the floor best. Which is the fair test?", "\U0001F45F", "pull each shoe across the same floor with a forcemeter, changing only the shoe", ["pull one shoe on carpet and the other on ice", "guess by looking at the soles"], "Same floor, same forcemeter, and only the shoe changes. The shoe that needs the biggest pull grips best."),
                  q("Why is sand spread on an icy path?", "\u2744\uFE0F", "it makes the path rougher, so there is more friction and less slipping", ["it melts the ice at once", "it makes gravity pull harder"], "A rough surface gives more friction, so shoes grip."),
                  q("Predict: a block slides on sandpaper instead of smooth wood. What will happen, and why?", "\U0001F4E6", "it stops sooner, because sandpaper is rougher and gives more friction", ["it slides further, because sandpaper is rougher", "it slides the same, because it is the same block"], "Rougher surface, more friction, shorter slide."),
-             ]},
-             "That is the whole lesson finished. You know gravity and friction."),
+                 q("You drop a marble and a heavy book together. Which lands first?", "\U0001F34E", "they land together", ["the book, because it is heavier", "the marble, because it is smaller"],
+                   "Gravity pulls them down together. A leaf falls slowly only because it has to push so much air out of the way."),
+                 q("Is there any friction in water?", "\U0001F4A7", "Yes. Slightly wet coins slide LESS easily than dry ones.", ["No, water gets rid of friction", "No, that is why a water slide is fast"],
+                   "A lot of water can cut friction down, but a little water increases it. Water does not remove friction."),
+             ],
+              "support": [
+                 q("What does a forcemeter measure in?", "\U0001F4CF", "newtons", ["centimetres"],
+                   "A forcemeter reads a force in newtons."),
+                 q("Which slides further, on ice or on carpet?", "\U0001F9CA", "on ice", ["on carpet"],
+                   "Smooth ice makes less friction."),
+              ],
+              "extension": [
+                 q("Rub your hands together hard and they get warm. What is doing that?", "\U0001F44F", "friction between your two hands", ["the blood in your fingers", "the air around them"],
+                   "Friction always makes a little heat. That is why a bicycle brake gets hot after a long hill."),
+                 q("An astronaut's mass is the same on the Moon, but their weight is less. How can both be true?", "\u2696\uFE0F", "mass is how much of them there is; weight is the pull of gravity on them", ["they lose mass on the way", "weight and mass mean the same thing"],
+                   "Same astronaut, same material, so the same mass. The Moon pulls more weakly, so the weight is less."),
+              ]},
+             "That is the whole lesson finished. You know gravity and friction.",
+             mis=["5.2-m1", "5.3-m1"]),
     ],
 }
 
@@ -198,6 +244,24 @@ LESSON["words"] = [
          ["The bar chart shows ice was the longest slide.", "Draw a bar chart of the distances."]),
     word("pattern", "\U0001F4C8", "Something that happens the same way every time in the results.",
          ["The pattern is: smoother surface, longer slide.", "Look for a pattern in the bar chart."]),
+    word("weight", "\u2696\uFE0F", "The pull of gravity on a thing. It is measured in newtons.",
+         ["The forcemeter reads the weight in newtons.", "Weight is a force; grams measure mass."]),
+    word("grip", "\U0001F45F", "How well a surface holds on instead of slipping.",
+         ["A rubber sole grips the floor.", "Friction gives a shoe its grip."]),
+    word("iron", "\U0001F529", "A strong metal. It is one of the few metals a magnet pulls.",
+         ["A nail is made of iron.", "Iron is magnetic; copper is not."]),
+]
+
+LESSON["cando"] = [
+    cando("I can measure a force with a forcemeter, in newtons.", "3Pf.01"),
+    cando("I can explain what gravity does.", "3Pf.02"),
+    cando("I can say where friction happens and what it does.", "3Pf.03"),
+    cando("I can explain why a rough surface makes more friction than a smooth one.", "3Pf.04"),
+    cando("I can make a bar chart of my results and read it.", "3TWSa.04"),
+    cando("I can describe a pattern in my results.", "3TWSa.02"),
+    cando("I can make a conclusion and link it back to the question.", "3TWSa.03"),
+    cando("I can choose the right equipment and use it properly.", "3TWSc.02"),
+    cando("I can explain how science thinking about forces has changed.", "3SIC.02"),
 ]
 
 LESSON["home"] = [

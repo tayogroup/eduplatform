@@ -5,7 +5,7 @@
 magnets interact (attract and repel); 3Pe.03 some materials are magnetic and
 many are not; with 3TWSp.03, 3TWSa.01, 3TWSa.03, 3TWSc.06 and 3SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 # the paperclip count at each part of a bar magnet, as a table and as a bar chart
 CLIP_TABLE = ('<svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#0E2434"/>'
@@ -52,8 +52,11 @@ LESSON = {
              {"sim": "magnetPoles",
               "predict": {"ask": "First, north meets south. Then you flip one magnet, so a <b>north</b> pole meets another <b>north</b> pole. What will happen then?",
                           "opts": [opt("They will push apart", True), opt("They will snap together", False), opt("Nothing will happen", False)]},
+              "plan": {"ask": "How shall we find out what the poles do? Which way is fair?",
+                        "opts": [opt("The same two magnets, brought together the same way, turning only one of them round", True), opt("Two different magnets each time", False), opt("One magnet and a steel paperclip", False)],
+                        "why": "Turning one magnet round changes ONE thing: which poles meet. A paperclip has no poles, so it cannot show you this."},
               "runAsk": "Bring them together: north meets south. Then flip the right magnet, so north meets north, and bring them together again.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened when you turned a magnet round?",
                            "opts": [opt("North to south snapped together; north to north pushed apart", True), opt("They stuck together both ways", False), opt("They pushed apart both ways", False)],
                            "why": "Unlike poles attract. Like poles repel. Flip a magnet and the pull becomes a push."},
               "conclude": {"ask": "What is the rule?",
@@ -97,7 +100,15 @@ LESSON = {
                   {"pic": icon("foil"), "label": "aluminium foil", "answer": "no", "why": "the foil did nothing. Aluminium is not magnetic."},
                   {"pic": "✂️", "label": "steel scissors", "answer": "yes", "why": "the steel scissors were pulled to the magnet."},
               ],
-              "choices": [{"id": "yes", "t": "magnetic", "pic": "\U0001F9F2"}, {"id": "no", "t": "not magnetic", "pic": "\U0001F6AB"}]},
+              "choices": [{"id": "yes", "t": "magnetic", "pic": "\U0001F9F2"}, {"id": "no", "t": "not magnetic", "pic": "\U0001F6AB"}],
+              "read": [
+                  {"ask": "Read your table. How many of the four materials were magnetic?",
+                   "opts": [opt("two", True), opt("all four", False), opt("none of them", False)],
+                   "why": "The iron nail and the steel scissors say yes. The copper wire and the aluminium foil say no. Two of four."},
+                  {"ask": "Look at the two magnetic rows. What are those two made of?",
+                   "opts": [opt("iron and steel", True), opt("metal of any kind", False), opt("the two hardest materials", False)],
+                   "why": "Copper and aluminium are metals too, and the magnet ignored both. Only a few metals are magnetic, and iron and steel are the two you meet most."},
+              ]},
              "Iron and steel: yes. Copper and aluminium: no."),
 
         step("context", "Magnets at work", "\U0001F9ED", "Useful magnets", ["3SIC.02", "3Pe.02", "3Pe.03"],
@@ -131,8 +142,13 @@ LESSON = {
                  q("South pole meets south pole. They...", "\U0001F9F2", "repel: push apart", ["attract", "melt"], "Like poles repel."),
                  q("Which material is magnetic?", "\U0001F529", "iron", ["copper", "plastic", "wood"], "Iron and steel."),
                  q("Is every metal magnetic?", "➰", "no; copper and aluminium are not", ["yes", "only shiny ones"], "The copper wire and the foil did nothing."),
+                 q("How many poles does a round magnet have?", "\U0001F9F2", "two, like every magnet", ["one", "none - it is round"],
+                   "Bring a labelled bar magnet up to a round one and you can find its north end and its south end."),
+                 q("Are all metals magnetic?", "\U0001F9F2", "No. Only a few, like iron and steel.", ["Yes, all metals are magnetic", "Yes, if they are shiny"],
+                   "Test an aluminium can, a copper coin and a gold ring: the magnet ignores all three."),
              ]},
-             "You know your magnets."),
+             "You know your magnets.",
+             mis=["5.4-m1", "5.5-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Pe.01", "3Pe.02", "3Pe.03", "3SIC.02"],
              "Time to show what you know. Tap the answer.",
@@ -153,7 +169,19 @@ LESSON = {
                  q("You want to know which of two magnets is stronger. Which is the fair test?", "\U0001F4CE", "count how many paperclips each one picks up from the same pot", ["see which magnet is bigger", "use a different kind of paperclip for each magnet"], "Same paperclips, same test, and only the magnet changes. Then count and compare."),
                  q("If a magnet picks up a steel paperclip but not a piece of copper wire, what does that show?", "\U0001F9F2", "steel is magnetic and copper is not", ["the wire is too heavy to lift", "all metals are magnetic"], "Only some metals are magnetic. Copper is not one of them."),
                  q("Why is a magnet used to sort steel cans from aluminium cans for recycling?", "\U0001F96B", "steel is magnetic, so the magnet pulls out only the steel cans", ["aluminium is magnetic, so it sticks", "the magnet makes the cans lighter"], "Steel is attracted to a magnet. Aluminium is not."),
-             ]},
+             ],
+              "support": [
+                 q("Does a magnet pull an iron nail?", "\U0001F529", "Yes", ["No"],
+                   "Iron is magnetic."),
+                 q("Does a magnet pull a plastic ruler?", "\U0001F4D0", "No", ["Yes"],
+                   "Plastic is not magnetic."),
+              ],
+              "extension": [
+                 q("A magnet picks up a paperclip, and that paperclip then picks up a second one. How?", "\U0001F587\uFE0F", "the first paperclip became a magnet while the magnet was touching it", ["the magnet is unusually strong", "paperclips are always magnetic to each other"],
+                   "Iron and steel become magnets themselves while a magnet is touching them. Take the magnet away and the chain falls apart."),
+                 q("A magnet works through a sheet of paper. Will it work through a thick book?", "\U0001F4D5", "No - the pull gets weaker the further away it is", ["Yes, a magnet works through anything", "No, a magnet never works through anything"],
+                   "A magnet's pull reaches through materials that are not magnetic, and it fades fast with distance. A sheet of paper is thin enough; a book is not."),
+              ]},
              "That is the whole lesson finished. You know how magnets behave."),
     ],
 }
@@ -198,6 +226,23 @@ LESSON["words"] = [
          ["A nail is magnetic.", "Copper is not magnetic."]),
     word("compass", "\U0001F9ED", "A tool with a magnetic needle that points north.",
          ["Use a compass to find north.", "A compass needle is a tiny magnet."]),
+    word("south pole", "\U0001F9F2", "The other end of a magnet, often coloured blue.",
+         ["The south pole is at the other end.", "A north pole and a south pole attract."]),
+    word("aluminium", "\U0001F944", "A very light metal. It is NOT magnetic.",
+         ["Foil is made of aluminium.", "A magnet does nothing to aluminium."]),
+    word("iron", "\U0001F529", "A strong metal that a magnet pulls.",
+         ["An iron nail is magnetic.", "Steel is made from iron, so steel is magnetic too."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe the poles of a magnet and say what they do.", "3Pe.01"),
+    cando("I can say what happens when two magnets meet.", "3Pe.02"),
+    cando("I can name magnetic and non-magnetic materials.", "3Pe.03"),
+    cando("I can find a pattern in my results.", "3TWSa.02"),
+    cando("I can make a bar chart and read it.", "3TWSa.04"),
+    cando("I can use my results to say whether my prediction was right.", "3TWSa.01"),
+    cando("I can record my test in a table.", "3TWSc.06"),
+    cando("I can explain how a magnet makes something work.", "3SIC.02"),
 ]
 
 LESSON["home"] = [

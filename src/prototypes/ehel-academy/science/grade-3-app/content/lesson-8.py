@@ -7,7 +7,7 @@ physically separated; 3Cp.02 materials keep their properties in a mixture;
 solid from a liquid; 3Cc.01 a dissolved solid is still there; 3TWSp.04
 risks and staying safe; with 3TWSc.04, 3TWSc.06, 3TWSa.03 and 3TWSc.01.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "mixtures",
@@ -40,6 +40,9 @@ LESSON = {
              {"sim": "separate",
               "predict": {"ask": "You stir salt into water and it disappears. Is the salt still there?",
                           "opts": [opt("Yes, in pieces too small to see", True), opt("No, it has gone for ever", False), opt("It turned into water", False)]},
+              "plan": {"ask": "How shall we find out whether the salt is still in the water? Which way is fair?",
+                        "opts": [opt("Let the water dry up and see what is left behind", True), opt("Look very hard at the water", False), opt("Pour it through a filter and see if the filter catches it", False)],
+                        "why": "Drying the water off leaves the salt where you can see it. A filter lets dissolved salt straight through, so it tells you nothing."},
               "runAsk": "Press each button: sieve, magnet, filter, then stir the salt in. In real life, taste only with a grown-up, and only kitchen salt in drinking water.",
               "happened": {"ask": "What happened with the salt?",
                            "opts": [opt("It disappeared into the water, but the water tasted salty: it was still there", True), opt("It sank to the bottom", False), opt("The water went solid", False)],
@@ -85,7 +88,15 @@ LESSON = {
                   {"pic": "\U0001F36C", "label": "sugar", "answer": "yes", "why": "sugar dissolves. The water tastes sweet."},
                   {"pic": "\U0001FAA8", "label": "pebbles", "answer": "no", "why": "pebbles sink and do not change."},
               ],
-              "choices": [{"id": "yes", "t": "dissolves", "pic": "\U0001F4A7"}, {"id": "no", "t": "does not dissolve", "pic": "\U0001FAA8"}]},
+              "choices": [{"id": "yes", "t": "dissolves", "pic": "\U0001F4A7"}, {"id": "no", "t": "does not dissolve", "pic": "\U0001FAA8"}],
+              "read": [
+                  {"ask": "Read your table. How many of the four solids dissolved?",
+                   "opts": [opt("two", True), opt("one", False), opt("all four", False)],
+                   "why": "Salt and sugar say yes; sand and pebbles say no. Two of four."},
+                  {"ask": "Look at the two that dissolved and the two that did not. What do you notice?",
+                   "opts": [opt("some solids dissolve in water and some do not - it depends on the solid", True), opt("the ones that dissolved were the smallest pieces", False), opt("the ones that dissolved were the heaviest", False)],
+                   "why": "Salt and sugar are soluble; sand and pebbles are insoluble. Grinding sand finer would not make it dissolve - dissolving is a property of the solid itself."},
+              ]},
              "Salt and sugar dissolve. Sand and pebbles do not. Dissolving is still mixing."),
 
         step("sort", "Safe, or risky?", "⚠️", "Safe scientist", ["3TWSp.04", "3TWSc.04"],
@@ -123,8 +134,17 @@ LESSON = {
                  q("Which tool separates sand from water?", "\U0001F4A7", "a filter", ["a magnet", "a ruler"], "The sand stays in the paper."),
                  q("Which tool separates iron filings from sand?", "\U0001F9F2", "a magnet", ["a sieve", "a filter"], "Only the iron is magnetic."),
                  q("Salt dissolves in water. Where is the salt?", "\U0001F9C2", "still in the water, in pieces too small to see", ["gone", "on the bottom"], "Taste it: salty."),
+                 q("Which would separate rice from sand?", "\U0001F944", "a sieve, with holes the rice cannot pass through", ["a funnel", "a measuring cylinder"],
+                   "A funnel only guides things into a narrow neck and a cylinder only measures. To separate, you need something that holds one material back."),
+                 q("You stir sugar into water until you cannot see it. Where has it gone?", "\U0001F944", "nowhere - it is still there, spread out too small to see", ["it has disappeared", "it has turned into water"],
+                   "Taste it and the sugar is there. Let the water dry up and the sugar is left behind."),
+                 q("Can you get dissolved salt out of water with a paper filter?", "\u2615", "No. The water that comes through is still salty.", ["Yes, the filter catches the salt", "Yes, if you filter it twice"],
+                   "A filter catches pieces you can see. Dissolved salt goes straight through - but let the water dry and the salt is left behind."),
+                 q("The water in the glass looks perfectly clear. Is it safe to drink?", "\U0001F6B0", "Not necessarily. Some things in water are too small to see.", ["Yes, clear water is always safe", "Yes, if it has no smell"],
+                   "Tiny living things can live in water that looks clean, and some make people ill. Only drink water a grown-up says is safe."),
              ]},
-             "You know your mixtures."),
+             "You know your mixtures.",
+             mis=["2.2-m1", "2.3-m1", "2.4-m1", "2.4-m2"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["3Cm.02", "3Cp.02", "3Cp.03", "3Cp.04", "3Cc.01", "3TWSp.04"],
              "Time to show what you know. Tap the answer.",
@@ -145,7 +165,19 @@ LESSON = {
                  q("Why can a filter not take the salt back out of salt water?", "\U0001F9C2", "the dissolved salt is in pieces small enough to go through the paper", ["the salt is too heavy", "the salt has turned into water"], "Dissolved salt spreads out in pieces too small to see, so it goes through the filter with the water."),
                  q("Iron filings, sand and water are all mixed. Which tools would you use if you wanted all three back?", "\U0001F9F2", "a magnet for the iron and a filter for the sand", ["a sieve for the water and a magnet for the sand", "a filter for the iron and a magnet for the water"], "The magnet pulls out the iron. The filter keeps the sand and lets the water through."),
                  q("Why does the sand stay in the filter paper while the water goes through?", "\U0001F4A7", "the sand grains are too big for the tiny holes in the paper", ["the sand is magnetic", "the water dissolves the paper"], "Water passes through the tiny holes. The grains of sand cannot."),
-             ]},
+             ],
+              "support": [
+                 q("Does salt dissolve in water?", "\U0001F9C2", "Yes", ["No"],
+                   "Salt is soluble: it dissolves."),
+                 q("Does sand dissolve in water?", "\U0001F3D6\uFE0F", "No", ["Yes"],
+                   "Sand is insoluble. It sinks and stays sand."),
+              ],
+              "extension": [
+                 q("You have a mixture of sand and salt in water. How would you get BOTH back?", "\u2615", "filter out the sand, then let the water dry to leave the salt", ["filter it once and you have both", "let it all dry and the sand and salt will separate themselves"],
+                   "Two separations, in order: the filter catches the insoluble sand, and drying leaves the soluble salt behind."),
+                 q("Stirring makes sugar dissolve faster. Does stirring make MORE of it dissolve?", "\U0001F944", "No - it dissolves sooner, not more", ["Yes, stirring dissolves more", "Yes, if you stir hard enough"],
+                   "Stirring speeds it up. How much will dissolve depends on the water, not on the spoon."),
+              ]},
              "That is the whole lesson finished. You can separate a mixture and stay safe doing it."),
     ],
 }
@@ -190,6 +222,23 @@ LESSON["words"] = [
          ["Iron filings are magnetic.", "Sand is not magnetic, so the magnet leaves it."]),
     word("risk", "⚠️", "Something that could hurt someone.",
          ["A wet floor is a risk.", "Spot the risk and remove it."]),
+    word("soluble", "\U0001F9C2", "It dissolves in a liquid.",
+         ["Salt is soluble in water.", "Sugar is soluble too."]),
+    word("insoluble", "\U0001F3D6\uFE0F", "It does NOT dissolve in a liquid.",
+         ["Sand is insoluble in water.", "An insoluble solid can be caught in a filter."]),
+    word("funnel", "\U0001F6B0", "A cone that guides a liquid into a narrow opening. It does not separate anything by itself.",
+         ["A funnel holds the filter paper.", "A funnel only guides the liquid; the paper does the separating."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say what a mixture is.", "3Cm.02"),
+    cando("I can describe how to separate a mixture of two solids.", "3Cp.03"),
+    cando("I can describe how to separate an insoluble solid from a liquid.", "3Cp.04"),
+    cando("I know that a dissolved solid is still there.", "3Cc.01"),
+    cando("I can name two materials that dissolve in water and one that does not.", "3Cc.01"),
+    cando("I can choose the right equipment to separate a mixture.", "3Cp.02"),
+    cando("I can say how to stay safe in an investigation.", "3TWSp.04"),
+    cando("I can record what I found in a table.", "3TWSc.06"),
 ]
 
 LESSON["home"] = [

@@ -440,31 +440,78 @@
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

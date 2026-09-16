@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1934,7 +1951,8 @@ textarea.write {
     "Are"
    ],
    "a": "Does",
-   "why": "Your sister is she, and she goes with does. Do is for I, you, we and they. Is and are do not go before live."
+   "why": "Your sister is she, and she goes with does. Do is for I, you, we and they. Is and are do not go before live.",
+   "mode": "type"
   },
   {
    "q": "Which question has no mistake?",
@@ -1945,7 +1963,8 @@ textarea.write {
     "Where do he work?"
    ],
    "a": "Where does he work?",
-   "why": "Does takes the s, so work has none. Where he works? has no does. He goes with does, not do."
+   "why": "Does takes the s, so work has none. Where he works? has no does. He goes with does, not do.",
+   "mode": "choose"
   },
   {
    "q": "Do you speak English? Yes, ___.",
@@ -1956,7 +1975,8 @@ textarea.write {
     "I do"
    ],
    "a": "I do",
-   "why": "The question starts with do, so the answer has do. I am answers a question with are. You do is about the other person. I speak needs more: I speak English."
+   "why": "The question starts with do, so the answer has do. I am answers a question with are. You do is about the other person. I speak needs more: I speak English.",
+   "mode": "type"
   },
   {
    "q": "Does Omar work at night? No, ___.",
@@ -1967,7 +1987,8 @@ textarea.write {
     "I don't"
    ],
    "a": "he doesn't",
-   "why": "Omar is he, and he goes with does. He don't is wrong: don't is for I, you, we and they. Isn't answers a question with is. I don't is about you."
+   "why": "Omar is he, and he goes with does. He don't is wrong: don't is for I, you, we and they. Isn't answers a question with is. I don't is about you.",
+   "mode": "type"
   },
   {
    "q": "Is she a teacher? Yes, ___.",
@@ -1978,7 +1999,8 @@ textarea.write {
     "is she"
    ],
    "a": "she is",
-   "why": "The question starts with is, so the answer has is. She does answers a does question. She do is wrong. Is she is a question, not an answer."
+   "why": "The question starts with is, so the answer has is. She does answers a does question. She do is wrong. Is she is a question, not an answer.",
+   "mode": "type"
   },
   {
    "q": "She does not work on Sunday. Which is the short form?",
@@ -1989,7 +2011,8 @@ textarea.write {
     "She doesn't work on Sunday."
    ],
    "a": "She doesn't work on Sunday.",
-   "why": "Take the o out of not and put the mark there: doesn't. Does'nt has the mark in the wrong place. She goes with does, not do. Isn't is is not, and it does not go with work."
+   "why": "Take the o out of not and put the mark there: doesn't. Does'nt has the mark in the wrong place. She goes with does, not do. Isn't is is not, and it does not go with work.",
+   "mode": "choose"
   },
   {
    "q": "I am not a farmer. Which is the short form?",
@@ -2000,7 +2023,8 @@ textarea.write {
     "Im not a farmer."
    ],
    "a": "I'm not a farmer.",
-   "why": "I am makes I'm. Am not has no short form, so write I'm not. I don't needs a word like live or work. Im has no mark."
+   "why": "I am makes I'm. Am not has no short form, so write I'm not. I don't needs a word like live or work. Im has no mark.",
+   "mode": "choose"
   },
   {
    "q": "You want the letters of a new word. What do you ask?",
@@ -2011,7 +2035,8 @@ textarea.write {
     "How are you?"
    ],
    "a": "How do you spell that?",
-   "why": "How do you spell that? asks for the letters. You means any person here. How you spell that? has no do. Where asks for a place. How are you? asks about the person."
+   "why": "How do you spell that? asks for the letters. You means any person here. How you spell that? has no do. Where asks for a place. How are you? asks about the person.",
+   "mode": "choose"
   },
   {
    "q": "When do you work?",
@@ -2022,7 +2047,8 @@ textarea.write {
     "A driver."
    ],
    "a": "On Monday.",
-   "why": "When asks for a time or a day: On Monday. In a shop answers where. For my job answers why. A driver answers What is your job?"
+   "why": "When asks for a time or a day: On Monday. In a shop answers where. For my job answers why. A driver answers What is your job?",
+   "mode": "choose"
   },
   {
    "q": "Why do you study English?",
@@ -2033,7 +2059,8 @@ textarea.write {
     "In a village."
    ],
    "a": "For my job.",
-   "why": "Why asks for a reason: For my job. At night answers when. Yes, I do answers a do question. In a village answers where."
+   "why": "Why asks for a reason: For my job. At night answers when. Yes, I do answers a do question. In a village answers where.",
+   "mode": "choose"
   },
   {
    "q": "I have a small shop. I work in it. I'm a ___.",
@@ -2044,7 +2071,8 @@ textarea.write {
     "shopkeeper"
    ],
    "a": "shopkeeper",
-   "why": "A shopkeeper has a shop and works in it. A farmer grows food. A police officer helps people on the street. A neighbour lives near you. It is not a job."
+   "why": "A shopkeeper has a shop and works in it. A farmer grows food. A police officer helps people on the street. A neighbour lives near you. It is not a job.",
+   "mode": "choose"
   },
   {
    "q": "It is your family name. Which word is it?",
@@ -2055,7 +2083,8 @@ textarea.write {
     "number"
    ],
    "a": "surname",
-   "why": "Your surname is your family name, like Dale. Your address is a number and a street. A country is a big land. A number is a word like ten."
+   "why": "Your surname is your family name, like Dale. Your address is a number and a street. A country is a big land. A number is a word like ten.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3482,31 +3511,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

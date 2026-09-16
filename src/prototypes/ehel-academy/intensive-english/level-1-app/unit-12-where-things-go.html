@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2058,7 +2075,8 @@ textarea.write {
     "to"
    ],
    "a": "in front of",
-   "why": "First in the line: in front of. Behind is the other way: Dan is behind Eva. Between needs two people, one on each side. To says where you go."
+   "why": "First in the line: in front of. Behind is the other way: Dan is behind Eva. Between needs two people, one on each side. To says where you go.",
+   "mode": "choose"
   },
   {
    "q": "The café is ___ the bank and the chemist.",
@@ -2069,7 +2087,8 @@ textarea.write {
     "to"
    ],
    "a": "between",
-   "why": "One place on each side, with and: between. In front needs of after it. Behind has no of after it. To says where you go."
+   "why": "One place on each side, with and: between. In front needs of after it. Behind has no of after it. To says where you go.",
+   "mode": "type"
   },
   {
    "q": "Which sentence is right?",
@@ -2080,7 +2099,8 @@ textarea.write {
     "The bus is in front of the bank."
    ],
    "a": "The bus is in front of the bank.",
-   "why": "In front of is three words, and the line needs is. Line 1 has no of. Line 2 has to, not of. Line 3 has no is."
+   "why": "In front of is three words, and the line needs is. Line 1 has no of. Line 2 has to, not of. Line 3 has no is.",
+   "mode": "choose"
   },
   {
    "q": "I walk ___ the post office.",
@@ -2091,7 +2111,8 @@ textarea.write {
     "with"
    ],
    "a": "to",
-   "why": "Walk: you are going there, so to. At: you are there. I am at the post office. In: inside a thing. With: a person, or a thing you use."
+   "why": "Walk: you are going there, so to. At: you are there. I am at the post office. In: inside a thing. With: a person, or a thing you use.",
+   "mode": "type"
   },
   {
    "q": "You have a letter to send. Where do you go?",
@@ -2102,7 +2123,8 @@ textarea.write {
     "to the post office"
    ],
    "a": "to the post office",
-   "why": "You send letters and boxes at the post office. At the cinema you see a film. At the library you borrow books. At the market you get fruit and fish."
+   "why": "You send letters and boxes at the post office. At the cinema you see a film. At the library you borrow books. At the market you get fruit and fish.",
+   "mode": "choose"
   },
   {
    "q": "I cut the bread ___ a knife.",
@@ -2113,7 +2135,8 @@ textarea.write {
     "at"
    ],
    "a": "with",
-   "why": "You use the knife, so with. For: the person who gets the bread. To and at: places."
+   "why": "You use the knife, so with. For: the person who gets the bread. To and at: places.",
+   "mode": "type"
   },
   {
    "q": "This present is ___ my sister.",
@@ -2124,7 +2147,8 @@ textarea.write {
     "behind"
    ],
    "a": "for",
-   "why": "My sister gets the present, so for. With: a thing you use, or a friend with you. At: a place. Behind: a place word."
+   "why": "My sister gets the present, so for. With: a thing you use, or a friend with you. At: a place. Behind: a place word.",
+   "mode": "type"
   },
   {
    "q": "Your hands are wet. What do you use?",
@@ -2135,7 +2159,8 @@ textarea.write {
     "a brush"
    ],
    "a": "a towel",
-   "why": "A towel makes wet hands dry. You wash with soap, and then your hands are wet again. Scissors cut. A brush cleans a floor."
+   "why": "A towel makes wet hands dry. You wash with soap, and then your hands are wet again. Scissors cut. A brush cleans a floor.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is right?",
@@ -2146,7 +2171,8 @@ textarea.write {
     "I tired."
    ],
    "a": "I feel tired.",
-   "why": "Use I feel or I'm, not both. I'm feel has both. We do not say I have tired: say I'm tired. I tired has no am and no feel."
+   "why": "Use I feel or I'm, not both. I'm feel has both. We do not say I have tired: say I'm tired. I tired has no am and no feel.",
+   "mode": "choose"
   },
   {
    "q": "Tomas didn't eat today. He is ___.",
@@ -2157,7 +2183,8 @@ textarea.write {
     "hungry"
    ],
    "a": "hungry",
-   "why": "He didn't eat, so he wants to eat: hungry. Thirsty is when you want to drink. Tired is when you want to sleep. Cold is when you are not hot."
+   "why": "He didn't eat, so he wants to eat: hungry. Thirsty is when you want to drink. Tired is when you want to sleep. Cold is when you are not hot.",
+   "mode": "choose"
   },
   {
    "q": "At the market, there is a long queue. You wait at the end of it, behind a man. What is a queue?",
@@ -2168,7 +2195,8 @@ textarea.write {
     "the price of fruit"
    ],
    "a": "people in a line, waiting",
-   "why": "You wait behind a man, at the end. It is a line of people. A shop and a building have no end to wait at. A price is a number."
+   "why": "You wait behind a man, at the end. It is a line of people. A shop and a building have no end to wait at. A price is a number.",
+   "mode": "choose"
   },
   {
    "q": "A sign says: Please wait behind the yellow line. Where do you stand?",
@@ -2179,7 +2207,8 @@ textarea.write {
     "Between two lines."
    ],
    "a": "Behind the line.",
-   "why": "The sign says behind, so the line is in front of you. In front of the line is the wrong side. On the line is not behind it. There is one line, not two."
+   "why": "The sign says behind, so the line is in front of you. In front of the line is the wrong side. On the line is not behind it. There is one line, not two.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3605,31 +3634,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

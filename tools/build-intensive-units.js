@@ -80,6 +80,7 @@ if (plan.levels.some((level) => level.eslFramework) && !eslIndex.size) {
 // words per stage the first three do.
 const REGISTER_CEILING = { 1: 12, 2: 15, 3: 18, 4: 21, 5: 24, 6: 27 };
 const registerReports = [];
+const quizMixReports = [];
 
 // No per-item audio descriptors. This course narrates through the shared
 // voiceButton, which looks a clip up by cyrb53 of the text it is about to
@@ -365,16 +366,60 @@ function buildUnit(authored) {
     };
   });
 
+  // --- how each item is ANSWERED -------------------------------------------
+  // Every quiz item was "Multiple choice": 480 of 480 across the two levels.
+  // The variety lived in `activities` (gap fill, word order, error correction)
+  // and never reached the graded check, so a learner PRACTISED production and
+  // was ASSESSED only on recognition.
+  //
+  // An item can be answered by typing when its stem has a gap AND its options
+  // are short. The four options stay on screen as a word bank, so the answer is
+  // still unambiguous — what changes is that the learner must pick it and spell
+  // it rather than tap a rendered sentence. Items whose stem needs the options
+  // to mean anything ("Which sentence is right?") cannot become anything else,
+  // and are left alone rather than forced.
+  //
+  // Capped at 4 per unit and spread through the quiz: a unit that is 11 of 12
+  // typed has swapped one monoculture for another. An authored `mode` on the
+  // item beats this rule, so an author can always overrule the derivation.
+  const typeable = (item) => /_{2,}/.test(String(item.q || ""))
+    && (item.options || []).every((option) => {
+      const text = String(option).trim();
+      return text.length <= 18 && text.split(/\s+/).length <= 2;
+    });
+  const typedIndexes = new Set();
+  {
+    const candidates = (authored.quizzes || [])
+      .map((item, n) => ({ item, n }))
+      .filter(({ item }) => typeable(item));
+    const take = Math.min(4, candidates.length);
+    for (let k = 0; k < take; k += 1) {
+      typedIndexes.add(candidates[Math.floor((k * candidates.length) / take)].n);
+    }
+  }
+
   const quizzes = list("quizzes", "q", (item, n, qid) => {
     if (!item.options.includes(item.a)) problems.push(`${where}: quiz ${n + 1} answer is not among its options.`);
     if (new Set(item.options).size !== item.options.length) problems.push(`${where}: quiz ${n + 1} has duplicate options.`);
     return {
       quizId: `${uid}-quiz-v1`, questionId: qid, quizTitle: `${authored.title} — checkpoint`,
-      questionType: "Multiple choice", question: item.q, options: item.options.join(" | "),
+      questionType: (item.mode || (typedIndexes.has(n) ? "type" : "choose")) === "type"
+        ? "Type the answer" : "Multiple choice",
+      // The page reads this; `questionType` above is the human-readable twin.
+      answerMode: (item.mode || (typedIndexes.has(n) ? "type" : "choose")) === "type" ? "type" : "choose",
+      question: item.q, options: item.options.join(" | "),
       correctAnswer: item.a, explanation: item.why, marks: 1, difficulty: item.difficulty || "Core",
       outcomeId: outcomeAt((item.outcome || 1) - 1),
     };
   });
+  // A quiz that is all one interaction assesses one thing. This is a REPORT,
+  // not a gate: six units have no item whose stem carries a gap, and forcing
+  // one there would mean rewriting good items to fit a quota.
+  if (quizzes.length) {
+    const typed = quizzes.filter((q) => q.answerMode === "type").length;
+    quizMixReports.push({ where, typed, total: quizzes.length });
+  }
+
   // Answer position must be distributed, or a learner scores by never reading.
   const positions = (authored.quizzes || []).map((item) => item.options.indexOf(item.a));
   for (const slot of new Set(positions)) {
@@ -729,6 +774,14 @@ for (const level of plan.levels.filter((item) => item.eslFramework)) {
   const complete = onDisk.length >= level.units.length;
   console.log(`\nlevel ${level.number}: ${expected.length - missing.length}/${expected.length} Cambridge ${level.eslFramework} objectives of stages ${stages.join(", ")} cited, across ${onDisk.length}/${level.units.length} built units`);
   if (complete && missing.length) problems.push(`L${level.number}: every unit is built and ${missing.length} ${level.eslFramework} objective(s) are still uncited: ${missing.join(", ")}.`);
+}
+
+if (quizMixReports.length) {
+  const typed = quizMixReports.reduce((n, r) => n + r.typed, 0);
+  const total = quizMixReports.reduce((n, r) => n + r.total, 0);
+  const none = quizMixReports.filter((r) => r.typed === 0).map((r) => r.where);
+  console.log(`\nquiz interaction mix: ${typed} typed / ${total} items (${Math.round((typed / total) * 100)}% typed, the rest multiple choice)`);
+  if (none.length) console.log(`  all multiple choice (no stem carries a gap): ${none.join(", ")}`);
 }
 
 if (registerReports.length) {

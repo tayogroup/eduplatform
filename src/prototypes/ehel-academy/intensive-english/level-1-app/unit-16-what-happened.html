@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1957,7 +1974,8 @@ textarea.write {
     "leaves"
    ],
    "a": "left",
-   "why": "The story is in the past. Every word is in the past: got up, had, left. Leave and leaves are now. Leaving is not a past word."
+   "why": "The story is in the past. Every word is in the past: got up, had, left. Leave and leaves are now. Leaving is not a past word.",
+   "mode": "type"
   },
   {
    "q": "Which line is in the right order for a morning?",
@@ -1968,7 +1986,8 @@ textarea.write {
     "Got up, I had breakfast and left."
    ],
    "a": "I got up, had breakfast and left.",
-   "why": "First you get up, then breakfast, then you leave. The first two are in the wrong order. The last one needs I at the start."
+   "why": "First you get up, then breakfast, then you leave. The first two are in the wrong order. The last one needs I at the start.",
+   "mode": "choose"
   },
   {
    "q": "They ___ at the party last night.",
@@ -1979,7 +1998,8 @@ textarea.write {
     "were"
    ],
    "a": "were",
-   "why": "They takes were in the past. Was is for I, he, she and it. Are is now, not last night. Be does not go after they here."
+   "why": "They takes were in the past. Was is for I, he, she and it. Are is now, not last night. Be does not go after they here.",
+   "mode": "type"
   },
   {
    "q": "I ___ it was Monday, but it was Sunday!",
@@ -1990,7 +2010,8 @@ textarea.write {
     "thinks"
    ],
    "a": "thought",
-   "why": "Think changes in the past: thought. Thinked adds -ed, and this word does not take -ed. Think and thinks are now."
+   "why": "Think changes in the past: thought. Thinked adds -ed, and this word does not take -ed. Think and thinks are now.",
+   "mode": "choose"
   },
   {
    "q": "Which word is the past of catch?",
@@ -2001,7 +2022,8 @@ textarea.write {
     "caught"
    ],
    "a": "caught",
-   "why": "Catch, caught: it changes. Catched adds -ed. Cought has the wrong letters: it is a-u-g-h-t. Catch is now."
+   "why": "Catch, caught: it changes. Catched adds -ed. Cought has the wrong letters: it is a-u-g-h-t. Catch is now.",
+   "mode": "choose"
   },
   {
    "q": "Lunch was at one. You called at three. You called ___ lunch.",
@@ -2012,7 +2034,8 @@ textarea.write {
     "last"
    ],
    "a": "after",
-   "why": "Three o'clock comes when lunch is finished, so after. Before is the time up to lunch. Ago goes at the end: two days ago. Last goes with night or week."
+   "why": "Three o'clock comes when lunch is finished, so after. Before is the time up to lunch. Ago goes at the end: two days ago. Last goes with night or week.",
+   "mode": "type"
   },
   {
    "q": "You were late. The bus left, and you were not on it. You ___ the bus.",
@@ -2023,7 +2046,8 @@ textarea.write {
     "broke"
    ],
    "a": "missed",
-   "why": "Missed: you were late, and the bus left. Caught means you got on it. You drop or break a cup, not a bus."
+   "why": "Missed: you were late, and the bus left. Caught means you got on it. You drop or break a cup, not a bus.",
+   "mode": "type"
   },
   {
    "q": "I heard the wind ___.",
@@ -2034,7 +2058,8 @@ textarea.write {
     "night ago"
    ],
    "a": "last night",
-   "why": "Say last night. Yesterday night is not right, but yesterday morning is. Last takes no in before it. Ago needs a number: two days ago."
+   "why": "Say last night. Yesterday night is not right, but yesterday morning is. Last takes no in before it. Ago needs a number: two days ago.",
+   "mode": "choose"
   },
   {
    "q": "Today is Friday. Wednesday was ___.",
@@ -2045,7 +2070,8 @@ textarea.write {
     "two days ago"
    ],
    "a": "two days ago",
-   "why": "Wednesday is two days before Friday: two days ago. In two days is after now, not before. Ago comes at the end. Last two days is not a time word."
+   "why": "Wednesday is two days before Friday: two days ago. In two days is after now, not before. Ago comes at the end. Last two days is not a time word.",
+   "mode": "choose"
   },
   {
    "q": "I saw Dan and gave ___ the keys.",
@@ -2056,7 +2082,8 @@ textarea.write {
     "them"
    ],
    "a": "him",
-   "why": "After the doing word, he changes to him: gave him the keys. He goes before the doing word. His is for a thing he has. Them is for more than one person."
+   "why": "After the doing word, he changes to him: gave him the keys. He goes before the doing word. His is for a thing he has. Them is for more than one person.",
+   "mode": "choose"
   },
   {
    "q": "Eva needed a pen. Which line is right?",
@@ -2067,7 +2094,8 @@ textarea.write {
     "I her gave a pen."
    ],
    "a": "I gave her a pen.",
-   "why": "The person first, then the thing: gave her a pen. She goes before the doing word, not after. Not a pen her. Say: a pen to her. Her goes after gave."
+   "why": "The person first, then the thing: gave her a pen. She goes before the doing word, not after. Not a pen her. Say: a pen to her. Her goes after gave.",
+   "mode": "choose"
   },
   {
    "q": "Which line needs an exclamation mark at the end?",
@@ -2078,7 +2106,8 @@ textarea.write {
     "Did you hear the storm"
    ],
    "a": "Suddenly, the window broke",
-   "why": "Suddenly means a surprise. End it with an exclamation mark. What happened and Did you hear the storm are questions: question mark. We had lunch at one gets a full stop."
+   "why": "Suddenly means a surprise. End it with an exclamation mark. What happened and Did you hear the storm are questions: question mark. We had lunch at one gets a full stop.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3504,31 +3533,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

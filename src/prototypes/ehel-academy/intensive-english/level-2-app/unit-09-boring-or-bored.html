@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2050,7 +2067,8 @@ textarea.write {
     "The journey was long, so I am boring it."
    ],
    "a": "The journey was long, so I was bored.",
-   "why": "I is a person, so the word is bored. I was boring says that other people were bored with you, which is not the meaning here. The journey is a thing, so it can be boring but never bored."
+   "why": "I is a person, so the word is bored. I was boring says that other people were bored with you, which is not the meaning here. The journey is a thing, so it can be boring but never bored.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: The form had six pages and very small writing. It was ... .",
@@ -2061,7 +2079,8 @@ textarea.write {
     "confusingly"
    ],
    "a": "confusing",
-   "why": "The form is a thing, so it takes the -ing word. Confused is for the person who reads it. Confuse is the verb on its own, and confusingly says how somebody does something."
+   "why": "The form is a thing, so it takes the -ing word. Confused is for the person who reads it. Confuse is the verb on its own, and confusingly says how somebody does something.",
+   "mode": "choose"
   },
   {
    "q": "Which one puts the describing words in the order English uses?",
@@ -2072,7 +2091,8 @@ textarea.write {
     "a wooden old small box"
    ],
    "a": "a small old wooden box",
-   "why": "Size comes first, then age, then what it is made of. The two options that begin with wooden put the material first, and the material always goes last. The option that begins with old puts age before size."
+   "why": "Size comes first, then age, then what it is made of. The two options that begin with wooden put the material first, and the material always goes last. The option that begins with old puts age before size.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: This shelf is not wide ... for the box.",
@@ -2083,7 +2103,8 @@ textarea.write {
     "enough"
    ],
    "a": "enough",
-   "why": "Enough comes after the describing word, and not wide enough means there is less width than you need. Too would have to come in front of wide, not after it. Very and quite say how much there is and do not fit after not wide."
+   "why": "Enough comes after the describing word, and not wide enough means there is less width than you need. Too would have to come in front of wide, not after it. Very and quite say how much there is and do not fit after not wide.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence means you could not drink the tea?",
@@ -2094,7 +2115,8 @@ textarea.write {
     "The tea is slightly hot."
    ],
    "a": "The tea is too hot.",
-   "why": "Too means more than you can use, so you cannot drink it. Quite hot is a good amount and hot enough means it has reached what you need. Slightly hot means only a very little heat."
+   "why": "Too means more than you can use, so you cannot drink it. Quite hot is a good amount and hot enough means it has reached what you need. Slightly hot means only a very little heat.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: She is very good ... numbers.",
@@ -2105,7 +2127,8 @@ textarea.write {
     "with"
    ],
    "a": "at",
-   "why": "Good always brings at with it, and the pair never changes. Good in is the commonest wrong answer, because many languages join the two words another way. Good for means healthy or useful, and good with is used about people or animals, not about a skill like this."
+   "why": "Good always brings at with it, and the pair never changes. Good in is the commonest wrong answer, because many languages join the two words another way. Good for means healthy or useful, and good with is used about people or animals, not about a skill like this.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: I am nervous ... the test tomorrow.",
@@ -2116,7 +2139,8 @@ textarea.write {
     "at"
    ],
    "a": "about",
-   "why": "Nervous brings about. Afraid is the word that brings of, so nervous of is a mix of two pairs. For goes with grateful and ready, and at goes with good and bad."
+   "why": "Nervous brings about. Afraid is the word that brings of, so nervous of is a mix of two pairs. For goes with grateful and ready, and at goes with good and bad.",
+   "mode": "choose"
   },
   {
    "q": "Which word means almost not at all?",
@@ -2127,7 +2151,8 @@ textarea.write {
     "hardly"
    ],
    "a": "hardly",
-   "why": "Hardly means there is almost none of the thing: I hardly slept. Completely is the other end of the line, and means all of it. Extremely means a very great amount, and rather means more than you wanted."
+   "why": "Hardly means there is almost none of the thing: I hardly slept. Completely is the other end of the line, and means all of it. Extremely means a very great amount, and rather means more than you wanted.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is correct?",
@@ -2138,7 +2163,8 @@ textarea.write {
     "I am interest in old buildings."
    ],
    "a": "I am interested in old buildings.",
-   "why": "I is a person, so the word is interested, and interested always brings in. Interesting would describe the buildings, not you. Of belongs with fond and aware, and interest on its own is not a describing word."
+   "why": "I is a person, so the word is interested, and interested always brings in. Interesting would describe the buildings, not you. Of belongs with fond and aware, and interest on its own is not a describing word.",
+   "mode": "choose"
   },
   {
    "q": "On the library notice board, which session has no tools in it?",
@@ -2149,7 +2175,8 @@ textarea.write {
     "All three sessions."
    ],
    "a": "Session 3, at 14.00.",
-   "why": "The Session 3 lines say there are no tools and that you sit and you listen. Sessions 1 and 2 both ask you to bring a thing to work on, and the notice says the tools are all there."
+   "why": "The Session 3 lines say there are no tools and that you sit and you listen. Sessions 1 and 2 both ask you to bring a thing to work on, and the notice says the tools are all there.",
+   "mode": "choose"
   },
   {
    "q": "One comment says Session 2 was extremely interesting, but too short. What is that person telling you?",
@@ -2160,7 +2187,8 @@ textarea.write {
     "The session was at the wrong time of day."
    ],
    "a": "They liked it and wanted more time.",
-   "why": "Extremely interesting is the good half, and too short means there was less time than they wanted. The word but joins the two halves. Too short is the opposite of long, and nothing in the comment is about the time of day or about not going."
+   "why": "Extremely interesting is the good half, and too short means there was less time than they wanted. The word but joins the two halves. Too short is the opposite of long, and nothing in the comment is about the time of day or about not going.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: The work is ... finished. One box is still open.",
@@ -2171,7 +2199,8 @@ textarea.write {
     "almost"
    ],
    "a": "almost",
-   "why": "One box is still open, so the work is very near the end but not all the way there. Completely finished would mean nothing is left. Hardly finished would mean almost none of it is done, and extremely does not go with finished at all."
+   "why": "One box is still open, so the work is very near the end but not all the way there. Completely finished would mean nothing is left. Hardly finished would mean almost none of it is done, and extremely does not go with finished at all.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3599,31 +3628,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

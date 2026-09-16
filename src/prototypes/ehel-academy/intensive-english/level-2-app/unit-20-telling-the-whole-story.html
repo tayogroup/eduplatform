@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1957,7 +1974,8 @@ textarea.write {
     "I read the map after she stopped the car."
    ],
    "a": "While she was driving, I was reading the map.",
-   "why": "Both halves have was plus an -ing verb, so both actions take time and run together. The cooking one is the tempting choice, because it also has an -ing verb, but went off is a single moment cutting across the cooking. The other two put the actions one after the other."
+   "why": "Both halves have was plus an -ing verb, so both actions take time and run together. The cooking one is the tempting choice, because it also has an -ing verb, but went off is a single moment cutting across the cooking. The other two put the actions one after the other.",
+   "mode": "choose"
   },
   {
    "q": "You handed the form in one minute ago. Which sentence is right?",
@@ -1968,7 +1986,8 @@ textarea.write {
     "I finish the form just now."
    ],
    "a": "I have just finished the form.",
-   "why": "Just goes between have and the past form and means only now. The first option is the tempting one, and it looks the same until you see at nine o'clock. A named time sends the sentence back to the past simple. Ever asks about your whole life, and the last option uses the wrong verb form."
+   "why": "Just goes between have and the past form and means only now. The first option is the tempting one, and it looks the same until you see at nine o'clock. A named time sends the sentence back to the past simple. Ever asks about your whole life, and the last option uses the wrong verb form.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence punctuates the extra detail correctly?",
@@ -1979,7 +1998,8 @@ textarea.write {
     "My supervisor, whose office is upstairs signed it."
    ],
    "a": "My supervisor, whose office is upstairs, signed it.",
-   "why": "Extra detail needs a comma at each end, and belonging takes whose. The second option is the tempting one, because who's sounds the same; it is short for who is, and an office cannot be who is. The other two open the commas and never close them, or close them and never open them."
+   "why": "Extra detail needs a comma at each end, and belonging takes whose. The second option is the tempting one, because who's sounds the same; it is short for who is, and an office cannot be who is. The other two open the commas and never close them, or close them and never open them.",
+   "mode": "choose"
   },
   {
    "q": "Which order is right?",
@@ -1990,7 +2010,8 @@ textarea.write {
     "an impressive old leather chair"
    ],
    "a": "an impressive old leather chair",
-   "why": "The order is what you think of it, then how old, then what it is made of. The second option is the tempting one, because old and leather are in the right order and only the opinion word is out of place. Your opinion always comes first."
+   "why": "The order is what you think of it, then how old, then what it is made of. The second option is the tempting one, because old and leather are in the right order and only the opinion word is out of place. Your opinion always comes first.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence makes the comparison stronger, and is correct English?",
@@ -2001,7 +2022,8 @@ textarea.write {
     "It went far well than I expected."
    ],
    "a": "It went far better than I expected.",
-   "why": "Far, much and a lot must be followed by a comparing word, and the comparing form of well is better. Much good fails because good is the plain form. Very better fails because very belongs in front of a plain word. Far well fails because well has its own comparing form."
+   "why": "Far, much and a lot must be followed by a comparing word, and the comparing form of well is better. Much good fails because good is the plain form. Very better fails because very belongs in front of a plain word. Far well fails because well has its own comparing form.",
+   "mode": "choose"
   },
   {
    "q": "The first week was quiet, ____ the second was very busy. Which word fits?",
@@ -2012,7 +2034,8 @@ textarea.write {
     "nevertheless"
    ],
    "a": "whereas",
-   "why": "Whereas puts two different facts side by side, which is exactly what the two halves are. Despite is the tempting one, but it needs a noun after it, not a whole sentence. Furthermore adds a point that agrees, and nevertheless says a problem did not change the ending."
+   "why": "Whereas puts two different facts side by side, which is exactly what the two halves are. Despite is the tempting one, but it needs a noun after it, not a whole sentence. Furthermore adds a point that agrees, and nevertheless says a problem did not change the ending.",
+   "mode": "type"
   },
   {
    "q": "From Unit 15. Which sentence says what somebody's job is?",
@@ -2023,7 +2046,8 @@ textarea.write {
     "She looks after a nurse."
    ],
    "a": "She works as a nurse.",
-   "why": "As names the job the person actually does. Looks like is the tempting one, because it is only one word different; like compares her appearance to a nurse and says nothing about her job. Deals with and looks after describe what she does to somebody else."
+   "why": "As names the job the person actually does. Looks like is the tempting one, because it is only one word different; like compares her appearance to a nurse and says nothing about her job. Deals with and looks after describe what she does to somebody else.",
+   "mode": "choose"
   },
   {
    "q": "From Unit 16. The parcel arrived yesterday. Which sentence says so without naming who brought it?",
@@ -2034,7 +2058,8 @@ textarea.write {
     "The parcel was delivered yesterday."
    ],
    "a": "The parcel was delivered yesterday.",
-   "why": "Was plus the past form puts the parcel first and leaves the deliverer out. The first option is the tempting one, because it also hides the name, but somebody is still doing the action in the sentence. The second uses the present for a past day, and the third leaves the was out altogether."
+   "why": "Was plus the past form puts the parcel first and leaves the deliverer out. The first option is the tempting one, because it also hides the name, but somebody is still doing the action in the sentence. The second uses the present for a past day, and the third leaves the was out altogether.",
+   "mode": "choose"
   },
   {
    "q": "From Unit 17. The supervisor said these words: wait here. Which sentence passes them on?",
@@ -2045,7 +2070,8 @@ textarea.write {
     "She said me that wait there."
    ],
    "a": "She told me to wait there.",
-   "why": "Tell takes a person straight after it, and an instruction passed on takes to plus the verb. The second option is the tempting one, because it is otherwise perfect. Say never takes a person after it, so it would have to be she said that I should wait. The third drops the person that tell needs."
+   "why": "Tell takes a person straight after it, and an instruction passed on takes to plus the verb. The second option is the tempting one, because it is otherwise perfect. Say never takes a person after it, so it would have to be she said that I should wait. The third drops the person that tell needs.",
+   "mode": "choose"
   },
   {
    "q": "From Unit 18. Which sentence is right?",
@@ -2056,7 +2082,8 @@ textarea.write {
     "When the parcel will come, I ring you."
    ],
    "a": "When the parcel comes, I will ring you.",
-   "why": "The time half stays in the present and the other half takes will. The first option is the tempting one, because both halves really are about the future. English still keeps will out of the half that begins with when, until, before or as soon as. The third drops the will from the half that needs it."
+   "why": "The time half stays in the present and the other half takes will. The first option is the tempting one, because both halves really are about the future. English still keeps will out of the half that begins with when, until, before or as soon as. The third drops the will from the half that needs it.",
+   "mode": "choose"
   },
   {
    "q": "From Unit 19. Your neighbour asks what to do about a broken lock. Which sentence gives advice?",
@@ -2067,7 +2094,8 @@ textarea.write {
     "You are ringing the office today."
    ],
    "a": "You should ring the office today.",
-   "why": "Should offers advice and leaves the choice with the other person. Must is the tempting one, but it says the person has no choice, which is not advice. Needn't says the opposite of what is meant, and the last option describes an arrangement rather than advising anything."
+   "why": "Should offers advice and leaves the choice with the other person. Must is the tempting one, but it says the person has no choice, which is not advice. Needn't says the opposite of what is meant, and the last option describes an arrangement rather than advising anything.",
+   "mode": "choose"
   },
   {
    "q": "From Unit 8. You started the job in March and you are still doing it. Which sentence is right?",
@@ -2078,7 +2106,8 @@ textarea.write {
     "I have worked here since March."
    ],
    "a": "I have worked here since March.",
-   "why": "Since names the starting point, and have worked says it is still true today. The second option is the tempting one, because it has the right verb form. For needs a length of time, such as for four months, not a starting point. The other two use the wrong verb form for something that is still true."
+   "why": "Since names the starting point, and have worked says it is still true today. The second option is the tempting one, because it has the right verb form. For needs a length of time, such as for four months, not a starting point. The other two use the wrong verb form for something that is still true.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3510,31 +3539,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

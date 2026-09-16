@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2036,7 +2053,8 @@ textarea.write {
     "P"
    ],
    "a": "B",
-   "why": "B is capital b. d is a different small letter. D and P are other capitals."
+   "why": "B is capital b. d is a different small letter. D and P are other capitals.",
+   "mode": "choose"
   },
   {
    "q": "a, b, c, ___. Tap the next letter.",
@@ -2047,7 +2065,8 @@ textarea.write {
     "f"
    ],
    "a": "d",
-   "why": "The order is a, b, c, d. e is after d. b is in the line already."
+   "why": "The order is a, b, c, d. e is after d. b is in the line already.",
+   "mode": "type"
   },
   {
    "q": "Tap the small letter.",
@@ -2058,7 +2077,8 @@ textarea.write {
     "e"
    ],
    "a": "e",
-   "why": "e is small. Capital e is E. M, T and G are capitals."
+   "why": "e is small. Capital e is E. M, T and G are capitals.",
+   "mode": "choose"
   },
   {
    "q": "Tap the word with the a of bag.",
@@ -2069,7 +2089,8 @@ textarea.write {
     "box"
    ],
    "a": "map",
-   "why": "map and bag both have a. bed has e. sun has u. box has o."
+   "why": "map and bag both have a. bed has e. sun has u. box has o.",
+   "mode": "choose"
   },
   {
    "q": "Tap the word with the u of bus.",
@@ -2080,7 +2101,8 @@ textarea.write {
     "pen"
    ],
    "a": "cup",
-   "why": "cup and bus both have u. bin has i. hot has o. pen has e."
+   "why": "cup and bus both have u. bin has i. hot has o. pen has e.",
+   "mode": "choose"
   },
   {
    "q": "Tap the first sound of shop.",
@@ -2091,7 +2113,8 @@ textarea.write {
     "st"
    ],
    "a": "sh",
-   "why": "s and h make one sound: sh. ch is in chin. th is in this. st is two sounds, as in stop."
+   "why": "s and h make one sound: sh. ch is in chin. th is in this. st is two sounds, as in stop.",
+   "mode": "choose"
   },
   {
    "q": "Tap the word with th.",
@@ -2102,7 +2125,8 @@ textarea.write {
     "this"
    ],
    "a": "this",
-   "why": "this starts with t and h: th. chin starts with ch. fish ends with sh. sit has no h."
+   "why": "this starts with t and h: th. chin starts with ch. fish ends with sh. sit has no h.",
+   "mode": "choose"
   },
   {
    "q": "c - u - p. Tap the word.",
@@ -2113,7 +2137,8 @@ textarea.write {
     "pup"
    ],
    "a": "cup",
-   "why": "c, u, p join: cup. cap has a, not u. cut ends with t. pup starts with p."
+   "why": "c, u, p join: cup. cap has a, not u. cut ends with t. pup starts with p.",
+   "mode": "choose"
   },
   {
    "q": "Tap the word with 4 sounds.",
@@ -2124,7 +2149,8 @@ textarea.write {
     "stop"
    ],
    "a": "stop",
-   "why": "stop has 4 sounds: s, t, o, p. fish has 4 letters but 3 sounds: f, i, sh. bus and leg have 3."
+   "why": "stop has 4 sounds: s, t, o, p. fish has 4 letters but 3 sounds: f, i, sh. bus and leg have 3.",
+   "mode": "choose"
   },
   {
    "q": "b, e, d. Tap the word.",
@@ -2135,7 +2161,8 @@ textarea.write {
     "bet"
    ],
    "a": "bed",
-   "why": "b, e, d spells bed. bad has a, not e. dab has d first. bet ends with t."
+   "why": "b, e, d spells bed. bad has a, not e. dab has d first. bet ends with t.",
+   "mode": "choose"
   },
   {
    "q": "👂 Tap the word.",
@@ -2146,7 +2173,8 @@ textarea.write {
     "tap"
    ],
    "a": "listen",
-   "why": "👂 is your ear: listen. look is eyes 👀. write is a hand with a pen. tap is one finger."
+   "why": "👂 is your ear: listen. look is eyes 👀. write is a hand with a pen. tap is one finger.",
+   "mode": "choose"
   },
   {
    "q": "✍️ Tap the word.",
@@ -2157,7 +2185,8 @@ textarea.write {
     "point"
    ],
    "a": "write",
-   "why": "✍️ is a hand with a pen: write. read is eyes on words. say is your mouth. point is 👉."
+   "why": "✍️ is a hand with a pen: write. read is eyes on words. say is your mouth. point is 👉.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3582,31 +3611,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

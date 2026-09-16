@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2049,7 +2066,8 @@ textarea.write {
     "more cheaper"
    ],
    "a": "cheaper",
-   "why": "Cheap is a short word, so add -er: cheaper. Cheap takes -er, not more cheap. Cheapest is for three or more. More cheaper uses more and -er together."
+   "why": "Cheap is a short word, so add -er: cheaper. Cheap takes -er, not more cheap. Cheapest is for three or more. More cheaper uses more and -er together.",
+   "mode": "type"
   },
   {
    "q": "This chair is ___ than that chair.",
@@ -2060,7 +2078,8 @@ textarea.write {
     "more comfortable"
    ],
    "a": "more comfortable",
-   "why": "Comfortable is a long word, so use more: more comfortable. Comfortabler adds -er to a long word. The most is for three or more. Comfortable alone does not go with than."
+   "why": "Comfortable is a long word, so use more: more comfortable. Comfortabler adds -er to a long word. The most is for three or more. Comfortable alone does not go with than.",
+   "mode": "choose"
   },
   {
    "q": "Three bags: 20, 35 and 50. The bag for 20 is ___.",
@@ -2071,7 +2090,8 @@ textarea.write {
     "cheap than"
    ],
    "a": "the cheapest",
-   "why": "Three bags, so use the -est: the cheapest. Cheaper is for two things. Cheap is short, so not the most cheap. Cheap than has no -er."
+   "why": "Three bags, so use the -est: the cheapest. Cheaper is for two things. Cheap is short, so not the most cheap. Cheap than has no -er.",
+   "mode": "choose"
   },
   {
    "q": "Café 1 is good. Café 2 is very good. Café 2 is ___ than café 1.",
@@ -2082,7 +2102,8 @@ textarea.write {
     "the best"
    ],
    "a": "better",
-   "why": "Good changes: good, better, the best. Gooder and more good are not words we use. The best is for three or more, and it does not go with than."
+   "why": "Good changes: good, better, the best. Gooder and more good are not words we use. The best is for three or more, and it does not go with than.",
+   "mode": "type"
   },
   {
    "q": "It is very, very bad weather. It is the ___ weather of the year.",
@@ -2093,7 +2114,8 @@ textarea.write {
     "worst"
    ],
    "a": "worst",
-   "why": "Bad changes: bad, worse, the worst. The whole year is more than two things, so the worst. Worse is for two things. Baddest and most bad are not right."
+   "why": "Bad changes: bad, worse, the worst. The whole year is more than two things, so the worst. Worse is for two things. Baddest and most bad are not right.",
+   "mode": "choose"
   },
   {
    "q": "Omar is a good driver. He drives ___.",
@@ -2104,7 +2126,8 @@ textarea.write {
     "better than"
    ],
    "a": "well",
-   "why": "For how he drives, good changes to well. Good is for the person: a good driver. Goodly is not a word we use. Better than needs a second thing after it."
+   "why": "For how he drives, good changes to well. Good is for the person: a good driver. Goodly is not a word we use. Better than needs a second thing after it.",
+   "mode": "type"
   },
   {
    "q": "Which line is right?",
@@ -2115,7 +2138,8 @@ textarea.write {
     "She works hardly."
    ],
    "a": "She works hard.",
-   "why": "Hard stays hard, and it goes after works. Hardly is a different word. She hard works has the wrong order. In She is work, take out is."
+   "why": "Hard stays hard, and it goes after works. Hardly is a different word. She hard works has the wrong order. In She is work, take out is.",
+   "mode": "choose"
   },
   {
    "q": "How ___ rice do you need?",
@@ -2126,7 +2150,8 @@ textarea.write {
     "a lot"
    ],
    "a": "much",
-   "why": "You can't count rice, so use much: How much rice? Many is for things you can count, like eggs. Any does not go after how. A lot needs of: a lot of rice."
+   "why": "You can't count rice, so use much: How much rice? Many is for things you can count, like eggs. Any does not go after how. A lot needs of: a lot of rice.",
+   "mode": "type"
   },
   {
    "q": "The fridge is empty. There is ___ milk.",
@@ -2137,7 +2162,8 @@ textarea.write {
     "many"
    ],
    "a": "no",
-   "why": "No means not any: There is no milk. Any needs not: There isn't any milk. Some says there is milk. Many is for things you can count."
+   "why": "No means not any: There is no milk. Any needs not: There isn't any milk. Some says there is milk. Many is for things you can count.",
+   "mode": "choose"
   },
   {
    "q": "Two pens. Yours is in your hand. Which one is yours?",
@@ -2148,7 +2174,8 @@ textarea.write {
     "Which one."
    ],
    "a": "This one.",
-   "why": "The pen is in your hand, so it is near you: this one. That one is not near you. Those ones is for two or more. Which one is the question, not the answer."
+   "why": "The pen is in your hand, so it is near you: this one. That one is not near you. Those ones is for two or more. Which one is the question, not the answer.",
+   "mode": "choose"
   },
   {
    "q": "Which is 250?",
@@ -2159,7 +2186,8 @@ textarea.write {
     "two hundred and fifteen"
    ],
    "a": "two hundred and fifty",
-   "why": "250 is two hundred, and, fifty. Hundred has no s after two. Twenty-five hundred is 2,500. Two hundred and fifteen is 215: fifteen, not fifty."
+   "why": "250 is two hundred, and, fifty. Hundred has no s after two. Twenty-five hundred is 2,500. Two hundred and fifteen is 215: fifteen, not fifty.",
+   "mode": "choose"
   },
   {
    "q": "You need 2 litres of milk. 1 litre is 90. The 2-litre bottle is 160. Which is cheaper?",
@@ -2170,7 +2198,8 @@ textarea.write {
     "One 2-litre bottle: 160."
    ],
    "a": "One 2-litre bottle: 160.",
-   "why": "90 and 90 is 180. 160 is smaller than 180, so the 2-litre bottle is cheaper. 180 and 160 are not the same. Milk is in litres, not kilos."
+   "why": "90 and 90 is 180. 160 is smaller than 180, so the 2-litre bottle is cheaper. 180 and 160 are not the same. Milk is in litres, not kilos.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3596,31 +3625,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

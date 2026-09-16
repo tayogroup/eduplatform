@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2001,7 +2018,8 @@ textarea.write {
     "You work here, isn't it?"
    ],
    "a": "You work here, don't you?",
-   "why": "The sentence is positive, so the tag is negative: don't. The short word for you is you, not he or it. Do you leaves both sides positive."
+   "why": "The sentence is positive, so the tag is negative: don't. The short word for you is you, not he or it. Do you leaves both sides positive.",
+   "mode": "choose"
   },
   {
    "q": "It isn't far, ___?",
@@ -2012,7 +2030,8 @@ textarea.write {
     "does it"
    ],
    "a": "is it",
-   "why": "The sentence is negative, so the tag is positive: is it. Isn't it would make both sides negative. It is is a statement, not a tag. Does it needs a do sentence, and this one uses is."
+   "why": "The sentence is negative, so the tag is positive: is it. Isn't it would make both sides negative. It is is a statement, not a tag. Does it needs a do sentence, and this one uses is.",
+   "mode": "type"
   },
   {
    "q": "Which sentence is correct?",
@@ -2023,7 +2042,8 @@ textarea.write {
     "She drive, does she?"
    ],
    "a": "She doesn't drive, does she?",
-   "why": "A negative sentence takes a positive tag: does she. Doesn't she keeps both sides negative. She does? is not a tag. She drive has no -s and no doesn't."
+   "why": "A negative sentence takes a positive tag: does she. Doesn't she keeps both sides negative. She does? is not a tag. She drive has no -s and no doesn't.",
+   "mode": "choose"
   },
   {
    "q": "You want to offer a biscuit. What do you say?",
@@ -2034,7 +2054,8 @@ textarea.write {
     "Would you like a biscuit?"
    ],
    "a": "Would you like a biscuit?",
-   "why": "A thing after would you like needs no to. Biscuit needs a in front of it. You would like is a sentence about the guest, not an offer."
+   "why": "A thing after would you like needs no to. Biscuit needs a in front of it. You would like is a sentence about the guest, not an offer.",
+   "mode": "choose"
   },
   {
    "q": "You want to invite someone to sit down. What do you say?",
@@ -2045,7 +2066,8 @@ textarea.write {
     "You like to sit here?"
    ],
    "a": "Would you like to sit here?",
-   "why": "A doing word after would you like always needs to. Sit is a doing word, so a sit is wrong. You like to sit here is a question about every day, not an invitation."
+   "why": "A doing word after would you like always needs to. Sit is a doing word, so a sit is wrong. You like to sit here is a question about every day, not an invitation.",
+   "mode": "choose"
   },
   {
    "q": "Someone offers you tea and you do not want it. What do you say?",
@@ -2056,7 +2078,8 @@ textarea.write {
     "Not please."
    ],
    "a": "No thank you.",
-   "why": "No thank you is the short, kind answer. Refuse is a word for talking about it, not for saying it. Thanks you and Not please are not English."
+   "why": "No thank you is the short, kind answer. Refuse is a word for talking about it, not for saying it. Thanks you and Not please are not English.",
+   "mode": "choose"
   },
   {
    "q": "Which line tells someone NOT to do something?",
@@ -2067,7 +2090,8 @@ textarea.write {
     "You press the switch."
    ],
    "a": "Don't press the switch.",
-   "why": "Don't in front of the doing word says what not to do. The other three all say to do it. You press also adds a you, which an instruction does not need."
+   "why": "Don't in front of the doing word says what not to do. The other three all say to do it. You press also adds a you, which an instruction does not need.",
+   "mode": "choose"
   },
   {
    "q": "___ that switch yet. It is not ready.",
@@ -2078,7 +2102,8 @@ textarea.write {
     "Don't press"
    ],
    "a": "Don't press",
-   "why": "Don't comes first, and the doing word does not change. Not press and No press are not English. Presses adds an -s that an instruction never has."
+   "why": "Don't comes first, and the doing word does not change. Not press and No press are not English. Presses adds an -s that an instruction never has.",
+   "mode": "type"
   },
   {
    "q": "Fill the kettle. Press the switch. Don't open it. Pour the water. Which step says what not to do?",
@@ -2089,7 +2114,8 @@ textarea.write {
     "Pour the water."
    ],
    "a": "Don't open it.",
-   "why": "Only one step starts with don't, and that is the step to avoid. The other three all say to do something."
+   "why": "Only one step starts with don't, and that is the step to avoid. The other three all say to do something.",
+   "mode": "choose"
   },
   {
    "q": "A guest arrives at your door. What do you say first?",
@@ -2100,7 +2126,8 @@ textarea.write {
     "It is ready, isn't it?"
    ],
    "a": "Welcome. Come in.",
-   "why": "A host welcomes the guest at the door. Goodbye ends a visit. No thank you answers an offer. A tag question checks a fact, and nothing has been said yet."
+   "why": "A host welcomes the guest at the door. Goodbye ends a visit. No thank you answers an offer. A tag question checks a fact, and nothing has been said yet.",
+   "mode": "choose"
   },
   {
    "q": "What does confirm mean?",
@@ -2111,7 +2138,8 @@ textarea.write {
     "To make a mistake."
    ],
    "a": "To say again that something is correct.",
-   "why": "Confirm means you check a fact and say it is correct. Saying no is refuse. Bringing food to a table is serve. Making a mistake is being wrong."
+   "why": "Confirm means you check a fact and say it is correct. Saying no is refuse. Bringing food to a table is serve. Making a mistake is being wrong.",
+   "mode": "choose"
   },
   {
    "q": "A notice says: PULL. Don't push. The door does not open. What do you do?",
@@ -2122,7 +2150,8 @@ textarea.write {
     "Pull the door."
    ],
    "a": "Pull the door.",
-   "why": "The notice says PULL and Don't push, so pull it. Pressing and twisting are different moves. The notice does not ask for either of them."
+   "why": "The notice says PULL and Don't push, so pull it. Pressing and twisting are different moves. The notice does not ask for either of them.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3548,31 +3577,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

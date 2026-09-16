@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2014,7 +2031,8 @@ textarea.write {
     "The bags is made here."
    ],
    "a": "The bags are made here.",
-   "why": "Two pieces are needed: are, then the past form made. Are make keeps the plain verb. The bags make here says the bags do the making. Bags are more than one, so is is the wrong first piece."
+   "why": "Two pieces are needed: are, then the past form made. Are make keeps the plain verb. The bags make here says the bags do the making. Bags are more than one, so is is the wrong first piece.",
+   "mode": "choose"
   },
   {
    "q": "Cotton is one thing. Which sentence is correct?",
@@ -2025,7 +2043,8 @@ textarea.write {
     "Cotton grown on small farms."
    ],
    "a": "Cotton is grown on small farms.",
-   "why": "One thing takes is, so are is wrong here. Is grow leaves out the past form grown. The last one has no is or are at all, so it is not a finished sentence."
+   "why": "One thing takes is, so are is wrong here. Is grow leaves out the past form grown. The last one has no is or are at all, so it is not a finished sentence.",
+   "mode": "choose"
   },
   {
    "q": "The boxes arrived at the side gate yesterday. Which sentence reports that?",
@@ -2036,7 +2055,8 @@ textarea.write {
     "The boxes are delivered at the side gate yesterday."
    ],
    "a": "The boxes were delivered at the side gate.",
-   "why": "Boxes are more than one and this is the past, so the word is were. Was is for one thing. The boxes delivered says the boxes did the delivering. The last one puts a present form with yesterday."
+   "why": "Boxes are more than one and this is the past, so the word is were. Was is for one thing. The boxes delivered says the boxes did the delivering. The last one puts a present form with yesterday.",
+   "mode": "choose"
   },
   {
    "q": "You want to know the date the factory was built. Which question do you ask?",
@@ -2047,7 +2067,8 @@ textarea.write {
     "When was the factory built?"
    ],
    "a": "When was the factory built?",
-   "why": "The question word comes first, then was, then the thing, then the past form. The first keeps statement order. The second mixes did with a past form. The third puts the thing after the verb."
+   "why": "The question word comes first, then was, then the thing, then the past form. The first keeps statement order. The second mixes did with a past form. The third puts the thing after the verb.",
+   "mode": "choose"
   },
   {
    "q": "Twenty birds are sitting on a roof. What do you call them?",
@@ -2058,7 +2079,8 @@ textarea.write {
     "A crew of birds"
    ],
    "a": "A flock of birds",
-   "why": "Birds go in a flock. A herd is for large animals such as cows. A crowd is for people. A crew is a group of people working together on one job."
+   "why": "Birds go in a flock. A herd is for large animals such as cows. A crowd is for people. A crew is a group of people working together on one job.",
+   "mode": "choose"
   },
   {
    "q": "Which phrase is correct?",
@@ -2069,7 +2091,8 @@ textarea.write {
     "a bunch of workers"
    ],
    "a": "a bunch of keys",
-   "why": "A bunch is for small things held or tied together, such as keys, bananas or flowers. Cows go in a herd, people stand in a crowd, and workers on one job are a crew."
+   "why": "A bunch is for small things held or tied together, such as keys, bananas or flowers. Cows go in a herd, people stand in a crowd, and workers on one job are a crew.",
+   "mode": "choose"
   },
   {
    "q": "The boxes arrive on Friday. Which word completes this line: The ____ is on Friday.",
@@ -2080,7 +2103,8 @@ textarea.write {
     "delivery"
    ],
    "a": "delivery",
-   "why": "After the word the, English needs a noun, and the noun for this process is delivery. Deliver is the verb, delivered is its past form, and delivering is the -ing form."
+   "why": "After the word the, English needs a noun, and the noun for this process is delivery. Deliver is the verb, delivered is its past form, and delivering is the -ing form.",
+   "mode": "type"
   },
   {
    "q": "Which noun completes this line from a label: A free ____ for one year.",
@@ -2091,7 +2115,8 @@ textarea.write {
     "repairing"
    ],
    "a": "repair",
-   "why": "Repair does not change: the verb and the noun are the same word. Reparation and repairment are not used for this, and repairing is the -ing form, not the name of the service."
+   "why": "Repair does not change: the verb and the noun are the same word. Reparation and repairment are not used for this, and repairing is the -ing form, not the name of the service.",
+   "mode": "type"
   },
   {
    "q": "Steel comes into this country from another one. What happens to the steel?",
@@ -2102,7 +2127,8 @@ textarea.write {
     "It is manufactured."
    ],
    "a": "It is imported.",
-   "why": "Goods brought in from another country are imported. Exported means sent out. Harvested is for a crop, and manufactured means made in large numbers by machines."
+   "why": "Goods brought in from another country are imported. Exported means sent out. Harvested is for a crop, and manufactured means made in large numbers by machines.",
+   "mode": "choose"
   },
   {
    "q": "A jacket has a warm lining. Which material is it most likely made of?",
@@ -2113,7 +2139,8 @@ textarea.write {
     "wool"
    ],
    "a": "wool",
-   "why": "Wool is the warm hair of a sheep, and warm clothes are made from it. Concrete builds walls, clay makes plates and bowls, and steel is a hard metal for tools."
+   "why": "Wool is the warm hair of a sheep, and warm clothes are made from it. Concrete builds walls, clay makes plates and bowls, and steel is a hard metal for tools.",
+   "mode": "choose"
   },
   {
    "q": "A shop takes the costs away from the money it received. What is left?",
@@ -2124,7 +2151,8 @@ textarea.write {
     "the industry"
    ],
    "a": "the profit",
-   "why": "What is left after the costs is the profit. Waste is what is thrown away after something is made. A material is what a thing is made of, and an industry is all the work of one kind."
+   "why": "What is left after the costs is the profit. Waste is what is thrown away after something is made. A material is what a thing is made of, and an industry is all the work of one kind.",
+   "mode": "choose"
   },
   {
    "q": "Your chair went to the workshop and came back on Friday. Which sentence says so?",
@@ -2135,7 +2163,8 @@ textarea.write {
     "The chair repaired on Friday."
    ],
    "a": "The chair was repaired on Friday.",
-   "why": "It has already happened and the chair is one thing, so the word is was. Is repaired describes what happens every time. Were is for more than one. The last one says the chair did the repairing."
+   "why": "It has already happened and the chair is one thing, so the word is was. Is repaired describes what happens every time. Were is for more than one. The last one says the chair did the repairing.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3562,31 +3591,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

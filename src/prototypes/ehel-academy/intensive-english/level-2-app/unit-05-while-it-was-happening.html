@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1977,7 +1994,8 @@ textarea.write {
     "am working"
    ],
    "a": "worked",
-   "why": "A long, finished time takes the plain past: worked. Was working is the background form, for something going on when another thing happened. Work and am working are about now."
+   "why": "A long, finished time takes the plain past: worked. Was working is the background form, for something going on when another thing happened. Work and am working are about now.",
+   "mode": "type"
   },
   {
    "q": "I ___ at the crossing when the bus passed.",
@@ -1988,7 +2006,8 @@ textarea.write {
     "am waiting"
    ],
    "a": "was waiting",
-   "why": "Waiting is the long thing going on, so it takes was plus -ing. Waited would make it a second short event, and the line already has one: the bus passed. Wait and am waiting are about now."
+   "why": "Waiting is the long thing going on, so it takes was plus -ing. Waited would make it a second short event, and the line already has one: the bus passed. Wait and am waiting are about now.",
+   "mode": "type"
   },
   {
    "q": "Which line puts while in the right place?",
@@ -1999,7 +2018,8 @@ textarea.write {
     "While I waiting, the call came."
    ],
    "a": "While I was waiting, the call came.",
-   "why": "While goes in front of the long background: I was waiting. The first line puts while in front of the short event and turns the meaning round. The second stops before its verb. The fourth drops was."
+   "why": "While goes in front of the long background: I was waiting. The first line puts while in front of the short event and turns the meaning round. The second stops before its verb. The fourth drops was.",
+   "mode": "choose"
   },
   {
    "q": "The printer jammed ___ I was printing the form.",
@@ -2010,7 +2030,8 @@ textarea.write {
     "while"
    ],
    "a": "while",
-   "why": "While joins two things at the same moment, and a whole sentence follows it. During is followed by a naming word: during the morning. Then and afterwards point forward to the next thing, not to the same moment."
+   "why": "While joins two things at the same moment, and a whole sentence follows it. During is followed by a naming word: during the morning. Then and afterwards point forward to the next thing, not to the same moment.",
+   "mode": "type"
   },
   {
    "q": "What does eventually mean?",
@@ -2021,7 +2042,8 @@ textarea.write {
     "Before anything else happened."
    ],
    "a": "In the end, after a long time.",
-   "why": "Eventually means in the end. At once is immediately. At the same time is while. The last one is first."
+   "why": "Eventually means in the end. At once is immediately. At the same time is while. The last one is first.",
+   "mode": "choose"
   },
   {
    "q": "You are standing on the ___ , not in the road.",
@@ -2032,7 +2054,8 @@ textarea.write {
     "detour"
    ],
    "a": "pavement",
-   "why": "The pavement is the path at the side of a road. A crossing is where you walk over a road. A route is the way a bus goes, and a detour is a longer way round."
+   "why": "The pavement is the path at the side of a road. A crossing is where you walk over a road. A route is the way a bus goes, and a detour is a longer way round.",
+   "mode": "type"
   },
   {
    "q": "Which sentence uses realise correctly?",
@@ -2043,7 +2066,8 @@ textarea.write {
     "Halfway there, I realised I was on the wrong bus."
    ],
    "a": "Halfway there, I realised I was on the wrong bus.",
-   "why": "Realise names a moment of understanding, so here it takes the plain past: realised. The first has no past ending. The second uses -ing, which does not fit a moment. The third has no subject."
+   "why": "Realise names a moment of understanding, so here it takes the plain past: realised. The first has no past ending. The second uses -ing, which does not fit a moment. The third has no subject.",
+   "mode": "choose"
   },
   {
    "q": "Put these in order: a. Eventually, the bus came. b. I left the house at eight. c. Then I saw the roadworks.",
@@ -2054,7 +2078,8 @@ textarea.write {
     "b, a, c"
    ],
    "a": "b, c, a",
-   "why": "Leaving the house has no joining word, so it opens the account. Then comes next, and eventually points to the end of a long wait. The other orders put the end or the middle first."
+   "why": "Leaving the house has no joining word, so it opens the account. Then comes next, and eventually points to the end of a long wait. The other orders put the end or the middle first.",
+   "mode": "choose"
   },
   {
    "q": "She lost her keys and looked for an hour. Then she found them. How did she feel then?",
@@ -2065,7 +2090,8 @@ textarea.write {
     "annoyed"
    ],
    "a": "relieved",
-   "why": "Relieved means happy because a worry has gone. Anxious is the worry before she found them. Upset is unhappy and annoyed is a little angry, and neither fits the moment a worry ends."
+   "why": "Relieved means happy because a worry has gone. Anxious is the worry before she found them. Upset is unhappy and annoyed is a little angry, and neither fits the moment a worry ends.",
+   "mode": "choose"
   },
   {
    "q": "___ the roadworks, there were no buses on this street.",
@@ -2076,7 +2102,8 @@ textarea.write {
     "Afterwards"
    ],
    "a": "During",
-   "why": "During comes before a naming word: during the roadworks. While needs a whole sentence after it. Then and afterwards point at the next thing, not at a length of time."
+   "why": "During comes before a naming word: during the roadworks. While needs a whole sentence after it. Then and afterwards point at the next thing, not at a length of time.",
+   "mode": "choose"
   },
   {
    "q": "Which pair is right? We ___ in a jam when the phone ___ .",
@@ -2087,7 +2114,8 @@ textarea.write {
     "were sitting / rang"
    ],
    "a": "were sitting / rang",
-   "why": "We takes were, not was. Sitting in the jam is the long background, so it needs -ing. The phone ringing is the short event, so it keeps the plain past: rang."
+   "why": "We takes were, not was. Sitting in the jam is the long background, so it needs -ing. The phone ringing is the short event, so it keeps the plain past: rang.",
+   "mode": "choose"
   },
   {
    "q": "Which word means the price you pay to travel on a bus?",
@@ -2098,7 +2126,8 @@ textarea.write {
     "passenger"
    ],
    "a": "fare",
-   "why": "The fare is the price of the journey. A route is the way the bus goes. Traffic is all the cars and buses on the road. A passenger is a person travelling."
+   "why": "The fare is the price of the journey. A route is the way the bus goes. Traffic is all the cars and buses on the road. A passenger is a person travelling.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3525,31 +3554,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

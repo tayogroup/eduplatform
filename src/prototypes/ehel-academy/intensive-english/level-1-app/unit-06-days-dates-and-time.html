@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1937,7 +1954,8 @@ textarea.write {
     "five"
    ],
    "a": "fifth",
-   "why": "5th is fifth. Five changes to fif. Fiveth is not a word. Fifteen is 15. Five is 5, not an order word."
+   "why": "5th is fifth. Five changes to fif. Fiveth is not a word. Fifteen is 15. Five is 5, not an order word.",
+   "mode": "choose"
   },
   {
    "q": "Wednesday is the ___ day of the week.",
@@ -1948,7 +1966,8 @@ textarea.write {
     "three"
    ],
    "a": "third",
-   "why": "Monday is first, Tuesday second, Wednesday third. Thursday is the fourth day. Three is a number, not an order word."
+   "why": "Monday is first, Tuesday second, Wednesday third. Thursday is the fourth day. Three is a number, not an order word.",
+   "mode": "type"
   },
   {
    "q": "I am at school or at work ___ Monday.",
@@ -1959,7 +1978,8 @@ textarea.write {
     "with"
    ],
    "a": "on",
-   "why": "A day goes with on: on Monday. In is for the morning, afternoon or evening. At is for a place: at work. With is for a person."
+   "why": "A day goes with on: on Monday. In is for the morning, afternoon or evening. At is for a place: at work. With is for a person.",
+   "mode": "choose"
   },
   {
    "q": "I like walking ___ the evening.",
@@ -1970,7 +1990,8 @@ textarea.write {
     "in"
    ],
    "a": "in",
-   "why": "Morning, afternoon, evening: in the. On is for a day. At goes with a place. For is for a thing going to a person."
+   "why": "Morning, afternoon, evening: in the. On is for a day. At goes with a place. For is for a thing going to a person.",
+   "mode": "type"
   },
   {
    "q": "This card is ___ my sister. It is her card now.",
@@ -1981,7 +2002,8 @@ textarea.write {
     "in"
    ],
    "a": "for",
-   "why": "The card is going to my sister, so for. With is for a person next to you. On and in are for days and parts of the day."
+   "why": "The card is going to my sister, so for. With is for a person next to you. On and in are for days and parts of the day.",
+   "mode": "choose"
   },
   {
    "q": "I am playing football ___ my brother. We are in the park.",
@@ -1992,7 +2014,8 @@ textarea.write {
     "with"
    ],
    "a": "with",
-   "why": "My brother and I are in the park, so with. For is for a thing going to a person. On and in are for days and parts of the day."
+   "why": "My brother and I are in the park, so with. For is for a thing going to a person. On and in are for days and parts of the day.",
+   "mode": "type"
   },
   {
    "q": "What time is it?",
@@ -2003,7 +2026,8 @@ textarea.write {
     "I am five."
    ],
    "a": "It is five o'clock.",
-   "why": "What time asks for a number and o'clock. Monday is a day. The fifth is an order word. I am five is an age."
+   "why": "What time asks for a number and o'clock. Monday is a day. The fifth is an order word. I am five is an age.",
+   "mode": "choose"
   },
   {
    "q": "Which day has the same first sound as sun?",
@@ -2014,7 +2038,8 @@ textarea.write {
     "Saturday"
    ],
    "a": "Saturday",
-   "why": "Sun and Saturday start with the s sound. Thursday starts with th, like three. Monday starts with m. Wednesday starts with w."
+   "why": "Sun and Saturday start with the s sound. Thursday starts with th, like three. Monday starts with m. Wednesday starts with w.",
+   "mode": "choose"
   },
   {
    "q": "Tomas and Mia are my friends. ___ bag is blue.",
@@ -2025,7 +2050,8 @@ textarea.write {
     "His"
    ],
    "a": "Their",
-   "why": "Their goes before a thing: their bag. They is for the people, not the bag. There is a place. His is for one man."
+   "why": "Their goes before a thing: their bag. They is for the people, not the bag. There is a place. His is for one man.",
+   "mode": "choose"
   },
   {
    "q": "Which one is right?",
@@ -2036,7 +2062,8 @@ textarea.write {
     "red a bag"
    ],
    "a": "a red bag",
-   "why": "The colour goes before the thing: a red bag. Red has no -s. A goes first."
+   "why": "The colour goes before the thing: a red bag. Red has no -s. A goes first.",
+   "mode": "choose"
   },
   {
    "q": "On Sunday, I like ___.",
@@ -2047,7 +2074,8 @@ textarea.write {
     "to cooking"
    ],
    "a": "cooking",
-   "why": "Like and -ing: I like cooking. Cook and cooks have no -ing. To cooking is not right."
+   "why": "Like and -ing: I like cooking. Cook and cooks have no -ing. To cooking is not right.",
+   "mode": "type"
   },
   {
    "q": "Look! Tomas ___ now.",
@@ -2058,7 +2086,8 @@ textarea.write {
     "run"
    ],
    "a": "is running",
-   "why": "Now: am, is or are and -ing. Tomas is one man, so is. Are is for you, we and they. Running needs is. Run has no -ing."
+   "why": "Now: am, is or are and -ing. Tomas is one man, so is. Are is for you, we and they. Running needs is. Run has no -ing.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3485,31 +3514,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

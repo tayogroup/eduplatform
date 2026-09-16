@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2104,7 +2121,8 @@ textarea.write {
     "The train will leaves at six twenty."
    ],
    "a": "The train leaves at six twenty.",
-   "why": "A timetable time takes the present simple, and one train takes -s: leaves. The train leave drops the -s. Is leave mixes two forms. Will never takes a verb with -s."
+   "why": "A timetable time takes the present simple, and one train takes -s: leaves. The train leave drops the -s. Is leave mixes two forms. Will never takes a verb with -s.",
+   "mode": "choose"
   },
   {
    "q": "You fixed a time with the doctor last week. What do you say?",
@@ -2115,7 +2133,8 @@ textarea.write {
     "The doctor is going to see me, I think."
    ],
    "a": "I am seeing the doctor on Thursday.",
-   "why": "An arrangement made with a person takes am, is or are plus -ing. Will is for a decision you make as you speak. The present simple is for a timetable, not for your own appointment. The last one is a guess, not the fixed fact."
+   "why": "An arrangement made with a person takes am, is or are plus -ing. Will is for a decision you make as you speak. The present simple is for a timetable, not for your own appointment. The last one is a guess, not the fixed fact.",
+   "mode": "choose"
   },
   {
    "q": "Look at those clouds. Which sentence fits?",
@@ -2126,7 +2145,8 @@ textarea.write {
     "It rain later."
    ],
    "a": "It is going to rain.",
-   "why": "You can see it coming, so going to is right. Rain has no timetable, so It rains soon does not work. Is raining tomorrow claims an arrangement nobody made. It rain has no verb ending at all."
+   "why": "You can see it coming, so going to is right. Rain has no timetable, so It rains soon does not work. Is raining tomorrow claims an arrangement nobody made. It rain has no verb ending at all.",
+   "mode": "choose"
   },
   {
    "q": "The bag looks heavy. You decide, as you speak, to carry it. What do you say?",
@@ -2137,7 +2157,8 @@ textarea.write {
     "I will carry it."
    ],
    "a": "I will carry it.",
-   "why": "A decision made as you speak takes will. Going to needs a decision you had already made. The present simple is for timetables. I am carrying it says it is happening now."
+   "why": "A decision made as you speak takes will. Going to needs a decision you had already made. The present simple is for timetables. I am carrying it says it is happening now.",
+   "mode": "choose"
   },
   {
    "q": "Which instruction is correct?",
@@ -2148,7 +2169,8 @@ textarea.write {
     "Send to the form me."
    ],
    "a": "Send me the form.",
-   "why": "In the person-first order the person takes no small word. Send to me the form adds one. Send me it should be Send it to me, because the thing is a pronoun. The last one is not English word order."
+   "why": "In the person-first order the person takes no small word. Send to me the form adds one. Send me it should be Send it to me, because the thing is a pronoun. The last one is not English word order.",
+   "mode": "choose"
   },
   {
    "q": "The thing is a pronoun. Which sentence is right?",
@@ -2159,7 +2181,8 @@ textarea.write {
     "Gives it to her."
    ],
    "a": "Give it to her.",
-   "why": "When the thing is it or them, use the to order. Give her it is the order English avoids. Give it her to puts the small word last. An instruction never takes -s, so Gives is wrong."
+   "why": "When the thing is it or them, use the to order. Give her it is the order English avoids. Give it her to puts the small word last. An instruction never takes -s, so Gives is wrong.",
+   "mode": "choose"
   },
   {
    "q": "I stopped eating. What does it mean?",
@@ -2170,7 +2193,8 @@ textarea.write {
     "I do not eat that any more."
    ],
    "a": "I do not eat that any more.",
-   "why": "The -ing form points back at the thing itself, so the eating ended. I stopped to eat is the one that means I stopped so that I could eat. The other two are not about stopping at all."
+   "why": "The -ing form points back at the thing itself, so the eating ended. I stopped to eat is the one that means I stopped so that I could eat. The other two are not about stopping at all.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence tells somebody not to forget?",
@@ -2181,7 +2205,8 @@ textarea.write {
     "I will never forget booking it."
    ],
    "a": "Remember to book it.",
-   "why": "To points forward, so this one is about something still to do. The other three use the -ing form, which points back at a memory of something already done."
+   "why": "To points forward, so this one is about something still to do. The other three use the -ing form, which points back at a memory of something already done.",
+   "mode": "choose"
   },
   {
    "q": "The notice says the night service is Friday and Saturday only. You want to travel on a Wednesday night. What can you do?",
@@ -2192,7 +2217,8 @@ textarea.write {
     "Buy a night ticket from the machine."
    ],
    "a": "Take a different service, or travel on Friday.",
-   "why": "The notice limits the night service to two days, so on a Wednesday it does not exist. Buying a ticket cannot create a train, and waiting on the platform will not either."
+   "why": "The notice limits the night service to two days, so on a Wednesday it does not exist. Buying a ticket cannot create a train, and waiting on the platform will not either.",
+   "mode": "choose"
   },
   {
    "q": "What does a departure screen show that an arrival screen does not?",
@@ -2203,7 +2229,8 @@ textarea.write {
     "The time trains and planes go."
    ],
    "a": "The time trains and planes go.",
-   "why": "A departure screen lists the ones leaving. The arrival screen lists the ones getting here, so that is the wrong way round. Neither screen shows prices or staff names."
+   "why": "A departure screen lists the ones leaving. The arrival screen lists the ones getting here, so that is the wrong way round. Neither screen shows prices or staff names.",
+   "mode": "choose"
   },
   {
    "q": "From Monday onwards the shop opens at eight. What does onwards mean here?",
@@ -2214,7 +2241,8 @@ textarea.write {
     "Every Monday for a fortnight."
    ],
    "a": "From Monday, and after it too.",
-   "why": "Onwards means from that time forward, with no end given. It is not one day only, it is not earlier, and the sentence states no number of weeks."
+   "why": "Onwards means from that time forward, with no end given. It is not one day only, it is not earlier, and the sentence states no number of weeks.",
+   "mode": "choose"
   },
   {
    "q": "Which word means to give one thing and get another thing back?",
@@ -2225,7 +2253,8 @@ textarea.write {
     "obtain"
    ],
    "a": "exchange",
-   "why": "Exchange means you give one thing and get another. Provide and supply both mean give somebody what they need, and nothing comes back. Obtain means get."
+   "why": "Exchange means you give one thing and get another. Provide and supply both mean give somebody what they need, and nothing comes back. Obtain means get.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3652,31 +3681,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

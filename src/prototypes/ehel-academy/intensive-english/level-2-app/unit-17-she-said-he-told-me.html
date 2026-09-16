@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2003,7 +2020,8 @@ textarea.write {
     "She said to that the shop was shut."
    ],
    "a": "She said that the shop was shut.",
-   "why": "Say takes that and then a whole sentence, with the verb stepped back: is becomes was. She said me is the tempting one, because tell does take a person there; say never does. She told that is the same error the other way round, with the person missing. The last one adds a stray to."
+   "why": "Say takes that and then a whole sentence, with the verb stepped back: is becomes was. She said me is the tempting one, because tell does take a person there; say never does. She told that is the same error the other way round, with the person missing. The last one adds a stray to.",
+   "mode": "choose"
   },
   {
    "q": "The driver said: 'I will ring you.' How do you report it?",
@@ -2014,7 +2032,8 @@ textarea.write {
     "The driver told me would ring me."
    ],
    "a": "The driver told me that he would ring me.",
-   "why": "Will steps back to would in a report. The first option keeps will, which is the commonest error here. The third puts a person after said, and say cannot take one. The fourth has lost its subject, he."
+   "why": "Will steps back to would in a report. The first option keeps will, which is the commonest error here. The third puts a person after said, and say cannot take one. The fourth has lost its subject, he.",
+   "mode": "choose"
   },
   {
    "q": "A colleague said: 'Wait by the door.' How do you report it?",
@@ -2025,7 +2044,8 @@ textarea.write {
     "She told to wait by the door."
    ],
    "a": "She told me to wait by the door.",
-   "why": "An instruction is reported with told, then the person, then to, then the plain verb. The first option drops to. The second uses say, which cannot take a person. The fourth drops the person, and tell always needs one."
+   "why": "An instruction is reported with told, then the person, then to, then the plain verb. The first option drops to. The second uses say, which cannot take a person. The fourth drops the person, and tell always needs one.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence reports the instruction 'Do not press that button'?",
@@ -2036,7 +2056,8 @@ textarea.write {
     "She told me not to press that button."
    ],
    "a": "She told me not to press that button.",
-   "why": "Not goes in front of to. The first option is the tempting one, because it keeps the words in the order you hear them; English puts not before to here. The second leaves the direct instruction unchanged. The third uses say with a person after it."
+   "why": "Not goes in front of to. The first option is the tempting one, because it keeps the words in the order you hear them; English puts not before to here. The second leaves the direct instruction unchanged. The third uses say with a person after it.",
+   "mode": "choose"
   },
   {
    "q": "Which word fits? The office ____ me that the form was ready.",
@@ -2047,7 +2068,8 @@ textarea.write {
     "answered"
    ],
    "a": "told",
-   "why": "Me is a person, and it sits straight after the gap, so the verb must be one that takes a person there. Told does. Said is the tempting one, because the rest of the sentence fits it perfectly; it fails only on the person. Spoke needs to before a person, and answered does not take that and a sentence in this way."
+   "why": "Me is a person, and it sits straight after the gap, so the verb must be one that takes a person there. Told does. Said is the tempting one, because the rest of the sentence fits it perfectly; it fails only on the person. Spoke needs to before a person, and answered does not take that and a sentence in this way.",
+   "mode": "type"
   },
   {
    "q": "Which sentence is correct?",
@@ -2058,7 +2080,8 @@ textarea.write {
     "He told me the time."
    ],
    "a": "He told me the time.",
-   "why": "Tell the time is a fixed pair, and tell takes a person first. Said me puts a person after say. Told the time with no person leaves tell incomplete. Said to me the time has the right pieces in the wrong order: he said the time to me would be correct."
+   "why": "Tell the time is a fixed pair, and tell takes a person first. Said me puts a person after say. Told the time with no person leaves tell incomplete. Said to me the time has the right pieces in the wrong order: he said the time to me would be correct.",
+   "mode": "choose"
   },
   {
    "q": "You want the driver to ring on Friday. What do you say?",
@@ -2069,7 +2092,8 @@ textarea.write {
     "I need that you ring on Friday."
    ],
    "a": "I need you to ring on Friday.",
-   "why": "The shape is verb, person, to, plain verb. The second option is the trap: it is a correct English sentence, but it says that you will do the ringing. The third drops to, and the fourth uses that, which this pattern never takes."
+   "why": "The shape is verb, person, to, plain verb. The second option is the trap: it is a correct English sentence, but it says that you will do the ringing. The third drops to, and the fourth uses that, which this pattern never takes.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence says that a job is still waiting for you?",
@@ -2080,7 +2104,8 @@ textarea.write {
     "I have three calls for make."
    ],
    "a": "I have three calls to make.",
-   "why": "Have, then the thing, then to, then the plain verb. The first option says the calls are finished, which is the opposite. The second says you are on the telephone now. The fourth uses for, and the word in front of a plain verb here is always to."
+   "why": "Have, then the thing, then to, then the plain verb. The first option says the calls are finished, which is the opposite. The second says you are on the telephone now. The fourth uses for, and the word in front of a plain verb here is always to.",
+   "mode": "choose"
   },
   {
    "q": "On Monday she said: 'I posted it yesterday.' You report it on Wednesday. Which is right?",
@@ -2091,7 +2116,8 @@ textarea.write {
     "She said that she posted it the day before."
    ],
    "a": "She said that she posted it the day before.",
-   "why": "Yesterday moves with the speaker, so in your report it becomes the day before. The first option keeps yesterday, which now points at Tuesday rather than Sunday. The second mixes a present verb with a past time word. The third turns a finished action into a future one."
+   "why": "Yesterday moves with the speaker, so in your report it becomes the day before. The first option keeps yesterday, which now points at Tuesday rather than Sunday. The second mixes a present verb with a past time word. The third turns a finished action into a future one.",
+   "mode": "choose"
   },
   {
    "q": "Which word means from a short time ago?",
@@ -2102,7 +2128,8 @@ textarea.write {
     "immediate"
    ],
    "a": "recent",
-   "why": "Recent is about a short distance back in time. Current is the tempting one, because recent news and current news feel close; current means now, and a recent notice may already have been taken down. Former means before and not now. Immediate means with no wait at all."
+   "why": "Recent is about a short distance back in time. Current is the tempting one, because recent news and current news feel close; current means now, and a recent notice may already have been taken down. Former means before and not now. Immediate means with no wait at all.",
+   "mode": "choose"
   },
   {
    "q": "A story that is going round, that nobody has checked, is a",
@@ -2113,7 +2140,8 @@ textarea.write {
     "source"
    ],
    "a": "rumour",
-   "why": "A rumour is exactly that: unchecked, and moving from person to person. A headline is the short line at the top of a story, checked or not. A statement is something a person actually said. A source is the person or place news came from, which is what a rumour has none of."
+   "why": "A rumour is exactly that: unchecked, and moving from person to person. A headline is the short line at the top of a story, checked or not. A statement is something a person actually said. A source is the person or place news came from, which is what a rumour has none of.",
+   "mode": "choose"
   },
   {
    "q": "Somebody says 'Take your time.' What are they telling you?",
@@ -2124,7 +2152,8 @@ textarea.write {
     "Watch the clock for me."
    ],
    "a": "There is no need to hurry.",
-   "why": "The saying means use as much time as you need. The third option is the tempting one, because the separate words point at time running short; the saying means the opposite. The first is what make up your mind can mean, and the fourth is close to keep an eye on."
+   "why": "The saying means use as much time as you need. The third option is the tempting one, because the separate words point at time running short; the saying means the opposite. The first is what make up your mind can mean, and the fourth is close to keep an eye on.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3552,31 +3581,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

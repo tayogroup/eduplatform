@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2098,7 +2115,8 @@ textarea.write {
     "Yes."
    ],
    "a": "Why did you turn it down?",
-   "why": "Only the first asks for a sentence back. Did you? and Yes are closed, and Oh asks for nothing at all. An open question starts with a question word and puts the verb form before the subject: why did you."
+   "why": "Only the first asks for a sentence back. Did you? and Yes are closed, and Oh asks for nothing at all. An open question starts with a question word and puts the verb form before the subject: why did you.",
+   "mode": "choose"
   },
   {
    "q": "Which question is written correctly?",
@@ -2109,7 +2127,8 @@ textarea.write {
     "Why you did put it off?"
    ],
    "a": "Why did you put it off?",
-   "why": "After why the verb form comes before the subject: did you. The first and the last leave the order unchanged or put did in the wrong place. The third is wrong for another reason: with it, the small word goes last, so put it off."
+   "why": "After why the verb form comes before the subject: did you. The first and the last leave the order unchanged or put did in the wrong place. The third is wrong for another reason: with it, the small word goes last, so put it off.",
+   "mode": "choose"
   },
   {
    "q": "Which suggestion is correct?",
@@ -2120,7 +2139,8 @@ textarea.write {
     "What about start at eight?"
    ],
    "a": "How about starting at eight?",
-   "why": "After about you put a noun or a verb with -ing. To never follows about, a whole sentence never follows it, and the plain verb start does not work either. Starting is the form you need."
+   "why": "After about you put a noun or a verb with -ing. To never follows about, a whole sentence never follows it, and the plain verb start does not work either. Starting is the form you need.",
+   "mode": "choose"
   },
   {
    "q": "Your partner says the meeting is too long. Which reply is a suggestion built on a noun?",
@@ -2131,7 +2151,8 @@ textarea.write {
     "What about a shorter meeting?"
    ],
    "a": "What about a shorter meeting?",
-   "why": "A shorter meeting is a noun, so it follows what about directly. Finishing is correct English too, but it is an -ing word, not a noun. The second reply is a comment, and the third is an open question."
+   "why": "A shorter meeting is a noun, so it follows what about directly. Finishing is correct English too, but it is an -ing word, not a noun. The second reply is a comment, and the third is an open question.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is correct?",
@@ -2142,7 +2163,8 @@ textarea.write {
     "She after looks them."
    ],
    "a": "She looks after them.",
-   "why": "Look after never splits, so the object comes after the pair. Them is the object form; they is not. The last option moves the small word in front of the verb, which never happens."
+   "why": "Look after never splits, so the object comes after the pair. Them is the object form; they is not. The last option moves the small word in front of the verb, which never happens.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is wrong?",
@@ -2153,7 +2175,8 @@ textarea.write {
     "I put it off."
    ],
    "a": "I put off it.",
-   "why": "Put off can split, so the first and third are both correct. When the object is it or them it must sit in the middle, so I put it off is right and I put off it is not."
+   "why": "Put off can split, so the first and third are both correct. When the object is it or them it must sit in the middle, so I put it off is right and I put off it is not.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence says that the person really is a driver?",
@@ -2164,7 +2187,8 @@ textarea.write {
     "He talks like a driver."
    ],
    "a": "He works as a driver.",
-   "why": "As gives the real job. Like only says that something is similar, so the other three suggest he is not a driver at all."
+   "why": "As gives the real job. Like only says that something is similar, so the other three suggest he is not a driver at all.",
+   "mode": "choose"
   },
   {
    "q": "The sky is dark and grey. Which sentence is correct?",
@@ -2175,7 +2199,8 @@ textarea.write {
     "It looks like rain."
    ],
    "a": "It looks like rain.",
-   "why": "The sky is not rain; it is similar to rain coming, so the word is like. As would say the sky really is rain. The second option has no linking word at all, and the third has both problems together."
+   "why": "The sky is not rain; it is similar to rain coming, so the word is like. As would say the sky really is rain. The second option has no linking word at all, and the third has both problems together.",
+   "mode": "choose"
   },
   {
    "q": "Ana calls Ben every week and Ben calls Ana every week. Which sentence says this?",
@@ -2186,7 +2211,8 @@ textarea.write {
     "Ana and Ben call each other's every week."
    ],
    "a": "Ana and Ben call each other every week.",
-   "why": "Each other carries the action both ways. It never takes a plain s, so each others is wrong. Them would mean other people, not the two of them. Each other's is the possessive and needs a thing after it, as in each other's names."
+   "why": "Each other carries the action both ways. It never takes a plain s, so each others is wrong. Them would mean other people, not the two of them. Each other's is the possessive and needs a thing after it, as in each other's names.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence uses the possessive form correctly?",
@@ -2197,7 +2223,8 @@ textarea.write {
     "We know each others' names."
    ],
    "a": "We know each other's names.",
-   "why": "Each other counts as one thing, so the apostrophe goes before the s. The first has no possessive at all, and the other two add an s to each other, which never happens."
+   "why": "Each other counts as one thing, so the apostrophe goes before the s. The first has no possessive at all, and the other two add an s to each other, which never happens.",
+   "mode": "choose"
   },
   {
    "q": "Somebody says: I finish at six, the group starts at six, and the bus takes twenty minutes. Which sentence says it back best?",
@@ -2208,7 +2235,8 @@ textarea.write {
     "So you are saying the bus is slow."
    ],
    "a": "So you are saying you cannot get there in time.",
-   "why": "A summary keeps the point and drops the detail. The point is that the times do not work. The second only repeats one detail, the fourth picks a detail that was not the point, and the first adds a conclusion the speaker never reached."
+   "why": "A summary keeps the point and drops the detail. The point is that the times do not work. The second only repeats one detail, the fourth picks a detail that was not the point, and the first adds a conclusion the speaker never reached.",
+   "mode": "choose"
   },
   {
    "q": "Somebody asks: How long have you been on the team? Which answer gives the detail asked for?",
@@ -2219,7 +2247,8 @@ textarea.write {
     "About two years."
    ],
    "a": "About two years.",
-   "why": "How long asks for a length of time, so a number of years answers it. On Thursday evenings answers when, not how long. The first is a yes or no answer to a question that is not a yes or no question, and the third changes the subject."
+   "why": "How long asks for a length of time, so a number of years answers it. On Thursday evenings answers when, not how long. The first is a yes or no answer to a question that is not a yes or no question, and the third changes the subject.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3647,31 +3676,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

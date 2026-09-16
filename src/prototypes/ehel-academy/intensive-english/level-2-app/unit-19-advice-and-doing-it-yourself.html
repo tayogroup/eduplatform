@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1989,7 +2006,8 @@ textarea.write {
     "You cannot send it in writing."
    ],
    "a": "You should send it in writing.",
-   "why": "Should says it is a good idea, and the person may still decide. Must makes it necessary, the bare verb makes it an order, and cannot says it is not allowed. Must is the tempting one, because advice often feels strong."
+   "why": "Should says it is a good idea, and the person may still decide. Must makes it necessary, the bare verb makes it an order, and cannot says it is not allowed. Must is the tempting one, because advice often feels strong.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence says that a job is not necessary?",
@@ -2000,7 +2018,8 @@ textarea.write {
     "You have to ring them."
    ],
    "a": "You needn't ring them.",
-   "why": "Needn't means there is no need, so ringing is allowed and simply not required. Mustn't forbids it, shouldn't calls it a bad idea, and have to makes it necessary. Mustn't is the usual wrong choice, because both words look negative."
+   "why": "Needn't means there is no need, so ringing is allowed and simply not required. Mustn't forbids it, shouldn't calls it a bad idea, and have to makes it necessary. Mustn't is the usual wrong choice, because both words look negative.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is written correctly?",
@@ -2011,7 +2030,8 @@ textarea.write {
     "You should writing it down."
    ],
    "a": "You ought to write it down.",
-   "why": "Ought keeps its to and should never takes one, so the first drops a needed to and the second adds one that does not belong. The last changes the verb, which stays plain after every one of these words."
+   "why": "Ought keeps its to and should never takes one, so the first drops a needed to and the second adds one that does not belong. The last changes the verb, which stays plain after every one of these words.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is written correctly?",
@@ -2022,7 +2042,8 @@ textarea.write {
     "I filled the form in myself."
    ],
    "a": "I filled the form in myself.",
-   "why": "The doer is I, so the self word is myself, written as one word. Me is the plain object form, my self splits a single word in two, and himself names somebody else. My self is the tempting one because it looks like my bag."
+   "why": "The doer is I, so the self word is myself, written as one word. Me is the plain object form, my self splits a single word in two, and himself names somebody else. My self is the tempting one because it looks like my bag.",
+   "mode": "choose"
   },
   {
    "q": "She taught ____ to drive. Which word fits?",
@@ -2033,7 +2054,8 @@ textarea.write {
     "hers"
    ],
    "a": "herself",
-   "why": "The woman who taught and the woman who learnt are the same person, so the word ends in self. Her would mean a second woman, herselves is not a word, and hers means the one belonging to her."
+   "why": "The woman who taught and the woman who learnt are the same person, so the word ends in self. Her would mean a second woman, herselves is not a word, and hers means the one belonging to her.",
+   "mode": "type"
   },
   {
    "q": "Which sentence is written correctly?",
@@ -2044,7 +2066,8 @@ textarea.write {
     "I am responsible on the keys."
    ],
    "a": "I am responsible for the keys.",
-   "why": "Responsible always brings for with it. Of is the commonest wrong choice because it is the everyday joiner between two nouns, the third drops the small word altogether, and on belongs to keen."
+   "why": "Responsible always brings for with it. Of is the commonest wrong choice because it is the everyday joiner between two nouns, the third drops the small word altogether, and on belongs to keen.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is written correctly?",
@@ -2055,7 +2078,8 @@ textarea.write {
     "She is capable for doing it alone."
    ],
    "a": "She is capable of doing it alone.",
-   "why": "Capable takes of, and a verb after of ends in ing. The first uses the pattern that belongs to able to. The second keeps of but leaves the verb plain. The last swaps in the small word that belongs to responsible."
+   "why": "Capable takes of, and a verb after of ends in ing. The first uses the pattern that belongs to able to. The second keeps of but leaves the verb plain. The last swaps in the small word that belongs to responsible.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is written correctly?",
@@ -2066,7 +2090,8 @@ textarea.write {
     "I am keen on early starts."
    ],
    "a": "I am keen on early starts.",
-   "why": "Keen brings on with it, in the same way that good brings at and interested brings in. Of and to are borrowed from other adjectives, and the third leaves the pair unfinished."
+   "why": "Keen brings on with it, in the same way that good brings at and interested brings in. Of and to are borrowed from other adjectives, and the third leaves the pair unfinished.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is written correctly?",
@@ -2077,7 +2102,8 @@ textarea.write {
     "Please send it by writing."
    ],
    "a": "Please send it in writing.",
-   "why": "In writing is a fixed phrase and takes in. On and by are the small words people reach for from by hand and on purpose, and in write uses the wrong form of the word. Nothing inside the phrase can be worked out; it is learnt whole."
+   "why": "In writing is a fixed phrase and takes in. On and by are the small words people reach for from by hand and on purpose, and in write uses the wrong form of the word. Nothing inside the phrase can be worked out; it is learnt whole.",
+   "mode": "choose"
   },
   {
    "q": "Which phrase means after a long wait?",
@@ -2088,7 +2114,8 @@ textarea.write {
     "by hand"
    ],
    "a": "at last",
-   "why": "At last marks the end of a long wait. At first points at the beginning instead, on purpose gives a reason, and by hand names the way a thing was done. At first is the tempting one, because both phrases start with at."
+   "why": "At last marks the end of a long wait. At first points at the beginning instead, on purpose gives a reason, and by hand names the way a thing was done. At first is the tempting one, because both phrases start with at.",
+   "mode": "choose"
   },
   {
    "q": "I tried both keys and the door stayed shut. ____ of my keys opens it.",
@@ -2099,7 +2126,8 @@ textarea.write {
     "Either"
    ],
    "a": "Neither",
-   "why": "Not one and not the other is neither, and the verb stays short: opens. Both would say the opposite, several needs more than two things, and either would mean one of them does work."
+   "why": "Not one and not the other is neither, and the verb stays short: opens. Both would say the opposite, several needs more than two things, and either would mean one of them does work.",
+   "mode": "type"
   },
   {
    "q": "Which sentence is written correctly?",
@@ -2110,7 +2138,8 @@ textarea.write {
     "Several of the answers were wrong."
    ],
    "a": "Several of the answers were wrong.",
-   "why": "Several of counts more than two things, so were is right. Either and neither each count as one, so the first two put a plural verb where a short one belongs. The third drops the the that of needs in front of a noun."
+   "why": "Several of counts more than two things, so were is right. Either and neither each count as one, so the first two put a plural verb where a short one belongs. The third drops the the that of needs in front of a noun.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3538,31 +3567,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

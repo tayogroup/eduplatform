@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1943,7 +1960,8 @@ textarea.write {
     "If you drop a glass, it breaks."
    ],
    "a": "If it rains tomorrow, I will take the bus.",
-   "why": "Will points at one moment, and tomorrow names it. The other three are true every time, which is why they take no will at all. The ice one is the tempting choice, because it also starts with if; the test is whether you could say every time in front of it."
+   "why": "Will points at one moment, and tomorrow names it. The other three are true every time, which is why they take no will at all. The ice one is the tempting choice, because it also starts with if; the test is whether you could say every time in front of it.",
+   "mode": "choose"
   },
   {
    "q": "Complete the sentence: If the shop ____ shut, I will come back on Monday.",
@@ -1954,7 +1972,8 @@ textarea.write {
     "is being"
    ],
    "a": "is",
-   "why": "The if half stays in the present simple. Will be is the commonest wrong answer, because the sentence is about the future, but English keeps will out of the if half. Was puts the sentence in the past, and is being describes something happening at this second."
+   "why": "The if half stays in the present simple. Will be is the commonest wrong answer, because the sentence is about the future, but English keeps will out of the if half. Was puts the sentence in the past, and is being describes something happening at this second.",
+   "mode": "type"
   },
   {
    "q": "Which sentence uses unless correctly?",
@@ -1965,7 +1984,8 @@ textarea.write {
     "Unless it rains, I walked."
    ],
    "a": "Unless it rains, I will walk.",
-   "why": "Unless already means if not, so the meaning is: if it does not rain, I will walk. The first option says not twice and turns the meaning round. The second puts will in the unless half. The last one answers with a past verb for a future plan."
+   "why": "Unless already means if not, so the meaning is: if it does not rain, I will walk. The first option says not twice and turns the meaning round. The second puts will in the unless half. The last one answers with a past verb for a future plan.",
+   "mode": "choose"
   },
   {
    "q": "Choose the word: I will wait ____ she calls.",
@@ -1976,7 +1996,8 @@ textarea.write {
     "until"
    ],
    "a": "until",
-   "why": "The waiting stops at the moment she calls, and until marks that stopping point. While would mean you wait during her call. As soon as would mean you start waiting the moment she calls, which is the opposite. Whenever would make it every time she calls."
+   "why": "The waiting stops at the moment she calls, and until marks that stopping point. While would mean you wait during her call. As soon as would mean you start waiting the moment she calls, which is the opposite. Whenever would make it every time she calls.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence means: at the very moment it arrives, with no gap?",
@@ -1987,7 +2008,8 @@ textarea.write {
     "I will ring you whenever it arrives."
    ],
    "a": "I will ring you as soon as it arrives.",
-   "why": "As soon as is the one that means with no delay. While needs a stretch of time, and arriving is one moment. Until would mean you stop ringing then. Whenever makes it every time, which cannot be right for one parcel."
+   "why": "As soon as is the one that means with no delay. While needs a stretch of time, and arriving is one moment. Until would mean you stop ringing then. Whenever makes it every time, which cannot be right for one parcel.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is correct?",
@@ -1998,7 +2020,8 @@ textarea.write {
     "When the parcel will come, I ring you."
    ],
    "a": "When the parcel comes, I will ring you.",
-   "why": "The time part keeps the present simple, and the other part takes will. The first option puts will in both halves. The second breaks the word order. The last one has will in the time half only, which is the wrong half."
+   "why": "The time part keeps the present simple, and the other part takes will. The first option puts will in both halves. The second breaks the word order. The last one has will in the time half only, which is the wrong half.",
+   "mode": "choose"
   },
   {
    "q": "Choose the correct pair: I ____ the wire after I ____ work.",
@@ -2009,7 +2032,8 @@ textarea.write {
     "will inspect / finish"
    ],
    "a": "will inspect / finish",
-   "why": "One will to a sentence, and it never goes after the word after. Will inspect and will finish is the tempting answer, because both actions are in the future; only one half may carry will. Inspect and finish drops the will altogether, and will finished puts a past form after will."
+   "why": "One will to a sentence, and it never goes after the word after. Will inspect and will finish is the tempting answer, because both actions are in the future; only one half may carry will. Inspect and finish drops the will altogether, and will finished puts a past form after will.",
+   "mode": "choose"
   },
   {
    "q": "I am collecting it on Friday. What does this sentence tell you?",
@@ -2020,7 +2044,8 @@ textarea.write {
     "It happens every Friday."
    ],
    "a": "It is arranged, and it has not happened yet.",
-   "why": "On Friday is a day, and a day means later, so the -ing form is an arrangement. It would only mean happening now with a word like now or at the moment. A guess would take will, and every Friday would take the present simple: I collect it on Fridays."
+   "why": "On Friday is a day, and a day means later, so the -ing form is an arrangement. It would only mean happening now with a word like now or at the moment. A guess would take will, and every Friday would take the present simple: I collect it on Fridays.",
+   "mode": "choose"
   },
   {
    "q": "Which time word shows that the action is happening while you speak?",
@@ -2031,7 +2056,8 @@ textarea.write {
     "tomorrow"
    ],
    "a": "at the moment",
-   "why": "At the moment means this second, so the -ing form is happening now. On Friday, next week and tomorrow all point past this second, so with an -ing verb they mean an arrangement instead."
+   "why": "At the moment means this second, so the -ing form is happening now. On Friday, next week and tomorrow all point past this second, so with an -ing verb they mean an arrangement instead.",
+   "mode": "choose"
   },
   {
    "q": "A fault is:",
@@ -2042,7 +2068,8 @@ textarea.write {
     "something wrong inside a thing that stops it working."
    ],
    "a": "something wrong inside a thing that stops it working.",
-   "why": "A fault is the reason a machine stops. The first option is a refund, the second is a guarantee and the third is a replacement. The word people confuse it with is breakdown: the breakdown is what happens, and the fault is why it happened."
+   "why": "A fault is the reason a machine stops. The first option is a refund, the second is a guarantee and the third is a replacement. The word people confuse it with is breakdown: the breakdown is what happens, and the fault is why it happened.",
+   "mode": "choose"
   },
   {
    "q": "The notice says the lift is temporarily out of order. What does temporarily mean?",
@@ -2053,7 +2080,8 @@ textarea.write {
     "At any time you like."
    ],
    "a": "For a short time only.",
-   "why": "Temporarily means not for good. For good is its opposite, and the notice would not tell people to use the stairs until further notice if the lift were never coming back. Every morning would be regularly, and at any time you like is whenever."
+   "why": "Temporarily means not for good. For good is its opposite, and the notice would not tell people to use the stairs until further notice if the lift were never coming back. Every morning would be regularly, and at any time you like is whenever.",
+   "mode": "choose"
   },
   {
    "q": "Which word means every time, or at any time?",
@@ -2064,7 +2092,8 @@ textarea.write {
     "gradually"
    ],
    "a": "whenever",
-   "why": "Whenever covers both every time and at any time that suits you. Ahead means earlier than you need to, unless means if not, and gradually means slowly, a little at a time."
+   "why": "Whenever covers both every time and at any time that suits you. Ahead means earlier than you need to, unless means if not, and gradually means slowly, a little at a time.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3492,31 +3521,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

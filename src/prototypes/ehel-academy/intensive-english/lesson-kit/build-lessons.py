@@ -205,6 +205,10 @@ def lesson_payload(unit, pictures):
         "quiz": [{
             "q": q["question"], "options": [o.strip() for o in q["options"].split("|")],
             "a": q["correctAnswer"], "why": q["explanation"],
+            # "type" -> the learner writes the answer with the options beside
+            # them as a word bank; "choose" -> the four buttons. Derived by
+            # the builder, which is where the rule and its cap are written.
+            "mode": q.get("answerMode", "choose"),
         } for q in unit["quizzes"]],
         "self": [s["statement"] for s in unit["selfAssessment"]],
         "assignment": ({

@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1930,7 +1947,8 @@ textarea.write {
     "Turning left at the bank."
    ],
    "a": "Turn left at the bank.",
-   "why": "An instruction starts with the doing word: Turn left. You turns has you and an -s. The bank is on the left says where the bank is. Turning has -ing."
+   "why": "An instruction starts with the doing word: Turn left. You turns has you and an -s. The bank is on the left says where the bank is. Turning has -ing.",
+   "mode": "choose"
   },
   {
    "q": "___ the water for the tea.",
@@ -1941,7 +1959,8 @@ textarea.write {
     "You boil"
    ],
    "a": "Boil",
-   "why": "An instruction starts with the doing word as it is: Boil the water. Boils has an -s. Boiling has -ing. An instruction has no you at the start."
+   "why": "An instruction starts with the doing word as it is: Boil the water. Boils has an -s. Boiling has -ing. An instruction has no you at the start.",
+   "mode": "type"
   },
   {
    "q": "First, boil the water. ___, pour it into a cup. Finally, add milk.",
@@ -1952,7 +1971,8 @@ textarea.write {
     "Next"
    ],
    "a": "Next",
-   "why": "Next is for a step in the middle. Finally is on the last step here, and first is on step 1. Next to is a place, not a step."
+   "why": "Next is for a step in the middle. Finally is on the last step here, and first is on step 1. Next to is a place, not a step.",
+   "mode": "type"
   },
   {
    "q": "Which word starts the last step?",
@@ -1963,7 +1983,8 @@ textarea.write {
     "Then"
    ],
    "a": "Finally",
-   "why": "Finally means last of all. First starts step 1. Next and then are for the steps in the middle."
+   "why": "Finally means last of all. First starts step 1. Next and then are for the steps in the middle.",
+   "mode": "choose"
   },
   {
    "q": "Step 1: Wash the rice. Step 2: Boil the water. Step 3: Add the rice. What is the second step?",
@@ -1974,7 +1995,8 @@ textarea.write {
     "Eat the rice."
    ],
    "a": "Boil the water.",
-   "why": "The second step is Step 2: Boil the water. Wash the rice is step 1, and add the rice is step 3. Eat the rice is not on the card."
+   "why": "The second step is Step 2: Boil the water. Wash the rice is step 1, and add the rice is step 3. Eat the rice is not on the card.",
+   "mode": "choose"
   },
   {
    "q": "You are at the traffic lights. The park is to the right. What is the instruction?",
@@ -1985,7 +2007,8 @@ textarea.write {
     "Right you turn."
    ],
    "a": "Turn right.",
-   "why": "The park is to the right, so turn right. Turn on the right is wrong: say turn right. Turn left goes to the left, not to the park. Right you turn has the words in the wrong order."
+   "why": "The park is to the right, so turn right. Turn on the right is wrong: say turn right. Turn left goes to the left, not to the park. Right you turn has the words in the wrong order.",
+   "mode": "choose"
   },
   {
    "q": "Go ___ on to the bridge.",
@@ -1996,7 +2019,8 @@ textarea.write {
     "step"
    ],
    "a": "straight",
-   "why": "Go straight on: the same way, with no turns. Left needs turn: Turn left. Cross and step are doing words, so they do not go after go."
+   "why": "Go straight on: the same way, with no turns. Left needs turn: Turn left. Cross and step are doing words, so they do not go after go.",
+   "mode": "type"
   },
   {
    "q": "Which one says where the café is?",
@@ -2007,7 +2031,8 @@ textarea.write {
     "The café is on the left."
    ],
    "a": "The café is on the left.",
-   "why": "On the left says where a place is. Turn left at the café is an instruction to move. The café is left needs on the. You cross a road, not a café."
+   "why": "On the left says where a place is. Turn left at the café is an instruction to move. The café is left needs on the. You cross a road, not a café.",
+   "mode": "choose"
   },
   {
    "q": "The milk is in the fridge. The milk is ___ the fridge.",
@@ -2018,7 +2043,8 @@ textarea.write {
     "above"
    ],
    "a": "inside",
-   "why": "In the fridge is inside the fridge. Outside is not in it. Opposite has a room or a road between. Above is up from it."
+   "why": "In the fridge is inside the fridge. Outside is not in it. Opposite has a room or a road between. Above is up from it.",
+   "mode": "type"
   },
   {
    "q": "Which one is right?",
@@ -2029,7 +2055,8 @@ textarea.write {
     "The bank is opposites the park."
    ],
    "a": "The bank is opposite the park.",
-   "why": "After opposite, there is no of: opposite the park. Opposite of has an extra word. The bank opposite is has the words in the wrong order. Opposite never takes an -s."
+   "why": "After opposite, there is no of: opposite the park. Opposite of has an extra word. The bank opposite is has the words in the wrong order. Opposite never takes an -s.",
+   "mode": "choose"
   },
   {
    "q": "A sign says: BRIDGE CLOSED. Walking to the station? Turn right here. You are walking to the station. What do you do?",
@@ -2040,7 +2067,8 @@ textarea.write {
     "Wait at the bridge."
    ],
    "a": "Turn right.",
-   "why": "The sign says: Turn right here. The bridge is closed, so you can't cross it. Turn left is the way to the market. Waiting does not take you to the station."
+   "why": "The sign says: Turn right here. The bridge is closed, so you can't cross it. Turn left is the way to the market. Waiting does not take you to the station.",
+   "mode": "choose"
   },
   {
    "q": "You write your name on the first line of a page. Where is it?",
@@ -2051,7 +2079,8 @@ textarea.write {
     "At the top of the page."
    ],
    "a": "At the top of the page.",
-   "why": "A page starts at the top. The first line is at the top. The bottom and the end are the last line. The middle is between the top and the bottom."
+   "why": "A page starts at the top. The first line is at the top. The bottom and the end are the last line. The middle is between the top and the bottom.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3477,31 +3506,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

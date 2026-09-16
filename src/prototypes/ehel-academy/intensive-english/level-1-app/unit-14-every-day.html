@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1938,7 +1955,8 @@ textarea.write {
     "working"
    ],
    "a": "works",
-   "why": "Eva is she, and every afternoon is again and again, not now: works. Work has no change for she. Is and work do not go together. Working needs is before it, and every afternoon is not now."
+   "why": "Eva is she, and every afternoon is again and again, not now: works. Work has no change for she. Is and work do not go together. Working needs is before it, and every afternoon is not now.",
+   "mode": "type"
   },
   {
    "q": "My brother ___ English every evening.",
@@ -1949,7 +1967,8 @@ textarea.write {
     "studies"
    ],
    "a": "studies",
-   "why": "Study changes for he: the y goes, and it is studies. Studys keeps the y. Study has no change for he. Is and study do not go together."
+   "why": "Study changes for he: the y goes, and it is studies. Studys keeps the y. Study has no change for he. Is and study do not go together.",
+   "mode": "type"
   },
   {
    "q": "Which line has the capital letters right?",
@@ -1960,7 +1979,8 @@ textarea.write {
     "On Monday, Eva Goes To The Library."
    ],
    "a": "On Monday, Eva goes to the library.",
-   "why": "Capitals go on the first word, on names and on days: On, Monday, Eva. The second line needs Monday. The third needs On and Eva. Goes, to, the and library are not names: no capitals."
+   "why": "Capitals go on the first word, on names and on days: On, Monday, Eva. The second line needs Monday. The third needs On and Eva. Goes, to, the and library are not names: no capitals.",
+   "mode": "choose"
   },
   {
    "q": "Look! The bus ___.",
@@ -1971,7 +1991,8 @@ textarea.write {
     "are coming"
    ],
    "a": "is coming",
-   "why": "Look! means it is happening now: is coming. Comes is for every day. Come has no change for it. Are is for we, you and they, not for the bus."
+   "why": "Look! means it is happening now: is coming. Comes is for every day. Come has no change for it. Are is for we, you and they, not for the bus.",
+   "mode": "choose"
   },
   {
    "q": "Today is Sunday. Dan is not working. He ___ at home.",
@@ -1982,7 +2003,8 @@ textarea.write {
     "relaxing"
    ],
    "a": "is relaxing",
-   "why": "Today, now: is relaxing. Relaxes is for every day, not today. Relax has no change for he. Relaxing needs is before it."
+   "why": "Today, now: is relaxing. Relaxes is for every day, not today. Relax has no change for he. Relaxing needs is before it.",
+   "mode": "type"
   },
   {
    "q": "Which line is right?",
@@ -1993,7 +2015,8 @@ textarea.write {
     "I always gets up at six."
    ],
    "a": "I always get up at six.",
-   "why": "Always goes before the doing word. At the end of the line is not right. Don't never says no two times. Gets is for he and she, not for I."
+   "why": "Always goes before the doing word. At the end of the line is not right. Don't never says no two times. Gets is for he and she, not for I.",
+   "mode": "choose"
   },
   {
    "q": "Which line is right?",
@@ -2004,7 +2027,8 @@ textarea.write {
     "She is never late."
    ],
    "a": "She is never late.",
-   "why": "With is, the how-often word goes after it: is never. Never is before is in the first line. The second has never at the end. The third has two no words and no is."
+   "why": "With is, the how-often word goes after it: is never. Never is before is in the first line. The second has never at the end. The third has two no words and no is.",
+   "mode": "choose"
   },
   {
    "q": "You do a thing on five or six days of the week. Which word is it?",
@@ -2015,7 +2039,8 @@ textarea.write {
     "always"
    ],
    "a": "usually",
-   "why": "Usually is nearly every time: five or six days. Always is all seven days. Sometimes is one or two days. Never is no days at all."
+   "why": "Usually is nearly every time: five or six days. Always is all seven days. Sometimes is one or two days. Never is no days at all.",
+   "mode": "choose"
   },
   {
    "q": "Tea or coffee? I ___ tea.",
@@ -2026,7 +2051,8 @@ textarea.write {
     "preferring"
    ],
    "a": "prefer",
-   "why": "Prefer takes no -ing, even now: I prefer tea. Am preferring adds -ing. Prefers is for he and she. Preferring has no am, and prefer takes no -ing."
+   "why": "Prefer takes no -ing, even now: I prefer tea. Am preferring adds -ing. Prefers is for he and she. Preferring has no am, and prefer takes no -ing.",
+   "mode": "type"
   },
   {
    "q": "What does weekday ___?",
@@ -2037,7 +2063,8 @@ textarea.write {
     "is mean"
    ],
    "a": "mean",
-   "why": "After does, the word does not change: What does it mean? Means is for a line with no does: It means Monday to Friday. Meaning takes no -ing here. Is and mean do not go together."
+   "why": "After does, the word does not change: What does it mean? Means is for a line with no does: It means Monday to Friday. Meaning takes no -ing here. Is and mean do not go together.",
+   "mode": "choose"
   },
   {
    "q": "Which one do you eat?",
@@ -2048,7 +2075,8 @@ textarea.write {
     "housework"
    ],
    "a": "lunch",
-   "why": "Lunch is the food you eat at one or two o'clock. A weekday is Monday to Friday. A shower is water for washing. Housework is jobs at home."
+   "why": "Lunch is the food you eat at one or two o'clock. A weekday is Monday to Friday. A shower is water for washing. Housework is jobs at home.",
+   "mode": "choose"
   },
   {
    "q": "A notice says: Saturday, 10 o'clock to 4 o'clock. You are free at 5 on Saturday. Can you go?",
@@ -2059,7 +2087,8 @@ textarea.write {
     "No. It is closed at 5 on Saturday."
    ],
    "a": "No. It is closed at 5 on Saturday.",
-   "why": "The notice says 10 o'clock to 4 o'clock. At 5 it is closed. It is not always open. It is open on Saturday, but not at 5. Never is wrong: it is open from 10 to 4."
+   "why": "The notice says 10 o'clock to 4 o'clock. At 5 it is closed. It is not always open. It is open on Saturday, but not at 5. Never is wrong: it is open from 10 to 4.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3485,31 +3514,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

@@ -411,6 +411,31 @@ Pre-A1 a long sentence is not harder, it is unreadable.
 45b. **At least two items ask the learner to PRODUCE before choosing.** The stem
     poses the task — "You want to say you did this yesterday. Which is right?" —
     rather than presenting four forms to compare cold.
+45c. **An item whose stem carries a gap is ANSWERED BY WRITING IT, and the
+    builder decides which.** All 480 items across the two levels were multiple
+    choice, so a learner practised production in `activities` and was assessed
+    only on recognition. Where the stem has a blank and the options are short,
+    the page now shows those four options as a word bank and asks the learner to
+    write the answer: as well defined as the buttons were, but they must pick it
+    AND spell it. Marked on meaning — case, surrounding spaces and a trailing
+    full stop are forgiven, the spelling is not.
+
+    You do not mark this up. The builder derives it (`answerMode`), capped at
+    FOUR per unit and spread through the quiz, because a unit that is 11 of 12
+    typed has only swapped one monoculture for another. Two things follow for
+    you as the author:
+
+    - **Write the gap into the stem where the item is about a form.** "Yesterday
+      I ___ in the garden" can be written; "Which sentence is right?" cannot,
+      because its stem means nothing without the options. Both are legitimate
+      items — but only the first can become anything other than a tap.
+    - **Keep the options short where you can.** Four one-word options can be a
+      word bank; four full sentences cannot, so that item stays a choice however
+      good it is.
+
+    Six units currently have no item whose stem carries a gap and are all
+    multiple choice for that reason. That is reported by the build, not failed:
+    rewriting a good item to meet a quota would be the worse trade.
 
 #### I. The AI tutor
 

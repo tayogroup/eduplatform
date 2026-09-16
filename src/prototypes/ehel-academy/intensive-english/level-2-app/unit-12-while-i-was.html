@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2009,7 +2026,8 @@ textarea.write {
     "was teach"
    ],
    "a": "taught",
-   "why": "teach does not add -ed. Its past form is taught. Teached is the tempting one, because most verbs really do add -ed, but these eight change shape instead. Teachs is not a word, and was teach has no -ing on the end."
+   "why": "teach does not add -ed. Its past form is taught. Teached is the tempting one, because most verbs really do add -ed, but these eight change shape instead. Teachs is not a word, and was teach has no -ing on the end.",
+   "mode": "type"
   },
   {
    "q": "I ______ down the stairs when the lift stopped.",
@@ -2020,7 +2038,8 @@ textarea.write {
     "walking"
    ],
    "a": "was walking",
-   "why": "Walking down the stairs took time, so it is the long action and takes was with -ing. Walked and went are past forms, and they would make the walking a short event, which it was not. Walking on its own has no was in front of it."
+   "why": "Walking down the stairs took time, so it is the long action and takes was with -ing. Walked and went are past forms, and they would make the walking a short event, which it was not. Walking on its own has no was in front of it.",
+   "mode": "choose"
   },
   {
    "q": "The shop ______ I bought it was near the station.",
@@ -2031,7 +2050,8 @@ textarea.write {
     "what"
    ],
    "a": "where",
-   "why": "A shop is a place, and a place takes where. When names a time, who names a person, and what cannot be used here at all."
+   "why": "A shop is a place, and a place takes where. When names a time, who names a person, and what cannot be used here at all.",
+   "mode": "type"
   },
   {
    "q": "The shift started ______ six o'clock.",
@@ -2042,7 +2062,8 @@ textarea.write {
     "at"
    ],
    "a": "at",
-   "why": "A clock time takes at: at six o'clock. In goes with a part of the day or a month: in the morning, in May. On goes with a day: on Monday. During goes with something that lasts: during the shift."
+   "why": "A clock time takes at: at six o'clock. In goes with a part of the day or a month: in the morning, in May. On goes with a day: on Monday. During goes with something that lasts: during the shift.",
+   "mode": "choose"
   },
   {
    "q": "Which question is written correctly?",
@@ -2053,7 +2074,8 @@ textarea.write {
     "She did taught you the job?"
    ],
    "a": "Did she teach you the job?",
-   "why": "did already carries the past, so the verb beside it goes back to its plain form: teach. The first option keeps the past form as well, which is the commonest slip. The third adds an s that belongs to the present, and the fourth is not a question at all."
+   "why": "did already carries the past, so the verb beside it goes back to its plain form: teach. The first option keeps the past form as well, which is the commonest slip. The third adds an s that belongs to the present, and the fourth is not a question at all.",
+   "mode": "choose"
   },
   {
    "q": "She ______ us out of the basement.",
@@ -2064,7 +2086,8 @@ textarea.write {
     "was led"
    ],
    "a": "led",
-   "why": "The past form of lead is led, with one e. Leaded and leded are both attempts to add -ed, and neither is English. Was led would mean somebody took her, not that she took us."
+   "why": "The past form of lead is led, with one e. Leaded and leded are both attempts to add -ed, and neither is English. Was led would mean somebody took her, not that she took us.",
+   "mode": "type"
   },
   {
    "q": "Which sentence puts the comma in the right place?",
@@ -2075,7 +2098,8 @@ textarea.write {
     "While I was cooking, the power went off."
    ],
    "a": "While I was cooking, the power went off.",
-   "why": "The comma goes in only when the while part comes first, and it goes at the end of that part. The first option needs no comma at all, because the while part is not at the front. The second is missing it, and the third puts it straight after while, where nothing has been said yet."
+   "why": "The comma goes in only when the while part comes first, and it goes at the end of that part. The first option needs no comma at all, because the while part is not at the front. The second is missing it, and the third puts it straight after while, where nothing has been said yet.",
+   "mode": "choose"
   },
   {
    "q": "I went ______ the basement to find the tools.",
@@ -2086,7 +2110,8 @@ textarea.write {
     "at"
    ],
    "a": "into",
-   "why": "This is movement from outside to inside, and movement takes into. In would say where you already were, not where you went. On and at cannot be used for going inside a place."
+   "why": "This is movement from outside to inside, and movement takes into. In would say where you already were, not where you went. On and at cannot be used for going inside a place.",
+   "mode": "choose"
   },
   {
    "q": "The lift stopped and nobody could get out. That was the ______ .",
@@ -2097,7 +2122,8 @@ textarea.write {
     "consequence"
    ],
    "a": "situation",
-   "why": "The situation is how things are at one moment, especially when there is a problem, and that is what this sentence describes. The solution would be the thing that ended it. A detail is one small piece of information, and a consequence is something that happens later because of it."
+   "why": "The situation is how things are at one moment, especially when there is a problem, and that is what this sentence describes. The solution would be the thing that ended it. A detail is one small piece of information, and a consequence is something that happens later because of it.",
+   "mode": "type"
   },
   {
    "q": "I still remember the day ______ it happened.",
@@ -2108,7 +2134,8 @@ textarea.write {
     "that is"
    ],
    "a": "when",
-   "why": "A day is a time, and a time takes when. Where names a place. Which is for a thing, and a day here is not a thing you point at. That is would start a new sentence instead of joining this one."
+   "why": "A day is a time, and a time takes when. Where names a place. Which is for a thing, and a day here is not a thing you point at. That is would start a new sentence instead of joining this one.",
+   "mode": "choose"
   },
   {
    "q": "The incident record says never to leave anything in a lift doorway, on any floor. What does that mean for a person carrying a box on floor 2?",
@@ -2119,7 +2146,8 @@ textarea.write {
     "They must not put it down in the doorway at all."
    ],
    "a": "They must not put it down in the doorway at all.",
-   "why": "The record says on any floor, so floor 2 is included, and anything in the doorway stops the doors closing. The first option reads the floor number and ignores the words after it. Reporting is for after an incident, and nothing in the record allows one shift or any other length of time."
+   "why": "The record says on any floor, so floor 2 is included, and anything in the doorway stops the doors closing. The first option reads the floor number and ignores the words after it. Reporting is for after an incident, and nothing in the record allows one shift or any other length of time.",
+   "mode": "choose"
   },
   {
    "q": "In Reading 1 the incident has one consequence. What does consequence mean there?",
@@ -2130,7 +2158,8 @@ textarea.write {
     "One small piece of information about the incident."
    ],
    "a": "Something that happened later, because of the incident.",
-   "why": "Everything after the word came later and came from the incident: everybody used the stairs, the stairs were wet, and a notice went up. The reason is the cause, not the consequence, and the two point in opposite directions. The third option describes a person, and the fourth is what detail means."
+   "why": "Everything after the word came later and came from the incident: everybody used the stairs, the stairs were wet, and a notice went up. The reason is the cause, not the consequence, and the two point in opposite directions. The third option describes a person, and the fourth is what detail means.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3558,31 +3587,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

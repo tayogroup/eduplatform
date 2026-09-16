@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2005,7 +2022,8 @@ textarea.write {
     "I bought a less egg this week."
    ],
    "a": "I bought fewer eggs this week.",
-   "why": "Eggs can be counted, so the word is fewer. Less goes with things you cannot count, like water. Fewer needs the plural form eggs, not egg. The last one puts a in front of a smaller amount, which English does not do."
+   "why": "Eggs can be counted, so the word is fewer. Less goes with things you cannot count, like water. Fewer needs the plural form eggs, not egg. The last one puts a in front of a smaller amount, which English does not do.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence compares two amounts of water correctly?",
@@ -2016,7 +2034,8 @@ textarea.write {
     "I use not as less water as you."
    ],
    "a": "I use not as much water as you.",
-   "why": "Water cannot be counted, so the phrase is not as much. Not as many is for countable nouns. Fewer and less never follow as: the pair is as much or as many."
+   "why": "Water cannot be counted, so the phrase is not as much. Not as many is for countable nouns. Fewer and less never follow as: the pair is as much or as many.",
+   "mode": "choose"
   },
   {
    "q": "Your bus arrived earlier than it usually does. Which sentence says it?",
@@ -2027,7 +2046,8 @@ textarea.write {
     "The bus came more sooner than usual."
    ],
    "a": "The bus came sooner than usual.",
-   "why": "Soon is a short word, so it adds -er: sooner. More soon uses the long-word way instead. The soonest picks the top of a group and cannot take than. More sooner uses both ways at once."
+   "why": "Soon is a short word, so it adds -er: sooner. More soon uses the long-word way instead. The soonest picks the top of a group and cannot take than. More sooner uses both ways at once.",
+   "mode": "choose"
   },
   {
    "q": "You walk to work. Which sentence is right?",
@@ -2038,7 +2058,8 @@ textarea.write {
     "I go to work on foot."
    ],
    "a": "I go to work on foot.",
-   "why": "On foot is a fixed phrase and you learn it whole. By is for a vehicle, so by foot is wrong and on bus is wrong the other way round. With is for a tool you hold, not for walking."
+   "why": "On foot is a fixed phrase and you learn it whole. By is for a vehicle, so by foot is wrong and on bus is wrong the other way round. With is for a tool you hold, not for walking.",
+   "mode": "choose"
   },
   {
    "q": "Somebody helped you for nothing. Which word names the thing they showed?",
@@ -2049,7 +2070,8 @@ textarea.write {
     "kinder"
    ],
    "a": "kindness",
-   "why": "Kindness is the noun, and the sentence needs a thing. Kind is the describing word. Kindly says how something is done. Kinder compares two people."
+   "why": "Kindness is the noun, and the sentence needs a thing. Kind is the describing word. Kindly says how something is done. Kinder compares two people.",
+   "mode": "choose"
   },
   {
    "q": "The word timetable is made of two words joined. Which two?",
@@ -2060,7 +2082,8 @@ textarea.write {
     "timet and able"
    ],
    "a": "time and table",
-   "why": "A timetable is a table of times, so the two words are time and table. Able is a different word and is not inside this one. The other two split the letters in places that make no words at all."
+   "why": "A timetable is a table of times, so the two words are time and table. Able is a different word and is not inside this one. The other two split the letters in places that make no words at all.",
+   "mode": "choose"
   },
   {
    "q": "You started this job in March, and you are still there. Which sentence is right?",
@@ -2071,7 +2094,8 @@ textarea.write {
     "I have worked here since three months."
    ],
    "a": "I have worked here since March.",
-   "why": "Since names the point when it started, and something still true takes have worked. The first one uses the plain present, which does not reach back to March. For needs a length of time, not a month name, and since needs a point, not a length."
+   "why": "Since names the point when it started, and something still true takes have worked. The first one uses the plain present, which does not reach back to March. For needs a length of time, not a month name, and since needs a point, not a length.",
+   "mode": "choose"
   },
   {
    "q": "Nothing happened in the film, and you fell asleep. How do you describe the film and yourself?",
@@ -2082,7 +2106,8 @@ textarea.write {
     "The film was boring, and I was bored."
    ],
    "a": "The film was boring, and I was bored.",
-   "why": "The -ing form describes the thing that causes the feeling, so the film was boring. The -ed form describes the person who feels it, so you were bored. The other three swap one or both of them."
+   "why": "The -ing form describes the thing that causes the feeling, so the film was boring. The -ed form describes the person who feels it, so you were bored. The other three swap one or both of them.",
+   "mode": "choose"
   },
   {
    "q": "There is a fire door, and people must never block it. Which sentence says that?",
@@ -2093,7 +2118,8 @@ textarea.write {
     "You could block the fire door."
    ],
    "a": "You mustn't block the fire door.",
-   "why": "Mustn't says a thing is forbidden. Don't need to and needn't both say it is not necessary, which is the opposite of forbidden. Could says it is merely possible."
+   "why": "Mustn't says a thing is forbidden. Don't need to and needn't both say it is not necessary, which is the opposite of forbidden. Could says it is merely possible.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence says what always happens?",
@@ -2104,7 +2130,8 @@ textarea.write {
     "If you heat water enough, it boiled."
    ],
    "a": "If you heat water enough, it boils.",
-   "why": "For something always true, both halves take the present simple. Will does not follow if in this pattern. The other two put one half in the past, which turns an always-true fact into one occasion."
+   "why": "For something always true, both halves take the present simple. Will does not follow if in this pattern. The other two put one half in the past, which turns an always-true fact into one occasion.",
+   "mode": "choose"
   },
   {
    "q": "One action cut across another one. Which sentence is right?",
@@ -2115,7 +2142,8 @@ textarea.write {
     "I cook when the power went off."
    ],
    "a": "I was cooking when the power went off.",
-   "why": "The long background action takes was plus -ing, and the short action that cuts across it takes the past simple. The first swaps them round. The second puts both in the long form, so nothing cuts across. The last one mixes present and past."
+   "why": "The long background action takes was plus -ing, and the short action that cuts across it takes the past simple. The first swaps them round. The second puts both in the long form, so nothing cuts across. The last one mixes present and past.",
+   "mode": "choose"
   },
   {
    "q": "The notice says the kitchen closes at 2 on Saturday. How do you report that fixed time?",
@@ -2126,7 +2154,8 @@ textarea.write {
     "The kitchen closes at 2 on Saturday."
    ],
    "a": "The kitchen closes at 2 on Saturday.",
-   "why": "A time on a timetable or a notice takes the present simple. Is closing claims an arrangement somebody made with a person. Will close is a decision made as you speak. Going to needs a decision made earlier or something you can see coming."
+   "why": "A time on a timetable or a notice takes the present simple. Is closing claims an arrangement somebody made with a person. Will close is a decision made as you speak. Going to needs a decision made earlier or something you can see coming.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3553,31 +3582,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

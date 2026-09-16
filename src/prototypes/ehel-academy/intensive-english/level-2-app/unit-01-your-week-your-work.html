@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2075,7 +2092,8 @@ textarea.write {
     "doing"
    ],
    "a": "does",
-   "why": "My manager is she or he, so do becomes does. Do is the form for I, we and they. Dos is not a word. Doing needs is in front of it."
+   "why": "My manager is she or he, so do becomes does. Do is the form for I, we and they. Dos is not a word. Doing needs is in front of it.",
+   "mode": "type"
   },
   {
    "q": "She ___ thirty names on one sheet.",
@@ -2086,7 +2104,8 @@ textarea.write {
     "having"
    ],
    "a": "has",
-   "why": "After she, have becomes has. Have is the form for I, we and they. Haves is not a word. Having needs is in front of it."
+   "why": "After she, have becomes has. Have is the form for I, we and they. Haves is not a word. Having needs is in front of it.",
+   "mode": "choose"
   },
   {
    "q": "The last bus ___ at ten.",
@@ -2097,7 +2116,8 @@ textarea.write {
     "going"
    ],
    "a": "goes",
-   "why": "The bus is it, so go becomes goes. Gos is the wrong spelling, because go takes es. Go is the plain form. Going needs is in front of it."
+   "why": "The bus is it, so go becomes goes. Gos is the wrong spelling, because go takes es. Go is the plain form. Going needs is in front of it.",
+   "mode": "type"
   },
   {
    "q": "He ___ his shift at eight.",
@@ -2108,7 +2128,8 @@ textarea.write {
     "finishes"
    ],
    "a": "finishes",
-   "why": "Finish ends in sh, so it takes es: finishes. Finishs is the wrong spelling. Finish has no change after he. Finishing needs is in front of it."
+   "why": "Finish ends in sh, so it takes es: finishes. Finishs is the wrong spelling. Finish has no change after he. Finishing needs is in front of it.",
+   "mode": "choose"
   },
   {
    "q": "Is there ___ for me to do today?",
@@ -2119,7 +2140,8 @@ textarea.write {
     "anyone"
    ],
    "a": "anything",
-   "why": "This is a question, so it takes anything. Something is for a plain sentence. Nothing would turn the question into an answer. Anyone is a person, not a thing."
+   "why": "This is a question, so it takes anything. Something is for a plain sentence. Nothing would turn the question into an answer. Anyone is a person, not a thing.",
+   "mode": "choose"
   },
   {
    "q": "I did not take ___ from the staff room.",
@@ -2130,7 +2152,8 @@ textarea.write {
     "everyone"
    ],
    "a": "anything",
-   "why": "The line already has not, so it takes anything. Nothing would give you two nots in one line. Something does not go after not. Everyone is a person, not a thing."
+   "why": "The line already has not, so it takes anything. Nothing would give you two nots in one line. Something does not go after not. Everyone is a person, not a thing.",
+   "mode": "type"
   },
   {
    "q": "___ on the early shift attends the training.",
@@ -2141,7 +2164,8 @@ textarea.write {
     "Nothing"
    ],
    "a": "Everyone",
-   "why": "Everyone means every person in the group, and all of them attend. Anyone means any person at all, which is a different idea. Anything and nothing are things, not people."
+   "why": "Everyone means every person in the group, and all of them attend. Anyone means any person at all, which is a different idea. Anything and nothing are things, not people.",
+   "mode": "choose"
   },
   {
    "q": "What is your new job ___? It is busy but normal.",
@@ -2152,7 +2176,8 @@ textarea.write {
     "like"
    ],
    "a": "like",
-   "why": "The answer describes the job, so the question takes like. About asks for the subject of a text or a talk. For and with do not make a question here."
+   "why": "The answer describes the job, so the question takes like. About asks for the subject of a text or a talk. For and with do not make a question here.",
+   "mode": "choose"
   },
   {
    "q": "The email is ___ my wage.",
@@ -2163,7 +2188,8 @@ textarea.write {
     "of"
    ],
    "a": "about",
-   "why": "About names the subject of the email. Like would mean the email is similar to a wage. As and of do not work after is here."
+   "why": "About names the subject of the email. Like would mean the email is similar to a wage. As and of do not work after is here.",
+   "mode": "type"
   },
   {
    "q": "I need ___ the room before eight.",
@@ -2174,7 +2200,8 @@ textarea.write {
     "prepares"
    ],
    "a": "to prepare",
-   "why": "Need takes to and the plain word. Preparing is the ing form, and need does not take it. Prepare on its own is missing the to. Prepares is the he and she form."
+   "why": "Need takes to and the plain word. Preparing is the ing form, and need does not take it. Prepare on its own is missing the to. Prepares is the he and she form.",
+   "mode": "choose"
   },
   {
    "q": "She finished ___ the boxes at four.",
@@ -2185,7 +2212,8 @@ textarea.write {
     "organises"
    ],
    "a": "organising",
-   "why": "Finish takes the ing form. Finish never takes to. Organise on its own cannot follow finished. Organises is the he and she form."
+   "why": "Finish takes the ing form. Finish never takes to. Organise on its own cannot follow finished. Organises is the he and she form.",
+   "mode": "choose"
   },
   {
    "q": "Which word means the money you get for your work?",
@@ -2196,7 +2224,8 @@ textarea.write {
     "wage"
    ],
    "a": "wage",
-   "why": "A wage is the money you get for your work. A shift is the hours you work in one day. A task is one small job. Training is lessons that show you how to do a job."
+   "why": "A wage is the money you get for your work. A shift is the hours you work in one day. A task is one small job. Training is lessons that show you how to do a job.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3622,31 +3651,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

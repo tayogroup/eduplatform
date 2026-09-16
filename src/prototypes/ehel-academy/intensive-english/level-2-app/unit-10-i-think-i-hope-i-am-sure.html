@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2075,7 +2092,8 @@ textarea.write {
     "I think that closes at five."
    ],
    "a": "I think the shop closes at five.",
-   "why": "After I think comes a whole sentence, with its own subject and its own verb: the shop closes at five. The second option puts the verb before the subject. The third drops the s from closes. The fourth has no subject at all."
+   "why": "After I think comes a whole sentence, with its own subject and its own verb: the shop closes at five. The second option puts the verb before the subject. The third drops the s from closes. The fourth has no subject at all.",
+   "mode": "choose"
   },
   {
    "q": "Which is the usual way to say I think it is not open?",
@@ -2086,7 +2104,8 @@ textarea.write {
     "I am not think it is open."
    ],
    "a": "I do not think it is open.",
-   "why": "English moves the not to the front here, and it needs do in front of it. I not think has no do. I think it is not to open adds a to that does not belong. I am not think mixes am with think."
+   "why": "English moves the not to the front here, and it needs do in front of it. I not think has no do. I think it is not to open adds a to that does not belong. I am not think mixes am with think.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: The queue was long, ... I waited outside.",
@@ -2097,7 +2116,8 @@ textarea.write {
     "otherwise"
    ],
    "a": "so",
-   "why": "The long queue is the reason you waited, and so gives the result. When would say at what moment, which is not the point. Although would make the second half a surprise. Otherwise would say what happens if you do not wait."
+   "why": "The long queue is the reason you waited, and so gives the result. When would say at what moment, which is not the point. Although would make the second half a surprise. Otherwise would say what happens if you do not wait.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: I always check the list ... I leave the house.",
@@ -2108,7 +2128,8 @@ textarea.write {
     "when"
    ],
    "a": "when",
-   "why": "The checking happens at the moment you leave, so it takes when. So and therefore would both say the list makes you leave, which is not the meaning. Besides adds a second reason, and there is no first one here."
+   "why": "The checking happens at the moment you leave, so it takes when. So and therefore would both say the list makes you leave, which is not the meaning. Besides adds a second reason, and there is no first one here.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence has the comma in the right place?",
@@ -2119,7 +2140,8 @@ textarea.write {
     "When the door opens please go in,"
    ],
    "a": "When the door opens, please go in.",
-   "why": "When the when part comes first, the comma goes at the end of it, just before the second half. The other three cut the sentence in the wrong place, or leave the comma hanging at the end."
+   "why": "When the when part comes first, the comma goes at the end of it, just before the second half. The other three cut the sentence in the wrong place, or leave the comma hanging at the end.",
+   "mode": "choose"
   },
   {
    "q": "You are at a desk and you do not know the person. Which request is politest?",
@@ -2130,7 +2152,8 @@ textarea.write {
     "Form, please."
    ],
    "a": "Could I have a form, please?",
-   "why": "Could plus please is the soft shape you use with somebody you do not know. Give me is an order. I want says what you want, not what you are asking for. Form, please is short but has no request in it."
+   "why": "Could plus please is the soft shape you use with somebody you do not know. Give me is an order. I want says what you want, not what you are asking for. Form, please is short but has no request in it.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence says that a thing is NOT allowed?",
@@ -2141,7 +2164,8 @@ textarea.write {
     "You could use that door."
    ],
    "a": "You mustn't use that door.",
-   "why": "Mustn't says it is not allowed. Need says it is necessary, which is the opposite kind of rule. Would like says what somebody wants. Could says it is possible or polite."
+   "why": "Mustn't says it is not allowed. Need says it is necessary, which is the opposite kind of rule. Would like says what somebody wants. Could says it is possible or polite.",
+   "mode": "choose"
   },
   {
    "q": "Somebody asks: Do you mind if I sit here? You are happy for them to sit. What do you say?",
@@ -2152,7 +2176,8 @@ textarea.write {
     "No, not at all."
    ],
    "a": "No, not at all.",
-   "why": "Mind means feel that something is a problem, so no means there is no problem. Yes, I mind and Yes, of course I mind both say it is a problem. Yes, please sit sounds friendly but answers a different question."
+   "why": "Mind means feel that something is a problem, so no means there is no problem. Yes, I mind and Yes, of course I mind both say it is a problem. Yes, please sit sounds friendly but answers a different question.",
+   "mode": "choose"
   },
   {
    "q": "Add the tag: It isn't far, ...?",
@@ -2163,7 +2188,8 @@ textarea.write {
     "it is?"
    ],
    "a": "is it?",
-   "why": "The sentence is already negative, so the tag is positive: is it? Isn't it would make two negatives. Does it needs a different verb. It is has the words the wrong way round for a tag."
+   "why": "The sentence is already negative, so the tag is positive: is it? Isn't it would make two negatives. Does it needs a different verb. It is has the words the wrong way round for a tag.",
+   "mode": "choose"
   },
   {
    "q": "Your voice goes UP at the end of a tag question. What does that mean?",
@@ -2174,7 +2200,8 @@ textarea.write {
     "You are asking for permission."
    ],
    "a": "You are not sure, and you want an answer.",
-   "why": "A rising voice turns the tag into a real question. A falling voice is the one that asks for agreement. A tag says nothing about being angry, and permission is asked with may or could."
+   "why": "A rising voice turns the tag into a real question. A falling voice is the one that asks for agreement. A tag says nothing about being angry, and permission is asked with may or could.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right joining word: The drivers are polite. ..., the bus is often late.",
@@ -2185,7 +2212,8 @@ textarea.write {
     "Otherwise"
    ],
    "a": "However",
-   "why": "The second idea is different from the first, and however marks that. Therefore would make the lateness a result of the drivers being polite. Besides would add a second reason on the same side. Otherwise would say what happens if something is not done."
+   "why": "The second idea is different from the first, and however marks that. Therefore would make the lateness a result of the drivers being polite. Besides would add a second reason on the same side. Otherwise would say what happens if something is not done.",
+   "mode": "choose"
   },
   {
    "q": "Which word means think that something is probably not true?",
@@ -2196,7 +2224,8 @@ textarea.write {
     "doubt"
    ],
    "a": "doubt",
-   "why": "Doubt is the word for thinking something is probably not true. Insist means say it again and again. Approve means think it is good. Suppose means think it is probably true, which is the other way round."
+   "why": "Doubt is the word for thinking something is probably not true. Insist means say it again and again. Approve means think it is good. Suppose means think it is probably true, which is the other way round.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3623,31 +3652,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

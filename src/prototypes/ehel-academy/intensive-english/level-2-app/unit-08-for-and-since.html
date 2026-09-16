@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2019,7 +2036,8 @@ textarea.write {
     "I am living here since March."
    ],
    "a": "I have lived here since March.",
-   "why": "Have plus the past form shows it began before now and is still true. Since names a starting point, and March is a point. I live here since March uses the wrong verb form. Since three years puts a length after since, and a length needs for."
+   "why": "Have plus the past form shows it began before now and is still true. Since names a starting point, and March is a point. I live here since March uses the wrong verb form. Since three years puts a length after since, and a length needs for.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: She has worked at the chemist ... eight months.",
@@ -2030,7 +2048,8 @@ textarea.write {
     "ago"
    ],
    "a": "for",
-   "why": "Eight months is a length of time, so it takes for. Since needs a starting point, like last April. From and ago do not go with this verb form here."
+   "why": "Eight months is a length of time, so it takes for. Since needs a starting point, like last April. From and ago do not go with this verb form here.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: They have had the same landlord ... last September.",
@@ -2041,7 +2060,8 @@ textarea.write {
     "while"
    ],
    "a": "since",
-   "why": "Last September is the point where the time started, so it takes since. For needs a length, like two years. During and while go with a whole event, not with a starting point."
+   "why": "Last September is the point where the time started, so it takes since. For needs a length, like two years. During and while go with a whole event, not with a starting point.",
+   "mode": "choose"
   },
   {
    "q": "Which question asks how long something has been true?",
@@ -2052,7 +2072,8 @@ textarea.write {
     "How long have you lived here?"
    ],
    "a": "How long have you lived here?",
-   "why": "How long asks about the length of time up to now, so the verb is have lived. When did you come here asks about one point in the past. The other two ask about place and about a finished year."
+   "why": "How long asks about the length of time up to now, so the verb is have lived. When did you come here asks about one point in the past. The other two ask about place and about a finished year.",
+   "mode": "choose"
   },
   {
    "q": "Choose the best answer to this question: How long has she had that contract?",
@@ -2063,7 +2084,8 @@ textarea.write {
     "In January."
    ],
    "a": "Since January.",
-   "why": "How long takes for or since in the answer. Since January names the start, so it fits. She had it last year answers when, not how long. Yes she has answers a yes or no question, and this is not one."
+   "why": "How long takes for or since in the answer. Since January names the start, so it fits. She had it last year answers when, not how long. Yes she has answers a yes or no question, and this is not one.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is correct?",
@@ -2074,7 +2096,8 @@ textarea.write {
     "How long did he take that medicine, and still now?"
    ],
    "a": "How long has he taken that medicine?",
-   "why": "With he, she and it the word is has, not have. In a question the has comes before the person: has he taken. Option three leaves has after he, which is the order for a statement. Option four uses did, which asks about a finished time."
+   "why": "With he, she and it the word is has, not have. In a question the has comes before the person: has he taken. Option three leaves has after he, which is the order for a statement. Option four uses did, which asks about a finished time.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is correct?",
@@ -2085,7 +2108,8 @@ textarea.write {
     "Nobody has fixed it."
    ],
    "a": "Nobody has fixed it.",
-   "why": "Nobody means one person, so the verb is has. Nobody already means not, so a second not is wrong. That rules out options two and three. Option one uses have, which goes with I, you, we and they."
+   "why": "Nobody means one person, so the verb is has. Nobody already means not, so a second not is wrong. That rules out options two and three. Option one uses have, which goes with I, you, we and they.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: I have not told ... about the contract.",
@@ -2096,7 +2120,8 @@ textarea.write {
     "nowhere"
    ],
    "a": "anybody",
-   "why": "The sentence already has not, so the word after it is anybody. Nobody would put a second not into the same sentence. Everybody turns the meaning into the opposite. Nowhere is a word for a place, not for a person."
+   "why": "The sentence already has not, so the word after it is anybody. Nobody would put a second not into the same sentence. Everybody turns the meaning into the opposite. Nowhere is a word for a place, not for a person.",
+   "mode": "choose"
   },
   {
    "q": "Choose the right word: I have looked ... and I still cannot find it.",
@@ -2107,7 +2132,8 @@ textarea.write {
     "anybody"
    ],
    "a": "everywhere",
-   "why": "Everywhere means in all places, which fits looking and not finding. Somewhere means one place, so it does not explain the long search. Nobody and anybody are words for people, not for places."
+   "why": "Everywhere means in all places, which fits looking and not finding. Somewhere means one place, so it does not explain the long search. Nobody and anybody are words for people, not for places.",
+   "mode": "choose"
   },
   {
    "q": "In the notice for Block C, since when has the hot water been off?",
@@ -2118,7 +2144,8 @@ textarea.write {
     "Since Monday 10 March."
    ],
    "a": "Since Monday 10 March.",
-   "why": "The hot water line gives that day. Friday 21 March is the day the man comes back. Last April is about the rent, and January is about the front door."
+   "why": "The hot water line gives that day. Friday 21 March is the day the man comes back. Last April is about the rent, and January is about the front door.",
+   "mode": "choose"
   },
   {
    "q": "Which word means lasting only a short time?",
@@ -2129,7 +2156,8 @@ textarea.write {
     "regular"
    ],
    "a": "temporary",
-   "why": "Temporary means it does not last. Permanent is the opposite, because it lasts for a very long time. Constant means it never stops, which is about all the time. Regular means it happens again and again at the same times."
+   "why": "Temporary means it does not last. Permanent is the opposite, because it lasts for a very long time. Constant means it never stops, which is about all the time. Regular means it happens again and again at the same times.",
+   "mode": "choose"
   },
   {
    "q": "Which word means a paper from a doctor that lets you get medicine?",
@@ -2140,7 +2168,8 @@ textarea.write {
     "injury"
    ],
    "a": "prescription",
-   "why": "A prescription is the paper itself. A symptom is a sign in your body that something is wrong. Treatment is what a doctor or a nurse does to help. An injury is a hurt that comes from an accident."
+   "why": "A prescription is the paper itself. A symptom is a sign in your body that something is wrong. Treatment is what a doctor or a nurse does to help. An injury is a hurt that comes from an accident.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3567,31 +3596,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

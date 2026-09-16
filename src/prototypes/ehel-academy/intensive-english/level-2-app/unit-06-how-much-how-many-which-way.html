@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -2005,7 +2022,8 @@ textarea.write {
     "a few / a few"
    ],
    "a": "a little / a few",
-   "why": "Flour has no plural s, so it takes a little. Eggs has one, so it takes a few. The second option turns the pair round, and the last two use one word for both kinds."
+   "why": "Flour has no plural s, so it takes a little. Eggs has one, so it takes a few. The second option turns the pair round, and the last two use one word for both kinds.",
+   "mode": "choose"
   },
   {
    "q": "Which line is right?",
@@ -2016,7 +2034,8 @@ textarea.write {
     "I need a little of egg."
    ],
    "a": "I need a few eggs.",
-   "why": "Eggs can be counted, so a few fits. The first uses a little for a counted word. The third uses a few for flour, which you cannot count. The fourth adds an of that does not belong."
+   "why": "Eggs can be counted, so a few fits. The first uses a little for a counted word. The third uses a few for flour, which you cannot count. The fourth adds an of that does not belong.",
+   "mode": "choose"
   },
   {
    "q": "Which line has no mistake?",
@@ -2027,7 +2046,8 @@ textarea.write {
     "Every box have a label."
    ],
    "a": "Every box has a label.",
-   "why": "After every, the naming word is one thing, and the verb takes an s. The first two put a plural s on the naming word. The last one drops the s from the verb."
+   "why": "After every, the naming word is one thing, and the verb takes an s. The first two put a plural s on the naming word. The last one drops the s from the verb.",
+   "mode": "choose"
   },
   {
    "q": "The price on ___ of the six packets is the same.",
@@ -2038,7 +2058,8 @@ textarea.write {
     "each"
    ],
    "a": "each",
-   "why": "Before of the, English uses each. Every cannot stand before of the. All would need a plural verb: all of the six packets are the same. Much is for things you cannot count."
+   "why": "Before of the, English uses each. Every cannot stand before of the. All would need a plural verb: all of the six packets are the same. Much is for things you cannot count.",
+   "mode": "type"
   },
   {
    "q": "The notice says: a dozen eggs. How many eggs is that?",
@@ -2049,7 +2070,8 @@ textarea.write {
     "Twenty."
    ],
    "a": "Twelve.",
-   "why": "A dozen is twelve. Six is half a dozen. Ten and twenty are round numbers, but neither is what dozen means."
+   "why": "A dozen is twelve. Six is half a dozen. Ten and twenty are round numbers, but neither is what dozen means.",
+   "mode": "choose"
   },
   {
    "q": "You want to get from one side of the road to the other. Which word?",
@@ -2060,7 +2082,8 @@ textarea.write {
     "into"
    ],
    "a": "across",
-   "why": "Across goes from one side to the other side. Along follows the road instead of cutting over it, past takes you by something, and into takes you inside."
+   "why": "Across goes from one side to the other side. Along follows the road instead of cutting over it, past takes you by something, and into takes you inside.",
+   "mode": "choose"
   },
   {
    "q": "The bank is on your street. You do not stop there. Which word?",
@@ -2071,7 +2094,8 @@ textarea.write {
     "through"
    ],
    "a": "past",
-   "why": "Past means you go by it and keep going. Into and through would both take you inside the bank, and around would send you all the way round it."
+   "why": "Past means you go by it and keep going. Into and through would both take you inside the bank, and around would send you all the way round it.",
+   "mode": "choose"
   },
   {
    "q": "He put the jar ___ the trolley.",
@@ -2082,7 +2106,8 @@ textarea.write {
     "into"
    ],
    "a": "into",
-   "why": "The jar goes from outside the trolley to inside it, so into fits. The other three all move by, over or beside a thing, and none of them ends up inside."
+   "why": "The jar goes from outside the trolley to inside it, so into fits. The other three all move by, over or beside a thing, and none of them ends up inside.",
+   "mode": "type"
   },
   {
    "q": "What is an aisle?",
@@ -2093,7 +2118,8 @@ textarea.write {
     "A paper bag with food inside."
    ],
    "a": "A long space between the shelves, that you walk along.",
-   "why": "The other three are shop words from this unit too. The till is where you pay. A jar is glass, and a packet is a paper bag."
+   "why": "The other three are shop words from this unit too. The till is where you pay. A jar is glass, and a packet is a paper bag.",
+   "mode": "choose"
   },
   {
    "q": "The notice says the tills are at the front, past aisle 1. Where are the tills?",
@@ -2104,7 +2130,8 @@ textarea.write {
     "At the back, beside the milk."
    ],
    "a": "At the front, after aisle 1.",
-   "why": "Past aisle 1 means you go by aisle 1 and keep going, so the tills come after it. Outside to the left is where the trolleys are, and the milk is in aisle 4 at the back."
+   "why": "Past aisle 1 means you go by aisle 1 and keep going, so the tills come after it. Outside to the left is where the trolleys are, and the milk is in aisle 4 at the back.",
+   "mode": "choose"
   },
   {
    "q": "Which word means more than enough?",
@@ -2115,7 +2142,8 @@ textarea.write {
     "dozen"
    ],
    "a": "plenty",
-   "why": "Plenty of means more than enough. Several is about three to six, a portion is the food for one person, and a dozen is exactly twelve."
+   "why": "Plenty of means more than enough. Several is about three to six, a portion is the food for one person, and a dozen is exactly twelve.",
+   "mode": "choose"
   },
   {
    "q": "There is a display in the middle of the shop, and you walk all the way round it. Which word?",
@@ -2126,7 +2154,8 @@ textarea.write {
     "around"
    ],
    "a": "around",
-   "why": "Around goes all the way round the outside. Through would take you in one side and out the other. Into would put you inside it. Along follows a long line, such as an aisle."
+   "why": "Around goes all the way round the outside. Through would take you in one side and out the other. Into would put you inside it. Along follows a long line, such as an aisle.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3553,31 +3582,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

@@ -849,6 +849,23 @@ textarea.write {
   .opt.wide { flex-basis: 100%; }
 }
 
+/* --- a quiz item answered by writing it (see intensive.js :: quiz) --- */
+.bank-label { margin: 0 0 6px; font-weight: 700; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.bank span {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--card, #eef2f7); border: 1px solid var(--line, #cbd5e1);
+  font-weight: 700;
+}
+input.typein {
+  flex: 1 1 12rem; min-width: 8rem; padding: 12px 14px;
+  font: inherit; font-weight: 700;
+  border-radius: 10px; border: 2px solid var(--line, #cbd5e1);
+  background: var(--card, #fff); color: inherit;
+}
+input.typein.right { border-color: #2f855a; }
+input.typein.wrong { border-color: #c53030; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1904,7 +1921,8 @@ textarea.write {
     "then"
    ],
    "a": "but",
-   "why": "Like and don't like are different ideas, so but. And joins two things with no change. Or is for a choice. Then is for what comes after."
+   "why": "Like and don't like are different ideas, so but. And joins two things with no change. Or is for a choice. Then is for what comes after.",
+   "mode": "type"
   },
   {
    "q": "Is your class on Monday ___ on Friday?",
@@ -1915,7 +1933,8 @@ textarea.write {
     "at"
    ],
    "a": "or",
-   "why": "The question asks you to choose one day, so or. Then is for what comes after. But is for different ideas. At is for a clock time."
+   "why": "The question asks you to choose one day, so or. Then is for what comes after. But is for different ideas. At is for a clock time.",
+   "mode": "type"
   },
   {
    "q": "I did my homework. ___ I went to bed.",
@@ -1926,7 +1945,8 @@ textarea.write {
     "Of"
    ],
    "a": "Then",
-   "why": "Bed comes after the homework, so then. Or is for a choice. Where starts a question. Of does not join two ideas."
+   "why": "Bed comes after the homework, so then. Or is for a choice. Where starts a question. Of does not join two ideas.",
+   "mode": "choose"
   },
   {
    "q": "Which sentence is right?",
@@ -1937,7 +1957,8 @@ textarea.write {
     "I live on Park Street."
    ],
    "a": "I live on Park Street.",
-   "why": "I is always a capital, and Park Street is a place name. Live and on are not names, so they stay small."
+   "why": "I is always a capital, and Park Street is a place name. Live and on are not names, so they stay small.",
+   "mode": "choose"
   },
   {
    "q": "Which word always starts with a capital?",
@@ -1948,7 +1969,8 @@ textarea.write {
     "monday"
    ],
    "a": "monday",
-   "why": "Monday is a day, and days always have a capital. Street and city have a capital only in a name, like Park Street. A bag never does."
+   "why": "Monday is a day, and days always have a capital. Street and city have a capital only in a name, like Park Street. A bag never does.",
+   "mode": "choose"
   },
   {
    "q": "Which one needs a question mark?",
@@ -1959,7 +1981,8 @@ textarea.write {
     "The pen is on the desk"
    ],
    "a": "Where is my pen",
-   "why": "Where starts a question, so it asks. I forgot my pen tells. Write with a pen tells you what to do. The pen is on the desk tells."
+   "why": "Where starts a question, so it asks. I forgot my pen tells. Write with a pen tells you what to do. The pen is on the desk tells.",
+   "mode": "choose"
   },
   {
    "q": "Bread ___ milk and eggs. What goes after bread?",
@@ -1970,7 +1993,8 @@ textarea.write {
     "a capital"
    ],
    "a": "a comma",
-   "why": "In a list, a comma goes between the things. A full stop ends a sentence. A question mark ends a question. A capital is a letter, not a mark."
+   "why": "In a list, a comma goes between the things. A full stop ends a sentence. A question mark ends a question. A capital is a letter, not a mark.",
+   "mode": "choose"
   },
   {
    "q": "Check this note: hello Sam, I am at the bank. What is the mistake?",
@@ -1981,7 +2005,8 @@ textarea.write {
     "bank needs a capital"
    ],
    "a": "hello needs a capital",
-   "why": "Hello is the first word, so it needs a capital. Sam is a name, so its capital is right. The sentence tells, so a full stop is right. A bank with no name stays small."
+   "why": "Hello is the first word, so it needs a capital. Sam is a name, so its capital is right. The sentence tells, so a full stop is right. A bank with no name stays small.",
+   "mode": "choose"
   },
   {
    "q": "___ she live near the library? (Unit 7)",
@@ -1992,7 +2017,8 @@ textarea.write {
     "Does"
    ],
    "a": "Does",
-   "why": "She is one person, so does: Does she live here? Do is for I, you, we and they. Is and are go with -ing: Is she living here?"
+   "why": "She is one person, so does: Does she live here? Do is for I, you, we and they. Is and are go with -ing: Is she living here?",
+   "mode": "type"
   },
   {
    "q": "There ___ three dictionaries on the shelf. (Unit 8)",
@@ -2003,7 +2029,8 @@ textarea.write {
     "be"
    ],
    "a": "are",
-   "why": "Three dictionaries are more than one, so there are. There is is for one thing. Am is only for I. Be does not go here."
+   "why": "Three dictionaries are more than one, so there are. There is is for one thing. Am is only for I. Be does not go here.",
+   "mode": "choose"
   },
   {
    "q": "Yesterday I ___ my notebook on the bus. (Unit 10)",
@@ -2014,7 +2041,8 @@ textarea.write {
     "leaving"
    ],
    "a": "left",
-   "why": "Yesterday is the past. Leave changes to left, with no -ed. Leave and leaves are for now. Leaving needs am or is."
+   "why": "Yesterday is the past. Leave changes to left, with no -ed. Leave and leaves are for now. Leaving needs am or is.",
+   "mode": "type"
   },
   {
    "q": "This postcard is ___ you, Sam! (Unit 12)",
@@ -2025,7 +2053,8 @@ textarea.write {
     "at"
    ],
    "a": "for",
-   "why": "Sam gets the postcard, so for: a present for you. With is for the thing you use, or the person with you. Of and at do not fit here."
+   "why": "Sam gets the postcard, so for: a present for you. With is for the thing you use, or the person with you. Of and at do not fit here.",
+   "mode": "choose"
   }
  ],
  "self": [
@@ -3453,31 +3482,78 @@ textarea.write {
       '<p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>';
 
+    /* A typed answer is marked on what the learner MEANT, not on their
+       punctuation: case, surrounding spaces, a trailing full stop or question
+       mark, and a doubled space are all ignored. Nothing else is — the point of
+       the item is that they spell the word. */
+    function same(written, wanted) {
+      const tidy = (t) => String(t).trim().toLowerCase()
+        .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
+      return tidy(written) === tidy(wanted);
+    }
+
+    /* One place where an answered item is settled, whichever way it was
+       answered, so the score, the explanation and the move to the next question
+       cannot drift apart between the two renderers. */
+    function settle(ok) {
+      if (ok) right += 1;
+      $(id + "-fb").textContent = item_why();
+      setTimeout(() => {
+        at += 1;
+        if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
+        else {
+          $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
+          $(id + "-opts").innerHTML = "";
+          $(id + "-count").textContent = "";
+          $(id + "-again").hidden = false;
+          if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
+          attempt(i, items.length, items.length, "questions");
+          finish(i, "");
+        }
+      }, 2600);
+    }
+    function item_why() { return items[at].why; }
+
     function draw() {
       const item = items[at];
       $(id + "-q").textContent = item.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + " · " + right + " right";
+
+      if (item.mode === "type") {
+        /* The four options stay on screen as a word bank, so the answer is as
+           well defined as it was on the buttons. What the learner has to do is
+           different: pick it AND write it. The browser must not do that work,
+           hence no autocorrect, no autocapitalise and no spellcheck. */
+        $(id + "-opts").innerHTML =
+          '<p class="bank-label">Write the missing word. These are the choices:</p>' +
+          '<p class="bank">' + item.options.map((o) => "<span>" + esc(o) + "</span>").join("") + "</p>" +
+          '<div class="actions"><input type="text" class="typein" id="' + id + '-in"' +
+          ' autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' +
+          ' aria-label="Write the missing word">' +
+          '<button type="button" class="big small" id="' + id + '-check">Check</button></div>';
+        const box = $(id + "-in");
+        const go = () => {
+          if (box.disabled) return;
+          const ok = same(box.value, item.a);
+          box.disabled = true;
+          $(id + "-check").disabled = true;
+          box.classList.add(ok ? "right" : "wrong");
+          if (!ok) box.value = box.value.trim() ? box.value + "  →  " + item.a : item.a;
+          settle(ok);
+        };
+        $(id + "-check").addEventListener("click", go);
+        box.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+        box.focus();
+        return;
+      }
+
       $(id + "-opts").innerHTML = item.options.map((o) => '<button type="button" class="opt wide" data-a="' + esc(o) + '">' + esc(o) + "</button>").join("");
       $(id + "-opts").querySelectorAll(".opt").forEach((b) => b.addEventListener("click", () => {
         if (b.disabled) return;
         const ok = b.dataset.a === item.a;
         $(id + "-opts").querySelectorAll(".opt").forEach((x) => { x.disabled = true; if (x.dataset.a === item.a) x.classList.add("right"); });
         if (!ok) b.classList.add("wrong");
-        if (ok) right += 1;
-        $(id + "-fb").textContent = item.why;
-        setTimeout(() => {
-          at += 1;
-          if (at < items.length) { $(id + "-fb").textContent = ""; draw(); }
-          else {
-            $(id + "-fb").textContent = "You scored " + right + " of " + items.length + ".";
-            $(id + "-opts").innerHTML = "";
-            $(id + "-count").textContent = "";
-            $(id + "-again").hidden = false;
-            if (window.__ehelScore) { try { window.__ehelScore(i, right, items.length); } catch (_) {} }
-            attempt(i, items.length, items.length, "questions");
-            finish(i, "");
-          }
-        }, 2600);
+        settle(ok);
       }));
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => {

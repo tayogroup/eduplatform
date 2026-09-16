@@ -518,6 +518,38 @@ reading code — which is the same lesson as the `break-inside: avoid` page coun
 and the two suns in the sky: the declaration tells you the intent, never what
 the running thing does.
 
+### A citation gate proves the code is REAL, never that the teaching matches it
+
+Worked example, 2026-09-16, Intensive English Level 2. Cambridge `6Sc.05` is
+"Pronounce familiar words and phrases clearly; begin to use intonation and place
+stress at word, phrase and sentence level appropriately". The plan placed it in
+Unit 20, an outcome cited it, and the build reported a clean **176/176
+objectives cited**. That outcome was *"Make a comparison stronger with far, much
+and a lot"*, and across all twenty units `intonation` had **0** occurrences,
+`linked sound` 0, `schwa` 0, and every hit for `stress` was the vocabulary word
+"stressful". The level claimed an objective it taught nothing of, and every gate
+was green.
+
+**This is not one subject's bug.** Checked in all three that map objectives, and
+each verifies something real and none verifies aptness:
+
+| gate | what it proves |
+| --- | --- |
+| `build-intensive-units.js` | the placed code is NAMED by some outcome of that unit |
+| `validate-unit.mjs` (English) | the claimed code EXISTS and is from the unit's declared stage |
+| `check-science-cambridge-objectives.mjs` | per-stage COVERAGE — how many objectives are mapped |
+
+Real codes, right stage, all placed, count correct — and no machine reads the
+outcome and the objective together. So "150/150" and "176/176" mean *every
+objective has a citation*, which is worth having and is not what it sounds like.
+
+Two things follow. **A coverage number is not evidence that anything is taught**;
+to check delivery, grep the units for the words the objective is about
+(`intonation`, `stress`) and read what comes back. And when an objective is
+about something the course could plausibly skip — pronunciation, handwriting,
+listening — that is where to look first, because it is exactly the kind a unit
+can cite in passing while teaching around it.
+
 ## Where the rest of the detail lives
 
 This file used to be 4,385 lines and was loaded into every session in this repo
@@ -537,7 +569,7 @@ learned is below, and arrives when you are actually working in that area.
 | Computing | `…/computing/CLAUDE.md` | booklet answer keys; Stages 1-4 deck-only; reviewed scripts; narration; the word-picture map |
 | Global Perspectives | `…/global-perspectives/CLAUDE.md` | the two pack shapes; the unauthored Stages; assigned objective codes; reviewed scripts; narration; which subjects' clips git actually holds; the measured CDN cache-control table |
 | Mathematics | `…/mathematics/CLAUDE.md` | why `build:math` needs `--force`; answers checked by arithmetic; the 0096 framework hole |
-| Intensive English | `…/intensive-english/CLAUDE.md` | both levels on Cambridge 0057; the standalone lesson build; Level 2's three new traps |
+| Intensive English | `…/intensive-english/CLAUDE.md` | both levels on Cambridge 0057, live; the standalone lesson build and the ~17 pipeline steps `build-lessons.py` does NOT run; the Interchange enhancement pass (connected speech, survival lexis, `functions`, the quiz's second answer mode); why the course ENDS at B1 and what single file blocks Level 3 |
 | Moodle plugins | `src/moodle/CLAUDE.md` | the live group board, activity ring, hand-raise and live-class flag; the classroom chat and its screenshot; the v331 poisoning; endpoint CORS contracts; the md5-is-the-only-proof deploy loop; the PHP gate and the p→q corruption |
 | Portal pages | `src/portal/CLAUDE.md` | the portal deploy channel and the route allowlist gate |
 | Build/deploy tooling | `tools/CLAUDE.md` | the platform CORS gate, and a pointer to the history below |

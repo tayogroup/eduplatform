@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1357,10 +1328,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Wanting to do something, and interested in it.",
      "example": "She is keen on languages.",
      "sentences": [
-      "She is keen on languages.",
       "He was keen to start, but the course was full.",
       "I am not keen on early mornings.",
-      "They were keen on the idea until they saw the price."
+      "They were keen on the idea until they saw the price.",
+      "Keen takes on before a noun and to before a verb."
      ],
      "starter": "I am keen on …",
      "pic": ""
@@ -1371,10 +1342,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Knowing that something exists or is happening.",
      "example": "I was not aware of the deadline.",
      "sentences": [
-      "I was not aware of the deadline.",
       "She became aware of the problem too late.",
       "Are you aware that the office closes early on Friday?",
-      "He is aware of how much the training costs."
+      "He is aware of how much the training costs.",
+      "Aware takes of before a noun and that before a whole clause."
      ],
      "starter": "I was not aware of …",
      "pic": ""
@@ -1385,10 +1356,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Having the skill or the power to do something.",
      "example": "She is capable of far more than this job asks.",
      "sentences": [
-      "She is capable of far more than this job asks.",
       "He proved he was capable of running the shift alone.",
       "The machine is capable of printing both sides at once.",
-      "I did not think I was capable of finishing it."
+      "I did not think I was capable of finishing it.",
+      "Capable is always of. It never takes anything else."
      ],
      "starter": "I am capable of …",
      "pic": ""
@@ -1399,10 +1370,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Pleased with something you did or something you belong to.",
      "example": "I am proud of what I built here.",
      "sentences": [
-      "I am proud of what I built here.",
       "She was proud of her daughter on the day.",
       "He is proud to say he trained every one of them.",
-      "They were proud of a result nobody had predicted."
+      "They were proud of a result nobody had predicted.",
+      "Proud takes of before a noun and to before a verb."
      ],
      "starter": "I am proud of …",
      "pic": "😌"
@@ -1413,10 +1384,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Feeling bad about something you did.",
      "example": "He was ashamed of how he had spoken.",
      "sentences": [
-      "He was ashamed of how he had spoken.",
       "I am not ashamed of where I started.",
       "She was ashamed to admit she had forgotten.",
-      "Nobody should be ashamed of asking for help."
+      "Nobody should be ashamed of asking for help.",
+      "Ashamed is almost always of, and after of the verb takes -ing."
      ],
      "starter": "Nobody should be ashamed of …",
      "pic": ""
@@ -1427,10 +1398,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Sad because something was not as good as you hoped.",
      "example": "I was disappointed with the result.",
      "sentences": [
-      "I was disappointed with the result.",
       "She was disappointed in him after the meeting.",
       "We were disappointed with the flat, but we took it.",
-      "He was disappointed to hear the course had been cancelled."
+      "He was disappointed to hear the course had been cancelled.",
+      "Disappointed takes with for a thing and in for a person."
      ],
      "starter": "I was disappointed with …",
      "pic": "😞"
@@ -1446,10 +1417,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The years when you were a child.",
      "example": "She spent her childhood near the sea.",
      "sentences": [
-      "She spent her childhood near the sea.",
       "My childhood was quiet and I was glad of it.",
       "He rarely talks about his childhood.",
-      "A childhood in one place gives you one accent."
+      "A childhood in one place gives you one accent.",
+      "Childhood is uncountable here: not a childhood, just childhood."
      ],
      "starter": "My childhood was …",
      "pic": "🧒🏾"
@@ -1460,10 +1431,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The way your family raised you, and what they taught you.",
      "example": "He had a strict upbringing.",
      "sentences": [
-      "He had a strict upbringing.",
       "Her upbringing taught her to finish what she started.",
       "An upbringing is what was done for you, not what happened to you.",
-      "They gave their children the upbringing they had wanted."
+      "They gave their children the upbringing they had wanted.",
+      "I owe my patience to my upbringing."
      ],
      "starter": "My upbringing taught me …",
      "pic": ""
@@ -1474,10 +1445,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "All the people born at about the same time.",
      "example": "My generation left school before the internet.",
      "sentences": [
-      "My generation left school before the internet.",
       "Each generation thinks the next one has it easier.",
       "Three generations of the family worked at the same yard.",
-      "The older generation did not expect to change jobs."
+      "The older generation did not expect to change jobs.",
+      "A generation is roughly twenty-five years."
      ],
      "starter": "My generation …",
      "pic": ""
@@ -1488,10 +1459,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Where a person comes from, and the life they had before now.",
      "example": "People here come from every background.",
      "sentences": [
-      "People here come from every background.",
       "Her background is in engineering, not in teaching.",
       "He never let his background decide what he tried.",
-      "The two of them come from very different backgrounds."
+      "The two of them come from very different backgrounds.",
+      "Background can mean your family, your training, or both."
      ],
      "starter": "My background is in …",
      "pic": ""
@@ -1502,10 +1473,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An event that marks an important stage.",
      "example": "Finishing the course was a milestone for her.",
      "sentences": [
-      "Finishing the course was a milestone for her.",
       "The first wage he earned was a milestone.",
       "We marked the milestone with a meal.",
-      "A milestone is not always a happy event."
+      "A milestone is not always a happy event.",
+      "Most people remember three or four milestones and forget the rest."
      ],
      "starter": "One milestone for me was …",
      "pic": ""
@@ -1516,10 +1487,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The moment when things started to go a different way.",
      "example": "That conversation was the turning point.",
      "sentences": [
-      "That conversation was the turning point.",
       "The turning point came when she was offered the night shift.",
       "Looking back, I can see the turning point clearly.",
-      "A turning point is only obvious afterwards."
+      "A turning point is only obvious afterwards.",
+      "For him the turning point was losing the first job."
      ],
      "starter": "The turning point for me was …",
      "pic": ""
@@ -1535,10 +1506,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Slowly, over a long time, in small steps.",
      "example": "Gradually, the work became easier.",
      "sentences": [
-      "Gradually, the work became easier.",
       "She gradually took on more of the shift.",
       "The pain went gradually, not all at once.",
-      "Gradually usually sits before the verb or at the start."
+      "Gradually usually sits before the verb or at the start.",
+      "Things changed gradually enough that nobody noticed."
      ],
      "starter": "Gradually I …",
      "pic": ""
@@ -1549,10 +1520,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In the end, after a long time or some trouble.",
      "example": "Eventually they gave me the contract.",
      "sentences": [
-      "Eventually they gave me the contract.",
       "He eventually found work in the same trade.",
       "Eventually is not the same as finally: it carries the wait.",
-      "We eventually agreed, after three meetings."
+      "We eventually agreed, after three meetings.",
+      "She applied four times and eventually got in."
      ],
      "starter": "Eventually I …",
      "pic": ""
@@ -1563,10 +1534,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Before the time you are talking about.",
      "example": "He had previously worked as a driver.",
      "sentences": [
-      "He had previously worked as a driver.",
       "Previously, the office opened at seven.",
       "She had previously trained as a nurse.",
-      "Previously belongs with a past form, not with now."
+      "Previously belongs with a past form, not with now.",
+      "The building was previously a school."
      ],
      "starter": "Previously I …",
      "pic": ""
@@ -1577,10 +1548,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "At the beginning, before things changed.",
      "example": "Originally the course lasted two years.",
      "sentences": [
-      "Originally the course lasted two years.",
       "She is originally from a much smaller town.",
       "The plan was originally much simpler.",
-      "I originally trained for something else entirely."
+      "I originally trained for something else entirely.",
+      "Originally answers where or how something started."
      ],
      "starter": "Originally I …",
      "pic": ""
@@ -1591,10 +1562,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "At the present time, compared with the past.",
      "example": "Nowadays most of it is done online.",
      "sentences": [
-      "Nowadays most of it is done online.",
       "Nowadays I work fewer hours and sleep more.",
       "People nowadays change jobs far more often.",
-      "Nowadays goes with the present simple, never the past."
+      "Nowadays goes with the present simple, never the past.",
+      "Nowadays the training takes half the time."
      ],
      "starter": "Nowadays I …",
      "pic": ""
@@ -1605,10 +1576,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "At the same time as something else was happening.",
      "example": "Meanwhile, the rest of us waited outside.",
      "sentences": [
-      "Meanwhile, the rest of us waited outside.",
       "He studied at night; meanwhile he worked all day.",
       "Meanwhile joins two things happening together.",
-      "She was moving house. Meanwhile, the job offer arrived."
+      "She was moving house. Meanwhile, the job offer arrived.",
+      "Meanwhile usually starts its own sentence."
      ],
      "starter": "Meanwhile I …",
      "pic": ""
@@ -1624,10 +1595,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person or thing that changes how you think or act.",
      "example": "Her teacher was a big influence on her.",
      "sentences": [
-      "Her teacher was a big influence on her.",
       "The biggest influence on me was my grandmother.",
       "He had a quiet influence on everyone in the room.",
-      "Influence takes on: an influence ON somebody."
+      "Influence takes on: an influence ON somebody.",
+      "Some influences you only notice years later."
      ],
      "starter": "The biggest influence on me was …",
      "pic": ""
@@ -1638,10 +1609,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A chance to do something you want to do.",
      "example": "The move gave me an opportunity I had not expected.",
      "sentences": [
-      "The move gave me an opportunity I had not expected.",
       "She took the opportunity and never regretted it.",
       "There were few opportunities where I grew up.",
-      "Opportunity takes to before a verb: an opportunity to travel."
+      "Opportunity takes to before a verb: an opportunity to travel.",
+      "He was offered the opportunity twice and refused both times."
      ],
      "starter": "I was given the opportunity to …",
      "pic": ""
@@ -1652,10 +1623,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A fact or condition around an event, usually outside your control.",
      "example": "In those circumstances, nobody would have stayed.",
      "sentences": [
-      "In those circumstances, nobody would have stayed.",
       "Circumstances changed and the plan had to change too.",
       "She left, but only because of the circumstances.",
-      "Circumstance is most often used in the plural."
+      "Circumstance is most often used in the plural.",
+      "Under the circumstances, the decision was fair."
      ],
      "starter": "In those circumstances I …",
      "pic": ""
@@ -1666,10 +1637,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something difficult that tests what you can do.",
      "example": "The first winter there was a real challenge.",
      "sentences": [
-      "The first winter there was a real challenge.",
       "He saw the move as a challenge rather than a problem.",
       "The biggest challenge was the language, not the work.",
-      "Challenge can also be a verb: she challenged the decision."
+      "Challenge can also be a verb: she challenged the decision.",
+      "A challenge is difficult but not impossible."
      ],
      "starter": "The biggest challenge for me was …",
      "pic": "🧗🏾"
@@ -1680,10 +1651,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something good you managed to do, usually with effort.",
      "example": "Finishing that year was an achievement.",
      "sentences": [
-      "Finishing that year was an achievement.",
       "Her greatest achievement was not the one on paper.",
       "It is an achievement to keep going when nobody is watching.",
-      "Achievement comes from achieve: she achieved it."
+      "Achievement comes from achieve: she achieved it.",
+      "Small achievements add up to a life."
      ],
      "starter": "My greatest achievement is …",
      "pic": ""
@@ -1694,10 +1665,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something you wish you had done differently.",
      "example": "My only regret is that I left it so late.",
      "sentences": [
-      "My only regret is that I left it so late.",
       "He lives with one regret and talks about it rarely.",
       "She has no regrets about the decision.",
-      "Regret is also a verb: I regret nothing."
+      "Regret is also a verb: I regret nothing.",
+      "A regret is about your own choice, not about bad luck."
      ],
      "starter": "My only regret is …",
      "pic": ""
@@ -1713,10 +1684,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To bring something back to mind; a more formal word for remember.",
      "example": "I can still recall the smell of that kitchen.",
      "sentences": [
-      "I can still recall the smell of that kitchen.",
       "She could not recall his name, only his face.",
       "As far as I recall, the office was closed that week.",
-      "Recall is more formal than remember and fits a written account."
+      "Recall is more formal than remember and fits a written account.",
+      "He recalled the day in detail, forty years later."
      ],
      "starter": "I can still recall …",
      "pic": ""
@@ -1727,10 +1698,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To think carefully about something that happened.",
      "example": "Looking back, I reflect on how young we were.",
      "sentences": [
-      "Looking back, I reflect on how young we were.",
       "She took a week to reflect before answering.",
       "Reflect takes on: reflect ON something.",
-      "He rarely reflects on the past; he prefers to plan."
+      "He rarely reflects on the past; he prefers to plan.",
+      "Reflecting is slower than remembering."
      ],
      "starter": "When I reflect on …",
      "pic": "🤔"
@@ -1741,10 +1712,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say that something is true when you would rather not.",
      "example": "I admit I was wrong about the timing.",
      "sentences": [
-      "I admit I was wrong about the timing.",
       "He admitted he had never read it.",
       "She admits to finding the work dull.",
-      "Admit takes -ing or a that clause, never to + plain verb."
+      "Admit takes -ing or a that clause, never to + plain verb.",
+      "Admitting a mistake early costs less than hiding it."
      ],
      "starter": "I admit I …",
      "pic": ""
@@ -1755,10 +1726,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To suddenly understand something that was already true.",
      "example": "I only realised later what she had meant.",
      "sentences": [
-      "I only realised later what she had meant.",
       "He realised he had taken the wrong turning.",
       "It took me years to realise how much that helped.",
-      "Realise is about understanding, not about doing."
+      "Realise is about understanding, not about doing.",
+      "She realised that nobody was going to tell her."
      ],
      "starter": "I only realised later that …",
      "pic": ""
@@ -1769,10 +1740,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To understand the value of something, and be glad of it.",
      "example": "I appreciate what they did for me.",
      "sentences": [
-      "I appreciate what they did for me.",
       "You only appreciate quiet after years of noise.",
       "She appreciates being asked rather than told.",
-      "Appreciate takes -ing after it, not to."
+      "Appreciate takes -ing after it, not to.",
+      "I did not appreciate the training until I had to use it."
      ],
      "starter": "I appreciate …",
      "pic": "🙏🏾"

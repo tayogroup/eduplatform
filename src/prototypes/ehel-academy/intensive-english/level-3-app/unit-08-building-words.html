@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1350,10 +1321,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not able to do something.",
      "example": "We were unable to trace the delivery.",
      "sentences": [
-      "We were unable to trace the delivery.",
       "Unable takes to before a verb.",
       "Un- is the commonest negative prefix in English.",
-      "Unable is more formal than cannot."
+      "Unable is more formal than cannot.",
+      "Its noun is inability, which takes in- instead."
      ],
      "starter": "We were unable to …",
      "pic": ""
@@ -1364,10 +1335,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not honest; intending to deceive.",
      "example": "It would be dishonest to leave that out.",
      "sentences": [
-      "It would be dishonest to leave that out.",
       "Dis- reverses the word it joins.",
       "Dishonesty is the noun.",
-      "Dis- also appears in disagree, dislike, disconnect."
+      "Dis- also appears in disagree, dislike, disconnect.",
+      "A dishonest answer is not the same as a wrong one."
      ],
      "starter": "It would be dishonest to …",
      "pic": ""
@@ -1378,10 +1349,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not correct in its details.",
      "example": "The figures in the first report were inaccurate.",
      "sentences": [
-      "The figures in the first report were inaccurate.",
       "In- is the negative prefix before most consonants.",
       "Inaccurate means wrong in detail; false means wrong altogether.",
-      "Its noun is inaccuracy."
+      "Its noun is inaccuracy.",
+      "In- becomes im-, il- or ir- before certain letters."
      ],
      "starter": "The … was inaccurate because …",
      "pic": ""
@@ -1392,10 +1363,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not following the usual pattern or the usual times.",
      "example": "The deliveries have been irregular since March.",
      "sentences": [
-      "The deliveries have been irregular since March.",
       "In- becomes ir- before r: irregular, irrelevant, irresponsible.",
       "Irregular can mean uneven in time or uneven in shape.",
-      "Its noun is irregularity."
+      "Its noun is irregularity.",
+      "An irregular verb does not follow the usual rule."
      ],
      "starter": "The … has been irregular since …",
      "pic": ""
@@ -1406,10 +1377,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Against the law.",
      "example": "Storing it there would be illegal.",
      "sentences": [
-      "Storing it there would be illegal.",
       "In- becomes il- before l: illegal, illegible, illogical.",
       "Illegal means against the law; unlawful is the formal twin.",
-      "Its noun is illegality."
+      "Its noun is illegality.",
+      "Do not confuse illegible, which means impossible to read."
      ],
      "starter": "It would be illegal to …",
      "pic": "🚫"
@@ -1420,10 +1391,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not willing to wait.",
      "example": "The client is getting impatient.",
      "sentences": [
-      "The client is getting impatient.",
       "In- becomes im- before m, b and p: impatient, impossible, imbalance.",
       "Impatient takes with a person, and for a thing.",
-      "Its noun is impatience."
+      "Its noun is impatience.",
+      "The prefix changes to match the sound that follows it."
      ],
      "starter": "I am impatient with …",
      "pic": ""
@@ -1439,10 +1410,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To write something again, differently.",
      "example": "I rewrote the whole section.",
      "sentences": [
-      "I rewrote the whole section.",
       "Re- means again: rewrite, reread, rebuild, reconsider.",
       "Its past forms are rewrote and rewritten.",
-      "Rewriting is not correcting: you start again."
+      "Rewriting is not correcting: you start again.",
+      "Re- is the most productive prefix in English."
      ],
      "starter": "I rewrote … because …",
      "pic": ""
@@ -1453,10 +1424,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To understand something wrongly.",
      "example": "I think we misunderstood each other.",
      "sentences": [
-      "I think we misunderstood each other.",
       "Mis- means wrongly: misunderstand, misread, mislead, misjudge.",
       "Its past form is misunderstood.",
-      "A misunderstanding is nobody's fault by default."
+      "A misunderstanding is nobody's fault by default.",
+      "Mis- attaches to verbs, not usually to adjectives."
      ],
      "starter": "I misunderstood …",
      "pic": ""
@@ -1467,10 +1438,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To think something is bigger or better than it is.",
      "example": "We overestimated how long the parts would last.",
      "sentences": [
-      "We overestimated how long the parts would last.",
       "Over- means too much: overestimate, overcharge, overload.",
       "Its opposite here is underestimate.",
-      "It is also a noun, stressed differently."
+      "It is also a noun, stressed differently.",
+      "Overestimating a risk is safer than underestimating one."
      ],
      "starter": "We overestimated …",
      "pic": ""
@@ -1481,10 +1452,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To think something is smaller or easier than it is.",
      "example": "I underestimated the time it would take.",
      "sentences": [
-      "I underestimated the time it would take.",
       "Under- means too little: underestimate, undercharge, understaffed.",
       "Underestimating a job is the commoner mistake of the two.",
-      "It is also a noun, with the stress on the first part."
+      "It is also a noun, with the stress on the first part.",
+      "Do not underestimate is a fixed warning."
      ],
      "starter": "I underestimated …",
      "pic": ""
@@ -1495,10 +1466,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A look at something before it is finished or released.",
      "example": "We saw a preview of the new form.",
      "sentences": [
-      "We saw a preview of the new form.",
       "Pre- means before: preview, prepare, precaution, predict.",
       "It is also a verb: to preview the changes.",
-      "A preview is before; a review is after."
+      "A preview is before; a review is after.",
+      "Pre- attaches to nouns and verbs alike."
      ],
      "starter": "We saw a preview of …",
      "pic": ""
@@ -1509,10 +1480,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To do better than somebody or something else.",
      "example": "The cheaper model outperformed the expensive one.",
      "sentences": [
-      "The cheaper model outperformed the expensive one.",
       "Out- can mean better than: outperform, outlast, outnumber.",
       "Outperform takes a direct object, with no preposition.",
-      "It is common in reports and rare in speech."
+      "It is common in reports and rare in speech.",
+      "Out- has several meanings; this is only one."
      ],
      "starter": "The … outperformed …",
      "pic": ""
@@ -1528,10 +1499,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Able to change or bend to fit the situation.",
      "example": "The hours are flexible within reason.",
      "sentences": [
-      "The hours are flexible within reason.",
       "-ible and -able both mean can be, or tends to.",
       "Flexible comes from flex, to bend.",
-      "Its noun is flexibility."
+      "Its noun is flexibility.",
+      "-ible follows a root that is not a whole English word."
      ],
      "starter": "The … is flexible …",
      "pic": ""
@@ -1542,10 +1513,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Able to be seen.",
      "example": "The repair is visible from the road.",
      "sentences": [
-      "The repair is visible from the road.",
       "Visible comes from a Latin root, not from an English word.",
       "That is why it takes -ible and not -able.",
-      "Its noun is visibility."
+      "Its noun is visibility.",
+      "Invisible is its opposite, with in-."
      ],
      "starter": "The … is visible from …",
      "pic": ""
@@ -1556,10 +1527,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Showing good judgement; practical.",
      "example": "That is a sensible arrangement.",
      "sentences": [
-      "That is a sensible arrangement.",
       "Sensible means practical; sensitive means easily affected.",
       "The two are confused constantly and mean different things.",
-      "Its noun is sense, or sensibleness."
+      "Its noun is sense, or sensibleness.",
+      "A sensible decision may still turn out badly."
      ],
      "starter": "It would be sensible to …",
      "pic": ""
@@ -1570,10 +1541,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Dangerous, especially in a formal or official sense.",
      "example": "The waste is classed as hazardous.",
      "sentences": [
-      "The waste is classed as hazardous.",
       "-ous means full of, or having the quality of.",
       "Hazardous comes from hazard, a danger.",
-      "It is the official word: dangerous is the everyday one."
+      "It is the official word: dangerous is the everyday one.",
+      "Hazardous materials have their own rules."
      ],
      "starter": "The … is classed as hazardous.",
      "pic": ""
@@ -1584,10 +1555,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Wanting to achieve a great deal; or needing a great deal to achieve.",
      "example": "The timescale is ambitious.",
      "sentences": [
-      "The timescale is ambitious.",
       "An ambitious person wants a lot.",
       "An ambitious plan asks a lot, which is a polite way of saying unrealistic.",
-      "Its noun is ambition."
+      "Its noun is ambition.",
+      "-ous attaches to a noun to make an adjective."
      ],
      "starter": "The … is ambitious.",
      "pic": ""
@@ -1598,10 +1569,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Careful to avoid risk.",
      "example": "I would be cautious about that supplier.",
      "sentences": [
-      "I would be cautious about that supplier.",
       "Cautious takes about.",
       "Its noun is caution.",
-      "A cautious estimate is deliberately low."
+      "A cautious estimate is deliberately low.",
+      "Cautious is not the same as frightened."
      ],
      "starter": "I would be cautious about …",
      "pic": ""
@@ -1617,10 +1588,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The amount of work a person or a team has to do.",
      "example": "My workload has doubled since January.",
      "sentences": [
-      "My workload has doubled since January.",
       "Two nouns joined into one: work plus load.",
       "The stress is on the FIRST part: WORKload.",
-      "A heavy workload, not a big one."
+      "A heavy workload, not a big one.",
+      "It is written as one word."
      ],
      "starter": "My workload has …",
      "pic": ""
@@ -1631,10 +1602,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "All the people who work somewhere.",
      "example": "Half the workforce was retrained.",
      "sentences": [
-      "Half the workforce was retrained.",
       "Work plus force, joined into one.",
       "The stress is on WORK, as in almost every compound noun.",
-      "Workforce takes a singular verb in British English, usually."
+      "Workforce takes a singular verb in British English, usually.",
+      "Do not confuse it with workload."
      ],
      "starter": "The workforce …",
      "pic": ""
@@ -1645,10 +1616,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An organised store of information on a computer.",
      "example": "The database has not been updated since March.",
      "sentences": [
-      "The database has not been updated since March.",
       "Data plus base, joined into one.",
       "The stress is on DATA.",
-      "Data is technically plural, though it is treated as singular."
+      "Data is technically plural, though it is treated as singular.",
+      "A database is searched; a file is opened."
      ],
      "starter": "The database …",
      "pic": "🗄️"
@@ -1659,10 +1630,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The period over which something is expected to happen.",
      "example": "The timescale is ambitious.",
      "sentences": [
-      "The timescale is ambitious.",
       "Time plus scale, joined into one.",
       "A timescale is how long; a timetable is when.",
-      "The stress is on TIME."
+      "The stress is on TIME.",
+      "A tight timescale leaves no room for problems."
      ],
      "starter": "The timescale for … is …",
      "pic": ""
@@ -1673,10 +1644,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Comments telling somebody how well they did.",
      "example": "The feedback was useful and uncomfortable.",
      "sentences": [
-      "The feedback was useful and uncomfortable.",
       "Feed plus back, joined into one.",
       "Feedback is uncountable: never a feedback.",
-      "A piece of feedback is how you count it."
+      "A piece of feedback is how you count it.",
+      "The stress is on FEED."
      ],
      "starter": "The feedback on … was …",
      "pic": ""
@@ -1687,10 +1658,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The total money a business takes; or how fast staff leave and are replaced.",
      "example": "Staff turnover has been high all year.",
      "sentences": [
-      "Staff turnover has been high all year.",
       "Turn plus over, joined into one.",
       "It has two quite separate meanings: money, and staff.",
-      "The stress is on TURN."
+      "The stress is on TURN.",
+      "High turnover of staff is usually a warning sign."
      ],
      "starter": "Turnover has …",
      "pic": ""
@@ -1706,10 +1677,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Getting a result without wasting time or resources.",
      "example": "The change was made for efficiency, not for quality.",
      "sentences": [
-      "The change was made for efficiency, not for quality.",
       "-ency and -ence build a noun from an adjective.",
       "Efficient becomes efficiency, with the t becoming c.",
-      "Efficiency is doing it cheaply; effectiveness is doing it well."
+      "Efficiency is doing it cheaply; effectiveness is doing it well.",
+      "The two are often confused and often traded off."
      ],
      "starter": "The … was done for efficiency, not for …",
      "pic": ""
@@ -1720,10 +1691,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The quality of working every time, as expected.",
      "example": "Reliability matters more than speed here.",
      "sentences": [
-      "Reliability matters more than speed here.",
       "-ity builds a noun from an adjective: reliable becomes reliability.",
       "The -le becomes -il before the ending.",
-      "Reliability is about consistency, not about quality."
+      "Reliability is about consistency, not about quality.",
+      "An unreliable thing may be excellent when it works."
      ],
      "starter": "Reliability matters more than …",
      "pic": ""
@@ -1734,10 +1705,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The ability to change to fit the situation.",
      "example": "There is no flexibility in the deadline.",
      "sentences": [
-      "There is no flexibility in the deadline.",
       "Flexible becomes flexibility, with -le turning to -il.",
       "It follows the same pattern as reliability.",
-      "Flexibility can be in hours, in terms, or in a material."
+      "Flexibility can be in hours, in terms, or in a material.",
+      "No flexibility means the thing is fixed."
      ],
      "starter": "There is no flexibility in …",
      "pic": ""
@@ -1748,10 +1719,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Knowing that something exists or is happening.",
      "example": "There was little awareness of the new rule.",
      "sentences": [
-      "There was little awareness of the new rule.",
       "-ness builds a noun from an adjective: aware becomes awareness.",
       "-ness is the simplest of these endings: nothing else changes.",
-      "Awareness takes of."
+      "Awareness takes of.",
+      "Raising awareness is a fixed phrase."
      ],
      "starter": "There was little awareness of …",
      "pic": ""
@@ -1762,10 +1733,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The duty to deal with something, and to answer for it.",
      "example": "Nobody would take responsibility for the delay.",
      "sentences": [
-      "Nobody would take responsibility for the delay.",
       "Responsible becomes responsibility, with -le turning to -il.",
       "Responsibility takes for.",
-      "Taking responsibility is not the same as being at fault."
+      "Taking responsibility is not the same as being at fault.",
+      "It is the longest of this group and worth spelling aloud."
      ],
      "starter": "Nobody would take responsibility for …",
      "pic": ""

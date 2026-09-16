@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1354,10 +1325,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say exactly what something means or what it includes.",
      "example": "The contract defines what counts as damage.",
      "sentences": [
-      "The contract defines what counts as damage.",
       "Define your terms before you argue about them.",
       "Define takes as: damage is defined as any mark.",
-      "Its noun is definition."
+      "Its noun is definition.",
+      "A well-defined role saves a great deal of trouble."
      ],
      "starter": "The … defines …",
      "pic": ""
@@ -1368,10 +1339,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say which one it is, out of several.",
      "example": "Please identify the faulty part.",
      "sentences": [
-      "Please identify the faulty part.",
       "We have identified three possible causes.",
       "Identify answers which one, define answers what it means.",
-      "It takes as: identified as a supplier."
+      "It takes as: identified as a supplier.",
+      "Its noun is identification."
      ],
      "starter": "We have identified …",
      "pic": ""
@@ -1382,10 +1353,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To state something exactly, leaving no room for doubt.",
      "example": "The order did not specify a colour.",
      "sentences": [
-      "The order did not specify a colour.",
       "Please specify the size when you order.",
       "Specify is what you do to avoid an argument later.",
-      "Its noun is specification, often shortened to spec."
+      "Its noun is specification, often shortened to spec.",
+      "Unspecified means nobody said."
      ],
      "starter": "The … did not specify …",
      "pic": ""
@@ -1396,10 +1367,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To show or suggest something, without stating it outright.",
      "example": "The figures indicate a fall in demand.",
      "sentences": [
-      "The figures indicate a fall in demand.",
       "A cracked seal indicates water damage.",
       "Indicate is weaker than show and much weaker than prove.",
-      "Its noun is indication."
+      "Its noun is indication.",
+      "It suits a report, where you cannot yet be certain."
      ],
      "starter": "The … indicate …",
      "pic": ""
@@ -1410,10 +1381,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To mention something, or to send somebody to another place.",
      "example": "The letter refers to an earlier agreement.",
      "sentences": [
-      "The letter refers to an earlier agreement.",
       "Refer takes to: refer to the manual.",
       "They referred me to another department.",
-      "Its noun is reference, and note the dropped r."
+      "Its noun is reference, and note the dropped r.",
+      "A reference is also a letter about a former employee."
      ],
      "starter": "The … refers to …",
      "pic": ""
@@ -1424,10 +1395,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To see or show the difference between two things.",
      "example": "It is hard to distinguish the two grades.",
      "sentences": [
-      "It is hard to distinguish the two grades.",
       "Distinguish takes between, or from.",
       "You distinguish between A and B, or A from B.",
-      "Its adjective is distinct: two distinct kinds."
+      "Its adjective is distinct: two distinct kinds.",
+      "Distinguished also means respected, which is a separate meaning."
      ],
      "starter": "It is hard to distinguish …",
      "pic": ""
@@ -1443,10 +1414,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A group of things of the same kind.",
      "example": "The form has four categories of fault.",
      "sentences": [
-      "The form has four categories of fault.",
       "Which category does this fall into?",
       "Category takes into after fall: it falls into category two.",
-      "Its plural is categories."
+      "Its plural is categories.",
+      "To categorise is the verb."
      ],
      "starter": "It falls into the category of …",
      "pic": ""
@@ -1457,10 +1428,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A kind or sort of something.",
      "example": "There are two types of contract here.",
      "sentences": [
-      "There are two types of contract here.",
       "What type of work do you do?",
       "Type of is followed by a singular noun: type of contract.",
-      "Type is the everyday word; category is the formal one."
+      "Type is the everyday word; category is the formal one.",
+      "Typical is the adjective from it."
      ],
      "starter": "There are two types of …",
      "pic": ""
@@ -1471,10 +1442,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A part or quality that stands out.",
      "example": "The main feature of the flat is the light.",
      "sentences": [
-      "The main feature of the flat is the light.",
       "This model has three features the old one lacked.",
       "A feature is something you would mention.",
-      "It is also a verb: the report features two case studies."
+      "It is also a verb: the report features two case studies.",
+      "Featureless means with nothing that stands out."
      ],
      "starter": "The main feature of … is …",
      "pic": ""
@@ -1485,10 +1456,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "One part of something larger, especially something abstract.",
      "example": "There is an element of risk in every job.",
      "sentences": [
-      "There is an element of risk in every job.",
       "The report has three elements: cause, effect and remedy.",
       "An element is a part of a whole, often an idea.",
-      "An element of risk means some, not all."
+      "An element of risk means some, not all.",
+      "Elementary means basic, from the same root."
      ],
      "starter": "There is an element of …",
      "pic": "🧪"
@@ -1499,10 +1470,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "One side of a situation, seen from a particular angle.",
      "example": "The cost is only one aspect of the problem.",
      "sentences": [
-      "The cost is only one aspect of the problem.",
       "Every aspect of the job has changed.",
       "An aspect is a way of looking, not a physical part.",
-      "In this aspect, in this respect: both work."
+      "In this aspect, in this respect: both work.",
+      "Do not confuse it with expect."
      ],
      "starter": "One aspect of … is …",
      "pic": ""
@@ -1513,10 +1484,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "One of the physical parts a thing is built from.",
      "example": "A single component had failed.",
      "sentences": [
-      "A single component had failed.",
       "The components arrive from three suppliers.",
       "A component is physical; an element can be an idea.",
-      "Component parts is a common phrase, though it repeats itself."
+      "Component parts is a common phrase, though it repeats itself.",
+      "The stress is on the second part: com-PO-nent."
      ],
      "starter": "The … component …",
      "pic": ""
@@ -1532,10 +1503,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who has applied for something.",
      "example": "Every applicant is interviewed by two people.",
      "sentences": [
-      "Every applicant is interviewed by two people.",
       "There were sixty applicants for four places.",
       "An applicant has applied; a candidate has got through.",
-      "It comes from apply, with the y becoming i."
+      "It comes from apply, with the y becoming i.",
+      "Applications are assessed by a panel."
      ],
      "starter": "Every applicant …",
      "pic": ""
@@ -1546,10 +1517,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person being considered for a job or a place.",
      "example": "Four candidates were shortlisted.",
      "sentences": [
-      "Four candidates were shortlisted.",
       "The successful candidate will start in March.",
       "A candidate has usually passed a first stage.",
-      "Candidates are informed within two weeks."
+      "Candidates are informed within two weeks.",
+      "It is also used in elections."
      ],
      "starter": "The successful candidate will …",
      "pic": "🙋🏾"
@@ -1560,10 +1531,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person or organisation that pays for a professional service.",
      "example": "The client is told before any extra work begins.",
      "sentences": [
-      "The client is told before any extra work begins.",
       "We have about forty regular clients.",
       "A client buys a service; a customer buys goods.",
-      "Clients are billed at the end of each month."
+      "Clients are billed at the end of each month.",
+      "Clientele is the whole group of them."
      ],
      "starter": "The client is …",
      "pic": ""
@@ -1574,10 +1545,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person or firm that provides goods to a business.",
      "example": "The components arrive from three suppliers.",
      "sentences": [
-      "The components arrive from three suppliers.",
       "Our main supplier has raised prices twice.",
       "A supplier supplies; a client buys.",
-      "Suppliers are paid within thirty days."
+      "Suppliers are paid within thirty days.",
+      "Supply chain is the whole route from maker to buyer."
      ],
      "starter": "Our main supplier …",
      "pic": ""
@@ -1588,10 +1559,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who lives in a particular place.",
      "example": "Residents are notified before any road closure.",
      "sentences": [
-      "Residents are notified before any road closure.",
       "Every resident receives a copy of the notice.",
       "A resident lives there; a visitor does not.",
-      "It is also an adjective: the resident engineer."
+      "It is also an adjective: the resident engineer.",
+      "Residence is the noun for the place or the fact."
      ],
      "starter": "Residents are …",
      "pic": ""
@@ -1602,10 +1573,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person taking part in something.",
      "example": "Participants are asked to arrive by nine.",
      "sentences": [
-      "Participants are asked to arrive by nine.",
       "Each participant is given a number.",
       "A participant takes part; an observer only watches.",
-      "It comes from participate, which takes in."
+      "It comes from participate, which takes in.",
+      "Participants are not told the results."
      ],
      "starter": "Participants are …",
      "pic": ""
@@ -1621,10 +1592,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The building and land a business occupies.",
      "example": "Smoking is not permitted on the premises.",
      "sentences": [
-      "Smoking is not permitted on the premises.",
       "The premises are inspected once a year.",
       "Premises is always plural, even for one building.",
-      "The premises ARE, never the premises is."
+      "The premises ARE, never the premises is.",
+      "It is a formal word, common on notices."
      ],
      "starter": "… on the premises.",
      "pic": ""
@@ -1635,10 +1606,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A building or service provided for a particular purpose.",
      "example": "The facility is closed for maintenance.",
      "sentences": [
-      "The facility is closed for maintenance.",
       "The new facility opens in March.",
       "Facilities in the plural often means toilets and washrooms.",
-      "A facility is provided; premises are occupied."
+      "A facility is provided; premises are occupied.",
+      "Its adjective is facile, which means something else entirely."
      ],
      "starter": "The facility is …",
      "pic": ""
@@ -1649,10 +1620,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The place where an event is held.",
      "example": "The venue has been changed to the town hall.",
      "sentences": [
-      "The venue has been changed to the town hall.",
       "Participants are told the venue a week before.",
       "A venue is for an event, not for daily work.",
-      "It is pronounced VEN-you."
+      "It is pronounced VEN-you.",
+      "The venue was moved, so it was changed by somebody."
      ],
      "starter": "The venue is …",
      "pic": ""
@@ -1663,10 +1634,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A piece of ground where something is, was, or will be built.",
      "example": "Visitors are not allowed on site without a helmet.",
      "sentences": [
-      "Visitors are not allowed on site without a helmet.",
       "The site was cleared last spring.",
       "On site, with no article, is the fixed phrase.",
-      "A site is ground; premises are the built thing."
+      "A site is ground; premises are the built thing.",
+      "Do not confuse it with sight or cite."
      ],
      "starter": "On site, …",
      "pic": ""
@@ -1677,10 +1648,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "One single thing on a list.",
      "example": "Each item is checked against the order.",
      "sentences": [
-      "Each item is checked against the order.",
       "Three items were missing from the delivery.",
       "An item is one entry; a component is one part.",
-      "Itemised means listed one by one."
+      "Itemised means listed one by one.",
+      "Items are stored in a locked cupboard."
      ],
      "starter": "Each item is …",
      "pic": ""
@@ -1691,10 +1662,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A thing made for a particular job, usually small.",
      "example": "The device is fitted by an engineer.",
      "sentences": [
-      "The device is fitted by an engineer.",
       "Every device is tested before it leaves.",
       "A device does a job; an item is just a thing on a list.",
-      "Devise is the verb, spelled with an s."
+      "Devise is the verb, spelled with an s.",
+      "Devices are returned to the supplier if faulty."
      ],
      "starter": "The device is …",
      "pic": "📱"
@@ -1710,10 +1681,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Exact, with no room for doubt.",
      "example": "Give me the precise figure, not a rough one.",
      "sentences": [
-      "Give me the precise figure, not a rough one.",
       "The precise wording matters in a contract.",
       "Precise is about exactness; accurate is about being right.",
-      "Its adverb is precisely, which also means exactly so."
+      "Its adverb is precisely, which also means exactly so.",
+      "Precision is the noun."
      ],
      "starter": "The precise …",
      "pic": ""
@@ -1724,10 +1695,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not clearly expressed; leaving too much open.",
      "example": "The instructions were vague about the deadline.",
      "sentences": [
-      "The instructions were vague about the deadline.",
       "A vague answer is worse than no answer.",
       "Vague is the opposite of precise.",
-      "It is pronounced VAYG, with a silent u."
+      "It is pronounced VAYG, with a silent u.",
+      "Vagueness is the noun."
      ],
      "starter": "The … was vague about …",
      "pic": ""
@@ -1738,10 +1709,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Able to be understood in more than one way.",
      "example": "The clause is ambiguous and both sides read it differently.",
      "sentences": [
-      "The clause is ambiguous and both sides read it differently.",
       "An ambiguous instruction is dangerous on site.",
       "Vague says too little. Ambiguous says two things at once.",
-      "Its noun is ambiguity."
+      "Its noun is ambiguity.",
+      "The stress is on the second part: am-BIG-you-us."
      ],
      "starter": "The … is ambiguous because …",
      "pic": ""
@@ -1752,10 +1723,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Stated openly and directly, leaving nothing to be guessed.",
      "example": "The contract is explicit about who pays.",
      "sentences": [
-      "The contract is explicit about who pays.",
       "She gave explicit instructions not to start.",
       "Explicit is said; implicit is only understood.",
-      "Its adverb is explicitly."
+      "Its adverb is explicitly.",
+      "Explicit is the safer of the two in writing."
      ],
      "starter": "The … is explicit about …",
      "pic": ""
@@ -1766,10 +1737,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Understood without being said.",
      "example": "There was an implicit agreement that nobody would mention it.",
      "sentences": [
-      "There was an implicit agreement that nobody would mention it.",
       "The threat was implicit rather than stated.",
       "Implicit is the opposite of explicit.",
-      "Implicit in the offer was a deadline."
+      "Implicit in the offer was a deadline.",
+      "Its adverb is implicitly."
      ],
      "starter": "There was an implicit …",
      "pic": ""

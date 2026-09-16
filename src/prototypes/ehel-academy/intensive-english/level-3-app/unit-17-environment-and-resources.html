@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1346,10 +1317,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Able to be replaced naturally as it is used.",
      "example": "About a third of the supply is now renewable.",
      "sentences": [
-      "About a third of the supply is now renewable.",
       "Renewable means the source refills itself.",
       "It is the opposite of finite in this context.",
-      "Its verb is renew, and its noun renewal."
+      "Its verb is renew, and its noun renewal.",
+      "Renewables, as a plural noun, means the sources themselves."
      ],
      "starter": "About … of the supply is renewable.",
      "pic": ""
@@ -1360,10 +1331,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Having a limit; there is only so much of it.",
      "example": "Fresh water is finite in any one place.",
      "sentences": [
-      "Fresh water is finite in any one place.",
       "Finite means there is an end to it.",
       "Its opposite is infinite, with in-.",
-      "It is pronounced FY-nite."
+      "It is pronounced FY-nite.",
+      "Finite is about the total, not about the speed of use."
      ],
      "starter": "… is finite because …",
      "pic": ""
@@ -1374,10 +1345,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not available in enough quantity.",
      "example": "Skilled labour is scarce in the region.",
      "sentences": [
-      "Skilled labour is scarce in the region.",
       "Scarce is about availability now, not about the total.",
       "Its noun is scarcity.",
-      "Scarcely, the adverb, means hardly, which is a different idea."
+      "Scarcely, the adverb, means hardly, which is a different idea.",
+      "Something finite need not be scarce yet."
      ],
      "starter": "… is scarce in …",
      "pic": ""
@@ -1388,10 +1359,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Present in large quantities.",
      "example": "Wind is abundant here and difficult to store.",
      "sentences": [
-      "Wind is abundant here and difficult to store.",
       "Abundant is the opposite of scarce.",
       "Its noun is abundance.",
-      "Abundant takes in for where: abundant in the north."
+      "Abundant takes in for where: abundant in the north.",
+      "Abundance does not mean easy to use."
      ],
      "starter": "… is abundant in …",
      "pic": ""
@@ -1402,10 +1373,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The amount of something used up.",
      "example": "Consumption fell by four per cent over the decade.",
      "sentences": [
-      "Consumption fell by four per cent over the decade.",
       "Consumption takes of.",
       "Its verb is consume.",
-      "Consumption measures use; production measures supply."
+      "Consumption measures use; production measures supply.",
+      "Per capita consumption is consumption divided by population."
      ],
      "starter": "Consumption of … fell by …",
      "pic": ""
@@ -1416,10 +1387,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The reduction of a supply by use.",
      "example": "Depletion of the aquifer has accelerated since 2015.",
      "sentences": [
-      "Depletion of the aquifer has accelerated since 2015.",
       "Depletion takes of.",
       "Its verb is deplete.",
-      "Depletion is the process; scarcity is the result."
+      "Depletion is the process; scarcity is the result.",
+      "A depleted resource may still have some left."
      ],
      "starter": "Depletion of … has …",
      "pic": ""
@@ -1435,10 +1406,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Gases or particles released into the air.",
      "example": "Emissions were rising steadily until 2019.",
      "sentences": [
-      "Emissions were rising steadily until 2019.",
       "Emissions is almost always plural.",
       "Its verb is emit, which doubles the t: emitted.",
-      "Emissions takes from for the source."
+      "Emissions takes from for the source.",
+      "It takes a plural verb: emissions were rising."
      ],
      "starter": "Emissions from … were …",
      "pic": "💨"
@@ -1449,10 +1420,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A substance that causes pollution.",
      "example": "Three pollutants are measured at each station.",
      "sentences": [
-      "Three pollutants are measured at each station.",
       "A pollutant is the substance; pollution is the condition.",
       "Its verb is pollute.",
-      "-ant names a thing or a person that does something."
+      "-ant names a thing or a person that does something.",
+      "A pollutant is only a pollutant where it does not belong."
      ],
      "starter": "… pollutants are measured at …",
      "pic": "🛢️"
@@ -1463,10 +1434,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The natural home of a plant or animal.",
      "example": "The habitat was being surveyed when the work stopped.",
      "sentences": [
-      "The habitat was being surveyed when the work stopped.",
       "A habitat is where something lives.",
       "It takes for: a habitat for wading birds.",
-      "Habitat loss is the commonest phrase."
+      "Habitat loss is the commonest phrase.",
+      "It is pronounced HAB-i-tat."
      ],
      "starter": "The habitat for … was …",
      "pic": "🏞️"
@@ -1477,10 +1448,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The variety of living things in a place.",
      "example": "Biodiversity has declined across all four sites.",
      "sentences": [
-      "Biodiversity has declined across all four sites.",
       "Bio- means life; diversity means variety.",
       "Biodiversity is uncountable.",
-      "It counts variety, not quantity."
+      "It counts variety, not quantity.",
+      "A place can have many animals and low biodiversity."
      ],
      "starter": "Biodiversity has … across …",
      "pic": ""
@@ -1491,10 +1462,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A community of living things and the place they live in.",
      "example": "The whole ecosystem depends on the water level.",
      "sentences": [
-      "The whole ecosystem depends on the water level.",
       "An ecosystem includes the living and the non-living together.",
       "It is one word.",
-      "A habitat is a home; an ecosystem is a system."
+      "A habitat is a home; an ecosystem is a system.",
+      "The stress is on the first part: EE-co-system."
      ],
      "starter": "The ecosystem depends on …",
      "pic": "🌿"
@@ -1505,10 +1476,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The presence of something harmful where it should not be.",
      "example": "Contamination was detected at two of the wells.",
      "sentences": [
-      "Contamination was detected at two of the wells.",
       "Contamination takes of, and by for the substance.",
       "Its verb is contaminate.",
-      "Contamination is local; pollution is usually broader."
+      "Contamination is local; pollution is usually broader.",
+      "It is often found in the passive: was contaminated."
      ],
      "starter": "Contamination of … was detected at …",
      "pic": "☣️"
@@ -1524,10 +1495,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To be one of several causes of something.",
      "example": "Transport contributes about a quarter of the total.",
      "sentences": [
-      "Transport contributes about a quarter of the total.",
       "Contribute takes to.",
       "It says one of several, which is honest and useful.",
-      "Its noun is contribution."
+      "Its noun is contribution.",
+      "Contributing is weaker than causing, deliberately."
      ],
      "starter": "… contributes to …",
      "pic": ""
@@ -1538,10 +1509,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make something happen faster.",
      "example": "Depletion has accelerated since 2015.",
      "sentences": [
-      "Depletion has accelerated since 2015.",
       "Accelerate can take an object or none.",
       "Its noun is acceleration.",
-      "Accelerating is about the rate, not the amount."
+      "Accelerating is about the rate, not the amount.",
+      "Something can accelerate while the total still falls."
      ],
      "starter": "… has accelerated since …",
      "pic": "⏩"
@@ -1552,10 +1523,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To balance one effect with an opposite one.",
      "example": "The gain was offset by higher consumption elsewhere.",
      "sentences": [
-      "The gain was offset by higher consumption elsewhere.",
       "Offset takes by for the balancing thing.",
       "Its past forms are offset and offset: it never changes.",
-      "Offsetting cancels; it does not remove."
+      "Offsetting cancels; it does not remove.",
+      "It is also a noun: a carbon offset."
      ],
      "starter": "The … was offset by …",
      "pic": ""
@@ -1566,10 +1537,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make a bad situation worse.",
      "example": "The dry summer exacerbated the shortage.",
      "sentences": [
-      "The dry summer exacerbated the shortage.",
       "Exacerbate takes a direct object.",
       "It applies only to things that are already bad.",
-      "Its noun is exacerbation."
+      "Its noun is exacerbation.",
+      "It is pronounced ig-ZAS-er-bate."
      ],
      "starter": "The … exacerbated …",
      "pic": ""
@@ -1580,10 +1551,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make a bad situation less severe.",
      "example": "The new store alleviated the shortage but did not end it.",
      "sentences": [
-      "The new store alleviated the shortage but did not end it.",
       "Alleviate is the opposite of exacerbate.",
       "It takes a direct object.",
-      "Alleviating reduces; solving removes."
+      "Alleviating reduces; solving removes.",
+      "Its noun is alleviation."
      ],
      "starter": "… alleviated … but did not …",
      "pic": ""
@@ -1594,10 +1565,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To act against something so as to reduce its effect.",
      "example": "Nothing was done to counteract the rise.",
      "sentences": [
-      "Nothing was done to counteract the rise.",
       "Counter- means against.",
       "Counteract takes a direct object.",
-      "Counteracting is deliberate; offsetting may be accidental."
+      "Counteracting is deliberate; offsetting may be accidental.",
+      "It is one word."
      ],
      "starter": "Nothing was done to counteract …",
      "pic": ""
@@ -1613,10 +1584,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The level at which something changes or becomes serious.",
      "example": "Two readings were above the threshold.",
      "sentences": [
-      "Two readings were above the threshold.",
       "A threshold is a limit with a consequence attached.",
       "It takes for: the threshold for action.",
-      "It also means a doorway."
+      "It also means a doorway.",
+      "Crossing a threshold triggers something; a target does not."
      ],
      "starter": "… readings were above the threshold for …",
      "pic": ""
@@ -1627,10 +1598,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The starting measurement everything else is compared with.",
      "example": "The 2010 figure is used as the baseline.",
      "sentences": [
-      "The 2010 figure is used as the baseline.",
       "A baseline is a reference point, chosen deliberately.",
       "Changing the baseline changes every comparison.",
-      "It is one word."
+      "It is one word.",
+      "Always ask what baseline a percentage is against."
      ],
      "starter": "The … figure is used as the baseline.",
      "pic": ""
@@ -1641,10 +1612,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The general direction of change over time.",
      "example": "The trend is downward, with two bad years in it.",
      "sentences": [
-      "The trend is downward, with two bad years in it.",
       "A trend is a direction, not a single measurement.",
       "It takes in: a trend in consumption.",
-      "Two points do not make a trend."
+      "Two points do not make a trend.",
+      "Its adjective is trending, which is recent."
      ],
      "starter": "The trend in … is …",
      "pic": "📈"
@@ -1655,10 +1626,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A relationship in which two things change together.",
      "example": "There is a strong correlation between the two.",
      "sentences": [
-      "There is a strong correlation between the two.",
       "Correlation takes between, or with.",
       "It says they move together, not that one causes the other.",
-      "Its verb is correlate."
+      "Its verb is correlate.",
+      "This distinction is the subject of a whole card in this unit."
      ],
      "starter": "There is a correlation between … and …",
      "pic": ""
@@ -1669,10 +1640,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An estimate of a future figure, based on present data.",
      "example": "The projection assumes consumption stays flat.",
      "sentences": [
-      "The projection assumes consumption stays flat.",
       "A projection is not a prediction: it carries assumptions.",
       "Its verb is project, stressed pro-JECT.",
-      "Every projection depends on what it assumed."
+      "Every projection depends on what it assumed.",
+      "Ask what the assumptions are, always."
      ],
      "starter": "The projection assumes …",
      "pic": ""
@@ -1683,10 +1654,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A measurement used to show how something is changing.",
      "example": "Water level is the best single indicator we have.",
      "sentences": [
-      "Water level is the best single indicator we have.",
       "An indicator stands for something harder to measure.",
       "It takes of, or for.",
-      "Its verb is indicate, from Unit 4."
+      "Its verb is indicate, from Unit 4.",
+      "A good indicator moves when the real thing moves."
      ],
      "starter": "… is the best indicator of …",
      "pic": "📊"
@@ -1702,10 +1673,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To seem to be the case, on the evidence available.",
      "example": "Emissions appear to have peaked in 2019.",
      "sentences": [
-      "Emissions appear to have peaked in 2019.",
       "Appear takes to plus a plain verb.",
       "It hedges without weakening you unfairly.",
-      "It is a state verb: no continuous form here."
+      "It is a state verb: no continuous form here.",
+      "It also means to become visible, which is different."
      ],
      "starter": "… appear to have …",
      "pic": ""
@@ -1716,10 +1687,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To calculate an approximate figure.",
      "example": "Consumption is estimated at forty thousand litres.",
      "sentences": [
-      "Consumption is estimated at forty thousand litres.",
       "Estimate takes at for the figure.",
       "It is also a noun, said differently: ES-ti-mut.",
-      "An estimate should carry a range or a margin."
+      "An estimate should carry a range or a margin.",
+      "Estimated is very common in the passive."
      ],
      "starter": "… is estimated at …",
      "pic": ""
@@ -1730,10 +1701,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "About; close to but not exactly.",
      "example": "Approximately a third of the supply is renewable.",
      "sentences": [
-      "Approximately a third of the supply is renewable.",
       "Approximately is the formal about.",
       "It should not sit in front of a precise figure.",
-      "Approximately 40,000 is fine; approximately 41,237 is not."
+      "Approximately 40,000 is fine; approximately 41,237 is not.",
+      "Its adjective is approximate."
      ],
      "starter": "Approximately … of …",
      "pic": ""
@@ -1744,10 +1715,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In general terms, with exceptions allowed for.",
      "example": "The trend is broadly downward.",
      "sentences": [
-      "The trend is broadly downward.",
       "Broadly admits exceptions without listing them.",
       "Broadly speaking is the fixed phrase.",
-      "It is honest hedging: it says the detail is untidy."
+      "It is honest hedging: it says the detail is untidy.",
+      "Its adjective is broad."
      ],
      "starter": "The … is broadly …",
      "pic": ""
@@ -1758,10 +1729,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not final; offered subject to change.",
      "example": "These are tentative figures and may be revised.",
      "sentences": [
-      "These are tentative figures and may be revised.",
       "Tentative means provisional and says so.",
       "Its adverb is tentatively.",
-      "A tentative conclusion invites challenge, which is its purpose."
+      "A tentative conclusion invites challenge, which is its purpose.",
+      "It is stronger than a guess and weaker than a finding."
      ],
      "starter": "These are tentative … and may …",
      "pic": ""

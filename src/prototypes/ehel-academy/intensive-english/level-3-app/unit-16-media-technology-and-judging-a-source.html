@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1346,10 +1317,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An organisation that publishes news.",
      "example": "The story appeared in three outlets the same morning.",
      "sentences": [
-      "The story appeared in three outlets the same morning.",
       "An outlet is the publisher, not the journalist.",
       "It covers newspapers, broadcasters and websites alike.",
-      "It also means a shop, or a socket, which are unrelated."
+      "It also means a shop, or a socket, which are unrelated.",
+      "Naming the outlet is the first step in judging a story."
      ],
      "starter": "The story appeared in … outlets.",
      "pic": "🏢"
@@ -1360,10 +1331,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The title of a news story, set in large type.",
      "example": "The headline said more than the article did.",
      "sentences": [
-      "The headline said more than the article did.",
       "A headline is written by an editor, not usually by the writer.",
       "That is why it can overstate what the article says.",
-      "It is also a verb: to headline a story."
+      "It is also a verb: to headline a story.",
+      "Headlines use their own grammar, which this unit teaches."
      ],
      "starter": "The headline said …",
      "pic": "📰"
@@ -1374,10 +1345,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The line naming the journalist who wrote a piece.",
      "example": "There was no byline, which is unusual.",
      "sentences": [
-      "There was no byline, which is unusual.",
       "A byline names the author.",
       "No byline can mean agency copy, or a sensitive story.",
-      "It is one word."
+      "It is one word.",
+      "A byline is not a source: it names who wrote, not who told."
      ],
      "starter": "There was no byline on …",
      "pic": "✍🏾"
@@ -1388,10 +1359,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The amount and kind of reporting something gets.",
      "example": "The coverage was heavy for two days and then stopped.",
      "sentences": [
-      "The coverage was heavy for two days and then stopped.",
       "Coverage is uncountable.",
       "Coverage takes of: coverage of the inquiry.",
-      "Heavy coverage is not the same as good coverage."
+      "Heavy coverage is not the same as good coverage.",
+      "Its verb is cover: to cover a story."
      ],
      "starter": "The coverage of … was …",
      "pic": ""
@@ -1402,10 +1373,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The number of copies an outlet sells or distributes.",
      "example": "Its circulation has halved in a decade.",
      "sentences": [
-      "Its circulation has halved in a decade.",
       "Circulation counts copies; readership counts people.",
       "One copy may have several readers, so the two differ.",
-      "Its verb is circulate."
+      "Its verb is circulate.",
+      "It also means the movement of blood, or of air."
      ],
      "starter": "Its circulation has …",
      "pic": ""
@@ -1416,10 +1387,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The people who read an outlet, taken together.",
      "example": "Its readership is older than it was.",
      "sentences": [
-      "Its readership is older than it was.",
       "Readership counts people; circulation counts copies.",
       "Readership is usually the larger number.",
-      "It takes a singular verb in British English, usually."
+      "It takes a singular verb in British English, usually.",
+      "Knowing an outlet's readership explains a lot of its choices."
      ],
      "starter": "Its readership is …",
      "pic": "👥"
@@ -1435,10 +1406,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not identified by name.",
      "example": "An unnamed official confirmed the figure.",
      "sentences": [
-      "An unnamed official confirmed the figure.",
       "Unnamed means the outlet knows who it is and will not say.",
       "That is different from anonymous, where nobody knows.",
-      "It is one word, with un-."
+      "It is one word, with un-.",
+      "An unnamed source is still a source the outlet has checked."
      ],
      "starter": "An unnamed … confirmed …",
      "pic": ""
@@ -1449,10 +1420,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "With the identity unknown or hidden.",
      "example": "The allegation came from an anonymous letter.",
      "sentences": [
-      "The allegation came from an anonymous letter.",
       "Anonymous means the identity is hidden from the reader.",
       "With an unnamed source, the journalist knows and the reader does not.",
-      "With a genuinely anonymous one, nobody knows."
+      "With a genuinely anonymous one, nobody knows.",
+      "Its adverb is anonymously."
      ],
      "starter": "The … came from an anonymous …",
      "pic": "🕵🏾"
@@ -1463,10 +1434,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person within an organisation who passes on information.",
      "example": "One insider described the meeting as difficult.",
      "sentences": [
-      "One insider described the meeting as difficult.",
       "An insider has access, which is why they are worth quoting.",
       "They also have an interest, which is why you weigh it.",
-      "It is one word."
+      "It is one word.",
+      "Insider is vague by design: it hides the person's role."
      ],
      "starter": "One insider described … as …",
      "pic": ""
@@ -1477,10 +1448,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Information released without permission.",
      "example": "The figures reached the press through a leak.",
      "sentences": [
-      "The figures reached the press through a leak.",
       "A leak is deliberate; a mistake is not.",
       "It is also a verb: the document was leaked.",
-      "Leaks are often timed to affect a decision."
+      "Leaks are often timed to affect a decision.",
+      "Ask who benefits from the timing."
      ],
      "starter": "The … reached the press through a leak.",
      "pic": ""
@@ -1491,10 +1462,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Information given to journalists, often unattributably.",
      "example": "The account came from an official briefing.",
      "sentences": [
-      "The account came from an official briefing.",
       "A briefing is arranged; a leak is not.",
       "Off the record means it cannot be quoted at all.",
-      "Its verb is brief: to brief a journalist."
+      "Its verb is brief: to brief a journalist.",
+      "A briefing is a source with a purpose."
      ],
      "starter": "The account came from a briefing by …",
      "pic": ""
@@ -1505,10 +1476,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An unverified story passed from person to person.",
      "example": "It began as a rumour and was never confirmed.",
      "sentences": [
-      "It began as a rumour and was never confirmed.",
       "A rumour has no identified source at all.",
       "It is spelled rumour in British English.",
-      "Rumour is uncountable when general: rumour has it that."
+      "Rumour is uncountable when general: rumour has it that.",
+      "Reporting a rumour as news is the lowest rung."
      ],
      "starter": "It began as a rumour about …",
      "pic": ""
@@ -1524,10 +1495,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Believable, on reasonable grounds.",
      "example": "The account is credible but uncorroborated.",
      "sentences": [
-      "The account is credible but uncorroborated.",
       "Credible means worth believing, not proved.",
       "Its noun is credibility.",
-      "Credible and plausible are close; credible is about the source."
+      "Credible and plausible are close; credible is about the source.",
+      "Do not confuse it with credulous, which means too willing to believe."
      ],
      "starter": "The account is credible but …",
      "pic": ""
@@ -1538,10 +1509,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To confirm something with independent evidence.",
      "example": "Nothing in the story has been corroborated.",
      "sentences": [
-      "Nothing in the story has been corroborated.",
       "Corroborate needs a SECOND, independent source.",
       "Repeating the same source twice corroborates nothing.",
-      "Its noun is corroboration."
+      "Its noun is corroboration.",
+      "Uncorroborated is the standard negative."
      ],
      "starter": "Nothing in … has been corroborated.",
      "pic": ""
@@ -1552,10 +1523,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not connected to, or controlled by, the thing it reports on.",
      "example": "The figures have not been independently checked.",
      "sentences": [
-      "The figures have not been independently checked.",
       "Independent takes of: independent of the supplier.",
       "Its adverb is independently.",
-      "Independence is what makes corroboration worth anything."
+      "Independence is what makes corroboration worth anything.",
+      "Two outlets repeating one agency are not independent."
      ],
      "starter": "… has not been independently …",
      "pic": ""
@@ -1566,10 +1537,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Having a personal stake in the outcome.",
      "example": "The firm has a vested interest in the result.",
      "sentences": [
-      "The firm has a vested interest in the result.",
       "Vested interest is the fixed phrase.",
       "A vested interest does not make somebody wrong.",
-      "It means their account needs weighing, not discarding."
+      "It means their account needs weighing, not discarding.",
+      "It comes from vest, meaning to give a right to."
      ],
      "starter": "… has a vested interest in …",
      "pic": ""
@@ -1580,10 +1551,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A set of aims somebody is pursuing, often unstated.",
      "example": "Every outlet has an agenda; some declare it.",
      "sentences": [
-      "Every outlet has an agenda; some declare it.",
       "An agenda is a purpose, not a plot.",
       "It also means the list of items at a meeting.",
-      "Its plural is agendas."
+      "Its plural is agendas.",
+      "A declared agenda is easier to allow for than a hidden one."
      ],
      "starter": "… has an agenda, which is …",
      "pic": ""
@@ -1594,10 +1565,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A particular angle or bias in how something is reported.",
      "example": "The two reports have a different slant.",
      "sentences": [
-      "The two reports have a different slant.",
       "A slant is the angle, not a falsehood.",
       "It is also a verb: to slant a story.",
-      "Every account has a slant, because every account selects."
+      "Every account has a slant, because every account selects.",
+      "Naming the slant is more useful than complaining about it."
      ],
      "starter": "The … has a slant towards …",
      "pic": ""
@@ -1613,10 +1584,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A service through which content reaches people.",
      "example": "The same story behaves differently on each platform.",
      "sentences": [
-      "The same story behaves differently on each platform.",
       "A platform distributes; an outlet produces.",
       "Platforms choose what you see, which outlets cannot.",
-      "It also means a raised surface, or a railway platform."
+      "It also means a raised surface, or a railway platform.",
+      "Its verb is to platform somebody, which is recent."
      ],
      "starter": "On …, the story …",
      "pic": "💻"
@@ -1627,10 +1598,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A set of rules a system follows to decide what to show you.",
      "example": "The algorithm decides what most people ever see.",
      "sentences": [
-      "The algorithm decides what most people ever see.",
       "An algorithm is a procedure, not an opinion.",
       "It optimises for something, and rarely for accuracy.",
-      "Its adjective is algorithmic."
+      "Its adjective is algorithmic.",
+      "The stress is on the second part: AL-go-rithm."
      ],
      "starter": "The algorithm decides …",
      "pic": ""
@@ -1641,10 +1612,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The stream of items a platform shows you.",
      "example": "Two people's feeds share almost nothing.",
      "sentences": [
-      "Two people's feeds share almost nothing.",
       "A feed is personalised, so nobody sees the same one.",
       "That is why what everybody knows is no longer reliable.",
-      "It is also a verb: to feed a system with data."
+      "It is also a verb: to feed a system with data.",
+      "Its plural is feeds."
      ],
      "starter": "My feed is full of …",
      "pic": ""
@@ -1655,10 +1626,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An alert a system sends to get your attention.",
      "example": "Notifications are timed, not random.",
      "sentences": [
-      "Notifications are timed, not random.",
       "A notification interrupts on purpose.",
       "Its verb is notify, from Unit 18's formal set.",
-      "Turning them off changes what you read."
+      "Turning them off changes what you read.",
+      "It is a long word: no-ti-fi-CA-tion."
      ],
      "starter": "Notifications about … are …",
      "pic": "🔔"
@@ -1669,10 +1640,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who pays for, or signs up to, a service.",
      "example": "Subscriber numbers matter more than circulation now.",
      "sentences": [
-      "Subscriber numbers matter more than circulation now.",
       "A subscriber pays or registers; a reader may do neither.",
       "Its verb is subscribe, which takes to.",
-      "Subscription is the noun for the arrangement."
+      "Subscription is the noun for the arrangement.",
+      "Subscriber figures shape what an outlet publishes."
      ],
      "starter": "Subscriber numbers for … are …",
      "pic": ""
@@ -1683,10 +1654,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A stored collection of past material.",
      "example": "The archive shows the claim was made twice before.",
      "sentences": [
-      "The archive shows the claim was made twice before.",
       "An archive lets you check what was said earlier.",
       "It is also a verb: to archive a document.",
-      "Archives are how you catch a repeated claim."
+      "Archives are how you catch a repeated claim.",
+      "It is pronounced AR-kive."
      ],
      "starter": "The archive shows …",
      "pic": "🗄️"
@@ -1702,10 +1673,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In fact; used to correct gently or add a surprise.",
      "example": "Actually, the figure was lower than that.",
      "sentences": [
-      "Actually, the figure was lower than that.",
       "Actually softens a correction.",
       "It does not mean at the present time: that is currently.",
-      "It usually starts the sentence or follows the subject."
+      "It usually starts the sentence or follows the subject.",
+      "Overusing it makes everything sound like a correction."
      ],
      "starter": "Actually, …",
      "pic": ""
@@ -1716,10 +1687,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Used to add a qualification to what you just said.",
      "example": "It was well reported. Mind you, only for two days.",
      "sentences": [
-      "It was well reported. Mind you, only for two days.",
       "Mind you adds a but without starting an argument.",
       "It is informal and very common in speech.",
-      "It usually starts its own sentence."
+      "It usually starts its own sentence.",
+      "It concedes something, which makes the point before it survive."
      ],
      "starter": "…. Mind you, …",
      "pic": ""
@@ -1730,10 +1701,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Used to introduce something stronger or more exact.",
      "example": "The claim was weak. In fact, it was uncorroborated.",
      "sentences": [
-      "The claim was weak. In fact, it was uncorroborated.",
       "In fact usually strengthens what came before.",
       "It can also correct, like actually.",
-      "It is two words."
+      "It is two words.",
+      "In fact and indeed do much the same work."
      ],
      "starter": "…. In fact, …",
      "pic": ""
@@ -1744,10 +1715,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Used to concede a point before you argue past it.",
      "example": "Granted, the source was unnamed. It was still checked.",
      "sentences": [
-      "Granted, the source was unnamed. It was still checked.",
       "Granted concedes, exactly like admittedly from Unit 6.",
       "It usually starts the sentence and takes a comma.",
-      "It comes from grant, meaning to allow."
+      "It comes from grant, meaning to allow.",
+      "Conceding first makes the argument after it harder to dismiss."
      ],
      "starter": "Granted, …. …",
      "pic": ""
@@ -1758,10 +1729,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Used before saying something blunt or unwelcome.",
      "example": "Frankly, the coverage was thin.",
      "sentences": [
-      "Frankly, the coverage was thin.",
       "Frankly warns the listener that bluntness is coming.",
       "It is a softener and a strengthener at once.",
-      "To be frank means the same."
+      "To be frank means the same.",
+      "Overused, it makes everything sound like bad news."
      ],
      "starter": "Frankly, …",
      "pic": ""

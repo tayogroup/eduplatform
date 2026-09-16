@@ -157,7 +157,25 @@ def lesson_payload(unit, pictures):
                 "pos": d["partOfSpeech"],
                 "meaning": d["childMeaning"],
                 "example": d["exampleSentence"],
-                "sentences": ([d["exampleSentence"]] + list(d["practiceSentences"]))[:4],
+                # EXACTLY what tools/lib/ehel-intensive-narration.js generates for
+                # `wordSentences`, and it has to be: this list is what the page
+                # PLAYS, and a clip is named by the hash of the text played.
+                #
+                # It used to prepend the exampleSentence, which the narration lib
+                # never generates when practice sentences exist. So the FIRST
+                # sentence on every word card was a clip nobody had bought: the
+                # fetch 404'd and lib/voice.js fell through to quiz_tts.php, which
+                # proxies ElevenLabs -- a paid call per play, on live routed
+                # pages. Measured 2026-09-17: 520 + 601 + 570 = 1,691 words.
+                #
+                # The [:4] cap went with it rather than being kept: every word in
+                # all three levels has 4 or 5 practice sentences, so the cap was
+                # also dropping the last one of each (1,715 words) while adding an
+                # ungenerated one at the front. The `or [...]` arm mirrors the
+                # lib's own fallback and is currently unreachable -- no word here
+                # has an empty practice list -- but the two must agree in shape,
+                # not merely in the case that happens to occur today.
+                "sentences": list(d["practiceSentences"]) or [d["exampleSentence"]],
                 "starter": d.get("sentenceStarter", ""),
                 "pic": pictures.get(d["masterWord"], "") or pictures.get(d["displayWord"], ""),
             })

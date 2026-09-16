@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1350,10 +1321,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say something clearly and definitely.",
      "example": "She stated that the work had been completed.",
      "sentences": [
-      "She stated that the work had been completed.",
       "State is neutral: it takes no position on whether it is true.",
       "It takes that plus a clause.",
-      "Its noun is statement."
+      "Its noun is statement.",
+      "State is the standard verb for minutes and records."
      ],
      "starter": "She stated that …",
      "pic": ""
@@ -1364,10 +1335,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say something briefly, in passing.",
      "example": "He mentioned that the seal had been replaced.",
      "sentences": [
-      "He mentioned that the seal had been replaced.",
       "Mention suggests it was not the main point.",
       "It takes that plus a clause, or a direct object.",
-      "Mention never takes to before a person: mention it to her."
+      "Mention never takes to before a person: mention it to her.",
+      "Its noun is mention, unchanged."
      ],
      "starter": "He mentioned that …",
      "pic": ""
@@ -1378,10 +1349,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To give an account of something officially.",
      "example": "She reported that two boxes were missing.",
      "sentences": [
-      "She reported that two boxes were missing.",
       "Report takes that, or a direct object.",
       "You report something TO somebody.",
-      "Its noun is report."
+      "Its noun is report.",
+      "Reported speech takes its name from this verb."
      ],
      "starter": "She reported that …",
      "pic": "📋"
@@ -1392,10 +1363,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To observe something and record it.",
      "example": "The inspector noted that the gate was unlocked.",
      "sentences": [
-      "The inspector noted that the gate was unlocked.",
       "Note is common in reports and minutes.",
       "It carries a slight sense of putting it on record.",
-      "It takes that plus a clause."
+      "It takes that plus a clause.",
+      "Its noun is a note."
      ],
      "starter": "The … noted that …",
      "pic": "🗒️"
@@ -1406,10 +1377,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say something further, after what has already been said.",
      "example": "She added that the cost would be met locally.",
      "sentences": [
-      "She added that the cost would be met locally.",
       "Add always follows something else: it cannot open an account.",
       "It takes that plus a clause.",
-      "Add is neutral and very common in minutes."
+      "Add is neutral and very common in minutes.",
+      "In addition is the connective from the same root."
      ],
      "starter": "She added that …",
      "pic": ""
@@ -1420,10 +1391,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make a remark, often a considered one.",
      "example": "He observed that nobody had signed the form.",
      "sentences": [
-      "He observed that nobody had signed the form.",
       "Observe as a reporting verb is formal and slightly weighty.",
       "It also means to watch, and to follow a rule.",
-      "It takes that plus a clause."
+      "It takes that plus a clause.",
+      "Its noun here is observation."
      ],
      "starter": "He observed that …",
      "pic": ""
@@ -1439,10 +1410,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say that something is not true.",
      "example": "He denied sending the second invoice.",
      "sentences": [
-      "He denied sending the second invoice.",
       "Deny takes an -ing form, or that plus a clause.",
       "Never deny TO do something.",
-      "Its noun is denial."
+      "Its noun is denial.",
+      "Denying is not the same as disproving."
      ],
      "starter": "He denied …",
      "pic": ""
@@ -1453,10 +1424,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say you are unhappy about something.",
      "example": "She complained that nobody had replied.",
      "sentences": [
-      "She complained that nobody had replied.",
       "Complain takes about a thing, and to a person.",
       "It takes that plus a clause when you report what was said.",
-      "Its noun is complaint."
+      "Its noun is complaint.",
+      "Reporting somebody as complaining is not neutral."
      ],
      "starter": "She complained that …",
      "pic": ""
@@ -1467,10 +1438,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To speak with too much pride about what you have done.",
      "example": "He boasted that he had finished in half the time.",
      "sentences": [
-      "He boasted that he had finished in half the time.",
       "Boast takes about, or that plus a clause.",
       "It is strongly negative: it accuses the speaker of vanity.",
-      "Never use it in minutes unless you can defend it."
+      "Never use it in minutes unless you can defend it.",
+      "Its noun is a boast."
      ],
      "starter": "He boasted that …",
      "pic": ""
@@ -1481,10 +1452,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To advise somebody strongly and repeatedly.",
      "example": "She urged us to get it in writing.",
      "sentences": [
-      "She urged us to get it in writing.",
       "Urge takes a person plus to plus a plain verb.",
       "It is stronger than advise and weaker than order.",
-      "Its noun is an urge, though that means something different."
+      "Its noun is an urge, though that means something different.",
+      "Urging carries no authority, only insistence."
      ],
      "starter": "She urged us to …",
      "pic": ""
@@ -1495,10 +1466,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say something that removes somebody's worry.",
      "example": "He reassured us that the parts were on the way.",
      "sentences": [
-      "He reassured us that the parts were on the way.",
       "Reassure takes a person plus that plus a clause.",
       "It implies there was a worry to remove.",
-      "Its noun is reassurance."
+      "Its noun is reassurance.",
+      "Reassuring somebody wrongly is worse than saying nothing."
      ],
      "starter": "He reassured us that …",
      "pic": ""
@@ -1509,10 +1480,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To admit something you would rather not.",
      "example": "She confessed that she had not read it.",
      "sentences": [
-      "She confessed that she had not read it.",
       "Confess takes that, or to plus an -ing form.",
       "It is stronger than admit and carries more weight.",
-      "Its noun is confession."
+      "Its noun is confession.",
+      "Use it only where the admission genuinely cost the speaker."
      ],
      "starter": "She confessed that …",
      "pic": ""
@@ -1528,10 +1499,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To tell somebody to do something, with authority.",
      "example": "The inspector ordered the line to be stopped.",
      "sentences": [
-      "The inspector ordered the line to be stopped.",
       "Order takes a person plus to plus a plain verb.",
       "It claims real authority: use it only where there was some.",
-      "Its noun is an order."
+      "Its noun is an order.",
+      "Ordering is the strongest of this group."
      ],
      "starter": "The … ordered … to …",
      "pic": ""
@@ -1542,10 +1513,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To tell somebody officially how to do something.",
      "example": "We were instructed to keep a written record.",
      "sentences": [
-      "We were instructed to keep a written record.",
       "Instruct takes a person plus to plus a plain verb.",
       "It is formal and slightly softer than order.",
-      "Its noun is an instruction."
+      "Its noun is an instruction.",
+      "Instructions are usually written; orders are often spoken."
      ],
      "starter": "We were instructed to …",
      "pic": ""
@@ -1556,10 +1527,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To ask for something formally.",
      "example": "She requested a copy of the report.",
      "sentences": [
-      "She requested a copy of the report.",
       "Request takes a thing, or that plus a clause.",
       "Request somebody TO do something is possible but stiff.",
-      "Its noun is a request."
+      "Its noun is a request.",
+      "A request can be refused; an order cannot."
      ],
      "starter": "She requested …",
      "pic": ""
@@ -1570,10 +1541,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To tell somebody what you think they should do.",
      "example": "He advised us to wait for the certificate.",
      "sentences": [
-      "He advised us to wait for the certificate.",
       "Advise takes a person plus to plus a plain verb.",
       "Advise is the verb, with an s; advice is the noun, with a c.",
-      "That spelling pair is worth learning as a pair."
+      "That spelling pair is worth learning as a pair.",
+      "Advice is uncountable: a piece of advice."
      ],
      "starter": "He advised us to …",
      "pic": ""
@@ -1584,10 +1555,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To order somebody not to do something.",
      "example": "The notice forbids parking on the verge.",
      "sentences": [
-      "The notice forbids parking on the verge.",
       "Forbid takes a person plus to plus a plain verb.",
       "Its past forms are forbade and forbidden.",
-      "Forbidden is much commoner than the verb itself."
+      "Forbidden is much commoner than the verb itself.",
+      "Forbid is the opposite of permit."
      ],
      "starter": "The … forbids …",
      "pic": ""
@@ -1598,10 +1569,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To allow something, officially.",
      "example": "Visitors are not permitted beyond this point.",
      "sentences": [
-      "Visitors are not permitted beyond this point.",
       "Permit takes a person plus to plus a plain verb.",
       "It doubles its t: permitted, permitting.",
-      "Its noun is a permit, stressed on the first part."
+      "Its noun is a permit, stressed on the first part.",
+      "Permit is the formal allow."
      ],
      "starter": "… are not permitted to …",
      "pic": ""
@@ -1617,10 +1588,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To repeat somebody's exact words.",
      "example": "She quoted the clause in full.",
      "sentences": [
-      "She quoted the clause in full.",
       "Quoting means the exact words, inside quotation marks.",
       "Quote takes from for the source.",
-      "Its noun is a quotation, or informally a quote."
+      "Its noun is a quotation, or informally a quote.",
+      "If you change a word, you are no longer quoting."
      ],
      "starter": "She quoted …",
      "pic": "🗨️"
@@ -1631,10 +1602,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To give the meaning in your own words.",
      "example": "I have paraphrased his reply rather than quoting it.",
      "sentences": [
-      "I have paraphrased his reply rather than quoting it.",
       "Paraphrasing keeps the meaning and changes the words.",
       "It is honest as long as you say that is what you did.",
-      "It is both a verb and a noun."
+      "It is both a verb and a noun.",
+      "A paraphrase can be shorter; it must not be different."
      ],
      "starter": "I have paraphrased …",
      "pic": ""
@@ -1645,10 +1616,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In exactly the words that were used.",
      "example": "The minutes record her reply verbatim.",
      "sentences": [
-      "The minutes record her reply verbatim.",
       "Verbatim means word for word.",
       "It is both an adverb and an adjective: a verbatim record.",
-      "It is formal and comes from Latin."
+      "It is formal and comes from Latin.",
+      "A verbatim record is not the same as an accurate one."
      ],
      "starter": "The … records … verbatim.",
      "pic": ""
@@ -1659,10 +1630,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The general meaning, without the detail.",
      "example": "I only caught the gist of what she said.",
      "sentences": [
-      "I only caught the gist of what she said.",
       "The gist is the main point, not the words.",
       "It is almost always used with of.",
-      "Getting the gist is enough for some purposes and not others."
+      "Getting the gist is enough for some purposes and not others.",
+      "It is pronounced with a soft g, like jist."
      ],
      "starter": "I caught the gist of …",
      "pic": ""
@@ -1673,10 +1644,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To repeat somebody's words wrongly.",
      "example": "He claims he was misquoted in the summary.",
      "sentences": [
-      "He claims he was misquoted in the summary.",
       "Mis- plus quote: to quote wrongly.",
       "Misquoting can be accidental or deliberate.",
-      "Its noun is a misquotation."
+      "Its noun is a misquotation.",
+      "Being misquoted is a common complaint about minutes."
      ],
      "starter": "He was misquoted in …",
      "pic": ""
@@ -1687,10 +1658,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say who said or did something.",
      "example": "The remark was attributed to the chair.",
      "sentences": [
-      "The remark was attributed to the chair.",
       "Attribute takes to.",
       "The stress moves: a-TRIB-ute for the verb, AT-tri-bute for the noun.",
-      "Attributing a remark wrongly is a serious error in minutes."
+      "Attributing a remark wrongly is a serious error in minutes.",
+      "Unattributed means nobody is named."
      ],
      "starter": "The … was attributed to …",
      "pic": ""
@@ -1706,10 +1677,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Where information came from.",
      "example": "The report does not name its source.",
      "sentences": [
-      "The report does not name its source.",
       "A source can be a person or a document.",
       "Source takes of, or for.",
-      "An unnamed source cannot be checked."
+      "An unnamed source cannot be checked.",
+      "It is also a verb: to source materials."
      ],
      "starter": "The … does not name its source for …",
      "pic": ""
@@ -1720,10 +1691,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who saw something happen.",
      "example": "Two witnesses gave the same account.",
      "sentences": [
-      "Two witnesses gave the same account.",
       "A witness saw it; a source may only have been told.",
       "It is also a verb: to witness an accident.",
-      "To witness a signature is a separate legal meaning."
+      "To witness a signature is a separate legal meaning.",
+      "Its plural is witnesses."
      ],
      "starter": "The witness said that …",
      "pic": "👁️"
@@ -1734,10 +1705,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who speaks officially for an organisation.",
      "example": "A spokesperson said the matter was under review.",
      "sentences": [
-      "A spokesperson said the matter was under review.",
       "A spokesperson speaks for others, not for themselves.",
       "Spokesperson is the neutral form of spokesman.",
-      "Its plural is spokespeople."
+      "Its plural is spokespeople.",
+      "What a spokesperson says is the organisation's position."
      ],
      "starter": "A spokesperson said that …",
      "pic": ""
@@ -1748,10 +1719,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something said or written officially, on the record.",
      "example": "They issued a statement the same afternoon.",
      "sentences": [
-      "They issued a statement the same afternoon.",
       "A statement is prepared; a remark is not.",
       "You issue, release or make a statement.",
-      "It comes from state."
+      "It comes from state.",
+      "A written statement can be quoted verbatim."
      ],
      "starter": "They issued a statement saying that …",
      "pic": ""
@@ -1762,10 +1733,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A claim that somebody has done something wrong, not yet proved.",
      "example": "The allegation has not been investigated.",
      "sentences": [
-      "The allegation has not been investigated.",
       "An allegation is unproved by definition.",
       "It takes of, or that plus a clause.",
-      "Its verb is allege, and its adverb allegedly."
+      "Its verb is allege, and its adverb allegedly.",
+      "Calling something an allegation is not calling it false."
      ],
      "starter": "The allegation that …",
      "pic": ""

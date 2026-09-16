@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1354,10 +1325,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To grow or change into something more complete.",
      "example": "The town developed slowly after the railway came.",
      "sentences": [
-      "The town developed slowly after the railway came.",
       "She has developed a real feel for the work.",
       "The situation is developing faster than anybody expected.",
-      "Develop takes into for what a thing becomes."
+      "Develop takes into for what a thing becomes.",
+      "Its noun is development, with no extra e."
      ],
      "starter": "I have developed …",
      "pic": "📈"
@@ -1368,10 +1339,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To become larger, or to make something larger.",
      "example": "The company has expanded twice since I joined.",
      "sentences": [
-      "The company has expanded twice since I joined.",
       "They are expanding into two more towns.",
       "Expand takes into for a new area.",
-      "Metal expands when it is heated."
+      "Metal expands when it is heated.",
+      "Its noun is expansion, not expandment."
      ],
      "starter": "It has expanded …",
      "pic": ""
@@ -1382,10 +1353,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To become smaller, weaker or less; or to refuse politely.",
      "example": "The number of applicants has declined every year.",
      "sentences": [
-      "The number of applicants has declined every year.",
       "Sales have been declining since the spring.",
       "She declined the offer, politely but firmly.",
-      "Decline is the formal opposite of grow and of accept."
+      "Decline is the formal opposite of grow and of accept.",
+      "As a noun: a steady decline in numbers."
      ],
      "starter": "… has declined.",
      "pic": ""
@@ -1396,10 +1367,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To change something completely, so it is hard to recognise.",
      "example": "The new roof transformed the building.",
      "sentences": [
-      "The new roof transformed the building.",
       "The area has been transformed in ten years.",
       "Transform is much stronger than change.",
-      "It takes into: transformed into workshops."
+      "It takes into: transformed into workshops.",
+      "Its noun is transformation."
      ],
      "starter": "… transformed …",
      "pic": ""
@@ -1410,10 +1381,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To change yourself or a thing to fit new conditions.",
      "example": "It took me a year to adapt to the shifts.",
      "sentences": [
-      "It took me a year to adapt to the shifts.",
       "They adapted the machine for a different job.",
       "Adapt takes to for the new conditions.",
-      "Adapting is not the same as accepting."
+      "Adapting is not the same as accepting.",
+      "Its noun is adaptation."
      ],
      "starter": "I had to adapt to …",
      "pic": ""
@@ -1424,10 +1395,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make a small change so a thing fits or works better.",
      "example": "I adjusted the strap and it was fine.",
      "sentences": [
-      "I adjusted the strap and it was fine.",
       "It takes a few weeks to adjust to a new routine.",
       "Adjust is a small change; adapt is a bigger one.",
-      "Adjust also takes to for conditions."
+      "Adjust also takes to for conditions.",
+      "Its noun is adjustment."
      ],
      "starter": "I adjusted …",
      "pic": ""
@@ -1443,10 +1414,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The length of time something lasts.",
      "example": "The duration of the course is eighteen months.",
      "sentences": [
-      "The duration of the course is eighteen months.",
       "For the duration of the works, the road is closed.",
       "Duration is formal: in speech you would say how long.",
-      "It answers how long, not when."
+      "It answers how long, not when.",
+      "The duration of, not the duration for."
      ],
      "starter": "The duration of …",
      "pic": ""
@@ -1457,10 +1428,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A length of time with a beginning and an end.",
      "example": "There was a long period when nothing happened.",
      "sentences": [
-      "There was a long period when nothing happened.",
       "Over a period of six months, the numbers halved.",
       "A period is defined by what happened in it.",
-      "Period is far commoner than duration in speech."
+      "Period is far commoner than duration in speech.",
+      "A trial period is a set time for testing something."
      ],
      "starter": "During that period I …",
      "pic": ""
@@ -1471,10 +1442,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Ten years.",
      "example": "The mill stood empty for a decade.",
      "sentences": [
-      "The mill stood empty for a decade.",
       "Over the last decade, the town has changed completely.",
       "A decade is ten years; a century is a hundred.",
-      "The stress is on the first part: DEC-ade."
+      "The stress is on the first part: DEC-ade.",
+      "It often goes with the present perfect: for a decade."
      ],
      "starter": "Over the last decade …",
      "pic": ""
@@ -1485,10 +1456,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A long period of history with its own character.",
      "example": "That was the end of an era for the industry.",
      "sentences": [
-      "That was the end of an era for the industry.",
       "We are living through a difficult era.",
       "An era is defined by its character, a decade only by its length.",
-      "The end of an era is a fixed phrase."
+      "The end of an era is a fixed phrase.",
+      "It is pronounced EAR-a."
      ],
      "starter": "It was the end of an era for …",
      "pic": ""
@@ -1499,10 +1470,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Lasting for a limited time only.",
      "example": "I took a temporary job for the summer.",
      "sentences": [
-      "I took a temporary job for the summer.",
       "The arrangement is temporary and everybody knows it.",
       "Temporary work often becomes permanent.",
-      "The present continuous suits temporary situations."
+      "The present continuous suits temporary situations.",
+      "Its adverb is temporarily."
      ],
      "starter": "It was only temporary, so …",
      "pic": ""
@@ -1513,10 +1484,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Lasting for all the time you can see ahead.",
      "example": "After two years they made the post permanent.",
      "sentences": [
-      "After two years they made the post permanent.",
       "Nothing here is permanent, whatever they tell you.",
       "Permanent is the opposite of temporary.",
-      "The present simple suits permanent situations."
+      "The present simple suits permanent situations.",
+      "Its adverb is permanently."
      ],
      "starter": "It became permanent when …",
      "pic": ""
@@ -1532,10 +1503,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To reach the standard that lets you do something officially.",
      "example": "She qualified as an electrician last year.",
      "sentences": [
-      "She qualified as an electrician last year.",
       "I have qualified, but I have not started yet.",
       "Qualify takes as before the job.",
-      "You can also qualify FOR something: for a grant."
+      "You can also qualify FOR something: for a grant.",
+      "Its noun is qualification."
      ],
      "starter": "I qualified as …",
      "pic": ""
@@ -1546,10 +1517,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To succeed in doing something that took effort.",
      "example": "We accomplished more in a week than I expected.",
      "sentences": [
-      "We accomplished more in a week than I expected.",
       "She has accomplished a great deal since then.",
       "Accomplish is more formal than manage or do.",
-      "Its noun is accomplishment, close to achievement."
+      "Its noun is accomplishment, close to achievement.",
+      "It suits a report better than a conversation."
      ],
      "starter": "I accomplished …",
      "pic": ""
@@ -1560,10 +1531,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To learn something so well that you do it without effort.",
      "example": "It takes years to master a trade.",
      "sentences": [
-      "It takes years to master a trade.",
       "I have never quite mastered the spelling.",
       "Master is stronger than learn: it means completely.",
-      "It is also a noun: a master of the trade."
+      "It is also a noun: a master of the trade.",
+      "Mastering something is the end of a long process."
      ],
      "starter": "I have never mastered …",
      "pic": ""
@@ -1574,10 +1545,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To get something useful, usually over time.",
      "example": "I gained a lot of experience that year.",
      "sentences": [
-      "I gained a lot of experience that year.",
       "She has gained confidence since she started.",
       "Gain suits things that build up: experience, weight, speed.",
-      "It is the opposite of lose."
+      "It is the opposite of lose.",
+      "As a noun: a gain in speed."
      ],
      "starter": "I gained …",
      "pic": ""
@@ -1588,10 +1559,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To come to have something, often slowly or by effort.",
      "example": "He acquired the skill by watching.",
      "sentences": [
-      "He acquired the skill by watching.",
       "I have acquired a taste for it.",
       "Acquire is the formal word for get.",
-      "Acquired takes no preposition: acquire a skill."
+      "Acquired takes no preposition: acquire a skill.",
+      "Its noun is acquisition."
      ],
      "starter": "I acquired …",
      "pic": ""
@@ -1602,10 +1573,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To keep following something you want, over a long time.",
      "example": "She pursued a career in engineering.",
      "sentences": [
-      "She pursued a career in engineering.",
       "I have pursued it for years without much luck.",
       "Pursue suits a career, a claim, a qualification.",
-      "It is pronounced per-SUE."
+      "It is pronounced per-SUE.",
+      "Its noun is pursuit."
      ],
      "starter": "I decided to pursue …",
      "pic": ""
@@ -1621,10 +1592,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Happening a short time ago.",
      "example": "There has been a recent change to the rules.",
      "sentences": [
-      "There has been a recent change to the rules.",
       "In recent years the work has got harder.",
       "Recent goes with the present perfect very often.",
-      "Its adverb is recently: I have recently moved."
+      "Its adverb is recently: I have recently moved.",
+      "Recent is about the past; current is about now."
      ],
      "starter": "There has been a recent …",
      "pic": ""
@@ -1635,10 +1606,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Still happening, and not finished.",
      "example": "The investigation is ongoing.",
      "sentences": [
-      "The investigation is ongoing.",
       "There is an ongoing problem with the heating.",
       "Ongoing suits the present continuous.",
-      "It is written as one word."
+      "It is written as one word.",
+      "An ongoing issue has no end date yet."
      ],
      "starter": "There is an ongoing …",
      "pic": ""
@@ -1649,10 +1620,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Existing now, at this moment.",
      "example": "The current rate is lower than last year's.",
      "sentences": [
-      "The current rate is lower than last year's.",
       "My current job is temporary.",
       "Current is now; recent is just past.",
-      "Its adverb is currently: I am currently studying."
+      "Its adverb is currently: I am currently studying.",
+      "Current is also a noun: the current in a river."
      ],
      "starter": "My current …",
      "pic": ""
@@ -1663,10 +1634,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Belonging to an earlier time; the one before this.",
      "example": "My former employer still owes me a reference.",
      "sentences": [
-      "My former employer still owes me a reference.",
       "The former manager left in March.",
       "Former is the opposite of current.",
-      "It goes straight before the noun: a former colleague."
+      "It goes straight before the noun: a former colleague.",
+      "Formerly is the adverb: formerly a school."
      ],
      "starter": "My former …",
      "pic": ""
@@ -1677,10 +1648,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The most recent so far, with more expected.",
      "example": "The latest figures came out on Monday.",
      "sentences": [
-      "The latest figures came out on Monday.",
       "Have you seen the latest version?",
       "Latest means most recent; last means final.",
-      "The latest news is not the last news."
+      "The latest news is not the last news.",
+      "It often goes with the present perfect."
      ],
      "starter": "The latest …",
      "pic": ""
@@ -1691,10 +1662,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Happening all the time, without stopping.",
      "example": "There was a constant noise from the yard.",
      "sentences": [
-      "There was a constant noise from the yard.",
       "The constant changes made it hard to plan.",
       "Constant suits things that do not let up.",
-      "Its adverb is constantly."
+      "Its adverb is constantly.",
+      "Constantly + -ing often shows irritation."
      ],
      "starter": "There was a constant …",
      "pic": ""
@@ -1710,10 +1681,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Up to this point, with more still to come.",
      "example": "So far the work has gone well.",
      "sentences": [
-      "So far the work has gone well.",
       "We have had three replies so far.",
       "So far signals that the story is not finished.",
-      "It goes at the start or the end, rarely the middle."
+      "It goes at the start or the end, rarely the middle.",
+      "So far, so good is a fixed phrase."
      ],
      "starter": "So far I have …",
      "pic": ""
@@ -1724,10 +1695,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Continuously, from that moment until now.",
      "example": "I have worked here ever since.",
      "sentences": [
-      "I have worked here ever since.",
       "Ever since the closure, the town has been quieter.",
       "Ever since is stronger than since: it stresses the whole stretch.",
-      "It can stand alone at the end of a sentence."
+      "It can stand alone at the end of a sentence.",
+      "It always reaches up to now, so it takes the perfect."
      ],
      "starter": "Ever since …, I have …",
      "pic": ""
@@ -1738,10 +1709,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Until this moment, with the situation still open.",
      "example": "Up to now nobody has complained.",
      "sentences": [
-      "Up to now nobody has complained.",
       "Up to now the plan has worked.",
       "It means the same as so far and is slightly more formal.",
-      "It usually starts the sentence."
+      "It usually starts the sentence.",
+      "It takes the present perfect."
      ],
      "starter": "Up to now I have …",
      "pic": ""
@@ -1752,10 +1723,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In the recent past, up to now.",
      "example": "I have not seen much of her lately.",
      "sentences": [
-      "I have not seen much of her lately.",
       "Lately the trains have been worse.",
       "Lately means the same as recently but is commoner in the negative.",
-      "It goes at the start or the end."
+      "It goes at the start or the end.",
+      "It takes the present perfect, not the past simple."
      ],
      "starter": "Lately I have …",
      "pic": ""
@@ -1766,10 +1737,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Before now, and sooner than expected.",
      "example": "I have already sent it.",
      "sentences": [
-      "I have already sent it.",
       "Have you finished already?",
       "Already sits between have and the past form.",
-      "In a question it shows surprise."
+      "In a question it shows surprise.",
+      "Already is for what HAS happened; yet is for what has not."
      ],
      "starter": "I have already …",
      "pic": ""

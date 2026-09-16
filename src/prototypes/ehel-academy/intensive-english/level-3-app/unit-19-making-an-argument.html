@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1346,10 +1317,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A statement an argument takes as its starting point.",
      "example": "The argument rests on a premise nobody has checked.",
      "sentences": [
-      "The argument rests on a premise nobody has checked.",
       "A premise is assumed, not proved, inside the argument.",
       "If a premise is false, the conclusion does not follow.",
-      "Its plural is premises, which also means a building."
+      "Its plural is premises, which also means a building.",
+      "The stress is on the first part: PREM-iss."
      ],
      "starter": "The argument rests on the premise that …",
      "pic": ""
@@ -1360,10 +1331,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The unstated link that lets evidence support a claim.",
      "example": "The evidence is sound; the warrant is the weak part.",
      "sentences": [
-      "The evidence is sound; the warrant is the weak part.",
       "A warrant is the assumption joining evidence to claim.",
       "It is almost never written down, which is why it survives.",
-      "It is also a verb: to warrant attention."
+      "It is also a verb: to warrant attention.",
+      "A warrant is different from a premise: it joins rather than starts."
      ],
      "starter": "The warrant here is that …",
      "pic": ""
@@ -1374,10 +1345,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The central claim a whole piece is arguing for.",
      "example": "The thesis is stated in the second paragraph.",
      "sentences": [
-      "The thesis is stated in the second paragraph.",
       "A thesis is the one claim everything else supports.",
       "Its plural is theses, said THEE-seez.",
-      "It also means a long piece of academic writing."
+      "It also means a long piece of academic writing.",
+      "If you cannot state the thesis in one sentence, it is not clear enough."
      ],
      "starter": "The thesis of … is that …",
      "pic": ""
@@ -1388,10 +1359,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The reasoning behind a decision or a plan.",
      "example": "The rationale for the change was never published.",
      "sentences": [
-      "The rationale for the change was never published.",
       "Rationale takes for, or behind.",
       "It is pronounced rash-un-AHL.",
-      "A rationale explains why; a justification defends it."
+      "A rationale explains why; a justification defends it.",
+      "A decision without a stated rationale is hard to challenge."
      ],
      "starter": "The rationale for … was …",
      "pic": ""
@@ -1402,10 +1373,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A statement that can be true or false; or a proposal.",
      "example": "That is a proposition, not a fact.",
      "sentences": [
-      "That is a proposition, not a fact.",
       "A proposition can be tested for truth.",
       "It also means a business proposal.",
-      "Its verb is propose, from Unit 7."
+      "Its verb is propose, from Unit 7.",
+      "Calling something a proposition invites it to be tested."
      ],
      "starter": "That is a proposition rather than …",
      "pic": ""
@@ -1416,10 +1387,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The position from which somebody argues.",
      "example": "From the supplier's standpoint, the clause is reasonable.",
      "sentences": [
-      "From the supplier's standpoint, the clause is reasonable.",
       "Standpoint takes from.",
       "It names where somebody is arguing from, not whether they are right.",
-      "It is one word."
+      "It is one word.",
+      "Naming a standpoint is fairer than naming a bias."
      ],
      "starter": "From the standpoint of …, …",
      "pic": ""
@@ -1435,10 +1406,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An argument that two things are alike in a relevant way.",
      "example": "The analogy breaks down when you look at the cost.",
      "sentences": [
-      "The analogy breaks down when you look at the cost.",
       "Analogy takes between, or with.",
       "An analogy is only as good as the likeness it claims.",
-      "Its adjective is analogous, which takes to."
+      "Its adjective is analogous, which takes to.",
+      "Every analogy fails somewhere; the question is whether it fails where it matters."
      ],
      "starter": "The analogy between … and … breaks down because …",
      "pic": ""
@@ -1449,10 +1420,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An earlier case used to decide a later one.",
      "example": "There is no precedent for refusing on those grounds.",
      "sentences": [
-      "There is no precedent for refusing on those grounds.",
       "Precedent takes for.",
       "It is pronounced PRESS-i-dent.",
-      "Setting a precedent means a later case can rely on it."
+      "Setting a precedent means a later case can rely on it.",
+      "Its adjective is unprecedented, meaning never before."
      ],
      "starter": "There is no precedent for …",
      "pic": ""
@@ -1463,10 +1434,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A claim about a whole group drawn from some of it.",
      "example": "That is a generalisation from four cases.",
      "sentences": [
-      "That is a generalisation from four cases.",
       "A generalisation is not automatically wrong.",
       "It is wrong when the sample cannot support it.",
-      "Its verb is generalise."
+      "Its verb is generalise.",
+      "Always ask how many, and how chosen."
      ],
      "starter": "That is a generalisation from …",
      "pic": ""
@@ -1477,10 +1448,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A case that does not follow the rule.",
      "example": "One exception does not overturn the pattern.",
      "sentences": [
-      "One exception does not overturn the pattern.",
       "Exception takes to.",
       "Its adjective is exceptional.",
-      "The exception that proves the rule is usually misunderstood."
+      "The exception that proves the rule is usually misunderstood.",
+      "A single exception rarely destroys a general claim."
      ],
      "starter": "One exception to … does not …",
      "pic": ""
@@ -1491,10 +1462,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A general rule that decides how you act.",
      "example": "The objection is one of principle, not of cost.",
      "sentences": [
-      "The objection is one of principle, not of cost.",
       "Principle is a rule; principal is the main one, or a head teacher.",
       "The two are confused constantly.",
-      "In principle means in theory."
+      "In principle means in theory.",
+      "An objection of principle cannot be bought off."
      ],
      "starter": "The objection is one of principle because …",
      "pic": ""
@@ -1505,10 +1476,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A standard by which something is judged.",
      "example": "Only one criterion was applied.",
      "sentences": [
-      "Only one criterion was applied.",
       "Its plural is criteria: one criterion, three criteria.",
       "Criteria is plural and takes a plural verb.",
-      "A criterion should be stated before the judging, not after."
+      "A criterion should be stated before the judging, not after.",
+      "It is pronounced cry-TEER-ee-on."
      ],
      "starter": "The criterion for … was …",
      "pic": ""
@@ -1524,10 +1495,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The art of persuasion; or persuasive language with little behind it.",
      "example": "There was a great deal of rhetoric and very little evidence.",
      "sentences": [
-      "There was a great deal of rhetoric and very little evidence.",
       "Rhetoric has a neutral sense and a critical one.",
       "The neutral sense is the study of persuasion.",
-      "Its adjective is rhetorical."
+      "Its adjective is rhetorical.",
+      "A rhetorical question expects no answer."
      ],
      "starter": "There was rhetoric about … but …",
      "pic": ""
@@ -1538,10 +1509,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Special importance given to something.",
      "example": "The emphasis on cost hides the real objection.",
      "sentences": [
-      "The emphasis on cost hides the real objection.",
       "Emphasis takes on.",
       "Its plural is emphases; its verb is emphasise.",
-      "What is emphasised and what is omitted are the same choice."
+      "What is emphasised and what is omitted are the same choice.",
+      "The stress is on the first part: EM-fa-sis."
      ],
      "starter": "The emphasis on … hides …",
      "pic": ""
@@ -1552,10 +1523,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Saying the same thing more than once, for effect.",
      "example": "Repetition made it feel proved when it had only been said.",
      "sentences": [
-      "Repetition made it feel proved when it had only been said.",
       "Repetition is a device, not evidence.",
       "Its verb is repeat.",
-      "Repeating a claim raises how true it feels, not how true it is."
+      "Repeating a claim raises how true it feels, not how true it is.",
+      "This is worth knowing about your own reading."
      ],
      "starter": "Repetition of … made it feel …",
      "pic": ""
@@ -1566,10 +1537,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A short account of one case, used as if it were evidence.",
      "example": "The case rests on an anecdote and a projection.",
      "sentences": [
-      "The case rests on an anecdote and a projection.",
       "An anecdote is one case, and vivid.",
       "Vividness is what makes it persuasive and not what makes it true.",
-      "Its adjective is anecdotal."
+      "Its adjective is anecdotal.",
+      "Anecdotal evidence is a polite term for one story."
      ],
      "starter": "The case rests on an anecdote about …",
      "pic": ""
@@ -1580,10 +1551,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An attempt to move somebody by feeling rather than reason.",
      "example": "It is an appeal to fear rather than an argument.",
      "sentences": [
-      "It is an appeal to fear rather than an argument.",
       "Appeal takes to for the feeling or the person.",
       "An appeal to fear, to pity, to loyalty, to authority.",
-      "An appeal is not automatically illegitimate."
+      "An appeal is not automatically illegitimate.",
+      "It is also a verb, and a legal process."
      ],
      "starter": "It is an appeal to … rather than …",
      "pic": ""
@@ -1594,10 +1565,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Saying less than you mean, for effect.",
      "example": "Calling it a setback was an understatement.",
      "sentences": [
-      "Calling it a setback was an understatement.",
       "Understatement can be more persuasive than exaggeration.",
       "It invites the reader to supply the strength themselves.",
-      "Its verb is understate, from Unit 8."
+      "Its verb is understate, from Unit 8.",
+      "It is characteristic of British usage."
      ],
      "starter": "Calling it … was an understatement.",
      "pic": ""
@@ -1613,10 +1584,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A pattern of reasoning that does not work.",
      "example": "That is a fallacy, not a disagreement.",
      "sentences": [
-      "That is a fallacy, not a disagreement.",
       "A fallacy is a fault in the reasoning, not in the facts.",
       "Its plural is fallacies; its adjective is fallacious.",
-      "Naming a fallacy is stronger than saying you disagree."
+      "Naming a fallacy is stronger than saying you disagree.",
+      "A conclusion reached by a fallacy may still be true."
      ],
      "starter": "That is a fallacy because …",
      "pic": ""
@@ -1627,10 +1598,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Using the conclusion as one of the reasons for it.",
      "example": "The argument is circular: it assumes what it sets out to prove.",
      "sentences": [
-      "The argument is circular: it assumes what it sets out to prove.",
       "A circular argument goes round rather than forward.",
       "It can be very hard to spot when the wording changes each time.",
-      "Its noun is circularity."
+      "Its noun is circularity.",
+      "Begging the question is the traditional name for it."
      ],
      "starter": "The argument is circular because …",
      "pic": ""
@@ -1641,10 +1612,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To leave out so much that the claim stops being true.",
      "example": "To say the delay caused it oversimplifies a four-part failure.",
      "sentences": [
-      "To say the delay caused it oversimplifies a four-part failure.",
       "Over- plus simplify, from Unit 8.",
       "Simplifying is necessary; oversimplifying is not.",
-      "Its noun is oversimplification."
+      "Its noun is oversimplification.",
+      "The line between them is whether the claim survives."
      ],
      "starter": "To say … oversimplifies …",
      "pic": ""
@@ -1655,10 +1626,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To describe somebody's position wrongly.",
      "example": "The summary misrepresents what the panel actually found.",
      "sentences": [
-      "The summary misrepresents what the panel actually found.",
       "Mis- plus represent: to represent wrongly.",
       "Misrepresenting may be careless rather than dishonest.",
-      "Its noun is misrepresentation."
+      "Its noun is misrepresentation.",
+      "Check a summary against the original before relying on it."
      ],
      "starter": "The … misrepresents …",
      "pic": ""
@@ -1669,10 +1640,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To choose only the evidence that supports you.",
      "example": "Three good months were cherry-picked from ten years.",
      "sentences": [
-      "Three good months were cherry-picked from ten years.",
       "Cherry-pick is hyphenated.",
       "Every selection is a choice; cherry-picking hides the ones left out.",
-      "Its noun is cherry-picking."
+      "Its noun is cherry-picking.",
+      "The test is whether the excluded cases were disclosed."
      ],
      "starter": "… were cherry-picked from …",
      "pic": ""
@@ -1683,10 +1654,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A weakened version of somebody's argument, attacked instead of the real one.",
      "example": "That is a strawman: nobody argued for closing everything.",
      "sentences": [
-      "That is a strawman: nobody argued for closing everything.",
       "A strawman is easier to knock down than the real position.",
       "It is often built by accident, from a hasty summary.",
-      "It can be written as one word or two."
+      "It can be written as one word or two.",
+      "The remedy is to state their position in words they would accept."
      ],
      "starter": "That is a strawman because …",
      "pic": ""
@@ -1702,10 +1673,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To argue that a claim is wrong, with reasons.",
      "example": "The report rebuts two of the four findings.",
      "sentences": [
-      "The report rebuts two of the four findings.",
       "Rebut needs reasons; denying does not.",
       "It doubles the t: rebutted, rebutting.",
-      "Its noun is rebuttal."
+      "Its noun is rebuttal.",
+      "Rebutting is not the same as refuting, which claims to have disproved."
      ],
      "starter": "The … rebuts …",
      "pic": ""
@@ -1716,10 +1687,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To accept that part of the other side is right.",
      "example": "I concede the first point entirely.",
      "sentences": [
-      "I concede the first point entirely.",
       "Conceding early makes what follows harder to dismiss.",
       "Its noun is a concession.",
-      "Concede takes that plus a clause, or a direct object."
+      "Concede takes that plus a clause, or a direct object.",
+      "A concession you never make is a weakness they will find."
      ],
      "starter": "I concede that …, but …",
      "pic": ""
@@ -1730,10 +1701,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make a claim less extreme.",
      "example": "She moderated the claim after the second reading.",
      "sentences": [
-      "She moderated the claim after the second reading.",
       "Moderating strengthens a claim by making it defensible.",
       "It is also an adjective, said differently: MOD-er-ut.",
-      "Its noun is moderation."
+      "Its noun is moderation.",
+      "A moderated claim survives challenge; an extreme one invites it."
      ],
      "starter": "I moderated … because …",
      "pic": ""
@@ -1744,10 +1715,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To answer an argument with an opposing one.",
      "example": "They countered with three cases of their own.",
      "sentences": [
-      "They countered with three cases of their own.",
       "Counter takes with for what you answer with.",
       "It is also a noun: a counter-argument.",
-      "Countering answers; rebutting attacks the reasoning."
+      "Countering answers; rebutting attacks the reasoning.",
+      "A counter-example is the most economical kind."
      ],
      "starter": "They countered with …",
      "pic": ""
@@ -1758,10 +1729,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To weaken something gradually or indirectly.",
      "example": "One inconsistency undermines the whole account.",
      "sentences": [
-      "One inconsistency undermines the whole account.",
       "Undermining weakens without attacking directly.",
       "It takes a direct object.",
-      "It is one word, from under plus mine."
+      "It is one word, from under plus mine.",
+      "A small undermining fact can cost more than a large objection."
      ],
      "starter": "… undermines …",
      "pic": ""

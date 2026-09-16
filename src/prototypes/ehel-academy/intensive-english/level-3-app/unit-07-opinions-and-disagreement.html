@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1346,10 +1317,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say something is true, without proving it.",
      "example": "He claimed the part was faulty when it arrived.",
      "sentences": [
-      "He claimed the part was faulty when it arrived.",
       "She claims to have sent it twice.",
       "Claim leaves the reader free to doubt it.",
-      "Reporting somebody with claim is not neutral."
+      "Reporting somebody with claim is not neutral.",
+      "It is also a noun: an insurance claim."
      ],
      "starter": "He claimed that …",
      "pic": ""
@@ -1360,10 +1331,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To state something firmly and confidently.",
      "example": "She asserted that the figures were correct.",
      "sentences": [
-      "She asserted that the figures were correct.",
       "He asserted his right to see the file.",
       "Assert is firmer than say and more formal.",
-      "Its noun is assertion."
+      "Its noun is assertion.",
+      "To assert yourself is to stand up for your position."
      ],
      "starter": "She asserted that …",
      "pic": ""
@@ -1374,10 +1345,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To keep saying something is true, even under challenge.",
      "example": "He maintained that he had never been told.",
      "sentences": [
-      "He maintained that he had never been told.",
       "She maintains her account has not changed.",
       "Maintain implies the position has been challenged already.",
-      "It also means to keep something in good condition."
+      "It also means to keep something in good condition.",
+      "Its noun for that other meaning is maintenance."
      ],
      "starter": "He maintained that …",
      "pic": ""
@@ -1388,10 +1359,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say something firmly and repeatedly, refusing to give way.",
      "example": "She insisted that the work was finished.",
      "sentences": [
-      "She insisted that the work was finished.",
       "He insisted on seeing the manager.",
       "Insist takes on before a noun, and that before a clause.",
-      "Insisting suggests somebody was pushing back."
+      "Insisting suggests somebody was pushing back.",
+      "Its noun is insistence."
      ],
      "starter": "She insisted that …",
      "pic": ""
@@ -1402,10 +1373,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To suggest a plan for other people to consider.",
      "example": "I propose that we meet again in March.",
      "sentences": [
-      "I propose that we meet again in March.",
       "She proposed moving the date.",
       "Propose takes that plus a clause, or an -ing form.",
-      "Its noun is proposal."
+      "Its noun is proposal.",
+      "Propose is formal: in speech you would say suggest."
      ],
      "starter": "I propose that …",
      "pic": ""
@@ -1416,10 +1387,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To argue a position, especially against opposition.",
      "example": "They contend that the fault was there from the start.",
      "sentences": [
-      "They contend that the fault was there from the start.",
       "Both sides contend the other was at fault.",
       "Contend belongs in a dispute or an argument.",
-      "It also means to compete: contending for the place."
+      "It also means to compete: contending for the place.",
+      "Its noun is contention."
      ],
      "starter": "They contend that …",
      "pic": ""
@@ -1435,10 +1406,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To think something is true.",
      "example": "I believe the report is accurate.",
      "sentences": [
-      "I believe the report is accurate.",
       "She believes in doing things properly.",
       "Believe something, but believe IN something you value.",
-      "Believe is a state verb: never I am believing."
+      "Believe is a state verb: never I am believing.",
+      "Its noun is belief."
      ],
      "starter": "I believe that …",
      "pic": ""
@@ -1449,10 +1420,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To think something is probably not true.",
      "example": "I doubt they will reply before Monday.",
      "sentences": [
-      "I doubt they will reply before Monday.",
       "There is no doubt about it.",
       "Doubt is followed by whether, or by that in the negative.",
-      "It is a state verb, so no -ing form."
+      "It is a state verb, so no -ing form.",
+      "No doubt often means probably, not certainly."
      ],
      "starter": "I doubt whether …",
      "pic": ""
@@ -1463,10 +1434,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Completely certain, usually after being persuaded.",
      "example": "I am convinced the fault was there already.",
      "sentences": [
-      "I am convinced the fault was there already.",
       "She was not convinced by the explanation.",
       "Convinced takes by for the thing that persuaded you.",
-      "It is stronger than sure, because somebody persuaded you."
+      "It is stronger than sure, because somebody persuaded you.",
+      "To convince is the verb."
      ],
      "starter": "I am convinced that …",
      "pic": ""
@@ -1477,10 +1448,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Doubting; not easily convinced.",
      "example": "I am sceptical about the figures.",
      "sentences": [
-      "I am sceptical about the figures.",
       "He was sceptical of the whole plan.",
       "Sceptical takes about or of.",
-      "It is spelled with a c in British English."
+      "It is spelled with a c in British English.",
+      "Being sceptical is not the same as refusing to believe."
      ],
      "starter": "I am sceptical about …",
      "pic": ""
@@ -1491,10 +1462,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To take something as true without checking.",
      "example": "I assumed somebody had told her.",
      "sentences": [
-      "I assumed somebody had told her.",
       "Never assume the parts are in stock.",
       "An assumption is where most mistakes begin.",
-      "Assume takes that plus a clause."
+      "Assume takes that plus a clause.",
+      "Its noun is assumption."
      ],
      "starter": "I assumed that …",
      "pic": ""
@@ -1505,10 +1476,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To think something is probably true, without evidence.",
      "example": "I suspect the seal was already damaged.",
      "sentences": [
-      "I suspect the seal was already damaged.",
       "She suspected he had not read it.",
       "Suspect is a quiet, cautious form of believe.",
-      "The noun is suspicion; the person is a suspect."
+      "The noun is suspicion; the person is a suspect.",
+      "Note the stress: the verb is sus-PECT, the noun SUS-pect."
      ],
      "starter": "I suspect that …",
      "pic": ""
@@ -1524,10 +1495,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To agree, in formal language.",
      "example": "I concur with the findings.",
      "sentences": [
-      "I concur with the findings.",
       "The two reports concur on every point.",
       "Concur takes with.",
-      "It is very formal: minutes, reports, courtrooms."
+      "It is very formal: minutes, reports, courtrooms.",
+      "In speech you would simply say I agree."
      ],
      "starter": "I concur with …",
      "pic": ""
@@ -1538,10 +1509,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To support something publicly.",
      "example": "The committee endorsed the proposal.",
      "sentences": [
-      "The committee endorsed the proposal.",
       "She would not endorse the plan without figures.",
       "Endorsing is stronger than agreeing: you attach your name.",
-      "Its noun is endorsement."
+      "Its noun is endorsement.",
+      "It also means to sign the back of a document."
      ],
      "starter": "The … endorsed …",
      "pic": ""
@@ -1552,10 +1523,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To agree that something is true or right.",
      "example": "I accept that the delay was partly ours.",
      "sentences": [
-      "I accept that the delay was partly ours.",
       "She accepted the explanation without argument.",
       "Accepting a point is conceding it.",
-      "Accept takes that plus a clause."
+      "Accept takes that plus a clause.",
+      "Its noun is acceptance."
      ],
      "starter": "I accept that …",
      "pic": "👍🏾"
@@ -1566,10 +1537,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To back a position, or to provide evidence for it.",
      "example": "The figures support what she said.",
      "sentences": [
-      "The figures support what she said.",
       "I support the proposal, with one reservation.",
       "Evidence supports a claim; people support a plan.",
-      "Its noun is support, unchanged."
+      "Its noun is support, unchanged.",
+      "Supporting evidence is the fixed phrase."
      ],
      "starter": "The evidence supports …",
      "pic": ""
@@ -1580,10 +1551,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To admit that something is true, or to say you received it.",
      "example": "They acknowledged the delay but not the cost.",
      "sentences": [
-      "They acknowledged the delay but not the cost.",
       "Please acknowledge receipt of this letter.",
       "Acknowledging is narrower than accepting: you admit only that part.",
-      "Its noun is acknowledgement."
+      "Its noun is acknowledgement.",
+      "Watch the spelling: there is a d before the g."
      ],
      "starter": "They acknowledged …",
      "pic": ""
@@ -1594,10 +1565,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To hold the same view as somebody else.",
      "example": "I share her concern about the timing.",
      "sentences": [
-      "I share her concern about the timing.",
       "We share the same reservations.",
       "Share a view, a concern or a doubt.",
-      "It is warmer than agree: you already held the view."
+      "It is warmer than agree: you already held the view.",
+      "It also has its everyday meaning of dividing something."
      ],
      "starter": "I share …",
      "pic": ""
@@ -1613,10 +1584,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say that something is not true or not fair.",
      "example": "They dispute the amount, not the work.",
      "sentences": [
-      "They dispute the amount, not the work.",
       "Nobody disputes that the part failed.",
       "Dispute names exactly what you are challenging.",
-      "It is also a noun: a dispute over the invoice."
+      "It is also a noun: a dispute over the invoice.",
+      "The stress moves: dis-PUTE for the verb."
      ],
      "starter": "They dispute …",
      "pic": ""
@@ -1627,10 +1598,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say you are against something.",
      "example": "I object to the wording, not the decision.",
      "sentences": [
-      "I object to the wording, not the decision.",
       "She objected on the grounds of cost.",
       "Object takes to.",
-      "Its noun is objection."
+      "Its noun is objection.",
+      "The stress moves: ob-JECT for the verb, OB-ject for the noun."
      ],
      "starter": "I object to …",
      "pic": ""
@@ -1641,10 +1612,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say the opposite of what somebody else said.",
      "example": "The second report contradicts the first.",
      "sentences": [
-      "The second report contradicts the first.",
       "He contradicted himself twice in one letter.",
       "Two accounts contradict each other; a person contradicts somebody.",
-      "Its noun is contradiction."
+      "Its noun is contradiction.",
+      "Contradicting is stating the opposite, not disproving it."
      ],
      "starter": "The … contradicts …",
      "pic": ""
@@ -1655,10 +1626,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To prove that something is not true.",
      "example": "The record refutes his account entirely.",
      "sentences": [
-      "The record refutes his account entirely.",
       "You cannot refute a claim by denying it.",
       "Refuting needs evidence; denying does not.",
-      "Its noun is refutation."
+      "Its noun is refutation.",
+      "Many people use refute to mean deny. In careful English it does not."
      ],
      "starter": "The … refutes …",
      "pic": ""
@@ -1669,10 +1640,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To hold a different view.",
      "example": "I disagree with the conclusion.",
      "sentences": [
-      "I disagree with the conclusion.",
       "We disagreed about the timing, not the principle.",
       "Disagree takes with a person, and about a topic.",
-      "Its noun is disagreement."
+      "Its noun is disagreement.",
+      "It is the plain, everyday word for all of these."
      ],
      "starter": "I disagree with …",
      "pic": ""
@@ -1683,10 +1654,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A doubt that stops you agreeing completely.",
      "example": "I support it, with one reservation.",
      "sentences": [
-      "I support it, with one reservation.",
       "She had reservations about the cost.",
       "A reservation is partial: you agree, but not entirely.",
-      "It is also a booking: a table reservation."
+      "It is also a booking: a table reservation.",
+      "Without reservation means completely."
      ],
      "starter": "I support it, with one reservation: …",
      "pic": ""
@@ -1702,10 +1673,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something that is true and can be checked.",
      "example": "The fact is that nobody signed for it.",
      "sentences": [
-      "The fact is that nobody signed for it.",
       "Check the facts before you write.",
       "A fact can be checked; an opinion cannot.",
-      "In fact often introduces a correction."
+      "In fact often introduces a correction.",
+      "Its adjective is factual."
      ],
      "starter": "The fact is that …",
      "pic": ""
@@ -1716,10 +1687,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Information that shows whether something is true.",
      "example": "There is no evidence that it was reported.",
      "sentences": [
-      "There is no evidence that it was reported.",
       "The evidence supports her version.",
       "Evidence is uncountable: never an evidence.",
-      "A piece of evidence is how you count it."
+      "A piece of evidence is how you count it.",
+      "Evident is the adjective."
      ],
      "starter": "There is no evidence that …",
      "pic": "🔍"
@@ -1730,10 +1701,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something taken as true without being checked.",
      "example": "The whole plan rests on one assumption.",
      "sentences": [
-      "The whole plan rests on one assumption.",
       "That is an assumption, not a fact.",
       "An assumption is invisible until it fails.",
-      "It comes from assume."
+      "It comes from assume.",
+      "Making an assumption is not an error; not noticing it is."
      ],
      "starter": "The assumption was that …",
      "pic": ""
@@ -1744,10 +1715,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A leaning towards one side that stops you judging fairly.",
      "example": "The survey has an obvious bias.",
      "sentences": [
-      "The survey has an obvious bias.",
       "Everybody has a bias; the question is whether they declare it.",
       "Biased is the adjective, with one s.",
-      "Bias takes towards or against."
+      "Bias takes towards or against.",
+      "A biased source is not a useless one."
      ],
      "starter": "The … has a bias towards …",
      "pic": ""
@@ -1758,10 +1729,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Based on personal feeling rather than on fact.",
      "example": "That judgement is entirely subjective.",
      "sentences": [
-      "That judgement is entirely subjective.",
       "Comfort is subjective; weight is not.",
       "Subjective is the opposite of objective.",
-      "A subjective claim is not automatically wrong."
+      "A subjective claim is not automatically wrong.",
+      "Its noun is subjectivity."
      ],
      "starter": "… is subjective, because …",
      "pic": ""

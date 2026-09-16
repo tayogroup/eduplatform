@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1354,10 +1325,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something that happens as a result of something else.",
      "example": "The consequence of the delay was a lost contract.",
      "sentences": [
-      "The consequence of the delay was a lost contract.",
       "Every decision has a consequence, whether you see it or not.",
       "Consequence takes of: the consequence OF the delay.",
-      "As a consequence means therefore."
+      "As a consequence means therefore.",
+      "Consequently is the adverb."
      ],
      "starter": "The consequence of … was …",
      "pic": ""
@@ -1368,10 +1339,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The way something finally turns out.",
      "example": "The outcome was better than anybody expected.",
      "sentences": [
-      "The outcome was better than anybody expected.",
       "We will not know the outcome until March.",
       "An outcome is the end result; a consequence is caused by something.",
-      "Outcome is neutral: it can be good or bad."
+      "Outcome is neutral: it can be good or bad.",
+      "The outcome of the meeting, not the outcome for."
      ],
      "starter": "The outcome was …",
      "pic": ""
@@ -1382,10 +1353,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A change produced by something else.",
      "example": "The new rule had almost no effect.",
      "sentences": [
-      "The new rule had almost no effect.",
       "The effect on morale was immediate.",
       "Effect is the noun; affect is the verb.",
-      "It has an effect ON something."
+      "It has an effect ON something.",
+      "In effect means in practice."
      ],
      "starter": "The effect on … was …",
      "pic": ""
@@ -1396,10 +1367,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A strong effect, especially a sudden one.",
      "example": "The closure had a real impact on the town.",
      "sentences": [
-      "The closure had a real impact on the town.",
       "The impact was felt within weeks.",
       "Impact is stronger than effect, and takes on.",
-      "It is also a verb, though many people dislike that use."
+      "It is also a verb, though many people dislike that use.",
+      "A high-impact change is one people notice."
      ],
      "starter": "The impact on … was …",
      "pic": ""
@@ -1410,10 +1381,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To cause something to start, suddenly.",
      "example": "The failed inspection triggered a full review.",
      "sentences": [
-      "The failed inspection triggered a full review.",
       "A single complaint triggered the whole investigation.",
       "Trigger suits a sudden start, not a slow one.",
-      "It is also a noun: the trigger for the review."
+      "It is also a noun: the trigger for the review.",
+      "Triggered by is the common passive form."
      ],
      "starter": "… triggered …",
      "pic": ""
@@ -1424,10 +1395,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To stop something from happening.",
      "example": "Better checks would have prevented it.",
      "sentences": [
-      "Better checks would have prevented it.",
       "Nothing prevents you from asking.",
       "Prevent takes from before an -ing form.",
-      "Prevention is the noun."
+      "Prevention is the noun.",
+      "Prevent is about stopping before; stop can be during."
      ],
      "starter": "… would have prevented …",
      "pic": "🛑"
@@ -1443,10 +1414,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Probably going to happen.",
      "example": "It is likely to rain before six.",
      "sentences": [
-      "It is likely to rain before six.",
       "A delay is likely, so plan for one.",
       "Likely takes to before a verb.",
-      "It is an adjective, not an adverb, in careful English."
+      "It is an adjective, not an adverb, in careful English.",
+      "More likely than not means over half."
      ],
      "starter": "It is likely to …",
      "pic": ""
@@ -1457,10 +1428,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Probably not going to happen.",
      "example": "They are unlikely to reply before Monday.",
      "sentences": [
-      "They are unlikely to reply before Monday.",
       "It is unlikely, but not impossible.",
       "Unlikely also takes to.",
-      "Highly unlikely is the usual strengthener, not very."
+      "Highly unlikely is the usual strengthener, not very.",
+      "It is the plain opposite of likely."
      ],
      "starter": "They are unlikely to …",
      "pic": ""
@@ -1471,10 +1442,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Likely to be true or to happen.",
      "example": "The probable cause was water.",
      "sentences": [
-      "The probable cause was water.",
       "A probable outcome is one you would bet on.",
       "Probable is commoner before a noun: the probable cause.",
-      "Probably is the adverb and is far commoner in speech."
+      "Probably is the adverb and is far commoner in speech.",
+      "Probable is stronger than possible."
      ],
      "starter": "The probable cause was …",
      "pic": ""
@@ -1485,10 +1456,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Certain to happen, and impossible to prevent.",
      "example": "Some delay was inevitable.",
      "sentences": [
-      "Some delay was inevitable.",
       "It was inevitable that somebody would complain.",
       "Inevitable is already absolute, so no very.",
-      "Inevitably is the adverb."
+      "Inevitably is the adverb.",
+      "It sits at the far end of the likely scale."
      ],
      "starter": "It was inevitable that …",
      "pic": ""
@@ -1499,10 +1470,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something that might happen.",
      "example": "There is a possibility of a strike.",
      "sentences": [
-      "There is a possibility of a strike.",
       "We should consider every possibility.",
       "Possibility takes of before a noun, and that before a clause.",
-      "A possibility is weaker than a probability."
+      "A possibility is weaker than a probability.",
+      "Its adjective is possible."
      ],
      "starter": "There is a possibility of …",
      "pic": ""
@@ -1513,10 +1484,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The likelihood of something happening; also an opportunity.",
      "example": "There is a good chance it will be approved.",
      "sentences": [
-      "There is a good chance it will be approved.",
       "The chances of that are small.",
       "Chance of a noun, or chance that plus a clause.",
-      "It also means opportunity: a chance to travel."
+      "It also means opportunity: a chance to travel.",
+      "By chance means accidentally."
      ],
      "starter": "There is a good chance that …",
      "pic": ""
@@ -1532,10 +1503,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something that must be true before something else can happen.",
      "example": "They agreed, on one condition.",
      "sentences": [
-      "They agreed, on one condition.",
       "The condition is that you finish by Friday.",
       "On condition that is the full phrase.",
-      "Condition also means the state of a thing: in good condition."
+      "Condition also means the state of a thing: in good condition.",
+      "Conditional is the adjective."
      ],
      "starter": "They agreed, on condition that …",
      "pic": ""
@@ -1546,10 +1517,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Only if; on the condition that.",
      "example": "You may start provided the site is clear.",
      "sentences": [
-      "You may start provided the site is clear.",
       "Provided that and provided mean the same.",
       "Provided is more formal than if, and stronger.",
-      "It says this is the ONE thing that must be true."
+      "It says this is the ONE thing that must be true.",
+      "Providing also works and is slightly less formal."
      ],
      "starter": "You may … provided …",
      "pic": ""
@@ -1560,10 +1531,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "If not; in the other case.",
      "example": "Book early. Otherwise you will not get a place.",
      "sentences": [
-      "Book early. Otherwise you will not get a place.",
       "Otherwise carries the whole negative condition by itself.",
       "It usually starts its own sentence.",
-      "It can also mean in other respects: otherwise it is fine."
+      "It can also mean in other respects: otherwise it is fine.",
+      "Otherwise saves you writing a second if clause."
      ],
      "starter": "…. Otherwise …",
      "pic": ""
@@ -1574,10 +1545,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "If we take it as true that.",
      "example": "Assuming the parts arrive, we will finish on Friday.",
      "sentences": [
-      "Assuming the parts arrive, we will finish on Friday.",
       "Assuming that and assuming mean the same.",
       "It flags that you are not certain of the condition.",
-      "Assume is the verb; assumption is the noun."
+      "Assume is the verb; assumption is the noun.",
+      "Assuming is more tentative than provided."
      ],
      "starter": "Assuming …, we will …",
      "pic": ""
@@ -1588,10 +1559,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To imagine something as true, in order to think about it.",
      "example": "Suppose the parts do not arrive. What then?",
      "sentences": [
-      "Suppose the parts do not arrive. What then?",
       "Supposing it rains, what is the plan?",
       "Suppose and supposing both open an imagined case.",
-      "I suppose so is a weak agreement."
+      "I suppose so is a weak agreement.",
+      "Supposed to means expected to."
      ],
      "starter": "Suppose …. What then?",
      "pic": ""
@@ -1602,10 +1573,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To be decided by something else.",
      "example": "It depends on the weather.",
      "sentences": [
-      "It depends on the weather.",
       "Everything depends on whether they reply.",
       "Depend always takes on, with no exception.",
-      "It depends is a complete answer in speech."
+      "It depends is a complete answer in speech.",
+      "Dependent is the adjective; dependant is a person."
      ],
      "starter": "It depends on …",
      "pic": ""
@@ -1621,10 +1592,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To tell somebody about a danger before it happens.",
      "example": "I warned them the floor was wet.",
      "sentences": [
-      "I warned them the floor was wet.",
       "She warned us not to sign it.",
       "Warn somebody ABOUT a thing, or warn somebody TO do something.",
-      "Warning is the noun."
+      "Warning is the noun.",
+      "You warn before; you tell off afterwards."
      ],
      "starter": "I warned them …",
      "pic": ""
@@ -1635,10 +1606,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say you will cause harm; or to be about to happen.",
      "example": "The supplier threatened to stop deliveries.",
      "sentences": [
-      "The supplier threatened to stop deliveries.",
       "Rain threatened all afternoon.",
       "Threaten takes to before a verb.",
-      "Threat is the noun."
+      "Threat is the noun.",
+      "A threatened species is one at risk."
      ],
      "starter": "… threatened to …",
      "pic": ""
@@ -1649,10 +1620,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make certain that something happens.",
      "example": "Please ensure the gate is locked.",
      "sentences": [
-      "Please ensure the gate is locked.",
       "Ensure that everybody signs in.",
       "Ensure is make certain; insure is about insurance.",
-      "It takes that plus a clause."
+      "It takes that plus a clause.",
+      "Ensure is formal: in speech you would say make sure."
      ],
      "starter": "Please ensure that …",
      "pic": ""
@@ -1663,10 +1634,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To fix something firmly; or to succeed in getting it.",
      "example": "Secure the ladder before you climb.",
      "sentences": [
-      "Secure the ladder before you climb.",
       "She secured a place on the course.",
       "Secure is also an adjective: the load is secure.",
-      "Security is the noun."
+      "Security is the noun.",
+      "The two meanings are far apart: fix, and obtain."
      ],
      "starter": "Secure the …",
      "pic": ""
@@ -1677,10 +1648,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A second thing kept in case the first one fails.",
      "example": "There is no backup if the generator stops.",
      "sentences": [
-      "There is no backup if the generator stops.",
       "Always keep a backup of anything that matters.",
       "Backup as a noun is one word; back up as a verb is two.",
-      "A backup plan is the same idea."
+      "A backup plan is the same idea.",
+      "It also means extra help: we called for backup."
      ],
      "starter": "There is no backup if …",
      "pic": ""
@@ -1691,10 +1662,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A plan for something that might go wrong.",
      "example": "We have a contingency if the parts are late.",
      "sentences": [
-      "We have a contingency if the parts are late.",
       "A contingency plan is written before you need it.",
       "Contingency money is money set aside for problems.",
-      "It is pronounced con-TIN-jen-see."
+      "It is pronounced con-TIN-jen-see.",
+      "A contingency is for a possibility, not a certainty."
      ],
      "starter": "We have a contingency if …",
      "pic": ""
@@ -1710,10 +1681,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To think about something carefully before deciding.",
      "example": "We considered three suppliers.",
      "sentences": [
-      "We considered three suppliers.",
       "Have you considered moving the date?",
       "Consider takes an -ing form, never to.",
-      "Consideration is the noun."
+      "Consideration is the noun.",
+      "All things considered means having weighed everything."
      ],
      "starter": "We considered …",
      "pic": ""
@@ -1724,10 +1695,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To compare the good and bad sides before deciding.",
      "example": "You have to weigh the cost against the delay.",
      "sentences": [
-      "You have to weigh the cost against the delay.",
       "We weighed both options for a week.",
       "Weigh takes against for the comparison.",
-      "Weigh up is the same thing, slightly more informal."
+      "Weigh up is the same thing, slightly more informal.",
+      "It also means to measure weight."
      ],
      "starter": "You have to weigh … against …",
      "pic": "⚖️"
@@ -1738,10 +1709,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To pause before acting, because you are unsure.",
      "example": "I hesitated, and the place went to somebody else.",
      "sentences": [
-      "I hesitated, and the place went to somebody else.",
       "Do not hesitate to ask.",
       "Hesitate takes to before a verb.",
-      "Hesitation is the noun."
+      "Hesitation is the noun.",
+      "Without hesitation means immediately."
      ],
      "starter": "I hesitated because …",
      "pic": ""
@@ -1752,10 +1723,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To decide firmly and bind yourself to it.",
      "example": "I am not ready to commit to a date.",
      "sentences": [
-      "I am not ready to commit to a date.",
       "Once you commit, it is difficult to change.",
       "Commit takes to, and after to comes a noun or an -ing form.",
-      "Commitment is the noun, with two m's and two t's."
+      "Commitment is the noun, with two m's and two t's.",
+      "Committed also means dedicated."
      ],
      "starter": "I am not ready to commit to …",
      "pic": ""
@@ -1766,10 +1737,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Another choice you could take instead.",
      "example": "There was no realistic alternative.",
      "sentences": [
-      "There was no realistic alternative.",
       "The alternative is to wait until spring.",
       "Alternative takes to: an alternative TO waiting.",
-      "It is also an adjective: an alternative route."
+      "It is also an adjective: an alternative route.",
+      "Strictly, an alternative is one of two."
      ],
      "starter": "The alternative is to …",
      "pic": "🔀"

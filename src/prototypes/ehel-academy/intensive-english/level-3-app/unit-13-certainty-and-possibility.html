@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1350,10 +1321,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Without any doubt at all.",
      "example": "That is certainly the wrong batch.",
      "sentences": [
-      "That is certainly the wrong batch.",
       "Certainly is the top of the scale.",
       "It is also a strong yes in reply: certainly.",
-      "Its adjective is certain, which takes of or that."
+      "Its adjective is certain, which takes of or that.",
+      "Use it only where you would stake something on it."
      ],
      "starter": "That is certainly …",
      "pic": ""
@@ -1364,10 +1335,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "I am assuming this, on reasonable grounds.",
      "example": "Presumably nobody checked it.",
      "sentences": [
-      "Presumably nobody checked it.",
       "Presumably marks a reasonable assumption, not a fact.",
       "Its verb is presume.",
-      "It signals that you are inferring rather than reporting."
+      "It signals that you are inferring rather than reporting.",
+      "It is honest: it tells the reader you did not see it."
      ],
      "starter": "Presumably …",
      "pic": ""
@@ -1378,10 +1349,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "So it appears, or so I have been told.",
      "example": "Apparently the brake was faulty.",
      "sentences": [
-      "Apparently the brake was faulty.",
       "Apparently has two uses: it looks that way, and I heard.",
       "Both distance you from the claim.",
-      "Its adjective is apparent."
+      "Its adjective is apparent.",
+      "In a report, apparently means you have not verified it."
      ],
      "starter": "Apparently …",
      "pic": ""
@@ -1392,10 +1363,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Appearing to be so, though perhaps not.",
      "example": "The two accounts are seemingly identical.",
      "sentences": [
-      "The two accounts are seemingly identical.",
       "Seemingly hints that appearances may mislead.",
       "It is slightly more doubtful than apparently.",
-      "Its verb is seem."
+      "Its verb is seem.",
+      "Seemingly often introduces something the writer doubts."
      ],
      "starter": "The … are seemingly …",
      "pic": ""
@@ -1406,10 +1377,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "According to a claim that has not been proved.",
      "example": "The seal was allegedly damaged on arrival.",
      "sentences": [
-      "The seal was allegedly damaged on arrival.",
       "Allegedly marks a claim as unproved.",
       "It is a legal and journalistic word.",
-      "Its noun is allegation, from Unit 9."
+      "Its noun is allegation, from Unit 9.",
+      "Using it does not mean you think the claim is false."
      ],
      "starter": "The … was allegedly …",
      "pic": ""
@@ -1420,10 +1391,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "According to what people say, and I have doubts.",
      "example": "The line was supposedly checked on Monday.",
      "sentences": [
-      "The line was supposedly checked on Monday.",
       "Supposedly leans sceptical: it questions the claim.",
       "Allegedly is neutral; supposedly is not.",
-      "Its verb is suppose."
+      "Its verb is suppose.",
+      "Use it only where your doubt is fair."
      ],
      "starter": "The … was supposedly …",
      "pic": ""
@@ -1439,10 +1410,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To work something out from the evidence.",
      "example": "We deduced that the brake had failed first.",
      "sentences": [
-      "We deduced that the brake had failed first.",
       "Deduce takes that plus a clause, or from for the evidence.",
       "Its noun is deduction.",
-      "Deducing is reasoning from what you know to what follows."
+      "Deducing is reasoning from what you know to what follows.",
+      "It is stronger than guessing and weaker than proving."
      ],
      "starter": "We deduced that …",
      "pic": ""
@@ -1453,10 +1424,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To conclude something that was not stated.",
      "example": "I inferred from her tone that it had not gone well.",
      "sentences": [
-      "I inferred from her tone that it had not gone well.",
       "Infer takes from for the source.",
       "Its noun is inference.",
-      "The READER infers. The writer implies. They are opposite."
+      "The READER infers. The writer implies. They are opposite.",
+      "Infer doubles its r: inferred, inferring."
      ],
      "starter": "I inferred from … that …",
      "pic": ""
@@ -1467,10 +1438,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To suggest something without saying it.",
      "example": "The reply implied that nobody had read the form.",
      "sentences": [
-      "The reply implied that nobody had read the form.",
       "Imply is what the SPEAKER does.",
       "Infer is what the LISTENER does.",
-      "Its noun is implication."
+      "Its noun is implication.",
+      "Implying is not the same as stating, and is deniable."
      ],
      "starter": "The … implied that …",
      "pic": ""
@@ -1481,10 +1452,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To take something as true on reasonable grounds.",
      "example": "I presume the order was cancelled.",
      "sentences": [
-      "I presume the order was cancelled.",
       "Presume takes that plus a clause.",
       "Presuming is reasonable; assuming can be careless.",
-      "Its noun is presumption."
+      "Its noun is presumption.",
+      "Presumed innocent is a fixed legal phrase."
      ],
      "starter": "I presume that …",
      "pic": ""
@@ -1495,10 +1466,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To guess at something without enough evidence.",
      "example": "I would rather not speculate about the cause.",
      "sentences": [
-      "I would rather not speculate about the cause.",
       "Speculate takes about, or on.",
       "Its noun is speculation.",
-      "Speculating is honest if you say that is what you are doing."
+      "Speculating is honest if you say that is what you are doing.",
+      "In a report, speculation should be labelled as such."
      ],
      "starter": "I would rather not speculate about …",
      "pic": ""
@@ -1509,10 +1480,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To decide that something is definitely not the cause.",
      "example": "We can rule out the second supplier.",
      "sentences": [
-      "We can rule out the second supplier.",
       "Rule out splits: rule it out.",
       "Ruling something out is a finding, not a guess.",
-      "It is the opposite of considering something possible."
+      "It is the opposite of considering something possible.",
+      "You rule out a cause, an option or a person."
      ],
      "starter": "We can rule out …",
      "pic": ""
@@ -1528,10 +1499,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Understanding of an event that you only have afterwards.",
      "example": "With hindsight, the signs were all there.",
      "sentences": [
-      "With hindsight, the signs were all there.",
       "With hindsight and in hindsight both work.",
       "Hindsight is uncountable.",
-      "It is the opposite of foresight."
+      "It is the opposite of foresight.",
+      "Hindsight makes everything look obvious, which is its danger."
      ],
      "starter": "With hindsight, …",
      "pic": ""
@@ -1542,10 +1513,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A mistake made by not noticing something.",
      "example": "The missing signature was an oversight.",
      "sentences": [
-      "The missing signature was an oversight.",
       "An oversight is accidental, not deliberate.",
       "Confusingly, oversight also means supervision.",
-      "The two meanings are almost opposite."
+      "The two meanings are almost opposite.",
+      "Calling something an oversight is a mild defence."
      ],
      "starter": "The … was an oversight.",
      "pic": ""
@@ -1556,10 +1527,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A serious and careless mistake.",
      "example": "Sending it to the wrong client was a blunder.",
      "sentences": [
-      "Sending it to the wrong client was a blunder.",
       "A blunder is worse than an oversight and clearly careless.",
       "It is also a verb: to blunder into something.",
-      "It is informal and strongly critical."
+      "It is informal and strongly critical.",
+      "Do not use it in a report unless you mean it."
      ],
      "starter": "… was a blunder.",
      "pic": ""
@@ -1570,10 +1541,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To form a wrong opinion about something.",
      "example": "We misjudged how long it would take.",
      "sentences": [
-      "We misjudged how long it would take.",
       "Mis- plus judge: to judge wrongly.",
       "Its noun is misjudgement.",
-      "Misjudging is about estimation, not about carelessness."
+      "Misjudging is about estimation, not about carelessness.",
+      "It is a fairer word than blunder for most mistakes."
      ],
      "starter": "We misjudged …",
      "pic": ""
@@ -1584,10 +1555,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To know in advance that something will happen.",
      "example": "Nobody could have foreseen the second failure.",
      "sentences": [
-      "Nobody could have foreseen the second failure.",
       "Its past forms are foresaw and foreseen.",
       "Foreseeable is the adjective: a foreseeable risk.",
-      "Could not have been foreseen is a defence."
+      "Could not have been foreseen is a defence.",
+      "It is the opposite of hindsight."
      ],
      "starter": "Nobody could have foreseen …",
      "pic": ""
@@ -1598,10 +1569,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To expect something and prepare for it.",
      "example": "We had anticipated a delay and ordered early.",
      "sentences": [
-      "We had anticipated a delay and ordered early.",
       "Anticipate is expect plus act.",
       "Its noun is anticipation.",
-      "Foreseeing is knowing; anticipating is preparing."
+      "Foreseeing is knowing; anticipating is preparing.",
+      "Anticipate takes that, or a noun."
      ],
      "starter": "We had anticipated …",
      "pic": ""
@@ -1617,10 +1588,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Required to explain and answer for something.",
      "example": "The supervisor is accountable for the log.",
      "sentences": [
-      "The supervisor is accountable for the log.",
       "Accountable takes for a thing, and to a person.",
       "Being accountable is not the same as being at fault.",
-      "Its noun is accountability."
+      "Its noun is accountability.",
+      "You are accountable to somebody FOR something."
      ],
      "starter": "… is accountable for …",
      "pic": ""
@@ -1631,10 +1602,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Failing to take the care that was required.",
      "example": "The report does not find anybody negligent.",
      "sentences": [
-      "The report does not find anybody negligent.",
       "Negligent is a serious word with a legal edge.",
       "Its noun is negligence.",
-      "Negligence is a failure of care, not an accident."
+      "Negligence is a failure of care, not an accident.",
+      "Do not use it loosely."
      ],
      "starter": "The report does not find … negligent.",
      "pic": ""
@@ -1645,10 +1616,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To give good reasons for something.",
      "example": "I cannot justify the extra cost.",
      "sentences": [
-      "I cannot justify the extra cost.",
       "Justify takes a direct object, or an -ing form.",
       "Its noun is justification.",
-      "Justifying is explaining why it was right."
+      "Justifying is explaining why it was right.",
+      "Justified is the adjective: a justified complaint."
      ],
      "starter": "I cannot justify …",
      "pic": ""
@@ -1659,10 +1630,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make something less severe.",
      "example": "The quick response mitigated the damage.",
      "sentences": [
-      "The quick response mitigated the damage.",
       "Mitigate takes a direct object.",
       "Mitigating circumstances reduce the blame.",
-      "Its noun is mitigation."
+      "Its noun is mitigation.",
+      "Mitigating is reducing, not removing."
      ],
      "starter": "The … mitigated …",
      "pic": ""
@@ -1673,10 +1644,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To clear somebody of blame officially.",
      "example": "The findings exonerate the night shift.",
      "sentences": [
-      "The findings exonerate the night shift.",
       "Exonerate takes a person as its object.",
       "Its noun is exoneration.",
-      "Exonerating is clearing, not merely excusing."
+      "Exonerating is clearing, not merely excusing.",
+      "It needs evidence, not just a decision."
      ],
      "starter": "The findings exonerate …",
      "pic": ""
@@ -1687,10 +1658,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say that somebody or something caused a fault.",
      "example": "Nobody blamed the operator.",
      "sentences": [
-      "Nobody blamed the operator.",
       "Blame somebody FOR something, or blame something ON somebody.",
       "Those two frames are easy to mix.",
-      "It is also a noun: to take the blame."
+      "It is also a noun: to take the blame.",
+      "Blaming is not the same as finding a cause."
      ],
      "starter": "Nobody blamed … for …",
      "pic": ""
@@ -1706,10 +1677,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Possible to imagine, though unlikely.",
      "example": "It is conceivable that both failed at once.",
      "sentences": [
-      "It is conceivable that both failed at once.",
       "Conceivable is the weakest kind of possible.",
       "It takes that plus a clause.",
-      "Its verb is conceive."
+      "Its verb is conceive.",
+      "Every conceivable option means all of them."
      ],
      "starter": "It is conceivable that …",
      "pic": ""
@@ -1720,10 +1691,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Sounding reasonable, and possibly true.",
      "example": "That is a plausible explanation.",
      "sentences": [
-      "That is a plausible explanation.",
       "Plausible is about how it sounds, not whether it is true.",
       "A plausible explanation can still be wrong.",
-      "Its noun is plausibility."
+      "Its noun is plausibility.",
+      "It is stronger than conceivable and weaker than proved."
      ],
      "starter": "That is a plausible …",
      "pic": ""
@@ -1734,10 +1705,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Able to be done in practice.",
      "example": "It is not feasible before March.",
      "sentences": [
-      "It is not feasible before March.",
       "Feasible is about doing, not about being true.",
       "Plausible is about explanations; feasible is about plans.",
-      "Its noun is feasibility."
+      "Its noun is feasibility.",
+      "A feasibility study asks whether it can be done."
      ],
      "starter": "It is not feasible to …",
      "pic": ""
@@ -1748,10 +1719,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Very unlikely; or very far away.",
      "example": "The chance of that is remote.",
      "sentences": [
-      "The chance of that is remote.",
       "A remote chance is a very small one.",
       "It also means far away: a remote site.",
-      "Remotely is the adverb: not remotely likely."
+      "Remotely is the adverb: not remotely likely.",
+      "It is the low end of the possibility scale."
      ],
      "starter": "The chance of … is remote.",
      "pic": ""
@@ -1762,10 +1733,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Very small, of a chance.",
      "example": "There is a slim chance of getting it by Friday.",
      "sentences": [
-      "There is a slim chance of getting it by Friday.",
       "A slim chance is small but real.",
       "It is slightly more hopeful than remote.",
-      "It also means thin, of a person."
+      "It also means thin, of a person.",
+      "A slim margin is a narrow one."
      ],
      "starter": "There is a slim chance of …",
      "pic": ""

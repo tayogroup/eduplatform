@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1339,10 +1310,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The way you sound in a language: your own manner of saying things.",
      "example": "It took three years before I had a voice in English.",
      "sentences": [
-      "It took three years before I had a voice in English.",
       "A voice is more than accuracy: it is how you sound like yourself.",
       "Having a voice means the language stops being borrowed.",
-      "It also means the sound you make, and the active or passive voice."
+      "It also means the sound you make, and the active or passive voice.",
+      "Nobody gives you a voice. It arrives from use."
      ],
      "starter": "My voice in English is …",
      "pic": ""
@@ -1353,10 +1324,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A phrase whose meaning is not in its words; or the natural way a language is used.",
      "example": "The grammar was right and the idiom was not.",
      "sentences": [
-      "The grammar was right and the idiom was not.",
       "An idiom is a fixed phrase, from Unit 4.",
       "Idiom also means the natural usage of a language, as a whole.",
-      "Idiomatic means sounding like a native speaker."
+      "Idiomatic means sounding like a native speaker.",
+      "Correct and idiomatic are two different achievements."
      ],
      "starter": "The idiom of … is …",
      "pic": ""
@@ -1367,10 +1338,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The ability to keep going without stopping to search.",
      "example": "Fluency is about not stopping, not about being right.",
      "sentences": [
-      "Fluency is about not stopping, not about being right.",
       "Fluency is speed and continuity.",
       "It is measured against hesitation, not against error.",
-      "Its adjective is fluent."
+      "Its adjective is fluent.",
+      "You can be fluent and inaccurate, and accurate and halting."
      ],
      "starter": "My fluency is …",
      "pic": ""
@@ -1381,10 +1352,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The ability to get the forms right.",
      "example": "Accuracy improved long before fluency did.",
      "sentences": [
-      "Accuracy improved long before fluency did.",
       "Accuracy is correctness of form.",
       "It is the other half of the pair with fluency.",
-      "Its adjective is accurate."
+      "Its adjective is accurate.",
+      "Working on one often costs the other, temporarily."
      ],
      "starter": "My accuracy in … is …",
      "pic": ""
@@ -1395,10 +1366,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Sounding like yourself rather than like a textbook.",
      "example": "Authenticity is the last thing to arrive.",
      "sentences": [
-      "Authenticity is the last thing to arrive.",
       "Authenticity is saying what you actually mean.",
       "It comes after accuracy and after fluency, usually.",
-      "Its adjective is authentic."
+      "Its adjective is authentic.",
+      "A phrase can be correct, fluent and still not yours."
      ],
      "starter": "Authenticity for me would mean …",
      "pic": ""
@@ -1414,10 +1385,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The thing you will work on before the others.",
      "example": "My priority is listening, not vocabulary.",
      "sentences": [
-      "My priority is listening, not vocabulary.",
       "A priority is what comes first, so there can only be one or two.",
       "Priority takes over: a priority over the others.",
-      "Its verb is prioritise."
+      "Its verb is prioritise.",
+      "A list of ten priorities is a list of none."
      ],
      "starter": "My priority is … rather than …",
      "pic": ""
@@ -1428,10 +1399,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something you cannot yet do that you need to.",
      "example": "The gap is not vocabulary; it is speed.",
      "sentences": [
-      "The gap is not vocabulary; it is speed.",
       "Gap takes in: a gap in my listening.",
       "A gap is specific; a weakness is vague.",
-      "Naming a gap precisely is most of the work of fixing it."
+      "Naming a gap precisely is most of the work of fixing it.",
+      "It is also the space between two things."
      ],
      "starter": "The gap in my … is …",
      "pic": ""
@@ -1442,10 +1413,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A period when you stop improving despite continuing.",
      "example": "I was on a plateau for about a year.",
      "sentences": [
-      "I was on a plateau for about a year.",
       "A plateau is flat: effort continues and progress does not.",
       "It is pronounced PLAT-oh.",
-      "Plateaus usually mean the practice has stopped stretching you."
+      "Plateaus usually mean the practice has stopped stretching you.",
+      "It is also a verb: progress plateaued."
      ],
      "starter": "I was on a plateau in …",
      "pic": ""
@@ -1456,10 +1427,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Done on purpose, with attention, rather than by habit.",
      "example": "Deliberate practice is uncomfortable, which is how you know it is working.",
      "sentences": [
-      "Deliberate practice is uncomfortable, which is how you know it is working.",
       "Deliberate practice targets what you cannot do yet.",
       "Comfortable practice repeats what you can.",
-      "As a verb it is said differently: de-LIB-er-ate, to think carefully."
+      "As a verb it is said differently: de-LIB-er-ate, to think carefully.",
+      "The adjective is de-LIB-er-ut."
      ],
      "starter": "Deliberate practice for me would mean …",
      "pic": ""
@@ -1470,10 +1441,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A plan of what will be learned, in what order.",
      "example": "I wrote my own syllabus for the first time this year.",
      "sentences": [
-      "I wrote my own syllabus for the first time this year.",
       "A syllabus is a plan with an order in it.",
       "Its plural is syllabuses, or syllabi.",
-      "A syllabus you wrote yourself is the point of this unit."
+      "A syllabus you wrote yourself is the point of this unit.",
+      "A list of topics is not a syllabus until it has an order."
      ],
      "starter": "My syllabus for the next … is …",
      "pic": ""
@@ -1489,10 +1460,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something you do regularly without deciding to each time.",
      "example": "The habit matters more than the hour.",
      "sentences": [
-      "The habit matters more than the hour.",
       "A habit runs without a decision, which is its value.",
       "Habit takes of: the habit of reading at night.",
-      "Small and daily beats large and occasional."
+      "Small and daily beats large and occasional.",
+      "Its adjective is habitual."
      ],
      "starter": "My habit is …",
      "pic": ""
@@ -1503,10 +1474,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Doing something regularly over a long period.",
      "example": "Consistency beat intensity every time.",
      "sentences": [
-      "Consistency beat intensity every time.",
       "Consistency is about frequency, not about amount.",
       "Its adjective is consistent, which takes with.",
-      "Twenty minutes daily outlasts three hours on a Sunday."
+      "Twenty minutes daily outlasts three hours on a Sunday.",
+      "It is the single best predictor of progress."
      ],
      "starter": "Consistency for me means …",
      "pic": ""
@@ -1517,10 +1488,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The ease that comes from having kept going.",
      "example": "I lost momentum in August and it took a month to get back.",
      "sentences": [
-      "I lost momentum in August and it took a month to get back.",
       "Momentum builds, and it is lost faster than it is built.",
       "It is uncountable.",
-      "Losing momentum costs more than the days you missed."
+      "Losing momentum costs more than the days you missed.",
+      "It is pronounced mo-MEN-tum."
      ],
      "starter": "I lost momentum when …",
      "pic": ""
@@ -1531,10 +1502,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Surrounding yourself with the language.",
      "example": "Immersion helps only if you understand most of what you hear.",
      "sentences": [
-      "Immersion helps only if you understand most of what you hear.",
       "Immersion means being in the language, not just near it.",
       "Its verb is immerse, which takes in.",
-      "Immersion without comprehension is only noise."
+      "Immersion without comprehension is only noise.",
+      "It is one of the most misunderstood words in language learning."
      ],
      "starter": "Immersion for me would mean …",
      "pic": ""
@@ -1545,10 +1516,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Contact with the language, in quantity.",
      "example": "Exposure is necessary and it is not sufficient.",
      "sentences": [
-      "Exposure is necessary and it is not sufficient.",
       "Exposure takes to: exposure to the language.",
       "Its verb is expose.",
-      "Exposure builds recognition; production needs use."
+      "Exposure builds recognition; production needs use.",
+      "Hearing a word twenty times is not the same as using it once."
      ],
      "starter": "My exposure to … is …",
      "pic": ""
@@ -1564,10 +1535,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The level you have reached, measured against a standard.",
      "example": "Proficiency is measured; competence is what you can do.",
      "sentences": [
-      "Proficiency is measured; competence is what you can do.",
       "Proficiency takes in: proficiency in English.",
       "It is usually stated against a scale such as the CEFR.",
-      "Its adjective is proficient, which also takes in."
+      "Its adjective is proficient, which also takes in.",
+      "A proficiency level is a claim somebody else can check."
      ],
      "starter": "My proficiency in … is …",
      "pic": ""
@@ -1578,10 +1549,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "What you can actually do with the language.",
      "example": "My competence is wider than my proficiency level suggests.",
      "sentences": [
-      "My competence is wider than my proficiency level suggests.",
       "Competence is ability; proficiency is the measured level.",
       "Competence takes in.",
-      "Its adjective is competent."
+      "Its adjective is competent.",
+      "The two often differ, in both directions."
      ],
      "starter": "My competence in … is …",
      "pic": ""
@@ -1592,10 +1563,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A fixed point you measure progress against.",
      "example": "I use the same recording every six months as a benchmark.",
      "sentences": [
-      "I use the same recording every six months as a benchmark.",
       "A benchmark must stay the same to be useful.",
       "It is also a verb: to benchmark against something.",
-      "Changing the benchmark hides the progress."
+      "Changing the benchmark hides the progress.",
+      "It is one word."
      ],
      "starter": "My benchmark is …",
      "pic": ""
@@ -1606,10 +1577,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The ability to direct your own learning.",
      "example": "Autonomy is what this level was building towards.",
      "sentences": [
-      "Autonomy is what this level was building towards.",
       "Autonomy means choosing what to learn and how.",
       "Its adjective is autonomous.",
-      "It is the point at which a course becomes optional."
+      "It is the point at which a course becomes optional.",
+      "It is pronounced aw-TON-o-mee."
      ],
      "starter": "Autonomy for me would mean …",
      "pic": ""
@@ -1620,10 +1591,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The move from one stage to the next.",
      "example": "The transition from learning to using took a year.",
      "sentences": [
-      "The transition from learning to using took a year.",
       "Transition takes from and to.",
       "Its verb is transition, or make a transition.",
-      "A transition is gradual: nothing changes on one day."
+      "A transition is gradual: nothing changes on one day.",
+      "Its adjective is transitional."
      ],
      "starter": "The transition from … to …",
      "pic": ""

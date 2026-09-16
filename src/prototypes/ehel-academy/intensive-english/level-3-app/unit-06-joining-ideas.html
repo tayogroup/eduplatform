@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1350,10 +1321,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In addition to what has just been said.",
      "example": "The cost is high. Furthermore, the delay is unacceptable.",
      "sentences": [
-      "The cost is high. Furthermore, the delay is unacceptable.",
       "Furthermore starts a new sentence and takes a comma.",
       "It is formal: in speech you would say and another thing.",
-      "It adds a SECOND reason, not a detail of the first."
+      "It adds a SECOND reason, not a detail of the first.",
+      "Furthermore and moreover are almost interchangeable."
      ],
      "starter": "…. Furthermore, …",
      "pic": ""
@@ -1364,10 +1335,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In addition, and this matters too.",
      "example": "The route is longer. Moreover, it costs more.",
      "sentences": [
-      "The route is longer. Moreover, it costs more.",
       "Moreover carries slightly more weight than furthermore.",
       "It also starts its own sentence, with a comma after it.",
-      "Use it for the point you want remembered."
+      "Use it for the point you want remembered.",
+      "It is formal and rare in conversation."
      ],
      "starter": "…. Moreover, …",
      "pic": ""
@@ -1378,10 +1349,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In any case; and there is another thing.",
      "example": "It is too expensive. Besides, we do not need it.",
      "sentences": [
-      "It is too expensive. Besides, we do not need it.",
       "Besides is the informal member of this group.",
       "It often introduces the reason that really decides it.",
-      "Besides can also be a preposition: besides the cost."
+      "Besides can also be a preposition: besides the cost.",
+      "Do not confuse it with beside, which means next to."
      ],
      "starter": "…. Besides, …",
      "pic": ""
@@ -1392,10 +1363,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "As well as that.",
      "example": "Additionally, the guarantee has expired.",
      "sentences": [
-      "Additionally, the guarantee has expired.",
       "Additionally is neutral and very common in reports.",
       "It starts a sentence and takes a comma.",
-      "In addition means the same and is slightly lighter."
+      "In addition means the same and is slightly lighter.",
+      "It comes from addition, from add."
      ],
      "starter": "Additionally, …",
      "pic": ""
@@ -1406,10 +1377,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In the same way; the same is true of this.",
      "example": "The first batch failed. Likewise, the second.",
      "sentences": [
-      "The first batch failed. Likewise, the second.",
       "Likewise says the same thing happened again.",
       "It is not simply and: it claims a parallel.",
-      "Likewise alone can mean me too."
+      "Likewise alone can mean me too.",
+      "It is one word, not two."
      ],
      "starter": "…. Likewise, …",
      "pic": ""
@@ -1420,10 +1391,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In a similar way.",
      "example": "Similarly, the southern route was closed.",
      "sentences": [
-      "Similarly, the southern route was closed.",
       "Similarly draws a comparison between two cases.",
       "It is slightly weaker than likewise: alike, not identical.",
-      "It starts a sentence and takes a comma."
+      "It starts a sentence and takes a comma.",
+      "Its adjective is similar, which takes to."
      ],
      "starter": "Similarly, …",
      "pic": ""
@@ -1439,10 +1410,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "But; despite what has just been said.",
      "example": "The price is good. However, the delivery is slow.",
      "sentences": [
-      "The price is good. However, the delivery is slow.",
       "However is an adverb, not a conjunction like but.",
       "It cannot join two clauses with only a comma.",
-      "It takes a full stop or a semicolon in front, and a comma after."
+      "It takes a full stop or a semicolon in front, and a comma after.",
+      "However can also mean in whatever way: however you do it."
      ],
      "starter": "…. However, …",
      "pic": ""
@@ -1453,10 +1424,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In spite of that; even so.",
      "example": "It was expensive. Nevertheless, we went ahead.",
      "sentences": [
-      "It was expensive. Nevertheless, we went ahead.",
       "Nevertheless concedes the point and then overrides it.",
       "It is stronger than however and more formal.",
-      "It is one word, with three parts: never the less."
+      "It is one word, with three parts: never the less.",
+      "It usually starts a sentence."
      ],
      "starter": "…. Nevertheless, …",
      "pic": ""
@@ -1467,10 +1438,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Nevertheless; in spite of that.",
      "example": "The evidence is thin. Nonetheless, it is worth checking.",
      "sentences": [
-      "The evidence is thin. Nonetheless, it is worth checking.",
       "Nonetheless and nevertheless mean the same thing.",
       "Nonetheless is very slightly more formal.",
-      "It can also go at the end: it is worth checking nonetheless."
+      "It can also go at the end: it is worth checking nonetheless.",
+      "It is one word."
      ],
      "starter": "…. Nonetheless, …",
      "pic": ""
@@ -1481,10 +1452,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The opposite is also true.",
      "example": "Cheap parts fail sooner. Conversely, good ones last.",
      "sentences": [
-      "Cheap parts fail sooner. Conversely, good ones last.",
       "Conversely introduces the mirror image of what you just said.",
       "It is not simply but: the two cases must be opposites.",
-      "It is formal and belongs in an argument."
+      "It is formal and belongs in an argument.",
+      "Its noun is the converse."
      ],
      "starter": "…. Conversely, …",
      "pic": ""
@@ -1495,10 +1466,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In spite of; without being stopped by.",
      "example": "Despite the cost, we went ahead.",
      "sentences": [
-      "Despite the cost, we went ahead.",
       "Despite is a preposition, so a NOUN follows it.",
       "Despite the delay, not despite it was delayed.",
-      "Despite the fact that lets you follow it with a clause."
+      "Despite the fact that lets you follow it with a clause.",
+      "In spite of means exactly the same, in three words."
      ],
      "starter": "Despite …, …",
      "pic": ""
@@ -1509,10 +1480,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Without paying attention to it; anyway.",
      "example": "They went ahead regardless.",
      "sentences": [
-      "They went ahead regardless.",
       "Regardless of the cost is the full phrase.",
       "Regardless alone, at the end, means anyway.",
-      "Regardless of takes a noun."
+      "Regardless of takes a noun.",
+      "Irregardless is not a word in careful English."
      ],
      "starter": "They went ahead regardless of …",
      "pic": ""
@@ -1528,10 +1499,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "For that reason; so.",
      "example": "The part failed. Therefore the guarantee applies.",
      "sentences": [
-      "The part failed. Therefore the guarantee applies.",
       "Therefore is the formal so.",
       "It is an adverb, so it cannot join two clauses alone.",
-      "It often appears without a comma after it."
+      "It often appears without a comma after it.",
+      "Therefore states a logical result, not a time result."
      ],
      "starter": "…. Therefore …",
      "pic": ""
@@ -1542,10 +1513,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In this way, and so.",
      "example": "The line was cut. Thus no signal reached the alarm.",
      "sentences": [
-      "The line was cut. Thus no signal reached the alarm.",
       "Thus is the most formal member of this group.",
       "It can also mean in this way: it was done thus.",
-      "Thus far means so far."
+      "Thus far means so far.",
+      "It rarely takes a comma after it."
      ],
      "starter": "…. Thus …",
      "pic": ""
@@ -1556,10 +1527,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "For this reason; from this.",
      "example": "The road floods. Hence the new drain.",
      "sentences": [
-      "The road floods. Hence the new drain.",
       "Hence is often followed by a noun, with no verb at all.",
       "Hence the new drain is a complete and correct sentence.",
-      "It is formal and slightly old-fashioned."
+      "It is formal and slightly old-fashioned.",
+      "Henceforth means from now on."
      ],
      "starter": "…. Hence …",
      "pic": ""
@@ -1570,10 +1541,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "As a result of that.",
      "example": "The supplier failed. Consequently, the work stopped.",
      "sentences": [
-      "The supplier failed. Consequently, the work stopped.",
       "Consequently names a result with a clear cause.",
       "It starts a sentence and usually takes a comma.",
-      "It comes from consequence."
+      "It comes from consequence.",
+      "It is heavier than so and lighter than therefore."
      ],
      "starter": "…. Consequently, …",
      "pic": ""
@@ -1584,10 +1555,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In a way that fits what has just been said.",
      "example": "Numbers fell. We reduced the order accordingly.",
      "sentences": [
-      "Numbers fell. We reduced the order accordingly.",
       "Accordingly means we acted to match the situation.",
       "It is often at the end rather than the start.",
-      "It is not simply therefore: it implies an adjustment."
+      "It is not simply therefore: it implies an adjustment.",
+      "According to means as somebody said, which is different."
      ],
      "starter": "… accordingly.",
      "pic": ""
@@ -1598,10 +1569,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Taking everything together.",
      "example": "Overall, the year was better than expected.",
      "sentences": [
-      "Overall, the year was better than expected.",
       "Overall introduces your final judgement.",
       "It goes at the start, before you sum up.",
-      "It is also an adjective: the overall cost."
+      "It is also an adjective: the overall cost.",
+      "On balance means much the same thing."
      ],
      "starter": "Overall, …",
      "pic": ""
@@ -1617,10 +1588,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "As the first point.",
      "example": "Firstly, the cost is too high.",
      "sentences": [
-      "Firstly, the cost is too high.",
       "Firstly, secondly and thirdly number your points.",
       "First also works, and firstly is slightly more formal.",
-      "If you say firstly, finish with lastly or finally."
+      "If you say firstly, finish with lastly or finally.",
+      "It always takes a comma."
      ],
      "starter": "Firstly, …",
      "pic": ""
@@ -1631,10 +1602,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "At the beginning, before things changed.",
      "example": "Initially we agreed. Later we changed our minds.",
      "sentences": [
-      "Initially we agreed. Later we changed our minds.",
       "Initially describes a first stage that did not last.",
       "Firstly numbers a point; initially describes a time.",
-      "It often sets up a later contrast."
+      "It often sets up a later contrast.",
+      "It comes from initial."
      ],
      "starter": "Initially …, but …",
      "pic": ""
@@ -1645,10 +1616,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Afterwards; later than that.",
      "example": "The part was replaced. Subsequently it failed again.",
      "sentences": [
-      "The part was replaced. Subsequently it failed again.",
       "Subsequently is the formal afterwards.",
       "It describes a sequence in time.",
-      "Subsequent is the adjective: a subsequent inspection."
+      "Subsequent is the adjective: a subsequent inspection.",
+      "It does not mean as a result: that is consequently."
      ],
      "starter": "…. Subsequently …",
      "pic": ""
@@ -1659,10 +1630,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In the end, when everything had played out.",
      "example": "Ultimately the decision was not ours.",
      "sentences": [
-      "Ultimately the decision was not ours.",
       "Ultimately introduces the final outcome or the real point.",
       "It is stronger than finally: it implies everything considered.",
-      "It can start or sit inside a sentence."
+      "It can start or sit inside a sentence.",
+      "Its adjective is ultimate."
      ],
      "starter": "Ultimately …",
      "pic": ""
@@ -1673,10 +1644,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "After that time, from then on.",
      "example": "The rule changed in March. Thereafter all applications were checked.",
      "sentences": [
-      "The rule changed in March. Thereafter all applications were checked.",
       "Thereafter means from that point onwards.",
       "It is formal and common in official writing.",
-      "It is one word and needs no of."
+      "It is one word and needs no of.",
+      "Shortly thereafter means soon after that."
      ],
      "starter": "…. Thereafter …",
      "pic": ""
@@ -1687,10 +1658,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "As the final point.",
      "example": "Lastly, the guarantee has expired.",
      "sentences": [
-      "Lastly, the guarantee has expired.",
       "Lastly closes a list that firstly opened.",
       "Finally means the same and is a little less formal.",
-      "Do not use lastly for the last thing that happened in time."
+      "Do not use lastly for the last thing that happened in time.",
+      "It always takes a comma."
      ],
      "starter": "Lastly, …",
      "pic": ""
@@ -1706,10 +1677,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "It is true that, and I am conceding it.",
      "example": "Admittedly the evidence is thin.",
      "sentences": [
-      "Admittedly the evidence is thin.",
       "Admittedly concedes a point before you argue on.",
       "It makes you sound fairer, not weaker.",
-      "It usually starts the sentence."
+      "It usually starts the sentence.",
+      "It comes from admit."
      ],
      "starter": "Admittedly …, but …",
      "pic": ""
@@ -1720,10 +1691,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "It can be argued that, though not everybody would.",
      "example": "It is arguably the best of the three.",
      "sentences": [
-      "It is arguably the best of the three.",
       "Arguably marks a claim as open to argument.",
       "It protects you from stating an opinion as a fact.",
-      "It goes before the thing being claimed."
+      "It goes before the thing being claimed.",
+      "It comes from argue."
      ],
      "starter": "It is arguably …",
      "pic": ""
@@ -1734,10 +1705,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Yes, and more strongly than that.",
      "example": "The cost is high. Indeed, it has doubled.",
      "sentences": [
-      "The cost is high. Indeed, it has doubled.",
       "Indeed strengthens what you just said.",
       "It often introduces the sharper version of the same point.",
-      "It can also mean really: it was indeed broken."
+      "It can also mean really: it was indeed broken.",
+      "It is not a contrast word."
      ],
      "starter": "…. Indeed, …",
      "pic": ""
@@ -1748,10 +1719,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In particular, and worth noticing.",
      "example": "Several parts failed, notably the seal.",
      "sentences": [
-      "Several parts failed, notably the seal.",
       "Notably picks one example out as the important one.",
       "It comes from notable, meaning worth noticing.",
-      "It usually sits mid-sentence with a comma."
+      "It usually sits mid-sentence with a comma.",
+      "Most notably is the common strengthener."
      ],
      "starter": "…, notably …",
      "pic": ""
@@ -1762,10 +1733,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Especially; more than the others.",
      "example": "The winter was hard, particularly in February.",
      "sentences": [
-      "The winter was hard, particularly in February.",
       "Particularly narrows a general claim to one case.",
       "It is the everyday word for notably.",
-      "Not particularly means not very."
+      "Not particularly means not very.",
+      "It comes from particular."
      ],
      "starter": "…, particularly …",
      "pic": ""

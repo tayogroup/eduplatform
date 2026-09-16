@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1350,10 +1321,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make something in large quantities, in a factory.",
      "example": "The seals are manufactured in two sizes.",
      "sentences": [
-      "The seals are manufactured in two sizes.",
       "Manufacture is the formal word for make.",
       "It suits goods, not food or ideas.",
-      "Its noun is manufacture, and the firm is a manufacturer."
+      "Its noun is manufacture, and the firm is a manufacturer.",
+      "It appears in the passive far more often than the active."
      ],
      "starter": "The … are manufactured …",
      "pic": ""
@@ -1364,10 +1335,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To send something out to many places or people.",
      "example": "The revised forms are being distributed this week.",
      "sentences": [
-      "The revised forms are being distributed this week.",
       "Distribute takes to for people, and across for places.",
       "Its noun is distribution.",
-      "The stress is on the second part: dis-TRIB-ute."
+      "The stress is on the second part: dis-TRIB-ute.",
+      "A distributor is the company that does it."
      ],
      "starter": "The … are being distributed …",
      "pic": ""
@@ -1378,10 +1349,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To look at something carefully and officially.",
      "example": "Every batch is inspected before dispatch.",
      "sentences": [
-      "Every batch is inspected before dispatch.",
       "Inspecting is official; checking is not.",
       "Its noun is inspection, and the person is an inspector.",
-      "Inspect takes a direct object, with no preposition."
+      "Inspect takes a direct object, with no preposition.",
+      "It is almost always passive in a procedure."
      ],
      "starter": "Every … is inspected before …",
      "pic": "🔍"
@@ -1392,10 +1363,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To send something off to its destination.",
      "example": "The order was dispatched on Tuesday.",
      "sentences": [
-      "The order was dispatched on Tuesday.",
       "Dispatch is the formal word for send out.",
       "It is also a noun: the date of dispatch.",
-      "It can be spelled despatch in British English."
+      "It can be spelled despatch in British English.",
+      "Dispatched and delivered are not the same thing."
      ],
      "starter": "The … was dispatched on …",
      "pic": ""
@@ -1406,10 +1377,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To put equipment in place and make it ready to use.",
      "example": "The new unit will be installed next month.",
      "sentences": [
-      "The new unit will be installed next month.",
       "Install takes a direct object.",
       "Its noun is installation, with two l's in install.",
-      "Installing is more than delivering: it includes fitting."
+      "Installing is more than delivering: it includes fitting.",
+      "It is used of software as well as equipment."
      ],
      "starter": "The … will be installed …",
      "pic": ""
@@ -1420,10 +1391,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To take something apart, carefully.",
      "example": "The scaffold has been dismantled.",
      "sentences": [
-      "The scaffold has been dismantled.",
       "Dismantle is the opposite of assemble.",
       "Dis- plus mantle, though the root is not obvious.",
-      "It implies care: you dismantle in order to move or store."
+      "It implies care: you dismantle in order to move or store.",
+      "Demolish means destroy, which is different."
      ],
      "starter": "The … has been dismantled …",
      "pic": ""
@@ -1439,10 +1410,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To agree officially that something may go ahead.",
      "example": "The request was approved the same day.",
      "sentences": [
-      "The request was approved the same day.",
       "Approve takes a direct object, or of for liking something.",
       "I approve the plan is official. I approve OF it is personal.",
-      "Its noun is approval."
+      "Its noun is approval.",
+      "Approved suppliers are those on an official list."
      ],
      "starter": "The … was approved …",
      "pic": ""
@@ -1453,10 +1424,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To refuse to accept something.",
      "example": "Two of the batches were rejected.",
      "sentences": [
-      "Two of the batches were rejected.",
       "Reject takes a direct object.",
       "The stress moves: re-JECT for the verb, RE-ject for the noun.",
-      "Its noun is rejection, or a reject for the item."
+      "Its noun is rejection, or a reject for the item.",
+      "Rejecting is official; refusing is personal."
      ],
      "starter": "The … were rejected because …",
      "pic": ""
@@ -1467,10 +1438,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To give somebody official permission to do something.",
      "example": "Only two people are authorised to sign.",
      "sentences": [
-      "Only two people are authorised to sign.",
       "Authorise takes a person plus to plus a plain verb.",
       "Its noun is authorisation.",
-      "It is spelled with an s in British English."
+      "It is spelled with an s in British English.",
+      "Authorised is stronger than allowed: it names a power."
      ],
      "starter": "Only … are authorised to …",
      "pic": ""
@@ -1481,10 +1452,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To stop something temporarily.",
      "example": "The licence has been suspended pending the inspection.",
      "sentences": [
-      "The licence has been suspended pending the inspection.",
       "Suspend is temporary; withdraw is usually permanent.",
       "Its noun is suspension.",
-      "It also means to hang something up."
+      "It also means to hang something up.",
+      "Suspended pending is a very common pairing."
      ],
      "starter": "The … has been suspended pending …",
      "pic": ""
@@ -1495,10 +1466,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To take something back, or remove it from use.",
      "example": "The batch was withdrawn from sale.",
      "sentences": [
-      "The batch was withdrawn from sale.",
       "Its past forms are withdrew and withdrawn.",
       "Withdraw takes from for where it is removed.",
-      "Its noun is withdrawal, with the a before the l."
+      "Its noun is withdrawal, with the a before the l.",
+      "Withdrawing is usually final; suspending is not."
      ],
      "starter": "The … was withdrawn from …",
      "pic": ""
@@ -1509,10 +1480,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To give out something officially.",
      "example": "A certificate is issued after every inspection.",
      "sentences": [
-      "A certificate is issued after every inspection.",
       "Issue takes a direct object, and to for the recipient.",
       "It is also a noun: an issue, meaning a problem or an edition.",
-      "Issued, issuing: the e disappears before -ing."
+      "Issued, issuing: the e disappears before -ing.",
+      "A permit is issued; a statement is also issued."
      ],
      "starter": "A … is issued after …",
      "pic": ""
@@ -1528,10 +1499,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To keep something somewhere until it is needed.",
      "example": "The samples are stored at four degrees.",
      "sentences": [
-      "The samples are stored at four degrees.",
       "Store takes in, at or under for the conditions.",
       "Its noun is storage, not storeage.",
-      "Stored and kept are close, but store implies a proper place."
+      "Stored and kept are close, but store implies a proper place.",
+      "A store is also the place itself."
      ],
      "starter": "The … are stored …",
      "pic": ""
@@ -1542,10 +1513,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To move something from one place to another.",
      "example": "The records were transferred to the new system.",
      "sentences": [
-      "The records were transferred to the new system.",
       "Transfer takes from and to.",
       "It doubles the r: transferred, transferring.",
-      "The stress moves: trans-FER for the verb, TRANS-fer for the noun."
+      "The stress moves: trans-FER for the verb, TRANS-fer for the noun.",
+      "It is used of money, data, staff and goods alike."
      ],
      "starter": "The … were transferred to …",
      "pic": ""
@@ -1556,10 +1527,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To give out a share of something, officially.",
      "example": "Each site is allocated a fixed budget.",
      "sentences": [
-      "Each site is allocated a fixed budget.",
       "Allocate takes a person or place plus a thing.",
       "Its noun is allocation.",
-      "Allocating is deciding shares; distributing is sending them out."
+      "Allocating is deciding shares; distributing is sending them out.",
+      "It is common in the passive: funds are allocated."
      ],
      "starter": "Each … is allocated …",
      "pic": ""
@@ -1570,10 +1541,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To throw something away because it is no longer wanted.",
      "example": "Damaged items are discarded, not returned.",
      "sentences": [
-      "Damaged items are discarded, not returned.",
       "Discard is the formal word for throw away.",
       "It takes a direct object.",
-      "The stress is on the second part: dis-CARD."
+      "The stress is on the second part: dis-CARD.",
+      "Discarding is final; recycling is not."
      ],
      "starter": "Damaged … are discarded rather than …",
      "pic": ""
@@ -1584,10 +1555,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To treat used material so it can be used again.",
      "example": "Packaging is recycled where possible.",
      "sentences": [
-      "Packaging is recycled where possible.",
       "Re- plus cycle: to put through the cycle again.",
       "Its noun is recycling.",
-      "Recycled material is not the same as reused material."
+      "Recycled material is not the same as reused material.",
+      "It is almost always passive in a policy."
      ],
      "starter": "… is recycled where possible.",
      "pic": "♻️"
@@ -1598,10 +1569,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To close something completely so nothing gets in or out.",
      "example": "Each container is sealed and labelled.",
      "sentences": [
-      "Each container is sealed and labelled.",
       "Seal takes a direct object.",
       "It is also a noun: the seal on a container.",
-      "A broken seal is evidence that something was opened."
+      "A broken seal is evidence that something was opened.",
+      "Sealed and closed are not the same."
      ],
      "starter": "Each … is sealed and …",
      "pic": ""
@@ -1617,10 +1588,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To examine something carefully in order to find the truth.",
      "example": "The incident is being investigated.",
      "sentences": [
-      "The incident is being investigated.",
       "Investigate takes a direct object.",
       "Its noun is investigation, and the person is an investigator.",
-      "Investigating is broader than examining: it includes asking people."
+      "Investigating is broader than examining: it includes asking people.",
+      "It appears constantly in the continuous passive."
      ],
      "starter": "The … is being investigated by …",
      "pic": ""
@@ -1631,10 +1602,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To look at something closely and in detail.",
      "example": "The seal was examined under a lens.",
      "sentences": [
-      "The seal was examined under a lens.",
       "Examine takes a direct object.",
       "Its noun is examination.",
-      "Examining is looking; investigating is finding out."
+      "Examining is looking; investigating is finding out.",
+      "It is used of objects, documents and people."
      ],
      "starter": "The … was examined …",
      "pic": ""
@@ -1645,10 +1616,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To check that something is true or correct.",
      "example": "The figures have been verified independently.",
      "sentences": [
-      "The figures have been verified independently.",
       "Verify takes a direct object.",
       "Its noun is verification, with the y becoming i.",
-      "Verifying needs a source to check against."
+      "Verifying needs a source to check against.",
+      "Verified is stronger than checked."
      ],
      "starter": "The … have been verified by …",
      "pic": ""
@@ -1659,10 +1630,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To find where something came from or where it went.",
      "example": "The batch was traced to a single supplier.",
      "sentences": [
-      "The batch was traced to a single supplier.",
       "Trace takes to for the origin or destination.",
       "Its adjective is traceable.",
-      "Tracing follows a path; finding does not."
+      "Tracing follows a path; finding does not.",
+      "Traceability is a requirement in many industries."
      ],
      "starter": "The … was traced to …",
      "pic": ""
@@ -1673,10 +1644,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To watch something over time to see how it changes.",
      "example": "The temperature is monitored continuously.",
      "sentences": [
-      "The temperature is monitored continuously.",
       "Monitor takes a direct object.",
       "It implies over time, which inspect does not.",
-      "It is also a noun: the monitor itself."
+      "It is also a noun: the monitor itself.",
+      "Monitored and checked differ in duration."
      ],
      "starter": "The … is monitored …",
      "pic": ""
@@ -1687,10 +1658,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To examine records officially, to check they are correct.",
      "example": "The accounts are audited every year.",
      "sentences": [
-      "The accounts are audited every year.",
       "Audit is used of records and systems, not of objects.",
       "It is also a noun: an annual audit.",
-      "An auditor is independent of the thing being audited."
+      "An auditor is independent of the thing being audited.",
+      "Audited accounts have been formally checked."
      ],
      "starter": "The … are audited …",
      "pic": ""
@@ -1706,10 +1677,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something discovered by an investigation.",
      "example": "The findings will be published in March.",
      "sentences": [
-      "The findings will be published in March.",
       "Findings are usually plural.",
       "A finding is what an investigation concluded.",
-      "It comes from find."
+      "It comes from find.",
+      "Findings are reported; conclusions are drawn."
      ],
      "starter": "The findings of … were …",
      "pic": ""
@@ -1720,10 +1691,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A failure to follow a rule or an agreement.",
      "example": "The inspection found two breaches of the procedure.",
      "sentences": [
-      "The inspection found two breaches of the procedure.",
       "Breach takes of.",
       "It is also a verb: to breach a contract.",
-      "A breach is a failure to comply, not necessarily deliberate."
+      "A breach is a failure to comply, not necessarily deliberate.",
+      "Breach of contract is a fixed legal phrase."
      ],
      "starter": "The inspection found a breach of …",
      "pic": ""
@@ -1734,10 +1705,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A penalty imposed for breaking a rule.",
      "example": "No sanction was applied on this occasion.",
      "sentences": [
-      "No sanction was applied on this occasion.",
       "A sanction is a punishment, officially imposed.",
       "Confusingly, to sanction as a verb means to approve.",
-      "The noun and the verb point in opposite directions."
+      "The noun and the verb point in opposite directions.",
+      "Sanctions are applied or imposed."
      ],
      "starter": "No sanction was applied because …",
      "pic": ""
@@ -1748,10 +1719,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something done to put a fault right.",
      "example": "The remedy was agreed within a week.",
      "sentences": [
-      "The remedy was agreed within a week.",
       "A remedy fixes the problem; a sanction punishes it.",
       "It is also a verb: to remedy a defect.",
-      "Remedial work is work done to put something right."
+      "Remedial work is work done to put something right.",
+      "In law, a remedy is what you are entitled to."
      ],
      "starter": "The remedy for … was …",
      "pic": ""
@@ -1762,10 +1733,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Doing what a rule or agreement requires.",
      "example": "The report found full compliance.",
      "sentences": [
-      "The report found full compliance.",
       "Compliance takes with.",
       "Its verb is comply, which also takes with.",
-      "Non-compliance is the standard opposite."
+      "Non-compliance is the standard opposite.",
+      "In compliance with means in accordance with."
      ],
      "starter": "The report found compliance with …",
      "pic": ""

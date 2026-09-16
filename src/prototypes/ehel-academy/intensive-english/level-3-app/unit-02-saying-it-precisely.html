@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1354,10 +1325,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Extremely impressive or attractive.",
      "example": "The view from the top was stunning.",
      "sentences": [
-      "The view from the top was stunning.",
       "She did a stunning job on the repair.",
       "Stunning already means very impressive, so never say very stunning.",
-      "Stunning tells somebody what you think, not what the thing is like."
+      "Stunning tells somebody what you think, not what the thing is like.",
+      "A catalogue will not write stunning, for exactly that reason."
      ],
      "starter": "The … was stunning.",
      "pic": ""
@@ -1368,10 +1339,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Extremely large.",
      "example": "They moved into an enormous old house.",
      "sentences": [
-      "They moved into an enormous old house.",
       "The difference in price was enormous.",
       "An enormous amount of work went into it.",
-      "Enormous is size, so it comes after an opinion word."
+      "Enormous is size, so it comes after an opinion word.",
+      "A lovely enormous garden, not an enormous lovely garden."
      ],
      "starter": "It was an enormous …",
      "pic": "🐘"
@@ -1382,10 +1353,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Extremely small.",
      "example": "She wrote the note in tiny letters.",
      "sentences": [
-      "She wrote the note in tiny letters.",
       "The flat had a tiny kitchen and no window.",
       "A tiny difference can still matter.",
-      "Tiny is the opposite end of the same scale as enormous."
+      "Tiny is the opposite end of the same scale as enormous.",
+      "Both tiny and enormous are already extreme: no very."
      ],
      "starter": "There was a tiny …",
      "pic": ""
@@ -1396,10 +1367,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Very great in size or amount, usually of space or quantity.",
      "example": "A vast amount of data is collected every day.",
      "sentences": [
-      "A vast amount of data is collected every day.",
       "The vast majority of people never complain.",
       "Vast suits space and quantity better than objects.",
-      "You would say a vast plain, but rarely a vast cup."
+      "You would say a vast plain, but rarely a vast cup.",
+      "The vast difference in cost decided it."
      ],
      "starter": "A vast …",
      "pic": ""
@@ -1410,10 +1381,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Very small in degree; only just noticeable.",
      "example": "There was a slight delay on the line.",
      "sentences": [
-      "There was a slight delay on the line.",
       "A slight improvement is still an improvement.",
       "She had a slight accent I could not place.",
-      "Slight is about degree, tiny is about size."
+      "Slight is about degree, tiny is about size.",
+      "A slight change in the wording fixed it."
      ],
      "starter": "There was a slight …",
      "pic": ""
@@ -1424,10 +1395,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Large enough to matter; a good deal of something.",
      "example": "There was a considerable difference in price.",
      "sentences": [
-      "There was a considerable difference in price.",
       "It took a considerable amount of work.",
       "Considerable is the formal word for a lot of.",
-      "Its adverb is considerably: considerably cheaper."
+      "Its adverb is considerably: considerably cheaper.",
+      "Considerable is the opposite of slight on the same scale."
      ],
      "starter": "There was a considerable …",
      "pic": ""
@@ -1443,10 +1414,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In the shape of an egg or a flattened circle.",
      "example": "The table was oval and far too big.",
      "sentences": [
-      "The table was oval and far too big.",
       "An oval track is longer than it looks.",
       "Oval is shape, so it follows size: a large oval table.",
-      "Oval is not the same as round: it is longer one way."
+      "Oval is not the same as round: it is longer one way.",
+      "Oval is also a noun: they met on the oval."
      ],
      "starter": "The … was oval.",
      "pic": ""
@@ -1457,10 +1428,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In the shape of a rectangle.",
      "example": "Each panel is rectangular and identical.",
      "sentences": [
-      "Each panel is rectangular and identical.",
       "The rectangular window let in very little light.",
       "Most doors are rectangular, so nobody says so.",
-      "Rectangular is precise; oblong is the older word."
+      "Rectangular is precise; oblong is the older word.",
+      "A small rectangular metal box."
      ],
      "starter": "It was a rectangular …",
      "pic": ""
@@ -1471,10 +1442,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Very old; belonging to the distant past.",
      "example": "They found an ancient wall under the car park.",
      "sentences": [
-      "They found an ancient wall under the car park.",
       "My ancient laptop still works, somehow.",
       "Ancient is often used humorously about a thing that merely feels old.",
-      "Age follows shape: a round ancient table."
+      "Age follows shape: a round ancient table.",
+      "Ancient is already extreme, so no very."
      ],
      "starter": "The ancient …",
      "pic": ""
@@ -1485,10 +1456,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Of the present or recent times.",
      "example": "The building is modern and badly insulated.",
      "sentences": [
-      "The building is modern and badly insulated.",
       "Modern methods are not always better methods.",
       "A modern flat can be smaller than an old one.",
-      "Modern is age, so it sits between shape and colour."
+      "Modern is age, so it sits between shape and colour.",
+      "A small square modern white box."
      ],
      "starter": "The modern …",
      "pic": ""
@@ -1499,10 +1470,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Light in colour, with little strength of shade.",
      "example": "The walls were a pale grey.",
      "sentences": [
-      "The walls were a pale grey.",
       "He looked pale after the journey.",
       "A pale blue shirt shows every mark.",
-      "Pale goes before the colour it weakens: pale green."
+      "Pale goes before the colour it weakens: pale green.",
+      "Pale is the opposite of deep or rich for a colour."
      ],
      "starter": "It was pale …",
      "pic": ""
@@ -1513,10 +1484,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Very bright and strong in colour; or very clear in the mind.",
      "example": "The walls were a vivid green.",
      "sentences": [
-      "The walls were a vivid green.",
       "A vivid blue is the opposite of a pale one.",
       "Vivid also describes a memory: a vivid recollection.",
-      "Vivid goes before the colour it strengthens: vivid red."
+      "Vivid goes before the colour it strengthens: vivid red.",
+      "Pale and vivid are the two ends of the same scale."
      ],
      "starter": "It was a vivid …",
      "pic": ""
@@ -1532,10 +1503,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Made of wood.",
      "example": "A long wooden bench ran along the wall.",
      "sentences": [
-      "A long wooden bench ran along the wall.",
       "The wooden floor creaked in two places.",
       "Material comes last, right before the noun.",
-      "A lovely old wooden chair, in that order."
+      "A lovely old wooden chair, in that order.",
+      "Wooden can also mean stiff: a wooden performance."
      ],
      "starter": "A wooden …",
      "pic": "🪵"
@@ -1546,10 +1517,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Made of metal.",
      "example": "They replaced it with a metal frame.",
      "sentences": [
-      "They replaced it with a metal frame.",
       "A small metal box sat on the shelf.",
       "Metal is the material word; metallic means like metal.",
-      "Material sits closest to the noun of all of them."
+      "Material sits closest to the noun of all of them.",
+      "A large square metal tray."
      ],
      "starter": "A metal …",
      "pic": "🔩"
@@ -1560,10 +1531,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Made of plastic.",
      "example": "The handle is plastic and it will break.",
      "sentences": [
-      "The handle is plastic and it will break.",
       "A cheap plastic chair is still a chair.",
       "Plastic often carries a sense of poor quality.",
-      "Material last: a dreadful old plastic chair."
+      "Material last: a dreadful old plastic chair.",
+      "Plastic is also a noun: made of plastic."
      ],
      "starter": "A plastic …",
      "pic": "🧴"
@@ -1574,10 +1545,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Made of wool.",
      "example": "She wore a heavy woollen coat all winter.",
      "sentences": [
-      "She wore a heavy woollen coat all winter.",
       "A woollen blanket is warmer than it looks.",
       "Woollen is the material; woolly means like wool.",
-      "A fine old woollen jacket."
+      "A fine old woollen jacket.",
+      "Note the double l in woollen."
      ],
      "starter": "A woollen …",
      "pic": ""
@@ -1588,10 +1559,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Brought in from another country.",
      "example": "The imported parts cost twice as much.",
      "sentences": [
-      "The imported parts cost twice as much.",
       "Imported goods take longer to replace.",
       "Origin goes before material: an imported metal frame.",
-      "Imported is also a past participle: they imported it."
+      "Imported is also a past participle: they imported it.",
+      "The imported model had a different plug."
      ],
      "starter": "The imported …",
      "pic": ""
@@ -1602,10 +1573,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "From the area where you are.",
      "example": "We used local timber for the whole job.",
      "sentences": [
-      "We used local timber for the whole job.",
       "The local shop closes at six.",
       "Local is the plain opposite of imported.",
-      "A good local builder is worth waiting for."
+      "A good local builder is worth waiting for.",
+      "Local can also be a noun: he is a local."
      ],
      "starter": "The local …",
      "pic": "📍"
@@ -1621,10 +1592,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Extremely cold. It is already the end of the scale.",
      "example": "The flat was freezing all February.",
      "sentences": [
-      "The flat was freezing all February.",
       "It is freezing out there; take a coat.",
       "Never very freezing. Say absolutely freezing.",
-      "Cold has degrees. Freezing does not."
+      "Cold has degrees. Freezing does not.",
+      "Freezing is also the verb: the pipes are freezing."
      ],
      "starter": "It was freezing …",
      "pic": ""
@@ -1635,10 +1606,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Extremely hot. It is already the end of the scale.",
      "example": "The kitchen was boiling by two o'clock.",
      "sentences": [
-      "The kitchen was boiling by two o'clock.",
       "It was absolutely boiling in there.",
       "Never very boiling. Absolutely or completely.",
-      "Boiling and freezing sit at the two ends."
+      "Boiling and freezing sit at the two ends.",
+      "Boiling hot is common in speech, though it repeats itself."
      ],
      "starter": "It was boiling …",
      "pic": ""
@@ -1649,10 +1620,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Extremely tired, with nothing left.",
      "example": "I was exhausted by the end of the shift.",
      "sentences": [
-      "I was exhausted by the end of the shift.",
       "She was absolutely exhausted and said so.",
       "Tired has degrees. Exhausted does not.",
-      "Never very exhausted. Completely exhausted."
+      "Never very exhausted. Completely exhausted.",
+      "Exhausted is a participle adjective, from exhaust."
      ],
      "starter": "I was exhausted after …",
      "pic": ""
@@ -1663,10 +1634,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not able to happen at all.",
      "example": "Finishing by Friday was impossible.",
      "sentences": [
-      "Finishing by Friday was impossible.",
       "It is absolutely impossible to park here.",
       "Difficult has degrees. Impossible does not.",
-      "Never very impossible. Utterly or absolutely."
+      "Never very impossible. Utterly or absolutely.",
+      "Impossible can describe a person: he is impossible."
      ],
      "starter": "It was impossible to …",
      "pic": ""
@@ -1677,10 +1648,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Extremely angry. It is already the end of the scale.",
      "example": "She was furious when she saw the invoice.",
      "sentences": [
-      "She was furious when she saw the invoice.",
       "He was absolutely furious about the delay.",
       "Angry has degrees. Furious does not.",
-      "Never very furious. Absolutely furious."
+      "Never very furious. Absolutely furious.",
+      "Furious can also describe a pace: a furious rate of work."
      ],
      "starter": "I was furious when …",
      "pic": "😠"
@@ -1691,10 +1662,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Extremely pleased. It is already the end of the scale.",
      "example": "They were delighted with the result.",
      "sentences": [
-      "They were delighted with the result.",
       "I was absolutely delighted to hear it.",
       "Pleased has degrees. Delighted does not.",
-      "Never very delighted. Absolutely delighted."
+      "Never very delighted. Absolutely delighted.",
+      "Delighted takes with for a thing and to before a verb."
      ],
      "starter": "I was delighted when …",
      "pic": "😄"
@@ -1710,10 +1681,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Completely; the degree word for an adjective with no scale.",
      "example": "The room was absolutely freezing.",
      "sentences": [
-      "The room was absolutely freezing.",
       "I was absolutely exhausted by six.",
       "Absolutely goes with freezing, not with cold.",
-      "Very goes the other way: very cold, never very freezing."
+      "Very goes the other way: very cold, never very freezing.",
+      "Absolutely on its own means yes, completely."
      ],
      "starter": "It was absolutely …",
      "pic": ""
@@ -1724,10 +1695,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Entirely, with nothing left out.",
      "example": "The plan was completely impossible.",
      "sentences": [
-      "The plan was completely impossible.",
       "She was completely exhausted after the drive.",
       "Completely works with the same adjectives as absolutely.",
-      "Completely different, completely wrong, completely full."
+      "Completely different, completely wrong, completely full.",
+      "Not completely means partly, which is different from not at all."
      ],
      "starter": "It was completely …",
      "pic": ""
@@ -1738,10 +1709,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Completely, usually about something bad.",
      "example": "The instructions were utterly useless.",
      "sentences": [
-      "The instructions were utterly useless.",
       "I was utterly exhausted and could not think.",
       "Utterly leans negative: utterly dreadful, rarely utterly perfect.",
-      "It is stronger and more formal than completely."
+      "It is stronger and more formal than completely.",
+      "Utterly is the adverb from utter, which is also an adjective."
      ],
      "starter": "It was utterly …",
      "pic": ""
@@ -1752,10 +1723,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Completely, with no part left out.",
      "example": "The first attempt was entirely wrong.",
      "sentences": [
-      "The first attempt was entirely wrong.",
       "That is entirely my fault.",
       "Entirely is slightly more formal than completely.",
-      "It pairs with the same extreme adjectives."
+      "It pairs with the same extreme adjectives.",
+      "Not entirely means partly, which is not the same as not at all."
      ],
      "starter": "It was entirely …",
      "pic": ""
@@ -1766,10 +1737,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To a small degree. It goes with the adjectives that DO have a scale.",
      "example": "The second one was slightly cheaper.",
      "sentences": [
-      "The second one was slightly cheaper.",
       "I was slightly tired, not exhausted.",
       "Slightly goes with cold, tired, difficult. Never with freezing.",
-      "It is the opposite end from absolutely."
+      "It is the opposite end from absolutely.",
+      "Slightly is the adverb from slight."
      ],
      "starter": "It was slightly …",
      "pic": ""

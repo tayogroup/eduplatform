@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1350,10 +1321,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person trained to work with technical equipment.",
      "example": "Two technicians cover the whole site.",
      "sentences": [
-      "Two technicians cover the whole site.",
       "-ician names a person by a skill: technician, electrician, musician.",
       "The stress falls just before the ending: tech-NI-cian.",
-      "A technician maintains; an engineer designs."
+      "A technician maintains; an engineer designs.",
+      "Its adjective is technical."
      ],
      "starter": "The technician …",
      "pic": "🔧"
@@ -1364,10 +1335,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who installs and repairs electrical systems.",
      "example": "You will need a qualified electrician for that.",
      "sentences": [
-      "You will need a qualified electrician for that.",
       "-ician again, and the stress moves the same way.",
       "Electrician comes from electric, dropping the c sound.",
-      "It is a protected trade in many places."
+      "It is a protected trade in many places.",
+      "An electrical engineer is a different job."
      ],
      "starter": "You will need an electrician to …",
      "pic": "⚡"
@@ -1378,10 +1349,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An expert brought in to advise, usually from outside.",
      "example": "They brought in a consultant for six weeks.",
      "sentences": [
-      "They brought in a consultant for six weeks.",
       "-ant and -ent name a person by what they do.",
       "A consultant advises; they usually do not implement.",
-      "Its verb is consult, which takes a direct object."
+      "Its verb is consult, which takes a direct object.",
+      "In medicine, a consultant is a senior doctor."
      ],
      "starter": "They brought in a consultant to …",
      "pic": "🧑🏾‍💼"
@@ -1392,10 +1363,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person whose job is to examine information in detail.",
      "example": "The analyst found the pattern in the returns.",
      "sentences": [
-      "The analyst found the pattern in the returns.",
       "-ist names a person by a field: analyst, specialist, scientist.",
       "Its verb is analyse, with an s in British English.",
-      "Its noun for the work is analysis, plural analyses."
+      "Its noun for the work is analysis, plural analyses.",
+      "An analyst examines; a technician fixes."
      ],
      "starter": "The analyst found …",
      "pic": "📊"
@@ -1406,10 +1377,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who concentrates on one narrow area.",
      "example": "We need a specialist for the older machines.",
      "sentences": [
-      "We need a specialist for the older machines.",
       "Specialist takes in for the field: a specialist in seals.",
       "It is also an adjective: specialist equipment.",
-      "Its verb is specialise, which takes in."
+      "Its verb is specialise, which takes in.",
+      "A specialist knows one thing deeply."
      ],
      "starter": "We need a specialist in …",
      "pic": ""
@@ -1420,10 +1391,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who practises a profession or a skill.",
      "example": "She is a practitioner of the old method.",
      "sentences": [
-      "She is a practitioner of the old method.",
       "Practitioner comes from practise, the verb with an s.",
       "The noun practice has a c; the verb practise has an s.",
-      "A practitioner does the work rather than teaching it."
+      "A practitioner does the work rather than teaching it.",
+      "It is formal: general practitioner is the commonest use."
      ],
      "starter": "She is a practitioner of …",
      "pic": ""
@@ -1439,10 +1410,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A short summary of who you are, at the top of a CV.",
      "example": "Keep the profile to three lines.",
      "sentences": [
-      "Keep the profile to three lines.",
       "A profile is the opening paragraph of a CV.",
       "It should say what you do, not what you are like.",
-      "It is also a verb: to profile somebody."
+      "It is also a verb: to profile somebody.",
+      "A raised profile means more people know about you."
      ],
      "starter": "My profile says that I …",
      "pic": "👤"
@@ -1453,10 +1424,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A person who will confirm what you say about yourself.",
      "example": "Both referees were contacted the same week.",
      "sentences": [
-      "Both referees were contacted the same week.",
       "A referee vouches for you; a reference is what they write.",
       "In sport a referee is something else entirely.",
-      "Always ask a referee before naming them."
+      "Always ask a referee before naming them.",
+      "Its plural is referees."
      ],
      "starter": "My referees are …",
      "pic": ""
@@ -1467,10 +1438,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A collection of work you show to prove what you can do.",
      "example": "The portfolio matters more than the profile here.",
      "sentences": [
-      "The portfolio matters more than the profile here.",
       "A portfolio shows work; a CV describes it.",
       "It is used in design, building, teaching and writing.",
-      "Its plural is portfolios."
+      "Its plural is portfolios.",
+      "A portfolio of responsibilities is a separate sense."
      ],
      "starter": "My portfolio includes …",
      "pic": "💼"
@@ -1481,10 +1452,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A qualification or document proving what you can do.",
      "example": "Bring your credentials to the first meeting.",
      "sentences": [
-      "Bring your credentials to the first meeting.",
       "Credentials is usually plural.",
       "A credential is proof, not a claim.",
-      "It comes from the same root as credible."
+      "It comes from the same root as credible.",
+      "Digital credentials are increasingly common."
      ],
      "starter": "My credentials include …",
      "pic": ""
@@ -1495,10 +1466,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A period of supervised work as part of training.",
      "example": "The placement lasted eight weeks.",
      "sentences": [
-      "The placement lasted eight weeks.",
       "A placement is training; a job is not.",
       "It comes from place, with -ment.",
-      "You do a placement, or you are on placement."
+      "You do a placement, or you are on placement.",
+      "Placements are often unpaid, which is worth knowing."
      ],
      "starter": "I did a placement at …",
      "pic": ""
@@ -1509,10 +1480,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A temporary move to another job or department.",
      "example": "She is on secondment to the northern site.",
      "sentences": [
-      "She is on secondment to the northern site.",
       "On secondment is the fixed phrase.",
       "Its verb is second, stressed differently: se-COND.",
-      "A secondment ends and you go back."
+      "A secondment ends and you go back.",
+      "It is British: other countries use different words."
      ],
      "starter": "I was on secondment to …",
      "pic": ""
@@ -1528,10 +1499,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To organise several people or parts so they work together.",
      "example": "I coordinated the move across three sites.",
      "sentences": [
-      "I coordinated the move across three sites.",
       "Coordinate takes a direct object.",
       "Its noun is coordination.",
-      "Coordinating is organising others; doing is not."
+      "Coordinating is organising others; doing is not.",
+      "It is one of the most useful CV verbs."
      ],
      "starter": "I coordinated …",
      "pic": ""
@@ -1542,10 +1513,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To be responsible for watching that work is done properly.",
      "example": "I oversaw two teams for a year.",
      "sentences": [
-      "I oversaw two teams for a year.",
       "Its past forms are oversaw and overseen.",
       "Overseeing is supervising without doing it yourself.",
-      "Do not confuse it with overlook, which means to miss."
+      "Do not confuse it with overlook, which means to miss.",
+      "It is stronger than coordinate: it implies authority."
      ],
      "starter": "I oversaw …",
      "pic": "👀"
@@ -1556,10 +1527,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To make a process simpler and quicker.",
      "example": "We streamlined the checking process.",
      "sentences": [
-      "We streamlined the checking process.",
       "Streamline takes a direct object.",
       "It implies removing steps, not adding staff.",
-      "It is a single word."
+      "It is a single word.",
+      "Streamlining should be followed by a number."
      ],
      "starter": "We streamlined …",
      "pic": ""
@@ -1570,10 +1541,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To put a plan or a decision into practice.",
      "example": "The new system was implemented in March.",
      "sentences": [
-      "The new system was implemented in March.",
       "Implement takes a direct object.",
       "Its noun is implementation.",
-      "Deciding is not implementing: the second is the hard part."
+      "Deciding is not implementing: the second is the hard part.",
+      "It is also a noun, meaning a tool, stressed differently."
      ],
      "starter": "I implemented …",
      "pic": ""
@@ -1584,10 +1555,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To discuss something in order to reach an agreement.",
      "example": "I negotiated the contract with two suppliers.",
      "sentences": [
-      "I negotiated the contract with two suppliers.",
       "Negotiate takes a direct object, and with for the other party.",
       "Its noun is negotiation.",
-      "Negotiating implies both sides moved."
+      "Negotiating implies both sides moved.",
+      "It also means to get past an obstacle."
      ],
      "starter": "I negotiated … with …",
      "pic": "🤝🏾"
@@ -1598,10 +1569,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To keep in contact with another group to work together.",
      "example": "I liaised between the yard and the office.",
      "sentences": [
-      "I liaised between the yard and the office.",
       "Liaise takes with a person, and between two groups.",
       "Its noun is liaison.",
-      "Watch the spelling: two i's, liaise."
+      "Watch the spelling: two i's, liaise.",
+      "Liaising is communicating, not deciding."
      ],
      "starter": "I liaised with …",
      "pic": ""
@@ -1617,10 +1588,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To go beyond a limit or a target.",
      "example": "We exceeded the target by twelve per cent.",
      "sentences": [
-      "We exceeded the target by twelve per cent.",
       "Exceed takes a direct object, and by for the amount.",
       "Exceeding a target is good; exceeding a limit is not.",
-      "Its adjective is excessive, which is always negative."
+      "Its adjective is excessive, which is always negative.",
+      "Always follow exceed with a number."
      ],
      "starter": "We exceeded … by …",
      "pic": ""
@@ -1631,10 +1602,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To do better than something or somebody else.",
      "example": "The second quarter surpassed the first.",
      "sentences": [
-      "The second quarter surpassed the first.",
       "Surpass compares two things; exceed compares to a target.",
       "It takes a direct object.",
-      "It is formal and slightly literary."
+      "It is formal and slightly literary.",
+      "Unsurpassed means better than all others."
      ],
      "starter": "… surpassed …",
      "pic": ""
@@ -1645,10 +1616,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To keep something going at the same level.",
      "example": "We sustained that rate for eight months.",
      "sentences": [
-      "We sustained that rate for eight months.",
       "Sustain takes a direct object, and often a period.",
       "Its adjective is sustainable.",
-      "Sustaining is harder than achieving, and worth saying."
+      "Sustaining is harder than achieving, and worth saying.",
+      "It also means to suffer: sustained an injury."
      ],
      "starter": "We sustained … for …",
      "pic": ""
@@ -1659,10 +1630,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To keep something or somebody you might have lost.",
      "example": "We retained all four clients that year.",
      "sentences": [
-      "We retained all four clients that year.",
       "Retain takes a direct object.",
       "Its noun is retention.",
-      "Retaining staff is the opposite of turnover."
+      "Retaining staff is the opposite of turnover.",
+      "It is formal: keep is the everyday word."
      ],
      "starter": "We retained …",
      "pic": ""
@@ -1673,10 +1644,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To produce something, especially income or work.",
      "example": "The change generated eleven new enquiries.",
      "sentences": [
-      "The change generated eleven new enquiries.",
       "Generate takes a direct object.",
       "Its noun is generation, which also means an age group.",
-      "It suits income, interest, work and electricity."
+      "It suits income, interest, work and electricity.",
+      "Always follow generate with a number."
      ],
      "starter": "It generated …",
      "pic": ""
@@ -1687,10 +1658,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To reduce something as far as possible.",
      "example": "The change minimised downtime.",
      "sentences": [
-      "The change minimised downtime.",
       "Minimise takes a direct object.",
       "It is spelled with an s in British English.",
-      "Minimising is reducing, not removing."
+      "Minimising is reducing, not removing.",
+      "Its opposite is maximise."
      ],
      "starter": "We minimised …",
      "pic": ""
@@ -1706,10 +1677,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A skill an employer has decided to test for.",
      "example": "The four competencies are listed on the form.",
      "sentences": [
-      "The four competencies are listed on the form.",
       "A competency is a named, tested skill.",
       "Its plural is competencies.",
-      "A competency question asks for an example, not an opinion."
+      "A competency question asks for an example, not an opinion.",
+      "Competence, without the y, means being good enough."
      ],
      "starter": "The competencies for … are …",
      "pic": ""
@@ -1720,10 +1691,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A situation described so you can say what you would do.",
      "example": "They gave me a scenario about a late delivery.",
      "sentences": [
-      "They gave me a scenario about a late delivery.",
       "A scenario is hypothetical: it has not happened.",
       "It is answered with a second conditional, from Unit 13.",
-      "Its plural is scenarios."
+      "Its plural is scenarios.",
+      "A worst-case scenario is the fixed phrase."
      ],
      "starter": "They gave me a scenario about …",
      "pic": ""
@@ -1734,10 +1705,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An easy, comfortable relationship with somebody.",
      "example": "We built a rapport quite quickly.",
      "sentences": [
-      "We built a rapport quite quickly.",
       "Rapport takes with.",
       "The final t is silent: ra-POR.",
-      "You build or establish a rapport."
+      "You build or establish a rapport.",
+      "It is uncountable: not a rapports."
      ],
      "starter": "I built a rapport with …",
      "pic": ""
@@ -1748,10 +1719,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Able to express ideas clearly.",
      "example": "She was articulate under pressure.",
      "sentences": [
-      "She was articulate under pressure.",
       "As an adjective it ends in -ate said quickly.",
       "As a verb, to articulate, the ending is said fully.",
-      "Being articulate is about clarity, not vocabulary."
+      "Being articulate is about clarity, not vocabulary.",
+      "It is a common word in interview feedback."
      ],
      "starter": "… was articulate about …",
      "pic": ""
@@ -1762,10 +1733,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Saying what is needed in few words.",
      "example": "Keep the answer concise: two minutes at most.",
      "sentences": [
-      "Keep the answer concise: two minutes at most.",
       "Concise is short AND complete.",
       "Brief is only short; concise is short enough and no shorter.",
-      "Its noun is concision, or conciseness."
+      "Its noun is concision, or conciseness.",
+      "Concise answers are remembered; long ones are not."
      ],
      "starter": "Keep … concise.",
      "pic": ""

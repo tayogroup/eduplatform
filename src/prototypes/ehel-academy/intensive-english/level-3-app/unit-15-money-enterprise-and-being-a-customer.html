@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1346,10 +1317,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A part of something larger, often a share.",
      "example": "Only a small portion of the order arrived.",
      "sentences": [
-      "Only a small portion of the order arrived.",
       "Portion takes of.",
       "A portion is a part of a whole, and often a serving of food.",
-      "Its adjective is partial, from the same root."
+      "Its adjective is partial, from the same root.",
+      "A portion is smaller than a proportion suggests."
      ],
      "starter": "Only a small portion of …",
      "pic": ""
@@ -1360,10 +1331,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A quantity made or handled at one time.",
      "example": "The whole batch was rejected.",
      "sentences": [
-      "The whole batch was rejected.",
       "Batch takes of: a batch of seals.",
       "A batch is defined by when it was made, not by how many.",
-      "Batch number is how faults are traced."
+      "Batch number is how faults are traced.",
+      "It is also a verb: to batch the orders."
      ],
      "starter": "The batch of … was …",
      "pic": "📦"
@@ -1374,10 +1345,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Several things tied or sold together.",
      "example": "They sell it as a bundle with the fittings.",
      "sentences": [
-      "They sell it as a bundle with the fittings.",
       "Bundle takes of: a bundle of cables.",
       "A bundle is sold together and usually cheaper.",
-      "It is also a verb: to bundle two products."
+      "It is also a verb: to bundle two products.",
+      "Bundling can hide the price of each item."
      ],
      "starter": "It comes as a bundle with …",
      "pic": ""
@@ -1388,10 +1359,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An amount of something.",
      "example": "The quantity delivered does not match the invoice.",
      "sentences": [
-      "The quantity delivered does not match the invoice.",
       "Quantity takes of.",
       "Quantity is how much; quality is how good.",
-      "A small quantity is uncountable; a small number is countable."
+      "A small quantity is uncountable; a small number is countable.",
+      "In quantity means in bulk."
      ],
      "starter": "The quantity of … does not match …",
      "pic": "🔢"
@@ -1402,10 +1373,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A part considered in relation to the whole.",
      "example": "A large proportion of the batch was defective.",
      "sentences": [
-      "A large proportion of the batch was defective.",
       "Proportion takes of.",
       "A proportion is relative; a portion is absolute.",
-      "In proportion to means relative to."
+      "In proportion to means relative to.",
+      "Its adjective is proportional."
      ],
      "starter": "A large proportion of … was …",
      "pic": ""
@@ -1416,10 +1387,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A very small part of something.",
      "example": "It cost a fraction of the original quote.",
      "sentences": [
-      "It cost a fraction of the original quote.",
       "A fraction of is a fixed phrase meaning far less.",
       "It is also a number: three quarters is a fraction.",
-      "A fraction of the cost is a comparison, not a measurement."
+      "A fraction of the cost is a comparison, not a measurement.",
+      "Its adjective is fractional."
      ],
      "starter": "It cost a fraction of …",
      "pic": ""
@@ -1435,10 +1406,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A document asking for payment for goods or work.",
      "example": "The invoice arrived three weeks late.",
      "sentences": [
-      "The invoice arrived three weeks late.",
       "An invoice asks; a receipt confirms.",
       "It is also a verb: to invoice a client.",
-      "Invoices are issued, raised or sent."
+      "Invoices are issued, raised or sent.",
+      "It is pronounced IN-voice."
      ],
      "starter": "The invoice for … was …",
      "pic": "🧾"
@@ -1449,10 +1420,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "One of several payments spread over time.",
      "example": "It is payable in six monthly instalments.",
      "sentences": [
-      "It is payable in six monthly instalments.",
       "Instalment takes in: payable in instalments.",
       "It is spelled with one l in British English.",
-      "Missing an instalment usually triggers a charge."
+      "Missing an instalment usually triggers a charge.",
+      "It also means one part of a serialised story."
      ],
      "starter": "It is payable in … instalments.",
      "pic": ""
@@ -1463,10 +1434,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An extra charge added to the normal price.",
      "example": "There is a surcharge for weekend delivery.",
      "sentences": [
-      "There is a surcharge for weekend delivery.",
       "Sur- means over or above: a charge on top.",
       "Surcharge takes for.",
-      "It is also a verb: to surcharge a customer."
+      "It is also a verb: to surcharge a customer.",
+      "A surcharge must be disclosed before you agree."
      ],
      "starter": "There is a surcharge for …",
      "pic": ""
@@ -1477,10 +1448,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The amount added to the cost to make the selling price.",
      "example": "The markup on parts is about forty per cent.",
      "sentences": [
-      "The markup on parts is about forty per cent.",
       "Markup as a noun is one word; mark up as a verb is two.",
       "Markup takes on: the markup on parts.",
-      "Markup is added to cost; margin is taken from price."
+      "Markup is added to cost; margin is taken from price.",
+      "The two are different numbers for the same money."
      ],
      "starter": "The markup on … is …",
      "pic": ""
@@ -1491,10 +1462,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The difference between cost and selling price, as a share of the price.",
      "example": "The margin is narrower than it looks.",
      "sentences": [
-      "The margin is narrower than it looks.",
       "Margin takes on: the margin on that line.",
       "A narrow margin is small; a healthy margin is not.",
-      "It also means an edge, and a margin of error."
+      "It also means an edge, and a margin of error.",
+      "Margin and markup are calculated differently."
      ],
      "starter": "The margin on … is …",
      "pic": ""
@@ -1505,10 +1476,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An extra amount paid for something better; or an insurance payment.",
      "example": "You pay a premium for next-day delivery.",
      "sentences": [
-      "You pay a premium for next-day delivery.",
       "A premium is paid for something above standard.",
       "It also means the regular payment on an insurance policy.",
-      "At a premium means scarce and expensive."
+      "At a premium means scarce and expensive.",
+      "Its adjective is premium: premium grade."
      ],
      "starter": "You pay a premium for …",
      "pic": ""
@@ -1524,10 +1495,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "One numbered section of an agreement.",
      "example": "Clause 7 covers late delivery.",
      "sentences": [
-      "Clause 7 covers late delivery.",
       "A clause is a numbered part of a contract.",
       "In grammar, a clause is part of a sentence: a separate meaning.",
-      "Clauses are cited by number in a dispute."
+      "Clauses are cited by number in a dispute.",
+      "A get-out clause lets somebody escape an obligation."
      ],
      "starter": "Clause … covers …",
      "pic": "📜"
@@ -1538,10 +1509,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The conditions of an agreement.",
      "example": "Payment terms are thirty days.",
      "sentences": [
-      "Payment terms are thirty days.",
       "Terms is plural in this sense.",
       "Terms and conditions is the fixed phrase.",
-      "Under the terms of is how you refer to them."
+      "Under the terms of is how you refer to them.",
+      "A term is also a period of time, or a word."
      ],
      "starter": "Under the terms of …, …",
      "pic": ""
@@ -1552,10 +1523,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Legal responsibility for something, usually for a cost.",
      "example": "Liability is limited to the value of the goods.",
      "sentences": [
-      "Liability is limited to the value of the goods.",
       "Liability takes for.",
       "Its adjective is liable, from Unit 12.",
-      "Limiting liability is what most of a contract is for."
+      "Limiting liability is what most of a contract is for.",
+      "A liability is also a thing that causes you trouble."
      ],
      "starter": "Liability for … is limited to …",
      "pic": ""
@@ -1566,10 +1537,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A promise to repair or replace something for a set period.",
      "example": "The warranty runs for two years from delivery.",
      "sentences": [
-      "The warranty runs for two years from delivery.",
       "A warranty is a promise; a guarantee is usually the same thing.",
       "Warranty takes on: the warranty on the unit.",
-      "A warranty can be voided by misuse."
+      "A warranty can be voided by misuse.",
+      "It is spelled with two r's and no e."
      ],
      "starter": "The warranty on … runs for …",
      "pic": "🛡️"
@@ -1580,10 +1551,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Having no legal force; cancelled.",
      "example": "Removing the seal renders the warranty void.",
      "sentences": [
-      "Removing the seal renders the warranty void.",
       "Void means it no longer counts.",
       "It is also a verb: to void an agreement.",
-      "Null and void is the fixed legal phrase."
+      "Null and void is the fixed legal phrase.",
+      "Voiding is different from ending: a void agreement never counted."
      ],
      "starter": "… renders the warranty void.",
      "pic": ""
@@ -1594,10 +1565,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Legally forcing you to do what you agreed.",
      "example": "The estimate is not binding.",
      "sentences": [
-      "The estimate is not binding.",
       "Binding comes from bind, meaning to tie.",
       "A binding agreement cannot simply be walked away from.",
-      "Non-binding means you may still change your mind."
+      "Non-binding means you may still change your mind.",
+      "Legally binding is the usual phrase."
      ],
      "starter": "The … is not binding, so …",
      "pic": ""
@@ -1613,10 +1584,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Having a fault; not working as it should.",
      "example": "Two of the six were defective on arrival.",
      "sentences": [
-      "Two of the six were defective on arrival.",
       "Defective describes goods; faulty is the everyday word.",
       "Its noun is a defect.",
-      "Defective is the word a contract will use."
+      "Defective is the word a contract will use.",
+      "Goods can be defective without being broken."
      ],
      "starter": "… were defective on arrival.",
      "pic": ""
@@ -1627,10 +1598,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Below the quality that was agreed.",
      "example": "The work was substandard rather than defective.",
      "sentences": [
-      "The work was substandard rather than defective.",
       "Sub- means below: below the standard.",
       "Substandard work is done badly; defective goods are faulty.",
-      "It is one word."
+      "It is one word.",
+      "Substandard is a judgement; defective is a fact."
      ],
      "starter": "The … was substandard because …",
      "pic": ""
@@ -1641,10 +1612,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To charge more than the agreed or fair price.",
      "example": "We were overcharged by about ninety pounds.",
      "sentences": [
-      "We were overcharged by about ninety pounds.",
       "Over- plus charge, from Unit 8.",
       "It is also a noun, stressed on the first part.",
-      "Overcharging may be an error or may not."
+      "Overcharging may be an error or may not.",
+      "It is often only found by checking the invoice."
      ],
      "starter": "We were overcharged by …",
      "pic": ""
@@ -1655,10 +1626,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A difference between two things that should match.",
      "example": "There is a discrepancy between the invoice and the delivery note.",
      "sentences": [
-      "There is a discrepancy between the invoice and the delivery note.",
       "Discrepancy takes between, or in.",
       "A discrepancy is neutral: it names a difference, not a fault.",
-      "It is the right word before you know who is wrong."
+      "It is the right word before you know who is wrong.",
+      "The stress is on the second part: dis-CREP-ancy."
      ],
      "starter": "There is a discrepancy between … and …",
      "pic": ""
@@ -1669,10 +1640,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A formal complaint about being treated unfairly.",
      "example": "She raised a grievance about the surcharge.",
      "sentences": [
-      "She raised a grievance about the surcharge.",
       "A grievance is formal and usually internal.",
       "You raise, lodge or submit a grievance.",
-      "It comes from grieve."
+      "It comes from grieve.",
+      "A grievance procedure is the route it follows."
      ],
      "starter": "I raised a grievance about …",
      "pic": ""
@@ -1683,10 +1654,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something done to put right a wrong.",
      "example": "The clause offers no redress for late delivery.",
      "sentences": [
-      "The clause offers no redress for late delivery.",
       "Redress takes for.",
       "It is formal and legal: remedy is the everyday twin.",
-      "It is also a verb: to redress a balance."
+      "It is also a verb: to redress a balance.",
+      "Seeking redress means asking to be put right."
      ],
      "starter": "The … offers no redress for …",
      "pic": ""
@@ -1702,10 +1673,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Money paid to make up for a loss.",
      "example": "They offered compensation of two hundred pounds.",
      "sentences": [
-      "They offered compensation of two hundred pounds.",
       "Compensation takes for the loss, and of the amount.",
       "Its verb is compensate, which takes for.",
-      "Compensation is for the loss; a refund is for the price."
+      "Compensation is for the loss; a refund is for the price.",
+      "It is uncountable."
      ],
      "starter": "They offered compensation for …",
      "pic": "💰"
@@ -1716,10 +1687,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A new item supplied in place of a faulty one.",
      "example": "I asked for a replacement rather than a refund.",
      "sentences": [
-      "I asked for a replacement rather than a refund.",
       "Replacement takes for.",
       "Its verb is replace, which takes with.",
-      "A replacement is the same thing again; a refund is the money."
+      "A replacement is the same thing again; a refund is the money.",
+      "Asking for one rather than the other is a real choice."
      ],
      "starter": "I asked for a replacement rather than …",
      "pic": ""
@@ -1730,10 +1701,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To pay somebody back money they have spent.",
      "example": "They agreed to reimburse the carriage.",
      "sentences": [
-      "They agreed to reimburse the carriage.",
       "Reimburse takes a person, and for the thing.",
       "Its noun is reimbursement.",
-      "You reimburse an expense; you refund a price."
+      "You reimburse an expense; you refund a price.",
+      "The stress is on the last part: re-im-BURSE."
      ],
      "starter": "They agreed to reimburse …",
      "pic": "💸"
@@ -1744,10 +1715,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To take a complaint to a higher level.",
      "example": "I escalated it after two weeks with no reply.",
      "sentences": [
-      "I escalated it after two weeks with no reply.",
       "Escalate takes to for the level.",
       "Its noun is escalation.",
-      "Escalating too early weakens you; too late costs time."
+      "Escalating too early weakens you; too late costs time.",
+      "It also means to increase: costs escalated."
      ],
      "starter": "I escalated it to … because …",
      "pic": ""
@@ -1758,10 +1729,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "An independent official who investigates complaints.",
      "example": "The ombudsman will not look at it until the firm has replied.",
      "sentences": [
-      "The ombudsman will not look at it until the firm has replied.",
       "An ombudsman is independent of both sides.",
       "Most schemes require you to complain to the firm first.",
-      "It is pronounced OM-buds-man."
+      "It is pronounced OM-buds-man.",
+      "The plural is ombudsmen."
      ],
      "starter": "The ombudsman will not … until …",
      "pic": ""

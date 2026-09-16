@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1350,10 +1321,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Everything around a place or a person.",
      "example": "I did not recognise my surroundings at first.",
      "sentences": [
-      "I did not recognise my surroundings at first.",
       "Surroundings is always plural.",
       "It takes a plural verb: the surroundings were unfamiliar.",
-      "It describes what is around, not what is there."
+      "It describes what is around, not what is there.",
+      "It comes from surround."
      ],
      "starter": "The surroundings were …",
      "pic": ""
@@ -1364,10 +1335,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The feeling a place gives you.",
      "example": "There was a strange atmosphere in the yard.",
      "sentences": [
-      "There was a strange atmosphere in the yard.",
       "An atmosphere is felt, not seen.",
       "It also means the air around the earth.",
-      "The stress is on the first part: AT-mos-phere."
+      "The stress is on the first part: AT-mos-phere.",
+      "Its adjective is atmospheric."
      ],
      "starter": "There was a … atmosphere in …",
      "pic": ""
@@ -1378,10 +1349,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Complete absence of sound.",
      "example": "The silence afterwards was the worst part.",
      "sentences": [
-      "The silence afterwards was the worst part.",
       "Silence is uncountable in this sense.",
       "In silence is the fixed phrase.",
-      "Its adjective is silent, and its verb is to silence."
+      "Its adjective is silent, and its verb is to silence.",
+      "A silence can be described as long, sudden or awkward."
      ],
      "starter": "The silence …",
      "pic": "🤫"
@@ -1392,10 +1363,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The absence of light.",
      "example": "We waited in darkness for twenty minutes.",
      "sentences": [
-      "We waited in darkness for twenty minutes.",
       "Darkness is uncountable.",
       "In darkness and in the dark both work.",
-      "It comes from dark, with -ness added."
+      "It comes from dark, with -ness added.",
+      "Total darkness and complete darkness are both common."
      ],
      "starter": "We waited in darkness until …",
      "pic": "🌑"
@@ -1406,10 +1377,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The space between two things; or the far part of a view.",
      "example": "A light was moving in the distance.",
      "sentences": [
-      "A light was moving in the distance.",
       "In the distance means far away in view.",
       "At a distance means not close to.",
-      "Its adjective is distant."
+      "Its adjective is distant.",
+      "Distance also means how far: the distance to the gate."
      ],
      "starter": "In the distance I could see …",
      "pic": "📏"
@@ -1420,10 +1391,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The line where something ends.",
      "example": "He was standing at the edge of the yard.",
      "sentences": [
-      "He was standing at the edge of the yard.",
       "Edge takes of.",
       "At the edge means on the line; on edge means nervous.",
-      "Its adjective is edgy, which means nervous."
+      "Its adjective is edgy, which means nervous.",
+      "The edge of a blade is the sharp part."
      ],
      "starter": "At the edge of … there was …",
      "pic": ""
@@ -1439,10 +1410,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To stop something while it is happening.",
      "example": "A shout interrupted the meeting.",
      "sentences": [
-      "A shout interrupted the meeting.",
       "Interrupt takes a direct object.",
       "Its noun is interruption.",
-      "The past continuous is what an interruption cuts across."
+      "The past continuous is what an interruption cuts across.",
+      "You interrupt a person or an activity."
      ],
      "starter": "A … interrupted …",
      "pic": ""
@@ -1453,10 +1424,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To fall down suddenly.",
      "example": "Part of the roof collapsed in the night.",
      "sentences": [
-      "Part of the roof collapsed in the night.",
       "Collapse takes no object: things collapse, nobody collapses them.",
       "It is also a noun: the collapse of the roof.",
-      "A person can collapse too, meaning fall unconscious."
+      "A person can collapse too, meaning fall unconscious.",
+      "The stress is on the second part: col-LAPSE."
      ],
      "starter": "The … collapsed …",
      "pic": ""
@@ -1467,10 +1438,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To break open suddenly, from inside.",
      "example": "A pipe burst on the second floor.",
      "sentences": [
-      "A pipe burst on the second floor.",
       "Its past forms are burst and burst: it never changes.",
       "Burst into and burst out are common: burst into tears.",
-      "It is also a noun: a burst of noise."
+      "It is also a noun: a burst of noise.",
+      "Things burst; you do not usually burst them."
      ],
      "starter": "A … burst …",
      "pic": ""
@@ -1481,10 +1452,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To shut something with force and noise.",
      "example": "Somebody slammed the gate behind us.",
      "sentences": [
-      "Somebody slammed the gate behind us.",
       "Slam doubles its m: slammed, slamming.",
       "It takes a direct object: slam the door.",
-      "A door can also slam by itself, in the wind."
+      "A door can also slam by itself, in the wind.",
+      "It is also a noun: the slam of a door."
      ],
      "starter": "Somebody slammed …",
      "pic": "🚪"
@@ -1495,10 +1466,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To hit something with great force and noise.",
      "example": "A trolley crashed into the racking.",
      "sentences": [
-      "A trolley crashed into the racking.",
       "Crash takes into for what it hit.",
       "It is also a noun: a crash.",
-      "Computers crash too, which is a separate meaning."
+      "Computers crash too, which is a separate meaning.",
+      "Crashed and collided are close; collide needs two moving things."
      ],
      "starter": "… crashed into …",
      "pic": ""
@@ -1509,10 +1480,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To break suddenly into many small pieces.",
      "example": "The glass shattered across the floor.",
      "sentences": [
-      "The glass shattered across the floor.",
       "Shatter is used of glass and brittle things.",
       "It can be active or with no object at all.",
-      "Shattered also means exhausted, in speech."
+      "Shattered also means exhausted, in speech.",
+      "Broken is general; shattered is into pieces."
      ],
      "starter": "The … shattered …",
      "pic": ""
@@ -1528,10 +1499,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To stop moving completely, usually from shock.",
      "example": "I froze for a second and then ran.",
      "sentences": [
-      "I froze for a second and then ran.",
       "Its past forms are froze and frozen.",
       "Freezing from shock is different from freezing from cold.",
-      "Freeze takes no object in this meaning."
+      "Freeze takes no object in this meaning.",
+      "It is one of the commonest first reactions in an account."
      ],
      "starter": "I froze when …",
      "pic": "🛑"
@@ -1542,10 +1513,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To lose control because of sudden fear.",
      "example": "Nobody panicked, which surprised me afterwards.",
      "sentences": [
-      "Nobody panicked, which surprised me afterwards.",
       "Panic adds a k before -ed and -ing: panicked, panicking.",
       "That k is the spelling everybody gets wrong.",
-      "It is also a noun: a moment of panic."
+      "It is also a noun: a moment of panic.",
+      "Panic takes no object."
      ],
      "starter": "Nobody panicked because …",
      "pic": "😱"
@@ -1556,10 +1527,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To look at something very quickly.",
      "example": "I glanced at the clock: it was twenty past.",
      "sentences": [
-      "I glanced at the clock: it was twenty past.",
       "Glance takes at.",
       "A glance is shorter than a look.",
-      "It is also a noun: a quick glance."
+      "It is also a noun: a quick glance.",
+      "Glance off means to hit and bounce away."
      ],
      "starter": "I glanced at …",
      "pic": "👀"
@@ -1570,10 +1541,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To move or act very quickly.",
      "example": "Two of us rushed towards the door.",
      "sentences": [
-      "Two of us rushed towards the door.",
       "Rush takes towards, to or into.",
       "It is also a noun: a rush of water, the rush hour.",
-      "Rushing suggests urgency and a loss of care."
+      "Rushing suggests urgency and a loss of care.",
+      "Do not rush it means take your time."
      ],
      "starter": "We rushed towards …",
      "pic": "💨"
@@ -1584,10 +1555,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To stop for a short time and then continue.",
      "example": "She paused at the door and looked back.",
      "sentences": [
-      "She paused at the door and looked back.",
       "A pause is temporary: you carry on afterwards.",
       "Pause takes no object in this meaning.",
-      "It is also a noun: a long pause."
+      "It is also a noun: a long pause.",
+      "Stopping is final; pausing is not."
      ],
      "starter": "She paused and …",
      "pic": "⏸️"
@@ -1598,10 +1569,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To breathe in suddenly and audibly, from shock.",
      "example": "Somebody behind me gasped.",
      "sentences": [
-      "Somebody behind me gasped.",
       "Gasp takes no object.",
       "It is also a noun: a gasp.",
-      "Gasp for breath is a fixed phrase."
+      "Gasp for breath is a fixed phrase.",
+      "A gasp is heard; a glance is seen."
      ],
      "starter": "Somebody gasped when …",
      "pic": "😲"
@@ -1617,10 +1588,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "At exactly the same time.",
      "example": "Both alarms went off simultaneously.",
      "sentences": [
-      "Both alarms went off simultaneously.",
       "Simultaneously is the formal at the same time.",
       "Its adjective is simultaneous.",
-      "It is long: si-mul-TA-ne-ous-ly."
+      "It is long: si-mul-TA-ne-ous-ly.",
+      "It usually goes at the end of the sentence."
      ],
      "starter": "… happened simultaneously.",
      "pic": ""
@@ -1631,10 +1602,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Before the time in question.",
      "example": "Nobody had checked the alarm beforehand.",
      "sentences": [
-      "Nobody had checked the alarm beforehand.",
       "Beforehand is one word.",
       "It often goes with the past perfect.",
-      "It means before then, not before now."
+      "It means before then, not before now.",
+      "In advance means much the same thing."
      ],
      "starter": "Nobody had … beforehand.",
      "pic": ""
@@ -1645,10 +1616,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "For a very short time.",
      "example": "The lights went out momentarily.",
      "sentences": [
-      "The lights went out momentarily.",
       "In British English it means for a moment.",
       "In American English it can mean in a moment, which is different.",
-      "It comes from momentary."
+      "It comes from momentary.",
+      "The stress is on the third part: mo-men-TAR-i-ly."
      ],
      "starter": "The … stopped momentarily.",
      "pic": ""
@@ -1659,10 +1630,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "For a short time; or in few words.",
      "example": "I spoke to her briefly afterwards.",
      "sentences": [
-      "I spoke to her briefly afterwards.",
       "Briefly has two meanings: short in time, and short in words.",
       "Its adjective is brief.",
-      "Briefly is less formal than momentarily."
+      "Briefly is less formal than momentarily.",
+      "To put it briefly is a fixed phrase."
      ],
      "starter": "I … briefly.",
      "pic": ""
@@ -1673,10 +1644,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Immediately, with no delay at all.",
      "example": "The alarm sounded instantly.",
      "sentences": [
-      "The alarm sounded instantly.",
       "Instantly is stronger than immediately.",
       "Its adjective is instant.",
-      "It usually follows the verb."
+      "It usually follows the verb.",
+      "Instantaneous is the formal adjective."
      ],
      "starter": "The … sounded instantly.",
      "pic": ""
@@ -1687,10 +1658,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Suddenly, and in a way that feels unfinished.",
      "example": "The noise stopped abruptly.",
      "sentences": [
-      "The noise stopped abruptly.",
       "Abruptly carries a sense of something cut off.",
       "Its adjective is abrupt.",
-      "An abrupt reply is short and rude."
+      "An abrupt reply is short and rude.",
+      "Suddenly is neutral; abruptly is not."
      ],
      "starter": "The … stopped abruptly.",
      "pic": ""
@@ -1706,10 +1677,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Something that happened, usually unwanted.",
      "example": "The incident took about four minutes in total.",
      "sentences": [
-      "The incident took about four minutes in total.",
       "An incident is a single event, usually a problem.",
       "It is the standard official word.",
-      "Incidental means minor, which is a different idea."
+      "Incidental means minor, which is a different idea.",
+      "An incident report records one event."
      ],
      "starter": "The incident …",
      "pic": ""
@@ -1720,10 +1691,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The order in which things happened.",
      "example": "I have set out the sequence as I remember it.",
      "sentences": [
-      "I have set out the sequence as I remember it.",
       "Sequence takes of.",
       "Getting the sequence right is the whole job of a statement.",
-      "Its adjective is sequential."
+      "Its adjective is sequential.",
+      "A sequence is an order, not a list."
      ],
      "starter": "The sequence of … was …",
      "pic": ""
@@ -1734,10 +1705,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The period and the effects following a bad event.",
      "example": "In the aftermath, nobody could find the key.",
      "sentences": [
-      "In the aftermath, nobody could find the key.",
       "Aftermath is always about something bad.",
       "In the aftermath of is the usual phrase.",
-      "It is uncountable."
+      "It is uncountable.",
+      "The aftermath is longer than the event itself."
      ],
      "starter": "In the aftermath of …, …",
      "pic": ""
@@ -1748,10 +1719,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The most intense or important point of a sequence.",
      "example": "The climax was the moment the roof gave way.",
      "sentences": [
-      "The climax was the moment the roof gave way.",
       "A climax is the peak, not the end.",
       "It takes of.",
-      "Its verb is to climax."
+      "Its verb is to climax.",
+      "The aftermath follows the climax."
      ],
      "starter": "The climax of … was …",
      "pic": ""
@@ -1762,10 +1733,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A description of what happened, given by one person.",
      "example": "The two accounts differ on one point only.",
      "sentences": [
-      "The two accounts differ on one point only.",
       "An account is one person's version.",
       "Account takes of.",
-      "By all accounts means according to everybody."
+      "By all accounts means according to everybody.",
+      "It also means a bank account, which is unrelated."
      ],
      "starter": "My account of … is that …",
      "pic": ""

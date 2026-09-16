@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1350,10 +1321,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To get pleasure from something.",
      "example": "I enjoy working outside.",
      "sentences": [
-      "I enjoy working outside.",
       "Enjoy always takes -ing, never to.",
       "Enjoy needs an object: enjoy yourself, or enjoy something.",
-      "Never I enjoy to work."
+      "Never I enjoy to work.",
+      "Its adjective is enjoyable."
      ],
      "starter": "I enjoy …",
      "pic": "😄"
@@ -1364,10 +1335,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To do something that may have a bad result.",
      "example": "I would not risk leaving it unlocked.",
      "sentences": [
-      "I would not risk leaving it unlocked.",
       "Risk takes -ing, never to.",
       "It is also a noun: a risk of damage.",
-      "Risk takes of before a noun: the risk of failure."
+      "Risk takes of before a noun: the risk of failure.",
+      "Never risk to leave it."
      ],
      "starter": "I would not risk …",
      "pic": ""
@@ -1378,10 +1349,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To feel angry about something you think is unfair.",
      "example": "She resented being moved without notice.",
      "sentences": [
-      "She resented being moved without notice.",
       "Resent takes -ing, and often a passive -ing: being moved.",
       "Its noun is resentment.",
-      "Resenting is quieter and longer-lasting than being angry."
+      "Resenting is quieter and longer-lasting than being angry.",
+      "Never resent to be moved."
      ],
      "starter": "I resented …",
      "pic": ""
@@ -1392,10 +1363,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To accept something you do not like, without complaining.",
      "example": "We cannot tolerate being told at the last minute.",
      "sentences": [
-      "We cannot tolerate being told at the last minute.",
       "Tolerate takes -ing.",
       "Its noun is tolerance, and its adjective tolerant.",
-      "Tolerating is putting up with, more formally."
+      "Tolerating is putting up with, more formally.",
+      "Never tolerate to be told."
      ],
      "starter": "We cannot tolerate …",
      "pic": ""
@@ -1406,10 +1377,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To think seriously about doing something.",
      "example": "I am contemplating applying again.",
      "sentences": [
-      "I am contemplating applying again.",
       "Contemplate takes -ing.",
       "It is more formal and more serious than think about.",
-      "Its noun is contemplation."
+      "Its noun is contemplation.",
+      "Never contemplate to apply."
      ],
      "starter": "I am contemplating …",
      "pic": ""
@@ -1420,10 +1391,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To say that something is good, or should be done.",
      "example": "I would recommend checking it twice.",
      "sentences": [
-      "I would recommend checking it twice.",
       "Recommend takes -ing, or that plus a clause.",
       "Never recommend somebody to do it, in careful English.",
-      "Its noun is recommendation."
+      "Its noun is recommendation.",
+      "It behaves like suggest, from Unit 9."
      ],
      "starter": "I would recommend …",
      "pic": "👍🏾"
@@ -1439,10 +1410,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To plan to do something.",
      "example": "We intend to finish by Friday.",
      "sentences": [
-      "We intend to finish by Friday.",
       "Intend takes to, though intend -ing is also possible.",
       "Its noun is intention, which takes of or to.",
-      "Intended means meant, or planned."
+      "Intended means meant, or planned.",
+      "It is more formal than mean to."
      ],
      "starter": "We intend to …",
      "pic": ""
@@ -1453,10 +1424,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To try very hard over a long time.",
      "example": "They strive to keep the figures accurate.",
      "sentences": [
-      "They strive to keep the figures accurate.",
       "Strive takes to.",
       "Its past forms are strove and striven.",
-      "Striving is harder and longer than trying."
+      "Striving is harder and longer than trying.",
+      "It is formal and rare in speech."
      ],
      "starter": "We strive to …",
      "pic": ""
@@ -1467,10 +1438,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To have something as your goal.",
      "example": "We aim to reply within five days.",
      "sentences": [
-      "We aim to reply within five days.",
       "Aim takes to, or at plus an -ing form.",
       "We aim to reply, or we are aiming at replying.",
-      "It is also a noun: the aim of the project."
+      "It is also a noun: the aim of the project.",
+      "Aiming is a target, not a promise."
      ],
      "starter": "We aim to …",
      "pic": "🎯"
@@ -1481,10 +1452,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To usually do something, as a habit.",
      "example": "Deliveries tend to arrive late on Fridays.",
      "sentences": [
-      "Deliveries tend to arrive late on Fridays.",
       "Tend takes to.",
       "It states a tendency, not a rule.",
-      "Its noun is tendency, which takes to."
+      "Its noun is tendency, which takes to.",
+      "Tend also means to look after, which is unrelated."
      ],
      "starter": "… tend to …",
      "pic": ""
@@ -1495,10 +1466,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Not to do something you should have done.",
      "example": "The supplier failed to notify us.",
      "sentences": [
-      "The supplier failed to notify us.",
       "Fail takes to.",
       "Failed to is the formal way of saying did not.",
-      "It carries blame, which did not does not."
+      "It carries blame, which did not does not.",
+      "Its noun is failure, which takes to as well."
      ],
      "starter": "The … failed to …",
      "pic": "❌"
@@ -1509,10 +1480,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To have earned something, good or bad.",
      "example": "The team deserves to be told first.",
      "sentences": [
-      "The team deserves to be told first.",
       "Deserve takes to.",
       "It can also take a noun: deserve a rest.",
-      "Deserved is the adjective: a deserved result."
+      "Deserved is the adjective: a deserved result.",
+      "Deserve is a state verb: never I am deserving."
      ],
      "starter": "… deserves to …",
      "pic": ""
@@ -1528,10 +1499,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To do a task, especially an official one.",
      "example": "The inspection was carried out on Tuesday.",
      "sentences": [
-      "The inspection was carried out on Tuesday.",
       "Carry out splits: carry it out, never carry out it.",
       "It is very common in the passive.",
-      "It is the formal word for do, in a procedure."
+      "It is the formal word for do, in a procedure.",
+      "You carry out work, a check, an order or a survey."
      ],
      "starter": "The … was carried out …",
      "pic": ""
@@ -1542,10 +1513,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To start or establish something.",
      "example": "They set up a second line in March.",
      "sentences": [
-      "They set up a second line in March.",
       "Set up splits: set it up.",
       "Its past forms are set and set: it never changes.",
-      "It is also a noun, written setup or set-up."
+      "It is also a noun, written setup or set-up.",
+      "You set up a system, a meeting or a company."
      ],
      "starter": "We set up …",
      "pic": ""
@@ -1556,10 +1527,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To accept work or responsibility; or to employ somebody.",
      "example": "We took on two more staff in April.",
      "sentences": [
-      "We took on two more staff in April.",
       "Take on splits: take them on.",
       "It has two meanings: accept work, and employ.",
-      "Its past forms are took and taken."
+      "Its past forms are took and taken.",
+      "Taking on too much is a common complaint."
      ],
      "starter": "We took on …",
      "pic": ""
@@ -1570,10 +1541,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To move something to a later time; or to discourage somebody.",
      "example": "The meeting was put off until the 14th.",
      "sentences": [
-      "The meeting was put off until the 14th.",
       "Put off splits: put it off.",
       "It also means to discourage: the price put me off.",
-      "Its past forms are put and put."
+      "Its past forms are put and put.",
+      "Postpone is the formal single-word version."
      ],
      "starter": "The … was put off until …",
      "pic": ""
@@ -1584,10 +1555,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To cancel something that was arranged.",
      "example": "The visit was called off at short notice.",
      "sentences": [
-      "The visit was called off at short notice.",
       "Call off splits: call it off.",
       "Calling off is cancelling; putting off is delaying.",
-      "The two are often confused and are not the same."
+      "The two are often confused and are not the same.",
+      "Cancel is the formal single-word version."
      ],
      "starter": "The … was called off because …",
      "pic": ""
@@ -1598,10 +1569,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To deal with a problem and put it right.",
      "example": "Somebody needs to sort out the labelling.",
      "sentences": [
-      "Somebody needs to sort out the labelling.",
       "Sort out splits: sort it out.",
       "It is informal: resolve is the formal version.",
-      "It can mean organise, or repair, or settle a dispute."
+      "It can mean organise, or repair, or settle a dispute.",
+      "Sorted, in speech, can mean dealt with."
      ],
      "starter": "Somebody needs to sort out …",
      "pic": ""
@@ -1617,10 +1588,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To investigate something.",
      "example": "We will look into it and reply by Friday.",
      "sentences": [
-      "We will look into it and reply by Friday.",
       "Look into never splits: look into it, never look it into.",
       "It is the everyday word for investigate.",
-      "It has three parts in effect: look, into, object."
+      "It has three parts in effect: look, into, object.",
+      "Looking into something promises less than investigating it."
      ],
      "starter": "We will look into …",
      "pic": ""
@@ -1631,10 +1602,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To take action about something.",
      "example": "The complaint was dealt with the same day.",
      "sentences": [
-      "The complaint was dealt with the same day.",
       "Deal with never splits: deal with it.",
       "Its past forms are dealt and dealt.",
-      "Dealing with is broader than solving."
+      "Dealing with is broader than solving.",
+      "It is very common in the passive."
      ],
      "starter": "The … was dealt with …",
      "pic": ""
@@ -1645,10 +1616,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To find something by chance.",
      "example": "I came across the old log in a drawer.",
      "sentences": [
-      "I came across the old log in a drawer.",
       "Come across never splits.",
       "It means by chance, not by searching.",
-      "It also means to give an impression: she comes across well."
+      "It also means to give an impression: she comes across well.",
+      "Its past forms are came and come."
      ],
      "starter": "I came across …",
      "pic": ""
@@ -1659,10 +1630,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To raise a subject; or to raise a child.",
      "example": "Nobody brought up the cost until the end.",
      "sentences": [
-      "Nobody brought up the cost until the end.",
       "Bring up splits: bring it up.",
       "The child meaning was taught in Unit 1 of this level.",
-      "Raising a subject is the meaning used at work."
+      "Raising a subject is the meaning used at work.",
+      "Its past forms are brought and brought."
      ],
      "starter": "Nobody brought up …",
      "pic": ""
@@ -1673,10 +1644,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To draw attention to a fact.",
      "example": "She pointed out that the date was wrong.",
      "sentences": [
-      "She pointed out that the date was wrong.",
       "Point out splits: point it out.",
       "It usually takes that plus a clause.",
-      "Pointing out is neutral: it is not a criticism."
+      "Pointing out is neutral: it is not a criticism.",
+      "It is a useful reporting verb, from Unit 9."
      ],
      "starter": "She pointed out that …",
      "pic": ""
@@ -1687,10 +1658,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To have none left.",
      "example": "We ran out of labels on Thursday.",
      "sentences": [
-      "We ran out of labels on Thursday.",
       "Run out takes OF before the thing: run out of labels.",
       "It never splits.",
-      "Its past forms are ran and run."
+      "Its past forms are ran and run.",
+      "Time can run out as well as supplies."
      ],
      "starter": "We ran out of …",
      "pic": ""
@@ -1706,10 +1677,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Unwilling, and doing it anyway or not at all.",
      "example": "They were reluctant to put it in writing.",
      "sentences": [
-      "They were reluctant to put it in writing.",
       "Reluctant takes to plus a plain verb.",
       "Its noun is reluctance.",
-      "Reluctant is milder than unwilling: you may still do it."
+      "Reluctant is milder than unwilling: you may still do it.",
+      "Its adverb is reluctantly."
      ],
      "starter": "They were reluctant to …",
      "pic": "🤨"
@@ -1720,10 +1691,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Very keen to do something.",
      "example": "She was eager to start.",
      "sentences": [
-      "She was eager to start.",
       "Eager takes to, and also for plus a noun.",
       "Eager is stronger than keen.",
-      "Its noun is eagerness."
+      "Its noun is eagerness.",
+      "Eager to please can be a criticism."
      ],
      "starter": "She was eager to …",
      "pic": ""
@@ -1734,10 +1705,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Certain to happen; or legally obliged.",
      "example": "It was bound to go wrong eventually.",
      "sentences": [
-      "It was bound to go wrong eventually.",
       "Bound takes to plus a plain verb.",
       "Bound to means certain, in the prediction sense.",
-      "Legally bound means obliged, which is a separate meaning."
+      "Legally bound means obliged, which is a separate meaning.",
+      "It comes from bind."
      ],
      "starter": "It was bound to …",
      "pic": ""
@@ -1748,10 +1719,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Likely to do something unwanted; or legally responsible.",
      "example": "The seal is liable to fail in the cold.",
      "sentences": [
-      "The seal is liable to fail in the cold.",
       "Liable takes to plus a plain verb, or for plus a noun.",
       "Liable to is about an unwanted tendency.",
-      "Liable for is about legal responsibility."
+      "Liable for is about legal responsibility.",
+      "Its noun is liability."
      ],
      "starter": "The … is liable to …",
      "pic": ""
@@ -1762,10 +1733,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Tending to suffer from something, repeatedly.",
      "example": "That line is prone to jamming.",
      "sentences": [
-      "That line is prone to jamming.",
       "Prone takes to, and after to comes a noun or an -ing form.",
       "Note that: prone TO JAMMING, not prone to jam.",
-      "It differs from liable, which takes a plain verb."
+      "It differs from liable, which takes a plain verb.",
+      "Accident-prone is a common compound."
      ],
      "starter": "The … is prone to …",
      "pic": ""

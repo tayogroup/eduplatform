@@ -1049,25 +1049,11 @@ input.typein.wrong { border-color: #c53030; }
   .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
-  /* SHRINKABLE, and it was not until 2026-09-16. This bar was written before
-     add-lesson-search.py existed, so `flex: 0 0 auto` was right: a brand, a
-     progress track and two small controls always fitted. The search field then
-     went INTO this container (add-lesson-search.py injects it rather than
-     drawing its own bar on a lesson page), and a no-shrink container sizes to
-     max-content whatever the viewport does - so at 375px the group ran 44px
-     off the right of every lesson page in every subject, carrying the voice
-     toggle off-screen with it. add-lesson-search.py's own copy of this rule,
-     used only on the hub, already says `0 1 auto; min-width: 0`; this brings
-     the two into agreement.
-
-     `min-width: 0` is load-bearing beside the flex: a flex item's floor is its
-     min-content width by default, which for this group is the whole search
-     field plus the picker, so the flex alone would shrink nothing. */
-  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
   .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
-    color: var(--ink); font-size: 17px; cursor: pointer; flex: 0 0 auto; }
+    color: var(--ink); font-size: 17px; cursor: pointer; }
   /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
      writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
      file owns the thresholds. A page without focus mode never shows it at all.
@@ -1108,21 +1094,6 @@ input.typein.wrong { border-color: #c53030; }
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
     .eh-picker { max-width: 130px; }
-  }
-  /* At 375px five things do not fit, so one has to go, and making the group
-     shrinkable alone is not a fix - measured, it collapses the search input to
-     ZERO width and leaves a 24px stub. The picker is the one to drop, because
-     both of its jobs are already on screen one row below: bar 2 prints the
-     lesson title, and its Menu goes to the hub, which lists every lesson. The
-     progress track is NOT droppable for the same test - nothing else on a
-     narrow page reports progress (.eh-steps is display:none there), and the
-     pill beside it reads a real percentage.
-
-     Measured on a Computing lesson page at 375x812: 44px of overflow before,
-     0 after, with the voice toggle at its full 40px and the search field at
-     133px. */
-  @media (max-width: 480px) {
-    .eh-picker { display: none; }
   }
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -1346,10 +1317,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Used to close a letter that opened with a name.",
      "example": "Dear Ms Adeyemi ... Yours sincerely.",
      "sentences": [
-      "Dear Ms Adeyemi ... Yours sincerely.",
       "Yours sincerely follows a named person.",
       "Yours faithfully follows Dear Sir or Madam.",
-      "Getting the pair wrong is noticed in Britain and nowhere else."
+      "Getting the pair wrong is noticed in Britain and nowhere else.",
+      "Its adjective is sincere."
      ],
      "starter": "Dear … ... Yours sincerely.",
      "pic": ""
@@ -1360,10 +1331,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Used to close a letter to somebody unnamed.",
      "example": "Dear Sir or Madam ... Yours faithfully.",
      "sentences": [
-      "Dear Sir or Madam ... Yours faithfully.",
       "Faithfully goes with an unnamed opening.",
       "If you know the name, use it, and close with sincerely.",
-      "In an email, Kind regards replaces both."
+      "In an email, Kind regards replaces both.",
+      "The pair is British: other countries differ."
      ],
      "starter": "Dear Sir or Madam ... Yours …",
      "pic": ""
@@ -1374,10 +1345,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Included with a letter, in the same envelope.",
      "example": "Please find enclosed a copy of the invoice.",
      "sentences": [
-      "Please find enclosed a copy of the invoice.",
       "Enclosed is for a letter; attached is for an email.",
       "Please find enclosed is old-fashioned and still standard.",
-      "I enclose is shorter and equally correct."
+      "I enclose is shorter and equally correct.",
+      "Its noun is an enclosure."
      ],
      "starter": "Please find enclosed …",
      "pic": ""
@@ -1388,10 +1359,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "With this letter; along with this.",
      "example": "I forward herewith the signed agreement.",
      "sentences": [
-      "I forward herewith the signed agreement.",
       "Herewith is very formal and slightly archaic.",
       "It means the same as enclosed.",
-      "It is one word: here plus with."
+      "It is one word: here plus with.",
+      "In most letters, with this is better."
      ],
      "starter": "I forward herewith …",
      "pic": ""
@@ -1402,10 +1373,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The person who has signed below.",
      "example": "The undersigned confirms receipt.",
      "sentences": [
-      "The undersigned confirms receipt.",
       "The undersigned is a way of saying I without saying I.",
       "It takes the, always.",
-      "It is legal register and rare elsewhere."
+      "It is legal register and rare elsewhere.",
+      "It is one word."
      ],
      "starter": "The undersigned confirms …",
      "pic": ""
@@ -1416,10 +1387,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Letters and emails, taken together.",
      "example": "All correspondence should be sent to the address below.",
      "sentences": [
-      "All correspondence should be sent to the address below.",
       "Correspondence is uncountable.",
       "It covers the whole exchange, not one letter.",
-      "Its verb is correspond, which takes with."
+      "Its verb is correspond, which takes with.",
+      "It also means a match between two things."
      ],
      "starter": "All correspondence should be …",
      "pic": "✉️"
@@ -1435,10 +1406,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To ask, formally.",
      "example": "I am writing to enquire about the vacancy.",
      "sentences": [
-      "I am writing to enquire about the vacancy.",
       "Enquire is the formal ask.",
       "It takes about, or whether.",
-      "Its noun is an enquiry."
+      "Its noun is an enquiry.",
+      "Inquire, with an i, is the American spelling and the investigative one."
      ],
      "starter": "I am writing to enquire about …",
      "pic": "❓"
@@ -1449,10 +1420,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To tell somebody officially.",
      "example": "You will be notified within ten working days.",
      "sentences": [
-      "You will be notified within ten working days.",
       "Notify takes a person, and of for the thing.",
       "It is very common in the passive.",
-      "Its noun is notification, from Unit 16."
+      "Its noun is notification, from Unit 16.",
+      "Notifying is official; telling is not."
      ],
      "starter": "You will be notified of …",
      "pic": ""
@@ -1463,10 +1434,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To send something on to somebody else.",
      "example": "Your letter has been forwarded to the relevant department.",
      "sentences": [
-      "Your letter has been forwarded to the relevant department.",
       "Forward takes to.",
       "It is very common in the perfect passive.",
-      "Forwarding passes it on; it does not answer it."
+      "Forwarding passes it on; it does not answer it.",
+      "It is also an adjective and an adverb."
      ],
      "starter": "Your … has been forwarded to …",
      "pic": ""
@@ -1477,10 +1448,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To add something at the end of a document.",
      "example": "A copy of the schedule is appended.",
      "sentences": [
-      "A copy of the schedule is appended.",
       "Append takes to.",
       "Its noun is an appendix, plural appendices.",
-      "Appending adds at the end; enclosing puts it in the envelope."
+      "Appending adds at the end; enclosing puts it in the envelope.",
+      "It is formal and belongs to reports."
      ],
      "starter": "A copy of … is appended.",
      "pic": ""
@@ -1491,10 +1462,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To do what a rule or an instruction requires.",
      "example": "The work complies with the specification.",
      "sentences": [
-      "The work complies with the specification.",
       "Comply always takes with.",
       "Its noun is compliance, from Unit 10.",
-      "Complying is doing what is required, not agreeing with it."
+      "Complying is doing what is required, not agreeing with it.",
+      "Non-compliance is the standard negative."
      ],
      "starter": "The … complies with …",
      "pic": ""
@@ -1505,10 +1476,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "To stop yourself from doing something.",
      "example": "Visitors are asked to refrain from smoking.",
      "sentences": [
-      "Visitors are asked to refrain from smoking.",
       "Refrain takes from plus an -ing form.",
       "It is the formal way of saying do not.",
-      "It is almost always used in a request or a notice."
+      "It is almost always used in a request or a notice.",
+      "It is also a noun in music, meaning a chorus."
      ],
      "starter": "… are asked to refrain from …",
      "pic": ""
@@ -1524,10 +1495,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A short statement of the main points, usually at the front.",
      "example": "The summary should stand on its own.",
      "sentences": [
-      "The summary should stand on its own.",
       "A summary comes first and is written last.",
       "An executive summary is the same thing, named for its reader.",
-      "Its verb is summarise."
+      "Its verb is summarise.",
+      "A good summary can be read instead of the report."
      ],
      "starter": "The summary of … should …",
      "pic": ""
@@ -1538,10 +1509,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The account of how the work was done.",
      "example": "The methodology explains why those four sites were chosen.",
      "sentences": [
-      "The methodology explains why those four sites were chosen.",
       "Methodology is the account of the method, strictly.",
       "It exists so a reader can judge the findings.",
-      "It is often the shortest section and the most important."
+      "It is often the shortest section and the most important.",
+      "Its adjective is methodological."
      ],
      "starter": "The methodology explains …",
      "pic": ""
@@ -1552,10 +1523,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Material placed at the end, outside the main argument.",
      "example": "The full data is in Appendix B.",
      "sentences": [
-      "The full data is in Appendix B.",
       "Its plural is appendices.",
       "An appendix holds what a reader may want and does not need.",
-      "Its verb is append."
+      "Its verb is append.",
+      "If the argument depends on it, it is not an appendix."
      ],
      "starter": "The … is in Appendix …",
      "pic": ""
@@ -1566,10 +1537,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "A statement of what should be done.",
      "example": "Each recommendation names who should act and by when.",
      "sentences": [
-      "Each recommendation names who should act and by when.",
       "A recommendation takes that plus a clause, or an -ing form.",
       "Its verb is recommend, from Unit 12.",
-      "A recommendation without a name and a date is a wish."
+      "A recommendation without a name and a date is a wish.",
+      "Recommendations usually come last and are read first."
      ],
      "starter": "The recommendation is that …",
      "pic": ""
@@ -1580,10 +1551,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "What a piece of work covers.",
      "example": "Two sites were outside the scope of this review.",
      "sentences": [
-      "Two sites were outside the scope of this review.",
       "Scope takes of.",
       "Scope says what is IN; remit says what you were asked to do.",
-      "Out of scope is the standard phrase."
+      "Out of scope is the standard phrase.",
+      "Its verb is to scope a project."
      ],
      "starter": "… was outside the scope of …",
      "pic": ""
@@ -1594,10 +1565,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The authority and limits given to somebody for a task.",
      "example": "That question falls outside our remit.",
      "sentences": [
-      "That question falls outside our remit.",
       "A remit is granted; a scope is chosen.",
       "It is British: mandate is the wider word.",
-      "The stress is on the first part for the noun: RE-mit."
+      "The stress is on the first part for the noun: RE-mit.",
+      "Exceeding your remit is a real problem in a report."
      ],
      "starter": "That falls outside our remit because …",
      "pic": ""
@@ -1613,10 +1584,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "By this document; by saying this.",
      "example": "I hereby confirm that the work is complete.",
      "sentences": [
-      "I hereby confirm that the work is complete.",
       "Hereby means the saying IS the doing.",
       "It belongs to declarations, not to descriptions.",
-      "I hereby confirm is correct; I hereby went is not."
+      "I hereby confirm is correct; I hereby went is not.",
+      "It is one word."
      ],
      "starter": "I hereby confirm that …",
      "pic": ""
@@ -1627,10 +1598,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "By which; through which.",
      "example": "There is a scheme whereby costs are shared.",
      "sentences": [
-      "There is a scheme whereby costs are shared.",
       "Whereby introduces the means or the arrangement.",
       "It means by which, in one word.",
-      "It follows a noun: a scheme whereby, an arrangement whereby."
+      "It follows a noun: a scheme whereby, an arrangement whereby.",
+      "It is formal and still current."
      ],
      "starter": "There is an arrangement whereby …",
      "pic": ""
@@ -1641,10 +1612,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In that place, or in that document.",
      "example": "The agreement, and the obligations therein, remain in force.",
      "sentences": [
-      "The agreement, and the obligations therein, remain in force.",
       "Therein means in it, formally.",
       "It refers back to something just named.",
-      "Therein lies the problem is a fixed phrase."
+      "Therein lies the problem is a fixed phrase.",
+      "It is archaic outside legal writing."
      ],
      "starter": "The … and the obligations therein …",
      "pic": ""
@@ -1655,10 +1626,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Mentioned earlier in this document.",
      "example": "The aforementioned clause has been amended.",
      "sentences": [
-      "The aforementioned clause has been amended.",
       "Aforementioned points back to something already named.",
       "It is one word and very formal.",
-      "In most writing, the or that is enough."
+      "In most writing, the or that is enough.",
+      "Using it where the is enough is the error."
      ],
      "starter": "The aforementioned … has been …",
      "pic": ""
@@ -1669,10 +1640,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In spite of; despite.",
      "example": "Notwithstanding the delay, the work was completed.",
      "sentences": [
-      "Notwithstanding the delay, the work was completed.",
       "Notwithstanding takes a noun, like despite.",
       "It can also follow its noun: the delay notwithstanding.",
-      "It is one word and very formal."
+      "It is one word and very formal.",
+      "Despite means the same and is readable."
      ],
      "starter": "Notwithstanding …, …",
      "pic": ""
@@ -1683,10 +1654,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "In accordance with; following from.",
      "example": "Pursuant to clause 6, notice has been given.",
      "sentences": [
-      "Pursuant to clause 6, notice has been given.",
       "Pursuant always takes to.",
       "It means under, or in accordance with.",
-      "It is legal register and rare elsewhere."
+      "It is legal register and rare elsewhere.",
+      "Under clause 6 says the same thing and is shorter."
      ],
      "starter": "Pursuant to …, …",
      "pic": ""
@@ -1702,10 +1673,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Belonging to ordinary conversation.",
      "example": "That phrase is too colloquial for a report.",
      "sentences": [
-      "That phrase is too colloquial for a report.",
       "Colloquial means spoken, not wrong.",
       "Its noun is a colloquialism.",
-      "Colloquial language is right in speech and wrong in a contract."
+      "Colloquial language is right in speech and wrong in a contract.",
+      "It is pronounced co-LOH-kwee-al."
      ],
      "starter": "That is too colloquial for …",
      "pic": ""
@@ -1716,10 +1687,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "The level of formality a piece of language uses.",
      "example": "The register slips in the third paragraph.",
      "sentences": [
-      "The register slips in the third paragraph.",
       "Register is the whole level, not one word.",
       "A register can be too high as well as too low.",
-      "It also means a list, and a verb meaning to record."
+      "It also means a list, and a verb meaning to record.",
+      "Matching the register is what this unit is about."
      ],
      "starter": "The register of … is …",
      "pic": ""
@@ -1730,10 +1701,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Specialist language that outsiders do not share.",
      "example": "The summary is full of jargon.",
      "sentences": [
-      "The summary is full of jargon.",
       "Jargon is uncountable.",
       "Jargon is precise among specialists and opaque outside.",
-      "It is not the same as formality."
+      "It is not the same as formality.",
+      "Removing jargon for the wrong reader loses precision."
      ],
      "starter": "The … is full of jargon about …",
      "pic": ""
@@ -1744,10 +1715,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Using far more words than are needed.",
      "example": "The opening paragraph is verbose.",
      "sentences": [
-      "The opening paragraph is verbose.",
       "Verbose means wordy, not formal.",
       "Its noun is verbosity.",
-      "Formal writing is often verbose and does not have to be."
+      "Formal writing is often verbose and does not have to be.",
+      "It is pronounced ver-BOHS."
      ],
      "starter": "The … is verbose because …",
      "pic": ""
@@ -1758,10 +1729,10 @@ input.typein.wrong { border-color: #c53030; }
      "meaning": "Clear and direct, without unnecessary words.",
      "example": "Plain English is not informal English.",
      "sentences": [
-      "Plain English is not informal English.",
       "Plain means clear, not casual.",
       "Plain English is a movement in official writing.",
-      "A document can be plain and formal at once."
+      "A document can be plain and formal at once.",
+      "That is the point of this whole unit."
      ],
      "starter": "Plain … is not …",
      "pic": ""

@@ -24,6 +24,16 @@
 # question authored after it - which is the only kind of finding a gate wired in
 # after the fact can honestly claim.
 #
+# own-header-css.py runs LAST of the writers, after add-lesson-search.py, because
+# it appends Computing's own header-bar sizing to the end of the page's single
+# stylesheet and has to win on order. The shared add-header-bars.py draws that
+# bar with a container that cannot shrink, which was right until a 141px search
+# field was injected into it; the fix lived in the shared file until 2026-09-17
+# and was reverted out of it, because that file belongs to every subject. It
+# REFUSES rather than no-ops if the shared bar has changed shape - CSS is
+# invisible to check-lessons.py, so a silent no-op is a green build with 44px of
+# overflow.
+#
 # T is the SHARED pipeline directory and it is overridable ON PURPOSE. Several
 # sessions edit this tree at once, and on 2026-09-16 two of those shared tools
 # (build-lesson-search.py, wire-platform-controls.py) held another session's
@@ -55,6 +65,7 @@ python $T/wire-progress.py           --app .
 python $T/add-header-bars.py         --app .
 python ${S:-$T}/build-lesson-search.py --app .
 python $T/add-lesson-search.py       --app .
+python $K/own-header-css.py          --app .
 python $T/check-lessons.py           --app .
 python $K/check-coverage.py          --app .
 python $K/check-question-shape.py    --app .

@@ -402,19 +402,40 @@ rather than the page.
   progress (`.eh-steps` is `display: none` there). That last part was checked in
   the browser after being asserted wrongly from the CSS.
 
-  Fixed here in `computing/lesson-kit/build-hub.py` and in the shared
-  `mathematics/lesson-app-tools/add-header-bars.py`. **Four copies are still
-  `0 0 auto` and are other subjects' lanes**, left alone deliberately:
+  **Computing carries its own fix and touches nobody else's file.** The hub is
+  fixed in `computing/lesson-kit/build-hub.py`; the LESSON pages are fixed by
+  `computing/lesson-kit/own-header-css.py`, which `rebuild.sh` runs after
+  `add-lesson-search.py` and which appends three rules to the end of the page's
+  single stylesheet so they win on order.
+
+  It appends rather than editing the shared rule, so it does not depend on that
+  rule's exact text - which belongs to every subject and will change. And it
+  **REFUSES rather than no-ops** if a page has no `.eh-b1right` at all: CSS is
+  invisible to `check-lessons.py`, so a silent no-op would be a green build with
+  44px of overflow. Mutation-tested - rename the class away on one page and the
+  step exits 1, which stops `rebuild.sh` (`set -e`).
+
+  The fix DID live in the shared `add-header-bars.py` for a day and was reverted
+  out of it on 2026-09-17 at the owner's instruction, because that file belongs
+  to every subject. So **five copies are `0 0 auto`**, and none of them is
+  Computing's to change:
+  `mathematics/lesson-app-tools/add-header-bars.py` (the shared one, which is
+  why every other subject's LESSON pages still overflow),
   `art-and-design/lesson-kit/build-hub.py`,
   `global-perspectives/lesson-kit/build-hub.py`,
   `science/lesson-kit/build-hub.py`, and the stale per-app
   `mathematics/grade-1-app/add-header-bars.py`.
 
-  Be exact about what that leaves, because the two halves recover differently
-  and it was nearly written down wrong. Those subjects' **lesson pages** take
-  the fix for free the next time they rebuild - they get their bar from the
-  shared tool. Their **hubs** do not: each hub's CSS is its own subject's
-  `build-hub.py`, so every hub keeps the overflow until somebody edits that
-  file in that lane. Verified on the currently built pages, 2026-09-16: science,
-  global-perspectives and art-and-design all still read `flex: 0 0 auto` on both
-  their hub and their lesson pages.
+  Be exact about what that leaves. With the shared tool reverted, the other
+  subjects get NOTHING for free: their hubs overflow (each hub's CSS is its own
+  subject's `build-hub.py`) and so do their lesson pages (the shared bar is back
+  to `0 0 auto`). Global Perspectives and Art & Design were fixed on 2026-09-17
+  and reverted the same day at the owner's instruction, live pages included.
+
+  Their hubs carry a SECOND defect the header fix does not touch, found on
+  Global Perspectives and worth knowing before anyone measures one: `.hubhead p`
+  is written for the description (46ch, 19px, muted) and out-specifies
+  `.eyebrow` (0,1,1 against 0,1,0), so a 13px teal label is drawn at 19px with
+  `white-space: nowrap` - 455px of text in a 335px box, a further ~100px of
+  overflow on the subject with the longest name. Computing's own
+  `build-hub.py` fixes it with `:not(.eyebrow)`; the other three still have it.

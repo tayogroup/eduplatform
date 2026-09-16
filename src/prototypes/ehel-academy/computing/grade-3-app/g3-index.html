@@ -384,6 +384,17 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
+
+  /* ---- Computing's own header-bar sizing - own-header-css.py ----
+     The shared add-header-bars.py draws this bar with `.eh-b1right` at
+     `flex: 0 0 auto`, which was right before add-lesson-search.py began
+     injecting a 141px search field into it. A no-shrink flex item sizes to
+     max-content whatever the viewport does: 44px off the right at 375px, with
+     the voice toggle carried off the screen. Appended here, last in the sheet,
+     so it wins on order without editing a file that belongs to every subject. */
+  .eh-b1right { flex: 0 1 auto; min-width: 0; }
+  .eh-icon { flex: 0 0 auto; }
+  @media (max-width: 480px) { .eh-picker { display: none; } }
 </style>
 
 <header class="eh-bar1">

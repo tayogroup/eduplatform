@@ -107,17 +107,23 @@ $SUBJECTS = [
     // units, 1:1, so THE UNIT PROBLEM does not apply: the standalone pages
     // report the same ids the shell writes.
     //
-    // The two levels number their units differently and both are correct.
-    // Level 1 starts at ZERO (u00 Letters and Sounds .. u19) and Level 2 at
-    // ONE (u01 .. u20), so the levels are NOT parallel and a reader checking
-    // one cannot infer the other. The `grade` key here is the CEFR level, not
-    // a school year -- the same field-name trap the Wehel allowance carries
-    // for this subject, where `grade` in the payload is a level too.
+    // The levels number their units differently and all are correct.
+    // Level 1 starts at ZERO (u00 Letters and Sounds .. u19); Levels 2 and 3
+    // start at ONE (u01 .. u20), so the levels are NOT parallel and a reader
+    // checking one cannot infer the others. The `grade` key here is the CEFR
+    // level, not a school year -- the same field-name trap the Wehel allowance
+    // carries for this subject, where `grade` in the payload is a level too.
+    //
+    // Level 3 (Cambridge 0876, Stages 7-9, A2 to B1) was added on 2026-09-17,
+    // the day its app was deployed. It is the LAST level: 4 (C1) and 5 (C2)
+    // were dropped by the owner on 2026-09-16, so this table is complete for
+    // this subject and a fourth row would be wrong rather than missing.
     'intensive-english' => [
         'entry' => RP_HOST . 'Ehel%20Primary/app/intensive-english/index.html',
         'targets' => [
             1 => ['ehel-intensive-eng-l01', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-1-v2/index.html'],
             2 => ['ehel-intensive-eng-l02', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-2-v2/index.html'],
+            3 => ['ehel-intensive-eng-l03', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-3-v2/index.html'],
         ],
     ],
     'science' => [

@@ -18,7 +18,8 @@ Stages 1-3, **Pre-A1 to A1**. The audience is **adult ESL learners** — the own
 restated it on 2026-09-12 after a draft of this rebuild described the course as
 age-neutral, which it is not. **Level 2 = Stages 4-6, A1 to A2, rebuilt the
 same way on 2026-09-12** (commit `1fcf959c7`): 176/176 objectives, 585 words,
-20/20 units, gate green — built and committed, NOT narrated and NOT deployed.
+20/20 units, gate green. Narrated, deployed and routed since; the note at the
+foot of this file that said otherwise was true for four days.
 It replaced a B1 course, and that gap is why it had to: Level 1 exits at a
 secure A1 and Level 2 opened at B1, so nothing taught A1 to B1 and a learner
 finishing Level 1 met a course two CEFR levels above them on the first screen.
@@ -33,6 +34,26 @@ the level it genuinely belongs to.
 `src/curriculum/cambridge-english-0057.json` comes from
 `tools/extract-cambridge-esl-framework.py`, run on the official text PDF — the
 owner's OneDrive copy is a page capture with no text layer.
+
+**Level 3 is the LAST level, and it is blocked on ONE FILE.**
+`src/curriculum/cambridge-english-0876.json` does not exist. Nothing in
+`src/curriculum` mentions 0876 at all — only this file, the plan, the two
+manifests built from it and the authoring prompt do, and none of those is a
+framework.
+`tools/extract-cambridge-esl-framework.py` already writes the right shape (it
+produced 0057); it needs the official 0876 PDF. **`0861` is in the repo and is
+not a substitute**: it is Lower Secondary English as a FIRST language, the same
+distinction that made 0057 the choice over 0058 here. The plan entry said B2,
+blocked on "Grades 9-12 do not exist", until 2026-09-16 — stale from the era
+when Level 3 meant a B2 course cut from school grades, and a B2 Level 3 would
+have recreated the exact gap the Level 2 rebuild closed.
+
+**Levels 4 (C1) and 5 (C2) were dropped on 2026-09-16** (owner). The course ENDS
+at B1, and the reason is in the plan's `whyTheCourseStopsAtB1`: the contract
+design stops first. Every framework file in `src/curriculum` stops at stage 9,
+and above it Cambridge's ESL route is IGCSE — a qualification syllabus, not the
+per-stage objectives `build-intensive-units.js` reads. A Level 4 could not have
+been built the way 1-3 are.
 
 **The plan is the contract, and the build holds each unit to it.**
 `course-plan.json` places every 0057 objective of the level's stages in exactly
@@ -121,7 +142,7 @@ Note the catalogue also lists **Art & Design Stage 3**, committed by another
 session and not deployed when this was written — worth checking before that
 sync runs.
 
-### Level 2, rebuilt 2026-09-12 (`1fcf959c7`) — built, NOT shipped
+### Level 2, rebuilt 2026-09-12 (`1fcf959c7`), shipped since
 
 Same pipeline, same prompt, Stages 4-6 and A1 to A2. 176/176 objectives, 585
 words, 20/20 units, gate green, 0 sentences over any band's ceiling. Three
@@ -147,6 +168,58 @@ until it bit:
   question turned on "receipt", which the rebuilt Level 1 does not teach.
   A learner failing a section was sent to a unit that is not there.
 
-**Not narrated and not deployed** — both need the owner, and there is no
-`level-2-app` yet either.
+**Narrated, built and deployed since**: `level-2-app` exists, is routed, and
+Level 2's narration shipped with Level 1's.
+
+## The Interchange enhancement pass (2026-09-16)
+
+Both levels measured against Interchange (1, 2 and 3) and four gaps closed.
+`docs/ehel-intensive-english-authoring-prompt.md` carries the rules; what is
+here is what the measuring taught.
+
+- **Connected speech, section K, a 20-unit map PER LEVEL.** Neither level taught
+  any: `intonation` 0 occurrences, `linked sound` 0, `schwa` 0, `rhythm` 0.
+  **The two levels are not the same case.** At Stages 1-3, 0057 asks only for
+  intelligibility (`1Sc.04`, `2Sc.04`, `3Sc.05`), so Level 1's map is RECEPTIVE
+  and an outcome claiming productive stress there would claim above band. At
+  Stage 6 it is the CONTRACT: `6Sc.05` names intonation and stress at word,
+  phrase and sentence level.
+- **Level 2 was BREACHING that contract and no gate could see it.** `6Sc.05` was
+  placed in Unit 20 and cited by an outcome about "far, much and a lot", so the
+  build reported 176/176. **The gate checks a placed code is NAMED by an
+  outcome, never that the outcome is about it.** Unit 20 now teaches it.
+- **Survival lexis: L1 +28, L2 +21.** `computer`, `internet` and `passport` had
+  been absent from the whole course. **Measure a level against the CUMULATIVE
+  list, never its own** — `boil`, `mix`, `cut` and `pour` look like Level 2 gaps
+  and are all Level 1 Unit 15.
+- **`functions`**: 4-8 named speech acts per unit, so something in the repo
+  answers "which speech acts can this learner perform?". Nothing did, which is
+  why the lexis gap went unnoticed.
+- **The quiz was 480 of 480 "Multiple choice"**, the string hard-coded in the
+  builder. 134 items (28%) are now answered by WRITING, with the four options
+  beside them as a word bank so the item stays as well defined as it was.
+  Derived by the builder (`answerMode`), capped at four per unit, an authored
+  `mode` overrules. Dropping the options entirely does NOT work: only 22 of 480
+  have four options that are forms of one word.
+
+Four things that cost a check:
+
+- **The lesson pipeline is NOT the two commands above.** Running
+  `build-lessons.py` alone stripped the modulepreloads, the `pwsEndpoint`
+  preconnect and the `.lesson-back` styles — the shipped pages carry ~17 further
+  steps from `../../mathematics/lesson-app-tools`. Six of those tools REFUSE on
+  this build (deck shape, or Maths content files it has none of) and
+  `self-host-fonts` is deliberately skipped. Validate in a scratch copy by
+  diffing against the shipped pages before writing to `level-N-app`.
+- **A quiz blank is written TWO ways here**, `___` and `...`, and a detector
+  that knew only the first reported six units as having none when three of them
+  had thirteen between them. A report that names something is worth opening.
+- **`course-manifest.json` is learner-facing.** It carries the level ladder, is
+  built FROM `course-plan.json`, and the shell app fetches it — so a plan change
+  is not finished until the manifests are rebuilt, committed AND uploaded.
+- **Audit the word pictures for every word added.** Four were wrong and shipped
+  as-is would have taught nonsense: `back` drew a return arrow and `stomach` a
+  pregnancy (ien1); `interview` drew a radio microphone, and `online` and
+  `festival` drew the same glyph as `internet` and `celebrate` INSIDE one word
+  group (ien2). Blanks are honest; a wrong picture is not.
 

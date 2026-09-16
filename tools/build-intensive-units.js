@@ -218,6 +218,18 @@ function buildUnit(authored) {
     }
   }
 
+  // --- named functions ------------------------------------------------------
+  // Optional, because 35 units predate it. Wrong when PRESENT is still wrong:
+  // a list of one is not a syllabus, and a list of twenty is not a unit.
+  if (authored.functions !== undefined) {
+    const list = authored.functions;
+    if (!Array.isArray(list) || list.length < 4 || list.length > 8) {
+      problems.push(`${where}: functions must be a list of 4-8 speech acts (got ${Array.isArray(list) ? list.length : typeof list}).`);
+    } else if (list.some((item) => typeof item !== "string" || !item.trim())) {
+      problems.push(`${where}: every function must be a non-empty string.`);
+    }
+  }
+
   // --- the word contract ----------------------------------------------------
   // The plan allocates every word to one unit, so the level can never teach a
   // word twice however many people author it at once. An added word is the first
@@ -523,6 +535,12 @@ function buildUnit(authored) {
       ...(planUnit.capstone ? { capstone: true } : {}),
       unitOverview: authored.overview,
       learningPath: (authored.learningPath || []).join("\n"),
+      // What the unit lets the learner DO, in the learner's own words. The
+      // patterns are HOW it does it; these are what it is FOR. Optional: the
+      // 35 units authored before this field existed do not carry it.
+      ...(Array.isArray(authored.functions) && authored.functions.length
+        ? { functions: authored.functions.map((item) => String(item).trim()).filter(Boolean) }
+        : {}),
       origin: `Compressed from ${sourceRef}`,
       sourceFile: sourceRef,
       reviewStatus: REVIEW,

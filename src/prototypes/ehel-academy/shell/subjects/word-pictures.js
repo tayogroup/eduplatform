@@ -1084,6 +1084,18 @@ GRADE_WORD_PICTURES.ien1 = {
   go: "",              // "walk or ride to a new place"; 🟢 is a traffic signal
   table: "",           // 🍽️ is a place setting, and plate and dinner already use it
   often: "",           // 🔁 means repeat, which Unit 0 teaches
+  // --- the survival words added on 2026-09-16 (Units 3, 9, 12, 17, 18) ------
+  // The clinic and the shops were named as contexts this course teaches and
+  // were not carried by taught words. Two of the new words resolved to a
+  // picture of something else entirely, which is what this half of the map
+  // exists to stop.
+  back: "",            // the body part. 🔙 is a return arrow. The note above
+                       // retired `back` as untaught; Unit 3 teaches it again, so
+                       // the wrong picture came back with the word
+  stomach: "",         // no emoji shows it; the shared map's 🫃🏾 is a pregnancy
+  fever: "🌡️",       // the thermometer. 🤒 is already `ill`
+  menu: "📋",          // the list you read, not a plate of food
+  bill: "🧾",          // the paper you pay, as the shared map does `receipt`
 };
 // Level 2 was rebuilt on Cambridge 0057 on 2026-09-12 (Stages 4-6, A1 to A2,
 // adult ESL), with a new 585-word vocabulary. The entries below were found the

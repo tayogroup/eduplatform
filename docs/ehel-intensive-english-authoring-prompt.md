@@ -150,6 +150,7 @@ every id, sequence number, rubric, answer key and dictionary entry from it.
   "title": "Colours and Where Things Are",  // the plan title, exactly
   "overview": "…",                    // 2-4 short sentences: what you can DO after this unit
   "learningPath": ["…", "…"],         // 6-8 steps, each one short line, in the order of the app's sections
+  "functions": ["…", "…"],            // 4-8 speech acts this unit lets the learner PERFORM (§3 K)
   "image": "", "imageAlt": "",        // leave empty
   "lectureScript": "…",               // the spoken lesson, one idea per line, "\n" between lines (§3 G)
   "outcomes": [                       // 5-8
@@ -284,7 +285,11 @@ Pre-A1 a long sentence is not harder, it is unreadable.
     contexts are an adult's own day — work, the shops, the clinic, appointments,
     forms, travel, money. Assume an adult, but never a particular life: where a
     task would need a job, a car, a home or children, let the learner invent it
-    or offer the other side ("at work, or where you study").
+    or offer the other side ("at work, or where you study"). **Where the plan
+    allocates a domain to this unit** — the clinic, the shops, eating out,
+    travel, money — the unit must TEACH the words that domain needs, not merely
+    mention it. A unit that sends the learner to a chemist without teaching what
+    hurts has named a context and not delivered it.
 11. **Address the learner as you.** Never "the student", never "learners".
 12. **UK English**, in spelling and vocabulary.
 
@@ -397,6 +402,15 @@ Pre-A1 a long sentence is not harder, it is unreadable.
 45. **Checkpoint units** (the last unit of a stage) spend at least four of their
     twelve quiz items on earlier units of the same stage, and their assignment
     draws on the whole stage.
+45a. **The twelve quiz items are not twelve of the same question.** Every item
+    is multiple choice, because that is what the app draws (43a) — so the
+    variety has to come from what is ASKED. Across the twelve, cover at least
+    four of: pick the correct form; pick the word that fits the meaning; spot
+    the sentence with the mistake; match the answer to this line of the text;
+    which comes first; which means the same.
+45b. **At least two items ask the learner to PRODUCE before choosing.** The stem
+    poses the task — "You want to say you did this yesterday. Which is right?" —
+    rather than presenting four forms to compare cold.
 
 #### I. The AI tutor
 
@@ -404,6 +418,80 @@ Pre-A1 a long sentence is not harder, it is unreadable.
 47. Never asks for personal, immigration, medical or financial details.
 48. The tutor is a rehearsal partner, not a marking service. No task's only
     check is the tutor's opinion.
+
+#### J. Named functions — what the unit is FOR
+
+49. **Every unit names 4-8 functions** in `functions`: the speech acts the
+    learner can perform when they finish, written as the learner would say
+    them, not as grammar. "Say what hurts", "ask how much something costs",
+    "refuse an invitation politely", "leave a phone message" — never "use the
+    present simple". The patterns are HOW the unit does it; the functions are
+    what it is for.
+50. **A function nothing exercises is not a function.** Each one is performed in
+    a speaking, writing or activity task of this unit. The self-assessment
+    statements should be recognisably the same list.
+
+#### K. Connected speech — teaching the learner to HEAR English
+
+A self-study learner has nobody to tell them that "did you" is said "dijoo".
+They meet the written form, never hear it, and conclude they cannot understand
+English — when what they cannot yet do is decode it. Every unit therefore
+carries one connected-speech point, and it is taught for the EAR first.
+
+51. **One connected-speech focus per unit**, from the map in 55, in the unit's
+    existing `Pronunciation` speaking slot. It is not a new section: it replaces
+    or extends the task already there, and uses only this unit's words and
+    patterns. Never a phonetic alphabet, and never a term the learner has not
+    been shown — say "we join the two words", not "catenation".
+52. **Receptive first, and the outcome stays at band.** The task teaches the
+    learner to HEAR the form and recognise it in writing. Production is invited,
+    never required beyond the band: at Stages 1-3 the Cambridge objectives are
+    intelligibility only (`1Sc.04`, `2Sc.04`, `3Sc.05`), and the suprasegmental
+    objective `6Sc.05` belongs to Stage 6, which is Level 2. Write "You will
+    hear …. Now try it", never "Use falling intonation". An outcome claiming
+    productive control of stress or intonation at Stages 1-3 claims above its
+    band, and the build will fail it.
+53. **Show the two forms together**, slow then normal, always in that order,
+    because the learner needs to know the slow form is not wrong:
+
+        Slow:   Did you eat?
+        Normal: Did-you eat?   (sounds like "dijoo")
+
+    Respell in ordinary letters the learner can read. The respelling is a hint
+    for the ear, not a spelling to learn — say so in the task.
+54. **The check is a discrimination the learner can actually make ALONE.** The
+    page shows the task text and narrates that same text, so a "which did you
+    hear?" item whose options are printed hands over its own answer. Two designs
+    work. The learner records the contrast and listens back to their own voice
+    ("say thirteen, then thirty — are your two lines different?"), which is the
+    pattern the speaking tasks already use; or they decide from written evidence
+    ("which of these two would you hear in fast speech?"). Like every other
+    practice in this course, it states its answer.
+55. **The map — one per unit.** It runs word level, then phrase level, then
+    sentence level, and each point uses language the unit already teaches.
+
+    | Unit | Focus | Anchored in |
+    | --- | --- | --- |
+    | 0 | Sounds English spells oddly: th, sh, ch | the alphabet |
+    | 1 | Word stress: SOR-ry, hel-LO — which part is strong | greetings |
+    | 2 | Plural ends: books, keys, boxes (s, z, iz) | plurals |
+    | 3 | Two words, one strong: a red BAG — the thing, not the colour | adjective + noun |
+    | 4 | can weak ("kun"), can't strong | can / can't |
+    | 5 | -ing said "-in", and I am to I'm | present continuous |
+    | 6 | Joining a consonant to a vowel: on_a Monday | prepositions of time |
+    | 7 | do you to "d'you"; does he to "duzzee" | questions with do |
+    | 8 | there is to "there's"; there are to "there're" | there is / there are |
+    | 9 | THIR-teen against THIR-ty: where the stress goes | numbers to 100 |
+    | 10 | -ed: worked, played, waited (t, d, id) | past simple |
+    | 11 | will to "I'll"; going to heard as "gonna", never written | will / future |
+    | 12 | Sentence stress: the words that carry the meaning | prepositions |
+    | 13 | Down at a full stop; up on a yes/no question | punctuation |
+    | 14 | Third person -s: works, plays, watches | present simple |
+    | 15 | Stress on the step word: FIRST, NEXT, then TURN left | instructions |
+    | 16 | was and were weak ("I wuz late"); did you to "dijoo" | past simple |
+    | 17 | than to "thun": bigger than this | comparatives |
+    | 18 | Have you ever to "hav-yoo-ever"; must to "mus" | present perfect, must |
+    | 19 | to said "tuh": I go to work; because to "b'cause" | to + verb, because |
 
 ### 4 — POSITIVE QUALITY BAR
 
@@ -449,6 +537,15 @@ Pre-A1 a long sentence is not harder, it is unreadable.
     every item explained, distractors of mixed kinds.
 14. **Comprehension**: every question anchored; one on the real-world document.
 15. **Carousel fit**: the longest `explanation` and `rule`, in characters.
+16. **Functions**: the 4-8 named functions, and for each, the task where the
+    learner performs it.
+17. **Connected speech**: the unit's focus from the map in §3 K 55, the task
+    that carries it, and its stated answer. Confirm the outcome claims no
+    productive control of stress or intonation.
+18. **Domain delivery**: for each domain the plan allocates to this unit, the
+    words taught that carry it.
+19. **Quiz variety**: which of the 45a kinds appear and how many of each, plus
+    the two 45b production-first stems, quoted.
 
 ### 7 — RETURN FORMAT
 

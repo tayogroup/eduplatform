@@ -172,6 +172,9 @@ def lesson_payload(unit, pictures):
         "band": unit["unit"]["cefr"]["band"],
         "overview": unit["unit"]["unitOverview"],
         "path": [p for p in (unit["unit"].get("learningPath") or "").split("\n") if p.strip()],
+        # What the unit lets the learner DO, in their words. Absent on the 15
+        # units authored before the field existed, so always a list.
+        "functions": list(unit["unit"].get("functions") or []),
         "outcomes": [{"can": o["cefr"]["descriptor"], "detail": o["learningOutcome"]} for o in unit["outcomes"]],
         "lecture": unit["visual"]["lectureScript"],
         "groups": groups,

@@ -106,6 +106,10 @@
       '<p class="eyebrow">' + esc(LESSON.levelLabel) + " &middot; Unit " + LESSON.unit + " &middot; CEFR " + esc(LESSON.band) + "</p>" +
       "<h2>" + esc(LESSON.title) + "</h2>" +
       '<p class="lead">' + esc(LESSON.overview) + "</p>" +
+      (LESSON.functions && LESSON.functions.length
+        ? '<div class="panel"><h3>What you will be able to do</h3><ul class="cando">' +
+          LESSON.functions.map((f) => "<li>" + esc(f) + "</li>").join("") + "</ul></div>"
+        : "") +
       '<div class="panel"><h3>By the end of this unit</h3><ul class="cando">' +
       LESSON.outcomes.map((o) => "<li>" + esc(o.can) + "<small>" + esc(o.detail) + "</small></li>").join("") +
       "</ul></div>" +

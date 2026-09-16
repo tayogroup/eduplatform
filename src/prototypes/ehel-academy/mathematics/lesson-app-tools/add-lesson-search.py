@@ -475,9 +475,18 @@ def patch_hub(app):
                '<option value="" selected>Jump to a lesson…</option>' + opts +
                '</select></div>\n'
                '</header>\n' + PANEL + '\n')
-        j = s.find('<div class="wrap">')
+        # The hub's outer container. `.wrap` in every build except the two
+        # Intensive English hubs, whose build-hub.py emits `.hubwrap` -- a
+        # different width, so it is a different class rather than a rename.
+        HUB_CONTAINERS = ('<div class="wrap">', '<div class="hubwrap">')
+        j = -1
+        for container in HUB_CONTAINERS:
+            j = s.find(container)
+            if j >= 0:
+                break
         if j < 0:
-            print("  REFUSED %-23s no .wrap to put the bar before" % name)
+            print("  REFUSED %-23s no hub container (%s) to put the bar before"
+                  % (name, ", ".join(HUB_CONTAINERS)))
             return False
         s = s[:j] + bar + s[j:]
         # the hub has no lesson IIFE, so the picker needs its own handler; it

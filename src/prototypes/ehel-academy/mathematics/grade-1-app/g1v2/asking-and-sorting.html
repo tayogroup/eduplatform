@@ -790,6 +790,16 @@
       <div class="bigbtns"><button type="button" class="big small teal" id="wp13nx" hidden>Next story</button></div>
       <p class="score" id="wp13sc"></p>
     </section>
+<!-- 14  1Ss.02  Will it always work? -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Somebody has an idea about numbers. Your job is to test it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Testing an idea is not the same as agreeing with it.</s><s>You try it on one example, then on another.</s><s>If it works both times, you ask the big question: does it ALWAYS work?</s><s>And if you find even one example where it does not work, then it does not always work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often decide after one try.</s><s>One try is not enough to say always.</s><s>But one try IS enough to say NOT always, if that try breaks the idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So test it twice, then say whether it always works.</s></mstts:express-as>' data-say="Somebody has an idea. Test it on each example, then say whether it always works.">
+      <div class="slide-head"><span class="n">14</span><h2>Will it always work?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="at14say">Test the idea on each example. Then say whether it always works.</span></div>
+      <div class="stage" id="at14st"></div>
+      <div class="choices" id="at14ch"></div>
+      <p class="fb" id="at14fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="at14nx" hidden>Next test</button></div>
+      <p class="score" id="at14sc"></p>
+    </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If the question shows you a graph, read the answer off the graph.</s><s>If it asks about a hoop or a box, check the rule and answer yes or no.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayck">Tap the answer.</span></div>
@@ -1879,6 +1889,9 @@
     });
   })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+  /* ehel-always-true: the claim under test, kept on screen while it is tested */
+  const atClaim = (who, idea) => '<div class="at-claim"><p class="at-k">The idea we are testing</p>' +
+    '<p class="at-i">' + idea + '</p><p class="at-w">' + who + '</p></div>';
   /* ==== ehel-differentiation: the tiered runner - see grade-1-app/add-differentiation.py ====
      The story step, with Ready to Go's Support and Extension. A wrong answer puts
      a NARROWER version of the same problem next; finishing with at most one slip
@@ -2548,7 +2561,7 @@
         $("fbck").className = "fb good";
         $("fbck").textContent = "You got " + rightc + " out of " + CHECK.length + "!";
         say("You got " + rightc + " out of " + CHECK.length + "!");
-        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(13, "Well done!");
+        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(14, "Well done!");
         else retryCheck($("fbck"), $("chck"), rightc, CHECK.length, function () { qc = 0; rightc = 0; askCheck(); });
       } else askCheck();
     }, 2800);
@@ -2693,11 +2706,45 @@
   });
   scPaint();
 
+  /* ---- 14: will it always work - specialising then generalising ---- */
+  secondStep({
+    el: { say: $("at14say"), stage: $("at14st"), ch: $("at14ch"), fb: $("at14fb"), score: $("at14sc"), next: $("at14nx") },
+    label: "Test",
+    items: [
+      { ask: "6 children chose mango and 4 chose banana, so the mango bar is taller. Did more children choose mango?",
+        pic: atClaim("Ali", "On a block graph, the tallest bar is the one the most children chose."),
+        opts: [{ t: "Yes, 6 is more than 4", ok: true }, { t: "No, banana was more popular" }],
+        why: "A taller bar means more children. The idea holds so far." },
+      { ask: "2 chose apple and 5 chose orange, so the orange bar is taller. Did more children choose orange?",
+        pic: atClaim("Ali", "On a block graph, the tallest bar is the one the most children chose."),
+        opts: [{ t: "Yes, 5 is more than 2", ok: true }, { t: "No, apple was more popular" }],
+        why: "Taller again means more. The idea has held twice now." },
+      { ask: "So does Ali's idea always work?",
+        pic: atClaim("Ali", "On a block graph, the tallest bar is the one the most children chose."),
+        opts: [{ t: "Yes, it always works", ok: true }, { t: "It works sometimes" }, { t: "It never works" }],
+        why: "Each block stands for one child, so the tallest stack is always the most children." },
+      { ask: "The graph shows 6 mangoes. Hodan writes the same answers in a table. How many mangoes does the table show?",
+        pic: atClaim("Hodan", "If you write the same answers in a table instead of a graph, the numbers change."),
+        opts: [{ t: "6, the same", ok: true }, { t: "More than 6" }, { t: "Fewer than 6" }],
+        why: "The answers did not change, only the way they are drawn. The idea has not worked once yet." },
+      { ask: "The graph shows 4 bananas. How many bananas does her table show?",
+        pic: atClaim("Hodan", "If you write the same answers in a table instead of a graph, the numbers change."),
+        opts: [{ t: "4, the same", ok: true }, { t: "More than 4" }, { t: "Fewer than 4" }],
+        why: "The same again. Drawing the answers another way never changes them." },
+      { ask: "So does Hodan's idea always work?",
+        pic: atClaim("Hodan", "If you write the same answers in a table instead of a graph, the numbers change."),
+        opts: [{ t: "No, it never works", ok: true }, { t: "Yes, it always works" }, { t: "It works sometimes" }],
+        why: "A list, a table, a block graph and a pictogram can all show the very same answers. Only the drawing changes, never the numbers." },
+    ],
+    finish: 13,
+    done: "You can test an idea and say whether it always works.",
+  });
+
   /* ---- stickers ---- */
   const STICKERS = [
     ["🙋", "I asked everyone"], ["📝", "I can read a list"], ["📋", "I can fill a table"], ["📶", "I built a block graph"],
     ["📊", "I can read a graph"], ["🖼️", "I can read a pictogram"], ["⭕", "Sorting into a hoop"], ["🔗", "I can read a Venn diagram"],
-    ["🗂️", "A Carroll diagram"], ["❓", "Answering the question"], ["💭", "What we can say"], ["🕵️", "Spot the mistake"], ["🎯", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
+    ["🗂️", "A Carroll diagram"], ["❓", "Answering the question"], ["💭", "What we can say"], ["🕵️", "Spot the mistake"], ["🎯", "Story problems"], ["🔬", "Testing an idea"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
@@ -3637,4 +3684,14 @@
     color: var(--muted); font-weight: 700; margin: 0 0 4px; }
   @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
   @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
+</style>
+
+<style>/* ehel-always-true - see add-always-true.py */
+  .at-claim { max-width: min(92%, 470px); margin: 0 auto; background: var(--card); border: 3px solid var(--gold);
+    border-radius: 18px; padding: 13px 18px 10px; }
+  .at-k { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 11px; letter-spacing: .08em;
+    text-transform: uppercase; font-weight: 800; color: var(--gold); }
+  .at-i { margin: 0; font-size: clamp(18px, 4.2vw, 23px); line-height: 1.35; color: var(--ink); }
+  .at-w { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px;
+    color: var(--muted); text-align: right; }
 </style>

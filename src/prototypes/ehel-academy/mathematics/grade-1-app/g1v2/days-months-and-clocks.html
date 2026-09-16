@@ -703,6 +703,16 @@
       <div class="bigbtns"><button type="button" class="big small teal" id="wp8nx" hidden>Next story</button></div>
       <p class="score" id="wp8sc"></p>
     </section>
+<!-- 9  1Gt.03  Will it always work? -->
+<section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Somebody has an idea about numbers. Your job is to test it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Testing an idea is not the same as agreeing with it.</s><s>You try it on one example, then on another.</s><s>If it works both times, you ask the big question: does it ALWAYS work?</s><s>And if you find even one example where it does not work, then it does not always work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often decide after one try.</s><s>One try is not enough to say always.</s><s>But one try IS enough to say NOT always, if that try breaks the idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So test it twice, then say whether it always works.</s></mstts:express-as>' data-say="Somebody has an idea. Test it on each example, then say whether it always works.">
+      <div class="slide-head"><span class="n">9</span><h2>Will it always work?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="at9say">Test the idea on each example. Then say whether it always works.</span></div>
+      <div class="stage" id="at9st"></div>
+      <div class="choices" id="at9ch"></div>
+      <p class="fb" id="at9fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="at9nx" hidden>Next test</button></div>
+      <p class="score" id="at9sc"></p>
+    </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows a shape, count the sides or ask whether you could hold it.</s><s>If it asks about size, compare the two things.</s><s>If it shows a clock, find the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayck">Tap the answer.</span></div>
@@ -1794,6 +1804,9 @@
     });
   })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+  /* ehel-always-true: the claim under test, kept on screen while it is tested */
+  const atClaim = (who, idea) => '<div class="at-claim"><p class="at-k">The idea we are testing</p>' +
+    '<p class="at-i">' + idea + '</p><p class="at-w">' + who + '</p></div>';
   /* ==== ehel-differentiation: the tiered runner - see grade-1-app/add-differentiation.py ====
      The story step, with Ready to Go's Support and Extension. A wrong answer puts
      a NARROWER version of the same problem next; finishing with at most one slip
@@ -2421,7 +2434,7 @@
         $("fbck").className = "fb good";
         $("fbck").textContent = "You got " + rightc + " out of " + CHECK.length + "!";
         say("You got " + rightc + " out of " + CHECK.length + "!");
-        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(8, "Well done!");
+        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(9, "Well done!");
         else retryCheck($("fbck"), $("chck"), rightc, CHECK.length, function () { qc = 0; rightc = 0; askCheck(); });
       } else askCheck();
     }, 2800);
@@ -2615,6 +2628,40 @@
   });
   scPaint();
 
+  /* ---- 9: will it always work - specialising then generalising ---- */
+  secondStep({
+    el: { say: $("at9say"), stage: $("at9st"), ch: $("at9ch"), fb: $("at9fb"), score: $("at9sc"), next: $("at9nx") },
+    label: "Test",
+    items: [
+      { ask: "It is 3 o'clock. Does the long hand point at the 12?",
+        pic: atClaim("Amina", "At every o'clock time, the long hand points at the 12."),
+        opts: [{ t: "Yes, straight up at 12", ok: true }, { t: "No, it points at the 3" }],
+        why: "At o'clock the long hand is always straight up. The short hand is the one pointing at the 3." },
+      { ask: "Now it is 9 o'clock. Does the long hand point at the 12?",
+        pic: atClaim("Amina", "At every o'clock time, the long hand points at the 12."),
+        opts: [{ t: "Yes, straight up at 12", ok: true }, { t: "No, it points at the 9" }],
+        why: "Straight up again. The idea has held twice now." },
+      { ask: "So does Amina's idea always work?",
+        pic: atClaim("Amina", "At every o'clock time, the long hand points at the 12."),
+        opts: [{ t: "Yes, it always works", ok: true }, { t: "It works sometimes" }, { t: "It never works" }],
+        why: "O'clock means no minutes have passed yet, and that is exactly where the long hand sits: straight up at 12." },
+      { ask: "Musa thinks about growing from a baby into a child. Is that measured in years?",
+        pic: atClaim("Musa", "Everything that takes a long time is measured in years."),
+        opts: [{ t: "Yes, that takes years", ok: true }, { t: "No, that takes minutes" }],
+        why: "Growing up takes years, so the idea has worked once." },
+      { ask: "A whole school day feels long. Is a school day measured in years?",
+        pic: atClaim("Musa", "Everything that takes a long time is measured in years."),
+        opts: [{ t: "No, it is measured in hours", ok: true }, { t: "Yes, it takes years" }],
+        why: "A school day is long for a child, but it is hours, not years. That breaks the idea." },
+      { ask: "So does Musa's idea always work?",
+        pic: atClaim("Musa", "Everything that takes a long time is measured in years."),
+        opts: [{ t: "No, it does not always work", ok: true }, { t: "Yes, it always works" }, { t: "It never works" }],
+        why: "Long things can be hours, days or weeks as well as years. You pick the unit that fits." },
+    ],
+    finish: 8,
+    done: "You can test an idea and say whether it always works.",
+  });
+
   /* ---- stickers ---- */
   const STICKERS = [
     ["📅", "Days of the week"],
@@ -2623,7 +2670,7 @@
     ["⏰", "Telling the time"],
     ["⏱️", "How long it takes"],
     ["🕞", "Find the clock"],
-    ["🕵️", "Spot the mistake"], ["🎯", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
+    ["🕵️", "Spot the mistake"], ["🎯", "Story problems"], ["🔬", "Testing an idea"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
@@ -3576,4 +3623,14 @@
     color: var(--muted); font-weight: 700; margin: 0 0 4px; }
   @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
   @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
+</style>
+
+<style>/* ehel-always-true - see add-always-true.py */
+  .at-claim { max-width: min(92%, 470px); margin: 0 auto; background: var(--card); border: 3px solid var(--gold);
+    border-radius: 18px; padding: 13px 18px 10px; }
+  .at-k { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 11px; letter-spacing: .08em;
+    text-transform: uppercase; font-weight: 800; color: var(--gold); }
+  .at-i { margin: 0; font-size: clamp(18px, 4.2vw, 23px); line-height: 1.35; color: var(--ink); }
+  .at-w { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px;
+    color: var(--muted); text-align: right; }
 </style>

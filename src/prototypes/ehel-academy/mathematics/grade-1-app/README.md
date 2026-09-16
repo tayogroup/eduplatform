@@ -89,6 +89,7 @@ python add-second-steps.py --write                     # a second step for 17 si
 python add-spot-the-mistake.py --write                 # critiquing and improving, one named Cambridge error per item
 python add-story-problems.py --write                   # one-step word problems in the Cambridge Stage 1 shape
 python add-differentiation.py --write                  # Ready to Go's Support and Extension, on the story step
+python add-always-true.py --write                      # will it always work: specialising, then generalising
 python lengthen-days-check.py --write                  # Days asked 5 questions on three objectives; now 8
 python add-self-check.py --write                       # the Workbook's "I can..." page, on the sticker shelf
 python fix-turn-and-tree.py --write                    # the turning circle's dot, the short tree
@@ -184,14 +185,14 @@ two textual variants and none of them should carry the risk.
 `validate-against-framework.py` reports **36/36** (re-measured 2026-09-16, repo
 copies), per slide, every clause on screen — the `OK*` that used to sit against
 1Nc.01, taught only ALOUD, was closed by `show-conservation.py`. The shared
-`check-answer-keys.py` reads **361** questions across the seven lessons,
+`check-answer-keys.py` reads **403** questions across the seven lessons,
 verifies **160** and finds none wrong. Both are mutation-tested; a gate nobody
 has watched fail is not known to work.
 
 Neither says the teaching is good. Coverage means every objective has a home,
 not that the explanation is correct, well pitched, or free of error.
 
-**201 of the 361 questions cannot be verified by any tool.** "Which shape
+**243 of the 403 questions cannot be verified by any tool.** "Which shape
 has no corners?" has no computable answer, so those are reported as unchecked
 rather than counted as passes — coverage that cannot be falsified is not
 evidence. A wrong key among them reaches a child in silence.
@@ -206,8 +207,7 @@ python build-review-pack.py --out <somewhere>/g1-review-pack.html
 One page, every question in the build — the words a child sees, every option,
 which one is keyed right, and the explanation they are given — with the
 unverifiable ones FIRST, because those are the ones a human read is the only
-check on. It is not a gate and cannot fail. It lists 363 where the checker
-counts 361: a few stems are asked more than once with a different picture each
+check on. It is not a gate and cannot fail. It lists more than the checker counts: a few stems are asked more than once with a different picture each
 time, and each copy is its own thing to read.
 
 **The proportion that cannot be checked went UP with the 2026-09-16 content**

@@ -123,6 +123,10 @@ STEPS = [
     # the other three TWM families the same way; before build-grownup-section.py,
     # which reads those stamps back.
     ("add-characterising.py", ["--write"]),
+    # what the 2026-09-16 end-to-end read of the answer keys found. Near the
+    # END because it matches exact question text, so it must run after every
+    # tool that writes a question; before the hub, whose answer keys quote it.
+    ("fix-read-findings.py", ["--write"]),
     ("build-grownup-section.py", ["--write"]),
 ]
 

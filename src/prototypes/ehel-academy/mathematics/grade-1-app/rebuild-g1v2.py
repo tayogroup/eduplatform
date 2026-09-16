@@ -117,6 +117,12 @@ STEPS = [
     # content tools: it resolves each statement to the step that teaches it by
     # reading the page, so every step must already be on it.
     ("add-self-check.py", ["--write"]),
+    # Characterising and classifying, on the seven steps that ALREADY sort, plus
+    # the data-twm stamps the hub's index is derived from. After every tool that
+    # adds or renames a step, because it finds its host step BY TITLE and stamps
+    # the other three TWM families the same way; before build-grownup-section.py,
+    # which reads those stamps back.
+    ("add-characterising.py", ["--write"]),
     ("build-grownup-section.py", ["--write"]),
 ]
 

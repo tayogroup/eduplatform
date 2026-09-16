@@ -175,7 +175,22 @@ def read_lesson(name):
                 sys.exit("  REFUSED: %s has a check item with no ok:true option:\n    %s"
                          % (name, item.group(1)[:70]))
             keys.append((plain(item.group(1)), plain(ok.group(1).strip().strip('"'))))
-    return steps, codes, keys
+    # THE TWM INDEX, read from the data-twm stamps add-characterising.py writes.
+    # Read from EVERY section rather than from `teaching` above: "How do you
+    # know?" sits between the check and the sticker shelf, which is the one place
+    # a step can go without moving an existing index - so it is in the two
+    # sections `teaching` drops, and an index built from `teaching` would silently
+    # omit the one characteristic this build had first.
+    twm = []
+    for sec in secs:
+        t = re.search(r'<section class="slide"[^>]*\sdata-twm="([^"]+)"', sec)
+        if not t:
+            continue
+        h = re.search(r"<h2>(.*?)</h2>", sec)
+        k = re.search(r'<div class="slide-head"><span class="n">(\d+)</span>', sec)
+        twm.append((int(k.group(1)) if k else 999,
+                    plain(h.group(1)) if h else "?", t.group(1).split()))
+    return steps, codes, keys, sorted(twm)
 
 
 def main():
@@ -185,9 +200,10 @@ def main():
     total = 0
     blocks = []
     changed = []
+    seen_twm = set()
 
     for n, l in enumerate(cfg["lessons"], 1):
-        steps, codes, keys = read_lesson(l["file"])
+        steps, codes, keys, twm = read_lesson(l["file"])
         mins = minutes(len(steps) + 1)
         total += mins
         uniq = sorted(set(codes))
@@ -241,6 +257,26 @@ def main():
         # this page that has to be read BEFORE the lesson rather than after it.
         kit = ('\n      <h4>What to have to hand</h4>\n      <p class="gu-kit">%s</p>'
                % esc(l["materials"])) if l.get("materials") else ""
+        # THE TWM INDEX for this lesson, DERIVED from the pages. The Teacher's
+        # Guide carries a 113-row index of which question exercises which
+        # characteristic and nothing here had an equivalent, so a teacher could
+        # not tell that Sort the shapes is a classifying task and Spot the
+        # mistake is a critiquing one. Per STEP rather than per question, which
+        # is the finest grain these pages have. A hand-kept list would be wrong
+        # the first time a step was renamed; this cannot be, because it is the
+        # stamps themselves.
+        # 999 is the sort sentinel for a section with no numbered head - "How do
+        # you know?" is placed AFTER the check, which is the one position that
+        # moves no existing index, so it has no step number to print. Say where
+        # it is instead; printing the sentinel is how it first reached the page.
+        twmli = "".join(
+            '\n        <li><b>%s</b> (%s) &middot; %s</li>'
+            % (esc(t), ("step %d" % k) if k < 999 else "after the check",
+               esc(", ".join(cs))) for k, t, cs in twm)
+        twmh = ('\n      <h4>Thinking and Working Mathematically</h4>'
+                '\n      <ul>%s\n      </ul>' % twmli) if twm else ""
+        for _k, _t, cs in twm:
+            seen_twm.update(cs)
         blocks.append(
             '\n    <details class="gu">'
             '\n      <summary><b>Lesson %d: %s</b> <span class="gu-meta">%d steps '
@@ -251,9 +287,33 @@ def main():
             '\n      <h4>The steps</h4>'
             '\n      <ul>%s\n      </ul>'
             '\n      <h4>Check answers</h4>'
-            '\n      <ul>%s\n      </ul>%s'
+            '\n      <ul>%s\n      </ul>%s%s'
             '\n    </details>'
-            % (n, esc(l["title"]), len(steps), mins, len(uniq), len(keys), kit, obj, stp, ans, home))
+            % (n, esc(l["title"]), len(steps), mins, len(uniq), len(keys), kit, obj, stp, ans,
+               twmh, home))
+
+    # Cambridge's eight, in the Guide's own order. The sentence below is
+    # ASSEMBLED from what the pages are stamped with, so it cannot claim a
+    # characteristic the build does not exercise - and it names the missing ones
+    # out loud rather than printing a count that reads like a score.
+    TWM8 = ["specialising", "generalising", "conjecturing", "convincing",
+            "characterising", "classifying", "critiquing", "improving"]
+    have = [c for c in TWM8 if c in seen_twm]
+    miss = [c for c in TWM8 if c not in seen_twm]
+    unknown = sorted(seen_twm - set(TWM8))
+    if unknown:
+        sys.exit("  REFUSED: a step is stamped with something that is not one of "
+                 "Cambridge's eight: %s" % ", ".join(unknown))
+    twmnote = (
+        '\n    <p class="gu-twmnote"><b>Thinking and Working Mathematically.</b> '
+        'Cambridge names eight characteristics and flags them on individual questions. '
+        'These lessons exercise <b>%d of the 8</b> &mdash; %s &mdash; and each lesson below '
+        'lists which of its steps does which. %s</p>'
+        % (len(have), esc(", ".join(have)),
+           ("Not addressed: <b>%s</b>. Forming your own mathematical question is not "
+            "something a choice of three buttons can carry, so it is left to you and the "
+            "lesson you teach around this one." % esc(", ".join(miss))) if miss
+           else "All eight are addressed."))
 
     section = (
         START +
@@ -265,6 +325,7 @@ def main():
         'work through it, or print this page for the lot. The minutes are an estimate of '
         'about two and a half minutes a step, not yet timed against a real class, so treat '
         'them as a guide to the length of a sitting rather than a plan.</p>'
+        + twmnote
         + "".join(blocks) +
         '\n  </section>\n  ' + END)
 
@@ -358,6 +419,11 @@ details.gu .gu-home { font-size: 15px; line-height: 1.5; margin: 0; }
    block that is set off rather than run on */
 details.gu .gu-kit { font-size: 15px; line-height: 1.5; margin: 0; padding: 10px 12px;
   border-left: 3px solid var(--teal); background: var(--cell); border-radius: 0 8px 8px 0; }
+/* the TWM note sits above the lessons, so it is the section's own sentence
+   rather than a lesson's - quieter than the lede, set off from it by a rule */
+.grownup .gu-twmnote { font-size: 15px; line-height: 1.55; color: var(--muted);
+  margin: 0 0 16px; padding: 12px 0 0; border-top: 1px solid var(--line); max-width: 74ch; }
+.grownup .gu-twmnote b { color: var(--ink); }
 @media print {
   details.gu { break-inside: avoid; }
   details.gu > summary { list-style: none; }

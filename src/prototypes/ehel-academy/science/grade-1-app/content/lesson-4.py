@@ -158,7 +158,7 @@ LESSON = {
                  q("A glass window is...", "\U0001FA9F", "smooth and see-through", ["rough and bendy", "soft and furry"], "Glass is smooth, and you can see through it."),
                  q("An elastic band is...", "➰", "bendy and stretchy", ["stiff", "hard", "rough"], "An elastic band bends and stretches."),
                  q("A metal spoon is...", "\U0001F944", "hard and shiny", ["soft and dull", "bendy and rough"], "Metal is hard and shiny."),
-                 q("A wooden ruler is...", "\U0001F4CF", "stiff", ["stretchy", "soft", "runny"], "Wood keeps its shape. It is stiff."),
+                 q("A wooden ruler is...", "\U0001F4CF", "stiff", ["stretchy", "soft", "bendy"], "Wood keeps its shape. It does not bend easily, so it is stiff."),
                  q("A metal spoon is hard. What else is it?", "\U0001F944", "shiny and waterproof too", ["soft", "stretchy"], "One material has many properties at once. A metal spoon is hard, shiny, stiff and waterproof, all at the same time."),
                  q("A sponge is soft. What else is it?", "\U0001F9FD", "bendy, and it soaks up water", ["hard", "shiny and stiff"], "One material has many properties at once. A sponge is soft, bendy and dull, and it soaks up water."),
              ]},
@@ -276,8 +276,8 @@ LESSON = {
                    "Clay is easy to squash into a new shape."),
               ],
               "extension": [
-                 q("A sponge and a piece of paper are both squashed. The sponge springs back and the paper stays crumpled. Which is elastic?", "\U0001F9FD", "the sponge", ["the paper", "both of them"],
-                   "Elastic means it goes back to the shape it was. The sponge does; the paper does not."),
+                 q("An elastic band springs back after stretching. Clay pulled into a sausage stays a sausage. Both changed shape - so what is different?", "➰", "only the band goes back to its old shape, so only the band is elastic", ["the clay is elastic too, because it changed", "neither of them is elastic"],
+                   "Changing shape and being elastic are not the same thing. Elastic means it goes BACK. Clay changes and stays changed."),
                  q("You want to know which of three fabrics is roughest. What makes it a fair test?", "\U0001F9F5", "feel all three the same way, with the same finger", ["feel the one you like best twice", "ask three different friends, one each"],
                    "A fair test is fair to the THINGS being tested. Feel each one the same way."),
               ]

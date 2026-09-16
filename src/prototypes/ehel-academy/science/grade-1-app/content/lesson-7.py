@@ -216,10 +216,10 @@ LESSON = {
                  q("A magnet is held near a paperclip. What happens?", "\U0001F4CE", "the paperclip jumps to the magnet", ["nothing", "the paperclip melts", "the magnet breaks"], "Steel paperclips are magnetic. The magnet attracts the clip and it jumps across."),
                  q("A magnet is held near a wooden block. What happens?", "\U0001FAB5", "nothing", ["the block is attracted", "the block spins"], "Wood is not magnetic."),
                  q("What does <b>attract</b> mean?", "\U0001F9F2", "pull towards", ["stick with glue", "push away", "melt"], "Attract means pull towards. A magnet attracts a paperclip: it pulls the clip towards itself."),
-                 q("Which one is a magnet?", "\U0001F9F2", "all of them: a bar, a ring and a little fridge button", ["only the red horseshoe one", "only the big heavy one"], "Magnets come in many shapes and colours. The shape does not make it a magnet."),
+                 q("Which of these is a magnet: a bar, a ring, or a little fridge button?", "\U0001F9F2", "all three of them", ["only the red horseshoe one", "only the big heavy one"], "Magnets come in many shapes and colours. The shape does not make it a magnet."),
                  q("Why do we say a magnet <b>attracts</b> a paperclip, and not that it sticks to it?", "\U0001F4CE", "because the clip comes off again easily", ["because magnets are made of glue", "because the clip is heavy"], "Glue sticks things together for good. A magnet attracts, and lets go again."),
-                 q("Long ago, with no electricity, people lit their homes with...", "\U0001F56F️", "candles and oil lamps", ["electric torches", "phones", "televisions"], "Candles and oil lamps came before electric light."),
-                 q("You leave a room for the day. To use less electricity you should...", "\U0001F4A1", "switch the light off", ["leave the light on", "turn on the radio too"], "An empty room needs no light."),
+                 q("A home with no electricity today cannot use which of these?", "\U0001F56F️", "a fridge", ["a candle", "a broom", "a book"], "A fridge needs electricity. A candle, a broom and a book do not, which is how people managed before electric light."),
+                 q("Which of these is still using electricity even when nobody is in the room?", "\U0001F4FA", "a television left on standby", ["a closed book", "a wooden chair"], "A television on standby is still drawing electricity. Switching it off properly is what stops that."),
                  q("Your torch will not light up. What is the most likely reason?", "\U0001F526", "Its batteries have run out", ["It is made of plastic", "It is too dark outside"], "A torch needs electricity, and its batteries give it. When they run out, the torch cannot light up."),
              ],
               "support": [
@@ -229,8 +229,8 @@ LESSON = {
                    "The paperclip is steel, so the magnet attracts it and the clip jumps across."),
               ],
               "extension": [
-                 q("Kitchen foil is metal and a magnet does nothing to it. A steel tin lid is metal and the magnet attracts it. What is the rule?", "\U0001F9EF", "only some metals are magnetic - iron and steel", ["all metals are magnetic", "shiny metals are magnetic"],
-                   "Being metal is not enough. Iron and steel are magnetic; foil is not."),
+                 q("You have a box of small objects and one magnet, and must find every steel one without looking at them. How?", "\U0001F9F2", "hold the magnet near each one and keep the ones it attracts", ["weigh them all", "shake the box and listen"],
+                   "A magnet is a test for iron and steel. That is how a recycling plant pulls steel out of rubbish."),
                  q("A torch works with no wire to the wall. Does it use electricity?", "\U0001F526", "Yes, from its batteries", ["No, because there is no plug", "Only when it is sunny"],
                    "Electricity comes from the mains OR from a battery. Look for either one."),
               ]

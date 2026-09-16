@@ -17,6 +17,14 @@ question, plus what only the shipped bytes can answer:
     one step, no step cites an id the fixture does not hold or one the fixture
     assigns to another lesson, and the number answered may not fall below the
     recorded floor (../data/cambridge-stage<N>-misconceptions.json)
+  - no two questions in one lesson share a stem, and no `extension` item
+    restates a core question. _shell.py already refuses a warm-up or a game
+    round that reuses a quiz stem; nothing checked the other directions, and
+    the 2026-09-16 read of all 239 Grade 1 keys found ten pairs it would have
+    caught - including two experiments in one lesson asking the identical
+    "So what did we find out?", which reading the content did NOT catch.
+    `support` is exempt by design: Cambridge's Focus tier re-asks the same
+    idea more simply, so a support item SHOULD resemble the core item.
 
 Exit 0 clean, 1 on a finding, 2 when it could not run (no framework, fewer
 pages than app.config.json names) - a gate that cannot read its target and
@@ -71,6 +79,7 @@ def main():
 
     reached = {c: [] for c in codes}
     claimed = {m: [] for m in (MIS or {})}
+    asked = {}
     pages = 0
     for n, entry in enumerate(cfg["lessons"], 1):
         path = os.path.join(HERE, entry["file"])
@@ -99,6 +108,32 @@ def main():
         except ValueError as e:
             fail(entry["file"], "LESSON block is not JSON: %s" % e); continue
         for k, st in enumerate(data["steps"], 1):
+            d0 = st.get("data") or {}
+
+            def note(item, where):
+                """remember (where, stem, key) for the repeated-question check"""
+                if item and item.get("opts"):
+                    asked.setdefault(n, []).append(
+                        (where, item.get("ask", ""),
+                         " ".join(o["t"] for o in item["opts"] if o.get("ok"))))
+            if st["kind"] in ("questions", "quiz"):
+                for it in d0.get("items") or ():
+                    note(it, st["kind"])
+            for tier in ("support", "extension"):
+                for it in d0.get(tier) or ():
+                    note(it, tier)
+            if st["kind"] == "experiment":
+                for ph in ("predict", "plan", "happened", "conclude"):
+                    note(d0.get(ph), "exp." + ph)
+            if st["kind"] in ("record", "graph"):
+                for it in d0.get("read") or ():
+                    note(it, "read-off")
+            if st["kind"] == "measure":
+                note(d0.get("compare"), "measure")
+            if st["kind"] in ("explore", "context"):
+                note(d0.get("then"), st["kind"])
+            if st["kind"] == "ask":
+                note(d0.get("findOut"), "ask")
             for mid in st.get("mis") or ():
                 if MIS is None:
                     fail(entry["file"], "step %d cites misconception %r and there is no fixture" % (k, mid))
@@ -136,6 +171,39 @@ def main():
                         fail(entry["file"], "step %d sorts %r into a bin that is not there" % (k, it["label"]))
         if not bad or not bad[-1].startswith(entry["file"] + ":"):
             print("  ok   %-32s %2d objectives" % (entry["file"], len(mine)))
+
+    # ---- repeated questions inside one lesson ---------------------------
+    # Strict only where similarity IS the defect: an identical stem, or an
+    # extension item that restates a core question instead of widening it.
+    # Anything else is left alone - a shared one-word key ("roots", "ears") is
+    # normal, and only a person can say whether two stems are the same
+    # question.
+    STOP = set(("a an the is are was were do does did you your it its this that those of to in on"
+                " with and or but if then what which who how why when where not no yes for from at"
+                " as be will would can could should than there their they them he she his her i my"
+                " me we us").split())
+
+    def bag(t):
+        t = re.sub(r"<[^>]+>", " ", str(t)).lower()
+        t = re.sub(r"[^a-z0-9 ]", " ", t)
+        return {w for w in t.split() if w not in STOP and len(w) > 2}
+
+    def jac(a, b):
+        return (len(a & b) / float(len(a | b))) if (a and b) else 0.0
+
+    for n, qs in sorted(asked.items()):
+        for a in range(len(qs)):
+            for b in range(a + 1, len(qs)):
+                x, y = qs[a], qs[b]
+                if "support" in (x[0], y[0]):
+                    continue
+                if bag(x[1]) and bag(x[1]) == bag(y[1]) and x[1].strip().lower() == y[1].strip().lower():
+                    fail("lesson %d" % n, "two questions share a stem (%s, %s): %r"
+                                          % (x[0], y[0], x[1][:56]))
+                elif "extension" in (x[0], y[0]) and max(jac(bag(x[1]), bag(y[1])),
+                                                         jac(bag(x[2]), bag(y[2]))) >= 0.6:
+                    fail("lesson %d" % n, "the extension item restates a core question (%s vs %s): %r"
+                                          % (x[0], y[0], x[1][:52]))
 
     if pages < len(cfg["lessons"]):
         print("  cannot run: %d of %d pages" % (pages, len(cfg["lessons"]))); sys.exit(2)

@@ -199,7 +199,7 @@ LESSON = {
                  q("You walk away from a ringing bell. The sound gets...", "\U0001F514", "quieter", ["louder", "higher", "faster"], "Sound gets quieter as it travels away from its source. You tested it."),
                  q("Which of these is a source of sound?", "❓", "a barking dog", ["a closed book", "a still stone", "an empty room"], "A barking dog makes a sound. The dog is the source."),
                  q("You hum and feel your throat. What do you feel?", "\U0001F5E3️", "shaking", ["nothing", "cold", "wet"], "Your voice is your throat shaking."),
-                 q("A sound hurts your ears. What should you do?", "\U0001F442", "cover your ears and move away", ["get closer", "shout louder"], "Loud sounds can hurt ears. Move away from the source."),
+                 q("Why is standing right next to a very loud drum worse than standing far away?", "\U0001F941", "the sound is loudest close to its source", ["the drum is bigger close up", "sounds from far away are always the dangerous ones"], "Sound gets quieter as it travels. Close to the source it has not faded at all, so that is where it is loudest and where it can hurt your ears."),
                  q("Stop an elastic band shaking with your finger. What happens to the sound?", "✋", "it stops", ["it gets louder", "it gets higher"], "No shaking, no sound."),
                  q("Why do you have to stand close to hear a whisper?", "\U0001F92B", "A whisper is quiet, and sound gets quieter as it travels", ["Whispers only go up to the sky", "Ears only work when you are close"], "A whisper starts quiet, and every step away makes it quieter still. Close up, it has not faded yet."),
                  q("A dog barks behind a closed door. Can you hear it?", "\U0001F6AA", "Yes. Sound goes round corners and through doors.", ["No, you must see a thing to hear it", "No, sound only goes in straight lines"], "You hear things you cannot see all day long. Sound spreads out and goes round corners."),
@@ -216,8 +216,8 @@ LESSON = {
                    "You tested it. Every step away made the bell quieter."),
               ],
               "extension": [
-                 q("You hear a drum from the next room, through a closed door. What does that tell you?", "\U0001F6AA", "sound goes round corners and through solid things", ["the drum must be very close", "sound only travels in straight lines"],
-                   "Sound spreads out. It goes round corners, through doors and through walls."),
+                 q("Zara cannot see the bell and hears it clearly. Arun can see it, is much further away, and can barely hear it. What decides how loud it is to you?", "\U0001F514", "how far away you are, not whether you can see it", ["whether you can see the source", "how big the source is"],
+                   "Seeing has nothing to do with hearing. Distance is what changes the loudness."),
                  q("Two children stand the same distance from a bell. One is reading a book and not listening. Who hears it?", "\U0001F4D6", "both of them", ["only the one who is listening", "neither of them"],
                    "Your ears do not switch off. A sound in the night can wake you when you are asleep."),
               ]

@@ -83,7 +83,7 @@ LESSON = {
                  ["Read the question, think about the job, then tap the part."]),
              {"label": "Question", "items": [
                  q("Which part drinks water from the soil?", "\U0001F4A7", "roots", ["leaves", "flower", "stem"], "The roots are in the soil and drink up the water."),
-                 q("Which part catches sunlight and makes food?", "☀️", "leaves", ["roots", "flower", "stem"], "The green leaves catch the sunlight."),
+                 q("Caterpillars have eaten every one of a plant's leaves. What will the plant find hard to do?", "\U0001F41B", "make its own food", ["drink water", "stand up straight"], "Food is made in the leaves. With no leaves the plant cannot make any, even though its roots can still drink."),
                  q("Which part makes the seeds?", "\U0001F330", "flower", ["roots", "leaves", "stem"], "The flower makes seeds for new plants."),
                  q("Which part holds the plant up tall?", "\U0001F33F", "stem", ["roots", "flower", "leaves"], "The stem is the stalk that holds the plant up."),
                  q("Which part is hidden under the soil?", icon("soil"), "roots", ["flower", "leaves", "stem"], "The roots grow down into the soil."),
@@ -244,7 +244,7 @@ LESSON = {
                  q("Which part carries water up to the leaves?", "\U0001F33F", "the stem", ["the flower", "the roots", "the petals"], "The stem carries water from the roots up to the leaves."),
                  q("A plant is kept in a dark cupboard with water. What happens?", "\U0001F6AA", "it goes pale and droopy", ["it grows big and green", "it turns into a flower", "nothing changes"], "You saw it in the experiment. Without light a plant goes pale."),
                  q("Which grew first from the seed?", "\U0001F331", "the root", ["the flower", "the leaves", "the stem"], "The root grows down first, to drink water."),
-                 q("A seedling is 3 cubes tall and a sunflower is 8 cubes tall. Which is taller?", "\U0001F4CF", "the sunflower", ["the seedling", "they are the same"], "8 is more than 3, so the sunflower is taller."),
+                 q("You measured a plant as 6 cubes last week and 9 cubes today. What does that tell you?", "\U0001F4CF", "it has grown 3 cubes", ["it has shrunk", "it stayed the same"], "9 cubes is 3 more than 6 cubes, so it grew. Measuring the same plant twice shows you the change."),
                  q("What would happen to a plant if all its roots were cut off?", "\U0001F33F", "It could not take in water, so it would droop", ["It would grow faster", "It would make more flowers"], "The roots take in water for the plant. With no roots it gets no water, and a plant with no water droops."),
                  q("A plant stands in a room with no window, under a bright lamp all day. What happens?", "\U0001F4A1", "it grows well, because a lamp gives light", ["it goes pale, because light must come from the Sun", "it dies at once"], "Plants need light. The light does not have to come from the Sun. A bright lamp works, which is how plants grow indoors."),
                  q("Sofia says the whole plant is called a flower. Is she right?", "\U0001F33C", "No, the flower is only one part of the plant", ["Yes, plants are called flowers", "Yes, if it is a small plant"], "The flower is one part, like the roots and the stem. The whole thing is a plant."),
@@ -256,8 +256,8 @@ LESSON = {
                    "You tested it. The plant in the dark cupboard went pale and droopy."),
               ],
               "extension": [
-                 q("A plant is put in a cupboard with a bright lamp switched on all day and night. What happens?", "\U0001F4A1", "it grows, because it has light and water", ["it goes pale, because a cupboard is always dark", "it dies, because there is no Sun"],
-                   "It is the LIGHT a plant needs, not the Sun in particular. A lamp gives light."),
+                 q("A plant on a sunny windowsill is never watered. Another is watered daily but kept in a dark cupboard. Which lives longer?", "\U0001F4A1", "neither lasts - each is missing something a plant must have", ["the windowsill one, because it has light", "the cupboard one, because it has water"],
+                   "A plant needs light AND water. Take either one away and it cannot live, so there is no winner here."),
                  q("Two plants get the same water and the same light. One grows in a tiny pot and one in a big pot. Is that a fair test of whether pot size matters?", "\U0001FAB4", "Yes, because only the pot is different", ["No, pots are never fair", "No, you must change the water too"],
                    "A fair test changes ONE thing. Here only the pot changes, so it is fair."),
               ]

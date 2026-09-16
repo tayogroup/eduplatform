@@ -334,3 +334,21 @@ at the same reading demand.
 - **Grades 2-4.** Untouched, and not rebuilt. The kit changes are inert without
   opt-in data: 36 pages across Grades 2, 3 and 4 were rebuilt into a scratch
   copy and every LESSON payload is identical.
+
+### The read of all 239 keys (2026-09-16, later)
+
+Every question in the built pages reviewed one by one. **No key was factually
+wrong**; 18 defects of other kinds were found and fixed - see the appendix in
+`VALIDATION.md`. The three that mattered: a stem asking which is *easier* to
+find while its key argued *quantity* (and contradicting the Cambridge
+misconception it was written for), a "bright light moving slowly across the
+night sky" stem that describes every star, and two options that were not
+mutually exclusive.
+
+`check-coverage.py` gained a **repeated-question arm** out of it, because the
+one exact duplicate in the build - lesson 8's two experiments both asking "So
+what did we find out?" - was found by writing the check, not by reading. It is
+strict only where similarity IS the defect: an identical stem inside one lesson,
+and an `extension` item that restates a core question. **`support` is exempt and
+must stay exempt**: Cambridge's Focus tier re-asks the same idea more simply, so
+a support item is supposed to resemble the item it helps with.

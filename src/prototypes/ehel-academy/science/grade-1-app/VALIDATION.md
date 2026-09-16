@@ -123,3 +123,63 @@ the dot rail following. **Zero paid TTS calls** across every drive.
   is the shared header bar's right-hand group (`.eh-b1right`, 327px pushed to
   right=421) and it measures identically on Grade 2 and Grade 3 pages that this
   pass never rebuilt.
+
+---
+
+## Appendix: the read of all 239 keys, 2026-09-16
+
+**Not a teacher's read.** A second-reader review by Claude of every one of the
+239 questions in the built pages: stem, options, key and the explanation the
+child is shown, each judged for whether the key is right, whether a distractor
+is also defensible, whether the stem asks what the key answers, and whether the
+science is accurate at Stage 1. Area 10's "a teacher's read of the keys" remains
+open.
+
+### The headline
+
+**No key was factually wrong.** All 239 marked answers are correct. What the
+read found instead were 18 defects of a different kind: stems that did not ask
+what their key answered, extension items that restated a core question instead
+of widening it, and quiz items that repeated an earlier step's closing question.
+All 18 are fixed.
+
+### The three that mattered most
+
+| # | Where | What was wrong |
+| --- | --- | --- |
+| 1 | L3 quiz, similar and different | Asked which is **easier to find**, the samenesses or the differences, and keyed it to "the same - there are far more of them". Cambridge's own misconception 5.3-m1 is that children find *differences* easier; the stem asked about ease and the key argued quantity, so a child answering "the differences" was right about ease and marked wrong. Now asks which there are **more** of. |
+| 2 | L8 quiz, the night sky | "You see a bright light **moving slowly** across the night sky. Is it a star?" keyed "probably not". Every star appears to move slowly across the night sky - which is what the very next question teaches. The stem undercut its own key. Now asks whether every bright light is a star. |
+| 3 | L3 quiz, measuring | "Who is taller: the child with the loudest voice, or the child who measures more hand spans?" The two options are not mutually exclusive - the loudest child may also measure more. Now asks what settles the argument. |
+
+### What the new gate found that reading did not
+
+Lesson 8 has two experiments and **both conclude phases asked the identical
+"So what did we find out?"** - the only exact duplicate stem in the build, and
+the read missed it. `check-coverage.py` gained a repeated-question arm and
+caught it immediately. That arm is strict in two places only: an identical stem
+within one lesson, and an `extension` item that restates a core question, since
+an extension exists to widen. `support` is exempt by design - Cambridge's Focus
+tier is *meant* to re-ask the same idea more simply. Mutation-tested both ways,
+page restored byte-identical; the first attempt reported MUTATION INVALID
+rather than a pass, which caught a bad mutation of mine.
+
+### The rest
+
+Six **extension** items restated the core question they were meant to widen
+(L2, L4, L6, L7, L8 x2) - all replaced with genuinely harder questions. Five
+**pre-existing** pairs had a quiz item repeating an earlier step's closing
+question (L2 measure/quiz, L6 explore/quiz, L7 context/quiz x2, L8 context/quiz)
+- all reworded; these predate this week's work. Two wordings: "Which one is a
+magnet?" answered "all of them", and "runny" offered as a property of a wooden
+ruler, against the build's own rule that a distractor is something the child is
+also learning.
+
+### After the fixes
+
+136 steps (unchanged, 8 of 8 lessons byte-identical in sequence), 239 questions,
+48 of 48 misconceptions, both gates green, reading level 9.30 words per sentence
+and highest Flesch-Kincaid 4.87 - unmoved. `review-pack.html` regenerated.
+
+**Still open, and still human:** nobody with a teaching qualification has read
+these 239 keys. The review above is a second reader, which every previous round
+of this build has shown is worth doing and is not the same thing.

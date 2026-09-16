@@ -148,6 +148,13 @@ def placer(s):
     return place
 
 
+# the "How do you know?" bank: claim, the reason that explains it, the two that
+# do not, and the hint. A bare array, which is why neither harvester saw it.
+REASON = re.compile(
+    r'\[\s*\n\s*"((?:[^"\\]|\\.)*)",\s*\n\s*"((?:[^"\\]|\\.)*)",\s*\n\s*\[\s*\n'
+    r'\s*"((?:[^"\\]|\\.)*)",\s*\n\s*"((?:[^"\\]|\\.)*)"\s*\n\s*\],\s*\n'
+    r'\s*"((?:[^"\\]|\\.)*)"\s*\n\s*\]')
+
 rows = []
 for f in FILES:
     s = io.open(os.path.join(G, f), encoding="utf-8").read()
@@ -183,6 +190,23 @@ for f in FILES:
         rows.append(dict(file=f, step=step, codes=codes, q=plain(q.group(1)),
                          key=key[0] if len(key) == 1 else ("** %d right options **" % len(key)),
                          opts=opts, why=plain(w.group(1)) if w else ""))
+    # shape 3: [ "claim", "the reason", [ "not this", "nor this" ], "the hint" ]
+    # "How do you know?" - and these were in NO pack and NO gate until 2026-09-16.
+    # They have neither `q:` nor `ask:`, so both harvesters above walked straight
+    # past all 42 of them, and the read that called itself end-to-end was
+    # end-to-end over what this file could see. That is the whole argument for a
+    # floor: a harvester that silently stops finding a shape reports a clean run.
+    n_reason = 0
+    for m in REASON.finditer(s):
+        claim, good, b1, b2, hint = [plain(x) for x in m.groups()]
+        step, codes = place(m.start())
+        rows.append(dict(file=f, step=step or "How do you know?", codes=codes,
+                         q=claim, key=good, opts=[good, b1, b2], why=hint,
+                         reason=True))
+        n_reason += 1
+    if n_reason < 6:
+        sys.exit("  REFUSED: %s holds %d reasoning items, fewer than the 6 every "
+                 "lesson carries - the harvester has stopped seeing them" % (f, n_reason))
 
 # which of them the machine can verify: ask the real tool rather than guess
 try:
@@ -201,8 +225,11 @@ except Exception:                                        # noqa
     unver, counts = set(), ("?", "?", "?")
 
 for r0 in rows:
-    r0["unverified"] = any(f == r0["file"] and r0["q"].startswith(q[:60].strip())
-                           for f, q in unver)
+    # a reasoning item is unverifiable BY CONSTRUCTION: no rule can decide which
+    # of three reasons explains a claim, and check-answer-keys.py cannot even see
+    # them, so they would otherwise be listed as if something had checked them.
+    r0["unverified"] = r0.get("reason", False) or any(
+        f == r0["file"] and r0["q"].startswith(q[:60].strip()) for f, q in unver)
 
 rows.sort(key=lambda r: (not r["unverified"], FILES.index(r["file"])))
 nun = len([r for r in rows if r["unverified"]])

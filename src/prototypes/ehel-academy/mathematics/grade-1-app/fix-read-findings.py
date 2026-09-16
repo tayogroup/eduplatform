@@ -60,6 +60,23 @@ FIXES = [
      'and a day is far too long."',
      'the key is "a minute" and the explanation said "about two minutes", '
      "so a child who answered correctly was told a different number"),
+    # The next two are from the 42 "How do you know?" items, which were in no
+    # pack and no gate until this read went looking for them.
+    ("adding-and-taking-away.html",
+     '"5p and 5p makes 10p."',
+     '"A 5 sh coin and a 5 sh coin make 10 sh."',
+     "the money step teaches shillings throughout - 10 sh, 6 sh - and this one "
+     "reasoning claim was in pence, a currency the child meets nowhere else"),
+    ("adding-and-taking-away.html",
+     '"Both coins are the same size.",\n                  "A 10p coin is bigger."',
+     '"Both coins are the same size.",\n                  "A 10 sh coin is bigger."',
+     "the same claim's distractor, in the same currency"),
+    ("counting-to-twenty.html",
+     '"Counting in tens goes 10, 20, 30."',
+     '"Counting in tens goes 0, 10, 20."',
+     "Stage 1 counts in tens from 0 to 20 (1Nc.04), and this lesson teaches "
+     "counting back in tens as 20, 10, 0 - so 30 was a number the lesson "
+     "itself never reaches"),
 ]
 
 done = skipped = refused = 0

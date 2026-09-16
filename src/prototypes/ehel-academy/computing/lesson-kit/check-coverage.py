@@ -126,6 +126,11 @@ def teaching_text(node, out):
             teaching_text(v, out)
 
 
+def word_in(term, text):
+    """Is `term` in `text` as a whole word (or its plural)?"""
+    return re.search(r"(?<![a-z])" + re.escape(term.lower()) + r"e?s?(?![a-z])", text) is not None
+
+
 def load_cambridge(stage):
     """The stage's fixture entries, or None when the fixture is not there."""
     if not os.path.isfile(CAMBRIDGE):
@@ -503,7 +508,12 @@ def main():
             fail("cambridge", "%s names %s, not a Stage %d code" % (e["id"], e["objective"], stage))
             continue
         text_ = taught.get(ln, "")
-        missing = [m for m in e["must"] if m.lower() not in text_]
+        # WHOLE WORDS. A plain `in` test let "led" be satisfied by
+        # "count-controlled", and `s4-v-led` was green on a grade that never
+        # said LED. The lookarounds are letters only, so a term may sit
+        # against a digit, a hyphen or punctuation and still count - which is
+        # what "1 = a", "micro:bit" and "sub-task" need.
+        missing = [m for m in e["must"] if not word_in(m, text_)]
         if missing:
             fail("cambridge", "%s (%s) - lesson %d never says %s"
                  % (e["id"], e["says"][:52], ln, ", ".join(repr(m) for m in missing)))

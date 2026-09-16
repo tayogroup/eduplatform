@@ -190,6 +190,21 @@ LESSON["warmup"] = [
 
 label_ct(LESSON, "Loops on the device", "Algorithmic thinking")
 
+LESSON["lecture"] = LESSON["lecture"] + [
+    part("\U0001F4A1", "The lights have a name",
+         "Look closely at Bitsy's screen. It is not really a screen. It is twenty-five "
+         "little lights in a grid, five across and five down. Each one is an LED. An LED "
+         "uses very little power and lasts for years, which is why a small battery can "
+         "run one for so long. When your program says show a heart, it is switching some "
+         "of the twenty-five LEDs on and leaving the rest off. A real board like the "
+         "micro:bit has the same grid of LEDs, and it is programmed the same way."),
+]
+
+LESSON["words"] = LESSON["words"] + [
+    word("LED", "\U0001F4A1", "A tiny light that uses very little power.",
+         ["Bitsy's screen is a grid of 25 LEDs.", "Show a heart switches some LEDs on."]),
+]
+
 LESSON["cando"] = [
     cando("I can program a physical device to produce outputs from its inputs.", "4P.08"),
     cando("I can use count-controlled and forever loops on a physical device.", "4P.09"),

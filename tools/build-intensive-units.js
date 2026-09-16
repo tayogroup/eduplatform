@@ -382,7 +382,15 @@ function buildUnit(authored) {
   // Capped at 4 per unit and spread through the quiz: a unit that is 11 of 12
   // typed has swapped one monoculture for another. An authored `mode` on the
   // item beats this rule, so an author can always overrule the derivation.
-  const typeable = (item) => /_{2,}/.test(String(item.q || ""))
+  // A blank is written two ways in this course: "___" and "...". Both read as a
+  // gap to the learner and both are answered the same way, but only the
+  // underscore was recognised here. That reported SIX units as having no item
+  // with a gap when three of them had thirteen between them, all with short
+  // options — Level 2 Units 8, 9 and 10 write every one of theirs with dots.
+  // Found 2026-09-16 by reading the units the report named instead of trusting
+  // the report.
+  const QUIZ_BLANK = /_{2,}|\.\.\.|\u2026/;
+  const typeable = (item) => QUIZ_BLANK.test(String(item.q || ""))
     && (item.options || []).every((option) => {
       const text = String(option).trim();
       return text.length <= 18 && text.split(/\s+/).length <= 2;

@@ -1133,6 +1133,17 @@ GRADE_WORD_PICTURES.ien2 = {
   assemble: "",        // put the parts together; 👥 is assembling PEOPLE. 🔩 would
                        // be honest but is already this level's picture for "metal",
                        // and one picture on two words in one level teaches neither
+  // --- the survival words added on 2026-09-16 (Units 1, 10, 11, 13, 15) ----
+  interview: "",       // a JOB interview. The map's 🎙️ is the one on the radio,
+                       // and Unit 1 teaches "a meeting about a job"
+  flight: "✈️",
+  hotel: "🏨",
+  passport: "🛂",
+  abroad: "🌍",
+  gift: "🎁",
+  festival: "🎊",     // 🎉 is this level's `celebrate`, and the two sit in ONE
+                       // word group -- see the note above about two words sharing
+  online: "",          // 🌐 is this level's `internet`, in that same group
 };
 
 /**

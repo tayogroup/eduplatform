@@ -34,6 +34,16 @@
   },
   "unitOverview": "This unit is about keeping a conversation going. You will ask questions that open a subject up. You will make a suggestion and answer one. You will also learn eight verbs that carry a small word with them, and where the object goes.",
   "learningPath": "Meet 30 words for talking, suggesting and working with people.\nRead a conversation, an information page and a community notice.\nAsk questions that open a subject up: What do you mean by that?\nSuggest something with what about and how about.\nUse look after, put off and deal with, and place the object correctly.\nChoose as or like to say how.\nSay what two people do for each other.\nSpeak, write, take the quiz, then record your assignment.",
+  "functions": [
+   "Ask a question that gets more than yes or no",
+   "Keep a conversation going with a follow-up question",
+   "Use a two-part verb: put it off, turn it down",
+   "Ask for the one detail you missed",
+   "Check you understood: so you are saying",
+   "Talk about people you know and how you know them",
+   "Talk about a festival, a custom and a tradition",
+   "Speak for two minutes without stopping"
+  ],
   "origin": "Compressed from Grade 5 Unit 7; Grade 4 Unit 4",
   "sourceFile": "Grade 5 Unit 7; Grade 4 Unit 4",
   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
@@ -90,7 +100,12 @@
     "ien-l2-u15-w21-relationship",
     "ien-l2-u15-w22-contact",
     "ien-l2-u15-w23-stranger",
-    "ien-l2-u15-w24-acquaintance"
+    "ien-l2-u15-w24-acquaintance",
+    "ien-l2-u15-w25-festival",
+    "ien-l2-u15-w26-custom",
+    "ien-l2-u15-w27-tradition",
+    "ien-l2-u15-w28-celebrate",
+    "ien-l2-u15-w29-gift"
    ]
   },
   {
@@ -98,12 +113,12 @@
    "number": 4,
    "title": "Suggesting",
    "vocabularyIds": [
-    "ien-l2-u15-w25-suggestion",
-    "ien-l2-u15-w26-option",
-    "ien-l2-u15-w27-alternative",
-    "ien-l2-u15-w28-proposal",
-    "ien-l2-u15-w29-recommend",
-    "ien-l2-u15-w30-volunteer"
+    "ien-l2-u15-w30-suggestion",
+    "ien-l2-u15-w31-option",
+    "ien-l2-u15-w32-alternative",
+    "ien-l2-u15-w33-proposal",
+    "ien-l2-u15-w34-recommend",
+    "ien-l2-u15-w35-volunteer"
    ]
   }
  ],
@@ -685,13 +700,133 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "vocabularyId": "ien-l2-u15-w25-suggestion",
+   "vocabularyId": "ien-l2-u15-w25-festival",
+   "dictionaryEntryId": "ehel-dict-en-festival-noun-01",
+   "unitId": "ien-l2-u15",
+   "levelId": "l2",
+   "groupId": "ien-l2-u15-g3-people-together",
+   "groupTitle": "People together",
+   "sequence": 25,
+   "masterWord": "festival",
+   "displayWord": "festival",
+   "partOfSpeech": "noun",
+   "childMeaning": "A time when people come together to celebrate something.",
+   "exampleSentence": "The festival lasts three days.",
+   "practiceSentences": [
+    "There is a music festival every summer.",
+    "The town is full during the festival.",
+    "She met her partner at a festival.",
+    "The festival brings people in from other cities."
+   ],
+   "spellingPractice": "f - e - s - t - i - v - a - l",
+   "sentenceStarter": "A festival I know is …",
+   "aiTutorPrompt": "Describe a festival without naming a country or a religion. Ask the tutor whether it was clear.",
+   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
+  },
+  {
+   "vocabularyId": "ien-l2-u15-w26-custom",
+   "dictionaryEntryId": "ehel-dict-en-custom-noun-01",
+   "unitId": "ien-l2-u15",
+   "levelId": "l2",
+   "groupId": "ien-l2-u15-g3-people-together",
+   "groupTitle": "People together",
+   "sequence": 26,
+   "masterWord": "custom",
+   "displayWord": "custom",
+   "partOfSpeech": "noun",
+   "childMeaning": "Something people in a place have done for a long time.",
+   "exampleSentence": "It is a custom to bring a small gift.",
+   "practiceSentences": [
+    "Every place has its own customs.",
+    "That custom is older than the building.",
+    "She explained the custom to the new staff.",
+    "A custom can change slowly over many years."
+   ],
+   "spellingPractice": "c - u - s - t - o - m",
+   "sentenceStarter": "One custom where I live is …",
+   "aiTutorPrompt": "Explain one custom in your own words. Ask the tutor to check you said custom and not costume.",
+   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
+  },
+  {
+   "vocabularyId": "ien-l2-u15-w27-tradition",
+   "dictionaryEntryId": "ehel-dict-en-tradition-noun-01",
+   "unitId": "ien-l2-u15",
+   "levelId": "l2",
+   "groupId": "ien-l2-u15-g3-people-together",
+   "groupTitle": "People together",
+   "sequence": 27,
+   "masterWord": "tradition",
+   "displayWord": "tradition",
+   "partOfSpeech": "noun",
+   "childMeaning": "A custom passed down from older people to younger ones.",
+   "exampleSentence": "It is a family tradition.",
+   "practiceSentences": [
+    "The tradition started a hundred years ago.",
+    "They kept the tradition after moving.",
+    "Some traditions are written down, but most are not.",
+    "A tradition is a custom with a history behind it."
+   ],
+   "spellingPractice": "t - r - a - d - i - t - i - o - n",
+   "sentenceStarter": "A tradition I like is …",
+   "aiTutorPrompt": "Say one tradition and where it came from. Ask the tutor to check you said a tradition.",
+   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
+  },
+  {
+   "vocabularyId": "ien-l2-u15-w28-celebrate",
+   "dictionaryEntryId": "ehel-dict-en-celebrate-verb-01",
+   "unitId": "ien-l2-u15",
+   "levelId": "l2",
+   "groupId": "ien-l2-u15-g3-people-together",
+   "groupTitle": "People together",
+   "sequence": 28,
+   "masterWord": "celebrate",
+   "displayWord": "celebrate",
+   "partOfSpeech": "verb",
+   "childMeaning": "To do something enjoyable because of a special day or good news.",
+   "exampleSentence": "We celebrated with a meal.",
+   "practiceSentences": [
+    "How do you celebrate good news?",
+    "They celebrated the end of the course together.",
+    "She does not celebrate her birthday.",
+    "The whole team celebrated when the work was finished."
+   ],
+   "spellingPractice": "c - e - l - e - b - r - a - t - e",
+   "sentenceStarter": "I celebrate …",
+   "aiTutorPrompt": "Say how you celebrate finishing something. Ask the tutor to check the past form, celebrated.",
+   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
+  },
+  {
+   "vocabularyId": "ien-l2-u15-w29-gift",
+   "dictionaryEntryId": "ehel-dict-en-gift-noun-01",
+   "unitId": "ien-l2-u15",
+   "levelId": "l2",
+   "groupId": "ien-l2-u15-g3-people-together",
+   "groupTitle": "People together",
+   "sequence": 29,
+   "masterWord": "gift",
+   "displayWord": "gift",
+   "partOfSpeech": "noun",
+   "childMeaning": "Something you give somebody, usually on a special day.",
+   "exampleSentence": "I brought a small gift.",
+   "practiceSentences": [
+    "The gift was wrapped in brown paper.",
+    "A gift does not have to be expensive.",
+    "She sent a gift to say thank you.",
+    "Choosing a gift takes longer than buying it."
+   ],
+   "spellingPractice": "g - i - f - t",
+   "sentenceStarter": "A good gift is …",
+   "aiTutorPrompt": "Say what makes a good gift. Ask the tutor to check you said a gift, not a present, if you meant one thing.",
+   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
+  },
+  {
+   "vocabularyId": "ien-l2-u15-w30-suggestion",
    "dictionaryEntryId": "ehel-dict-en-suggestion-noun-01",
    "unitId": "ien-l2-u15",
    "levelId": "l2",
    "groupId": "ien-l2-u15-g4-suggesting",
    "groupTitle": "Suggesting",
-   "sequence": 25,
+   "sequence": 30,
    "masterWord": "suggestion",
    "displayWord": "suggestion",
    "partOfSpeech": "noun",
@@ -709,13 +844,13 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "vocabularyId": "ien-l2-u15-w26-option",
+   "vocabularyId": "ien-l2-u15-w31-option",
    "dictionaryEntryId": "ehel-dict-en-option-noun-01",
    "unitId": "ien-l2-u15",
    "levelId": "l2",
    "groupId": "ien-l2-u15-g4-suggesting",
    "groupTitle": "Suggesting",
-   "sequence": 26,
+   "sequence": 31,
    "masterWord": "option",
    "displayWord": "option",
    "partOfSpeech": "noun",
@@ -733,13 +868,13 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "vocabularyId": "ien-l2-u15-w27-alternative",
+   "vocabularyId": "ien-l2-u15-w32-alternative",
    "dictionaryEntryId": "ehel-dict-en-alternative-noun-01",
    "unitId": "ien-l2-u15",
    "levelId": "l2",
    "groupId": "ien-l2-u15-g4-suggesting",
    "groupTitle": "Suggesting",
-   "sequence": 27,
+   "sequence": 32,
    "masterWord": "alternative",
    "displayWord": "alternative",
    "partOfSpeech": "noun",
@@ -757,13 +892,13 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "vocabularyId": "ien-l2-u15-w28-proposal",
+   "vocabularyId": "ien-l2-u15-w33-proposal",
    "dictionaryEntryId": "ehel-dict-en-proposal-noun-01",
    "unitId": "ien-l2-u15",
    "levelId": "l2",
    "groupId": "ien-l2-u15-g4-suggesting",
    "groupTitle": "Suggesting",
-   "sequence": 28,
+   "sequence": 33,
    "masterWord": "proposal",
    "displayWord": "proposal",
    "partOfSpeech": "noun",
@@ -781,13 +916,13 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "vocabularyId": "ien-l2-u15-w29-recommend",
+   "vocabularyId": "ien-l2-u15-w34-recommend",
    "dictionaryEntryId": "ehel-dict-en-recommend-verb-01",
    "unitId": "ien-l2-u15",
    "levelId": "l2",
    "groupId": "ien-l2-u15-g4-suggesting",
    "groupTitle": "Suggesting",
-   "sequence": 29,
+   "sequence": 34,
    "masterWord": "recommend",
    "displayWord": "recommend",
    "partOfSpeech": "verb",
@@ -805,13 +940,13 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "vocabularyId": "ien-l2-u15-w30-volunteer",
+   "vocabularyId": "ien-l2-u15-w35-volunteer",
    "dictionaryEntryId": "ehel-dict-en-volunteer-verb-01",
    "unitId": "ien-l2-u15",
    "levelId": "l2",
    "groupId": "ien-l2-u15-g4-suggesting",
    "groupTitle": "Suggesting",
-   "sequence": 30,
+   "sequence": 35,
    "masterWord": "volunteer",
    "displayWord": "volunteer",
    "partOfSpeech": "verb",
@@ -1229,6 +1364,20 @@
    "recordingRequired": true,
    "aiTutorPrompt": "Take the other part in a two-minute conversation about joining a group, and ask me an open question every time I stop.",
    "outcomeId": "ien-l2-u15-lo01"
+  },
+  {
+   "unitId": "ien-l2-u15",
+   "sequence": 7,
+   "origin": "Authored for the intensive course",
+   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01",
+   "sourceFile": "Grade 5 Unit 7; Grade 4 Unit 4",
+   "speakingId": "ien-l2-u15-speak07",
+   "activityType": "Pronunciation",
+   "title": "Speaking 7 — Two-part verbs take two beats",
+   "instructionsAndModelLines": "A two-part verb has TWO strong beats, not one.\nListen and repeat.\nlook UP\nput it OFF\nturn it DOWN\nThe small word in the middle stays quiet. The last word is strong.\nCompare a two-part verb with an ordinary one.\nI LOOKED at it. One strong beat.\nI looked it UP. Two strong beats.\nListen and repeat these pairs.\nput off the meeting, put the meeting OFF\nturn down the offer, turn the offer DOWN\nfill in the form, fill the form IN\nNow say these three lines.\nI put off the interview until Friday.\nShe turned the offer down without thinking about it.\nFill the form in and hand it over at the desk.\nTap the mic. Say the three lines.\nTap again and listen to yourself.\nCheck: can you hear two strong beats in each two-part verb?\nIf the last word is quiet, the listener hears a different verb.",
+   "recordingRequired": true,
+   "aiTutorPrompt": "Say the lines to the tutor and ask it to tell you where it heard the strong beat.",
+   "outcomeId": "ien-l2-u15-lo07"
   }
  ],
  "writing": [
@@ -1395,6 +1544,21 @@
    "soloPath": "Read the six words and their meanings first. Then cover them and do the gaps.",
    "deliveryMode": "Independent",
    "outcomeId": "ien-l2-u15-lo02"
+  },
+  {
+   "unitId": "ien-l2-u15",
+   "sequence": 7,
+   "origin": "Authored for the intensive course",
+   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01",
+   "sourceFile": "Grade 5 Unit 7; Grade 4 Unit 4",
+   "activityId": "ien-l2-u15-act07",
+   "title": "Practice 7 — A festival, a custom, a tradition",
+   "activityType": "Choose the word",
+   "instructionsAndItems": "Choose the right word.\n1. It is a family (custom / festival) to eat together on Sunday.\n2. The music (festival / tradition) lasts three days and fills the town.\n3. They still keep the (gift / tradition) their grandparents started.\n4. We (celebrate / custom) the end of the course with a meal.\n5. She brought a small (gift / festival) to say thank you.\n6. A (tradition / device) is a custom with a history behind it.\nNow write three lines of your own.\n7. Describe a festival, without naming a country or a religion.\n8. Say one custom a visitor where you live would not expect.\n9. Say how you celebrate finishing something difficult.",
+   "answerSummary": "1. custom  2. festival  3. tradition  4. celebrate  5. gift  6. tradition\n7 to 9: your own words. Examples:\n7. There is a festival every summer where the streets are closed and people cook outside.\n8. Visitors do not expect us to take our shoes off at the door.\n9. I celebrate by cooking something I do not usually have time for.\nWrong on 1? A festival is an event with a date; a custom is a habit a whole place keeps.\n5 or 6 right in 1 to 6: good.",
+   "soloPath": "Write the three lines on paper. Say them out loud. Check with the examples.",
+   "deliveryMode": "Independent",
+   "outcomeId": "ien-l2-u15-lo07"
   }
  ],
  "assignments": [
@@ -1881,6 +2045,15 @@
   {
    "answerId": "ien-l2-u15-ans22",
    "unitId": "ien-l2-u15",
+   "contentId": "ien-l2-u15-act07",
+   "contentType": "Activity",
+   "answerOrGuidance": "1. custom  2. festival  3. tradition  4. celebrate  5. gift  6. tradition\n7 to 9: your own words. Examples:\n7. There is a festival every summer where the streets are closed and people cook outside.\n8. Visitors do not expect us to take our shoes off at the door.\n9. I celebrate by cooking something I do not usually have time for.\nWrong on 1? A festival is an event with a date; a custom is a habit a whole place keeps.\n5 or 6 right in 1 to 6: good.",
+   "origin": "Derived from the authored item",
+   "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
+  },
+  {
+   "answerId": "ien-l2-u15-ans23",
+   "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q01",
    "contentType": "Quiz",
    "answerOrGuidance": "Why did you turn it down? — Only the first asks for a sentence back. Did you? and Yes are closed, and Oh asks for nothing at all. An open question starts with a question word and puts the verb form before the subject: why did you.",
@@ -1888,7 +2061,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans23",
+   "answerId": "ien-l2-u15-ans24",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q02",
    "contentType": "Quiz",
@@ -1897,7 +2070,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans24",
+   "answerId": "ien-l2-u15-ans25",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q03",
    "contentType": "Quiz",
@@ -1906,7 +2079,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans25",
+   "answerId": "ien-l2-u15-ans26",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q04",
    "contentType": "Quiz",
@@ -1915,7 +2088,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans26",
+   "answerId": "ien-l2-u15-ans27",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q05",
    "contentType": "Quiz",
@@ -1924,7 +2097,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans27",
+   "answerId": "ien-l2-u15-ans28",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q06",
    "contentType": "Quiz",
@@ -1933,7 +2106,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans28",
+   "answerId": "ien-l2-u15-ans29",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q07",
    "contentType": "Quiz",
@@ -1942,7 +2115,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans29",
+   "answerId": "ien-l2-u15-ans30",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q08",
    "contentType": "Quiz",
@@ -1951,7 +2124,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans30",
+   "answerId": "ien-l2-u15-ans31",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q09",
    "contentType": "Quiz",
@@ -1960,7 +2133,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans31",
+   "answerId": "ien-l2-u15-ans32",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q10",
    "contentType": "Quiz",
@@ -1969,7 +2142,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans32",
+   "answerId": "ien-l2-u15-ans33",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q11",
    "contentType": "Quiz",
@@ -1978,7 +2151,7 @@
    "reviewStatus": "Reviewed: script review and curriculum sign-off, 2026-08-01"
   },
   {
-   "answerId": "ien-l2-u15-ans33",
+   "answerId": "ien-l2-u15-ans34",
    "unitId": "ien-l2-u15",
    "contentId": "ien-l2-u15-q12",
    "contentType": "Quiz",

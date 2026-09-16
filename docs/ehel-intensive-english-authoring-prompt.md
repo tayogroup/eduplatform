@@ -469,6 +469,11 @@ carries one connected-speech point, and it is taught for the EAR first.
     practice in this course, it states its answer.
 55. **The map — one per unit.** It runs word level, then phrase level, then
     sentence level, and each point uses language the unit already teaches.
+    The two levels number units differently (Level 1 is 0-19, Level 2 is
+    1-20) and share no focus: a point taught in Level 1 is recycled in
+    Level 2's tasks, never re-taught, the same as any other pattern.
+
+    **Level 1 — Stages 1-3, receptive (see 52).**
 
     | Unit | Focus | Anchored in |
     | --- | --- | --- |
@@ -492,6 +497,38 @@ carries one connected-speech point, and it is taught for the EAR first.
     | 17 | than to "thun": bigger than this | comparatives |
     | 18 | Have you ever to "hav-yoo-ever"; must to "mus" | present perfect, must |
     | 19 | to said "tuh": I go to work; because to "b'cause" | to + verb, because |
+
+    **Level 2 — Stages 4-6. At Stage 6 this stops being an extra and becomes
+    the CONTRACT**: `6Sc.05` is "Pronounce familiar words and phrases clearly;
+    begin to use intonation and place stress at word, phrase and sentence level
+    appropriately". A Stage 6 unit that cites it and teaches no stress or
+    intonation has claimed an objective it does not deliver, which the build
+    cannot see — it checks that a placed code is NAMED by an outcome, not that
+    the outcome is about it. So at Stages 5-6 the learner may be asked to
+    PRODUCE, not only to hear.
+
+    | Unit | Focus | Anchored in |
+    | --- | --- | --- |
+    | 1 | used to said "yoostu" | past habits |
+    | 2 | Would you, Could you: "wudja", "kudja" | offers and requests |
+    | 3 | 've and 's almost disappear: I've been, she's gone | present perfect |
+    | 4 | The lost middle vowel: PROB-ab-ly said "prob-ly" | probably, definitely |
+    | 5 | while and when are never strong: "wile I woz reading" | past continuous |
+    | 6 | of said "uv": a lot of, how much of it | quantity |
+    | 7 | have to said "hafta"; has to said "hasta" | obligation |
+    | 8 | for said "fuh" in a time phrase: for two years | for and since |
+    | 9 | BOR-ing is two parts, BORED is one | -ed and -ing adjectives |
+    | 10 | Sure falls, not sure rises | certainty and doubt |
+    | 11 | Where the beat lands: e-LEC-tric, in-for-MA-tion | longer words |
+    | 12 | The vowel carries the past: come, came; think, thought | irregular pasts |
+    | 13 | Correcting someone: I said TUESDAY, not Thursday | arrangements |
+    | 14 | The beats in a line, and the quiet words between them | amounts |
+    | 15 | Two-part verbs take two strong beats: look UP, put ON | phrasal verbs |
+    | 16 | is and was go quiet in the passive: it's MADE here | the passive |
+    | 17 | said said "sed"; told me said "tol-me" | reported speech |
+    | 18 | Up on the if, down on the answer | conditionals |
+    | 19 | should said "shud"; had better said "bedder" | advice |
+    | 20 | Making ONE word carry the whole point | telling a story |
 
 ### 4 — POSITIVE QUALITY BAR
 

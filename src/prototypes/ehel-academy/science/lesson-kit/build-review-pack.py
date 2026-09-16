@@ -4,19 +4,27 @@
 WHY THIS EXISTS. check-coverage.py proves a key is SINGLE and EXPLAINED. It
 cannot prove a key is RIGHT. And Science's other gate cannot help here:
 check-science-answer-keys.mjs compares each key against the one printed in its
-own booklet, and Stage 1 ships no Practice booklet - so Grade 1's keys have no
-external ground truth and never will. They are authored claims until a person
-reads them.
+own booklet, and these standalone builds author their own questions rather than
+taking them from a booklet - so their keys have no external ground truth and
+never will. They are authored claims until a person reads them.
 
-So this writes review-pack.html: every question in the eight lessons, grouped
-by lesson, JUDGEMENT ITEMS FIRST - the ones where a wrong key is a wrong
-opinion rather than a wrong fact, which is where a reviewer's time is worth
-most. New items from the 2026-09-16 Cambridge depth pass are marked, and each
-misconception item names the Cambridge topic it came from.
+So this writes review-pack.html: every question in the build, grouped by
+lesson, JUDGEMENT ITEMS FIRST - the ones where a wrong key is a wrong opinion
+rather than a wrong fact, which is where a reviewer's time is worth most. Items
+added by the Cambridge depth pass are marked, and each misconception item names
+the Cambridge topic it came from.
 
-    python build-review-pack.py --app .
+    python ../lesson-kit/build-review-pack.py --app .
 
-Reads the BUILT pages, so it reviews what ships.
+Reads the BUILT pages, so it reviews what ships. It lived in grade-1-app until
+Grade 2 needed the same read; everything grade-specific now comes out of
+app.config.json. Two things changed with the move and neither is cosmetic: the
+lede no longer claims "Stage 1 ships no Practice booklet" (true, and true only
+of Stage 1 - the reason these keys have no ground truth is that the build
+authors its own questions), and the collector now reads a GRAPH step's
+read-off list, which Grade 2 has three of and Grade 1 none. Missing that would
+have dropped real questions out of the pack silently, which is the one failure
+a review pack cannot have.
 """
 import io
 import json
@@ -33,7 +41,7 @@ JUDGEMENT = re.compile(
 
 HEAD = """<!doctype html>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Grade 1 Science - question review pack</title>
+<title>@GRADE@ Science - question review pack</title>
 <style>
  :root{--ink:#16211f;--paper:#f4f6f5;--card:#fff;--line:#d5ded9;--muted:#5d6d66;
        --new:#8a5a10;--newbg:#fdf3dd;--judge:#8f3a26;--judgebg:#fbe9e4}
@@ -65,16 +73,18 @@ HEAD = """<!doctype html>
  .sum td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 </style>
 <div class="wrap">
-<h1>Grade 1 Science - question review pack</h1>
-<p class="lede">Every question in the eight lessons. <b>Judgement items come
+<h1>@GRADE@ Science - question review pack</h1>
+<p class="lede">Every question in the @COUNT@ lessons. <b>Judgement items come
 first in each lesson</b>: those are the keys where being wrong means holding a
 wrong opinion rather than misremembering a fact, so they are where a reader's
 time is worth most. Items added by the Cambridge depth pass are tagged
 <span class="tag new">new</span>, and each one that answers a Cambridge
 misconception names its topic. No gate can check whether these keys are right -
-Stage 1 ships no Practice booklet, so there is no printed answer key to compare
-with.</p>
+this build authors its own questions rather than taking them from a Cambridge
+booklet, so there is no printed answer key to compare with.</p>
 """
+
+WORDS = {8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen"}
 
 
 def collect(app):
@@ -113,9 +123,9 @@ def collect(app):
             if st["kind"] == "experiment":
                 for k in ("predict", "plan", "happened", "conclude"):
                     add(d.get(k), "experiment " + k)
-            if st["kind"] == "record":
+            if st["kind"] in ("record", "graph"):
                 for it in d.get("read") or []:
-                    add(it, "record read-off")
+                    add(it, st["kind"] + " read-off")
             if st["kind"] == "measure":
                 add(d.get("compare"), "measure compare")
             if st["kind"] in ("explore", "context"):
@@ -133,8 +143,9 @@ def esc(s):
 def main():
     app = os.path.abspath(sys.argv[sys.argv.index("--app") + 1] if "--app" in sys.argv else os.getcwd())
     lessons, cfg = collect(app)
-    NEW = {"experiment plan", "experiment conclude", "record read-off"}
-    html = [HEAD]
+    NEW = {"experiment plan", "experiment conclude", "record read-off", "graph read-off"}
+    html = [HEAD.replace("@GRADE@", cfg["gradeLabel"])
+                .replace("@COUNT@", WORDS.get(len(cfg["lessons"]), str(len(cfg["lessons"]))))]
     tot = judge = new = 0
     for n, title, qs in lessons:
         for q in qs:

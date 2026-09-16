@@ -6,7 +6,7 @@ diet, hygiene and exercise; 2Bp.02 what illness is and its common signs; with
 2TWSc.01, 2TWSc.02, 2TWSc.05 (a fact card as a secondary source), 2SIC.02 and
 2SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 TEETH = [
     {"id": "incisors", "label": "incisors", "say": "The incisors are the flat front teeth. They cut food, like biting into an apple."},
@@ -139,8 +139,12 @@ LESSON = {
                  q("How many times a day should you brush your teeth?", "\U0001FAA5", "two", ["zero", "once a week", "ten"], "Twice a day: morning and before bed."),
                  q("Which teeth grind food at the back of your mouth?", "\U0001F9B7", "molars", ["incisors", "canines", "the tongue"], "The wide molars at the back grind."),
                  q("You feel ill. What should you do first?", "\U0001F912", "tell a grown-up", ["hide it", "eat sweets", "run about"], "Telling a grown-up early means you get better sooner."),
+                 q("In science, what does your <b>diet</b> mean?", "\U0001F957", "everything you eat and drink", ["eating less to get thinner", "only the healthy things you eat"], "Everybody has a diet. It is simply all your food and drink, whatever it is."),
+                 q("Is it wrong to ever eat a piece of cake?", "\U0001F370", "No. The problem is eating a lot of it, often.", ["Yes, never eat cake", "Yes, unless you brush afterwards"], "Your body needs a mixture of foods. A treat now and then is fine; too much of one kind is not."),
+                 q("Your hands look perfectly clean. Do they still need washing before you eat?", "\U0001F9FC", "Yes. Germs are far too small to see.", ["No, they look clean", "Only if you have been outside"], "You cannot see germs at all. A hand that looks spotless can still be covered in them."),
              ]},
-             "You know how to keep a body healthy, and what to do when it is not."),
+             "You know how to keep a body healthy, and what to do when it is not.",
+             mis=["rtg-03", "4.4-m1", "rtg-04"]),
 
         step("context", "Science that keeps us well", "\U0001FA7A", "Health science", ["2SIC.02", "2SIC.03"],
              "Science explains how the things that keep us healthy work, and some people make it their job. Tap each one.",
@@ -170,7 +174,7 @@ LESSON = {
                  ["Take your time. Read it, look at it, then tap."]),
              {"items": [
                  q("Which teeth are flat and at the front, for cutting?", "\U0001F9B7", "incisors", ["molars", "canines", "wisdom teeth"], "Incisors are the flat front teeth that cut."),
-                 q("Which teeth are pointed, for tearing?", "\U0001F9B7", "canines", ["incisors", "molars", "front teeth"], "Canines are the pointed teeth beside the incisors."),
+                 q("Which teeth are pointed, for tearing?", "\U0001F9B7", "canines", ["incisors", "molars", "the tongue"], "Canines are the pointed teeth beside the incisors."),
                  q("How long should you brush your teeth for?", "⏱️", "two minutes", ["five seconds", "an hour", "as long as a sneeze"], "Two minutes, all the way to the back."),
                  q("What feeds the germs that make holes in teeth?", "\U0001F36C", "sugar", ["water", "vegetables", "toothpaste"], "Sugary sweets and drinks feed the germs."),
                  q("What are the three things a body needs to stay healthy?", "\U0001F4AA", "good food, keeping clean and moving", ["sweets, television and staying up late", "only sleep"], "Diet, hygiene and exercise."),
@@ -178,8 +182,23 @@ LESSON = {
                  q("Why do your adult teeth matter so much?", "\U0001F9B7", "they have to last your whole life", ["they fall out soon", "they are softer"], "Adult teeth are the last set you get."),
                  q("Where did you find the answer 'brush for two minutes'?", "\U0001F4D6", "in the fact card, a secondary source", ["by doing an experiment", "by guessing"], "A fact card, a book or a poster is a secondary source."),
                  q("Why do molars have wide, bumpy tops?", "\U0001F9B7", "to grind and mash food into small pieces", ["to cut a bite off an apple", "to make the teeth look nice"], "A wide, bumpy top is good for grinding. The shape of each tooth suits its job."),
-             ]},
-             "That is the whole lesson finished. Look after those teeth."),
+                 q("Does it matter if a baby tooth gets a hole in it, when a new tooth will grow there?", "\U0001F9B7", "Yes. The adult tooth is growing right underneath, and a bad hole can harm it.", ["No, the new one will be fine", "No, baby teeth do not count"], "Your adult teeth are growing up inside your gums right now. A hole left to get worse can reach them - and that second set is the last one you get."),
+                 q("An eggshell left in a fizzy drink overnight goes soft. Would your teeth go soft that fast?", "\U0001F95A", "No. The outside of a tooth is much harder than an eggshell.", ["Yes, exactly that fast", "Yes, but only at night"], "The eggshell shows you WHAT sugary drinks do, not how fast. A model is not the real thing."),
+             ],
+              "support": [
+                 q("Which tooth tears food?", "\U0001F9B7", "the canine", ["the molar"],
+                   "Canines are the pointed ones. They tear."),
+                 q("Should you brush every day?", "\U0001FAA5", "Yes", ["No"],
+                   "Twice a day, for two minutes."),
+              ],
+              "extension": [
+                 q("Why is one sugary drink sipped all afternoon worse than the same drink swallowed at once?", "\U0001F964", "the sugar stays on the teeth far longer", ["the slow one holds more sugar", "there is no difference"],
+                   "It is how LONG sugar sits on a tooth that feeds the germs, not only how much of it there is."),
+                 q("Your friend has a cold. What is the kindest thing you can do?", "\U0001F927", "cover your own mouth and wash your hands too", ["keep away from them all week", "nothing, colds just happen"],
+                   "Germs pass from person to person. Washing your hands protects them as well as you."),
+              ]},
+             "That is the whole lesson finished. Look after those teeth.",
+             mis=["4.5-m1", "rtg-06"]),
     ],
 }
 
@@ -226,6 +245,22 @@ LESSON["words"] = [
          ["A cold is an illness.", "Rest helps an illness get better."]),
     word("fever", "\U0001F321\uFE0F", "When your body gets too hot because you are ill.",
          ["A fever makes your forehead hot.", "Tell a grown-up if you have a fever."]),
+    word("diet", "\U0001F957", "All the food a person eats.",
+         ["A healthy diet has fruit and vegetables in it.", "Your diet is what you eat, not something you go on."]),
+    word("fluoride", "\U0001FAA5", "Something in toothpaste that makes the outside of a tooth harder.",
+         ["Toothpaste with fluoride keeps teeth strong.", "Fluoride helps stop holes in teeth."]),
+    word("gums", "\U0001F444", "The soft pink part of your mouth that teeth grow out of.",
+         ["Brush your gums gently too.", "Healthy gums hold the teeth in place."]),
+]
+
+LESSON["cando"] = [
+    cando("I can name the three types of teeth and say what each one does.", "2Bs.02"),
+    cando("I can explain how to look after my teeth.", "2Bs.02"),
+    cando("I can talk about three ways to keep healthy.", "2Bp.01"),
+    cando("I can say what being ill is like and name some signs of it.", "2Bp.02"),
+    cando("I can sort food into groups.", "2TWSc.01"),
+    cando("I can find an answer in a book or on a fact card.", "2TWSc.05"),
+    cando("I can name people whose work keeps us healthy.", "2SIC.03"),
 ]
 
 LESSON["home"] = [

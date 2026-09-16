@@ -6,7 +6,7 @@ in body parts and skin covering; 2Bp.03 how young animals change as they grow;
 2Bp.04 offspring have a mix of their parents' features; 2TWSm.03 a diagram
 versus a picture; with 2TWSc.01, 2TWSp.01 and 2SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 # a diagram is a drawing that shows the parts and names them; a picture just shows the thing
 BIRD_DIAGRAM = ('<svg viewBox="0 0 120 90"><path d="M20 55 q30 -30 60 -10 l20 -6 l-16 14 q-10 22 -44 18z" fill="none" stroke="#fff" stroke-width="2"/>'
@@ -87,8 +87,13 @@ LESSON = {
                  q("What does a person usually have that a fish does not?", "\U0001F9D2", "arms and legs", ["eyes", "a mouth", "a body"], "A fish has fins and a tail instead of arms and legs."),
                  q("A lamb has a black face like its father and thick wool like its mother. Where did its features come from?", "\U0001F411", "some from each parent", ["only from its father", "from neither parent"], "Offspring get a mix of features: some from the mother and some from the father."),
                  q("Two puppies from the same mother and father. Do they have to look the same?", "\U0001F436\U0001F415", "no, each gets its own mix", ["yes, always exactly the same", "yes, they look just like the mother"], "Each puppy gets its own mix of its parents' features, so brothers and sisters can look different."),
+                 q("Two cats look alike but one has longer fur. Are they <b>the same</b>, or <b>similar</b>?", "\U0001F431", "similar", ["the same", "neither"], "The same means no difference at all. Similar means alike in some ways and different in others, which is what these two cats are."),
+                 q("An ant is tiny. Is it an animal?", "\U0001F41C", "Yes, a very small one", ["No, it is too small to be an animal", "Only if it can bite"], "Most of the animals in the world are tiny. Being small does not stop something being an animal."),
+                 q("Is a human an animal?", "\U0001F9D2", "Yes. In science, people are animals.", ["No, people are not animals", "Only babies are"], "People are a kind of mammal. We are very different from the others, and we are still animals."),
+                 q("Your grandmother is your father's...", "\U0001F475", "mother", ["sister", "friend", "teacher"], "A grandmother is your mother's mother or your father's mother. That is what makes her your grandmother."),
              ]},
-             "Alike in some parts, different in others. Even brothers and sisters get their own mix."),
+             "Alike in some parts, different in others. Even brothers and sisters get their own mix.",
+             mis=["rtg-08", "rtg-01", "4.1-m1", "rtg-02"]),
 
         step("order", "From egg to hen", "\U0001F95A", "In order", ["2Bp.03"],
              "Put a hen's life in order. Tap what comes <b>first</b>, then next.",
@@ -211,8 +216,24 @@ LESSON = {
                  q("A drawing of a plant with lines pointing to 'root', 'stem' and 'leaf' is a...", "\U0001F4D0", "diagram", ["picture", "photo", "painting"], "Labels and lines pointing to parts make it a diagram."),
                  q("Which two animals both have four legs and fur?", "❓", "a cat and a dog", ["a bird and a fish", "a snake and a frog", "a hen and a duck"], "Cats and dogs both have fur and four legs."),
                  q("Why is a penguin sorted with the birds, not with the fish?", "\U0001F427", "It is covered in feathers", ["It swims in the sea", "It is black and white"], "Scientists sort animals by their covering. A penguin has feathers, so it is a bird, however well it swims."),
-             ]},
-             "That is the whole lesson finished. You can compare animals like a scientist."),
+                 q("Grandad is 70 and Dad is 40. Who is taller?", "\U0001F46A", "you cannot tell from their ages", ["Grandad, because he is oldest", "Dad, because he is younger"], "People stop growing taller at about 17 to 20. After that, age tells you nothing about height."),
+                 q("A boy has curly hair like his mother and brown eyes like his father. Is that possible?", "\U0001F466", "Yes. Everybody gets a mixture from both parents.", ["No, boys only take after their father", "No, eyes always come from the mother"], "Boys and girls both get a mixture from both parents. There is no rule about which parent gives what."),
+                 q("One parent has black hair and one has light brown hair. What colour could their baby's hair be?", "\U0001F476", "black, light brown, or a shade in between", ["always exactly halfway between the two", "never the same as either parent"], "A mix is not a rule. Some features come through as one or the other, and some land in between - which is why a family can hold every shade of brown."),
+             ],
+              "support": [
+                 q("Which animal has <b>feathers</b>?", "\U0001F426", "a bird", ["a fish"],
+                   "Feathers only grow on birds."),
+                 q("Is a human an animal?", "\U0001F9D2", "Yes", ["No"],
+                   "In science, people are animals too."),
+              ],
+              "extension": [
+                 q("A puppy has floppy ears and neither of its parents does. Its grandmother did. How?", "\U0001F436", "a feature can skip a parent and come through again later", ["the puppy is not really theirs", "its ears will straighten as it grows"],
+                   "A parent can carry a feature without showing it, and pass it on. That is why a child can look like a grandparent."),
+                 q("A tadpole and a frog look nothing alike. Can they be one animal?", "\U0001F438", "Yes - one animal at two ages", ["No, they are two kinds of animal", "Only if they are the same colour"],
+                   "Some animals change shape completely as they grow. It is still one animal."),
+              ]},
+             "That is the whole lesson finished. You can compare animals like a scientist.",
+             mis=["4.2-m1", "4.3-m1", "4.3-m2"]),
     ],
 }
 
@@ -259,6 +280,23 @@ LESSON["words"] = [
          ["The diagram names the wing, the beak and the legs.", "Draw a diagram, not a picture."]),
     word("label", "\U0001F3F7\uFE0F", "A word on a diagram that names a part.",
          ["The label says beak.", "Add a label for the tail."]),
+    word("egg", "\U0001F95A", "A shell made by a female animal, with the young inside it.",
+         ["A hen lays an egg.", "A chick hatches out of an egg."]),
+    word("parent", "\U0001F46A", "An animal's mother or its father.",
+         ["A puppy's parents are two dogs.", "You get a mix of features from both parents."]),
+    word("young", "\U0001F423", "An animal that has not been alive long. An animal's babies are its young.",
+         ["A kitten is a young cat.", "A hen's young are called chicks."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say how animals look similar and different.", "2Bs.01"),
+    cando("I can name the covering on an animal's body.", "2Bs.01"),
+    cando("I can describe how animals change as they grow up.", "2Bp.03"),
+    cando("I can explain why young animals look like their parents.", "2Bp.04"),
+    cando("I can sort animals into groups by what covers them.", "2TWSc.01"),
+    cando("I can say how a diagram is different from a picture.", "2TWSm.03"),
+    cando("I can ask my own question about an animal.", "2TWSp.01"),
+    cando("I can name some people whose job is science about animals.", "2SIC.03"),
 ]
 
 LESSON["home"] = [

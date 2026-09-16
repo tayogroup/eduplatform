@@ -6,7 +6,7 @@ is a characteristic and a material has more than one; 2Cp.02 why a material
 is chosen for a purpose; 2Cp.03 materials can be tested for their properties;
 with 2TWSc.01, 2TWSc.02, 2TWSc.06 and 2SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "natural-or-made",
@@ -59,7 +59,7 @@ LESSON = {
         step("tester", "Test the materials", "\U0001F52C", "Material tester", ["2Cp.01", "2Cp.03", "2TWSc.02"],
              "A <b>property</b> is what a material is like. Every material has several. Press each test on at least <b>four</b> materials.",
              explain(
-                 ["A property is a characteristic of a material: hard, bendy, waterproof, see-through, strong.", "One material has lots of properties at once, and you can test for each one."],
+                 ["A property is a characteristic of a material: hard, bendy, waterproof, absorbent, see-through, strong.", "One material has lots of properties at once, and you can test for each one."],
                  ["Choose glass.", "Press it: hard.", "Bend it: stiff. Another word for stiff is rigid.", "Hold it up: see-through. Another word for see-through is transparent.", "Pour water: waterproof.", "Four properties, one material.",
                   "Now choose wool and see how different its answers are.", "Wool bends easily. Another word for bendy is flexible."],
                  ["Children think one test tells you everything.", "Each test finds one property. A material has many."],
@@ -97,7 +97,15 @@ LESSON = {
                   {"pic": "\U0001F9FD", "label": "sponge", "answer": "no", "why": "the sponge soaked the water up."},
                   {"pic": "\U0001F9F4", "label": "thin plastic", "answer": "yes", "why": "the water ran off the plastic."},
               ],
-              "choices": [{"id": "yes", "t": "Yes, waterproof", "pic": "☔"}, {"id": "no", "t": "No, it soaks it up", "pic": "\U0001F4A7"}]},
+              "choices": [{"id": "yes", "t": "Yes, waterproof", "pic": "☔"}, {"id": "no", "t": "No, it soaks it up", "pic": "\U0001F4A7"}],
+              "read": [
+                  {"ask": "Read your table. How many of the five materials were <b>waterproof</b>?",
+                   "opts": [opt("three", True), opt("two", False), opt("all five", False)],
+                   "why": "Glass, metal and the thin plastic let the water run off. The wool and the sponge soaked it up. Three of five."},
+                  {"ask": "Three of them were waterproof. Which would you pick for an umbrella?",
+                   "opts": [opt("the thin plastic", True), opt("the glass, because water runs off it", False), opt("the wool, because it is soft", False)],
+                   "why": "All three of glass, metal and thin plastic kept the water off. Only the plastic is also light and bendy enough to fold up. Waterproof is not the only property the job needs."},
+              ]},
              "Your table compares five materials on one property."),
 
         step("questions", "The right material for the job", "\U0001F3E0", "Right material", ["2Cp.02", "2Cp.01"],
@@ -118,8 +126,13 @@ LESSON = {
                  q("Would a sponge make a good window?", "\U0001F9FD", "No. A sponge is not see-through", ["Yes, it is soft", "Yes, it soaks up rain"], "A window needs to be see-through, and a sponge is not."),
                  q("Glass is hard, see-through and waterproof. What are those three words?", "\U0001FA9F", "three properties of one material", ["three kinds of glass", "three names for a window"], "Each word says what glass is like. One material can have many properties."),
                  q("Which of these words is a property of a material?", "❓", "bendy", ["spoon", "factory"], "A property says what a material is like. Bendy is a property; a spoon is an object and a factory is a place."),
+                 q("In science, what does the word <b>material</b> mean?", "\U0001F9F1", "whatever a thing is made of", ["cloth", "only hard things"], "Cloth has its own word: fabric. Material means wood, glass, metal, rock - whatever a thing is made of."),
+                 q("A glass window. Which word is the <b>material</b>?", "\U0001FA9F", "glass", ["window", "shiny", "see-through"], "Window is the object. Glass is what it is made of."),
+                 q("A sponge squashes easily. Is it <b>smooth</b>?", "\U0001F9FD", "No. It is soft and full of holes.", ["Yes, soft things are smooth", "Yes, if it is wet"], "Soft means it squashes. Smooth means no bumps or holes. A sponge is one and not the other."),
+                 q("A thin plastic ruler does not squash, but it snaps. Is it <b>hard</b>, or <b>strong</b>?", "\U0001F4CF", "hard but not strong", ["strong but not hard", "both"], "Hard means it does not squash. Strong means it does not break. They are two different properties."),
              ]},
-             "A material is chosen for its properties."),
+             "A material is chosen for its properties.",
+             mis=["3.1-m1", "3.1-m2", "3.2-m1", "3.2-m2"]),
 
         step("context", "The science in everyday things", "\U0001F527", "How it works", ["2SIC.02", "2Cp.02"],
              "Science explains why everyday objects are made the way they are. Tap each one.",
@@ -157,8 +170,25 @@ LESSON = {
                  q("Glass is made by melting...", "\U0001FA9F", "sand", ["wood", "wool", "water"], "Sand melted very hot becomes glass: a manufactured material from a natural one."),
                  q("Which is the best material for a towel?", icon("towel"), "cotton, because it soaks up water", ["glass, because it is see-through", "metal, because it is hard"], "A towel has to soak water up."),
                  q("What would happen if a raincoat were made of wool?", "\U0001F9E5", "the wool would soak up the rain and you would get wet", ["you would stay dry", "the rain would bounce off"], "Wool soaks up water. A raincoat needs a waterproof material, like plastic."),
-             ]},
-             "That is the whole lesson finished. You know your materials and why they are chosen."),
+                 q("Cotton thread is spun in a factory. Is cotton still <b>natural</b>?", "\U0001F9F5", "Yes. The factory only changed its shape, not the material.", ["No, factories make manufactured things", "Only before it goes in"], "Some factories change one material into a different one. Others just change the shape. Cotton comes out of the factory still cotton, like wood is still wood after a chair is made."),
+                 q("Which of these did nobody make?", "\U0001FAB5", "wood", ["plastic", "glass", "a brick"], "Wood, rock, wool and cotton are natural. People only shape them. Plastic, glass and bricks are manufactured."),
+                 q("A shiny red pencil looks like plastic. How could you tell what it is really made of?", "✏️", "look at the sharpened end", ["weigh it", "look at its colour"], "Paint makes a thin shiny layer that looks like plastic. The sharpened end shows the wood underneath."),
+                 q("Two coats are both called waterproof. Is one able to be <b>more</b> waterproof than the other?", "\U0001F9E5", "Yes, and even a waterproof one soaks up a little if water sits on it long enough", ["No, waterproof means waterproof", "No, only the colour differs"], "Waterproof is not simply on or off. You can test which fabric holds water off for longest."),
+             ],
+              "support": [
+                 q("Is wood natural or manufactured?", "\U0001FAB5", "natural", ["manufactured"],
+                   "Wood grows on trees."),
+                 q("Can you see through glass?", "\U0001F453", "Yes", ["No"],
+                   "Glass is see-through. That is why windows are made of it."),
+              ],
+              "extension": [
+                 q("Wood is stronger than glass. So why would you not use it for a window?", "\U0001F3E0", "a window has to be see-through, and wood is not", ["wood is not strong enough", "wood costs too little"],
+                   "A material is chosen for the property the job needs. Strength is not the property a window needs most."),
+                 q("Paper is made from wood, and wood is natural. So which is paper?", "\U0001F4C4", "manufactured - people turned the wood into a new material", ["natural, because it starts in a tree", "both at once"],
+                   "Paper is a different material from wood. When a factory makes one material into another, the result is manufactured."),
+              ]},
+             "That is the whole lesson finished. You know your materials and why they are chosen.",
+             mis=["3.1-m3", "rtg-09", "3.3-m1", "3.4-m1"]),
     ],
 }
 
@@ -185,7 +215,7 @@ LESSON["lecture"] = [
     part("\U0001F50D", "Testing for properties",
          "Is it hard? Does it bend? Does water go through it? Can you see through it? Each test finds one property. A material has several."),
     part("\U0001F4A7", "Waterproof or not",
-         "Drip water on glass and it runs off. Drip it on wool and it soaks in. Glass is waterproof. Wool is not. You will record that in a table."),
+         "Drip water on glass and it runs off. Drip it on wool and it soaks in. Glass is waterproof. Wool is absorbent. You will record that in a table."),
     part(icon("kettle"), "Chosen for the job",
          "A kettle is metal because metal does not melt when it gets hot. A tyre is rubber because rubber grips and bends. Every material is chosen for its properties."),
 ]
@@ -205,6 +235,24 @@ LESSON["words"] = [
          ["Wool is flexible.", "A rubber tyre is flexible."]),
     word("rigid", "\U0001F9F1", "Stiff. Does not bend.",
          ["Brick is rigid.", "A rigid ruler draws a straight line."]),
+    word("material", "\U0001F4E6", "What a thing is made of.",
+         ["Glass is a material.", "A window is the object; glass is the material."]),
+    word("object", "\U0001F9F8", "A thing you can see or touch, made out of a material.",
+         ["A cup is an object.", "Name the object, then name its material."]),
+    word("absorbent", "\U0001F9FD", "It soaks water up. The opposite of waterproof.",
+         ["A sponge is absorbent.", "A towel is absorbent, so it dries you."]),
+    word("cotton", "\U0001F455", "A soft material that comes from a plant and is made into cloth.",
+         ["A T-shirt is cotton.", "Cotton is absorbent, so towels are made of it."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say where some materials come from.", "2Cm.01"),
+    cando("I can name two natural materials and two manufactured ones.", "2Cm.01"),
+    cando("I can name more than one property of the same material.", "2Cp.01"),
+    cando("I can say why a material was chosen to make something.", "2Cp.02"),
+    cando("I can test a material to find out its properties.", "2Cp.03"),
+    cando("I can record what I found in a table.", "2TWSc.06"),
+    cando("I can say how science explains the everyday things I use.", "2SIC.02"),
 ]
 
 LESSON["home"] = [

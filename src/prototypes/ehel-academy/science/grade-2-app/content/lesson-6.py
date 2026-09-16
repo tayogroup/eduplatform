@@ -6,7 +6,7 @@
 when something makes them; with 2TWSp.02, 2TWSa.01, 2TWSa.02, 2TWSa.03,
 2TWSc.01, 2TWSc.03 and 2TWSc.06.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "forces-change-things",
@@ -46,10 +46,20 @@ LESSON = {
               ],
               "predict": {"ask": "What will a <b>hard</b> push do, compared with a gentle one?",
                           "opts": [opt("Move the car further", True), opt("Move it the same distance", False), opt("Move it a shorter way", False)]},
+              "plan": {"ask": "How shall we find out whether a bigger push moves it further? Which way is <b>fair</b>?",
+                       "opts": [opt("The same car, on the same floor, pushed three different amounts", True),
+                                opt("A small car pushed gently and a big car pushed hard", False),
+                                opt("The same car on carpet, then on tiles", False)],
+                       "why": "A fair test changes ONE thing. Keep the car and the floor the same and change only the push."},
               "runAsk": "Press all three pushes: gentle, medium, then hard. Count the steps each time.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to <b>how far it went</b>?",
                            "opts": [opt("The harder the push, the further the car went: three steps, then six, then nine", True), opt("Every push moved it three steps", False), opt("The gentle push moved it furthest", False)],
-                           "why": "Gentle: three steps. Medium: six. Hard: nine. A bigger force, a bigger change in movement."}},
+                           "why": "Gentle: three steps. Medium: six. Hard: nine. A bigger force, a bigger change in movement."},
+              "conclude": {"ask": "So what did we find out about <b>the size of a push</b>?",
+                           "opts": [opt("A bigger push makes a bigger change in movement", True),
+                                    opt("The size of the push makes no difference", False),
+                                    opt("A gentle push moves it furthest", False)],
+                           "why": "Same car, same floor: three steps, then six, then nine. Only the push changed."}},
              "A bigger push, a bigger move."),
 
         step("record", "Record the pushes", "\U0001F4DD", "Push table", ["2TWSc.06"],
@@ -66,7 +76,16 @@ LESSON = {
                   {"pic": "\U0001F44A", "label": "medium push", "answer": "6", "why": "the medium push rolled the car six steps, between the other two."},
                   {"pic": "\U0001F4A5", "label": "hard push", "answer": "9", "why": "the hard push rolled it nine steps."},
               ],
-              "choices": [{"id": "3", "t": "3 steps", "pic": "3️⃣"}, {"id": "6", "t": "6 steps", "pic": "6️⃣"}, {"id": "9", "t": "9 steps", "pic": "9️⃣"}]},
+              "choices": [{"id": "3", "t": "3 steps", "pic": "3️⃣"}, {"id": "6", "t": "6 steps", "pic": "6️⃣"}, {"id": "9", "t": "9 steps", "pic": "9️⃣"}],
+              "read": [
+                  {"ask": "Read your table. How far did the <b>medium</b> push send the car?",
+                   "opts": [opt("six steps", True), opt("three steps", False), opt("nine steps", False)],
+                   "why": "The medium row of your table says six steps."},
+                  {"ask": "Read the three rows in order: 3, 6, 9. What kind of pattern is that?",
+                   "opts": [opt("an increasing pattern - each one is bigger", True),
+                            opt("a decreasing pattern", False), opt("no pattern at all", False)],
+                   "why": "Each number is bigger than the one before. Numbers make patterns too."},
+              ]},
              "Three pushes, three distances, in a table."),
 
         step("graph", "Graph the pushes", "\U0001F4CA", "Push graph", ["2TWSa.03", "2TWSa.02"],
@@ -84,7 +103,15 @@ LESSON = {
               ],
               "pattern": {"ask": "What is the pattern in your graph?",
                           "opts": [opt("The bigger the push, the further the car goes: the columns go up", True), opt("The columns all stay the same", False), opt("The bigger the push, the shorter the roll", False)],
-                          "why": "Each column is taller than the last. An increasing pattern: bigger push, further roll."}},
+                          "why": "Each column is taller than the last. An increasing pattern: bigger push, further roll."},
+              "read": [
+                  {"ask": "How many <b>more</b> steps did the hard push give than the gentle one?",
+                   "opts": [opt("six", True), opt("three", False), opt("nine", False)],
+                   "why": "Nine steps for the hard push, three for the gentle. Nine take away three leaves six."},
+                  {"ask": "If you pushed even harder than the hard push, what would the next column look like?",
+                   "opts": [opt("taller still", True), opt("shorter", False), opt("exactly the same", False)],
+                   "why": "The pattern is increasing. Reading a pattern lets you say what would come next."},
+              ]},
              "An increasing pattern: bigger push, further roll."),
 
         step("experiment", "A force changes shape too", "\U0001F9EA", "Shape changer", ["2Pf.02", "2TWSp.02", "2TWSa.01"],
@@ -110,10 +137,20 @@ LESSON = {
               ],
               "predict": {"ask": "Which thing will your push and pull change the shape of <b>most</b>?",
                           "opts": [opt("The sponge", True), opt("The wooden block", False), opt("None of them", False)]},
+              "plan": {"ask": "How shall we find out which things change shape? Which way is <b>fair</b>?",
+                       "opts": [opt("Do the same actions to each thing, one at a time", True),
+                                opt("Squash the sponge and bend the paperclip", False),
+                                opt("Ask which ones look bendy", False)],
+                       "why": "To compare things fairly, do the SAME thing to each. Different actions on different things tells you nothing."},
               "runAsk": "Press two actions on each thing. Watch which shapes change.",
-              "happened": {"ask": "What happened?",
+              "happened": {"ask": "What happened to <b>their shapes</b>?",
                            "opts": [opt("The sponge and the paperclip changed shape; the wooden block did not", True), opt("Everything changed shape the same", False), opt("Nothing changed", False)],
-                           "why": "The sponge changed shape and sprang back. The paperclip changed shape and stayed bent. The wood needs a far bigger force than a hand can give."}},
+                           "why": "The sponge changed shape and sprang back. The paperclip changed shape and stayed bent. The wood needs a far bigger force than a hand can give."},
+              "conclude": {"ask": "So what did we find out about <b>forces and shape</b>?",
+                           "opts": [opt("A force can change a shape, not only how a thing moves", True),
+                                    opt("Forces only change how things move", False),
+                                    opt("A force changes every shape it touches", False)],
+                           "why": "The sponge and the paperclip changed shape. The wooden block did not, because a hand cannot push hard enough."}},
              "Forces change shape as well as movement."),
 
         step("sort", "Movement, or shape?", "\U0001F5C2️", "Force sorter", ["2Pf.01", "2Pf.02", "2TWSc.01"],
@@ -167,8 +204,13 @@ LESSON = {
                  q("A trolley rolling straight suddenly turns. What happened?", "\U0001F6D2", "something pushed it from the side", ["it decided to turn", "nothing"], "A change of direction needs a sideways force."),
                  q("A swing goes higher. What made it?", icon("swing"), "a push", ["the wind stopped", "nothing, swings go up on their own"], "Speeding up needs a force: a push."),
                  q("A ball sits still on the grass. What will it do if nothing pushes or pulls it?", "⚽", "stay still", ["start rolling", "jump"], "A still thing stays still until a force acts."),
+                 q("You push hard on a wall and it does not move. Did you push it?", "\U0001F9F1", "Yes. You pushed, but your push was not big enough to move it.", ["No, you cannot push a wall", "No, only things that move can be pushed"], "Pushing and moving are two different things. You can push something far too heavy to move."),
+                 q("You are running and you want to turn left. Which way do your feet push?", "\U0001F45F", "to the right", ["to the left", "straight down"], "To move yourself one way, you push the opposite way. Push back on a wall and you go forwards."),
+                 q("A rolling ball slows down and stops on its own. Is a force acting on it?", "⚽", "Yes, something you cannot see is pushing back on it", ["No, it just runs out of go", "No, forces only start things moving"], "Rub your hands together and feel it. That same rubbing force acts between the ball and the floor."),
+                 q("1 block, then 3 blocks, then 5 blocks. Is that a <b>pattern</b>?", "\U0001F4CA", "Yes - it is a getting-bigger pattern", ["No, a pattern has to be stripes or shapes", "No, the numbers are different"], "Numbers make patterns too. Getting bigger every time, or smaller every time, is a pattern."),
              ]},
-             "Every change in movement has a cause."),
+             "Every change in movement has a cause.",
+             mis=["2.1-m1", "2.4-m1", "2.3-m1", "2.2-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["2Pf.01", "2Pf.02", "2Pf.03", "2TWSa.02"],
              "Time to show what you know. Tap the answer.",
@@ -187,7 +229,19 @@ LESSON = {
                  q("Which force changes the shape of a thing?", "❓", "stretching an elastic band", ["kicking a ball", "pulling a sledge", "catching a ball"], "Stretching changes shape; the others change movement."),
                  q("A ball turns while rolling. What must have happened?", "↗️", "a force pushed it from the side", ["nothing", "it wanted to"], "A change of direction needs a sideways force."),
                  q("What would happen if you gave the same toy car the same push on thick carpet instead of a smooth floor?", "\U0001F697", "it would stop sooner, because the carpet rubs against it more", ["it would roll on for ever", "it would go further, because the carpet is soft"], "Thick carpet rubs against the wheels more than a smooth floor does, so the car slows down and stops sooner."),
-             ]},
+             ],
+              "support": [
+                 q("You push a toy car. Does it move?", "\U0001F697", "Yes", ["No"],
+                   "A push makes a thing move."),
+                 q("You squash a sponge. Did its shape change?", "\U0001F9FD", "Yes", ["No"],
+                   "A force can change a shape as well as a movement."),
+              ],
+              "extension": [
+                 q("You drop a ball of clay and it lands flat. Two things happened to it. What?", "\U0001FAA8", "it moved, and then its shape changed", ["only its shape changed", "only it moved"],
+                   "Falling is a change of movement and going flat is a change of shape. One force did both."),
+                 q("You catch a ball that was flying towards you. Was a force needed?", "\U0001F9E4", "Yes - stopping a thing takes a force, just as starting it does", ["No, catching is not a push", "Only if it stung your hands"],
+                   "Slowing down, stopping and turning are all changes of movement, and every change of movement needs a force."),
+              ]},
              "That is the whole lesson finished. You know what forces do."),
     ],
 }
@@ -235,6 +289,21 @@ LESSON["words"] = [
          ["Squash the clay.", "You cannot squash a stone."]),
     word("stretch", "\U0001FAA2", "To pull something longer.",
          ["Stretch the elastic band.", "Wool stretches a little."]),
+    word("direction", "\U0001F9ED", "The way something is going.",
+         ["A push can change the direction of a ball.", "The car changed direction when it turned."]),
+    word("towards", "\u27A1\uFE0F", "Moving nearer to something.",
+         ["Pull the box towards you.", "The ball rolled towards the door."]),
+    word("away", "\u2B05\uFE0F", "Moving further from something.",
+         ["Push the box away from you.", "The ball rolled away from me."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say how a push or a pull changes the way something moves.", "2Pf.01"),
+    cando("I can say how a force can change the shape of something.", "2Pf.02"),
+    cando("I can say that things only speed up, slow down or turn when something makes them.", "2Pf.03"),
+    cando("I can measure how far something moved, in steps.", "2TWSc.03"),
+    cando("I can find a pattern in my results.", "2TWSa.02"),
+    cando("I can make a block graph and read it.", "2TWSa.03"),
 ]
 
 LESSON["home"] = [

@@ -5,7 +5,7 @@
 2TWSc.02, 2TWSp.02, 2TWSa.01, 2TWSa.02, 2TWSa.03, 2TWSc.03, 2TWSc.04,
 2TWSc.06, 2SIC.01 and 2SIC.03.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "the-sun-across-the-sky",
@@ -39,10 +39,20 @@ LESSON = {
              {"sim": "sunPath",
               "predict": {"ask": "Where do you think the Sun will be at <b>midday</b>?",
                           "opts": [opt("High in the sky, at its highest", True), opt("Low in the east", False), opt("Low in the west", False)]},
+              "plan": {"ask": "How shall we find out how a shadow changes through the day? Which way is <b>fair</b>?",
+                       "opts": [opt("Leave the stick in the same spot and look at it several times in one day", True),
+                                opt("Move the stick to a new spot each time you look", False),
+                                opt("Look once in the morning and once next week", False)],
+                       "why": "Move the stick and you change two things at once. Keep it still and only the time changes."},
               "runAsk": "Press Three hours later and watch the Sun and the shadow, until sunset.",
               "happened": {"ask": "What happened to the shadow through the day?",
                            "opts": [opt("Long in the morning, shortest at midday, long again in the evening, and it swung round", True), opt("It stayed the same all day", False), opt("It got longer and longer", False)],
-                           "why": "The Sun rose in the east, was highest at midday and set in the west. The shadow was long, then short, then long, and it pointed away from the Sun the whole time."}},
+                           "why": "The Sun rose in the east, was highest at midday and set in the west. The shadow was long, then short, then long, and it pointed away from the Sun the whole time."},
+              "conclude": {"ask": "So what did we find out about <b>the shadow</b>?",
+                           "opts": [opt("It moves round and changes length as the day goes on", True),
+                                    opt("It stays exactly the same all day", False),
+                                    opt("It only appears at midday", False)],
+                           "why": "The stick never moved. The shadow did - because the Sun is in a different place at each time of day."}},
              "As the Sun moves across the sky, the shadow swings round and changes length."),
 
         step("measure", "Measure the shadow", "\U0001F4CF", "Shadow ruler", ["2TWSc.03", "2ESs.01"],
@@ -78,7 +88,17 @@ LESSON = {
                   {"pic": "☀️", "label": "midday", "answer": "1", "why": "at midday the shadow was one hand long."},
                   {"pic": "\U0001F307", "label": "3 o'clock", "answer": "3", "why": "at 3 o'clock the shadow was three hands long."},
               ],
-              "choices": [{"id": "1", "t": "1 hand", "pic": "1️⃣"}, {"id": "2", "t": "2 hands", "pic": "2️⃣"}, {"id": "3", "t": "3 hands", "pic": "3️⃣"}]},
+              "choices": [{"id": "1", "t": "1 hand", "pic": "1️⃣"}, {"id": "2", "t": "2 hands", "pic": "2️⃣"}, {"id": "3", "t": "3 hands", "pic": "3️⃣"}],
+              "read": [
+                  {"ask": "Read your table. How much <b>longer</b> was the 9 o'clock shadow than the midday one?",
+                   "opts": [opt("two hands longer", True), opt("one hand longer", False), opt("three hands longer", False)],
+                   "why": "Three hands at 9 o'clock and one hand at midday. Three take away one leaves two."},
+                  {"ask": "Long, then short, then long again. What does that tell you about the Sun?",
+                   "opts": [opt("it is highest in the middle of the day", True),
+                            opt("it is highest in the morning", False),
+                            opt("it stays at the same height all day", False)],
+                   "why": "A high Sun makes a short shadow. The shortest shadow marks the highest Sun."},
+              ]},
              "Three times, three lengths, in a table."),
 
         step("graph", "Graph the shadow", "\U0001F4CA", "Shadow graph", ["2TWSa.03", "2TWSa.02"],
@@ -96,7 +116,15 @@ LESSON = {
               ],
               "pattern": {"ask": "What is the pattern in your graph?",
                           "opts": [opt("The shadow gets shorter towards midday, then longer again", True), opt("The shadow gets longer all day", False), opt("The shadow stays the same", False)],
-                          "why": "Down, then up: the shadow is shortest when the Sun is highest, at midday."}},
+                          "why": "Down, then up: the shadow is shortest when the Sun is highest, at midday."},
+              "read": [
+                  {"ask": "The columns go down and then up again. What is that pattern called?",
+                   "opts": [opt("decreasing, then increasing", True), opt("increasing all the way", False), opt("no pattern at all", False)],
+                   "why": "Patterns can change direction. This one falls to midday and rises again by evening."},
+                  {"ask": "What would the shadow do if you watched for one more hour after the last column?",
+                   "opts": [opt("get longer still", True), opt("get shorter again", False), opt("disappear", False)],
+                   "why": "The pattern after midday is increasing, so the next column would be taller again. That is what reading a pattern is for."},
+              ]},
              "Decreasing, then increasing: shortest at midday."),
 
         step("order", "A day in order", "\U0001F305", "Day in order", ["2ESs.01"],
@@ -163,9 +191,12 @@ LESSON = {
                  q("The Sun is low in the sky. Is the stick's shadow long or short?", "\U0001F305", "long", ["short", "there is no shadow"], "When the Sun is low, the shadow is long."),
                  q("What did you lay along the shadow to measure it?", "\U0001F914", "hand spans", ["cubes", "spoons"], "You laid hands end to end along the shadow."),
                  q("The shadow was 3 hands at 9 o'clock and 1 hand at midday. Which was longer?", "\U0001F4DD", "the 9 o'clock shadow", ["the midday shadow", "they were the same"], "3 hands is longer than 1 hand."),
-                 q("What does the Earth do once every day?", "\U0001F30D", "it spins round", ["it stops still", "it goes round the Moon"], "The Earth spins round once a day. That makes the Sun seem to move."),
+                 q("What does the Earth do once every day?", "\U0001F30D", "it spins round", ["it stops still", "it turns once a week"], "The Earth spins round once a day. That makes the Sun seem to move."),
+                 q("The Sun seems to cross the sky all day. What is really moving?", "\U0001F30D", "the Earth, turning round", ["the Sun, travelling across", "the clouds, carrying it"], "Spin slowly on a chair with your head still: the room seems to move past you. The Earth turning does the same to the Sun."),
+                 q("Is your shadow a real thing, stuck to your feet?", "\U0001F45F", "No. It is the patch the light could not reach, because you were in the way.", ["Yes, it is joined to you", "Yes, it is a dark copy of you"], "A shadow is not a thing at all. Stand where no light reaches you and there is no shadow."),
              ]},
-             "You can follow the Sun across the sky."),
+             "You can follow the Sun across the sky.",
+             mis=["5.3-m1", "rtg-20"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["2ESs.01", "2TWSa.02"],
              "Time to show what you know. Tap the answer.",
@@ -184,7 +215,19 @@ LESSON = {
                  q("A shadow clock tells the time using...", "\U0001F570️", "the shadow made by the Sun", ["batteries inside it", "the light of the Moon at midday"], "As the Sun moves across the sky, the shadow moves round, so the shadow shows the time."),
                  q("Why does the Sun seem to move across the sky?", "\U0001F504", "the Earth is turning", ["the Sun flies round the Earth", "clouds push it"], "It is the Earth that turns; the Sun only seems to move."),
                  q("Why is your shadow short at midday?", "☀️", "the Sun is high in the sky", ["the Sun is low in the east", "your body shrinks at lunchtime"], "When the Sun is high, its light comes from above you, so your shadow is short."),
-             ]},
+             ],
+              "support": [
+                 q("Where does the Sun come up?", "\U0001F305", "in the east", ["in the west"],
+                   "The Sun comes up in the east every morning."),
+                 q("When is your shadow shortest?", "\U0001F45F", "at midday", ["in the evening"],
+                   "The Sun is highest at midday, so shadows are shortest then."),
+              ],
+              "extension": [
+                 q("A shadow clock works outdoors on a sunny day. When is it no use at all?", "\u2601\uFE0F", "on a cloudy day, and at night", ["early in the morning", "when the wind blows"],
+                   "No Sun, no shadow, no clock. Every model has something it cannot do."),
+                 q("Your shadow stretches out towards the west. Roughly what time of day is it?", "\U0001F9ED", "morning - the Sun is in the east, so shadows fall the other way", ["evening", "the middle of the day"],
+                   "A shadow always falls on the opposite side from the Sun."),
+              ]},
              "That is the whole lesson finished, and the whole of Grade 2 Science."),
     ],
 }
@@ -232,6 +275,23 @@ LESSON["words"] = [
          ["The stick's shadow points west.", "Shadows are shortest at midday."]),
     word("turn", "\U0001F300", "To go round. The Earth turns once a day.",
          ["The Earth turns.", "Turn the globe slowly."]),
+    word("table", "\U0001F4CB", "A grid of boxes for writing down what you found.",
+         ["Write your shadow lengths in a table.", "A table keeps your results tidy."]),
+    word("record", "\U0001F4DD", "To write down or draw what happened.",
+         ["Record the length of the shadow each hour.", "Record it straight away, before you forget."]),
+    word("measure", "\U0001F4CF", "To find out how big or how long something is.",
+         ["Measure the shadow with your feet.", "Measure it the same way every time."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe how the Sun seems to move during the day.", "2ESs.01"),
+    cando("I can say that it is really the Earth that turns.", "2ESs.01"),
+    cando("I can measure a shadow and record it in a table.", "2TWSc.06"),
+    cando("I can make a block graph and read it.", "2TWSa.03"),
+    cando("I can see a pattern in my results.", "2TWSa.02"),
+    cando("I can make a shadow clock and say what it models.", "2TWSm.02"),
+    cando("I can keep myself safe by never looking straight at the Sun.", "2TWSc.04"),
+    cando("I can say what people long ago thought the Sun was doing.", "2SIC.01"),
 ]
 
 LESSON["home"] = [

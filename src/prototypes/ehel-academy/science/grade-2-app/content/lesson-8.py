@@ -6,7 +6,7 @@ electricity and how to be safe with it; 2Pe.02 the parts of a simple circuit
 (cells, wires, lamps); 2Pe.03 building a simple series circuit; with 2TWSm.01,
 2TWSm.02 (make and use a model), 2TWSm.03, 2TWSc.02, 2TWSc.04 and 2SIC.02.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 CIRCUIT_PARTS = [
     {"id": "cell", "label": "cell", "say": "The cell. It is what people call a battery. It pushes the electricity round the circuit."},
@@ -90,14 +90,14 @@ LESSON = {
              "The circuit you built is a drawing, a <b>diagram</b>. Press <b>Next</b> to see how it stands for the real thing.",
              explain(
                  ["The circuit drawing is a model: it shows the idea of the loop clearly, with simple symbols, and leaves out how the real parts look."],
-                 ["In the real torch the cell is a round battery, the wires are tiny metal strips, and the lamp is a little bulb.", "The diagram draws each one as a symbol so anyone can read it."],
+                 ["In the real torch the cell is a round battery, the wires are tiny metal strips, and the lamp is the little glass light.", "The diagram draws each one as a symbol so anyone can read it."],
                  ["Children think the diagram is a picture of the torch.", "It is a diagram: symbols and lines, not a picture."],
                  ["Press Next and match each symbol to the real part."]),
              {"frames": [
-                 {"pic": "\U0001F526", "cap": "A real torch. Inside are a battery, metal strips and a bulb.", "say": "A real torch. Inside it are a battery, two metal strips and a little bulb."},
+                 {"pic": "\U0001F526", "cap": "A real torch. Inside are a battery, metal strips and a lamp.", "say": "A real torch. Inside it are a battery, two metal strips and a little lamp."},
                  {"pic": "\U0001F526", "cap": "A <b>picture</b> of a torch shows how it looks, not what is inside.", "say": "A picture of a torch shows how the torch looks. It does not show the loop inside."},
                  {"pic": "\U0001F50B", "cap": "The <b>cell symbol</b>: a long line and a short line. It stands for the battery.", "say": "In the diagram the battery is drawn as a long line and a short line. That symbol stands for the cell."},
-                 {"pic": "\U0001F4A1", "cap": "The <b>lamp symbol</b>: a circle with a cross. It stands for the bulb.", "say": "The bulb is drawn as a circle with a cross inside. That symbol stands for the lamp."},
+                 {"pic": "\U0001F4A1", "cap": "The <b>lamp symbol</b>: a circle with a cross. It stands for the lamp.", "say": "The lamp is drawn as a circle with a cross inside. Some people call a lamp a bulb. Scientists say lamp."},
                  {"pic": "\U0001F4D0", "cap": "The diagram is a <b>model</b> of the torch: the idea of the loop, without the look.", "say": "So the circuit diagram is a model of the torch. It shows the loop clearly and leaves out what the parts look like. Every electrician in the world can read it."},
              ]},
              "A circuit diagram is a model: symbols for the parts, lines for the loop."),
@@ -115,9 +115,9 @@ LESSON = {
                  {"pic": "\U0001F6CE️", "label": "doorbell", "say": "A doorbell button closes a circuit only while your finger presses it. Let go, the gap opens, the ringing stops."},
                  {"pic": "\U0001F697", "label": "toy car", "say": "A battery toy car has a circuit with a motor instead of a lamp. The switch closes the loop and the motor turns the wheels."},
              ], "need": 4,
-              "then": {"ask": "What does a switch do in a circuit?",
-                       "opts": [opt("Opens or closes a gap in the loop", True), opt("Makes the electricity", False), opt("Makes the wires longer", False)],
-                       "why": "A switch is a gap you can close (on) or open (off)."}},
+              "then": {"ask": "Why does a torch need a cell of its own, when a lamp at home does not?",
+                       "opts": [opt("A torch has to work anywhere, with no wire to the wall", True), opt("A torch's lamp is bigger", False), opt("A home lamp is too old to need one", False)],
+                       "why": "A torch carries its electricity with it, in the cell. A lamp at home gets its electricity from the mains, along a wire in the wall."}},
              "Everything with a switch is a circuit with a gap you control."),
 
         step("questions", "Circuit check", "✅", "Circuit check", ["2Pe.01", "2Pe.02", "2Pe.03"],
@@ -133,8 +133,13 @@ LESSON = {
                  q("A wire is joined only to the cell, and not to the lamp. Does the lamp light?", "➰", "No. The loop is not complete", ["Yes", "Only at night"], "Electricity needs a complete loop, from the cell, through the lamp, and back to the cell."),
                  q("You take a wire out of a working circuit. What happens?", "✂️", "the lamp goes out", ["the lamp gets brighter", "nothing"], "A gap breaks the loop. You saw it."),
                  q("Which is safe?", "✅", "putting a small cell in a torch", ["poking a socket", "wet hands on a switch"], "A small cell is safe to handle, but never in your mouth and never broken open. Sockets and water are not safe."),
+                 q("A wind-up clock ticks all day. Does it use electricity?", "\U0001F570️", "No. It has no plug and no cell.", ["Yes, everything that works uses electricity", "Yes, because it moves"], "Look for a plug or a cell. No plug and no cell means no electricity."),
+                 q("Is every electrical thing too dangerous to touch?", "\U0001F526", "No. A torch with its cells covered is made to be handled.", ["Yes, never touch anything electrical", "Yes, unless a grown-up is there"], "Mains electricity from the wall is the dangerous one. Cell-powered things are made for you to hold. Follow the rules and you are safe."),
+                 q("What do scientists call the little light in a circuit?", "\U0001F4A1", "a lamp", ["a bulb", "a torch", "a cell"], "It is a lamp. Using the right word now saves confusion later on."),
+                 q("You join just one end of the lamp to the cell. Does it light?", "\U0001F50B", "No. The electricity has to go all the way round and back.", ["Yes, one wire is enough", "Yes, if the cell is new"], "One connection leaves a gap, and a gap means no light. A circuit has to be a complete loop."),
              ]},
-             "You know your circuits."),
+             "You know your circuits.",
+             mis=["6.1-m1", "6.2-m1", "rtg-17", "rtg-18"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["2Pe.01", "2Pe.02", "2Pe.03", "2TWSm.02"],
              "Time to show what you know. Tap the answer.",
@@ -153,8 +158,24 @@ LESSON = {
                  q("The circle with a cross in a circuit diagram stands for...", "\U0001F4A1", "the lamp", ["the cell", "a wire", "the switch"], "That symbol is the lamp."),
                  q("What does a switch do?", "\U0001F6CE️", "opens or closes a gap in the loop", ["makes electricity", "stores electricity"], "On closes the loop; off opens a gap."),
                  q("Why does a torch go dark when you switch it off?", "\U0001F526", "the switch opens a gap, so the loop is broken", ["the cell is used up at once", "the lamp falls out"], "Switching off opens a gap in the circuit. Electricity cannot flow round a broken loop, so the lamp goes out."),
-             ]},
-             "That is the whole lesson finished. You can build a circuit."),
+                 q("How does the electricity get to the lamp?", "\U0001F526", "it flows all the way round the loop and back to the cell", ["it comes out of both ends of the cell and crashes in the lamp", "it jumps across the gap"], "It goes round one way, through the lamp, and back into the cell."),
+                 q("Your wire has red plastic on it and your friend's is blue. Does that change anything?", "\U0001F534", "No. The metal inside is the same.", ["Yes, red wires work better", "Yes, blue is for cells only"], "Colour only matters in big complicated wiring. In your circuit, any colour works."),
+                 q("Does a long wire let the electricity leak out?", "\U0001F50C", "No. Electricity cannot leak out of a wire.", ["Yes, keep wires short", "Yes, if the wire is bent"], "A long wire works exactly as well as a short one."),
+             ],
+              "support": [
+                 q("Does a torch need a cell?", "\U0001F526", "Yes", ["No"],
+                   "The cell gives the torch its electricity."),
+                 q("May you put anything except a plug into a socket?", "\U0001F50C", "No", ["Yes"],
+                   "Only a plug. Anything else is dangerous."),
+              ],
+              "extension": [
+                 q("Your lamp will not light. The cell is new and the lamp is fine. What would you check next?", "\U0001F50D", "whether the loop is complete, with no loose wire", ["whether the wires are the right colour", "whether the wires are short enough"],
+                   "A gap anywhere in the loop stops the lamp, and a loose connection is the usual cause."),
+                 q("On a circuit diagram a lamp is a circle with a cross. Why not draw the lamp itself?", "\U0001F4D0", "so that anybody, anywhere, reads it the same way", ["because drawing is too hard", "because the symbol looks nicer"],
+                   "That is what a diagram is for. A picture shows what a thing looks like; a diagram shows how it works."),
+              ]},
+             "That is the whole lesson finished. You can build a circuit.",
+             mis=["6.3-m1", "6.3-m2", "6.3-m3"]),
     ],
 }
 
@@ -201,12 +222,29 @@ LESSON["words"] = [
          ["The symbol for a lamp is a circle with a cross.", "Learn the symbol for a cell."]),
     word("socket", "\U0001F3E0", "The holes in a wall that electricity comes out of.",
          ["Only plugs go in a socket.", "Keep water away from the socket."]),
+    word("plug", "\u26A1", "The part you push into a socket to join something to the mains.",
+         ["Only a plug goes into a socket.", "Ask a grown-up to put the plug in."]),
+    word("complete", "\U0001F517", "Nothing missing. A circuit has to be a complete loop.",
+         ["The lamp lights when the circuit is complete.", "One loose wire and the loop is not complete."]),
+    word("flow", "\U0001F30A", "To move along, the way water moves along a pipe.",
+         ["Electricity flows round the circuit.", "Electricity cannot flow across a gap."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say how we use electricity, and how to be safe with it.", "2Pe.01"),
+    cando("I can name the parts of a simple circuit.", "2Pe.02"),
+    cando("I can build a circuit with a cell, wires and a lamp.", "2Pe.03"),
+    cando("I can say what a circuit diagram is a model of.", "2TWSm.01"),
+    cando("I can make a model of something real.", "2TWSm.02"),
+    cando("I can say how a diagram is different from a picture.", "2TWSm.03"),
+    cando("I can follow the safety rules when I build a circuit.", "2TWSc.04"),
+    cando("I can explain how a torch works.", "2SIC.02"),
 ]
 
 LESSON["home"] = [
     home("Inside a torch", "A torch that opens, a grown-up",
          ["Open the torch and take out the battery.",
-          "Find the metal strips and the little bulb.",
+          "Find the metal strips and the little lamp.",
           "Put it back together and switch it on."],
          "Cell, wires, lamp, switch. A torch is a circuit in a tube."),
     home("Switch hunt", "Paper and a pencil",

@@ -124,6 +124,24 @@ the dot rail following. **Zero paid TTS calls** across every drive.
   right=421) and it measures identically on Grade 2 and Grade 3 pages that this
   pass never rebuilt.
 
+### Correction, later on 2026-09-16: the tier label shipped broken
+
+The drive above recorded the tiers as working, and they did work - but the LABEL
+ran straight into the question: "One step at a timeWhich animal has feathers?".
+`deck.js` writes it in a `<span class="qbook">`, which is English's class; it
+came over with the file and is styled in English's stylesheet and never in
+Science's, so the span stayed inline. It was found the same day by answering a
+Grade 2 question wrongly and looking at the screen. `lib/science.css` now
+defines `.qbook` as a gold uppercase eyebrow on its own line, and Grade 1 was
+rebuilt and redeployed with it - all eight LESSON payloads byte-identical, every
+page exactly +1333 bytes of library.
+
+Worth keeping because of how it got through: the drive that verified the tiers
+asserted on BEHAVIOUR (does the support bank appear, is it unmarked, does the
+core bank resume) and every one of those assertions was true. Nothing in it
+looked at how the two strings sat next to each other, and no gate can - the
+declaration tells you the intent, never what the running thing draws.
+
 ---
 
 ## Appendix: the read of all 239 keys, 2026-09-16

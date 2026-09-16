@@ -1123,7 +1123,13 @@
   function blockGraph(o) {
     const el = o.el, cols = o.columns, count = cols.map(() => 0);
     const maxV = Math.max.apply(null, cols.map((c) => c.value));
-    let asked = false, lock = false;
+    /* `read` is an optional LIST of further questions asked after `pattern`,
+       with the graph still on screen. Stage 2 wants it: 2TWSa.02 is "identify
+       simple patterns in results" and 2TWSa.03 is "present and INTERPRET
+       results using tables and block graphs", and one question per graph is
+       thin for an objective about interpreting. A step with no `read` behaves
+       exactly as before, so Grades 3-4 rebuild byte-identical. */
+    let asked = false, lock = false, q = 0, phase = "build", score = 0;
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small"><thead><tr><th>' + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
         cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + (o.unit ? " " + esc(o.unit) : "") + "</span></td></tr>").join("") + "</tbody></table>" +
@@ -1136,7 +1142,7 @@
       $(el.score).textContent = done + " of " + cols.length + " columns built";
     }
     function askPattern() {
-      asked = true;
+      asked = true; phase = "pattern";
       $(el.ask).innerHTML = o.pattern.ask;
       $(el.ch).classList.add("stack");
       $(el.ch).innerHTML = shuffle(o.pattern.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
@@ -1160,10 +1166,28 @@
       const ok = b.dataset.ok === "1";
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong");
-      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + o.pattern.why; say($(el.fb).textContent);
-      reportScore(o.finish, ok ? 1 : 0, 1);
-      setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 2800);
+      const src = phase === "read" ? o.read[q] : o.pattern;
+      if (ok) score++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + src.why; say($(el.fb).textContent);
+      const total = 1 + ((o.read && o.read.length) || 0);
+      if (phase === "read") q++;
+      const more = o.read && o.read.length && (phase === "pattern" ? 0 : q) < o.read.length;
+      setTimeout(() => {
+        if (more) { phase = "read"; askRead(); return; }
+        reportScore(o.finish, score, total);
+        $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done);
+      }, 2800);
     });
+    function askRead() {
+      lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.score).textContent = "Reading the graph: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     draw();
   }
 

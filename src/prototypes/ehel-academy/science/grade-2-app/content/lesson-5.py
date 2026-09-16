@@ -5,7 +5,7 @@
 2Cp.03 testing; with 2TWSp.02, 2TWSa.01, 2TWSc.01, 2TWSc.04, 2TWSc.06 and
 2SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home
+from _kit import explain, step, opt, q, part, word, home, cando
 
 LESSON = {
     "slug": "changing-materials",
@@ -39,10 +39,20 @@ LESSON = {
              {"sim": "newMaterial",
               "predict": {"ask": "After the egg is cooked, what will happen when you <b>cool it down</b>?",
                           "opts": [opt("It will stay cooked", True), opt("It will turn back into a raw runny egg", False), opt("It will turn into an ice cube", False)]},
+              "plan": {"ask": "How shall we find out whether cooking makes a <b>new</b> material? Which way is <b>fair</b>?",
+                       "opts": [opt("Heat the egg, then cool it right down again and see if it goes back", True),
+                                opt("Heat the egg and then eat it", False),
+                                opt("Heat one egg and freeze a different egg", False)],
+                       "why": "The test for a NEW material is whether you can get the first one back. So you have to try to undo it."},
               "runAsk": "Press Heat it three times. Then press Cool it down.",
               "happened": {"ask": "What happened when the cooked egg cooled down?",
                            "opts": [opt("It stayed cooked. It did not go back to raw", True), opt("It went runny and raw again", False), opt("It disappeared", False)],
-                           "why": "Cooling did not undo the cooking. Cooking made a new material, and there is no going back."}},
+                           "why": "Cooling did not undo the cooking. Cooking made a new material, and there is no going back."},
+              "conclude": {"ask": "So what did we find out about <b>cooking</b>?",
+                           "opts": [opt("Cooking makes a new material that you cannot change back", True),
+                                    opt("Cooking only changes the shape", False),
+                                    opt("Cooling always undoes cooking", False)],
+                           "why": "The egg would not go back however cold it got. When you cannot get the first material back, a new one has been made."}},
              "Cooking makes a new material. Cooling cannot undo it."),
 
         step("sort", "New material, or the same one back?", "\U0001F5C2️", "Change sorter", ["2Cc.01", "2TWSc.01"],
@@ -83,7 +93,17 @@ LESSON = {
                   {"pic": "\U0001F36B", "label": "the chocolate", "answer": "melt", "why": "the chocolate melted, and it was still chocolate."},
                   {"pic": "\U0001F35E", "label": "the dough", "answer": "new", "why": "the dough baked into bread, a new material."},
               ],
-              "choices": [{"id": "melt", "t": "Melted, same material", "pic": "\U0001F4A7"}, {"id": "new", "t": "Became a new material", "pic": "\U0001F525"}]},
+              "choices": [{"id": "melt", "t": "Melted, same material", "pic": "\U0001F4A7"}, {"id": "new", "t": "Became a new material", "pic": "\U0001F525"}],
+              "read": [
+                  {"ask": "Look at your table. Which two rows gave you the <b>same material back</b>?",
+                   "opts": [opt("the ice and the chocolate - both only melted", True), opt("the egg and the dough", False), opt("all four of them", False)],
+                   "why": "The ice melted to water and the chocolate melted to chocolate: both still the same material. The egg and the dough became new materials."},
+                  {"ask": "Two rows say it melted and two say a new material. What does that tell you?",
+                   "opts": [opt("some changes make a new material and some do not", True),
+                            opt("every change makes a new material", False),
+                            opt("no change ever makes a new material", False)],
+                   "why": "It depends on the change. That is the whole point of the table."},
+              ]},
              "Your table shows which changes made something new."),
 
         step("explore", "Safe with heat", "\U0001F9E4", "Safe hands", ["2TWSc.04", "2TWSc.02"],
@@ -136,8 +156,12 @@ LESSON = {
                  q("A marshmallow is toasted brown over a fire. Same material?", "\U0001F525", "No. Toasting made a new material.", ["Yes, it is the same", "Yes, it just melted"], "The brown toasted part cannot go back to being white marshmallow."),
                  q("A snowman melts in the sun. What is the water?", "⛄", "the same material as the snow", ["a new material", "gone for ever"], "Snow is frozen water. Melted snow is water. Same material."),
                  q("A match is struck and burns. Same material after?", "\U0001F525", "No. Burning made ash and smoke, new materials.", ["Yes, it is still a match", "Yes, it just got warm"], "Burning always makes new materials."),
+                 q("You roll a flat sheet of paper into a tube. The tube is stiff. Did the <b>material</b> change?", "\U0001F4C4", "No. The object changed shape; the paper is as bendy as ever.", ["Yes, it became a stiff material", "Yes, rolling makes new paper"], "Unroll it and it is the same bendy paper. The OBJECT changed, not the material."),
+                 q("Sofia says toast is just bread with a brown top, so it is still bread. Is she right?", "\U0001F35E", "No. The brown is a new material, and no cooling turns toast back into bread.", ["Yes, it is still bread underneath", "Yes, if you scrape the brown off"], "Scraping the brown off does not give you a fresh slice back, and cooling gives you cold toast. Toasting made something new."),
+                 q("Are all inventors and scientists people from long ago?", "\U0001F52C", "No. Scientists are discovering new things today.", ["Yes, they all lived long ago", "Yes, they are all very old"], "There are scientists at work right now, finding out things nobody knew last year. Some of them are quite young."),
              ]},
-             "Melt, freeze, squash: same. Cook, bake, burn: new."),
+             "Melt, freeze, squash: same. Cook, bake, burn: new.",
+             mis=["3.5-m1", "rtg-11", "rtg-12"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["2Cc.01", "2TWSc.04"],
              "Time to show what you know. Tap the answer.",
@@ -156,7 +180,19 @@ LESSON = {
                  q("The pan has stopped steaming. What do you do?", "\U0001F9E4", "leave it for a grown-up to move, or wait until it is cool", ["pick it up with bare hands", "touch it to check"], "Metal stays hot long after the steam stops."),
                  q("Long ago people tried to make gold by heating other materials. What happened?", "\U0001F9EA", "It never worked, but it started chemistry", ["They made lots of gold", "They gave up straight away"], "What people knew changed by testing."),
                  q("Why can you get chocolate back after it melts, but not bread back after it is toasted?", "\U0001F36B", "melting keeps the same material; toasting makes a new one", ["chocolate is brown", "bread is bigger than chocolate"], "Melted chocolate sets into chocolate again. Toasting changes bread into a new material that cannot go back."),
-             ]},
+             ],
+              "support": [
+                 q("You melt chocolate and let it go cold. Is it chocolate again?", "\U0001F36B", "Yes", ["No"],
+                   "Melting and setting give the same material back."),
+                 q("Can you un-cook a cooked egg?", "\U0001F373", "No", ["Yes, by freezing it"],
+                   "Cooking makes a new material that will not go back."),
+              ],
+              "extension": [
+                 q("Water freezes hard, then melts again. Has a <b>new material</b> been made?", "\u2744\uFE0F", "No - it is the same water, and you can always get it back", ["Yes, ice is a new material", "Only while it stays frozen"],
+                   "The test is whether you can get the first material back. With ice you always can."),
+                 q("A nail left outdoors for a year goes brown and flaky. Same material, or new?", "\U0001F529", "new - and no washing turns the flakes back into a shiny nail", ["the same, it is only dirty", "the same, it just needs a rub"],
+                   "Rust is a different material from the metal it came from. Like cooking, it does not go back."),
+              ]},
              "That is the whole lesson finished. You know which changes make something new."),
     ],
 }
@@ -204,6 +240,22 @@ LESSON["words"] = [
          ["The candle burns.", "Wood burns to ash."]),
     word("reversible", "\u21A9\uFE0F", "A change you can undo, getting the same material back.",
          ["Melting ice is reversible.", "Freezing water is reversible too."]),
+    word("solid", "\U0001F9F1", "A material that keeps its own shape and does not flow.",
+         ["Ice is a solid.", "A brick is a solid."]),
+    word("liquid", "\U0001F4A7", "A material that flows and can be poured.",
+         ["Water is a liquid.", "Melted chocolate is a liquid."]),
+    word("safe", "\u2705", "It will not hurt you. The opposite of dangerous.",
+         ["Ask a grown-up before you go near anything hot, to stay safe.", "Oven gloves make it safe to hold a hot tray."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe how some materials can be changed.", "2Cc.01"),
+    cando("I can say which changes make a new material and which do not.", "2Cc.01"),
+    cando("I can say what I think will happen before I try it.", "2TWSp.02"),
+    cando("I can say whether what happened matched my prediction.", "2TWSa.01"),
+    cando("I can keep myself safe when I work with something hot.", "2TWSc.04"),
+    cando("I can record what happened in a table.", "2TWSc.06"),
+    cando("I can say how what people thought long ago is different from what we know now.", "2SIC.01"),
 ]
 
 LESSON["home"] = [

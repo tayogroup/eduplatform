@@ -45,10 +45,14 @@ node   $T/deploy.mjs                --app .    # plan only; --upload is an owner
 | 6 Forces Change Things | 16 | 10 | push table → block graph → increasing pattern |
 | 7 Light and Dark | 15 | 9 | the `darkRoom` sim: curtains, lamp, total darkness |
 | 8 Electricity and Circuits | 15 | 10 | the `circuit` figure, then **build** the circuit and break it |
-| 9 Rocks and the Earth | 16 | 11 | rocks in the tester, quarry / mine / riverbed scenes |
-| 10 The Sun Across the Sky | 16 | 11 | the `sunPath` sim, shadows measured, recorded, graphed |
+| 9 Rocks and the Earth | 17 | 11 | rocks in the tester, quarry / mine / riverbed scenes |
+| 10 The Sun Across the Sky | 17 | 12 | the `sunPath` sim, shadows measured, recorded, graphed |
 
-155 steps in all (83 of the lessons' own plus the seven-step unit shell on each, see below), about 400 minutes by the hub's estimate.
+157 steps in all (87 of the lessons' own plus the seven-step unit shell on each,
+see below), about 410 minutes by the hub's estimate. Lessons 3 and 10 gained an
+objective in the 2026-09-16 depth pass and lessons 9 and 10 a practice step in
+the 2026-09-11 fix pass; `objectiveFloors` in `app.config.json` records the
+measured count after each build and may rise, never fall.
 
 **Four new step kinds carry the new objectives, and each was added because
 no Stage 1 kind could honestly claim the code:**
@@ -112,3 +116,100 @@ Added on 2026-09-10 and verified the same day: 70 science words; both gates
 green; the seven shell steps driven to completion in the browser on Lesson 8;
 no horizontal overflow at 375px on any step of Lesson 3, in the game overlay,
 or in the word finder.
+
+## The Cambridge Stage 2 depth pass (2026-09-16)
+
+The same pass Grade 1 had on the same day, against the four Stage 2 books
+(Learner's Book 2, Teacher's Resource 2, Ready to Go Lessons Stage 2, Teacher's
+Guide Stage 2). Nothing here moved a step: **157 steps, and all ten sequences
+byte-identical to the shipped pages**, because progress is stored by position.
+Everything was added INSIDE an existing step, or onto the sticker shelf, which
+is not a step.
+
+**Cambridge's misconceptions are now a fixture and a gate.**
+`../data/cambridge-stage2-misconceptions.json` holds 51 of them - 37 from the
+Teacher's Resource, keyed `<topic>-m<N>`, and 14 more from Ready to Go, keyed
+`rtg-NN`. A step names the ones it answers in `mis=[...]`, `check-coverage.py`
+refuses a citation the fixture does not hold or that it assigns to another
+lesson, and coverage may not fall below `minimumCovered`. The file also carries
+an `_excluded` block: five Ready to Go entries that duplicate a Teacher's
+Resource row (folded into it, with the id that absorbed them) and two Cambridge
+DEFERS to a later stage - "a still object has no forces" to Stage 5 and "we see
+because of what our eyes do" to later stages. Writing down what was left out is
+the half of the record that stops the next pass re-finding it.
+
+**Cambridge's five-move enquiry, where the shape allowed it.** Stage 2's
+experiments had predict / try / what happened / did it match; Cambridge's method
+is question → predict → **plan** → observe → **conclude**. Five experiments
+gained a `plan` ("which way is fair?") and five a `conclude`, and `lib/science.js`
+now COMPUTES the phase list from whether those keys are present, so a step
+without them behaves exactly as before.
+
+**Data that gets read rather than just filled in.** 2TWSa.02 and 2TWSa.03 are
+about finding a pattern and INTERPRETING a table or graph, and one question per
+table was thin for that. Eight steps gained a `read` list - five record tables
+and three block graphs - asked with the table or the graph still on screen.
+`blockGraph` learned the same `read` phase `recordTable` already had.
+
+**The self-check, the tiers, and the words.**
+
+- 74 "Look what I can do!" claims on the sticker shelf, Cambridge's own closing
+  block, one per topic-sized idea. Each names an objective THIS lesson's own
+  steps carry and the builder resolves it to the step that teaches it - it
+  refuses a code no step carries, which is what stops the Grade 1 bug where
+  every claim resolved to step 0 (`_shell.expand` gives the shell steps the
+  whole lesson's codes, so the search has to run over `lesson["steps"]`).
+- 40 differentiation items, from Ready to Go's own Support and Extension pairs:
+  a two-option `support` bank that NARROWS the task after a wrong answer, and an
+  `extension` bank that WIDENS it after a clean finish. Neither is scored and
+  both say so on screen.
+- 101 science words, up from 70. The 31 were measured, not guessed: the
+  Learner's Book glossary has 160 entries, 125 had no card here, and 77 of those
+  are words the lessons already say. The cards are the ones each lesson uses most
+  and never defines, plus three Cambridge CONTRAST partners we taught only one
+  half of - `absorbent` against waterproof, `smooth` against rough, and `shiny`,
+  defined here against dull.
+
+**Three pieces of taught language corrected**, each against Cambridge's own
+instruction: `absorbent` now names the opposite of waterproof in Lesson 4's
+property list and lecture (the lesson already answered TR 3.4-m1's "waterproof
+is on or off" in a question, but had no word for the other half); Lesson 8 says
+**lamp** where it said "bulb" four times, keeping one use named as the everyday
+word, because Ready to Go says use "lamp" from the start and the lesson's own
+quiz item teaches exactly that.
+
+**The 292 keys were read by a person, and 17 things were changed.** No key named
+the wrong option. What the read found: two pieces of wrong science (one key
+taught that inherited features never land in between, and backed it with a claim
+about height that is the reverse of the truth; another said toasting changes
+bread all the way through); four read-off questions that asked about rows their
+table does not have; three items that repeated something the same lesson already
+asked; two distractors that were not actually wrong; and six pieces of loose
+wording. `../lesson-kit/build-review-pack.py` writes `review-pack.html` - every
+question, judgement items first - and is not in the deploy set.
+
+**Verified in the browser on 2026-09-16**, on the built pages served from
+localhost:
+
+- The support bank fires on a wrong answer and the extension bank after a clean
+  finish; both label themselves "not marked"; the graph read-off asks
+  "Reading the graph: 1 of 2" and "2 of 2" with the graph still on screen.
+- Every self-check row routes to the step that teaches its code - "I can say
+  how a diagram is different from a picture" opens step 10, *Diagram, or
+  picture?* - and the eight rows of Lesson 1 point at seven different steps.
+- One real defect that no gate could see, found by answering a question wrongly:
+  the tier label ran into the question ("One step at a timeWhich animal has
+  feathers?"). `qbook` is English's class, which came over with `deck.js` and is
+  styled in English's stylesheet and never in Science's. It shipped that way in
+  Grade 1 earlier the same day; `lib/science.css` now defines it and both grades
+  were rebuilt.
+- The only failed requests are the five platform sidecars
+  (`learner-controls.js`, `wehel.js`, `course-shell.js`, `seb-session.js`,
+  `progress-client.js`), which exist only on the deployed tier. Zero JS errors.
+
+**Serve these pages on any port EXCEPT 4287.** `lib/voice.js` treats
+`localhost:4287` as the dev twin and posts every narration line to
+`/api/elevenlabs-tts`, which bills per character; on any other port with no
+`?pwsEndpoint`/`?pwsToken` the endpoint resolves to "" and the module reports
+itself unavailable, so nothing is requested - which is what the network log
+above confirms. `npm run preview:src` is the 4287 one.

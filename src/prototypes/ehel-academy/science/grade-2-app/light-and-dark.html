@@ -690,6 +690,38 @@
 .sit-card p { font-size: 18px; line-height: 1.5; margin: 0 0 16px; }
 .sit-card .bigbtns { justify-content: center; gap: 10px; flex-wrap: wrap; }
 
+  /* ---- the tier eyebrow. deck.js writes
+       <span class="qbook">One step at a time</span> + the question
+     when it offers the support or the extension bank. `qbook` is ENGLISH's
+     class - it came over with deck.js and is defined in English's stylesheet,
+     never in this one - so here the span stayed inline and the label ran into
+     the first word of the question: "One step at a timeWhich animal has
+     feathers?". It shipped that way in Grade 1 on 2026-09-16 and no gate could
+     see it; it was found by answering a question wrongly in the browser. ---- */
+  .qbook { display: block; margin: 0 0 4px; font-size: 14px; font-weight: 800;
+    letter-spacing: .05em; text-transform: uppercase; color: var(--gold); }
+
+  /* ---- the self-check on the sticker shelf: Cambridge's "Look what I can
+     do!", which closes every one of its topics at each stage (25 at Stage 1,
+     26 at Stage 2). It sits on the SHELF and not in a step, so nothing here
+     moves a saved place. No new hue: the heading is the taught-thing teal and
+     "Show me" is a ghost button. ---- */
+  .cando { width: 100%; max-width: 680px; margin: 18px auto 4px; text-align: left; }
+  .cando h3 { margin: 0 0 4px; font-size: 20px; color: var(--teal); }
+  .cando .candonote { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cando ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cando li { display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+  .cando li > span { font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .candogo { flex: none; border: 2px solid var(--line); background: transparent; color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; font-family: inherit; font-weight: 700; font-size: 14px;
+    cursor: pointer; }
+  .candogo:hover { border-color: var(--teal); color: var(--teal); }
+  .candogo:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  @media (max-width: 460px) {
+    .cando li { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -1121,6 +1153,19 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="cando">
+          <h3>Look what I can do!</h3>
+          <p class="candonote">Read each one. Can you do it? If you are not sure, press <b>Show me</b>.</p>
+          <ul>
+          <li><span>I can talk about different light sources.</span><button type="button" class="candogo" data-go="3">Show me</button></li>
+          <li><span>I can say that without light it is dark.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can say what a model shows and what it leaves out.</span><button type="button" class="candogo" data-go="6">Show me</button></li>
+          <li><span>I can say what I think will happen before I try it.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can say whether what happened matched my prediction.</span><button type="button" class="candogo" data-go="5">Show me</button></li>
+          <li><span>I can ask my own question about light.</span><button type="button" class="candogo" data-go="7">Show me</button></li>
+          <li><span>I can say what people used to think about light, and what we know now.</span><button type="button" class="candogo" data-go="8">Show me</button></li>
+          </ul>
+        </div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1193,7 +1238,7 @@
           ],
           "counts": {
             "steps": 15,
-            "words": 7,
+            "words": 10,
             "games": 4,
             "home": 3
           },
@@ -1374,6 +1419,33 @@
                 "Shine the torch in the dark.",
                 "A torch is a light source."
               ]
+            },
+            {
+              "w": "shiny",
+              "pic": "✨",
+              "meaning": "Light bounces off it. A dull thing is the opposite: light does not bounce off it.",
+              "uses": [
+                "A mirror is shiny.",
+                "Tin foil is shiny, so it shines light back."
+              ]
+            },
+            {
+              "w": "bright",
+              "pic": "🔆",
+              "meaning": "Gives off a lot of light.",
+              "uses": [
+                "The Sun is very bright.",
+                "A torch is brighter than a candle."
+              ]
+            },
+            {
+              "w": "daylight",
+              "pic": "🌤️",
+              "meaning": "The light we get from the Sun in the daytime.",
+              "uses": [
+                "In daylight you do not need a lamp.",
+                "Daylight comes from the Sun, not from the sky itself."
+              ]
             }
           ]
         }
@@ -1542,6 +1614,24 @@
               }
             ]
           },
+          "plan": {
+            "ask": "How shall we find out what darkness really is? Which way is <b>fair</b>?",
+            "opts": [
+              {
+                "t": "Take away every light, one at a time, and see what is left",
+                "ok": true
+              },
+              {
+                "t": "Shut your eyes tight",
+                "ok": false
+              },
+              {
+                "t": "Paint the walls black",
+                "ok": false
+              }
+            ],
+            "why": "Shutting your eyes tests your eyes, not the room. Take the LIGHT away and see what the room is like."
+          },
           "runAsk": "Close the curtains. Then switch the lamp off. Look. Then switch the lamp back on.",
           "happened": {
             "ask": "What happened with no light source left?",
@@ -1560,6 +1650,24 @@
               }
             ],
             "why": "With every light source gone there was nothing to see by. Darkness is the absence of light. Switching the lamp on brought the light, and the seeing, back."
+          },
+          "conclude": {
+            "ask": "So what did we find out about <b>darkness</b>?",
+            "opts": [
+              {
+                "t": "Darkness is what is left when there is no light",
+                "ok": true
+              },
+              {
+                "t": "Darkness came into the room from outside",
+                "ok": false
+              },
+              {
+                "t": "Darkness is the opposite of light",
+                "ok": false
+              }
+            ],
+            "why": "Nothing arrived when the lamp went off. Something LEFT, and dark is what remained."
           }
         }
       },
@@ -1803,9 +1911,71 @@
                 }
               ],
               "why": "The Sun lights the whole daytime side of the Earth."
+            },
+            {
+              "ask": "You press the switch and the room lights up. Is the <b>switch</b> the light source?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">💡</div>",
+              "opts": [
+                {
+                  "t": "No. The lamp is. The switch only lets the electricity through.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, it makes the light",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, because you press it",
+                  "ok": false
+                }
+              ],
+              "why": "Look at where the light actually comes out. That is the source."
+            },
+            {
+              "ask": "A silver spoon looks bright on a sunny table. Is it a light source?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🥄</div>",
+              "opts": [
+                {
+                  "t": "No. It only bounces light back, like a mirror.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, it is shining",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, if it is very shiny",
+                  "ok": false
+                }
+              ],
+              "why": "A source MAKES its own light. Shiny things and the Moon only shine light back."
+            },
+            {
+              "ask": "Sofia says dark is the <b>opposite</b> of light, like hot and cold. Is she right?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🌑</div>",
+              "opts": [
+                {
+                  "t": "No. Dark is simply what is left when the light is taken away.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, they are opposites",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, and dark is a kind of cold",
+                  "ok": false
+                }
+              ],
+              "why": "Hot and cold are two real things. Light is a real thing and dark is only its absence - there is no such stuff as dark."
             }
           ]
-        }
+        },
+        "mis": [
+          "5.1-m1",
+          "5.1-m2",
+          "5.2-m1"
+        ]
       },
       {
         "kind": "games",
@@ -1880,6 +2050,36 @@
                   ],
                   "answer": "the Sun",
                   "explanation": "The Sun lights the whole daytime side of the Earth."
+                },
+                {
+                  "prompt": "You press the switch and the room lights up. Is the switch the light source?",
+                  "choices": [
+                    "No. The lamp is. The switch only lets the electricity through.",
+                    "Yes, it makes the light",
+                    "Yes, because you press it"
+                  ],
+                  "answer": "No. The lamp is. The switch only lets the electricity through.",
+                  "explanation": "Look at where the light actually comes out. That is the source."
+                },
+                {
+                  "prompt": "A silver spoon looks bright on a sunny table. Is it a light source?",
+                  "choices": [
+                    "No. It only bounces light back, like a mirror.",
+                    "Yes, it is shining",
+                    "Yes, if it is very shiny"
+                  ],
+                  "answer": "No. It only bounces light back, like a mirror.",
+                  "explanation": "A source MAKES its own light. Shiny things and the Moon only shine light back."
+                },
+                {
+                  "prompt": "Sofia says dark is the opposite of light, like hot and cold. Is she right?",
+                  "choices": [
+                    "No. Dark is simply what is left when the light is taken away.",
+                    "Yes, they are opposites",
+                    "Yes, and dark is a kind of cold"
+                  ],
+                  "answer": "No. Dark is simply what is left when the light is taken away.",
+                  "explanation": "Hot and cold are two real things. Light is a real thing and dark is only its absence - there is no such stuff as dark."
                 }
               ]
             },
@@ -2000,6 +2200,23 @@
                     [
                       "model",
                       "A clear way of showing an object or an idea, leaving the rest out."
+                    ]
+                  ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "torch",
+                      "A small lamp you carry, with a battery inside."
+                    ],
+                    [
+                      "shiny",
+                      "Light bounces off it. A dull thing is the opposite: light does not bounce off it."
+                    ],
+                    [
+                      "bright",
+                      "Gives off a lot of light."
                     ]
                   ]
                 }
@@ -2292,9 +2509,123 @@
                 }
               ],
               "why": "A mirror is not a light source. With no light in the room, there is nothing for it to bounce back."
+            },
+            {
+              "ask": "At dusk, does darkness creep out of the corners of the room?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🌌</div>",
+              "opts": [
+                {
+                  "t": "No. The light is going, and dark is what is left.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, it spreads from the dark corners",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, it comes in the window",
+                  "ok": false
+                }
+              ],
+              "why": "Nothing spreads. Add light and the dark goes; take light away and it is dark again."
+            },
+            {
+              "ask": "Is there anything in a dark room that was not there with the light on?",
+              "pic": "<div class=\"askpic\" aria-hidden=\"true\">🛏️</div>",
+              "opts": [
+                {
+                  "t": "No. Only the light has gone.",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, the dark is there now",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, things come out in the dark",
+                  "ok": false
+                }
+              ],
+              "why": "Darkness is only a lack of light. Nothing is added. You do have to move carefully though, because you cannot see."
+            }
+          ],
+          "support": [
+            {
+              "ask": "Is a candle a light source?",
+              "pic": "🕯️",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "A candle flame makes its own light."
+            },
+            {
+              "ask": "Is the Moon a light source?",
+              "pic": "🌙",
+              "opts": [
+                {
+                  "t": "No",
+                  "ok": true
+                },
+                {
+                  "t": "Yes",
+                  "ok": false
+                }
+              ],
+              "why": "The Moon only sends the Sun's light back to us."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "A room has no window and no lamp. You wait ten minutes. Will your eyes get used to it enough to see?",
+              "pic": "🌑",
+              "opts": [
+                {
+                  "t": "No - with no light at all there is nothing to see by",
+                  "ok": true
+                },
+                {
+                  "t": "Yes, eyes always get used to the dark",
+                  "ok": false
+                },
+                {
+                  "t": "Yes, after about an hour",
+                  "ok": false
+                }
+              ],
+              "why": "Eyes do adjust when there is a LITTLE light. Where there is none, there is nothing for them to adjust to."
+            },
+            {
+              "ask": "You are reading these words. What had to happen first?",
+              "pic": "📖",
+              "opts": [
+                {
+                  "t": "light from a source bounced off the page into your eyes",
+                  "ok": true
+                },
+                {
+                  "t": "your eyes sent light onto the page",
+                  "ok": false
+                },
+                {
+                  "t": "the page made its own light",
+                  "ok": false
+                }
+              ],
+              "why": "You need a source, and its light has to reach your eyes. The page only bounces it."
             }
           ]
-        }
+        },
+        "mis": [
+          "5.2-m2",
+          "5.2-m3"
+        ]
       },
       {
         "kind": "world",
@@ -2377,9 +2708,48 @@
                 "Shine the torch in the dark.",
                 "A torch is a light source."
               ]
+            },
+            {
+              "w": "shiny",
+              "pic": "✨",
+              "meaning": "Light bounces off it. A dull thing is the opposite: light does not bounce off it.",
+              "uses": [
+                "A mirror is shiny.",
+                "Tin foil is shiny, so it shines light back."
+              ]
+            },
+            {
+              "w": "bright",
+              "pic": "🔆",
+              "meaning": "Gives off a lot of light.",
+              "uses": [
+                "The Sun is very bright.",
+                "A torch is brighter than a candle."
+              ]
+            },
+            {
+              "w": "daylight",
+              "pic": "🌤️",
+              "meaning": "The light we get from the Sun in the daytime.",
+              "uses": [
+                "In daylight you do not need a lamp.",
+                "Daylight comes from the Sun, not from the sky itself."
+              ]
             }
           ],
           "finder": [
+            {
+              "w": "absorbent",
+              "pic": "🧽",
+              "meaning": "It soaks water up. The opposite of waterproof.",
+              "uses": [
+                "A sponge is absorbent.",
+                "A towel is absorbent, so it dries you."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
             {
               "w": "Arctic",
               "pic": "🧊",
@@ -2393,6 +2763,18 @@
               "file": "habitats.html"
             },
             {
+              "w": "away",
+              "pic": "⬅️",
+              "meaning": "Moving further from something.",
+              "uses": [
+                "Push the box away from you.",
+                "The ball rolled away from me."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
               "w": "block graph",
               "pic": "📊",
               "meaning": "A graph made of blocks, one block for each thing counted.",
@@ -2403,6 +2785,18 @@
               "lesson": 3,
               "title": "Habitats",
               "file": "habitats.html"
+            },
+            {
+              "w": "bright",
+              "pic": "🔆",
+              "meaning": "Gives off a lot of light.",
+              "uses": [
+                "The Sun is very bright.",
+                "A torch is brighter than a candle."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
             },
             {
               "w": "burn",
@@ -2453,6 +2847,18 @@
               "file": "electricity-and-circuits.html"
             },
             {
+              "w": "complete",
+              "pic": "🔗",
+              "meaning": "Nothing missing. A circuit has to be a complete loop.",
+              "uses": [
+                "The lamp lights when the circuit is complete.",
+                "One loose wire and the loop is not complete."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            },
+            {
               "w": "cook",
               "pic": "🍳",
               "meaning": "To heat food until it changes into something new.",
@@ -2477,12 +2883,36 @@
               "file": "changing-materials.html"
             },
             {
+              "w": "cotton",
+              "pic": "👕",
+              "meaning": "A soft material that comes from a plant and is made into cloth.",
+              "uses": [
+                "A T-shirt is cotton.",
+                "Cotton is absorbent, so towels are made of it."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
               "w": "dark",
               "pic": "🌑",
               "meaning": "No light at all.",
               "uses": [
                 "The cupboard is dark inside.",
                 "At night, without lamps, it is dark."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
+              "w": "daylight",
+              "pic": "🌤️",
+              "meaning": "The light we get from the Sun in the daytime.",
+              "uses": [
+                "In daylight you do not need a lamp.",
+                "Daylight comes from the Sun, not from the sky itself."
               ],
               "lesson": 7,
               "title": "Light and Dark",
@@ -2513,6 +2943,30 @@
               "file": "animals-and-their-coverings.html"
             },
             {
+              "w": "diet",
+              "pic": "🥗",
+              "meaning": "All the food a person eats.",
+              "uses": [
+                "A healthy diet has fruit and vegetables in it.",
+                "Your diet is what you eat, not something you go on."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "direction",
+              "pic": "🧭",
+              "meaning": "The way something is going.",
+              "uses": [
+                "A push can change the direction of a ball.",
+                "The car changed direction when it turned."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
               "w": "distance",
               "pic": "📏",
               "meaning": "How far something travels.",
@@ -2535,6 +2989,18 @@
               "lesson": 10,
               "title": "The Sun Across the Sky",
               "file": "the-sun-across-the-sky.html"
+            },
+            {
+              "w": "egg",
+              "pic": "🥚",
+              "meaning": "A shell made by a female animal, with the young inside it.",
+              "uses": [
+                "A hen lays an egg.",
+                "A chick hatches out of an egg."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
             },
             {
               "w": "environment",
@@ -2583,6 +3049,30 @@
               "lesson": 4,
               "title": "Natural or Made?",
               "file": "natural-or-made.html"
+            },
+            {
+              "w": "flow",
+              "pic": "🌊",
+              "meaning": "To move along, the way water moves along a pipe.",
+              "uses": [
+                "Electricity flows round the circuit.",
+                "Electricity cannot flow across a gap."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            },
+            {
+              "w": "fluoride",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><g transform=\"rotate(-35 32 32)\"><rect x=\"4\" y=\"30\" width=\"40\" height=\"8\" rx=\"4\" fill=\"#3B7FD1\"/><rect x=\"40\" y=\"29\" width=\"18\" height=\"10\" rx=\"3\" fill=\"#E9EEF2\" stroke=\"#3B7FD1\" stroke-width=\"2\"/><path d=\"M43 29 V21 M47 29 V21 M51 29 V21 M55 29 V21\" stroke=\"#8FC9EA\" stroke-width=\"3\" stroke-linecap=\"round\"/></g></svg>",
+              "meaning": "Something in toothpaste that makes the outside of a tooth harder.",
+              "uses": [
+                "Toothpaste with fluoride keeps teeth strong.",
+                "Fluoride helps stop holes in teeth."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
             },
             {
               "w": "force",
@@ -2657,6 +3147,18 @@
               "file": "rocks-and-the-earth.html"
             },
             {
+              "w": "gums",
+              "pic": "👄",
+              "meaning": "The soft pink part of your mouth that teeth grow out of.",
+              "uses": [
+                "Brush your gums gently too.",
+                "Healthy gums hold the teeth in place."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
               "w": "habitat",
               "pic": "🌿",
               "meaning": "The place where a living thing naturally lives.",
@@ -2693,6 +3195,18 @@
               "file": "changing-materials.html"
             },
             {
+              "w": "home",
+              "pic": "🏠",
+              "meaning": "The one place an animal sleeps and keeps its young safe. A habitat is bigger than a home.",
+              "uses": [
+                "A rabbit's home is its burrow.",
+                "Its habitat is the burrow AND the field it feeds in."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
               "w": "illness",
               "pic": "🤒",
               "meaning": "Being ill. When your body is not working as it should.",
@@ -2715,6 +3229,18 @@
               "lesson": 2,
               "title": "Teeth and Staying Healthy",
               "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "insect",
+              "pic": "🐜",
+              "meaning": "A small animal with six legs and three body parts.",
+              "uses": [
+                "An ant is an insect.",
+                "Count the legs: six means an insect."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
             },
             {
               "w": "label",
@@ -2765,6 +3291,30 @@
               "file": "light-and-dark.html"
             },
             {
+              "w": "liquid",
+              "pic": "💧",
+              "meaning": "A material that flows and can be poured.",
+              "uses": [
+                "Water is a liquid.",
+                "Melted chocolate is a liquid."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "litter",
+              "pic": "🗑️",
+              "meaning": "Rubbish dropped on the ground instead of in a bin.",
+              "uses": [
+                "Litter spoils a habitat.",
+                "Pick up litter and put it in a bin."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
               "w": "manufactured",
               "pic": "🏭",
               "meaning": "Made by people, usually in a factory.",
@@ -2775,6 +3325,30 @@
               "lesson": 4,
               "title": "Natural or Made?",
               "file": "natural-or-made.html"
+            },
+            {
+              "w": "material",
+              "pic": "📦",
+              "meaning": "What a thing is made of.",
+              "uses": [
+                "Glass is a material.",
+                "A window is the object; glass is the material."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
+              "w": "measure",
+              "pic": "📏",
+              "meaning": "To find out how big or how long something is.",
+              "uses": [
+                "Measure the shadow with your feet.",
+                "Measure it the same way every time."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
             },
             {
               "w": "melt",
@@ -2849,12 +3423,36 @@
               "file": "natural-or-made.html"
             },
             {
+              "w": "object",
+              "pic": "🧸",
+              "meaning": "A thing you can see or touch, made out of a material.",
+              "uses": [
+                "A cup is an object.",
+                "Name the object, then name its material."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
               "w": "offspring",
               "pic": "🐥",
               "meaning": "An animal's young. Its babies.",
               "uses": [
                 "A hen's offspring are chicks.",
                 "Offspring look a bit like each parent."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
+            },
+            {
+              "w": "parent",
+              "pic": "👪",
+              "meaning": "An animal's mother or its father.",
+              "uses": [
+                "A puppy's parents are two dogs.",
+                "You get a mix of features from both parents."
               ],
               "lesson": 1,
               "title": "Animals and Their Coverings",
@@ -2883,6 +3481,18 @@
               "lesson": 9,
               "title": "Rocks and the Earth",
               "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "plug",
+              "pic": "⚡",
+              "meaning": "The part you push into a socket to join something to the mains.",
+              "uses": [
+                "Only a plug goes into a socket.",
+                "Ask a grown-up to put the plug in."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
             },
             {
               "w": "pond",
@@ -2919,6 +3529,18 @@
               "lesson": 9,
               "title": "Rocks and the Earth",
               "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "record",
+              "pic": "📝",
+              "meaning": "To write down or draw what happened.",
+              "uses": [
+                "Record the length of the shadow each hour.",
+                "Record it straight away, before you forget."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
             },
             {
               "w": "reflect",
@@ -2969,6 +3591,30 @@
               "file": "rocks-and-the-earth.html"
             },
             {
+              "w": "safe",
+              "pic": "✅",
+              "meaning": "It will not hurt you. The opposite of dangerous.",
+              "uses": [
+                "Ask a grown-up before you go near anything hot, to stay safe.",
+                "Oven gloves make it safe to hold a hot tray."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "sand",
+              "pic": "🏖️",
+              "meaning": "Rock broken into tiny grains.",
+              "uses": [
+                "A beach is covered in sand.",
+                "Sand is rock, only very small."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
+            },
+            {
               "w": "scales",
               "pic": "🐟",
               "meaning": "Small hard plates that cover a fish or a snake.",
@@ -3005,6 +3651,18 @@
               "file": "the-sun-across-the-sky.html"
             },
             {
+              "w": "shiny",
+              "pic": "✨",
+              "meaning": "Light bounces off it. A dull thing is the opposite: light does not bounce off it.",
+              "uses": [
+                "A mirror is shiny.",
+                "Tin foil is shiny, so it shines light back."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
               "w": "skin",
               "pic": "🐸",
               "meaning": "The covering on the outside of a body.",
@@ -3027,6 +3685,18 @@
               "lesson": 6,
               "title": "Forces Change Things",
               "file": "forces-change-things.html"
+            },
+            {
+              "w": "smooth",
+              "pic": "✋",
+              "meaning": "Flat to touch, not bumpy. The opposite of rough.",
+              "uses": [
+                "A pebble is smooth.",
+                "Rub it: smooth means your finger slides."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
             },
             {
               "w": "soak",
@@ -3053,6 +3723,18 @@
               "file": "electricity-and-circuits.html"
             },
             {
+              "w": "solid",
+              "pic": "🧱",
+              "meaning": "A material that keeps its own shape and does not flow.",
+              "uses": [
+                "Ice is a solid.",
+                "A brick is a solid."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
               "w": "speed up",
               "pic": "🏃🏾",
               "meaning": "To go faster.",
@@ -3075,6 +3757,18 @@
               "lesson": 6,
               "title": "Forces Change Things",
               "file": "forces-change-things.html"
+            },
+            {
+              "w": "stones",
+              "pic": "⛰️",
+              "meaning": "Small pieces of rock. Stones, pebbles and rocks are all the same material.",
+              "uses": [
+                "The stones in the wall are rock.",
+                "A pebble is a stone that water has made smooth."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
             },
             {
               "w": "stretch",
@@ -3149,6 +3843,18 @@
               "file": "electricity-and-circuits.html"
             },
             {
+              "w": "table",
+              "pic": "📋",
+              "meaning": "A grid of boxes for writing down what you found.",
+              "uses": [
+                "Write your shadow lengths in a table.",
+                "A table keeps your results tidy."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
+            },
+            {
               "w": "torch",
               "pic": "🔦",
               "meaning": "A small lamp you carry, with a battery inside.",
@@ -3159,6 +3865,18 @@
               "lesson": 7,
               "title": "Light and Dark",
               "file": "light-and-dark.html"
+            },
+            {
+              "w": "towards",
+              "pic": "➡️",
+              "meaning": "Moving nearer to something.",
+              "uses": [
+                "Pull the box towards you.",
+                "The ball rolled towards the door."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
             },
             {
               "w": "transparent",
@@ -3219,6 +3937,18 @@
               "lesson": 8,
               "title": "Electricity and Circuits",
               "file": "electricity-and-circuits.html"
+            },
+            {
+              "w": "young",
+              "pic": "🐣",
+              "meaning": "An animal that has not been alive long. An animal's babies are its young.",
+              "uses": [
+                "A kitten is a young cat.",
+                "A hen's young are called chicks."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
             }
           ],
           "teaches": [
@@ -4374,6 +5104,20 @@
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
+    /* ---- DIFFERENTIATION (Cambridge's Focus / Practice / Challenge) --------
+       Cambridge tiers all 24 of its Stage 1 Workbook topics and this build
+       tiered nothing: every child ran one path. Two optional banks:
+
+         support    NARROWS the same task - fewer options, one idea. Offered
+                    the first time the child gets a core question wrong.
+         extension  WIDENS it. Offered after the core bank, and only to a
+                    child who finished with at most one slip.
+
+       NEITHER IS SCORED and `finish()` still fires at the end of the CORE
+       bank, so no step, position or completed check moves - which was the
+       design constraint for a live, routed grade. A step with neither bank
+       behaves exactly as before, so Grades 2-4 rebuild byte-identical. */
+    let mode = "core", queue = [], qi = 0, supportUsed = false;
     const el = o.el;
     function draw() {
       lock = false;
@@ -4419,9 +5163,48 @@
          child who comes back later is spoken to by show(), so nothing is lost. */
       if (cur === o.finish) say(plain(it.ask));
     }
+    /* An unscored tier question. The badge says which tier it is, so a child
+       (and a grown-up watching) can see this one is extra and not marked. */
+    function drawTier(kind) {
+      lock = false;
+      const it = queue[qi];
+      $(el.say).innerHTML = '<span class="qbook">' + (kind === "support" ? "One step at a time" : "Try a harder one") + "</span>" + it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (kind === "support" ? "Extra help" : "Extra challenge") + " - not marked";
+      if (cur === o.finish) say(plain(it.ask));
+    }
+    function endStep() {
+      $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+      reportScore(o.finish, right, o.items.length);
+      finish(o.finish, o.done);
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
       lock = true;
+      if (mode !== "core") {
+        const kind = mode, it = queue[qi], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+        say($(el.fb).textContent);
+        qi++;
+        setTimeout(() => {
+          if (qi < queue.length) { drawTier(kind); return; }
+          mode = "core"; queue = []; qi = 0;
+          /* support runs BETWEEN core questions, so go back to the core bank;
+             extension runs after it, and the step is already finished. */
+          if (kind === "support") { i < o.items.length ? draw() : endStep(); return; }
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "That was the harder one. " + o.done;
+        }, 2700);
+        return;
+      }
       const ok = b.dataset.ok === "1", it = o.items[i];
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong"); else right++;
@@ -4429,14 +5212,21 @@
       $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
       say((ok ? cheer() + " " : "") + it.why);
       i++;
+      const offerSupport = !ok && !supportUsed && o.support && o.support.length;
       setTimeout(() => {
+        if (offerSupport) {
+          supportUsed = true; mode = "support"; queue = o.support.slice(); qi = 0;
+          drawTier("support"); return;
+        }
         if (i >= o.items.length) {
-          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
-          reportScore(o.finish, right, o.items.length);
-          finish(o.finish, o.done);
-        } else draw();
+          endStep();
+          /* At most one slip earns the harder one, AFTER the step is done. */
+          if (o.extension && o.extension.length && right >= o.items.length - 1) {
+            setTimeout(() => { mode = "extension"; queue = o.extension.slice(); qi = 0; drawTier("extension"); }, 2600);
+          }
+          return;
+        }
+        draw();
       }, 2700);
     });
     draw();
@@ -4834,7 +5624,12 @@
             setTimeout(() => {
               if (item.answer === "yes") { it.style.transform = "translateX(-40px)"; SOUND.play("click", 0.6); }
               else SOUND.play("pop", 0.3);
-              setTimeout(() => { api.say(item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it."); r(); }, 500);
+              /* `said` lets a lesson supply its own sentence. Stage 1 needs it:
+                 Cambridge names "magnets stick to things" as a misconception to
+                 correct (attract is its own Stage 1 glossary word), and the
+                 fallback below is the wording Grade 3 already ships, so a grade
+                 that sets nothing rebuilds byte-identical. */
+              setTimeout(() => { api.say(item.said || (item.answer === "yes" ? "The " + item.label + " sticks to the magnet! It jumped across." : "The " + item.label + " does not stick. The magnet does nothing to it.")); r(); }, 500);
             }, 950);
           }, 40);
         });
@@ -5059,8 +5854,20 @@
   function experiment(o) {
     const el = o.el, sim = SIMS[o.sim];
     let predicted = null, score = 0, lock = false;
+    /* The phases are NUMBERED FROM THE ONES THIS STEP ACTUALLY HAS, because two
+       of the five are optional: `plan` (Stage 1, the second clause of 1TWSp.01 -
+       "talk about how to find answers") and `conclude` (Stage 3, 3TWSa.03). A
+       step with neither reads 1 Predict, 2 Try it, 3 What happened?, 4 Did it
+       match? exactly as before, so Grades 2-4 rebuild byte-identical. The order
+       is Cambridge's own five-move method from the Learner's Book back matter:
+       question, predict, plan, observe, conclude. */
+    const PHASES = ["Predict"].concat(o.plan ? ["How to find out"] : [],
+                                      ["Try it", "What happened?", "Did it match?"],
+                                      o.conclude ? ["Conclude"] : []);
+    const phName = (n) => (PHASES.indexOf(n) + 1) + " · " + n;
+    const outOf = 2 + (o.plan ? 1 : 0) + (o.conclude ? 1 : 0);
     const stage = $(el.stage);
-    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">1 · Predict</span>' +
+    stage.innerHTML = '<div class="stagewide"><span class="phase" id="' + el.stage + 'ph">' + phName("Predict") + '</span>' +
       '<div class="sim" id="' + el.stage + 'sim"></div><div class="simrow" id="' + el.stage + 'ctl"></div></div>';
     const box = $(el.stage + "sim"), ctl = $(el.stage + "ctl"), ph = $(el.stage + "ph");
     /* data: the step's own data, so a sim can be given its own objects -
@@ -5072,29 +5879,39 @@
       $(el.ch).innerHTML = shuffle(opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '" data-t="' + esc(c.t) + '">' + c.t + "</button>").join("");
     }
     function askPredict() {
-      ph.textContent = "1 · Predict"; $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
+      ph.textContent = phName("Predict"); $(el.ask).innerHTML = o.predict.ask; choices(o.predict.opts);
       $(el.score).textContent = "What do you think will happen?";
     }
+    /* Cambridge's third move: talk about WHAT TO DO to find the answer. One
+       way is fair and the others change more than one thing at a time, which is
+       the Stage 1 fair-test idea the Teacher's Resource says children read as
+       "fair for the learners". */
+    function askPlan() {
+      phase = "plan";
+      ph.textContent = phName("How to find out"); $(el.ask).innerHTML = o.plan.ask; choices(o.plan.opts);
+      $(el.score).textContent = "How shall we find out?"; lock = false;
+      sayHere(o.finish, plain(o.plan.ask));
+    }
     function runIt() {
-      ph.textContent = "2 · Try it"; $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
+      ph.textContent = phName("Try it"); $(el.ask).innerHTML = o.runAsk || "Now let us try it and watch carefully.";
       $(el.ch).innerHTML = ""; $(el.score).textContent = "Press the button and watch";
       sayHere(o.finish, plain(o.runAsk || "Now let us try it. Press the button and watch carefully."));
       sim.run(box, api).then(() => setTimeout(askHappened, 1800));
     }
     function askHappened() {
       phase = "happened";
-      ph.textContent = "3 · What happened?"; $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
+      ph.textContent = phName("What happened?"); $(el.ask).innerHTML = o.happened.ask; choices(o.happened.opts);
       $(el.score).textContent = "Say what you saw"; lock = false;
       sayHere(o.finish, plain(o.happened.ask));
     }
     function askConclude() {
       phase = "conclude";
-      ph.textContent = "5 · Conclude"; $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
+      ph.textContent = phName("Conclude"); $(el.ask).innerHTML = o.conclude.ask; choices(o.conclude.opts);
       $(el.score).textContent = "What does this tell us?"; lock = false;
       sayHere(o.finish, plain(o.conclude.ask));
     }
     function askMatched() {
-      ph.textContent = "4 · Did it match?";
+      ph.textContent = phName("Did it match?");
       $(el.ask).innerHTML = "You predicted: <b>" + esc(predicted.t) + "</b>. Did it match what happened?";
       $(el.ch).innerHTML = '<button type="button" class="choice text" data-m="1">Yes, it matched my prediction</button><button type="button" class="choice text" data-m="0">No, something different happened</button>';
       $(el.score).textContent = "Scientists always check"; lock = false;
@@ -5111,7 +5928,16 @@
         b.classList.add("right");
         $(el.fb).className = "fb"; $(el.fb).textContent = "Your prediction: " + predicted.t + ". Let us find out!";
         say("You predict: " + predicted.t + ". A prediction is a good guess before you try. Let us find out!");
+        if (o.plan) { phase = "plan"; setTimeout(() => { $(el.fb).textContent = ""; askPlan(); }, 2600); return; }
         phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 2600);
+      } else if (phase === "plan") {
+        const ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong"); else score++;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Not quite. ") + o.plan.why;
+        say($(el.fb).textContent);
+        phase = "run"; setTimeout(() => { $(el.fb).textContent = ""; runIt(); }, 3000);
       } else if (phase === "happened") {
         const ok = b.dataset.ok === "1";
         $(el.ch).querySelectorAll(".choice").forEach((c) => { if (c.dataset.ok === "1") c.classList.add("right"); });
@@ -5131,7 +5957,7 @@
            about the question. Without one, the step ends here as before. */
         if (o.conclude) { setTimeout(() => { $(el.fb).textContent = ""; askConclude(); }, 3200); return; }
         phase = "done";
-        reportScore(o.finish, score, 2);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3200);
       } else if (phase === "conclude") {
         const ok = b.dataset.ok === "1";
@@ -5140,7 +5966,7 @@
         $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Think about what you saw. ") + o.conclude.why;
         say($(el.fb).textContent);
         phase = "done";
-        reportScore(o.finish, score, 3);
+        reportScore(o.finish, score, outOf);
         setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 3400);
       }
     });
@@ -5211,7 +6037,7 @@
   /* ---- record what happened in a simple table ----------------------- */
   function recordTable(o) {
     const el = o.el;
-    let row = 0, right = 0, lock = false;
+    let row = 0, right = 0, lock = false, q = 0, phase = "fill";
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec"><thead><tr><th>' + esc(o.columns[0]) + "</th><th>" + esc(o.columns[1]) + "</th></tr></thead><tbody>" +
         o.rows.map((r, k) => '<tr><td><span class="rowlab">' + picHtml(r.pic, "pic") + esc(r.label) + '</span></td><td><button type="button" class="cell' + (k === row ? " now" : "") + (r.filled ? " filled " + (r.ok ? "right" : "") : "") + '" data-k="' + k + '"' + (k !== row ? " disabled" : "") + ">" + (r.filled ? esc(r.filled) : (k === row ? "tap to fill in" : "…")) + "</button></td></tr>").join("") + "</tbody></table></div>";
@@ -5224,8 +6050,38 @@
       $(el.score).textContent = "Row " + (row + 1) + " of " + o.rows.length;
       sayHere(o.finish, plain(o.ask.replace("%s", r.label)));
     }
+    function askRead() {
+      phase = "read"; lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+      $(el.score).textContent = "Reading your table: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;
+      if (phase === "read") {
+        lock = true;
+        const it = o.read[q], ok = b.dataset.ok === "1";
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (ok) right++; else b.classList.add("wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        $(el.fb).textContent = (ok ? cheer() + " " : "Look at your table again. ") + it.why;
+        say($(el.fb).textContent);
+        q++;
+        setTimeout(() => {
+          $(el.fb).textContent = ""; $(el.fb).className = "fb";
+          if (q < o.read.length) { askRead(); return; }
+          $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+          const total = o.rows.length + o.read.length;
+          const line = "Your table is complete, and you read it. You got " + right + " of " + total + " first time. " + o.done;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+          reportScore(o.finish, right, total);
+          finish(o.finish, line);
+        }, 2800);
+        return;
+      }
       lock = true;
       const r = o.rows[row], ok = b.dataset.c === r.answer, chosen = o.choices.find((c) => c.id === b.dataset.c) || {};
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.c === r.answer) c.classList.add("right"); });
@@ -5238,11 +6094,15 @@
       setTimeout(() => {
         $(el.fb).textContent = ""; $(el.fb).className = "fb";
         if (row >= o.rows.length) {
+          /* Cambridge reads a table as well as filling one in, so the finished
+             table stays on screen while these run - see `read` in the header. */
+          if (o.read && o.read.length && q < o.read.length) { askRead(); return; }
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.ask).innerHTML = "Your table is complete.";
-          const line = "Your table is complete. You recorded " + right + " of " + o.rows.length + " first time. " + o.done;
+          const total = o.rows.length + ((o.read && o.read.length) || 0);
+          const line = "Your table is complete. You got " + right + " of " + total + " first time. " + o.done;
           $(el.fb).className = "fb good"; $(el.fb).textContent = line;
-          reportScore(o.finish, right, o.rows.length);
+          reportScore(o.finish, right, total);
           finish(o.finish, line);
         } else offer();
       }, 2600);
@@ -5497,7 +6357,13 @@
   function blockGraph(o) {
     const el = o.el, cols = o.columns, count = cols.map(() => 0);
     const maxV = Math.max.apply(null, cols.map((c) => c.value));
-    let asked = false, lock = false;
+    /* `read` is an optional LIST of further questions asked after `pattern`,
+       with the graph still on screen. Stage 2 wants it: 2TWSa.02 is "identify
+       simple patterns in results" and 2TWSa.03 is "present and INTERPRET
+       results using tables and block graphs", and one question per graph is
+       thin for an objective about interpreting. A step with no `read` behaves
+       exactly as before, so Grades 3-4 rebuild byte-identical. */
+    let asked = false, lock = false, q = 0, phase = "build", score = 0;
     function draw() {
       $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small"><thead><tr><th>' + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
         cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + (o.unit ? " " + esc(o.unit) : "") + "</span></td></tr>").join("") + "</tbody></table>" +
@@ -5510,7 +6376,7 @@
       $(el.score).textContent = done + " of " + cols.length + " columns built";
     }
     function askPattern() {
-      asked = true;
+      asked = true; phase = "pattern";
       $(el.ask).innerHTML = o.pattern.ask;
       $(el.ch).classList.add("stack");
       $(el.ch).innerHTML = shuffle(o.pattern.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
@@ -5534,10 +6400,28 @@
       const ok = b.dataset.ok === "1";
       $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
       if (!ok) b.classList.add("wrong");
-      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + o.pattern.why; say($(el.fb).textContent);
-      reportScore(o.finish, ok ? 1 : 0, 1);
-      setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 2800);
+      const src = phase === "read" ? o.read[q] : o.pattern;
+      if (ok) score++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + src.why; say($(el.fb).textContent);
+      const total = 1 + ((o.read && o.read.length) || 0);
+      if (phase === "read") q++;
+      const more = o.read && o.read.length && (phase === "pattern" ? 0 : q) < o.read.length;
+      setTimeout(() => {
+        if (more) { phase = "read"; askRead(); return; }
+        reportScore(o.finish, score, total);
+        $(el.ch).innerHTML = ""; $(el.ch).classList.remove("stack"); $(el.score).textContent = "";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done);
+      }, 2800);
     });
+    function askRead() {
+      lock = false;
+      const it = o.read[q];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.score).textContent = "Reading the graph: " + (q + 1) + " of " + o.read.length;
+      sayHere(o.finish, plain(it.ask));
+    }
     draw();
   }
 
@@ -7282,6 +8166,18 @@
   const restart = $("restart");
   if (restart) restart.addEventListener("click", () => location.reload());
 
+  /* Cambridge's "Look what I can do!" self-check, on the sticker shelf. Each
+     claim carries the step the builder resolved it to, so "Show me" goes
+     straight there. `show` is looked up by NAME so the pipeline's wrappers
+     (header percentage, progress reporting, resume) all run - see the README.
+     Delegated, because the shelf is painted before this runs. */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".candogo");
+    if (!b) return;
+    const i = parseInt(b.dataset.go, 10);
+    if (i >= 0) show(i);
+  });
+
 
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Science words"], ["💡", "Light sources"], ["🗂️", "Source spotter"], ["🧪", "Dark room"], ["📐", "Model maker"], ["❓", "Asked why"], ["🕯️", "Long ago"], ["✅", "Light check"], ["🎮", "I played the games"], ["🏠", "Science at home"], ["⭐", "Star scientist"], ["🌍", "Science world"], ["🗂️", "My resources"]];
 
@@ -8008,15 +8904,3 @@
     if (added) report(lastAt);
   };
 </script>
-
-<style>/* ehel-narration-caption - the spoken explain, on screen one sentence at a time */
-  .narr { display: none; margin: 10px 0 14px; padding: 12px 16px; border: 1px solid var(--line);
-    border-left: 4px solid var(--teal); border-radius: 12px; background: var(--card);
-    color: var(--ink); font-size: clamp(16px, 2.2vw, 19px); line-height: 1.45;
-    min-height: 3.1em; box-sizing: border-box; }
-  .narr.on { display: block; }
-  .narr .narr-k { display: block; font-size: 11px; letter-spacing: .09em; text-transform: uppercase;
-    color: var(--muted); font-weight: 700; margin: 0 0 4px; }
-  @media (prefers-reduced-motion: no-preference) { .narr.on { animation: narrIn .18s ease-out; } }
-  @keyframes narrIn { from { opacity: .4 } to { opacity: 1 } }
-</style>

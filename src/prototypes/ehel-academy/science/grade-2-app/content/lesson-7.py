@@ -5,7 +5,7 @@
 is the absence of light; 2TWSm.01 a model represents an idea; with 2TWSp.01,
 2TWSp.02, 2TWSa.01, 2TWSc.01 and 2SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 RAY_MODEL = ('<svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#0E2434"/><circle cx="24" cy="45" r="12" fill="#F4C95D"/>'
              '<g stroke="#F4C95D" stroke-width="2"><line x1="36" y1="45" x2="130" y2="20"/><line x1="36" y1="45" x2="130" y2="45"/><line x1="36" y1="45" x2="130" y2="70"/></g>'
@@ -70,10 +70,20 @@ LESSON = {
              {"sim": "darkRoom",
               "predict": {"ask": "Curtains shut <b>and</b> lamp off. What do you think you will see?",
                           "opts": [opt("Nothing at all. It will be completely dark", True), opt("Everything, just a bit greyer", False), opt("Only the cat", False)]},
+              "plan": {"ask": "How shall we find out what darkness really is? Which way is <b>fair</b>?",
+                       "opts": [opt("Take away every light, one at a time, and see what is left", True),
+                                opt("Shut your eyes tight", False),
+                                opt("Paint the walls black", False)],
+                       "why": "Shutting your eyes tests your eyes, not the room. Take the LIGHT away and see what the room is like."},
               "runAsk": "Close the curtains. Then switch the lamp off. Look. Then switch the lamp back on.",
               "happened": {"ask": "What happened with no light source left?",
                            "opts": [opt("It was completely dark. You could see nothing", True), opt("You could still see everything", False), opt("The cat glowed", False)],
-                           "why": "With every light source gone there was nothing to see by. Darkness is the absence of light. Switching the lamp on brought the light, and the seeing, back."}},
+                           "why": "With every light source gone there was nothing to see by. Darkness is the absence of light. Switching the lamp on brought the light, and the seeing, back."},
+              "conclude": {"ask": "So what did we find out about <b>darkness</b>?",
+                           "opts": [opt("Darkness is what is left when there is no light", True),
+                                    opt("Darkness came into the room from outside", False),
+                                    opt("Darkness is the opposite of light", False)],
+                           "why": "Nothing arrived when the lamp went off. Something LEFT, and dark is what remained."}},
              "Darkness is what is left when there is no light."),
 
         step("demo", "A model of light", "\U0001F4D0", "Model maker", ["2TWSm.01", "2Ps.01"],
@@ -141,8 +151,12 @@ LESSON = {
                  q("Could a torch shine darkness into a bright room?", "\U0001F311", "No. Darkness is only what is left when there is no light", ["Yes, a black torch could", "Yes, but only at night"], "Darkness is not a thing that can be shone. It is the absence of light."),
                  q("You are in a room with no windows and the lamp off. What can you see?", "\U0001F6AA", "nothing", ["everything, in grey", "only shiny things"], "No light source, nothing to see by."),
                  q("Which is the biggest light source we have?", "☀️", "the Sun", ["a torch", "a fire", "a lamp"], "The Sun lights the whole daytime side of the Earth."),
+                 q("You press the switch and the room lights up. Is the <b>switch</b> the light source?", "\U0001F4A1", "No. The lamp is. The switch only lets the electricity through.", ["Yes, it makes the light", "Yes, because you press it"], "Look at where the light actually comes out. That is the source."),
+                 q("A silver spoon looks bright on a sunny table. Is it a light source?", "\U0001F944", "No. It only bounces light back, like a mirror.", ["Yes, it is shining", "Yes, if it is very shiny"], "A source MAKES its own light. Shiny things and the Moon only shine light back."),
+                 q("Sofia says dark is the <b>opposite</b> of light, like hot and cold. Is she right?", "\U0001F311", "No. Dark is simply what is left when the light is taken away.", ["Yes, they are opposites", "Yes, and dark is a kind of cold"], "Hot and cold are two real things. Light is a real thing and dark is only its absence - there is no such stuff as dark."),
              ]},
-             "Sources make light; with none, it is dark."),
+             "Sources make light; with none, it is dark.",
+             mis=["5.1-m1", "5.1-m2", "5.2-m1"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["2Ps.01", "2Ps.02", "2TWSm.01"],
              "Time to show what you know. Tap the answer.",
@@ -161,8 +175,23 @@ LESSON = {
                  q("Long ago some people thought eyes sent out light. Why is that wrong?", "\U0001F441️", "in total darkness you see nothing, so light must come into the eyes", ["because eyes are round", "because torches exist"], "Testing showed light comes from sources into our eyes."),
                  q("Why can you see a screen in a dark room?", "\U0001F4FA", "the screen makes its own light", ["the room is not really dark", "screens are mirrors"], "A switched-on screen is a light source."),
                  q("Why can a mirror not help you see in a room with no light at all?", icon("mirror"), "a mirror only shines light back, and there is no light to shine back", ["mirrors only work in the morning", "the mirror is too small"], "A mirror is not a light source. With no light in the room, there is nothing for it to bounce back."),
-             ]},
-             "That is the whole lesson finished. You know where light comes from."),
+                 q("At dusk, does darkness creep out of the corners of the room?", "\U0001F30C", "No. The light is going, and dark is what is left.", ["Yes, it spreads from the dark corners", "Yes, it comes in the window"], "Nothing spreads. Add light and the dark goes; take light away and it is dark again."),
+                 q("Is there anything in a dark room that was not there with the light on?", "\U0001F6CF️", "No. Only the light has gone.", ["Yes, the dark is there now", "Yes, things come out in the dark"], "Darkness is only a lack of light. Nothing is added. You do have to move carefully though, because you cannot see."),
+             ],
+              "support": [
+                 q("Is a candle a light source?", "\U0001F56F\uFE0F", "Yes", ["No"],
+                   "A candle flame makes its own light."),
+                 q("Is the Moon a light source?", "\U0001F319", "No", ["Yes"],
+                   "The Moon only sends the Sun's light back to us."),
+              ],
+              "extension": [
+                 q("A room has no window and no lamp. You wait ten minutes. Will your eyes get used to it enough to see?", "\U0001F311", "No - with no light at all there is nothing to see by", ["Yes, eyes always get used to the dark", "Yes, after about an hour"],
+                   "Eyes do adjust when there is a LITTLE light. Where there is none, there is nothing for them to adjust to."),
+                 q("You are reading these words. What had to happen first?", "\U0001F4D6", "light from a source bounced off the page into your eyes", ["your eyes sent light onto the page", "the page made its own light"],
+                   "You need a source, and its light has to reach your eyes. The page only bounces it."),
+              ]},
+             "That is the whole lesson finished. You know where light comes from.",
+             mis=["5.2-m2", "5.2-m3"]),
     ],
 }
 
@@ -209,6 +238,22 @@ LESSON["words"] = [
          ["A globe is a model of Earth.", "We drew a model of light."]),
     word("torch", "\U0001F526", "A small lamp you carry, with a battery inside.",
          ["Shine the torch in the dark.", "A torch is a light source."]),
+    word("shiny", "\u2728", "Light bounces off it. A dull thing is the opposite: light does not bounce off it.",
+         ["A mirror is shiny.", "Tin foil is shiny, so it shines light back."]),
+    word("bright", "\U0001F506", "Gives off a lot of light.",
+         ["The Sun is very bright.", "A torch is brighter than a candle."]),
+    word("daylight", "\U0001F324\uFE0F", "The light we get from the Sun in the daytime.",
+         ["In daylight you do not need a lamp.", "Daylight comes from the Sun, not from the sky itself."]),
+]
+
+LESSON["cando"] = [
+    cando("I can talk about different light sources.", "2Ps.01"),
+    cando("I can say that without light it is dark.", "2Ps.02"),
+    cando("I can say what a model shows and what it leaves out.", "2TWSm.01"),
+    cando("I can say what I think will happen before I try it.", "2TWSp.02"),
+    cando("I can say whether what happened matched my prediction.", "2TWSa.01"),
+    cando("I can ask my own question about light.", "2TWSp.01"),
+    cando("I can say what people used to think about light, and what we know now.", "2SIC.01"),
 ]
 
 LESSON["home"] = [

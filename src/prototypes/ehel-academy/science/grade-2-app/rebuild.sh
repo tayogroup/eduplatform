@@ -1,0 +1,51 @@
+#!/bin/sh
+# Rebuild Grade 2 Science from the content modules, in the one order that works.
+#
+#   sh rebuild.sh
+#
+# Identical in shape to grade-1-app/rebuild.sh, and for the same reasons:
+# build-lessons.py writes every page from scratch, so it must run first and the
+# whole chain must run after it - rebuilding one lesson leaves that page
+# unwired, and running the builder again over a wired page throws the wiring
+# away. build-lesson-search.py derives the index FROM the finished pages, so it
+# runs after the content is final and before add-lesson-search.py mounts the box
+# that reads it.
+#
+# Stops at the first failure. The two gates at the end are the ones that decide
+# whether this build ships: check-lessons.py (the shared pipeline's own) and
+# check-coverage.py (the curriculum gate, including the Cambridge Stage 2
+# misconception arm and the repeated-question arm).
+#
+# T is the SHARED pipeline directory, and it is overridable on purpose. Several
+# sessions edit this tree at once, and on 2026-09-16 two of those shared tools
+# (build-lesson-search.py, wire-platform-controls.py) held UNCOMMITTED work - a
+# Wehel dock fix worth +45 lines on every page. A plain rebuild bakes whatever
+# is in the working copy into the pages, so a content commit made that way
+# carries an unreviewed change inside it. To build against the committed tools:
+#
+#   git archive HEAD src/prototypes/ehel-academy/mathematics/lesson-app-tools \
+#     | tar -x -C /tmp/tools-HEAD --strip-components=5
+#   T=/tmp/tools-HEAD sh rebuild.sh
+#
+set -e
+
+T=${T:-../../mathematics/lesson-app-tools}
+K=../lesson-kit
+
+python $K/build-lessons.py           --app .
+python $K/build-hub.py               --app .
+python $T/wire-navigation.py         --app .
+python $T/wire-platform-controls.py  --app .
+python $T/preload-platform.py        --app .
+python $T/wire-progress.py           --app .
+python $T/add-header-bars.py         --app .
+# The search INDEX is the one step that must NOT come from a HEAD export. The
+# committed lesson-search.json files across all 24 lesson builds were generated
+# by the working copy of build-lesson-search.py, which carries a measured
+# formal-term synonym bridge ("photosynthesis" -> "make their own food") that
+# HEAD's copy does not; running HEAD's version strips 21 bridge entries and
+# shrinks the file. So S defaults to the working tree even when T does not.
+python ${S:-../../mathematics/lesson-app-tools}/build-lesson-search.py --app .
+python $T/add-lesson-search.py       --app .
+python $T/check-lessons.py           --app .
+python $K/check-coverage.py          --app .

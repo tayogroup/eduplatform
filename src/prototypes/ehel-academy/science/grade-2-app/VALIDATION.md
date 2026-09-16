@@ -66,3 +66,90 @@ Change status at 2026-09-11: **17** areas need no change or are done, **6** have
 ## Verdict
 
 Grade 2 is now at the same standard as Grade 1, and the version on learners' screens matches this report. The remaining checks need people.
+
+---
+
+## Appendix: the Cambridge Stage 2 depth pass, 2026-09-16
+
+**This is an appendix, not a version 3.** The 27 areas above are NOT re-scored:
+that needs the full re-review. What follows is what changed and what was
+measured, so a future v3 has its input. Unlike Grade 1's appendix, this one can
+say that a person has read every key (below) - but nobody has read the taught
+text this pass added, and no teacher has read any of it.
+
+Against the four Cambridge Primary Science Stage 2 books: Learner's Book 2,
+Teacher's Resource 2, Ready to Go Lessons Stage 2, Teacher's Guide Stage 2. The
+same three owner choices as Grade 1 hold: position-safety, and the app as the
+teaching spine alongside a teacher.
+
+### Three pieces of taught language that were defects rather than gaps
+
+- **`waterproof` had no opposite.** The Teacher's Resource names "waterproof is
+  either on or off" (TR 3.4) as the thing to correct. Lesson 4 answered that in
+  a question and then said "soaks up water" everywhere, so the property had no
+  name; Cambridge cards both `absorb` and `absorbent`. `absorbent` is now in the
+  property list, in the lecture and on a card.
+- **Lesson 8 said "bulb" four times** while its own quiz item taught that
+  scientists say **lamp** - and one line managed to say both ("The bulb is drawn
+  as a circle with a cross. That symbol stands for the lamp"). Ready to Go says
+  use "lamp" from the start. One use survives, named as the everyday word.
+- **`similar` was the word the objective is written in** (2Bs.01: "how animals
+  are similar and different") and RtG names "similar and the same mean the same
+  thing" as a misconception. It is now used four times in Lesson 1, answered as
+  a question, and claimed on the shelf.
+
+### Areas this pass bears on, with the new evidence
+
+| # | Area | was | evidence now | still open |
+| --- | --- | --- | --- | --- |
+| 3 | Content Depth and Coverage | 5 | 51 of 51 Cambridge Stage 2 misconceptions answered and gated (37 from the Teacher's Resource, 14 more from Ready to Go); questions 175 -> 292; five experiments gained Cambridge's `plan` move and five its `conclude` | - |
+| 4 | Content Accuracy | 4 | the three taught-language defects above corrected; the read of all 292 keys found and fixed two pieces of wrong science and four read-off questions whose table could not answer them | a teacher's read |
+| 10 | Question and Assessment Quality | 4 | 117 new questions, 44 of the 292 now judgement items; 17 defects found by reading every key and every one fixed; the gate still proves one key each and now also refuses a repeated question inside a lesson | a teacher's read - `review-pack.html` exists for it |
+| 11 | Assessment Balance | 4 | read-off questions on eight steps (five record tables, three block graphs) asked with the data still on screen; plan and conclude phases; 40 unscored tier items from Ready to Go's own Support and Extension pairs | - |
+| 6 | Grade-Level Appropriateness | 4 | 23,841 -> 33,496 learner words at 9.89 -> 9.92 words per sentence; highest Flesch-Kincaid 4.48 -> 4.38, and the page holding it moved from Electricity to Natural or Made? - so the demand did not rise with the volume | - |
+| 19 | Language and Reading Level | 4 | 70 -> 101 science words. The 31 were measured: the Learner's Book glossary has 160 entries, 125 had no card, and 77 of those are words the lessons already say | a human proofread |
+| 22 | Learner Progress and Completion | 4 | the step sequence of all ten lessons is IDENTICAL to the shipped pages, read out of both payloads as JSON: 157 steps, 0 moved | saved-record re-check |
+| 27 | Bugs, syntax and errors | 4 | both gates green; the three new gate arms mutation-tested 5 of 5 with all ten content modules verified back byte-identical; one real rendering defect found in the browser that no gate could see (below) | - |
+
+### Measured in the browser, on the built pages
+
+Quiz tiers on Lesson 1: a wrong core answer brought the support bank ("One step
+at a time", two options, "Extra help - not marked") and returned to the core
+bank; a clean finish brought the extension bank ("Try a harder one", "Extra
+challenge - not marked") after the step had already ended. Both support items
+and both extension items were answered. Graph read-off on Lesson 3: the pattern
+question, then "Reading the graph: 1 of 2" and "2 of 2", with the graph on
+screen throughout. Self-check: eight claims on Lesson 1's shelf pointing at
+seven different steps, and "Show me" on the diagram claim landed on step 10,
+*Diagram, or picture?*. Zero JS errors; the only failed requests are the five
+platform sidecars that exist only on the deployed tier. **Zero paid TTS calls** -
+the pages were served on a port other than 4287, where `lib/voice.js` resolves
+its endpoint to "" and requests nothing.
+
+**One real defect came out of that drive, and no gate could have caught it.**
+The tier label ran straight into the question: "One step at a timeWhich animal
+has feathers?". `deck.js` writes it in a `<span class="qbook">`, which is
+ENGLISH's class - it came across with the file and is styled in English's
+stylesheet, never in Science's. It shipped that way in Grade 1 earlier the same
+day, through a drive that exercised both tiers and recorded them as working.
+`lib/science.css` now defines `.qbook` and both grades were rebuilt.
+
+### Two things this appendix must not be read as claiming
+
+- **No teacher has read it.** A person read all 292 keys and fixed 17 things;
+  that is not a teacher's read, and it is not a check any gate can make. Of the
+  292, zero can be proved RIGHT by machine - this build authors its own
+  questions rather than taking them from a Cambridge booklet, so
+  `check-science-answer-keys.mjs` has no printed key to compare with.
+- **Grades 3 and 4 were NOT rebuilt, and that was a decision.** The pass changed
+  `lib/science.js`, which every page embeds, so rebuilding them would have
+  changed two live grades this pass was not asked about - and it would have done
+  more than refresh a library: **both author `plan` and `conclude` data that the
+  old renderer ignored**, so a rebuild makes those phases appear for the first
+  time. Their pages are back exactly as HEAD has them. Rebuilding them also
+  turns up three real repeated questions the new gate arm refuses - two in
+  Grade 3 Lesson 9 (two experiments both asking "What happened?", and a conclude
+  question that repeats a practice item word for word) and one in Grade 4 Lesson
+  12 (an explore follow-up and a practice item both asking "What is at the
+  centre of the Solar System?"). Those are pre-existing and want fixing before
+  either grade is next rebuilt.

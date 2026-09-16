@@ -353,6 +353,12 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
         one_ok(d["pattern"]["opts"], where + " pattern")
         if not d["pattern"].get("why"):
             sys.exit("REFUSED: %s pattern has no why" % where)
+        # the optional read-off list (2TWSa.03 is about INTERPRETING a graph)
+        for it in d.get("read") or []:
+            one_ok(it["opts"], where + " read-off %r" % it["ask"][:40])
+            if not it.get("why"):
+                sys.exit("REFUSED: %s read-off %r has no why" % (where, it["ask"][:40]))
+
     elif kind == "lookup":
         if not d["source"].get("lines") or len(d["items"]) < 2:
             sys.exit("REFUSED: %s needs a source with lines and at least 2 questions" % where)

@@ -7,7 +7,7 @@ animals; 2Be.03 compare local environments (hot, cold, dry, wet, many or few
 plants and animals); with 2TWSc.01, 2TWSc.05, 2TWSa.02, 2TWSa.03, 2TWSp.01
 and 2SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "habitats",
@@ -70,8 +70,13 @@ LESSON = {
                  q("Where would you find more animals?", "\U0001F41C", "under a log in a garden", ["on a concrete playground", "on a tarmac road"], "Damp dark places under logs are full of small animals."),
                  q("A snowy mountain top. Which words fit?", "\U0001F3D4️", "cold, few plants", ["hot, many plants", "wet, many animals"], "It is cold up high, and few plants can grow there."),
                  q("A shady forest floor. Which words fit?", "\U0001F333", "damp, many plants, many animals", ["dry, no plants", "hot, no animals"], "A forest is damp and full of plants and small animals."),
+                 q("A whole wood is an <b>environment</b>. What is the hollow tree where an owl lives?", "\U0001F989", "its habitat", ["another environment", "the same thing as the wood"], "The environment is the whole big area. A habitat is the particular place inside it where one living thing lives."),
+                 q("A rabbit sleeps in a burrow and eats grass in the field. Which is its habitat?", "\U0001F430", "both - everywhere it needs to live", ["only the burrow, because that is its home", "only the field, because that is where it eats"], "A habitat is not just the sleeping place. It is everywhere the animal finds what it needs."),
+                 q("Could a daisy grow in the middle of a busy road?", "\U0001F33C", "No. A plant needs the right place.", ["Yes, plants grow anywhere", "Yes, if it rains"], "Plants need soil, light and water. A road gives none of them."),
+                 q("A fish that lives only in warm shallow sea is moved to a cold deep lake. What happens?", "\U0001F41F", "it cannot live there - it needs its own habitat", ["it will be fine, fish live anywhere", "it will turn into a lake fish"], "Some animals need one exact kind of place. Take them out of it and they cannot survive."),
              ]},
-             "Hot or cold, wet or dry, many or few. That is how scientists compare places."),
+             "Hot or cold, wet or dry, many or few. That is how scientists compare places.",
+             mis=["1.1-m1", "1.1-m2", "1.2-m1", "1.3-m1"]),
 
         step("lookup", "Look it up: the pond", "\U0001F4D6", "Fact finder", ["2TWSc.05", "2Be.02", "2Be.03"],
              "Read the fact card about a pond, then answer <b>from the card</b>.",
@@ -113,7 +118,16 @@ LESSON = {
               ],
               "pattern": {"ask": "Look at your graph. Where did the class find the <b>most</b> animals?",
                           "opts": [opt("the pond, the tallest column", True), opt("the car park, the shortest column", False), opt("they were all the same", False)],
-                          "why": "The pond column is the tallest: eight animals. The car park, with one, is the shortest. Wetter places with more plants had more animals."}},
+                          "why": "The pond column is the tallest: eight animals. The car park, with one, is the shortest. Wetter places with more plants had more animals."},
+              "read": [
+                  {"ask": "How many <b>more</b> animals were found at the pond than in the car park?",
+                   "opts": [opt("seven", True), opt("eight", False), opt("one", False)],
+                   "why": "Eight at the pond and one in the car park. Eight take away one leaves seven."},
+                  {"ask": "Why is a block graph easier to use than the list of numbers on its own?",
+                   "opts": [opt("you can see the biggest and the smallest without counting", True),
+                            opt("it uses fewer numbers", False), opt("it is more colourful", False)],
+                   "why": "That is what a graph is FOR: turning numbers into something you can take in at one look."},
+              ]},
              "A block graph shows the most and the least at a glance."),
 
         step("ask", "Ask a question about a habitat", "❓", "Asked why", ["2TWSp.01"],
@@ -169,8 +183,24 @@ LESSON = {
                  q("Which of these harms a pond habitat?", "\U0001F5D1️", "throwing rubbish in it", ["planting reeds beside it", "leaving it alone"], "Rubbish traps and poisons pond animals."),
                  q("Why does a forest hold different animals from a desert?", "\U0001F333", "each animal suits the place it lives in", ["animals choose at random", "all animals live everywhere"], "Different habitats hold different living things because each suits its place."),
                  q("Why could a frog not live in a desert?", "\U0001F438", "a desert is too dry, and a frog needs water", ["a desert is too cold", "a frog does not like the colour of sand"], "A frog's habitat must give it water for its wet skin and its eggs. A dry desert cannot."),
-             ]},
-             "That is the whole lesson finished. You know where living things live."),
+                 q("Are there any <b>wild</b> animals near your school?", "\U0001F426", "Yes - birds, insects and spiders are all wild", ["No, wild animals live far away", "Only if there are lions"], "Wild means it looks after itself, not that it is fierce. A sparrow on the roof is a wild animal."),
+                 q("Why are there frogs in the pond?", "\U0001F438", "because the pond gives them what they need", ["because somebody put them there", "because frogs like people"], "Nobody stocked the pond. Living things are found where the place suits them."),
+                 q("You are one child. Can what you do help the environment?", "\U0001F30D", "Yes - and a whole school doing it adds up fast", ["No, one person is too small to matter", "Only grown-ups can help"], "One class of thirty not dropping litter is thirty people. A school is hundreds."),
+             ],
+              "support": [
+                 q("Where does a fish live?", "\U0001F41F", "in water", ["in a tree"],
+                   "Water is a fish's habitat."),
+                 q("Is a desert wet or dry?", "\U0001F3DC\uFE0F", "dry", ["wet"],
+                   "Hardly any rain falls on a desert."),
+              ],
+              "extension": [
+                 q("A pond dries up completely in a hot summer. What becomes of the animals that lived in it?", "\U0001F438", "they must move, or they cannot live there any more", ["they carry on as before", "they turn into land animals"],
+                   "A habitat gives an animal what it needs. Take the water away and it is no longer their habitat."),
+                 q("Which holds more kinds of plant and animal: a car park, or a hedge?", "\U0001F33F", "the hedge", ["the car park", "exactly the same number"],
+                   "More plants usually means more animals, because plants are food and shelter."),
+              ]},
+             "That is the whole lesson finished. You know where living things live.",
+             mis=["1.1-m3", "rtg-07", "1.5-m1"]),
     ],
 }
 
@@ -217,6 +247,23 @@ LESSON["words"] = [
          ["Thick fur suits a cold place.", "Webbed feet suit a pond."]),
     word("block graph", "\U0001F4CA", "A graph made of blocks, one block for each thing counted.",
          ["The block graph shows eight fish.", "Read the tallest column of the block graph."]),
+    word("home", "\U0001F3E0", "The one place an animal sleeps and keeps its young safe. A habitat is bigger than a home.",
+         ["A rabbit's home is its burrow.", "Its habitat is the burrow AND the field it feeds in."]),
+    word("insect", "\U0001F41C", "A small animal with six legs and three body parts.",
+         ["An ant is an insect.", "Count the legs: six means an insect."]),
+    word("litter", "\U0001F5D1\uFE0F", "Rubbish dropped on the ground instead of in a bin.",
+         ["Litter spoils a habitat.", "Pick up litter and put it in a bin."]),
+]
+
+LESSON["cando"] = [
+    cando("I can say that the place a living thing lives is its habitat.", "2Be.01"),
+    cando("I can say that different habitats have different plants and animals.", "2Be.02"),
+    cando("I can compare two places as hot or cold, wet or dry.", "2Be.03"),
+    cando("I can talk about ways people change the environment.", "2ESp.03"),
+    cando("I can make a block graph and read it.", "2TWSa.03"),
+    cando("I can find a pattern in my results.", "2TWSa.02"),
+    cando("I can ask my own question about a habitat.", "2TWSp.01"),
+    cando("I can say how what people do changes the world around us.", "2SIC.04"),
 ]
 
 LESSON["home"] = [

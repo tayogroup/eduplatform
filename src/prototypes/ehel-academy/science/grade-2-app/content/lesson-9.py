@@ -6,7 +6,7 @@
 activity affects the environment; with 2Cp.03, 2TWSc.01, 2TWSc.03, 2TWSc.05,
 2TWSc.06, 2TWSp.01 and 2SIC.04.
 """
-from _kit import explain, step, opt, q, part, word, home, icon
+from _kit import explain, step, opt, q, part, word, home, icon, cando
 
 LESSON = {
     "slug": "rocks-and-the-earth",
@@ -70,7 +70,16 @@ LESSON = {
                   {"pic": "\U0001F3DC️", "label": "sandstone", "answer": "yes", "why": "the sandstone soaked it up between its grains."},
                   {"pic": "\U0001F3DB️", "label": "marble", "answer": "no", "why": "the water ran off the marble."},
               ],
-              "choices": [{"id": "yes", "t": "Yes, it soaks in", "pic": "\U0001F4A7"}, {"id": "no", "t": "No, it runs off", "pic": "☔"}]},
+              "choices": [{"id": "yes", "t": "Yes, it soaks in", "pic": "\U0001F4A7"}, {"id": "no", "t": "No, it runs off", "pic": "☔"}],
+              "read": [
+                  {"ask": "Read your table. Did water soak into the <b>marble</b>?",
+                   "opts": [opt("No", True), opt("Yes", False)],
+                   "why": "The marble row of your table says No."},
+                  {"ask": "Two rocks soaked water up and two did not. What does your table show?",
+                   "opts": [opt("rocks are not all the same - they have different properties", True),
+                            opt("all rocks soak up water", False), opt("no rock soaks up water", False)],
+                   "why": "That is why we test rocks instead of guessing about them."},
+              ]},
              "Chalk and sandstone soak up water; granite and marble do not."),
 
         step("measure", "How big is the rock?", "\U0001F4CF", "Measured it", ["2TWSc.03"],
@@ -176,8 +185,12 @@ LESSON = {
                  q("You drop water on granite. What happens?", "\U0001F4A7", "it runs off", ["it soaks in", "the granite crumbles"], "Granite does not soak up water. The water sits on top."),
                  q("Where do miners dig rock out in tunnels underground?", "\U0001F573\uFE0F", "in a mine", ["in a quarry", "in a riverbed"], "A mine goes deep underground. A quarry is an open pit."),
                  q("Which of these helps the environment?", "\U0001F49A", "planting trees", ["leaving litter on the beach", "dumping rubbish in a river"], "Trees give shade, homes for animals and clean air."),
+                 q("Is a single grain of sand <b>rock</b>?", "\U0001F3D6️", "Yes. Rock comes in every size.", ["No, rock has to be big and heavy", "No, sand is soil"], "Sand is rock broken into tiny grains. Being small does not stop it being rock."),
+                 q("Rocks, stones and pebbles. How many different materials is that?", "\U0001FAA8", "one - they are all rock", ["three different things", "two, because pebbles are smooth"], "The words only tell you how big the piece is and how smooth it is. All three are rock."),
+                 q("Is a brick a rock?", "\U0001F9F1", "No. People make bricks.", ["Yes, it is hard like rock", "Yes, it has stones in it"], "Bricks and concrete are made by people. You would not find them in a natural place unless somebody put them there."),
              ]},
-             "You can tell your rocks apart."),
+             "You can tell your rocks apart.",
+             mis=["1.4-m1", "rtg-19", "1.4-m2"]),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["2ESp.01", "2ESp.02", "2ESp.03"],
              "Time to show what you know. Tap the answer.",
@@ -196,7 +209,19 @@ LESSON = {
                  q("Which of these harms the environment?", "\U0001F6AB", "dumping rubbish in a river", ["planting trees", "recycling cans", "making an old quarry a lake"], "Rubbish poisons water and animals."),
                  q("How do we find out a rock's properties?", "\U0001F52C", "test it: scratch, look, drop water, rub", ["guess from its name", "ask the rock"], "Rocks are tested like any material."),
                  q("Why is granite, not chalk, used for kitchen worktops?", icon("rock"), "granite is hard and does not soak up water; chalk is soft and crumbles", ["chalk is too heavy to lift", "granite is softer than chalk"], "A worktop has to stay hard and dry. Chalk would crumble and soak up every spill."),
-             ]},
+             ],
+              "support": [
+                 q("Is chalk soft or hard?", "\U0001F9F1", "soft", ["hard"],
+                   "A fingernail scratches chalk."),
+                 q("Is sand made of rock?", "\U0001F3D6\uFE0F", "Yes", ["No"],
+                   "Sand is rock broken into tiny grains."),
+              ],
+              "extension": [
+                 q("Chalk is made from the crushed shells of tiny sea animals. So where did it form?", "\U0001F41A", "on the floor of a sea", ["in a desert", "inside a volcano"],
+                   "Chalk built up on an ancient sea floor from countless tiny shells. A rock carries the story of the place it formed in."),
+                 q("Pumice floats and granite sinks, and both are rock. What does that tell a scientist?", "\U0001F30B", "rocks have different properties, so each one has to be tested", ["pumice is not really rock", "granite is heavier than every other rock"],
+                   "Pumice is full of holes from a volcano. Testing is how you find out, never guessing."),
+              ]},
              "That is the whole lesson finished. You know your rocks."),
     ],
 }
@@ -244,6 +269,23 @@ LESSON["words"] = [
          ["Sandstone is grainy.", "The grainy rock felt rough."]),
     word("environment", "\U0001F30D", "Everything around us: the land, the water, the air and the living things.",
          ["Litter harms the environment.", "Planting trees helps the environment."]),
+    word("sand", "\U0001F3D6\uFE0F", "Rock broken into tiny grains.",
+         ["A beach is covered in sand.", "Sand is rock, only very small."]),
+    word("stones", "\u26F0\uFE0F", "Small pieces of rock. Stones, pebbles and rocks are all the same material.",
+         ["The stones in the wall are rock.", "A pebble is a stone that water has made smooth."]),
+    word("smooth", "\u270B", "Flat to touch, not bumpy. The opposite of rough.",
+         ["A pebble is smooth.", "Rub it: smooth means your finger slides."]),
+]
+
+LESSON["cando"] = [
+    cando("I can describe rocks and compare them.", "2ESp.01"),
+    cando("I can say three ways rock is taken out of the Earth.", "2ESp.02"),
+    cando("I can talk about how digging rock changes the environment.", "2ESp.03"),
+    cando("I can test a rock to find out its properties.", "2Cp.03"),
+    cando("I can measure a rock with cubes.", "2TWSc.03"),
+    cando("I can find an answer on a fact card.", "2TWSc.05"),
+    cando("I can record what I found in a table.", "2TWSc.06"),
+    cando("I can say how digging rock out of the ground changes the land.", "2SIC.04"),
 ]
 
 LESSON["home"] = [

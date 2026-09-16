@@ -3806,21 +3806,18 @@
     {
       "number": 3,
       "id": "l3",
-      "label": "Level 3 — Upper-Intermediate",
+      "label": "Level 3 — Threshold",
       "cefr": [
-        "B2"
+        "A2",
+        "B1"
       ],
-      "cefrName": "Upper-Intermediate",
-      "status": "Planned — blocked on source material",
-      "sourceGrades": [
-        9,
-        10,
-        11,
-        12
-      ],
-      "exitDescriptor": "Can follow concrete and abstract discussion, interact with reasonable fluency, and write clear, detailed text on a range of topics. The common benchmark for many undergraduate courses and mixed-language workplaces.",
-      "blockedBy": "Grades 9-12 do not exist in this repository — English, Mathematics and Science all stop at grade 8. Level 3 cannot be planned in detail until that material is authored.",
-      "units": []
+      "cefrName": "A2 to B1",
+      "status": "Planned — blocked on the Cambridge 0876 framework",
+      "exitDescriptor": "Exits at a secure B1. Can follow the main points of clear speech on familiar matters, deal with most situations that come up while travelling or at work, narrate an event, and write connected text on familiar topics, giving reasons and explanations.",
+      "blockedBy": "Needs src/curriculum/cambridge-english-0876.json, which does not exist. 0876 is Cambridge Lower Secondary English as a Second Language, Stages 7-9 — the sibling of the 0057 that Levels 1 and 2 are built on, and the framework this level's contract has to cite. The extractor is tools/extract-cambridge-esl-framework.py, which produced 0057 from the official syllabus PDF and writes the same JSON shape; it needs the 0876 PDF. 0861 is in the repo and is NOT a substitute: it is Lower Secondary English as a first language, which is why 0057 was chosen over 0058 for Levels 1 and 2. (The earlier note here said Level 3 was blocked because grades 9-12 are not in the repository. That was true of the B2 course this entry used to describe, and stopped being the reason when Level 3 was reassigned to A2-B1.)",
+      "units": [],
+      "source": "inputs/ehel-english-intensive-source/archive/level-2-b1-2026-08 — the B1 to B1+ course that was Level 2 until 2026-09-12: 20 authored units, 571 words, reviewed and signed off. Benchmark for the rebuild is Interchange 3 (B1 to B1+), whose syllabus matches it closely: relative clauses, gerund phrases as subjects, the past perfect, indirect requests, participles as adjectives.",
+      "note": "Correcting this entry leaves a NEW gap above it, of the same kind: Level 3 would exit at B1 and Level 4 opens at C1, so nothing teaches B1 to B2. Levels 4 and 5 are untouched here because only Level 3 was agreed (2026-09-16); they need the same look."
     },
     {
       "number": 4,

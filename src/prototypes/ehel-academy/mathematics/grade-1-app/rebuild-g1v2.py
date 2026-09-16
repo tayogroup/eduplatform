@@ -106,6 +106,9 @@ STEPS = [
     # redraw, and before the hub, whose answer keys quote a picture
     ("replace-new-emoji.py", ["--write"]),
     (T + "replace-new-emoji-all-grades.py", ["--only", "grade-1-app/", "--write"]),
+    # what to have to hand, folded away on step 1. Reads lessons[].materials from
+    # app.config.json, the same field build-grownup-section.py renders on the hub.
+    ("add-materials-note.py", ["--write"]),
     # the Workbook's end-of-unit self-check, on the sticker shelf. LAST of the
     # content tools: it resolves each statement to the step that teaches it by
     # reading the page, so every step must already be on it.

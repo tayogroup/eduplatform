@@ -655,6 +655,7 @@
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>What comes next?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">A pattern <b>repeats</b>. Say it out loud, then tap the bead that comes <b>next</b>.</span></div>
+      <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Two or three kinds of small object to lay out in a line - spoons and cups, or bottle tops in two colours. A pattern a child makes and says aloud is worth more than one they tap.</p></details>
       <div class="stage">
         <div class="beads" id="row1"></div>
         <div class="choices" id="ch1"></div>
@@ -3798,4 +3799,18 @@
   .at-i { margin: 0; font-size: clamp(18px, 4.2vw, 23px); line-height: 1.35; color: var(--ink); }
   .at-w { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px;
     color: var(--muted); text-align: right; }
+</style>
+
+<style>/* ehel-materials-note - see add-materials-note.py */
+  .kit { margin: 10px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
 </style>

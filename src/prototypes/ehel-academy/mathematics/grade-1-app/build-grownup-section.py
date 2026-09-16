@@ -230,10 +230,22 @@ def main():
         # A lesson without one gets no heading, never an empty one.
         home = ('\n      <h4>Try at home</h4>\n      <p class="gu-home">%s</p>'
                 % esc(l["atHome"])) if l.get("atHome") else ""
+        # WHAT TO HAVE TO HAND, read from app.config.json :: lessons[].materials.
+        # Authored there for the same reason atHome is: nothing in a lesson knows
+        # what a classroom or a kitchen has in it. Added 2026-09-16, against the
+        # one row of the Cambridge comparison a screen cannot argue with - Stage 1
+        # is physical throughout, cubes and counters and water and sand, and this
+        # app is the teaching spine BESIDE a teacher rather than a replacement for
+        # any of it. So it does not pretend to be the cubes; it says which ones to
+        # get out, and it comes FIRST in the block because it is the only part of
+        # this page that has to be read BEFORE the lesson rather than after it.
+        kit = ('\n      <h4>What to have to hand</h4>\n      <p class="gu-kit">%s</p>'
+               % esc(l["materials"])) if l.get("materials") else ""
         blocks.append(
             '\n    <details class="gu">'
             '\n      <summary><b>Lesson %d: %s</b> <span class="gu-meta">%d steps '
             '&middot; about %d min &middot; %d objectives &middot; %d check questions</span></summary>'
+            '%s'
             '\n      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>'
             '\n      <ul>%s\n      </ul>'
             '\n      <h4>The steps</h4>'
@@ -241,7 +253,7 @@ def main():
             '\n      <h4>Check answers</h4>'
             '\n      <ul>%s\n      </ul>%s'
             '\n    </details>'
-            % (n, esc(l["title"]), len(steps), mins, len(uniq), len(keys), obj, stp, ans, home))
+            % (n, esc(l["title"]), len(steps), mins, len(uniq), len(keys), kit, obj, stp, ans, home))
 
     section = (
         START +
@@ -342,6 +354,10 @@ details.gu h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .04e
 details.gu ul { margin: 0; padding-left: 20px; }
 details.gu li { font-size: 15px; line-height: 1.5; margin: 0 0 4px; }
 details.gu .gu-home { font-size: 15px; line-height: 1.5; margin: 0; }
+/* what to have to hand: read BEFORE the lesson, so it is the one line in this
+   block that is set off rather than run on */
+details.gu .gu-kit { font-size: 15px; line-height: 1.5; margin: 0; padding: 10px 12px;
+  border-left: 3px solid var(--teal); background: var(--cell); border-radius: 0 8px 8px 0; }
 @media print {
   details.gu { break-inside: avoid; }
   details.gu > summary { list-style: none; }

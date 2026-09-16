@@ -468,8 +468,18 @@ def patch_hub(app):
         bar = ('\n<header class="eh-bar1">\n'
                '  <img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt=""'
                ' width="32" height="32" decoding="async">\n'
-               '  <span class="eh-brandtext"><b>Ehel Academy</b><i>Primary '
-               + app.subject_label + '</i></span>\n'
+               # Same `brandLine` opt-in add-header-bars.py already honours, and
+               # for the same reason: "Primary <subject>" is right for the
+               # school builds and wrong for a course that is not a school year
+               # at all. Intensive English is adult ESL by CEFR level, and this
+               # line is why its HUB still read "Primary Intensive English"
+               # after the lesson pages were fixed -- the opt-in was added to
+               # the tool that writes the LESSON bar, and the hub's bar 1 is
+               # built here. A build that names no brandLine is unchanged, which
+               # is all 26 of the school builds.
+               '  <span class="eh-brandtext"><b>Ehel Academy</b><i>'
+               + app.cfg.get("brandLine", "Primary %s" % app.subject_label)
+               + '</i></span>\n'
                '  <div class="eh-b1right">' + fill(FIELD, app) +
                '<select class="eh-picker" id="ehPicker" aria-label="Choose a lesson">'
                '<option value="" selected>Jump to a lesson…</option>' + opts +

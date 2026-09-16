@@ -512,17 +512,20 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
     <!-- 1 equal parts -->
-    <section class="slide" data-say="A fraction only works when the parts are equal. Is this shape cut into equal parts?" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A fraction only works when the parts are all the same size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A cake cut into two parts the same size gives two halves.</s><s>If one part is bigger, neither part is a half.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two parts is not enough.</s><s>They have to be two equal parts.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look at the parts.</s><s>Are they all exactly the same size?</s></mstts:express-as>'>
+    <section class="slide" data-twm="characterising classifying" data-say="A fraction only works when the parts are equal. Is this shape cut into equal parts?" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A fraction only works when the parts are all the same size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A cake cut into two parts the same size gives two halves.</s><s>If one part is bigger, neither part is a half.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two parts is not enough.</s><s>They have to be two equal parts.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look at the parts.</s><s>Are they all exactly the same size?</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Equal parts first</h2>
       <!-- 0096 2Nf.01: an object or shape split into equal parts, and into unequal ones --></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">A fraction only works when the parts are <b>equal</b>. Is this cut into equal parts?</span></div>
+      <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Paper to fold and cut, a piece of fruit or bread to share at snack time, and about 20 beans. Folding is what teaches equal parts; a screen can only show it.</p></details>
       <div class="stage">
         <svg class="cutbox flat" id="cut1" viewBox="0 0 240 200" role="img" aria-label="A shape cut into parts"></svg>
         <div class="choices" id="ch1"></div>
         <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score1"></p>
       </div>
+    
+      <div class="twm" id="twm1"><p class="twm-h">Why do they go together?</p><div class="twm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="twm-q"></span></div><div class="choices twm-ch"></div><p class="fb" role="status" aria-live="polite"></p><p class="score twm-sc"></p><div class="bigbtns"><button type="button" class="big small teal twm-next" hidden>Next question</button></div></div>
     </section>
 
     <!-- 2 naming -->
@@ -630,6 +633,36 @@
     </section>
 
     <!-- 10 check -->
+    <!-- 10  2Nf.01  Spot the mistake -->
+    <section class="slide" data-twm="critiquing improving" data-say="Read what each child says. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A fraction answer can look right, so check the parts first.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ali sees a bar cut into 2 parts and calls each a half.</s><s>But one part is much longer than the other.</s><s>Halves must be equal, so neither is a half.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two parts is what anybody notices first.</s><s>Equal parts is what makes them halves.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one. Look hard at the picture.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">10</span><h2>Spot the mistake</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sm10say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
+      <div class="stage" id="sm10st"></div>
+      <div class="choices" id="sm10ch"></div>
+      <p class="fb" id="sm10fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="sm10nx" hidden>Next question</button></div>
+      <p class="score" id="sm10sc"></p>
+    </section>
+    <!-- 11  2Nf.03  Story problems -->
+    <section class="slide" data-say="Read the story. Work out the answer. Then tap it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A fraction story asks you to share a number.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>There are 12 sweets and Amina eats half.</s><s>Half means two equal groups.</s><s>6 and 6 make 12, so Amina eats 6.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Half of a number is not the small number in the story.</s><s>Find what is being shared, then share it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first story. Say what is being shared.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">11</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sp11say">Read the story, work out the answer, then tap it.</span></div>
+      <div class="stage" id="sp11st"></div>
+      <div class="choices" id="sp11ch"></div>
+      <p class="fb" id="sp11fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="sp11nx" hidden>Next story</button></div>
+      <p class="score" id="sp11sc"></p>
+    </section>
+    <!-- 12  2Nf.01  Will it always work? -->
+    <section class="slide" data-twm="specialising generalising" data-say="Somebody has an idea. Test it on each example, then say whether it always works." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A fraction idea can hold once and fall apart next time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa says a bigger bottom number means a bigger fraction.</s><s>Compare a half with a quarter.</s><s>A quarter has the bigger bottom number and is the smaller piece.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The bottom number counts the pieces, not their size.</s><s>More pieces means each one is smaller.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Test the idea on each example, then decide.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">12</span><h2>Will it always work?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="at12say">Test the idea on each example. Then say whether it always works.</span></div>
+      <div class="stage" id="at12st"></div>
+      <div class="choices" id="at12ch"></div>
+      <p class="fb" id="at12fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="at12nx" hidden>Next test</button></div>
+      <p class="score" id="at12sc"></p>
+    </section>
     <section class="slide" data-say="Time to show what you know. Tap the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the check for fractions.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You will find halves and quarters of shapes and groups, and compare them.</s><s>Get most of them right to finish the lesson, and the screen tells you how many you need.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you do not get enough, that is fine.</s><s>Press Try again and the questions come round again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>For every question, ask yourself how many equal parts the whole is cut into.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
@@ -643,7 +676,7 @@
 
     <!-- 11 stickers -->
     <!-- how do you know -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+    <section class="slide" data-twm="convincing" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
       <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
       <div class="stage">
@@ -654,12 +687,13 @@
       </div>
     </section>
 
-    <section class="slide" data-say="Look at all the stickers you earned!" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf, with a sticker for every step you finished.</s></prosody></mstts:express-as>'>
+    <section class="slide" data-say="Look at all the stickers you earned. Then tell me which parts you can do." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf, with a sticker for every step you finished.</s></prosody></mstts:express-as>'>
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb11" role="status" aria-live="polite"></p>
+        <div class="sc-wrap" id="selfcheck"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1595,6 +1629,375 @@
       fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
     });
   })();
+
+  /* ---- ehel-spiral: the warm-up's second question, drawn from lessons already
+     FINISHED - see add-spiral-warmup.py. Cambridge's volume comes from the
+     spiral, and nothing here re-asked an earlier lesson. Like the warm-up above
+     it: not a step, no sticker, no dot, no score. */
+  const SPIRAL = [
+    { from: "l01", q: "Which is more: 47 or 74?", opts: [74, 47, 44], a: 74, why: "74 has 7 tens and 47 has only 4, so 74 is more. Compare the tens first." },
+    { from: "l01", q: "Round 62 to the nearest 10.", opts: [60, 70, 62], a: 60, why: "62 is 2 away from 60 and 8 away from 70, so it rounds to 60." },
+    { from: "l01", q: "4 rows of 5 counters is how many altogether?", opts: [20, 9, 45], a: 20, why: "An array of 4 rows of 5 counts in fives: 5, 10, 15, 20." },
+    { from: "l02", q: "What is 25 sh and 25 sh altogether?", opts: [50, 40, 55], a: 50, why: "The tens make 40 and the ones make 10, so it is 50 sh." },
+    { from: "l02", q: "A pen costs 20 sh. You pay with 50 sh. What is the change?", opts: [30, 70, 20], a: 30, why: "Count on from 20 to 50: that is 30 sh change." },
+    { from: "l02", q: "Which is worth more: three 10 sh coins, or one 20 sh coin?", opts: ["three 10 sh coins", "one 20 sh coin", "they are the same"], a: "three 10 sh coins", why: "Three 10 sh coins make 30 sh, and 30 is more than 20." },
+    { from: "l03", q: "What is half of 20?", opts: [10, 5, 40], a: 10, why: "20 shared into two equal groups is 10 and 10." },
+    { from: "l03", q: "Which is bigger: one half or one quarter?", opts: ["one half", "one quarter", "they are the same"], a: "one half", why: "Cut the same thing into 2 instead of 4 and each piece is bigger." },
+    { from: "l03", q: "How many quarters make one whole?", opts: [4, 2, 8], a: 4, why: "Four equal parts fit back together into the whole." },
+    { from: "l04", q: "Count on in fives: 15, 20, 25. What comes next?", opts: [30, 26, 35], a: 30, why: "Every jump is 5, so 25 and 5 more is 30." },
+    { from: "l04", q: "Count back in tens from 60. What comes next?", opts: [50, 59, 70], a: 50, why: "Counting back in tens takes away a whole ten: 60, 50, 40." },
+    { from: "l04", q: "In 2, 4, 6, 8 how big is each jump?", opts: [2, 1, 4], a: 2, why: "Take each number from the next: every jump is 2." },
+    { from: "l05", q: "How many corners has a rectangle?", opts: [4, 3, 6], a: 4, why: "A rectangle has 4 straight sides and 4 corners." },
+    { from: "l05", q: "Which solid shape has no flat faces at all?", opts: ["a sphere", "a cube", "a cylinder"], a: "a sphere", why: "A sphere is curved all over. A cube has 6 flat faces and a cylinder has 2." },
+    { from: "l05", q: "A shape folds so both halves match exactly. What is that fold called?", opts: ["a line of symmetry", "a corner", "a curved side"], a: "a line of symmetry", why: "A line of symmetry splits a shape into two halves that land on top of each other." },
+    { from: "l06", q: "How many quarter turns make a whole turn?", opts: [4, 2, 3], a: 4, why: "Four quarter turns take you all the way round to where you started." },
+    { from: "l06", q: "You face the door and make a half turn. What do you face?", opts: ["the way you came", "the door still", "the floor"], a: "the way you came", why: "A half turn is two quarter turns, and it faces you back the way you came." },
+    { from: "l06", q: "In a mirror, which way does the picture face?", opts: ["the other way", "the same way", "upside down"], a: "the other way", why: "A mirror turns a picture over, so it faces the other way." },
+    { from: "l07", q: "How many centimetres make 1 metre?", opts: [100, 10, 60], a: 100, why: "It takes 100 centimetres to make 1 metre." },
+    { from: "l07", q: "Which unit tells you how heavy something is?", opts: ["grams", "centimetres", "litres"], a: "grams", why: "Grams and kilograms measure mass. Centimetres measure length and litres measure capacity." },
+    { from: "l07", q: "A jug's water is halfway between the 20 and the 30 marks. What does it read?", opts: [25, 20, 30], a: 25, why: "Halfway from 20 to 30 is 25. Look at the small marks between the numbers." },
+    { from: "l08", q: "How many minutes are there in one hour?", opts: [60, 100, 30], a: 60, why: "An hour is 60 minutes, whatever time of day it is." },
+    { from: "l08", q: "The long hand points at the 9. Is it quarter past or quarter to?", opts: ["quarter to", "quarter past", "half past"], a: "quarter to", why: "Quarter past is at the 3 and quarter to is at the 9, three quarters of the way round." },
+    { from: "l08", q: "Moving from one number to the next on a clock is how many minutes?", opts: [5, 1, 10], a: 5, why: "Count round the clock face in fives: 5, 10, 15." },
+    { from: "l09", q: "In a tally chart, how many is one gate?", opts: [5, 4, 10], a: 5, why: "Four lines and a fifth across them make a gate of five." },
+    { from: "l09", q: "On a block graph where one block is one child, what does the tallest bar mean?", opts: ["the most children chose it", "the fewest chose it", "it was drawn first"], a: "the most children chose it", why: "Each block stands for one child, so the tallest stack is the most children." },
+    { from: "l09", q: "A coin has landed on heads three times. What happens next?", opts: ["heads and tails are still equally likely", "tails is certain", "heads is certain"], a: "heads and tails are still equally likely", why: "The coin does not remember. Every toss is exactly like the first one." }
+  ];
+  const SPIRAL_TITLES = { l01: "Tens and Ones", l02: "Coins and Change", l03: "Fair Shares", l04: "Patterns That Grow", l05: "Sides and Corners", l06: "Which Way From Here", l07: "How Much, How Long", l08: "Half Past, Quarter To", l09: "Count It, Chart It" };
+  /* Called from the page's hydrate block with the whole course record. Until it
+     answers there is no spiral question, which is also what a child on their
+     first lesson correctly sees. */
+  window.__ehelSpiral = function (units, here) {
+    const w = document.getElementById("ehWarm");
+    if (!w || w.querySelector(".eh-spiral")) return;          /* once only */
+    const pool = SPIRAL.filter(function (it) {
+      const u = units && units[it.from];
+      return it.from !== here && u && u.completed === true;
+    });
+    if (!pool.length) return;
+    const it = pool[Math.floor(Math.random() * pool.length)];
+    const box = document.createElement("div");
+    box.className = "eh-spiral";
+    box.innerHTML = '<p class="eh-warm-h">And one from before</p>'
+      + '<div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button>'
+      + '<span class="eh-spiral-q"></span></div>'
+      + '<div class="choices eh-spiral-ch"></div>'
+      + '<p class="fb" role="status" aria-live="polite"></p>';
+    box.querySelector(".eh-spiral-q").textContent = it.q;
+    /* bound here, not by the page-wide .speak wiring, which ran at load */
+    box.querySelector(".speak").addEventListener("click", function () { say(it.q); });
+    const ch = box.querySelector(".eh-spiral-ch"), fb = box.querySelector(".fb");
+    ch.innerHTML = shuffle(it.opts.slice()).map(function (o) {
+      return '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>";
+    }).join("");
+    ch.addEventListener("click", function (e) {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(it.a);
+      ch.querySelectorAll(".choice").forEach(function (c) {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(it.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + it.why
+        + " That was in " + SPIRAL_TITLES[it.from] + ".";
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+    w.appendChild(box);
+  };
+  /* ==== ehel-differentiation: the tiered runner - see add-differentiation.py ====
+     The story step, with Ready to Go's Support and Extension. A wrong answer
+     puts an easier one next, with the apparatus named; finishing with at most
+     one slip offers an opening question AFTER the step is done, because
+     Cambridge's extensions all read "once they have completed...". Neither tier
+     scores and finish() fires at the end of the core bank exactly as
+     secondStep() does, so progress, the sticker and the gate are untouched.
+
+     Separate from secondStep() on purpose: that one drives the other added
+     steps, and none of them should carry the risk of this change. */
+  function tieredStep(o) {
+    const el = o.el, core = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const sup = (o.support || []).slice(), ext = (o.extension || []).slice();
+    let i = 0, right = 0, lock = true, mode = "core", queued = null, extDone = 0;
+    function current() { return mode === "core" ? core[i] : queued; }
+    function label() {
+      if (mode === "support") return "An easier one";
+      if (mode === "extension") return "A harder one - " + (extDone + 1) + " of " + ext.length;
+      return (o.label || "Question") + " " + (i + 1) + " of " + core.length;
+    }
+    function draw() {
+      const it = current();
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = label();
+      el.score.className = "score" + (mode === "core" ? "" : " tier-" + mode);
+      el.stage.innerHTML = it.pic || "";
+      el.ch.innerHTML = shuffle(it.opts.slice()).map((c) => '<button type="button" class="choice'
+        + (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">'
+        + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    function endCore() {
+      el.score.className = "score";
+      el.score.textContent = "You got " + right + " of " + core.length + ". " + o.done;
+      finish(o.finish);
+      if (ext.length && right >= core.length - 1) {
+        el.next.textContent = "Try a harder one";
+        el.next.hidden = false;
+      }
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = current(), ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      if (mode === "core" && ok) right++;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      say(msg);
+      if (mode === "extension") {
+        extDone++;
+        if (extDone < ext.length) { el.next.textContent = "Next challenge"; el.next.hidden = false; }
+        else el.score.textContent = "That is the last challenge. Well done.";
+        return;
+      }
+      if (mode === "support") {
+        mode = "core";
+        if (i < core.length) { el.next.textContent = o.nextLabel || "Next story"; el.next.hidden = false; }
+        else endCore();
+        return;
+      }
+      i++;
+      if (!ok && sup.length) {
+        queued = sup.shift(); mode = "support";
+        el.next.textContent = "Try an easier one";
+        el.next.hidden = false;
+        return;
+      }
+      if (i < core.length) { el.next.textContent = o.nextLabel || "Next story"; el.next.hidden = false; }
+      else endCore();
+    });
+    el.next.addEventListener("click", () => {
+      if (mode === "extension" || (el.next.textContent === "Try a harder one" && ext.length)) {
+        if (mode !== "extension") { mode = "extension"; extDone = 0; }
+        queued = ext[extDone];
+        draw();
+        return;
+      }
+      if (mode === "support") { draw(); return; }
+      if (i < core.length) draw();
+    });
+    draw();
+  }
+  /* ==== ehel-item-runner: one question after another - see add-spot-the-mistake.py ====
+     This build had no generic item runner: a warm-up, its own hand-written
+     steps, a gated check and How do you know?, and nothing that drives a BANK.
+     Written once here, in the shape Grade 1's secondStep() has, so the tools
+     that follow - story problems, Support and Extension, Will it always work? -
+     can use it unchanged. The child moves on with a button rather than a timer,
+     because say() stops whatever is playing and a timer would cut the
+     explanation off, and every one of these explains its answer. */
+  function secondStep(o) {
+    const el = o.el, items = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    let i = 0, right = 0, lock = true;
+    function draw() {
+      const it = items[i];
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.stage.innerHTML = it.pic || "";
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      el.ch.innerHTML = shuffle(it.opts.slice()).map((c) => '<button type="button" class="choice'
+        + (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">'
+        + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = items[i], ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (ok) right++; else b.classList.add("wrong");
+      const last = i === items.length - 1;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb" + (ok ? " good" : ""); el.fb.textContent = msg; say(msg);
+      if (last) { finish(o.finish, o.done); } else { el.next.hidden = false; }
+      i += 1;
+    });
+    el.next.addEventListener("click", () => { if (i < items.length) draw(); });
+    draw();
+  }
+  /* ehel-spot-the-mistake: the claim being judged, in the mouth of the child who made it */
+  const smSays = (who, what) => '<div class="sm-bubble"><p class="sm-what">' + what +
+    '</p><p class="sm-who">' + who + '</p></div>';
+  /* ---- 10: spot the mistake - critiquing and improving, from the Cambridge Stage 2 books ---- */
+  secondStep({
+    el: { say: $("sm10say"), stage: $("sm10st"), ch: $("sm10ch"), fb: $("sm10fb"), score: $("sm10sc"), next: $("sm10nx") },
+    label: "Mistake",
+    items: [
+      { ask: "Ali cuts a bar into one big piece and one small piece and calls each one a half. What went wrong?",
+        pic: smSays("Ali", "The bar is cut into 2 parts, so each part is a half."),
+        opts: [{ t: "Halves must be the same size", ok: true }, { t: "Two pieces are always halves", ok: false }, { t: "He needed 4 pieces", ok: false }],
+        why: "A half is one of TWO EQUAL parts. Two parts that are not equal are not halves." },
+      { ask: "Amina says a quarter is bigger than a half because 4 is bigger than 2. What went wrong?",
+        pic: smSays("Amina", "One quarter is bigger than one half."),
+        opts: [{ t: "The more parts, the smaller each one is", ok: true }, { t: "4 is bigger, so a quarter is bigger", ok: false }, { t: "They are the same size", ok: false }],
+        why: "Cut the same cake into 4 instead of 2 and every piece gets smaller. A half is bigger than a quarter." },
+      { ask: "Hodan works out three quarters of 8 and says 3. What went wrong?",
+        pic: smSays("Hodan", "Three quarters of 8 is 3."),
+        opts: [{ t: "She found three quarters, not three of them", ok: true }, { t: "Three quarters of 8 is 3", ok: false }, { t: "Three quarters of 8 is 8", ok: false }],
+        why: "One quarter of 8 is 2, so three quarters is 2 and 2 and 2, which is 6." },
+      { ask: "Kiki says two quarters cannot be the same as one half. What went wrong?",
+        pic: smSays("Kiki", "Two quarters and one half are different amounts."),
+        opts: [{ t: "Two quarters make exactly one half", ok: true }, { t: "Quarters are always smaller", ok: false }, { t: "She is right", ok: false }],
+        why: "Put two quarters side by side and they cover the same amount as one half. They are equal fractions." },
+      { ask: "Musa shades 1 part of a shape cut into 5 equal parts and calls it a quarter. What went wrong?",
+        pic: smSays("Musa", "I shaded 1 part of 5, so I shaded one quarter."),
+        opts: [{ t: "One of five parts is a fifth", ok: true }, { t: "One part is always a quarter", ok: false }, { t: "He shaded one half", ok: false }],
+        why: "The bottom number says how many equal parts there are. Five parts means each one is a fifth." },
+      { ask: "Amina says four quarters make one whole. Is she right?",
+        pic: smSays("Amina", "Four quarters make one whole."),
+        opts: [{ t: "Yes, she is right", ok: true }, { t: "No, it makes two wholes", ok: false }, { t: "No, it makes one half", ok: false }],
+        why: "Four quarters fit back together into the one thing you started with. Amina is right." },
+    ],
+    finish: 9,
+    done: "You can find the mistake and say what went wrong.",
+  });
+  /* ---- 11: story problems - ehel-story-problems, the measured Stage 2 shape.
+     See add-story-problems.py. ---- */
+  tieredStep({
+    el: { say: $("sp11say"), stage: $("sp11st"), ch: $("sp11ch"), fb: $("sp11fb"), score: $("sp11sc"), next: $("sp11nx") },
+    label: "Story",
+    items: [
+      { ask: "There are 12 sweets in a bag. Amina eats half of them. How many sweets does Amina eat?", pic: "",
+        opts: [{ t: "6", ok: true }, { t: "12", ok: false }, { t: "2", ok: false }],
+        why: "Half of 12 means two equal groups. 6 and 6 make 12, so half of 12 is 6." },
+      { ask: "A cake is cut into 4 equal pieces. Musa eats 1 piece. What fraction of the cake does Musa eat?", pic: "",
+        opts: [{ t: "one quarter", ok: true }, { t: "one half", ok: false }, { t: "one third", ok: false }],
+        why: "Four equal pieces means each one is a quarter, and Musa ate one of them." },
+      { ask: "Hodan has 20 beads. She gives one quarter of them to Kiki. How many beads does Kiki get?", pic: "",
+        opts: [{ t: "5", ok: true }, { t: "4", ok: false }, { t: "10", ok: false }],
+        why: "A quarter means four equal groups. 20 shared into 4 groups is 5 in each group." },
+      { ask: "There are 15 oranges. One third of them are ripe. How many oranges are ripe?", pic: "",
+        opts: [{ t: "5", ok: true }, { t: "3", ok: false }, { t: "10", ok: false }],
+        why: "A third means three equal groups. 15 shared into 3 groups is 5 in each group." },
+      { ask: "Ali has 16 marbles. He gives half to his brother, then finds 4 more. How many marbles has Ali now?", pic: "",
+        opts: [{ t: "12", ok: true }, { t: "8", ok: false }, { t: "20", ok: false }],
+        why: "Two steps. Half of 16 is 8, so he has 8 left. Then 8 and 4 more makes 12." },
+      { ask: "A ribbon is cut into 2 equal parts. Amina joins both parts back together. What does she have?", pic: "",
+        opts: [{ t: "one whole ribbon", ok: true }, { t: "two whole ribbons", ok: false }, { t: "half a ribbon", ok: false }],
+        why: "Two halves fit back together into the one ribbon she started with." },
+    ],
+    support: [
+      { ask: "A cake is cut into 2 equal parts. Musa eats 1 part. What has he eaten?", pic: "",
+        opts: [{ t: "one half", ok: true }, { t: "one quarter", ok: false }, { t: "the whole cake", ok: false }],
+        why: "Fold a paper circle in half and colour one part. Two equal parts means each one is a half." },
+      { ask: "What is half of 6?", pic: "",
+        opts: [{ t: "3", ok: true }, { t: "2", ok: false }, { t: "12", ok: false }],
+        why: "Share 6 counters into two equal piles: 3 and 3. The cubes do the sharing for you." },
+      { ask: "There are 8 beads. One quarter of them are red. How many are red?", pic: "",
+        opts: [{ t: "2", ok: true }, { t: "4", ok: false }, { t: "8", ok: false }],
+        why: "Share 8 counters into 4 equal groups. Each group has 2, so a quarter of 8 is 2." },
+    ],
+    extension: [
+      { ask: "Using halves and quarters of one cake, how many different ways can you take exactly one half?", pic: "",
+        opts: [{ t: "2", ok: true }, { t: "1", ok: false }, { t: "4", ok: false }],
+        why: "One half itself, or two quarters. Finding both is how you know a half and two quarters are equal." },
+      { ask: "A bag holds 12 sweets. Is it possible to share them equally between 5 friends?", pic: "",
+        opts: [{ t: "no, 12 does not split into 5 equal groups", ok: true }, { t: "yes, 2 each", ok: false }, { t: "yes, 3 each", ok: false }],
+        why: "Try it: 5 groups of 2 is 10 and 5 groups of 3 is 15. Neither is 12, so it cannot be done." },
+    ],
+    finish: 10,
+    done: "You can read a story and work out the maths in it.",
+  });
+  /* ehel-always-true: the claim under test, kept on screen while it is tested */
+  const atClaim = (who, idea) => '<div class="at-claim"><p class="at-k">The idea we are testing</p>' +
+    '<p class="at-i">' + idea + '</p><p class="at-w">' + who + '</p></div>';
+  /* ---- 12: will it always work? - ehel-always-true, specialising then generalising.
+     See add-always-true.py. ---- */
+  secondStep({
+    el: { say: $("at12say"), stage: $("at12st"), ch: $("at12ch"), fb: $("at12fb"), score: $("at12sc"), next: $("at12nx") },
+    label: "Test",
+    items: [
+      { ask: "Kiki puts four quarters of an orange together. Does she get one whole orange?",
+        pic: atClaim("Kiki", "Four quarters always make one whole."),
+        opts: [{ t: "Yes, one whole orange", ok: true }, { t: "No, two oranges", ok: false }],
+        why: "The four equal parts fit back into the one orange she started with. The idea holds so far." },
+      { ask: "She puts four quarters of a cake together. Does she get one whole cake?",
+        pic: atClaim("Kiki", "Four quarters always make one whole."),
+        opts: [{ t: "Yes, one whole cake", ok: true }, { t: "No, half a cake", ok: false }],
+        why: "Four quarters of anything fit back together into one whole of it. Held twice now." },
+      { ask: "So does Kiki's idea always work?",
+        pic: atClaim("Kiki", "Four quarters always make one whole."),
+        opts: [{ t: "Yes, it always works", ok: true }, { t: "It works sometimes", ok: false }, { t: "It never works", ok: false }],
+        why: "A quarter means one of four equal parts, so all four put back together is the whole again." },
+      { ask: "Musa compares one half and one quarter. Is one half bigger?",
+        pic: atClaim("Musa", "The bigger the bottom number, the bigger the fraction."),
+        opts: [{ t: "Yes, one half is bigger", ok: true }, { t: "No, one quarter is bigger", ok: false }],
+        why: "Cut the same cake into 2 instead of 4 and each piece is bigger. His idea has failed once already." },
+      { ask: "He compares one quarter and one third. Is one third bigger?",
+        pic: atClaim("Musa", "The bigger the bottom number, the bigger the fraction."),
+        opts: [{ t: "Yes, one third is bigger", ok: true }, { t: "No, one quarter is bigger", ok: false }],
+        why: "Three parts are bigger than four parts of the same thing. It breaks again." },
+      { ask: "So does Musa's idea always work?",
+        pic: atClaim("Musa", "The bigger the bottom number, the bigger the fraction."),
+        opts: [{ t: "No, it never works that way round", ok: true }, { t: "Yes, it always works", ok: false }, { t: "It works sometimes", ok: false }],
+        why: "The more equal parts you cut something into, the SMALLER each part gets." },
+    ],
+    finish: 11,
+    done: "You can test an idea and say whether it always works.",
+  });
+  /* ---- ehel-characterising: characterising, then classifying - see add-characterising.py.
+     The sorting above is already judged and already called finish(). This is the
+     question a teacher asks AFTER the sorting is right: say what the rule was.
+     It adds no step and it does not score. */
+  const TWM1 = [
+    { q: "A square in 2 equal parts, a circle in 4 equal parts, a strip in 3 equal parts. What is the same about all of them?", opts: ["every part in each one is the same size", "each one is cut into 2 parts", "each one is a square"], a: "every part in each one is the same size", why: "The number of parts differs, but within each shape the parts are equal. That is what makes them fractions." },
+    { q: "Which one belongs with them?", opts: ["a cake cut into 5 equal slices", "a cake cut into one big and one small piece", "a cake with no cuts"], a: "a cake cut into 5 equal slices", why: "Five equal parts follows the same rule: the parts are all the same size." },
+    { q: "Which one does NOT belong with shapes cut into equal parts?", opts: ["two parts, one bigger than the other", "four parts the same size", "three parts the same size"], a: "two parts, one bigger than the other", why: "If the parts are not equal they are not fractions of the whole, however many there are." }
+  ];
+  (function () {
+    const w = document.getElementById("twm1"); if (!w) return;
+    const ch = w.querySelector(".twm-ch"), fb = w.querySelector(".fb"),
+          sc = w.querySelector(".twm-sc"), nx = w.querySelector(".twm-next");
+    let k = 0;
+    function paint() {
+      const t = TWM1[k];
+      w.querySelector(".twm-q").textContent = t.q;
+      ch.innerHTML = shuffle(t.opts.slice()).map((o) =>
+        '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+      fb.className = "fb"; fb.textContent = "";
+      sc.textContent = "Question " + (k + 1) + " of " + TWM1.length;
+      nx.hidden = true;
+    }
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const t = TWM1[k], ok = String(b.dataset.v) === String(t.a);
+      ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(t.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const last = k === TWM1.length - 1;
+      const msg = (ok ? cheer() + " " : "Good try. ") + t.why
+        + (last ? " That is what the rule was all along." : "");
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+      nx.hidden = last;
+    });
+    nx.addEventListener("click", () => { k += 1; paint(); });
+    paint();
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
@@ -1946,7 +2349,7 @@
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(12, "You got " + right10 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && /[a-z]/.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -1961,6 +2364,56 @@
     c10++; later(round10, 2800);
   });
   round10();
+
+  /* ==== ehel-self-check - see grade-1-app/add-self-check.py ====
+     The Workbook closes every Stage 1 unit with this: a three-way scale and a
+     list of "I can..." statements the child marks themselves. It sits on the
+     sticker shelf rather than in a step of its own, so no progress position
+     moves. Nothing here is scored, stored anywhere but this browser, or sent
+     to the school - it is the child's own claim, and the only thing it does
+     with the answer is offer the step that teaches it. */
+  const SELFCHECK = [
+    { say: "I can say when parts are equal and when they are not.", step: 0, title: "Equal parts first" },
+    { say: "I know what the top and bottom numbers of a fraction mean.", step: 1, title: "Top number, bottom number" },
+    { say: "I can find a fraction of a group of objects.", step: 2, title: "A fraction of a group" },
+    { say: "I can name fractions that are worth the same.", step: 3, title: "Same size, different name" },
+    { say: "I can compare two fractions and say which is bigger.", step: 4, title: "Which is bigger?" },
+    { say: "I can put fractions on a number line.", step: 5, title: "On the number line" }
+  ];
+  const SC_KEY = "ehel-selfcheck-fair-shares-v1";
+  function scLoad() {
+    try { return JSON.parse(localStorage.getItem(SC_KEY) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function scSave(m) {
+    try { localStorage.setItem(SC_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function scPaint() {
+    const host = $("selfcheck"); if (!host) return;
+    const marks = scLoad();
+    host.innerHTML = '<p class="sc-head">Self-check</p><p class="sc-sub">See how much you know</p>' +
+      SELFCHECK.map((it, i) => {
+        const got = marks[i];
+        const opts = [["yes", "I can do this"], ["trying", "I can do this, but need to keep trying"], ["notyet", "I cannot do this yet"]].map((o) =>
+          '<button type="button" data-i="' + i + '" data-v="' + o[0] + '" aria-pressed="' +
+          (got === o[0] ? "true" : "false") + '">' + o[1] + "</button>").join("");
+        const back = (got && got !== "yes")
+          ? '<p class="sc-back"><button type="button" class="sc-go" data-step="' + it.step +
+            '">Go back to step ' + (it.step + 1) + ": " + it.title + "</button></p>"
+          : "";
+        return '<div class="sc-item"><p class="sc-say">' + it.say +
+          '</p><div class="sc-opts">' + opts + "</div>" + back + "</div>";
+      }).join("");
+  }
+  $("selfcheck").addEventListener("click", (e) => {
+    const go = e.target.closest(".sc-go");
+    if (go) { show(Number(go.dataset.step), true); return; }
+    const b = e.target.closest("button[data-v]"); if (!b) return;
+    const marks = scLoad();
+    marks[Number(b.dataset.i)] = b.dataset.v;
+    scSave(marks);
+    scPaint();
+  });
+  scPaint();
 
   /* ---- 11: stickers ---- */
   const STICKERS = [["✂️", "Equal parts"], ["🔢", "Top and bottom"], ["🍎", "Fraction of a group"], ["🏷️", "Same size, new name"], ["⚖️", "Comparing"], ["📏", "On the number line"], ["➕", "Putting parts together"], ["🍕", "Past one whole"], ["🌍", "Real life"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
@@ -2657,6 +3110,10 @@
     try {
       const doc = await ws.hydrate();
       const u = doc && doc.units && doc.units[UNIT];
+      /* ehel-spiral: the whole record, not this unit - a child at the top of
+         lesson 3 with lessons 1 and 2 behind them has no `u` yet. */
+      try { if (window.__ehelSpiral) window.__ehelSpiral(doc && doc.units, UNIT); }
+      catch (_) { /* never break the lesson */ }
       if (!u) return;
       const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
       for (const i of doneIdx) doneIds.add(sectionId(i));
@@ -2770,3 +3227,83 @@
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
 </style>
+
+<style>/* ehel-spot-the-mistake - see add-spot-the-mistake.py */
+  .sm-bubble { max-width: min(92%, 460px); margin: 0 auto; background: var(--cell);
+    border: 3px solid var(--gold, #E8B44A); border-radius: 18px; padding: 14px 18px 10px; }
+  .sm-what { margin: 0; font-size: 21px; line-height: 1.45; color: var(--ink); }
+  .sm-who { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 16px; color: var(--muted); text-align: right; }
+  .choice.ss-w { font-size: 18px; }
+</style>
+
+<style>/* ehel-differentiation - see add-differentiation.py */
+  .score.tier-support { color: var(--teal, #2BB3A6); font-weight: 800; }
+  .score.tier-extension { color: var(--gold, #E8B44A); font-weight: 800; }
+</style>
+
+<style>/* ehel-always-true - see add-always-true.py */
+  .at-claim { max-width: min(92%, 470px); margin: 0 auto; background: var(--card);
+    border: 3px solid var(--gold, #E8B44A); border-radius: 18px; padding: 13px 18px 10px; }
+  .at-k { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .at-i { margin: 0; font-size: 20px; line-height: 1.45; color: var(--ink); font-weight: 700; }
+  .at-w { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 16px; color: var(--muted); text-align: right; }
+</style>
+
+<style>/* ehel-self-check - see add-self-check.py */
+  .sc-wrap { margin: 22px auto 0; max-width: 620px; text-align: left; }
+  .sc-head { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 22px; color: var(--ink);
+    margin: 0 0 2px; }
+  .sc-sub { margin: 0 0 14px; font-size: 17px; color: var(--muted); }
+  .sc-item { border-top: 2px solid var(--line); padding: 12px 0 10px; }
+  .sc-say { margin: 0 0 8px; font-size: 19px; line-height: 1.35; color: var(--ink); }
+  .sc-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sc-opts button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 9px 14px; min-height: 44px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--card); color: var(--ink); cursor: pointer; }
+  .sc-opts button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #06231F; }
+  .sc-back { margin: 9px 0 0; }
+  .sc-back button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 8px 14px; min-height: 44px; border-radius: 12px; border: 2px dashed var(--accent);
+    background: transparent; color: var(--ink); cursor: pointer; }
+</style>
+
+<style>/* ehel-materials-note - see add-materials-note.py */
+  .kit { margin: 10px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-spiral - see add-spiral-warmup.py */
+  .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
+  .eh-spiral .eh-spiral-ch { margin-top: 12px; }
+</style>
+
+<style>/* ehel-characterising - see add-characterising.py */
+  .twm { margin: 16px 0 0; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--line); }
+  .twm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); }
+  /* mirrors .say under its own class, so the Explain button never finds it -
+     it looks for the FIRST .say in the slide and would read this instead */
+  .twm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--cell); font-size: 20px; }
+  .twm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .twm-say button:active { transform: scale(0.94); }
+  .twm-ch { margin-top: 12px; }
+  .twm-sc { margin: 10px 0 0; }
+</style>
+<!-- ehel-explain-scripts: see add-explain-scripts.py -->

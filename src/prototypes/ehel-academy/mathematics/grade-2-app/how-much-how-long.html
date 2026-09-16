@@ -550,6 +550,7 @@
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Longer and shorter</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">They all start in the <b>same place</b>, so look at where each one <b>ends</b>.</span></div>
+      <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A ruler marked in centimetres, kitchen scales, a measuring jug and two or three containers to fill. This lesson is about reading real scales, so read real ones.</p></details>
       <div class="stage">
         <div class="things" id="things1"></div>
         <p class="fb" id="fb1" role="status" aria-live="polite"></p>
@@ -583,7 +584,7 @@
     </section>
 
     <!-- 4 which unit -->
-    <section class="slide" data-say="Which unit would you use? Centimetres for small things, metres for big things like a room." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Pick the unit that fits the size of the thing you are measuring.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil is a few centimetres long, so centimetres fit.</s><s>A classroom is a few metres long, so metres fit.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Measuring a room in centimetres gives a huge number, and measuring a pencil in metres gives almost nothing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Picture the thing, then choose centimetres for small things or metres for big ones.</s></mstts:express-as>'>
+    <section class="slide" data-twm="characterising classifying" data-say="Which unit would you use? Centimetres for small things, metres for big things like a room." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Pick the unit that fits the size of the thing you are measuring.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil is a few centimetres long, so centimetres fit.</s><s>A classroom is a few metres long, so metres fit.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Measuring a room in centimetres gives a huge number, and measuring a pencil in metres gives almost nothing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Picture the thing, then choose centimetres for small things or metres for big ones.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">4</span><h2>Which unit?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Pick the unit that makes sense.</span></div>
       <div class="stage">
@@ -593,6 +594,8 @@
         <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="score4"></p>
       </div>
+    
+      <div class="twm" id="twm4"><p class="twm-h">Why do they go together?</p><div class="twm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="twm-q"></span></div><div class="choices twm-ch"></div><p class="fb" role="status" aria-live="polite"></p><p class="score twm-sc"></p><div class="bigbtns"><button type="button" class="big small teal twm-next" hidden>Next question</button></div></div>
     </section>
 
     <!-- 5 balance -->
@@ -695,6 +698,36 @@
     </section>
 
     <!-- 12 check -->
+    <!-- 12  2Gg.03  Spot the mistake -->
+    <section class="slide" data-twm="critiquing improving" data-say="Read what each child says. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Before comparing measurements, check the unit is the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa says the book is longer, as it took more cubes.</s><s>The pencil was measured in paperclips.</s><s>Different units, so the numbers do not compare.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Comparing the numbers is the right instinct.</s><s>It works once both count the same unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one. Check what each was measured with.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">12</span><h2>Spot the mistake</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sm12say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
+      <div class="stage" id="sm12st"></div>
+      <div class="choices" id="sm12ch"></div>
+      <p class="fb" id="sm12fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="sm12nx" hidden>Next question</button></div>
+      <p class="score" id="sm12sc"></p>
+    </section>
+    <!-- 13  2Gg.03  Story problems -->
+    <section class="slide" data-say="Read the story. Work out the answer. Then tap it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A measuring story gives two amounts and compares them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil is 9 centimetres and a crayon is 6.</s><s>How much longer asks for the difference.</s><s>9 take away 6 is 3 centimetres longer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>How much longer and how long altogether sound alike.</s><s>Longer than means take away, altogether means add.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first story. Difference, or total?</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sp13say">Read the story, work out the answer, then tap it.</span></div>
+      <div class="stage" id="sp13st"></div>
+      <div class="choices" id="sp13ch"></div>
+      <p class="fb" id="sp13fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="sp13nx" hidden>Next story</button></div>
+      <p class="score" id="sp13sc"></p>
+    </section>
+    <!-- 14  2Gg.03  Will it always work? -->
+    <section class="slide" data-twm="specialising generalising" data-say="Somebody has an idea. Test it on each example, then say whether it always works." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some ideas about size hold every time, and some do not.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ali says a bigger object is always heavier.</s><s>A stone is smaller than a balloon.</s><s>It is also much heavier, so size does not decide.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Bigger things often are heavier, so this feels true.</s><s>Often is not always.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Test the idea on each example, then decide.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">14</span><h2>Will it always work?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="at14say">Test the idea on each example. Then say whether it always works.</span></div>
+      <div class="stage" id="at14st"></div>
+      <div class="choices" id="at14ch"></div>
+      <p class="fb" id="at14fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="at14nx" hidden>Next test</button></div>
+      <p class="score" id="at14sc"></p>
+    </section>
     <section class="slide" data-say="Time to show what you know. Tap the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the check for length, mass and capacity.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You will read rulers, scales and jugs, and choose units.</s><s>Get most of them right to finish the lesson, and the screen tells you how many you need.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you do not get enough, that is fine.</s><s>Press Try again and the questions come round again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>On every scale, find zero and work out what each mark is worth.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
@@ -708,7 +741,7 @@
 
     <!-- 13 stickers -->
     <!-- how do you know -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+    <section class="slide" data-twm="convincing" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
       <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
       <div class="stage">
@@ -719,12 +752,13 @@
       </div>
     </section>
 
-    <section class="slide" data-say="Look at all the stickers you earned!" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf, with a sticker for every step you finished.</s></prosody></mstts:express-as>'>
+    <section class="slide" data-say="Look at all the stickers you earned. Then tell me which parts you can do." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf, with a sticker for every step you finished.</s></prosody></mstts:express-as>'>
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb11" role="status" aria-live="polite"></p>
+        <div class="sc-wrap" id="selfcheck"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1653,6 +1687,375 @@
       fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
     });
   })();
+
+  /* ---- ehel-spiral: the warm-up's second question, drawn from lessons already
+     FINISHED - see add-spiral-warmup.py. Cambridge's volume comes from the
+     spiral, and nothing here re-asked an earlier lesson. Like the warm-up above
+     it: not a step, no sticker, no dot, no score. */
+  const SPIRAL = [
+    { from: "l01", q: "Which is more: 47 or 74?", opts: [74, 47, 44], a: 74, why: "74 has 7 tens and 47 has only 4, so 74 is more. Compare the tens first." },
+    { from: "l01", q: "Round 62 to the nearest 10.", opts: [60, 70, 62], a: 60, why: "62 is 2 away from 60 and 8 away from 70, so it rounds to 60." },
+    { from: "l01", q: "4 rows of 5 counters is how many altogether?", opts: [20, 9, 45], a: 20, why: "An array of 4 rows of 5 counts in fives: 5, 10, 15, 20." },
+    { from: "l02", q: "What is 25 sh and 25 sh altogether?", opts: [50, 40, 55], a: 50, why: "The tens make 40 and the ones make 10, so it is 50 sh." },
+    { from: "l02", q: "A pen costs 20 sh. You pay with 50 sh. What is the change?", opts: [30, 70, 20], a: 30, why: "Count on from 20 to 50: that is 30 sh change." },
+    { from: "l02", q: "Which is worth more: three 10 sh coins, or one 20 sh coin?", opts: ["three 10 sh coins", "one 20 sh coin", "they are the same"], a: "three 10 sh coins", why: "Three 10 sh coins make 30 sh, and 30 is more than 20." },
+    { from: "l03", q: "What is half of 20?", opts: [10, 5, 40], a: 10, why: "20 shared into two equal groups is 10 and 10." },
+    { from: "l03", q: "Which is bigger: one half or one quarter?", opts: ["one half", "one quarter", "they are the same"], a: "one half", why: "Cut the same thing into 2 instead of 4 and each piece is bigger." },
+    { from: "l03", q: "How many quarters make one whole?", opts: [4, 2, 8], a: 4, why: "Four equal parts fit back together into the whole." },
+    { from: "l04", q: "Count on in fives: 15, 20, 25. What comes next?", opts: [30, 26, 35], a: 30, why: "Every jump is 5, so 25 and 5 more is 30." },
+    { from: "l04", q: "Count back in tens from 60. What comes next?", opts: [50, 59, 70], a: 50, why: "Counting back in tens takes away a whole ten: 60, 50, 40." },
+    { from: "l04", q: "In 2, 4, 6, 8 how big is each jump?", opts: [2, 1, 4], a: 2, why: "Take each number from the next: every jump is 2." },
+    { from: "l05", q: "How many corners has a rectangle?", opts: [4, 3, 6], a: 4, why: "A rectangle has 4 straight sides and 4 corners." },
+    { from: "l05", q: "Which solid shape has no flat faces at all?", opts: ["a sphere", "a cube", "a cylinder"], a: "a sphere", why: "A sphere is curved all over. A cube has 6 flat faces and a cylinder has 2." },
+    { from: "l05", q: "A shape folds so both halves match exactly. What is that fold called?", opts: ["a line of symmetry", "a corner", "a curved side"], a: "a line of symmetry", why: "A line of symmetry splits a shape into two halves that land on top of each other." },
+    { from: "l06", q: "How many quarter turns make a whole turn?", opts: [4, 2, 3], a: 4, why: "Four quarter turns take you all the way round to where you started." },
+    { from: "l06", q: "You face the door and make a half turn. What do you face?", opts: ["the way you came", "the door still", "the floor"], a: "the way you came", why: "A half turn is two quarter turns, and it faces you back the way you came." },
+    { from: "l06", q: "In a mirror, which way does the picture face?", opts: ["the other way", "the same way", "upside down"], a: "the other way", why: "A mirror turns a picture over, so it faces the other way." },
+    { from: "l07", q: "How many centimetres make 1 metre?", opts: [100, 10, 60], a: 100, why: "It takes 100 centimetres to make 1 metre." },
+    { from: "l07", q: "Which unit tells you how heavy something is?", opts: ["grams", "centimetres", "litres"], a: "grams", why: "Grams and kilograms measure mass. Centimetres measure length and litres measure capacity." },
+    { from: "l07", q: "A jug's water is halfway between the 20 and the 30 marks. What does it read?", opts: [25, 20, 30], a: 25, why: "Halfway from 20 to 30 is 25. Look at the small marks between the numbers." },
+    { from: "l08", q: "How many minutes are there in one hour?", opts: [60, 100, 30], a: 60, why: "An hour is 60 minutes, whatever time of day it is." },
+    { from: "l08", q: "The long hand points at the 9. Is it quarter past or quarter to?", opts: ["quarter to", "quarter past", "half past"], a: "quarter to", why: "Quarter past is at the 3 and quarter to is at the 9, three quarters of the way round." },
+    { from: "l08", q: "Moving from one number to the next on a clock is how many minutes?", opts: [5, 1, 10], a: 5, why: "Count round the clock face in fives: 5, 10, 15." },
+    { from: "l09", q: "In a tally chart, how many is one gate?", opts: [5, 4, 10], a: 5, why: "Four lines and a fifth across them make a gate of five." },
+    { from: "l09", q: "On a block graph where one block is one child, what does the tallest bar mean?", opts: ["the most children chose it", "the fewest chose it", "it was drawn first"], a: "the most children chose it", why: "Each block stands for one child, so the tallest stack is the most children." },
+    { from: "l09", q: "A coin has landed on heads three times. What happens next?", opts: ["heads and tails are still equally likely", "tails is certain", "heads is certain"], a: "heads and tails are still equally likely", why: "The coin does not remember. Every toss is exactly like the first one." }
+  ];
+  const SPIRAL_TITLES = { l01: "Tens and Ones", l02: "Coins and Change", l03: "Fair Shares", l04: "Patterns That Grow", l05: "Sides and Corners", l06: "Which Way From Here", l07: "How Much, How Long", l08: "Half Past, Quarter To", l09: "Count It, Chart It" };
+  /* Called from the page's hydrate block with the whole course record. Until it
+     answers there is no spiral question, which is also what a child on their
+     first lesson correctly sees. */
+  window.__ehelSpiral = function (units, here) {
+    const w = document.getElementById("ehWarm");
+    if (!w || w.querySelector(".eh-spiral")) return;          /* once only */
+    const pool = SPIRAL.filter(function (it) {
+      const u = units && units[it.from];
+      return it.from !== here && u && u.completed === true;
+    });
+    if (!pool.length) return;
+    const it = pool[Math.floor(Math.random() * pool.length)];
+    const box = document.createElement("div");
+    box.className = "eh-spiral";
+    box.innerHTML = '<p class="eh-warm-h">And one from before</p>'
+      + '<div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button>'
+      + '<span class="eh-spiral-q"></span></div>'
+      + '<div class="choices eh-spiral-ch"></div>'
+      + '<p class="fb" role="status" aria-live="polite"></p>';
+    box.querySelector(".eh-spiral-q").textContent = it.q;
+    /* bound here, not by the page-wide .speak wiring, which ran at load */
+    box.querySelector(".speak").addEventListener("click", function () { say(it.q); });
+    const ch = box.querySelector(".eh-spiral-ch"), fb = box.querySelector(".fb");
+    ch.innerHTML = shuffle(it.opts.slice()).map(function (o) {
+      return '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>";
+    }).join("");
+    ch.addEventListener("click", function (e) {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(it.a);
+      ch.querySelectorAll(".choice").forEach(function (c) {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(it.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + it.why
+        + " That was in " + SPIRAL_TITLES[it.from] + ".";
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+    w.appendChild(box);
+  };
+  /* ==== ehel-differentiation: the tiered runner - see add-differentiation.py ====
+     The story step, with Ready to Go's Support and Extension. A wrong answer
+     puts an easier one next, with the apparatus named; finishing with at most
+     one slip offers an opening question AFTER the step is done, because
+     Cambridge's extensions all read "once they have completed...". Neither tier
+     scores and finish() fires at the end of the core bank exactly as
+     secondStep() does, so progress, the sticker and the gate are untouched.
+
+     Separate from secondStep() on purpose: that one drives the other added
+     steps, and none of them should carry the risk of this change. */
+  function tieredStep(o) {
+    const el = o.el, core = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const sup = (o.support || []).slice(), ext = (o.extension || []).slice();
+    let i = 0, right = 0, lock = true, mode = "core", queued = null, extDone = 0;
+    function current() { return mode === "core" ? core[i] : queued; }
+    function label() {
+      if (mode === "support") return "An easier one";
+      if (mode === "extension") return "A harder one - " + (extDone + 1) + " of " + ext.length;
+      return (o.label || "Question") + " " + (i + 1) + " of " + core.length;
+    }
+    function draw() {
+      const it = current();
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = label();
+      el.score.className = "score" + (mode === "core" ? "" : " tier-" + mode);
+      el.stage.innerHTML = it.pic || "";
+      el.ch.innerHTML = shuffle(it.opts.slice()).map((c) => '<button type="button" class="choice'
+        + (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">'
+        + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    function endCore() {
+      el.score.className = "score";
+      el.score.textContent = "You got " + right + " of " + core.length + ". " + o.done;
+      finish(o.finish);
+      if (ext.length && right >= core.length - 1) {
+        el.next.textContent = "Try a harder one";
+        el.next.hidden = false;
+      }
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = current(), ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      if (mode === "core" && ok) right++;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      say(msg);
+      if (mode === "extension") {
+        extDone++;
+        if (extDone < ext.length) { el.next.textContent = "Next challenge"; el.next.hidden = false; }
+        else el.score.textContent = "That is the last challenge. Well done.";
+        return;
+      }
+      if (mode === "support") {
+        mode = "core";
+        if (i < core.length) { el.next.textContent = o.nextLabel || "Next story"; el.next.hidden = false; }
+        else endCore();
+        return;
+      }
+      i++;
+      if (!ok && sup.length) {
+        queued = sup.shift(); mode = "support";
+        el.next.textContent = "Try an easier one";
+        el.next.hidden = false;
+        return;
+      }
+      if (i < core.length) { el.next.textContent = o.nextLabel || "Next story"; el.next.hidden = false; }
+      else endCore();
+    });
+    el.next.addEventListener("click", () => {
+      if (mode === "extension" || (el.next.textContent === "Try a harder one" && ext.length)) {
+        if (mode !== "extension") { mode = "extension"; extDone = 0; }
+        queued = ext[extDone];
+        draw();
+        return;
+      }
+      if (mode === "support") { draw(); return; }
+      if (i < core.length) draw();
+    });
+    draw();
+  }
+  /* ==== ehel-item-runner: one question after another - see add-spot-the-mistake.py ====
+     This build had no generic item runner: a warm-up, its own hand-written
+     steps, a gated check and How do you know?, and nothing that drives a BANK.
+     Written once here, in the shape Grade 1's secondStep() has, so the tools
+     that follow - story problems, Support and Extension, Will it always work? -
+     can use it unchanged. The child moves on with a button rather than a timer,
+     because say() stops whatever is playing and a timer would cut the
+     explanation off, and every one of these explains its answer. */
+  function secondStep(o) {
+    const el = o.el, items = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    let i = 0, right = 0, lock = true;
+    function draw() {
+      const it = items[i];
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.stage.innerHTML = it.pic || "";
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      el.ch.innerHTML = shuffle(it.opts.slice()).map((c) => '<button type="button" class="choice'
+        + (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">'
+        + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = items[i], ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (ok) right++; else b.classList.add("wrong");
+      const last = i === items.length - 1;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb" + (ok ? " good" : ""); el.fb.textContent = msg; say(msg);
+      if (last) { finish(o.finish, o.done); } else { el.next.hidden = false; }
+      i += 1;
+    });
+    el.next.addEventListener("click", () => { if (i < items.length) draw(); });
+    draw();
+  }
+  /* ehel-spot-the-mistake: the claim being judged, in the mouth of the child who made it */
+  const smSays = (who, what) => '<div class="sm-bubble"><p class="sm-what">' + what +
+    '</p><p class="sm-who">' + who + '</p></div>';
+  /* ---- 12: spot the mistake - critiquing and improving, from the Cambridge Stage 2 books ---- */
+  secondStep({
+    el: { say: $("sm12say"), stage: $("sm12st"), ch: $("sm12ch"), fb: $("sm12fb"), score: $("sm12sc"), next: $("sm12nx") },
+    label: "Mistake",
+    items: [
+      { ask: "Musa measures the book in cubes and the pencil in paperclips, then compares the numbers. What went wrong?",
+        pic: smSays("Musa", "The book is longer because it needed more cubes than the pencil needed paperclips."),
+        opts: [{ t: "He measured them with different units", ok: true }, { t: "8 is more than 5, so he is right", ok: false }, { t: "He should count the cubes twice", ok: false }],
+        why: "To compare two lengths you must measure both with the SAME thing. Eight of one and five of another tell you nothing." },
+      { ask: "Amina lines the pencil up with the 1 on the ruler, reads 8 at the end, and says 7 cm. Her teacher says to start at 0. What went wrong?",
+        pic: smSays("Amina", "The pencil is 7 cm long."),
+        opts: [{ t: "Measuring should start at 0", ok: true }, { t: "She should read the 1", ok: false }, { t: "Rulers start at 1", ok: false }],
+        why: "Line the end up with 0, not with 1. Then the number at the far end is the length." },
+      { ask: "Without pouring anything, Kiki says the tall jug holds more. What went wrong?",
+        pic: smSays("Kiki", "The tall thin jug must hold more than the short wide one."),
+        opts: [{ t: "Tall does not always mean it holds more", ok: true }, { t: "The tall jug always holds more", ok: false }, { t: "There is no way to find out", ok: false }],
+        why: "A short wide jug can hold more than a tall thin one. Pour each into the same cups and count to find out." },
+      { ask: "Ali says he would measure how heavy a bag of rice is in centimetres. What went wrong?",
+        pic: smSays("Ali", "I would weigh a bag of rice in centimetres."),
+        opts: [{ t: "Centimetres measure length, not mass", ok: true }, { t: "Centimetres measure anything", ok: false }, { t: "He should use litres", ok: false }],
+        why: "Length is measured in centimetres and metres. How heavy something is is measured in grams and kilograms." },
+      { ask: "Hodan reads a kitchen scale whose pointer sits halfway between 20 and 30 and says 20. What went wrong?",
+        pic: smSays("Hodan", "The pointer is between 20 and 30, so it says 20."),
+        opts: [{ t: "Halfway between 20 and 30 is 25", ok: true }, { t: "It says 20", ok: false }, { t: "It says 30", ok: false }],
+        why: "Look at the small marks between the numbers. Halfway from 20 to 30 is 25." },
+      { ask: "Amina says a metre is longer than a centimetre. Is she right?",
+        pic: smSays("Amina", "A metre is longer than a centimetre."),
+        opts: [{ t: "Yes, she is right", ok: true }, { t: "No, a centimetre is longer", ok: false }, { t: "No, they are the same", ok: false }],
+        why: "It takes 100 centimetres to make 1 metre, so a metre is much longer." },
+    ],
+    finish: 11,
+    done: "You can find the mistake and say what went wrong.",
+  });
+  /* ---- 13: story problems - ehel-story-problems, the measured Stage 2 shape.
+     See add-story-problems.py. ---- */
+  tieredStep({
+    el: { say: $("sp13say"), stage: $("sp13st"), ch: $("sp13ch"), fb: $("sp13fb"), score: $("sp13sc"), next: $("sp13nx") },
+    label: "Story",
+    items: [
+      { ask: "A pencil is 9 cm long. A crayon is 6 cm long. How much longer is the pencil than the crayon?", pic: "",
+        opts: [{ t: "3 cm", ok: true }, { t: "15 cm", ok: false }, { t: "6 cm", ok: false }],
+        why: "Count on from 6 to 9: 7, 8, 9. That is 3 cm longer." },
+      { ask: "A jug holds 2 litres. Amina pours in 1 litre. How much more will the jug hold?", pic: "",
+        opts: [{ t: "1 litre", ok: true }, { t: "3 litres", ok: false }, { t: "2 litres", ok: false }],
+        why: "The jug holds 2 litres in total and 1 is already in, so 1 more litre will fit." },
+      { ask: "A bag of rice weighs 50 g. A bag of beans weighs 30 g. How much do they weigh together?", pic: "",
+        opts: [{ t: "80 g", ok: true }, { t: "20 g", ok: false }, { t: "60 g", ok: false }],
+        why: "50 and 30: the tens make 80, so together they weigh 80 g." },
+      { ask: "Zara's tomato weighs 65 g. Jack's tomato weighs 20 g more than Zara's. How heavy is Jack's tomato?", pic: "",
+        opts: [{ t: "85 g", ok: true }, { t: "45 g", ok: false }, { t: "20 g", ok: false }],
+        why: "65 and 20 more: the tens make 80 and the 5 ones stay, so Jack's tomato is 85 g." },
+      { ask: "A ribbon is 40 cm long. Musa cuts off 10 cm, then cuts off 20 cm more. How much ribbon is left?", pic: "",
+        opts: [{ t: "10 cm", ok: true }, { t: "30 cm", ok: false }, { t: "20 cm", ok: false }],
+        why: "Two steps. 40 take away 10 is 30. Then 30 take away 20 is 10 cm left." },
+      { ask: "Hodan measures her desk in cubes and it takes 12. Ali measures his in the same cubes and it takes 9. Whose desk is longer?", pic: "",
+        opts: [{ t: "Hodan's desk", ok: true }, { t: "Ali's desk", ok: false }, { t: "they are the same", ok: false }],
+        why: "They used the SAME cubes, so the counts can be compared. 12 cubes is longer than 9." },
+    ],
+    support: [
+      { ask: "A pencil is 8 cm and a crayon is 5 cm. Which is longer?", pic: "",
+        opts: [{ t: "the pencil", ok: true }, { t: "the crayon", ok: false }, { t: "they are equal", ok: false }],
+        why: "Line them up at the same end against a ruler. The one reaching further is longer." },
+      { ask: "Which is heavier, a book or a feather?", pic: "",
+        opts: [{ t: "the book", ok: true }, { t: "the feather", ok: false }, { t: "they are the same", ok: false }],
+        why: "Put one in each pan of a balance. The pan that goes down holds the heavier thing." },
+      { ask: "A jug holds 2 litres. How many 1 litre bottles fill it?", pic: "",
+        opts: [{ t: "2", ok: true }, { t: "1", ok: false }, { t: "4", ok: false }],
+        why: "Pour real bottles into the jug and count them. Two 1 litre bottles fill 2 litres." },
+    ],
+    extension: [
+      { ask: "Measuring a desk in cubes and again in longer sticks, which count is smallest?", pic: "",
+        opts: [{ t: "the stick count", ok: true }, { t: "the cube count", ok: false }, { t: "they are equal", ok: false }],
+        why: "Longer units mean fewer of them. This is why you must say WHICH unit you measured in." },
+      { ask: "Is it possible for a big box to be lighter than a small box?", pic: "",
+        opts: [{ t: "yes, it depends what is inside", ok: true }, { t: "no, big is always heavier", ok: false }, { t: "only if it is empty", ok: false }],
+        why: "A big box of feathers weighs less than a small box of stones. Size does not tell you the mass." },
+    ],
+    finish: 12,
+    done: "You can read a story and work out the maths in it.",
+  });
+  /* ehel-always-true: the claim under test, kept on screen while it is tested */
+  const atClaim = (who, idea) => '<div class="at-claim"><p class="at-k">The idea we are testing</p>' +
+    '<p class="at-i">' + idea + '</p><p class="at-w">' + who + '</p></div>';
+  /* ---- 14: will it always work? - ehel-always-true, specialising then generalising.
+     See add-always-true.py. ---- */
+  secondStep({
+    el: { say: $("at14say"), stage: $("at14st"), ch: $("at14ch"), fb: $("at14fb"), score: $("at14sc"), next: $("at14nx") },
+    label: "Test",
+    items: [
+      { ask: "A pencil takes 9 cubes and a crayon takes 5 cubes. Is the pencil longer?",
+        pic: atClaim("Hodan", "If two things are measured with the same unit, the bigger number is longer."),
+        opts: [{ t: "Yes, the pencil is longer", ok: true }, { t: "No, the crayon is longer", ok: false }],
+        why: "Same cubes both times, so the counts can be compared. Holds so far." },
+      { ask: "A desk takes 30 cubes and a chair takes 20 cubes. Is the desk longer?",
+        pic: atClaim("Hodan", "If two things are measured with the same unit, the bigger number is longer."),
+        opts: [{ t: "Yes, the desk is longer", ok: true }, { t: "No, the chair is longer", ok: false }],
+        why: "The same cubes again, so 30 is longer than 20. Held twice now." },
+      { ask: "So does Hodan's idea always work?",
+        pic: atClaim("Hodan", "If two things are measured with the same unit, the bigger number is longer."),
+        opts: [{ t: "Yes, as long as the unit is the same", ok: true }, { t: "It never works", ok: false }, { t: "It works with any units", ok: false }],
+        why: "The unit must be the SAME both times. Different units make the counts mean different things." },
+      { ask: "Ali compares a big stone and a small stone. Is the big one heavier?",
+        pic: atClaim("Ali", "A bigger object is always heavier."),
+        opts: [{ t: "Yes, the big stone", ok: true }, { t: "No, the small one", ok: false }],
+        why: "Two stones of the same kind: the bigger is heavier. His idea has worked once." },
+      { ask: "Now he compares a big bag of feathers and a small bag of stones. Is the big bag heavier?",
+        pic: atClaim("Ali", "A bigger object is always heavier."),
+        opts: [{ t: "No, the stones are heavier", ok: true }, { t: "Yes, the big bag is heavier", ok: false }],
+        why: "A big bag of feathers weighs less than a small bag of stones. That breaks the idea." },
+      { ask: "So does Ali's idea always work?",
+        pic: atClaim("Ali", "A bigger object is always heavier."),
+        opts: [{ t: "No, it does not always work", ok: true }, { t: "Yes, it always works", ok: false }, { t: "It never works", ok: false }],
+        why: "Size does not tell you the mass. You have to weigh it to know." },
+    ],
+    finish: 13,
+    done: "You can test an idea and say whether it always works.",
+  });
+  /* ---- ehel-characterising: characterising, then classifying - see add-characterising.py.
+     The sorting above is already judged and already called finish(). This is the
+     question a teacher asks AFTER the sorting is right: say what the rule was.
+     It adds no step and it does not score. */
+  const TWM4 = [
+    { q: "Centimetres, metres and kilometres. What is the same about all of them?", opts: ["they all measure length", "they all measure mass", "they all measure time"], a: "they all measure length", why: "Every one of them tells you how long, how tall or how far something is." },
+    { q: "Which unit belongs with grams and kilograms?", opts: ["the mass of a bag of rice", "the length of a pencil", "the time a film takes"], a: "the mass of a bag of rice", why: "Grams and kilograms measure mass, which is how heavy something is." },
+    { q: "Which does NOT belong with litres and millilitres?", opts: ["how tall a door is", "how much a jug holds", "how much water is in a bottle"], a: "how tall a door is", why: "Litres measure capacity, which is how much a container holds. Height is a length." }
+  ];
+  (function () {
+    const w = document.getElementById("twm4"); if (!w) return;
+    const ch = w.querySelector(".twm-ch"), fb = w.querySelector(".fb"),
+          sc = w.querySelector(".twm-sc"), nx = w.querySelector(".twm-next");
+    let k = 0;
+    function paint() {
+      const t = TWM4[k];
+      w.querySelector(".twm-q").textContent = t.q;
+      ch.innerHTML = shuffle(t.opts.slice()).map((o) =>
+        '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+      fb.className = "fb"; fb.textContent = "";
+      sc.textContent = "Question " + (k + 1) + " of " + TWM4.length;
+      nx.hidden = true;
+    }
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const t = TWM4[k], ok = String(b.dataset.v) === String(t.a);
+      ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(t.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const last = k === TWM4.length - 1;
+      const msg = (ok ? cheer() + " " : "Good try. ") + t.why
+        + (last ? " That is what the rule was all along." : "");
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+      nx.hidden = last;
+    });
+    nx.addEventListener("click", () => { k += 1; paint(); });
+    paint();
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
@@ -2112,7 +2515,7 @@
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(11, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(14, "You got " + right10 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -2126,6 +2529,56 @@
     c10++; later(round10, 2800);
   });
   round10();
+
+  /* ==== ehel-self-check - see grade-1-app/add-self-check.py ====
+     The Workbook closes every Stage 1 unit with this: a three-way scale and a
+     list of "I can..." statements the child marks themselves. It sits on the
+     sticker shelf rather than in a step of its own, so no progress position
+     moves. Nothing here is scored, stored anywhere but this browser, or sent
+     to the school - it is the child's own claim, and the only thing it does
+     with the answer is offer the step that teaches it. */
+  const SELFCHECK = [
+    { say: "I can compare two lengths and say which is longer.", step: 0, title: "Longer and shorter" },
+    { say: "I can measure with the same unit every time.", step: 1, title: "Measure with cubes" },
+    { say: "I can measure a length in whole centimetres with a ruler.", step: 2, title: "Reading a ruler" },
+    { say: "I can choose the right unit for what I am measuring.", step: 3, title: "Which unit?" },
+    { say: "I can estimate the mass of an object before measuring it.", step: 5, title: "Reading a kitchen scale" },
+    { say: "I can read scales marked in twos, fives and tens.", step: 10, title: "Between the marks" }
+  ];
+  const SC_KEY = "ehel-selfcheck-how-much-how-long-v1";
+  function scLoad() {
+    try { return JSON.parse(localStorage.getItem(SC_KEY) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function scSave(m) {
+    try { localStorage.setItem(SC_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function scPaint() {
+    const host = $("selfcheck"); if (!host) return;
+    const marks = scLoad();
+    host.innerHTML = '<p class="sc-head">Self-check</p><p class="sc-sub">See how much you know</p>' +
+      SELFCHECK.map((it, i) => {
+        const got = marks[i];
+        const opts = [["yes", "I can do this"], ["trying", "I can do this, but need to keep trying"], ["notyet", "I cannot do this yet"]].map((o) =>
+          '<button type="button" data-i="' + i + '" data-v="' + o[0] + '" aria-pressed="' +
+          (got === o[0] ? "true" : "false") + '">' + o[1] + "</button>").join("");
+        const back = (got && got !== "yes")
+          ? '<p class="sc-back"><button type="button" class="sc-go" data-step="' + it.step +
+            '">Go back to step ' + (it.step + 1) + ": " + it.title + "</button></p>"
+          : "";
+        return '<div class="sc-item"><p class="sc-say">' + it.say +
+          '</p><div class="sc-opts">' + opts + "</div>" + back + "</div>";
+      }).join("");
+  }
+  $("selfcheck").addEventListener("click", (e) => {
+    const go = e.target.closest(".sc-go");
+    if (go) { show(Number(go.dataset.step), true); return; }
+    const b = e.target.closest("button[data-v]"); if (!b) return;
+    const marks = scLoad();
+    marks[Number(b.dataset.i)] = b.dataset.v;
+    scSave(marks);
+    scPaint();
+  });
+  scPaint();
 
   /* ---- 13: stickers ---- */
   const STICKERS = [["📏", "Longer and shorter"], ["🎲", "Measure with cubes"], ["📐", "Reading a ruler"], ["🏷️", "Choosing the unit"], ["⚖️", "Balancing scales"], ["🍎", "Reading a kitchen scale"], ["🥤", "Reading a jug"], ["🥛", "Which holds more"], ["🎯", "Estimate, then measure"], ["✏️", "Drawing a line"], ["🔍", "Between the marks"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
@@ -2822,6 +3275,10 @@
     try {
       const doc = await ws.hydrate();
       const u = doc && doc.units && doc.units[UNIT];
+      /* ehel-spiral: the whole record, not this unit - a child at the top of
+         lesson 3 with lessons 1 and 2 behind them has no `u` yet. */
+      try { if (window.__ehelSpiral) window.__ehelSpiral(doc && doc.units, UNIT); }
+      catch (_) { /* never break the lesson */ }
       if (!u) return;
       const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
       for (const i of doneIdx) doneIds.add(sectionId(i));
@@ -2935,3 +3392,83 @@
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
 </style>
+
+<style>/* ehel-spot-the-mistake - see add-spot-the-mistake.py */
+  .sm-bubble { max-width: min(92%, 460px); margin: 0 auto; background: var(--cell);
+    border: 3px solid var(--gold, #E8B44A); border-radius: 18px; padding: 14px 18px 10px; }
+  .sm-what { margin: 0; font-size: 21px; line-height: 1.45; color: var(--ink); }
+  .sm-who { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 16px; color: var(--muted); text-align: right; }
+  .choice.ss-w { font-size: 18px; }
+</style>
+
+<style>/* ehel-differentiation - see add-differentiation.py */
+  .score.tier-support { color: var(--teal, #2BB3A6); font-weight: 800; }
+  .score.tier-extension { color: var(--gold, #E8B44A); font-weight: 800; }
+</style>
+
+<style>/* ehel-always-true - see add-always-true.py */
+  .at-claim { max-width: min(92%, 470px); margin: 0 auto; background: var(--card);
+    border: 3px solid var(--gold, #E8B44A); border-radius: 18px; padding: 13px 18px 10px; }
+  .at-k { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .at-i { margin: 0; font-size: 20px; line-height: 1.45; color: var(--ink); font-weight: 700; }
+  .at-w { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 16px; color: var(--muted); text-align: right; }
+</style>
+
+<style>/* ehel-self-check - see add-self-check.py */
+  .sc-wrap { margin: 22px auto 0; max-width: 620px; text-align: left; }
+  .sc-head { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 22px; color: var(--ink);
+    margin: 0 0 2px; }
+  .sc-sub { margin: 0 0 14px; font-size: 17px; color: var(--muted); }
+  .sc-item { border-top: 2px solid var(--line); padding: 12px 0 10px; }
+  .sc-say { margin: 0 0 8px; font-size: 19px; line-height: 1.35; color: var(--ink); }
+  .sc-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sc-opts button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 9px 14px; min-height: 44px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--card); color: var(--ink); cursor: pointer; }
+  .sc-opts button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #06231F; }
+  .sc-back { margin: 9px 0 0; }
+  .sc-back button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 8px 14px; min-height: 44px; border-radius: 12px; border: 2px dashed var(--accent);
+    background: transparent; color: var(--ink); cursor: pointer; }
+</style>
+
+<style>/* ehel-materials-note - see add-materials-note.py */
+  .kit { margin: 10px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-spiral - see add-spiral-warmup.py */
+  .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
+  .eh-spiral .eh-spiral-ch { margin-top: 12px; }
+</style>
+
+<style>/* ehel-characterising - see add-characterising.py */
+  .twm { margin: 16px 0 0; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--line); }
+  .twm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); }
+  /* mirrors .say under its own class, so the Explain button never finds it -
+     it looks for the FIRST .say in the slide and would read this instead */
+  .twm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--cell); font-size: 20px; }
+  .twm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .twm-say button:active { transform: scale(0.94); }
+  .twm-ch { margin-top: 12px; }
+  .twm-sc { margin: 10px 0 0; }
+</style>
+<!-- ehel-explain-scripts: see add-explain-scripts.py -->

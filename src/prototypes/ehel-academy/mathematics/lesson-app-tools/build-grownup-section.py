@@ -212,7 +212,25 @@ def read_lesson(app, name, stage):
         say = re.search(r'data-say="(.*?)"', sec)
         steps.append((plain(h.group(1)) if h else "?", plain(say.group(1)) if say else "", i > ci))
     codes = sorted(set(re.findall(r"\b%s(?:Gg|Gp|Gt|Nc|Nf|Ni|Nm|Np|Sp|Ss)\.\d\d\b" % stage, s)))
+    # THE TWM INDEX, from the data-twm stamps add-characterising.py writes. Read
+    # from EVERY section, not from the step list above: "How do you know?" sits
+    # AFTER the check, which is the one position a step can take without moving
+    # an existing index, and a list built from the teaching steps alone would
+    # silently omit the one characteristic these builds had first.
+    #
+    # A build with no stamps gets an empty list and renders nothing, which is
+    # how this stays inert for the grades that have not had the pass yet.
+    twm = []
+    for sec in secs:
+        t = re.search(r'<section class="slide"[^>]*\sdata-twm="([^"]+)"', sec)
+        if not t:
+            continue
+        h = re.search(r"<h2[^>]*>(.*?)</h2>", sec, re.S)
+        k = re.search(r'<div class="slide-head"><span class="n">(\d+)</span>', sec)
+        twm.append((int(k.group(1)) if k else 999,
+                    plain(h.group(1)) if h else "?", t.group(1).split()))
     return {"steps": steps, "teaching": ci, "minutes": minutes(len(secs) - 1), "codes": codes,
+            "twm": sorted(twm),
             "kind": kind, "keys": keys, "need": need, "total": total}
 
 
@@ -228,6 +246,7 @@ def main():
         sys.exit("  REFUSED: %s already has a teachers-and-parents section from another builder\n"
                  "  (Grade 1's is ../grade-1-app/build-grownup-section.py) - run that one" % app.hub)
     blocks, changed, total = [], [], 0
+    seen_twm = set()
     for n, (unit, f, title) in enumerate(app.lessons, 1):
         l = read_lesson(app, f, stage)
         cfg = app.cfg["lessons"][n - 1]
@@ -270,17 +289,64 @@ def main():
                      'screen as the child gives it. %s</p>' % (l["total"], mark))
         home = ('\n      <h4>Try at home</h4>\n      <p class="gu-home">%s</p>' % esc(cfg["atHome"])) \
             if cfg.get("atHome") else ""
+        # WHAT TO HAVE TO HAND, from app.config.json :: lessons[].materials, and
+        # FIRST in the block because it is the only part of this page that has to
+        # be read BEFORE the lesson rather than after it. The same field the
+        # in-lesson note reads, so there is no second copy to keep true. A build
+        # whose config has no materials renders nothing here.
+        kit = ('\n      <h4>What to have to hand</h4>\n      <p class="gu-kit">%s</p>'
+               % esc(cfg["materials"])) if cfg.get("materials") else ""
+        # the Teacher's Guide keeps an index of which question exercises which
+        # TWM characteristic; this is the same thing at the finest grain these
+        # pages have, and it is DERIVED from the stamps rather than listed
+        twmli = "".join(
+            '\n        <li><b>%s</b> (%s) &middot; %s</li>'
+            % (esc(t), ("step %d" % k) if k < 999 else "after the check", esc(", ".join(cs)))
+            for k, t, cs in l["twm"])
+        twmh = ('\n      <h4>Thinking and Working Mathematically</h4>'
+                '\n      <ul>%s\n      </ul>' % twmli) if l["twm"] else ""
+        for _k, _t, cs in l["twm"]:
+            seen_twm.update(cs)
         blocks.append(
             '\n    <details class="gu">'
             '\n      <summary><b>Lesson %d: %s</b> <span class="gu-meta">%d steps &middot; about %d min '
-            '&middot; %d objectives &middot; %d check questions</span></summary>'
+            '&middot; %d objectives &middot; %d check questions</span></summary>%s'
             '\n      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage %s)</h4>'
             '\n      <ul>%s\n      </ul>'
             '\n      <h4>The steps</h4>'
-            '\n      <ul>%s\n      </ul>%s%s'
+            '\n      <ul>%s\n      </ul>%s%s%s'
             '\n    </details>'
-            % (n, esc(title), l["teaching"], l["minutes"], len(l["codes"]), l["total"], stage, obj, stp, check, home))
+            % (n, esc(title), l["teaching"], l["minutes"], len(l["codes"]), l["total"],
+               kit, stage, obj, stp, check, twmh, home))
 
+    # Cambridge names eight characteristics and flags them on individual
+    # questions. This sentence is ASSEMBLED from what the pages are stamped
+    # with, so it cannot claim one the build does not exercise, and it names the
+    # missing ones out loud rather than printing a count that reads like a
+    # score. A build with no stamps gets no sentence at all.
+    TWM8 = ("specialising generalising conjecturing convincing characterising "
+            "classifying critiquing improving").split()
+    unknown = sorted(seen_twm - set(TWM8))
+    if unknown:
+        sys.exit("  REFUSED: a step is stamped with something that is not one of "
+                 "Cambridge's eight: %s" % ", ".join(unknown))
+    have = [c for c in TWM8 if c in seen_twm]
+    miss = [c for c in TWM8 if c not in seen_twm]
+    twmnote = ""
+    if have:
+        twmnote = (
+            '\n    <p class="gu-twmnote"><b>Thinking and Working Mathematically.</b> '
+            'Cambridge names eight characteristics and flags them on individual questions. '
+            'These lessons exercise <b>%d of the 8</b> &mdash; %s &mdash; and each lesson below '
+            'lists which of its steps does which. %s</p>'
+            % (len(have), esc(", ".join(have)),
+               ("Not addressed: <b>%s</b>. Forming your own mathematical question is not "
+                "something a choice of three buttons can carry, so it is left to you and the "
+                "lesson you teach around this one." % esc(", ".join(miss))) if miss
+               else "All eight are addressed."))
+
+    want_extra = bool(seen_twm) or any(
+        l.get("materials") for l in app.cfg["lessons"])
     count = NUMBERS[len(app.lessons)] if len(app.lessons) < len(NUMBERS) else str(len(app.lessons))
     section = (
         START +
@@ -292,6 +358,7 @@ def main():
         'one stands on its own, so a child can start with any of them. The minutes are an estimate of '
         'about two and a half minutes a step, not yet timed against a real class, so treat them as a '
         'guide to the length of a sitting rather than a plan.</p>' % count
+        + twmnote
         + "".join(blocks) +
         '\n  </section>\n  ' + END)
     if START in hub:
@@ -321,12 +388,22 @@ def main():
     if CSS_START in hub:
         i = hub.index(CSS_START)
         j = hub.index(CSS_END, i) + len(CSS_END)
-        if hub[i:j] != CSS.strip():
-            hub = hub[:i] + CSS.strip() + hub[j:]
+        # The two rules for the materials block and the TWM note are added ONLY
+        # when the build actually uses them. Emitting them unconditionally
+        # rewrote the Grade 3 and Grade 4 hubs - which have neither feature -
+        # for eight lines of unused CSS, and those are live pages: a change
+        # with no effect still has to be reviewed and redeployed. Measured both
+        # ways before this was written.
+        css = CSS.strip()
+        if want_extra:
+            css = css.replace(CSS_END, EXTRA_CSS.strip() + "\n" + CSS_END)
+        if hub[i:j] != css:
+            hub = hub[:i] + css + hub[j:]
             changed.append("styles")
     else:
         i = hub.rindex("</style>")
-        hub = hub[:i] + CSS + hub[i:]
+        hub = hub[:i] + (CSS if not want_extra else
+                         CSS.replace(CSS_END, EXTRA_CSS.strip() + "\n" + CSS_END)) + hub[i:]
         changed.append("styles")
 
     print("\n  total: about %d minutes across %d lessons" % (total, len(app.lessons)))
@@ -341,6 +418,22 @@ def main():
         print("  dry run -- pass --write\n")
     return 0
 
+
+EXTRA_CSS = """/* what to have to hand: read BEFORE the lesson, so it is the one line in this
+   block that is set off rather than run on */
+/* --teal and --cell are Grade 1's hub palette and are NOT defined on these
+   hubs, so naming them bare made the whole shorthand invalid and the block
+   rendered with no border and no background at all - measured as
+   border-left-width: 0px in the browser, not read off the stylesheet. */
+details.gu .gu-kit { font-size: 15px; line-height: 1.5; margin: 0; padding: 10px 12px;
+  border-left: 3px solid var(--teal, #2BB3A6); background: var(--cell, var(--card));
+  border-radius: 0 8px 8px 0; }
+/* the TWM note sits above the lessons, so it is the section's own sentence
+   rather than a lesson's - quieter than the lede, set off from it by a rule */
+.grownup .gu-twmnote { font-size: 15px; line-height: 1.55; color: var(--muted);
+  margin: 0 0 16px; padding: 12px 0 0; border-top: 1px solid var(--line); max-width: 74ch; }
+.grownup .gu-twmnote b { color: var(--ink); }
+"""
 
 CSS_START = "/* ==== lesson-app-tools/build-grownup-section.py ==== */"
 CSS_END = "/* ==== end lesson-app-tools/build-grownup-section.py ==== */"

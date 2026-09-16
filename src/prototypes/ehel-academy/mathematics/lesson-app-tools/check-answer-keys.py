@@ -847,8 +847,26 @@ def money_answer(low, opts):
     # which side is worth more, each side written as a sum
     m = re.search(r"which is worth more:?\s*(.+?),?\s*\bor\b\s*(.+)", low)
     if m:
-        a = sum(int(x) for x in re.findall(r"(\d+)\s*sh", m.group(1))) or None
-        b = sum(int(x) for x in re.findall(r"(\d+)\s*sh", m.group(2))) or None
+        # HOW MANY OF THEM, not just what one is worth. Summing the bare `N sh`
+        # read "three 10 sh coins" as 10 and reported the correct key wrong -
+        # three tens is 30, which beats one 20. A count word (or numeral) in
+        # front multiplies the side, so read it; refuse the side if a count is
+        # there and cannot be read, rather than silently treating it as one.
+        def side(t):
+            total, seen = 0, False
+            for cnt, val in re.findall(r"(?:(\w+|\d+)\s+)?(\d+)\s*sh", t):
+                n = 1
+                if cnt:
+                    if re.fullmatch(r"\d+", cnt):
+                        n = int(cnt)
+                    elif cnt in _ONES:
+                        n = _ONES[cnt]
+                    elif cnt not in ("a", "an", "the", "of", "and", "is", "or"):
+                        return None            # a word we cannot count with
+                total += n * int(val)
+                seen = True
+            return total if seen else None
+        a, b = side(m.group(1)), side(m.group(2))
         if a and b and a != b:
             return pick(opts, float(max(a, b)), money)
     return None
@@ -2118,6 +2136,23 @@ def story_answer(low, t, opts):
     Stage 1 only, by construction: one step, both numbers whole, and a
     subtraction that would go below zero is refused rather than answered.
     """
+    # TWO-STEP PROBLEMS AND SCALED ONES ARE REFUSED, NOT ANSWERED. The docstring
+    # above says "Stage 1 only, by construction: one step" and nothing enforced
+    # it - so when Stage 2 introduced two-step problems (the Guide works one
+    # through on p109) this rule read the two numbers, applied one operation and
+    # reported the CORRECT keys as wrong: "half of 16, then 4 more" came back as
+    # 20 instead of 12, and "3 triangles and 2 squares, how many sides" as 5
+    # instead of 17. Both passed the account-for-every-number rule, because both
+    # numbers ARE used - just not by the operation the story asks for.
+    #
+    # A confident wrong verdict is worse here than no verdict: the next person
+    # reads "should: 20" and edits a correct key to match it.
+    if re.search(r"\bthen\b|\bafter that\b|\bhalf\b|\bquarter\b|\bthird\b|\bdouble[sd]?\b|\btwice\b", low):
+        return None
+    # the question counts one thing and asks about another (shapes -> sides)
+    if re.search(r"\b(?:sides?|corners?|faces?|edges?)\b", low) and \
+            re.search(r"\b(?:triangles?|squares?|rectangles?|shapes?|cubes?)\b", low):
+        return None
     have = nums(t)
     if len(have) != 2:
         return None

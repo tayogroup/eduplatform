@@ -525,10 +525,11 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
     <!-- 1 count sides and corners -->
-    <section class="slide" data-say="Every flat shape has sides and corners. Tap each side to count them, then tap each corner." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Flat shapes have straight sides, and corners where two sides meet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A triangle has 3 sides and 3 corners.</s><s>A square has 4 sides and 4 corners.</s><s>Tap each side as you count it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count each side only once.</s><s>Go round the shape in order so you do not miss one or count one twice.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a shape, tap every side, then tap every corner.</s></mstts:express-as>'>
+    <section class="slide" data-twm="characterising classifying" data-say="Every flat shape has sides and corners. Tap each side to count them, then tap each corner." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Flat shapes have straight sides, and corners where two sides meet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A triangle has 3 sides and 3 corners.</s><s>A square has 4 sides and 4 corners.</s><s>Tap each side as you count it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count each side only once.</s><s>Go round the shape in order so you do not miss one or count one twice.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a shape, tap every side, then tap every corner.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Sides and corners</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Tap each <b>side</b> to count it. Then tap each <b>corner</b>. Pick a shape to start.</span></div>
+      <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A tin, a box and a ball, paper to fold for the symmetry step, and scissors. Holding a solid shape and turning it is the one thing a picture of one cannot do.</p></details>
       <div class="stage">
         <div class="bigbtns" id="pick1"></div>
         <svg class="shapebox" id="shape1" viewBox="0 0 240 240" role="img" aria-label="A shape to count"></svg>
@@ -536,6 +537,8 @@
         <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="fb small-fb" id="note1"></p>
       </div>
+    
+      <div class="twm" id="twm1"><p class="twm-h">Why do they go together?</p><div class="twm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="twm-q"></span></div><div class="choices twm-ch"></div><p class="fb" role="status" aria-live="polite"></p><p class="score twm-sc"></p><div class="bigbtns"><button type="button" class="big small teal twm-next" hidden>Next question</button></div></div>
     </section>
 
     <!-- 2 name the shape -->
@@ -666,6 +669,36 @@
     </section>
 
     <!-- 12 check -->
+    <!-- 12  2Gg.01  Spot the mistake -->
+    <section class="slide" data-twm="critiquing improving" data-say="Read what each child says. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A shape is what it is, whatever way round you see it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ali says a triangle upside down is not a triangle.</s><s>Count the sides: still 3.</s><s>Turning a shape changes nothing about it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Shapes are nearly always drawn flat on one side.</s><s>So a turned one just looks unfamiliar.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one. Count the sides yourself.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">12</span><h2>Spot the mistake</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sm12say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
+      <div class="stage" id="sm12st"></div>
+      <div class="choices" id="sm12ch"></div>
+      <p class="fb" id="sm12fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="sm12nx" hidden>Next question</button></div>
+      <p class="score" id="sm12sc"></p>
+    </section>
+    <!-- 13  2Gg.01  Story problems -->
+    <section class="slide" data-say="Read the story. Work out the answer. Then tap it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A shape story describes a shape and asks you to name it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Kiki draws a shape with 4 straight sides, all equal.</s><s>Four equal sides is a square.</s><s>The story never says square, so the description names it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read every part of the description.</s><s>Four sides alone is not enough, as a rectangle has four.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first story. List what you are told.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sp13say">Read the story, work out the answer, then tap it.</span></div>
+      <div class="stage" id="sp13st"></div>
+      <div class="choices" id="sp13ch"></div>
+      <p class="fb" id="sp13fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="sp13nx" hidden>Next story</button></div>
+      <p class="score" id="sp13sc"></p>
+    </section>
+    <!-- 14  2Gg.01  Will it always work? -->
+    <section class="slide" data-twm="specialising generalising" data-say="Somebody has an idea. Test it on each example, then say whether it always works." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some things are true of every flat shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ali says a shape has as many corners as sides.</s><s>A triangle has 3 sides and 3 corners.</s><s>A square has 4 and 4, and a six sided shape has 6.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Every side has to end somewhere.</s><s>Where two sides meet is a corner.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Test the idea on each example, then decide.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">14</span><h2>Will it always work?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="at14say">Test the idea on each example. Then say whether it always works.</span></div>
+      <div class="stage" id="at14st"></div>
+      <div class="choices" id="at14ch"></div>
+      <p class="fb" id="at14fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="at14nx" hidden>Next test</button></div>
+      <p class="score" id="at14sc"></p>
+    </section>
     <section class="slide" data-say="Time to show what you know. Tap the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the check for shapes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You will count sides and corners, name shapes, and find lines of symmetry and turns.</s><s>Get most of them right to finish the lesson, and the screen tells you how many you need.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you do not get enough, that is fine.</s><s>Press Try again and the questions come round again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>When a shape is on the screen, count its sides before you answer.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
@@ -679,7 +712,7 @@
 
     <!-- 13 stickers -->
     <!-- how do you know -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+    <section class="slide" data-twm="convincing" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
       <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
       <div class="stage">
@@ -690,12 +723,13 @@
       </div>
     </section>
 
-    <section class="slide" data-say="Look at all the stickers you earned!" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf, with a sticker for every step you finished.</s></prosody></mstts:express-as>'>
+    <section class="slide" data-say="Look at all the stickers you earned. Then tell me which parts you can do." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf, with a sticker for every step you finished.</s></prosody></mstts:express-as>'>
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb12" role="status" aria-live="polite"></p>
+        <div class="sc-wrap" id="selfcheck"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1632,6 +1666,375 @@
       fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
     });
   })();
+
+  /* ---- ehel-spiral: the warm-up's second question, drawn from lessons already
+     FINISHED - see add-spiral-warmup.py. Cambridge's volume comes from the
+     spiral, and nothing here re-asked an earlier lesson. Like the warm-up above
+     it: not a step, no sticker, no dot, no score. */
+  const SPIRAL = [
+    { from: "l01", q: "Which is more: 47 or 74?", opts: [74, 47, 44], a: 74, why: "74 has 7 tens and 47 has only 4, so 74 is more. Compare the tens first." },
+    { from: "l01", q: "Round 62 to the nearest 10.", opts: [60, 70, 62], a: 60, why: "62 is 2 away from 60 and 8 away from 70, so it rounds to 60." },
+    { from: "l01", q: "4 rows of 5 counters is how many altogether?", opts: [20, 9, 45], a: 20, why: "An array of 4 rows of 5 counts in fives: 5, 10, 15, 20." },
+    { from: "l02", q: "What is 25 sh and 25 sh altogether?", opts: [50, 40, 55], a: 50, why: "The tens make 40 and the ones make 10, so it is 50 sh." },
+    { from: "l02", q: "A pen costs 20 sh. You pay with 50 sh. What is the change?", opts: [30, 70, 20], a: 30, why: "Count on from 20 to 50: that is 30 sh change." },
+    { from: "l02", q: "Which is worth more: three 10 sh coins, or one 20 sh coin?", opts: ["three 10 sh coins", "one 20 sh coin", "they are the same"], a: "three 10 sh coins", why: "Three 10 sh coins make 30 sh, and 30 is more than 20." },
+    { from: "l03", q: "What is half of 20?", opts: [10, 5, 40], a: 10, why: "20 shared into two equal groups is 10 and 10." },
+    { from: "l03", q: "Which is bigger: one half or one quarter?", opts: ["one half", "one quarter", "they are the same"], a: "one half", why: "Cut the same thing into 2 instead of 4 and each piece is bigger." },
+    { from: "l03", q: "How many quarters make one whole?", opts: [4, 2, 8], a: 4, why: "Four equal parts fit back together into the whole." },
+    { from: "l04", q: "Count on in fives: 15, 20, 25. What comes next?", opts: [30, 26, 35], a: 30, why: "Every jump is 5, so 25 and 5 more is 30." },
+    { from: "l04", q: "Count back in tens from 60. What comes next?", opts: [50, 59, 70], a: 50, why: "Counting back in tens takes away a whole ten: 60, 50, 40." },
+    { from: "l04", q: "In 2, 4, 6, 8 how big is each jump?", opts: [2, 1, 4], a: 2, why: "Take each number from the next: every jump is 2." },
+    { from: "l05", q: "How many corners has a rectangle?", opts: [4, 3, 6], a: 4, why: "A rectangle has 4 straight sides and 4 corners." },
+    { from: "l05", q: "Which solid shape has no flat faces at all?", opts: ["a sphere", "a cube", "a cylinder"], a: "a sphere", why: "A sphere is curved all over. A cube has 6 flat faces and a cylinder has 2." },
+    { from: "l05", q: "A shape folds so both halves match exactly. What is that fold called?", opts: ["a line of symmetry", "a corner", "a curved side"], a: "a line of symmetry", why: "A line of symmetry splits a shape into two halves that land on top of each other." },
+    { from: "l06", q: "How many quarter turns make a whole turn?", opts: [4, 2, 3], a: 4, why: "Four quarter turns take you all the way round to where you started." },
+    { from: "l06", q: "You face the door and make a half turn. What do you face?", opts: ["the way you came", "the door still", "the floor"], a: "the way you came", why: "A half turn is two quarter turns, and it faces you back the way you came." },
+    { from: "l06", q: "In a mirror, which way does the picture face?", opts: ["the other way", "the same way", "upside down"], a: "the other way", why: "A mirror turns a picture over, so it faces the other way." },
+    { from: "l07", q: "How many centimetres make 1 metre?", opts: [100, 10, 60], a: 100, why: "It takes 100 centimetres to make 1 metre." },
+    { from: "l07", q: "Which unit tells you how heavy something is?", opts: ["grams", "centimetres", "litres"], a: "grams", why: "Grams and kilograms measure mass. Centimetres measure length and litres measure capacity." },
+    { from: "l07", q: "A jug's water is halfway between the 20 and the 30 marks. What does it read?", opts: [25, 20, 30], a: 25, why: "Halfway from 20 to 30 is 25. Look at the small marks between the numbers." },
+    { from: "l08", q: "How many minutes are there in one hour?", opts: [60, 100, 30], a: 60, why: "An hour is 60 minutes, whatever time of day it is." },
+    { from: "l08", q: "The long hand points at the 9. Is it quarter past or quarter to?", opts: ["quarter to", "quarter past", "half past"], a: "quarter to", why: "Quarter past is at the 3 and quarter to is at the 9, three quarters of the way round." },
+    { from: "l08", q: "Moving from one number to the next on a clock is how many minutes?", opts: [5, 1, 10], a: 5, why: "Count round the clock face in fives: 5, 10, 15." },
+    { from: "l09", q: "In a tally chart, how many is one gate?", opts: [5, 4, 10], a: 5, why: "Four lines and a fifth across them make a gate of five." },
+    { from: "l09", q: "On a block graph where one block is one child, what does the tallest bar mean?", opts: ["the most children chose it", "the fewest chose it", "it was drawn first"], a: "the most children chose it", why: "Each block stands for one child, so the tallest stack is the most children." },
+    { from: "l09", q: "A coin has landed on heads three times. What happens next?", opts: ["heads and tails are still equally likely", "tails is certain", "heads is certain"], a: "heads and tails are still equally likely", why: "The coin does not remember. Every toss is exactly like the first one." }
+  ];
+  const SPIRAL_TITLES = { l01: "Tens and Ones", l02: "Coins and Change", l03: "Fair Shares", l04: "Patterns That Grow", l05: "Sides and Corners", l06: "Which Way From Here", l07: "How Much, How Long", l08: "Half Past, Quarter To", l09: "Count It, Chart It" };
+  /* Called from the page's hydrate block with the whole course record. Until it
+     answers there is no spiral question, which is also what a child on their
+     first lesson correctly sees. */
+  window.__ehelSpiral = function (units, here) {
+    const w = document.getElementById("ehWarm");
+    if (!w || w.querySelector(".eh-spiral")) return;          /* once only */
+    const pool = SPIRAL.filter(function (it) {
+      const u = units && units[it.from];
+      return it.from !== here && u && u.completed === true;
+    });
+    if (!pool.length) return;
+    const it = pool[Math.floor(Math.random() * pool.length)];
+    const box = document.createElement("div");
+    box.className = "eh-spiral";
+    box.innerHTML = '<p class="eh-warm-h">And one from before</p>'
+      + '<div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button>'
+      + '<span class="eh-spiral-q"></span></div>'
+      + '<div class="choices eh-spiral-ch"></div>'
+      + '<p class="fb" role="status" aria-live="polite"></p>';
+    box.querySelector(".eh-spiral-q").textContent = it.q;
+    /* bound here, not by the page-wide .speak wiring, which ran at load */
+    box.querySelector(".speak").addEventListener("click", function () { say(it.q); });
+    const ch = box.querySelector(".eh-spiral-ch"), fb = box.querySelector(".fb");
+    ch.innerHTML = shuffle(it.opts.slice()).map(function (o) {
+      return '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>";
+    }).join("");
+    ch.addEventListener("click", function (e) {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(it.a);
+      ch.querySelectorAll(".choice").forEach(function (c) {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(it.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + it.why
+        + " That was in " + SPIRAL_TITLES[it.from] + ".";
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+    w.appendChild(box);
+  };
+  /* ==== ehel-differentiation: the tiered runner - see add-differentiation.py ====
+     The story step, with Ready to Go's Support and Extension. A wrong answer
+     puts an easier one next, with the apparatus named; finishing with at most
+     one slip offers an opening question AFTER the step is done, because
+     Cambridge's extensions all read "once they have completed...". Neither tier
+     scores and finish() fires at the end of the core bank exactly as
+     secondStep() does, so progress, the sticker and the gate are untouched.
+
+     Separate from secondStep() on purpose: that one drives the other added
+     steps, and none of them should carry the risk of this change. */
+  function tieredStep(o) {
+    const el = o.el, core = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const sup = (o.support || []).slice(), ext = (o.extension || []).slice();
+    let i = 0, right = 0, lock = true, mode = "core", queued = null, extDone = 0;
+    function current() { return mode === "core" ? core[i] : queued; }
+    function label() {
+      if (mode === "support") return "An easier one";
+      if (mode === "extension") return "A harder one - " + (extDone + 1) + " of " + ext.length;
+      return (o.label || "Question") + " " + (i + 1) + " of " + core.length;
+    }
+    function draw() {
+      const it = current();
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = label();
+      el.score.className = "score" + (mode === "core" ? "" : " tier-" + mode);
+      el.stage.innerHTML = it.pic || "";
+      el.ch.innerHTML = shuffle(it.opts.slice()).map((c) => '<button type="button" class="choice'
+        + (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">'
+        + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    function endCore() {
+      el.score.className = "score";
+      el.score.textContent = "You got " + right + " of " + core.length + ". " + o.done;
+      finish(o.finish);
+      if (ext.length && right >= core.length - 1) {
+        el.next.textContent = "Try a harder one";
+        el.next.hidden = false;
+      }
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = current(), ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      if (mode === "core" && ok) right++;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      say(msg);
+      if (mode === "extension") {
+        extDone++;
+        if (extDone < ext.length) { el.next.textContent = "Next challenge"; el.next.hidden = false; }
+        else el.score.textContent = "That is the last challenge. Well done.";
+        return;
+      }
+      if (mode === "support") {
+        mode = "core";
+        if (i < core.length) { el.next.textContent = o.nextLabel || "Next story"; el.next.hidden = false; }
+        else endCore();
+        return;
+      }
+      i++;
+      if (!ok && sup.length) {
+        queued = sup.shift(); mode = "support";
+        el.next.textContent = "Try an easier one";
+        el.next.hidden = false;
+        return;
+      }
+      if (i < core.length) { el.next.textContent = o.nextLabel || "Next story"; el.next.hidden = false; }
+      else endCore();
+    });
+    el.next.addEventListener("click", () => {
+      if (mode === "extension" || (el.next.textContent === "Try a harder one" && ext.length)) {
+        if (mode !== "extension") { mode = "extension"; extDone = 0; }
+        queued = ext[extDone];
+        draw();
+        return;
+      }
+      if (mode === "support") { draw(); return; }
+      if (i < core.length) draw();
+    });
+    draw();
+  }
+  /* ==== ehel-item-runner: one question after another - see add-spot-the-mistake.py ====
+     This build had no generic item runner: a warm-up, its own hand-written
+     steps, a gated check and How do you know?, and nothing that drives a BANK.
+     Written once here, in the shape Grade 1's secondStep() has, so the tools
+     that follow - story problems, Support and Extension, Will it always work? -
+     can use it unchanged. The child moves on with a button rather than a timer,
+     because say() stops whatever is playing and a timer would cut the
+     explanation off, and every one of these explains its answer. */
+  function secondStep(o) {
+    const el = o.el, items = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    let i = 0, right = 0, lock = true;
+    function draw() {
+      const it = items[i];
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.stage.innerHTML = it.pic || "";
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      el.ch.innerHTML = shuffle(it.opts.slice()).map((c) => '<button type="button" class="choice'
+        + (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">'
+        + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = items[i], ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (ok) right++; else b.classList.add("wrong");
+      const last = i === items.length - 1;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb" + (ok ? " good" : ""); el.fb.textContent = msg; say(msg);
+      if (last) { finish(o.finish, o.done); } else { el.next.hidden = false; }
+      i += 1;
+    });
+    el.next.addEventListener("click", () => { if (i < items.length) draw(); });
+    draw();
+  }
+  /* ehel-spot-the-mistake: the claim being judged, in the mouth of the child who made it */
+  const smSays = (who, what) => '<div class="sm-bubble"><p class="sm-what">' + what +
+    '</p><p class="sm-who">' + who + '</p></div>';
+  /* ---- 12: spot the mistake - critiquing and improving, from the Cambridge Stage 2 books ---- */
+  secondStep({
+    el: { say: $("sm12say"), stage: $("sm12st"), ch: $("sm12ch"), fb: $("sm12fb"), score: $("sm12sc"), next: $("sm12nx") },
+    label: "Mistake",
+    items: [
+      { ask: "Kiki points at a long thin rectangle and calls it a square. What went wrong?",
+        pic: smSays("Kiki", "Any shape with four sides is a square."),
+        opts: [{ t: "A square needs all four sides equal", ok: true }, { t: "Four sides always means a square", ok: false }, { t: "A rectangle has five sides", ok: false }],
+        why: "A square and a rectangle both have 4 sides and 4 corners. Only a square has all four sides the same." },
+      { ask: "Ali says a triangle pointing downwards is not a triangle. What went wrong?",
+        pic: smSays("Ali", "This triangle is not a triangle because it is upside down."),
+        opts: [{ t: "Turning a shape does not change it", ok: true }, { t: "Triangles must point up", ok: false }, { t: "It has four sides now", ok: false }],
+        why: "It still has 3 straight sides and 3 corners, whichever way round it sits." },
+      { ask: "Amina counts the faces of a cube and says 4. What went wrong?",
+        pic: smSays("Amina", "A cube has 4 faces."),
+        opts: [{ t: "She forgot the top and the bottom", ok: true }, { t: "A cube has 8 faces", ok: false }, { t: "A cube really has 4 faces", ok: false }],
+        why: "A cube has 6 flat faces: four around the sides, one on top and one underneath." },
+      { ask: "Hodan folds a shape so one half hangs over the edge of the other. What went wrong?",
+        pic: smSays("Hodan", "This shape folds in half here, so the fold is a line of symmetry."),
+        opts: [{ t: "The two halves must match exactly", ok: true }, { t: "Any fold is a line of symmetry", ok: false }, { t: "She should fold it twice", ok: false }],
+        why: "A line of symmetry only works if the two halves land exactly on top of each other." },
+      { ask: "Musa faces the door, turns all the way round once, and says he now faces the window. What went wrong?",
+        pic: smSays("Musa", "A whole turn brings me to face the other way."),
+        opts: [{ t: "A whole turn brings him back to the door", ok: true }, { t: "A whole turn is a half turn", ok: false }, { t: "He is right", ok: false }],
+        why: "A whole turn goes all the way round and finishes where it started. A HALF turn faces you the other way." },
+      { ask: "Kiki says a square looks the same after a quarter turn. Is she right?",
+        pic: smSays("Kiki", "A square still looks the same after a quarter turn."),
+        opts: [{ t: "Yes, she is right", ok: true }, { t: "No, it becomes a diamond", ok: false }, { t: "No, it becomes a rectangle", ok: false }],
+        why: "A square has four equal sides and four square corners, so a quarter turn leaves it looking the same." },
+    ],
+    finish: 11,
+    done: "You can find the mistake and say what went wrong.",
+  });
+  /* ---- 13: story problems - ehel-story-problems, the measured Stage 2 shape.
+     See add-story-problems.py. ---- */
+  tieredStep({
+    el: { say: $("sp13say"), stage: $("sp13st"), ch: $("sp13ch"), fb: $("sp13fb"), score: $("sp13sc"), next: $("sp13nx") },
+    label: "Story",
+    items: [
+      { ask: "Kiki draws a shape with 4 straight sides that are all the same length. What shape has Kiki drawn?", pic: "",
+        opts: [{ t: "a square", ok: true }, { t: "a rectangle", ok: false }, { t: "a triangle", ok: false }],
+        why: "Four straight sides all the same length, with square corners, makes a square." },
+      { ask: "Musa has a solid shape with 6 faces, and every face is a square. What is the shape?", pic: "",
+        opts: [{ t: "a cube", ok: true }, { t: "a cylinder", ok: false }, { t: "a cone", ok: false }],
+        why: "Six flat faces that are all squares make a cube." },
+      { ask: "Amina folds a square in half so the two halves match exactly. What has Amina found?", pic: "",
+        opts: [{ t: "a line of symmetry", ok: true }, { t: "a corner", ok: false }, { t: "a curved side", ok: false }],
+        why: "A fold where both halves land exactly on top of each other is a line of symmetry." },
+      { ask: "Hodan has 3 triangles and 2 squares. How many straight sides do all her shapes have altogether?", pic: "",
+        opts: [{ t: "17", ok: true }, { t: "5", ok: false }, { t: "12", ok: false }],
+        why: "Two steps. Three triangles have 3, 6, 9 sides. Two squares have 8 sides. 9 and 8 make 17." },
+      { ask: "Ali turns a rectangle a quarter turn. How many sides does the rectangle have now?", pic: "",
+        opts: [{ t: "4", ok: true }, { t: "2", ok: false }, { t: "8", ok: false }],
+        why: "Turning a shape moves it round but does not change it. A rectangle always has 4 sides." },
+      { ask: "A tin of milk sits on the table. Which solid shape is the tin like?", pic: "",
+        opts: [{ t: "a cylinder", ok: true }, { t: "a cube", ok: false }, { t: "a sphere", ok: false }],
+        why: "A tin has two flat circle faces and one curved surface, so it is a cylinder." },
+    ],
+    support: [
+      { ask: "How many straight sides has a triangle?", pic: "",
+        opts: [{ t: "3", ok: true }, { t: "4", ok: false }, { t: "1", ok: false }],
+        why: "Hold the actual shape and run a finger along each side, counting as you go." },
+      { ask: "How many corners has a square?", pic: "",
+        opts: [{ t: "4", ok: true }, { t: "3", ok: false }, { t: "6", ok: false }],
+        why: "Put a counter on each corner of a paper square, then count the counters." },
+      { ask: "Which shape is round with no corners at all?", pic: "",
+        opts: [{ t: "a circle", ok: true }, { t: "a square", ok: false }, { t: "a triangle", ok: false }],
+        why: "Feel round the edge of each shape. Only the circle has no corner to stop your finger." },
+    ],
+    extension: [
+      { ask: "Using 4 straight sides, how many different shapes can you make that are NOT squares?", pic: "",
+        opts: [{ t: "many, as long as the sides differ", ok: true }, { t: "only one", ok: false }, { t: "none", ok: false }],
+        why: "Rectangles, diamonds and long thin shapes all have 4 sides. Only equal sides make a square." },
+      { ask: "Is it possible for a shape to have 3 sides and 4 corners?", pic: "",
+        opts: [{ t: "no, sides and corners match", ok: true }, { t: "yes, if it is bent", ok: false }, { t: "yes, if it is big", ok: false }],
+        why: "Every corner is where two sides meet, so a closed shape has as many corners as sides." },
+    ],
+    finish: 12,
+    done: "You can read a story and work out the maths in it.",
+  });
+  /* ehel-always-true: the claim under test, kept on screen while it is tested */
+  const atClaim = (who, idea) => '<div class="at-claim"><p class="at-k">The idea we are testing</p>' +
+    '<p class="at-i">' + idea + '</p><p class="at-w">' + who + '</p></div>';
+  /* ---- 14: will it always work? - ehel-always-true, specialising then generalising.
+     See add-always-true.py. ---- */
+  secondStep({
+    el: { say: $("at14say"), stage: $("at14st"), ch: $("at14ch"), fb: $("at14fb"), score: $("at14sc"), next: $("at14nx") },
+    label: "Test",
+    items: [
+      { ask: "Ali counts a triangle: 3 sides. How many corners?",
+        pic: atClaim("Ali", "A shape always has the same number of corners as sides."),
+        opts: [{ t: "3 corners", ok: true }, { t: "4 corners", ok: false }],
+        why: "Each corner is where two sides meet, so a triangle has 3 of each. Holds so far." },
+      { ask: "He counts a rectangle: 4 sides. How many corners?",
+        pic: atClaim("Ali", "A shape always has the same number of corners as sides."),
+        opts: [{ t: "4 corners", ok: true }, { t: "3 corners", ok: false }],
+        why: "A rectangle has 4 sides and 4 corners. The idea has held twice now." },
+      { ask: "So does Ali's idea always work?",
+        pic: atClaim("Ali", "A shape always has the same number of corners as sides."),
+        opts: [{ t: "Yes, it always works", ok: true }, { t: "It works sometimes", ok: false }, { t: "It never works", ok: false }],
+        why: "Every side ends at a corner and every corner joins two sides, so the counts always match." },
+      { ask: "Kiki compares a small triangle and a big square. Has the square more sides?",
+        pic: atClaim("Kiki", "A shape with more sides is always bigger."),
+        opts: [{ t: "Yes, 4 beats 3", ok: true }, { t: "No, fewer", ok: false }],
+        why: "The square has 4 sides and the triangle has 3. Her idea has worked once." },
+      { ask: "Now she compares a huge triangle and a tiny shape with 5 sides. Is the 5-sided shape bigger?",
+        pic: atClaim("Kiki", "A shape with more sides is always bigger."),
+        opts: [{ t: "No, the huge triangle is bigger", ok: true }, { t: "Yes, more sides means bigger", ok: false }],
+        why: "A tiny shape can have many sides. Size and number of sides are different things." },
+      { ask: "So does Kiki's idea always work?",
+        pic: atClaim("Kiki", "A shape with more sides is always bigger."),
+        opts: [{ t: "No, it does not always work", ok: true }, { t: "Yes, it always works", ok: false }, { t: "It never works", ok: false }],
+        why: "How many sides a shape has says nothing about how much room it takes up." },
+    ],
+    finish: 13,
+    done: "You can test an idea and say whether it always works.",
+  });
+  /* ---- ehel-characterising: characterising, then classifying - see add-characterising.py.
+     The sorting above is already judged and already called finish(). This is the
+     question a teacher asks AFTER the sorting is right: say what the rule was.
+     It adds no step and it does not score. */
+  const TWM1 = [
+    { q: "A triangle, a square and a rectangle. What is the same about all of them?", opts: ["every side is straight", "every side is curved", "they all have 3 sides"], a: "every side is straight", why: "You can run a finger along any side without it bending." },
+    { q: "Which shape belongs with them?", opts: ["a shape with 5 straight sides", "a circle", "a ball"], a: "a shape with 5 straight sides", why: "Its sides are straight too, so it goes in the same group." },
+    { q: "Which one does NOT belong with a triangle, a square and a rectangle?", opts: ["a circle", "a shape with 6 straight sides", "a shape with 4 straight sides"], a: "a circle", why: "A circle is one curved line all the way round. It has no straight sides at all." }
+  ];
+  (function () {
+    const w = document.getElementById("twm1"); if (!w) return;
+    const ch = w.querySelector(".twm-ch"), fb = w.querySelector(".fb"),
+          sc = w.querySelector(".twm-sc"), nx = w.querySelector(".twm-next");
+    let k = 0;
+    function paint() {
+      const t = TWM1[k];
+      w.querySelector(".twm-q").textContent = t.q;
+      ch.innerHTML = shuffle(t.opts.slice()).map((o) =>
+        '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+      fb.className = "fb"; fb.textContent = "";
+      sc.textContent = "Question " + (k + 1) + " of " + TWM1.length;
+      nx.hidden = true;
+    }
+    ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const t = TWM1[k], ok = String(b.dataset.v) === String(t.a);
+      ch.querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(t.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const last = k === TWM1.length - 1;
+      const msg = (ok ? cheer() + " " : "Good try. ") + t.why
+        + (last ? " That is what the rule was all along." : "");
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+      nx.hidden = last;
+    });
+    nx.addEventListener("click", () => { k += 1; paint(); });
+    paint();
+  })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
@@ -2106,7 +2509,7 @@
   let c11 = 0, right11 = 0, lock11 = false;
   function round11() {
     lock11 = false; $("fb11").textContent = ""; $("fb11").className = "fb";
-    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right11 >= Math.ceil(CHECK.length * 0.75)) { finish(11, "You got " + right11 + " out of " + CHECK.length + "."); return; }
+    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right11 >= Math.ceil(CHECK.length * 0.75)) { finish(14, "You got " + right11 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb11"), $("ch11"), right11, CHECK.length, function () { c11 = 0; right11 = 0; round11(); }); return; }
     const q = CHECK[c11]; $("score11").textContent = "Question " + (c11 + 1) + " of " + CHECK.length; $("q11").textContent = q.q; $("say11").textContent = q.q;
     $("ch11").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -2120,6 +2523,56 @@
     c11++; later(round11, 2800);
   });
   round11();
+
+  /* ==== ehel-self-check - see grade-1-app/add-self-check.py ====
+     The Workbook closes every Stage 1 unit with this: a three-way scale and a
+     list of "I can..." statements the child marks themselves. It sits on the
+     sticker shelf rather than in a step of its own, so no progress position
+     moves. Nothing here is scored, stored anywhere but this browser, or sent
+     to the school - it is the child's own claim, and the only thing it does
+     with the answer is offer the step that teaches it. */
+  const SELFCHECK = [
+    { say: "I can count the sides and corners of a 2D shape.", step: 0, title: "Sides and corners" },
+    { say: "I can name 2D shapes and say what is the same about them.", step: 1, title: "Name the shape" },
+    { say: "I can draw a line of symmetry on a 2D shape.", step: 4, title: "Does it fold in half?" },
+    { say: "I can name solid shapes and describe their faces.", step: 5, title: "Solid shapes" },
+    { say: "I can describe a turn as a quarter, a half or a whole turn.", step: 7, title: "Turning" },
+    { say: "I can find shapes like these in real things around me.", step: 9, title: "Shapes in real things" }
+  ];
+  const SC_KEY = "ehel-selfcheck-sides-and-corners-v1";
+  function scLoad() {
+    try { return JSON.parse(localStorage.getItem(SC_KEY) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function scSave(m) {
+    try { localStorage.setItem(SC_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function scPaint() {
+    const host = $("selfcheck"); if (!host) return;
+    const marks = scLoad();
+    host.innerHTML = '<p class="sc-head">Self-check</p><p class="sc-sub">See how much you know</p>' +
+      SELFCHECK.map((it, i) => {
+        const got = marks[i];
+        const opts = [["yes", "I can do this"], ["trying", "I can do this, but need to keep trying"], ["notyet", "I cannot do this yet"]].map((o) =>
+          '<button type="button" data-i="' + i + '" data-v="' + o[0] + '" aria-pressed="' +
+          (got === o[0] ? "true" : "false") + '">' + o[1] + "</button>").join("");
+        const back = (got && got !== "yes")
+          ? '<p class="sc-back"><button type="button" class="sc-go" data-step="' + it.step +
+            '">Go back to step ' + (it.step + 1) + ": " + it.title + "</button></p>"
+          : "";
+        return '<div class="sc-item"><p class="sc-say">' + it.say +
+          '</p><div class="sc-opts">' + opts + "</div>" + back + "</div>";
+      }).join("");
+  }
+  $("selfcheck").addEventListener("click", (e) => {
+    const go = e.target.closest(".sc-go");
+    if (go) { show(Number(go.dataset.step), true); return; }
+    const b = e.target.closest("button[data-v]"); if (!b) return;
+    const marks = scLoad();
+    marks[Number(b.dataset.i)] = b.dataset.v;
+    scSave(marks);
+    scPaint();
+  });
+  scPaint();
 
   /* ---- 15: stickers ---- */
   const STICKERS = [["📐", "Sides and corners"], ["🔷", "Naming shapes"], ["❓", "Shape riddles"], ["🦋", "Make it match"], ["✂️", "Lines of symmetry"], ["📦", "Solid shapes"], ["📍", "Where is it?"], ["🔄", "Turning"], ["⭕", "The middle of a circle"], ["🚪", "Shapes in real things"], ["🌀", "Spinning right round"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
@@ -2816,6 +3269,10 @@
     try {
       const doc = await ws.hydrate();
       const u = doc && doc.units && doc.units[UNIT];
+      /* ehel-spiral: the whole record, not this unit - a child at the top of
+         lesson 3 with lessons 1 and 2 behind them has no `u` yet. */
+      try { if (window.__ehelSpiral) window.__ehelSpiral(doc && doc.units, UNIT); }
+      catch (_) { /* never break the lesson */ }
       if (!u) return;
       const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
       for (const i of doneIdx) doneIds.add(sectionId(i));
@@ -2929,3 +3386,83 @@
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
 </style>
+
+<style>/* ehel-spot-the-mistake - see add-spot-the-mistake.py */
+  .sm-bubble { max-width: min(92%, 460px); margin: 0 auto; background: var(--cell);
+    border: 3px solid var(--gold, #E8B44A); border-radius: 18px; padding: 14px 18px 10px; }
+  .sm-what { margin: 0; font-size: 21px; line-height: 1.45; color: var(--ink); }
+  .sm-who { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 16px; color: var(--muted); text-align: right; }
+  .choice.ss-w { font-size: 18px; }
+</style>
+
+<style>/* ehel-differentiation - see add-differentiation.py */
+  .score.tier-support { color: var(--teal, #2BB3A6); font-weight: 800; }
+  .score.tier-extension { color: var(--gold, #E8B44A); font-weight: 800; }
+</style>
+
+<style>/* ehel-always-true - see add-always-true.py */
+  .at-claim { max-width: min(92%, 470px); margin: 0 auto; background: var(--card);
+    border: 3px solid var(--gold, #E8B44A); border-radius: 18px; padding: 13px 18px 10px; }
+  .at-k { margin: 0 0 4px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .at-i { margin: 0; font-size: 20px; line-height: 1.45; color: var(--ink); font-weight: 700; }
+  .at-w { margin: 6px 0 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 16px; color: var(--muted); text-align: right; }
+</style>
+
+<style>/* ehel-self-check - see add-self-check.py */
+  .sc-wrap { margin: 22px auto 0; max-width: 620px; text-align: left; }
+  .sc-head { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 22px; color: var(--ink);
+    margin: 0 0 2px; }
+  .sc-sub { margin: 0 0 14px; font-size: 17px; color: var(--muted); }
+  .sc-item { border-top: 2px solid var(--line); padding: 12px 0 10px; }
+  .sc-say { margin: 0 0 8px; font-size: 19px; line-height: 1.35; color: var(--ink); }
+  .sc-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sc-opts button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 9px 14px; min-height: 44px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--card); color: var(--ink); cursor: pointer; }
+  .sc-opts button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #06231F; }
+  .sc-back { margin: 9px 0 0; }
+  .sc-back button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
+    padding: 8px 14px; min-height: 44px; border-radius: 12px; border: 2px dashed var(--accent);
+    background: transparent; color: var(--ink); cursor: pointer; }
+</style>
+
+<style>/* ehel-materials-note - see add-materials-note.py */
+  .kit { margin: 10px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-spiral - see add-spiral-warmup.py */
+  .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
+  .eh-spiral .eh-spiral-ch { margin-top: 12px; }
+</style>
+
+<style>/* ehel-characterising - see add-characterising.py */
+  .twm { margin: 16px 0 0; padding: 14px 16px 16px; border-radius: 18px;
+    border: 2px dashed var(--line); }
+  .twm-h { margin: 0 0 10px; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); }
+  /* mirrors .say under its own class, so the Explain button never finds it -
+     it looks for the FIRST .say in the slide and would read this instead */
+  .twm-say { display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-radius: 16px; background: var(--cell); font-size: 20px; }
+  .twm-say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+    border: 0; background: var(--teal, #2BB3A6); color: #06231F; font-size: 24px;
+    display: grid; place-items: center; cursor: pointer; }
+  .twm-say button:active { transform: scale(0.94); }
+  .twm-ch { margin-top: 12px; }
+  .twm-sc { margin: 10px 0 0; }
+</style>
+<!-- ehel-explain-scripts: see add-explain-scripts.py -->

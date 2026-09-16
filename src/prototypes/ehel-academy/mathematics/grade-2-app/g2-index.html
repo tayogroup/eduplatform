@@ -202,6 +202,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
   details.gu > summary { list-style: none; }
   details.gu[open] > summary::marker { content: ""; }
 }
+/* what to have to hand: read BEFORE the lesson, so it is the one line in this
+   block that is set off rather than run on */
+/* --teal and --cell are Grade 1's hub palette and are NOT defined on these
+   hubs, so naming them bare made the whole shorthand invalid and the block
+   rendered with no border and no background at all - measured as
+   border-left-width: 0px in the browser, not read off the stylesheet. */
+details.gu .gu-kit { font-size: 15px; line-height: 1.5; margin: 0; padding: 10px 12px;
+  border-left: 3px solid var(--teal, #2BB3A6); background: var(--cell, var(--card));
+  border-radius: 0 8px 8px 0; }
+/* the TWM note sits above the lessons, so it is the section's own sentence
+   rather than a lesson's - quieter than the lede, set off from it by a rule */
+.grownup .gu-twmnote { font-size: 15px; line-height: 1.55; color: var(--muted);
+  margin: 0 0 16px; padding: 12px 0 0; border-top: 1px solid var(--line); max-width: 74ch; }
+.grownup .gu-twmnote b { color: var(--ink); }
 /* ==== end lesson-app-tools/build-grownup-section.py ==== */
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -270,7 +284,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
   <header>
     <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
     <h1>Grade 2 <em>Mathematics</em></h1>
-    <p class="lede">Nine lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind. About 260 minutes in all.</p>
+    <p class="lede">Nine lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind. About 330 minutes in all.</p>
   </header>
 
   <div class="grid" id="lessons" role="main">
@@ -285,7 +299,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Number</span>
       <h2>Tens and Ones</h2>
       <p class="covers">Every number to 100 and what its digits mean. See a small amount at a glance and estimate a big one, read numbers as words, compare and order them, say which place in a line, round to the nearest ten, then add, take away, share and make rows.</p>
-      <span class="foot"><span class="steps">15 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">18 steps &middot; about 50 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-number" href="coins-and-change.html?from=g2">
@@ -298,7 +312,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Money</span>
       <h2>Coins and Change</h2>
       <p class="covers">Know the coins and notes, count what is in the purse, make an exact amount and then make it with the fewest pieces, add up a basket, find how much more you need, write money the shop way, and work out which of two purses is worth more.</p>
-      <span class="foot"><span class="steps">9 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">12 steps &middot; about 35 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-frac" href="fair-shares.html?from=g2">
@@ -311,7 +325,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Fractions</span>
       <h2>Fair Shares</h2>
       <p class="covers">Equal parts before anything else. What the top and bottom numbers mean, a fraction of a group, two names for the same amount, which fraction is bigger, where they sit on a number line, adding them, and going past one whole.</p>
-      <span class="foot"><span class="steps">9 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">12 steps &middot; about 35 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-pattern" href="patterns-that-grow.html?from=g2">
@@ -325,7 +339,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Patterns</span>
       <h2>Patterns That Grow</h2>
       <p class="covers">Find the part that repeats and mend a pattern with a hole in it. Then count on and back in ones, twos, fives and tens from any number, say how a number pattern goes up, fill the missing number, and find patterns on the hundred square.</p>
-      <span class="foot"><span class="steps">9 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">12 steps &middot; about 35 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-shape" href="sides-and-corners.html?from=g2">
@@ -337,7 +351,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Shape and space</span>
       <h2>Sides and Corners</h2>
       <p class="covers">Count sides and corners and name the shape, solve shape riddles, fold for a line of symmetry, meet the solid shapes, find the middle of a circle, spot shapes hiding in real things, and turn a shape all the way round.</p>
-      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">14 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-shape" href="which-way-from-here.html?from=g2">
@@ -350,7 +364,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Position and direction</span>
       <h2>Which Way From Here</h2>
       <p class="covers">Say where something is in words, work out whose left is whose, drive a robot to the flag and say the route it took, then flip a shape over a mirror line.</p>
-      <span class="foot"><span class="steps">5 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">8 steps &middot; about 25 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-measure" href="how-much-how-long.html?from=g2">
@@ -363,7 +377,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Measurement</span>
       <h2>How Much, How Long</h2>
       <p class="covers">Compare lengths, measure with cubes and then with a ruler, and draw a line to the length you are asked for. Choose the right unit, balance the scales, read a kitchen scale and a measuring jug, find which holds more by counting cups, estimate before you measure, and read a value that falls between the marks.</p>
-      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">14 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-measure" href="half-past-quarter-to.html?from=g2">
@@ -376,7 +390,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Time</span>
       <h2>Half Past, Quarter To</h2>
       <p class="covers">What the two hands do, quarter past and quarter to, counting round the clock in fives, and matching a clock face to a digital one. Then the units from seconds to years, and reading a real calendar month.</p>
-      <span class="foot"><span class="steps">6 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">9 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-data" href="count-it-chart-it.html?from=g2">
@@ -389,7 +403,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Statistics and probability</span>
       <h2>Count It, Chart It</h2>
       <p class="covers">Sort things into groups and then two ways at once, keep a tally, read a pictogram, and build and read a block graph. Then toss a coin and spin a spinner to see what happens, run a small survey of the class, and tell a regular pattern from a random one.</p>
-      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">13 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
   </div>
@@ -399,8 +413,11 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
   <section class="grownup" id="grownups">
     <h3>For teachers and parents</h3>
     <p>What each lesson teaches, in Cambridge's own words; what every step asks the child to do; the check at the end, its pass mark and its answers; and one thing to try at home with things you already have. The nine lessons are listed in the order the course runs them, but each one stands on its own, so a child can start with any of them. The minutes are an estimate of about two and a half minutes a step, not yet timed against a real class, so treat them as a guide to the length of a sitting rather than a plan.</p>
+    <p class="gu-twmnote"><b>Thinking and Working Mathematically.</b> Cambridge names eight characteristics and flags them on individual questions. These lessons exercise <b>7 of the 8</b> &mdash; specialising, generalising, convincing, characterising, classifying, critiquing, improving &mdash; and each lesson below lists which of its steps does which. Not addressed: <b>conjecturing</b>. Forming your own mathematical question is not something a choice of three buttons can carry, so it is left to you and the lesson you teach around this one.</p>
     <details class="gu">
-      <summary><b>Lesson 1: Tens and Ones</b> <span class="gu-meta">15 steps &middot; about 40 min &middot; 16 objectives &middot; 8 check questions</span></summary>
+      <summary><b>Lesson 1: Tens and Ones</b> <span class="gu-meta">18 steps &middot; about 50 min &middot; 16 objectives &middot; 8 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">About 100 small things that are all the same - dried beans, bottle tops or pasta - and a hundred square if you can print one. Making real piles of ten is what makes tens and ones mean something.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Nc.01</b> Count objects from 0 to 100.</li>
@@ -437,6 +454,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Arrays: 2s, 5s and 10s</b> &middot; Rows of dots make an array. Count the rows and how many in each row.</li>
         <li><b>Know them by heart</b> &middot; No array this time. Answer from memory if you can, and press Count it up only when you are stuck.</li>
         <li><b>Sharing and grouping</b> &middot; Sharing gives one each until they are gone. Grouping makes groups of the same size.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -451,11 +471,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Is 17 odd or even? <b>odd</b> &mdash; Pair them up and one is left over, so 17 is odd.</li>
         <li>One more than 59 is ? <b>60</b> &mdash; 59 and one more is 6 tens exactly: 60.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Odd or even?</b> (step 8) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 16) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 18) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Take a big handful of dried beans or pasta and count it by making piles of ten. Say how many tens and how many ones there are, then write the number: 3 tens and 4 ones is 34. Then pair the beans up: if one is left without a partner, the number is odd.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 2: Coins and Change</b> <span class="gu-meta">9 steps &middot; about 30 min &middot; 6 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 2: Coins and Change</b> <span class="gu-meta">12 steps &middot; about 35 min &middot; 6 objectives &middot; 10 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">A handful of real coins and a note or two, and something with a price on it. Counting real money, biggest coin first, is this whole lesson done for real.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Ni.03</b> Recognise complements of 20 and complements of multiples of 10 (up to 100).</li>
@@ -476,6 +505,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Writing money</b> &middot; Money has its own way of writing. Forty-five shillings can be written 45 sh, or KSh 45. Both mean the same.</li>
         <li><b>Which purse is worth more?</b> &middot; Two purses. Add up what is in each one, then choose the one worth more.</li>
         <li><b>Saving and spending</b> &middot; Money you keep is saving. Money you hand over is spending. Both are just adding and taking away.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -492,11 +524,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>You save 10 sh a week. After 5 weeks you have… <b>50 sh</b> &mdash; 5 lots of 10 is 50.</li>
         <li>You have 80 sh and spend 30 sh. What is left? <b>50 sh</b> &mdash; 8 tens take away 3 tens leaves 5 tens: 50 sh.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Know your money</b> (step 1) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 10) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 12) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Put a few coins and notes on the table and count them together, starting with the biggest and counting on. Then pick something that costs less than 100 shillings and ask which coins would pay for it exactly, and which way uses the fewest coins.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 3: Fair Shares</b> <span class="gu-meta">9 steps &middot; about 30 min &middot; 6 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 3: Fair Shares</b> <span class="gu-meta">12 steps &middot; about 35 min &middot; 6 objectives &middot; 10 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">Paper to fold and cut, a piece of fruit or bread to share at snack time, and about 20 beans. Folding is what teaches equal parts; a screen can only show it.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Nf.01</b> Understand that an object or shape can be split into four equal parts or four unequal parts.</li>
@@ -517,6 +558,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Putting parts together</b> &middot; Adding fractions with the same bottom number. Just count the parts.</li>
         <li><b>More than one whole</b> &middot; More than one whole. Four quarters make one whole, so five quarters is one and a quarter.</li>
         <li><b>Fractions in real life</b> &middot; Fractions in real life. Read the problem and work it out.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -533,11 +577,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>How many quarters make one whole? <b>4</b> &mdash; A whole cut into 4 equal parts has 4 quarters.</li>
         <li>5 quarters is the same as… <b>1 whole and 1/4</b> &mdash; 4 quarters make 1 whole, and 1 quarter is left over.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Equal parts first</b> (step 1) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 10) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 12) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Fold a piece of paper into four equal parts, then cut another into four parts that are not equal, and ask which ones are quarters. Share 12 beans fairly between four people: each person's share is a quarter of 12.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 4: Patterns That Grow</b> <span class="gu-meta">9 steps &middot; about 30 min &middot; 3 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 4: Patterns That Grow</b> <span class="gu-meta">12 steps &middot; about 35 min &middot; 3 objectives &middot; 10 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">Two or three kinds of small object to lay out in a line - spoons and forks, or bottle tops in two colours - and a hundred square if you have one. A pattern a child makes and says aloud is worth more than one they tap.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Nc.04</b> Count on and count back in ones, twos, fives or tens, starting from any number (from 0 to 100).</li>
@@ -555,6 +608,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>The missing number</b> &middot; A number is missing from the pattern. Work out how it goes up, then fill the gap.</li>
         <li><b>Counting back in steps</b> &middot; Count back in steps. Start high, and take the same step away each time.</li>
         <li><b>Hundred square patterns</b> &middot; Patterns hide in the hundred square. The coloured numbers go up by the same amount. Tap the next one.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -571,11 +627,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Which is a repeating pattern? <b>AB AB AB</b> &mdash; A repeating pattern has a part that comes round again; the number patterns keep going up.</li>
         <li>Count back in fives from 50: 50, 45, 40… what comes next? <b>35</b> &mdash; Counting back in fives takes 5 away each time: 40 − 5 = 35.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>The part that repeats</b> (step 1) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 10) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 12) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Make a repeating pattern with spoons and forks, or clap, clap, stamp, and ask your child which part repeats and what comes next. Then count on in fives from 15, and back in tens from 90, together.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 5: Sides and Corners</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 7 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 5: Sides and Corners</b> <span class="gu-meta">14 steps &middot; about 40 min &middot; 7 objectives &middot; 10 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">A tin, a box and a ball, paper to fold for the symmetry step, and scissors. Holding a solid shape and turning it is the one thing a picture of one cannot do.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Gg.01</b> Identify, describe, sort, name and sketch 2D shapes by their properties, including reference to regular polygons, number of sides and vertices. Recognise these shapes in different positions and orientations.</li>
@@ -599,6 +664,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>The middle of a circle</b> &middot; A circle has a middle point. Every single point on its edge is exactly the same distance from that middle.</li>
         <li><b>Shapes in real things</b> &middot; Shapes are not only on the page. A door is a rectangle, a tin is a cylinder, a dice is a cube.</li>
         <li><b>Spin it all the way round</b> &middot; Spin a shape all the way round. Some shapes look exactly the same several times on the way.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -615,11 +683,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Turning clockwise means turning… <b>the way a clock goes</b> &mdash; Clockwise is the way the hands of a clock move round.</li>
         <li>How many edges does a cube have? <b>12</b> &mdash; 4 edges round the top, 4 round the bottom and 4 up the sides: 12.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Sides and corners</b> (step 1) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 12) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 14) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Go on a shape hunt around the house: something with four sides, something round, a box shaped like a cube, a tin shaped like a cylinder. Fold a paper square in half to find a line of symmetry.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 6: Which Way From Here</b> <span class="gu-meta">5 steps &middot; about 20 min &middot; 3 objectives &middot; 8 check questions</span></summary>
+      <summary><b>Lesson 6: Which Way From Here</b> <span class="gu-meta">8 steps &middot; about 25 min &middot; 3 objectives &middot; 8 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">Room to walk in, and a small mirror if you have one. Directions and turns are learned by standing up and making them, not by watching somebody else.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Gg.11</b> Understand that an angle is a description of a turn, including reference to the terms whole, half and quarter turns, both clockwise and anticlockwise.</li>
@@ -633,6 +710,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Drive it to the flag</b> &middot; Now drive the robot. Forward goes the way it is facing, so turn first and then go.</li>
         <li><b>Say the route</b> &middot; Now read a route somebody else walked, and say it in words.</li>
         <li><b>Over the mirror line</b> &middot; A mirror line flips a shape over. The reflection is the same distance from the line, on the other side.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -647,11 +727,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>A reflection in a mirror line is… <b>the same distance the other side</b> &mdash; Each point of the shape is copied the same distance away, on the other side of the line.</li>
         <li>When a shape is reflected, the reflection is… <b>the same size</b> &mdash; A mirror flips a shape over; it does not grow or shrink it.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Saying where</b> (step 1) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 6) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 8) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Hide a toy and guide your child to it with directions such as 'three steps forward, make a quarter turn to the left, two steps forward'. Then swap, and your child gives the directions.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 7: How Much, How Long</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 5 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 7: How Much, How Long</b> <span class="gu-meta">14 steps &middot; about 40 min &middot; 5 objectives &middot; 10 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">A ruler marked in centimetres, kitchen scales, a measuring jug and two or three containers to fill. This lesson is about reading real scales, so read real ones.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Gg.03</b> Understand that length is a fixed distance between two points. Estimate and measure lengths using non-standard or standard units.</li>
@@ -673,6 +762,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Estimate, then measure</b> &middot; Guess first, then measure. A good guess is close to the real length.</li>
         <li><b>Draw a line yourself</b> &middot; Now you draw the line. Tap the ruler where your line should end.</li>
         <li><b>Between the marks</b> &middot; A measuring scale is a number line. Some marks have no number on them, so you work them out.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -689,11 +781,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>A pencil is 15 cm long. A crayon is 9 cm long. Which is longer? <b>the pencil</b> &mdash; 15 cm is more than 9 cm.</li>
         <li>A scale goes 0, 10, 20 with one unmarked line halfway between each. What is the line between 10 and 20? <b>15</b> &mdash; Halfway between 10 and 20 is 15.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Which unit?</b> (step 4) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 12) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 14) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Measure a table with hand spans, then with a ruler in centimetres. Count how many cups of water fill a jug, and hold two things to guess which is heavier before checking on a scale if you have one.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 8: Half Past, Quarter To</b> <span class="gu-meta">6 steps &middot; about 20 min &middot; 3 objectives &middot; 9 check questions</span></summary>
+      <summary><b>Lesson 8: Half Past, Quarter To</b> <span class="gu-meta">9 steps &middot; about 30 min &middot; 3 objectives &middot; 9 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">A clock with hands, or one drawn on paper with a split pin, and a calendar. Turning the hands yourself is what makes quarter past and quarter to make sense.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Gt.01</b> Order and compare units of time (seconds, minutes, hours, days, weeks, months and years).</li>
@@ -708,6 +809,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Clock face and digital</b> &middot; A digital clock writes the time with numbers. Match the clock face to the digital time.</li>
         <li><b>Seconds to years</b> &middot; Seconds, minutes, hours, days, weeks, months and years. How long is each one?</li>
         <li><b>Days, months, calendar</b> &middot; A week has seven days in the same order every week, and a year has twelve months. A calendar lays a month out in rows of seven.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -723,11 +827,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Which month comes after March? <b>April</b> &mdash; The months go January, February, March, April…</li>
         <li>The 1st of March is a Monday. What day is the 8th? <b>Monday</b> &mdash; 7 days later is the same day of the week: one row down on the calendar.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Seconds to years</b> (step 5) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 7) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 9) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Read the clock together at a few times in the day, to five minutes. Find today's date on a calendar and count how many days are left until the weekend.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 9: Count It, Chart It</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 5 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 9: Count It, Chart It</b> <span class="gu-meta">13 steps &middot; about 40 min &middot; 5 objectives &middot; 10 check questions</span></summary>
+      <h4>What to have to hand</h4>
+      <p class="gu-kit">Buttons or bottle tops to sort, paper for a tally and a block graph, a coin to toss and a spinner if you have one. Asking real people a real question is the start of it.</p>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 2)</h4>
       <ul>
         <li><b>2Sp.01</b> Use familiar language associated with patterns and randomness, including regular pattern and random pattern.</li>
@@ -748,6 +861,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Spin and record</b> &middot; This spinner is half orange and half teal. Spin it ten times, and the block graph shows what happened.</li>
         <li><b>Ask, collect, answer</b> &middot; An investigation starts with a question. Ask it, record every answer in a tally, then use the tally to answer.</li>
         <li><b>Regular or random?</b> &middot; Some rows repeat over and over. Those are regular patterns. Others have no repeat at all. Those are random.</li>
+        <li><b>Spot the mistake</b> &middot; Read what each child says. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Story problems</b> &middot; Read the story. Work out the answer. Then tap it.</li>
+        <li><b>Will it always work?</b> &middot; Somebody has an idea. Test it on each example, then say whether it always works.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -763,6 +879,13 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>You want to find the class’s favourite fruit. What do you do first? <b>ask everyone and keep a tally</b> &mdash; An investigation starts by asking and recording every answer.</li>
         <li>What is a tally chart good for? <b>counting as you go</b> &mdash; You make one mark for each thing as you count, so nothing is missed.</li>
         <li>A block graph shows 6, 4, 8 and 2. How many altogether? <b>20</b> &mdash; 6 + 4 + 8 + 2 = 20.</li>
+      </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Sort them into groups</b> (step 1) &middot; characterising, classifying</li>
+        <li><b>Spot the mistake</b> (step 11) &middot; critiquing, improving</li>
+        <li><b>Will it always work?</b> (step 13) &middot; specialising, generalising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
       </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Toss a coin ten times and keep a tally of heads and tails. Then ask everyone at home one question, such as their favourite fruit, and make a tally chart of the answers.</p>

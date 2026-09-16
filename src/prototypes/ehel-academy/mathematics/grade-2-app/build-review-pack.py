@@ -6,13 +6,13 @@
         # the same page with no <!doctype>/<html>/<head>/<body> wrapper, for
         # publishing as an Artifact, which supplies its own skeleton
 
-WHY THIS EXISTS. check-answer-keys.py verifies the keys it can COMPUTE - 152 of
-315 as this was written - and reports the rest as unverified rather than
+WHY THIS EXISTS. check-answer-keys.py verifies the keys it can COMPUTE - 141 of
+600 as this was written for Grade 2 - and reports the rest as unverified rather than
 counting them as passes, which is the honest thing to do and leaves 163
 questions whose key rests on the author alone. The README has said so since the
 build went into git: "a wrong key among them reaches a child in silence... that
 needs a human reading, and this build has never had one. English has a
-reviewed-scripts workbook process for exactly this and Grade 1 Maths has
+reviewed-scripts workbook process for exactly this and Grade 2 Maths has
 nothing equivalent."
 
 This is the missing half. It is not a gate and cannot fail: it lays every
@@ -37,28 +37,38 @@ The pack is GENERATED, never hand-kept: re-run it after any content change. It
 prints its own count beside check-answer-keys.py's so a divergence between the
 two is visible on the page rather than discovered later.
 
-THE TWO COUNTS DO NOT MATCH, AND HERE IS THE SUM. "That is expected" is what
-this paragraph used to say, and it hid 21 questions for a day:
+THE TWO COUNTS DO NOT MATCH, AND HERE IS THE WHOLE ARITHMETIC. Leaving it at
+"expected" is what let 42 questions hide in the Grade 1 pack, so the difference
+is reconciled exactly and written down:
 
-    this pack            489
-      - 42  reasoning claims, which the checker cannot see at all
-      - 2   items in steps with no fixed right answer, which it declines
-      - 21  the warm-up recall bank, listed ONCE here
-      + 147 the same bank as the checker counts it: once per lesson page
-    check-answer-keys    571
+    this pack            443
+      - 54  reasoning claims, which the checker cannot see at all
+      - 5   items in steps with no fixed right answer, which it declines
+      - 27  the warm-up recall bank, listed ONCE here
+      + 243 the same bank as the checker counts it: once per lesson page
+    check-answer-keys    600
 
-Five of the seven lessons reconcile to exactly zero; the two that do not are
-Halves and Wholes and Shapes and Sizes, and they are the two with exploration
-steps - a manipulative the child plays with, no key to check. That is not a hole
-in either tool.
+The 5 are not a hole in either tool: two in Coins and Change and three in Count
+It, Chart It, all inside steps whose answer is whatever the child got - a coin
+tossed, a spinner run. The checker declines them because there is no key; this
+pack lists them because a reader still has to look at the words.
 
-THE BANK WAS INVISIBLE HERE UNTIL 2026-09-16. Its items lead with their own
-`from:` field, so the harvester's `{ q:` pattern walked past all 21 - the third
-shape to hide from this file, after the reasoning triples and, in the answer-key
-gate, the `items:`-named banks. Each time the tell was a count that did not add
-up and was explained away in prose instead of subtracted.
+AN EARLIER VERSION OF THIS PARAGRAPH WAS WRONG, and the way it was wrong is the
+point. It claimed the pack listed the recall bank once and the checker nine
+times, and totalled to 600. In fact this pack listed the bank ZERO times: its
+items lead with their own `from:` field, so the harvester's `{ q:` pattern
+walked straight past all 27 of them - the third shape to hide from this file,
+after the reasoning triples and the `w:` explanation field. The sum in that
+paragraph did not actually add up either, and nobody had made it add up.
 
-So when this stops reconciling, do the arithmetic. Do not widen the paragraph.
+So: when this stops reconciling, do the subtraction. Do not widen the prose.
+
+THE OLD NOTE, still true: This pack lists every
+question OBJECT; the checker reports a slightly smaller number. The difference
+is stems that appear more than once with a different picture each time - five
+"Where is the ball?" items in Shapes and Sizes, two asking a cube's faces. For a
+reader each of those is a separate thing a child meets and each needs its own
+look, so they are all listed here.
 
 It is NOT a hole in the gate, which was the first guess and was wrong: moving
 the key on the second copy of a repeated stem is caught. That took three
@@ -70,9 +80,10 @@ import io, os, re, sys, json, html, subprocess
 
 sys.stdout.reconfigure(encoding="utf-8")
 HERE = os.path.dirname(os.path.abspath(__file__))
-G = os.path.join(HERE, "g1v2")
+# Grade 2 keeps its lessons in the app root, where Grade 1 has a g1v2/ subfolder
+G = HERE
 argv = sys.argv[1:]
-OUT = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(HERE, "g1-review-pack.html")
+OUT = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(HERE, "g2-review-pack.html")
 ARTIFACT = "--artifact" in argv
 
 cfg = json.load(io.open(os.path.join(G, "app.config.json"), encoding="utf-8"))
@@ -80,7 +91,7 @@ FILES = [l["file"] for l in cfg["lessons"]]
 TITLES = {l["file"]: l["title"] for l in cfg["lessons"]}
 FW = json.load(io.open(os.path.join(HERE, "..", "..", "..", "..", "curriculum",
                                     "cambridge-mathematics-0096.json"), encoding="utf-8"))
-OBJ_TEXT = {o["code"]: o.get("text", "") for o in FW["objectivesByStage"]["1"]}
+OBJ_TEXT = {o["code"]: o.get("text", "") for o in FW["objectivesByStage"]["2"]}
 
 
 def plain(s):
@@ -114,8 +125,8 @@ def slide_index(s):
     """[(codes, title, ids)] per slide, and the objective comment above it."""
     out = []
     codes_for = {}
-    for m in re.finditer(r"<!--\s*(\d+)\s+((?:1[A-Za-z]{2}\.\d{2}[,\s]*)+)\s*([^>]*?)-->", s):
-        codes_for[int(m.group(1))] = re.findall(r"1[A-Za-z]{2}\.\d{2}", m.group(2))
+    for m in re.finditer(r"<!--\s*(\d+)\s+((?:2[A-Za-z]{2}\.\d{2}[,\s]*)+)\s*([^>]*?)-->", s):
+        codes_for[int(m.group(1))] = re.findall(r"2[A-Za-z]{2}\.\d{2}", m.group(2))
     n = 0
     for m in re.finditer(r'<section class="slide"[\s\S]*?</section>', s):
         n += 1
@@ -171,44 +182,138 @@ REASON = re.compile(
     r'\s*"((?:[^"\\]|\\.)*)",\s*\n\s*"((?:[^"\\]|\\.)*)"\s*\n\s*\],\s*\n'
     r'\s*"((?:[^"\\]|\\.)*)"\s*\n\s*\]')
 
+def q_text(obj, m_end, field="q:"):
+    """(text, generated?) for a question whose q: may be an expression.
+
+    A literal `q: "..."` comes back as itself. An expression - a q built from
+    variables with + - comes back as its literal parts joined by a placeholder,
+    so the row shows the sentence a child meets instead of its first fragment.
+    """
+    i = obj.index('"', m_end - 1) if False else None
+    # walk from the q: value to the comma that ends it, at depth 0
+    if field not in obj:
+        return "", False
+    k = obj.index(field) + len(field)
+    while obj[k] in " \t":
+        k += 1
+    parts, depth, lit, j = [], 0, None, k
+    while j < len(obj):
+        c = obj[j]
+        if lit is not None:
+            if c == "\\":
+                lit += obj[j:j + 2]
+                j += 2
+                continue
+            if c == '"':
+                parts.append(lit)
+                lit = None
+            else:
+                lit += c
+        elif c == '"':
+            lit = ""
+        elif c in "([{":
+            depth += 1
+        elif c in ")]}":
+            if depth == 0:
+                break
+            depth -= 1
+        elif c == "," and depth == 0:
+            break
+        j += 1
+    if not parts:
+        return "", False
+    if len(parts) == 1:
+        return plain(parts[0]), False
+    return plain("\u25a2".join(parts)), True
+
+
 rows = []
-# OUTSIDE the per-file loop: inside it this resets on every page and the
-# recall bank comes out seven times instead of once.
+# the recall bank is byte-identical in all nine pages, so it is listed ONCE.
+# Declared inside the per-file loop this reset on every page and the bank came
+# out nine times - 243 rows instead of 27, burying the rest of the pack.
 seen_shared = set()
 for f in FILES:
     s = io.open(os.path.join(G, f), encoding="utf-8").read()
     place = placer(s)
     # shape 1: { q: "...", opts: [...], a: "...", why: "..." }
-    # NAME THE SHAPES PRECISELY. The recall bank's items lead with their own
-    # `from:` field, so a bare `{ q:` walked past all 21 of them - the third
-    # shape to hide from this pack. Widening it to "a { with a q: nearby"
-    # instead matches ENCLOSING braces and collapses the pack; do not.
+    # `{ q:` ALONE MISSES THE WARM-UP RECALL BANK, whose items lead with their
+    # own field: { from: "l01", q: "...", opts: [...] }. Twenty-seven questions a
+    # child meets were listed nowhere in this pack until 2026-09-16 - the third
+    # shape to hide from it, after the reasoning triples and the `w:` field.
+    # Allow a few fields before q:, and collapse the bank to ONE row: it is
+    # byte-identical in all nine pages, so listing it nine times would bury the
+    # rest of the pack in duplicates.
+    # NAME THE TWO SHAPES PRECISELY. Widening this to "a { with a q: within
+    # the next 60 characters" was tried and is wrong: it matches at ENCLOSING
+    # braces, so balanced() returns the wrapper instead of the item and the
+    # pack fell from 416 rows to 261 while still finding none of the bank.
     for m in re.finditer(r"\{\s*(?:from:\s*\"l\d+\",\s*)?q:\s*\"", s):
         o = balanced(s, m.start())
         q = re.search(r'q:\s*"((?:[^"\\]|\\.)*)"', o)
         a = re.search(r'a:\s*("(?:[^"\\]|\\.)*"|[\w.]+)', o)
+        # TWO NAMES FOR THE SAME THING. These builds write `why: "..."` in
+        # some steps and `w: ["Working...", "Watch out..."]` in others - an
+        # array, and the name Grade 4 uses throughout. Reading only `why`
+        # left 26 questions looking as though the child is told nothing on
+        # answering, when the runner in fact shows both lines and speaks the
+        # first. A reviewer told "no explanation" would go looking for a
+        # defect that is not there.
         w = re.search(r'why:\s*"((?:[^"\\]|\\.)*)"', o)
+        why_text = plain(w.group(1)) if w else ""
+        if not why_text:
+            wa = re.search(r'\bw:\s*\[', o)
+            if wa:
+                parts = [plain(x) for x in re.findall(
+                    r'"((?:[^"\\]|\\.)*)"', balanced(o, wa.end() - 1))]
+                why_text = " ".join(p for p in parts if p)
         op = re.search(r"opts:\s*\[", o)
         if not (q and a and op):
             continue
-        opts = [x for x in re.findall(r'"((?:[^"\\]|\\.)*)"|(\d+)', balanced(o, op.end() - 1))
-                for x in [plain(x[0] or x[1])] if x]
+        qt, made = q_text(o, q.end())
+        if made:
+            # the options are computed too, so the digits a regex finds in the
+            # expression are not the options a child sees - say so rather than
+            # print them
+            opts, key = [], ""
+            # the explanation is usually built from variables too, so its
+            # first literal is a fragment - "Each week adds" - which ran
+            # straight into the sentence below and read as one broken line.
+            wt, _ = q_text(o, 0, "why:")
+            why_text = ((wt or why_text) + " ").strip() + (
+                " The numbers and the options are worked out fresh each time, "
+                "so there is no single answer to print.")
+        else:
+            opts = [x for x in re.findall(r'"((?:[^"\\]|\\.)*)"|(\d+)', balanced(o, op.end() - 1))
+                    for x in [plain(x[0] or x[1])] if x]
+            key = plain(a.group(1).strip('"'))
         step, codes = place(m.start())
         shared = re.match(r'\{\s*from:\s*"l\d+"', o) is not None
         if shared:
-            # byte-identical in all seven pages, so list it once
-            if plain(q.group(1)) in seen_shared:
+            if qt in seen_shared:
                 continue
-            seen_shared.add(plain(q.group(1)))
+            seen_shared.add(qt)
             step = "Warm-up recall (the same bank in every lesson)"
-        rows.append(dict(file=f, step=step, codes=codes, q=plain(q.group(1)),
-                         key=plain(a.group(1).strip('"')), opts=opts,
-                         why=plain(w.group(1)) if w else ""))
+        rows.append(dict(file=f, step=step, codes=codes, q=qt or plain(q.group(1)),
+                         key=key, opts=opts, why=why_text, generated=made))
     # shape 2: { ask: "...", opts: [{ t: "...", ok: true }], why: "..." }
     for m in re.finditer(r"\{\s*ask:\s*\"", s):
         o = balanced(s, m.start())
         q = re.search(r'ask:\s*"((?:[^"\\]|\\.)*)"', o)
+        # TWO NAMES FOR THE SAME THING. These builds write `why: "..."` in
+        # some steps and `w: ["Working...", "Watch out..."]` in others - an
+        # array, and the name Grade 4 uses throughout. Reading only `why`
+        # left 26 questions looking as though the child is told nothing on
+        # answering, when the runner in fact shows both lines and speaks the
+        # first. A reviewer told "no explanation" would go looking for a
+        # defect that is not there.
         w = re.search(r'why:\s*"((?:[^"\\]|\\.)*)"', o)
+        why_text = plain(w.group(1)) if w else ""
+        if not why_text:
+            wa = re.search(r'\bw:\s*\[', o)
+            if wa:
+                parts = [plain(x) for x in re.findall(
+                    r'"((?:[^"\\]|\\.)*)"', balanced(o, wa.end() - 1))]
+                why_text = " ".join(p for p in parts if p)
         op = re.search(r"opts:\s*", o)
         if not (q and op):
             continue
@@ -219,7 +324,7 @@ for f in FILES:
         step, codes = place(m.start())
         rows.append(dict(file=f, step=step, codes=codes, q=plain(q.group(1)),
                          key=key[0] if len(key) == 1 else ("** %d right options **" % len(key)),
-                         opts=opts, why=plain(w.group(1)) if w else ""))
+                         opts=opts, why=why_text))
     # shape 3: [ "claim", "the reason", [ "not this", "nor this" ], "the hint" ]
     # "How do you know?" - and these were in NO pack and NO gate until 2026-09-16.
     # They have neither `q:` nor `ask:`, so both harvesters above walked straight
@@ -266,8 +371,8 @@ for r0 in rows:
 # a shape that stops being found reports a clean run. The bank is written into
 # every lesson page by add-spiral-warmup.py, so finding none of it means the
 # harvester has stopped seeing it, not that the build stopped carrying it.
-if len(seen_shared) != 21:
-    sys.exit("  REFUSED: the recall bank has stopped being found - %d of the 21 "
+if len(seen_shared) != 27:
+    sys.exit("  REFUSED: the recall bank has stopped being found - %d of the 27 "
              "items are in this pack. Its items lead with a `from:` field; a bare "
              "`{ q:` pattern walks past every one of them." % len(seen_shared))
 
@@ -374,8 +479,8 @@ STYLE = """
 """
 
 BODY = ['<div class="wrap">', '<header>',
-        '<h1>Every question in Grade 1 Maths, for review</h1>',
-        '<p class="lede">The seven live lesson pages, laid out for a human read. '
+        '<h1>Every question in Grade 2 Maths, for review</h1>',
+        '<p class="lede">The nine live lesson pages, laid out for a human read. '
         'Questions no tool can check come first &mdash; those are the ones where a wrong '
         'answer key would reach a child in silence.</p>', '</header>']
 
@@ -389,17 +494,17 @@ BODY.append('<div class="panel"><h2>What has and has not been checked</h2>'
             '<p>A question counts as checked when <code>check-answer-keys.py</code> can work its '
             'answer out from the question and the item\'s own data. That catches a key bound to the '
             'wrong option &mdash; and nothing else. Whether the question is pitched right for a '
-            'six-year-old, whether the explanation teaches, and whether the wrong options are the '
+            'seven-year-old, whether the explanation teaches, and whether the wrong options are the '
             'mistakes children actually make are all still for you.</p>'
-            '<p>This page lists %d items where the checker counts %s: a few questions are asked '
-            'more than once with a different picture each time, and each copy is its own thing to read.</p>'
+            '<p>This page lists %d items where the checker counts %s. The difference is not a '
+            'disagreement: this page carries the reasoning claims, which the checker cannot see at all; the checker counts the warm-up recall bank once per lesson page where it is really one bank; and a handful of items here sit in steps with no fixed right answer - a coin tossed, a spinner run - which the checker rightly declines and a reader still has to look at.</p>'
             '<p>Marks are kept in this browser only. Nothing here is sent anywhere.</p></div>'
             % (len(rows), nun, counts[1], counts[2], len(rows), counts[0]))
 
 BODY.append('<div class="bar">'
             '<input type="search" id="q" placeholder="Search questions, answers or explanations" '
             'aria-label="Search the questions">'
-            '<select id="lesson" aria-label="Filter by lesson"><option value="">All seven lessons</option>%s</select>'
+            '<select id="lesson" aria-label="Filter by lesson"><option value="">All nine lessons</option>%s</select>'
             '<label class="toggle"><input type="checkbox" id="onlyun"> Unchecked keys only</label>'
             '<label class="toggle"><input type="checkbox" id="hideread"> Hide what I have read</label>'
             '<span class="count" id="count"></span></div>'
@@ -424,7 +529,8 @@ for i, r0 in enumerate(rows):
         '<button type="button" class="flagit" data-i="%d" aria-pressed="false">Looks wrong</button>'
         '</div></div></article>'
         % ("un" if r0["unverified"] else "", esc(r0["file"]), 1 if r0["unverified"] else 0, i,
-           '<span class="chip">%s</span>' % ("unchecked key" if r0["unverified"] else "key checked"),
+           '<span class="chip">%s</span>' % ("made fresh each time" if r0.get("generated")
+            else "unchecked key" if r0["unverified"] else "key checked"),
            esc(r0["step"] or "-"),
            ('<span class="code" title="%s">%s</span>' % (esc(OBJ_TEXT.get(code, "")), esc(code))) if code else "",
            esc(r0["q"]),
@@ -482,7 +588,7 @@ SCRIPT = """
 </script>
 """
 
-TITLE = "<title>Grade 1 Maths Question Review</title>"
+TITLE = "<title>Grade 2 Maths Question Review</title>"
 page = TITLE + STYLE + "\n".join(BODY) + SCRIPT
 if not ARTIFACT:
     page = ('<!doctype html><html lang="en-GB"><head><meta charset="utf-8">'
@@ -495,6 +601,6 @@ print("  %d questions (%d unverifiable, first in the pack)" % (len(rows), nun))
 print("  check-answer-keys.py reads %s; this pack reads %d%s"
       % (counts[0], len(rows),
          "" if str(counts[0]) == str(len(rows))
-         else "   (see this file's docstring: the two counts reconcile exactly)"))
+         else "   (see this file's docstring: the two counts reconcile to zero)"))
 print("  %d carry an objective code" % len([r for r in rows if r["codes"]]))
 print("  written to %s%s" % (OUT, "   (artifact-shaped: no doctype wrapper)" if ARTIFACT else ""))

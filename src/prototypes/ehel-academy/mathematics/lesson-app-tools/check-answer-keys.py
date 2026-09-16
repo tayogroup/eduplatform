@@ -1982,8 +1982,18 @@ def harvest(js):
                     continue
                 key = opts[int(key)]
             qs.append((plain(q.group(1)), opts, key, obj))
-    for m in re.finditer(r"\bitems:\s*\[", js):
-        for o in objects_in(balanced(js, m.end() - 1)[1:-1]):
+    # THE ASK-SHAPED QUESTION IS FOUND BY SHAPE TOO, and this is the same bug as
+    # the one above, one level down. It read `items: [` only - the name of the
+    # array, not the shape of the thing in it - so when add-differentiation.py
+    # gave the story step `support: [` and `extension: [` banks, 35 questions
+    # became invisible to this file overnight and the total did not move, which
+    # is precisely how `const QS` and `const Q5` hid 135 questions before.
+    #
+    # An object carrying an `ask:` string AND an options array of `{t, ok}` is a
+    # question wherever it is written and whatever holds it. Scanned directly, so
+    # a bank named anything at all is read.
+    for m in re.finditer(r"\{\s*ask:\s*\"", js):
+        for o in [balanced(js, m.start())]:
             q = re.search(r'\bask:\s*"((?:[^"\\]|\\.)*)"', o)
             om = re.search(r"\bopts:\s*(?:shuffle\()?\[", o)
             if not (q and om):
@@ -2047,6 +2057,15 @@ def story_answer(low, t, opts):
                               r"takes away|fly away|flies away|drive away|walk away)\b", low) \
             and re.search(r"\bleft\b|\bremain", low):
         return pick(opts, float(a - b), amount) if a >= b else None
+    # INCREASE: "Musa has 8 beans. Hodan gives him 5 more beans. How many now?"
+    # Cambridge's own second category, and distinct from COMBINE below: there is
+    # one set that GROWS rather than two sets put together. Every arm that owns
+    # "than", "left" or "needs" has already run and returned, so this cannot take
+    # a difference or a take-away off them.
+    if ask_many and re.search(r"\b(?:gives?|gave|gets?|got|adds?|finds?|buys?|picks?|puts?)\b", low) \
+            and re.search(r"\b\d+ more\b", low) \
+            and not re.search(r"\bleft\b|\bthan\b|\bneeds?\b|\bremain", low):
+        return pick(opts, float(a + b), amount)
     # COMBINE: "4 mangoes and 11 oranges ... in total / altogether"
     if ask_many and re.search(r"\band\b", low) \
             and re.search(r"\bin total\b|\baltogether\b|\bin all\b", low) \

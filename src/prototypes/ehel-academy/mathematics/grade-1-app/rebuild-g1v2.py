@@ -82,6 +82,10 @@ STEPS = [
     # rule landed on 4 of 5 - 80%, the harshest check in the build. Three more
     # questions put it on 6 of 8. The pass mark is computed from CHECK.length, so
     # nothing else moves.
+    # Ready to Go's Support and Extension on the story step. AFTER the story
+    # problems, whose block it rewrites from secondStep to tieredStep and injects
+    # the two tiers into; it refuses a block that is not the shape that tool wrote.
+    ("add-differentiation.py", ["--write"]),
     ("lengthen-days-check.py", ["--write"]),
     # "How do you know?" - after the second steps, because it inserts itself
     # before the sticker shelf and must see the final set of steps; before the

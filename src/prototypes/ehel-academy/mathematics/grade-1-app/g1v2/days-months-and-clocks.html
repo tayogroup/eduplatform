@@ -1687,6 +1687,97 @@
     });
   })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+  /* ==== ehel-differentiation: the tiered runner - see grade-1-app/add-differentiation.py ====
+     The story step, with Ready to Go's Support and Extension. A wrong answer puts
+     a NARROWER version of the same problem next; finishing with at most one slip
+     offers a WIDER one behind a button. Neither tier scores, and finish() fires at
+     the end of the core bank exactly as secondStep does - so progress, the sticker
+     and the gate are untouched.
+
+     Separate from secondStep() on purpose: that one drives 24 other steps in two
+     textual variants, and none of them should carry the risk of this change. */
+  function tieredStep(o) {
+    const el = o.el, core = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const sup = (o.support || []).slice(), ext = (o.extension || []).slice();
+    let i = 0, right = 0, lock = true, mode = "core", queued = null, extDone = 0;
+    function current() { return mode === "core" ? core[i] : queued; }
+    function label() {
+      if (mode === "support") return "An easier one";
+      if (mode === "extension") return "A harder one - " + (extDone + 1) + " of " + ext.length;
+      return (o.label || "Question") + " " + (i + 1) + " of " + core.length;
+    }
+    function draw() {
+      const it = current();
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = label();
+      el.score.className = "score" + (mode === "core" ? "" : " tier-" + mode);
+      el.stage.innerHTML = it.pic || "";
+      el.ch.innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' +
+        (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    function endCore() {
+      el.score.className = "score";
+      el.score.textContent = "You got " + right + " of " + core.length + ". " + o.done;
+      finish(o.finish);
+      /* the offer comes AFTER the step is done, and only to a child who did not
+         need the support - Cambridge's extensions all read "once they have
+         completed ...". One slip is allowed; two means an easier one was the
+         right call, not a harder one. */
+      if (ext.length && right >= core.length - 1) {
+        el.next.textContent = "Try a harder one";
+        el.next.hidden = false;
+      }
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = current(), ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      if (mode === "core" && ok) right++;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      say(msg);
+      if (mode === "extension") {
+        extDone++;
+        if (extDone < ext.length) { el.next.textContent = "Next challenge"; el.next.hidden = false; }
+        else el.score.textContent = "That is the last challenge. Well done.";
+        return;
+      }
+      if (mode === "support") {
+        mode = "core";                       /* back to where the child was */
+        if (i < core.length) { el.next.textContent = o.nextLabel || "Next question"; el.next.hidden = false; }
+        else endCore();
+        return;
+      }
+      i++;
+      if (!ok && sup.length) {               /* narrow the task, then carry on */
+        queued = sup.shift(); mode = "support";
+        el.next.textContent = "Try an easier one";
+        el.next.hidden = false;
+        return;
+      }
+      if (i < core.length) { el.next.textContent = o.nextLabel || "Next question"; el.next.hidden = false; }
+      else endCore();
+    });
+    el.next.addEventListener("click", () => {
+      if (mode === "extension" || (el.next.textContent === "Try a harder one" && ext.length)) {
+        if (mode !== "extension") { mode = "extension"; extDone = 0; }
+        queued = ext[extDone];
+        draw();
+        return;
+      }
+      if (mode === "support") { draw(); return; }
+      if (i < core.length) draw();
+    });
+    draw();
+  }
   /* ehel-spot-the-mistake: the claim being judged, in the mouth of the child who made it */
   const smSays = (who, what) => '<div class="sm-bubble"><p class="sm-what">' + what +
     '</p><p class="sm-who">' + who + '</p></div>';
@@ -2321,7 +2412,7 @@
   });
 
   /* ---- 8: story problems - one-step problems in the Cambridge Stage 1 shape ---- */
-  secondStep({
+  tieredStep({
     el: { say: $("wp8say"), stage: $("wp8st"), ch: $("wp8ch"), fb: $("wp8fb"), score: $("wp8sc"), next: $("wp8nx") },
     label: "Story",
     items: [
@@ -2343,6 +2434,26 @@
       { ask: "Kiki goes to sleep on Saturday night. Which day does Kiki wake up on?",
         opts: [{ t: "Sunday", ok: true }, { t: "Friday" }, { t: "Monday" }],
         why: "Sunday comes after Saturday." },
+    ],
+    /* ehel-differentiation - Ready to Go Support and Extension; neither tier scores */
+    support: [
+      { ask: "Today is Monday. Which day comes next?",
+        opts: [{ t: "Tuesday", ok: true }, { t: "Sunday" }, { t: "Friday" }],
+        why: "The week goes Monday, Tuesday, Wednesday. Tuesday comes next." },
+      { ask: "Does blinking your eyes take about a second or about an hour?",
+        opts: [{ t: "about a second", ok: true }, { t: "about an hour" }, { t: "about a day" }],
+        why: "A second is very short, and a blink is quicker than you can say it." },
+      { ask: "The long hand points at the 12 and the short hand points at the 3. What time is it?",
+        opts: [{ t: "3 o'clock", ok: true }, { t: "half past 3" }, { t: "12 o'clock" }],
+        why: "The long hand on 12 means o'clock, and the short hand says which hour." },
+    ],
+    extension: [
+      { ask: "Musa's lesson starts at 2 o'clock and finishes at half past 2. Is the lesson shorter or longer than one hour?",
+        opts: [{ t: "shorter than an hour", ok: true }, { t: "longer than an hour" }, { t: "exactly one hour" }],
+        why: "Half past 2 is only halfway to 3 o'clock, so the lesson is half an hour. That is shorter than an hour." },
+      { ask: "Hodan's birthday is in the month straight after June. Which month is it?",
+        opts: [{ t: "July", ok: true }, { t: "May" }, { t: "January" }],
+        why: "The months go May, June, July. July comes straight after June." },
     ],
     finish: 7,
     done: "You can find the maths inside a story.",
@@ -3340,4 +3451,10 @@
   .sc-back button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
     padding: 8px 14px; min-height: 44px; border-radius: 12px; border: 2px dashed var(--accent);
     background: transparent; color: var(--ink); cursor: pointer; }
+</style>
+
+<style>/* ehel-differentiation - see add-differentiation.py */
+  .score.tier-support, .score.tier-extension { font-weight: 700; }
+  .score.tier-support { color: var(--teal); }
+  .score.tier-extension { color: var(--gold); }
 </style>

@@ -1806,6 +1806,97 @@
     });
   })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+  /* ==== ehel-differentiation: the tiered runner - see grade-1-app/add-differentiation.py ====
+     The story step, with Ready to Go's Support and Extension. A wrong answer puts
+     a NARROWER version of the same problem next; finishing with at most one slip
+     offers a WIDER one behind a button. Neither tier scores, and finish() fires at
+     the end of the core bank exactly as secondStep does - so progress, the sticker
+     and the gate are untouched.
+
+     Separate from secondStep() on purpose: that one drives 24 other steps in two
+     textual variants, and none of them should carry the risk of this change. */
+  function tieredStep(o) {
+    const el = o.el, core = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const sup = (o.support || []).slice(), ext = (o.extension || []).slice();
+    let i = 0, right = 0, lock = true, mode = "core", queued = null, extDone = 0;
+    function current() { return mode === "core" ? core[i] : queued; }
+    function label() {
+      if (mode === "support") return "An easier one";
+      if (mode === "extension") return "A harder one - " + (extDone + 1) + " of " + ext.length;
+      return (o.label || "Question") + " " + (i + 1) + " of " + core.length;
+    }
+    function draw() {
+      const it = current();
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = label();
+      el.score.className = "score" + (mode === "core" ? "" : " tier-" + mode);
+      el.stage.innerHTML = it.pic || "";
+      el.ch.innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' +
+        (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    function endCore() {
+      el.score.className = "score";
+      el.score.textContent = "You got " + right + " of " + core.length + ". " + o.done;
+      finish(o.finish);
+      /* the offer comes AFTER the step is done, and only to a child who did not
+         need the support - Cambridge's extensions all read "once they have
+         completed ...". One slip is allowed; two means an easier one was the
+         right call, not a harder one. */
+      if (ext.length && right >= core.length - 1) {
+        el.next.textContent = "Try a harder one";
+        el.next.hidden = false;
+      }
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = current(), ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      if (mode === "core" && ok) right++;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      say(msg);
+      if (mode === "extension") {
+        extDone++;
+        if (extDone < ext.length) { el.next.textContent = "Next challenge"; el.next.hidden = false; }
+        else el.score.textContent = "That is the last challenge. Well done.";
+        return;
+      }
+      if (mode === "support") {
+        mode = "core";                       /* back to where the child was */
+        if (i < core.length) { el.next.textContent = o.nextLabel || "Next question"; el.next.hidden = false; }
+        else endCore();
+        return;
+      }
+      i++;
+      if (!ok && sup.length) {               /* narrow the task, then carry on */
+        queued = sup.shift(); mode = "support";
+        el.next.textContent = "Try an easier one";
+        el.next.hidden = false;
+        return;
+      }
+      if (i < core.length) { el.next.textContent = o.nextLabel || "Next question"; el.next.hidden = false; }
+      else endCore();
+    });
+    el.next.addEventListener("click", () => {
+      if (mode === "extension" || (el.next.textContent === "Try a harder one" && ext.length)) {
+        if (mode !== "extension") { mode = "extension"; extDone = 0; }
+        queued = ext[extDone];
+        draw();
+        return;
+      }
+      if (mode === "support") { draw(); return; }
+      if (i < core.length) draw();
+    });
+    draw();
+  }
   /* ehel-spot-the-mistake: the claim being judged, in the mouth of the child who made it */
   const smSays = (who, what) => '<div class="sm-bubble"><p class="sm-what">' + what +
     '</p><p class="sm-who">' + who + '</p></div>';
@@ -2859,7 +2950,7 @@
   });
 
   /* ---- 20: story problems - one-step problems in the Cambridge Stage 1 shape ---- */
-  secondStep({
+  tieredStep({
     el: { say: $("wp20say"), stage: $("wp20st"), ch: $("wp20ch"), fb: $("wp20fb"), score: $("wp20sc"), next: $("wp20nx") },
     label: "Story",
     items: [
@@ -2881,6 +2972,26 @@
       { ask: "Amina draws a flat shape with 3 straight sides and 3 corners. What shape does Amina draw?",
         opts: [{ t: "a triangle", ok: true }, { t: "a square" }, { t: "a circle" }],
         why: "Three straight sides and three corners make a triangle." },
+    ],
+    /* ehel-differentiation - Ready to Go Support and Extension; neither tier scores */
+    support: [
+      { ask: "Amina finds a box of tea in the kitchen. Which solid shape is the box like?",
+        opts: [{ t: "a cuboid", ok: true }, { t: "a sphere" }, { t: "a cone" }],
+        why: "A box has flat faces and square corners, so it is a cuboid." },
+      { ask: "Musa's pencil is 5 cubes long. Ali's pencil is 8 cubes long. Whose pencil is longer?",
+        opts: [{ t: "Ali's pencil", ok: true }, { t: "Musa's pencil" }, { t: "They are the same" }],
+        why: "They used the same cubes, so 8 cubes is longer than 5." },
+      { ask: "Kiki wants to know how long her desk is. Which tool should Kiki use?",
+        opts: [{ t: "a ruler", ok: true }, { t: "scales" }, { t: "a jug" }],
+        why: "A ruler measures how long something is." },
+    ],
+    extension: [
+      { ask: "A bottle holds 8 cups. A pot holds 5 cups. A jug holds 3 cups. Which one holds the most?",
+        opts: [{ t: "the bottle", ok: true }, { t: "the pot" }, { t: "the jug" }],
+        why: "The same cup measured all three, so the counts can be put in order: 3, 5, 8. The bottle holds the most." },
+      { ask: "Hodan has a solid shape with 6 faces, and every face is a flat square. What shape is it?",
+        opts: [{ t: "a cube", ok: true }, { t: "a cuboid" }, { t: "a cylinder" }],
+        why: "Six flat faces that are all squares make a cube." },
     ],
     finish: 19,
     done: "You can find the maths inside a story.",
@@ -3893,4 +4004,10 @@
   .sc-back button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
     padding: 8px 14px; min-height: 44px; border-radius: 12px; border: 2px dashed var(--accent);
     background: transparent; color: var(--ink); cursor: pointer; }
+</style>
+
+<style>/* ehel-differentiation - see add-differentiation.py */
+  .score.tier-support, .score.tier-extension { font-weight: 700; }
+  .score.tier-support { color: var(--teal); }
+  .score.tier-extension { color: var(--gold); }
 </style>

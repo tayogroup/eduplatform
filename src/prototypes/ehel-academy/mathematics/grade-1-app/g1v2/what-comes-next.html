@@ -1814,6 +1814,97 @@
     });
   })();
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+  /* ==== ehel-differentiation: the tiered runner - see grade-1-app/add-differentiation.py ====
+     The story step, with Ready to Go's Support and Extension. A wrong answer puts
+     a NARROWER version of the same problem next; finishing with at most one slip
+     offers a WIDER one behind a button. Neither tier scores, and finish() fires at
+     the end of the core bank exactly as secondStep does - so progress, the sticker
+     and the gate are untouched.
+
+     Separate from secondStep() on purpose: that one drives 24 other steps in two
+     textual variants, and none of them should carry the risk of this change. */
+  function tieredStep(o) {
+    const el = o.el, core = o.items;
+    const words = (h) => String(h).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const sup = (o.support || []).slice(), ext = (o.extension || []).slice();
+    let i = 0, right = 0, lock = true, mode = "core", queued = null, extDone = 0;
+    function current() { return mode === "core" ? core[i] : queued; }
+    function label() {
+      if (mode === "support") return "An easier one";
+      if (mode === "extension") return "A harder one - " + (extDone + 1) + " of " + ext.length;
+      return (o.label || "Question") + " " + (i + 1) + " of " + core.length;
+    }
+    function draw() {
+      const it = current();
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = it.ask;
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = label();
+      el.score.className = "score" + (mode === "core" ? "" : " tier-" + mode);
+      el.stage.innerHTML = it.pic || "";
+      el.ch.innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' +
+        (/^\s*\d+\s*$/.test(c.t) ? "" : " ss-w") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      lock = false;
+      say(words(it.ask));
+    }
+    function endCore() {
+      el.score.className = "score";
+      el.score.textContent = "You got " + right + " of " + core.length + ". " + o.done;
+      finish(o.finish);
+      /* the offer comes AFTER the step is done, and only to a child who did not
+         need the support - Cambridge's extensions all read "once they have
+         completed ...". One slip is allowed; two means an easier one was the
+         right call, not a harder one. */
+      if (ext.length && right >= core.length - 1) {
+        el.next.textContent = "Try a harder one";
+        el.next.hidden = false;
+      }
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = current(), ok = b.dataset.ok === "1";
+      el.ch.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      if (mode === "core" && ok) right++;
+      const msg = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      el.fb.className = "fb " + (ok ? "good" : "bad"); el.fb.textContent = msg;
+      say(msg);
+      if (mode === "extension") {
+        extDone++;
+        if (extDone < ext.length) { el.next.textContent = "Next challenge"; el.next.hidden = false; }
+        else el.score.textContent = "That is the last challenge. Well done.";
+        return;
+      }
+      if (mode === "support") {
+        mode = "core";                       /* back to where the child was */
+        if (i < core.length) { el.next.textContent = o.nextLabel || "Next question"; el.next.hidden = false; }
+        else endCore();
+        return;
+      }
+      i++;
+      if (!ok && sup.length) {               /* narrow the task, then carry on */
+        queued = sup.shift(); mode = "support";
+        el.next.textContent = "Try an easier one";
+        el.next.hidden = false;
+        return;
+      }
+      if (i < core.length) { el.next.textContent = o.nextLabel || "Next question"; el.next.hidden = false; }
+      else endCore();
+    });
+    el.next.addEventListener("click", () => {
+      if (mode === "extension" || (el.next.textContent === "Try a harder one" && ext.length)) {
+        if (mode !== "extension") { mode = "extension"; extDone = 0; }
+        queued = ext[extDone];
+        draw();
+        return;
+      }
+      if (mode === "support") { draw(); return; }
+      if (i < core.length) draw();
+    });
+    draw();
+  }
   /* ==== ehel-spot-the-mistake: the runner - see grade-1-app/add-spot-the-mistake.py ====
      The same question-after-question shape as add-second-steps.py's secondStep,
      installed here for the three lessons that never had one. The child moves on
@@ -2492,7 +2583,7 @@
   });
 
   /* ---- 16: story problems - one-step problems in the Cambridge Stage 1 shape ---- */
-  secondStep({
+  tieredStep({
     el: { say: $("wp16say"), stage: $("wp16st"), ch: $("wp16ch"), fb: $("wp16fb"), score: $("wp16sc"), next: $("wp16nx") },
     label: "Story",
     items: [
@@ -2514,6 +2605,26 @@
       { ask: "A number machine adds 3 to every number. Musa puts in 5. What number comes out?",
         opts: [{ t: "8", ok: true }, { t: "3" }, { t: "2" }],
         why: "The machine adds 3 every time. 5 and 3 more is 8." },
+    ],
+    /* ehel-differentiation - Ready to Go Support and Extension; neither tier scores */
+    support: [
+      { ask: "The beads go red, blue, red, blue. What colour comes next?",
+        opts: [{ t: "red", ok: true }, { t: "blue" }, { t: "yellow" }],
+        why: "The part that repeats is red, blue. After blue comes red again." },
+      { ask: "Musa counts in twos: 2, 4, 6. What number comes next?",
+        opts: [{ t: "8", ok: true }, { t: "7" }, { t: "9" }],
+        why: "Every jump is 2 more. 6 and 2 make 8." },
+      { ask: "Kiki has 2 stones. She needs 5 stones. How many more stones does Kiki need?",
+        opts: [{ t: "3", ok: true }, { t: "7" }, { t: "2" }],
+        why: "2 and 3 make 5, so Kiki needs 3 more." },
+    ],
+    extension: [
+      { ask: "The beads go red, blue, yellow, red, blue, yellow. What colour comes next?",
+        opts: [{ t: "red", ok: true }, { t: "yellow" }, { t: "blue" }],
+        why: "The part that repeats is three long: red, blue, yellow. After yellow it starts again with red." },
+      { ask: "A number machine adds 4 to every number. Hodan puts in 9. What number comes out?",
+        opts: [{ t: "13", ok: true }, { t: "12" }, { t: "5" }],
+        why: "9 and 1 make 10, and 3 of the 4 are left. 10 and 3 make 13." },
     ],
     finish: 15,
     done: "You can find the maths inside a story.",
@@ -3505,4 +3616,10 @@
   .sc-back button { font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700;
     padding: 8px 14px; min-height: 44px; border-radius: 12px; border: 2px dashed var(--accent);
     background: transparent; color: var(--ink); cursor: pointer; }
+</style>
+
+<style>/* ehel-differentiation - see add-differentiation.py */
+  .score.tier-support, .score.tier-extension { font-weight: 700; }
+  .score.tier-support { color: var(--teal); }
+  .score.tier-extension { color: var(--gold); }
 </style>

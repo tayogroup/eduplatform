@@ -68,7 +68,13 @@ const orphans = onDisk.filter((f) => !reachable.has(path.basename(f, ".mp3")));
 
 // Anything git already has can be restored for free; anything else is a clip
 // that would have to be bought again.
-const tracked = new Set(execFileSync("git", ["ls-files", "--", TTS], { cwd: ROOT, encoding: "utf8" })
+// maxBuffer, because the default is 1 MB and this listing outgrew it. Intensive
+// English tracks 13,436 clips in one directory, which is ~1.04 MB of path text,
+// and execFileSync threw ENOBUFS — killing the tool on the line that decides
+// what git can restore. It failed CLOSED, which is the right direction for a
+// delete tool, but it failed on the largest subject, which is the one with most
+// to prune. 64 MB is ~800k paths: far past any plausible cache.
+const tracked = new Set(execFileSync("git", ["ls-files", "--", TTS], { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
   .split("\n").filter(Boolean).map((line) => path.basename(line)));
 const recoverable = orphans.filter((f) => tracked.has(f));
 const unrecoverable = orphans.filter((f) => !tracked.has(f));

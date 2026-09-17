@@ -69,6 +69,26 @@
       "sourceDocumentCount": 4,
       "implementationStatus": "Complete runtime package",
       "reviewStatus": "Imported - curriculum review required"
+    },
+    {
+      "number": 7,
+      "id": "g05u07",
+      "termId": "t03",
+      "title": "Forces and Magnets",
+      "data": "./data/units/unit-7.json",
+      "sourceDocumentCount": 0,
+      "implementationStatus": "Complete runtime package",
+      "reviewStatus": "Authored from the Cambridge books — curriculum review required"
+    },
+    {
+      "number": 8,
+      "id": "g05u08",
+      "termId": "t03",
+      "title": "Food, Digestion and a Healthy Diet",
+      "data": "./data/units/unit-8.json",
+      "sourceDocumentCount": 0,
+      "implementationStatus": "Complete runtime package",
+      "reviewStatus": "Authored from the Cambridge books — curriculum review required"
     }
   ],
   "finalAssessment": {
@@ -76,7 +96,7 @@
     "title": "Stage 5 Science Capstone Quiz",
     "data": "./data/grade-capstone.json",
     "placement": "After the Stage 5 capstone project",
-    "questionCount": 18,
+    "questionCount": 24,
     "passPercent": 80,
     "reviewStatus": "Rebuilt v2.0 - curriculum review pending"
   },
@@ -84,56 +104,8 @@
     "framework": "0097",
     "status": "Proposed mapping — Cambridge sign-off pending",
     "objectivesPublished": 59,
-    "objectivesClaimed": 51,
-    "coveragePercent": 86,
-    "gaps": [
-      {
-        "subStrand": "Structure and function",
-        "reachedByNoUnit": false,
-        "objectives": [
-          {
-            "code": "5Bs.04",
-            "text": "Describe the human digestive system, including the functions of the organs involved (limited to mouth, oesophagus, stomach, small intestine, large intestine and anus), and know that many vertebrates have a similar digestive system."
-          }
-        ],
-        "reason": "5Bs.04 (the human digestive system) is the clearest case of the framework moving rather than the course misplacing. 0846 has no human-biology sub-strand at Stage 5 at all — its Stage 5 is Plants, States of matter, Light and The Earth and beyond — and puts humans and animals at Stage 6 (6Bh1-6Bh4), which Grade 6 Unit 1 teaches in full, digestion included. So the content exists in the course, one stage later than 0097 wants it, and it cannot be moved: Grade 5's six units are one per 0846 sub-strand and none of them is about the body. 5Bs.01-5Bs.03 (the parts of a flower) ARE claimed, which is why this sub-strand is only partly covered rather than empty."
-      },
-      {
-        "subStrand": "Forces and energy",
-        "reachedByNoUnit": true,
-        "objectives": [
-          {
-            "code": "5Pf.01",
-            "text": "Identify a range of forces (limited to gravity, applied forces, normal forces, upthrust, friction, air resistance and water resistance)."
-          },
-          {
-            "code": "5Pf.02",
-            "text": "Know that an object may have multiple forces acting upon it, even when at rest."
-          },
-          {
-            "code": "5Pf.03",
-            "text": "Use force diagrams to show the name and direction of forces acting on an object."
-          }
-        ]
-      },
-      {
-        "subStrand": "Electricity and magnetism",
-        "reachedByNoUnit": true,
-        "objectives": [
-          {
-            "code": "5Pe.01",
-            "text": "Know the difference between a magnet and a magnetic material."
-          },
-          {
-            "code": "5Pe.02",
-            "text": "Know that forces act over a distance between magnets, and between a magnet and a magnetic material."
-          },
-          {
-            "code": "5Pe.03",
-            "text": "Know that magnets can have different magnetic strengths."
-          }
-        ]
-      }
-    ]
+    "objectivesClaimed": 59,
+    "coveragePercent": 100,
+    "gaps": []
   }
 }

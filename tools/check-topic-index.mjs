@@ -45,7 +45,10 @@ const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 // the last thing you added cannot see that thing disappear.
 const TOPIC_FLOORS = {
   mathematics: 4191,
-  science: 1254,
+  // Raised from 1254 on 2026-09-17 when six authored units were added to
+  // Stages 5 and 6. A floor set at what you had before the last thing you
+  // added is a formality.
+  science: 1376,
   computing: 1895,
   "global-perspectives": 1273,
   english: 2165,

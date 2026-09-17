@@ -203,6 +203,13 @@ const CAMBRIDGE_OBJECTIVES = {
   "5-5": ["5TWSp.03", "5TWSp.05", "5TWSm.02", "5SIC.02"],
   "5-6": ["5ESs.01", "5ESs.02", "5ESs.03", "5TWSc.07", "5TWSm.02", "5SIC.01",
           "5SIC.03", "5SIC.05"],
+  // ── Stage 5, units 7 and 8: AUTHORED, not from the pack ──
+  // The 2018 framework gave Stage 5 no forces, magnetism or human-biology
+  // sub-strand, so the pack has no unit for any of them. 0097 does, and the
+  // Teacher's Resource 5 cites every code below at Stage 5 in Cambridge's own
+  // wording. Authored in science/data/cambridge-stage5-units.json.
+  "5-7": ["5Pf.01", "5Pf.02", "5Pf.03", "5Pe.01", "5Pe.02", "5Pe.03"],
+  "5-8": ["5Bp.01", "5Bs.04"],
   // ── Stage 6 (0097) ──
   // Re-pointed with Stage 5, for the same reasons. 28 of 0846's 40 (70%) becomes
   // 21 of 0097's 59 (36%). The whole Earth-and-space strand is missing content —
@@ -234,6 +241,17 @@ const CAMBRIDGE_OBJECTIVES = {
   // `parallel` appears nowhere in Grade 6. The unit teaches series only.
   "6-5": ["6Cp.03", "6Pe.01", "6Pe.02", "6TWSp.05", "6TWSc.01", "6TWSc.06",
           "6TWSa.04", "6TWSm.02", "6SIC.01", "6SIC.02"],
+  // ── Stage 6, units 6 to 9: AUTHORED, not from the pack ──
+  // The 2018 framework gave Stage 6 no Earth-and-space, no light and no
+  // reproduction sub-strand, so the pack has no unit for any of them. 0097 does,
+  // and the Teacher's Resource 6 cites every code below at Stage 6 in
+  // Cambridge's own wording. Unit 9's subject is already live in this course at
+  // Grade 8 Unit 2; this teaches it at the stage the current framework places it.
+  // Authored in science/data/cambridge-stage6-units.json.
+  "6-6": ["6ESp.01", "6ESp.02", "6ESp.03", "6ESp.04", "6ESc.01"],
+  "6-7": ["6ESs.01", "6ESs.02"],
+  "6-8": ["6Ps.01", "6Ps.02"],
+  "6-9": ["6Bs.03", "6Bp.01"],
   // ── Stage 7 (0893) ──
   "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01", "7SIC.04"],
   "7-2": ["7Cm.01", "7Cm.02", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01", "7TWSm.01"],
@@ -778,6 +796,9 @@ for (const stage of [5, 6, 7, 8]) {
   CONCEPT_ADDITIONS[stage] = { doc, byUnit };
 }
 const conceptsAdded = {};
+// Units authored from the Cambridge books for sub-strands the pack does not
+// cover. Counted so the end-of-build report says how many shipped.
+const authoredUnitsWritten = {};
 
 function applyConceptAdditions(grade, unitNo, concepts) {
   const add = CONCEPT_ADDITIONS[grade];
@@ -3456,6 +3477,122 @@ function buildGrade(grade) {
     fs.writeFileSync(path.join(unitDir, `unit-${unitMeta.unit}.json`), `${JSON.stringify(runtime, null, 2)}\n`, "utf8");
   });
 
+  // ── Units the source pack never contained ──────────────────────────────────
+  // CONCEPT_ADDITIONS can only extend a unit that exists, and 19 of Cambridge
+  // 0097's Stage 5 and 6 objectives have no unit to extend — forces, magnetism,
+  // diet and digestion at Stage 5; rocks and soils, the Solar System, mirrors
+  // and refraction, and growing up at Stage 6. Those sub-strands are absent
+  // because the pack was built to the 2018 framework, which did not place them
+  // at these stages.
+  //
+  // So these units are authored from the Cambridge books rather than extracted,
+  // and the fixture carries the SUBSTANCE while this function derives the
+  // scaffolding the generated units also derive: the wrapper, the visual
+  // models, the fluency round, self-assessment, the vocabulary cards (which are
+  // a view of reference.terms in every generated unit too) and the games.
+  // Authoring both halves would mean keeping two copies of the same list in
+  // step by hand.
+  //
+  // They are APPENDED with unit numbers above the pack's, so no existing unit
+  // is renumbered. A learner's progress is keyed per unit, so a new unit simply
+  // has no progress yet; renumbering an existing one would silently hand them
+  // somebody else's.
+  const authoredFile = path.join(sciRoot, "data", `cambridge-stage${grade}-units.json`);
+  if (fs.existsSync(authoredFile)) {
+    const doc = JSON.parse(fs.readFileSync(authoredFile, "utf8"));
+    const packNumbers = new Set(source.units.map((u) => Number(u.unit)));
+    for (const row of doc.units || []) {
+      if (packNumbers.has(Number(row.unitNo))) {
+        throw new Error(`Grade ${grade}: authored unit ${row.unitNo} collides with a unit the pack now provides. Renumber the authored one; never renumber the pack's.`);
+      }
+      for (const field of ["unitNo", "unitId", "unitTitle", "unitOverview", "outcomes", "concepts",
+                           "explorations", "methods", "workedExamples", "practice", "activities",
+                           "reference", "realProblems", "assessment", "codes"]) {
+        if (!row[field]) throw new Error(`cambridge-stage${grade}-units.json: unit ${row.unitNo} is missing ${field}.`);
+      }
+      if (row.concepts.length < 3) {
+        throw new Error(`cambridge-stage${grade}-units.json: unit ${row.unitNo} has ${row.concepts.length} concepts. check-science-content.mjs refuses fewer than 3.`);
+      }
+      for (const concept of row.concepts) {
+        if ((concept.explanation || "").length < 300) {
+          throw new Error(`cambridge-stage${grade}-units.json: unit ${row.unitNo} concept ${concept.id} has a ${(concept.explanation || "").length}-character explanation; the content gate refuses under 300.`);
+        }
+      }
+      const outcomes = row.outcomes;
+      const lo = (i) => `lo${String((i % Math.max(1, outcomes.length)) + 1).padStart(2, "0")}`;
+      const terms = row.reference.terms || [];
+      const assessment = { passPercent: row.assessment.passPercent || 70, questions: row.assessment.questions };
+      const runtime = {
+        schemaVersion: "Ehel Science Runtime v1.0",
+        generatedAt: new Date().toISOString(),
+        stage: { id: stageId, label: stageLabel }, subject: "Science",
+        // termOf() is per-POSITION, and an authored unit sits after the
+        // pack's, so its position is the pack's count plus its place in the
+        // fixture.  itself is scoped inside buildUnit and not available
+        // here, which is what the first attempt got wrong.
+        term: (() => { const t = termOf(source.units.length + (doc.units || []).indexOf(row)); return { id: `t0${t}`, label: `Term ${t}` }; })(),
+        unit: {
+          unitId: row.unitId, unitNo: row.unitNo, unitTitle: row.unitTitle,
+          unitOverview: row.unitOverview,
+          learningPath: ["Preview the goals and core ideas", "Explore concepts and investigations", "Learn methods and study worked examples", "Complete guided practice, experiments and games", "Apply, explain and complete the Unit Challenge"],
+          reviewStatus: "Authored from the Cambridge books — curriculum review required",
+        },
+        cambridge: {
+          ...cambridge,
+          objectiveCodes: row.codes.slice(),
+          objectives: cambridgeObjectivesFor(grade, row.unitNo, cambridge.code),
+          alignmentStatus: "Proposed mapping — Cambridge sign-off pending",
+        },
+        provenance: {
+          contentPackage, framework: cambridgeLabel,
+          sourceArchive: null,
+          sourceDocuments: row.sources || [],
+          sourceBlockCount: 0,
+          transformation: `Authored against ${cambridgeLabel} from the Cambridge books, for a sub-strand the source pack does not cover.`,
+          reviewStatus: "Authored — curriculum review required",
+        },
+        media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
+        outcomes,
+        concepts: row.concepts,
+        explorations: row.explorations,
+        // A visual model is a titled text panel in every generated unit too —
+        // no diagram data — so it is derived from the concepts rather than
+        // authored twice.
+        visualModels: row.concepts.map((concept, i) => ({
+          id: `model-${i + 1}`, outcomeId: lo(i), title: concept.title,
+          modelType: `concept-model-${i + 1}`,
+          purpose: String(concept.explanation).split("\n\n")[0],
+          defaultNumber: null,
+        })),
+        methods: row.methods,
+        workedExamples: row.workedExamples,
+        practice: row.practice.slice(0, 12),
+        activities: row.activities,
+        reference: {
+          ...row.reference,
+          vocabulary: terms.map(([t, meaning]) => ({
+            term: t, meaning, example: row.unitOverview, letter: (t[0] || "?").toUpperCase(),
+          })),
+        },
+        // The fluency round is the practice bank asked again under a timer in
+        // every generated unit; same here.
+        fluency: row.practice.slice(0, 12).map((item, i) => ({
+          id: `fl${String(i + 1).padStart(2, "0")}`, outcomeId: lo(i),
+          difficulty: i < 4 ? "Round 1" : i < 8 ? "Round 2" : "Round 3",
+          prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: item.answer,
+        })),
+        realProblems: row.realProblems,
+        reasoningPrompts: row.reasoningPrompts || [],
+        assessment,
+        games: { masteryScore: 3, games: gameData(assessment, terms, row.unitNo) },
+        selfAssessment: outcomes.slice(0, 8).map(toFirstPerson),
+      };
+      builtUnits.push(runtime);
+      authoredUnitsWritten[grade] = (authoredUnitsWritten[grade] || 0) + 1;
+      fs.writeFileSync(path.join(unitDir, `unit-${row.unitNo}.json`), `${JSON.stringify(runtime, null, 2)}\n`, "utf8");
+    }
+  }
+
   // Sample each unit across the difficulty bands rather than taking the first
   // two questions. Unit assessments are ordered Basic → Core → Challenge, so
   // "first two" always produced an all-Basic capstone that never tested the
@@ -3492,16 +3629,30 @@ function buildGrade(grade) {
     // signed it off. The banner the learner sees is driven by this string, so it
     // has to describe what actually happened.
     packageReviewStatus: "Rebuilt v2.0 - self-teaching content pass complete; curriculum review pending",
-    units: source.units.map((unit, position) => ({
-      number: unit.unit,
-      id: unit.unit_id,
-      termId: `t0${termOf(position)}`,
-      title: builtUnits[position].unit.unitTitle,
-      data: `./data/units/unit-${unit.unit}.json`,
-      sourceDocumentCount: unit.source_document_count,
-      implementationStatus: "Complete runtime package",
-      reviewStatus: unit.review_status,
-    })),
+    // Mapped from builtUnits, NOT from source.units. This listing is what the
+    // shell reads to draw the unit picker, so a unit absent here is a unit no
+    // learner can reach however complete its data file is — which is exactly
+    // what happened on the first build that appended authored units: unit-7.json
+    // and unit-8.json were written, every gate passed, and the manifest still
+    // advertised six. Caught by counting the manifest rather than the directory.
+    units: builtUnits.map((built, position) => {
+      const packed = source.units[position];
+      return {
+        number: built.unit.unitNo,
+        id: built.unit.unitId,
+        termId: built.term.id,
+        title: built.unit.unitTitle,
+        data: `./data/units/unit-${built.unit.unitNo}.json`,
+        sourceDocumentCount: packed ? packed.source_document_count : 0,
+        implementationStatus: "Complete runtime package",
+        // The PACK's review status for a pack unit, not the built object's.
+        // Reading it off `built` rewrote "Imported - curriculum review
+        // required" to "Curriculum review required" in all eight manifests -
+        // a silent edit to every grade, caught by diffing a grade this change
+        // was not supposed to touch.
+        reviewStatus: packed ? packed.review_status : built.unit.reviewStatus,
+      };
+    }),
     // Mirrors the English manifest's finalAssessment block so every subject
     // advertises its end-of-course assessment the same way. For Science that
     // assessment is the stage capstone quiz.

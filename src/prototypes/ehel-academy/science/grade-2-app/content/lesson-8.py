@@ -137,7 +137,19 @@ LESSON = {
                  q("Is every electrical thing too dangerous to touch?", "\U0001F526", "No. A torch with its cells covered is made to be handled.", ["Yes, never touch anything electrical", "Yes, unless a grown-up is there"], "Mains electricity from the wall is the dangerous one. Cell-powered things are made for you to hold. Follow the rules and you are safe."),
                  q("What do scientists call the little light in a circuit?", "\U0001F4A1", "a lamp", ["a bulb", "a torch", "a cell"], "It is a lamp. Using the right word now saves confusion later on."),
                  q("You join just one end of the lamp to the cell. Does it light?", "\U0001F50B", "No. The electricity has to go all the way round and back.", ["Yes, one wire is enough", "Yes, if the cell is new"], "One connection leaves a gap, and a gap means no light. A circuit has to be a complete loop."),
-             ]},
+             ],
+              "support": [
+                 q("Does a torch need a cell?", "\U0001F526", "Yes", ["No"],
+                   "The cell gives the torch its electricity."),
+                 q("Will a lamp light if a wire is missing?", "\U0001F4A1", "No", ["Yes"],
+                   "The loop has to be complete all the way round."),
+              ],
+              "extension": [
+                 q("Why is the metal inside a wire covered in plastic?", "\U0001F50C", "the metal carries the electricity and the plastic keeps it in", ["to give the wire a nicer colour", "so that the wire bends more easily"],
+                   "Metal where you want the electricity to travel, plastic where you do not. Every wire in your house is built that way."),
+                 q("A switch in a circuit is turned off. What has it actually done?", "\U0001F501", "made a gap in the loop, so nothing can go round", ["used up the electricity in the cell", "made the lamp too weak to light"],
+                   "A switch is a gap you can open and close on purpose. Closed, the loop is whole; open, it is broken."),
+              ]},
              "You know your circuits.",
              mis=["6.1-m1", "6.2-m1", "rtg-17", "rtg-18"]),
 

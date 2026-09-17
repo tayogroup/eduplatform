@@ -188,7 +188,19 @@ LESSON = {
                  q("Is a single grain of sand <b>rock</b>?", "\U0001F3D6️", "Yes. Rock comes in every size.", ["No, rock has to be big and heavy", "No, sand is soil"], "Sand is rock broken into tiny grains. Being small does not stop it being rock."),
                  q("Rocks, stones and pebbles. How many different materials is that?", "\U0001FAA8", "one - they are all rock", ["three different things", "two, because pebbles are smooth"], "The words only tell you how big the piece is and how smooth it is. All three are rock."),
                  q("Is a brick a rock?", "\U0001F9F1", "No. People make bricks.", ["Yes, it is hard like rock", "Yes, it has stones in it"], "Bricks and concrete are made by people. You would not find them in a natural place unless somebody put them there."),
-             ]},
+             ],
+              "support": [
+                 q("Is granite hard or soft?", "\U0001FAA8", "hard", ["soft"],
+                   "Granite is so hard it is used for kitchen worktops."),
+                 q("Is sand made of rock?", "\U0001F3D6\uFE0F", "Yes", ["No"],
+                   "Sand is rock broken into tiny grains."),
+              ],
+              "extension": [
+                 q("A stone statue outdoors has lost its face after two hundred years. What wore it away?", "\U0001F5FF", "rain, wind and frost, very slowly", ["people rubbing it as they pass", "the stone was badly made"],
+                   "Water seeps into tiny cracks and freezes, and freezing water pushes. Over centuries that breaks even hard rock apart."),
+                 q("Sandstone soaks water up and granite does not. Which would you build a wall with, and why?", "\U0001F9F1", "granite, because water running off keeps the wall dry", ["sandstone, because it is easier to find", "either one, it makes no difference"],
+                   "Test a rock and use what you find. A stone that drinks is a stone that cracks when the water inside it freezes."),
+              ]},
              "You can tell your rocks apart.",
              mis=["1.4-m1", "rtg-19", "1.4-m2"]),
 

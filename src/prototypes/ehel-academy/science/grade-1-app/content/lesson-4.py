@@ -161,7 +161,19 @@ LESSON = {
                  q("A wooden ruler is...", "\U0001F4CF", "stiff", ["stretchy", "soft", "bendy"], "Wood keeps its shape. It does not bend easily, so it is stiff."),
                  q("A metal spoon is hard. What else is it?", "\U0001F944", "shiny and waterproof too", ["soft", "stretchy"], "One material has many properties at once. A metal spoon is hard, shiny, stiff and waterproof, all at the same time."),
                  q("A sponge is soft. What else is it?", "\U0001F9FD", "bendy, and it soaks up water", ["hard", "shiny and stiff"], "One material has many properties at once. A sponge is soft, bendy and dull, and it soaks up water."),
-             ]},
+             ],
+              "support": [
+                 q("Is a stone hard or soft?", "\U0001FAA8", "hard", ["soft"],
+                   "A stone does not squash when you press it."),
+                 q("Can you see through wood?", "\U0001FAB5", "No", ["Yes"],
+                   "Wood is not see-through. Glass is."),
+              ],
+              "extension": [
+                 q("Glass and clean water are both see-through. Does that make them the same material?", "\U0001F95B", "No - two different materials can share one property", ["Yes, see-through things are all the same material", "Yes, water is melted glass"],
+                   "A property is one thing about a material, not its name. Glass and water share see-through and almost nothing else."),
+                 q("A window could be glass or clear plastic, and both are see-through. Why is glass usually chosen?", "\U0001FA9F", "it stays stiff, and it does not scratch as easily", ["clear plastic is not really see-through", "glass costs less than any other material"],
+                   "When two materials both have the property you need, you look at the next one - stiffness, scratches, how long it lasts."),
+              ]},
              "You can describe materials with science words.",
              mis=["3.2-m1"]),
 

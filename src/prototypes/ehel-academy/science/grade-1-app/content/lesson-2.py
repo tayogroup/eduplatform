@@ -91,7 +91,19 @@ LESSON = {
                  q("You water a plant. Which part takes the water in?", "\U0001F4A7", "the roots", ["the leaves", "the flower"], "The water soaks into the soil, and the roots drink it up. Water does not go in through the leaves."),
                  q("Which of these is a <b>plant</b>?", "\U0001F333", "all of them: a tree, some grass and a daisy", ["only the daisy", "only the tree"], "A tree is a plant. Grass is a plant. A daisy is a plant. They are all green living things that make their own food."),
                  q("Where does a plant get its food?", "\U0001F343", "it makes its own, in its leaves", ["it eats the soil", "a grown-up feeds it", "it drinks it through the roots"], "A plant makes its own food in its leaves, using light. The roots take in water, not food."),
-             ]},
+             ],
+              "support": [
+                 q("Which part of a plant is under the soil?", "\U0001F331", "the roots", ["the flower"],
+                   "Roots grow down into the soil."),
+                 q("Does a plant need its roots?", "\U0001F4A7", "Yes", ["No"],
+                   "Without roots it cannot drink."),
+              ],
+              "extension": [
+                 q("Why are so many flowers brightly coloured?", "\U0001F41D", "to bring insects, which help the plant make seeds", ["to look pretty for people", "to soak up more light than leaves do"],
+                   "A bright flower attracts insects. They carry pollen from flower to flower, and that is how seeds get made."),
+                 q("A plant cannot walk. So what are its seeds for?", "\U0001F330", "getting new plants started somewhere else", ["feeding the parent plant", "holding the flower up"],
+                   "A plant stays where it is all its life. Its seeds are the part that can travel, and that is how a plant reaches new ground."),
+              ]},
              "You know the parts of a plant and what each one does."),
 
         step("experiment", "Does a plant need light?", "\U0001F9EA", "Light test", ["1Bp.03", "1TWSp.02", "1TWSc.04", "1TWSa.01"],

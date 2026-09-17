@@ -130,7 +130,19 @@ LESSON = {
                  q("A glass window. Which word is the <b>material</b>?", "\U0001FA9F", "glass", ["window", "shiny", "see-through"], "Window is the object. Glass is what it is made of."),
                  q("A sponge squashes easily. Is it <b>smooth</b>?", "\U0001F9FD", "No. It is soft and full of holes.", ["Yes, soft things are smooth", "Yes, if it is wet"], "Soft means it squashes. Smooth means no bumps or holes. A sponge is one and not the other."),
                  q("A thin plastic ruler does not squash, but it snaps. Is it <b>hard</b>, or <b>strong</b>?", "\U0001F4CF", "hard but not strong", ["strong but not hard", "both"], "Hard means it does not squash. Strong means it does not break. They are two different properties."),
-             ]},
+             ],
+              "support": [
+                 q("Is metal hard or soft?", "\U0001F944", "hard", ["soft"],
+                   "Metal does not squash, which is why a saucepan is made of it."),
+                 q("Is a jumper soft or hard?", "\U0001F9F6", "soft", ["hard"],
+                   "Wool is soft, which is why it is comfortable to wear."),
+              ],
+              "extension": [
+                 q("Wool comes from a sheep and cotton from a plant. Are both natural?", "\U0001F411", "Yes - one from an animal, one from a plant, and neither made by people", ["only the wool, because a sheep is alive", "only the cotton, because plants grow"],
+                   "Natural means it grows or is dug out of the ground. It does not have to come from a plant."),
+                 q("A raincoat and a towel are both cloth. Why does one keep water out and the other soak it up?", "\U0001F9E5", "they are different materials, picked for opposite properties", ["the towel is simply older", "the raincoat is only thicker"],
+                   "Cloth is not one material. Cotton drinks water and coated plastic sheds it. The job decides which you pick."),
+              ]},
              "A material is chosen for its properties.",
              mis=["3.1-m1", "3.1-m2", "3.2-m1", "3.2-m2"]),
 

@@ -154,7 +154,19 @@ LESSON = {
                  q("You press the switch and the room lights up. Is the <b>switch</b> the light source?", "\U0001F4A1", "No. The lamp is. The switch only lets the electricity through.", ["Yes, it makes the light", "Yes, because you press it"], "Look at where the light actually comes out. That is the source."),
                  q("A silver spoon looks bright on a sunny table. Is it a light source?", "\U0001F944", "No. It only bounces light back, like a mirror.", ["Yes, it is shining", "Yes, if it is very shiny"], "A source MAKES its own light. Shiny things and the Moon only shine light back."),
                  q("Sofia says dark is the <b>opposite</b> of light, like hot and cold. Is she right?", "\U0001F311", "No. Dark is simply what is left when the light is taken away.", ["Yes, they are opposites", "Yes, and dark is a kind of cold"], "Hot and cold are two real things. Light is a real thing and dark is only its absence - there is no such stuff as dark."),
-             ]},
+             ],
+              "support": [
+                 q("Does the Sun make its own light?", "\u2600\uFE0F", "Yes", ["No"],
+                   "The Sun makes its own light. The Moon does not."),
+                 q("Is a mirror a light source?", "\U0001FA9E", "No", ["Yes"],
+                   "A mirror only bounces light that came from somewhere else."),
+              ],
+              "extension": [
+                 q("Why can you see a book, which makes no light of its own?", "\U0001F4D6", "light from a source bounces off it into your eye", ["your eyes send light onto the page", "paper makes a little light of its own"],
+                   "Two things have to happen: a source lights the book, and the bounced light reaches your eye."),
+                 q("You close the curtains at noon and the room goes dim. Where did the light go?", "\U0001FA9F", "the curtains blocked it before it could get in", ["the light was used up by the room", "the darkness came in through the curtains"],
+                   "Light travels from a source until something stops it. Curtains stop it, and what is left is simply less light."),
+              ]},
              "Sources make light; with none, it is dark.",
              mis=["5.1-m1", "5.1-m2", "5.2-m1"]),
 

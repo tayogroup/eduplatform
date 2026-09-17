@@ -142,7 +142,19 @@ LESSON = {
                  q("In science, what does your <b>diet</b> mean?", "\U0001F957", "everything you eat and drink", ["eating less to get thinner", "only the healthy things you eat"], "Everybody has a diet. It is simply all your food and drink, whatever it is."),
                  q("Is it wrong to ever eat a piece of cake?", "\U0001F370", "No. The problem is eating a lot of it, often.", ["Yes, never eat cake", "Yes, unless you brush afterwards"], "Your body needs a mixture of foods. A treat now and then is fine; too much of one kind is not."),
                  q("Your hands look perfectly clean. Do they still need washing before you eat?", "\U0001F9FC", "Yes. Germs are far too small to see.", ["No, they look clean", "Only if you have been outside"], "You cannot see germs at all. A hand that looks spotless can still be covered in them."),
-             ]},
+             ],
+              "support": [
+                 q("Should you wash your hands before you eat?", "\U0001F9FC", "Yes", ["No"],
+                   "Washing takes the germs off your hands."),
+                 q("Which teeth are the big flat ones at the back?", "\U0001F9B7", "the molars", ["the incisors"],
+                   "Molars are the grinders at the back."),
+              ],
+              "extension": [
+                 q("Why does a dentist say to brush before bed, and not only in the morning?", "\U0001FAA5", "germs work on your teeth all night while you sleep", ["teeth only get dirty at night", "toothpaste works better in the dark"],
+                   "Nothing washes your mouth while you sleep, so whatever is left on your teeth has all night to do damage."),
+                 q("Why does a doctor ask whether anyone else at home is ill too?", "\U0001F321\uFE0F", "because an infectious illness passes from person to person", ["to find out how many beds you have", "it makes no difference to them"],
+                   "If your family has the same thing, it probably passed between you - and that helps the doctor work out what it is."),
+              ]},
              "You know how to keep a body healthy, and what to do when it is not.",
              mis=["rtg-03", "4.4-m1", "rtg-04"]),
 

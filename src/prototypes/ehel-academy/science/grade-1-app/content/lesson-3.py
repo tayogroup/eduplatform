@@ -93,7 +93,19 @@ LESSON = {
                  q("The blanket feels soft. Which part told you?", "\U0001F9F6", "skin", ["ears", "eyes", "tongue"], "Your skin felt it, through your hands. That is touch."),
                  q("Thunder rumbles far away. Which part told you?", "⛈️", "ears", ["tongue", "nose", "hands"], "Your ears heard the thunder."),
                  q("Smoke! Which sense warns you first, before you see the fire?", "\U0001F525", "smell, with your nose", ["taste, with your tongue", "touch, with your feet"], "Smell warns you of smoke. Senses keep us safe."),
-             ]},
+             ],
+              "support": [
+                 q("Which part of you hears?", "\U0001F514", "your ears", ["your eyes"],
+                   "Ears are for hearing."),
+                 q("Do you see with your eyes?", "\U0001F441\uFE0F", "Yes", ["No"],
+                   "Eyes are for seeing."),
+              ],
+              "extension": [
+                 q("You have a heavy cold and your nose is blocked. Why does your dinner taste of almost nothing?", "\U0001F927", "most of what you call taste is really smell", ["your tongue stops working when you are ill", "food changes while you are ill"],
+                   "Your tongue only finds a few things - sweet, salty, sour, bitter. The rest of a flavour comes through your nose."),
+                 q("Why do you have two ears instead of one?", "\U0001F442", "so you can tell which direction a sound came from", ["in case one of them breaks", "so that sounds are twice as loud"],
+                   "A sound reaches the nearer ear a whisker sooner than the other. That tiny difference is how you know where to look."),
+              ]},
              "Your senses tell you about the world, and they keep you safe."),
 
         step("questions", "The feely bag", "\U0001F45C", "Feely bag", ["1Bs.02"],
@@ -110,7 +122,19 @@ LESSON = {
                  q("It feels rough and bumpy, like sandpaper.", "\U0001F45C", "a rock", ["a silk scarf", "an egg", "a balloon"], "Rough and bumpy: a rock. Smooth things have no bumps."),
                  q("It feels light, soft and tickly.", "\U0001F45C", "a feather", ["a brick", "a key", "a bottle"], "Light and tickly: a feather."),
                  q("It feels smooth, cold and hard, and it has a handle.", "\U0001F45C", "a metal spoon", ["a sock", "a leaf", "a pillow"], "Smooth, cold, hard, with a handle: a spoon."),
-             ]},
+             ],
+              "support": [
+                 q("Is a rock rough or smooth?", "\U0001FAA8", "rough", ["smooth"],
+                   "A rock feels bumpy under your fingers."),
+                 q("Which sense are you using inside the feely bag?", "\u270B", "touch, with my skin", ["sight, with my eyes"],
+                   "The bag hides everything, so your hands have to do the work."),
+              ],
+              "extension": [
+                 q("Your hand closes on something in the bag. What can touch NOT tell you about it?", "\U0001F3A8", "what colour it is", ["whether it is hard or soft", "whether it is rough or smooth"],
+                   "Touch gives you shape, texture, weight and warmth. Colour needs light and eyes."),
+                 q("Two things in the bag both feel smooth, cold and hard. How could you still tell them apart?", "\U0001F944", "by their shape and size, still using only touch", ["by their colour", "you could not tell, so you would have to look"],
+                   "Touch hands you several clues at once. Smooth, cold and hard fits a spoon and a marble - their shapes do not."),
+              ]},
              "Touch told you what was there, without your eyes."),
 
         step("explore", "Same and different", "\U0001F46B", "Same and different", ["1Bp.04"],

@@ -159,7 +159,19 @@ LESSON = {
                  q("You roll a flat sheet of paper into a tube. The tube is stiff. Did the <b>material</b> change?", "\U0001F4C4", "No. The object changed shape; the paper is as bendy as ever.", ["Yes, it became a stiff material", "Yes, rolling makes new paper"], "Unroll it and it is the same bendy paper. The OBJECT changed, not the material."),
                  q("Sofia says toast is just bread with a brown top, so it is still bread. Is she right?", "\U0001F35E", "No. The brown is a new material, and no cooling turns toast back into bread.", ["Yes, it is still bread underneath", "Yes, if you scrape the brown off"], "Scraping the brown off does not give you a fresh slice back, and cooling gives you cold toast. Toasting made something new."),
                  q("Are all inventors and scientists people from long ago?", "\U0001F52C", "No. Scientists are discovering new things today.", ["Yes, they all lived long ago", "Yes, they are all very old"], "There are scientists at work right now, finding out things nobody knew last year. Some of them are quite young."),
-             ]},
+             ],
+              "support": [
+                 q("Does toast ever go back to being bread?", "\U0001F35E", "No", ["Yes"],
+                   "Toasting makes a new material, and it does not go back."),
+                 q("Can you un-burn a burnt match?", "\U0001F525", "No", ["Yes"],
+                   "Burning makes new materials that will not go back."),
+              ],
+              "extension": [
+                 q("You mix flour and water into a dough. A new material, or a mixture?", "\U0001F35A", "a mixture - the flour and the water are both still in there", ["a new material, because it looks different", "neither of the two"],
+                   "Looking different is not the test. Ask whether the materials you started with are still there."),
+                 q("Bread goes hard and stale after a week. Same material, or new?", "\U0001F956", "the same bread, only dried out", ["a new material", "it has turned itself into toast"],
+                   "Drying out is a change you can see, and it makes nothing new. Toasting the same slice would."),
+              ]},
              "Melt, freeze, squash: same. Cook, bake, burn: new.",
              mis=["3.5-m1", "rtg-11", "rtg-12"]),
 

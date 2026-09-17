@@ -194,7 +194,19 @@ LESSON = {
                  q("What does the Earth do once every day?", "\U0001F30D", "it spins round", ["it stops still", "it turns once a week"], "The Earth spins round once a day. That makes the Sun seem to move."),
                  q("The Sun seems to cross the sky all day. What is really moving?", "\U0001F30D", "the Earth, turning round", ["the Sun, travelling across", "the clouds, carrying it"], "Spin slowly on a chair with your head still: the room seems to move past you. The Earth turning does the same to the Sun."),
                  q("Is your shadow a real thing, stuck to your feet?", "\U0001F45F", "No. It is the patch the light could not reach, because you were in the way.", ["Yes, it is joined to you", "Yes, it is a dark copy of you"], "A shadow is not a thing at all. Stand where no light reaches you and there is no shadow."),
-             ]},
+             ],
+              "support": [
+                 q("Where does the Sun come up?", "\U0001F305", "in the east", ["in the west"],
+                   "The Sun comes up in the east every morning."),
+                 q("Is your shadow longer in the morning or at midday?", "\U0001F45F", "in the morning", ["at midday"],
+                   "A low Sun makes a long shadow."),
+              ],
+              "extension": [
+                 q("It is a cloudy day. Why can you not measure the stick's shadow?", "\u2601\uFE0F", "there is no single bright light to cast one", ["shadows only form in summer", "the clouds soak the shadow up"],
+                   "A sharp shadow needs one strong light. Cloud spreads the Sun's light out, so nothing casts a clear edge."),
+                 q("It is midday and a stick casts almost no shadow at all. Where must the Sun be?", "\u2600\uFE0F", "almost straight overhead", ["very low, near the horizon", "hidden behind a cloud"],
+                   "The higher the Sun, the shorter the shadow. Directly overhead and there is hardly any shadow to measure."),
+              ]},
              "You can follow the Sun across the sky.",
              mis=["5.3-m1", "rtg-20"]),
 

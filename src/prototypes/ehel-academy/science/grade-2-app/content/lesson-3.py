@@ -74,7 +74,19 @@ LESSON = {
                  q("A rabbit sleeps in a burrow and eats grass in the field. Which is its habitat?", "\U0001F430", "both - everywhere it needs to live", ["only the burrow, because that is its home", "only the field, because that is where it eats"], "A habitat is not just the sleeping place. It is everywhere the animal finds what it needs."),
                  q("Could a daisy grow in the middle of a busy road?", "\U0001F33C", "No. A plant needs the right place.", ["Yes, plants grow anywhere", "Yes, if it rains"], "Plants need soil, light and water. A road gives none of them."),
                  q("A fish that lives only in warm shallow sea is moved to a cold deep lake. What happens?", "\U0001F41F", "it cannot live there - it needs its own habitat", ["it will be fine, fish live anywhere", "it will turn into a lake fish"], "Some animals need one exact kind of place. Take them out of it and they cannot survive."),
-             ]},
+             ],
+              "support": [
+                 q("Is a forest floor damp or dry?", "\U0001F33F", "damp", ["dry"],
+                   "Shade and fallen leaves keep a forest floor damp."),
+                 q("Is a pond a wet place?", "\U0001F438", "Yes", ["No"],
+                   "A pond is full of water."),
+              ],
+              "extension": [
+                 q("Two gardens sit side by side. One is under a big tree, one is open. Which is damper?", "\U0001F333", "the shaded one, because shade slows the drying", ["the open one, because more rain falls on it", "exactly the same, they are next to each other"],
+                   "Two places a few steps apart can be different habitats. Shade keeps the damp in."),
+                 q("A car park is built over a field of grass and flowers. Name what the insects lose.", "\U0001F697", "their food and their home, both at once", ["only somewhere to shelter", "nothing, they can simply fly elsewhere"],
+                   "The flowers were the food and the field was the home. Cover it over and both go together."),
+              ]},
              "Hot or cold, wet or dry, many or few. That is how scientists compare places.",
              mis=["1.1-m1", "1.1-m2", "1.2-m1", "1.3-m1"]),
 

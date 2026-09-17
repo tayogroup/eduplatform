@@ -91,7 +91,19 @@ LESSON = {
                  q("An ant is tiny. Is it an animal?", "\U0001F41C", "Yes, a very small one", ["No, it is too small to be an animal", "Only if it can bite"], "Most of the animals in the world are tiny. Being small does not stop something being an animal."),
                  q("Is a human an animal?", "\U0001F9D2", "Yes. In science, people are animals.", ["No, people are not animals", "Only babies are"], "People are a kind of mammal. We are very different from the others, and we are still animals."),
                  q("Your grandmother is your father's...", "\U0001F475", "mother", ["sister", "friend", "teacher"], "A grandmother is your mother's mother or your father's mother. That is what makes her your grandmother."),
-             ]},
+             ],
+              "support": [
+                 q("Do a cat and a dog both have fur?", "\U0001F431", "Yes", ["No"],
+                   "Both are covered in fur."),
+                 q("How many legs does a bird have?", "\U0001F426", "two", ["four"],
+                   "Every bird has two legs and two wings."),
+              ],
+              "extension": [
+                 q("Your grandmother is your father's mother. So where did your father's features come from?", "\U0001F46A", "a mix from HIS two parents", ["only from his mother", "he chose them himself"],
+                   "Every generation gets its own mix. That is how you can look like a grandparent and not much like a parent."),
+                 q("A whale lives in the sea and feeds its baby on milk. Which animals is it most like?", "\U0001F433", "cats and dogs, because they feed their babies milk too", ["fish, because it lives in the sea", "birds, because it comes up for air"],
+                   "Where an animal lives does not decide what it is like. Milk for the young is the thing a whale shares with a cat."),
+              ]},
              "Alike in some parts, different in others. Even brothers and sisters get their own mix.",
              mis=["rtg-08", "rtg-01", "4.1-m1", "rtg-02"]),
 

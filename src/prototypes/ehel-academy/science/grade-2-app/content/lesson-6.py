@@ -208,7 +208,19 @@ LESSON = {
                  q("You are running and you want to turn left. Which way do your feet push?", "\U0001F45F", "to the right", ["to the left", "straight down"], "To move yourself one way, you push the opposite way. Push back on a wall and you go forwards."),
                  q("A rolling ball slows down and stops on its own. Is a force acting on it?", "⚽", "Yes, something you cannot see is pushing back on it", ["No, it just runs out of go", "No, forces only start things moving"], "Rub your hands together and feel it. That same rubbing force acts between the ball and the floor."),
                  q("1 block, then 3 blocks, then 5 blocks. Is that a <b>pattern</b>?", "\U0001F4CA", "Yes - it is a getting-bigger pattern", ["No, a pattern has to be stripes or shapes", "No, the numbers are different"], "Numbers make patterns too. Getting bigger every time, or smaller every time, is a pattern."),
-             ]},
+             ],
+              "support": [
+                 q("Does a pull make something move?", "\U0001FAA2", "Yes", ["No"],
+                   "A pull is a force too, just like a push."),
+                 q("Does a ball rolling on grass slow down?", "\u26BD", "Yes", ["No"],
+                   "The grass rubs against it and slows it."),
+              ],
+              "extension": [
+                 q("You push a heavy box and nothing happens. A friend pushes too and it slides. Why?", "\U0001F4E6", "two pushes together make a bigger force than one", ["the box became lighter", "the floor became smoother"],
+                   "Forces add up. One push was not enough to start it moving; two together were."),
+                 q("Two children pull a rope in opposite directions and it does not move. Are there any forces?", "\U0001F9F6", "Yes, two of them, pulling the same amount each way", ["No, because nothing is moving", "Only the stronger child's pull counts"],
+                   "Forces can cancel out. Nothing moving does not mean nothing pushing - it can mean the pushes are balanced."),
+              ]},
              "Every change in movement has a cause.",
              mis=["2.1-m1", "2.4-m1", "2.3-m1", "2.2-m1"]),
 

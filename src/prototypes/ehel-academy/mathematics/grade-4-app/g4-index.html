@@ -203,6 +203,20 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
   details.gu > summary { list-style: none; }
   details.gu[open] > summary::marker { content: ""; }
 }
+/* what to have to hand: read BEFORE the lesson, so it is the one line in this
+   block that is set off rather than run on */
+/* --teal and --cell are Grade 1's hub palette and are NOT defined on these
+   hubs, so naming them bare made the whole shorthand invalid and the block
+   rendered with no border and no background at all - measured as
+   border-left-width: 0px in the browser, not read off the stylesheet. */
+details.gu .gu-kit { font-size: 15px; line-height: 1.5; margin: 0; padding: 10px 12px;
+  border-left: 3px solid var(--teal, #2BB3A6); background: var(--cell, var(--card));
+  border-radius: 0 8px 8px 0; }
+/* the TWM note sits above the lessons, so it is the section's own sentence
+   rather than a lesson's - quieter than the lede, set off from it by a rule */
+.grownup .gu-twmnote { font-size: 15px; line-height: 1.55; color: var(--muted);
+  margin: 0 0 16px; padding: 12px 0 0; border-top: 1px solid var(--line); max-width: 74ch; }
+.grownup .gu-twmnote b { color: var(--ink); }
 /* ==== end lesson-app-tools/build-grownup-section.py ==== */
 
   /* ---- the lesson search, beside the picker - add-lesson-search.py ---- */
@@ -271,7 +285,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
   <header>
     <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
     <h1>Grade 4 <em>Mathematics</em></h1>
-    <p class="lede">Eight lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind. About 240 minutes in all.</p>
+    <p class="lede">Eight lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind. About 270 minutes in all.</p>
   </header>
 
   <div class="grid" id="lessons" role="main">
@@ -285,7 +299,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Place value</span>
       <h2>Big Numbers and Below Zero</h2>
       <p class="covers">Numbers up to a hundred thousand and down past zero. What each digit is worth, building a number from its parts and swapping one thousand for ten hundreds, ten times and a hundred times, counting on in steps of any size, putting positives and negatives in order, and rounding to every place from ten to a hundred thousand.</p>
-      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">12 steps &middot; about 35 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-pattern" href="patterns-and-squares.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -296,7 +310,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Counting and sequences</span>
       <h2>Patterns and Square Numbers</h2>
       <p class="covers">What numbers do when you look for the rule. Odd and even and what adding them always gives, a shape standing for a number nobody has told you, sequences that step evenly and ones that do not, and the dots that make a square.</p>
-      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">12 steps &middot; about 35 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-number" href="ways-to-calculate.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -307,7 +321,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Calculating</span>
       <h2>Ways to Calculate</h2>
       <p class="covers">Reading and writing numbers in words, estimating before you work, all ten times tables and the trick of regrouping them, multiples and factor pairs, and the tests that tell you what divides exactly.</p>
-      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">13 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-frac" href="parts-of-a-whole.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -318,7 +332,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Fractions</span>
       <h2>Parts of a Whole</h2>
       <p class="covers">More parts means smaller parts. A fraction as a division, a fraction of an amount, equivalence, per cent, comparing, and adding and taking away with the same bottom number.</p>
-      <span class="foot"><span class="steps">9 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-measure" href="telling-the-time.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -329,7 +343,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Time</span>
       <h2>Telling the Time</h2>
       <p class="covers">Units of time and how to convert them, one moment written three ways, reading a timetable, and working out how long something takes.</p>
-      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">12 steps &middot; about 35 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-shape" href="shape-and-measures.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -340,7 +354,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Shape and measures</span>
       <h2>Shape and Measures</h2>
       <p class="covers">The faces of a solid and the nets that fold into one, every line of symmetry, tessellation, area without counting, estimating an odd shape on a grid, reading between the marks on a scale, and naming an angle.</p>
-      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">12 steps &middot; about 35 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-shape" href="where-things-are.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -351,7 +365,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Position and direction</span>
       <h2>Where Things Are</h2>
       <p class="covers">Saying where something is and how to get there: reflecting a shape in a mirror line, the eight points of the compass, and reading coordinates by going along first and then up.</p>
-      <span class="foot"><span class="steps">9 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
     <a class="lesson c-data" href="asking-sorting-chance.html?from=g4">
       <span class="mark" aria-hidden="true">
@@ -362,7 +376,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
       <span class="strand">Statistics and probability</span>
       <h2>Asking, Sorting and Chance</h2>
       <p class="covers">Plan a question worth asking, tally it, show the same data three ways, sort it two ways at once, compare two classes, then put events on a line from impossible to certain and spin a spinner a thousand times.</p>
-      <span class="foot"><span class="steps">9 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
 
@@ -373,8 +387,9 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
   <section class="grownup" id="grownups">
     <h3>For teachers and parents</h3>
     <p>What each lesson teaches, in Cambridge's own words; what every step asks the child to do; the check at the end, its pass mark and its answers; and one thing to try at home with things you already have. The eight lessons are listed in the order the course runs them, but each one stands on its own, so a child can start with any of them. The minutes are an estimate of about two and a half minutes a step, not yet timed against a real class, so treat them as a guide to the length of a sitting rather than a plan.</p>
+    <p class="gu-twmnote"><b>Thinking and Working Mathematically.</b> Cambridge names eight characteristics and flags them on individual questions. These lessons exercise <b>7 of the 8</b> &mdash; specialising, generalising, convincing, characterising, classifying, critiquing, improving &mdash; and each lesson below lists which of its steps does which. Not addressed: <b>conjecturing</b>. Forming your own mathematical question is not something a choice of three buttons can carry, so it is left to you and the lesson you teach around this one.</p>
     <details class="gu">
-      <summary><b>Lesson 1: Big Numbers and Below Zero</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 7 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 1: Big Numbers and Below Zero</b> <span class="gu-meta">12 steps &middot; about 35 min &middot; 7 objectives &middot; 10 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
       <ul>
         <li><b>4Nc.01</b> Count on and count back in steps of constant size: 1-digit numbers, tens, hundreds or thousands, starting from any number, and extending beyond zero to include negative numbers.</li>
@@ -397,6 +412,8 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Smallest to largest</b> &middot; Order them from smallest to largest. Below zero, the bigger the digits look, the smaller the number is.</li>
         <li><b>Which one is it nearer?</b> &middot; Rounding is asking which one it is nearer to. Find the two neighbours and compare the distances.</li>
         <li><b>One number, five answers</b> &middot; One number rounds to different answers depending on which place you are asked for.</li>
+        <li><b>Spot the mistake</b> &middot; Read what the child said. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Try this one</b> &middot; Answer this one. Where it takes you next depends on how it goes.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -413,11 +430,24 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Round 4,650 to the nearest 100. <b>4,700</b> &mdash; It is exactly halfway between 4,600 and 4,700, and halfway is the case that rounds up.</li>
         <li>Round 47,318 to the nearest 1000. <b>47,000</b> &mdash; It sits between 47,000 and 48,000, and it is only 318 past 47,000. The other two answers round it to the nearest 100 and the nearest 10 000.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>What each digit is worth</b> (step 2) &middot; characterising</li>
+        <li><b>The same number, regrouped</b> (step 3) &middot; specialising</li>
+        <li><b>Ten times, a hundred times</b> (step 4) &middot; generalising</li>
+        <li><b>Below zero, in order</b> (step 7) &middot; characterising</li>
+        <li><b>Smallest to largest</b> (step 8) &middot; characterising</li>
+        <li><b>Which one is it nearer?</b> (step 9) &middot; specialising</li>
+        <li><b>One number, five answers</b> (step 10) &middot; critiquing, improving</li>
+        <li><b>Spot the mistake</b> (step 11) &middot; critiquing, improving</li>
+        <li><b>Try this one</b> (step 12) &middot; specialising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Look at a weather forecast or a freezer thermometer for temperatures below zero, and put them in order from coldest to warmest. Find a big number in a newspaper and say what each digit is worth.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 2: Patterns and Square Numbers</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 7 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 2: Patterns and Square Numbers</b> <span class="gu-meta">12 steps &middot; about 35 min &middot; 7 objectives &middot; 10 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
       <ul>
         <li><b>4Nc.02</b> Recognise and explain generalisations when adding and subtracting combinations of even and odd numbers.</li>
@@ -440,6 +470,8 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Say the rule</b> &middot; Saying the rule out loud is worth more than one more term, because the rule gives you every term there will ever be.</li>
         <li><b>Numbers that make squares</b> &middot; A square number is one you can arrange into a perfect square of dots.</li>
         <li><b>Between one square and the next</b> &middot; To grow a square by one on each side you add a whole L shape round two of its edges.</li>
+        <li><b>Spot the mistake</b> &middot; Read what the child said. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Try this one</b> &middot; Answer this one. Where it takes you next depends on how it goes.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -456,11 +488,23 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>2, 5, 9, 14 … what is the term-to-term rule? <b>Add one more each time than you added before</b> &mdash; The steps are +3, +4, +5. They are not the same, so it is not add 3 every time — each step is one bigger than the last.</li>
         <li>How many dots turn a 6 by 6 square into a 7 by 7 one? <b>13</b> &mdash; An arm of 6 down one side, an arm of 6 along the other, and 1 in the corner: 6 + 6 + 1 = 13. That is why the gaps between square numbers are the odd numbers.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Odd, even, and what happens</b> (step 1) &middot; generalising</li>
+        <li><b>Taking away, odd and even</b> (step 2) &middot; generalising</li>
+        <li><b>What comes next?</b> (step 6) &middot; generalising</li>
+        <li><b>Same step, or changing step?</b> (step 7) &middot; classifying</li>
+        <li><b>Say the rule</b> (step 8) &middot; generalising</li>
+        <li><b>Numbers that make squares</b> (step 9) &middot; characterising</li>
+        <li><b>Spot the mistake</b> (step 11) &middot; critiquing, improving</li>
+        <li><b>Try this one</b> (step 12) &middot; specialising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Make square numbers with coins or buttons: 2 by 2, 3 by 3, 4 by 4, and count each square. Then add two odd numbers a few times and see what kind of number you always get.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 3: Ways to Calculate</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 9 objectives &middot; 11 check questions</span></summary>
+      <summary><b>Lesson 3: Ways to Calculate</b> <span class="gu-meta">13 steps &middot; about 40 min &middot; 9 objectives &middot; 11 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
       <ul>
         <li><b>4Nc.02</b> Recognise and explain generalisations when adding and subtracting combinations of even and odd numbers.</li>
@@ -486,6 +530,8 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>6s, 7s, 9s and factor pairs</b> &middot; The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.</li>
         <li><b>Multiples and factors, both ways</b> &middot; Multiple and factor are the same fact said from the two ends. The small number is a factor and the big one is a multiple.</li>
         <li><b>Does it divide exactly?</b> &middot; You can tell whether a number divides exactly without doing the division at all. You only have to look at the end of it.</li>
+        <li><b>Spot the mistake</b> &middot; Read what the child said. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Try this one</b> &middot; Answer this one. Where it takes you next depends on how it goes.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -503,11 +549,24 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Omar shares 87 sweets equally among 5 friends. How many does each friend get, and how many are left over? <b>17 each, 2 left over</b> &mdash; 5 × 17 = 85, and 2 are left over — not enough to make another group of 5. Check it: 85 + 2 = 87.</li>
         <li>Which sentence is true about 6 and 24? <b>6 is a factor of 24</b> &mdash; 6 × 4 = 24 says both things at once: the smaller number is the factor and the bigger one is the multiple.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Estimate before you work</b> (step 2) &middot; specialising</li>
+        <li><b>Tables, and a shortcut</b> (step 5) &middot; generalising</li>
+        <li><b>Double one, halve the other</b> (step 6) &middot; generalising</li>
+        <li><b>Sharing out, and what is left</b> (step 8) &middot; characterising</li>
+        <li><b>6s, 7s, 9s and factor pairs</b> (step 9) &middot; generalising</li>
+        <li><b>Multiples and factors, both ways</b> (step 10) &middot; generalising</li>
+        <li><b>Does it divide exactly?</b> (step 11) &middot; classifying</li>
+        <li><b>Spot the mistake</b> (step 12) &middot; critiquing, improving</li>
+        <li><b>Try this one</b> (step 13) &middot; specialising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Before adding up a shopping list, estimate the total, then work it out exactly and compare. Pick a number such as 24 and find every pair of numbers that multiply to make it.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 4: Parts of a Whole</b> <span class="gu-meta">9 steps &middot; about 30 min &middot; 7 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 4: Parts of a Whole</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 7 objectives &middot; 10 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
       <ul>
         <li><b>4Nf.01</b> Understand that the more parts a whole is divided into, the smaller the parts become.</li>
@@ -529,6 +588,8 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Which is bigger?</b> &middot; To compare two fractions, give them the same bottom number first. Then you are only comparing the top ones.</li>
         <li><b>Fractions in order</b> &middot; To put fractions in order, give them all the same bottom number, and then the top numbers put them in order for you.</li>
         <li><b>Adding and taking away</b> &middot; When the bottom numbers match, you are counting the same kind of piece. Guess first, then work it out.</li>
+        <li><b>Spot the mistake</b> &middot; Read what the child said. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Try this one</b> &middot; Answer this one. Where it takes you next depends on how it goes.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -545,11 +606,22 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Amina has 30 mangoes and gives one fifth of them to her grandmother. How many does she give? <b>6</b> &mdash; One fifth means 5 equal groups: 30 ÷ 5 = 6 in each group. 5 is the number of groups, and 25 is what she keeps.</li>
         <li>Which list is in order, smallest first? <b>One quarter, one half, five eighths</b> &mdash; In eighths they are 2, 4 and 5 eighths, so one quarter is the smallest and five eighths the biggest.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>More parts, smaller parts</b> (step 1) &middot; generalising</li>
+        <li><b>A fraction is a division</b> (step 2) &middot; characterising</li>
+        <li><b>Same value, different name</b> (step 5) &middot; specialising</li>
+        <li><b>Which is bigger?</b> (step 7) &middot; characterising</li>
+        <li><b>Fractions in order</b> (step 8) &middot; characterising</li>
+        <li><b>Spot the mistake</b> (step 10) &middot; critiquing, improving</li>
+        <li><b>Try this one</b> (step 11) &middot; specialising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Cut a paper circle into eighths and compare: which is bigger, three eighths or one half? Find a quarter of 20 beans by sharing them into four equal groups.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 5: Telling the Time</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 4 objectives &middot; 14 check questions</span></summary>
+      <summary><b>Lesson 5: Telling the Time</b> <span class="gu-meta">12 steps &middot; about 35 min &middot; 4 objectives &middot; 14 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
       <ul>
         <li><b>4Gt.01</b> Understand the direct relationship between units of time, and convert between them.</li>
@@ -569,6 +641,8 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>How long between?</b> &middot; To find how long something lasted, count on from the start to the finish.</li>
         <li><b>Over the end of the month</b> &middot; Counting days past the end of a month means knowing how many days that month has.</li>
         <li><b>Months and years apart</b> &middot; Months and years are units of time too, and the gaps between them are counted the same way.</li>
+        <li><b>Spot the mistake</b> &middot; Read what the child said. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Try this one</b> &middot; Answer this one. Where it takes you next depends on how it goes.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -589,11 +663,22 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>It is 28 April. What is the date 9 days later? <b>7 May</b> &mdash; April has 30 days, so 2 days take you to the 30th and 7 are left over: 7 May.</li>
         <li>How many months from March 2024 to January 2026? <b>22</b> &mdash; Two whole years is 24 months, but January is two months BEFORE March, so it is 24 − 2 = 22.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>Swapping units, both ways</b> (step 2) &middot; generalising</li>
+        <li><b>Three ways to say one time</b> (step 3) &middot; characterising</li>
+        <li><b>Writing it in 24-hour</b> (step 5) &middot; characterising</li>
+        <li><b>Which one do you catch?</b> (step 7) &middot; specialising</li>
+        <li><b>How long between?</b> (step 8) &middot; specialising</li>
+        <li><b>Spot the mistake</b> (step 11) &middot; critiquing, improving</li>
+        <li><b>Try this one</b> (step 12) &middot; specialising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Read a bus timetable or a TV guide written in 24-hour time, change a few of the times into 12-hour time, and work out how long a journey or a programme lasts.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 6: Shape and Measures</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 10 objectives &middot; 12 check questions</span></summary>
+      <summary><b>Lesson 6: Shape and Measures</b> <span class="gu-meta">12 steps &middot; about 35 min &middot; 10 objectives &middot; 12 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
       <ul>
         <li><b>4Gg.01</b> Investigate what shapes can be made if two or more shapes are combined, and analyse their properties, including reference to tessellation.</li>
@@ -619,6 +704,8 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Two rectangles, one area</b> &middot; An L shape is two rectangles joined together. Find the area of each one, then add them.</li>
         <li><b>An odd shape on a grid</b> &middot; An odd shape has no rule. Count the whole squares, then pair up the part squares.</li>
         <li><b>Reading between the marks</b> &middot; When the pointer sits between two marks, the fraction of the way tells you the reading.</li>
+        <li><b>Spot the mistake</b> &middot; Read what the child said. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Try this one</b> &middot; Answer this one. Where it takes you next depends on how it goes.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -637,11 +724,24 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Hodan puts a fence all the way round a garden 7 metres long and 3 metres wide. How much fence does she need? <b>20 metres</b> &mdash; All the way round is 7 + 3 + 7 + 3 = 2 × (7 + 3) = 20 metres. 21 is the area inside, and 10 only goes half way round.</li>
         <li>An L shape is a 5 by 3 rectangle joined to a 2 by 2 square. What is its area? <b>19 squares</b> &mdash; Add the two areas: 5 × 3 = 15 and 2 × 2 = 4, so 15 + 4 = 19 squares.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>The faces of a solid</b> (step 1) &middot; characterising</li>
+        <li><b>Fold it up: nets</b> (step 2) &middot; specialising</li>
+        <li><b>Every line of symmetry</b> (step 3) &middot; characterising</li>
+        <li><b>Acute, right or obtuse?</b> (step 4) &middot; classifying</li>
+        <li><b>Area without counting</b> (step 6) &middot; generalising</li>
+        <li><b>Two rectangles, one area</b> (step 8) &middot; specialising</li>
+        <li><b>Reading between the marks</b> (step 10) &middot; specialising</li>
+        <li><b>Spot the mistake</b> (step 11) &middot; critiquing, improving</li>
+        <li><b>Try this one</b> (step 12) &middot; specialising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Cover a table mat with square sticky notes to find its area. Look around the room for right angles, and for acute angles (smaller than a right angle) and obtuse ones (bigger).</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 7: Where Things Are</b> <span class="gu-meta">9 steps &middot; about 30 min &middot; 5 objectives &middot; 8 check questions</span></summary>
+      <summary><b>Lesson 7: Where Things Are</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 5 objectives &middot; 8 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
       <ul>
         <li><b>4Gg.01</b> Investigate what shapes can be made if two or more shapes are combined, and analyse their properties, including reference to tessellation.</li>
@@ -661,6 +761,8 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>The corners of a shape</b> &middot; Every corner of a shape has its own pair of coordinates.</li>
         <li><b>Reflect it in the mirror</b> &middot; Every square of the shape has a partner the same distance on the other side of the mirror line.</li>
         <li><b>When the mirror is the edge</b> &middot; When the mirror sits on the edge of the shape, the reflection touches it and the whole thing doubles.</li>
+        <li><b>Spot the mistake</b> &middot; Read what the child said. Work it out yourself. Then tap what went wrong.</li>
+        <li><b>Try this one</b> &middot; Answer this one. Where it takes you next depends on how it goes.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -675,11 +777,23 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>A rectangle has corners at (1, 1) and (4, 3). What are the other two? <b>(4, 1) and (1, 3)</b> &mdash; The corners share their numbers: each one takes an along from one and an up from the other.</li>
         <li>The mirror line runs along the edge of a shape. Where does the reflection sit? <b>Touching the shape</b> &mdash; A square against the mirror has no distance to cross, so its partner sits right beside it.</li>
       </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>The eight points</b> (step 2) &middot; characterising</li>
+        <li><b>Which way from here?</b> (step 3) &middot; specialising</li>
+        <li><b>Coordinates</b> (step 5) &middot; characterising</li>
+        <li><b>Along first, then up</b> (step 6) &middot; characterising</li>
+        <li><b>Reflect it in the mirror</b> (step 8) &middot; specialising</li>
+        <li><b>When the mirror is the edge</b> (step 9) &middot; specialising</li>
+        <li><b>Spot the mistake</b> (step 10) &middot; critiquing, improving</li>
+        <li><b>Try this one</b> (step 11) &middot; specialising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
+      </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Draw a grid with numbered lines on paper and hide 'treasure' at a point such as (3, 2) for your child to find, going along first and then up. Then take turns giving directions using the eight compass points.</p>
     </details>
     <details class="gu">
-      <summary><b>Lesson 8: Asking, Sorting and Chance</b> <span class="gu-meta">9 steps &middot; about 30 min &middot; 5 objectives &middot; 10 check questions</span></summary>
+      <summary><b>Lesson 8: Asking, Sorting and Chance</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 5 objectives &middot; 10 check questions</span></summary>
       <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 4)</h4>
       <ul>
         <li><b>4Sp.01</b> Use language associated with chance to describe familiar events, including reference to maybe, likely, certain, impossible.</li>
@@ -699,6 +813,7 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li><b>Impossible to certain</b> &middot; Some things cannot happen, some are sure to. Most sit somewhere in between.</li>
         <li><b>Maybe, likely or certain?</b> &middot; Impossible, maybe, likely or certain. Think about what could happen, and how often.</li>
         <li><b>Spin it, and spin it again</b> &middot; Spin it ten times and the counts are lumpy. Spin it a thousand times and they even out.</li>
+        <li><b>Try this one</b> &middot; Answer this one. Where it takes you next depends on how it goes.</li>
         <li><b>How do you know?</b> <i>(after the check)</i> &middot; Only one of these three reasons really explains it. Which one?</li>
       </ul>
       <h4>Check answers</h4>
@@ -714,6 +829,18 @@ details.gu .gu-home, details.gu .gu-note { font-size: 15px; line-height: 1.5; ma
         <li>Two classes both have 22 children. 4A walks 9 and 4B walks 5. What can you say? <b>More of 4A walk</b> &mdash; The classes are the same size, so the difference is real — 9 against 5 — and worth looking for a reason.</li>
         <li>Which would you use to sort children by two questions at once: has a pet, and walks to school? <b>A Carroll diagram</b> &mdash; A Carroll diagram has a box for each pair of answers, so it sorts by two questions at once.</li>
         <li>Musa rolls an ordinary dice. How likely is it that he rolls a number less than 7? <b>Certain</b> &mdash; Every number on an ordinary dice, 1 to 6, is less than 7, so it is certain.</li>
+      </ul>
+      <h4>Thinking and Working Mathematically</h4>
+      <ul>
+        <li><b>What would answer it?</b> (step 1) &middot; characterising</li>
+        <li><b>One set, three pictures</b> (step 3) &middot; critiquing, improving</li>
+        <li><b>Sorting two ways at once</b> (step 4) &middot; classifying</li>
+        <li><b>Which chart would you choose?</b> (step 5) &middot; critiquing, improving</li>
+        <li><b>Impossible to certain</b> (step 7) &middot; classifying</li>
+        <li><b>Maybe, likely or certain?</b> (step 8) &middot; classifying</li>
+        <li><b>Spin it, and spin it again</b> (step 9) &middot; specialising</li>
+        <li><b>Try this one</b> (step 10) &middot; specialising</li>
+        <li><b>How do you know?</b> (after the check) &middot; convincing</li>
       </ul>
       <h4>Try at home</h4>
       <p class="gu-home">Ask everyone at home a question, sort the answers in a Carroll or Venn diagram, and talk about events that are certain, likely, maybe or impossible, such as rain tomorrow.</p>

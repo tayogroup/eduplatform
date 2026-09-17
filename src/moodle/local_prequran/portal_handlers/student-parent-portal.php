@@ -366,7 +366,7 @@ if ($progressrows) {
             // lessondone/lessonseen: the rows that are a standalone build's own
             // lesson units (l01..) - see pqpr_course_units().
             $bycourse[$key] = ['done' => 0, 'seen' => 0, 'lessondone' => 0, 'lessonseen' => 0,
-                'checkpoints' => [], 'attempts' => [],
+                'checkpoints' => [], 'attempts' => [], 'drafts' => [],
                 // Where they are, in the child's own words, and how many words
                 // they have shown they know. `at` tracks which unit row these
                 // came from so the two always describe ONE unit - the same
@@ -437,6 +437,12 @@ if ($progressrows) {
             $bycourse[$key]['attempts'],
             pqpr_attempts_from_state($state, (string)$row->unit, (int)$row->timemodified)
         );
+        // And the writing those counts are counting. Its own bucket for the same
+        // reason: no score, no pass flag, and nothing above may render it as one.
+        $bycourse[$key]['drafts'] = array_merge(
+            $bycourse[$key]['drafts'],
+            pqpr_drafts_from_state($state, (string)$row->unit, (int)$row->timemodified)
+        );
     }
     $courselabels = pqpr_course_labels(array_keys($bycourse));
     foreach ($bycourse as $key => $counts) {
@@ -476,6 +482,9 @@ if ($progressrows) {
             // Capped so a long course cannot balloon the family's payload.
             'checkpoints' => array_slice(pqpr_sort_checkpoints($counts['checkpoints']), 0, 40),
             'attempts' => array_slice(pqpr_sort_checkpoints($counts['attempts']), 0, 40),
+            // Three, not forty: these are sentences rather than score pills
+            // and a course row on a family's page has to stay readable.
+            'drafts' => array_slice(pqpr_sort_checkpoints($counts['drafts']), 0, 3),
         ]);
     }
 }

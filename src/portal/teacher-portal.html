@@ -54,9 +54,13 @@
   a.btn:hover{border-color:var(--blue2);color:var(--blue2)}
   .wrote-head{font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin:6px 0 2px}
   .wrote-line{display:block;margin:0 0 4px;font-size:12.5px;line-height:1.45}
-  .wrote-line q{display:block;quotes:'\201C' '\201D'}
-  .wrote-line q:before{content:open-quote}
-  .wrote-line q:after{content:close-quote}
+  /* No `quotes` override and no ::before/::after: <q> draws quotation
+     marks itself. The override that was here parsed as quotes:"C" "D"
+     - a CSS hex escape runs 1-6 digits and is delimited by whitespace,
+     so '\201C' yielded U+0081, a control character, and a tofu box sat
+     in front of the child's sentence. Caught in a screenshot; the
+     textContent check read clean. */
+  .wrote-line q{display:block}
 </style>
 </head>
 <body>

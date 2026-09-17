@@ -41,6 +41,12 @@ class local_prequran_progress_external extends external_api {
     // away with the tab open is charged one gap for the absence, not the
     // afternoon.
     const LEARN_IDLE_GAP_SECONDS = 300;
+    /** Longest draft text stored per section. A backstop against an
+     * unbounded client, not a limit on what a learner may write: no
+     * draft textarea in any subject sets a maxlength, and this row is
+     * read whole on every request. See case 'draft.saved'. */
+    const MAX_DRAFT_CHARS = 20000;
+
     const MAX_TUTORING_SESSIONS = 20;
 
     /**
@@ -52,6 +58,31 @@ class local_prequran_progress_external extends external_api {
      * into their totals the way sanitise_attempted() clamps answered, and a
      * payload with neither a topic nor a summary is noise, not a session.
      */
+    /**
+     * Bound one draft's text. Returns [text, wasTruncated].
+     *
+     * LENGTH ONLY, deliberately. The control-character strip that the rollup
+     * applies belongs to display, where the text is rendered on one line beside
+     * a label; doing it here would flatten the newlines out of a learner's own
+     * paragraphs, and course-app.js hydrates this text straight back into their
+     * editor when they open the course on another device.
+     *
+     * Multibyte-safe where the extension is present, and it must not split a
+     * character: mb_substr counts characters, substr counts bytes, so the
+     * fallback is only reached on a build without mbstring.
+     */
+    private static function clamp_draft_text($raw): array {
+        $text = is_scalar($raw) ? (string)$raw : '';
+        $len = function_exists('mb_strlen') ? mb_strlen($text) : strlen($text);
+        if ($len <= self::MAX_DRAFT_CHARS) {
+            return [$text, false];
+        }
+        $text = function_exists('mb_substr')
+            ? mb_substr($text, 0, self::MAX_DRAFT_CHARS)
+            : substr($text, 0, self::MAX_DRAFT_CHARS);
+        return [$text, true];
+    }
+
     private static function sanitise_tutoring_session($ev): ?array {
         if (!is_array($ev)) {
             return null;
@@ -369,11 +400,31 @@ class local_prequran_progress_external extends external_api {
                 }
                 break;
             case 'draft.saved':
+                // A BACKSTOP, NOT A WORD LIMIT, and the distinction decides the
+                // number. No draft textarea in any subject carries a maxlength,
+                // so a client can push an unbounded string into a JSON state row
+                // that is read whole on every request. This bounds that. It is
+                // set far above any Stage 1-8 writing task - about 3,300 words,
+                // where an upper-stage essay runs a few hundred - so a learner
+                // who hits it is a runaway client rather than a child who wrote
+                // a lot.
+                //
+                // LENGTH ONLY. The control-character strip that the rollup does
+                // belongs to DISPLAY, where the text is rendered on one line
+                // beside a label. Doing it here would flatten the newlines out
+                // of a learner's own paragraphs, and course-app.js hydrates this
+                // text straight back into their editor on a new device.
+                //
+                // Truncation is RECORDED rather than silent: nothing downstream
+                // may present a clipped draft as the whole of what a child
+                // wrote.
+                [$drafttext, $draftcut] = self::clamp_draft_text($ev['text'] ?? '');
                 $drafts[$ev['section'] ?? '_'] = [
-                    'text' => $ev['text'] ?? '',
+                    'text' => $drafttext,
                     'blobRef' => $ev['blobRef'] ?? null,
                     'words' => isset($ev['words']) ? (int)$ev['words'] : null,
                     'at' => $ev['at'] ?? null,
+                    'truncated' => $draftcut,
                 ];
                 break;
             case 'tutoring.session':

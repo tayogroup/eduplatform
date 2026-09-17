@@ -15,6 +15,11 @@ if ($src === false) {
     fwrite(STDERR, "cannot read progress_rolluplib.php\n");
     exit(2);
 }
+$ing = file_get_contents(__DIR__ . '/../src/moodle/local_prequran/externallib_progress.php');
+if ($ing === false) {
+    fwrite(STDERR, "cannot read externallib_progress.php\n");
+    exit(2);
+}
 
 function extract_fn(string $src, string $name): string {
     $at = strpos($src, 'function ' . $name . '(');
@@ -42,6 +47,19 @@ define('PQPR_DRAFT_MAX_CHARS', (int)$m[1]);
 eval(extract_fn($src, 'pqpr_unit_label'));
 eval(extract_fn($src, 'pqpr_section_label'));
 eval(extract_fn($src, 'pqpr_drafts_from_state'));
+
+// The INGEST clamp, run rather than grepped for. It is a private static method,
+// so it is lifted out and rebound as a plain function with the same body; the
+// constant it reads is taken from the same file rather than retyped here.
+if (!preg_match('/const MAX_DRAFT_CHARS = (\d+);/', $ing, $mm)) {
+    fwrite(STDERR, "extract failed: MAX_DRAFT_CHARS not found in the ingest\n");
+    exit(2);
+}
+define('MAX_DRAFT_CHARS', (int)$mm[1]);
+$clampsrc = extract_fn($ing, 'clamp_draft_text');
+$clampsrc = str_replace(['private static function clamp_draft_text', 'self::MAX_DRAFT_CHARS'],
+                        ['function clamp_draft_text', 'MAX_DRAFT_CHARS'], $clampsrc);
+eval($clampsrc);
 
 $fails = 0;
 function ok(string $label, bool $cond, $detail = null) {
@@ -112,6 +130,36 @@ foreach ($r as $row) {
     ok("label is not bare '{$row['section']}'", $row['label'] !== $row['section'], $row['label']);
     ok("label mentions the unit", strpos($row['label'], pqpr_unit_label('u02')) === 0, $row['label']);
 }
+
+echo "\nThe INGEST clamp — a backstop on the stored row, not a word limit:\n";
+// BOUNDED AT BOTH ENDS. Every other assertion here is relative to the cap
+// read out of the file, so a cap raised to 100,000,000 passed all of them -
+// found by mutation, and it is the same shape as a floor set below the true
+// count: a backstop with no ceiling on its own value is not a backstop.
+// Low enough to bound the row, high enough that no Stage 1-8 writing task
+// reaches it (100,000 characters is roughly 16,000 words).
+ok('the cap is generous enough to be a backstop', MAX_DRAFT_CHARS >= 10000, MAX_DRAFT_CHARS);
+ok('and small enough to actually bound the row', MAX_DRAFT_CHARS <= 100000, MAX_DRAFT_CHARS);
+[$t, $cut] = clamp_draft_text(str_repeat('a', MAX_DRAFT_CHARS - 1));
+ok('a draft under the cap is untouched',
+    $cut === false && (function_exists('mb_strlen') ? mb_strlen($t) : strlen($t)) === MAX_DRAFT_CHARS - 1);
+[$t, $cut] = clamp_draft_text(str_repeat('a', MAX_DRAFT_CHARS + 500));
+ok('an over-long draft is clamped',
+    (function_exists('mb_strlen') ? mb_strlen($t) : strlen($t)) === MAX_DRAFT_CHARS);
+ok('and the truncation is RECORDED, never silent', $cut === true);
+[$t, $cut] = clamp_draft_text(["not", "a", "string"]);
+ok('a non-scalar payload becomes empty rather than a crash', $t === '' && $cut === false);
+
+// LENGTH ONLY. Stripping control characters here would flatten a learner's own
+// paragraphs, and course-app.js hydrates this text back into their editor.
+[$t, ] = clamp_draft_text("para one\n\npara two");
+ok('newlines survive the ingest', $t === "para one\n\npara two", $t);
+
+echo "\nA server-shortened draft is never shown as whole:\n";
+$r = pqpr_drafts_from_state(['drafts' => [
+    'a' => ['text' => 'short enough to fit the display clamp', 'truncated' => true],
+]], 'u01', 0);
+ok('the reader honours the stored flag', ($r[0]['truncated'] ?? false) === true);
 
 echo "\n" . ($fails ? "{$fails} FAILURE(S)\n" : "all checks passed\n");
 exit($fails ? 1 : 0);

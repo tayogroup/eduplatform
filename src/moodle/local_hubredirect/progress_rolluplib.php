@@ -335,7 +335,12 @@ function pqpr_drafts_from_state(array $state, string $unit, int $unitupdated): a
             'section' => $section,
             'label' => pqpr_unit_label($unit) . ' · ' . pqpr_section_label($section),
             'text' => $text,
-            'truncated' => $text !== $full,
+            // TRUE IF EITHER CLIPPED IT. This row is clamped for display at
+            // PQPR_DRAFT_MAX_CHARS; the ingest clamps the stored text at its
+            // own, larger bound and records that it did. A row that reported
+            // only its own clipping would present a server-shortened draft as
+            // the whole of what a child wrote.
+            'truncated' => ($text !== $full) || !empty($draft['truncated']),
             'words' => $words,
             // `at` is the client's ISO stamp for the save; the row's own
             // timemodified is when the server last touched the unit. Prefer the

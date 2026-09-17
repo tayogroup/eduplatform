@@ -182,22 +182,26 @@ const CAMBRIDGE_OBJECTIVES = {
   //
   // The other 29 claims were audited the same way and every one is evidenced by
   // real content.
-  "5-1": ["5Bp.02", "5Bp.04", "5TWSp.03", "5TWSp.04", "5TWSm.02"],
+  "5-1": ["5Bp.02", "5Bp.04", "5TWSp.01", "5TWSp.03", "5TWSp.04", "5TWSc.04",
+          "5TWSa.01", "5TWSa.03", "5TWSm.02"],
   // 5Be.02 is claimed on substance rather than wording: the unit teaches bright
   // petals and scent drawing pollinators in, and four dispersal mechanisms, which
   // is what "adapted to attract pollinators and promote seed dispersal" asks for.
   // Worth knowing that the word `adapt` appears NOWHERE in Grade 5 — so the
   // learner meets the mechanism and never the concept's name. 5Be.01 and 5Be.03
   // are not claimed for that same reason plus no content at all.
-  "5-2": ["5Bs.02", "5Bs.03", "5Bp.02", "5Bp.03", "5Be.02", "5TWSp.03", "5TWSm.02"],
+  "5-2": ["5Bs.02", "5Bs.03", "5Bp.02", "5Bp.03", "5Be.02", "5TWSp.03", "5TWSc.02",
+          "5TWSc.03", "5TWSc.06", "5TWSm.02", "5SIC.04"],
   // 5Cp.02 is claimed on three of its four clauses — melting point, freezing at
   // 0 degrees and water's ability to dissolve a range of substances are all
   // taught; "expands when it solidifies" is not.
   "5-3": ["5Cm.01", "5Cp.01", "5Cp.02", "5Cc.01", "5Cc.02", "5Cc.03", "5ESc.01",
-          "5ESp.02", "5TWSp.03", "5TWSp.04", "5TWSm.01", "5TWSm.02"],
-  "5-4": ["5TWSp.03", "5TWSm.02"],
-  "5-5": ["5TWSp.03", "5TWSm.02"],
-  "5-6": ["5ESs.01", "5ESs.02", "5ESs.03", "5TWSm.02"],
+          "5ESp.02", "5TWSp.03", "5TWSp.04", "5TWSc.05", "5TWSc.08", "5TWSa.02",
+          "5TWSa.05", "5TWSm.01", "5TWSm.02"],
+  "5-4": ["5TWSp.02", "5TWSp.03", "5TWSc.01", "5TWSa.04", "5TWSm.02"],
+  "5-5": ["5TWSp.03", "5TWSp.05", "5TWSm.02", "5SIC.02"],
+  "5-6": ["5ESs.01", "5ESs.02", "5ESs.03", "5TWSc.07", "5TWSm.02", "5SIC.01",
+          "5SIC.03", "5SIC.05"],
   // ── Stage 6 (0097) ──
   // Re-pointed with Stage 5, for the same reasons. 28 of 0846's 40 (70%) becomes
   // 21 of 0097's 59 (36%). The whole Earth-and-space strand is missing content —
@@ -1354,6 +1358,47 @@ for (const stage of [5, 6]) {
 // failure this guards: the panel would simply be shorter, and no other check
 // reads it.
 const misconceptionsWritten = {};
+
+// ── Thinking and Working Scientifically, and Science in Context ──────────────
+// The other half of the coverage gap, and the half that needs no new topic. TWS
+// and SIC are not subjects: they are how an investigation the unit ALREADY runs
+// is framed — ask the question, pick the enquiry, name the risk, decide when to
+// repeat, spot the anomaly, draw the conclusion, say who uses this science. Of
+// 125 unclaimed objectives across Stages 5-8, 70 are these.
+//
+// The vehicle is `reasoningPrompts`, which the shell renders as "Explain Your
+// Thinking" — prompt, textarea, key ideas as a checklist, model answer behind a
+// disclosure — and MARKS: reasoningHits() checks the learner's text against
+// keyIdeas and the section completes when every prompt is done.
+//
+// Checked before choosing it, because the arithmetic looks dangerous: the
+// section completes on `completed.size === course.reasoningPrompts.length`, so
+// adding prompts raises the bar. It cannot un-tick anything — complete() in
+// course-app.js is add-only (`if (!wasDone) progress.completed.push(section)`)
+// and nothing anywhere removes a section. A learner who finished six of six
+// keeps the tick and meets the new prompts as further work.
+const ENQUIRY_FIXTURES = {};
+for (const stage of [5, 6, 7, 8]) {
+  const file = path.join(sciRoot, "data", `cambridge-stage${stage}-enquiry.json`);
+  if (!fs.existsSync(file)) continue;
+  const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+  const byUnit = new Map();
+  const seen = new Set();
+  for (const row of doc.prompts || []) {
+    for (const field of ["prompt", "modelAnswer", "outcomeId", "difficulty"]) {
+      if (!row[field]) throw new Error(`cambridge-stage${stage}-enquiry.json: ${row.id} has no ${field}.`);
+    }
+    if (!Array.isArray(row.keyIdeas) || !row.keyIdeas.length) {
+      throw new Error(`cambridge-stage${stage}-enquiry.json: ${row.id} has no keyIdeas, so reasoningHits() could never mark it correct and the section could never complete.`);
+    }
+    if (seen.has(row.id)) throw new Error(`cambridge-stage${stage}-enquiry.json: duplicate id ${row.id}`);
+    seen.add(row.id);
+    if (!byUnit.has(row.unit)) byUnit.set(row.unit, []);
+    byUnit.get(row.unit).push(row);
+  }
+  ENQUIRY_FIXTURES[stage] = { doc, byUnit };
+}
+const enquiryWritten = {};
 const reviewStats = { applied: 0, missed: [] };
 const tidiedExplanations = [];
 
@@ -3234,6 +3279,27 @@ function buildGrade(grade) {
       const concept = concepts[reasoningPrompts.length % concepts.length];
       reasoningPrompts.push({ id: `reason${String(reasoningPrompts.length + 1).padStart(2, "0")}`, outcomeId: "lo01", difficulty: "Core", responseMode: "text", prompt: `Explain the key idea in ${concept.title}.`, keyIdeas: reference.terms.slice(0, 3).map((termPair) => termPair[0]), modelAnswer: concept.explanation });
     }
+    // The authored TWS/SIC prompts go on the END of the pack-derived ones, and
+    // keep their own `5-enq-N` ids rather than being renumbered into the
+    // `reasonNN` sequence. Two reasons: the shell stores completion by item id
+    // (`progress.reasoning`), so renumbering would silently re-point a learner's
+    // finished work at a different prompt; and an id that says where it came
+    // from is what lets the gate below find them again in the built unit.
+    const enquiry = ENQUIRY_FIXTURES[grade];
+    if (enquiry && enquiry.byUnit.has(unitNo)) {
+      for (const row of enquiry.byUnit.get(unitNo)) {
+        reasoningPrompts.push({
+          id: row.id,
+          outcomeId: row.outcomeId,
+          difficulty: row.difficulty,
+          responseMode: "text",
+          prompt: row.prompt,
+          keyIdeas: row.keyIdeas.slice(),
+          modelAnswer: row.modelAnswer,
+        });
+      }
+      enquiryWritten[grade] = (enquiryWritten[grade] || 0) + enquiry.byUnit.get(unitNo).length;
+    }
 
     return {
       schemaVersion: "Ehel Science Runtime v1.0",
@@ -3443,6 +3509,37 @@ for (const [stage, { doc }] of Object.entries(MISCONCEPTION_FIXTURES)) {
   }
   console.log(`Stage ${stage}: ${got} Cambridge misconceptions delivered to the learner (floor ${floor}), `
     + `${Object.keys(doc._excluded || {}).length - 1} recorded as having no unit to sit in.`);
+}
+
+// The same check for the enquiry prompts, and one more besides: every objective
+// a prompt claims must actually be claimed by that prompt's unit in
+// CAMBRIDGE_OBJECTIVES. Without that second half the fixture could deliver a
+// prompt about anomalous results while nothing claimed the objective — or,
+// worse, the objective could stay claimed after the prompt stopped being
+// delivered, which is the citation-without-teaching shape this whole mapping
+// exists to prevent.
+for (const [stage, { doc, byUnit }] of Object.entries(ENQUIRY_FIXTURES)) {
+  const want = (doc.prompts || []).length;
+  const floor = Number(doc.minimumCovered);
+  const got = enquiryWritten[stage] || 0;
+  if (got !== want) {
+    throw new Error(`Stage ${stage}: ${got} of ${want} enquiry prompts reached a unit. A fixture row names a unit that was not built.`);
+  }
+  if (want < floor) {
+    throw new Error(`Stage ${stage}: the enquiry fixture carries ${want} prompts, below its recorded floor of ${floor}. Coverage is a number that only goes up.`);
+  }
+  for (const [unitNo, rows] of byUnit.entries()) {
+    const claimed = new Set(CAMBRIDGE_OBJECTIVES[`${stage}-${unitNo}`] || []);
+    for (const row of rows) {
+      for (const code of row.codes || []) {
+        if (!claimed.has(code)) {
+          throw new Error(`Stage ${stage} unit ${unitNo}: enquiry prompt ${row.id} teaches ${code}, but unit ${unitNo} does not claim it. Add it to CAMBRIDGE_OBJECTIVES["${stage}-${unitNo}"] or move the prompt.`);
+        }
+      }
+    }
+  }
+  const codes = new Set((doc.prompts || []).flatMap((r) => r.codes || []));
+  console.log(`Stage ${stage}: ${got} enquiry prompts delivered (floor ${floor}), closing ${codes.size} TWS/SIC objective(s).`);
 }
 
 console.log(`\nReviewer corrections applied: ${reviewStats.applied}`);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:16:48.791Z",
+  "generatedAt": "2026-09-17T17:33:55.562Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -31,8 +31,12 @@
     "objectiveCodes": [
       "5Bp.02",
       "5Bp.04",
+      "5TWSp.01",
       "5TWSp.03",
       "5TWSp.04",
+      "5TWSc.04",
+      "5TWSa.01",
+      "5TWSa.03",
       "5TWSm.02"
     ],
     "objectives": [
@@ -49,6 +53,12 @@
         "text": "Describe seed germination and know that seeds, in general, require water and an appropriate temperature to germinate."
       },
       {
+        "code": "5TWSp.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Ask scientific questions and select appropriate scientific enquiries to use."
+      },
+      {
         "code": "5TWSp.03",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
@@ -59,6 +69,24 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Plan fair test investigations, identifying the independent, dependent and control variables."
+      },
+      {
+        "code": "5TWSc.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Decide when observations and measurements need to be repeated to give more reliable data."
+      },
+      {
+        "code": "5TWSa.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe the accuracy of predictions, based on results."
+      },
+      {
+        "code": "5TWSa.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Make a conclusion from results informed by scientific understanding."
       },
       {
         "code": "5TWSm.02",
@@ -972,6 +1000,58 @@
         "Shoot"
       ],
       "modelAnswer": "Any two of: light, nutrients, space, suitable temperature. A growing plant needs these along with water to stay healthy."
+    },
+    {
+      "id": "5-enq-1",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You want to know whether bean seeds germinate faster in a warm place or a cool one. Write that as a scientific question, and say which kind of enquiry would answer it.",
+      "keyIdeas": [
+        "A question you can actually test",
+        "A fair test, changing one thing only",
+        "Temperature is the thing you change"
+      ],
+      "modelAnswer": "The question is: does temperature change how quickly a bean seed germinates? A fair test answers it, because I can change the temperature and keep the water, the seeds and the soil the same. Simply watching seeds without changing anything would tell me what happens, but not what caused it."
+    },
+    {
+      "id": "5-enq-2",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You predicted that all ten beans in the warm jar would sprout. Eight sprouted. How accurate was your prediction, and what should you write about it?",
+      "keyIdeas": [
+        "Mostly right, not exactly right",
+        "Say what the results actually showed",
+        "A prediction is not wrong for missing by a little"
+      ],
+      "modelAnswer": "The prediction was close but not exact. Eight of the ten sprouted, so warmth did help, which is the part I had right. I was wrong that every single seed would sprout - two did not, perhaps because they were old or damaged. A scientist says how near the prediction came rather than only 'right' or 'wrong'."
+    },
+    {
+      "id": "5-enq-3",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Your warm jar sprouted eight seeds and your cool jar sprouted two. Write a conclusion, and use what you know about seeds to explain why.",
+      "keyIdeas": [
+        "State what the results show",
+        "Warmth speeds up germination",
+        "Link it to the seed waking up and using its food store"
+      ],
+      "modelAnswer": "I conclude that bean seeds germinate better in a warm place: eight sprouted in the warm jar against two in the cool one. That fits what we know about seeds. A seed needs water and a suitable temperature before it will wake up and start using its food store, and warmth makes that happen faster."
+    },
+    {
+      "id": "5-enq-4",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Your friend tested one seed in each jar and got one sprout and none. Why is your ten-seed test more trustworthy, and when should a measurement be repeated?",
+      "keyIdeas": [
+        "One result could just be luck",
+        "More seeds, or repeating, evens out chance",
+        "Repeat when a result surprises you or two readings disagree"
+      ],
+      "modelAnswer": "One seed tells you almost nothing, because that single seed might have been a bad one. Using ten - or repeating the whole test - means one unlucky seed cannot decide the answer. Repeat a measurement when the result surprises you, or when two readings of the same thing do not agree."
     }
   ],
   "assessment": {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T15:51:06.921Z",
+  "generatedAt": "2026-09-17T17:33:55.670Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -30,7 +30,9 @@
     "stage": 5,
     "objectiveCodes": [
       "5TWSp.03",
-      "5TWSm.02"
+      "5TWSp.05",
+      "5TWSm.02",
+      "5SIC.02"
     ],
     "objectives": [
       {
@@ -40,10 +42,22 @@
         "text": "Make predictions, referring to relevant scientific knowledge and understanding within familiar and unfamiliar contexts."
       },
       {
+        "code": "5TWSp.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Describe risks when planning practical work and consider how to minimise them."
+      },
+      {
         "code": "5TWSm.02",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Models and representations",
         "text": "Use models, including diagrams, to represent and describe scientific phenomena and ideas."
+      },
+      {
+        "code": "5SIC.02",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Describe how science is used in their local area."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending",
@@ -915,6 +929,32 @@
         "Gnomon"
       ],
       "modelAnswer": "Each layer of cloth blocks a little more light. Stacking many layers together blocks nearly all the light, so the folded stack behaves almost like an opaque material."
+    },
+    {
+      "id": "5-enq-16",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You are going outside to measure a shadow every hour in the sun. Name two risks, and say how you would reduce each one.",
+      "keyIdeas": [
+        "Never look straight at the Sun",
+        "Heat and sunburn",
+        "Reduce them with shade, a hat and water"
+      ],
+      "modelAnswer": "The first risk is looking up at the Sun to see where it is, which can damage your eyes - so I would look at the shadow instead and never up. The second is the heat: standing out every hour could burn my skin or make me dizzy, so I would wear a hat, drink water and wait in the shade between readings. Naming a risk first is what lets you plan around it."
+    },
+    {
+      "id": "5-enq-17",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "How do people near you use the fact that shadows move in a pattern through the day?",
+      "keyIdeas": [
+        "Shade for people, animals or crops",
+        "Knowing when a place will be sunny",
+        "Drying things in the sun"
+      ],
+      "modelAnswer": "People use it without calling it science. A market trader sets up where the building's shadow will fall in the afternoon, not where it fell in the morning. A farmer plants a shade tree on the side that will shade the animals at midday. Anyone drying maize or washing puts it where the sun will stay longest. All of that is using a pattern of shadows they have learned to predict."
     }
   ],
   "assessment": {

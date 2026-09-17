@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:16:48.886Z",
+  "generatedAt": "2026-09-17T17:33:55.641Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -29,15 +29,36 @@
     "code": "0097",
     "stage": 5,
     "objectiveCodes": [
+      "5TWSp.02",
       "5TWSp.03",
+      "5TWSc.01",
+      "5TWSa.04",
       "5TWSm.02"
     ],
     "objectives": [
+      {
+        "code": "5TWSp.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Know the features of the five main types of scientific enquiry."
+      },
       {
         "code": "5TWSp.03",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Make predictions, referring to relevant scientific knowledge and understanding within familiar and unfamiliar contexts."
+      },
+      {
+        "code": "5TWSc.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Sort, group and classify objects, materials and living things through testing, observation and using secondary information."
+      },
+      {
+        "code": "5TWSa.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Suggest how an investigation could be improved and explain any proposed changes."
       },
       {
         "code": "5TWSm.02",
@@ -955,6 +976,45 @@
         "Shadow"
       ],
       "modelAnswer": "Refraction is the bending of light as it passes from one clear material into another, such as air into water. Example: a straw looking bent in a glass of water."
+    },
+    {
+      "id": "5-enq-13",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You have glass, greaseproof paper, card, a plastic bottle and a metal spoon. Sort them by how light passes through, and say how you decided.",
+      "keyIdeas": [
+        "Three groups: transparent, translucent, opaque",
+        "Test each one - do not sort by what you expect",
+        "Hold it up to the light and try to see through"
+      ],
+      "modelAnswer": "Three groups. Transparent, where I can see clearly through - the glass and the plastic bottle. Translucent, where light gets through but shapes are blurred - the greaseproof paper. Opaque, where no light gets through at all - the card and the metal spoon. I decided by testing each one, holding it up and trying to read through it, rather than sorting them by what I expected."
+    },
+    {
+      "id": "5-enq-14",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Sorting materials into transparent, translucent and opaque is one kind of scientific enquiry. Name a different kind, and say how it is different.",
+      "keyIdeas": [
+        "Sorting and classifying puts things into groups",
+        "A fair test changes one thing and measures the result",
+        "The question decides which enquiry to use"
+      ],
+      "modelAnswer": "Sorting and classifying is what I did: putting things into groups by a property I could observe. A fair test is different - there I change one thing on purpose and measure what happens, such as moving a torch further away and measuring the shadow. There are others too: observing over time, looking for patterns, and researching in books and other sources. The question you are asking decides which one fits."
+    },
+    {
+      "id": "5-enq-15",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You tested five materials once each by holding them up to a window. Suggest one improvement to the investigation, and explain why it would help.",
+      "keyIdeas": [
+        "Use the same lamp at the same distance",
+        "Test each material more than once",
+        "Say WHY the change helps"
+      ],
+      "modelAnswer": "I would use the same lamp at the same distance instead of the window, because the daylight changed while I was working, and a cloud passing can make a transparent thing look translucent. Then the only thing changing is the material, which is the thing I am testing. I would also test each material twice, so that one careless look cannot decide its group."
     }
   ],
   "assessment": {

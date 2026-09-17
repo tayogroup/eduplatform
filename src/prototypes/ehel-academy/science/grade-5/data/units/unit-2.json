@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:16:48.822Z",
+  "generatedAt": "2026-09-17T17:33:55.589Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -35,7 +35,11 @@
       "5Bp.03",
       "5Be.02",
       "5TWSp.03",
-      "5TWSm.02"
+      "5TWSc.02",
+      "5TWSc.03",
+      "5TWSc.06",
+      "5TWSm.02",
+      "5SIC.04"
     ],
     "objectives": [
       {
@@ -75,10 +79,34 @@
         "text": "Make predictions, referring to relevant scientific knowledge and understanding within familiar and unfamiliar contexts."
       },
       {
+        "code": "5TWSc.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Complete a key based on easily observed differences."
+      },
+      {
+        "code": "5TWSc.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Choose equipment to carry out an investigation and use it appropriately."
+      },
+      {
+        "code": "5TWSc.06",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Carry out practical work safely."
+      },
+      {
         "code": "5TWSm.02",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Models and representations",
         "text": "Use models, including diagrams, to represent and describe scientific phenomena and ideas."
+      },
+      {
+        "code": "5SIC.04",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Identify people who use science, including professionally, in their area and describe how they use science."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -935,6 +963,58 @@
         "Stigma"
       ],
       "modelAnswer": "If all seeds land beneath the parent, they must compete for the same water, light and soil, so most will not survive. Spreading out helps more of them live."
+    },
+    {
+      "id": "5-enq-5",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You have four flowers: a hibiscus, a maize tassel, a grass flower and a mango blossom. Build a key of yes-or-no questions that would let a friend tell them apart.",
+      "keyIdeas": [
+        "Questions with only two answers",
+        "Use only what you can SEE",
+        "Each question splits the group smaller"
+      ],
+      "modelAnswer": "Start with a question that splits the four in half, such as 'Does it have big colourful petals?' The hibiscus and mango blossom answer yes; the maize and grass answer no. Then split each pair again - 'Are the petals wider than your thumb?' separates hibiscus from mango blossom. A key works because every question has exactly two answers and each one cuts the group smaller."
+    },
+    {
+      "id": "5-enq-6",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You are going to open a flower and find the anthers and the stigma. Name the equipment you would choose, and say what each piece is for.",
+      "keyIdeas": [
+        "A hand lens, to see small parts",
+        "Tweezers or a blunt pin, to separate parts",
+        "White paper or a tray, to lay them out"
+      ],
+      "modelAnswer": "A hand lens, because anthers and pollen grains are too small to see properly. Tweezers or a blunt pin, to lift the parts apart without crushing them. A sheet of white paper to lay each part on, so the pollen shows up and nothing gets lost. Choosing equipment means asking what the job needs, not taking everything on the shelf."
+    },
+    {
+      "id": "5-enq-7",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Before you take a flower apart, name two things you would do to work safely, and say why each one matters.",
+      "keyIdeas": [
+        "Wash your hands afterwards",
+        "Keep anything sharp pointed away from fingers",
+        "Never taste any part of a plant"
+      ],
+      "modelAnswer": "Wash my hands when I have finished, because some plants irritate the skin and I do not want that in my eyes or mouth. Keep the pin pointed away from my fingers and away from the person beside me. And never taste any part of the flower - a fruit holds seeds and that does not make it food, and some plants are poisonous."
+    },
+    {
+      "id": "5-enq-8",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Who near you uses what you have learned about pollination in their work, and how do they use it?",
+      "keyIdeas": [
+        "A farmer or fruit grower",
+        "A beekeeper",
+        "They use it to get more fruit, or more honey"
+      ],
+      "modelAnswer": "A farmer growing mangoes or tomatoes uses it: knowing that insects carry pollen from flower to flower, they avoid spraying while the trees are in flower, because killing the insects means less fruit. A beekeeper uses the same fact the other way round, placing hives beside a crop so the bees find nectar and the crop gets pollinated. Both are earning a living from one piece of science."
     }
   ],
   "assessment": {

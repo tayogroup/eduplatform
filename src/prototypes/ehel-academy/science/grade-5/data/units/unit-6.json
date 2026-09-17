@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T15:51:06.942Z",
+  "generatedAt": "2026-09-17T17:33:55.693Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -32,7 +32,11 @@
       "5ESs.01",
       "5ESs.02",
       "5ESs.03",
-      "5TWSm.02"
+      "5TWSc.07",
+      "5TWSm.02",
+      "5SIC.01",
+      "5SIC.03",
+      "5SIC.05"
     ],
     "objectives": [
       {
@@ -54,10 +58,34 @@
         "text": "Know that a satellite is an object in space that orbits a larger object and a moon is a natural satellite that orbits a planet."
       },
       {
+        "code": "5TWSc.07",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Use a range of secondary information sources to research and select relevant evidence to answer questions."
+      },
+      {
         "code": "5TWSm.02",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Models and representations",
         "text": "Use models, including diagrams, to represent and describe scientific phenomena and ideas."
+      },
+      {
+        "code": "5SIC.01",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Describe how scientific knowledge and understanding changes over time through the use of evidence gained by enquiry."
+      },
+      {
+        "code": "5SIC.03",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Use science to support points when discussing issues, situations or actions."
+      },
+      {
+        "code": "5SIC.05",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Discuss how the use of science and technology can have positive and negative environmental effects on their local area."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending",
@@ -957,6 +985,58 @@
         "Crescent"
       ],
       "modelAnswer": "The Moon has no light of its own; it is a ball of rock that reflects sunlight, like a stone lit by a lamp."
+    },
+    {
+      "id": "5-enq-18",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "People once believed the Sun travels around the Earth. Why did they think so, and what changed their minds?",
+      "keyIdeas": [
+        "The evidence they had really did look that way",
+        "Better observation gave new evidence",
+        "Ideas change when the evidence changes"
+      ],
+      "modelAnswer": "It is what the sky looks like: the Sun rises on one side and sets on the other, every single day. With only your eyes, that is a sensible conclusion. What changed it was better evidence - telescopes, and careful records of where the planets appear night after night, which only make sense if the Earth is going round the Sun. Science changed its mind because the evidence changed, not because someone insisted."
+    },
+    {
+      "id": "5-enq-19",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A friend says the Moon must make its own light, because it shines at night. Use science to answer them.",
+      "keyIdeas": [
+        "The Moon reflects the Sun's light",
+        "The phases are the evidence",
+        "Give the reason, not just the answer"
+      ],
+      "modelAnswer": "I would say the Moon has no light of its own; it reflects the Sun's. The evidence is its phases: if the Moon made its own light we would see the whole circle lit every night, but we see a different amount each night, because we are seeing how much of its sunlit half is turned towards us. That is using evidence to support the point, rather than just telling them they are wrong."
+    },
+    {
+      "id": "5-enq-20",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Satellites help farmers see where rain has fallen. Give one good effect and one bad effect of space technology.",
+      "keyIdeas": [
+        "A good effect: better information, sooner",
+        "A bad effect: fuel burned, and debris left in orbit",
+        "Both sides are real at once"
+      ],
+      "modelAnswer": "A good effect is that a satellite can show where rain has fallen and where crops are failing, so help reaches the right district before people go hungry. A bad effect is that rockets burn enormous quantities of fuel, and worn-out satellites are left circling as debris that can strike the working ones. The same technology does both, which is why people argue about how much of it to build."
+    },
+    {
+      "id": "5-enq-21",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You want to know how long the Moon takes to go through all its phases, but you cannot watch for a month. Where would you look, and how would you decide what to trust?",
+      "keyIdeas": [
+        "Secondary sources: books, encyclopaedias, an observatory's own pages",
+        "Check more than one and see whether they agree",
+        "Prefer a source that says where its facts came from"
+      ],
+      "modelAnswer": "I would use secondary sources - a science book, an encyclopaedia, or the pages of an observatory or space agency. I would check at least two, because if they agree the number is probably right, and if they disagree I know to keep looking. And I would trust a source that says where its information came from over one that simply states it."
     }
   ],
   "assessment": {

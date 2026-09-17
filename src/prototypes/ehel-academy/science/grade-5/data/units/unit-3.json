@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:16:48.857Z",
+  "generatedAt": "2026-09-17T17:33:55.618Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -39,6 +39,10 @@
       "5ESp.02",
       "5TWSp.03",
       "5TWSp.04",
+      "5TWSc.05",
+      "5TWSc.08",
+      "5TWSa.02",
+      "5TWSa.05",
       "5TWSm.01",
       "5TWSm.02"
     ],
@@ -102,6 +106,30 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Plan fair test investigations, identifying the independent, dependent and control variables."
+      },
+      {
+        "code": "5TWSc.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Take appropriately accurate measurements."
+      },
+      {
+        "code": "5TWSc.08",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Collect and record observations and/or measurements in tables and diagrams appropriate to the type of scientific enquiry."
+      },
+      {
+        "code": "5TWSa.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe patterns in results, including identifying any anomalous results."
+      },
+      {
+        "code": "5TWSa.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Present and interpret results using tables, bar charts, dot plots and line graphs."
       },
       {
         "code": "5TWSm.01",
@@ -1044,6 +1072,58 @@
         "Evaporation"
       ],
       "modelAnswer": "Evaporation is slow, happens only at the surface, and can occur at any temperature. Boiling is fast, happens throughout the liquid with bubbles, and occurs at the boiling point (100 degrees Celsius for water)."
+    },
+    {
+      "id": "5-enq-9",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You are measuring how much water is left in a dish after a day in the sun. How do you make that measurement accurate?",
+      "keyIdeas": [
+        "Use a measuring cylinder, not a guess",
+        "Read it with your eye level with the water",
+        "Read it the same way every time"
+      ],
+      "modelAnswer": "Pour the water into a measuring cylinder rather than guessing from the dish, because the cylinder has a scale. Stand it on a flat surface and read it with my eye level with the water, not from above - from above the number looks bigger than it is. And read it the same way every time, so that the readings can fairly be compared."
+    },
+    {
+      "id": "5-enq-10",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You are testing evaporation in three places: a sunny windowsill, a shady corner and a breezy doorway. Describe the table you would record your results in.",
+      "keyIdeas": [
+        "A column for the thing you change",
+        "A column for the thing you measure",
+        "One row per place, with the unit in the heading"
+      ],
+      "modelAnswer": "Two columns at least: one for the place, which is the thing I change, and one for the water left in millilitres, which is the thing I measure. Three rows, one for each place. The unit goes in the column heading so it does not have to be written in every box. If I measure each place more than once, I add a column for each reading and one for the average."
+    },
+    {
+      "id": "5-enq-11",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Your three dishes lost 40 ml, 38 ml and 5 ml of water. Describe the pattern, and say what you make of the odd one.",
+      "keyIdeas": [
+        "Two results are close, one is far off",
+        "The odd one is an anomalous result",
+        "Look for a reason - do not just cross it out"
+      ],
+      "modelAnswer": "Two dishes lost about the same, around 40 ml, and the third lost only 5 ml, which does not fit that pattern. That third reading is an anomalous result. I would look for a reason - perhaps it stood in the shade, or was covered, or I misread the scale - and say so in my write-up. An odd result is evidence about the method, not something to rub out."
+    },
+    {
+      "id": "5-enq-12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You have the water lost from three different places. Which kind of chart shows it best, and what would a reader see at once?",
+      "keyIdeas": [
+        "A bar chart, because the places are separate groups",
+        "One bar per place, height showing water lost",
+        "A line graph would be wrong - a line joins things that do not join"
+      ],
+      "modelAnswer": "A bar chart, because the three places are separate groups rather than one measurement changing over time. One bar per place, its height showing the water lost in millilitres. A reader sees at a glance which place lost most, and how big the difference is, without reading a single number. A line graph would be wrong here, because a line suggests the three places join up and they do not."
     }
   ],
   "assessment": {

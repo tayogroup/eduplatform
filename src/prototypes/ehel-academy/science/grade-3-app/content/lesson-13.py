@@ -199,6 +199,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Where is a fossil found?", "\U0001F41F", "in rock", ["in a cloud", "in the sky"], "A fossil is a shape kept in rock for a very long time."),
     q("When is the Moon easiest to see?", "\U0001F319", "at night", ["at lunchtime", "never"], "The Moon is easiest to see in the dark night sky."),
+    q("A material that lets no light through at all is called...", "\U0001F944", "opaque", ["transparent", "translucent"],
+      "No light through means opaque."),
+    q("Which keeps its own shape, a solid or a liquid?", "\U0001F9F1", "a solid", ["a liquid"],
+      "A solid keeps its shape. A liquid takes the shape of its container."),
 ]
 
 LESSON["lecture"] = [

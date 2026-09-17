@@ -188,6 +188,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What does a tadpole grow into?", icon("tadpole"), "a frog", ["a fish", "a butterfly"], "A tadpole grows legs, loses its tail and becomes a frog."),
     q("You can hold it and turn it round. Which kind of model is that?", "\U0001F30D", "a physical model", ["a diagram", "a drawing"], "A physical model is one you can touch, like a globe."),
+    q("Which part of a plant makes its food?", "\U0001F343", "the leaves", ["the roots", "the flower"],
+      "A leaf makes food out of light."),
 ]
 
 LESSON["lecture"] = [

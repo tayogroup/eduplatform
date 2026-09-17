@@ -287,6 +287,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What do you do to open a drawer?", "\U0001F5C4️", "pull it", ["sing to it", "look at it"], "You pull a drawer to open it. A pull is a force."),
     q("What makes a football start to move?", "⚽", "a kick", ["looking at it", "waiting for it"], "A kick is a push. Something has to push a ball to start it moving."),
+    q("An animal needs somewhere damp and dark. Where would you look for it?", "\U0001FAB5", "under a log", ["on a sunny path", "up a wall"],
+      "Under a log is damp and dark, which suits worms and woodlice."),
 ]
 
 LESSON["lecture"] = [

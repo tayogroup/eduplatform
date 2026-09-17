@@ -260,6 +260,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What makes a lamp light up?", "\U0001F4A1", "electricity", ["water", "sand"], "A lamp needs electricity to light up."),
     q("What can a magnet pick up?", "\U0001F9F2", "a paperclip", ["a piece of paper", "a leaf"], "A magnet pulls a paperclip, because the paperclip is made of steel."),
+    q("A window is made of a material you can see through. Which material?", "\U0001FA9F", "glass", ["wood", "metal"],
+      "Glass is see-through, which is why windows are made of it."),
+    q("Is a rock a living thing?", "\U0001FAA8", "no, it was never alive", ["yes", "it used to be alive"],
+      "A rock never fed, grew or had young."),
 ]
 
 LESSON["lecture"] = [

@@ -267,6 +267,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What happens to a ball when you kick it?", "⚽", "it moves away from you", ["it stays still", "it comes towards you"], "A kick is a push. It sends the ball away from you."),
     q("What does a boat do on the water?", "\U0001F6F6", "it floats", ["it sinks"], "A boat floats on top of the water."),
+    q("A plant is drooping and its soil is dry. What does it need?", "\U0001F4A7", "water", ["more leaves", "a bigger pot"],
+      "Water is one of the things every plant must have."),
 ]
 
 LESSON["lecture"] = [

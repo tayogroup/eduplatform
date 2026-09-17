@@ -244,6 +244,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Which way does gravity pull things?", "⚽", "towards the centre of the Earth", ["up into the sky", "sideways"], "Gravity pulls everything towards the centre of the Earth."),
     q("Which of these gives out its own light?", "\U0001F526", "a torch", ["a mirror", "a book"], "A torch makes its own light. A mirror only bounces light back."),
+    q("Which state of matter spreads out to fill all the space it is in?", "\U0001F4A8", "a gas", ["a solid", "a liquid"],
+      "A gas fills everything available to it."),
+    q("What hatches out of frogspawn?", "\U0001F95A", "a tadpole", ["a frog", "a fish"],
+      "A tadpole, which later grows legs and becomes a frog."),
 ]
 
 LESSON["lecture"] = [

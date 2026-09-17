@@ -224,6 +224,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Light goes straight through a clear window. The glass is...", "\U0001FA9F", "transparent", ["opaque", "translucent"], "You can see clearly through it: transparent."),
     q("Which of these is made of metal?", "\U0001F511", "a key", ["a cotton sock", "a paper bag"], "A key is made of metal."),
+    q("Which tool would you use to separate sand from water?", "\u2615", "a filter", ["a magnet", "a sieve"],
+      "The sand grains are too big for the filter's holes, so they stay behind."),
+    q("Which organ takes in air?", "\U0001F32C\uFE0F", "the lungs", ["the stomach", "the heart"],
+      "The two lungs fill when you breathe in."),
 ]
 
 LESSON["lecture"] = [

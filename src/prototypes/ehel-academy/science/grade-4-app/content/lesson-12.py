@@ -201,6 +201,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("We live on the Earth's thin outer layer. What is it called?", "\U0001F30D", "the crust", ["the core", "the mantle"], "From the last lesson: the crust."),
     q("Where is the Sun in the sky around midday?", "☀️", "high up in the sky", ["under the ground", "behind the Moon"], "The Sun is highest in the sky around midday."),
+    q("How does light travel?", "\U0001F4D0", "in straight lines", ["in curves", "in circles"],
+      "Always straight, which is why you cannot see round a corner."),
+    q("What is everything made of?", "\u269B\uFE0F", "particles too small to see", ["tiny coloured balls", "nothing at all"],
+      "Solid, liquid and gas are all particles, arranged differently."),
 ]
 
 LESSON["lecture"] = [

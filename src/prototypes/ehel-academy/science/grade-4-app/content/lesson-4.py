@@ -195,6 +195,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What does a vaccine train your body to do?", "\U0001F489", "fight a germ before it makes you ill", ["grow taller", "run faster"], "From the last lesson: a vaccine trains the body in advance."),
     q("What does a plant need from the Sun?", "☀️", "light", ["sound", "wind"], "Plants need light to grow."),
+    q("What does a muscle do when it contracts?", "\U0001F4AA", "gets shorter and pulls", ["gets longer and pushes", "stays the same"],
+      "A muscle can only pull, and it pulls by getting shorter."),
 ]
 
 LESSON["lecture"] = [

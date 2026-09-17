@@ -299,6 +299,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What is the big bright light in the sky in the daytime?", "☀️", "the Sun", ["the Moon", "a lamp"], "In the daytime the Sun lights up the sky."),
     q("What is the sea made of?", "\U0001F30A", "water", ["sand", "rock"], "The sea is water, and there is a lot of it on Earth."),
+    q("Something heavy is put in water and goes to the bottom. What did it do?", "\U0001FAA8", "it sank", ["it floated", "it stayed still on top"],
+      "Things that go down to the bottom sink."),
+    q("Where does a new plant come from?", "\U0001F331", "a seed", ["a leaf", "a stone"],
+      "A seed grows into a new plant."),
 ]
 
 LESSON["lecture"] = [

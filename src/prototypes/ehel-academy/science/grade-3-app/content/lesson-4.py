@@ -217,6 +217,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Which group does a frog belong to?", "\U0001F438", "amphibians", ["reptiles", "fish"], "Smooth damp skin and a start in water: an amphibian."),
     q("How many legs does a butterfly have?", "\U0001F98B", "six", ["four", "eight"], "A butterfly is an insect, and every insect has six legs."),
+    q("Which of these was never alive: a leaf, a shell, or a glass bottle?", "\U0001F37E", "the glass bottle", ["the leaf", "the shell"],
+      "A leaf and a shell were both part of a living thing. Glass never was."),
 ]
 
 LESSON["lecture"] = [

@@ -233,6 +233,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Where does wood come from?", "\U0001F333", "trees", ["a factory", "the sea"], "Wood grows on trees. It is a natural material."),
     q("Which of these can you see through?", "❓", "a glass window", ["a brick wall", "a wooden door"], "Light goes through glass, so you can see through it."),
+    q("You find a feather on the ground. Which kind of animal dropped it?", "\U0001FAB6", "a bird", ["a fish", "a cat"],
+      "Birds are the animals covered in feathers."),
 ]
 
 LESSON["lecture"] = [

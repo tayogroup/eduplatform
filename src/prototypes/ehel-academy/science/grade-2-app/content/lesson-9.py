@@ -267,6 +267,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Which of these is a kind of rock?", "❓", "a pebble", ["a leaf", "a feather"], "A pebble is a small piece of rock, worn smooth by water."),
     q("Which is the hardest?", "❓", "a stone", ["a sponge", "a slice of bread"], "A stone is a piece of rock, and most rock is hard."),
+    q("What makes a ball roll further?", "\u26BD", "a bigger push", ["a smaller push", "no push at all"],
+      "The bigger the push, the further it goes."),
+    q("Which is wetter, a pond or a desert?", "\U0001F438", "a pond", ["a desert"],
+      "A pond is full of water and a desert is dry."),
 ]
 
 LESSON["lecture"] = [

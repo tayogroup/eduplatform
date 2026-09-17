@@ -242,6 +242,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Which tool separates iron filings from sand?", "\U0001F9F2", "a magnet", ["a filter", "a thermometer"], "Iron is magnetic and sand is not, so a magnet pulls the filings out."),
     q("What makes a toy car start to move?", "\U0001F697", "a push or a pull", ["looking at it", "its colour"], "A push or a pull is a force, and a force can start something moving."),
+    q("What does every food chain start with?", "\U0001F33F", "a plant", ["an animal", "the Sun"],
+      "Only a plant can make its own food, so every chain starts with one."),
+    q("How many legs has an adult insect?", "\U0001F41C", "six", ["eight", "four"],
+      "Six legs. A spider has eight, so it is not an insect."),
 ]
 
 LESSON["lecture"] = [

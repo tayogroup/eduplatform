@@ -292,6 +292,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Light always travels in...", "\U0001F4CF", "straight lines", ["curves", "circles"], "From the last lesson: light goes in straight lines."),
     q("Which of these needs electricity to work?", "\U0001F50C", "a lamp", ["a spoon", "a pencil"], "A lamp needs electricity to light up."),
+    q("What is the sign that a chemical reaction has happened?", "\u2697\uFE0F", "a new substance has been made", ["something changed shape", "something got warm"],
+      "A new substance is the test, and it is why a reaction cannot be undone."),
+    q("Where does a plant get its energy?", "\u2600\uFE0F", "from light", ["from the soil", "from water"],
+      "A plant catches light. Everything else in a chain gets it second-hand."),
 ]
 
 LESSON["lecture"] = [

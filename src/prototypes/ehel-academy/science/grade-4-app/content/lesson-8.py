@@ -250,6 +250,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Vinegar poured on bicarbonate of soda fizzes. What is made?", "\U0001F9EA", "a new gas", ["more vinegar", "nothing new at all"], "From the last lesson: a chemical reaction makes a new substance."),
     q("What makes a toy car start to move?", "\U0001F697", "a push or a pull", ["its colour", "being left alone"], "A push or a pull makes things start to move."),
+    q("What does it mean to say an animal is suited to its habitat?", "\U0001F42A", "its features fit the place, so it can survive there", ["it was born there", "it likes the weather"],
+      "A camel's hump and a polar bear's fat are features that fit their places."),
+    q("Where is an exoskeleton?", "\U0001F980", "on the outside of the body", ["inside, round the organs", "only in the legs"],
+      "On the outside, which is why it has to be shed to grow."),
 ]
 
 LESSON["lecture"] = [

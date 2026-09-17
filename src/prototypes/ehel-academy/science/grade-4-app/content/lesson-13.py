@@ -251,6 +251,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What spins to make day and night?", "\U0001F30D", "the Earth", ["the Sun", "the Moon"], "From the last lesson: the Earth spins once a day."),
     q("In a fair test, how many things do you change?", "⚖️", "one", ["all of them", "none"], "Change one thing and keep the rest the same."),
+    q("What does a switch do to a circuit?", "\U0001F501", "opens or closes a gap in the loop", ["makes more electricity", "stores the electricity"],
+      "A switch is a gap you can open and close on purpose."),
+    q("Is melting a physical change or a chemical reaction?", "\U0001F9CA", "a physical change", ["a chemical reaction"],
+      "Nothing new is made, and it goes back when it cools."),
 ]
 
 LESSON["lecture"] = [

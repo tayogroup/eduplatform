@@ -236,6 +236,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("When would you need a torch to see?", "\U0001F526", "in the dark", ["on a sunny afternoon", "in a bright room"], "A torch gives light where there is none."),
     q("What lights up the sky in the daytime?", "❓", "the Sun", ["the Moon", "a mirror"], "The Sun makes its own light, and daylight is sunlight."),
+    q("Is plastic natural, or made by people?", "\U0001F9F4", "made by people", ["natural"],
+      "Plastic is manufactured in a factory."),
+    q("What is a fish covered in?", "\U0001F41F", "scales", ["fur", "feathers"],
+      "Scales cover a fish."),
 ]
 
 LESSON["lecture"] = [

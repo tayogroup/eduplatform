@@ -220,6 +220,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Is water a solid, a liquid or a gas?", "\U0001F4A7", "a liquid", ["a solid", "a gas"], "Water flows and takes the shape of its container: a liquid."),
     q("Which tool measures how hot something is?", "\U0001F321\ufe0f", "a thermometer", ["a ruler", "a measuring jug"], "A thermometer measures temperature."),
+    q("Which organ pumps blood round your body?", "\u2764\uFE0F", "the heart", ["the lungs", "the brain"],
+      "The heart pumps, day and night."),
+    q("What do a plant's roots do?", "\U0001FAB4", "take in water from the soil", ["make the food", "make the seeds"],
+      "Roots anchor the plant and take in water."),
 ]
 
 LESSON["lecture"] = [

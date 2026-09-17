@@ -220,6 +220,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Which of these needs electricity to work?", "❓", "a lamp", ["a book", "a spoon"], "A lamp needs electricity to make light."),
     q("What is inside a torch that makes it light up?", "\U0001F526", "a battery", ["water", "sand"], "A battery inside the torch makes the lamp light."),
+    q("Can you turn toast back into bread?", "\U0001F35E", "No", ["Yes"],
+      "Toasting made a new material, and it does not go back."),
+    q("How many times a day should you brush your teeth?", "\U0001FAA5", "twice", ["once", "never"],
+      "Morning and before bed."),
 ]
 
 LESSON["lecture"] = [

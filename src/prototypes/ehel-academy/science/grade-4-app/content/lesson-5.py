@@ -236,6 +236,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("A rabbit eats only plants. It is a...", "\U0001F407", "herbivore", ["carnivore", "omnivore"], "From the last lesson: plants only, a herbivore."),
     q("Where does a fish live?", "\U0001F41F", "in water", ["in a tree", "in the desert sand"], "A fish needs water to live."),
+    q("An animal with a backbone is called a...", "\U0001F41F", "vertebrate", ["invertebrate", "exoskeleton"],
+      "A backbone inside makes a vertebrate."),
 ]
 
 LESSON["lecture"] = [

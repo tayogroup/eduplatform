@@ -273,6 +273,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("When is it dark outside?", "\U0001F319", "at night", ["at midday", "in the afternoon"], "At night our side of the Earth is turned away from the Sun."),
     q("What makes your shadow on a sunny day?", "\U0001F464", "your body blocking the Sun's light", ["the wind", "the grass"], "A shadow is the dark shape where something blocks the light."),
+    q("Which makes its own light, the Sun or the Moon?", "\u2600\uFE0F", "the Sun", ["the Moon"],
+      "The Sun is a light source. The Moon only shines back the Sun's light."),
+    q("Is wood natural?", "\U0001FAB5", "Yes", ["No"],
+      "Wood comes from a tree, so it is natural."),
 ]
 
 LESSON["lecture"] = [

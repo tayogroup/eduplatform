@@ -247,6 +247,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Which of these can make a loud sound?", "\U0001F941", "a drum", ["a feather", "a sock"], "Hit a drum and it booms. A feather and a sock are very quiet."),
     q("Where is a bell harder to hear?", "\U0001F514", "far away from it", ["right next to it"], "The further away you are, the quieter a sound is."),
+    q("You cover your ears and a sound goes quiet. Which sense did you block?", "\U0001F442", "hearing", ["smell", "taste"],
+      "You hear with your ears, so covering them blocks hearing."),
 ]
 
 LESSON["lecture"] = [

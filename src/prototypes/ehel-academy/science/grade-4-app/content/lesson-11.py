@@ -214,6 +214,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("You put a metal key in the gap of a circuit. What does the lamp do?", "\U0001F511", "it lights: metal conducts", ["it stays off", "it melts"], "From the last lesson: metals are conductors."),
     q("What do you find if you dig deep down under the soil?", "⛏️", "rock", ["only water", "only air"], "Dig deep enough anywhere and you reach solid rock."),
+    q("Can energy be destroyed?", "\u26A1", "no, only transferred", ["yes, it is used up", "yes, machines destroy it"],
+      "It never disappears. It spreads out until it is too thin to use."),
+    q("Why would a fish not survive in a desert?", "\U0001F41F", "its gills only work in water", ["deserts are too bright", "it would get lost"],
+      "A fish is suited to water and cannot breathe out of it."),
 ]
 
 LESSON["lecture"] = [

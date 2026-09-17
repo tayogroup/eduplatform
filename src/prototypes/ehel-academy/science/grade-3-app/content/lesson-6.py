@@ -195,6 +195,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Which organ breaks food down?", "\U0001F372", "the stomach", ["the lungs", "the brain"], "The stomach churns food and breaks it down."),
     q("What does a leaf use to make a plant's food?", "\U0001F343", "sunlight", ["moonlight", "stones"], "Leaves catch sunlight and use it to make the plant's food."),
+    q("An animal covered in feathers belongs to which group?", "\U0001F426", "birds", ["mammals", "reptiles"],
+      "Feathers make a bird."),
 ]
 
 LESSON["lecture"] = [

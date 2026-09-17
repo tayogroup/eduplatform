@@ -209,6 +209,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("In a food chain, what do we call a plant?", "\U0001F33F", "a producer", ["a consumer", "a hunter"], "A plant makes its own food, so it is a producer."),
     q("What happens to an ice cube in a warm room?", "\U0001F9CA", "it melts into water", ["it grows bigger", "it turns into stone"], "Warmth melts ice into liquid water."),
+    q("What does a caterpillar turn into?", "\U0001F98B", "a butterfly", ["a beetle", "a frog"],
+      "It goes into a chrysalis and comes out a butterfly."),
+    q("Is a mushroom a living thing?", "\U0001F344", "Yes", ["No"],
+      "It feeds, grows and makes more of its own kind."),
 ]
 
 LESSON["lecture"] = [

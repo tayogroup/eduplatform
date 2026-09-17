@@ -327,6 +327,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What is a window made of?", "\U0001FA9F", "glass", ["paper", "wool"], "Windows are made of glass, so you can see through them."),
     q("Which of these is soft?", "\U0001F9F8", "a teddy bear", ["a stone", "a metal spoon"], "A teddy bear squashes when you press it. It is soft."),
+    q("A wooden spoon was once part of a tree. Which group does it go in?", "\U0001F944", "used to be alive", ["alive", "never alive"],
+      "Wood came from a living tree, so the spoon used to be alive."),
 ]
 
 LESSON["lecture"] = [

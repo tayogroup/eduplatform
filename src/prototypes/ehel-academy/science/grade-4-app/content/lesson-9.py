@@ -220,6 +220,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Energy cannot be made or destroyed. What can happen to it?", "\U0001F504", "it can be transferred", ["it can vanish", "it can be used up for ever"], "From the last lesson: energy is only ever transferred."),
     q("What makes a shadow?", "\U0001F464", "something blocking the light", ["a mirror making light", "the wind"], "An object in the way of the light makes a shadow behind it."),
+    q("In which state are the particles furthest apart?", "\U0001F4A8", "a gas", ["a solid", "a liquid"],
+      "Big gaps in a gas, almost none in a solid."),
+    q("Who should give a child medicine?", "\U0001F48A", "a grown-up, measuring it from the label", ["the child, on their own", "a friend"],
+      "The label says how much, and a grown-up reads it."),
 ]
 
 LESSON["lecture"] = [

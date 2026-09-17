@@ -215,6 +215,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Particles in a solid are packed in rows. What do they do all the time?", "\U0001F7E2", "vibrate on the spot", ["stay perfectly still", "fly about freely"], "From the last lesson: particles are always moving."),
     q("What happens to chocolate held in a warm hand?", "\U0001F36B", "it melts", ["it freezes", "it turns into water"], "Warmth melts chocolate."),
+    q("An animal that eats only plants is a...", "\U0001F411", "herbivore", ["carnivore", "omnivore"],
+      "Only plants means herbivore."),
+    q("Which bone protects your brain?", "\U0001F9E0", "the skull", ["the spine", "the ribs"],
+      "The skull is a hard case round the brain."),
 ]
 
 LESSON["lecture"] = [

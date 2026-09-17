@@ -214,6 +214,10 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("Two north poles meet. What do they do?", "\U0001F9F2", "push apart", ["pull together", "nothing at all"], "Like poles repel."),
     q("Where did the wood in a wooden chair come from?", "\U0001FA91", "a tree", ["a rock", "the sea"], "Wood grew as part of a tree. It was once alive."),
+    q("Which surface gives more friction, ice or carpet?", "\U0001F9F6", "carpet", ["ice"],
+      "Rough carpet rubs far more than smooth ice."),
+    q("What do we call an animal in a food chain?", "\U0001F98A", "a consumer", ["a producer", "a plant"],
+      "It has to eat other living things, so it is a consumer."),
 ]
 
 LESSON["lecture"] = [

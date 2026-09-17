@@ -71,6 +71,11 @@ def main():
     FLOORS = {int(k): int(v) for k, v in (cfg.get("objectiveFloors") or {}).items()}
     if len(FLOORS) != len(cfg["lessons"]):
         print("  cannot run: objectiveFloors in app.config.json must name every lesson (%d of %d)" % (len(FLOORS), len(cfg["lessons"]))); sys.exit(2)
+    # Per-lesson warm-up counts, for the spiral - see the check further down.
+    RETRIEVAL = {int(k): int(v) for k, v in (cfg.get("retrievalFloors") or {}).items()}
+    if len(RETRIEVAL) != len(cfg["lessons"]):
+        print("  cannot run: retrievalFloors in app.config.json must name every lesson (%d of %d)"
+              % (len(RETRIEVAL), len(cfg["lessons"]))); sys.exit(2)
     bad = []
 
     def fail(where, msg):
@@ -107,6 +112,24 @@ def main():
             data = json.loads(m.group(1))
         except ValueError as e:
             fail(entry["file"], "LESSON block is not JSON: %s" % e); continue
+        # THE SPIRAL, counted. The overview step's warm-up is where a topic
+        # returns: every lesson's first warm-up question retrieves the lesson
+        # before it, and from lesson 4 there are further ones at lags of three
+        # and six, so an early topic comes back three times. All of it is
+        # ordinary authored content with nothing in the data marking it as
+        # retrieval, so the only thing a gate can hold is the COUNT - which is
+        # enough to catch the failure that matters, an edit or a rebuild quietly
+        # dropping them. Recorded at the measured value, may rise, may not fall.
+        warm = 0
+        for st in data["steps"]:
+            if st["kind"] == "overview":
+                warm = len((st.get("data") or {}).get("warmup") or [])
+        rfloor = RETRIEVAL.get(n)
+        if rfloor is None:
+            fail(entry["file"], "retrievalFloors in app.config.json names no lesson %d" % n)
+        elif warm < rfloor:
+            fail(entry["file"], "carries %d warm-up question(s), below its floor of %d - the "
+                                "spiral's retrieval has been lost" % (warm, rfloor))
         for k, st in enumerate(data["steps"], 1):
             d0 = st.get("data") or {}
 

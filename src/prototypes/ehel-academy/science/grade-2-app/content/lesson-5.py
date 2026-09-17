@@ -238,6 +238,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What happens to an ice cube on a warm day?", "\U0001F9CA", "it melts into water", ["it grows bigger", "it turns into wood"], "Warmth melts ice into water."),
     q("What does a toaster do to bread?", "\U0001F35E", "makes it brown and crisp", ["turns it back into dough", "makes it cold and wet"], "Heat changes bread into toast."),
+    q("Which teeth do the chewing at the back of your mouth?", "\U0001F9B7", "the molars", ["the incisors", "the canines"],
+      "Molars are the big flat grinders at the back."),
 ]
 
 LESSON["lecture"] = [

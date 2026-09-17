@@ -196,6 +196,8 @@ LESSON["about"] = [
 LESSON["warmup"] = [
     q("What is a habitat?", "\U0001F333", "the place where a living thing naturally lives", ["a kind of food", "a type of rock"], "From the last lesson."),
     q("Is ice a solid or a liquid?", "\U0001F9CA", "a solid", ["a liquid", "a gas"], "Ice keeps its shape: a solid."),
+    q("When is a vaccine given?", "\U0001F489", "while you are well", ["once you are ill", "only in winter"],
+      "It trains the body before the germ ever arrives."),
 ]
 
 LESSON["lecture"] = [

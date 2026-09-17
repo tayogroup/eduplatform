@@ -115,7 +115,7 @@ if (plan.levels.some((level) => level.eslFramework) && !eslIndex.size) {
 // unlisted stage takes the `|| 18` fallback below, which is Stage 3's A1
 // ceiling, and every B1 sentence would be reported as over. Level 2 hit
 // exactly this when Stages 4-6 were added.
-const REGISTER_CEILING = { 1: 12, 2: 15, 3: 18, 4: 21, 5: 24, 6: 27, 7: 30, 8: 33, 9: 36 };
+const REGISTER_CEILING = { 0: 10, 1: 12, 2: 15, 3: 18, 4: 21, 5: 24, 6: 27, 7: 30, 8: 33, 9: 36 };
 
 // A plan source is one of two shapes: school English, `{grade, units[]}`, or a
 // unit of a previous intensive course kept in `archive/`, `{archive, unit}`,
@@ -186,7 +186,7 @@ function buildUnit(authored) {
   // 0057 objectives this unit must deliver, and which words it teaches.
   const eslLevel = Boolean(level.eslFramework);
   const levelStages = level.cambridgeStages || [];
-  if (eslLevel && authored.title !== planUnit.title) {
+  if (authored.title !== planUnit.title) {
     problems.push(`${where}: title "${authored.title}" differs from the plan's "${planUnit.title}".`);
   }
 
@@ -216,8 +216,8 @@ function buildUnit(authored) {
     if (outcome.cefrSkill && !CEFR_SKILLS.includes(outcome.cefrSkill)) {
       problems.push(`${where}: outcome ${n + 1} has cefrSkill "${outcome.cefrSkill}" — must be one of ${CEFR_SKILLS.join(", ")}.`);
     }
-    if (eslLevel && !outcome.cefrSkill) problems.push(`${where}: outcome ${n + 1} names no CEFR skill — CEFR is recorded per skill.`);
-    if (eslLevel && !outcome.cefrDescriptor) problems.push(`${where}: outcome ${n + 1} has no "I can" descriptor.`);
+    if (!outcome.cefrSkill) problems.push(`${where}: outcome ${n + 1} names no CEFR skill — CEFR is recorded per skill.`);
+    if (!outcome.cefrDescriptor) problems.push(`${where}: outcome ${n + 1} has no "I can" descriptor.`);
     const level_ = outcome.cefrLevel || declaredBand;
     if (CEFR_ORDER.indexOf(level_) < 0) problems.push(`${where}: outcome ${n + 1} claims CEFR "${level_}", which is not a level.`);
     if (CEFR_ORDER.indexOf(level_) > bandRank) {
@@ -287,7 +287,7 @@ function buildUnit(authored) {
   // The plan allocates every word to one unit, so the level can never teach a
   // word twice however many people author it at once. An added word is the first
   // step to a duplicate; a dropped one is a hole in the level's vocabulary.
-  if (eslLevel && Array.isArray(planUnit.vocabulary)) {
+  if (Array.isArray(planUnit.vocabulary)) {
     const norm = (value) => String(value).trim().toLowerCase();
     const planned = planUnit.vocabulary.flatMap((group) => group.words.map(norm));
     const written = (authored.groups || []).flatMap((group) => (group.words || []).map((word) => norm(word.w)));
@@ -594,7 +594,7 @@ function buildUnit(authored) {
   }] : [];
 
   // --- register report (a report, not a gate) --------------------------------
-  if (eslLevel && band?.stage) {
+  if (band?.stage != null) {
     const ceiling = REGISTER_CEILING[band.stage] || 18;
     const readable = [
       authored.overview, ...(authored.learningPath || []),
@@ -634,8 +634,8 @@ function buildUnit(authored) {
       levelId: lid, unitId: uid, unitNo: authored.unit, unitTitle: authored.title,
       cefr: {
         band: declaredBand, level: level.cefr, skills,
-        ...(eslLevel && band?.cefrName ? { bandName: band.cefrName } : {}),
-        ...(eslLevel && band?.stage ? { stage: band.stage } : {}),
+        ...(band?.cefrName ? { bandName: band.cefrName } : {}),
+        ...(band?.stage != null ? { stage: band.stage } : {}),
       },
       ...(planUnit.capstone ? { capstone: true } : {}),
       unitOverview: authored.overview,

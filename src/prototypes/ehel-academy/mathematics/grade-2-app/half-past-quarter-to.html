@@ -2399,7 +2399,7 @@
   scPaint();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["🕐", "The two hands"], ["🕓", "Quarter past and to"], ["🕔", "Five minutes"], ["🔢", "Clock and digital"], ["⏳", "Seconds to years"], ["📅", "Days and the calendar"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🕐", "The two hands"], ["🕓", "Quarter past and to"], ["🕔", "Five minutes"], ["🔢", "Clock and digital"], ["⏳", "Seconds to years"], ["📅", "Days and the calendar"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;

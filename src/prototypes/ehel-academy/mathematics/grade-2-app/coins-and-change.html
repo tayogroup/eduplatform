@@ -2507,7 +2507,7 @@
   scPaint();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["💰", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🛒", "Shop totals"], ["➕", "How much more"], ["✍️", "Writing money"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["💰", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🛒", "Shop totals"], ["➕", "How much more"], ["✍️", "Writing money"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;

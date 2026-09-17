@@ -2680,7 +2680,7 @@
   scPaint();
 
   /* ---- 15: stickers ---- */
-  const STICKERS = [["📐", "Sides and corners"], ["🔷", "Naming shapes"], ["❓", "Shape riddles"], ["🦋", "Make it match"], ["✂️", "Lines of symmetry"], ["📦", "Solid shapes"], ["📍", "Where is it?"], ["🔄", "Turning"], ["⭕", "The middle of a circle"], ["🚪", "Shapes in real things"], ["🌀", "Spinning right round"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["📐", "Sides and corners"], ["🔷", "Naming shapes"], ["❓", "Shape riddles"], ["🦋", "Make it match"], ["✂️", "Lines of symmetry"], ["📦", "Solid shapes"], ["📍", "Where is it?"], ["🔄", "Turning"], ["⭕", "The middle of a circle"], ["🚪", "Shapes in real things"], ["🌀", "Spinning right round"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;

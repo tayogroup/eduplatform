@@ -1096,6 +1096,19 @@ GRADE_WORD_PICTURES.ien1 = {
   fever: "🌡️",       // the thermometer. 🤒 is already `ill`
   menu: "📋",          // the list you read, not a plate of food
   bill: "🧾",          // the paper you pay, as the shared map does `receipt`
+  // --- the health words added on 2026-09-17 (Units 3 and 12) ----------------
+  // From the Interchange Intro comparison: the course taught `chemist` as a
+  // place with nothing in it, and eleven parts of the body. `tablet` is the
+  // same failure as `back` directly above — the note at the top of this block
+  // retired it as untaught, Unit 12 teaches it again, and the wrong picture
+  // came back with the word.
+  tablet: "",          // the medicine. 📱 is the computer you hold
+  knee: "",            // 🦵 is the whole leg, and `leg` is taught in Unit 0
+  sick: "",            // `ill`, in the same group, already draws 🤒
+  sore: "",            // `pain`, in the same group, already draws 🤕
+  plaster: "🩹",       // the one you put on a cut, not the one on a wall — so
+                       // it stays here and does not go in the shared map, where
+                       // it would reach English
 };
 // Level 2 was rebuilt on Cambridge 0057 on 2026-09-12 (Stages 4-6, A1 to A2,
 // adult ESL), with a new 585-word vocabulary. The entries below were found the

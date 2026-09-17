@@ -1191,44 +1191,47 @@ input.typein.wrong { border-color: #c53030; }
     <section class="slide" data-say="Seasons.">
       <div id="s5"></div>
     </section>
-    <section class="slide" data-say="Which word means this?">
+    <section class="slide" data-say="Special days.">
       <div id="s6"></div>
     </section>
-    <section class="slide" data-say="-ed for the past: worked, played.">
+    <section class="slide" data-say="Which word means this?">
       <div id="s7"></div>
     </section>
-    <section class="slide" data-say="Went, had, saw: words that change.">
+    <section class="slide" data-say="-ed for the past: worked, played.">
       <div id="s8"></div>
     </section>
-    <section class="slide" data-say="Did you go? I didn't go..">
+    <section class="slide" data-say="Went, had, saw: words that change.">
       <div id="s9"></div>
     </section>
-    <section class="slide" data-say="Yesterday, today, a week ago.">
+    <section class="slide" data-say="Did you go? I didn't go..">
       <div id="s10"></div>
     </section>
-    <section class="slide" data-say="The Green Bag.">
+    <section class="slide" data-say="Yesterday, today, a week ago.">
       <div id="s11"></div>
     </section>
-    <section class="slide" data-say="Twelve Months.">
+    <section class="slide" data-say="The Green Bag.">
       <div id="s12"></div>
     </section>
-    <section class="slide" data-say="A Lost Bag Form.">
+    <section class="slide" data-say="Twelve Months.">
       <div id="s13"></div>
     </section>
-    <section class="slide" data-say="Questions. Write your answer first, then check the reviewed answer.">
+    <section class="slide" data-say="A Lost Bag Form.">
       <div id="s14"></div>
     </section>
-    <section class="slide" data-say="Say it out loud. Record yourself and listen back. Hearing your own voice is the fastest correction there is.">
+    <section class="slide" data-say="Questions. Write your answer first, then check the reviewed answer.">
       <div id="s15"></div>
     </section>
-    <section class="slide" data-say="Write it down. Your draft saves on this device as you type.">
+    <section class="slide" data-say="Say it out loud. Record yourself and listen back. Hearing your own voice is the fastest correction there is.">
       <div id="s16"></div>
     </section>
-    <section class="slide" data-say="Practice. 6 things to do, most of them out loud.">
+    <section class="slide" data-say="Write it down. Your draft saves on this device as you type.">
       <div id="s17"></div>
     </section>
-    <section class="slide" data-say="Check what you know. 12 questions. You can try again.">
+    <section class="slide" data-say="Practice. 6 things to do, most of them out loud.">
       <div id="s18"></div>
+    </section>
+    <section class="slide" data-say="Check what you know. 12 questions. You can try again.">
+      <div id="s19"></div>
     </section>
     <section class="slide" data-say="What can you do now? Answer honestly. Nobody else sees this — it is here so you can see what has moved and what has not.">
       <div id="summary"></div>
@@ -1285,7 +1288,8 @@ input.typein.wrong { border-color: #c53030; }
   "Ask somebody what they did, and say what you did not do",
   "Say when it happened: yesterday, last week, a week ago",
   "Tell a short story about one past day",
-  "Say the months of the year"
+  "Say the months of the year, and when your birthday is",
+  "Wish someone well: Happy birthday, Congratulations"
  ],
  "outcomes": [
   {
@@ -1790,6 +1794,39 @@ input.typein.wrong { border-color: #c53030; }
      "pic": "🍂"
     }
    ]
+  },
+  {
+   "title": "Special days",
+   "words": [
+    {
+     "w": "birthday",
+     "pos": "noun",
+     "meaning": "The day of the year you were born.",
+     "example": "My birthday is in May.",
+     "sentences": [
+      "Her birthday was last week.",
+      "When is your birthday?",
+      "We had a cake for his birthday.",
+      "My birthday is the twelfth of June."
+     ],
+     "starter": "My birthday is in …",
+     "pic": "🎂"
+    },
+    {
+     "w": "congratulations",
+     "pos": "interjection",
+     "meaning": "Say it to a person when something good happens to them.",
+     "example": "Congratulations! You passed.",
+     "sentences": [
+      "Congratulations on your new job!",
+      "She said congratulations to me.",
+      "Congratulations! It is a good day for you.",
+      "We said congratulations and gave her the flowers."
+     ],
+     "starter": "Congratulations! …",
+     "pic": ""
+    }
+   ]
   }
  ],
  "patterns": [
@@ -1987,8 +2024,8 @@ input.typein.wrong { border-color: #c53030; }
    "speech": ""
   },
   {
-   "title": "Speaking 6 — The months, and when",
-   "instructions": "Listen and repeat the twelve months.\nJanuary, February, March, April\nMay, June, July, August\nSeptember, October, November, December\nSay Feb-ru-ar-y slowly. Say ju-LY: the end is long.\nNow answer three questions. Made-up answers are fine.\nWhen did you visit a friend? In May. Or: Last month.\nWhen did you get your bag? A year ago.\nWhen did you see a film? Last week.\nTap the mic. Say the 12 months. Say your 3 answers. Tap again. Listen.\nCheck: 12 months, in order? A time word in each answer?",
+   "title": "Speaking 6 — The months, when, and Happy birthday",
+   "instructions": "Listen and repeat the twelve months.\nJanuary, February, March, April\nMay, June, July, August\nSeptember, October, November, December\nSay Feb-ru-ar-y slowly. Say ju-LY: the end is long.\nNow answer three questions. Made-up answers are fine.\nWhen did you visit a friend? In May. Or: Last month.\nWhen did you get your bag? A year ago.\nWhen did you see a film? Last week.\nTap the mic. Say the 12 months. Say your 3 answers. Tap again. Listen.\nCheck: 12 months, in order? A time word in each answer?\nNow two good days. Say the B line warmly, not flat.\nA: My birthday is in June. B: Happy birthday!\nA: I got the job. B: Congratulations!\nTap the mic. Say both B lines. Tap again. Listen.\nCheck: did your voice go up, and not stay flat?",
    "speech": ""
   }
  ],
@@ -3766,19 +3803,20 @@ input.typein.wrong { border-color: #c53030; }
   wordWalk(3, 's3', LESSON.groups[1]);
   wordWalk(4, 's4', LESSON.groups[2]);
   wordWalk(5, 's5', LESSON.groups[3]);
-  wordCheck(6, 's6', LESSON.groups.flatMap(g => g.words));
-  pattern(7, 's7', LESSON.patterns[0]);
-  pattern(8, 's8', LESSON.patterns[1]);
-  pattern(9, 's9', LESSON.patterns[2]);
-  pattern(10, 's10', LESSON.patterns[3]);
-  reading(11, 's11', LESSON.readings[0]);
-  reading(12, 's12', LESSON.readings[1]);
-  reading(13, 's13', LESSON.readings[2]);
-  questions(14, 's14', LESSON.questions);
-  speaking(15, 's15', LESSON.speaking);
-  writing(16, 's16', LESSON.writing);
-  practice(17, 's17', LESSON.practice);
-  quiz(18, 's18', LESSON.quiz);
+  wordWalk(6, 's6', LESSON.groups[4]);
+  wordCheck(7, 's7', LESSON.groups.flatMap(g => g.words));
+  pattern(8, 's8', LESSON.patterns[0]);
+  pattern(9, 's9', LESSON.patterns[1]);
+  pattern(10, 's10', LESSON.patterns[2]);
+  pattern(11, 's11', LESSON.patterns[3]);
+  reading(12, 's12', LESSON.readings[0]);
+  reading(13, 's13', LESSON.readings[1]);
+  reading(14, 's14', LESSON.readings[2]);
+  questions(15, 's15', LESSON.questions);
+  speaking(16, 's16', LESSON.speaking);
+  writing(17, 's17', LESSON.writing);
+  practice(18, 's18', LESSON.practice);
+  quiz(19, 's19', LESSON.quiz);
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);
 

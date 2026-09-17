@@ -395,6 +395,19 @@
      fallback is only for the instant before the first measurement. */
   body:has(#seb-session-bar) .w-dock,
   body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
+
+  /* ehel-dock-foot-lift-focus: AND THE SAME LIFT IN FOCUS MODE.
+     The rule directly above is specificity (1,1,1); the `.w-dock, .w-drawer`
+     rule further down that spends --wehel-foot-lift is (0,1,0), so with a
+     session bar on screen the footer lift was being thrown away entirely and
+     the dock sat back on top of Next. Measured on the live page before this
+     went in: 134px without the bar (correct), 94px with it (the lift gone).
+     This composes the two offsets rather than letting one replace the other,
+     and sits after the rule above so it wins on source order at equal
+     specificity. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer {
+    bottom: calc(var(--seb-lift, 78px) + var(--wehel-foot-lift, 0px)); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;

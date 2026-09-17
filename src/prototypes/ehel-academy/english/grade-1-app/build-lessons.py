@@ -359,6 +359,29 @@ WORDS_MIN_STEP = 4
 # the two-clause answers a child cannot read as one option. Grades 1-2 keep 70.
 STORY_ANSWER_MAX = 70 if GRADE <= 2 else 110
 
+
+def question_tier(c):
+    """Cambridge's rung for one question, folded to three.
+
+    The authored values are not three clean names. Measured across Grades 3 and
+    4's 465 comprehension and quiz items: `Foundation`, `Core`, `Stretch`,
+    `Challenge` (3 items in total) and `Grade 3 core` / `Grade 4 core` (12) -
+    the last two being Core with a stray prefix, which a reader comparing string
+    equality would silently drop out of the Core band and into whatever the
+    fallback is. So Core is the FALLBACK rather than a match: anything not
+    recognisably easier or harder is the middle rung, which is also the right
+    answer for an item carrying no difficulty at all.
+
+    Challenge rides with Stretch because three items cannot be a rung of their
+    own - a "Challenge" button would be empty in 18 of the 20 units.
+    """
+    d = str(c.get("difficulty") or "").strip()
+    if d == "Foundation":
+        return "F"
+    if d in ("Stretch", "Challenge"):
+        return "S"
+    return "C"
+
 # The order a learner walks a unit. Owner, 2026-09-08, matching the shell
 # course's own Grades 1-4 arrangement: the picture books LEAD the reading,
 # their questions come straight after them, and the unit's own text sits near
@@ -1530,17 +1553,49 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     # written to teach viewpoint and setting, Stage 4 objectives nothing else
     # in the unit teaches), never got its second. The reading with the most
     # questions is the unit's main text; ties keep reading order.
-    chosen, n = [], 0
-    while len(chosen) < 6 and any(len(q) > n for q in queues):
-        live = [q for q in queues if n < len(q)]
-        room = 6 - len(chosen)
-        if len(live) > room:
-            live = sorted(live, key=lambda q: -len(q))[:room]   # stable: ties stay in reading order
-        chosen.extend(q[n] for q in live)
-        n += 1
-    chosen.sort(key=lambda c: reading_order.get(c.get("readingId"), len(reading_order)))
+    def pick_six(prefer=None):
+        """The six questions a rung shows.
 
-    if len(factual) >= 3:
+        `prefer=None` is the round-robin described above, untouched: one
+        question per reading in turn, so the six are shared between the unit's
+        stories. That is the DEFAULT rung and an owner decision (2026-09-10),
+        and it still produces exactly what it produced before the ladder existed
+        - verified by rebuilding all five grades and finding Grades 1, 2 and 5
+        byte-identical.
+
+        `prefer` is a tier order ("FCS" easier, "SCF" harder) and takes the six
+        easiest (or hardest) questions in the unit, wherever they live. IT
+        DELIBERATELY GIVES UP THE READING SPREAD, and that was measured before
+        it was chosen. Sorting each READING's own queue instead - the obvious
+        way, which keeps one question per story - produced an easier six
+        IDENTICAL TO THE DEFAULT in 13 of the 20 units, because the authored
+        questions are already Foundation-first inside each reading: the default
+        six ARE the easy ones. A rung that re-asks the same six questions under
+        the word "Easier" is worse than no rung.
+
+        The cost is real and bounded: the easier six comes from 3.5 of the
+        unit's stories on average instead of 4.8, worst case 2 of 5. That is
+        acceptable for a rung a child has asked for and would not be acceptable
+        as the default, which is why only the rungs pay it.
+        """
+        if prefer:
+            # stable, so questions of one tier keep authored order; then back
+            # into reading order, because the six are still GROUPED by story.
+            chosen = sorted(factual, key=lambda c: prefer.index(question_tier(c)))[:6]
+            return sorted(chosen, key=lambda c: reading_order.get(c.get("readingId"),
+                                                                 len(reading_order)))
+        chosen, n = [], 0
+        while len(chosen) < 6 and any(len(q) > n for q in queues):
+            live = [q for q in queues if n < len(q)]
+            room = 6 - len(chosen)
+            if len(live) > room:
+                live = sorted(live, key=lambda q: -len(q))[:room]   # stable: ties stay in reading order
+            chosen.extend(q[n] for q in live)
+            n += 1
+        chosen.sort(key=lambda c: reading_order.get(c.get("readingId"), len(reading_order)))
+        return chosen
+
+    def build_items(chosen):
         items = []
         for k, c in enumerate(chosen):
             # authored wrong options first; the sibling-answer pool only fills
@@ -1583,7 +1638,69 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 "why": c.get("explanation") or "",
                 "srcTitle": reading_title.get(c.get("readingId"), ""),
             })
-        data["questions"] = items
+        return items
+
+    if len(factual) >= 3:
+        data["questions"] = build_items(pick_six())
+
+        # ---- the Cambridge tier ladder, Grades 3 and 4 only ----------
+        # Every comprehension item in this course carries a `difficulty`, and
+        # until now NOTHING rendered it: the six shown were picked by which
+        # story they belong to, so a child who could not get into a question met
+        # the same question again. Cambridge tiers its workbook sessions three
+        # ways for exactly this.
+        #
+        # GRADES 3 AND 4 ONLY, and that is the data rather than a preference.
+        # Measured across all four grades: Grade 1's items are one "supported"
+        # level throughout and Grade 2's are nine-tenths Core, so neither has a
+        # ladder to render - a control there would offer a child the same six
+        # questions under three different names. Grade 5 is a separate
+        # owner-approved app and is deliberately not widened into. Widening is
+        # this tuple, once its data carries a real F and a real S.
+        #
+        # The unit must ALSO prove it: a pool with no Foundation or no Stretch
+        # gets no control, so a future unit authored flat renders exactly as it
+        # does today instead of growing a button that changes nothing.
+        if GRADE in (3, 4):
+            pool = {question_tier(c) for c in factual}
+            if "F" in pool and "S" in pool:
+                easier, harder = build_items(pick_six("FCS")), build_items(pick_six("SCF"))
+
+                # EASIER ALSO DROPS AN OPTION, and that is the half that does
+                # the work. Measured across all 20 units: the harder six brings
+                # 2 to 6 new questions, but the easier six brings only 1 to 3 -
+                # in six units exactly ONE - because the default round-robin
+                # already takes each reading's first question and the authored
+                # order is Foundation-first. The six a child is given ARE the
+                # unit's easy ones, so there is no easier SET to swap in and
+                # pretending otherwise is a button that re-asks five of the same
+                # six questions under the word "Easier".
+                #
+                # So this rung does what Cambridge's Support column does -
+                # reduce the demand of the SAME task - by taking one wrong
+                # option away. That is a real scaffold in every unit including
+                # the six with nothing to swap, it needs no content that does
+                # not exist, and it costs nothing a family reads: the step is
+                # attemptOnly, so it reports participation and never a mark.
+                for q in easier:
+                    right = [o for o in q["opts"] if o["ok"]]
+                    wrong = [o for o in q["opts"] if not o["ok"]]
+                    q["opts"] = right + wrong[:1]
+
+                # Defensive: a rung identical to the default in BOTH its
+                # questions and its option counts is a control that does
+                # nothing, and is dropped rather than drawn.
+                def shape(items):
+                    return [(q["ask"], len(q["opts"])) for q in items]
+
+                here = shape(data["questions"])
+                tiers = {}
+                if shape(easier) != here:
+                    tiers["easier"] = easier
+                if shape(harder) != here:
+                    tiers["harder"] = harder
+                if tiers:
+                    data["questionTiers"] = tiers
         i = add("questions", "What happened in the story?", "\U0001F914", "I answered the story questions",
                 "Tap the answer.",
                 explain(
@@ -2583,8 +2700,17 @@ def bootstrap(slides, data):
             # same story, so the tally measures elimination rather than
             # comprehension. Reported as participation, never as a mark -
             # see the note at the report in the deck's sequence().
-            out.append('  sequence({ el: %s, items: LESSON.questions, finish: %d, attemptOnly: true,\n'
-                       '    label: "Question", done: "You remembered the story well." });' % (el, i))
+            # tieredSequence is english.js's own runner and is used ONLY where
+            # the unit carries a ladder. Everywhere else this emits the line it
+            # always emitted, so Grades 1, 2 and 5 keep deck.js's sequence()
+            # verbatim and their pages do not move.
+            if data.get("questionTiers"):
+                out.append('  tieredSequence({ el: %s, items: LESSON.questions,\n'
+                           '    tiers: LESSON.questionTiers, finish: %d, attemptOnly: true,\n'
+                           '    label: "Question", done: "You remembered the story well." });' % (el, i))
+            else:
+                out.append('  sequence({ el: %s, items: LESSON.questions, finish: %d, attemptOnly: true,\n'
+                           '    label: "Question", done: "You remembered the story well." });' % (el, i))
         elif k == "sayit":
             out.append('  sayOutLoud({ el: %s, items: LESSON.sayit, finish: %d,\n'
                        '    ask: "Listen, then say it out loud.",\n'

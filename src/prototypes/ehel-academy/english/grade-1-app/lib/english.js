@@ -199,6 +199,155 @@
      exist yet, so they wire theirs when they first use it */
   window.__ehelWireFeedback = wireFeedbackListen;
 
+  /* ---- the story questions, with Cambridge's tier ladder on them ---
+     The same step deck.js's sequence() draws, plus a way to ask for an
+     easier or a harder six. Every comprehension item in this course carries
+     a Cambridge tier and until now nothing rendered one, so a child who
+     could not get into a question met that question again and nothing else.
+
+     WHY THIS IS A SEPARATE RUNNER AND NOT A FLAG ON sequence().
+     `lib/deck.js` is the Mathematics build's engine, lifted verbatim and
+     shared by every subject's lesson app; this file is English's own. A tier
+     swap has to reset the runner's `i` and `right` and redraw, and none of
+     those is reachable from outside sequence()'s closure - so the honest
+     choices were to fork a shared engine or to write English's own runner
+     beside its three existing ones (hearAndTap, pictureMatch, wordWalk, all
+     the same shape). This is the second. Grades 1, 2 and 5 still call
+     sequence() and their pages are unchanged.
+
+     THE CONTROL IS A SIBLING OF #stageN, NOT INSIDE IT. Every redraw sets
+     `$(el.stage).innerHTML`, so a control drawn in there would be wiped by
+     the next question. Its PARENT `.stage` is never written to, so the rungs
+     sit next to #stageN and survive - and are painted once per rung change
+     rather than once per question, so they never flicker mid-step.
+
+     WHAT THE RUNGS ARE CALLED, AND WHY NOT "FOUNDATION". Cambridge's names
+     are written for the teacher's book. On a child's screen "Foundation"
+     over their question labels the child rather than the question, so the
+     buttons say what the child wants ("Easier", "Harder") and the Cambridge
+     rung rides in the title and the aria-label, where the adult beside them
+     and a screen reader still get it.
+     ------------------------------------------------------------------ */
+  function tieredSequence(o) {
+    const el = o.el;
+    const tiers = o.tiers || {};
+    /* The default six are the middle rung. A rung the builder left out - a
+       unit whose easier six came out identical to these - is simply absent
+       from the row, rather than a button that re-asks the same questions. */
+    const rungs = [
+      tiers.easier && { key: "easier", items: tiers.easier, label: "Easier", tier: "Foundation" },
+      { key: "core", items: o.items, label: "These six", tier: "Core" },
+      tiers.harder && { key: "harder", items: tiers.harder, label: "Harder", tier: "Stretch" },
+    ].filter(Boolean);
+
+    let at = rungs.findIndex((r) => r.key === "core");
+    let items = rungs[at].items;
+    let i = 0, right = 0, lock = false, reported = false;
+    /* Every rung change bumps this, and the 2.7s advance timer captures it.
+       Without it a child who answers and immediately switches gets the old
+       set's next question painted over the new set two seconds later. */
+    let gen = 0;
+
+    /* ABOVE THE QUESTION, not between it and the answers. Drawn first into
+       .stage (the only container no redraw rewrites) it landed between the
+       question card and the choices, which splits a nine-year-old's reading of
+       the question from the answers to it. `.say` holds the question and is
+       rewritten only INSIDE (#askN), so a sibling placed before it is as safe
+       and reads as what it is: a control about which six questions you get,
+       before the first of them. */
+    const sayEl = $(el.ask).closest(".say") || $(el.stage);
+    const row = document.createElement("div");
+    row.className = "q-rungs";
+    sayEl.parentNode.insertBefore(row, sayEl);
+
+    function paintRungs() {
+      row.innerHTML = '<span class="q-rungs-lab">Questions:</span>' + rungs.map((r, k) =>
+        '<button type="button" class="q-rung' + (k === at ? " on" : "") + '"' +
+        ' data-rung="' + r.key + '"' + (k === at ? ' aria-current="true"' : "") +
+        ' title="Cambridge tier: ' + r.tier + '"' +
+        ' aria-label="' + esc(r.label) + ', Cambridge tier ' + r.tier + '">' +
+        esc(r.label) + "</button>").join("");
+    }
+
+    function draw() {
+      lock = false;
+      const it = items[i];
+      const src = it.srcTitle ? '<span class="qbook">' + esc(it.srcTitle) + "</span>" : "";
+      $(el.ask).innerHTML = src + it.ask;
+      $(el.stage).innerHTML = "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) =>
+        '<button type="button" class="choice" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      if (cur === o.finish) say(plain(it.ask));
+    }
+
+    row.addEventListener("click", (e) => {
+      const b = e.target.closest(".q-rung"); if (!b) return;
+      const k = rungs.findIndex((r) => r.key === b.dataset.rung);
+      if (k < 0 || k === at) return;
+      /* A tier swap RESTARTS the step, and says so rather than silently
+         resetting a child's count. Blocked while an answer is on screen: the
+         advance timer is still pending and the child is reading feedback for
+         a question that is about to stop existing. */
+      if (lock) return;
+      at = k; items = rungs[at].items; i = 0; right = 0; gen++;
+      paintRungs();
+      draw();
+      /* Says what actually changed. "Easier" swaps in the unit's
+         Foundation-weighted six AND drops a wrong option, and the second half
+         is the part a child will notice - in six of the twenty units the
+         questions barely move, because the default six already are the easy
+         ones (see build-lessons.py). Promising easier QUESTIONS there would be
+         a promise the content cannot keep. */
+      const msg = rungs[at].key === "core"
+        ? "Back to these six questions."
+        : rungs[at].key === "easier"
+          ? "Six easier questions, with one answer taken away. Starting again."
+          : "Six harder questions. Starting again.";
+      $(el.fb).className = "fb"; $(el.fb).textContent = msg;
+      say(msg);
+    });
+
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const mine = gen, it = items[i];
+      const ok = b.dataset.ok === "1";
+      $(el.ch).querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
+      say((ok ? cheer() + " " : "") + it.why);
+      i++;
+      setTimeout(() => {
+        if (mine !== gen) return;          // the child changed rung meanwhile
+        if (i >= items.length) {
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You got " + right + " of " + items.length + ". " + o.done;
+          /* Reported ONCE, on the first set finished, and as participation
+             rather than a mark - the same reasoning sequence() carries at
+             length: these are oral questions turned into taps by borrowing
+             the other questions' answers, so the tally measures elimination.
+             A child who then does a harder six has not attempted the step
+             twice, so a second report would inflate a figure a family reads. */
+          if (!reported) {
+            reported = true;
+            if (o.attemptOnly) reportAttempt(o.finish, items.length, items.length, "questions");
+            else reportScore(o.finish, right, items.length);
+          }
+          finish(o.finish, o.done);
+        } else draw();
+      }, 2700);
+    });
+
+    paintRungs();
+    draw();
+  }
+
   /* ---- hear the word, tap the word --------------------------------
      The clip plays on its own, then the child picks. The distractors are
      other words from THIS unit, so a wrong tap is a word they are also

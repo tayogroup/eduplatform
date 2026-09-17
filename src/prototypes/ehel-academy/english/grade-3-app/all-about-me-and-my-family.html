@@ -557,6 +557,23 @@
     font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em;
     color: var(--teal); margin-bottom: 2px; }
 
+  /* ---- the Cambridge tier ladder on the story questions ----
+     A sibling of #stageN rather than a child of it, because every redraw
+     rewrites that element - see tieredSequence() in english.js. Sized like a
+     control a seven-year-old taps: 44px minimum, which is why the row wraps
+     on a narrow screen rather than shrinking. */
+  .q-rungs { width: 100%; display: flex; flex-wrap: wrap; align-items: center;
+    gap: 8px; margin: 0 0 14px; }
+  .q-rungs-lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700;
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  .q-rung { min-height: 44px; padding: 8px 16px; border-radius: 999px;
+    border: 2px solid var(--line); background: var(--card); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px;
+    cursor: pointer; }
+  .q-rung:hover { border-color: var(--teal); }
+  .q-rung.on { border-color: var(--teal); background: var(--teal); color: #fff; }
+  .q-rung:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
   /* ---- the unit's study plan ---- */
   .plan { width: 100%; display: flex; flex-direction: column; gap: 4px; }
   .plan-when { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 6px; }
@@ -795,6 +812,20 @@
      fallback is only for the instant before the first measurement. */
   body:has(#seb-session-bar) .w-dock,
   body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
+  /* AND THE SAME LIFT IN FOCUS MODE. The rule above is specificity (1,1,1)
+     (:has() takes the specificity of its most specific argument, and
+     #seb-session-bar is an id); the plain `.w-dock, .w-drawer` rule further
+     down that spends --wehel-foot-lift is (0,1,0), so with a session bar on
+     screen the footer lift was being thrown away entirely, not merely
+     outranked, and the dock sat back on top of Next - the exact bug fixed
+     below, returning in the one launch mode (focus mode: live class, exam)
+     that also happens to carry a session bar. Composes the two offsets
+     instead of letting one replace the other, and sits after the rule above
+     so it wins on source order at equal specificity. Found and fixed by a
+     peer session porting this to Grade 2 - see 81c06f0940. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer {
+    bottom: calc(var(--seb-lift, 78px) + var(--wehel-foot-lift, 0px)); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -812,6 +843,24 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* The dock's resting spot (bottom:14) can land on the Back/Next footer when
+     a step is short enough that .foot is the last thing on screen -- routine
+     on a phone or tablet, where the viewport is short relative to the deck --
+     and reaches the same collision on a step long enough to NEED scrolling,
+     at the scroll position where .foot comes into view, because .foot is the
+     last thing in the document and the dock's footprint is fixed to the
+     viewport rather than to a point in the page. A trailing padding-bottom on
+     .wrap fixes neither case: .foot's position is set by the content ABOVE
+     it, so padding added after it never moves it, which is what the first
+     attempt at this got wrong (verified in the browser -- the overlap
+     survived it unchanged, in the fits-without-scrolling case this comment
+     first shipped for). Lift the dock clear instead, exactly as it already
+     lifts above the session bar below, but tracked on scroll as well as
+     resize -- see the script -- because unlike the session bar, .foot is
+     ordinary content and its distance from the viewport's bottom edge is a
+     function of scroll position, not a constant once measured. */
+  .w-dock, .w-drawer { bottom: calc(14px + var(--wehel-foot-lift, 0px)); }
 
   /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
      The dock and the drawer above already use --card/--line/--ink, so before
@@ -2263,6 +2312,216 @@ My duty at home is to ______.</span></div>
         "srcTitle": "Amal's Big Day"
       }
     ],
+    "questionTiers": {
+      "easier": [
+        {
+          "ask": "Who lives in the small house with Amal? Name every person.",
+          "opts": [
+            {
+              "t": "Her mum, her dad, her two brothers, her little sister, and Grandma Hana.",
+              "ok": 1
+            },
+            {
+              "t": "In private, at home with your family.",
+              "ok": 0
+            }
+          ],
+          "why": "The text lists the whole household, so all six people must be named.",
+          "srcTitle": "My Family"
+        },
+        {
+          "ask": "What does Amal say her duty at home is?",
+          "opts": [
+            {
+              "t": "Her duty is to keep her room tidy and to be kind.",
+              "ok": 1
+            },
+            {
+              "t": "Many other people share the market, so a calm voice keeps everyone safe.",
+              "ok": 0
+            }
+          ],
+          "why": "The text gives two parts to the duty, so a full answer names both the tidy room and the kindness.",
+          "srcTitle": "My Family"
+        },
+        {
+          "ask": "Name two ways this text says we show respect at school.",
+          "opts": [
+            {
+              "t": "We show respect to our teacher and to our friends. We also listen quietly when other people are talking.",
+              "ok": 1
+            },
+            {
+              "t": "Because she is the youngest member of the drama club.",
+              "ok": 0
+            }
+          ],
+          "why": "The first two sentences give the two behaviours, so you scan the opening lines for them.",
+          "srcTitle": "Good Behaviour at School"
+        },
+        {
+          "ask": "The text calls the lunch area a public place. What does public mean here?",
+          "opts": [
+            {
+              "t": "Public means everyone at school shares the area, so we behave calmly there.",
+              "ok": 1
+            },
+            {
+              "t": "She runs over at once and offers to help the younger girl.",
+              "ok": 0
+            }
+          ],
+          "why": "The words around it, sit down calmly and speak softly, show that public means shared with other people.",
+          "srcTitle": "Good Behaviour at School"
+        },
+        {
+          "ask": "Who does Amal call her role models, and what do they teach her?",
+          "opts": [
+            {
+              "t": "Her parents are her role models, and they teach her to help other people.",
+              "ok": 1
+            },
+            {
+              "t": "She feels proud, and the story says she liked her nickname now.",
+              "ok": 0
+            }
+          ],
+          "why": "The third sentence names the role models and gives the reason in the same breath.",
+          "srcTitle": "Amal Talks About Her Family"
+        },
+        {
+          "ask": "Amal talks about her grandmother. Should she say he or she about her? Why?",
+          "opts": [
+            {
+              "t": "She should say she, because grandmother names one female person.",
+              "ok": 1
+            },
+            {
+              "t": "She is acting the senior student, so Amal can show the polite way.",
+              "ok": 0
+            }
+          ],
+          "why": "Choosing the right pronoun depends on who the noun names, which is Grammar Lesson 4 in this unit.",
+          "srcTitle": "Amal Talks About Her Family"
+        }
+      ],
+      "harder": [
+        {
+          "ask": "Amal talks about her grandmother. Should she say he or she about her? Why?",
+          "opts": [
+            {
+              "t": "She should say she, because grandmother names one female person.",
+              "ok": 1
+            },
+            {
+              "t": "Her mum, her dad, her two brothers, her little sister, and Grandma Hana.",
+              "ok": 0
+            },
+            {
+              "t": "Her duty is to keep her room tidy and to be kind.",
+              "ok": 0
+            }
+          ],
+          "why": "Choosing the right pronoun depends on who the noun names, which is Grammar Lesson 4 in this unit.",
+          "srcTitle": "Amal Talks About Her Family"
+        },
+        {
+          "ask": "Where does the speaker say you can play games and be loud?",
+          "opts": [
+            {
+              "t": "In private, at home with your family.",
+              "ok": 1
+            },
+            {
+              "t": "Her duty is to keep her room tidy and to be kind.",
+              "ok": 0
+            },
+            {
+              "t": "We show respect to our teacher and to our friends. We also listen quietly when other people are talking.",
+              "ok": 0
+            }
+          ],
+          "why": "The first sentence pairs in private with at home, so the answer must include both parts.",
+          "srcTitle": "Public and Private"
+        },
+        {
+          "ask": "The speaker names the market as a public place. Why should you speak softly there?",
+          "opts": [
+            {
+              "t": "Many other people share the market, so a calm voice keeps everyone safe.",
+              "ok": 1
+            },
+            {
+              "t": "We show respect to our teacher and to our friends. We also listen quietly when other people are talking.",
+              "ok": 0
+            },
+            {
+              "t": "Public means everyone at school shares the area, so we behave calmly there.",
+              "ok": 0
+            }
+          ],
+          "why": "The last line, keep other people safe, gives the reason you must join to the market example.",
+          "srcTitle": "Public and Private"
+        },
+        {
+          "ask": "How does Amal feel about her nickname by the end? Quote one line that shows it.",
+          "opts": [
+            {
+              "t": "She feels proud, and the story says she liked her nickname now.",
+              "ok": 1
+            },
+            {
+              "t": "Public means everyone at school shares the area, so we behave calmly there.",
+              "ok": 0
+            },
+            {
+              "t": "Her parents are her role models, and they teach her to help other people.",
+              "ok": 0
+            }
+          ],
+          "why": "The feeling must be supported by the closing line, not simply guessed from the happy ending.",
+          "srcTitle": "Amal's Big Day"
+        },
+        {
+          "ask": "Nora pretends to be rude during the play. Why does she do that?",
+          "opts": [
+            {
+              "t": "She is acting the senior student, so Amal can show the polite way.",
+              "ok": 1
+            },
+            {
+              "t": "Her parents are her role models, and they teach her to help other people.",
+              "ok": 0
+            },
+            {
+              "t": "She runs over at once and offers to help the younger girl.",
+              "ok": 0
+            }
+          ],
+          "why": "The play is a lesson inside the story, so Nora's rudeness is acting rather than real behaviour.",
+          "srcTitle": "Amal's Big Day"
+        },
+        {
+          "ask": "Why do the drama club students call Amal Junior?",
+          "opts": [
+            {
+              "t": "Because she is the youngest member of the drama club.",
+              "ok": 1
+            },
+            {
+              "t": "She runs over at once and offers to help the younger girl.",
+              "ok": 0
+            },
+            {
+              "t": "She should say she, because grandmother names one female person.",
+              "ok": 0
+            }
+          ],
+          "why": "The opening line of the story gives the reason for the nickname straight away.",
+          "srcTitle": "Amal's Big Day"
+        }
+      ]
+    },
     "sayit": [
       {
         "text": "In my family, there is ______, ______, and me.",
@@ -7581,6 +7840,155 @@ My duty at home is to ______.</span></div>
      exist yet, so they wire theirs when they first use it */
   window.__ehelWireFeedback = wireFeedbackListen;
 
+  /* ---- the story questions, with Cambridge's tier ladder on them ---
+     The same step deck.js's sequence() draws, plus a way to ask for an
+     easier or a harder six. Every comprehension item in this course carries
+     a Cambridge tier and until now nothing rendered one, so a child who
+     could not get into a question met that question again and nothing else.
+
+     WHY THIS IS A SEPARATE RUNNER AND NOT A FLAG ON sequence().
+     `lib/deck.js` is the Mathematics build's engine, lifted verbatim and
+     shared by every subject's lesson app; this file is English's own. A tier
+     swap has to reset the runner's `i` and `right` and redraw, and none of
+     those is reachable from outside sequence()'s closure - so the honest
+     choices were to fork a shared engine or to write English's own runner
+     beside its three existing ones (hearAndTap, pictureMatch, wordWalk, all
+     the same shape). This is the second. Grades 1, 2 and 5 still call
+     sequence() and their pages are unchanged.
+
+     THE CONTROL IS A SIBLING OF #stageN, NOT INSIDE IT. Every redraw sets
+     `$(el.stage).innerHTML`, so a control drawn in there would be wiped by
+     the next question. Its PARENT `.stage` is never written to, so the rungs
+     sit next to #stageN and survive - and are painted once per rung change
+     rather than once per question, so they never flicker mid-step.
+
+     WHAT THE RUNGS ARE CALLED, AND WHY NOT "FOUNDATION". Cambridge's names
+     are written for the teacher's book. On a child's screen "Foundation"
+     over their question labels the child rather than the question, so the
+     buttons say what the child wants ("Easier", "Harder") and the Cambridge
+     rung rides in the title and the aria-label, where the adult beside them
+     and a screen reader still get it.
+     ------------------------------------------------------------------ */
+  function tieredSequence(o) {
+    const el = o.el;
+    const tiers = o.tiers || {};
+    /* The default six are the middle rung. A rung the builder left out - a
+       unit whose easier six came out identical to these - is simply absent
+       from the row, rather than a button that re-asks the same questions. */
+    const rungs = [
+      tiers.easier && { key: "easier", items: tiers.easier, label: "Easier", tier: "Foundation" },
+      { key: "core", items: o.items, label: "These six", tier: "Core" },
+      tiers.harder && { key: "harder", items: tiers.harder, label: "Harder", tier: "Stretch" },
+    ].filter(Boolean);
+
+    let at = rungs.findIndex((r) => r.key === "core");
+    let items = rungs[at].items;
+    let i = 0, right = 0, lock = false, reported = false;
+    /* Every rung change bumps this, and the 2.7s advance timer captures it.
+       Without it a child who answers and immediately switches gets the old
+       set's next question painted over the new set two seconds later. */
+    let gen = 0;
+
+    /* ABOVE THE QUESTION, not between it and the answers. Drawn first into
+       .stage (the only container no redraw rewrites) it landed between the
+       question card and the choices, which splits a nine-year-old's reading of
+       the question from the answers to it. `.say` holds the question and is
+       rewritten only INSIDE (#askN), so a sibling placed before it is as safe
+       and reads as what it is: a control about which six questions you get,
+       before the first of them. */
+    const sayEl = $(el.ask).closest(".say") || $(el.stage);
+    const row = document.createElement("div");
+    row.className = "q-rungs";
+    sayEl.parentNode.insertBefore(row, sayEl);
+
+    function paintRungs() {
+      row.innerHTML = '<span class="q-rungs-lab">Questions:</span>' + rungs.map((r, k) =>
+        '<button type="button" class="q-rung' + (k === at ? " on" : "") + '"' +
+        ' data-rung="' + r.key + '"' + (k === at ? ' aria-current="true"' : "") +
+        ' title="Cambridge tier: ' + r.tier + '"' +
+        ' aria-label="' + esc(r.label) + ', Cambridge tier ' + r.tier + '">' +
+        esc(r.label) + "</button>").join("");
+    }
+
+    function draw() {
+      lock = false;
+      const it = items[i];
+      const src = it.srcTitle ? '<span class="qbook">' + esc(it.srcTitle) + "</span>" : "";
+      $(el.ask).innerHTML = src + it.ask;
+      $(el.stage).innerHTML = "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) =>
+        '<button type="button" class="choice" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (o.label || "Question") + " " + (i + 1) + " of " + items.length;
+      if (cur === o.finish) say(plain(it.ask));
+    }
+
+    row.addEventListener("click", (e) => {
+      const b = e.target.closest(".q-rung"); if (!b) return;
+      const k = rungs.findIndex((r) => r.key === b.dataset.rung);
+      if (k < 0 || k === at) return;
+      /* A tier swap RESTARTS the step, and says so rather than silently
+         resetting a child's count. Blocked while an answer is on screen: the
+         advance timer is still pending and the child is reading feedback for
+         a question that is about to stop existing. */
+      if (lock) return;
+      at = k; items = rungs[at].items; i = 0; right = 0; gen++;
+      paintRungs();
+      draw();
+      /* Says what actually changed. "Easier" swaps in the unit's
+         Foundation-weighted six AND drops a wrong option, and the second half
+         is the part a child will notice - in six of the twenty units the
+         questions barely move, because the default six already are the easy
+         ones (see build-lessons.py). Promising easier QUESTIONS there would be
+         a promise the content cannot keep. */
+      const msg = rungs[at].key === "core"
+        ? "Back to these six questions."
+        : rungs[at].key === "easier"
+          ? "Six easier questions, with one answer taken away. Starting again."
+          : "Six harder questions. Starting again.";
+      $(el.fb).className = "fb"; $(el.fb).textContent = msg;
+      say(msg);
+    });
+
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const mine = gen, it = items[i];
+      const ok = b.dataset.ok === "1";
+      $(el.ch).querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
+      say((ok ? cheer() + " " : "") + it.why);
+      i++;
+      setTimeout(() => {
+        if (mine !== gen) return;          // the child changed rung meanwhile
+        if (i >= items.length) {
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You got " + right + " of " + items.length + ". " + o.done;
+          /* Reported ONCE, on the first set finished, and as participation
+             rather than a mark - the same reasoning sequence() carries at
+             length: these are oral questions turned into taps by borrowing
+             the other questions' answers, so the tally measures elimination.
+             A child who then does a harder six has not attempted the step
+             twice, so a second report would inflate a figure a family reads. */
+          if (!reported) {
+            reported = true;
+            if (o.attemptOnly) reportAttempt(o.finish, items.length, items.length, "questions");
+            else reportScore(o.finish, right, items.length);
+          }
+          finish(o.finish, o.done);
+        } else draw();
+      }, 2700);
+    });
+
+    paintRungs();
+    draw();
+  }
+
   /* ---- hear the word, tap the word --------------------------------
      The clip plays on its own, then the child picks. The distractors are
      other words from THIS unit, so a wrong tap is a word they are also
@@ -10527,7 +10935,8 @@ My duty at home is to ______.</span></div>
     done: "That is the Game Zone played." });
   unitReadings({ el: { ask: "ask19", say: "ask19", stage: "stage19", ch: "ch19", fb: "fb19", score: "score19", pick: "pick19" }, items: LESSON.reads, finish: 18,
     done: "You read the whole story." });
-  sequence({ el: { ask: "ask20", say: "ask20", stage: "stage20", ch: "ch20", fb: "fb20", score: "score20" }, items: LESSON.questions, finish: 19, attemptOnly: true,
+  tieredSequence({ el: { ask: "ask20", say: "ask20", stage: "stage20", ch: "ch20", fb: "fb20", score: "score20" }, items: LESSON.questions,
+    tiers: LESSON.questionTiers, finish: 19, attemptOnly: true,
     label: "Question", done: "You remembered the story well." });
   activityList({ el: { ask: "ask21", say: "ask21", stage: "stage21", ch: "ch21", fb: "fb21", score: "score21", acts: "acts21" }, items: LESSON.activities, finish: 20,
     tier: LESSON.activityTier,
@@ -10715,6 +11124,33 @@ My duty at home is to ______.</span></div>
       .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
     lift();
     try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
+
+  /* How far the dock has to lift to clear the Back/Next footer - see
+     --wehel-foot-lift in the stylesheet. Unlike the session bar above, .foot
+     is ordinary content rather than a second fixed element, so its distance
+     from the viewport's bottom edge is a function of SCROLL POSITION, not a
+     constant a page-load measurement can capture once - a step long enough to
+     need scrolling reaches the same collision the moment .foot is scrolled
+     into view. Re-measured on scroll (rAF-throttled to at most once a frame,
+     so it costs nothing while the page is still) as well as on resize. */
+  (function () {
+    const foot = document.querySelector(".foot");
+    if (!foot) return;
+    const lift = () => {
+      const overlap = window.innerHeight - foot.getBoundingClientRect().top;
+      document.documentElement.style
+        .setProperty("--wehel-foot-lift", (overlap > 0 ? overlap + 14 : 0) + "px");
+    };
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; lift(); });
+    };
+    lift();
+    addEventListener("scroll", onScroll, { passive: true });
+    try { new ResizeObserver(lift).observe(foot); } catch (e) { addEventListener("resize", lift); }
   })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for

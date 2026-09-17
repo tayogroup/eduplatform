@@ -532,6 +532,23 @@
     font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em;
     color: var(--teal); margin-bottom: 2px; }
 
+  /* ---- the Cambridge tier ladder on the story questions ----
+     A sibling of #stageN rather than a child of it, because every redraw
+     rewrites that element - see tieredSequence() in english.js. Sized like a
+     control a seven-year-old taps: 44px minimum, which is why the row wraps
+     on a narrow screen rather than shrinking. */
+  .q-rungs { width: 100%; display: flex; flex-wrap: wrap; align-items: center;
+    gap: 8px; margin: 0 0 14px; }
+  .q-rungs-lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700;
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  .q-rung { min-height: 44px; padding: 8px 16px; border-radius: 999px;
+    border: 2px solid var(--line); background: var(--card); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px;
+    cursor: pointer; }
+  .q-rung:hover { border-color: var(--teal); }
+  .q-rung.on { border-color: var(--teal); background: var(--teal); color: #fff; }
+  .q-rung:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
   /* ---- the unit's study plan ---- */
   .plan { width: 100%; display: flex; flex-direction: column; gap: 4px; }
   .plan-when { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 6px; }

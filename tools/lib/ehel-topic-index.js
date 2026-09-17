@@ -40,7 +40,14 @@ const SUBJECTS = {
   computing: { param: "stage", stageWord: "Stage", stages: [1, 2, 3, 4, 5, 6, 7, 8], dir: (n) => `grade-${n}` },
   "global-perspectives": { param: "stage", stageWord: "Stage", stages: [1, 2, 3, 4, 6, 7, 8], dir: (n) => `grade-${n}` },
   english: { param: "grade", stageWord: "Grade", stages: [1, 2, 3, 4, 5, 6, 7, 8], dir: (n) => `grade-${n}`, minUnit: 1 },
-  "intensive-english": { param: "level", stageWord: "Level", stages: [1, 2], dir: (n) => `level-${n}` },
+  // `[1, 2]` was written when those were the only levels. Intro (0) shipped
+  // 2026-09-17 and Level 3 on 2026-09-16, so the tutoring topic index has
+  // never covered either of them — a list that is simply short reports
+  // nothing and looks like a subject with fewer stages. Phonics is -1, and
+  // its folder is named, so `dir` asks the shared module rather than
+  // formatting the number into `level--1`.
+  "intensive-english": { param: "level", stageWord: "Level", stages: [-1, 0, 1, 2, 3],
+    dir: (n) => (Number(n) === -1 ? "level-phonics" : `level-${n}`) },
 };
 
 // Words that carry no topical signal. Small on purpose: an over-grown list

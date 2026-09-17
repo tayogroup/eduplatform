@@ -58,8 +58,14 @@ if (!subject || !stage) {
 
 // Intensive English keys its overrides off "ien1"/"ien2" rather than a number,
 // because a level is not a grade and nothing about their vocabulary lines up.
-const dirFor = subject === "intensive-english" ? `level-${stage}` : `grade-${stage}`;
-const keyFor = subject === "intensive-english" ? `ien${stage}` : Number(stage);
+// The Phonics level is -1 and lives in `level-phonics`, so its picture key is
+// `ienph` rather than the `ien-1` a bare number would give — the same choice
+// the course idnumber makes (`ehel-intensive-eng-lph`), and for the same
+// reason: `ien-1` reads as level 1.
+const intensiveKey = Number(stage) === -1 ? "ph" : String(stage);
+const dirFor = subject !== "intensive-english" ? `grade-${stage}`
+  : (Number(stage) === -1 ? "level-phonics" : `level-${stage}`);
+const keyFor = subject === "intensive-english" ? `ien${intensiveKey}` : Number(stage);
 const unitsDir = path.join(EHEL, subject, dirFor, "data", "units");
 if (!fs.existsSync(unitsDir)) {
   console.error(`no units at ${path.relative(ROOT, unitsDir)}`);

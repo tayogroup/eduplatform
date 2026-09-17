@@ -11,6 +11,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { levelDir, levels: intensiveLevels } = require("./ehel-intensive-levels");
 
 const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
 const { speakableFrames, speakableWords } = require("./ehel-tts");
@@ -132,7 +133,7 @@ const ATTR_ENTITIES = { "&quot;": '"', "&#39;": "'", "&apos;": "'", "&lt;": "<",
 const unescapeAttr = (s) => String(s).replace(/&(?:quot|#39|apos|lt|gt|amp);/g, (m) => ATTR_ENTITIES[m]);
 
 function appSlideTexts(courseRoot, level) {
-  const dir = path.join(courseRoot, `level-${level}-app`);
+  const dir = path.join(courseRoot, `${levelDir(level, courseRoot)}-app`);
   const out = new Set();
   if (!fs.existsSync(dir)) return out;
   for (const file of fs.readdirSync(dir)) {
@@ -213,18 +214,19 @@ function sectionIntroTexts(contexts) {
 // activity must change its clip — a frozen list is how the word cards came to
 // ask for audio nobody had bought.
 function sectionIntroClips(courseRoot, level) {
-  const unitDir = path.join(courseRoot, `level-${level}`, "data", "units");
+  const levelRoot = path.join(courseRoot, levelDir(level, courseRoot));
+  const unitDir = path.join(levelRoot, "data", "units");
   if (!fs.existsSync(unitDir)) return [];
-  const manifestPath = path.join(courseRoot, `level-${level}`, "data", "course-manifest.json");
+  const manifestPath = path.join(levelRoot, "data", "course-manifest.json");
   const manifest = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, "utf8")) : {};
   const levelRow = (manifest.levels || []).find((row) => Number(row.number) === Number(level)) || {};
-  const dictFile = fs.readdirSync(path.join(courseRoot, `level-${level}`, "data"))
+  const dictFile = fs.readdirSync(path.join(levelRoot, "data"))
     .find((f) => /^master-dictionary\./.test(f));
   // `entryCount` is the field the app itself reads (`dictionary.entryCount`),
   // so take that rather than counting `entries` — the two agree today and the
   // app's choice is the one that must be mirrored if they ever stop.
   const entryCount = dictFile
-    ? JSON.parse(fs.readFileSync(path.join(courseRoot, `level-${level}`, "data", dictFile), "utf8")).entryCount || 0
+    ? JSON.parse(fs.readFileSync(path.join(levelRoot, "data", dictFile), "utf8")).entryCount || 0
     : 0;
 
   const contexts = [];
@@ -264,7 +266,7 @@ function sectionIntroClips(courseRoot, level) {
 // the per-stage deploy tree with this, so a text shared by two levels is
 // uploaded under both.
 function hashesForLevel(courseRoot, level, categories = CATEGORIES) {
-  const unitDir = path.join(courseRoot, `level-${level}`, "data", "units");
+  const unitDir = path.join(courseRoot, levelDir(level, courseRoot), "data", "units");
   const out = new Set();
   if (!fs.existsSync(unitDir)) return out;
   // Wehel's stock phrases are spoken on every level's tutor panel, so every
@@ -299,10 +301,12 @@ function hashesForLevel(courseRoot, level, categories = CATEGORIES) {
 // but they occupy the same gNN slot in the deploy path.
 function hashGradeMap(courseRoot, categories = CATEGORIES) {
   const map = new Map();
-  for (const entry of fs.readdirSync(courseRoot)) {
-    const match = entry.match(/^level-(\d+)$/);
-    if (!match) continue;
-    const level = Number(match[1]);
+  // Discovered through the shared module, not by a regex on the folder
+  // name. `/^level-(\d+)$/` was right for four years and stopped being right
+  // when the Phonics level arrived as `level-phonics`: it matched one folder
+  // fewer, so every clip Phonics claims would have been missing from this
+  // map and missing from the upload, with no error anywhere.
+  for (const { number: level } of intensiveLevels(courseRoot)) {
     for (const key of hashesForLevel(courseRoot, level, categories)) {
       if (!map.has(key)) map.set(key, new Set());
       map.get(key).add(level);

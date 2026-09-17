@@ -73,7 +73,14 @@ const SUBJECTS = ["english", "mathematics", "science", "computing", "global-pers
 //
 // Hard-coding `grade-${n}` here meant this tool walked nothing for such a
 // course and reported success having uploaded zero unit files.
-const STAGE_DIR = { "intensive-english": (n) => `level-${n}` };
+// Intensive English asks the shared module rather than formatting a number:
+// its Phonics level is -1 and lives in `level-phonics`, so `level-${n}` would
+// build `level--1`, find nothing, and be skipped by the existsSync below
+// without a word. The module throws for a level that does not exist, which
+// is why the caller below only asks about levels it has discovered.
+const { levels: intensiveLevels } = require("./lib/ehel-intensive-levels");
+const INTENSIVE_DIRS = new Map(intensiveLevels().map((l) => [l.number, l.dir]));
+const STAGE_DIR = { "intensive-english": (n) => INTENSIVE_DIRS.get(n) || `level-${n}` };
 const stageDirFor = (subject, n) => (STAGE_DIR[subject] || ((x) => `grade-${x}`))(n);
 // An unrecognised argument used to be dropped by this filter, so a typo — or a
 // subject nobody had wired up yet — ran to completion, reported success, and
@@ -121,7 +128,10 @@ function buildList() {
     // already describes for `grade-${n}` — "walked nothing for such a course and
     // reported success having uploaded zero unit files" — one level lower down.
     // No subject has a `grade-0`, so starting at 0 is inert for every other one.
-    for (let g = 0; g <= 12; g += 1) {
+    // And from -1, because Intensive English's Phonics level is numbered -1.
+    // Starting at 0 would have left Phonics out in exactly the way starting at
+    // 1 left Intro out: 20 units walked by nothing, and a tick printed.
+    for (let g = -1; g <= 12; g += 1) {
       const dataDir = path.join(EHEL, subject, stageDirFor(subject, g), "data");
       if (!fs.existsSync(dataDir)) continue;
       const gg = String(g).padStart(2, "0");

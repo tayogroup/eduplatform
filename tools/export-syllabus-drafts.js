@@ -120,7 +120,9 @@ for (const file of files) {
   // the seeder finds courses by idnumber and a near-miss silently seeds nothing.
   let idnumber;
   if (subjectDir === "intensive-english") {
-    idnumber = `ehel-intensive-eng-l${String(num).padStart(2, "0")}`;
+    // Phonics is level -1 and takes `lph`, not `l-1`. Kept identical to
+    // generate-ehel-catalog.js on purpose; the note there says why.
+    idnumber = `ehel-intensive-eng-l${Number(num) < 0 ? "ph" : String(num).padStart(2, "0")}`;
   } else {
     const key = SUBJECT_KEY[subjectDir];
     if (!key) { skipped.push(`${file}: no catalogue subjectKey for "${subjectDir}"`); continue; }

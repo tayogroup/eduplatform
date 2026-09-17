@@ -22,6 +22,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { levelDir, levels: intensiveLevels } = require("./lib/ehel-intensive-levels");
 
 const ROOT = path.resolve(__dirname, "..");
 const COURSE = path.join(ROOT, "src", "prototypes", "ehel-academy", "intensive-english");
@@ -57,18 +58,24 @@ const catList = cats.length ? cats : ALL_CATS;
 // of narrowing. That is the same failure the comment below describes, reached
 // from the other side — so the digit test is now any digit, and an argument
 // that names a level which does not exist is refused rather than dropped.
-const levels = args.filter((a) => /^\d$/.test(a)).map(Number);
+// `-1` is a level argument, not a flag. Every flag here is `--something`,
+// so a leading single dash is unambiguous — and without this the Phonics
+// level simply could not be named on the command line, which under the
+// fall-through below means asking for it narrates ALL of them.
+const levels = args.filter((a) => /^-?\d$/.test(a)).map(Number);
 // The default used to be the literal [1, 2], written when those were the only
 // levels. Level 3 shipped on 2026-09-16 and a bare run silently narrated two
 // thirds of the course — no error, just a category table that never mentioned
 // the missing level. Discovered from the level-N directories instead, the same
 // way hashesForLevel/hashGradeMap in lib/ehel-intensive-narration.js already
 // find them, so a new level is narrated by existing.
-const builtLevels = () => fs.readdirSync(COURSE)
-  .map((e) => e.match(/^level-(\d+)$/))
-  .filter((m) => m && fs.existsSync(path.join(COURSE, m[0], "data", "units")))
-  .map((m) => Number(m[1]))
-  .sort((a, b) => a - b);
+// Through the shared module rather than a regex on the folder name: the
+// Phonics level is `level-phonics`, so `/^level-(\d+)$/` found four levels
+// where there are five and a bare run would have narrated the course minus
+// Phonics, silently, exactly as the two notes above describe.
+const builtLevels = () => intensiveLevels(COURSE)
+  .filter((l) => fs.existsSync(path.join(COURSE, l.dir, "data", "units")))
+  .map((l) => l.number);
 const levelList = levels.length ? levels : builtLevels();
 const unknownLevels = levelList.filter((n) => !builtLevels().includes(n));
 if (unknownLevels.length) {
@@ -136,7 +143,7 @@ function collect() {
   // Keyed by hash so a text shared by two units is one clip, bought once.
   const byHash = new Map();
   for (const level of levelList) {
-    const unitDir = path.join(COURSE, `level-${level}`, "data", "units");
+    const unitDir = path.join(COURSE, levelDir(level, COURSE), "data", "units");
     if (!fs.existsSync(unitDir)) continue;
     const files = fs.readdirSync(unitDir)
       .filter((f) => /^unit-\d+\.json$/.test(f))

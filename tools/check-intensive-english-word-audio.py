@@ -98,7 +98,10 @@ def words_from_course() -> list[dict]:
         "const C='src/prototypes/ehel-academy/intensive-english';"
         "const out=new Map();"
         "for(const e of fs.readdirSync(C)){"
-        "  const m=e.match(/^level-([0-9]+)$/); if(!m) continue;"
+        # A named folder now: the Phonics level is `level-phonics`, so a
+        # digits-only match found four levels where there are five and
+        # reported a clean sweep over the ones it happened to see.
+        "  if(!/^level-/.test(e)) continue;"
         "  const d=path.join(C,e,'data','units'); if(!fs.existsSync(d)) continue;"
         "  for(const f of fs.readdirSync(d)){"
         "    if(!/^unit-[0-9]+[.]json$/.test(f)) continue;"

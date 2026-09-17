@@ -302,7 +302,10 @@ function courseDataRoot(subjectKey, grade) {
   const marker = "/ehel-academy/";
   const at = location.pathname.indexOf(marker);
   if (IS_LOCAL_DEV && at !== -1) {
-    const stageDir = subjectKey === "intensive-english" ? `level-${grade}` : `grade-${grade}`;
+    // Intensive English level -1 is Phonics, in `level-phonics`. Local dev
+    // only — the production branch below resolves through g${pad2}.
+    const stageDir = subjectKey !== "intensive-english" ? `grade-${grade}`
+      : (Number(grade) === -1 ? "level-phonics" : `level-${grade}`);
     return new URL(`${location.pathname.slice(0, at + marker.length)}${subjectKey}/${stageDir}/data/`, location.origin);
   }
   // ANCHOR ON /app/, never on a count of ../ hops. The content tier is a

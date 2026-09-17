@@ -1251,6 +1251,47 @@ GRADE_WORD_PICTURES.ien0 = {
   again: "",           // `repeat` keeps 🔁
 };
 
+// `ienph`, not `ien-1`: the Phonics level is numbered -1 and `ien-1` reads as
+// level 1. Same choice as its course idnumber, `ehel-intensive-eng-lph`.
+//
+// Found by printing all 269 words of the level beside the glyph this function
+// returns and the meaning the unit itself authored, and reading the MEANING
+// column. 111 of the 269 were pictured; 20 of those drew something else. The
+// level is Pre-A1 phonics for adults who cannot yet read, so a wrong glyph is
+// not a weak hint here — it is the only thing on the card the learner can
+// actually decode, and it will win against the word.
+GRADE_WORD_PICTURES.ienph = {
+  // --- the word means the SPELLING, and the glyph found the other sense ------
+  // These are the `tablet: "📱"` failure of the Level 1 pass, in a level where
+  // the whole vocabulary is metalanguage about reading.
+  letter: "",          // ✉️ is post; here it is one of the 26 shapes
+  capital: "",         // 🏛️ is a capital city; here it is a big letter
+  ph: "",              // 🧪 is pH the chemistry measure; here it is a grapheme
+  rhyme: "",           // 📜 is a scroll
+  join: "",            // 🤝🏾 joins people; Unit 2 joins sounds
+  lift: "",            // 🛗 is the elevator; Unit 11 teaches the verb
+  // --- the glyph draws what the meaning explicitly excludes ------------------
+  hill: "",            // ⛰️ is a mountain, and the meaning says "smaller than a mountain"
+  gas: "",             // 💨 is a gust of wind; the meaning is what you burn to cook
+  giant: "",           // 🐘 is an elephant, and that is what a learner will read
+  go: "",              // 🟢 beside `red` 🟥 and `blue` 🟦 teaches a colour, not a move
+  jump: "",            // 🤸🏾 is a cartwheel
+  turn: "",            // 🔄 is refresh, not "go a different way"
+  // --- the verb beside its own noun -----------------------------------------
+  sat: "",             // 🪑 is a chair
+  // --- one glyph for two words, where telling them apart IS the lesson -------
+  // Unit 13 teaches foot and feet as a deliberate singular/plural contrast
+  // ("Say foot, then feet. Ask the tutor which is one."), and the shared map
+  // draws 🦶🏾 for both — which makes the contrast invisible on the one card
+  // that exists to show it. `foot` keeps the glyph; `toe` had it too.
+  feet: "", toe: "",
+  quick: "",           // 🏃🏾, already on `run`
+  home: "",            // 🏠, already on `house`
+  ready: "",           // ✅, already on `yes`
+  hear: "",            // 👂🏾, already on `listen`, and the meanings barely differ
+  june: "",            // 📅 is not distinguishable from `week`'s 📆
+};
+
 /**
  * The picture for a word, or "" when there is no honest one.
  * Pass the grade number to get that grade's sense where the two differ.

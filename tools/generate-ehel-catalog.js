@@ -59,6 +59,21 @@ const pad2 = (n) => String(n).padStart(2, "0");
 // rather than claiming a syllabus this course does not award; the real
 // alignment travels in `cefr`. catalog_sync reads named keys with `?? ''`
 // defaults, so both the blank code and the extra field are safe for it.
+// Intensive English names its level folders itself — level -1 is Phonics, in
+// `level-phonics` — so both the bounds above and the path below ask the
+// shared module instead of formatting the number.
+const INTENSIVE_LEVEL_DIRS = new Map(
+  require("./lib/ehel-intensive-levels").levels().map((l) => [l.number, l.dir]));
+const INTENSIVE_LEVEL_NUMBERS = [...INTENSIVE_LEVEL_DIRS.keys()];
+// The level suffix in a course idnumber. `l${pad2(n)}` for every level
+// down to 0, but `pad2(-1)` is the string "-1", which puts
+// `ehel-intensive-eng-l-1` in an operator's list one row above
+// `ehel-intensive-eng-l01` — two different courses that read as the same
+// one. This identifier is what repoint-grade.php and the Moodle sync key
+// on, so it is the last place to be ambiguous. Phonics takes the key its
+// plan already gives it: lph.
+const levelSuffix = (n) => (Number(n) < 0 ? "ph" : String(n).padStart(2, "0"));
+
 const INTENSIVE = {
   dir: "intensive-english",
   key: "intensive-eng",
@@ -83,7 +98,14 @@ const INTENSIVE = {
   // started at a literal 1, so Intro could never reach the catalogue however
   // complete it was — and `if (!manifest) continue` cannot save a level the
   // loop never visits.
-  minLevel: 0,
+  //
+  // And the floor moved AGAIN, one day later, for the Phonics level, which
+  // is numbered -1. That is twice in two days that a literal bound written
+  // when the levels were 1 to 3 has silently hidden a finished level from
+  // the catalogue. So the floor is now DISCOVERED rather than written: it is
+  // the lowest level that exists on disk. A level that is authored is in the
+  // catalogue, and nobody has to remember this constant again.
+  minLevel: Math.min(...INTENSIVE_LEVEL_NUMBERS, 0),
   categoryPath: ["Ehel Academy", "Languages", "Intensive English"],
 };
 
@@ -94,7 +116,11 @@ function readManifest(subjectDir, grade) {
 }
 
 function readIntensiveManifest(level) {
-  const file = path.join(EHEL, INTENSIVE.dir, `level-${level}`, "data", "course-manifest.json");
+  // Through the shared module: level -1 is Phonics, in `level-phonics`, and
+  // `level-${level}` would build `level--1` and return null — which the
+  // caller treats as "not authored yet" and skips in silence.
+  const dir = INTENSIVE_LEVEL_DIRS.get(level) || `level-${level}`;
+  const file = path.join(EHEL, INTENSIVE.dir, dir, "data", "course-manifest.json");
   if (!fs.existsSync(file)) return null;
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
@@ -108,7 +134,7 @@ function addIntensiveCourses(courses, categorySet) {
     const meta = manifest.level || {};
     const label = meta.label || `Level ${level}`;
     const cefr = meta.cefr || [];
-    const idnumber = `ehel-${INTENSIVE.key}-l${pad2(level)}`;
+    const idnumber = `ehel-${INTENSIVE.key}-l${levelSuffix(level)}`;
     const categoryPath = INTENSIVE.categoryPath;
     categorySet.set(categoryPath.join(" / "), {
       name: categoryPath[categoryPath.length - 1],

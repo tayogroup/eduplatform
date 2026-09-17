@@ -77,6 +77,26 @@ def parse_vocabulary(script: str):
     return meaning, example, practice
 
 
+# A level's number comes from its own manifest, not from its folder name.
+# `int(p.name.split("-")[1])` was right while every level was `level-N`;
+# the Phonics level is `level-phonics`, so that expression raises ValueError
+# and takes the whole run with it. See tools/lib/ehel-intensive-levels.js,
+# which does the same thing for the Node tools.
+def _level_number(level_dir):
+    manifest = level_dir / "data" / "course-manifest.json"
+    if not manifest.exists():
+        return None
+    level = json.loads(manifest.read_text(encoding="utf-8")).get("level") or {}
+    number = level.get("number")
+    return number if isinstance(number, int) else None
+
+
+def _level_dirs(course):
+    found = [(n, d) for d in course.glob("level-*")
+             for n in [_level_number(d)] if n is not None]
+    return [d for _n, d in sorted(found)]
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--workbook", type=Path, required=True)
@@ -89,8 +109,8 @@ def main() -> None:
     # Freshly generate the rows the workbook was made from, keeping each row's
     # origin (level, unit file) so an edit can be traced back to a source file.
     generated = {}
-    for level_dir in sorted(course.glob("level-*"), key=lambda p: int(p.name.split("-")[1])):
-        level = int(level_dir.name.split("-")[1])
+    for level_dir in _level_dirs(course):
+        level = _level_number(level_dir)
         unit_dir = level_dir / "data" / "units"
         if not unit_dir.exists():
             continue

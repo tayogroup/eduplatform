@@ -328,7 +328,11 @@ function renderLecture() {
 //
 // masterWord is preferred over displayWord because the link carries both and the
 // master entry is the lemma the map is keyed on.
-const dictionaryPicture = (item) => (item ? wordPicture(item.masterWord, `ien${levelNumber}`) || wordPicture(item.displayWord, `ien${levelNumber}`) : "");
+// `ienph` for the Phonics level, not `ien-1`. Must match the key
+// tools/audit-word-pictures.mjs uses, or the audit reports on a map the
+// page never reads — a gate green about pictures nobody can see.
+const pictureKey = () => `ien${levelNumber === -1 ? "ph" : levelNumber}`;
+const dictionaryPicture = (item) => (item ? wordPicture(item.masterWord, pictureKey()) || wordPicture(item.displayWord, pictureKey()) : "");
 
 function renderDictionary() {
   const words = course.dictionaryLinks;
@@ -728,7 +732,11 @@ const config = {
   param: "level",
   mediaSubject: "intensive-english",
   ttsPurpose: "ehel_english",
-  stageDir: (level) => `level-${level}`,
+  // Phonics is level -1 and its folder is `level-phonics`, not `level--1`.
+  // This is the LOCAL DEV path only: in production course-app.js resolves
+  // `../../content/intensive-english/g${pad2(level)}/`, which is `g-1` and
+  // needs no special case, because the uploader pads the same way.
+  stageDir: (level) => (Number(level) === -1 ? "level-phonics" : `level-${level}`),
   defaultUnit: defaultUnitForLevel,
   sections,
   nonCountable: ["overview", "answers", "year-plan", "unit-plan"],
@@ -757,19 +765,28 @@ const config = {
   // that file. Run it soon: the unique key (environment, userid, coursekey,
   // unit) means a learner who accumulates rows under BOTH keys can no longer be
   // migrated by a plain UPDATE.
-  courseKey: (level) => `ehel-intensive-eng-l${String(level).padStart(2, "0")}`,
+  // `lph` for the Phonics level, which is -1: `padStart` would give "-1" and
+  // `ehel-intensive-eng-l-1` reads as Level 1 in an operator's course list.
+  // Identical to generate-ehel-catalog.js, which is what this must match.
+  courseKey: (level) => `ehel-intensive-eng-l${Number(level) < 0 ? "ph" : String(level).padStart(2, "0")}`,
   // "Get help with…" — the tutoring search page (shell/get-help.js). The shell
   // appends its nav entry and dispatches its route; it is never in `sections`,
   // so it cannot gate or count. Levels are CEFR tracks in level-N/ folders —
   // the same stageDir exception the content uploader carries.
   getHelp: createGetHelp({
     deps: () => ({ $, escapeHtml, icon, pageHeader }),
-    subjectKey: "intensive-english", subjectLabel: "Intensive English", param: "level", stageWord: "Level", maxStage: 2,
+    // 3, not 2 — Level 3 shipped 2026-09-16 and Get Help has not offered it
+    // since. NOT lower than 1: get-help.js models a stage range as
+    // `Array.from({length: maxStage}, (_, i) => i + 1)` and rejects `n < 1`,
+    // so Intro (0) and Phonics (-1) cannot be reached through it until that
+    // range becomes a list. That is a change to a module all six subjects
+    // share, and it is flagged rather than made here.
+    subjectKey: "intensive-english", subjectLabel: "Intensive English", param: "level", stageWord: "Level", maxStage: 3,
     stage: () => levelNumber,
     course: () => course,
     marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("Intensive English")}` : ""),
     sections: () => sections,
-    stageDir: (n) => `level-${n}`,
+    stageDir: (n) => (Number(n) === -1 ? "level-phonics" : `level-${n}`),
     examples: ["past tense", "greetings", "filling in a form"],
   }),
   extendSummary: (state, base) => ({ ...base, knownWords: state.knownWords ? [...state.knownWords] : undefined }),

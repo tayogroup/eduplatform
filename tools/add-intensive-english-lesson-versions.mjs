@@ -24,6 +24,13 @@
 //   node tools/add-intensive-english-lesson-versions.mjs --write   # apply
 import fs from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
+
+// tools/lib/ehel-intensive-levels.js is CommonJS, like the rest of tools/lib,
+// and this file is ESM — so it comes in through createRequire rather than a
+// bare require, which in an .mjs file is a runtime error `node --check`
+// cannot see.
+const { levels: intensiveLevels } = createRequire(import.meta.url)("./lib/ehel-intensive-levels.js");
 
 const ROOT = path.join("src", "prototypes", "ehel-academy", "intensive-english");
 const argv = process.argv.slice(2);
@@ -36,8 +43,12 @@ for (const arg of argv) {
 }
 
 let added = 0, already = 0, noLesson = 0;
-for (const level of [1, 2]) {
-  const dir = path.join(ROOT, `level-${level}`, "data", "units");
+// `[1, 2]` was written when those were the only levels, so Level 3, Intro
+// and Phonics have never been visited by this tool — it ran, reported on the
+// two it knew, and said nothing about the three it did not. Discovered
+// through the shared module instead.
+for (const { number: level, dir: levelDirName } of intensiveLevels()) {
+  const dir = path.join(ROOT, levelDirName, "data", "units");
   if (!fs.existsSync(dir)) { console.log(`level ${level}: no units directory — skipped`); continue; }
   let levelAdded = 0, levelSkipped = 0;
   for (const file of fs.readdirSync(dir).filter((f) => /^unit-\d+\.json$/.test(f)).sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]))) {

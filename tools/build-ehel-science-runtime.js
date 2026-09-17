@@ -323,7 +323,7 @@ const CAMBRIDGE_ALIGNMENT_NOTES = {
   "5-4": "Light is not in 0097 Stage 5 — the current framework carries light sources at Stage 2 (2Ps.01), transparent/translucent/opaque and shadows at Stage 3 (3Ps.01-3Ps.03), straight-line travel, ray diagrams, reflection and how we see non-luminous objects at Stage 4 (4Ps.01-4Ps.03), and reflection from a plane mirror plus refraction at Stage 6 (6Ps.01, 6Ps.02). Stage 5's own Ps sub-strand is SOUND, which this grade does not teach. Only the enquiry objectives this unit genuinely meets are claimed; its subject matter is taught by the Grade 3 and Grade 4 standalone lesson apps at the stages 0097 assigns it.",
   "5-5": "Shadows are not in 0097 Stage 5 — they are 3Ps.02 and 3Ps.03, and the moving-Sun content is 4ESs.01. As with Unit 4, only the enquiry objectives are claimed. The shadow investigation itself is sound work for the enquiry strand, which is why 5TWSp.03 is claimed rather than nothing.",
   "5-6": "This unit's astronomy is split across stages by 0097. The Earth's orbit, the tilt and the seasons, and satellites are Stage 5 and are claimed in full (5ESs.01-5ESs.03). Day and night from the Earth's spin is Stage 4 (4ESs.01), and the Moon's phases are Stage 6 (6ESs.02) — which Grade 6 does not teach either, so that content is in the course at the wrong stage rather than missing.",
-  "6-1": "The digestion concept in this unit is a Stage 5 objective under 0097 (5Bs.04, the human digestive system and the functions of its organs), and Grade 5 does not teach it. The circulatory and respiratory objectives claimed here are Stage 6 and are met in full. This is a sequencing gap rather than a content one: moving that concept to Grade 5 would close 5Bs.04 without authoring anything.",
+  "6-1": "The digestion concept in this unit is a Stage 5 objective under 0097 (5Bs.04, the human digestive system and the functions of its organs), and Grade 5 does not teach it. The circulatory and respiratory objectives claimed here are Stage 6 and are met in full. CORRECTED 2026-09-17: this was recorded as a cheap sequencing fix - \"moving that concept to Grade 5 would close 5Bs.04 without authoring anything\" - and that is wrong. Grade 5 has no unit that could host it: its six units are Plants, Plants, States of matter, Light, Light and Earth-and-beyond, which is exactly one unit per content sub-strand of 0846 Stage 5, the framework this course was built to. Human biology is not a Stage 5 sub-strand in 0846 at all, and the whole grade contains one incidental mention of a digestive system (a seed passing through an animal's gut). The move has no destination; see the 5-Structure and function gap reason.",
 };
 
 // Resolve a unit's codes against the framework, and refuse the build if one is
@@ -366,6 +366,60 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 // unit to a new objective and the gap closes here on the next build. Only the
 // REASON is authored, and only where it has actually been established.
 const CAMBRIDGE_GAP_REASONS = {
+  // ── Stages 5 and 6: WHY the coverage figure fell, and why no move fixes it ──
+  // Authored 2026-09-17, after an attempt to do the "re-sequencing moves" found
+  // there are none to do. This replaces a claim made earlier the same day, in
+  // these two stages' misconception fixtures and in the 6-1 alignment note, that
+  // two objectives were "deliverable by moving a concept rather than authoring
+  // anything". That was wrong and it was not checked before it shipped.
+  //
+  // THE COURSE IS A 0846 COURSE, AND A COMPLETE ONE. Measured against the
+  // framework it was actually built to:
+  //
+  //   0846 Stage 5   38 objectives = 24 content + 14 enquiry;  course claimed 21
+  //                  of the 24 content (5Cs5, 5Pl4 and 5Pb4 excepted)
+  //   0846 Stage 6   40 objectives = 24 content + 16 enquiry;  course claimed
+  //                  ALL 24 content objectives
+  //
+  // And the unit structure is one unit per content sub-strand, exactly. Grade 6
+  // has five content sub-strands in 0846 — Humans and animals, Living things in
+  // their environment, Material changes, Forces and motion, Electricity — and
+  // five units, one each. Grade 5 has four — Plants, States of matter, Light,
+  // The Earth and beyond — and six units, with Plants and Light taking two.
+  // Nothing about the sequencing is accidental or wrong.
+  //
+  // WHAT CHANGED IS THE FRAMEWORK, in three ways at once, which is why 71% and
+  // 70% became 36% and 29% without a line of content changing:
+  //
+  //   more content      0097 publishes 34 content objectives per stage against
+  //                     0846's 24 — ten per stage the old framework never asked
+  //                     for, including sound, magnetism, forces and pollution at
+  //                     Stage 5 and rocks, soils, disease and space at Stage 6.
+  //   redistribution    0097 moved topics BETWEEN stages. Light was the whole of
+  //                     0846's 5Pl1-5Pl8 and is Stages 2, 3, 4 and 6 in 0097.
+  //                     Human biology was 0846's Stage 6 (6Bh1-6Bh4) and
+  //                     digestion is Stage 5 in 0097. The Earth and beyond was
+  //                     0846 Stage 5 (5Pb) and the Moon's cycle is Stage 6.
+  //   a new apparatus   0846 had 14-16 enquiry objectives (Ep/Eo). 0097 has 25
+  //                     per stage: 20 Thinking and Working Scientifically plus 5
+  //                     Science in Context, which has no 0846 ancestor at all.
+  //
+  // SO THERE IS NO MOVE TO MAKE. Every "wrong stage" concept is content sitting
+  // where 0846 put it, in the only unit of its grade that covers that
+  // sub-strand, and the destination grade has no unit of that subject to receive
+  // it — Grade 5 has no human biology and Grade 6 has no space or light, because
+  // 0846 gave neither grade those sub-strands. Moving a concept would empty a
+  // unit that is correct for its own framework and leave an orphan in a grade
+  // with nowhere to put it. Re-sequencing to 0097 is not a move; it is rebuilding
+  // the unit structure of both grades against a different distribution of
+  // topics, which is the commission below and not a tidying job.
+  "5-Structure and function":
+    "5Bs.04 (the human digestive system) is the clearest case of the framework moving rather than the course misplacing. 0846 has no human-biology sub-strand at Stage 5 at all — its Stage 5 is Plants, States of matter, Light and The Earth and beyond — and puts humans and animals at Stage 6 (6Bh1-6Bh4), which Grade 6 Unit 1 teaches in full, digestion included. So the content exists in the course, one stage later than 0097 wants it, and it cannot be moved: Grade 5's six units are one per 0846 sub-strand and none of them is about the body. 5Bs.01-5Bs.03 (the parts of a flower) ARE claimed, which is why this sub-strand is only partly covered rather than empty.",
+  "6-Earth in space":
+    "6ESs.01 and 6ESs.02 (the Solar System; the Moon's monthly cycle) are the same case in the other direction. 0846 places The Earth and beyond at Stage 5 (5Pb1-5Pb4) and gives Stage 6 no astronomy sub-strand, so Grade 5 Unit 6 teaches the Solar System and the Moon's phases and Grade 6 has no unit that could receive them. Grade 6's five units are one per 0846 Stage 6 sub-strand and none is about space. Recorded because the Stage 6 misconception fixture's 'The Moon is only in the sky at night' row has nowhere to sit for exactly this reason.",
+  "6-Light and sound":
+    "6Ps.01 and 6Ps.02 (reflection from a plane mirror; refraction) sit in the same hole. 0846 made light the whole of Stage 5 (5Pl1-5Pl8) and Grade 5 spends TWO units on it, Light and Vision and Shadows and Light Behavior, which between them teach transparent/translucent/opaque, shadows, reflection, mirrors and refraction. 0097 spreads that across Stages 2, 3 and 4 and keeps plane mirrors and refraction back for Stage 6. So Grade 5 teaches Stage 6's two light objectives two years early, and Grade 6 has no light unit to claim them in.",
+
   // ── Stages 7 and 8, authored 2026-09-17 ──────────────────────────────────
   // Both stages reported an EMPTY gaps block while 19 and 30 objectives went
   // unclaimed, because a partly-covered sub-strand is not reported without an

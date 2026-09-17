@@ -119,19 +119,27 @@ $SUBJECTS = [
     // report the same ids the shell writes.
     //
     // The levels number their units differently and all are correct.
-    // Level 1 starts at ZERO (u00 Letters and Sounds .. u19); Levels 2 and 3
-    // start at ONE (u01 .. u20), so the levels are NOT parallel and a reader
-    // checking one cannot infer the others. The `grade` key here is the CEFR
-    // level, not a school year -- the same field-name trap the Wehel allowance
-    // carries for this subject, where `grade` in the payload is a level too.
+    // Intro starts at ONE (u01 .. u16); Level 1 starts at ZERO (u00 Letters
+    // and Sounds .. u19); Levels 2 and 3 start at ONE (u01 .. u20). So the
+    // levels are NOT parallel and a reader checking one cannot infer the
+    // others. The `grade` key here is the CEFR level, not a school year -- the
+    // same field-name trap the Wehel allowance carries for this subject, where
+    // `grade` in the payload is a level too.
     //
     // Level 3 (Cambridge 0876, Stages 7-9, A2 to B1) was added on 2026-09-17,
-    // the day its app was deployed. It is the LAST level: 4 (C1) and 5 (C2)
-    // were dropped by the owner on 2026-09-16, so this table is complete for
-    // this subject and a fourth row would be wrong rather than missing.
+    // the day its app was deployed. It is the last level UPWARDS: 4 (C1) and
+    // 5 (C2) were dropped by the owner on 2026-09-16, so a row above 3 would
+    // be wrong rather than missing.
+    //
+    // Intro (grade 0) was added later the same day and the table grew DOWNWARDS
+    // instead. It is Pre-A1, below Cambridge 0057 Stage 1, and claims no 0057
+    // objective -- 0057 has no stage under 1 and all of Stage 1 is already
+    // placed in Level 1. So this row is the floor exactly as 3 is the ceiling,
+    // and the table is now complete in both directions.
     'intensive-english' => [
         'entry' => RP_HOST . 'Ehel%20Primary/app/intensive-english/index.html',
         'targets' => [
+            0 => ['ehel-intensive-eng-l00', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-0-v2/index.html'],
             1 => ['ehel-intensive-eng-l01', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-1-v2/index.html'],
             2 => ['ehel-intensive-eng-l02', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-2-v2/index.html'],
             3 => ['ehel-intensive-eng-l03', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-3-v2/index.html'],

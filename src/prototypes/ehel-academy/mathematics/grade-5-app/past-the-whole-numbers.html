@@ -436,6 +436,13 @@
     </div>
     <div class="hero-mini" aria-hidden="true" id="heroMini"></div>
   </header>
+      <!-- ehel-g5-search: search this grade's lesson content. The field sits with
+         the step list because that is this page's table of contents. -->
+    <div class="lsearch">
+      <label class="lsearch-lab" for="lsq">Search the lessons</label>
+      <input id="lsq" type="search" autocomplete="off" placeholder="try &quot;square number&quot; or &quot;rounding&quot;">
+      <div id="lsout" class="lsearch-out" role="status" aria-live="polite"></div>
+    </div>
   <nav class="steps-nav" aria-label="Steps in this lesson">
     <a href="#s21"><b>21</b> Rounding</a>
     <a href="#s22"><b>22</b> Below zero</a>
@@ -1243,6 +1250,90 @@
   });
 })();
 </script>
+<script>
+/* ehel-g5-search - see add-lesson-search.py.
+   One matcher, both hosts: the hub and every lesson page get this same body.
+   It tells them apart by asking the page - a result in THIS document scrolls
+   to the step, anything else navigates, carrying ?from=g5 exactly as the hub's
+   own lesson links do. */
+(function () {
+  const box = document.getElementById("lsq"), out = document.getElementById("lsout");
+  if (!box || !out) return;
+  const HERE = location.pathname.split("/").pop() || "index.html";
+  let INDEX = null, pending = null;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
+  fetch("lesson-search.json").then((r) => r.json()).then((d) => {
+    INDEX = d;
+    if (pending !== null) { const q = pending; pending = null; run(q); }
+  }).catch(() => { out.innerHTML = '<p class="ls-none">The lesson list could not be loaded.</p>'; });
+
+  /* Word-PREFIX, not substring: a substring search for "even" answers with
+     "seven" and "eleven". Each token must start a word somewhere in the step. */
+  const toks = (q) => q.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length > 1);
+  const hasAll = (hay, ts) => ts.every((t) =>
+    new RegExp("(?:^|[^a-z0-9])" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).test(hay));
+
+  function snippet(text, ts) {
+    const low = text.toLowerCase();
+    let at = -1;
+    for (const t of ts) {
+      const m = low.search(new RegExp("(?:^|[^a-z0-9])" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+      if (m >= 0 && (at < 0 || m < at)) at = m;
+    }
+    if (at < 0) at = 0;
+    const from = Math.max(0, at - 40);
+    let s = text.slice(from, from + 170);
+    if (from > 0) s = "..." + s;
+    if (from + 170 < text.length) s += "...";
+    let html = esc(s);
+    for (const t of ts) {
+      html = html.replace(new RegExp("((?:^|[^a-z0-9]))(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[a-z0-9]*)", "gi"),
+        (m0, a, b) => a + "<mark>" + b + "</mark>");
+    }
+    return html;
+  }
+
+  function run(q) {
+    const ts = toks(q);
+    if (!ts.length) { out.innerHTML = ""; return; }
+    if (!INDEX) { pending = q; return; }
+    const hits = [];
+    for (const l of INDEX.lessons) {
+      for (const s of l.steps) {
+        const hay = (s.h + " " + s.t + " " + (s.g || "")).toLowerCase();
+        if (hasAll(hay, ts)) hits.push({ l: l, s: s });
+      }
+    }
+    if (!hits.length) {
+      out.innerHTML = '<p class="ls-none">Nothing in this grade matches "'
+        + esc(q) + '".</p>';
+      return;
+    }
+    out.innerHTML = hits.slice(0, 12).map((h) => {
+      const here = h.l.file === HERE;
+      const href = (here ? "" : h.l.file + "?from=g5") + "#" + h.s.a;
+      return '<a class="ls-hit" href="' + href + '">'
+        + '<span class="ls-where">' + esc(h.l.title) + (here ? " - this lesson" : "")
+        + '</span><p class="ls-head">' + esc(h.s.h) + "</p>"
+        + '<p class="ls-snip">' + snippet(h.s.t, ts) + "</p></a>";
+    }).join("") + (hits.length > 12
+      ? '<p class="ls-none">' + (hits.length - 12) + " more.</p>" : "");
+  }
+
+  box.addEventListener("input", () => run(box.value));
+  out.addEventListener("click", (e) => {
+    const a = e.target.closest(".ls-hit");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (href.charAt(0) !== "#") return;          // another lesson: let it navigate
+    e.preventDefault();
+    const el = document.getElementById(href.slice(1));
+    if (el) { history.replaceState(null, "", href); el.scrollIntoView({ block: "start" }); }
+  });
+})();
+</script>
+
 
 
 </body>
@@ -1273,4 +1364,24 @@
   .spot-fb.good { color: var(--good); }
   .spot-fb.bad { color: var(--ink); }
   .spot-src { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+</style>
+<style>/* ehel-g5-search - see add-lesson-search.py */
+  .lsearch { margin: 0 0 18px; }
+  .lsearch-lab { display: block; font-size: 12.5px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+  .lsearch input { font: inherit; font-size: 15px; width: 100%; max-width: 30rem;
+    padding: 9px 13px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); }
+  .lsearch-out { margin-top: 10px; }
+  .lsearch-out:empty { display: none; }
+  .ls-hit { display: block; text-decoration: none; color: inherit;
+    padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--card); margin-bottom: 7px; }
+  .ls-hit:hover, .ls-hit:focus-visible { border-color: var(--accent); }
+  .ls-where { font-size: 12px; color: var(--muted); }
+  .ls-head { font-weight: 600; font-size: 15px; margin: 1px 0 2px; }
+  .ls-snip { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+  .ls-snip mark { background: var(--accent-soft); color: var(--accent);
+    padding: 0 2px; border-radius: 3px; }
+  .ls-none { font-size: 14px; color: var(--muted); }
 </style>

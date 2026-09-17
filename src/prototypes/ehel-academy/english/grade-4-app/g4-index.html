@@ -527,6 +527,18 @@
     font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
   .act .tick { margin-top: auto; align-self: flex-start; }
 
+  /* ---- the activities tier, above the jobs ----
+     One Support and one Challenge for the whole step, closed until a child or
+     an adult asks for it. It carries its OWN .task-meta rule rather than
+     borrowing tasks.css's: that stylesheet is inlined only when a build sets
+     "taskSteps", so a grade that turned the writing steps off would otherwise
+     lose the styling on a step that has nothing to do with them. */
+  .act-tier { width: 100%; display: flex; flex-direction: column; gap: 8px; margin: 0 0 14px; }
+  .act-tier .task-meta { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .act-tier .task-meta b { display: block; font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--teal); margin-bottom: 2px; }
+
   /* ---- the unit's study plan ---- */
   .plan { width: 100%; display: flex; flex-direction: column; gap: 4px; }
   .plan-when { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 6px; }

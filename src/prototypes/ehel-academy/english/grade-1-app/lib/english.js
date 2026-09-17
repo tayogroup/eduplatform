@@ -806,10 +806,30 @@
     const did = new Array(o.items.length).fill(false);
     const shown = new Array(o.items.length).fill(false);
 
+    /* THE TIER, at the head of the step and closed until it is wanted.
+       Cambridge attaches a Support and a Challenge to a task rather than to
+       every item inside it; this is the same shape, one pair for the step. It
+       is deliberately NOT part of finishing: `did` is what ticks this step, so
+       a child who takes the support route has done it. Absent on any unit whose
+       data carries no pair, which is how a grade that has not been authored yet
+       renders unchanged. */
+    const tier = o.tier && (o.tier.support || o.tier.extension) ? o.tier : null;
+    let tierOpen = false;
+    function tierHtml() {
+      if (!tier) return "";
+      return '<div class="act-tier">' +
+        '<button type="button" class="act-how" data-act="tier">' +
+        (tierOpen ? "Hide" : "Too hard? Too easy?") + "</button>" +
+        (tierOpen
+          ? (tier.support ? '<p class="task-meta"><b>Stuck?</b> ' + esc(tier.support) + "</p>" : "") +
+            (tier.extension ? '<p class="task-meta"><b>Want more?</b> ' + esc(tier.extension) + "</p>" : "")
+          : "") + "</div>";
+    }
+
     function paint() {
       $(el.ask).innerHTML = o.ask || "Jobs to do away from the screen.";
       $(el.stage).className = "stagewide";
-      $(el.stage).innerHTML = '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
+      $(el.stage).innerHTML = tierHtml() + '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
         '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
         '<div class="act-head"><span class="act-n">' + it.n + "</span>" +
         (it.kind ? '<span class="act-kind">' + esc(it.kind) + "</span>" : "") +
@@ -843,6 +863,14 @@
     $(el.stage).addEventListener("click", (e) => {
       const card = e.target.closest(".act");
       const button = e.target.closest("[data-act]");
+      /* The tier sits ABOVE the cards, so it has no .act ancestor and has to be
+         answered before the guard below - which returns on any click that is
+         not inside a job card. */
+      if (button && button.dataset.act === "tier") {
+        tierOpen = !tierOpen;
+        paint();
+        return;
+      }
       if (!card || !button) return;
       const k = Number(card.dataset.k);
       /* The spoken fallback is the WHOLE job, not its first line. It used to

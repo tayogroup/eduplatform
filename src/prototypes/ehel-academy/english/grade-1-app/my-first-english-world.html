@@ -545,6 +545,18 @@
     font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
   .act .tick { margin-top: auto; align-self: flex-start; }
 
+  /* ---- the activities tier, above the jobs ----
+     One Support and one Challenge for the whole step, closed until a child or
+     an adult asks for it. It carries its OWN .task-meta rule rather than
+     borrowing tasks.css's: that stylesheet is inlined only when a build sets
+     "taskSteps", so a grade that turned the writing steps off would otherwise
+     lose the styling on a step that has nothing to do with them. */
+  .act-tier { width: 100%; display: flex; flex-direction: column; gap: 8px; margin: 0 0 14px; }
+  .act-tier .task-meta { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .act-tier .task-meta b { display: block; font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--teal); margin-bottom: 2px; }
+
   /* ---- the unit's study plan ---- */
   .plan { width: 100%; display: flex; flex-direction: column; gap: 4px; }
   .plan-when { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 6px; }
@@ -2661,6 +2673,10 @@
         "check": "A story with a start, a middle and an end, in the child's own words. Copying the first line counts as writing; a drawing with one written line is a fine page."
       }
     ],
+    "activityTier": {
+      "support": "Doing all 13 is not the point. Pick the first 4 and do those properly, starting with capstone workshop. Say every answer out loud before writing anything, and let a grown-up write it down for you if the writing is the hard part.",
+      "extension": "Pick any job you have finished and do it again, this time using “Introduce yourself with confidence” in every answer. Then choose one answer and make it longer by adding a reason."
+    },
     "fluency": [
       {
         "ask": "Which sentence uses the pattern “My name is ___.”?",
@@ -5590,6 +5606,26 @@
             "title": "🎉 Well done — your child has finished Year 1!",
             "body": "This is the end of Year 1, and the book in your child's hands is the proof. They started as a brand-new beginner and can now say their name, name the things around them, count, describe, read some words on their own, and tell you what they like.\n\nKeep the book. Read it together now and then. Next year it will show your child how far they have come.\n\nIn Year 2, your child will build on all of this — reading a little more, writing a little more, and speaking with more confidence. They are ready!\n\nFrom all of us at Ehel Academy: well done to your child, and well done to YOU for teaching with love. 🌟",
             "items": []
+          },
+          {
+            "title": "⚠️ Watch out for this",
+            "body": "Children often think: “There is only one type of book”\n\nHOW TO SPOT IT — Ask what kinds of book they know. If the answer is 'story books', the idea is there.\n\nHOW TO HELP — Look back over the year's texts together - a rhyme, a diary, instructions, a chart, a fact file, a contents page. Books hold many kinds of writing.\n\nFrom the Cambridge Primary English Teacher’s Resource 1, page 208 (cme-s1-044). The full table is in english/data/cambridge-misconceptions-1-4.json.",
+            "items": []
+          },
+          {
+            "title": "▶️ Starting the lesson",
+            "body": "Five to ten minutes before the first step. Ask what your child already knows about my first english world, and write the words they offer where they can see them. Keep the list: at the end of the unit you will add to it, and the growth is the point. If they have nothing to say, read the first line of “Amal's English Year” aloud and ask what they think it is about.\n\nDerived from this unit’s own words, pattern and writing task rather than written one by one — a shape for the lesson, not a script.",
+            "items": []
+          },
+          {
+            "title": "⏹️ Ending the lesson",
+            "body": "Five minutes after the last step they finish today. Ask for one sentence out loud using the pattern “Introduce yourself with confidence”, and one word from “Core words” used correctly. If either comes slowly, that is the thing to start tomorrow with rather than the next step.",
+            "items": []
+          },
+          {
+            "title": "🏠 At home",
+            "body": "“My First English World page 1” can be done away from the screen, on paper, with whoever is at home. Ask them to read it back to you afterwards - reading their own writing aloud is where most of the corrections get made.",
+            "items": []
           }
         ]
       }
@@ -7574,10 +7610,30 @@
     const did = new Array(o.items.length).fill(false);
     const shown = new Array(o.items.length).fill(false);
 
+    /* THE TIER, at the head of the step and closed until it is wanted.
+       Cambridge attaches a Support and a Challenge to a task rather than to
+       every item inside it; this is the same shape, one pair for the step. It
+       is deliberately NOT part of finishing: `did` is what ticks this step, so
+       a child who takes the support route has done it. Absent on any unit whose
+       data carries no pair, which is how a grade that has not been authored yet
+       renders unchanged. */
+    const tier = o.tier && (o.tier.support || o.tier.extension) ? o.tier : null;
+    let tierOpen = false;
+    function tierHtml() {
+      if (!tier) return "";
+      return '<div class="act-tier">' +
+        '<button type="button" class="act-how" data-act="tier">' +
+        (tierOpen ? "Hide" : "Too hard? Too easy?") + "</button>" +
+        (tierOpen
+          ? (tier.support ? '<p class="task-meta"><b>Stuck?</b> ' + esc(tier.support) + "</p>" : "") +
+            (tier.extension ? '<p class="task-meta"><b>Want more?</b> ' + esc(tier.extension) + "</p>" : "")
+          : "") + "</div>";
+    }
+
     function paint() {
       $(el.ask).innerHTML = o.ask || "Jobs to do away from the screen.";
       $(el.stage).className = "stagewide";
-      $(el.stage).innerHTML = '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
+      $(el.stage).innerHTML = tierHtml() + '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
         '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
         '<div class="act-head"><span class="act-n">' + it.n + "</span>" +
         (it.kind ? '<span class="act-kind">' + esc(it.kind) + "</span>" : "") +
@@ -7611,6 +7667,14 @@
     $(el.stage).addEventListener("click", (e) => {
       const card = e.target.closest(".act");
       const button = e.target.closest("[data-act]");
+      /* The tier sits ABOVE the cards, so it has no .act ancestor and has to be
+         answered before the guard below - which returns on any click that is
+         not inside a job card. */
+      if (button && button.dataset.act === "tier") {
+        tierOpen = !tierOpen;
+        paint();
+        return;
+      }
       if (!card || !button) return;
       const k = Number(card.dataset.k);
       /* The spoken fallback is the WHOLE job, not its first line. It used to
@@ -9880,6 +9944,7 @@
   sequence({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17" }, items: LESSON.questions, finish: 16, attemptOnly: true,
     label: "Question", done: "You remembered the story well." });
   activityList({ el: { ask: "ask18", say: "ask18", stage: "stage18", ch: "ch18", fb: "fb18", score: "score18", acts: "acts18" }, items: LESSON.activities, finish: 17,
+    tier: LESSON.activityTier,
     done: "That is this unit's jobs done." });
   sequence({ el: { ask: "ask19", say: "ask19", stage: "stage19", ch: "ch19", fb: "fb19", score: "score19" }, items: LESSON.fluency, finish: 18,
     label: "Question", done: "That is this unit's words and patterns practised." });

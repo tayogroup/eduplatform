@@ -1998,6 +1998,17 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
         })
     if acts:
         data["activities"] = acts
+        # THE TIER, ONE PAIR FOR THE WHOLE STEP. Cambridge attaches a Support and
+        # a Challenge to a TASK rather than to every item inside it, and 486
+        # bespoke pairs could not be written well - so the pair sits at the head
+        # of the step and names what to drop and what to add. Neither counts
+        # toward completion: the step is ticked by doing the jobs, and a child
+        # who takes the support route has done it. See
+        # tools/author-english-activity-differentiation.py.
+        _ad = unit.get("activityDifferentiation") or {}
+        if (_ad.get("support") or "").strip() or (_ad.get("extension") or "").strip():
+            data["activityTier"] = {"support": (_ad.get("support") or "").strip(),
+                                    "extension": (_ad.get("extension") or "").strip()}
         i = add("activities", "Things to do", "\u270B", "I did the activities",
                 "Jobs to do away from the screen.",
                 explain(
@@ -2617,6 +2628,7 @@ def bootstrap(slides, data):
                        '    finish: %d, done: "You answered the book questions." });' % (el, i))
         elif k == "activities":
             out.append('  activityList({ el: %s, items: LESSON.activities, finish: %d,\n'
+                       '    tier: LESSON.activityTier,\n'
                        '    done: "That is this unit\'s jobs done." });' % (el, i))
         elif k in ("writetasks", "speaktasks"):
             out.append('  taskList({ el: %s, items: LESSON.%s, finish: %d, write: %s,\n'

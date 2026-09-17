@@ -545,6 +545,18 @@
     font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
   .act .tick { margin-top: auto; align-self: flex-start; }
 
+  /* ---- the activities tier, above the jobs ----
+     One Support and one Challenge for the whole step, closed until a child or
+     an adult asks for it. It carries its OWN .task-meta rule rather than
+     borrowing tasks.css's: that stylesheet is inlined only when a build sets
+     "taskSteps", so a grade that turned the writing steps off would otherwise
+     lose the styling on a step that has nothing to do with them. */
+  .act-tier { width: 100%; display: flex; flex-direction: column; gap: 8px; margin: 0 0 14px; }
+  .act-tier .task-meta { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .act-tier .task-meta b { display: block; font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--teal); margin-bottom: 2px; }
+
   /* ---- the unit's study plan ---- */
   .plan { width: 100%; display: flex; flex-direction: column; gap: 4px; }
   .plan-when { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 6px; }
@@ -3295,6 +3307,10 @@ First, find real information. Then, write it clearly. After that, check your spe
         "check": "Answers will differ between children. Check that each word is used with the right meaning, that item 3 really follows the pattern from “Countable and Uncountable Nouns”, and that the word in item 4 is spelled correctly."
       }
     ],
+    "activityTier": {
+      "support": "Doing all 12 in one sitting is not the point. Choose 4 and finish those, starting with guided practice. Talk each answer through before you write it - if you can say it, you can write it.",
+      "extension": "Pick any job you have finished and do it again, this time using “Countable and Uncountable Nouns” in every answer. Then choose one answer and make it longer by adding a reason."
+    },
     "fluency": [
       {
         "ask": "Which sentence uses the pattern “Countable and Uncountable Nouns”?",
@@ -6517,6 +6533,26 @@ First, find real information. Then, write it clearly. After that, check your spe
               "Writing 1, Writing 2 and Writing 5 drafted, marked against the Writing rubric and revised once in Writing 6.",
               "The four story questions answered with quoted evidence, and the message explained aloud in Speaking 5."
             ]
+          },
+          {
+            "title": "⚠️ Watch out for this",
+            "body": "Children often think: “To understand a difficult word you always need a dictionary”\n\nHOW TO SPOT IT — Read a text containing two or three hard words, then ask whether they followed it.\n\nHOW TO HELP — Replace a word with a nonsense word and ask what it must mean. The sentence around a word usually carries enough - the dictionary confirms, it does not rescue.\n\nFrom the Cambridge Primary English Teacher’s Resource 4, page 71 (cme-s4-167). The full table is in english/data/cambridge-misconceptions-1-4.json.",
+            "items": []
+          },
+          {
+            "title": "▶️ Starting the lesson",
+            "body": "Five to ten minutes before the first step. Ask what your child already knows about community and communication, and write the words they offer where they can see them. Keep the list: at the end of the unit you will add to it, and the growth is the point. If they have nothing to say, read the first line of “The Library That Came to Us” aloud and ask what they think it is about.\n\nDerived from this unit’s own words, pattern and writing task rather than written one by one — a shape for the lesson, not a script.",
+            "items": []
+          },
+          {
+            "title": "⏹️ Ending the lesson",
+            "body": "Five minutes after the last step they finish today. Ask for one sentence out loud using the pattern “Countable and Uncountable Nouns”, and one word from “Word endings: -less and -ment” used correctly. If either comes slowly, that is the thing to start tomorrow with rather than the next step.",
+            "items": []
+          },
+          {
+            "title": "🏠 At home",
+            "body": "“Writing 1: Instructions: “How to Share News in My Community”” can be done away from the screen, on paper, with whoever is at home. Ask them to read it back to you afterwards - reading their own writing aloud is where most of the corrections get made.",
+            "items": []
           }
         ]
       }
@@ -8501,10 +8537,30 @@ First, find real information. Then, write it clearly. After that, check your spe
     const did = new Array(o.items.length).fill(false);
     const shown = new Array(o.items.length).fill(false);
 
+    /* THE TIER, at the head of the step and closed until it is wanted.
+       Cambridge attaches a Support and a Challenge to a task rather than to
+       every item inside it; this is the same shape, one pair for the step. It
+       is deliberately NOT part of finishing: `did` is what ticks this step, so
+       a child who takes the support route has done it. Absent on any unit whose
+       data carries no pair, which is how a grade that has not been authored yet
+       renders unchanged. */
+    const tier = o.tier && (o.tier.support || o.tier.extension) ? o.tier : null;
+    let tierOpen = false;
+    function tierHtml() {
+      if (!tier) return "";
+      return '<div class="act-tier">' +
+        '<button type="button" class="act-how" data-act="tier">' +
+        (tierOpen ? "Hide" : "Too hard? Too easy?") + "</button>" +
+        (tierOpen
+          ? (tier.support ? '<p class="task-meta"><b>Stuck?</b> ' + esc(tier.support) + "</p>" : "") +
+            (tier.extension ? '<p class="task-meta"><b>Want more?</b> ' + esc(tier.extension) + "</p>" : "")
+          : "") + "</div>";
+    }
+
     function paint() {
       $(el.ask).innerHTML = o.ask || "Jobs to do away from the screen.";
       $(el.stage).className = "stagewide";
-      $(el.stage).innerHTML = '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
+      $(el.stage).innerHTML = tierHtml() + '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
         '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
         '<div class="act-head"><span class="act-n">' + it.n + "</span>" +
         (it.kind ? '<span class="act-kind">' + esc(it.kind) + "</span>" : "") +
@@ -8538,6 +8594,14 @@ First, find real information. Then, write it clearly. After that, check your spe
     $(el.stage).addEventListener("click", (e) => {
       const card = e.target.closest(".act");
       const button = e.target.closest("[data-act]");
+      /* The tier sits ABOVE the cards, so it has no .act ancestor and has to be
+         answered before the guard below - which returns on any click that is
+         not inside a job card. */
+      if (button && button.dataset.act === "tier") {
+        tierOpen = !tierOpen;
+        paint();
+        return;
+      }
       if (!card || !button) return;
       const k = Number(card.dataset.k);
       /* The spoken fallback is the WHOLE job, not its first line. It used to
@@ -10818,6 +10882,7 @@ First, find real information. Then, write it clearly. After that, check your spe
   sequence({ el: { ask: "ask21", say: "ask21", stage: "stage21", ch: "ch21", fb: "fb21", score: "score21" }, items: LESSON.questions, finish: 20, attemptOnly: true,
     label: "Question", done: "You remembered the story well." });
   activityList({ el: { ask: "ask22", say: "ask22", stage: "stage22", ch: "ch22", fb: "fb22", score: "score22", acts: "acts22" }, items: LESSON.activities, finish: 21,
+    tier: LESSON.activityTier,
     done: "That is this unit's jobs done." });
   sequence({ el: { ask: "ask23", say: "ask23", stage: "stage23", ch: "ch23", fb: "fb23", score: "score23" }, items: LESSON.fluency, finish: 22,
     label: "Question", done: "That is this unit's words and patterns practised." });

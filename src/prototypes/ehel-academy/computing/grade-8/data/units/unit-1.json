@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T09:57:05.800Z",
+  "generatedAt": "2026-09-17T10:33:43.175Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -729,28 +729,28 @@
       "id": "p33",
       "level": "Extension",
       "prompt": "Print 'You passed' only when score is 50 or more.\nscore = int(input(\"Enter your score: \"))\nif score ____ 50:\nprint(\"You passed\")",
-      "answer": "INPUT.",
+      "answer": ">= - the line becomes if score >= 50:.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
       "id": "p34",
       "level": "Extension",
       "prompt": "Give a discount only when both conditions are true.\nif age < 16 ____ card == \"yes\":\nprint(\"You get 10% discount\")",
-      "answer": "(20 + 200) / 20 = 220 / 20 = 11. newValue is 11.",
+      "answer": "and - the line becomes if age < 16 and card == \"yes\":.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
       "id": "p35",
       "level": "Extension",
       "prompt": "Import the library, then round 8.2 up.\n____ math\nprint(math.____(8.2))",
-      "answer": "!= is 'not equal to'.",
+      "answer": "import then ceil - import math and print(math.ceil(8.2)), which prints 9.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
       "id": "p36",
       "level": "Extension",
       "prompt": "Complete the function so it returns double the number.\ndef double(number):\n____ number * 2\nprint(double(6))",
-      "answer": "Check 12 (no), 3 (no), 33 (yes - found at the third item, position 2 counting from 0). It stops as soon as it finds 33.",
+      "answer": "return - the line becomes return number * 2; the program prints 12. Each program has one bug. Describe the bug and give the corrected line. F1. F1 value = 10 if value = 10: print(\"Ten\") F2. F2 if score >= 50 print(\"Pass\") F3. F3 if age < 13: print(\"Child\") else if age < 20: print(\"Teenager\") F4. This should allow ages 16 and under to join, but a 16-year-old is refused. F4 age = int(input(\"Enter your age: \")) if age < 16: print(\"You can join\") else: print(\"Too old\") F1. A single = is used in the condition; it should be ==. Corrected: if value == 10:. F2. The colon is missing at the end of the if line. Corrected: if score >= 50:. F3. Python uses elif, not 'else if'. Corrected: elif age < 20:. F4. This is a boundary error: age < 16 refuses 16. It should be age <= 16 so that 16 is allowed. Section G: End-of-Unit Quiz Try this without notes, then mark yourself. It covers the whole unit. Which pseudocode command reads input from the user: INPUT, PRINT or SHOW? Write the value stored in newValue after: variable1 <- 20 ; xValue <- 200 ; newValue <- (variable1 + xValue) / variable1 Which is the Python operator for 'not equal to': =, != or ==? Show the steps a linear search takes to find 33 in: 12, 3, 33, 19, 5. In Python, how do you show which code is inside an if statement (there is no ENDIF)? Give one example of normal, invalid and boundary test data for a program that accepts marks from 0 to 100. Write a Python if/elif/else that prints 'Positive', 'Negative' or 'Zero' for a number the user enters. What does random.randint(2, 8) do, and list every value it could return. In MicroPython, what does radio.receive() return when no message has arrived? A micro:bit sends the string \"heart\" when button A is pressed. Write the two-line change (inside the loop) that would make it send \"star\" when button B is pressed instead. Section G: Answer Key",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     }
   ],
@@ -1340,9 +1340,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Print 'You passed' only when score is 50 or more.\nscore = int(input(\"Enter your score: \"))\nif score ____ 50:\nprint(\"You passed\")",
-      "answer": "INPUT.",
+      "answer": ">= - the line becomes if score >= 50:.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: INPUT."
+      "errorFeedback": "Check your reasoning against this: >= - the line becomes if score >= 50:."
     },
     {
       "id": "rp04",
@@ -1350,9 +1350,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "Give a discount only when both conditions are true.\nif age < 16 ____ card == \"yes\":\nprint(\"You get 10% discount\")",
-      "answer": "(20 + 200) / 20 = 220 / 20 = 11. newValue is 11.",
+      "answer": "and - the line becomes if age < 16 and card == \"yes\":.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: (20 + 200) / 20 = 220 / 20 = 11. newValue is 11."
+      "errorFeedback": "Check your reasoning against this: and - the line becomes if age < 16 and card == \"yes\":."
     },
     {
       "id": "rp05",
@@ -1360,9 +1360,9 @@
       "difficulty": "Challenge",
       "context": "Travel",
       "prompt": "Import the library, then round 8.2 up.\n____ math\nprint(math.____(8.2))",
-      "answer": "!= is 'not equal to'.",
+      "answer": "import then ceil - import math and print(math.ceil(8.2)), which prints 9.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: != is 'not equal to'."
+      "errorFeedback": "Check your reasoning against this: import then ceil - import math and print(math.ceil(8.2)), which prints 9."
     },
     {
       "id": "rp06",
@@ -1370,9 +1370,9 @@
       "difficulty": "Challenge",
       "context": "Health",
       "prompt": "Complete the function so it returns double the number.\ndef double(number):\n____ number * 2\nprint(double(6))",
-      "answer": "Check 12 (no), 3 (no), 33 (yes - found at the third item, position 2 counting from 0). It stops as soon as it finds 33.",
+      "answer": "return - the line becomes return number * 2; the program prints 12. Each program has one bug. Describe the bug and give the corrected line. F1. F1 value = 10 if value = 10: print(\"Ten\") F2. F2 if score >= 50 print(\"Pass\") F3. F3 if age < 13: print(\"Child\") else if age < 20: print(\"Teenager\") F4. This should allow ages 16 and under to join, but a 16-year-old is refused. F4 age = int(input(\"Enter your age: \")) if age < 16: print(\"You can join\") else: print(\"Too old\") F1. A single = is used in the condition; it should be ==. Corrected: if value == 10:. F2. The colon is missing at the end of the if line. Corrected: if score >= 50:. F3. Python uses elif, not 'else if'. Corrected: elif age < 20:. F4. This is a boundary error: age < 16 refuses 16. It should be age <= 16 so that 16 is allowed. Section G: End-of-Unit Quiz Try this without notes, then mark yourself. It covers the whole unit. Which pseudocode command reads input from the user: INPUT, PRINT or SHOW? Write the value stored in newValue after: variable1 <- 20 ; xValue <- 200 ; newValue <- (variable1 + xValue) / variable1 Which is the Python operator for 'not equal to': =, != or ==? Show the steps a linear search takes to find 33 in: 12, 3, 33, 19, 5. In Python, how do you show which code is inside an if statement (there is no ENDIF)? Give one example of normal, invalid and boundary test data for a program that accepts marks from 0 to 100. Write a Python if/elif/else that prints 'Positive', 'Negative' or 'Zero' for a number the user enters. What does random.randint(2, 8) do, and list every value it could return. In MicroPython, what does radio.receive() return when no message has arrived? A micro:bit sends the string \"heart\" when button A is pressed. Write the two-line change (inside the loop) that would make it send \"star\" when button B is pressed instead. Section G: Answer Key",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Check 12 (no), 3 (no), 33 (yes - found at the third item, position 2 counting from 0). It stops as soon as it finds 33."
+      "errorFeedback": "Check your reasoning against this: return - the line becomes return number * 2; the program prints 12. Each program has one bug. Describe the bug and give the corrected line. F1. F1 value = 10 if value = 10: print(\"Ten\") F2. F2 if score >= 50 print(\"Pass\") F3. F3 if age < 13: print(\"Child\") else if age < 20: print(\"Teenager\") F4. This should allow ages 16 and under to join, but a 16-year-old is refused. F4 age = int(input(\"Enter your age: \")) if age < 16: print(\"You can join\") else: print(\"Too old\") F1. A single = is used in the condition; it should be ==. Corrected: if value == 10:. F2. The colon is missing at the end of the if line. Corrected: if score >= 50:. F3. Python uses elif, not 'else if'. Corrected: elif age < 20:. F4. This is a boundary error: age < 16 refuses 16. It should be age <= 16 so that 16 is allowed. Section G: End-of-Unit Quiz Try this without notes, then mark yourself. It covers the whole unit. Which pseudocode command reads input from the user: INPUT, PRINT or SHOW? Write the value stored in newValue after: variable1 <- 20 ; xValue <- 200 ; newValue <- (variable1 + xValue) / variable1 Which is the Python operator for 'not equal to': =, != or ==? Show the steps a linear search takes to find 33 in: 12, 3, 33, 19, 5. In Python, how do you show which code is inside an if statement (there is no ENDIF)? Give one example of normal, invalid and boundary test data for a program that accepts marks from 0 to 100. Write a Python if/elif/else that prints 'Positive', 'Negative' or 'Zero' for a number the user enters. What does random.randint(2, 8) do, and list every value it could return. In MicroPython, what does radio.receive() return when no message has arrived? A micro:bit sends the string \"heart\" when button A is pressed. Write the two-line change (inside the loop) that would make it send \"star\" when button B is pressed instead. Section G: Answer Key"
     }
   ],
   "reasoningPrompts": [

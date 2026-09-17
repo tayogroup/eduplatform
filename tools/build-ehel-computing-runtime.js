@@ -1319,9 +1319,45 @@ function buildGrade(grade) {
       // label rather than by index — a stray instruction line in either run
       // would otherwise shift every answer after it by one.
       const keyByNumber = new Map();
+      // TWO KEYS CLAIMING ONE NUMBER CANNOT BOTH BE THIS QUESTION'S, and the
+      // last one written used to win silently. LABEL strips an optional section
+      // letter, so "E1." and a bare "1." both parse to 1 - and a key run that
+      // has absorbed the NEXT section's keys therefore overwrites its own.
+      // Measured in Stage 8 unit 1, Section E "Fill in the Code": 4 tasks and
+      // 14 keys, of which K1-K4 were the right ones ("E1. >= - the line becomes
+      // if score >= 50") and K5-K14 belonged to the section after it, numbered
+      // 1-10. Every correct key was overwritten, so "if age < 16 ____ card ==
+      // 'yes'" shipped answered "(20 + 200) / 20 = 11".
+      //
+      // Marked ambiguous rather than resolved, the same way rekeyPaddingOverrides
+      // handles two overrides naming one word: null is falsy, so the lookup falls
+      // through to the aligned-positional path and, failing that, to the
+      // placeholder - which the comment above calls better for a learner than a
+      // wrong answer.
+      // A key that names its own section ("E1.") outranks a bare "1.", because
+      // only the first is evidence about WHICH section it belongs to. Both
+      // parse to 1 - LABEL strips the letter - so a run that has absorbed the
+      // next section's keys otherwise overwrites its own, last-write-wins.
+      const LETTERED = new RegExp(`^${letter}\\s*(\\d{1,2})(?:\\s*[.):]\\s*|\\s+[-\u2013\u2014]\\s+)`, "i");
+      const claimed = new Set();
+      for (const key of keys) {
+        const match = LETTERED.exec(key);
+        if (!match) continue;
+        const labelled = Number(match[1]);
+        claimed.add(labelled);
+        keyByNumber.set(labelled, tidy(key.slice(match[0].length)));
+      }
       for (const key of keys) {
         const match = LABEL.exec(key);
-        if (match) keyByNumber.set(Number(match[1]), tidy(key.slice(match[0].length)));
+        if (!match) continue;
+        const labelled = Number(match[1]);
+        if (claimed.has(labelled)) continue;   // this section's own key wins
+        // Two unlettered keys claiming one number cannot both be right; null
+        // marks it ambiguous, the way rekeyPaddingOverrides marks a word two
+        // overrides both name, and the lookup falls through to the aligned
+        // path and then to the placeholder.
+        keyByNumber.set(labelled,
+          keyByNumber.has(labelled) ? null : tidy(key.slice(match[0].length)));
       }
       // Unnumbered keys can only be read positionally, and position is only
       // trustworthy when the two runs are the same length. One stray line in

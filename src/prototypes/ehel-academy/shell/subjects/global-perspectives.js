@@ -186,22 +186,18 @@ const DECK_MAX_STAGE = 4;
 // instead of the course. Removing it from the picker alone would not be a
 // withdrawal, because every one of those routes bypasses the picker.
 //
-// Stage 5 is withdrawn because it teaches two of the subject's six skills.
-// Evaluation, Reflection, Collaboration and Communication were never in the
-// source export, and a re-export on 2026-08-09 returned the same two units byte
-// for byte, so this is not waiting on a rebuild. The gap and the hold are
-// recorded in inputs/ehel-global-perspectives-source/source-manifest.json, and
-// check:global-perspectives prints them on every run.
+// Stage 5 was withdrawn 2026-08-09 because it taught two of the subject's six
+// skills — Evaluation, Reflection, Collaboration and Communication were never
+// in the source export, and a re-export the same day returned the same two
+// units byte for byte, so it was not waiting on a rebuild. Restored 2026-09-17:
+// the four missing units were hand-authored (see global-perspectives/CLAUDE.md
+// and data/authored-units/grade-5/) and Stage 5 now carries all six skills at
+// 100% Cambridge objective coverage, same as every other self-study stage.
 //
 // To restore a stage: delete its entry here, delete the matching knownGaps
 // entry in the source manifest so the coverage gate guards it again, and lift
 // the hold on docs/ehel-global-perspectives-stage-5-syllabus.md.
-const WITHDRAWN_STAGES = {
-  5: {
-    since: "2026-08-09",
-    reason: "Stage 5 teaches two of the six Global Perspectives skills. Evaluation, Reflection, Collaboration and Communication are not built.",
-  },
-};
+const WITHDRAWN_STAGES = {};
 // Takes the stage explicitly because the two callers see different worlds:
 // config.load() runs BEFORE config.bind(), so the module's `stageNumber` is
 // still undefined there and the check would silently pass. load() reads it off

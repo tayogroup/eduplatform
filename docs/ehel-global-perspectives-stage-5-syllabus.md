@@ -1,4 +1,4 @@
-# Stage 5 Global Perspectives — course syllabus (HELD)
+# Stage 5 Global Perspectives — course syllabus
 
 Narrative copy for the syllabus authoring form at
 `local/hubredirect/syllabus.php`, for the Ehel Academy **Stage 5 Global
@@ -12,92 +12,69 @@ checking it against, not for pasting.
 
 Fields map 1:1 to the form. `{{...}}` marks what only the school can supply.
 
-## HELD — do not publish this syllabus
+## Restored 2026-09-17 — read this before publishing
 
-**Decision taken 2026-08-09: Stage 5 Global Perspectives is held until the full
-content is located.** This draft is not for approval, not for families, and not
-for the catalogue. It is kept so that the work is ready the day the missing
-units arrive.
+**Held 2026-08-09, restored 2026-09-17.** Stage 5 taught two of the subject's
+six skills from 2026-08-09 (Research and Analysis were built; Evaluation,
+Reflection, Collaboration and Communication were confirmed by the school on
+2026-08-11 as never authored — a re-export the same day returned the same two
+units byte for byte, so it was never a rebuild waiting to happen). The four
+missing units have now been hand-authored directly against Cambridge's own
+Stage 5 objectives — see `global-perspectives/CLAUDE.md` and
+`global-perspectives/data/authored-units/grade-5/` — matching the structure and
+depth of the extracted self-study units. Stage 5 now teaches all six skills at
+100% Cambridge objective coverage, confirmed by `check:global-perspectives`.
 
-Stage 5 teaches **2 of the subject's six skills**. Present: Research and
-Analysis. **Missing entirely: Evaluation, Reflection, Collaboration,
-Communication.**
+**What has been done to restore it:**
 
-**A re-export will not fix it.** That was the standing assumption and it has been
-tested: a fresh Google Drive export taken on 2026-08-09
-(`Year 5-20260809T155926Z-1-001.zip`) is the right subject, confirmed by pack
-shape, and contains Unit 1 and Unit 2 only — all eight files byte-for-byte
-identical to the copies already in the repository. The export is not dropping
-anything; the folder it exports from holds two units. Either the four units live
-somewhere else in Drive, or they were never authored.
+1. Units 3–6 written (not found — see the reasoning above).
+2. `build:global-perspectives` and `check:global-perspectives` both pass clean;
+   content and audio are deployed and verified in step
+   (`check-ehel-deploy-sync.mjs`).
+3. The `"5"` entry deleted from `knownGaps`
+   (`inputs/ehel-global-perspectives-source/source-manifest.json`) and from
+   `withdrawn-courses.json`, and the `WITHDRAWN_STAGES` entry deleted from
+   `shell/subjects/global-perspectives.js` — the app now serves the stage on
+   every route.
+4. This block replaced, and the unit spine below re-checked against the
+   rebuilt six-unit course (2026-09-17 figures).
 
-### What lifting the hold requires
+**Still outstanding before this can go in front of families — this is a
+content and app restoration, not a publication decision:**
 
-1. Units 3–6 located or written.
-2. `npm run extract:global-perspectives-content && npm run build:global-perspectives && npm run check:global-perspectives`.
-3. The `"5"` entry deleted from `knownGaps` in
-   `inputs/ehel-global-perspectives-source/source-manifest.json`, which puts the
-   stage back under the coverage gate rather than on its allowed list.
-4. This block replaced, and the unit spine below re-checked against the rebuilt
-   course.
+- **Curriculum review of the four new units.** They carry
+  `"reviewStatus": "Hand-authored - curriculum review required"` in their own
+  data, same as every other unit in this course reads *"Built from source
+  packs — curriculum review pending"*. Nobody at the school has read them yet.
+- **Catalog and Moodle.** `catalog.json`'s `ehel-gp-g05` entry needs
+  regenerating (`generate-ehel-catalog.js`, then `generate-ehel-cohorts.js`),
+  and Moodle course 71's `visible`/`visibleold` flags need restoring — see
+  `withdrawn-courses.json` and `source-manifest.json` for exactly what was
+  flipped and needs flipping back. Whether that has happened by the time you
+  read this is a separate question from whether the content exists; check
+  both.
+- **The later placement exams' remediation links.** Stages 6, 7 and 8 were
+  repointed at Stage 4 while Stage 5 was withdrawn (a build gate refuses a
+  route into a withdrawn stage). Whether they have been repointed back to
+  Stage 5 is tracked separately — check the placement exam JSON under each
+  stage's `grade-N/data/placement-exam.json` rather than assuming it followed
+  automatically from this restoration.
 
-### The course is withdrawn as well as held
-
-Settled 2026-08-09. The hold covers publication of this syllabus; the course
-itself has been withdrawn at every layer it was reachable from:
-
-- **The app** refuses it on every route — overview, placement and the teaching
-  sections — and the stage picker shows it disabled. A bookmark or a remediation
-  link out of Stage 6 draws a withdrawal notice, not the course.
-- **The catalogue** no longer lists `ehel-gp-g05`, and Moodle's
-  `catalog_source_url` was repointed at a content-addressed URL so the change
-  reached the sync rather than sitting behind a 30-day CDN cache.
-- **Moodle course 71** is hidden — `visible = 0`, `visibleold = 0`.
-
-**No learner was affected: the course had zero enrolments.** Nobody had work in
-it, so there was nothing to migrate and nobody to notify. Had anyone been
-enrolled, that would have been a different decision.
-
-It is hidden rather than deleted, so the `ehel-gp-g05` idnumber survives and the
-sync reattaches to the same course — with its history — the day Stage 5 returns.
-
-**The later placement exams no longer route here.** Stages 6, 7 and 8 each named
-Stage 5 units as the place to go and rebuild, which after the withdrawal meant
-sending the lowest-scoring learner to a withdrawal notice. All of them now point
-at Stage 4, which teaches the same six skills one per unit. A build gate fails
-on any placement exam that routes into a withdrawn stage, so this cannot come
-back quietly.
-
-Everything below describes what actually exists, and remains accurate for the
-two units that are built.
-
----
-
-## Read this before publishing
-
-- **Curriculum review is outstanding.** The package reads *"Built from source
-  packs — curriculum review pending"*.
-- **The narration is complete and committed**: all 235 clips this stage calls
-  for are present, verified against the claim map.
-- **Cambridge does not print objective codes for this subject.** Neither Global
-  Perspectives framework numbers its objectives — the published pages are bare
-  bullets under strand headings — so the codes this course shows against each
-  unit (`5Rq.01` and the like) are **assigned by Ehel's extractor, not by
-  Cambridge**. That is recorded in the framework file itself. Do not present them
-  to a family as Cambridge references.
+**No learner was affected by the original withdrawal or needs to be by this
+restoration: the course had zero enrolments throughout.**
 
 ---
 
 ## Overview
 
-Stage 5 Global Perspectives teaches the same six skills as Stage 4 — in principle. It follows **Cambridge Primary Global Perspectives 0838, Stage 5**.
+Stage 5 Global Perspectives teaches the same six skills as every other
+self-study stage, one per unit. It follows **Cambridge Primary Global
+Perspectives 0838, Stage 5**.
 
-**In practice this course holds two of them.** Research and Analysis are built and complete; Evaluation, Reflection, Collaboration and Communication are absent. That is why the stage is held — see the top of this syllabus.
-
-Across the year: **2 units**, one per skill — **32 explainers**,
-**16 big ideas**, **22 models**, **19 toolkit entries**, **44 practice
-items**, **14 activities**, **10 reflections** and **24 challenge questions**
-at a **80% pass mark**.
+Across the year: **6 units**, one per skill — **105 explainers**,
+**37 big ideas**, **32 models**, **66 toolkit entries**, **134 practice
+items**, **51 activities**, **35 reflections**, **55 self-assessment
+statements** and **31 challenge questions**.
 
 **This is a self-study course.** There is no grown-up guide; the explainers are
 written to the learner. Each unit is one skill end to end, so a learner does not
@@ -200,26 +177,36 @@ contact must be scheduled rather than triggered}}.
 
 | Unit | Skill | Outcomes | Explainers | Practice | Challenge |
 |---|---|---|---|---|---|
-| 1 | Research | 4 | 17 | 22 | 12 |
-| 2 | Analysis | 4 | 15 | 22 | 12 |
-| | **Total** | **8** | **32** | **44** | **24** |
+| 1 | Research | 4 | 17 | 22 | 6 |
+| 2 | Analysis | 4 | 15 | 22 | 6 |
+| 3 | Evaluation | 10 | 18 | 23 | 6 |
+| 4 | Reflection | 13 | 18 | 22 | 7 |
+| 5 | Collaboration | 8 | 18 | 22 | 3 |
+| 6 | Communication | 6 | 19 | 23 | 3 |
+| | **Total** | **45** | **105** | **134** | **31** |
 
-Varying between units: explainers (15–17), practice (22),
-outcomes (4) and self-assessment (7–8).
+Varying between units: explainers (15–19), practice (22–23),
+outcomes (4–13, higher on the four newly-authored units, which carry richer
+Support/Extension-style goal ladders than units 1–2) and self-assessment
+(7–12).
 
 Framework: Cambridge Primary Global Perspectives 0838, Stage 5.
-Pack shape: self-study. Narration: 235/235 clips present.
+Pack shape: self-study. Units 1–2 extracted from the school's Word source
+pack; units 3–6 hand-authored 2026-09-17 (see the restoration note above).
+Narration: 471/471 clips present for this stage (some of the 238 clips
+generated for this restoration were shared Stage 1–3 pages, not Stage 5's own).
 
 Source: `course-manifest.json` and `units/unit-*.json` under
 `src/prototypes/ehel-academy/global-perspectives/grade-5/data/`.
 
 ## Before submitting for approval
 
-**Do not submit this for approval while the hold stands.** When it is lifted, work
-through the list below.
+**Do not submit this for approval until the outstanding items above are
+settled** — particularly curriculum review of units 3–6, which nobody at the
+school has read yet. When they are:
 
-1. Confirm the rebuilt course teaches all six skills — the coverage gate will say
-   so once the  entry is deleted.
+1. Confirm the rebuilt course teaches all six skills — the coverage gate
+   already says so (`check:global-perspectives`, 100%).
 2. Settle who reads what a learner produces, and set the rhythm.
 3. Do not present the objective codes as Cambridge's own.
 4. Fill every remaining `{{...}}`, confirm term dates, save as **draft**, and

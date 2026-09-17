@@ -68,6 +68,16 @@
     return prev + (now - prev) * inAt(t, BEATS[i].start, 0.5);
   }
 
+  /* Each scene owns a colour, so the film reads as chapters rather than one
+     long slide. Every value is a lesson.css dark-half token - the film invents
+     no colours of its own. Keyed by scene id here rather than written into the
+     storyboard, because it is a property of how the film LOOKS and the
+     storyboard is what it SAYS. */
+  var HUE = {
+    title: "#35BFB2", bones: "#F4C95D", jobs: "#35BFB2", pull: "#E9744F",
+    pair: "#B78BD1", health: "#4FD1A0", people: "#6E9DE8", recap: "#35BFB2"
+  };
+
   /* ---- chrome -------------------------------------------------------- */
   function chrome(scene, t) {
     var pct = clamp(t / TOTAL, 0, 1) * 100;
@@ -79,30 +89,38 @@
       '<div class="rail"><i style="width:' + pct.toFixed(3) + '%"></i></div>';
   }
 
-  /* A row of Cambridge codes, bottom right, for the scene on screen. The
-     lesson prints these on its own steps; a teacher watching the video should
-     be able to see which objective a minute of it belongs to. */
-  function codes(scene) {
-    if (!scene.codes || !scene.codes.length) return "";
-    return '<div class="codes">' + scene.codes.map(function (c) {
-      return "<span>" + esc(c) + "</span>";
-    }).join("") + "</div>";
-  }
+  /* The scene's title bar: a coloured dot, the chapter name, and the Cambridge
+     codes pushed to the right. The codes used to float bottom-right over the
+     stage, where four of them landed across the Conclusion card. Here they have
+     a row of their own and cannot collide with anything.
 
+     The heading leads the codes by a beat - that stagger is what makes a cut
+     read as a new chapter rather than a repaint. */
   function heading(scene, t, i) {
     if (!scene.heading) return "";
-    var o = inAt(t, BEATS[scene.first].start, 0.5);
-    return '<h2 class="sceneh" style="opacity:' + o.toFixed(3) +
-      ";transform:translateY(" + ((1 - o) * 10).toFixed(2) + 'px)">' + esc(scene.heading) + "</h2>";
+    var at = BEATS[scene.first].start;
+    var a = inAt(t, at, 0.55), b = inAt(t, at + 0.12, 0.55);
+    var cs = (scene.codes || []).map(function (c) { return "<span>" + esc(c) + "</span>"; }).join("");
+    return '<div class="kicker" style="opacity:' + b.toFixed(3) + '">' +
+        '<i class="dot"></i>' +
+        /* the CHAPTER, not the subject: the top bar already says "Grade 4
+           Science" two lines above, and printing it twice tells a viewer
+           nothing the second time */
+        '<span class="eyebrow">Chapter ' + (BEATS[i].scene + 1) + " of " + F.scenes.length + "</span>" +
+        (cs ? '<div class="codes">' + cs + "</div>" : "") +
+      "</div>" +
+      '<h2 class="sceneh" style="opacity:' + a.toFixed(3) +
+      ";transform:translateY(" + ((1 - a) * 16).toFixed(2) + 'px)">' + esc(scene.heading) + "</h2>";
   }
 
   /* The spoken line, on screen, one beat at a time. Not a caption track -
      that ships beside the file as .vtt - but the sentence being said, which
      is what a nine-year-old reading along needs. */
   function band(beat, t) {
-    var o = inAt(t, beat.start, 0.3);
-    return '<footer class="band" style="opacity:' + o.toFixed(3) + '">' +
-      '<span class="spk">🔊</span><p>' + esc(beat.say) + "</p></footer>";
+    var o = inAt(t, beat.start, 0.34);
+    return '<footer class="band">' +
+      '<p style="opacity:' + o.toFixed(3) + ";transform:translateY(" + ((1 - o) * 9).toFixed(2) + 'px)">' +
+      esc(beat.say) + "</p></footer>";
   }
 
   /* ---- scene: the title card ----------------------------------------- */
@@ -110,7 +128,7 @@
     var a = inAt(t, BEATS[scene.first].start, 1.0);
     var b = inAt(t, BEATS[scene.first + 1].start, 0.7);
     return '<div class="title">' +
-      '<div class="tfig figure boneplate" style="opacity:' + (0.18 + a * 0.82).toFixed(3) +
+      '<div class="tfig figure glow" style="opacity:' + (0.18 + a * 0.82).toFixed(3) +
         ";transform:translateY(" + ((1 - a) * 26).toFixed(2) + "px) scale(" + (0.94 + a * 0.06).toFixed(3) + ')">' +
         ART.skeletonSvg() + "</div>" +
       '<div class="tw">' +
@@ -159,7 +177,7 @@
     }).join("");
 
     return '<div class="bones">' +
-      '<div class="figure boneplate' + (part ? " lit" : "") + '" style="--pulse:' + pulse.toFixed(3) + '">' + svg + "</div>" +
+      '<div class="figure glow' + (part ? " lit" : "") + '" style="--pulse:' + pulse.toFixed(3) + '">' + svg + "</div>" +
       '<div class="blist"><p class="eyebrow">Seven bones to know</p><ol>' + list + "</ol>" +
         '<p class="bcount">' + Object.keys(seen).length + " of 7</p></div>" +
       "</div>";
@@ -178,7 +196,7 @@
     }).join("");
     var aliveO = alive ? inAt(t, BEATS[i].start, 0.5) : 0;
     return '<div class="jobs">' +
-      '<div class="figure boneplate">' + ART.skeletonSvg() + "</div>" +
+      '<div class="figure glow">' + ART.skeletonSvg() + "</div>" +
       '<div class="jgrid">' + cards +
         '<div class="alive" style="opacity:' + aliveO.toFixed(3) +
           ";transform:translateY(" + ((1 - aliveO) * 14).toFixed(2) + 'px)">' +
@@ -330,12 +348,24 @@
     /* a scene change crossfades, so no cut lands mid-sentence */
     var fade = inAt(t, scene.start, 0.4);
 
-    document.getElementById("film").innerHTML =
+    /* The scene's colour drives every accent through one custom property, so
+       nothing downstream has to know which scene it is in. */
+    var film = document.getElementById("film");
+    film.style.setProperty("--hue", HUE[scene.id] || "#35BFB2");
+
+    /* A slow drift across the whole scene - about 10px and 1.5% over its
+       length. Small enough not to be seen as movement, large enough that a
+       held shot does not read as a still. */
+    var span = Math.max(scene.end - scene.start, 0.001);
+    var d = clamp((t - scene.start) / span, 0, 1);
+
+    film.innerHTML =
       chrome(scene, t) +
-      '<main class="stage" style="opacity:' + fade.toFixed(3) + '">' +
+      '<main class="stage" style="opacity:' + fade.toFixed(3) +
+        ";transform:translateY(" + ((1 - fade) * 14 - d * 6).toFixed(2) +
+        "px) scale(" + (1 + d * 0.012).toFixed(4) + ')">' +
         heading(scene, t, i) +
         draw(scene, beat, t, i) +
-        codes(scene) +
       "</main>" +
       band(beat, t);
   }

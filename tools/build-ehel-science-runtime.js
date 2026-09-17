@@ -190,15 +190,16 @@ const CAMBRIDGE_OBJECTIVES = {
   // Worth knowing that the word `adapt` appears NOWHERE in Grade 5 — so the
   // learner meets the mechanism and never the concept's name. 5Be.01 and 5Be.03
   // are not claimed for that same reason plus no content at all.
-  "5-2": ["5Bs.02", "5Bs.03", "5Bp.02", "5Bp.03", "5Be.01", "5Be.02", "5TWSp.03",
-          "5TWSc.02", "5TWSc.03", "5TWSc.06", "5TWSm.02", "5SIC.04"],
+  "5-2": ["5Bs.02", "5Bs.03", "5Bp.02", "5Bp.03", "5Be.01", "5Be.02", "5Be.03",
+          "5TWSp.03", "5TWSc.02", "5TWSc.03", "5TWSc.06", "5TWSm.02", "5SIC.04"],
   // 5Cp.02 is claimed on three of its four clauses — melting point, freezing at
   // 0 degrees and water's ability to dissolve a range of substances are all
   // taught; "expands when it solidifies" is not.
   "5-3": ["5Cm.01", "5Cm.02", "5Cp.01", "5Cp.02", "5Cc.01", "5Cc.02", "5Cc.03",
           "5ESc.01", "5ESp.01", "5ESp.02", "5ESp.03", "5TWSp.03", "5TWSp.04",
           "5TWSc.05", "5TWSc.08", "5TWSa.02", "5TWSa.05", "5TWSm.01", "5TWSm.02"],
-  "5-4": ["5TWSp.02", "5TWSp.03", "5TWSc.01", "5TWSa.04", "5TWSm.02"],
+  "5-4": ["5Ps.01", "5Ps.02", "5Ps.03", "5TWSp.02", "5TWSp.03", "5TWSc.01",
+          "5TWSa.04", "5TWSm.02"],
   "5-5": ["5TWSp.03", "5TWSp.05", "5TWSm.02", "5SIC.02"],
   "5-6": ["5ESs.01", "5ESs.02", "5ESs.03", "5TWSc.07", "5TWSm.02", "5SIC.01",
           "5SIC.03", "5SIC.05"],
@@ -252,7 +253,8 @@ const CAMBRIDGE_OBJECTIVES = {
   "7-4": ["7Bp.01", "7Bp.02", "7Bp.03", "7Bp.04", "7TWSc.01", "7TWSc.06"],
   "7-5": ["7Cm.03", "7Cp.01", "7Cp.02", "7Cp.03", "7Cp.05", "7Cp.06", "7Cp.07",
           "7TWSp.05", "7TWSc.04"],
-  "7-6": ["7Ps.01", "7Ps.02", "7ESp.01", "7ESp.02", "7ESs.04", "7TWSc.05", "7SIC.05"],
+  "7-6": ["7Ps.01", "7Ps.02", "7ESp.01", "7ESp.02", "7ESp.03", "7ESs.04", "7TWSc.05",
+          "7SIC.05"],
   "7-7": ["7Bs.01", "7Be.01", "7Be.02", "7TWSp.01", "7TWSp.04", "7TWSc.02",
           "7TWSa.03", "7SIC.02"],
   // 7Cp.04 on the gas tests the unit teaches by name: "Carbon dioxide turns
@@ -260,8 +262,8 @@ const CAMBRIDGE_OBJECTIVES = {
   // glowing splint." 7Cc.02 is NOT claimed — the unit names a precipitate as one
   // of the signs a reaction has happened, but never explains why one forms from
   // soluble reactants, which is what the objective asks for.
-  "7-8": ["7Cc.01", "7Cc.03", "7Cc.04", "7Cp.04", "7TWSp.03", "7TWSc.05", "7TWSc.07",
-          "7TWSa.02", "7TWSa.05"],
+  "7-8": ["7Cc.01", "7Cc.02", "7Cc.03", "7Cc.04", "7Cp.04", "7TWSp.03", "7TWSc.05",
+          "7TWSc.07", "7TWSa.02", "7TWSa.05"],
   "7-9": ["7Pe.01", "7Pe.02", "7Pe.03", "7Pe.04", "7Pe.05", "7TWSc.03", "7TWSa.04",
           "7SIC.03"],
   // ── Stage 8 (0893) ──
@@ -275,11 +277,12 @@ const CAMBRIDGE_OBJECTIVES = {
   // 0893, so before this it claimed almost nothing at its own stage.
   "8-1": ["8SIC.02", "8TWSp.01", "8TWSp.04", "8Be.01", "8Be.02", "8Be.03"],
   "8-2": ["8Bp.01", "8Bp.03", "8SIC.04"],
-  "8-3": ["8Pf.01", "8Pf.02", "8TWSm.03", "8TWSc.02", "8TWSc.03", "8TWSc.04",
-          "8TWSa.01", "8TWSa.02"],
-  "8-4": ["8Cc.06", "8TWSm.01", "8TWSm.02", "8TWSm.03", "8SIC.01"],
-  "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.05", "8TWSp.03", "8TWSp.05", "8TWSc.05",
-          "8TWSa.05"],
+  "8-3": ["8Pf.01", "8Pf.02", "8Pf.03", "8Pf.04", "8Pf.05", "8Pf.06", "8Pf.07",
+          "8TWSm.03", "8TWSc.02", "8TWSc.03", "8TWSc.04", "8TWSa.01", "8TWSa.02"],
+  "8-4": ["8Cm.01", "8Cm.02", "8Cm.03", "8Cc.03", "8Cc.06", "8TWSm.01", "8TWSm.02",
+          "8TWSm.03", "8SIC.01"],
+  "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.01", "8Cc.02", "8Cc.04", "8Cc.05",
+          "8TWSp.03", "8TWSp.05", "8TWSc.05", "8TWSa.05"],
   "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04", "8TWSa.03"],
   // 8Bs.02-8Bs.04 are claimed on the passage CONCEPT_INSERTS continues concept 4
   // with: blood components, the alveolar structure that makes gas exchange
@@ -290,8 +293,8 @@ const CAMBRIDGE_OBJECTIVES = {
   // digestion concept: hinge and ball-and-socket joints identified, and
   // antagonistic muscle pairs explained at a hinge — the elbow explicitly, and
   // the jaw the learner is chewing with.
-  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8Bs.01", "8Bs.02", "8Bs.03", "8Bs.04",
-          "8TWSc.06", "8TWSc.07", "8TWSa.05"],
+  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8Bp.04", "8Bp.05", "8Bs.01", "8Bs.02",
+          "8Bs.03", "8Bs.04", "8TWSc.06", "8TWSc.07", "8TWSa.05"],
   // 8ESs.01-8ESs.02 are claimed on the passage CONCEPT_INSERTS continues the
   // rock cycle concept with: asteroids as leftover rock smaller than any planet,
   // and a galaxy as stars, planetary systems and star-forming dust and gas. The
@@ -3646,9 +3649,13 @@ for (const [stage, { doc, byUnit }] of Object.entries(CONCEPT_ADDITIONS)) {
     throw new Error(`Stage ${stage}: the authored concepts close ${codes.size} objectives, below the recorded floor of ${floor}. Coverage is a number that only goes up.`);
   }
   const chars = (doc.concepts || []).reduce((n, r) => n + r.explanation.length, 0);
+  // The -1 drops the block's own _comment key. A fixture with NO _needsNewUnit
+  // block at all — Stages 7 and 8, which have no gap left needing a unit —
+  // gave "-1 gap(s)" before the max().
+  const needsUnit = Math.max(0, Object.keys(doc._needsNewUnit || {}).length - 1);
   console.log(`Stage ${stage}: ${got} authored concept(s) added, closing ${codes.size} objective(s) (floor ${floor}), `
     + `${chars.toLocaleString("en-GB")} characters of teaching. `
-    + `${Object.keys(doc._needsNewUnit || {}).length - 1} gap(s) recorded as needing a unit of their own.`);
+    + `${needsUnit} gap(s) recorded as needing a unit of their own.`);
 }
 
 console.log(`\nReviewer corrections applied: ${reviewStats.applied}`);

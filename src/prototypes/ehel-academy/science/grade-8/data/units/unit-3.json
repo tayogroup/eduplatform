@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T18:05:40.957Z",
+  "generatedAt": "2026-09-17T18:44:29.176Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -31,6 +31,11 @@
     "objectiveCodes": [
       "8Pf.01",
       "8Pf.02",
+      "8Pf.03",
+      "8Pf.04",
+      "8Pf.05",
+      "8Pf.06",
+      "8Pf.07",
       "8TWSm.03",
       "8TWSc.02",
       "8TWSc.03",
@@ -50,6 +55,36 @@
         "strand": "Physics",
         "subStrand": "Forces and energy",
         "text": "Interpret and draw simple distance / time graphs."
+      },
+      {
+        "code": "8Pf.03",
+        "strand": "Physics",
+        "subStrand": "Forces and energy",
+        "text": "Describe the effects of balanced and unbalanced forces on motion."
+      },
+      {
+        "code": "8Pf.04",
+        "strand": "Physics",
+        "subStrand": "Forces and energy",
+        "text": "Identify and calculate turning forces (moment = force x distance)."
+      },
+      {
+        "code": "8Pf.05",
+        "strand": "Physics",
+        "subStrand": "Forces and energy",
+        "text": "Explain that pressure is caused by the action of a force, exerted by a substance, on an area (pressure = force / area)."
+      },
+      {
+        "code": "8Pf.06",
+        "strand": "Physics",
+        "subStrand": "Forces and energy",
+        "text": "Use particle theory to explain pressures in gases and liquids (qualitative only)."
+      },
+      {
+        "code": "8Pf.07",
+        "strand": "Physics",
+        "subStrand": "Forces and energy",
+        "text": "Describe the diffusion of gases and liquids as the intermingling of substances by the movement of particles."
       },
       {
         "code": "8TWSm.03",
@@ -155,6 +190,36 @@
       "title": "Calculating Speed (Worked Examples)",
       "explanation": "speed = distance / time, or in short symbols, s = d / t.\n\nAs with density, follow the four steps every time: Given, Formula, Calculate, Answer with unit. Keep the units matching: if distance is in metres and time in seconds, the speed is in m/s; if distance is in kilometres and time in hours, the speed is in km/h. Let us work through several examples.\n\nFarah runs 100 metres in 20 seconds during a school race. What is his speed?\n\nGiven: distance d = 100 m; time t = 20 s.\n\nFormula: s = d / t.\n\nCalculate: s = 100 / 20 = 5.",
       "example": "Farah runs 100 metres in 20 seconds during a school race. What is his speed?"
+    },
+    {
+      "id": "concept-6-balanced-and-unbalanced-forces",
+      "title": "Balanced and Unbalanced Forces",
+      "explanation": "You can describe motion now - speed, and the shape of a distance/time graph. The next question is what changes it.\n\nAn object almost always has several forces on it at once, and what matters is not how many but whether they cancel. Add up the forces on an object, taking direction into account, and what is left over is the RESULTANT force. If the forces cancel exactly the resultant is zero and the forces are balanced. If they do not, the resultant points somewhere and the forces are unbalanced.\n\nThe rule is short and is not what most people expect. BALANCED forces do not mean the object is still - they mean its motion does not change. A book on a table is still, and stays still. A lorry on a motorway at a steady 90 km/h also has balanced forces: the engine's drive forward exactly equals the friction and air resistance backward, and because they balance, the speed holds. Nothing is needed to keep it moving; something is needed only to CHANGE how it moves.\n\nUNBALANCED forces change motion. A resultant force forward makes an object speed up; backward, slow down; sideways, change direction. On a distance/time graph that shows as the line bending rather than staying straight.\n\nSo a steady speed and standing still are the same case as far as forces are concerned, which is the part worth holding on to. Press the brake in that lorry and the backward forces now exceed the drive: the resultant is backward, the lorry slows, and the graph's line begins to flatten.",
+      "example": "A parachutist falls faster and faster at first, because gravity's pull exceeds the air resistance - unbalanced, downward. As she speeds up the air resistance grows until it equals her weight. From that moment the forces are balanced and she falls at a steady speed the rest of the way down, without slowing or speeding up."
+    },
+    {
+      "id": "concept-7-turning-forces",
+      "title": "Turning Forces, and How to Calculate One",
+      "explanation": "Push a door in the middle and it swings. Push it just beside the hinge, with the same effort, and it hardly moves. The force was the same, so something else decides how much turning you get.\n\nWhen a force turns something about a fixed point, that point is the PIVOT, and the turning effect is called the MOMENT of the force. It depends on two things: how big the force is, and how far from the pivot it acts. The further out, the more turning for the same push - which is why a door handle is fitted at the edge and never next to the hinges.\n\nIt is calculated like this:\n\n    moment = force x perpendicular distance from the pivot\n\nForce in newtons, distance in metres, and the moment comes out in newton metres (Nm). A force of 20 N acting 0.5 m from a pivot gives a moment of 10 Nm. The same 20 N at 1.5 m gives 30 Nm - three times the turning from an identical push.\n\nThat is the whole principle behind a lever. A long spanner undoes a tight nut that a short one will not, because the extra length multiplies the moment. A wheelbarrow lets one person lift a load that would be far too heavy to carry, because the load sits close to the wheel - the pivot - while the hands are far from it.\n\nWhen something balances on a pivot, like a see-saw, the moments turning it one way equal the moments turning it the other. A light child far out can balance a heavy one sitting close in, and now you can work out exactly where.",
+      "example": "A 300 N child sits 1.2 m from the middle of a see-saw, giving a moment of 360 Nm. A 450 N child must sit closer to balance it: 360 divided by 450 is 0.8 m. The heavier child has less distance to work with, which is why the small one always ends up out at the end."
+    },
+    {
+      "id": "concept-8-pressure-force-over-area",
+      "title": "Pressure: The Same Force, Spread Differently",
+      "explanation": "Stand on soft ground in flat shoes and you leave a shallow print. Stand on the same ground in one narrow heel and it sinks in. Your weight has not changed. What changed is how much ground it was spread over.\n\nPRESSURE is the force acting on each unit of area:\n\n    pressure = force / area\n\nForce in newtons and area in square metres gives pressure in newtons per square metre, which has its own name: the pascal (Pa). Because area is underneath, the same force gives MORE pressure on a smaller area and LESS on a larger one.\n\nThat one relationship explains a great deal of design. A knife is sharpened so its force acts on an almost invisible area, producing pressure high enough to part what it touches - a blunt knife has the same force behind it and too much area to cut with. A drawing pin has a broad head to push on and a fine point to push with, deliberately. Going the other way: a tractor wears wide tyres and a camel has broad feet so their considerable weight is spread and neither sinks, and lying flat is the advice on thin ice because it spreads your weight over the largest area you have.\n\nLiquids and gases press too, and in every direction rather than just down. The pressure in a liquid grows with depth, because there is more liquid above pressing down, which is why a dam is built thick at the bottom and thin at the top, and why a diver feels it in the ears.",
+      "example": "A person of weight 600 N stands on two flat soles of total area 0.03 m2, giving 20,000 Pa. The same person balanced on one stiletto heel of area 0.0001 m2 gives 6,000,000 Pa - three hundred times as much, from exactly the same 600 N."
+    },
+    {
+      "id": "concept-9-pressure-and-particles",
+      "title": "Why a Gas Pushes Back",
+      "explanation": "A football holds its shape because the air inside pushes outward on the skin. Nothing is pushing it deliberately, so where does the push come from? The particle model answers it, and the answer explains everything else a gas does under pressure.\n\nThe particles in a gas are spread far apart and moving fast in every direction. Each one that strikes the wall of its container bounces off, and each bounce gives the wall a tiny push. There are so many particles and so many collisions every second that the pushes add up to a steady outward force spread over the whole inside surface. That is gas pressure: the total effect of countless collisions.\n\nThree predictions follow, and all three are testable. Squeeze the gas into a smaller space and the particles hit the walls more often, so the pressure rises - which is why a pumped tyre is hard and why squeezing a sealed syringe gets harder the further you push. Warm the gas and the particles move faster, hit harder and more often, and the pressure rises again - which is why a sealed can must never be heated. Put more gas in and there are simply more particles colliding, which is what a pump does.\n\nLiquid pressure works by the same collisions but with a difference that matters: the particles in a liquid are already touching, so a liquid cannot be squeezed into a smaller space to speak of. That is exactly why hydraulic brakes work - push the fluid at one end and it must move at the other, because there is no give in it.",
+      "example": "A sealed syringe with its nozzle blocked can be pushed in some way with effort, and springs back when released - the gas inside was compressed and its pressure rose. Fill the same syringe with water and block it, and it will barely move at all: the particles are already in contact and have nowhere to go."
+    },
+    {
+      "id": "concept-10-diffusion",
+      "title": "Diffusion: Substances Mixing Themselves",
+      "explanation": "Someone opens a bottle of perfume at the other side of a still room and a minute later you can smell it. Nobody fanned it towards you and there was no draught. The perfume travelled on its own.\n\nDIFFUSION is the spreading of one substance through another by the ordinary movement of their particles, until the two are evenly mixed. It needs no stirring and no current. The particles of a gas or a liquid are already moving constantly in all directions, and that movement alone carries them into every space available.\n\nIt has a direction, and the direction is what makes it useful to know. A substance diffuses from where its particles are CROWDED to where they are sparse - from high concentration to low - because in a crowded region more particles happen to be moving outward than inward. When the crowding has evened out, the particles keep moving but the net flow stops.\n\nIt happens in liquids as well as gases, and more slowly, because the particles are packed tighter and get in each other's way: a drop of ink in still water will colour the whole glass eventually. Warming speeds it up, since faster particles spread faster. Solids barely diffuse at all, because their particles only vibrate in place.\n\nDiffusion is how oxygen crosses from the air in your lungs into your blood, and how carbon dioxide crosses back - no pump for that last step, just a difference in crowding and particles that never stop moving.",
+      "example": "A crystal of purple potassium permanganate is dropped into a beaker of still water. Nobody stirs it. Over an hour the purple spreads outward from the crystal until the whole beaker is evenly coloured - and it never un-mixes afterwards, because there is nothing to drive the particles back into a crowd."
     }
   ],
   "explorations": [

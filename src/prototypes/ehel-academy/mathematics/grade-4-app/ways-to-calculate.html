@@ -1114,6 +1114,15 @@
       <p class="fb" id="fbG" role="status" aria-live="polite"></p>
       <p class="score" id="scG"></p>
     </section>
+    <!-- 13  Support and Challenge  (Stage 3 Teacher's Guide) -->
+    <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">13</span><h2>Try this one</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG4"></span></div>
+      <div id="tierG"></div>
+      <div class="choices" id="chG4"></div>
+      <p class="fb" id="fbG4" role="status" aria-live="polite"></p>
+      <p class="score" id="scG4"></p>
+    </section>
     <section class="slide" data-say="Show what you know. Tap the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the check for calculating.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You will estimate, add, take away, multiply and divide, and use factors and multiples.</s><s>Get enough right to finish the lesson, and every answer tells you why it is right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you fall short, press Try again.</s><s>The questions come round again, and the reasons will help.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Estimate first, so you know roughly what the answer should be.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
@@ -2790,7 +2799,7 @@
       $("stem11").textContent = "That is all of them.";
       $("choices11").innerHTML = "";
       $("score11").textContent = rq + " out of " + Q11.length + " right.";
-      if (rq >= 9) finish(12, "");
+      if (rq >= 9) finish(13, "");
       else retryCheck($("fb11"), $("choices11"), rq, Q11.length, 9, function () { cq = 0; rq = 0; round11(); });
       return;
     }
@@ -2814,7 +2823,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [["🔤", "Saying it in words"], ["🎯", "Estimate before you work"], ["➕", "Adding it exactly"], ["➖", "Taking away exactly"], ["✖️", "Tables, and a shortcut"], ["⚖️", "Double one, halve the other"], ["✂️", "Multiplying a big number"], ["🍬", "Sharing out, and what is left"], ["⬜", "6s, 7s, 9s and factor pairs"], ["🔁", "Multiples and factors, both ways"], ["➗", "Does it divide exactly?"], ["🔍", "Spot the mistake"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🔤", "Saying it in words"], ["🎯", "Estimate before you work"], ["➕", "Adding it exactly"], ["➖", "Taking away exactly"], ["✖️", "Tables, and a shortcut"], ["⚖️", "Double one, halve the other"], ["✂️", "Multiplying a big number"], ["🍬", "Sharing out, and what is left"], ["⬜", "6s, 7s, 9s and factor pairs"], ["🔁", "Multiples and factors, both ways"], ["➗", "Does it divide exactly?"], ["🔍", "Spot the mistake"], ["🪜", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -3032,6 +3041,64 @@
     scPaint();
   });
   scPaint();
+
+  /* ==== ehel-g4-tiers: Stage 3's Support and Challenge ====
+     Written in this page's own idiom and deriving its slot the way the
+     reasoning step does, so nothing later needs renumbering.
+
+     THE CORE QUESTION ALONE FINISHES THE STEP. A wrong answer brings the
+     support route, whose question names the apparatus a Stage 3 support note
+     would hand over; a right one offers the challenge AFTER the step is
+     already done. Neither tier scores, because a child who needs the aid must
+     not be marked down for using it and one who takes the challenge must not
+     be punished for trying. */
+  (function () {
+    const host = document.getElementById("tierG");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const TIERS = {
+      core: { q: "What is 225 + 98?", why: "225 + 100 = 325, and 98 is 2 less than 100, so take 2 off: 323.", opts: [{ t: "323", ok: true }, { t: "313", ok: false }, { t: "333", ok: false }] },
+      support: { q: "Use a number line. Jump from 225 to 325, then step back 2. Where do you land?", why: "Adding 100 is one easy jump on a number line. Then step back the 2 you added too many.", opts: [{ t: "323", ok: true }, { t: "327", ok: false }, { t: "325", ok: false }] },
+      extension: { q: "Alim adds 47 + 53 by rounding. Which pair is easiest to round the same way?", why: "98 is 2 below 100 and 102 is 2 above, so the 2s cancel and the total is 200.  (Teacher's Guide p53)", opts: [{ t: "98 and 102", ok: true }, { t: "47 and 53", ok: false }, { t: "12 and 9", ok: false }] }
+    };
+    let stage = "core", live = false;
+    function paint() {
+      const it = TIERS[stage];
+      document.getElementById("sayG4").textContent = it.q;
+      document.getElementById("chG4").innerHTML = shuffle(it.opts.slice())
+        .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+          + '">' + esc(o.t) + "</button>").join("");
+      document.getElementById("fbG4").className = "fb";
+      document.getElementById("fbG4").textContent = "";
+      document.getElementById("scG4").textContent =
+        stage === "core" ? "" : (stage === "support" ? "A little help" : "A harder one");
+      live = true;
+    }
+    document.getElementById("chG4").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = TIERS[stage], ok = b.dataset.ok === "1";
+      [...document.getElementById("chG4").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbG4");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      say(ok ? cheer() : it.why);
+      if (stage === "core") {
+        /* the step is finished by the core question either way: the tiers are
+           a route through it, not a second hurdle */
+        finish(SLOT, "You can do this one, and you have seen a harder one.");
+        stage = ok ? "extension" : "support";
+        later(paint, 3600);
+      }
+    });
+    paint();
+  })();
 
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3893,3 +3960,7 @@
     color: var(--good, #2f6f4a); font-weight: 600; }
 </style>
 <!-- ehel-g4-twm: see add-twm-stamps.py -->
+<style>/* ehel-g4-tiers - see add-differentiation.py */
+  #scG4 { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--muted, #666); }
+</style>

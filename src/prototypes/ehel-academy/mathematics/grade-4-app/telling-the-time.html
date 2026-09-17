@@ -1063,6 +1063,15 @@
       <p class="fb" id="fbG" role="status" aria-live="polite"></p>
       <p class="score" id="scG"></p>
     </section>
+    <!-- 12  Support and Challenge  (Stage 3 Teacher's Guide) -->
+    <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">12</span><h2>Try this one</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG4"></span></div>
+      <div id="tierG"></div>
+      <div class="choices" id="chG4"></div>
+      <p class="fb" id="fbG4" role="status" aria-live="polite"></p>
+      <p class="score" id="scG4"></p>
+    </section>
     <section class="slide" data-say="Show what you know. Tap the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the check for time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You will change units of time, read clocks and timetables, and work out how long things take.</s><s>Get enough right to finish the lesson, and every answer tells you why it is right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you fall short, press Try again.</s><s>The questions come round again, and the reasons will help.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Remember that an hour is 60 minutes whenever you count time.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Tap the answer.</span></div>
@@ -2718,7 +2727,7 @@
       $("stem5").textContent = "That is all of them.";
       $("choices5").innerHTML = "";
       $("score5").textContent = right5 + " out of " + Q5.length + " right.";
-      if (right5 >= 11) finish(11, "");
+      if (right5 >= 11) finish(12, "");
       else retryCheck($("fb5"), $("choices5"), right5, Q5.length, 11, function () { c5 = 0; right5 = 0; round5(); });
       return;
     }
@@ -2743,7 +2752,7 @@
   round5();
 
   /* ---- 6: stickers ---- */
-  const STICKERS = [["📏", "How long is that?"], ["🔁", "Swapping units, both ways"], ["🕰️", "Three ways to say one time"], ["🕐", "Read the clock"], ["🌃", "Writing it in 24-hour"], ["🚌", "Reading a timetable"], ["🚏", "Which one do you catch?"], ["⏱️", "How long between?"], ["📆", "Over the end of the month"], ["🗓️", "Months and years apart"], ["🔍", "Spot the mistake"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["📏", "How long is that?"], ["🔁", "Swapping units, both ways"], ["🕰️", "Three ways to say one time"], ["🕐", "Read the clock"], ["🌃", "Writing it in 24-hour"], ["🚌", "Reading a timetable"], ["🚏", "Which one do you catch?"], ["⏱️", "How long between?"], ["📆", "Over the end of the month"], ["🗓️", "Months and years apart"], ["🔍", "Spot the mistake"], ["🪜", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -2961,6 +2970,64 @@
     scPaint();
   });
   scPaint();
+
+  /* ==== ehel-g4-tiers: Stage 3's Support and Challenge ====
+     Written in this page's own idiom and deriving its slot the way the
+     reasoning step does, so nothing later needs renumbering.
+
+     THE CORE QUESTION ALONE FINISHES THE STEP. A wrong answer brings the
+     support route, whose question names the apparatus a Stage 3 support note
+     would hand over; a right one offers the challenge AFTER the step is
+     already done. Neither tier scores, because a child who needs the aid must
+     not be marked down for using it and one who takes the challenge must not
+     be punished for trying. */
+  (function () {
+    const host = document.getElementById("tierG");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const TIERS = {
+      core: { q: "What is 15:45 on a 12-hour clock?", why: "Take 12 off the hours: 15 - 12 = 3, and it is after midday, so 3:45 p.m.", opts: [{ t: "3:45 p.m.", ok: true }, { t: "5:45 p.m.", ok: false }, { t: "3:45 a.m.", ok: false }] },
+      support: { q: "Use a clock face. Count on from 12 noon: 13:00 is 1 o'clock, 14:00 is 2. What is 15:45?", why: "Each hour past 12 noon counts on by one: 13 is 1, 14 is 2, 15 is 3. The minutes do not change.", opts: [{ t: "3:45 p.m.", ok: true }, { t: "4:45 p.m.", ok: false }, { t: "15 minutes to 4", ok: false }] },
+      extension: { q: "Which of these is another way of saying 15:45?", why: "45 minutes past 3 is the same as 15 minutes before 4, and 15:00 is in the afternoon.  (Teacher's Guide p64)", opts: [{ t: "quarter to four in the afternoon", ok: true }, { t: "quarter past four in the afternoon", ok: false }, { t: "quarter to four in the morning", ok: false }] }
+    };
+    let stage = "core", live = false;
+    function paint() {
+      const it = TIERS[stage];
+      document.getElementById("sayG4").textContent = it.q;
+      document.getElementById("chG4").innerHTML = shuffle(it.opts.slice())
+        .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+          + '">' + esc(o.t) + "</button>").join("");
+      document.getElementById("fbG4").className = "fb";
+      document.getElementById("fbG4").textContent = "";
+      document.getElementById("scG4").textContent =
+        stage === "core" ? "" : (stage === "support" ? "A little help" : "A harder one");
+      live = true;
+    }
+    document.getElementById("chG4").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = TIERS[stage], ok = b.dataset.ok === "1";
+      [...document.getElementById("chG4").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbG4");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      say(ok ? cheer() : it.why);
+      if (stage === "core") {
+        /* the step is finished by the core question either way: the tiers are
+           a route through it, not a second hurdle */
+        finish(SLOT, "You can do this one, and you have seen a harder one.");
+        stage = ok ? "extension" : "support";
+        later(paint, 3600);
+      }
+    });
+    paint();
+  })();
 
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3848,3 +3915,7 @@
     color: var(--good, #2f6f4a); font-weight: 600; }
 </style>
 <!-- ehel-g4-twm: see add-twm-stamps.py -->
+<style>/* ehel-g4-tiers - see add-differentiation.py */
+  #scG4 { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--muted, #666); }
+</style>

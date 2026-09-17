@@ -773,6 +773,24 @@
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
 
+  /* The dock's resting spot (bottom:14) can land on the Back/Next footer when
+     a step is short enough that .foot is the last thing on screen -- routine
+     on a phone or tablet, where the viewport is short relative to the deck --
+     and reaches the same collision on a step long enough to NEED scrolling,
+     at the scroll position where .foot comes into view, because .foot is the
+     last thing in the document and the dock's footprint is fixed to the
+     viewport rather than to a point in the page. A trailing padding-bottom on
+     .wrap fixes neither case: .foot's position is set by the content ABOVE
+     it, so padding added after it never moves it, which is what the first
+     attempt at this got wrong (verified in the browser -- the overlap
+     survived it unchanged, in the fits-without-scrolling case this comment
+     first shipped for). Lift the dock clear instead, exactly as it already
+     lifts above the session bar below, but tracked on scroll as well as
+     resize -- see the script -- because unlike the session bar, .foot is
+     ordinary content and its distance from the viewport's bottom edge is a
+     function of scroll position, not a constant once measured. */
+  .w-dock, .w-drawer { bottom: calc(14px + var(--wehel-foot-lift, 0px)); }
+
   /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
      The dock and the drawer above already use --card/--line/--ink, so before
      this the drawer was a dark card containing a white sheet: shell/wehel.js
@@ -8920,6 +8938,33 @@
       .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
     lift();
     try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
+
+  /* How far the dock has to lift to clear the Back/Next footer - see
+     --wehel-foot-lift in the stylesheet. Unlike the session bar above, .foot
+     is ordinary content rather than a second fixed element, so its distance
+     from the viewport's bottom edge is a function of SCROLL POSITION, not a
+     constant a page-load measurement can capture once - a step long enough to
+     need scrolling reaches the same collision the moment .foot is scrolled
+     into view. Re-measured on scroll (rAF-throttled to at most once a frame,
+     so it costs nothing while the page is still) as well as on resize. */
+  (function () {
+    const foot = document.querySelector(".foot");
+    if (!foot) return;
+    const lift = () => {
+      const overlap = window.innerHeight - foot.getBoundingClientRect().top;
+      document.documentElement.style
+        .setProperty("--wehel-foot-lift", (overlap > 0 ? overlap + 14 : 0) + "px");
+    };
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; lift(); });
+    };
+    lift();
+    addEventListener("scroll", onScroll, { passive: true });
+    try { new ResizeObserver(lift).observe(foot); } catch (e) { addEventListener("resize", lift); }
   })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for

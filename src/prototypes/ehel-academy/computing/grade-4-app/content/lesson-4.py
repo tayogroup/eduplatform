@@ -265,3 +265,14 @@ LESSON["talk"] = talk(
     "each answer change?",
     "Ask what they tested, and how they knew both ways round worked."
 )
+
+# ---- the CT move on every CT-strand step, 2026-09-17 ----------------------
+# Cambridge names a thinking move on the TASK, throughout; this build named one
+# per lesson. These are the steps whose stated objective IS the thinking, and
+# the move comes from that objective's own wording. Steps outside the CT strand
+# keep no label rather than be given a guessed one.
+label_ct(LESSON, "One question, two answers", "Algorithmic thinking")
+label_ct(LESSON, "Take the branch", "Algorithmic thinking")
+label_ct(LESSON, "Build an algorithm with a repeat", "Algorithmic thinking")
+label_ct(LESSON, "In the loop, or outside it?", "Algorithmic thinking")
+label_ct(LESSON, "Check: inputs and loops", "Algorithmic thinking")

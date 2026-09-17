@@ -254,3 +254,14 @@ LESSON["words"] = LESSON["words"] + [
     word("reuse", "\u267B\ufe0f", "To use the same sub-routine more than once.",
          ["Write WASH once and reuse it.", "Reuse saves writing the same steps twice."]),
 ]
+
+# ---- the CT move on every CT-strand step, 2026-09-17 ----------------------
+# Cambridge names a thinking move on the TASK, throughout; this build named one
+# per lesson. These are the steps whose stated objective IS the thinking, and
+# the move comes from that objective's own wording. Steps outside the CT strand
+# keep no label rather than be given a guessed one.
+label_ct(LESSON, "What decomposition is", "Decomposition")
+label_ct(LESSON, "Write the main algorithm", "Decomposition")
+label_ct(LESSON, "Follow the calls", "Decomposition")
+label_ct(LESSON, "Why sub-routines help", "Decomposition")
+label_ct(LESSON, "Check: sub-routines", "Decomposition")

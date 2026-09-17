@@ -281,3 +281,15 @@ LESSON["talk"] = talk(
     "Ask for a step whose position matters and one whose position does not. What makes the "
     "difference?"
 )
+
+# ---- the CT move on every CT-strand step, 2026-09-17 ----------------------
+# Cambridge names a thinking move on the TASK, throughout; this build named one
+# per lesson. These are the steps whose stated objective IS the thinking, and
+# the move comes from that objective's own wording. Steps outside the CT strand
+# keep no label rather than be given a guessed one.
+label_ct(LESSON, "A linear algorithm", "Algorithmic thinking")
+label_ct(LESSON, "Follow it exactly", "Algorithmic thinking")
+label_ct(LESSON, "Correct the algorithm", "Algorithmic thinking")
+label_ct(LESSON, "Edit the algorithm", "Algorithmic thinking")
+label_ct(LESSON, "Follow, understand, edit or correct?", "Algorithmic thinking")
+label_ct(LESSON, "Check: linear algorithms", "Algorithmic thinking")

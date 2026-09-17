@@ -235,3 +235,13 @@ LESSON["words"] = LESSON["words"] + [
     word("algorithm", "\U0001F4CB", "A set of steps that does a job.",
          ["Compare the two algorithms.", "The shorter algorithm is not always the better one."]),
 ]
+
+# ---- the CT move on every CT-strand step, 2026-09-17 ----------------------
+# Cambridge names a thinking move on the TASK, throughout; this build named one
+# per lesson. These are the steps whose stated objective IS the thinking, and
+# the move comes from that objective's own wording. Steps outside the CT strand
+# keep no label rather than be given a guessed one.
+label_ct(LESSON, "Where does the loop leave Robo?", "Logical thinking")
+label_ct(LESSON, "Find the repeat", "Pattern recognition")
+label_ct(LESSON, "Compare and contrast", "Evaluation")
+label_ct(LESSON, "Check: predict and compare", "Pattern recognition")

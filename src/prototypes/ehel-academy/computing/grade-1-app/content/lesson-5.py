@@ -294,3 +294,10 @@ LESSON["talk"] = talk(
     "thing to do when something does not work?",
     "Ask each pair to finish this sentence out loud: 'I knew it was wrong because...'"
 )
+
+# ---- the CT move on every CT-strand step, 2026-09-17 ----------------------
+# Cambridge names a thinking move on the TASK, throughout; this build named one
+# per lesson. These are the steps whose stated objective IS the thinking, and
+# the move comes from that objective's own wording. Steps outside the CT strand
+# keep no label rather than be given a guessed one.
+label_ct(LESSON, "Bugs in everyday algorithms", "Logical thinking")

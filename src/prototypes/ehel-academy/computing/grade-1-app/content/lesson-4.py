@@ -293,3 +293,10 @@ LESSON["talk"] = talk(
     "In pairs: name one thing a computer does better than a person, and one thing it cannot "
     "do at all."
 )
+
+# ---- the CT move on every CT-strand step, 2026-09-17 ----------------------
+# Cambridge names a thinking move on the TASK, throughout; this build named one
+# per lesson. These are the steps whose stated objective IS the thinking, and
+# the move comes from that objective's own wording. Steps outside the CT strand
+# keep no label rather than be given a guessed one.
+label_ct(LESSON, "Algorithm, or program?", "Algorithmic thinking")

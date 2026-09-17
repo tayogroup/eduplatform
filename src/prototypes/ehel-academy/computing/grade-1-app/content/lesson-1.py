@@ -305,3 +305,16 @@ LESSON["words"] = LESSON["words"] + [
     word("rule", "\U0001F4CF", "Something that is always true, that tells you what to do.",
          ["The rule is: shoes off at the door.", "An algorithm follows its rules every time."]),
 ]
+
+# ---- the CT move on every CT-strand step, 2026-09-17 ----------------------
+# Cambridge names a thinking move on the TASK, throughout; this build named one
+# per lesson. These are the steps whose stated objective IS the thinking, and
+# the move comes from that objective's own wording. Steps outside the CT strand
+# keep no label rather than be given a guessed one.
+label_ct(LESSON, "Robo makes toast", "Algorithmic thinking")
+label_ct(LESSON, "Algorithms all around you", "Algorithmic thinking")
+label_ct(LESSON, "Follow the algorithm: get dressed", "Algorithmic thinking")
+label_ct(LESSON, "Follow the algorithm: wash your hands", "Algorithmic thinking")
+label_ct(LESSON, "Put the steps in order: build a tower", "Algorithmic thinking")
+label_ct(LESSON, "Who follows algorithms?", "Algorithmic thinking")
+label_ct(LESSON, "Algorithm or not?", "Algorithmic thinking")

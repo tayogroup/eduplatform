@@ -76,6 +76,14 @@ const INTENSIVE = {
   // ceiling states the decision rather than leaving room for levels that are
   // not coming.
   maxLevel: 3,
+  // And a FLOOR, because the note above reasons only about the ceiling and the
+  // course grew the other way. The Intro level (2026-09-17) is level 0: Pre-A1,
+  // below Cambridge 0057 Stage 1, claiming no 0057 objective because 0057 has
+  // no stage under 1 and all of Stage 1 is already placed in Level 1. The loop
+  // started at a literal 1, so Intro could never reach the catalogue however
+  // complete it was — and `if (!manifest) continue` cannot save a level the
+  // loop never visits.
+  minLevel: 0,
   categoryPath: ["Ehel Academy", "Languages", "Intensive English"],
 };
 
@@ -93,7 +101,7 @@ function readIntensiveManifest(level) {
 
 // Pushes one course per authored level into the shared courses/category set.
 function addIntensiveCourses(courses, categorySet) {
-  for (let level = 1; level <= INTENSIVE.maxLevel; level += 1) {
+  for (let level = INTENSIVE.minLevel; level <= INTENSIVE.maxLevel; level += 1) {
     const manifest = readIntensiveManifest(level);
     if (!manifest) continue;
 

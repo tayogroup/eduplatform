@@ -27,10 +27,35 @@ const plan = JSON.parse(fs.readFileSync(path.join(SRC, "course-plan.json"), "utf
 
 const VOICE = { provider: "ElevenLabs", voiceId: "XfNU2rGpBa01ckF309OY", model: "eleven_multilingual_v2" };
 const SCHEMA_VERSION = "Ehel Intensive English Runtime v1.0";
-// Scripts were reviewed and corrected in the returned workbook, and curriculum
-// sign-off followed on 2026-08-01. This is metadata only — no narrated string
-// depends on it, so changing it moves no clip hash.
-const REVIEW = "Reviewed: script review and curriculum sign-off, 2026-08-01";
+// reviewStatus is a claim about SPECIFIC TEXT, and one constant made that claim
+// about every unit of every level at once.
+//
+// The 2026-08-01 sign-off was real — scripts were reviewed and corrected in the
+// returned workbook and curriculum sign-off followed — but it covered the course
+// as it then stood, and that course now sits in
+// inputs/ehel-english-intensive-source/archive/. Levels 1 and 2 were rebuilt on
+// Cambridge 0057 in September and Level 3 was written on 2026-09-16, so the
+// stamp outlived the text it described: on 2026-09-17 all 60 current units
+// claimed a review of content that no longer exists.
+//
+// Two things follow from that. A sign-off belongs to a LEVEL, because the level
+// is the unit in which this course's text gets replaced — one global string is
+// exactly what made a real review of one course into a false claim about
+// another. And the default is PENDING rather than approved, for the reason
+// English's own gate states (shell/subjects/english.js :: unitAwaitsSignOff):
+// the honest default for "we cannot tell" is to disclose, not to imply
+// approval. That gate also tests /^approved\b/i, so a pending string must not
+// open with "Reviewed" or "Approved" — which the old constant did.
+//
+// Metadata only. Nothing in Intensive English's UI reads reviewStatus (English
+// and Computing read their own), and no narrated string depends on it, so
+// changing it moves no clip hash.
+const REVIEW_PENDING = "Script review and curriculum sign-off pending";
+// Level number -> the sign-off that actually covers that level's CURRENT text.
+// Add an entry when a real review lands against text that is still in place;
+// an absent entry is the truthful state, not an omission to tidy up.
+const LEVEL_REVIEW = {};
+const reviewFor = (level) => LEVEL_REVIEW[level.number] || REVIEW_PENDING;
 // Pre-A1 ranks below A1: Level 1's Stage 1 units (rebuilt on 0057, 2026-09-11)
 // may claim nothing higher, and the band check below reads rank, not name.
 const CEFR_ORDER = ["Pre-A1", "A1", "A2", "B1", "B1+", "B2", "C1", "C2"];
@@ -224,7 +249,7 @@ function buildUnit(authored) {
         literacyStages: [...new Set(codes.map((code) => cambridgeIndex.get(code)?.stage).filter(Boolean))],
       } : {}),
       origin: "Authored for the intensive course",
-      reviewStatus: REVIEW,
+      reviewStatus: reviewFor(level),
       sourceFile: sourceRef,
     };
   });
@@ -316,14 +341,14 @@ function buildUnit(authored) {
         spellingPractice: word.spelling || String(word.w).split("").join(" - "),
         sentenceStarter: word.starter || "",
         aiTutorPrompt: word.tutor,
-        reviewStatus: REVIEW,
+        reviewStatus: reviewFor(level),
       });
     }
     vocabularyGroups.push({ id: groupId, number: groupNumber + 1, title: group.title, vocabularyIds });
   }
 
   const list = (key, kind, map) => (authored[key] || []).map((item, n) => ({
-    unitId: uid, sequence: n + 1, origin: "Authored for the intensive course", reviewStatus: REVIEW, sourceFile: sourceRef,
+    unitId: uid, sequence: n + 1, origin: "Authored for the intensive course", reviewStatus: reviewFor(level), sourceFile: sourceRef,
     ...map(item, n, id(kind, n + 1)),
   }));
 
@@ -530,7 +555,7 @@ function buildUnit(authored) {
     criterionId: `rub-${slug(rubric.target)}-v1-c${String(n + 1).padStart(2, "0")}`,
     criterion: rubric.criterion, level1: rubric.level1, level2: rubric.level2,
     level3: rubric.level3, level4: rubric.level4, maximumMarks: 4,
-    origin: "Ehel Intensive English approved rubric v1", reviewStatus: REVIEW,
+    origin: "Ehel Intensive English approved rubric v1", reviewStatus: reviewFor(level),
   }));
 
   // Marks are DERIVED from the rubric criteria the assignment is marked on, four
@@ -565,7 +590,7 @@ function buildUnit(authored) {
     marks: assignmentMarks, outcomeIds: outcomes.map((o) => o.outcomeId).join(", "),
     rubricIds: assignmentRubricIds.join(", "),
     ...(assignmentCriterionIds ? { criterionIds: assignmentCriterionIds.join(", ") } : {}),
-    origin: "Authored for the intensive course", reviewStatus: REVIEW, sourceFile: sourceRef,
+    origin: "Authored for the intensive course", reviewStatus: reviewFor(level), sourceFile: sourceRef,
   }] : [];
 
   // --- register report (a report, not a gate) --------------------------------
@@ -594,7 +619,7 @@ function buildUnit(authored) {
     ...grammar.filter((item) => item.answerKey).map((item) => ({ contentId: item.grammarId, contentType: "Grammar practice", answerOrGuidance: item.answerKey })),
     ...activities.filter((item) => item.answerSummary).map((item) => ({ contentId: item.activityId, contentType: "Activity", answerOrGuidance: item.answerSummary })),
     ...quizzes.map((item) => ({ contentId: item.questionId, contentType: "Quiz", answerOrGuidance: `${item.correctAnswer} — ${item.explanation}` })),
-  ].map((entry, n) => ({ answerId: id("ans", n + 1), unitId: uid, ...entry, origin: "Derived from the authored item", reviewStatus: REVIEW }));
+  ].map((entry, n) => ({ answerId: id("ans", n + 1), unitId: uid, ...entry, origin: "Derived from the authored item", reviewStatus: reviewFor(level) }));
 
   return {
     schemaVersion: SCHEMA_VERSION,
@@ -623,7 +648,7 @@ function buildUnit(authored) {
         : {}),
       origin: `Compressed from ${sourceRef}`,
       sourceFile: sourceRef,
-      reviewStatus: REVIEW,
+      reviewStatus: reviewFor(level),
     },
     // `lectureVersion` is written HERE. It used to be stamped afterwards by
     // add-intensive-english-lesson-versions.mjs, so every full rebuild silently
@@ -903,7 +928,7 @@ for (const level of plan.levels) {
         // above, so it inherited the same dead path and the same available:
         // false. The vocabulary screen speaks through voiceButton like every
         // other surface in this course.
-        status: REVIEW,
+        status: reviewFor(level),
       });
     }
   }

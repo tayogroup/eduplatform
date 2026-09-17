@@ -1144,6 +1144,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
+      <div id="selfcheck"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
       </div>
     </section>
@@ -2986,6 +2987,52 @@
     paint();
   })();
 
+
+  /* ==== ehel-g4-self-check: Stage 4's own success criteria ====
+     From the Teacher's Guide rather than the Workbook, because the
+     Workbook's "I can" statements are 23% recoverable from the PDF
+     against Stage 3's 78%. One substitution, "Learners can" to "I
+     can", and the pronouns that follow it. NEVER a score: no mark, no
+     report, no pass depends on it. */
+  const SC_KEY = "ehel-g4-sc-ways-to-calculate";
+  const SELFCHECK = [{ t: "I can regroup numbers in different ways and explain why my regrouping is correct", p: "p50" }, { t: "I can use mental methods to add or subtract near multiples of 10", p: "p53" }, { t: "I can compare and use different calculation methods and say what is the same", p: "p56" }, { t: "I can regroup ones, tens or both, as required", p: "p56" }, { t: "I can use subtraction facts to subtract a number of ones, tens or hundreds", p: "p59" }, { t: "I can explain and use the relationship between the multiplication tables of 3, 6 and 9, for example that 5 x 9 is triple 5 x 3", p: "p61" }, { t: "I can give related multiplication and division facts", p: "p61" }, { t: "I can use addition and subtraction facts, including complements of 100, to help me identify missing numbers", p: "p89" }, { t: "I can decide when to use a mental or written method and explain my choice", p: "p91" }, { t: "I can use rounding to help me make estimates", p: "p91" }, { t: "I can use estimates to check answers", p: "p91" }, { t: "I can fluently recall the facts for the tables of 2 and 5", p: "p93" }, { t: "I can complete the multiplication table of 7 up to 7 x 10", p: "p93" }, { t: "I can interpret an array and say what multiplication it represents", p: "p95" }, { t: "I can make estimates and explain whether an answer will be greater or smaller", p: "p95" }, { t: "I can decompose three-digit numbers into hundreds, tens and ones", p: "p98" }, { t: "I can multiply three-digit numbers by a one-digit number using mental and written methods", p: "p98" }, { t: "I can explain that any symbol can be used to represent a missing number", p: "p166" }, { t: "I can multiply a whole number by 10 and explain the effect", p: "p172" }, { t: "I can divide a whole number by 10 and explain the effect", p: "p172" }, { t: "I can explain why dividing by 10 is the inverse of multiplying by 10", p: "p172" }, { t: "I can make estimates and explain whether the product will be more or less", p: "p177" }];
+  const SC_SCALE = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I can't do this yet"]];
+  function scLoad() {
+    try { return JSON.parse(localStorage.getItem(SC_KEY) || "{}") || {}; }
+    catch (e) { return {}; }
+  }
+  function scSave(m) {
+    try { localStorage.setItem(SC_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function scPaint() {
+    const host = document.getElementById("selfcheck");
+    if (!host) return;
+    const marks = scLoad();
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;");
+    host.innerHTML = '<p class="sc-head">What I can do</p>'
+      + '<p class="sc-sub">Cambridge asks these about this lesson. Tick the ones that are true for you. Nothing here is marked and nobody is told - it is for you.</p>'
+      + SELFCHECK.map((it, i) =>
+        '<div class="sc-row"><p class="sc-say">' + esc(it.t) + '</p>'
+        + SC_SCALE.map(([v, label]) =>
+            '<button type="button" class="sc-opt' + (marks[i] === v ? " on" : "")
+            + '" data-i="' + i + '" data-v="' + v + '" aria-pressed="'
+            + (marks[i] === v) + '">' + esc(label) + "</button>").join("")
+        + "</div>").join("");
+  }
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".sc-opt");
+    if (!b) return;
+    const marks = scLoad();
+    const i = Number(b.dataset.i);
+    /* tapping the same one again clears it: a child who changes their mind
+       must be able to say nothing, not only swap to another answer */
+    marks[i] = marks[i] === b.dataset.v ? "" : b.dataset.v;
+    scSave(marks);
+    scPaint();
+  });
+  scPaint();
+
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3832,4 +3879,16 @@
     background: var(--card, #fff); border: 1px solid var(--line, #ddd); }
   #scG { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
     color: var(--muted, #666); }
+</style>
+<style>/* ehel-g4-self-check - see add-self-check.py */
+  #selfcheck { margin: 18px auto 0; max-width: 46ch; text-align: left; }
+  .sc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
+  .sc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
+  .sc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
+  .sc-say { margin: 0 0 6px; font-size: 15px; line-height: 1.45; }
+  .sc-opt { font: inherit; font-size: 13px; padding: 5px 11px; margin: 0 6px 6px 0;
+    border-radius: 999px; border: 1px solid var(--line, #ddd);
+    background: var(--card, #fff); color: var(--muted, #555); cursor: pointer; }
+  .sc-opt.on { background: var(--good-soft, #e6f1ea); border-color: var(--good, #2f6f4a);
+    color: var(--good, #2f6f4a); font-weight: 600; }
 </style>

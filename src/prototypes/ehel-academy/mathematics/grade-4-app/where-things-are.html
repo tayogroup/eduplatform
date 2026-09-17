@@ -1075,6 +1075,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
+      <div id="selfcheck"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
       </div>
     </section>
@@ -2767,6 +2768,52 @@
     paint();
   })();
 
+
+  /* ==== ehel-g4-self-check: Stage 4's own success criteria ====
+     From the Teacher's Guide rather than the Workbook, because the
+     Workbook's "I can" statements are 23% recoverable from the PDF
+     against Stage 3's 78%. One substitution, "Learners can" to "I
+     can", and the pronouns that follow it. NEVER a score: no mark, no
+     report, no pass depends on it. */
+  const SC_KEY = "ehel-g4-sc-where-things-are";
+  const SELFCHECK = [{ t: "I can use compass directions to give the directions through a maze or map", p: "p143" }, { t: "I can understand coordinates when one of the numbers is zero, such as (0, 3) or (6, 0)", p: "p145" }, { t: "I can plot coordinates accurately", p: "p200" }, { t: "I can reason about shapes with vertices plotted on a coordinate grid", p: "p200" }, { t: "I can correct a shape that has been reflected incorrectly", p: "p202" }];
+  const SC_SCALE = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I can't do this yet"]];
+  function scLoad() {
+    try { return JSON.parse(localStorage.getItem(SC_KEY) || "{}") || {}; }
+    catch (e) { return {}; }
+  }
+  function scSave(m) {
+    try { localStorage.setItem(SC_KEY, JSON.stringify(m)); } catch (e) {}
+  }
+  function scPaint() {
+    const host = document.getElementById("selfcheck");
+    if (!host) return;
+    const marks = scLoad();
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;");
+    host.innerHTML = '<p class="sc-head">What I can do</p>'
+      + '<p class="sc-sub">Cambridge asks these about this lesson. Tick the ones that are true for you. Nothing here is marked and nobody is told - it is for you.</p>'
+      + SELFCHECK.map((it, i) =>
+        '<div class="sc-row"><p class="sc-say">' + esc(it.t) + '</p>'
+        + SC_SCALE.map(([v, label]) =>
+            '<button type="button" class="sc-opt' + (marks[i] === v ? " on" : "")
+            + '" data-i="' + i + '" data-v="' + v + '" aria-pressed="'
+            + (marks[i] === v) + '">' + esc(label) + "</button>").join("")
+        + "</div>").join("");
+  }
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest(".sc-opt");
+    if (!b) return;
+    const marks = scLoad();
+    const i = Number(b.dataset.i);
+    /* tapping the same one again clears it: a child who changes their mind
+       must be able to say nothing, not only swap to another answer */
+    marks[i] = marks[i] === b.dataset.v ? "" : b.dataset.v;
+    scSave(marks);
+    scPaint();
+  });
+  scPaint();
+
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3614,4 +3661,16 @@
     background: var(--card, #fff); border: 1px solid var(--line, #ddd); }
   #scG { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
     color: var(--muted, #666); }
+</style>
+<style>/* ehel-g4-self-check - see add-self-check.py */
+  #selfcheck { margin: 18px auto 0; max-width: 46ch; text-align: left; }
+  .sc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
+  .sc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
+  .sc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
+  .sc-say { margin: 0 0 6px; font-size: 15px; line-height: 1.45; }
+  .sc-opt { font: inherit; font-size: 13px; padding: 5px 11px; margin: 0 6px 6px 0;
+    border-radius: 999px; border: 1px solid var(--line, #ddd);
+    background: var(--card, #fff); color: var(--muted, #555); cursor: pointer; }
+  .sc-opt.on { background: var(--good-soft, #e6f1ea); border-color: var(--good, #2f6f4a);
+    color: var(--good, #2f6f4a); font-weight: 600; }
 </style>

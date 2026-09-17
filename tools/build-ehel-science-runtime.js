@@ -226,7 +226,7 @@ const CAMBRIDGE_OBJECTIVES = {
   "6-5": ["6Pe.01", "6TWSp.05", "6TWSc.01", "6TWSm.02"],
   // ── Stage 7 (0893) ──
   "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01"],
-  "7-2": ["7Cm.01", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01"],
+  "7-2": ["7Cm.01", "7Cm.02", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01"],
   // This unit was badly under-mapped, because its outcomes list is short and
   // misleading and I mapped from it. Its concepts are Gravity, Mass and Weight,
   // Calculating Weight, The Solar System, Movement in Space and The Tides — so
@@ -238,7 +238,8 @@ const CAMBRIDGE_OBJECTIVES = {
   // 7Pf.01 and 7Pf.02 are claimed on the energy passage CONCEPT_INSERTS adds to
   // the tides concept: stores transferring into one another as an event runs,
   // and every transfer spilling some energy as heat too thinly spread to use.
-  "7-3": ["7Pf.01", "7Pf.02", "7Pf.03", "7Pf.04", "7Cm.05", "7ESs.02", "7ESs.03", "7TWSm.02"],
+  "7-3": ["7Pf.01", "7Pf.02", "7Pf.03", "7Pf.04", "7Cm.05", "7ESs.01", "7ESs.02",
+          "7ESs.03", "7TWSm.02", "7TWSp.02"],
   "7-4": ["7Bp.01", "7Bp.02", "7Bp.03", "7Bp.04", "7TWSc.01"],
   "7-5": ["7Cm.03", "7Cp.01", "7Cp.02", "7Cp.03", "7Cp.05", "7Cp.06", "7Cp.07", "7TWSp.05"],
   "7-6": ["7Ps.01", "7Ps.02", "7ESp.01", "7ESp.02", "7ESs.04", "7TWSc.05"],
@@ -262,7 +263,7 @@ const CAMBRIDGE_OBJECTIVES = {
   "8-1": ["8SIC.02", "8TWSp.04", "8Be.01", "8Be.02", "8Be.03"],
   "8-2": ["8Bp.01", "8Bp.03"],
   "8-3": ["8Pf.01", "8Pf.02", "8TWSm.03", "8TWSc.02", "8TWSc.04"],
-  "8-4": ["8TWSm.03"],
+  "8-4": ["8Cc.06", "8TWSm.03"],
   "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.05", "8TWSp.03", "8TWSa.05"],
   "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04"],
   // 8Bs.02-8Bs.04 are claimed on the passage CONCEPT_INSERTS continues concept 4
@@ -365,6 +366,61 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 // unit to a new objective and the gap closes here on the next build. Only the
 // REASON is authored, and only where it has actually been established.
 const CAMBRIDGE_GAP_REASONS = {
+  // ── Stages 7 and 8, authored 2026-09-17 ──────────────────────────────────
+  // Both stages reported an EMPTY gaps block while 19 and 30 objectives went
+  // unclaimed, because a partly-covered sub-strand is not reported without an
+  // authored reason and every one of those 49 sits inside a sub-strand that some
+  // unit reaches. So the two least-covered stages in the course were the two
+  // saying nothing about what they miss. Four objectives were closed by reading
+  // the content (7Cm.02, 7ESs.01, 7TWSp.02, 8Cc.06); these are the rest, and
+  // each reason is a measurement rather than an impression.
+  //
+  // THE MEASUREMENT METHOD MATTERS, because the naive version endorses most of
+  // these. Every figure below comes from reading the matching sentences with the
+  // `cambridge` block excluded — claiming a code writes its own wording into the
+  // unit, so grepping for the objective's words finds the claim restating
+  // itself. Read that way, the high hit counts collapsed into homonyms:
+  //
+  //   "nucleus"   57 hits, every one a CELL nucleus — pollen, sperm, egg
+  //   "pressure"  50 hits, every one GEOLOGICAL pressure making metamorphic rock
+  //   "moment"    11 hits, every one "the moment at which a new human life begins"
+  //   "scatter"   in 7TWSa.05's probe: "Scattered through the cytoplasm"
+  //
+  // None of those four objectives is taught anywhere in its stage.
+
+  "7-Scientific enquiry: purpose and planning":
+    "7TWSp.01 (is a hypothesis testable) and 7TWSp.03 (predict likely outcomes, referring to scientific knowledge) are not taught. `hypothesis` appears 12 times in Grade 7 and every occurrence is either using one ('Was your hypothesis correct?', 'Hypothesis prompt: write what you think will happen') or the one sentence about evidence changing ideas that 7TWSp.02 is now claimed on. Nothing asks whether a hypothesis COULD be tested, which is the whole of 7TWSp.01.",
+  "7-Scientific enquiry: analysis, evaluation and conclusions":
+    "None of 7TWSa.01, .02, .04 or .05 is taught. The counts look healthy and are homonyms or bare instructions: `predict` is plentiful but never about the ACCURACY of a prediction against results; the only `trend` in the grade is one method step, 'Step 3 - Interpret the trend'; `anomalous` appears nowhere; and 7TWSa.05's chart terms resolve to 'Scattered through the cytoplasm' and 'Scatter in the beans'. No bar chart, line graph or scatter graph exists in Grade 7.",
+  "7-Carrying out scientific enquiry":
+    "7TWSc.02, .03, .04 and .06 are not taught. `repeatable` and `reproducible` appear nowhere in the grade, so 7TWSc.03 has no basis at all; `equipment` appears once, as a list rather than a decision, which is not 7TWSc.02's 'decide what equipment is required'; `precise` never appears with `accurate` in the sense 7TWSc.04 asks for; and 7TWSc.06 needs sources to be evaluated for relevance and bias, where the grade's three `reliable` mentions are about measurements.",
+  "7-Science in Context":
+    "7SIC.03, .04 and .05 are not taught. 7SIC.04's distinguishing element is collaboration and peer-review: Unit 1's microscope history (Robert Hooke, and understanding growing as microscopes improved) is real and is already what 7SIC.01 is claimed on, and claiming a second objective on the same three sentences is padding rather than coverage. `issue`, `debate` and `argument` appear nowhere for 7SIC.03, and 7SIC.05's global environmental impact has two mentions, both incidental.",
+  "7-Models and representations":
+    "7TWSm.01 is 'Describe the strengths AND LIMITATIONS of a model'. Grade 7 uses models throughout and 7TWSm.02 is claimed on that; nothing anywhere says what a model leaves out. One occurrence of `limitation` in the grade, in an unrelated sentence.",
+  "7-Changes to materials":
+    "7Cc.02 asks why a precipitate forms, in terms of soluble reactants forming an insoluble product. Unit 8 names a precipitate twice, as one of the signs that a reaction has happened, and never explains why one forms. Recorded here rather than only in the unit's own mapping comment, so it survives the sibling objectives being closed.",
+  "7-Planet Earth":
+    "7ESp.03 wants the composition of clean dry air as figures - 78% nitrogen, 21% oxygen - and that it changes with pollution and natural emissions. Unit 2 says 'Air is a mixture of gases - mostly nitrogen and oxygen, with small amounts of others', which is the idea without a single number, and nothing in the grade says the composition can change.",
+
+  "8-Materials and their structure":
+    "8Cm.01 (the Rutherford model), 8Cm.02 (electrons negative, protons positive) and 8Cm.03 (electrostatic attraction) are not taught, and this is the clearest case of a count misleading: `nucleus` has 57 occurrences in Grade 8 and every one is a CELL nucleus, in the plant- and human-reproduction units. `Rutherford`, `electron`, `proton`, `neutron` and `electrostatic` appear nowhere. Unit 4's own alignment note already says Stage 8 carries none of its chemistry; what it did not say is that Stage 8 publishes three atomic-structure objectives and no unit reaches them.",
+  "8-Forces and energy":
+    "8Pf.03 to 8Pf.07 are not taught, with one honourable near miss. `balanced force`, `unbalanced force` and `resultant force` appear nowhere, so 8Pf.03 has no basis. 8Pf.04's eleven `moment` hits are all 'the moment at which a new human life begins'; `pivot`, `lever` and `turning force` appear nowhere. 8Pf.05's fifty `pressure` hits are all the GEOLOGICAL pressure that makes metamorphic rock, never force over an area. 8Pf.06 needs particle theory applied to pressure and the grade applies it to nothing. 8Pf.07 is the near miss: Unit 7 teaches gas exchange by diffusion properly ('Gases cross that thin barrier by diffusion, moving from where they are crowded to where they are not'), but the objective asks for gases AND liquids as the intermingling of PARTICLES, and the passage names neither - the same two-halves test that dropped 6Cp.03.",
+  "8-Changes to materials":
+    "8Cc.01, .02, .03 and .04 are not taught; 8Cc.06 is now claimed. `endothermic` and `exothermic` appear nowhere, and neither does `word equation` in the sense 8Cc.01 means. 8Cc.03 wants the reactivity of nine named metals with oxygen, water and dilute acids: Unit 4's 78 hits for those metal names are the elements being introduced as examples ('Gold, copper, sodium, calcium - each of these is a pure element'), and its one reactivity sentence is 'Group 1, for example, contains sodium and potassium, which are both soft, reactive metals' - naming two of the nine as reactive, with no reaction taught.",
+  "8-Life processes":
+    "8Bp.04 (aerobic respiration in the mitochondria) and 8Bp.05 (its summary word equation) are not taught. `mitochondria` appears in GRADE 7, in the cells unit, and nowhere in Grade 8; `aerobic respiration` appears in neither. Unit 7's alignment note records that 0893 carries no digestion objective at any Lower Secondary stage; respiration is the opposite case - Stage 8 publishes two objectives for it and the course teaches breathing and gas exchange without ever naming respiration as the process that uses the oxygen.",
+  "8-Scientific enquiry: analysis, evaluation and conclusions":
+    "None of 8TWSa.01 to .04 is taught, and the same homonyms apply as at Stage 7. 8TWSa.03 is the one worth naming twice: it asks for conclusions that explain their own limitations, and `conclusion` appears NOWHERE in Grade 8, exactly as it appears nowhere in Grades 5 and 6. Three consecutive stages of this course ask a learner to investigate and never once use the word.",
+  "8-Scientific enquiry: purpose and planning":
+    "8TWSp.01, .02 and .05 are not taught. The grade's single `hypothesis` sentence is 'Was your hypothesis correct - which test turned out to be the most reliable?', which uses one rather than judging whether it is testable or how evidence bears on it. 8TWSp.05 and 8TWSc.05 both need risk assessment and `risk` appears nowhere in Grade 8 at all.",
+  "8-Carrying out scientific enquiry":
+    "8TWSc.03 and .05 have no basis anywhere - `repeatable`, `reproducible` and `risk` are absent from the whole grade. 8TWSc.06 needs secondary sources evaluated for relevance and bias; the eleven `reliable` hits are about measurements and one about a test, never about a source.",
+  "8-Models and representations":
+    "8TWSm.01 and 8TWSm.02 are both about ANALOGY - describing what one is, and using an existing one for a purpose. `analogy` appears nowhere in Grade 8. The grade uses models (8TWSm.03 is claimed on three units), which is a different objective; an analogy is the one representational move Stage 8 adds and the course does not make it.",
+  "8-Science in Context":
+    "8SIC.01, .03 and .04 are not taught, the same three as at Stage 7 and for the same reasons - no collaboration or peer-review, no issue evaluated, no account of how understanding is built. 8SIC.02 and .05 are claimed. Worth stating that this is now a pattern rather than two coincidences: Science in Context is the strand this course consistently reaches least, at every stage where it has been measured.",
 };
 
 // ── Targeted teaching added to a source concept ──────────────────────────────
@@ -404,6 +460,19 @@ const CONCEPT_INSERTS = {
   // closing on the same elbow-bend the learner can feel themselves, echoing
   // the concept's own opening move of reaching behind their back to feel the
   // backbone.
+  // 7ESs.01 is "Describe how planets form from dust and gas, WHICH ARE PULLED
+  // TOGETHER BY GRAVITY", and Unit 3 had the first half outright — "the whole
+  // Solar System formed long ago from a giant spinning cloud of dust and gas in
+  // space called a nebula" — with nothing anywhere linking gravity to that
+  // forming. Checked before writing: no sentence in Grade 7 puts `gravity`
+  // within 200 characters of `nebula` or `dust`.
+  //
+  // The same near-miss-on-one-clause shape as 8ESp.01, and the same remedy. It
+  // belongs in THIS unit rather than anywhere else because the unit's other five
+  // concepts are Gravity, Mass and Weight, Calculating Weight, Movement in Space
+  // and The Tides — the learner has just been taught that the Sun's gravity holds
+  // the planets in their orbits, so the clause continues an idea they have
+  // rather than introducing one.
   "4-1": [{
     conceptId: "concept-3-animals-with-backbones-and-without",
     after: "It is made of many small bones and it holds your body up.",
@@ -438,7 +507,16 @@ const CONCEPT_INSERTS = {
   // the concept has just spent 2,000 characters on the Moon hauling an entire
   // ocean up a beach twice a day, which is energy on a scale nothing else in the
   // unit matches. The forms named are the ones the unit's own outcome lists.
+  // TWO inserts on this unit, and they must live in ONE array: the first
+  // attempt added a second `"7-3":` key to this object and JavaScript silently
+  // kept only the later one, so the build was green, the anchor check never ran
+  // on the dead entry, and the clause reached no learner. Found by grepping the
+  // BUILT unit for the sentence, not by reading the diff.
   "7-3": [{
+    conceptId: "concept-4-the-solar-system",
+    after: "Scientists also think the whole Solar System formed long ago from a giant spinning cloud of dust and gas in space called a nebula.",
+    text: " Gravity is what turned that cloud into planets. Every speck of dust pulled on every other speck, so the cloud slowly drew itself into clumps; the clumps pulled in more dust and grew heavier, and the heavier they grew the harder they pulled. The largest clump of all became the Sun, and the clumps that went on sweeping up dust in orbit around it became the planets.",
+  }, {
     conceptId: "concept-6-the-tides",
     after: "can plan when it is safe to bring a boat into the harbour and when the reef will be exposed for gathering shellfish.",
     text: "\n\nEverything in this unit has been about pull and movement, and behind all of it sits one idea: energy. Energy is what must be transferred for anything at all to happen — for the sea to climb the beach, for a boat to lift on the water, for a fisherman's arms to haul in a net.\n\nEnergy is stored in several ways, and their names are worth learning. A moving object carries kinetic energy: the running child, the falling date, the incoming tide. An object that has been lifted carries gravitational potential energy, ready to be released the moment it is let go — the higher and heavier it is, the more it holds. A stretched rubber band or a bent bow holds elastic energy. Food, charcoal and a battery hold chemical energy. A hot pot holds thermal energy. Light, sound and electricity are all ways energy travels from one place to another.\n\nEnergy is never created and never destroyed; it only moves from one store to another. Hold a stone above the ground and it holds gravitational potential energy. Let go, and gravity transfers that store into kinetic energy as the stone speeds up. When it strikes the sand the movement stops, but the energy has not vanished — it has gone into a small thud of sound and a slight warming of the stone and the ground where they met.\n\nThat last step matters more than it looks. Every transfer spills some energy into the surroundings as heat, spread thinly through the air and the ground. It is still energy, but it is now shared out so widely that nothing can be done with it. Scientists say the energy has dissipated. It is why a bicycle left to itself always rolls to a stop, why every machine grows warm as it works, and why no engine ever returns all the energy it is fed.",

@@ -1,14 +1,14 @@
 # The unit lecture film
 
-`bones-and-muscles.mp4` — about three minutes, 1280×720, narrated in the
-platform voice — plus its captions (`.vtt`) and its poster (`.jpg`). Built by
+`bones-and-muscles.mp4` — 3:10 (3:01 spoken, plus a silent title card and end
+card), 1280×720, narrated in the platform voice — plus its captions (`.vtt`) and its poster (`.jpg`). Built by
 [`tools/create-ehel-science-unit-lecture.js`](../../../../../../tools/create-ehel-science-unit-lecture.js)
 from `bones-and-muscles.json`, the storyboard beside it.
 
 ```bash
 T=tools/create-ehel-science-unit-lecture.js
 node $T --app src/prototypes/ehel-academy/science/grade-4-app --slug bones-and-muscles --dry        # characters + objective coverage, buys nothing
-node $T --app ... --slug ... --preview                                                              # one still per beat, buys nothing
+node $T --app ... --slug ... --preview                                                              # a still per beat + both cards, buys nothing
 node $T --app ... --slug ... --calibrate                                                            # buys the 3 longest clips, reports the real speaking rate
 node $T --app ... --slug ...                                                                        # narrate, render, mux
 ```
@@ -18,6 +18,39 @@ Then rebuild the page, because the film reaches a learner only through it:
 ```bash
 python ../lesson-kit/build-lessons.py --app . 1   # and the rest of the pipeline in the app README
 ```
+
+## The look, and the two cards
+
+**The film wears the lesson's own DARK theme.** Every colour is a token from
+`lesson-kit/lib/lesson.css` — its dark half, the one the lesson page actually
+renders in. The first cut used the light half and, inside the page, read as a
+lit rectangle punched into a dark lesson. It suits the artwork too: the bones
+are `#E9E4D6` with no backdrop of their own, so on light they were cream on
+white and needed a plate bolted behind them. The **arm** is the exception and
+keeps a light card, because its labels are baked in at `#1B1B1B` and the
+drawing may not be edited.
+
+Each of the eight scenes owns a colour (`HUE` in the scenes module, keyed by
+scene id) so the film reads as chapters. That lives in the renderer and not in
+the storyboard, because the storyboard is what the film *says*.
+
+**A title card opens it and an end card closes it** — `OPEN_HOLD` 3.6s and
+`END_HOLD` 5.0s. Both are **silent**, and that is deliberate: a beat is defined
+as one narration clip, so a card is not a beat. Making them speak would re-open
+a paid script to narrate furniture. They are timeline segments at the two ends,
+they carry no chrome or lower third, and `frame()` hands off to them before it
+looks for a beat at all. The audio track gets matching silence, so nothing
+drifts.
+
+Two things to know if you change them. `--preview` shoots one still per beat,
+so it could not see the cards at all until it was taught to shoot them by name
+— it now takes two frames of each, `00a/00b-open` and `99a/99b-end`. And the
+ghosted skeleton behind them is 560px, not 660: at 660 its feet ran off the
+bottom of a 720 frame and the crop read as an accident.
+
+The title card carries the credit line **"A short unit lecture by the Ehel
+Academy Virtual Teacher"**; the end card lists all eight Cambridge codes the
+lesson covers, staggered in so they read as a list rather than a block.
 
 ## Three things worth knowing before changing it
 
@@ -48,7 +81,7 @@ re-renders for nothing and only edited narration is re-bought.
 
 **Cut the script before buying it, not after.** `--dry` reports the character
 count, `--calibrate` buys the three longest clips and reports what the voice
-actually does with them, and `--preview` renders one still per beat from that
+actually does with them, and `--preview` renders a still per beat from that
 rate. Measured on 2026-09-17 with this voice and these settings: **15.92
 characters a second**. A script trimmed against a guessed rate is re-bought at
 full price when the guess is wrong.

@@ -334,8 +334,81 @@
     recap: null
   };
 
+  /* ---- the title card and the end card --------------------------------
+     Neither is a scene and neither is a beat: a beat is one narration clip,
+     and these are silent. They are held segments at the two ends of the
+     timeline (FILM.cards), and frame() hands off to them before it looks for
+     a beat at all - so no chrome, no lower third, nothing that belongs to the
+     spoken film appears over them. */
+
+  function openCard(t) {
+    var c = F.cards.open;
+    var u = clamp((t - c.start) / Math.max(c.end - c.start, 0.001), 0, 1);
+    var a = inAt(t, c.start + 0.15, 0.85);         /* the mark and the rule */
+    var b = inAt(t, c.start + 0.55, 0.9);          /* the title */
+    var d = inAt(t, c.start + 1.15, 0.9);          /* the line under it */
+    var out = 1 - ease((u - 0.86) / 0.14);         /* hand over to the film */
+    return '<div class="card-slide open" style="opacity:' + (a * out).toFixed(3) + '">' +
+      '<div class="cs-fig" style="opacity:' + (a * 0.13).toFixed(3) +
+        ";transform:scale(" + (1.04 + u * 0.05).toFixed(4) + ')">' + ART.skeletonSvg() + "</div>" +
+      '<div class="cs-in">' +
+        '<div class="cs-mark" style="opacity:' + a.toFixed(3) +
+          ";transform:scale(" + (0.86 + a * 0.14).toFixed(3) + ')">E</div>' +
+        '<p class="eyebrow" style="opacity:' + a.toFixed(3) + '">Ehel Academy · ' + esc(F.subtitle) + "</p>" +
+        '<h1 style="opacity:' + b.toFixed(3) + ";transform:translateY(" + ((1 - b) * 18).toFixed(2) + 'px)">' +
+          esc(F.title) + "</h1>" +
+        '<div class="cs-rule" style="transform:scaleX(' + d.toFixed(3) + ')"></div>' +
+        '<p class="cs-by" style="opacity:' + d.toFixed(3) +
+          ";transform:translateY(" + ((1 - d) * 8).toFixed(2) + 'px)">' +
+          "A short unit lecture by the Ehel Academy Virtual Teacher</p>" +
+        '<p class="cs-sub" style="opacity:' + inAt(t, c.start + 1.55, 0.8).toFixed(3) +
+          '">Cambridge Primary Science 0097 · Stage ' + esc(F.stage) + "</p>" +
+      "</div></div>";
+  }
+
+  function endCard(t) {
+    var c = F.cards.end;
+    var u = clamp((t - c.start) / Math.max(c.end - c.start, 0.001), 0, 1);
+    var a = inAt(t, c.start + 0.35, 0.8);
+    var b = inAt(t, c.start + 0.85, 0.8);
+    var codes = (F.objectives || []).map(function (o, n) {
+      /* staggered, so the eight codes arrive as a list being read rather than
+         as one block appearing */
+      var k = inAt(t, c.start + 1.15 + n * 0.09, 0.5);
+      return '<span style="opacity:' + k.toFixed(3) +
+        ";transform:translateY(" + ((1 - k) * 8).toFixed(2) + 'px)">' + esc(o[0]) + "</span>";
+    }).join("");
+    return '<div class="card-slide end" style="opacity:' + a.toFixed(3) + '">' +
+      '<div class="cs-fig" style="opacity:' + (a * 0.11).toFixed(3) +
+        ";transform:scale(" + (1.0 + u * 0.05).toFixed(4) + ')">' + ART.skeletonSvg() + "</div>" +
+      '<div class="cs-in">' +
+        '<p class="eyebrow" style="opacity:' + a.toFixed(3) + '">That is the whole lesson</p>' +
+        '<h1 style="opacity:' + a.toFixed(3) + ";transform:translateY(" + ((1 - a) * 14).toFixed(2) + 'px)">' +
+          esc(F.title) + "</h1>" +
+        '<div class="cs-rule" style="transform:scaleX(' + b.toFixed(3) + ')"></div>' +
+        '<p class="cs-cap" style="opacity:' + b.toFixed(3) + '">What this lesson covered</p>' +
+        '<div class="cs-codes">' + codes + "</div>" +
+        '<p class="cs-sign" style="opacity:' + inAt(t, c.start + 2.2, 0.8).toFixed(3) + '">' +
+          '<span class="cs-mark sm">E</span>Ehel Academy · ' + esc(F.subtitle) + "</p>" +
+      "</div></div>";
+  }
+
   /* ---- the frame ------------------------------------------------------ */
   function frame(t) {
+    /* The cards own the whole frame at the two ends, before any beat is
+       looked for. --hue is set first so they are tinted like everything else. */
+    var film = document.getElementById("film");
+    if (F.cards && t < F.cards.open.end) {
+      film.style.setProperty("--hue", HUE.title);
+      film.innerHTML = openCard(t);
+      return;
+    }
+    if (F.cards && t >= F.cards.end.start) {
+      film.style.setProperty("--hue", HUE.recap);
+      film.innerHTML = endCard(t);
+      return;
+    }
+
     KINDS.health = KINDS.health || listScene(F.health, "rows three");
     KINDS.people = KINDS.people || listScene(F.people, "rows four");
     KINDS.recap = KINDS.recap || listScene(F.recap, "rows four recap");
@@ -350,7 +423,6 @@
 
     /* The scene's colour drives every accent through one custom property, so
        nothing downstream has to know which scene it is in. */
-    var film = document.getElementById("film");
     film.style.setProperty("--hue", HUE[scene.id] || "#35BFB2");
 
     /* A slow drift across the whole scene - about 10px and 1.5% over its

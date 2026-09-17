@@ -343,3 +343,65 @@ body {
   font-family: "Inter", sans-serif; font-weight: 700; font-size: 34px;
   color: var(--hue);
 }
+
+/* ---- the title card and the end card ---------------------------------
+   Full-frame and silent, at the two ends of the timeline. They carry no
+   chrome, no lower third and no objective row: everything that belongs to the
+   spoken film is drawn by frame() only after these have had their turn. */
+.card-slide {
+  position: absolute; inset: 0; z-index: 4;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(900px 560px at 50% 18%, color-mix(in srgb, var(--hue) 20%, transparent), transparent 62%),
+    var(--ground);
+  text-align: center;
+}
+/* the skeleton, very faint, as the card's own texture rather than a subject */
+.card-slide .cs-fig {
+  position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
+}
+/* 560, not 660: at 660 the feet ran off the bottom of a 720 frame and the
+   crop read as an accident rather than as a choice */
+.card-slide .cs-fig svg { height: 560px; width: auto; }
+.card-slide .cs-in { position: relative; width: 880px; }
+
+.cs-mark {
+  width: 56px; height: 56px; border-radius: 17px; margin: 0 auto 20px;
+  background: var(--hue); color: #04141B;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 30px;
+  display: grid; place-items: center;
+}
+.cs-mark.sm {
+  width: 26px; height: 26px; border-radius: 8px; font-size: 15px;
+  margin: 0 10px 0 0; display: inline-grid; vertical-align: -7px;
+}
+.card-slide h1 {
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 76px;
+  letter-spacing: -0.034em; line-height: 1.0; margin: 12px 0 0;
+}
+.cs-rule {
+  width: 200px; height: 3px; border-radius: 2px; margin: 26px auto;
+  background: var(--hue); transform-origin: 50% 50%;
+}
+/* what this film IS and who made it, above the syllabus line it belongs to */
+.cs-by {
+  font-size: 22px; color: var(--ink); font-weight: 700; letter-spacing: 0.005em;
+}
+.cs-sub { font-size: 17px; color: var(--muted); letter-spacing: 0.06em; margin-top: 10px; }
+.cs-cap {
+  font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+}
+.cs-codes {
+  display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin: 18px 0 30px;
+}
+.cs-codes span {
+  font-family: "Inter", sans-serif; font-size: 15px; font-weight: 700;
+  color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--hue) 45%, transparent);
+  background: color-mix(in srgb, var(--hue) 12%, transparent);
+  border-radius: 999px; padding: 7px 15px;
+}
+.cs-sign {
+  font-family: "Inter", sans-serif; font-size: 16px; font-weight: 700; color: var(--muted);
+}

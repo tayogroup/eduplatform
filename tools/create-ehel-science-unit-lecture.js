@@ -50,6 +50,12 @@ const VOICE_SETTINGS = { stability: 0.52, similarity_boost: 0.82, style: 0.24, u
 const FPS = 30;
 const W = 1280, H = 720;
 const LEAD = 0.8, TAIL = 1.6, GAP_BEAT = 0.22, GAP_SCENE = 0.5;
+/* The title card and the end card, both SILENT and both held for a fixed time.
+   Silent because the narration is complete at 33 clips and a card is the one
+   place a film does not need a voice - and because adding one would re-open a
+   paid script for furniture. They are timeline segments rather than beats: a
+   beat is defined as one narration clip, and these have none. */
+const OPEN_HOLD = 3.6, END_HOLD = 5.0;
 /* Only --preview and --calibrate use this. A real render MEASURES every
    clip, so this number never reaches a rendered frame; it exists so the
    script can be cut to length before any of it is bought. Set from a
@@ -181,7 +187,7 @@ function duration(file) {
 /* --------------------------------------------------------- the timeline --- */
 function buildTimeline(film, durations) {
   const beats = [];
-  let t = LEAD, k = 0;
+  let t = LEAD + OPEN_HOLD, k = 0;
   film.scenes.forEach((scene, si) => {
     scene.first = beats.length;
     scene.start = t;
@@ -193,9 +199,15 @@ function buildTimeline(film, durations) {
     scene.end = t;
     if (si + 1 < film.scenes.length) t += GAP_SCENE;
   });
-  /* the last beat runs to the end of the film so nothing blinks out on the tail */
-  const total = t + TAIL;
-  beats[beats.length - 1].end = total;
+  /* The last beat runs to the end of the SPOKEN film, so nothing blinks out on
+     the tail; the end card then plays after it. */
+  const spokenEnd = t + TAIL;
+  beats[beats.length - 1].end = spokenEnd;
+  const total = spokenEnd + END_HOLD;
+  film.cards = {
+    open: { start: 0, end: LEAD + OPEN_HOLD },
+    end: { start: spokenEnd, end: total }
+  };
   return { beats, total };
 }
 
@@ -310,7 +322,7 @@ function buildPage(film, art) {
     const rate = chars / secs;
     console.log(`\n  measured ${rate.toFixed(2)} characters a second (CHARS_PER_SECOND is ${CHARS_PER_SECOND}).`);
     const speech = flat.reduce((n, b) => n + b.say.length, 0) / rate;
-    const pad = LEAD + TAIL + GAP_BEAT * (flat.length - film.scenes.length) + GAP_SCENE * (film.scenes.length - 1);
+    const pad = LEAD + TAIL + OPEN_HOLD + END_HOLD + GAP_BEAT * (flat.length - film.scenes.length) + GAP_SCENE * (film.scenes.length - 1);
     const est = speech + pad;
     console.log(`  so ${flat.length} beats would run about ${Math.floor(est / 60)}:${String(Math.round(est % 60)).padStart(2, "0")}` +
       ` (${speech.toFixed(0)}s of speech + ${pad.toFixed(1)}s of pauses).`);
@@ -376,14 +388,28 @@ function buildPage(film, art) {
     const shots = path.join(scratch, "preview");
     fs.rmSync(shots, { recursive: true, force: true });
     fs.mkdirSync(shots, { recursive: true });
+    /* The cards are not beats, so a beat-driven preview cannot see them - the
+       first run of this loop shot 33 stills and neither card was among them.
+       Two frames each: part way in, where things are still arriving, and near
+       the end, where the card is whole. */
+    const cardShots = [
+      ["00a-open", film.cards.open.start + 1.1],
+      ["00b-open", film.cards.open.end - 0.5],
+      ["99a-end", film.cards.end.start + 1.6],
+      ["99b-end", film.cards.end.end - 0.4]
+    ];
+    for (const [name, at] of cardShots) {
+      await page.evaluate((t) => window.EHEL_FILM.frame(t), at);
+      await page.screenshot({ path: path.join(shots, `${name}.png`) });
+    }
     for (let i = 0; i < beats.length; i++) {
       const b = beats[i];
       await page.evaluate((t) => window.EHEL_FILM.frame(t), b.start + b.dur * 0.7);
-      await page.screenshot({ path: path.join(shots, `${String(i).padStart(2, "0")}-${film.scenes[b.scene].id}.png`) });
+      await page.screenshot({ path: path.join(shots, `${String(i + 1).padStart(2, "0")}-${film.scenes[b.scene].id}.png`) });
     }
     if (errs.length) die("the page threw while rendering:\n" + errs.slice(0, 5).join("\n"));
     await browser.close();
-    console.log(`  ${beats.length} preview stills in ${path.relative(ROOT, shots)}`);
+    console.log(`  ${beats.length + cardShots.length} preview stills (both cards included) in ${path.relative(ROOT, shots)}`);
     console.log(`  estimated ${Math.floor(total / 60)}:${String(Math.round(total % 60)).padStart(2, "0")} ` +
       `at ${CHARS_PER_SECOND} characters a second - calibrate with --calibrate before trusting it.`);
     return;
@@ -414,7 +440,7 @@ function buildPage(film, art) {
         { stdio: ["ignore", "ignore", "pipe"] });
     return p;
   };
-  parts.push(silence(LEAD, "lead"));
+  parts.push(silence(LEAD + OPEN_HOLD, "lead"));
   for (let i = 0; i < clips.length; i++) {
     const w = path.join(wavDir, `c${String(i).padStart(3, "0")}.wav`);
     run("ffmpeg", ["-y", "-i", clips[i], "-ar", "44100", "-ac", "2", w], { stdio: ["ignore", "ignore", "pipe"] });
@@ -422,7 +448,7 @@ function buildPage(film, art) {
     const next = beats[i + 1];
     if (next) parts.push(silence(next.start - (beats[i].start + beats[i].dur), `g${i}`));
   }
-  parts.push(silence(TAIL, "tail"));
+  parts.push(silence(TAIL + END_HOLD, "tail"));
 
   const listFile = path.join(scratch, "audio.txt");
   fs.writeFileSync(listFile, parts.map((p) => `file '${p.replace(/\\/g, "/")}'`).join("\n"), "utf8");

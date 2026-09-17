@@ -82,7 +82,7 @@ Mathematics works the same way and is gated by `check:math`. The two courses sha
 ```bash
 T=tools/create-ehel-science-unit-lecture.js
 node $T --app src/prototypes/ehel-academy/science/grade-4-app --slug bones-and-muscles --dry        # characters + objective coverage, buys nothing
-node $T --app ... --slug ... --preview                                                              # one still per beat, buys nothing
+node $T --app ... --slug ... --preview                                                              # a still per beat + both cards, buys nothing
 node $T --app ... --slug ... --calibrate                                                            # buys the 3 longest clips, reports the real speaking rate
 node $T --app ... --slug ...                                                                        # narrate, render, mux
 ```
@@ -108,6 +108,32 @@ clipping faults in that artwork instead of fixing them — `armSvg`'s tendon
 label runs past its own viewBox and the bent arm's hand rotates to about y −55,
 both clipped in the lesson too. The viewBox and the drawing's own background
 rect grow together, so the picture is identical with more page beside it.
+
+**It wears the lesson's DARK theme, and that is not a taste decision.** Every
+colour is a token from `lesson-kit/lib/lesson.css` — its dark half, which is
+what the lesson page actually renders in. The first cut used the light half and
+inside the page it read as a lit rectangle punched into a dark lesson. It suits
+the artwork too: the bones are `#E9E4D6` with no backdrop of their own, so on
+light they were cream on white and needed a plate bolted behind them. The ARM
+keeps a light card and has to — its labels are baked in at `#1B1B1B` and the
+drawing may not be edited.
+
+Three things the dark stage made visible that the light one hid, all now fixed:
+the Cambridge codes floated bottom-right and in the pair scene four of them
+landed **across the Conclusion card**; the kicker repeated "Grade 4 Science"
+which the top bar says two lines above; and the skeleton stacked the lesson's
+green `.found` outlines until, by the seventh bone, seven crude bounding boxes
+sat over the figure and read as debug boxes. Already-named bones are marked by
+BRIGHTNESS now, and only the bone being named wears the gold pointer.
+
+**A silent title card opens it and a silent end card closes it** (`OPEN_HOLD`
+3.6s, `END_HOLD` 5.0s). Silent is deliberate: a beat is defined as one
+narration clip, so a card is not a beat, and narrating furniture would re-open
+a paid script. They are timeline segments at the two ends with matching silence
+on the audio track, and `frame()` hands off to them before it looks for a beat
+at all. **`--preview` could not see them** — it shoots one still per beat — so
+it now shoots each card by name as well; that is worth knowing before trusting
+a preview sweep of anything that is not a beat.
 
 **The animation is timed from the voice, not the other way round.** Every beat
 is narrated first, ffprobed, and the timeline is built from the measured

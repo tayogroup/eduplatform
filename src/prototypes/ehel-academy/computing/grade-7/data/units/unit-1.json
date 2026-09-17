@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.975Z",
+  "generatedAt": "2026-09-17T20:45:49.911Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -74,37 +74,15 @@
       "note": "Runs in a web browser. Free, with nothing to download."
     },
     {
-      "name": "micro:bit simulator",
-      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "name": "Python",
+      "url": "python.microbit.org or any Python editor",
       "steps": [
         "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
         "Write your code in the editor.",
         "The micro:bit simulator on the left runs your code straight away.",
         "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
       ],
-      "note": "You do not need to own a real micro:bit — the simulator does everything."
-    },
-    {
-      "name": "Python",
-      "url": "python.microbit.org or any Python editor",
-      "steps": [
-        "Open the editor and start a new file.",
-        "Type your program one line at a time.",
-        "Run it and read any error message from the bottom up.",
-        "Fix one error at a time, then run it again."
-      ],
       "note": "Python is a text language: spelling and indentation both matter."
-    },
-    {
-      "name": "A free spreadsheet",
-      "url": "Google Sheets, or LibreOffice Calc",
-      "steps": [
-        "Open a new blank spreadsheet.",
-        "Put your field names in row 1, one per column.",
-        "Type one record per row underneath.",
-        "Use Insert → Chart to turn your data into a graph."
-      ],
-      "note": "Any free spreadsheet works — the ideas are the same in all of them."
     }
   ],
   "tutorPrompts": [
@@ -373,7 +351,7 @@
       "title": "Try it: Practise Activities",
       "context": "work through the steps below and see what happens. This is writing and saving a program (script mode) in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "These activities practise one skill at a time. Work through them steadily.",
-      "answer": "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode). Check what you noticed against that, and write down anything that differed.",
+      "answer": "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode). Follow these steps in Thonny to make… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Task: In the Shell, type each line below, pressing ENTER after each. Predict the answer before you press ENTER, then check.",
       "explanation": "Writing and Saving a Program (Script Mode): See how the three lines run in order, from top to bottom? This is sequencing, and it is one of the most important ideas in programming. The computer does exactly what you tell it, in exactly the order you write it. If you ever need to change a saved program, use File > Open, edit it, and save again."
@@ -429,7 +407,7 @@
       "outcomeId": "lo05",
       "title": "Writing and Saving a Program (Script Mode)",
       "modelType": "concept-model-5",
-      "purpose": "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode).",
+      "purpose": "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode).…",
       "defaultNumber": null
     },
     {
@@ -477,7 +455,7 @@
       "outcomeId": "lo01",
       "title": "Arithmetic Operators",
       "modelType": "concept-model-11",
-      "purpose": "Python uses arithmetic operators for calculations. They are a little different from the symbols you write by hand:",
+      "purpose": "Python uses arithmetic operators for calculations. They are a little different from the symbols you write by hand: One thing surprises many students: division with / always gives a float (a decimal), even when the…",
       "defaultNumber": null
     },
     {
@@ -564,10 +542,10 @@
       "title": "How to work with writing and saving a program (script mode)",
       "example": "See how the three lines run in order, from top to bottom? This is sequencing, and it is one of the most important ideas in programming. The computer does exactly what you tell it, in exactly the order you write it. If you ever need to change a saved program,…",
       "steps": [
-        "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode).",
-        "Follow these steps in Thonny to make your first saved program:",
-        "Click File, then New (or press Ctrl+N). A blank editor opens at the top.",
-        "Type your program into the editor (see the code below)."
+        "Read the concept card for writing and saving a program (script mode) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
       ]
     },
     {

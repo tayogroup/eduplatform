@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:55.001Z",
+  "generatedAt": "2026-09-17T20:45:49.937Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -83,17 +83,6 @@
         "Fix one error at a time, then run it again."
       ],
       "note": "Python is a text language: spelling and indentation both matter."
-    },
-    {
-      "name": "A free spreadsheet",
-      "url": "Google Sheets, or LibreOffice Calc",
-      "steps": [
-        "Open a new blank spreadsheet.",
-        "Put your field names in row 1, one per column.",
-        "Type one record per row underneath.",
-        "Use Insert → Chart to turn your data into a graph."
-      ],
-      "note": "Any free spreadsheet works — the ideas are the same in all of them."
     }
   ],
   "tutorPrompts": [
@@ -376,7 +365,7 @@
       "answer": "Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another. MicroPython code Expected behaviour: 'Leo' scrolls across the LEDs, then a duck picture appears and stays. Try other images such as Image.HEART, Image.HOUSE or Image.GIRAFFE. Ask Your AI Tutor",
       "modelType": "model-5",
       "hint": "Start here: Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one…",
-      "explanation": "Your First MicroPython Program: Two commands did all the work. display.scroll('...') slides text across the screen, and display.show(Image.HAPPY) shows a single picture that stays on. Notice that the text 'Maya' has quotation marks around it, but Image.HAPPY does not - and HAPPY is in capital letters. Those are rules of the…"
+      "explanation": "Your First MicroPython Program: Two commands did all the work. display.scroll('...') slides text across the screen, and display.show(Image.HAPPY) shows a single picture that stays on. Notice that the text 'Maya' has quotation marks around it, but Image.HAPPY does not — and HAPPY is in capital letters. Those are rules of the…"
     },
     {
       "id": "explore-6",
@@ -388,7 +377,7 @@
       "answer": "Ask Your AI Tutor Give me a list of five fun Image names I can try, and tell me what each one looks like. Activity 2 — Button A input (input and output) Task: show a happy face only when button A is pressed. This adds your first input and the while True loop.",
       "modelType": "model-6",
       "hint": "Start here: Ask Your AI Tutor",
-      "explanation": "Inputs and the 'while True' Loop: Look closely at the indentation - the spaces at the start of the lines. The code inside the loop is indented four spaces. The code inside the IF is indented four spaces again. MicroPython uses this indentation to know what belongs inside what. Getting it wrong is one of the most common beginner…"
+      "explanation": "Inputs and the 'while True' Loop: Look closely at the indentation — the spaces at the start of the lines. The code inside the loop is indented four spaces. The code inside the IF is indented four spaces again. MicroPython uses this indentation to know what belongs inside what. Getting it wrong is one of the most common beginner…"
     }
   ],
   "visualModels": [
@@ -493,7 +482,7 @@
       "outcomeId": "lo03",
       "title": "The Project Plan and Evaluating",
       "modelType": "concept-model-13",
-      "purpose": "Professional software follows a project plan with five stages. You are already using every one of them in this unit:",
+      "purpose": "Professional software follows a project plan with five stages. You are already using every one of them in this unit: Plan — decompose the problem and write down your success criteria (what the finished program must do).…",
       "defaultNumber": null
     }
   ],

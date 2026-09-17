@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.758Z",
+  "generatedAt": "2026-09-17T20:45:49.709Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -99,19 +99,7 @@
     "Explain what the internet is and what cloud storage means.",
     "Describe why connections break and what causes network failure."
   ],
-  "toolkit": [
-    {
-      "name": "A free spreadsheet",
-      "url": "Google Sheets, or LibreOffice Calc",
-      "steps": [
-        "Open a new blank spreadsheet.",
-        "Put your field names in row 1, one per column.",
-        "Type one record per row underneath.",
-        "Use Insert → Chart to turn your data into a graph."
-      ],
-      "note": "Any free spreadsheet works — the ideas are the same in all of them."
-    }
-  ],
+  "toolkit": [],
   "tutorPrompts": [],
   "concepts": [
     {
@@ -226,7 +214,7 @@
       "title": "Try it: Trace a message's journey (Part 3.2)",
       "context": "work through the steps below and see what happens. This is how data travels through networks in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "A student at Ehel Academy sends the message HELLO FROM HARGEISA to a cousin in Mogadishu. Show how the message is split into packets.",
-      "answer": "You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in this part. Check what you noticed against that, and write down anything that differed.",
+      "answer": "You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in this part. Cellular networks: the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Draw one packet in detail, showing its packet number, 'sent from' and 'sent to' IP addresses (make up valid ones), and its piece of data.",
       "explanation": "How Data Travels Through Networks: Fifty kilometres is a very long way. If you ran around a 400-metre running track, you would have to go around it about 125 times to run 50 km! That is roughly the furthest a single cell tower can send its signal."
@@ -318,7 +306,7 @@
       "outcomeId": "lo05",
       "title": "Split the Send the Packets cross Put the packets",
       "modelType": "concept-model-5",
-      "purpose": "message ---> packets to --> the internet --> back in order to",
+      "purpose": "message ---> packets to --> the internet --> back in order to into packets the internet by different rebuild the whole What happens if a packet gets lost? Sometimes a packet does not arrive at all — it gets lost along…",
       "defaultNumber": null
     },
     {
@@ -358,7 +346,7 @@
       "outcomeId": "lo10",
       "title": "The BLUE route is broken, but the data still reaches",
       "modelType": "concept-model-10",
-      "purpose": "the server along the RED and YELLOW routes.",
+      "purpose": "the server along the RED and YELLOW routes. Sometimes, though, a large server or a very important connection breaks. Then you might notice that a service you use suddenly stops working, or becomes very slow. Usually…",
       "defaultNumber": null
     },
     {
@@ -407,10 +395,10 @@
       "title": "How to work with how data travels through networks",
       "example": "Fifty kilometres is a very long way. If you ran around a 400-metre running track, you would have to go around it about 125 times to run 50 km! That is roughly the furthest a single cell tower can send its signal.",
       "steps": [
-        "You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in…",
-        "Cellular networks: the internet almost anywhere",
-        "A cellular network is another kind of wireless network, but it works over very large areas. Instead of a small Wi-Fi box on a wall, cellular networks use tall towers (you may have seen them standing high above towns and…",
-        "A single cell tower can reach a phone up to about 50 kilometres away, although most of the time the useful range is around 5 kilometres. Making the towers tall is important, because it means the signal is less likely to…"
+        "Read the concept card for how data travels through networks and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
       ]
     },
     {

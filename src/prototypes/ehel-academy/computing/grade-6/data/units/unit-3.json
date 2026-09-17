@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.905Z",
+  "generatedAt": "2026-09-17T20:45:49.842Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -95,19 +95,7 @@
     "Explain what user authentication is and describe different methods: usernames and passwords, fingerprints and facial recognition.",
     "Explain what makes a strong password, and follow good online-safety habits."
   ],
-  "toolkit": [
-    {
-      "name": "A free spreadsheet",
-      "url": "Google Sheets, or LibreOffice Calc",
-      "steps": [
-        "Open a new blank spreadsheet.",
-        "Put your field names in row 1, one per column.",
-        "Type one record per row underneath.",
-        "Use Insert → Chart to turn your data into a graph."
-      ],
-      "note": "Any free spreadsheet works — the ideas are the same in all of them."
-    }
-  ],
+  "toolkit": [],
   "tutorPrompts": [],
   "concepts": [
     {
@@ -177,7 +165,7 @@
       "answer": "Activities for Subunit 3.1 — Storing and Transferring Data You will need: a large piece of paper and some pens. A network map is a drawing that shows every device on a network and how they connect. In this activity you will map a network you know well. Choose a network: your home, or Ehel Academy if you know it well. In the middle of your paper, draw the server or the router — the device everything connects through. Around it, draw every device you can think of: laptops, tablets, phones, a printer, a smart TV, smart lights, and so on.",
       "modelType": "model-1",
       "hint": "Start here: Activities for Subunit 3.1 — Storing and Transferring Data",
-      "explanation": "Streaming, messaging and the school intranet: How can data travel through the air with nothing connecting the devices? The answer is radio waves. A radio wave is a form of energy that can carry data - text, pictures, sound - from one place to another. Your device turns your data into a pattern of radio waves and sends it out through a small…"
+      "explanation": "Streaming, messaging and the school intranet: How can data travel through the air with nothing connecting the devices? The answer is radio waves. A radio wave is a form of energy that can carry data — text, pictures, sound — from one place to another. Your device turns your data into a pattern of radio waves and sends it out through a small…"
     },
     {
       "id": "explore-2",
@@ -213,7 +201,7 @@
       "answer": "Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once, and the quicker everything feels. The… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Device | Cable? | Wi-fi? | Cellular?",
-      "explanation": "Bandwidth: why some networks feel fast and others feel slow: Think of bandwidth like a plate of injera shared at dinner. If two people share the plate, everyone gets a good amount. If ten hungry cousins arrive, each person's share gets much smaller - and if too many people crowd in, some might get almost nothing at all! The food (the network) is fine; there…"
+      "explanation": "Bandwidth: why some networks feel fast and others feel slow: Think of bandwidth like a plate of injera shared at dinner. If two people share the plate, everyone gets a good amount. If ten hungry cousins arrive, each person's share gets much smaller — and if too many people crowd in, some might get almost nothing at all! The food (the network) is fine; there…"
     },
     {
       "id": "explore-5",
@@ -225,7 +213,7 @@
       "answer": "Network overload happens when too many devices try to use the network at the same time and it can no longer cope. When a network is overloaded, data moves extremely slowly, pictures freeze halfway through loading, videos keep pausing, and error messages start… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: ----------------+--------+--------+----------",
-      "explanation": "Network overload: About 333 billion emails are sent every day - roughly 47 for every person on Earth. But be careful: more than 85% of all emails sent are spam (junk mail) or phishing attempts trying to trick people. The more active you are online, the more junk and tricks may arrive in your inbox, so a careful eye…"
+      "explanation": "Network overload: About 333 billion emails are sent every day — roughly 47 for every person on Earth. But be careful: more than 85% of all emails sent are spam (junk mail) or phishing attempts trying to trick people. The more active you are online, the more junk and tricks may arrive in your inbox, so a careful eye…"
     },
     {
       "id": "explore-6",
@@ -237,7 +225,7 @@
       "answer": "Smart TV | Yes | Yes | No Games console | Yes | Yes | No Smart lightbulb | No | Yes | No Then discuss: which of your devices could connect in the most different ways? Which could only connect one way? A phone is special because it can use both wi-fi at home and a cellular network when you are out. Activity 3.1c — Speed test investigation",
       "modelType": "model-6",
       "hint": "Start here: Smart TV | Yes | Yes | No",
-      "explanation": "Encryption: scrambling a message: Real websites do not use a simple Caesar cipher, because a shift is far too easy to crack - there are only 25 shifts to try. Instead, modern computers use very powerful encryption with enormous keys that would take even the fastest computer millions of years to guess. But the *idea* is exactly the…"
+      "explanation": "Encryption: scrambling a message: Real websites do not use a simple Caesar cipher, because a shift is far too easy to crack — there are only 25 shifts to try. Instead, modern computers use very powerful encryption with enormous keys that would take even the fastest computer millions of years to guess. But the *idea* is exactly the…"
     }
   ],
   "visualModels": [
@@ -332,10 +320,10 @@
       "title": "How to work with packets: how a file makes the journey",
       "example": "Truth: The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet.",
       "steps": [
-        "Here is one of the most important ideas in the whole unit. When a file is sent across a network, it does not travel as one whole piece. Instead, the file is chopped into many small parcels called packets, and each…",
-        "Picture a diagram of the journey. On the left is Layla's tablet in Mogadishu. On the right is Karim's phone in Nairobi. In the middle is the network. Follow the arrows:",
-        "Layla writes a message and presses send. Her tablet breaks the message into packets, each with address labels and an order number.",
-        "The packets travel to her router, then out to her internet service provider, and into the wider internet."
+        "Read the concept card for packets: how a file makes the journey and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
       ]
     },
     {
@@ -370,10 +358,10 @@
       "title": "How to work with encryption: scrambling a message",
       "example": "Real websites do not use a simple Caesar cipher, because a shift is far too easy to crack — there are only 25 shifts to try. Instead, modern computers use very powerful encryption with enormous keys that would take even the fastest computer millions of years…",
       "steps": [
-        "The strongest way to protect data while it travels is encryption. Encryption means scrambling a message so that only the people who are meant to read it can understand it. To everyone else, it looks like meaningless…",
-        "One of the oldest and simplest ways to encrypt is a Caesar cipher, named after the Roman leader Julius Caesar, who used a similar trick so that enemies could not read his military plans. The idea is to shift every…",
-        "PLAIN : A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
-        "CIPHER: D E F G H I J K L M N O P Q R S T U V W X Y Z A B C"
+        "Read the concept card for encryption: scrambling a message and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
       ]
     },
     {

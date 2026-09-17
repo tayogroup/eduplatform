@@ -73,7 +73,7 @@ for a in sys.argv[1:]:
         sys.exit("unrecognised argument: %s" % a)
 
 MARK = "ehel-g4-tiers"
-STICKER = ("\U0001FA9C", "Try this one")
+STICKER = ("\U0001F4DD", "Try this one")
 
 
 def shelf_span(s):

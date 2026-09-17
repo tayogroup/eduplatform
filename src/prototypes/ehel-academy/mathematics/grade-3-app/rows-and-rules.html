@@ -2478,7 +2478,7 @@
     ["🔲", "Rows and columns"], ["🔄", "Turn it round"], ["✖️", "The tables you need"], ["👨‍👩‍👧", "One array, four facts"],
     ["✂️", "Split it to multiply"], ["🎯", "Estimate, then multiply"], ["🍪", "Sharing and leftovers"], ["🔟", "Multiples"],
     ["📈", "The rule"], ["🔺", "Patterns that grow"], ["📦", "The mystery box"], ["🔍", "Spot the mistake"],
-    ["🪜", "Try this one"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
+    ["📝", "Try this one"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");

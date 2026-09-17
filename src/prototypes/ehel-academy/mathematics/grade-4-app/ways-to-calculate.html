@@ -2823,7 +2823,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [["🔤", "Saying it in words"], ["🎯", "Estimate before you work"], ["➕", "Adding it exactly"], ["➖", "Taking away exactly"], ["✖️", "Tables, and a shortcut"], ["⚖️", "Double one, halve the other"], ["✂️", "Multiplying a big number"], ["🍬", "Sharing out, and what is left"], ["⬜", "6s, 7s, 9s and factor pairs"], ["🔁", "Multiples and factors, both ways"], ["➗", "Does it divide exactly?"], ["🔍", "Spot the mistake"], ["🪜", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🔤", "Saying it in words"], ["🎯", "Estimate before you work"], ["➕", "Adding it exactly"], ["➖", "Taking away exactly"], ["✖️", "Tables, and a shortcut"], ["⚖️", "Double one, halve the other"], ["✂️", "Multiplying a big number"], ["🍬", "Sharing out, and what is left"], ["⬜", "6s, 7s, 9s and factor pairs"], ["🔁", "Multiples and factors, both ways"], ["➗", "Does it divide exactly?"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

@@ -2752,7 +2752,7 @@
   round5();
 
   /* ---- 6: stickers ---- */
-  const STICKERS = [["📏", "How long is that?"], ["🔁", "Swapping units, both ways"], ["🕰️", "Three ways to say one time"], ["🕐", "Read the clock"], ["🌃", "Writing it in 24-hour"], ["🚌", "Reading a timetable"], ["🚏", "Which one do you catch?"], ["⏱️", "How long between?"], ["📆", "Over the end of the month"], ["🗓️", "Months and years apart"], ["🔍", "Spot the mistake"], ["🪜", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["📏", "How long is that?"], ["🔁", "Swapping units, both ways"], ["🕰️", "Three ways to say one time"], ["🕐", "Read the clock"], ["🌃", "Writing it in 24-hour"], ["🚌", "Reading a timetable"], ["🚏", "Which one do you catch?"], ["⏱️", "How long between?"], ["📆", "Over the end of the month"], ["🗓️", "Months and years apart"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

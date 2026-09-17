@@ -2714,7 +2714,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [["🔗", "Odd, even, and what happens"], ["➖", "Taking away, odd and even"], ["🔺", "The shape that hides a number"], ["❓", "When the shape comes first"], ["⚖️", "The same shape twice"], ["👣", "What comes next?"], ["📈", "Same step, or changing step?"], ["📜", "Say the rule"], ["🔲", "Numbers that make squares"], ["➕", "Between one square and the next"], ["🔍", "Spot the mistake"], ["🪜", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🔗", "Odd, even, and what happens"], ["➖", "Taking away, odd and even"], ["🔺", "The shape that hides a number"], ["❓", "When the shape comes first"], ["⚖️", "The same shape twice"], ["👣", "What comes next?"], ["📈", "Same step, or changing step?"], ["📜", "Say the rule"], ["🔲", "Numbers that make squares"], ["➕", "Between one square and the next"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

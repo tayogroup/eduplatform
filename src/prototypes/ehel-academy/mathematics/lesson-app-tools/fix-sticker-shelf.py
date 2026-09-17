@@ -77,7 +77,7 @@ APPS = {
  ),
  "grade-3-app": (
    (r'id="smM"', "\U0001F50D", "Spot the mistake"),
-   (r'id="tierT"', "\U0001FA9C", "Try this one"),
+   (r'id="tierT"', "\U0001F4DD", "Try this one"),
  ),
 }
 

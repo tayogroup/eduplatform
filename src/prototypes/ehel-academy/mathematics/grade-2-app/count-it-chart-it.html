@@ -711,6 +711,16 @@
       <div class="bigbtns"><button type="button" class="big small teal" id="at13nx" hidden>Next test</button></div>
       <p class="score" id="at13sc"></p>
     </section>
+    <!-- 14  2Ss.02  Make up a problem -->
+    <section class="slide" data-twm="specialising generalising" data-say="Here is a number sentence. Build a story that matches it, then solve it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Comparing two counts is a take away, and its story needs both counts.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at 8 take away 5.</s><s>How many more asks for the difference between the two.</s><s>Counting 5 votes for banana gives the second amount to compare.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Counting 5 more for mango adds instead of comparing.</s><s>The question is how many MORE, not how many altogether.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick who is counting, then what they count next.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">14</span><h2>Make up a problem</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="pb14say">Here is a number sentence. Build a story that matches it, then solve it.</span></div>
+      <div class="stage" id="pb14st"></div>
+      <div class="choices" id="pb14ch"></div>
+      <p class="fb" id="pb14fb" role="status" aria-live="polite"></p>
+      <div class="bigbtns"><button type="button" class="big small teal" id="pb14nx" hidden>Next</button></div>
+      <p class="score" id="pb14sc"></p>
+    </section>
     <section class="slide" data-say="Time to show what you know. Tap the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the check for sorting, charts and chance.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You will read tally charts, pictograms and block graphs, and sort things two ways.</s><s>Get most of them right to finish the lesson, and the screen tells you how many you need.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you do not get enough, that is fine.</s><s>Press Try again and the questions come round again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Before you answer, read the labels on the chart.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
@@ -2039,6 +2049,88 @@
     nx.addEventListener("click", () => { k += 1; paint(); });
     paint();
   })();
+  /* ==== ehel-build-runner: make up a word problem that matches the number sentence ====
+     Cambridge's own task ("make up a word problem to match a number sentence,
+     for example, 70 + 30 = 100") and its own TWM skill for it, SPECIALISING -
+     the child chooses an example and then checks it against the criteria.
+
+     THREE PICKS, and only the middle one carries mathematics. Who the story is
+     about cannot be wrong, so every option there is accepted; what HAPPENS can
+     be wrong, because only an action matching the operation can match the
+     sentence; and then the child solves the problem they have just written,
+     which is markable because this composed it. Nothing here marks prose and
+     nothing pretends to. */
+  function buildStep(o) {
+    const el = o.el, s = o.sentence;
+    const picks = {};
+    const stages = [
+      { key: "who", ask: "Who is your story about?", opts: o.whos.map((w) => ({ t: w, ok: true })) },
+      { key: "act", ask: "What happens next? Only one of these matches the number sentence.",
+        opts: o.actions },
+      { key: "ans", ask: "Now solve the problem you just wrote.", opts: o.solve },
+    ];
+    let i = 0, lock = true;
+    const story = () => picks.who
+      ? picks.who + " " + o.opening + ". Then " + picks.who + " "
+        + (picks.act || "&hellip;") + ". " + o.question
+      : "";
+    function panel() {
+      return '<p class="pb-sum">' + o.sentenceText + "</p>"
+        + (picks.who ? '<p class="pb-story">' + story() + "</p>" : "");
+    }
+    function draw() {
+      const st = stages[i];
+      lock = true;
+      el.next.hidden = true;
+      el.say.innerHTML = st.ask;
+      el.stage.innerHTML = panel();
+      el.fb.className = "fb"; el.fb.textContent = "";
+      el.score.textContent = "Step " + (i + 1) + " of " + stages.length;
+      el.ch.innerHTML = shuffle(st.opts.slice()).map((c) => '<button type="button" '
+        + 'class="choice ss-w" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      lock = false;
+      say(String(st.ask).replace(/<[^>]*>/g, " "));
+    }
+    el.ch.addEventListener("click", (e) => {
+      const b = e.target.closest("button.choice");
+      if (!b || lock) return;
+      const st = stages[i], ok = b.dataset.ok === "1";
+      if (!ok) {
+        el.fb.className = "fb bad";
+        el.fb.textContent = o.wrong[st.key] || "Not that one. Read the number sentence again.";
+        say(el.fb.textContent);
+        return;
+      }
+      lock = true;
+      picks[st.key] = b.textContent;
+      el.stage.innerHTML = panel();
+      el.fb.className = "fb good";
+      el.fb.textContent = o.right[st.key] || "Yes.";
+      say(el.fb.textContent);
+      i++;
+      if (i >= stages.length) { cheer(); finish(o.finish, o.done); return; }
+      el.next.hidden = false;
+    });
+    el.next.addEventListener("click", draw);
+    draw();
+  }
+  /* ---- 14: make up a problem to match 8 - 5 = 3 - specialising, Cambridge Stage 2 ---- */
+  buildStep({
+    el: { say: $("pb14say"), stage: $("pb14st"), ch: $("pb14ch"), fb: $("pb14fb"), score: $("pb14sc"), next: $("pb14nx") },
+    sentence: { a: 8, b: 5, ans: 3 },
+    sentenceText: "8 &minus; 5 = 3",
+    opening: "counts 8 votes for mango",
+    question: "How many more chose mango?",
+    whos: ["Viti", "Amina", "Hodan"],
+    actions: [{ t: "counts 5 votes for banana", ok: true }, { t: "counts 5 more votes for mango", ok: false }, { t: "counts them all again", ok: false }],
+    solve: [{ t: "3", ok: true }, { t: "13", ok: false }, { t: "5", ok: false }],
+    right: { who: "Good. Now what happens to them?", act: "That matches the number sentence.",
+             ans: "That is the answer to your own problem." },
+    wrong: { act: "That does not match the number sentence. Which way does the amount go?",
+             ans: "Read your story again and work it out." },
+    finish: 13,
+    done: "You can write a word problem that matches a number sentence.",
+  });
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
@@ -2528,7 +2620,7 @@
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(13, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(14, "You got " + right10 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -3485,3 +3577,10 @@
   .twm-sc { margin: 10px 0 0; }
 </style>
 <!-- ehel-explain-scripts: see add-explain-scripts.py -->
+<style>/* ehel-problem-builder - see add-problem-builder.py */
+  .pb-sum { font-size: 30px; font-weight: 800; text-align: center; margin: 6px 0 10px;
+    letter-spacing: .02em; }
+  .pb-story { font-size: 18px; line-height: 1.5; text-align: center; margin: 0 auto;
+    max-width: 30ch; padding: 10px 12px; border-radius: 10px;
+    background: var(--cell, var(--card)); border: 1px solid var(--line, #ddd); }
+</style>

@@ -41,7 +41,8 @@ THE TWO COUNTS DO NOT MATCH, AND HERE IS THE WHOLE ARITHMETIC. Leaving it at
 "expected" is what let 42 questions hide in the Grade 1 pack, so the difference
 is reconciled exactly and written down:
 
-    this pack            443
+    this pack            461
+      - 18  problem-builder questions, which the checker cannot see either
       - 54  reasoning claims, which the checker cannot see at all
       - 5   items in steps with no fixed right answer, which it declines
       - 27  the warm-up recall bank, listed ONCE here
@@ -231,6 +232,7 @@ rows = []
 # the recall bank is byte-identical in all nine pages, so it is listed ONCE.
 # Declared inside the per-file loop this reset on every page and the bank came
 # out nine times - 243 rows instead of 27, burying the rest of the pack.
+MARK_BUILDER = "ehel-problem-builder"
 seen_shared = set()
 for f in FILES:
     s = io.open(os.path.join(G, f), encoding="utf-8").read()
@@ -342,6 +344,58 @@ for f in FILES:
     if n_reason < 6:
         sys.exit("  REFUSED: %s holds %d reasoning items, fewer than the 6 every "
                  "lesson carries - the harvester has stopped seeing them" % (f, n_reason))
+
+    # shape 4: buildStep({ ..., actions: [{t,ok}], solve: [{t,ok}] })
+    # "Make up a problem" - two keyed questions per lesson, and they were
+    # invisible to BOTH tools on the day they were written: the gate read 600
+    # and this pack read 443, both unchanged, with nine new keyed questions in
+    # the build. Neither harvester above looks for `actions:` or `solve:`, so
+    # each walked straight past. Fourth shape to do this. Hence the floor.
+    n_build = 0
+    for m in re.finditer(r"buildStep\(\{", s):
+        o = s[m.start():m.start() + 2600]
+        sent = re.search(r'sentenceText:\s*"((?:[^"\\]|\\.)*)"', o)
+        thing = re.search(r'opening:\s*"((?:[^"\\]|\\.)*)"', o)
+        quest = re.search(r'question:\s*"((?:[^"\\]|\\.)*)"', o)
+        a = re.search(r"sentence:\s*\{\s*a:\s*(\d+)", o)
+        if not (sent and thing and quest and a):
+            continue
+        step, codes = place(m.start())
+        sent_t, thing_t, quest_t = plain(sent.group(1)), plain(thing.group(1)), plain(quest.group(1))
+
+        def arr(name):
+            mm = re.search(name + r":\s*\[([\s\S]*?)\]\s*,\s*\n", o)
+            if not mm:
+                return [], None
+            got, k = [], None
+            for t, ok in re.findall(r'\{\s*t:\s*"((?:[^"\\]|\\.)*)",\s*ok:\s*(true|false)\s*\}',
+                                    mm.group(1)):
+                got.append(plain(t))
+                if ok == "true":
+                    k = plain(t)
+            return got, k
+
+        acts, act_key = arr("actions")
+        solv, solv_key = arr("solve")
+        if acts and act_key:
+            rows.append(dict(file=f, step=step or "Make up a problem", codes=codes,
+                             q="The number sentence is " + sent_t
+                               + ". Which of these matches it?",
+                             key=act_key, opts=acts,
+                             why="Only this one moves the amount the way the number "
+                                 "sentence does."))
+            n_build += 1
+        if solv and solv_key:
+            rows.append(dict(file=f, step=step or "Make up a problem", codes=codes,
+                             q="A child builds: somebody " + thing_t + ", then "
+                               + act_key + ". " + quest_t,
+                             key=solv_key, opts=solv,
+                             why="The answer the number sentence " + sent_t + " gives."))
+            n_build += 1
+    if MARK_BUILDER in s and n_build != 2:
+        sys.exit("  REFUSED: %s carries a problem builder but %d of its 2 keyed "
+                 "questions were found - the harvester has stopped seeing "
+                 "`actions:` / `solve:`" % (f, n_build))
 
 # which of them the machine can verify: ask the real tool rather than guess
 try:

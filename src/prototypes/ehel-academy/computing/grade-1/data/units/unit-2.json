@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:53.778Z",
+  "generatedAt": "2026-09-17T20:45:48.729Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -34,10 +34,6 @@
         "text": "Follow the steps in algorithms for everyday tasks."
       },
       {
-        "code": "1CT.05",
-        "text": "Know that an algorithm is a set of instructions to complete a task or to solve a problem."
-      },
-      {
         "code": "1P.01",
         "text": "Know that algorithms can be recreated as code on computers."
       },
@@ -48,6 +44,10 @@
       {
         "code": "1CT.06",
         "text": "Know that the order of instructions is important when creating algorithms."
+      },
+      {
+        "code": "1CT.05",
+        "text": "Know that an algorithm is a set of instructions to complete a task or to solve a problem."
       }
     ],
     "objectiveMapping": {
@@ -79,7 +79,6 @@
     "poster": null
   },
   "outcomes": [
-    "These come straight from the textbook unit. By the end of the unit, the child should be able to:",
     "Know what an algorithm is — a set of steps for a job, in the right order.",
     "Follow the steps in an algorithm, one after another.",
     "Know that an algorithm can be turned into code (a program the computer follows).",
@@ -114,22 +113,22 @@
     {
       "id": "concept-1-everyday-steps-what-is-an-algorithm",
       "title": "Everyday steps (what is an algorithm?)",
-      "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.\n\nStand up and wash your hands in the air together, calling out each step: “First we turn on the tap. Then we get the soap. Then we scrub, scrub, scrub. Then we rinse. Then we dry.” Do it with big happy actions.",
+      "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up and wash your hands in the air, calling out each step: “First we turn on the tap. Then we get the soap. Then we scrub, scrub, scrub. Then we rinse. Then we dry.” Do it with big happy actions.",
       "example": "Those steps, in the right order, are called an algorithm. An algorithm is just steps for a job!",
       "checkYourself": "steps for a job. That is plenty for day one. Can you put two or three everyday steps into a sensible order?"
     },
     {
       "id": "concept-2-follow-the-steps-in-order",
       "title": "Follow the steps, in order",
-      "explanation": "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle — even if all the steps are there. Oh no! All the steps are here, but the order is silly. Order matters! Take 2 steps forward. Hop 1 time.",
-      "example": "Clap 2 times. Then let a child be the leader.",
+      "explanation": "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all the steps are there.\n\nOh no! All the steps are here, but the order is silly. Order matters! Take 2 steps forward. Hop 1 time.",
+      "example": "Clap 2 times, in that order. Can you invent your own two-step order for someone at home to copy?",
       "checkYourself": "Can you notice when the order is silly? Can you trace a simple path and say the moves (right, up, hop)? Can you follow a short list of steps in order?"
     },
     {
       "id": "concept-3-code-and-programs",
       "title": "Code and programs",
-      "explanation": "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of code that does a job is called a program. We plan a program by first writing the algorithm — the steps — and then turning each step into a block of code. One child is the robot (the computer). A robot can only do exactly what it is told — it cannot guess. Robot, take 2 steps forward. Now stop. Then give a fuzzy command like “go over there” and let the robot freeze and shrug.",
-      "example": "“See? A computer only does the steps we give it — it cannot think for itself.”",
+      "explanation": "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of code that does a job is called a program. We plan a program by first writing the algorithm — the steps — and then turning each step into a block of code. You can be the robot yourself: give yourself an exact instruction, like “take 2 steps forward, now stop” — and only move on that exact instruction. A robot can only do exactly what it is told; it cannot guess. Now try a fuzzy command like “go over there” — you will not know what to do, because it is not exact.",
+      "example": "“See? A computer only does the steps we give it - it cannot think for itself.”",
       "checkYourself": "Can you match a simple block to its job by its picture or colour? Can you put Start, Move, Stop in order?"
     },
     {
@@ -226,9 +225,9 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Put the Steps in Order",
-      "context": "work through the steps below and see what happens. This is everyday steps (what is an algorithm?) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Put the Steps in Order: work through the steps below and see what happens. This is everyday steps (what is an algorithm?) in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "These are the steps to wash your hands. They are mixed up! Write 1, 2, 3 in the boxes to put them in the right order.",
-      "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Check what you noticed against that, and write down anything that differed.",
+      "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up and wash your hands in the air, calling out each step: “First we turn on the tap. Then we get the soap. Then we… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: [ ] Dry your hands",
       "explanation": "Everyday steps (what is an algorithm?): Those steps, in the right order, are called an algorithm. An algorithm is just steps for a job!"
@@ -238,60 +237,60 @@
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Follow the Path",
-      "context": "work through the steps below and see what happens. This is follow the steps, in order in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Follow the Path: work through the steps below and see what happens. This is follow the steps, in order in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Nadia's bird wants to get home to its nest. Trace the path with your finger, then with a pencil. Say each move out loud!",
       "answer": "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all the steps are there. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Bird -> Move right -> Move right -> Hop up -> Nest",
-      "explanation": "Follow the steps, in order: We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle — even if all the steps are there."
+      "explanation": "Follow the steps, in order: Clap 2 times, in that order. Can you invent your own two-step order for someone at home to copy?"
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Match the Block",
-      "context": "work through the steps below and see what happens. This is code and programs in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Match the Block: work through the steps below and see what happens. This is code and programs in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "In ScratchJr you use picture blocks. Draw a line to match each block to what it does.",
-      "answer": "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of code that does a job is called a program. We plan a program by first writing the algorithm - the steps - and… Check what you noticed against that, and write down anything that differed.",
+      "answer": "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of code that does a job is called a program. We plan a program by first writing the algorithm — the steps — and… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Code and programs: Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of code that does a job is called a program. We plan a program by first writing the algorithm — the steps — and then turning each step into a block of…"
+      "explanation": "Code and programs: “See? A computer only does the steps we give it - it cannot think for itself.”"
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Put the Code in Order",
-      "context": "work through the steps below and see what happens. This is be an animator! make it move in scratchjr in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Put the Code in Order: work through the steps below and see what happens. This is be an animator! make it move in scratchjr in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Here is the code to make a character move. Write 1, 2, 3 in the boxes to put the blocks in the right order.",
-      "answer": "[ ] Move Right (blue) [ ] Start on Green Flag (yellow) [ ] End — stop the program (red)",
+      "answer": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job: make a character move across and hop. this is the one we will make move. our picture instructions. our GO button… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: [ ] Move Right (blue)",
       "explanation": "Be an animator! Make it move in ScratchJr: Do it yourself: be an animator! Make it move in ScratchJr. Work through it slowly, then check what you did against the explanation above."
     },
     {
       "id": "explore-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Explore",
       "title": "Try it: Make it Move in ScratchJr!",
-      "context": "work through the steps below and see what happens. This is make it talk, and tap to start in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Make it Move in ScratchJr!: work through the steps below and see what happens. This is make it talk, and tap to start in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Now be an animator! Make your character move and hop.",
-      "answer": "Tap the + to start a new project. Tap the + at the top-left to add a character you like — an animal or a person! Find these blocks at the bottom and join them in a row, like a jigsaw Start on Green Flag (yellow). Move Right (5) (blue — move across).",
+      "answer": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on Tap (yellow — the program runs when you tap the character, instead of the green flag). Blue blocks move, purple… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Tap the + to start a new project.",
-      "explanation": "Make it talk, and tap to start: A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on Tap (yellow — the program runs when you tap the character, instead of the green flag)."
+      "explanation": "Make it talk, and tap to start: Do it yourself: make it talk, and tap to start. Work through it slowly, then check what you did against the explanation above."
     },
     {
       "id": "explore-6",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Explore",
       "title": "Try it: Draw Your Character Moving",
-      "context": "work through the steps below and see what happens. This is everyday steps (what is an algorithm?) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "Draw your ScratchJr character. Show it moving — use arrows, or draw it hopping!",
-      "answer": "Did You Know? The steps to brush your teeth are an algorithm — steps for a job, in the right order! A cartoon is made of pictures that move. You just made your own moving character — you are an animator!",
+      "context": "Draw Your Character Moving: work through the steps below and see what happens. This is be an animator in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
+      "prompt": "Draw your ScratchJr character. Show it moving - use arrows, or draw it hopping!",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Did You Know?",
-      "explanation": "Everyday steps (what is an algorithm?): Those steps, in the right order, are called an algorithm. An algorithm is just steps for a job!"
+      "explanation": "There are three small ideas that build on each other. First, an algorithm is a set of steps in the right order - and the order matters. Second, we can follow the steps one after another, from start to finish. Third, an algorithm can be turned into code - the special language that tells a computer what to do - and a…"
     }
   ],
   "visualModels": [
@@ -300,7 +299,7 @@
       "outcomeId": "lo01",
       "title": "Everyday steps (what is an algorithm?)",
       "modelType": "concept-model-1",
-      "purpose": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+      "purpose": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up and wash your hands in the air, calling out each step: “First we turn…",
       "defaultNumber": null
     },
     {
@@ -324,12 +323,12 @@
       "outcomeId": "lo04",
       "title": "Be an animator! Make it move in ScratchJr",
       "modelType": "concept-model-4",
-      "purpose": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job: make a character move across and hop.",
+      "purpose": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job: make a character move across and hop. this is the one we will make move.…",
       "defaultNumber": null
     },
     {
       "id": "model-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "title": "Make it talk, and tap to start",
       "modelType": "concept-model-5",
       "purpose": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on Tap (yellow — the program runs when you tap the character, instead of…",
@@ -355,7 +354,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "title": "How to work with follow the steps, in order",
-      "example": "Clap 2 times. Then let a child be the leader.",
+      "example": "Clap 2 times, in that order. Can you invent your own two-step order for someone at home to copy?",
       "steps": [
         "Read the concept card for follow the steps, in order and say the main idea in your own words.",
         "Look at the worked example and copy it exactly, one step at a time.",
@@ -391,7 +390,7 @@
     },
     {
       "id": "method-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Challenge",
       "title": "How to work with make it talk, and tap to start",
       "example": "Do it yourself: make it talk, and tap to start. Work through it slowly, then check what you did against the explanation above.",
@@ -434,23 +433,23 @@
       "difficulty": "Intermediate",
       "title": "Worked example 4: Everyday steps (what is an algorithm?)",
       "prompt": "Explain in your own words: Everyday steps (what is an algorithm?).",
-      "solution": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.\n\nStand up and wash your hands in the air together, calling out each step: “First we turn on the tap. Then we get the soap. Then we scrub, scrub, scrub. Then we rinse. Then we dry.” Do it with big happy actions.\n\nFor example: Those steps, in the right order, are called an algorithm. An algorithm is just steps for a job!"
+      "solution": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up and wash your hands in the air, calling out each step: “First we turn on the tap. Then we get the soap. Then we scrub, scrub, scrub. Then we rinse. Then we dry.” Do it with big happy actions. For example: Those steps, in the right order, are called an algorithm. An algorithm is just steps for a job!"
     },
     {
       "id": "we05",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Intermediate",
       "title": "Worked example 5: Follow the steps, in order",
       "prompt": "Explain in your own words: Follow the steps, in order.",
-      "solution": "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle — even if all the steps are there. Oh no! All the steps are here, but the order is silly. Order matters! Take 2 steps forward. Hop 1 time. For example: Clap 2 times. Then let a child be the leader."
+      "solution": "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle — even if all the steps are there. Oh no! All the steps are here, but the order is silly. Order matters! Take 2 steps forward. Hop 1 time. For example: Clap 2 times, in that order. Can you invent your own two-step order for someone at home to copy?"
     },
     {
       "id": "we06",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Code and programs",
       "prompt": "Explain in your own words: Code and programs.",
-      "solution": "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of code that does a job is called a program. We plan a program by first writing the algorithm — the steps — and then turning each step into a block of code. One child is the robot (the computer). A robot can only do exactly what it is told — it cannot guess. Robot, take 2 steps forward. Now stop. Then give a fuzzy command like “go over there” and let the robot freeze and shrug. For example: “See? A computer only does the steps we give it — it cannot think for itself.”"
+      "solution": "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of code that does a job is called a program. We plan a program by first writing the algorithm — the steps — and then turning each step into a block of code. You can be the robot yourself: give yourself an exact instruction, like “take 2 steps forward, now stop” — and only move on that exact instruction. A robot can only do exactly what it is told; it cannot guess. Now try a fuzzy command like “go over there” — you will not know what to do, because it is not exact. For example: “See? A computer only does the steps we give it — it cannot think for itself.”"
     }
   ],
   "practice": [
@@ -715,7 +714,7 @@
       ],
       [
         "The order does not matter.",
-        "A computer cannot guess or think — it only does exactly what the blocks say. Use the Robot Game: give a fuzzy instruction and the robot freezes."
+        "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
       ],
       [
         "The computer knows what I mean.",
@@ -723,7 +722,7 @@
       ],
       [
         "Blocks work even if they are not touching.",
-        "Someone wrote the steps — the algorithm — to make it move. This is a lovely, empowering idea: people made it, so people like them can make one too."
+        "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap, you can see nothing happens, then join them."
       ],
       [
         "A cartoon or a game just happens by magic.",
@@ -771,7 +770,7 @@
     },
     {
       "id": "fl05",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Round 2",
       "prompt": "Which block starts the program when you tap the green flag? (Start on Green Flag Hop Move Left)",
       "answer": "Start on Green Flag.",
@@ -780,7 +779,7 @@
     },
     {
       "id": "fl06",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Round 2",
       "prompt": "Put these steps in order. Write 1, 2, 3 in the boxes.",
       "answer": "1 = Get the soap, 2 = Scrub your hands, 3 = Dry your hands.",
@@ -913,12 +912,12 @@
         "options": [
           "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
           "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
-          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
           "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
         ],
-        "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+        "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today."
+        "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…"
       },
       {
         "id": "q02",
@@ -927,7 +926,7 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Follow the steps, in order”?",
         "options": [
-          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
           "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
           "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
           "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
@@ -944,13 +943,13 @@
         "question": "Which of these describes “Code and programs”?",
         "options": [
           "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
-          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
           "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
           "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
         ],
         "answer": "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Step means one thing you do."
+        "explanation": "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
       },
       {
         "id": "q04",
@@ -959,7 +958,7 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Be an animator! Make it move in ScratchJr”?",
         "options": [
-          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
           "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
           "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
           "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
@@ -971,23 +970,23 @@
       {
         "id": "q05",
         "type": "Application",
-        "outcomeId": "lo05",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "Which of these describes “Make it talk, and tap to start”?",
         "options": [
-          "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
-          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+          "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
+          "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
           "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
           "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
         ],
-        "answer": "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
+        "answer": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…"
+        "explanation": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…"
       },
       {
         "id": "q06",
         "type": "Application",
-        "outcomeId": "lo01",
+        "outcomeId": "lo02",
         "difficulty": "Core",
         "question": "What should you do when this happens: The order does not matter.",
         "options": [
@@ -1003,7 +1002,7 @@
       {
         "id": "q07",
         "type": "Application",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Core",
         "question": "What should you do when this happens: The computer knows what I mean.",
         "options": [
@@ -1019,7 +1018,7 @@
       {
         "id": "q08",
         "type": "Application",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Core",
         "question": "What should you do when this happens: Blocks work even if they are not touching.",
         "options": [
@@ -1030,12 +1029,12 @@
         ],
         "answer": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap, you can see nothing happens, then join them.",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Run means make the computer do the program."
+        "explanation": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap, you can see nothing happens, then join them."
       },
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo04",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: A cartoon or a game just happens by magic.",
         "options": [
@@ -1051,7 +1050,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo05",
+        "outcomeId": "lo02",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: Which step comes first, next and last.?",
         "options": [
@@ -1062,12 +1061,12 @@
         ],
         "answer": "order",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Order means which step comes first, next and last.."
+        "explanation": "Order means which step comes first, next and last."
       },
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: Blocks that tell a computer what to do.?",
         "options": [
@@ -1078,12 +1077,12 @@
         ],
         "answer": "code",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Code means blocks that tell a computer what to do."
+        "explanation": "Code means blocks that tell a computer what to do.."
       },
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: Code that does a job.?",
         "options": [
@@ -1094,7 +1093,7 @@
         ],
         "answer": "program",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Program means code that does a job."
+        "explanation": "Program means code that does a job.."
       }
     ]
   },
@@ -1112,26 +1111,26 @@
           {
             "prompt": "Which of these describes “Everyday steps”?",
             "choices": [
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
-            "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+            "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today."
+            "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…"
           },
           {
             "prompt": "Which of these describes “Be an animator! Make it move in ScratchJr”?",
             "choices": [
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
             ],
             "answer": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Order means which step comes first, next and last."
+            "explanation": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
           },
           {
             "prompt": "What should you do when this happens: The computer knows what I mean.",
@@ -1155,7 +1154,7 @@
             ],
             "answer": "order",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for a job, in the right order."
+            "explanation": "Order means which step comes first, next and last.."
           }
         ]
       },
@@ -1171,7 +1170,7 @@
             "prompt": "Which of these describes “Follow the steps, in order”?",
             "choices": [
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
@@ -1182,14 +1181,14 @@
           {
             "prompt": "Which of these describes “Make it talk, and tap to start”?",
             "choices": [
-              "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
             ],
-            "answer": "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
+            "answer": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Code means blocks that tell a computer what to do."
+            "explanation": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…"
           },
           {
             "prompt": "What should you do when this happens: Blocks work even if they are not touching.",
@@ -1213,7 +1212,7 @@
             ],
             "answer": "code",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Step means one thing you do."
+            "explanation": "Code means blocks that tell a computer what to do.."
           }
         ]
       },
@@ -1229,7 +1228,7 @@
             "prompt": "Which of these describes “Code and programs”?",
             "choices": [
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
@@ -1247,7 +1246,7 @@
             ],
             "answer": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top.",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Program means code that does a job."
+            "explanation": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
           },
           {
             "prompt": "What should you do when this happens: A cartoon or a game just happens by magic.",
@@ -1271,7 +1270,7 @@
             ],
             "answer": "program",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Order means which step comes first, next and last."
+            "explanation": "Program means code that does a job.."
           }
         ]
       },
@@ -1287,13 +1286,13 @@
             "prompt": "Which of these describes “Be an animator! Make it move in ScratchJr”?",
             "choices": [
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
             ],
             "answer": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Order means which step comes first, next and last."
+            "explanation": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
           },
           {
             "prompt": "What should you do when this happens: The computer knows what I mean.",
@@ -1317,19 +1316,19 @@
             ],
             "answer": "order",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for a job, in the right order."
+            "explanation": "Order means which step comes first, next and last.."
           },
           {
             "prompt": "Which of these describes “Everyday steps”?",
             "choices": [
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
-            "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+            "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today."
+            "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…"
           }
         ]
       },
@@ -1344,14 +1343,14 @@
           {
             "prompt": "Which of these describes “Make it talk, and tap to start”?",
             "choices": [
-              "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
             ],
-            "answer": "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
+            "answer": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Code means blocks that tell a computer what to do."
+            "explanation": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…"
           },
           {
             "prompt": "What should you do when this happens: Blocks work even if they are not touching.",
@@ -1375,13 +1374,13 @@
             ],
             "answer": "code",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Step means one thing you do."
+            "explanation": "Code means blocks that tell a computer what to do.."
           },
           {
             "prompt": "Which of these describes “Follow the steps, in order”?",
             "choices": [
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
@@ -1409,7 +1408,7 @@
             ],
             "answer": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top.",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Program means code that does a job."
+            "explanation": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
           },
           {
             "prompt": "What should you do when this happens: A cartoon or a game just happens by magic.",
@@ -1433,13 +1432,13 @@
             ],
             "answer": "program",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Order means which step comes first, next and last."
+            "explanation": "Program means code that does a job.."
           },
           {
             "prompt": "Which of these describes “Code and programs”?",
             "choices": [
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
@@ -1479,31 +1478,31 @@
             ],
             "answer": "order",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for a job, in the right order."
+            "explanation": "Order means which step comes first, next and last.."
           },
           {
             "prompt": "Which of these describes “Everyday steps”?",
             "choices": [
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
-            "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+            "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today."
+            "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…"
           },
           {
             "prompt": "Which of these describes “Be an animator! Make it move in ScratchJr”?",
             "choices": [
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
             ],
             "answer": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Order means which step comes first, next and last."
+            "explanation": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
           }
         ]
       },
@@ -1537,13 +1536,13 @@
             ],
             "answer": "code",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Step means one thing you do."
+            "explanation": "Code means blocks that tell a computer what to do.."
           },
           {
             "prompt": "Which of these describes “Follow the steps, in order”?",
             "choices": [
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
@@ -1554,14 +1553,14 @@
           {
             "prompt": "Which of these describes “Make it talk, and tap to start”?",
             "choices": [
-              "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
             ],
-            "answer": "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
+            "answer": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Code means blocks that tell a computer what to do."
+            "explanation": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…"
           }
         ]
       },
@@ -1595,13 +1594,13 @@
             ],
             "answer": "program",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Order means which step comes first, next and last."
+            "explanation": "Program means code that does a job.."
           },
           {
             "prompt": "Which of these describes “Code and programs”?",
             "choices": [
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
@@ -1619,7 +1618,7 @@
             ],
             "answer": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top.",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Program means code that does a job."
+            "explanation": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
           }
         ]
       },
@@ -1641,31 +1640,31 @@
             ],
             "answer": "order",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for a job, in the right order."
+            "explanation": "Order means which step comes first, next and last.."
           },
           {
             "prompt": "Which of these describes “Everyday steps”?",
             "choices": [
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
-            "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+            "answer": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today."
+            "explanation": "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…"
           },
           {
             "prompt": "Which of these describes “Be an animator! Make it move in ScratchJr”?",
             "choices": [
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
             ],
             "answer": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Order means which step comes first, next and last."
+            "explanation": "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
           },
           {
             "prompt": "What should you do when this happens: The computer knows what I mean.",
@@ -1699,13 +1698,13 @@
             ],
             "answer": "code",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Step means one thing you do."
+            "explanation": "Code means blocks that tell a computer what to do.."
           },
           {
             "prompt": "Which of these describes “Follow the steps, in order”?",
             "choices": [
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
@@ -1716,14 +1715,14 @@
           {
             "prompt": "Which of these describes “Make it talk, and tap to start”?",
             "choices": [
-              "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…"
             ],
-            "answer": "A character can do more than move - it can talk! We add the Say block (purple - it shows a speech bubble). We also meet a new start block, Start on…",
+            "answer": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Code means blocks that tell a computer what to do."
+            "explanation": "A character can do more than move — it can talk! We add the Say block (purple — it shows a speech bubble). We also meet a new start block, Start on…"
           },
           {
             "prompt": "What should you do when this happens: Blocks work even if they are not touching.",
@@ -1757,13 +1756,13 @@
             ],
             "answer": "program",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Order means which step comes first, next and last."
+            "explanation": "Program means code that does a job.."
           },
           {
             "prompt": "Which of these describes “Code and programs”?",
             "choices": [
               "Computers follow steps too! The steps we give a computer are written in code. Code is the special language that tells a computer what to do. A set of…",
-              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today.",
+              "We do jobs in steps. A set of steps for a job, done in the right order, has a special name: an algorithm. That is the only new word today. Stand up…",
               "We follow the steps in an algorithm one after another, from first to last. The order matters. If we mix up the order, we get a muddle - even if all…",
               "Now we become animators and make a character really move. We turn our algorithm into blocks, join them, and tap the green flag to run it. Our job:…"
             ],
@@ -1781,7 +1780,7 @@
             ],
             "answer": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top.",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Program means code that does a job."
+            "explanation": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
           },
           {
             "prompt": "What should you do when this happens: A cartoon or a game just happens by magic.",
@@ -1800,9 +1799,8 @@
     ]
   },
   "selfAssessment": [
-    "I can these come straight from the textbook unit. By the end of the unit, the child should be able to:",
+    "I can know what an algorithm is - a set of steps for a job, in the right order.",
     "I can know what an algorithm is — a set of steps for a job, in the right order.",
-    "I can follow the steps in an algorithm, one after another.",
     "I can know that an algorithm can be turned into code (a program the computer follows).",
     "I can join blocks in ScratchJr to make a character move."
   ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.605Z",
+  "generatedAt": "2026-09-17T20:45:49.547Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -83,7 +83,6 @@
     "poster": null
   },
   "outcomes": [
-    "These objectives come straight from the source unit. By the end, the child should be able to:",
     "Explain that a control system works in three steps: input (sense), process (decide), output (act) — and that a robot is a control system.",
     "Give examples of everyday control systems (rice cooker, streetlight, traffic lights, fridge) and point to their input, process and output.",
     "Say what a sensor is, and name sensors that detect distance, light, motion, temperature and infrared.",
@@ -91,8 +90,7 @@
     "Name output devices — screen, printer, light, sound (buzzer/speaker), and movement (motor, robotic arm).",
     "Tell the difference between application software and system software, and say what an operating system is.",
     "Order everyday files from the smallest to the biggest storage (text, audio, image, video).",
-    "Follow (trace) a set of commands to guide a robot on a grid, and fix a command list that has a mistake.",
-    "Before starting, it helps if the child knows that a computer follows instructions and that a program is a set of steps in order. A quick reminder is enough — do not spend a whole session revising."
+    "Follow (trace) a set of commands to guide a robot on a grid, and fix a command list that has a mistake."
   ],
   "toolkit": [
     {
@@ -105,17 +103,6 @@
         "Click the green flag to run and the red circle to stop."
       ],
       "note": "Runs in a web browser. Free, with nothing to download."
-    },
-    {
-      "name": "A free spreadsheet",
-      "url": "Google Sheets, or LibreOffice Calc",
-      "steps": [
-        "Open a new blank spreadsheet.",
-        "Put your field names in row 1, one per column.",
-        "Type one record per row underneath.",
-        "Use Insert → Chart to turn your data into a graph."
-      ],
-      "note": "Any free spreadsheet works — the ideas are the same in all of them."
     }
   ],
   "tutorPrompts": [],
@@ -123,9 +110,9 @@
     {
       "id": "concept-1-sense-think-act-what-a-control-system-is",
       "title": "Sense, think, act: what a control system is",
-      "explanation": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a control system that we build to do a job for us. The short way to remember it is sense — think — act. Act it out first — it teaches the whole idea in five happy minutes. Child A calls out what they see ( “a wall in front!” ) — that is input. Child B decides the rule ( “if there is a wall, stop and turn” ) — that is process.",
-      "example": "Child C acts it out — that is output. Together, you three are a robot — you sense, you think, and you act.",
-      "checkYourself": "Can you name the three steps — sense (input), think (process), act (output) — and point to you in a simple machine like a rice cooker? Listen for the sense-think-act phrase."
+      "explanation": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a control system that we build to do a job for us. The short way to remember it is sense — think — act. Try acting it out yourself: notice something around you (“a wall in front!”) — that is input. Decide a rule (“if there is a wall, stop and turn”) — that is process.",
+      "example": "Then do the turn — that is output. You just acted as a robot — you sensed, you thought, and you acted.",
+      "checkYourself": "Can you name the three steps - sense (input), think (process), act (output) - and point to you in a simple machine like a rice cooker? Listen for the sense-think-act phrase."
     },
     {
       "id": "concept-2-sensing-the-world-sensors-and-data-loggers",
@@ -187,55 +174,55 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Sense, Think, Act",
-      "context": "work through the steps below and see what happens. This is sense, think, act: what a control system is in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Sense, Think, Act: work through the steps below and see what happens. This is sense, think, act: what a control system is in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Every robot works in three steps. Fill in the missing words: input, process, output.",
-      "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts - it moves, lights up, or makes a sound). A robot is a… Check what you noticed against that, and write down anything that differed.",
+      "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: a) The robot's sensors sense the world. This is the ______________.",
-      "explanation": "Sense, think, act: what a control system is: A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a control system that we build to do a job for…"
+      "explanation": "Sense, think, act: what a control system is: Then do the turn — that is output. You just acted as a robot — you sensed, you thought, and you acted."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Input, Process or Output?",
-      "context": "work through the steps below and see what happens. This is sensing the world: sensors and data loggers in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Input, Process or Output?: work through the steps below and see what happens. This is sensing the world: sensors and data loggers in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Write I for input, P for process, or O for output next to each one.",
-      "answer": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor. Different sensors sense different things: distance (how close something is), light (bright or dark), motion… Check what you noticed against that, and write down anything that differed.",
+      "answer": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor. Different sensors sense different things: distance (how close something is), light (bright or dark), motion… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: a) A distance sensor __________",
-      "explanation": "Sensing the world: sensors and data loggers: The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor. Different sensors sense different things: distance (how close something is), light (bright or dark), motion (movement), temperature (heat and cold), and…"
+      "explanation": "Sensing the world: sensors and data loggers: Find one real example of sensing the world: sensors and data loggers around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Match the Sensor to Its Job",
-      "context": "work through the steps below and see what happens. This is acting on the world: outputs, and guiding the robot in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Match the Sensor to Its Job: work through the steps below and see what happens. This is acting on the world: outputs, and guiding the robot in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "A sensor senses a change in the world. Draw a line from each sensor to its job.",
       "answer": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures, video), a printer, lights (a bulb or lamp), sound (a buzzer, speaker or bell) and movement (a motor turning… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Acting on the world: outputs, and guiding the robot: “Which move?” - a motor spinning a wheel, a robotic arm on a date farm lifting a box. Link each output back to a sensor: a smoke alarm senses smoke (input) and sounds a buzzer (output); a robot senses a wall (input) and its motors stop (output)."
+      "explanation": "Acting on the world: outputs, and guiding the robot: “Which move?” — a motor spinning a wheel, a robotic arm on a date farm lifting a box. Link each output back to a sensor: a smoke alarm senses smoke (input) and sounds a buzzer (output); a robot senses a wall (input) and its motors stop (output)."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Sensors and Data Loggers",
-      "context": "work through the steps below and see what happens. This is the software that runs a robot in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Sensors and Data Loggers: work through the steps below and see what happens. This is the software that runs a robot in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Answer in your own words.",
-      "answer": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game - and a robot's own task program. System… Check what you noticed against that, and write down anything that differed.",
+      "answer": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game — and a robot's own task program. System… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: a) What is a sensor? ____________________________________________",
-      "explanation": "The software that runs a robot: A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game — and a robot's own task program. System software runs the machine itself: it manages…"
+      "explanation": "The software that runs a robot: Find one real example of the software that runs a robot around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Guide the Robot to the Well",
-      "context": "work through the steps below and see what happens. This is a robot's memory: file sizes, and be a robot controller in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Guide the Robot to the Well: work through the steps below and see what happens. This is a robot's memory: file sizes, and be a robot controller in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "The robot R starts in the bottom-left, facing up (the arrow). The well is W. Follow the commands on the grid.",
       "answer": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note) is tiny; an audio file (a song) is bigger; an image file (a photo) bigger still; a video file (a film) is the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
@@ -247,12 +234,12 @@
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: Fix the Robot's Commands",
-      "context": "work through the steps below and see what happens. This is sense, think, act: what a control system is in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "Sami wanted his robot to reach the well on the same grid. But this command list has one mistake — the robot turns the wrong way and drives off the grid! Find it and fix it.",
-      "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts - it moves, lights up, or makes a sound). A robot is a… Check what you noticed against that, and write down anything that differed.",
+      "context": "Fix the Robot's Commands: work through the steps below and see what happens. This is be a robot controller in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
+      "prompt": "Sami wanted his robot to reach the well on the same grid. But this command list has one mistake - the robot turns the wrong way and drives off the grid! Find it and fix it.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Forward",
-      "explanation": "Sense, think, act: what a control system is: A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a control system that we build to do a job for…"
+      "explanation": "Welcome to Unit 11 of Year 4 Computing at Ehel Academy. This unit is all about control systems - and the friendly way we meet them is through robots. The big idea is simple and powerful: a control system, and a robot, always works in three steps. It takes in input (it senses the world), it processes that information…"
     }
   ],
   "visualModels": [
@@ -829,15 +816,15 @@
       ],
       [
         "Robots think and feel for themselves, like people.",
-        "A sensor is an input — it senses the world and sends information in. The action that comes out (a light, a sound, a movement) is the output."
+        "This is the big one. A robot only follows the program a person wrote for it. Its processor “decides” by following rules we gave it - it does not have feelings, wishes or ideas of its own. Show this with the grid: the robot went to the well only because we wrote the commands."
       ],
       [
         "A sensor is an output.",
-        "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat or distance — without anyone pressing it."
+        "A sensor is an input — it senses the world and sends information in. The action that comes out (a light, a sound, a movement) is the output."
       ],
       [
         "Any input device is a sensor.",
-        "A screen and a printer are outputs — they show or make something after the processing is done."
+        "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat or distance — without anyone pressing it."
       ],
       [
         "A screen or a printer is an input.",
@@ -1031,9 +1018,9 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Sense, think, act: what a control system is”?",
         "options": [
-          "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+          "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
           "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-          "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+          "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
           "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…"
         ],
         "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
@@ -1047,14 +1034,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Sensing the world: sensors and data loggers”?",
         "options": [
-          "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+          "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
           "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
           "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-          "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+          "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
         ],
-        "answer": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+        "answer": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
         "hint": "Use the Unit 11 Computing Words reference.",
-        "explanation": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…"
+        "explanation": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…"
       },
       {
         "id": "q03",
@@ -1064,9 +1051,9 @@
         "question": "Which of these describes “Acting on the world: outputs, and guiding the robot”?",
         "options": [
           "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-          "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+          "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
           "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-          "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+          "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
         ],
         "answer": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
         "hint": "Use the Unit 11 Computing Words reference.",
@@ -1080,13 +1067,13 @@
         "question": "Which of these describes “The software that runs a robot”?",
         "options": [
           "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-          "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
-          "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+          "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
+          "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
           "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
         ],
-        "answer": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+        "answer": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
         "hint": "Use the Unit 11 Computing Words reference.",
-        "explanation": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+        "explanation": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
       },
       {
         "id": "q05",
@@ -1096,7 +1083,7 @@
         "question": "Which of these describes “A robot's memory: file sizes, and be a robot controller”?",
         "options": [
           "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-          "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+          "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
           "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
           "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
         ],
@@ -1155,7 +1142,7 @@
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo09",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: A screen or a printer is an input.",
         "options": [
@@ -1171,7 +1158,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo10",
+        "outcomeId": "lo02",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: Software and hardware are the same thing.",
         "options": [
@@ -1187,7 +1174,7 @@
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: Senses how hot or cold it is.?",
         "options": [
@@ -1203,7 +1190,7 @@
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: Senses an invisible signal from a remote.?",
         "options": [
@@ -1233,9 +1220,9 @@
             "prompt": "Which of these describes “Sense, think, act: what a control system is”?",
             "choices": [
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
             "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
             "clue": "Use the Unit 11 Computing Words reference.",
@@ -1244,14 +1231,14 @@
           {
             "prompt": "Which of these describes “The software that runs a robot”?",
             "choices": [
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
             ],
-            "answer": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+            "answer": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Process means the brain deciding what to do with the input."
+            "explanation": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
           },
           {
             "prompt": "What should you do when this happens: A sensor is an output.",
@@ -1275,7 +1262,7 @@
             ],
             "answer": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software.",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Motion sensor means senses movement nearby."
+            "explanation": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software."
           }
         ]
       },
@@ -1290,26 +1277,26 @@
           {
             "prompt": "Which of these describes “Sensing the world: sensors and data loggers”?",
             "choices": [
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
-            "answer": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+            "answer": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Robot means a machine that senses, decides and acts to do a job."
+            "explanation": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…"
           },
           {
             "prompt": "Which of these describes “A robot's memory: file sizes, and be a robot controller”?",
             "choices": [
               "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
             ],
             "answer": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Output means the action the system does, that we can see or hear."
+            "explanation": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…"
           },
           {
             "prompt": "What should you do when this happens: Any input device is a sensor.",
@@ -1321,7 +1308,7 @@
             ],
             "answer": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Distance sensor means senses how close something is."
+            "explanation": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat…"
           },
           {
             "prompt": "Which computing word matches this meaning: Senses how hot or cold it is.?",
@@ -1350,12 +1337,12 @@
             "choices": [
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
             "answer": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Input means information that goes into the system."
+            "explanation": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
           },
           {
             "prompt": "What should you do when this happens: Robots think and feel for themselves, like people.",
@@ -1379,7 +1366,7 @@
             ],
             "answer": "A screen and a printer are outputs - they show or make something after the processing is done.",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Light sensor means senses how bright or dark it is."
+            "explanation": "A screen and a printer are outputs - they show or make something after the processing is done."
           },
           {
             "prompt": "Which computing word matches this meaning: Senses an invisible signal from a remote.?",
@@ -1406,14 +1393,14 @@
           {
             "prompt": "Which of these describes “The software that runs a robot”?",
             "choices": [
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
             ],
-            "answer": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+            "answer": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Process means the brain deciding what to do with the input."
+            "explanation": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
           },
           {
             "prompt": "What should you do when this happens: A sensor is an output.",
@@ -1437,15 +1424,15 @@
             ],
             "answer": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software.",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Motion sensor means senses movement nearby."
+            "explanation": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software."
           },
           {
             "prompt": "Which of these describes “Sense, think, act: what a control system is”?",
             "choices": [
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
             "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
             "clue": "Use the Unit 11 Computing Words reference.",
@@ -1466,12 +1453,12 @@
             "choices": [
               "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
             ],
             "answer": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Output means the action the system does, that we can see or hear."
+            "explanation": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…"
           },
           {
             "prompt": "What should you do when this happens: Any input device is a sensor.",
@@ -1483,7 +1470,7 @@
             ],
             "answer": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Distance sensor means senses how close something is."
+            "explanation": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat…"
           },
           {
             "prompt": "Which computing word matches this meaning: Senses how hot or cold it is.?",
@@ -1500,14 +1487,14 @@
           {
             "prompt": "Which of these describes “Sensing the world: sensors and data loggers”?",
             "choices": [
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
-            "answer": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+            "answer": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Robot means a machine that senses, decides and acts to do a job."
+            "explanation": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…"
           }
         ]
       },
@@ -1541,7 +1528,7 @@
             ],
             "answer": "A screen and a printer are outputs - they show or make something after the processing is done.",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Light sensor means senses how bright or dark it is."
+            "explanation": "A screen and a printer are outputs - they show or make something after the processing is done."
           },
           {
             "prompt": "Which computing word matches this meaning: Senses an invisible signal from a remote.?",
@@ -1560,12 +1547,12 @@
             "choices": [
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
             "answer": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Input means information that goes into the system."
+            "explanation": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
           }
         ]
       },
@@ -1599,15 +1586,15 @@
             ],
             "answer": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software.",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Motion sensor means senses movement nearby."
+            "explanation": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software."
           },
           {
             "prompt": "Which of these describes “Sense, think, act: what a control system is”?",
             "choices": [
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
             "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
             "clue": "Use the Unit 11 Computing Words reference.",
@@ -1616,14 +1603,14 @@
           {
             "prompt": "Which of these describes “The software that runs a robot”?",
             "choices": [
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
             ],
-            "answer": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+            "answer": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Process means the brain deciding what to do with the input."
+            "explanation": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
           }
         ]
       },
@@ -1645,7 +1632,7 @@
             ],
             "answer": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Distance sensor means senses how close something is."
+            "explanation": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat…"
           },
           {
             "prompt": "Which computing word matches this meaning: Senses how hot or cold it is.?",
@@ -1662,26 +1649,26 @@
           {
             "prompt": "Which of these describes “Sensing the world: sensors and data loggers”?",
             "choices": [
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
-            "answer": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+            "answer": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Robot means a machine that senses, decides and acts to do a job."
+            "explanation": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…"
           },
           {
             "prompt": "Which of these describes “A robot's memory: file sizes, and be a robot controller”?",
             "choices": [
               "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
             ],
             "answer": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Output means the action the system does, that we can see or hear."
+            "explanation": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…"
           }
         ]
       },
@@ -1703,7 +1690,7 @@
             ],
             "answer": "A screen and a printer are outputs - they show or make something after the processing is done.",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Light sensor means senses how bright or dark it is."
+            "explanation": "A screen and a printer are outputs - they show or make something after the processing is done."
           },
           {
             "prompt": "Which computing word matches this meaning: Senses an invisible signal from a remote.?",
@@ -1722,12 +1709,12 @@
             "choices": [
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
             "answer": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Input means information that goes into the system."
+            "explanation": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
           },
           {
             "prompt": "What should you do when this happens: Robots think and feel for themselves, like people.",
@@ -1761,15 +1748,15 @@
             ],
             "answer": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software.",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Motion sensor means senses movement nearby."
+            "explanation": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software."
           },
           {
             "prompt": "Which of these describes “Sense, think, act: what a control system is”?",
             "choices": [
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
             "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
             "clue": "Use the Unit 11 Computing Words reference.",
@@ -1778,14 +1765,14 @@
           {
             "prompt": "Which of these describes “The software that runs a robot”?",
             "choices": [
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
             ],
-            "answer": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…",
+            "answer": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Process means the brain deciding what to do with the input."
+            "explanation": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
           },
           {
             "prompt": "What should you do when this happens: A sensor is an output.",
@@ -1824,26 +1811,26 @@
           {
             "prompt": "Which of these describes “Sensing the world: sensors and data loggers”?",
             "choices": [
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
-            "answer": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+            "answer": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Robot means a machine that senses, decides and acts to do a job."
+            "explanation": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…"
           },
           {
             "prompt": "Which of these describes “A robot's memory: file sizes, and be a robot controller”?",
             "choices": [
               "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
             ],
             "answer": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Output means the action the system does, that we can see or hear."
+            "explanation": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note)…"
           },
           {
             "prompt": "What should you do when this happens: Any input device is a sensor.",
@@ -1855,7 +1842,7 @@
             ],
             "answer": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Distance sensor means senses how close something is."
+            "explanation": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat…"
           }
         ]
       },
@@ -1884,12 +1871,12 @@
             "choices": [
               "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
               "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor,…",
-              "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor.…",
-              "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a…"
+              "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor.…",
+              "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a…"
             ],
             "answer": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Input means information that goes into the system."
+            "explanation": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures,…"
           },
           {
             "prompt": "What should you do when this happens: Robots think and feel for themselves, like people.",
@@ -1913,22 +1900,20 @@
             ],
             "answer": "A screen and a printer are outputs - they show or make something after the processing is done.",
             "clue": "Use the Unit 11 Computing Words reference.",
-            "explanation": "Light sensor means senses how bright or dark it is."
+            "explanation": "A screen and a printer are outputs - they show or make something after the processing is done."
           }
         ]
       }
     ]
   },
   "selfAssessment": [
-    "I can these objectives come straight from the source unit. By the end, the child should be able to:",
+    "I can explain that a control system works in three steps: input (sense), process (decide), output (act) - and that a robot is a control system.",
     "I can explain that a control system works in three steps: input (sense), process (decide), output (act) — and that a robot is a control system.",
-    "I can give examples of everyday control systems (rice cooker, streetlight, traffic lights, fridge) and point to their input, process and output.",
     "I can say what a sensor is, and name sensors that detect distance, light, motion, temperature and infrared.",
     "I can explain what a data logger is and how it is used.",
+    "I can name output devices - screen, printer, light, sound (buzzer/speaker), and movement (motor, robotic arm).",
     "I can name output devices — screen, printer, light, sound (buzzer/speaker), and movement (motor, robotic arm).",
-    "I can tell the difference between application software and system software, and say what an operating system is.",
     "I can order everyday files from the smallest to the biggest storage (text, audio, image, video).",
-    "I can follow (trace) a set of commands to guide a robot on a grid, and fix a command list that has a mistake.",
-    "I can before starting, it helps if the child knows that a computer follows instructions and that a program is a set of steps in order. A quick reminder is enough — do not spend a whole session revising."
+    "I can follow (trace) a set of commands to guide a robot on a grid, and fix a command list that has a mistake."
   ]
 }

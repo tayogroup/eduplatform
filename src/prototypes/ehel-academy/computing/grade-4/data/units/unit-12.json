@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.621Z",
+  "generatedAt": "2026-09-17T20:45:49.563Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -30,16 +30,8 @@
     "stage": 4,
     "objectives": [
       {
-        "code": "4P.02",
-        "text": "Know how to develop programs with repetition."
-      },
-      {
         "code": "4P.05",
         "text": "Know how to develop programs that produce different outputs from different inputs."
-      },
-      {
-        "code": "4CT.10",
-        "text": "Know how to develop algorithms that include repetition."
       },
       {
         "code": "4P.09",
@@ -52,6 +44,14 @@
       {
         "code": "4P.04",
         "text": "Know how to develop programs that produce a desired output, which includes the use of the repeat command."
+      },
+      {
+        "code": "4CT.09",
+        "text": "Know how to develop algorithms to produce different outputs based on different inputs."
+      },
+      {
+        "code": "4P.02",
+        "text": "Know how to develop programs with repetition."
       }
     ],
     "objectiveMapping": {
@@ -90,8 +90,7 @@
     "Develop an algorithm (a plan) so that different inputs produce different outputs, then build it as a program.",
     "Build a program with a count-controlled loop (the repeat ( ) block) to flash art a set number of times.",
     "Build a program with a forever loop to make art animate over and over.",
-    "Test a program part by part, and find and fix (debug) simple mistakes.",
-    "Before this unit (from the syllabus), children should already follow, understand and edit algorithms that use repetition, test different parts of a program, and know about count-controlled and forever loops (met earlier in Year 4). They will also have met the micro:bit and its inputs and outputs in Unit 8, \"Be an innovator\". A quick recap of \"input, output, loop\" at the start of Session 1 is usually enough."
+    "Test a program part by part, and find and fix (debug) simple mistakes."
   ],
   "toolkit": [
     {
@@ -129,9 +128,9 @@
     {
       "id": "concept-2-painting-shapes-with-light-outputs-in-makecode",
       "title": "Painting shapes with light (outputs) in MakeCode",
-      "explanation": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds (a grid we colour in ourselves to draw our own art), clear screen (turn all the lights off) and pause (ms) (wait for a moment). We also meet show arrow for pointing arrows. On the projector, go to makecode.microbit.org and click New Project. Drag a show icon block into on start and pick the heart from its dropdown — the simulator lights it up at once. Here is a diamond-star pattern to build together (# is a light on. is a light off)",
+      "explanation": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds (a grid we colour in ourselves to draw our own art), clear screen (turn all the lights off) and pause (ms) (wait for a moment). We also meet show arrow for pointing arrows. Go to makecode.microbit.org and click New Project. Drag a show icon block into on start and pick the heart from its dropdown — the simulator lights it up at once. Here is a diamond-star pattern to build (# is a light on, . is a light off).",
       "example": "Find one real example of painting shapes with light (outputs) in MakeCode around you, or on a device you use. Say out loud what it is and why it fits.",
-      "checkYourself": "Can you understand that clear screen only turns the lights off — it does not delete your code? Can you open a new project and find the Basic blocks?"
+      "checkYourself": "Can you understand that clear screen only turns the lights off - it does not delete your code? Can you open a new project and find the Basic blocks?"
     },
     {
       "id": "concept-3-different-outputs-from-different-inputs",
@@ -159,7 +158,7 @@
     {
       "id": "code-1",
       "title": "on start",
-      "language": "Scratch blocks",
+      "language": "MakeCode (micro:bit)",
       "intro": "",
       "lines": [
         "repeat (5)",
@@ -169,9 +168,9 @@
     },
     {
       "id": "code-2",
-      "title": "Session 5 — Be an artist: forever loops and the light-art show — listing 1",
-      "language": "Scratch blocks",
-      "intro": "From Session 5 — Be an artist: forever loops and the light-art show.",
+      "title": "Session 5 - Be an artist: forever loops and the light-art show — listing 1",
+      "language": "MakeCode (micro:bit)",
+      "intro": "From Session 5 - Be an artist: forever loops and the light-art show.",
       "lines": [
         "forever",
         "show arrow [North]",
@@ -186,20 +185,20 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Inputs and Outputs",
-      "context": "work through the steps below and see what happens. This is our canvas of light (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Inputs and Outputs: work through the steps below and see what happens. This is our canvas of light (unplugged) in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "An input is information going IN. An output is information coming OUT. Write each thing below under the right heading.",
-      "answer": "Things: pressing Button A — a heart lighting up — touching the gold logo — a twinkle sound — shaking the micro:bit — a square lighting up Inputs (going in): ________________________________________________________ Outputs (coming out): _____________________________________________________",
+      "answer": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
-      "hint": "Start here: Things: pressing Button A — a heart lighting up — touching the gold logo — a twinkle sound — shaking the micro:bit — a square lighting up",
-      "explanation": "Our canvas of light (unplugged): A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called LEDs, in a 5-by-5 grid. That grid is our…"
+      "hint": "Start here: Things: pressing Button A - a heart lighting up - touching the gold logo - a twinkle sound - shaking the micro:bit - a square lighting up",
+      "explanation": "Our canvas of light (unplugged): Find one real example of our canvas of light around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Colour the Canvas",
-      "context": "work through the steps below and see what happens. This is painting shapes with light (outputs) in makecode in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "a) Colour some squares in this grid to draw a shape you like — a heart, a star, or the first letter of your name.",
+      "context": "Colour the Canvas: work through the steps below and see what happens. This is painting shapes with light (outputs) in makecode in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
+      "prompt": "a) Colour some squares in this grid to draw a shape you like - a heart, a star, or the first letter of your name.",
       "answer": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds (a grid we colour in ourselves to draw our own art), clear screen (turn all the lights off) and pause (ms)… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: b) Now make a pattern that is the same on the left and the right, like the beautiful tiles in a mosaic. Colour it carefully so it is balanced.",
@@ -210,7 +209,7 @@
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Match the Block to the Picture",
-      "context": "work through the steps below and see what happens. This is different outputs from different inputs in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Match the Block to the Picture: work through the steps below and see what happens. This is different outputs from different inputs in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Draw a line from each block to what it shows on the micro:bit.",
       "answer": "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed, on button B pressed, on logo pressed (the gold touch logo) and on shake. Whatever blocks we put inside an… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
@@ -222,7 +221,7 @@
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Write the Algorithm",
-      "context": "work through the steps below and see what happens. This is count-controlled loops: flash it a set number of times in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Write the Algorithm: work through the steps below and see what happens. This is count-controlled loops: flash it a set number of times in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Leila is planning her art. An algorithm is a plan you write BEFORE you code. Fill in the outputs: choose a shape or a sound for each input.",
       "answer": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
@@ -234,24 +233,24 @@
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Predict the Program",
-      "context": "work through the steps below and see what happens. This is be an artist: forever loops and the light-art show in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "Be a code detective! Do not build it yet — predict what it does.",
-      "answer": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the two loops - when do we want to stop after a set number (count-controlled), and when do we want it to keep… Check what you noticed against that, and write down anything that differed.",
+      "context": "Predict the Program: work through the steps below and see what happens. This is be an artist: forever loops and the light-art show in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
+      "prompt": "Be a code detective! Do not build it yet - predict what it does.",
+      "answer": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the two loops — when do we want to stop after a set number (count-controlled), and when do we want it to keep… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: on button A pressed",
-      "explanation": "Be an artist: forever loops and the light-art show: The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the two loops — when do we want to stop after a set number (count-controlled), and when do we want it to keep going (forever)?"
+      "explanation": "Be an artist: forever loops and the light-art show: Do it yourself: be an artist: forever loops and the light-art show. Work through it slowly, then check what you did against the explanation above."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: Try it in MakeCode! Flash a Light",
-      "context": "work through the steps below and see what happens. This is our canvas of light (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Try it in MakeCode! Flash a Light: work through the steps below and see what happens. This is be an artist in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Now build a blinking light with a count-controlled loop.",
-      "answer": "Go to makecode.microbit.org and click New Project. You will see an on-screen micro:bit — that is the simulator. You do not need a real one! From Loops, drag a repeat (4) block into on start. Inside the loop, build a blink: show leds (turn on the middle light), then pause (1000), then clear screen, then pause (1000). It should look like this on start .....",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
-      "hint": "Start here: Go to makecode.microbit.org and click New Project. You will see an on-screen micro:bit — that is the simulator. You do not need a real one!",
-      "explanation": "Our canvas of light (unplugged): A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called LEDs, in a 5-by-5 grid. That grid is our…"
+      "hint": "Start here: Go to makecode.microbit.org and click New Project. You will see an on-screen micro:bit - that is the simulator. You do not need a real one!",
+      "explanation": "Welcome to Unit 12 of Year 4 Computing at Ehel Academy - the very last unit of the year. Be an Artist. But there is no paper and no paintbrush: the canvas is a tiny computer called the micro:bit, and the paint is light. The micro:bit has 25 little red lights - LEDs - in a 5-by-5 grid. By turning those lights on and…"
     }
   ],
   "visualModels": [
@@ -992,11 +991,11 @@
         "question": "Which of these describes “Our canvas of light”?",
         "options": [
           "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
-          "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+          "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
           "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
           "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
         ],
-        "answer": "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+        "answer": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
         "hint": "Use the Unit 12 Computing Words reference.",
         "explanation": "Physical computing device means a small computer that senses the world and acts on it."
       },
@@ -1007,7 +1006,7 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Painting shapes with light (outputs) in MakeCode”?",
         "options": [
-          "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+          "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
           "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
           "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
           "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…"
@@ -1023,14 +1022,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Different outputs from different inputs”?",
         "options": [
-          "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+          "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
           "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
           "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
           "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
         ],
         "answer": "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
         "hint": "Use the Unit 12 Computing Words reference.",
-        "explanation": "Output means information coming out of the device."
+        "explanation": "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
       },
       {
         "id": "q04",
@@ -1040,7 +1039,7 @@
         "question": "Which of these describes “Count-controlled loops: flash it a set number of times”?",
         "options": [
           "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
-          "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+          "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
           "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
           "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
         ],
@@ -1056,7 +1055,7 @@
         "question": "Which of these describes “Be an artist: forever loops and the light-art show”?",
         "options": [
           "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
-          "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+          "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
           "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
           "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
         ],
@@ -1115,7 +1114,7 @@
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo09",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: You need a real micro:bit to code one.",
         "options": [
@@ -1131,7 +1130,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo02",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: forever and repeat are the same.",
         "options": [
@@ -1147,7 +1146,7 @@
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
         "options": [
@@ -1163,7 +1162,7 @@
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
         "options": [
@@ -1192,12 +1191,12 @@
           {
             "prompt": "Which of these describes “Our canvas of light”?",
             "choices": [
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
-            "answer": "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+            "answer": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
             "clue": "Use the Unit 12 Computing Words reference.",
             "explanation": "Physical computing device means a small computer that senses the world and acts on it."
           },
@@ -1205,13 +1204,13 @@
             "prompt": "Which of these describes “Count-controlled loops: flash it a set number of times”?",
             "choices": [
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
             ],
             "answer": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Input device means a part that sends information into the micro:bit."
+            "explanation": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
           },
           {
             "prompt": "What should you do when this happens: An input and an output are the same.",
@@ -1223,7 +1222,7 @@
             ],
             "answer": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+            "explanation": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays)."
           },
           {
             "prompt": "What should you do when this happens: forever and repeat are the same.",
@@ -1235,7 +1234,7 @@
             ],
             "answer": "No. forever never stops on its own; repeat (5) counts to five and stops.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+            "explanation": "No. forever never stops on its own; repeat (5) counts to five and stops."
           }
         ]
       },
@@ -1251,25 +1250,25 @@
             "prompt": "Which of these describes “Painting shapes with light (outputs) in MakeCode”?",
             "choices": [
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
             "answer": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Input means information going into the device."
+            "explanation": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…"
           },
           {
             "prompt": "Which of these describes “Be an artist: forever loops and the light-art show”?",
             "choices": [
               "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
             ],
             "answer": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Output device means a part that sends information out to us."
+            "explanation": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…"
           },
           {
             "prompt": "What should you do when this happens: Pressing a button always does the same thing.",
@@ -1281,7 +1280,7 @@
             ],
             "answer": "No. We program each input separately, so Button A can paint a square while Button B paints a heart.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Touch logo means the gold logo at the top that senses a touch."
+            "explanation": "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
           },
           {
             "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
@@ -1309,7 +1308,7 @@
             "prompt": "Which of these describes “Different outputs from different inputs”?",
             "choices": [
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
@@ -1327,7 +1326,7 @@
             ],
             "answer": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "LED means a tiny light on the micro:bit."
+            "explanation": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots."
           },
           {
             "prompt": "What should you do when this happens: You need a real micro:bit to code one.",
@@ -1339,7 +1338,7 @@
             ],
             "answer": "No. The free on-screen simulator lets you click the buttons and logo with a mouse.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+            "explanation": "No. The free on-screen simulator lets you click the buttons and logo with a mouse."
           },
           {
             "prompt": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
@@ -1367,13 +1366,13 @@
             "prompt": "Which of these describes “Count-controlled loops: flash it a set number of times”?",
             "choices": [
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
             ],
             "answer": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Input device means a part that sends information into the micro:bit."
+            "explanation": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
           },
           {
             "prompt": "What should you do when this happens: An input and an output are the same.",
@@ -1385,7 +1384,7 @@
             ],
             "answer": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+            "explanation": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays)."
           },
           {
             "prompt": "What should you do when this happens: forever and repeat are the same.",
@@ -1397,17 +1396,17 @@
             ],
             "answer": "No. forever never stops on its own; repeat (5) counts to five and stops.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+            "explanation": "No. forever never stops on its own; repeat (5) counts to five and stops."
           },
           {
             "prompt": "Which of these describes “Our canvas of light”?",
             "choices": [
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
-            "answer": "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+            "answer": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
             "clue": "Use the Unit 12 Computing Words reference.",
             "explanation": "Physical computing device means a small computer that senses the world and acts on it."
           }
@@ -1425,13 +1424,13 @@
             "prompt": "Which of these describes “Be an artist: forever loops and the light-art show”?",
             "choices": [
               "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
             ],
             "answer": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Output device means a part that sends information out to us."
+            "explanation": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…"
           },
           {
             "prompt": "What should you do when this happens: Pressing a button always does the same thing.",
@@ -1443,7 +1442,7 @@
             ],
             "answer": "No. We program each input separately, so Button A can paint a square while Button B paints a heart.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Touch logo means the gold logo at the top that senses a touch."
+            "explanation": "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
           },
           {
             "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
@@ -1461,13 +1460,13 @@
             "prompt": "Which of these describes “Painting shapes with light (outputs) in MakeCode”?",
             "choices": [
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
             "answer": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Input means information going into the device."
+            "explanation": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…"
           }
         ]
       },
@@ -1489,7 +1488,7 @@
             ],
             "answer": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "LED means a tiny light on the micro:bit."
+            "explanation": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots."
           },
           {
             "prompt": "What should you do when this happens: You need a real micro:bit to code one.",
@@ -1501,7 +1500,7 @@
             ],
             "answer": "No. The free on-screen simulator lets you click the buttons and logo with a mouse.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+            "explanation": "No. The free on-screen simulator lets you click the buttons and logo with a mouse."
           },
           {
             "prompt": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
@@ -1519,7 +1518,7 @@
             "prompt": "Which of these describes “Different outputs from different inputs”?",
             "choices": [
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
@@ -1547,7 +1546,7 @@
             ],
             "answer": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+            "explanation": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays)."
           },
           {
             "prompt": "What should you do when this happens: forever and repeat are the same.",
@@ -1559,17 +1558,17 @@
             ],
             "answer": "No. forever never stops on its own; repeat (5) counts to five and stops.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+            "explanation": "No. forever never stops on its own; repeat (5) counts to five and stops."
           },
           {
             "prompt": "Which of these describes “Our canvas of light”?",
             "choices": [
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
-            "answer": "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+            "answer": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
             "clue": "Use the Unit 12 Computing Words reference.",
             "explanation": "Physical computing device means a small computer that senses the world and acts on it."
           },
@@ -1577,13 +1576,13 @@
             "prompt": "Which of these describes “Count-controlled loops: flash it a set number of times”?",
             "choices": [
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
             ],
             "answer": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Input device means a part that sends information into the micro:bit."
+            "explanation": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
           }
         ]
       },
@@ -1605,7 +1604,7 @@
             ],
             "answer": "No. We program each input separately, so Button A can paint a square while Button B paints a heart.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Touch logo means the gold logo at the top that senses a touch."
+            "explanation": "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
           },
           {
             "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
@@ -1623,25 +1622,25 @@
             "prompt": "Which of these describes “Painting shapes with light (outputs) in MakeCode”?",
             "choices": [
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
             "answer": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Input means information going into the device."
+            "explanation": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…"
           },
           {
             "prompt": "Which of these describes “Be an artist: forever loops and the light-art show”?",
             "choices": [
               "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
             ],
             "answer": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Output device means a part that sends information out to us."
+            "explanation": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…"
           }
         ]
       },
@@ -1663,7 +1662,7 @@
             ],
             "answer": "No. The free on-screen simulator lets you click the buttons and logo with a mouse.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+            "explanation": "No. The free on-screen simulator lets you click the buttons and logo with a mouse."
           },
           {
             "prompt": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
@@ -1681,7 +1680,7 @@
             "prompt": "Which of these describes “Different outputs from different inputs”?",
             "choices": [
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
@@ -1699,7 +1698,7 @@
             ],
             "answer": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "LED means a tiny light on the micro:bit."
+            "explanation": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots."
           }
         ]
       },
@@ -1721,17 +1720,17 @@
             ],
             "answer": "No. forever never stops on its own; repeat (5) counts to five and stops.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+            "explanation": "No. forever never stops on its own; repeat (5) counts to five and stops."
           },
           {
             "prompt": "Which of these describes “Our canvas of light”?",
             "choices": [
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
-            "answer": "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+            "answer": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
             "clue": "Use the Unit 12 Computing Words reference.",
             "explanation": "Physical computing device means a small computer that senses the world and acts on it."
           },
@@ -1739,13 +1738,13 @@
             "prompt": "Which of these describes “Count-controlled loops: flash it a set number of times”?",
             "choices": [
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
             ],
             "answer": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Input device means a part that sends information into the micro:bit."
+            "explanation": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
           },
           {
             "prompt": "What should you do when this happens: An input and an output are the same.",
@@ -1757,7 +1756,7 @@
             ],
             "answer": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+            "explanation": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays)."
           }
         ]
       },
@@ -1785,25 +1784,25 @@
             "prompt": "Which of these describes “Painting shapes with light (outputs) in MakeCode”?",
             "choices": [
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
             "answer": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Input means information going into the device."
+            "explanation": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…"
           },
           {
             "prompt": "Which of these describes “Be an artist: forever loops and the light-art show”?",
             "choices": [
               "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…"
             ],
             "answer": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Output device means a part that sends information out to us."
+            "explanation": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the…"
           },
           {
             "prompt": "What should you do when this happens: Pressing a button always does the same thing.",
@@ -1815,7 +1814,7 @@
             ],
             "answer": "No. We program each input separately, so Button A can paint a square while Button B paints a heart.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Touch logo means the gold logo at the top that senses a touch."
+            "explanation": "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
           }
         ]
       },
@@ -1843,7 +1842,7 @@
             "prompt": "Which of these describes “Different outputs from different inputs”?",
             "choices": [
               "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed,…",
-              "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
+              "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and…",
               "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds…",
               "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
             ],
@@ -1861,7 +1860,7 @@
             ],
             "answer": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "LED means a tiny light on the micro:bit."
+            "explanation": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots."
           },
           {
             "prompt": "What should you do when this happens: You need a real micro:bit to code one.",
@@ -1873,7 +1872,7 @@
             ],
             "answer": "No. The free on-screen simulator lets you click the buttons and logo with a mouse.",
             "clue": "Use the Unit 12 Computing Words reference.",
-            "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+            "explanation": "No. The free on-screen simulator lets you click the buttons and logo with a mouse."
           }
         ]
       }
@@ -1887,7 +1886,6 @@
     "I can develop an algorithm (a plan) so that different inputs produce different outputs, then build it as a program.",
     "I can build a program with a count-controlled loop (the repeat ( ) block) to flash art a set number of times.",
     "I can build a program with a forever loop to make art animate over and over.",
-    "I can test a program part by part, and find and fix (debug) simple mistakes.",
-    "I can before this unit (from the syllabus), children should already follow, understand and edit algorithms that use repetition, test different parts of a program, and know about count-controlled and forever loops (met earlier in Year 4). They will also have met the micro:bit and its inputs and outputs in Unit 8, \"Be an innovator\". A quick recap of \"input, output, loop\" at the start of Session 1 is usually enough."
+    "I can test a program part by part, and find and fix (debug) simple mistakes."
   ]
 }

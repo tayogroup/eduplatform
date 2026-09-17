@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.149Z",
+  "generatedAt": "2026-09-17T20:45:49.109Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -14,7 +14,7 @@
     "unitId": "comp-g02-u07",
     "unitNo": 7,
     "unitTitle": "Be a Data Scientist",
-    "unitOverview": "Welcome to Unit 7 of Year 2 Computing at Ehel Academy. That sounds like a very big job, but it just means they ask good questions, collect the answers (which we call data), sort the data into the right kind, and use it to help solve a problem. This unit gives simple names to clever thinking they already do. There are three big ideas, and you build on each other. The first idea is that questions come in two kinds. A statistical question has more than one answer — like “What are the favourite snacks of the children in our class?” A non-statistical question has only one answer — like “What colour is Leo's bag?” The second idea is that the data we collect also comes in two kinds. Numerical data is numbers — things we count or measure, like height or test scores. Categorical data is groups — words like eye colour or favourite fruit. The third idea is the best part: data helps us solve problems. Almost all of this unit is unplugged — it is done on paper, with sorting cards, and with a tape measure. There is no app to download and no account to make. The one place a computer appears is the idea of an electronic form (a set of questions on a screen); you can show what a form looks like on a printed sheet, or on any tablet or phone you already have, but no child ever needs to sign in anywhere.",
+    "unitOverview": "Welcome to Unit 7 of Year 2 Computing at Ehel Academy. A data scientist sounds like a very big job, but it just means you ask good questions, collect the answers (which we call data), sort the data into the right kind, and use it to help solve a problem. This unit gives simple names to clever thinking you already do. There are three big ideas, and they build on each other. The first idea is that questions come in two kinds. A statistical question has more than one answer — like “What are the favourite snacks of the children in our class?” A non-statistical question has only one answer — like “What colour is Leo’s bag?” The second idea is that the data we collect also comes in two kinds. Numerical data is numbers — things we count or measure, like height or test scores. Categorical data is groups — words like eye colour or favourite fruit. The third idea is the best part: data helps us solve problems. Almost all of this unit is unplugged — it is done on paper, with sorting cards, and with a tape measure. There is no app to download and no account to make. The one place a computer appears is the idea of an electronic form (a set of questions on a screen); you can see what a form looks like on a printed sheet, or on any tablet or phone you already have, but you never need to sign in anywhere.",
     "learningPath": [
       "Preview the goals, key words and the tools you will use",
       "Read the concept explainers and study the code examples",
@@ -79,7 +79,7 @@
     "Explain, in their own words, that a statistical question is one where the answers can be different for different people.",
     "Name the two kinds of statistical data: numerical (numbers we count or measure) and categorical (groups, like colours or names).",
     "Sort simple data into numerical or categorical.",
-    "Understand that we must never add up categorical data — the numbers on a category are just name tags.",
+    "Understand that we must never add up categorical data - the numbers on a category are just name tags.",
     "Say that computing devices collect data on electronic forms, and that a number is typed or picked, while a category is chosen from a list.",
     "Give at least one way that data helps to solve a problem (test scores, shop stock, weather, or car maps).",
     "Choose the right thing to do with data to answer a question (for example, sort the marks to find the highest)."
@@ -90,8 +90,8 @@
     {
       "id": "concept-1-questions-one-answer-or-many-answers",
       "title": "Questions: one answer or many answers?",
-      "explanation": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking. What colour is my bag? Now say: “What is your favourite fruit?” Lots of different answers come back. Some questions have just one answer. Some have many answers.",
-      "example": "A many-answer question has a special name — a statistical question. A one-answer question is a non-statistical question.",
+      "explanation": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking. “What colour is my bag?” has only one answer. “What is your favourite fruit?” has lots of different answers, because everyone likes something different.",
+      "example": "A many-answer question has a special name - a statistical question. A one-answer question is a non-statistical question.",
       "checkYourself": "Can you tell a one-answer question from a many-answer question?"
     },
     {
@@ -142,31 +142,31 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: One Answer or Many Answers?",
-      "context": "work through the steps below and see what happens. This is questions: one answer or many answers? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "One Answer or Many Answers?: work through the steps below and see what happens. This is questions: one answer or many answers? in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Some questions have only one answer. Some have many answers. A many-answer question is called a statistical question. A one-answer question is called a non-statistical question. Tick the right box for each question.",
-      "answer": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking.… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Do one step at a time, and check the result before you move on.",
-      "explanation": "Questions: one answer or many answers?: Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking."
+      "explanation": "Questions: one answer or many answers?: A many-answer question has a special name - a statistical question. A one-answer question is a non-statistical question."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Numbers or Groups?",
-      "context": "work through the steps below and see what happens. This is two kinds of data: numbers and groups in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "Numerical data is numbers — we count or measure them. Categorical data is groups — like colours or names. Tick the right box for each one.",
-      "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or measure, like height, test scores or how many pets. Categorical data is groups - words that sort things into… Check what you noticed against that, and write down anything that differed.",
+      "context": "Numbers or Groups?: work through the steps below and see what happens. This is two kinds of data: numbers and groups in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
+      "prompt": "Numerical data is numbers - we count or measure them. Categorical data is groups - like colours or names. Tick the right box for each one.",
+      "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or measure, like height, test scores or how many pets. Categorical data is groups — words that sort things into… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Do one step at a time, and check the result before you move on.",
-      "explanation": "Two kinds of data: numbers and groups: When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or measure, like height, test scores or how many pets. Categorical data is groups — words that sort things into kinds, like eye colour, favourite fruit or…"
+      "explanation": "Two kinds of data: numbers and groups: Find one real example of two kinds of data: numbers and groups around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Circle the Numbers",
-      "context": "work through the steps below and see what happens. This is data on a form (computing devices) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Circle the Numbers: work through the steps below and see what happens. This is data on a form (computing devices) in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Circle the data that is numerical (numbers we count or measure). Leave the groups alone.",
       "answer": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you type or pick a number; for categorical data you pick a category from a list (you tap your choice). This is how… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
@@ -178,11 +178,11 @@
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Look at the Form",
-      "context": "work through the steps below and see what happens. This is how data helps us solve problems in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Look at the Form: work through the steps below and see what happens. This is how data helps us solve problems in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "A form is a set of questions on a screen or on paper. Look at the form. Does each question want a number or a group? Tick the right box.",
-      "answer": "Ehel Academy — Class Form 1. How many brothers and sisters 2. How do you get to school? ( ) walk ( ) car ( ) bus Match: Form question → Numerical (number) / Categorical (group)",
+      "answer": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores to see who needs help. Shops keep count of what they sell so you know what to buy more of. Weather computers… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
-      "hint": "Start here: Ehel Academy — Class Form",
+      "hint": "Start here: Ehel Academy - Class Form",
       "explanation": "How data helps us solve problems: Answer this in your own words, out loud or on paper: How data helps us solve problems? Then check your answer against the explanation above."
     },
     {
@@ -190,24 +190,24 @@
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Data Helps Us!",
-      "context": "work through the steps below and see what happens. This is be a data scientist: the mini-project in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Data Helps Us!: work through the steps below and see what happens. This is be a data scientist: the mini-project in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Data helps us solve problems. Draw a line from each problem to the data that helps.",
       "answer": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide which questions are statistical or non-statistical, and then use the data to answer a question. This session… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Be a data scientist: the Mini-Project: Help you measure heights with the tape measure (this is numerical data) and look carefully at eye colour (this is categorical data). Keep groups small - three or four you are plenty."
+      "explanation": "Be a data scientist: the Mini-Project: Help you measure heights with the tape measure (this is numerical data) and look carefully at eye colour (this is categorical data). Keep groups small — three or four you are plenty."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: True or False?",
-      "context": "work through the steps below and see what happens. This is questions: one answer or many answers? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "True or False?: work through the steps below and see what happens. This is be a data scientist in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Circle True or False for each one.",
-      "answer": "a. A question with many answers is a statistical question. True / False b. Numerical data is words, like eye colour. True / False c. Data can help us solve problems. True / False Did You Know? Data scientists use data to solve very big, tricky problems — like keeping people healthy!",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: a. A question with many answers is a statistical question. True / False",
-      "explanation": "Questions: one answer or many answers?: Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking."
+      "explanation": "Welcome to Unit 7 of Year 2 Computing at Ehel Academy. That sounds like a very big job, but it just means they ask good questions, collect the answers (which we call data), sort the data into the right kind, and use it to help solve a problem. This unit gives simple names to clever thinking they already do."
     }
   ],
   "visualModels": [
@@ -645,11 +645,11 @@
       ],
       [
         "How many children are in our class? has many answers.",
-        "It has only one answer - a single number. It is about how many answers the question has. It is non-statistical, even though we count many you to find it."
+        "It has only one answer — a single number. It is about how many answers the question has. It is non-statistical, even though we count many children to find it."
       ],
       [
         "All data is numbers.",
-        "It has only one answer — a single number. It is about how many answers the question has. It is non-statistical, even though we count many you to find it."
+        "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data)."
       ],
       [
         "You can add up any numbers.",
@@ -657,7 +657,7 @@
       ],
       [
         "Numerical and categorical are the same thing.",
-        "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing — the numbers are just name tags, like shirt numbers."
+        "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
       ],
       [
         "Data just sits there.",
@@ -875,14 +875,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Questions: one answer or many answers?”?",
         "options": [
-          "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+          "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
           "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
           "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
-          "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…"
+          "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…"
         ],
-        "answer": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
+        "answer": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
         "hint": "Use the Unit 7 Computing Words reference.",
-        "explanation": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…"
+        "explanation": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…"
       },
       {
         "id": "q04",
@@ -891,14 +891,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Two kinds of data: numbers and groups”?",
         "options": [
-          "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
-          "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
+          "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+          "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
           "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
           "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
         ],
-        "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+        "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
         "hint": "Use the Unit 7 Computing Words reference.",
-        "explanation": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…"
+        "explanation": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…"
       },
       {
         "id": "q05",
@@ -923,9 +923,9 @@
         "difficulty": "Core",
         "question": "Which of these describes “How data helps us solve problems”?",
         "options": [
-          "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
+          "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
           "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
-          "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+          "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
           "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
         ],
         "answer": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
@@ -939,8 +939,8 @@
         "difficulty": "Core",
         "question": "Which of these describes “Be a data scientist: the Mini-Project”?",
         "options": [
-          "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
-          "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+          "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+          "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
           "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
           "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…"
         ],
@@ -978,7 +978,7 @@
         ],
         "answer": "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
         "hint": "Use the Unit 7 Computing Words reference.",
-        "explanation": "Data means the facts we collect."
+        "explanation": "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data)."
       },
       {
         "id": "q10",
@@ -1055,26 +1055,26 @@
           {
             "prompt": "Which of these describes “Two kinds of data: numbers and groups”?",
             "choices": [
-              "A question with only one answer.",
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen."
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+            "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Non-statistical question means a question with only one answer."
+            "explanation": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…"
           },
           {
             "prompt": "Which of these describes “Be a data scientist: the Mini-Project”?",
             "choices": [
               "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…",
-              "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
-              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
               "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
             ],
             "answer": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Form means a set of questions on paper or on a screen."
+            "explanation": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…"
           },
           {
             "prompt": "What should you do when this happens: You can add up any numbers.",
@@ -1086,7 +1086,7 @@
             ],
             "answer": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Question means something we ask to get data."
+            "explanation": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
           }
         ]
       },
@@ -1111,14 +1111,14 @@
           {
             "prompt": "Which of these describes “Data on a form”?",
             "choices": [
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen.",
-              "Someone who uses data to solve problems."
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "Data that is numbers — we count or measure it.",
+            "answer": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Numerical data means data that is numbers — we count or measure it."
+            "explanation": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
           },
           {
             "prompt": "What should you do when this happens: A statistical question is one about numbers.",
@@ -1130,7 +1130,7 @@
             ],
             "answer": "What is your favourite colour?",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Data scientist means someone who uses data to solve problems."
+            "explanation": "What is your favourite colour?"
           },
           {
             "prompt": "What should you do when this happens: Numerical and categorical are the same thing.",
@@ -1142,7 +1142,7 @@
             ],
             "answer": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Statistical question means a question with many answers."
+            "explanation": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
           }
         ]
       },
@@ -1157,26 +1157,26 @@
           {
             "prompt": "Which of these describes “Questions: one answer or many answers?”?",
             "choices": [
-              "A question with many answers.",
-              "A question with only one answer.",
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names."
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
+            "answer": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Statistical question means a question with many answers."
+            "explanation": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…"
           },
           {
             "prompt": "Which of these describes “How data helps us solve problems”?",
             "choices": [
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen.",
-              "Someone who uses data to solve problems.",
-              "The facts we collect."
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
             ],
-            "answer": "Data that is groups — like colours or names.",
+            "answer": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Categorical data means data that is groups — like colours or names."
+            "explanation": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
           },
           {
             "prompt": "What should you do when this happens: All data is numbers.",
@@ -1200,7 +1200,7 @@
             ],
             "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Non-statistical question means a question with only one answer."
+            "explanation": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat."
           }
         ]
       },
@@ -1215,26 +1215,26 @@
           {
             "prompt": "Which of these describes “Two kinds of data: numbers and groups”?",
             "choices": [
-              "A question with only one answer.",
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen."
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+            "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Non-statistical question means a question with only one answer."
+            "explanation": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…"
           },
           {
             "prompt": "Which of these describes “Be a data scientist: the Mini-Project”?",
             "choices": [
               "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…",
-              "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
-              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
               "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
             ],
             "answer": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Form means a set of questions on paper or on a screen."
+            "explanation": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…"
           },
           {
             "prompt": "What should you do when this happens: You can add up any numbers.",
@@ -1246,7 +1246,7 @@
             ],
             "answer": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Question means something we ask to get data."
+            "explanation": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
           },
           {
             "prompt": "Circle the data that is numerical (numbers).",
@@ -1272,14 +1272,14 @@
           {
             "prompt": "Which of these describes “Data on a form”?",
             "choices": [
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen.",
-              "Someone who uses data to solve problems."
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "Data that is numbers — we count or measure it.",
+            "answer": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Numerical data means data that is numbers — we count or measure it."
+            "explanation": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
           },
           {
             "prompt": "What should you do when this happens: A statistical question is one about numbers.",
@@ -1291,7 +1291,7 @@
             ],
             "answer": "What is your favourite colour?",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Data scientist means someone who uses data to solve problems."
+            "explanation": "What is your favourite colour?"
           },
           {
             "prompt": "What should you do when this happens: Numerical and categorical are the same thing.",
@@ -1303,7 +1303,7 @@
             ],
             "answer": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Statistical question means a question with many answers."
+            "explanation": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
           },
           {
             "prompt": "True or false: You can add up categorical data like eye colours.",
@@ -1328,14 +1328,14 @@
           {
             "prompt": "Which of these describes “How data helps us solve problems”?",
             "choices": [
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen.",
-              "Someone who uses data to solve problems.",
-              "The facts we collect."
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
             ],
-            "answer": "Data that is groups — like colours or names.",
+            "answer": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Categorical data means data that is groups — like colours or names."
+            "explanation": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
           },
           {
             "prompt": "What should you do when this happens: All data is numbers.",
@@ -1359,19 +1359,19 @@
             ],
             "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Non-statistical question means a question with only one answer."
+            "explanation": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat."
           },
           {
             "prompt": "Which of these describes “Questions: one answer or many answers?”?",
             "choices": [
-              "A question with many answers.",
-              "A question with only one answer.",
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names."
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
+            "answer": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Statistical question means a question with many answers."
+            "explanation": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…"
           }
         ]
       },
@@ -1387,13 +1387,13 @@
             "prompt": "Which of these describes “Be a data scientist: the Mini-Project”?",
             "choices": [
               "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…",
-              "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
-              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
               "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
             ],
             "answer": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Form means a set of questions on paper or on a screen."
+            "explanation": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…"
           },
           {
             "prompt": "What should you do when this happens: You can add up any numbers.",
@@ -1405,7 +1405,7 @@
             ],
             "answer": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Question means something we ask to get data."
+            "explanation": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
           },
           {
             "prompt": "Circle the data that is numerical (numbers).",
@@ -1421,14 +1421,14 @@
           {
             "prompt": "Which of these describes “Two kinds of data: numbers and groups”?",
             "choices": [
-              "A question with only one answer.",
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen."
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+            "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Non-statistical question means a question with only one answer."
+            "explanation": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…"
           }
         ]
       },
@@ -1450,7 +1450,7 @@
             ],
             "answer": "What is your favourite colour?",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Data scientist means someone who uses data to solve problems."
+            "explanation": "What is your favourite colour?"
           },
           {
             "prompt": "What should you do when this happens: Numerical and categorical are the same thing.",
@@ -1462,7 +1462,7 @@
             ],
             "answer": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Statistical question means a question with many answers."
+            "explanation": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
           },
           {
             "prompt": "True or false: You can add up categorical data like eye colours.",
@@ -1477,14 +1477,14 @@
           {
             "prompt": "Which of these describes “Data on a form”?",
             "choices": [
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen.",
-              "Someone who uses data to solve problems."
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "Data that is numbers — we count or measure it.",
+            "answer": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Numerical data means data that is numbers — we count or measure it."
+            "explanation": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
           }
         ]
       },
@@ -1518,31 +1518,31 @@
             ],
             "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Non-statistical question means a question with only one answer."
+            "explanation": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat."
           },
           {
             "prompt": "Which of these describes “Questions: one answer or many answers?”?",
             "choices": [
-              "A question with many answers.",
-              "A question with only one answer.",
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names."
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
+            "answer": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Statistical question means a question with many answers."
+            "explanation": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…"
           },
           {
             "prompt": "Which of these describes “How data helps us solve problems”?",
             "choices": [
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen.",
-              "Someone who uses data to solve problems.",
-              "The facts we collect."
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
             ],
-            "answer": "Data that is groups — like colours or names.",
+            "answer": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Categorical data means data that is groups — like colours or names."
+            "explanation": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
           }
         ]
       },
@@ -1564,7 +1564,7 @@
             ],
             "answer": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Question means something we ask to get data."
+            "explanation": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
           },
           {
             "prompt": "Circle the data that is numerical (numbers).",
@@ -1580,26 +1580,26 @@
           {
             "prompt": "Which of these describes “Two kinds of data: numbers and groups”?",
             "choices": [
-              "A question with only one answer.",
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen."
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+            "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Non-statistical question means a question with only one answer."
+            "explanation": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…"
           },
           {
             "prompt": "Which of these describes “Be a data scientist: the Mini-Project”?",
             "choices": [
               "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…",
-              "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
-              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
               "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
             ],
             "answer": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Form means a set of questions on paper or on a screen."
+            "explanation": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide…"
           }
         ]
       },
@@ -1621,7 +1621,7 @@
             ],
             "answer": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Statistical question means a question with many answers."
+            "explanation": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
           },
           {
             "prompt": "True or false: You can add up categorical data like eye colours.",
@@ -1636,14 +1636,14 @@
           {
             "prompt": "Which of these describes “Data on a form”?",
             "choices": [
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen.",
-              "Someone who uses data to solve problems."
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "Data that is numbers — we count or measure it.",
+            "answer": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Numerical data means data that is numbers — we count or measure it."
+            "explanation": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
           },
           {
             "prompt": "What should you do when this happens: A statistical question is one about numbers.",
@@ -1655,7 +1655,7 @@
             ],
             "answer": "What is your favourite colour?",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Data scientist means someone who uses data to solve problems."
+            "explanation": "What is your favourite colour?"
           }
         ]
       },
@@ -1677,31 +1677,31 @@
             ],
             "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Non-statistical question means a question with only one answer."
+            "explanation": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat."
           },
           {
             "prompt": "Which of these describes “Questions: one answer or many answers?”?",
             "choices": [
-              "A question with many answers.",
-              "A question with only one answer.",
-              "Data that is numbers — we count or measure it.",
-              "Data that is groups — like colours or names."
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…",
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
             ],
-            "answer": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical…",
+            "answer": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Statistical question means a question with many answers."
+            "explanation": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…"
           },
           {
             "prompt": "Which of these describes “How data helps us solve problems”?",
             "choices": [
-              "Data that is groups — like colours or names.",
-              "A set of questions on paper or on a screen.",
-              "Someone who uses data to solve problems.",
-              "The facts we collect."
+              "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
+              "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical…",
+              "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or…",
+              "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you…"
             ],
-            "answer": "Data that is groups — like colours or names.",
+            "answer": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…",
             "clue": "Use the Unit 7 Computing Words reference.",
-            "explanation": "Categorical data means data that is groups — like colours or names."
+            "explanation": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores…"
           },
           {
             "prompt": "What should you do when this happens: All data is numbers.",

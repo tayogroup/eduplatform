@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:53.827Z",
+  "generatedAt": "2026-09-17T20:45:48.782Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -44,10 +44,6 @@
       {
         "code": "1MD.03",
         "text": "Know how to use computing devices to manually record data, including using a form."
-      },
-      {
-        "code": "1P.06",
-        "text": "Identify why a program does not produce the desired result."
       }
     ],
     "objectiveMapping": {
@@ -84,8 +80,7 @@
     "Sort real things into groups that are the same in some way (by colour, size or kind).",
     "Count how many things are in each group.",
     "Colour a tiny block graph to show how many — one block for each thing.",
-    "Organise things by putting them in order (small to big, or 1, 2, 3).",
-    "These are spoken, hands-on skills — the child does not need to read or write to show them. Pointing, sorting and colouring are enough."
+    "Organise things by putting them in order (small to big, or 1, 2, 3)."
   ],
   "toolkit": [],
   "tutorPrompts": [],
@@ -100,9 +95,9 @@
     {
       "id": "concept-2-sorting-into-groups",
       "title": "Sorting into groups",
-      "explanation": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by size (all the big ones together), or by kind (all the animals together, all the fruit together). Tip out your basket of objects in the middle of the circle. Oh dear, all mixed up! Let us sort them — all the same-colour ones together. This is a group. Every one is red.",
+      "explanation": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by size (all the big ones together), or by kind (all the animals together, all the fruit together). Tip out a basket of objects in front of you. Oh dear, all mixed up! Let us sort them — all the same-colour ones together. This is a group. Every one is red.",
       "example": "We sorted by colour. Look, we can sort the same things in more than one way!",
-      "checkYourself": "you are all red. you are all big. Can you make a group where everything is the same in some way?"
+      "checkYourself": "Can you say what makes a group the same — like colour or size? Can you make a group where everything is the same in some way?"
     },
     {
       "id": "concept-3-count-each-group-and-make-a-block-graph",
@@ -114,8 +109,8 @@
     {
       "id": "concept-4-putting-things-in-order",
       "title": "Putting things in order",
-      "explanation": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read. Muddle them up and ask: “Who is tallest? It is hard to tell.” Now line them up shortest to tallest: “Now it is easy!",
-      "example": "We put them in order by size.” Do the same with three objects — a small stone, a bigger one, the biggest. Choose three you of different heights (kindly, only if they are happy to help).",
+      "explanation": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read. Muddle them up and ask: “Who is tallest? It is hard to tell.” Now line them up shortest to tallest: “Now it is easy! We put them in order by size.”",
+      "example": "Try it with three objects — a small stone, a bigger one, and the biggest. If you have toys or family members of different heights nearby, line them up shortest to tallest.",
       "checkYourself": "Can you tell which is shortest and which is longest? Can you understand that order helps us read data? Can you put three things in order by size?"
     },
     {
@@ -133,21 +128,21 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: What can it tell us?",
-      "context": "work through the steps below and see what happens. This is data is all around us in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "What can it tell us?: work through the steps below and see what happens. This is data is all around us in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "A computing device can answer questions. Draw a line from each device to the question it can answer.",
-      "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a machine that works with data. The best part: a computing device can answer our questions. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a machine that works with data. The best part: a computing device can answer our questions. This is a computing… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Data is all around us: Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a machine that works with data. The best part: a computing device can answer our questions."
+      "explanation": "Data is all around us: See — it gave us an answer. That answer is data too."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Sort the animals",
-      "context": "work through the steps below and see what happens. This is sorting into groups in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Sort the animals: work through the steps below and see what happens. This is sorting into groups in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Some animals live in the SEA. Some live on the LAND. Colour the SEA animals blue. Colour the LAND animals green.",
-      "answer": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by size (all the big ones together), or by kind (all the animals together, all the fruit together). Check what you noticed against that, and write down anything that differed.",
+      "answer": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by size (all the big ones together), or by kind (all the animals together, all the fruit together). Tip out a basket… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: 🐟 fish 🐫 camel 🐳 whale 🐐 goat",
       "explanation": "Sorting into groups: We sorted by colour. Look, we can sort the same things in more than one way!"
@@ -157,7 +152,7 @@
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Count the fruit",
-      "context": "work through the steps below and see what happens. This is count each group and make a block graph in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Count the fruit: work through the steps below and see what happens. This is count each group and make a block graph in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Look at the basket. Count how many of each fruit. Write the number in the box.",
       "answer": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of our data. This picture is called a block graph. A block graph makes it very easy to see which group has the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
@@ -169,21 +164,21 @@
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Colour the block graph",
-      "context": "work through the steps below and see what happens. This is putting things in order in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Colour the block graph: work through the steps below and see what happens. This is putting things in order in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Now colour one block for each fruit you counted.",
-      "answer": "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2, 3, 4. When data is in a good order, it is much easier to read. Check what you noticed against that, and write down anything that differed.",
+      "answer": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read. Muddle them up and ask: “Who is tallest? It is… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Which fruit has the most blocks? Point to the longest row!",
-      "explanation": "Putting things in order: To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read."
+      "explanation": "Putting things in order: Try it with three objects — a small stone, a bigger one, and the biggest. If you have toys or family members of different heights nearby, line them up shortest to tallest."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Put them in order",
-      "context": "work through the steps below and see what happens. This is be a data detective! (class survey) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Put them in order: work through the steps below and see what happens. This is be a data detective! (class survey) in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Here are three bars. Write 1 by the shortest bar, 2 by the next, and 3 by the longest bar.",
-      "answer": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to find the answer. This session runs the Mini-Project, “Our Favourite Fruit”. Check what you noticed against that, and write down anything that differed.",
+      "answer": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to find the answer. This session runs the Mini-Project, “Our Favourite Fruit”. Detectives, here is our question:… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: A ####",
       "explanation": "Be a data detective! (class survey): Do it yourself: be a data detective! (class survey). Work through it slowly, then check what you did against the explanation above."
@@ -193,12 +188,12 @@
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: Draw a computing device",
-      "context": "work through the steps below and see what happens. This is data is all around us in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Draw a computing device: work through the steps below and see what happens. This is be a data detective in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "colour your Data Detective badge! Draw a computing device you use at home or at Ehel Academy (a phone, a tablet or a watch).",
-      "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a machine that works with data. The best part: a computing device can answer our questions. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Did You Know?",
-      "explanation": "Data is all around us: Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a machine that works with data. The best part: a computing device can answer our questions."
+      "explanation": "The big word for the unit is data. It sounds hard, but it is simple: data is information - numbers, words, pictures or sounds. When Leila counts the mangoes in the bowl, that is data. When Leo sorts his blocks into a red pile and a blue pile, he is being a data detective."
     }
   ],
   "visualModels": [
@@ -357,7 +352,7 @@
       "difficulty": "Intermediate",
       "title": "Worked example 6: Count each group and make a block graph",
       "prompt": "Explain in your own words: Count each group and make a block graph.",
-      "solution": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of our data. This picture is called a block graph. A block graph makes it very easy to see which group has the most and which has the fewest.\n\nGo back to your sorted groups from Session 2. 1, 2, 3, 4 - four red ones. Now show you the magic. Let us make a picture of this. For every red one, I colour one block. Watch. Now we can SEE it.\n\nFor example: Which row is longer? That group has the most!"
+      "solution": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of our data. This picture is called a block graph. A block graph makes it very easy to see which group has the most and which has the fewest. Go back to your sorted groups from Session 2. 1, 2, 3, 4 — four red ones. Now show you the magic. Let us make a picture of this. For every red one, I colour one block. Watch. Now we can SEE it.\n\nFor example: Which row is longer? That group has the most!"
     }
   ],
   "practice": [
@@ -789,6 +784,11 @@
     }
   ],
   "project": {
+    "0": "I asked my friends the question.",
+    "1": "I made one mark for each answer.",
+    "2": "I counted each group.",
+    "3": "I coloured one block for each child, with no gaps.",
+    "4": "I found our class favourite fruit (the most).",
     "title": "My Data Detective Project",
     "brief": "Bring together everything from Be a Data Detective into one finished piece of work you can show and explain.",
     "steps": [
@@ -804,7 +804,7 @@
       "I counted each group.",
       "I coloured one block for each child, with no gaps.",
       "I found our class favourite fruit (the most).",
-      "Practice — Read the Graph",
+      "Practice - Read the Graph",
       "1. How many children liked mango? [ ]",
       "2. Which fruit did the MOST children like? ______________________"
     ]
@@ -819,12 +819,12 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Data is all around us”?",
         "options": [
-          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
           "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
           "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-          "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+          "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
         ],
-        "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+        "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
         "hint": "Use the Unit 3 Computing Words reference.",
         "explanation": "Data means information. It can be numbers, words, pictures or sounds."
       },
@@ -835,10 +835,10 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Sorting into groups”?",
         "options": [
-          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
           "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
           "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
-          "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+          "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
         ],
         "answer": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
         "hint": "Use the Unit 3 Computing Words reference.",
@@ -851,9 +851,9 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Count each group and make a block graph”?",
         "options": [
-          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
           "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
-          "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…",
+          "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
           "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
         ],
         "answer": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
@@ -867,14 +867,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Putting things in order”?",
         "options": [
-          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
-          "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…",
+          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+          "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
           "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
           "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
         ],
-        "answer": "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…",
+        "answer": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+        "explanation": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
       },
       {
         "id": "q05",
@@ -883,7 +883,7 @@
         "difficulty": "Core",
         "question": "Which of these describes “Be a data detective!”?",
         "options": [
-          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+          "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
           "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
           "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
           "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…"
@@ -911,7 +911,7 @@
       {
         "id": "q07",
         "type": "Application",
-        "outcomeId": "lo07",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: Sorting means tidying up.",
         "options": [
@@ -927,7 +927,7 @@
       {
         "id": "q08",
         "type": "Application",
-        "outcomeId": "lo01",
+        "outcomeId": "lo02",
         "difficulty": "Core",
         "question": "What should you do when this happens: There is only one right way to sort.",
         "options": [
@@ -943,7 +943,7 @@
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Core",
         "question": "What should you do when this happens: The tallest block graph row is the one at the top.",
         "options": [
@@ -959,7 +959,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: Muddling sort and order. Sorting makes groups; ordering puts things in a line (small to big). Keep the two words joined to a clear action",
         "options": [
@@ -975,7 +975,7 @@
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo04",
+        "outcomeId": "lo05",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: To say how many.?",
         "options": [
@@ -991,7 +991,7 @@
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo05",
+        "outcomeId": "lo06",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: To put things in a line - small to big, or 1, 2, 3.?",
         "options": [
@@ -1020,26 +1020,26 @@
           {
             "prompt": "Which of these describes “Data is all around us”?",
             "choices": [
-              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
               "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
               "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-              "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
-            "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+            "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Data means information. It can be numbers, words, pictures or sounds."
           },
           {
             "prompt": "Which of these describes “Putting things in order”?",
             "choices": [
-              "Things that are the same in some way, kept together.",
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds."
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
             ],
-            "answer": "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…",
+            "answer": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Group means things that are the same in some way, kept together."
+            "explanation": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
           },
           {
             "prompt": "What should you do when this happens: Sorting means tidying up.",
@@ -1051,7 +1051,7 @@
             ],
             "answer": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+            "explanation": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?"
           },
           {
             "prompt": "What should you do when this happens: Muddling sort and order. Sorting makes groups; ordering puts things in a line (small to big). Keep the two words joined to a clear action",
@@ -1079,25 +1079,25 @@
             "prompt": "Which of these describes “Sorting into groups”?",
             "choices": [
               "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
-              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
               "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-              "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
             "answer": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Computing device means a machine that works with data. It can answer questions."
+            "explanation": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…"
           },
           {
             "prompt": "Which of these describes “Be a data detective!”?",
             "choices": [
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds.",
-              "A machine that works with data. It can answer questions."
+              "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
             ],
             "answer": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Count means to say how many."
+            "explanation": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…"
           },
           {
             "prompt": "What should you do when this happens: There is only one right way to sort.",
@@ -1109,7 +1109,7 @@
             ],
             "answer": "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Computing device means a machine that works with data. It can answer questions."
+            "explanation": "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this."
           },
           {
             "prompt": "Which computing word matches this meaning: To say how many.?",
@@ -1121,7 +1121,7 @@
             ],
             "answer": "count",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Count means to say how many."
+            "explanation": "Count means to say how many.."
           }
         ]
       },
@@ -1136,26 +1136,26 @@
           {
             "prompt": "Which of these describes “Count each group and make a block graph”?",
             "choices": [
-              "To put things into groups that are the same in some way.",
-              "Things that are the same in some way, kept together.",
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3."
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
             "answer": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Sort means to put things into groups that are the same in some way."
+            "explanation": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
           },
           {
             "prompt": "What should you do when this happens: Data is only numbers.",
             "choices": [
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds.",
-              "A machine that works with data. It can answer questions.",
-              "To put things into groups that are the same in some way."
+              "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
+              "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?",
+              "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this.",
+              "No - it is the longest row, wherever it sits. Point along each row to compare length, not position."
             ],
-            "answer": "To put things in a line — small to big, or 1, 2, 3.",
+            "answer": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+            "explanation": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data."
           },
           {
             "prompt": "What should you do when this happens: The tallest block graph row is the one at the top.",
@@ -1167,10 +1167,10 @@
             ],
             "answer": "No - it is the longest row, wherever it sits. Point along each row to compare length, not position.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Sort means to put things into groups that are the same in some way."
+            "explanation": "No - it is the longest row, wherever it sits. Point along each row to compare length, not position."
           },
           {
-            "prompt": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+            "prompt": "Which computing word matches this meaning: To put things in a line - small to big, or 1, 2, 3.?",
             "choices": [
               "order",
               "data",
@@ -1179,7 +1179,7 @@
             ],
             "answer": "order",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+            "explanation": "Order means to put things in a line - small to big, or 1, 2, 3.."
           }
         ]
       },
@@ -1194,14 +1194,14 @@
           {
             "prompt": "Which of these describes “Putting things in order”?",
             "choices": [
-              "Things that are the same in some way, kept together.",
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds."
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
             ],
-            "answer": "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…",
+            "answer": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Group means things that are the same in some way, kept together."
+            "explanation": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
           },
           {
             "prompt": "What should you do when this happens: Sorting means tidying up.",
@@ -1213,7 +1213,7 @@
             ],
             "answer": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+            "explanation": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?"
           },
           {
             "prompt": "What should you do when this happens: Muddling sort and order. Sorting makes groups; ordering puts things in a line (small to big). Keep the two words joined to a clear action",
@@ -1230,12 +1230,12 @@
           {
             "prompt": "Which of these describes “Data is all around us”?",
             "choices": [
-              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
               "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
               "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-              "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
-            "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+            "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Data means information. It can be numbers, words, pictures or sounds."
           }
@@ -1252,14 +1252,14 @@
           {
             "prompt": "Which of these describes “Be a data detective!”?",
             "choices": [
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds.",
-              "A machine that works with data. It can answer questions."
+              "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
             ],
             "answer": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Count means to say how many."
+            "explanation": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…"
           },
           {
             "prompt": "What should you do when this happens: There is only one right way to sort.",
@@ -1271,7 +1271,7 @@
             ],
             "answer": "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Computing device means a machine that works with data. It can answer questions."
+            "explanation": "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this."
           },
           {
             "prompt": "Which computing word matches this meaning: To say how many.?",
@@ -1283,19 +1283,19 @@
             ],
             "answer": "count",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Count means to say how many."
+            "explanation": "Count means to say how many.."
           },
           {
             "prompt": "Which of these describes “Sorting into groups”?",
             "choices": [
               "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
-              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
               "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-              "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
             "answer": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Computing device means a machine that works with data. It can answer questions."
+            "explanation": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…"
           }
         ]
       },
@@ -1310,14 +1310,14 @@
           {
             "prompt": "What should you do when this happens: Data is only numbers.",
             "choices": [
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds.",
-              "A machine that works with data. It can answer questions.",
-              "To put things into groups that are the same in some way."
+              "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
+              "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?",
+              "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this.",
+              "No - it is the longest row, wherever it sits. Point along each row to compare length, not position."
             ],
-            "answer": "To put things in a line — small to big, or 1, 2, 3.",
+            "answer": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+            "explanation": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data."
           },
           {
             "prompt": "What should you do when this happens: The tallest block graph row is the one at the top.",
@@ -1329,10 +1329,10 @@
             ],
             "answer": "No - it is the longest row, wherever it sits. Point along each row to compare length, not position.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Sort means to put things into groups that are the same in some way."
+            "explanation": "No - it is the longest row, wherever it sits. Point along each row to compare length, not position."
           },
           {
-            "prompt": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+            "prompt": "Which computing word matches this meaning: To put things in a line - small to big, or 1, 2, 3.?",
             "choices": [
               "order",
               "data",
@@ -1341,19 +1341,19 @@
             ],
             "answer": "order",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+            "explanation": "Order means to put things in a line - small to big, or 1, 2, 3.."
           },
           {
             "prompt": "Which of these describes “Count each group and make a block graph”?",
             "choices": [
-              "To put things into groups that are the same in some way.",
-              "Things that are the same in some way, kept together.",
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3."
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
             "answer": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Sort means to put things into groups that are the same in some way."
+            "explanation": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
           }
         ]
       },
@@ -1375,7 +1375,7 @@
             ],
             "answer": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+            "explanation": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?"
           },
           {
             "prompt": "What should you do when this happens: Muddling sort and order. Sorting makes groups; ordering puts things in a line (small to big). Keep the two words joined to a clear action",
@@ -1392,26 +1392,26 @@
           {
             "prompt": "Which of these describes “Data is all around us”?",
             "choices": [
-              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
               "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
               "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-              "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
-            "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+            "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Data means information. It can be numbers, words, pictures or sounds."
           },
           {
             "prompt": "Which of these describes “Putting things in order”?",
             "choices": [
-              "Things that are the same in some way, kept together.",
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds."
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
             ],
-            "answer": "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…",
+            "answer": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Group means things that are the same in some way, kept together."
+            "explanation": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
           }
         ]
       },
@@ -1433,7 +1433,7 @@
             ],
             "answer": "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Computing device means a machine that works with data. It can answer questions."
+            "explanation": "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this."
           },
           {
             "prompt": "Which computing word matches this meaning: To say how many.?",
@@ -1445,31 +1445,31 @@
             ],
             "answer": "count",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Count means to say how many."
+            "explanation": "Count means to say how many.."
           },
           {
             "prompt": "Which of these describes “Sorting into groups”?",
             "choices": [
               "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
-              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
               "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-              "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
             "answer": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Computing device means a machine that works with data. It can answer questions."
+            "explanation": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…"
           },
           {
             "prompt": "Which of these describes “Be a data detective!”?",
             "choices": [
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds.",
-              "A machine that works with data. It can answer questions."
+              "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
             ],
             "answer": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Count means to say how many."
+            "explanation": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…"
           }
         ]
       },
@@ -1491,10 +1491,10 @@
             ],
             "answer": "No - it is the longest row, wherever it sits. Point along each row to compare length, not position.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Sort means to put things into groups that are the same in some way."
+            "explanation": "No - it is the longest row, wherever it sits. Point along each row to compare length, not position."
           },
           {
-            "prompt": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+            "prompt": "Which computing word matches this meaning: To put things in a line - small to big, or 1, 2, 3.?",
             "choices": [
               "order",
               "data",
@@ -1503,31 +1503,31 @@
             ],
             "answer": "order",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+            "explanation": "Order means to put things in a line - small to big, or 1, 2, 3.."
           },
           {
             "prompt": "Which of these describes “Count each group and make a block graph”?",
             "choices": [
-              "To put things into groups that are the same in some way.",
-              "Things that are the same in some way, kept together.",
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3."
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
             "answer": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Sort means to put things into groups that are the same in some way."
+            "explanation": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
           },
           {
             "prompt": "What should you do when this happens: Data is only numbers.",
             "choices": [
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds.",
-              "A machine that works with data. It can answer questions.",
-              "To put things into groups that are the same in some way."
+              "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
+              "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?",
+              "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this.",
+              "No - it is the longest row, wherever it sits. Point along each row to compare length, not position."
             ],
-            "answer": "To put things in a line — small to big, or 1, 2, 3.",
+            "answer": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+            "explanation": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data."
           }
         ]
       },
@@ -1554,26 +1554,26 @@
           {
             "prompt": "Which of these describes “Data is all around us”?",
             "choices": [
-              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
               "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
               "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-              "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
-            "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+            "answer": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Data means information. It can be numbers, words, pictures or sounds."
           },
           {
             "prompt": "Which of these describes “Putting things in order”?",
             "choices": [
-              "Things that are the same in some way, kept together.",
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds."
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
             ],
-            "answer": "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…",
+            "answer": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Group means things that are the same in some way, kept together."
+            "explanation": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
           },
           {
             "prompt": "What should you do when this happens: Sorting means tidying up.",
@@ -1585,7 +1585,7 @@
             ],
             "answer": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+            "explanation": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?"
           }
         ]
       },
@@ -1607,31 +1607,31 @@
             ],
             "answer": "count",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Count means to say how many."
+            "explanation": "Count means to say how many.."
           },
           {
             "prompt": "Which of these describes “Sorting into groups”?",
             "choices": [
               "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
-              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device - like a phone, a tablet or a watch - is a…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
               "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
-              "To organise data means to put it in order. We can put things in order by size - from the smallest to the biggest. We can put numbers in order - 1, 2,…"
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
             "answer": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Computing device means a machine that works with data. It can answer questions."
+            "explanation": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…"
           },
           {
             "prompt": "Which of these describes “Be a data detective!”?",
             "choices": [
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds.",
-              "A machine that works with data. It can answer questions."
+              "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
             ],
             "answer": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Count means to say how many."
+            "explanation": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to…"
           },
           {
             "prompt": "What should you do when this happens: There is only one right way to sort.",
@@ -1643,7 +1643,7 @@
             ],
             "answer": "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Computing device means a machine that works with data. It can answer questions."
+            "explanation": "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this."
           }
         ]
       },
@@ -1656,7 +1656,7 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+            "prompt": "Which computing word matches this meaning: To put things in a line - small to big, or 1, 2, 3.?",
             "choices": [
               "order",
               "data",
@@ -1665,31 +1665,31 @@
             ],
             "answer": "order",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+            "explanation": "Order means to put things in a line - small to big, or 1, 2, 3.."
           },
           {
             "prompt": "Which of these describes “Count each group and make a block graph”?",
             "choices": [
-              "To put things into groups that are the same in some way.",
-              "Things that are the same in some way, kept together.",
-              "To say how many.",
-              "To put things in a line — small to big, or 1, 2, 3."
+              "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
+              "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a…",
+              "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by…",
+              "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2,…"
             ],
             "answer": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Sort means to put things into groups that are the same in some way."
+            "explanation": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of…"
           },
           {
             "prompt": "What should you do when this happens: Data is only numbers.",
             "choices": [
-              "To put things in a line — small to big, or 1, 2, 3.",
-              "Information. It can be numbers, words, pictures or sounds.",
-              "A machine that works with data. It can answer questions.",
-              "To put things into groups that are the same in some way."
+              "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
+              "Tidying is putting things away. Sorting is making groups where everything is the same in some way. What makes this a group? How are they the same?",
+              "No - we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this.",
+              "No - it is the longest row, wherever it sits. Point along each row to compare length, not position."
             ],
-            "answer": "To put things in a line — small to big, or 1, 2, 3.",
+            "answer": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+            "explanation": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data."
           },
           {
             "prompt": "What should you do when this happens: The tallest block graph row is the one at the top.",
@@ -1701,7 +1701,7 @@
             ],
             "answer": "No - it is the longest row, wherever it sits. Point along each row to compare length, not position.",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Sort means to put things into groups that are the same in some way."
+            "explanation": "No - it is the longest row, wherever it sits. Point along each row to compare length, not position."
           }
         ]
       }
@@ -1713,7 +1713,6 @@
     "I can sort real things into groups that are the same in some way (by colour, size or kind).",
     "I can count how many things are in each group.",
     "I can colour a tiny block graph to show how many — one block for each thing.",
-    "I can organise things by putting them in order (small to big, or 1, 2, 3).",
-    "I can these are spoken, hands-on skills — the child does not need to read or write to show them. Pointing, sorting and colouring are enough."
+    "I can organise things by putting them in order (small to big, or 1, 2, 3)."
   ]
 }

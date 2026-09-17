@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.521Z",
+  "generatedAt": "2026-09-17T20:45:49.464Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -30,10 +30,6 @@
     "stage": 4,
     "objectives": [
       {
-        "code": "4CT.02",
-        "text": "Follow, understand, edit and correct algorithms that use iteration, including count-controlled loops."
-      },
-      {
         "code": "4CT.10",
         "text": "Know how to develop algorithms that include repetition."
       },
@@ -42,16 +38,20 @@
         "text": "Predict the outcome of algorithms that contain repetition."
       },
       {
-        "code": "4CT.01",
-        "text": "Follow, understand, edit and correct algorithms that use repetition, including indefinite (forever) loops."
-      },
-      {
         "code": "4P.03",
         "text": "Know how to develop programs with iteration."
       },
       {
         "code": "4P.02",
         "text": "Know how to develop programs with repetition."
+      },
+      {
+        "code": "4CT.04",
+        "text": "Compare and contrast algorithms designed for the same task to determine which produces the outcome that is best suited to the purpose."
+      },
+      {
+        "code": "4CT.02",
+        "text": "Follow, understand, edit and correct algorithms that use iteration, including count-controlled loops."
       }
     ],
     "objectiveMapping": {
@@ -90,8 +90,7 @@
     "Compare and contrast two algorithms written for the same task and say which one is best suited.",
     "Develop a program with iteration in Scratch, using a loop to make sound.",
     "Use the volume blocks set volume to ( ) % and change volume by ( ), including a negative change to get quieter.",
-    "Add the free Music extension and compose a short rhythm or tune with play drum and play note, and add a comment to explain the code.",
-    "Before this unit (from the syllabus), children should already follow and correct an algorithm that uses iteration, build a program with the repeat command (met in Unit 4), and add comments to code. A quick recap of repeat at the start of Session 2 is usually enough."
+    "Add the free Music extension and compose a short rhythm or tune with play drum and play note, and add a comment to explain the code."
   ],
   "toolkit": [
     {
@@ -118,7 +117,7 @@
     {
       "id": "concept-2-meet-the-loops-forever-and-repeat",
       "title": "Meet the loops: forever and repeat",
-      "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and round until you press the red Stop. Add a drum-style sprite with the Add Sprite button, then find forever and repeat ( ) in the orange Control blocks. Build this tiny program together and run it with the green flag Open Scratch and click Create on the projector.",
+      "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and round until you press the red Stop. Add a drum-style sprite with the Add Sprite button, then find forever and repeat ( ) in the orange Control blocks. Build this tiny program and run it with the green flag.",
       "example": "Do it yourself: meet the loops: forever and repeat. Work through it slowly, then check what you did against the explanation above.",
       "checkYourself": "Can you run and stop a forever loop? Can you drag a loop block and put a sound block inside it?"
     },
@@ -140,7 +139,7 @@
       "id": "concept-5-be-a-musician-compose-and-compare",
       "title": "Be a musician: compose and compare",
       "explanation": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing two algorithms written for the same task, and we add a comment to explain our code.\n\nIn Scratch, click the Add Extension button (bottom-left) and choose Music. New green blocks appear, including set tempo to ( ), play drum ( ) for ( ) beats and play note ( ) for ( ) beats. In play drum, 1 is the Snare Drum (a sharp “tak” ) and 2 is the Bass Drum (a deep “dum” ). In play note, 60 is a nice middle note; bigger is higher, smaller is lower.",
-      "example": "The beats number is how long the sound lasts — the very idea from Session 1: 0.5 is a short note, 1 a one-beat note, 2 a long note. Build a simple hand-drum rhythm together, wrapped in a repeat loop so it plays four times",
+      "example": "The beats number is how long the sound lasts — the very idea from Session 1: 0.5 is a short note, 1 a one-beat note, 2 a long note. Build a simple hand-drum rhythm, wrapped in a repeat loop so it plays four times.",
       "checkYourself": "Can you build a rhythm inside a loop and change the tempo? Can you compare two algorithms and say which suits the task? Can you add a sensible comment? Can you add the Music extension?"
     }
   ],
@@ -218,72 +217,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Spot the Repetition",
-      "context": "work through the steps below and see what happens. This is repetition all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Spot the Repetition: work through the steps below and see what happens. This is repetition all around us (unplugged) in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Maya's class at Ehel Academy made up a drum chant. Read it out loud and tap the beat on your desk!",
-      "answer": "1. Dum, tak, tak — here we go! 2. Clap your hands and tap your toe. 3. Dum, tak, tak — here we go! 4. Beat the drum, now soft, now slow. 5. Dum, tak, tak — here we go!",
+      "answer": "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is iteration. When we tell a computer to repeat a block of instructions, we use a loop. dum, tak, tak. We just… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
-      "hint": "Start here: 1. Dum, tak, tak — here we go!",
-      "explanation": "Repetition all around us (unplugged): Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is iteration. When we tell a computer to repeat a block of instructions, we use a loop."
+      "hint": "Start here: 1. Dum, tak, tak - here we go!",
+      "explanation": "Repetition all around us (unplugged): Repetition is what makes music feel like music. Start with music, because they can hear it."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Continue the Beat Pattern",
-      "context": "work through the steps below and see what happens. This is meet the loops: forever and repeat in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Continue the Beat Pattern: work through the steps below and see what happens. This is meet the loops: forever and repeat in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "A pattern repeats a group over and over. Fill in the two blanks to finish each pattern.",
-      "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and round until you press the red Stop. Check what you noticed against that, and write down anything that differed.",
+      "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and round until you press the red Stop. Add a drum-style sprite with the Add Sprite button, then find forever and… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: a) dum, tak, tak, dum, tak, tak, dum, ______, ______",
-      "explanation": "Meet the loops: forever and repeat: In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and round until you press the red Stop."
+      "explanation": "Meet the loops: forever and repeat: Do it yourself: meet the loops: forever and repeat. Work through it slowly, then check what you did against the explanation above."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Name the Loop",
-      "context": "work through the steps below and see what happens. This is read it, predict it: algorithms and volume in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Name the Loop: work through the steps below and see what happens. This is read it, predict it: algorithms and volume in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Draw a line from each loop to what it does.",
-      "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and works out what they will hear. Check what you noticed against that, and write down anything that differed.",
+      "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and works out what they will hear. Try it: build it in Scratch to check the prediction. Check yourself: Can you… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Read it, predict it: algorithms and volume: An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and works out what they will hear."
+      "explanation": "Read it, predict it: algorithms and volume: Today we also meet the volume blocks: set volume to ( ) % fixes the loudness, and change volume by ( ) adds to it. A negative number, like -10, makes it quieter."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Which Loop for the Job?",
-      "context": "work through the steps below and see what happens. This is repeat until: a rhythm that stops on a key in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Which Loop for the Job?: work through the steps below and see what happens. This is repeat until: a rhythm that stops on a key in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Write the best loop for each job: choose from forever, repeat ( ), or repeat until.",
-      "answer": "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the condition becomes true. We give it a condition to watch using a Sensing block, key ( ) pressed?. This is the classic… Check what you noticed against that, and write down anything that differed.",
+      "answer": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the condition becomes true. We give it a condition to watch using a Sensing block, key ( ) pressed?. This is the classic… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: a) You want a drum beat that never stops. Loop: ______________________",
-      "explanation": "Repeat until: a rhythm that stops on a key: The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the condition becomes true. We give it a condition to watch using a Sensing block, key ( ) pressed?. This is the classic drum program from the textbook."
+      "explanation": "Repeat until: a rhythm that stops on a key: Find one real example of repeat until: a rhythm that stops on a key around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Predict the Outcome",
-      "context": "work through the steps below and see what happens. This is be a musician: compose and compare in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "Be a code detective! Read this program carefully. Do not run it yet — predict what will happen.",
+      "context": "Predict the Outcome: work through the steps below and see what happens. This is be a musician: compose and compare in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
+      "prompt": "Be a code detective! Read this program carefully. Do not run it yet - predict what will happen.",
       "answer": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing two algorithms written for the same task, and we add a comment to explain our code. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: when green flag clicked",
-      "explanation": "Be a musician: compose and compare: The beats number is how long the sound lasts - the very idea from Session 1: 0.5 is a short note, 1 a one-beat note, 2 a long note. Build a simple hand-drum rhythm together, wrapped in a repeat loop so it plays four times"
+      "explanation": "Be a musician: compose and compare: The beats number is how long the sound lasts — the very idea from Session 1: 0.5 is a short note, 1 a one-beat note, 2 a long note. Build a simple hand-drum rhythm, wrapped in a repeat loop so it plays four times."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: Try it in Scratch! Make a Drum Rhythm",
-      "context": "work through the steps below and see what happens. This is repetition all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "Now make your own drum rhythm — the kind of beat you can tap out on a hand drum.",
-      "answer": "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is iteration. When we tell a computer to repeat a block of instructions, we use a loop. Check what you noticed against that, and write down anything that differed.",
+      "context": "Try it in Scratch! Make a Drum Rhythm: work through the steps below and see what happens. This is be a musician in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
+      "prompt": "Now make your own drum rhythm - the kind of beat you can tap out on a hand drum.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Go to scratch.mit.edu and click Create.",
-      "explanation": "Repetition all around us (unplugged): Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is iteration. When we tell a computer to repeat a block of instructions, we use a loop."
+      "explanation": "Welcome to Unit 6 of Year 4 Computing at Ehel Academy. Be a Musician. But do not be fooled by the musical title: the real computing idea in this unit is repetition - teaching the computer to do something again and again. Music is simply the fun, natural way to meet that idea, because music is full of repeating beats…"
     }
   ],
   "visualModels": [
@@ -563,7 +562,8 @@
         "Nora and Leo both want a beat to play exactly 3 times and then stop. Look at their two algorithms.",
         "Nora — Algorithm A Leo — Algorithm B",
         "when green flag clicked when green flag clicked",
-        "Play drum (1) for (1) beats play drum (1) for (1) beats.",
+        "repeat (3) forever",
+        "Play drum (1) for (1) beats Play drum (1) for (1) beats",
         "a) Which algorithm plays the beat exactly 3 times and then stops? ____________",
         "b) What does the other algorithm do? ________________________________________"
       ]
@@ -604,7 +604,7 @@
     {
       "symptom": "A minus number is a mistake.",
       "cause": "A common mix-up in this unit, “Be a Musician”.",
-      "fix": "No. change volume by (-10) is on purpose — a minus sign means"
+      "fix": "No. change volume by (-10) is on purpose."
     }
   ],
   "esafety": [
@@ -817,11 +817,11 @@
       ],
       [
         "change volume by (10) sets the volume to 10.",
-        "No. change volume by (-10) is on purpose — a minus sign means"
+        "No. change adds to the current volume; set volume to (10) % jumps straight to 10."
       ],
       [
         "A minus number is a mistake.",
-        "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter."
+        "No. change volume by (-10) is on purpose."
       ]
     ],
     "connections": []
@@ -1007,12 +1007,12 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Repetition all around us”?",
         "options": [
-          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-          "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
-          "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…"
+          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+          "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+          "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…"
         ],
-        "answer": "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
+        "answer": "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
         "hint": "Use the Unit 6 Computing Words reference.",
         "explanation": "Repetition means doing something again and again."
       },
@@ -1023,14 +1023,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Meet the loops: forever and repeat”?",
         "options": [
-          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-          "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-          "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+          "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+          "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
         ],
-        "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
+        "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
         "hint": "Use the Unit 6 Computing Words reference.",
-        "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…"
+        "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…"
       },
       {
         "id": "q03",
@@ -1039,14 +1039,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Read it, predict it: algorithms and volume”?",
         "options": [
-          "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-          "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+          "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+          "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
         ],
-        "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
+        "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
         "hint": "Use the Unit 6 Computing Words reference.",
-        "explanation": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+        "explanation": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
       },
       {
         "id": "q04",
@@ -1055,14 +1055,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Repeat until: a rhythm that stops on a key”?",
         "options": [
-          "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-          "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
-          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+          "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+          "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
         ],
-        "answer": "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+        "answer": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
         "hint": "Use the Unit 6 Computing Words reference.",
-        "explanation": "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+        "explanation": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
       },
       {
         "id": "q05",
@@ -1072,9 +1072,9 @@
         "question": "Which of these describes “Be a musician: compose and compare”?",
         "options": [
           "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
-          "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+          "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+          "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+          "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
         ],
         "answer": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
         "hint": "Use the Unit 6 Computing Words reference.",
@@ -1131,7 +1131,7 @@
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo09",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: change volume by (10) sets the volume to 10.",
         "options": [
@@ -1147,7 +1147,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo02",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: A minus number is a mistake.",
         "options": [
@@ -1163,7 +1163,7 @@
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: How fast or slow the beat goes.?",
         "options": [
@@ -1179,7 +1179,7 @@
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
         "options": [
@@ -1208,26 +1208,26 @@
           {
             "prompt": "Which of these describes “Repetition all around us”?",
             "choices": [
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
+            "answer": "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Repetition means doing something again and again."
           },
           {
             "prompt": "Which of these describes “Repeat until: a rhythm that stops on a key”?",
             "choices": [
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
             ],
-            "answer": "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+            "answer": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+            "explanation": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
           },
           {
             "prompt": "What should you do when this happens: repeat until means repeat while it is true.",
@@ -1251,7 +1251,7 @@
             ],
             "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Sequence means the order in which steps happen."
+            "explanation": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter."
           }
         ]
       },
@@ -1266,26 +1266,26 @@
           {
             "prompt": "Which of these describes “Meet the loops: forever and repeat”?",
             "choices": [
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
+            "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Iteration means the computing word for repeating a block of code many times."
+            "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…"
           },
           {
             "prompt": "Which of these describes “Be a musician: compose and compare”?",
             "choices": [
               "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
             ],
             "answer": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+            "explanation": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…"
           },
           {
             "prompt": "What should you do when this happens: A bigger beats number makes a higher note.",
@@ -1297,7 +1297,7 @@
             ],
             "answer": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+            "explanation": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
           },
           {
             "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
@@ -1324,14 +1324,14 @@
           {
             "prompt": "Which of these describes “Read it, predict it: algorithms and volume”?",
             "choices": [
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
+            "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Loop means a block that repeats the code inside it."
+            "explanation": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
           },
           {
             "prompt": "What should you do when this happens: forever and repeat are the same.",
@@ -1343,7 +1343,7 @@
             ],
             "answer": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+            "explanation": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back."
           },
           {
             "prompt": "What should you do when this happens: change volume by (10) sets the volume to 10.",
@@ -1355,7 +1355,7 @@
             ],
             "answer": "No. change adds to the current volume; set volume to (10) % jumps straight to 10.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Predict means to say what will happen before you run the program."
+            "explanation": "No. change adds to the current volume; set volume to (10) % jumps straight to 10."
           },
           {
             "prompt": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
@@ -1382,14 +1382,14 @@
           {
             "prompt": "Which of these describes “Repeat until: a rhythm that stops on a key”?",
             "choices": [
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
             ],
-            "answer": "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+            "answer": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+            "explanation": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
           },
           {
             "prompt": "What should you do when this happens: repeat until means repeat while it is true.",
@@ -1413,17 +1413,17 @@
             ],
             "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Sequence means the order in which steps happen."
+            "explanation": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter."
           },
           {
             "prompt": "Which of these describes “Repetition all around us”?",
             "choices": [
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
+            "answer": "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Repetition means doing something again and again."
           }
@@ -1441,13 +1441,13 @@
             "prompt": "Which of these describes “Be a musician: compose and compare”?",
             "choices": [
               "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
             ],
             "answer": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+            "explanation": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…"
           },
           {
             "prompt": "What should you do when this happens: A bigger beats number makes a higher note.",
@@ -1459,7 +1459,7 @@
             ],
             "answer": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+            "explanation": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
           },
           {
             "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
@@ -1476,14 +1476,14 @@
           {
             "prompt": "Which of these describes “Meet the loops: forever and repeat”?",
             "choices": [
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
+            "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Iteration means the computing word for repeating a block of code many times."
+            "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…"
           }
         ]
       },
@@ -1505,7 +1505,7 @@
             ],
             "answer": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+            "explanation": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back."
           },
           {
             "prompt": "What should you do when this happens: change volume by (10) sets the volume to 10.",
@@ -1517,7 +1517,7 @@
             ],
             "answer": "No. change adds to the current volume; set volume to (10) % jumps straight to 10.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Predict means to say what will happen before you run the program."
+            "explanation": "No. change adds to the current volume; set volume to (10) % jumps straight to 10."
           },
           {
             "prompt": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
@@ -1534,14 +1534,14 @@
           {
             "prompt": "Which of these describes “Read it, predict it: algorithms and volume”?",
             "choices": [
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
+            "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Loop means a block that repeats the code inside it."
+            "explanation": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
           }
         ]
       },
@@ -1575,31 +1575,31 @@
             ],
             "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Sequence means the order in which steps happen."
+            "explanation": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter."
           },
           {
             "prompt": "Which of these describes “Repetition all around us”?",
             "choices": [
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
+            "answer": "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Repetition means doing something again and again."
           },
           {
             "prompt": "Which of these describes “Repeat until: a rhythm that stops on a key”?",
             "choices": [
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
             ],
-            "answer": "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+            "answer": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+            "explanation": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
           }
         ]
       },
@@ -1621,7 +1621,7 @@
             ],
             "answer": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+            "explanation": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
           },
           {
             "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
@@ -1638,26 +1638,26 @@
           {
             "prompt": "Which of these describes “Meet the loops: forever and repeat”?",
             "choices": [
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
+            "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Iteration means the computing word for repeating a block of code many times."
+            "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…"
           },
           {
             "prompt": "Which of these describes “Be a musician: compose and compare”?",
             "choices": [
               "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
             ],
             "answer": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+            "explanation": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…"
           }
         ]
       },
@@ -1679,7 +1679,7 @@
             ],
             "answer": "No. change adds to the current volume; set volume to (10) % jumps straight to 10.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Predict means to say what will happen before you run the program."
+            "explanation": "No. change adds to the current volume; set volume to (10) % jumps straight to 10."
           },
           {
             "prompt": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
@@ -1696,14 +1696,14 @@
           {
             "prompt": "Which of these describes “Read it, predict it: algorithms and volume”?",
             "choices": [
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
+            "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Loop means a block that repeats the code inside it."
+            "explanation": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
           },
           {
             "prompt": "What should you do when this happens: forever and repeat are the same.",
@@ -1715,7 +1715,7 @@
             ],
             "answer": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+            "explanation": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back."
           }
         ]
       },
@@ -1737,31 +1737,31 @@
             ],
             "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Sequence means the order in which steps happen."
+            "explanation": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter."
           },
           {
             "prompt": "Which of these describes “Repetition all around us”?",
             "choices": [
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
+            "answer": "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Repetition means doing something again and again."
           },
           {
             "prompt": "Which of these describes “Repeat until: a rhythm that stops on a key”?",
             "choices": [
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
             ],
-            "answer": "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
+            "answer": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+            "explanation": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
           },
           {
             "prompt": "What should you do when this happens: repeat until means repeat while it is true.",
@@ -1800,26 +1800,26 @@
           {
             "prompt": "Which of these describes “Meet the loops: forever and repeat”?",
             "choices": [
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
+            "answer": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Iteration means the computing word for repeating a block of code many times."
+            "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…"
           },
           {
             "prompt": "Which of these describes “Be a musician: compose and compare”?",
             "choices": [
               "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…"
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
             ],
             "answer": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+            "explanation": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing…"
           },
           {
             "prompt": "What should you do when this happens: A bigger beats number makes a higher note.",
@@ -1831,7 +1831,7 @@
             ],
             "answer": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+            "explanation": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
           }
         ]
       },
@@ -1858,14 +1858,14 @@
           {
             "prompt": "Which of these describes “Read it, predict it: algorithms and volume”?",
             "choices": [
-              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
-              "Repetition means doing something again and again. It is everywhere - in songs, in games, and in everyday jobs. The computing word for repetition is…",
-              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops - the code inside runs round and…",
-              "The third loop is repeat until ( ) - the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
+              "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
+              "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is…",
+              "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and…",
+              "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the…"
             ],
-            "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do - reads the steps and…",
+            "answer": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Loop means a block that repeats the code inside it."
+            "explanation": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and…"
           },
           {
             "prompt": "What should you do when this happens: forever and repeat are the same.",
@@ -1877,7 +1877,7 @@
             ],
             "answer": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+            "explanation": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back."
           },
           {
             "prompt": "What should you do when this happens: change volume by (10) sets the volume to 10.",
@@ -1889,7 +1889,7 @@
             ],
             "answer": "No. change adds to the current volume; set volume to (10) % jumps straight to 10.",
             "clue": "Use the Unit 6 Computing Words reference.",
-            "explanation": "Predict means to say what will happen before you run the program."
+            "explanation": "No. change adds to the current volume; set volume to (10) % jumps straight to 10."
           }
         ]
       }
@@ -1903,7 +1903,6 @@
     "I can compare and contrast two algorithms written for the same task and say which one is best suited.",
     "I can develop a program with iteration in Scratch, using a loop to make sound.",
     "I can use the volume blocks set volume to ( ) % and change volume by ( ), including a negative change to get quieter.",
-    "I can add the free Music extension and compose a short rhythm or tune with play drum and play note, and add a comment to explain the code.",
-    "I can before this unit (from the syllabus), children should already follow and correct an algorithm that uses iteration, build a program with the repeat command (met in Unit 4), and add comments to code. A quick recap of repeat at the start of Session 2 is usually enough."
+    "I can add the free Music extension and compose a short rhythm or tune with play drum and play note, and add a comment to explain the code."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.168Z",
+  "generatedAt": "2026-09-17T20:45:49.124Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -14,7 +14,7 @@
     "unitId": "comp-g02-u08",
     "unitNo": 8,
     "unitTitle": "Be an Artist",
-    "unitOverview": "Welcome to Unit 8 of Year 2 Computing at Ehel Academy. They do not paint with a brush — instead they give a device a careful set of instructions, and the device draws a shape or walks a path shaped like a letter. When the instructions are right, a picture appears. That is the art. The first big idea is the algorithm — a set of instructions in the right order. To make a drawing, the device needs simple commands: marker down (start drawing), move forward (go straight), turn left or turn right (make a corner), and stop. If you draw the little foot of a letter L before the tall line, you get the wrong shape. The second big idea is programming a device. Some devices can move. We write instructions and the device follows them — a little robot on the floor, or a character on a screen. The clever part, and the reason this is an art unit, is that the path the device travels can make a picture or a letter. Programming a robot to walk in the shape of a C or an L is drawing with movement.",
+    "unitOverview": "Welcome to Unit 8 of Year 2 Computing at Ehel Academy. You will not paint with a brush — instead you give a device a careful set of instructions, and the device draws a shape or walks a path shaped like a letter. When the instructions are right, a picture appears. That is the art. The first big idea is the algorithm — a set of instructions in the right order. To make a drawing, the device needs simple commands: marker down (start drawing), move forward (go straight), turn left or turn right (make a corner), and stop. If you draw the little foot of a letter L before the tall line, you get the wrong shape. The second big idea is programming a device. Some devices can move. We write instructions and the device follows them — a little robot on the floor, or a character on a screen. The clever part, and the reason this is an art unit, is that the path the device travels can make a picture or a letter. Programming a robot to walk in the shape of a C or an L is drawing with movement.",
     "learningPath": [
       "Preview the goals, key words and the tools you will use",
       "Read the concept explainers and study the code examples",
@@ -50,8 +50,8 @@
         "text": "Know how to debug programs so that they will run and will produce the desired output."
       },
       {
-        "code": "2DC.02",
-        "text": "Know that two devices working together can achieve things that neither device can achieve on its own."
+        "code": "2P.04",
+        "text": "Know how to plan the instructions for objects within programs."
       }
     ],
     "objectiveMapping": {
@@ -83,10 +83,10 @@
     "poster": null
   },
   "outcomes": [
-    "Write and follow an algorithm — a set of drawing instructions in the correct order.",
+    "Write and follow an algorithm - a set of drawing instructions in the correct order.",
     "Use the drawing commands: Marker down, Marker up, Move forward, Turn left, Turn right and Stop program.",
     "Explain, in their own words, why the order of the steps matters.",
-    "Program a device — a floor robot on a grid, or a ScratchJr character — to follow a path.",
+    "Program a device - a floor robot on a grid, or a ScratchJr character - to follow a path.",
     "See and say that a path can make a picture or a letter (that is the art).",
     "Use Repeat to make an algorithm shorter when a step happens again and again, and know the result is the same.",
     "Run or act out a program, check whether it did what they wanted, and fix a command that is wrong."
@@ -109,21 +109,21 @@
     {
       "id": "concept-1-be-the-marker-an-algorithm-that-draws-unplugged",
       "title": "Be the marker: an algorithm that draws (unplugged)",
-      "explanation": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means “put the pen on the paper and start drawing”. Then Move forward makes a line. I am going to be a drawing robot. But I only do what you tell me, one command at a time. draw a line. How far? Which way?",
-      "example": "And my marker is still up, so nothing happens! Now you can give you clean commands and follow them exactly",
+      "explanation": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means “put the pen on the paper and start drawing”. Then Move forward makes a line. Imagine you are a drawing robot, but you only do what you are told, one command at a time: draw a line. How far? Which way?",
+      "example": "And my marker is still up, so nothing happens! Now you can give clear commands and follow them exactly.",
       "checkYourself": "Can you understand that Marker down must come before drawing, and that Move forward needs a direction and a number? Do you follow the commands in order?"
     },
     {
       "id": "concept-2-turns-make-corners-drawing-a-letter-unplugged",
       "title": "Turns make corners: drawing a letter (unplugged)",
-      "explanation": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does not move you forward. By joining Move forward and turns, we can draw a whole letter. Stand everyone up. Face the front together. “Turn right!” — everyone makes a quarter turn. “Turn right again!” — now facing the back.",
+      "explanation": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does not move you forward. By joining Move forward and turns, we can draw a whole letter. Stand up and face the front. Say “Turn right!” and make a quarter turn. Say “Turn right again!” and you are now facing the back.",
       "example": "Feel how a turn changes the way we face but does not move us anywhere. Start with the marker at the top, facing down.",
       "checkYourself": "Can you know a turn does not move the marker forward? Can you order the steps so the letter comes out right? Can you pick the correct turn to make the corner go the right way?"
     },
     {
       "id": "concept-3-program-a-robot-on-the-floor-grid-unplugged",
       "title": "Program a robot on the floor grid (unplugged)",
-      "explanation": "Some devices can move. We can program them — write instructions and you can follow. And here is the art: the path can be the shape of a letter. Make a big grid on the floor with masking tape, about four squares by four squares. Then, together, program the robot to walk a path shaped like an L. Choose one child (or a soft toy) to be the robot, standing on a square and facing one way.",
+      "explanation": "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter. Imagine a big grid on the floor, about four squares by four squares. A robot (or a soft toy) stands on a square and faces one way, and you program it to walk a path shaped like an L.",
       "example": "Explain the three robot commands: Move forward 1 (step into the next square), Turn left, Turn right. Start the robot at the top, facing down the grid.",
       "checkYourself": "Can you understand that a turn changes the facing but is not a step forward? Can you predict, or recognise, the letter the path makes? Can you give clear, single commands in order?"
     },
@@ -161,72 +161,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Be the Marker",
-      "context": "work through the steps below and see what happens. This is be the marker: an algorithm that draws (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Be the Marker: work through the steps below and see what happens. This is be the marker: an algorithm that draws (unplugged) in practice — you need a tablet with ScratchJr, plus paper and a pencil for planning.",
       "prompt": "Now follow the steps. Put your pencil on the big dot. Point your pencil down. Draw a little line for each step.",
-      "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means “put the pen on the paper and start drawing”. Then Move forward makes a line. Check what you noticed against that, and write down anything that differed.",
+      "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means “put the pen on the paper and start drawing”. Then Move forward makes a line. Imagine you are a drawing robot,… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Marker down",
-      "explanation": "Be the marker: an algorithm that draws (unplugged): An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means “put the pen on the paper and start drawing”. Then Move forward makes a line."
+      "explanation": "Be the marker: an algorithm that draws (unplugged): And my marker is still up, so nothing happens! Now you can give clear commands and follow them exactly."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Match the Command",
-      "context": "work through the steps below and see what happens. This is turns make corners: drawing a letter (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Match the Command: work through the steps below and see what happens. This is turns make corners: drawing a letter (unplugged) in practice — you need a tablet with ScratchJr, plus paper and a pencil for planning.",
       "prompt": "Draw a line from each command to what it does.",
-      "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does not move you forward. By joining Move forward and turns, we can draw a whole letter. Check what you noticed against that, and write down anything that differed.",
+      "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does not move you forward. By joining Move forward and turns, we can draw a whole letter. Stand up and face the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Turns make corners: drawing a letter (unplugged): A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does not move you forward. By joining Move forward and turns, we can draw a whole letter."
+      "explanation": "Turns make corners: drawing a letter (unplugged): Feel how a turn changes the way we face but does not move us anywhere. Start with the marker at the top, facing down."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Put the Steps in Order",
-      "context": "work through the steps below and see what happens. This is program a robot on the floor grid (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Put the Steps in Order: work through the steps below and see what happens. This is program a robot on the floor grid (unplugged) in practice — you need a tablet with ScratchJr, plus paper and a pencil for planning.",
       "prompt": "These steps draw a letter, but they are mixed up! Write 1, 2, 3, 4, 5, 6 in the boxes to put them in order. Start program is first. Stop program is last.",
-      "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter. Imagine a big grid on the floor, about four squares by four squares. A robot (or a soft toy) stands on a square… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: [ ] Move forward 3",
-      "explanation": "Program a robot on the floor grid (unplugged): Some devices can move. We can program them — write instructions and you can follow. And here is the art: the path can be the shape of a letter."
+      "explanation": "Program a robot on the floor grid (unplugged): Explain the three robot commands: Move forward 1 (step into the next square), Turn left, Turn right. Start the robot at the top, facing down the grid."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Follow the Path",
-      "context": "work through the steps below and see what happens. This is repeat: a shorter way (floor grid, then scratchjr) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Follow the Path: work through the steps below and see what happens. This is repeat: a shorter way (floor grid, then scratchjr) in practice — you need a tablet with ScratchJr, plus paper and a pencil for planning.",
       "prompt": "The robot starts on the star and faces down. Follow the commands with your pencil. Move one square each time.",
       "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same path. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Turn left",
-      "explanation": "Repeat: a shorter way (floor grid, then ScratchJr): That is a lot of writing. Watch - we can say it in a shorter way."
+      "explanation": "Repeat: a shorter way (floor grid, then ScratchJr): That is a lot of writing. Watch — we can say it in a shorter way."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Spot the Repeat",
-      "context": "work through the steps below and see what happens. This is be an artist: the mini-project in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Spot the Repeat: work through the steps below and see what happens. This is be an artist: the mini-project in practice — you need a tablet with ScratchJr, plus paper and a pencil for planning.",
       "prompt": "Look at this list. One step happens again and again. Circle the step that repeats.",
       "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check and fix it. This session and the Mini-Project go hand in hand. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: How many steps is this? __________",
-      "explanation": "Be an artist: the Mini-Project: First plan your steps, then make it, then check it works - and if a command is wrong, find it and fix it. Keep letters simple - L, C, T or I are perfect."
+      "explanation": "Be an artist: the Mini-Project: First plan your steps, then make it, then check it works — and if a command is wrong, find it and fix it. Keep letters simple — L, C, T or I are perfect."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: Try It in ScratchJr",
-      "context": "work through the steps below and see what happens. This is be the marker: an algorithm that draws (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Try It in ScratchJr: work through the steps below and see what happens. This is be an artist in practice — you need a tablet with ScratchJr, plus paper and a pencil for planning.",
       "prompt": "Let us make a character move using Repeat.",
-      "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means “put the pen on the paper and start drawing”. Then Move forward makes a line. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Open ScratchJr and tap the big + to start a new project.",
-      "explanation": "Be the marker: an algorithm that draws (unplugged): An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means “put the pen on the paper and start drawing”. Then Move forward makes a line."
+      "explanation": "Welcome to Unit 8 of Year 2 Computing at Ehel Academy. They do not paint with a brush - instead they give a device a careful set of instructions, and the device draws a shape or walks a path shaped like a letter. When the instructions are right, a picture appears. That is the art."
     }
   ],
   "visualModels": [
@@ -277,7 +277,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "title": "How to work with be the marker: an algorithm that draws (unplugged)",
-      "example": "And my marker is still up, so nothing happens! Now you can give you clean commands and follow them exactly",
+      "example": "And my marker is still up, so nothing happens! Now you can give clear commands and follow them exactly.",
       "steps": [
         "Read the concept card for be the marker: an algorithm that draws (unplugged) and say the main idea in your own words.",
         "Look at the worked example and copy it exactly, one step at a time.",
@@ -345,7 +345,7 @@
       "difficulty": "Basic",
       "title": "Worked example 1: Be the marker: an algorithm that draws (unplugged)",
       "prompt": "What is an algorithm?",
-      "solution": "Any correct Repeat that gives the same path is right, and the algorithm should be shorter."
+      "solution": "An algorithm is a set of instructions in the right order — for example, the steps to draw the letter L."
     },
     {
       "id": "we02",
@@ -361,7 +361,7 @@
       "difficulty": "Basic",
       "title": "Worked example 3: Program a robot on the floor grid (unplugged)",
       "prompt": "Put these steps in order. Write 1, 2, 3 in the boxes.",
-      "solution": "Start program = 1, Marker down = 2, Move forward ="
+      "solution": "Start program = 1, Marker down = 2, Move forward 3 = 3, Turn left = 4, Move forward 2 = 5, Stop program = 6."
     },
     {
       "id": "we04",
@@ -393,7 +393,7 @@
       "id": "p01",
       "level": "Warm-up",
       "prompt": "What is an algorithm?",
-      "answer": "Any correct Repeat that gives the same path is right, and the algorithm should be shorter.",
+      "answer": "An algorithm is a set of instructions in the right order — for example, the steps to draw the letter L.",
       "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence."
     },
     {
@@ -414,7 +414,7 @@
       "id": "p04",
       "level": "Core",
       "prompt": "Put these steps in order. Write 1, 2, 3 in the boxes.",
-      "answer": "Start program = 1, Marker down = 2, Move forward =",
+      "answer": "Start program = 1, Marker down = 2, Move forward 3 = 3, Turn left = 4, Move forward 2 = 5, Stop program = 6.",
       "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence."
     },
     {
@@ -464,7 +464,8 @@
         "[ ] Turn left",
         "[ ] Marker down",
         "[ ] Move forward 2",
-        "[ ] Start program"
+        "[ ] Start program",
+        "[ ] Stop program"
       ]
     },
     {
@@ -780,9 +781,9 @@
       "outcomeId": "lo01",
       "difficulty": "Round 1",
       "prompt": "What is an algorithm?",
-      "answer": "Any correct Repeat that gives the same path is right, and the algorithm should be shorter.",
+      "answer": "An algorithm is a set of instructions in the right order — for example, the steps to draw the letter L.",
       "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Any correct Repeat that gives the same path is right, and the algorithm should be shorter."
+      "errorFeedback": "An algorithm is a set of instructions in the right order — for example, the steps to draw the letter L."
     },
     {
       "id": "fl02",
@@ -807,9 +808,9 @@
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "Put these steps in order. Write 1, 2, 3 in the boxes.",
-      "answer": "Start program = 1, Marker down = 2, Move forward =",
+      "answer": "Start program = 1, Marker down = 2, Move forward 3 = 3, Turn left = 4, Move forward 2 = 5, Stop program = 6.",
       "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Start program = 1, Marker down = 2, Move forward ="
+      "errorFeedback": "Start program = 1, Marker down = 2, Move forward 3 = 3, Turn left = 4, Move forward 2 = 5, Stop program = 6."
     },
     {
       "id": "fl05",
@@ -867,9 +868,9 @@
       "difficulty": "Core",
       "context": "Community",
       "prompt": "What is an algorithm?",
-      "answer": "Any correct Repeat that gives the same path is right, and the algorithm should be shorter.",
+      "answer": "An algorithm is a set of instructions in the right order — for example, the steps to draw the letter L.",
       "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Any correct Repeat that gives the same path is right, and the algorithm should be shorter."
+      "errorFeedback": "Check your reasoning against this: An algorithm is a set of instructions in the right order — for example, the steps to draw the letter L."
     }
   ],
   "reasoningPrompts": [
@@ -897,7 +898,7 @@
         "program",
         "marker down / up"
       ],
-      "modelAnswer": "Start program = 1, Marker down = 2, Move forward ="
+      "modelAnswer": "Start program = 1, Marker down = 2, Move forward 3 = 3, Turn left = 4, Move forward 2 = 5, Stop program = 6."
     },
     {
       "id": "reason03",
@@ -954,12 +955,12 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Be the marker: an algorithm that draws”?",
         "options": [
-          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+          "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
           "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
         ],
-        "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+        "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
         "hint": "Use the Unit 8 Computing Words reference.",
         "explanation": "Algorithm means a set of instructions in the right order."
       },
@@ -970,14 +971,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Turns make corners: drawing a letter”?",
         "options": [
-          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+          "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
           "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
         ],
-        "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+        "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…"
+        "explanation": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…"
       },
       {
         "id": "q03",
@@ -986,12 +987,12 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Program a robot on the floor grid”?",
         "options": [
-          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
           "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
-          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
+          "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
         ],
-        "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+        "answer": "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
         "hint": "Use the Unit 8 Computing Words reference.",
         "explanation": "Program means an algorithm a device can follow."
       },
@@ -1002,10 +1003,10 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Repeat: a shorter way”?",
         "options": [
-          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
           "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
-          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
+          "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
         ],
         "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
         "hint": "Use the Unit 8 Computing Words reference.",
@@ -1018,10 +1019,10 @@
         "difficulty": "Core",
         "question": "Which of these describes “Be an artist: the Mini-Project”?",
         "options": [
-          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
           "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
-          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
+          "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+          "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
         ],
         "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
         "hint": "Use the Unit 8 Computing Words reference.",
@@ -1155,12 +1156,12 @@
           {
             "prompt": "Which of these describes “Be the marker: an algorithm that draws”?",
             "choices": [
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Algorithm means a set of instructions in the right order."
           },
@@ -1168,16 +1169,16 @@
             "prompt": "Which of these describes “Repeat: a shorter way”?",
             "choices": [
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
             ],
             "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
           },
           {
-            "prompt": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
+            "prompt": "What should you do when this happens: I do not need Marker down.",
             "choices": [
               "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
               "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
@@ -1186,7 +1187,7 @@
             ],
             "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Repeat means do the same step again and again — a shorter way."
+            "explanation": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line."
           },
           {
             "prompt": "What should you do when this happens: The robot will know what I mean.",
@@ -1213,26 +1214,26 @@
           {
             "prompt": "Which of these describes “Turns make corners: drawing a letter”?",
             "choices": [
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Instruction means one thing you tell the device to do."
+            "explanation": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…"
           },
           {
             "prompt": "Which of these describes “Be an artist: the Mini-Project”?",
             "choices": [
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again — a shorter way.",
-              "The line the device travels along."
+              "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
             ],
             "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Move forward means go straight the way you are facing."
+            "explanation": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…"
           },
           {
             "prompt": "What should you do when this happens: Turn left and turn right are the same.",
@@ -1244,10 +1245,10 @@
             ],
             "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Path means the line the device travels along."
+            "explanation": "You make corners in opposite directions. The wrong turn draws the shape back to front."
           },
           {
-            "prompt": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
+            "prompt": "What should you do when this happens: Repeat does more, or changes the answer.",
             "choices": [
               "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
               "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
@@ -1256,7 +1257,7 @@
             ],
             "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
+            "explanation": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it."
           }
         ]
       },
@@ -1271,26 +1272,26 @@
           {
             "prompt": "Which of these describes “Program a robot on the floor grid”?",
             "choices": [
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+            "answer": "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm a device can follow."
           },
           {
             "prompt": "What should you do when this happens: The order does not matter.",
             "choices": [
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again — a shorter way.",
-              "The line the device travels along.",
-              "What it does"
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
             "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Turn left / right means turn a quarter, to make a corner."
+            "explanation": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it."
           },
           {
             "prompt": "What should you do when this happens: A turn also moves me forward.",
@@ -1305,7 +1306,7 @@
             "explanation": "No - a turn happens on the spot. You still need a Move forward to make a line."
           },
           {
-            "prompt": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
+            "prompt": "Which computing word matches this meaning: Go straight, that many steps, the way you are facing.?",
             "choices": [
               "Move forward (number)",
               "Turn right",
@@ -1314,7 +1315,7 @@
             ],
             "answer": "Move forward (number)",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker up means lift the pen — now the device can move without drawing."
+            "explanation": "Move forward (number) means go straight, that many steps, the way you are facing.."
           }
         ]
       },
@@ -1330,16 +1331,16 @@
             "prompt": "Which of these describes “Repeat: a shorter way”?",
             "choices": [
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
             ],
             "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
           },
           {
-            "prompt": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
+            "prompt": "What should you do when this happens: I do not need Marker down.",
             "choices": [
               "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
               "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
@@ -1348,7 +1349,7 @@
             ],
             "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Repeat means do the same step again and again — a shorter way."
+            "explanation": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line."
           },
           {
             "prompt": "What should you do when this happens: The robot will know what I mean.",
@@ -1365,12 +1366,12 @@
           {
             "prompt": "Which of these describes “Be the marker: an algorithm that draws”?",
             "choices": [
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Algorithm means a set of instructions in the right order."
           }
@@ -1387,14 +1388,14 @@
           {
             "prompt": "Which of these describes “Be an artist: the Mini-Project”?",
             "choices": [
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again — a shorter way.",
-              "The line the device travels along."
+              "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
             ],
             "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Move forward means go straight the way you are facing."
+            "explanation": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…"
           },
           {
             "prompt": "What should you do when this happens: Turn left and turn right are the same.",
@@ -1406,10 +1407,10 @@
             ],
             "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Path means the line the device travels along."
+            "explanation": "You make corners in opposite directions. The wrong turn draws the shape back to front."
           },
           {
-            "prompt": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
+            "prompt": "What should you do when this happens: Repeat does more, or changes the answer.",
             "choices": [
               "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
               "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
@@ -1418,19 +1419,19 @@
             ],
             "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
+            "explanation": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it."
           },
           {
             "prompt": "Which of these describes “Turns make corners: drawing a letter”?",
             "choices": [
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Instruction means one thing you tell the device to do."
+            "explanation": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…"
           }
         ]
       },
@@ -1445,14 +1446,14 @@
           {
             "prompt": "What should you do when this happens: The order does not matter.",
             "choices": [
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again — a shorter way.",
-              "The line the device travels along.",
-              "What it does"
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
             "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Turn left / right means turn a quarter, to make a corner."
+            "explanation": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it."
           },
           {
             "prompt": "What should you do when this happens: A turn also moves me forward.",
@@ -1467,7 +1468,7 @@
             "explanation": "No - a turn happens on the spot. You still need a Move forward to make a line."
           },
           {
-            "prompt": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
+            "prompt": "Which computing word matches this meaning: Go straight, that many steps, the way you are facing.?",
             "choices": [
               "Move forward (number)",
               "Turn right",
@@ -1476,17 +1477,17 @@
             ],
             "answer": "Move forward (number)",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker up means lift the pen — now the device can move without drawing."
+            "explanation": "Move forward (number) means go straight, that many steps, the way you are facing.."
           },
           {
             "prompt": "Which of these describes “Program a robot on the floor grid”?",
             "choices": [
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+            "answer": "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm a device can follow."
           }
@@ -1501,7 +1502,7 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
+            "prompt": "What should you do when this happens: I do not need Marker down.",
             "choices": [
               "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
               "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
@@ -1510,7 +1511,7 @@
             ],
             "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Repeat means do the same step again and again — a shorter way."
+            "explanation": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line."
           },
           {
             "prompt": "What should you do when this happens: The robot will know what I mean.",
@@ -1527,12 +1528,12 @@
           {
             "prompt": "Which of these describes “Be the marker: an algorithm that draws”?",
             "choices": [
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Algorithm means a set of instructions in the right order."
           },
@@ -1540,9 +1541,9 @@
             "prompt": "Which of these describes “Repeat: a shorter way”?",
             "choices": [
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
             ],
             "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
             "clue": "Use the Unit 8 Computing Words reference.",
@@ -1568,10 +1569,10 @@
             ],
             "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Path means the line the device travels along."
+            "explanation": "You make corners in opposite directions. The wrong turn draws the shape back to front."
           },
           {
-            "prompt": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
+            "prompt": "What should you do when this happens: Repeat does more, or changes the answer.",
             "choices": [
               "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
               "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
@@ -1580,31 +1581,31 @@
             ],
             "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
+            "explanation": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it."
           },
           {
             "prompt": "Which of these describes “Turns make corners: drawing a letter”?",
             "choices": [
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Instruction means one thing you tell the device to do."
+            "explanation": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…"
           },
           {
             "prompt": "Which of these describes “Be an artist: the Mini-Project”?",
             "choices": [
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again — a shorter way.",
-              "The line the device travels along."
+              "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
             ],
             "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Move forward means go straight the way you are facing."
+            "explanation": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…"
           }
         ]
       },
@@ -1629,7 +1630,7 @@
             "explanation": "No - a turn happens on the spot. You still need a Move forward to make a line."
           },
           {
-            "prompt": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
+            "prompt": "Which computing word matches this meaning: Go straight, that many steps, the way you are facing.?",
             "choices": [
               "Move forward (number)",
               "Turn right",
@@ -1638,31 +1639,31 @@
             ],
             "answer": "Move forward (number)",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker up means lift the pen — now the device can move without drawing."
+            "explanation": "Move forward (number) means go straight, that many steps, the way you are facing.."
           },
           {
             "prompt": "Which of these describes “Program a robot on the floor grid”?",
             "choices": [
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+            "answer": "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm a device can follow."
           },
           {
             "prompt": "What should you do when this happens: The order does not matter.",
             "choices": [
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again — a shorter way.",
-              "The line the device travels along.",
-              "What it does"
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
             "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Turn left / right means turn a quarter, to make a corner."
+            "explanation": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it."
           }
         ]
       },
@@ -1689,12 +1690,12 @@
           {
             "prompt": "Which of these describes “Be the marker: an algorithm that draws”?",
             "choices": [
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Algorithm means a set of instructions in the right order."
           },
@@ -1702,16 +1703,16 @@
             "prompt": "Which of these describes “Repeat: a shorter way”?",
             "choices": [
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
             ],
             "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
           },
           {
-            "prompt": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
+            "prompt": "What should you do when this happens: I do not need Marker down.",
             "choices": [
               "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
               "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
@@ -1720,7 +1721,7 @@
             ],
             "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Repeat means do the same step again and again — a shorter way."
+            "explanation": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line."
           }
         ]
       },
@@ -1733,7 +1734,7 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
+            "prompt": "What should you do when this happens: Repeat does more, or changes the answer.",
             "choices": [
               "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
               "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
@@ -1742,31 +1743,31 @@
             ],
             "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
+            "explanation": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it."
           },
           {
             "prompt": "Which of these describes “Turns make corners: drawing a letter”?",
             "choices": [
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Instruction means one thing you tell the device to do."
+            "explanation": "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…"
           },
           {
             "prompt": "Which of these describes “Be an artist: the Mini-Project”?",
             "choices": [
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again — a shorter way.",
-              "The line the device travels along."
+              "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…"
             ],
             "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Move forward means go straight the way you are facing."
+            "explanation": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…"
           },
           {
             "prompt": "What should you do when this happens: Turn left and turn right are the same.",
@@ -1778,7 +1779,7 @@
             ],
             "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Path means the line the device travels along."
+            "explanation": "You make corners in opposite directions. The wrong turn draws the shape back to front."
           }
         ]
       },
@@ -1791,7 +1792,7 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
+            "prompt": "Which computing word matches this meaning: Go straight, that many steps, the way you are facing.?",
             "choices": [
               "Move forward (number)",
               "Turn right",
@@ -1800,31 +1801,31 @@
             ],
             "answer": "Move forward (number)",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker up means lift the pen — now the device can move without drawing."
+            "explanation": "Move forward (number) means go straight, that many steps, the way you are facing.."
           },
           {
             "prompt": "Which of these describes “Program a robot on the floor grid”?",
             "choices": [
-              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
-              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
-              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter — like turning to face the side of the room. A turn happens on the spot; it does…",
               "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+            "answer": "Some devices can move. We can program them by writing instructions for them to follow. And here is the art: the path can be the shape of a letter.…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm a device can follow."
           },
           {
             "prompt": "What should you do when this happens: The order does not matter.",
             "choices": [
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again — a shorter way.",
-              "The line the device travels along.",
-              "What it does"
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
             "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Turn left / right means turn a quarter, to make a corner."
+            "explanation": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it."
           },
           {
             "prompt": "What should you do when this happens: A turn also moves me forward.",

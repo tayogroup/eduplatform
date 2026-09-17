@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.051Z",
+  "generatedAt": "2026-09-17T20:45:49.003Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -32,6 +32,14 @@
       {
         "code": "2CT.03",
         "text": "Know that an algorithm is a precise set of instructions."
+      },
+      {
+        "code": "2CT.04",
+        "text": "Identify the steps needed to undertake tasks, in order to develop simple algorithms."
+      },
+      {
+        "code": "2P.01",
+        "text": "Understand that programs instruct computers how to run algorithms."
       }
     ],
     "objectiveMapping": {
@@ -63,7 +71,6 @@
     "poster": null
   },
   "outcomes": [
-    "These come straight from the textbook unit. By the end of the unit, the child should be able to:",
     "Know that an algorithm is a precise set of instructions in the right order.",
     "Know that programs tell computers what to do, and that a computer follows them exactly.",
     "Turn an algorithm into a program by changing each step into a block of code.",
@@ -105,28 +112,28 @@
     {
       "id": "concept-2-be-precise-and-get-the-order-right",
       "title": "Be precise, and get the order right",
-      "explanation": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step is precise AND the steps are in the right order. If the order is wrong, even good steps give a silly result. Watch — I will put my shoe on first, then my sock on top. All the steps are here, but the order is silly! Order matters. Precise is our new word.",
+      "explanation": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step is precise AND the steps are in the right order. If the order is wrong, even good steps give a silly result.\n\nWatch - I will put my shoe on first, then my sock on top. All the steps are here, but the order is silly! Order matters. Precise is our new word.",
       "example": "It means exact and clear. Let us find the precise instructions.",
-      "checkYourself": "it say exactly. Can you put steps in a sensible order? Praise careful thinking over speed."
+      "checkYourself": "Can you put steps in a sensible order, and tell a precise instruction from a fuzzy one?"
     },
     {
       "id": "concept-3-programs-instructions-a-computer-follows",
       "title": "Programs: instructions a computer follows",
-      "explanation": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the program says, no more and no less. That is why the instructions in a program must be precise. The robot may only do exactly what it is told. Robot, take 3 steps forward. Now turn right. Now stop. go over there.",
-      "example": "You just gave the robot a program! A computer works just like our robot — it follows your steps exactly and cannot guess.",
+      "explanation": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the program says, no more and no less. That is why the instructions in a program must be precise. The robot may only do exactly what it is told. Robot, take 3 steps forward. Now turn right. Now stop. Now go over there.",
+      "example": "You just gave the robot a program! A computer works just like our robot - it follows your steps exactly and cannot guess.",
       "checkYourself": "Can you know a computer game is a program? Can you match a simple block to its job?"
     },
     {
       "id": "concept-4-making-a-program-in-scratchjr-the-whale-spins",
       "title": "Making a program in ScratchJr (the Whale spins)",
-      "explanation": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character, and one action; (2) write the algorithm; (3) change each step into a block of code; (4) run it. Our task: make the Whale do one full spin. our picture instructions. our GO button — we tap it to run the program. Open ScratchJr on a big tablet.",
+      "explanation": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character, and one action; (2) write the algorithm; (3) change each step into a block of code; (4) run it. Our task: make the Whale do one full spin. Here are our picture instructions. Here is our GO button — we tap it to run the program.",
       "example": "Find one real example of making a program in ScratchJr (the Whale spins) around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you tap the green flag to run it? Can you find a block by its colour and drag it to join the others?"
     },
     {
       "id": "concept-5-more-blocks-talk-and-hop-build-and-run",
       "title": "More blocks: talk and hop; build and run",
-      "explanation": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the Hop block (blue — it makes the character jump up). We build a slightly longer program, then run it and check it matches our algorithm. Blue blocks move, purple blocks talk. First the algorithm",
+      "explanation": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the Hop block (blue — it makes the character jump up). We build a slightly longer program, then run it and check it matches our algorithm. Blue blocks move, purple blocks talk. First the algorithm, then the blocks, then we run it and check.",
       "example": "Find one real example of more blocks: talk and hop; build and run around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you use the Say block and type or pick a short message? Can you test your program by tapping it, and check it matches what you planned? Can you add and join more than two blocks in the right order?"
     }
@@ -151,13 +158,16 @@
       "intro": "From Answer Key — Mini-Project & Practice.",
       "lines": [
         "Start on Tap (yellow)",
-        "Move Up (5) (blue)"
+        "Move Up (5) (blue)",
+        "Turn Left (12) (blue — spin left, a full spin)",
+        "Move Right (10) (blue)",
+        "End (red)"
       ],
       "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
     },
     {
       "id": "code-3",
-      "title": "Turn Left (12) (blue — spin left, a full spin)",
+      "title": "Continue the program — listing 2",
       "language": "Scratch blocks",
       "intro": "",
       "lines": [
@@ -187,20 +197,20 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Circle the Clear Instructions",
-      "context": "work through the steps below and see what happens. This is what is an algorithm? giving clear instructions in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Circle the Clear Instructions: work through the steps below and see what happens. This is what is an algorithm? giving clear instructions in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "A good instruction say exactly what to do. Circle the instructions you could follow easily. Put a line through the ones that are too fuzzy.",
-      "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy instruction like “Move” leaves you guessing; a clear one like “Take 4 steps forward” does not. Check what you noticed against that, and write down anything that differed.",
+      "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy instruction like “Move” leaves you guessing; a clear one like “Take 4 steps forward” does not. Simon says take 4… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Clap your hands 2 times",
-      "explanation": "What is an algorithm? Giving clear instructions: An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy instruction like “Move” leaves you guessing; a clear one like “Take 4 steps forward” does not."
+      "explanation": "What is an algorithm? Giving clear instructions: A good instruction tells us exactly what to do. Play a quick game of Simon Says to start."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Circle the Precise One",
-      "context": "work through the steps below and see what happens. This is be precise, and get the order right in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "Here are two ways to make a milkshake. One is precise — it say exactly what to do. Circle box A or box B.",
+      "context": "Circle the Precise One: work through the steps below and see what happens. This is be precise, and get the order right in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
+      "prompt": "Here are two ways to make a milkshake. One is precise - it say exactly what to do. Circle box A or box B.",
       "answer": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step is precise AND the steps are in the right order. If the order is wrong, even good steps give a silly result. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Box A",
@@ -211,48 +221,48 @@
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Put the Steps in Order",
-      "context": "work through the steps below and see what happens. This is programs: instructions a computer follows in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Put the Steps in Order: work through the steps below and see what happens. This is programs: instructions a computer follows in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Leila is getting ready. The steps are mixed up! Write 1, 2, 3 in the boxes to put them in the right order.",
-      "answer": "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the program says, no more and no less. That is why the instructions in a program must be precise. Check what you noticed against that, and write down anything that differed.",
+      "answer": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the program says, no more and no less. That is why the instructions in a program must be precise. The robot may only… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: [ ] Put on your shoes",
-      "explanation": "Programs: instructions a computer follows: A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the program says, no more and no less. That is why the instructions in a program must be precise."
+      "explanation": "Programs: instructions a computer follows: You just gave the robot a program! A computer works just like our robot - it follows your steps exactly and cannot guess."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Match the Block",
-      "context": "work through the steps below and see what happens. This is making a program in scratchjr (the whale spins) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Match the Block: work through the steps below and see what happens. This is making a program in scratchjr (the whale spins) in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "In ScratchJr you use picture blocks. Draw a line to match each block to what it does.",
-      "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character, and one action; (2) write the algorithm; (3) change each step into a block of code; (4) run it. Our task: make… Check what you noticed against that, and write down anything that differed.",
+      "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character, and one action; (2) write the algorithm; (3) change each step into a block of code; (4) run it. Our task: make… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Making a program in ScratchJr (the Whale spins): Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character, and one action; (2) write the algorithm; (3) change each step into a block of code; (4) run it. Our task: make the Whale do one full spin."
+      "explanation": "Making a program in ScratchJr (the Whale spins): Find one real example of making a program in ScratchJr (the Whale spins) around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Explore",
       "title": "Try it: True or False?",
-      "context": "work through the steps below and see what happens. This is more blocks: talk and hop; build and run in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "True or False?: work through the steps below and see what happens. This is more blocks: talk and hop; build and run in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Circle True or False.",
-      "answer": "A program can have more than one action. We add two new blocks: the Say block (purple - it shows a speech bubble so the character can talk) and the Hop block (blue - it makes the character jump up). We build a slightly longer program, then run it and check it… Check what you noticed against that, and write down anything that differed.",
+      "answer": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the Hop block (blue — it makes the character jump up). We build a slightly longer program, then run it and check it… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: a. A computer can think all by itself. True / False",
-      "explanation": "More blocks: talk and hop; build and run: A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the Hop block (blue — it makes the character jump up). We build a slightly longer program, then run it and check it matches our algorithm."
+      "explanation": "More blocks: talk and hop; build and run: Find one real example of more blocks: talk and hop; build and run around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-6",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Explore",
       "title": "Try it: Follow the Steps and Draw",
-      "context": "work through the steps below and see what happens. This is what is an algorithm? giving clear instructions in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Follow the Steps and Draw: work through the steps below and see what happens. This is be a game developer in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Follow the algorithm. Draw a happy face in the big box, one step at a time.",
-      "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy instruction like “Move” leaves you guessing; a clear one like “Take 4 steps forward” does not. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Step 1 Draw a big circle",
-      "explanation": "What is an algorithm? Giving clear instructions: An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy instruction like “Move” leaves you guessing; a clear one like “Take 4 steps forward” does not."
+      "explanation": "Welcome to Unit 1 of Year 2 Computing at Ehel Academy. The unit is called “Be a Game Developer”, but the big idea underneath the fun title is two words: algorithms and programs. An algorithm is a set of clear, step-by-step instructions, in the right order, for doing a job. A program is a set of instructions that a…"
     }
   ],
   "visualModels": [
@@ -290,7 +300,7 @@
     },
     {
       "id": "model-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "title": "More blocks: talk and hop; build and run",
       "modelType": "concept-model-5",
       "purpose": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the Hop block (blue — it makes the character jump up). We build a slightly…",
@@ -352,7 +362,7 @@
     },
     {
       "id": "method-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Challenge",
       "title": "How to work with more blocks: talk and hop; build and run",
       "example": "Find one real example of more blocks: talk and hop; build and run around you, or on a device you use. Say out loud what it is and why it fits.",
@@ -399,7 +409,7 @@
     },
     {
       "id": "we05",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Intermediate",
       "title": "Worked example 5: What is an algorithm? Giving clear instructions",
       "prompt": "Explain in your own words: What is an algorithm? Giving clear instructions.",
@@ -407,7 +417,7 @@
     },
     {
       "id": "we06",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Be precise, and get the order right",
       "prompt": "Explain in your own words: Be precise, and get the order right.",
@@ -463,7 +473,7 @@
       "title": "Circle the Clear Instructions",
       "materials": "A tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
-        "A good instruction say exactly what to do. Circle the instructions you could follow easily. Put a line through the ones that are too fuzzy.",
+        "A good instruction says exactly what to do. Circle the instructions you could follow easily. Put a line through the ones that are too fuzzy.",
         "Clap your hands 2 times",
         "Hop to the door"
       ]
@@ -472,7 +482,7 @@
       "title": "Circle the Precise One",
       "materials": "A tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
-        "Here are two ways to make a milkshake. One is precise — it say exactly what to do. Circle box A or box B.",
+        "Here are two ways to make a milkshake. One is precise — it says exactly what to do. Circle box A or box B.",
         "Box A",
         "Pour milk",
         "Add powder",
@@ -540,7 +550,7 @@
         "Algorithm 1",
         "Algorithm 2",
         "Spin right (12)",
-        "Spin left (12)",
+        "Spin (no number — just \"spin a bit\")",
         "I circled: Algorithm 1 Algorithm 2"
       ]
     }
@@ -720,11 +730,11 @@
       ],
       [
         "The order does not matter as long as all the steps are there.",
-        "A computer cannot guess or think — it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes."
+        "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
       ],
       [
         "The computer knows what I mean.",
-        "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them — people made it, so people like them can make one too."
+        "A computer cannot guess or think — it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes."
       ],
       [
         "A computer game just happens by magic.",
@@ -780,7 +790,7 @@
     },
     {
       "id": "fl05",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Round 2",
       "prompt": "In ScratchJr, what does the Turn block set to 12 do? (a full spin a tiny turn nothing)",
       "answer": "a full spin (12 = all the way around; a turn of 3 is only a quarter turn).",
@@ -789,7 +799,7 @@
     },
     {
       "id": "fl06",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Round 2",
       "prompt": "Put these steps in order. Write 1, 2, 3 in the boxes.",
       "answer": "1 = Make the anjero, 2 = Put the anjero on a plate, 3 = Eat the anjero.",
@@ -890,7 +900,7 @@
         "instruction",
         "precise"
       ],
-      "modelAnswer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character, and one action; (2) write the algorithm; (3) change each step into a block of code; (4) run it. Our task: make the Whale do one full spin. our picture instructions. our GO button — we tap it to run the program. Open ScratchJr on a big tablet."
+      "modelAnswer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character, and one action; (2) write the algorithm; (3) change each step into a block of code; (4) run it. Our task: make the Whale do one full spin. Here are our picture instructions. Here is our GO button — we tap it to run the program."
     }
   ],
   "project": {
@@ -935,13 +945,13 @@
         "question": "Which of these describes “What is an algorithm? Giving clear instructions”?",
         "options": [
           "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-          "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
-          "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…",
-          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…"
+          "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+          "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
+          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…"
         ],
-        "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+        "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…"
+        "explanation": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…"
       },
       {
         "id": "q03",
@@ -951,9 +961,9 @@
         "question": "Which of these describes “Be precise, and get the order right”?",
         "options": [
           "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
-          "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
-          "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…"
+          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+          "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+          "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
         ],
         "answer": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
         "hint": "Use the Unit 1 Computing Words reference.",
@@ -966,51 +976,51 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Programs: instructions a computer follows”?",
         "options": [
-          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
           "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-          "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
-          "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…"
+          "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+          "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
         ],
-        "answer": "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
+        "answer": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…"
+        "explanation": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
       },
       {
         "id": "q05",
         "type": "Application",
-        "outcomeId": "lo05",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "Which of these describes “Making a program in ScratchJr”?",
         "options": [
-          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
-          "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…",
+          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+          "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
           "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-          "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…"
+          "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
         ],
-        "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…",
+        "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…"
+        "explanation": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
       },
       {
         "id": "q06",
         "type": "Application",
-        "outcomeId": "lo01",
+        "outcomeId": "lo02",
         "difficulty": "Core",
         "question": "Which of these describes “More blocks: talk and hop; build and run”?",
         "options": [
-          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+          "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
           "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-          "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
-          "A program can have more than one action. We add two new blocks: the Say block (purple - it shows a speech bubble so the character can talk) and the…"
+          "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+          "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…"
         ],
-        "answer": "A program can have more than one action. We add two new blocks: the Say block (purple - it shows a speech bubble so the character can talk) and the…",
+        "answer": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "A program can have more than one action. We add two new blocks: the Say block (purple - it shows a speech bubble so the character can talk) and the…"
+        "explanation": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…"
       },
       {
         "id": "q07",
         "type": "Application",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Core",
         "question": "What should you do when this happens: The order does not matter as long as all the steps are there.",
         "options": [
@@ -1026,7 +1036,7 @@
       {
         "id": "q08",
         "type": "Application",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Core",
         "question": "What should you do when this happens: The computer knows what I mean.",
         "options": [
@@ -1042,7 +1052,7 @@
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo04",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: A computer game just happens by magic.",
         "options": [
@@ -1058,7 +1068,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo05",
+        "outcomeId": "lo02",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: Any turn number will spin it around.",
         "options": [
@@ -1074,7 +1084,7 @@
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: Blocks work even if they are not joined.",
         "options": [
@@ -1090,7 +1100,7 @@
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: One step that tells you what to do.?",
         "options": [
@@ -1129,14 +1139,14 @@
           {
             "prompt": "Which of these describes “Programs: instructions a computer follows”?",
             "choices": [
-              "The right order the steps must go in.",
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program."
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
-            "answer": "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
+            "answer": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Order means the right order the steps must go in."
+            "explanation": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
           },
           {
             "prompt": "What should you do when this happens: The order does not matter as long as all the steps are there.",
@@ -1148,7 +1158,7 @@
             ],
             "answer": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "ScratchJr means a free app where you join picture blocks to make a program."
+            "explanation": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
           },
           {
             "prompt": "What should you do when this happens: Any turn number will spin it around.",
@@ -1160,7 +1170,7 @@
             ],
             "answer": "In ScratchJr the number matters: a turn of 3 is only a quarter turn. It takes 12 to go all the way around once. If a spin looks wrong, check the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Run means to make the computer follow the program."
+            "explanation": "In ScratchJr the number matters: a turn of 3 is only a quarter turn. It takes 12 to go all the way around once. If a spin looks wrong, check the…"
           }
         ]
       },
@@ -1175,26 +1185,26 @@
           {
             "prompt": "Which of these describes “What is an algorithm? Giving clear instructions”?",
             "choices": [
-              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
               "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-              "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
-              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…"
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
-            "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+            "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Instruction means one step that tells you what to do."
+            "explanation": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…"
           },
           {
             "prompt": "Which of these describes “Making a program in ScratchJr”?",
             "choices": [
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program.",
-              "A person, animal or thing in ScratchJr that follows your blocks."
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
             ],
-            "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…",
+            "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Program means a set of instructions that a computer can follow."
+            "explanation": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
           },
           {
             "prompt": "What should you do when this happens: The computer knows what I mean.",
@@ -1206,7 +1216,7 @@
             ],
             "answer": "A computer cannot guess or think - it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Character means a person, animal or thing in ScratchJr that follows your blocks."
+            "explanation": "A computer cannot guess or think - it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes."
           },
           {
             "prompt": "What should you do when this happens: Blocks work even if they are not joined.",
@@ -1218,7 +1228,7 @@
             ],
             "answer": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap and you can see it fail, then join them.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+            "explanation": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap and you can see it fail, then join them."
           }
         ]
       },
@@ -1233,26 +1243,26 @@
           {
             "prompt": "Which of these describes “Be precise, and get the order right”?",
             "choices": [
-              "Exact, clear and correct.",
-              "The right order the steps must go in.",
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks."
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
             "answer": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Precise means exact, clear and correct."
+            "explanation": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…"
           },
           {
             "prompt": "Which of these describes “More blocks: talk and hop; build and run”?",
             "choices": [
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program.",
-              "A person, animal or thing in ScratchJr that follows your blocks.",
-              "One picture instruction you drag and join in ScratchJr."
+              "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
             ],
-            "answer": "The instructions inside a program — the blocks.",
+            "answer": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Code means the instructions inside a program — the blocks."
+            "explanation": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…"
           },
           {
             "prompt": "What should you do when this happens: A computer game just happens by magic.",
@@ -1264,7 +1274,7 @@
             ],
             "answer": "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them - people made it, so people like them can make…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Block means one picture instruction you drag and join in ScratchJr."
+            "explanation": "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them - people made it, so people like them can make…"
           },
           {
             "prompt": "Which computing word matches this meaning: One step that tells you what to do.?",
@@ -1291,14 +1301,14 @@
           {
             "prompt": "Which of these describes “Programs: instructions a computer follows”?",
             "choices": [
-              "The right order the steps must go in.",
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program."
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
-            "answer": "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
+            "answer": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Order means the right order the steps must go in."
+            "explanation": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
           },
           {
             "prompt": "What should you do when this happens: The order does not matter as long as all the steps are there.",
@@ -1310,7 +1320,7 @@
             ],
             "answer": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "ScratchJr means a free app where you join picture blocks to make a program."
+            "explanation": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
           },
           {
             "prompt": "What should you do when this happens: Any turn number will spin it around.",
@@ -1322,7 +1332,7 @@
             ],
             "answer": "In ScratchJr the number matters: a turn of 3 is only a quarter turn. It takes 12 to go all the way around once. If a spin looks wrong, check the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Run means to make the computer follow the program."
+            "explanation": "In ScratchJr the number matters: a turn of 3 is only a quarter turn. It takes 12 to go all the way around once. If a spin looks wrong, check the…"
           },
           {
             "prompt": "True or False: A computer can think by itself.",
@@ -1347,14 +1357,14 @@
           {
             "prompt": "Which of these describes “Making a program in ScratchJr”?",
             "choices": [
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program.",
-              "A person, animal or thing in ScratchJr that follows your blocks."
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
             ],
-            "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…",
+            "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Program means a set of instructions that a computer can follow."
+            "explanation": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
           },
           {
             "prompt": "What should you do when this happens: The computer knows what I mean.",
@@ -1366,7 +1376,7 @@
             ],
             "answer": "A computer cannot guess or think - it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Character means a person, animal or thing in ScratchJr that follows your blocks."
+            "explanation": "A computer cannot guess or think - it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes."
           },
           {
             "prompt": "What should you do when this happens: Blocks work even if they are not joined.",
@@ -1378,19 +1388,19 @@
             ],
             "answer": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap and you can see it fail, then join them.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+            "explanation": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap and you can see it fail, then join them."
           },
           {
             "prompt": "Which of these describes “What is an algorithm? Giving clear instructions”?",
             "choices": [
-              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
               "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-              "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
-              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…"
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
-            "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+            "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Instruction means one step that tells you what to do."
+            "explanation": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…"
           }
         ]
       },
@@ -1405,14 +1415,14 @@
           {
             "prompt": "Which of these describes “More blocks: talk and hop; build and run”?",
             "choices": [
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program.",
-              "A person, animal or thing in ScratchJr that follows your blocks.",
-              "One picture instruction you drag and join in ScratchJr."
+              "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
             ],
-            "answer": "The instructions inside a program — the blocks.",
+            "answer": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Code means the instructions inside a program — the blocks."
+            "explanation": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…"
           },
           {
             "prompt": "What should you do when this happens: A computer game just happens by magic.",
@@ -1424,7 +1434,7 @@
             ],
             "answer": "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them - people made it, so people like them can make…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Block means one picture instruction you drag and join in ScratchJr."
+            "explanation": "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them - people made it, so people like them can make…"
           },
           {
             "prompt": "Which computing word matches this meaning: One step that tells you what to do.?",
@@ -1441,14 +1451,14 @@
           {
             "prompt": "Which of these describes “Be precise, and get the order right”?",
             "choices": [
-              "Exact, clear and correct.",
-              "The right order the steps must go in.",
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks."
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
             "answer": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Precise means exact, clear and correct."
+            "explanation": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…"
           }
         ]
       },
@@ -1470,7 +1480,7 @@
             ],
             "answer": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "ScratchJr means a free app where you join picture blocks to make a program."
+            "explanation": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
           },
           {
             "prompt": "What should you do when this happens: Any turn number will spin it around.",
@@ -1482,7 +1492,7 @@
             ],
             "answer": "In ScratchJr the number matters: a turn of 3 is only a quarter turn. It takes 12 to go all the way around once. If a spin looks wrong, check the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Run means to make the computer follow the program."
+            "explanation": "In ScratchJr the number matters: a turn of 3 is only a quarter turn. It takes 12 to go all the way around once. If a spin looks wrong, check the…"
           },
           {
             "prompt": "True or False: A computer can think by itself.",
@@ -1497,14 +1507,14 @@
           {
             "prompt": "Which of these describes “Programs: instructions a computer follows”?",
             "choices": [
-              "The right order the steps must go in.",
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program."
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
-            "answer": "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
+            "answer": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Order means the right order the steps must go in."
+            "explanation": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
           }
         ]
       },
@@ -1526,7 +1536,7 @@
             ],
             "answer": "A computer cannot guess or think - it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Character means a person, animal or thing in ScratchJr that follows your blocks."
+            "explanation": "A computer cannot guess or think - it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes."
           },
           {
             "prompt": "What should you do when this happens: Blocks work even if they are not joined.",
@@ -1538,31 +1548,31 @@
             ],
             "answer": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap and you can see it fail, then join them.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+            "explanation": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap and you can see it fail, then join them."
           },
           {
             "prompt": "Which of these describes “What is an algorithm? Giving clear instructions”?",
             "choices": [
-              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
               "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-              "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
-              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…"
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
-            "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+            "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Instruction means one step that tells you what to do."
+            "explanation": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…"
           },
           {
             "prompt": "Which of these describes “Making a program in ScratchJr”?",
             "choices": [
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program.",
-              "A person, animal or thing in ScratchJr that follows your blocks."
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
             ],
-            "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…",
+            "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Program means a set of instructions that a computer can follow."
+            "explanation": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
           }
         ]
       },
@@ -1584,7 +1594,7 @@
             ],
             "answer": "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them - people made it, so people like them can make…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Block means one picture instruction you drag and join in ScratchJr."
+            "explanation": "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them - people made it, so people like them can make…"
           },
           {
             "prompt": "Which computing word matches this meaning: One step that tells you what to do.?",
@@ -1601,26 +1611,26 @@
           {
             "prompt": "Which of these describes “Be precise, and get the order right”?",
             "choices": [
-              "Exact, clear and correct.",
-              "The right order the steps must go in.",
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks."
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
             "answer": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Precise means exact, clear and correct."
+            "explanation": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…"
           },
           {
             "prompt": "Which of these describes “More blocks: talk and hop; build and run”?",
             "choices": [
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program.",
-              "A person, animal or thing in ScratchJr that follows your blocks.",
-              "One picture instruction you drag and join in ScratchJr."
+              "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
             ],
-            "answer": "The instructions inside a program — the blocks.",
+            "answer": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Code means the instructions inside a program — the blocks."
+            "explanation": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…"
           }
         ]
       },
@@ -1642,7 +1652,7 @@
             ],
             "answer": "In ScratchJr the number matters: a turn of 3 is only a quarter turn. It takes 12 to go all the way around once. If a spin looks wrong, check the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Run means to make the computer follow the program."
+            "explanation": "In ScratchJr the number matters: a turn of 3 is only a quarter turn. It takes 12 to go all the way around once. If a spin looks wrong, check the…"
           },
           {
             "prompt": "True or False: A computer can think by itself.",
@@ -1657,14 +1667,14 @@
           {
             "prompt": "Which of these describes “Programs: instructions a computer follows”?",
             "choices": [
-              "The right order the steps must go in.",
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program."
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
-            "answer": "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
+            "answer": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Order means the right order the steps must go in."
+            "explanation": "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
           },
           {
             "prompt": "What should you do when this happens: The order does not matter as long as all the steps are there.",
@@ -1676,7 +1686,7 @@
             ],
             "answer": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "ScratchJr means a free app where you join picture blocks to make a program."
+            "explanation": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks on top."
           }
         ]
       },
@@ -1698,31 +1708,31 @@
             ],
             "answer": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap and you can see it fail, then join them.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+            "explanation": "Blocks must click together in a row, like a jigsaw, or only the first one runs. Show a gap and you can see it fail, then join them."
           },
           {
             "prompt": "Which of these describes “What is an algorithm? Giving clear instructions”?",
             "choices": [
-              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
               "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
-              "A program is a set of instructions that a computer can follow. A computer is a machine - it cannot think for itself, so it does exactly what the…",
-              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…"
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
-            "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear - it must say exactly what to do. A fuzzy…",
+            "answer": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Instruction means one step that tells you what to do."
+            "explanation": "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…"
           },
           {
             "prompt": "Which of these describes “Making a program in ScratchJr”?",
             "choices": [
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program.",
-              "A person, animal or thing in ScratchJr that follows your blocks."
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
             ],
-            "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts - a background, a character,…",
+            "answer": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Program means a set of instructions that a computer can follow."
+            "explanation": "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
           },
           {
             "prompt": "What should you do when this happens: The computer knows what I mean.",
@@ -1734,7 +1744,7 @@
             ],
             "answer": "A computer cannot guess or think - it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes.",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Character means a person, animal or thing in ScratchJr that follows your blocks."
+            "explanation": "A computer cannot guess or think - it only does exactly what the blocks say. Use the Robot Game: when you give a fuzzy instruction, the robot freezes."
           }
         ]
       },
@@ -1761,26 +1771,26 @@
           {
             "prompt": "Which of these describes “Be precise, and get the order right”?",
             "choices": [
-              "Exact, clear and correct.",
-              "The right order the steps must go in.",
-              "A set of instructions that a computer can follow.",
-              "The instructions inside a program — the blocks."
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…",
+              "Now we turn an algorithm into a real program in ScratchJr, using four easy steps: (1) break the task into small parts — a background, a character,…"
             ],
             "answer": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Precise means exact, clear and correct."
+            "explanation": "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…"
           },
           {
             "prompt": "Which of these describes “More blocks: talk and hop; build and run”?",
             "choices": [
-              "The instructions inside a program — the blocks.",
-              "A free app where you join picture blocks to make a program.",
-              "A person, animal or thing in ScratchJr that follows your blocks.",
-              "One picture instruction you drag and join in ScratchJr."
+              "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
+              "An algorithm is a set of steps for doing a job. For the steps to work, each instruction must be clear — it must say exactly what to do. A fuzzy…",
+              "There is a special computing word for a clear instruction: precise. Precise means exact, clear and correct. An algorithm works best when every step…",
+              "A program is a set of instructions that a computer can follow. A computer is a machine — it cannot think for itself, so it does exactly what the…"
             ],
-            "answer": "The instructions inside a program — the blocks.",
+            "answer": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Code means the instructions inside a program — the blocks."
+            "explanation": "A program can have more than one action. We add two new blocks: the Say block (purple — it shows a speech bubble so the character can talk) and the…"
           },
           {
             "prompt": "What should you do when this happens: A computer game just happens by magic.",
@@ -1792,14 +1802,13 @@
             ],
             "answer": "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them - people made it, so people like them can make…",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Block means one picture instruction you drag and join in ScratchJr."
+            "explanation": "Every game is a program that a person wrote, step by step. This is a lovely, empowering idea for them - people made it, so people like them can make…"
           }
         ]
       }
     ]
   },
   "selfAssessment": [
-    "I can these come straight from the textbook unit. By the end of the unit, the child should be able to:",
     "I can know that an algorithm is a precise set of instructions in the right order.",
     "I can know that programs tell computers what to do, and that a computer follows them exactly.",
     "I can turn an algorithm into a program by changing each step into a block of code.",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.555Z",
+  "generatedAt": "2026-09-17T20:45:49.500Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -50,8 +50,8 @@
         "text": "Know how to develop algorithms to produce different outputs based on different inputs."
       },
       {
-        "code": "4CT.01",
-        "text": "Follow, understand, edit and correct algorithms that use repetition, including indefinite (forever) loops."
+        "code": "4P.01",
+        "text": "Know how to add comments to blocks of code and explain the benefits of these comments."
       }
     ],
     "objectiveMapping": {
@@ -90,8 +90,7 @@
     "Write an algorithm as an ordered list of steps, and predict its outcome before running it.",
     "Identify the components of an algorithm: what starts it, what it shows, how long for, and how many times it repeats.",
     "Build a program in Scratch that produces different outputs from different inputs, using an event block such as when [a] key pressed.",
-    "Reuse repetition (the repeat ( ) loop) to make an output happen a set number of times, and add a comment to explain the code.",
-    "Before this unit (from the syllabus), children should already use logical thinking to create algorithms, follow and correct algorithms that use repetition, understand that decomposition means breaking a task into parts, and create a simple program that produces an output from an input. A quick recap of the repeat block at the start of Session 3 is usually enough."
+    "Reuse repetition (the repeat ( ) loop) to make an output happen a set number of times, and add a comment to explain the code."
   ],
   "toolkit": [
     {
@@ -115,17 +114,6 @@
         "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
       ],
       "note": "You do not need to own a real micro:bit — the simulator does everything."
-    },
-    {
-      "name": "A free spreadsheet",
-      "url": "Google Sheets, or LibreOffice Calc",
-      "steps": [
-        "Open a new blank spreadsheet.",
-        "Put your field names in row 1, one per column.",
-        "Type one record per row underneath.",
-        "Use Insert → Chart to turn your data into a graph."
-      ],
-      "note": "Any free spreadsheet works — the ideas are the same in all of them."
     }
   ],
   "tutorPrompts": [],
@@ -161,7 +149,7 @@
     {
       "id": "concept-5-be-an-innovator-invent-your-own-gadget-scratch",
       "title": "Be an innovator: invent your own gadget (Scratch)",
-      "explanation": "This session flows straight into the Mini-Project. Talk about inventors for a minute: an innovator sees a problem and builds something useful to solve it. Clicking the sprite is another kind of input — the mouse is an input device too Ask what small gadget could help at Ehel Academy or at home — a badge that reminds you when it is time to tidy up, a helper that greets a visitor, a quiet-please signal for the library. Then show how to add a third input using the mouse.",
+      "explanation": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to solve it. Clicking the sprite is another kind of input — the mouse is an input device too. What small gadget could help at Ehel Academy or at home — a badge that reminds you when it is time to tidy up, a helper that greets a visitor, a quiet-please signal for the library? Try adding a third input using the mouse.",
       "example": "Do it yourself: be an innovator: invent your own gadget (Scratch). Work through it slowly, then check what you did against the explanation above.",
       "checkYourself": "Can you add a third input with its own output? Can you plan with an algorithm before building?"
     }
@@ -212,7 +200,7 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Input or Output?",
-      "context": "work through the steps below and see what happens. This is inputs and outputs all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Input or Output?: work through the steps below and see what happens. This is inputs and outputs all around us (unplugged) in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "An input goes into the computer. An output comes back out to us. Write IN next to each input device and OUT next to each output device.",
       "answer": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in is an input device (keyboard, mouse, microphone, touchscreen, camera); the hardware that carries information… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
@@ -224,7 +212,7 @@
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Match the Input to an Output",
-      "context": "work through the steps below and see what happens. This is decomposition and algorithms (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Match the Input to an Output: work through the steps below and see what happens. This is decomposition and algorithms (unplugged) in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Draw a line from each input to an output it could make.",
       "answer": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do a job. When we plan a gadget, we first decompose it into its separate jobs, then write one algorithm for each… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
@@ -236,33 +224,33 @@
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Our Senses Are Inputs",
-      "context": "work through the steps below and see what happens. This is different input, different output (scratch) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
-      "prompt": "You have five amazing input devices of your own — your senses! Write what each one takes in. Choose from: sight, sound, smell, taste, touch.",
-      "answer": "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a key (our input); the blocks under it are the output. Check what you noticed against that, and write down anything that differed.",
+      "context": "Our Senses Are Inputs: work through the steps below and see what happens. This is different input, different output (scratch) in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
+      "prompt": "You have five amazing input devices of your own - your senses! Write what each one takes in. Choose from: sight, sound, smell, taste, touch.",
+      "answer": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a key (our input); the blocks under it are the output. Name the three parts of the screen in child words: the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: a) Eyes take in ________________ b) Ears take in ________________",
-      "explanation": "Different input, different output (Scratch): Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a key (our input); the blocks under it are the output."
+      "explanation": "Different input, different output (Scratch): Find one real example of different input, different output (Scratch) around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Finish the Algorithm",
-      "context": "work through the steps below and see what happens. This is two algorithms in one program (scratch) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Finish the Algorithm: work through the steps below and see what happens. This is two algorithms in one program (scratch) in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Nadia is planning the Happy badge. Fill in the blanks in her algorithm.",
-      "answer": "Algorithm 1 — the Happy badge Step 1 Start when the ____ key is pressed Step 2 Show a ____________ face Step 3 Play the happy sound Step 4 Wait ____ second, then clear the face",
+      "answer": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started by a different input (the b key), giving a different output. Now the same program produces different outputs… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
-      "hint": "Start here: Algorithm 1 — the Happy badge",
-      "explanation": "Two algorithms in one program (Scratch): A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started by a different input (the b key), giving a different output. Now the same program produces different outputs from different inputs, which is the…"
+      "hint": "Start here: Algorithm 1 - the Happy badge",
+      "explanation": "Two algorithms in one program (Scratch): Find one real example of two algorithms in one program (Scratch) around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Decompose It",
-      "context": "work through the steps below and see what happens. This is be an innovator: invent your own gadget (scratch) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Decompose It: work through the steps below and see what happens. This is be an innovator: invent your own gadget (scratch) in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "The badge does two jobs, so it needs two algorithms. Fill in the missing boxes for each badge.",
-      "answer": "This session flows straight into the Mini-Project. Check what you noticed against that, and write down anything that differed.",
+      "answer": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to solve it. Clicking the sprite is another kind of input — the mouse is an input device too. What small gadget… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
       "explanation": "Be an innovator: invent your own gadget (Scratch): Do it yourself: be an innovator: invent your own gadget (Scratch). Work through it slowly, then check what you did against the explanation above."
@@ -272,12 +260,12 @@
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: Try it in Scratch! Build the Happy Badge",
-      "context": "work through the steps below and see what happens. This is inputs and outputs all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Try it in Scratch! Build the Happy Badge: work through the steps below and see what happens. This is be an innovator in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Time to build!",
-      "answer": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in is an input device (keyboard, mouse, microphone, touchscreen, camera); the hardware that carries information… Check what you noticed against that, and write down anything that differed.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Go to scratch.mit.edu and click Create.",
-      "explanation": "Inputs and outputs all around us (unplugged): They send information into your brain, the way a keyboard sends letters into a computer. Input in, output out."
+      "explanation": "Behind the fun theme sit three solid computing ideas. The first is inputs and outputs. An input is data that goes into a computer (a key press, a click, a sound at the microphone), and the hardware that sends it in is an input device. An output is information the computer sends back out to us (a picture on the screen,…"
     }
   ],
   "visualModels": [
@@ -318,7 +306,7 @@
       "outcomeId": "lo05",
       "title": "Be an innovator: invent your own gadget (Scratch)",
       "modelType": "concept-model-5",
-      "purpose": "This session flows straight into the Mini-Project.",
+      "purpose": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to solve it. Clicking the sprite is another kind of input — the mouse is an…",
       "defaultNumber": null
     }
   ],
@@ -798,7 +786,7 @@
       ],
       [
         "Input and output mean the same thing.",
-        "No — the screen sends a picture out to you, so it is an output device. Your eyes are the input."
+        "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture)."
       ],
       [
         "A screen is an input because I look at it.",
@@ -1001,9 +989,9 @@
         "question": "Which of these describes “Inputs and outputs all around us”?",
         "options": [
           "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-          "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+          "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
           "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
-          "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+          "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
         ],
         "answer": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
         "hint": "Use the Unit 8 Computing Words reference.",
@@ -1017,8 +1005,8 @@
         "question": "Which of these describes “Decomposition and algorithms”?",
         "options": [
           "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
-          "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-          "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+          "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+          "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
           "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…"
         ],
         "answer": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
@@ -1032,14 +1020,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Different input, different output”?",
         "options": [
-          "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+          "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
           "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
           "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-          "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+          "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
         ],
-        "answer": "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+        "answer": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+        "explanation": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
       },
       {
         "id": "q04",
@@ -1049,13 +1037,13 @@
         "question": "Which of these describes “Two algorithms in one program”?",
         "options": [
           "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
-          "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+          "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
           "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-          "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+          "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
         ],
-        "answer": "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+        "answer": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+        "explanation": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
       },
       {
         "id": "q05",
@@ -1064,14 +1052,14 @@
         "difficulty": "Core",
         "question": "Which of these describes “Be an innovator: invent your own gadget”?",
         "options": [
-          "This session flows straight into the Mini-Project.",
+          "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
           "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
           "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-          "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+          "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
         ],
-        "answer": "This session flows straight into the Mini-Project.",
+        "answer": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "This session flows straight into the Mini-Project."
+        "explanation": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…"
       },
       {
         "id": "q06",
@@ -1124,7 +1112,7 @@
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo09",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: More repeats always take more time.",
         "options": [
@@ -1140,7 +1128,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo02",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: Both scripts must join together.",
         "options": [
@@ -1156,7 +1144,7 @@
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
         "options": [
@@ -1172,7 +1160,7 @@
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: Something that makes a script start.?",
         "options": [
@@ -1203,8 +1191,8 @@
             "choices": [
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
             "answer": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
             "clue": "Use the Unit 8 Computing Words reference.",
@@ -1213,14 +1201,14 @@
           {
             "prompt": "Which of these describes “Two algorithms in one program”?",
             "choices": [
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
             ],
-            "answer": "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+            "answer": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Output device means hardware that sends information out to us."
+            "explanation": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
           },
           {
             "prompt": "What should you do when this happens: A screen is an input because I look at it.",
@@ -1232,7 +1220,7 @@
             ],
             "answer": "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Sequence means the order in which the steps happen."
+            "explanation": "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input."
           },
           {
             "prompt": "What should you do when this happens: Both scripts must join together.",
@@ -1244,7 +1232,7 @@
             ],
             "answer": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Predict means to say what will happen before you run it."
+            "explanation": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate."
           }
         ]
       },
@@ -1261,24 +1249,24 @@
             "choices": [
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
             "answer": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Output means information the computer sends out to us."
+            "explanation": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…"
           },
           {
             "prompt": "Which of these describes “Be an innovator: invent your own gadget”?",
             "choices": [
-              "This session flows straight into the Mini-Project.",
+              "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
             ],
-            "answer": "This session flows straight into the Mini-Project.",
+            "answer": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Decomposition means breaking a problem into smaller parts."
+            "explanation": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…"
           },
           {
             "prompt": "What should you do when this happens: A gadget with two jobs needs one big algorithm.",
@@ -1290,7 +1278,7 @@
             ],
             "answer": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Repetition means doing something again and again."
+            "explanation": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
           },
           {
             "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
@@ -1317,14 +1305,14 @@
           {
             "prompt": "Which of these describes “Different input, different output”?",
             "choices": [
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
-            "answer": "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+            "answer": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Input device means hardware that sends data into the computer."
+            "explanation": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
           },
           {
             "prompt": "What should you do when this happens: Input and output mean the same thing.",
@@ -1336,7 +1324,7 @@
             ],
             "answer": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+            "explanation": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture)."
           },
           {
             "prompt": "What should you do when this happens: More repeats always take more time.",
@@ -1348,7 +1336,7 @@
             ],
             "answer": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Loop means a block that repeats the code inside it."
+            "explanation": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count."
           },
           {
             "prompt": "Which computing word matches this meaning: Something that makes a script start.?",
@@ -1375,14 +1363,14 @@
           {
             "prompt": "Which of these describes “Two algorithms in one program”?",
             "choices": [
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
             ],
-            "answer": "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+            "answer": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Output device means hardware that sends information out to us."
+            "explanation": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
           },
           {
             "prompt": "What should you do when this happens: A screen is an input because I look at it.",
@@ -1394,7 +1382,7 @@
             ],
             "answer": "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Sequence means the order in which the steps happen."
+            "explanation": "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input."
           },
           {
             "prompt": "What should you do when this happens: Both scripts must join together.",
@@ -1406,15 +1394,15 @@
             ],
             "answer": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Predict means to say what will happen before you run it."
+            "explanation": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate."
           },
           {
             "prompt": "Which of these describes “Inputs and outputs all around us”?",
             "choices": [
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
             "answer": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
             "clue": "Use the Unit 8 Computing Words reference.",
@@ -1433,14 +1421,14 @@
           {
             "prompt": "Which of these describes “Be an innovator: invent your own gadget”?",
             "choices": [
-              "This session flows straight into the Mini-Project.",
+              "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
             ],
-            "answer": "This session flows straight into the Mini-Project.",
+            "answer": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Decomposition means breaking a problem into smaller parts."
+            "explanation": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…"
           },
           {
             "prompt": "What should you do when this happens: A gadget with two jobs needs one big algorithm.",
@@ -1452,7 +1440,7 @@
             ],
             "answer": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Repetition means doing something again and again."
+            "explanation": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
           },
           {
             "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
@@ -1471,12 +1459,12 @@
             "choices": [
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
             "answer": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Output means information the computer sends out to us."
+            "explanation": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…"
           }
         ]
       },
@@ -1498,7 +1486,7 @@
             ],
             "answer": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+            "explanation": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture)."
           },
           {
             "prompt": "What should you do when this happens: More repeats always take more time.",
@@ -1510,7 +1498,7 @@
             ],
             "answer": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Loop means a block that repeats the code inside it."
+            "explanation": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count."
           },
           {
             "prompt": "Which computing word matches this meaning: Something that makes a script start.?",
@@ -1527,14 +1515,14 @@
           {
             "prompt": "Which of these describes “Different input, different output”?",
             "choices": [
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
-            "answer": "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+            "answer": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Input device means hardware that sends data into the computer."
+            "explanation": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
           }
         ]
       },
@@ -1556,7 +1544,7 @@
             ],
             "answer": "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Sequence means the order in which the steps happen."
+            "explanation": "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input."
           },
           {
             "prompt": "What should you do when this happens: Both scripts must join together.",
@@ -1568,15 +1556,15 @@
             ],
             "answer": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Predict means to say what will happen before you run it."
+            "explanation": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate."
           },
           {
             "prompt": "Which of these describes “Inputs and outputs all around us”?",
             "choices": [
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
             "answer": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
             "clue": "Use the Unit 8 Computing Words reference.",
@@ -1585,14 +1573,14 @@
           {
             "prompt": "Which of these describes “Two algorithms in one program”?",
             "choices": [
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
             ],
-            "answer": "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+            "answer": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Output device means hardware that sends information out to us."
+            "explanation": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
           }
         ]
       },
@@ -1614,7 +1602,7 @@
             ],
             "answer": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Repetition means doing something again and again."
+            "explanation": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
           },
           {
             "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
@@ -1633,24 +1621,24 @@
             "choices": [
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
             "answer": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Output means information the computer sends out to us."
+            "explanation": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…"
           },
           {
             "prompt": "Which of these describes “Be an innovator: invent your own gadget”?",
             "choices": [
-              "This session flows straight into the Mini-Project.",
+              "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
             ],
-            "answer": "This session flows straight into the Mini-Project.",
+            "answer": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Decomposition means breaking a problem into smaller parts."
+            "explanation": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…"
           }
         ]
       },
@@ -1672,7 +1660,7 @@
             ],
             "answer": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Loop means a block that repeats the code inside it."
+            "explanation": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count."
           },
           {
             "prompt": "Which computing word matches this meaning: Something that makes a script start.?",
@@ -1689,14 +1677,14 @@
           {
             "prompt": "Which of these describes “Different input, different output”?",
             "choices": [
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
-            "answer": "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+            "answer": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Input device means hardware that sends data into the computer."
+            "explanation": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
           },
           {
             "prompt": "What should you do when this happens: Input and output mean the same thing.",
@@ -1708,7 +1696,7 @@
             ],
             "answer": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+            "explanation": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture)."
           }
         ]
       },
@@ -1730,15 +1718,15 @@
             ],
             "answer": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Predict means to say what will happen before you run it."
+            "explanation": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate."
           },
           {
             "prompt": "Which of these describes “Inputs and outputs all around us”?",
             "choices": [
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
             "answer": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
             "clue": "Use the Unit 8 Computing Words reference.",
@@ -1747,14 +1735,14 @@
           {
             "prompt": "Which of these describes “Two algorithms in one program”?",
             "choices": [
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
             ],
-            "answer": "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…",
+            "answer": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Output device means hardware that sends information out to us."
+            "explanation": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
           },
           {
             "prompt": "What should you do when this happens: A screen is an input because I look at it.",
@@ -1766,7 +1754,7 @@
             ],
             "answer": "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Sequence means the order in which the steps happen."
+            "explanation": "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input."
           }
         ]
       },
@@ -1795,24 +1783,24 @@
             "choices": [
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
             "answer": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Output means information the computer sends out to us."
+            "explanation": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…"
           },
           {
             "prompt": "Which of these describes “Be an innovator: invent your own gadget”?",
             "choices": [
-              "This session flows straight into the Mini-Project.",
+              "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…"
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
             ],
-            "answer": "This session flows straight into the Mini-Project.",
+            "answer": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Decomposition means breaking a problem into smaller parts."
+            "explanation": "This session flows straight into the Mini-Project. Think about inventors for a minute: an innovator sees a problem and builds something useful to…"
           },
           {
             "prompt": "What should you do when this happens: A gadget with two jobs needs one big algorithm.",
@@ -1824,7 +1812,7 @@
             ],
             "answer": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Repetition means doing something again and again."
+            "explanation": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
           }
         ]
       },
@@ -1851,14 +1839,14 @@
           {
             "prompt": "Which of these describes “Different input, different output”?",
             "choices": [
-              "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+              "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
               "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in…",
               "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do…",
-              "A real gadget does more than one thing, so it needs more than one algorithm - this is decomposition in action. Today we add a second script, started…"
+              "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started…"
             ],
-            "answer": "Now we build for real. In Scratch, a script starts with an event block - a “hat” block that waits for an input. when [a] key pressed waits for the a…",
+            "answer": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Input device means hardware that sends data into the computer."
+            "explanation": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a…"
           },
           {
             "prompt": "What should you do when this happens: Input and output mean the same thing.",
@@ -1870,7 +1858,7 @@
             ],
             "answer": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+            "explanation": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture)."
           },
           {
             "prompt": "What should you do when this happens: More repeats always take more time.",
@@ -1882,7 +1870,7 @@
             ],
             "answer": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Loop means a block that repeats the code inside it."
+            "explanation": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count."
           }
         ]
       }
@@ -1896,7 +1884,6 @@
     "I can write an algorithm as an ordered list of steps, and predict its outcome before running it.",
     "I can identify the components of an algorithm: what starts it, what it shows, how long for, and how many times it repeats.",
     "I can build a program in Scratch that produces different outputs from different inputs, using an event block such as when [a] key pressed.",
-    "I can reuse repetition (the repeat ( ) loop) to make an output happen a set number of times, and add a comment to explain the code.",
-    "I can before this unit (from the syllabus), children should already use logical thinking to create algorithms, follow and correct algorithms that use repetition, understand that decomposition means breaking a task into parts, and create a simple program that produces an output from an input. A quick recap of the repeat block at the start of Session 3 is usually enough."
+    "I can reuse repetition (the repeat ( ) loop) to make an output happen a set number of times, and add a comment to explain the code."
   ]
 }

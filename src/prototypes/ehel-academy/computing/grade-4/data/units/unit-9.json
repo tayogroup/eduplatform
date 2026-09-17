@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.570Z",
+  "generatedAt": "2026-09-17T20:45:49.514Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -36,6 +36,22 @@
       {
         "code": "4DC.05",
         "text": "Identify where and why encryption is used in digital systems."
+      },
+      {
+        "code": "4DC.01",
+        "text": "Explain the role of servers and clients in a network."
+      },
+      {
+        "code": "4P.01",
+        "text": "Know how to add comments to blocks of code and explain the benefits of these comments."
+      },
+      {
+        "code": "4CS.01",
+        "text": "Identify examples where a control system is used."
+      },
+      {
+        "code": "4P.02",
+        "text": "Know how to develop programs with repetition."
       }
     ],
     "objectiveMapping": {
@@ -74,8 +90,7 @@
     "Explain that a cipher is a secret way of writing, and that Caesar and Pigpen are substitution ciphers (one letter is swapped for something else).",
     "Encrypt and decrypt a message using the Caesar cipher with a chosen key, and know what to do when a letter goes past Z (wrap around to A).",
     "Encrypt and decrypt a message using the Pigpen cipher, reading the symbols from the grid.",
-    "Invent a simple cipher of their own and understand why the person receiving a message needs the key.",
-    "Before this unit (from the syllabus), children should already know some things you can do on a network and its advantages and disadvantages, know what a cipher is, and be able to use a simple code to write and decode a short message. A two-minute recap — \"what is a network, and what do we use it for?\" — is enough to begin."
+    "Invent a simple cipher of their own and understand why the person receiving a message needs the key."
   ],
   "toolkit": [],
   "tutorPrompts": [],
@@ -90,14 +105,14 @@
     {
       "id": "concept-2-what-is-encryption-and-why-do-we-use-it",
       "title": "What is encryption, and why do we use it?",
-      "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very important idea: encryption does not stop someone seeing the letters of a message — it stops them understanding it. Even if someone snatches it, they just see “KHOOR” and cannot understand it. Only Leo, who has the same key, can decrypt it back to “HELLO”.",
+      "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very important idea: encryption does not stop someone seeing the letters of a message — it stops them understanding it. Even if someone snatches it, they just see “KHOOR” and cannot understand it. Only the person with the same key can decrypt it back to “HELLO”.",
       "example": "Answer this in your own words, out loud or on paper: What is encryption, and why do we use it? Then check your answer against the explanation above.",
       "checkYourself": "Can you use “plain text”, “ciphertext” and “key” correctly? Can you give one reason encryption is important?"
     },
     {
       "id": "concept-3-the-caesar-cipher-writing-secret-messages",
       "title": "The Caesar cipher: writing secret messages",
-      "explanation": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the key. Julius Caesar himself often used a key of 3. Because you swap each letter for another letter, it is called a substitution cipher.\n\nThe top row is the normal alphabet; the bottom row is the same alphabet shifted along by 3. To encrypt, find your letter on the top and write the letter underneath it. Give you the Caesar alphabet strip (below).",
+      "explanation": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the key. Julius Caesar himself often used a key of 3. Because you swap each letter for another letter, it is called a substitution cipher. The top row is the normal alphabet; the bottom row is the same alphabet shifted along by 3. To encrypt, find your letter on the top and write the letter underneath it, using the Caesar alphabet strip below.",
       "example": "Find one real example of the Caesar cipher: writing secret messages around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you handle the wrap-around at the end of the alphabet? Can you use the strip to encrypt a word correctly with a key of 3?"
     },
@@ -123,31 +138,31 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Crack the Number Code",
-      "context": "work through the steps below and see what happens. This is networks, and what happens when they fail in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Crack the Number Code: work through the steps below and see what happens. This is networks, and what happens when they fail in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Here is a secret code. Each number stands for a letter: A = 1, B = 2, C = 3, all the way to Z = 26. Work out the hidden word!",
-      "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working… Check what you noticed against that, and write down anything that differed.",
+      "answer": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: 5 14 3 18 25 16 20 9 15 14",
-      "explanation": "Networks, and what happens when they fail: A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working properly. When the network is down, people…"
+      "explanation": "Networks, and what happens when they fail: Find one real example of networks, and what happens when they fail around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: When the Network Fails",
-      "context": "work through the steps below and see what happens. This is what is encryption, and why do we use it? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "When the Network Fails: work through the steps below and see what happens. This is what is encryption, and why do we use it? in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "A network joins computers together so they can share. A network failure is when it stops working. Answer these",
-      "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very… Check what you noticed against that, and write down anything that differed.",
+      "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: True or false?",
-      "explanation": "What is encryption, and why do we use it?: Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very important idea: encryption does not stop…"
+      "explanation": "What is encryption, and why do we use it?: Answer this in your own words, out loud or on paper: What is encryption, and why do we use it? Then check your answer against the explanation above."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Match the Secret Words",
-      "context": "work through the steps below and see what happens. This is the caesar cipher: writing secret messages in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Match the Secret Words: work through the steps below and see what happens. This is the caesar cipher: writing secret messages in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Draw a line from each word to its meaning.",
       "answer": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the key. Julius Caesar himself often used a key of 3. Because you swap each letter for another letter, it is called… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
@@ -159,7 +174,7 @@
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: True or False: Encryption",
-      "context": "work through the steps below and see what happens. This is cracking the caesar cipher: decrypting in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "True or False: Encryption: work through the steps below and see what happens. This is cracking the caesar cipher: decrypting in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Circle True or False for each one.",
       "answer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
@@ -171,7 +186,7 @@
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Write in the Caesar Cipher (Key = 3)",
-      "context": "work through the steps below and see what happens. This is the pigpen cipher, and invent your own in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Write in the Caesar Cipher (Key = 3): work through the steps below and see what happens. This is the pigpen cipher, and invent your own in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "Julius Caesar hid messages by shifting every letter along the alphabet. Use this strip: find your letter on the top row, then write the letter underneath it.",
       "answer": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is written into two grids and two crosses, and each letter's symbol is the shape around it. It has been used since… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
@@ -183,12 +198,12 @@
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: Change the Key (Key = 5)",
-      "context": "work through the steps below and see what happens. This is networks, and what happens when they fail in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Change the Key (Key = 5): work through the steps below and see what happens. This is be a code cracker in practice — you need a sheet of paper and a pencil — no computer needed for this one.",
       "prompt": "A different key makes a different code! This strip is shifted by 5.",
-      "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working… Check what you noticed against that, and write down anything that differed.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
-      "explanation": "Networks, and what happens when they fail: A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working properly. When the network is down, people…"
+      "explanation": "Welcome to Unit 9 of Year 4 Computing at Ehel Academy. This unit is called “Be a Code Cracker”, and it is all about keeping information safe. It is one of the most exciting units of the year, and - happily - it needs no computers at all. Everything is done with a pencil, paper and a bit of clever thinking."
     }
   ],
   "visualModels": [
@@ -715,19 +730,19 @@
       ],
       [
         "Encrypt and decrypt are the same thing.",
-        "In this unit, plain text means the normal, un-scrambled message — nothing to do with fonts."
+        "They are opposites. Encrypt turns plain text into ciphertext; decrypt turns ciphertext back into plain text."
       ],
       [
         "Plain text means text with no colour or style.",
-        "No — a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
+        "In this unit, plain text means the normal, un-scrambled message — nothing to do with fonts."
       ],
       [
         "With a Caesar key of 3, you always turn A into 3.",
-        "No — you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
+        "No — a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
       ],
       [
         "When you reach Z you just stop.",
-        "No — you shift the opposite way. If encrypting moved letters forward, decrypting moves them back."
+        "No — you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
       ]
     ],
     "connections": []
@@ -921,12 +936,12 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Networks, and what happens when they fail”?",
         "options": [
-          "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
-          "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+          "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
+          "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
           "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
           "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
         ],
-        "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+        "answer": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
         "hint": "Use the Unit 9 Computing Words reference.",
         "explanation": "Network means computers and devices joined together so they can share."
       },
@@ -937,14 +952,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “What is encryption, and why do we use it?”?",
         "options": [
-          "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
-          "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+          "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
+          "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
           "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
           "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
         ],
-        "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+        "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
         "hint": "Use the Unit 9 Computing Words reference.",
-        "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…"
+        "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…"
       },
       {
         "id": "q03",
@@ -953,8 +968,8 @@
         "difficulty": "Basic",
         "question": "Which of these describes “The Caesar cipher: writing secret messages”?",
         "options": [
-          "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-          "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+          "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+          "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
           "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
           "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
         ],
@@ -969,8 +984,8 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Cracking the Caesar cipher: decrypting”?",
         "options": [
-          "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-          "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+          "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+          "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
           "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
           "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
         ],
@@ -985,9 +1000,9 @@
         "difficulty": "Core",
         "question": "Which of these describes “The Pigpen cipher, and invent your own”?",
         "options": [
-          "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+          "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
           "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
-          "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+          "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
           "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
         ],
         "answer": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
@@ -1045,7 +1060,7 @@
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo09",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: With a Caesar key of 3, you always turn A into 3.",
         "options": [
@@ -1061,7 +1076,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo02",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: When you reach Z you just stop.",
         "options": [
@@ -1077,7 +1092,7 @@
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
         "options": [
@@ -1093,7 +1108,7 @@
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: Crime done using computers or the internet.?",
         "options": [
@@ -1122,12 +1137,12 @@
           {
             "prompt": "Which of these describes “Networks, and what happens when they fail”?",
             "choices": [
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
-            "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+            "answer": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
             "clue": "Use the Unit 9 Computing Words reference.",
             "explanation": "Network means computers and devices joined together so they can share."
           },
@@ -1135,8 +1150,8 @@
             "prompt": "Which of these describes “Cracking the Caesar cipher: decrypting”?",
             "choices": [
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
             ],
             "answer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…",
@@ -1165,7 +1180,7 @@
             ],
             "answer": "No - you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+            "explanation": "No - you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
           }
         ]
       },
@@ -1180,21 +1195,21 @@
           {
             "prompt": "Which of these describes “What is encryption, and why do we use it?”?",
             "choices": [
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
-            "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+            "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+            "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…"
           },
           {
             "prompt": "Which of these describes “The Pigpen cipher, and invent your own”?",
             "choices": [
               "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
             ],
             "answer": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
@@ -1211,7 +1226,7 @@
             ],
             "answer": "In this unit, plain text means the normal, un-scrambled message - nothing to do with fonts.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encrypt means to turn a normal message into a secret one."
+            "explanation": "In this unit, plain text means the normal, un-scrambled message - nothing to do with fonts."
           },
           {
             "prompt": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
@@ -1239,13 +1254,13 @@
             "prompt": "Which of these describes “The Caesar cipher: writing secret messages”?",
             "choices": [
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
             "answer": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encryption means disguising a message so only the right person can understand it."
+            "explanation": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
           },
           {
             "prompt": "What should you do when this happens: Encryption hides the message so no one can see it.",
@@ -1257,7 +1272,7 @@
             ],
             "answer": "No. A thief can still see and even copy the ciphertext - encryption stops them understanding it, not seeing it.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Plain text means the normal message, before it is encrypted."
+            "explanation": "No. A thief can still see and even copy the ciphertext - encryption stops them understanding it, not seeing it."
           },
           {
             "prompt": "What should you do when this happens: With a Caesar key of 3, you always turn A into 3.",
@@ -1269,7 +1284,7 @@
             ],
             "answer": "No - a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Decrypt means to turn a secret message back into a normal one."
+            "explanation": "No - a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
           },
           {
             "prompt": "Which computing word matches this meaning: Crime done using computers or the internet.?",
@@ -1297,8 +1312,8 @@
             "prompt": "Which of these describes “Cracking the Caesar cipher: decrypting”?",
             "choices": [
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
             ],
             "answer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…",
@@ -1327,17 +1342,17 @@
             ],
             "answer": "No - you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+            "explanation": "No - you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
           },
           {
             "prompt": "Which of these describes “Networks, and what happens when they fail”?",
             "choices": [
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
-            "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+            "answer": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
             "clue": "Use the Unit 9 Computing Words reference.",
             "explanation": "Network means computers and devices joined together so they can share."
           }
@@ -1355,8 +1370,8 @@
             "prompt": "Which of these describes “The Pigpen cipher, and invent your own”?",
             "choices": [
               "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
             ],
             "answer": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
@@ -1373,7 +1388,7 @@
             ],
             "answer": "In this unit, plain text means the normal, un-scrambled message - nothing to do with fonts.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encrypt means to turn a normal message into a secret one."
+            "explanation": "In this unit, plain text means the normal, un-scrambled message - nothing to do with fonts."
           },
           {
             "prompt": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
@@ -1390,14 +1405,14 @@
           {
             "prompt": "Which of these describes “What is encryption, and why do we use it?”?",
             "choices": [
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
-            "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+            "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+            "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…"
           }
         ]
       },
@@ -1419,7 +1434,7 @@
             ],
             "answer": "No. A thief can still see and even copy the ciphertext - encryption stops them understanding it, not seeing it.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Plain text means the normal message, before it is encrypted."
+            "explanation": "No. A thief can still see and even copy the ciphertext - encryption stops them understanding it, not seeing it."
           },
           {
             "prompt": "What should you do when this happens: With a Caesar key of 3, you always turn A into 3.",
@@ -1431,7 +1446,7 @@
             ],
             "answer": "No - a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Decrypt means to turn a secret message back into a normal one."
+            "explanation": "No - a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
           },
           {
             "prompt": "Which computing word matches this meaning: Crime done using computers or the internet.?",
@@ -1449,13 +1464,13 @@
             "prompt": "Which of these describes “The Caesar cipher: writing secret messages”?",
             "choices": [
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
             "answer": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encryption means disguising a message so only the right person can understand it."
+            "explanation": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
           }
         ]
       },
@@ -1489,17 +1504,17 @@
             ],
             "answer": "No - you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+            "explanation": "No - you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
           },
           {
             "prompt": "Which of these describes “Networks, and what happens when they fail”?",
             "choices": [
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
-            "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+            "answer": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
             "clue": "Use the Unit 9 Computing Words reference.",
             "explanation": "Network means computers and devices joined together so they can share."
           },
@@ -1507,8 +1522,8 @@
             "prompt": "Which of these describes “Cracking the Caesar cipher: decrypting”?",
             "choices": [
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
             ],
             "answer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…",
@@ -1535,7 +1550,7 @@
             ],
             "answer": "In this unit, plain text means the normal, un-scrambled message - nothing to do with fonts.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encrypt means to turn a normal message into a secret one."
+            "explanation": "In this unit, plain text means the normal, un-scrambled message - nothing to do with fonts."
           },
           {
             "prompt": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
@@ -1552,21 +1567,21 @@
           {
             "prompt": "Which of these describes “What is encryption, and why do we use it?”?",
             "choices": [
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
-            "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+            "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+            "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…"
           },
           {
             "prompt": "Which of these describes “The Pigpen cipher, and invent your own”?",
             "choices": [
               "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
             ],
             "answer": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
@@ -1593,7 +1608,7 @@
             ],
             "answer": "No - a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Decrypt means to turn a secret message back into a normal one."
+            "explanation": "No - a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
           },
           {
             "prompt": "Which computing word matches this meaning: Crime done using computers or the internet.?",
@@ -1611,13 +1626,13 @@
             "prompt": "Which of these describes “The Caesar cipher: writing secret messages”?",
             "choices": [
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
             "answer": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encryption means disguising a message so only the right person can understand it."
+            "explanation": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
           },
           {
             "prompt": "What should you do when this happens: Encryption hides the message so no one can see it.",
@@ -1629,7 +1644,7 @@
             ],
             "answer": "No. A thief can still see and even copy the ciphertext - encryption stops them understanding it, not seeing it.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Plain text means the normal message, before it is encrypted."
+            "explanation": "No. A thief can still see and even copy the ciphertext - encryption stops them understanding it, not seeing it."
           }
         ]
       },
@@ -1651,17 +1666,17 @@
             ],
             "answer": "No - you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+            "explanation": "No - you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
           },
           {
             "prompt": "Which of these describes “Networks, and what happens when they fail”?",
             "choices": [
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
-            "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+            "answer": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
             "clue": "Use the Unit 9 Computing Words reference.",
             "explanation": "Network means computers and devices joined together so they can share."
           },
@@ -1669,8 +1684,8 @@
             "prompt": "Which of these describes “Cracking the Caesar cipher: decrypting”?",
             "choices": [
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
             ],
             "answer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…",
@@ -1714,21 +1729,21 @@
           {
             "prompt": "Which of these describes “What is encryption, and why do we use it?”?",
             "choices": [
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
-            "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+            "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+            "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…"
           },
           {
             "prompt": "Which of these describes “The Pigpen cipher, and invent your own”?",
             "choices": [
               "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
             ],
             "answer": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is…",
@@ -1745,7 +1760,7 @@
             ],
             "answer": "In this unit, plain text means the normal, un-scrambled message - nothing to do with fonts.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encrypt means to turn a normal message into a secret one."
+            "explanation": "In this unit, plain text means the normal, un-scrambled message - nothing to do with fonts."
           }
         ]
       },
@@ -1773,13 +1788,13 @@
             "prompt": "Which of these describes “The Caesar cipher: writing secret messages”?",
             "choices": [
               "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
-              "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a…",
-              "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has…",
+              "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a…",
+              "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has…",
               "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each…"
             ],
             "answer": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encryption means disguising a message so only the right person can understand it."
+            "explanation": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the…"
           },
           {
             "prompt": "What should you do when this happens: Encryption hides the message so no one can see it.",
@@ -1791,7 +1806,7 @@
             ],
             "answer": "No. A thief can still see and even copy the ciphertext - encryption stops them understanding it, not seeing it.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Plain text means the normal message, before it is encrypted."
+            "explanation": "No. A thief can still see and even copy the ciphertext - encryption stops them understanding it, not seeing it."
           },
           {
             "prompt": "What should you do when this happens: With a Caesar key of 3, you always turn A into 3.",
@@ -1803,7 +1818,7 @@
             ],
             "answer": "No - a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Decrypt means to turn a secret message back into a normal one."
+            "explanation": "No - a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
           }
         ]
       }
@@ -1817,7 +1832,6 @@
     "I can explain that a cipher is a secret way of writing, and that Caesar and Pigpen are substitution ciphers (one letter is swapped for something else).",
     "I can encrypt and decrypt a message using the Caesar cipher with a chosen key, and know what to do when a letter goes past Z (wrap around to A).",
     "I can encrypt and decrypt a message using the Pigpen cipher, reading the symbols from the grid.",
-    "I can invent a simple cipher of their own and understand why the person receiving a message needs the key.",
-    "I can before this unit (from the syllabus), children should already know some things you can do on a network and its advantages and disadvantages, know what a cipher is, and be able to use a simple code to write and decode a short message. A two-minute recap — \"what is a network, and what do we use it for?\" — is enough to begin."
+    "I can invent a simple cipher of their own and understand why the person receiving a message needs the key."
   ]
 }

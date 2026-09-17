@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:54.369Z",
+  "generatedAt": "2026-09-17T20:45:49.315Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -78,39 +78,27 @@
     "Use at least two different codes: the flip-text cipher, a picture code, the letters-to-numbers code, and the reverse-alphabet code.",
     "Say why we might use a cipher when sending information on a network."
   ],
-  "toolkit": [
-    {
-      "name": "Scratch",
-      "url": "scratch.mit.edu",
-      "steps": [
-        "Go to scratch.mit.edu and click Create.",
-        "Drag blocks from the palette on the left into the code area.",
-        "Make variables in the orange Variables section.",
-        "Click the green flag to run and the red circle to stop."
-      ],
-      "note": "Runs in a web browser. Free, with nothing to download."
-    }
-  ],
+  "toolkit": [],
   "tutorPrompts": [],
   "concepts": [
     {
       "id": "concept-1-what-is-a-cipher-plain-text-and-ciphertext",
       "title": "What is a cipher? Plain text and ciphertext",
-      "explanation": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can. Have you ever wanted to tell your best friend something so that nobody else understands? Today we learn how to send secret messages — like a real spy or a code-breaker! before the vowel sound in a word, so. It does not have to be perfect — it is just to show that a secret language follows a rule.",
+      "explanation": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can. Have you ever wanted to tell your best friend something so that nobody else understands? Today we learn how to send secret messages — like a real spy or a code-breaker!",
       "example": "Answer this in your own words, out loud or on paper: What is a cipher? Plain text and ciphertext? Then check your answer against the explanation above.",
-      "checkYourself": "Can you point to where the cipher (the rule) does its work? Do not expect you to encode anything yet — that starts next session."
+      "checkYourself": "Can you point to where the cipher (the rule) does its work? Do not expect you to encode anything yet - that starts next session."
     },
     {
       "id": "concept-2-the-flip-text-cipher",
       "title": "The flip-text cipher",
-      "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code. write the letters in the opposite order: smeg. Same letters — just backwards. Now it is secret!",
+      "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code. Let’s try it: to encode the word gems, write the letters in the opposite order: smeg. Same letters — just backwards. Now it is secret!",
       "example": "Find one real example of the flip-text cipher around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you check your work by flipping back? Neat, careful letter-by-letter work matters more than speed here. Do you keep every letter (none dropped, none added) when you flip?"
     },
     {
       "id": "concept-3-picture-codes-swapping-letters-for-symbols",
       "title": "Picture codes: swapping letters for symbols",
-      "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures. Encode meet together, drawing square, triangle, triangle, diamond. Then ask a child to be the decoder and read the pictures back using the key.",
+      "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other’s secret pictures. To encode the word “meet”, draw square, triangle, triangle, diamond. Then try being the decoder and read the pictures back using the key.",
       "example": "Find one real example of picture codes: swapping letters for symbols around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you keep the shapes in the correct order (left to right), just like letters in a word? Do you use the key carefully, matching each picture to the right letter? Praise neat, in-order drawing."
     },
@@ -136,43 +124,43 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Secret Language Warm-Up",
-      "context": "work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Secret Language Warm-Up: work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Add the sound \"ub “before the vowel in a word. So hello becomes” hub-ello “and Ivy becomes” ub-Ivy\". Play a talking game with a partner. Try saying these to your partner.",
-      "answer": "Your name. hello. friend. This is just for fun — there is no wrong answer. Giggle and enjoy your secret language!",
+      "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can. Have you ever wanted… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Your name.",
-      "explanation": "What is a cipher? Plain text and ciphertext: A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can."
+      "explanation": "What is a cipher? Plain text and ciphertext: Answer this in your own words, out loud or on paper: What is a cipher? Plain text and ciphertext? Then check your answer against the explanation above."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Plain Text or Ciphertext?",
-      "context": "work through the steps below and see what happens. This is the flip-text cipher in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Plain Text or Ciphertext?: work through the steps below and see what happens. This is the flip-text cipher in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "One message is plain text (easy to read). One is ciphertext (secret). Write the right label under each one.",
-      "answer": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember - the rule *is* the code. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code. Let’s try it: to encode the word gems,… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Message A: hello",
-      "explanation": "The flip-text cipher: Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code."
+      "explanation": "The flip-text cipher: Find one real example of the flip-text cipher around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: The Flip Code",
-      "context": "work through the steps below and see what happens. This is picture codes: swapping letters for symbols in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "The Flip Code: work through the steps below and see what happens. This is picture codes: swapping letters for symbols in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "The flip code writes a message backwards. To read it, flip it back! Work slowly from the last letter.",
-      "answer": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures. Check what you noticed against that, and write down anything that differed.",
+      "answer": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other’s secret pictures. To… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: a) Layla sent this flipped name. Flip it back to read it",
-      "explanation": "Picture codes: swapping letters for symbols: A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures."
+      "explanation": "Picture codes: swapping letters for symbols: Find one real example of picture codes: swapping letters for symbols around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: The Picture Code",
-      "context": "work through the steps below and see what happens. This is the letters-to-numbers code in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "The Picture Code: work through the steps below and see what happens. This is the letters-to-numbers code in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "This code swaps each letter for a picture. Use the key to read and write secret words.",
       "answer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
@@ -184,9 +172,9 @@
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Try it: Decode the Number Message",
-      "context": "work through the steps below and see what happens. This is the reverse-alphabet code, and being a code-breaker in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Decode the Number Message: work through the steps below and see what happens. This is the reverse-alphabet code, and being a code-breaker in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Leo sent you a message in the letters-to-numbers code. Use the chart to read it. Read the digits two at a time.",
-      "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action. Check what you noticed against that, and write down anything that differed.",
+      "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action.… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Code chart",
       "explanation": "The reverse-alphabet code, and being a code-breaker: You can gasp; it feels like real code-breaking. Write the alphabet forwards, then underneath write it backwards, so the pairs line up."
@@ -196,12 +184,12 @@
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Try it: Send a Number Message",
-      "context": "work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Send a Number Message: work through the steps below and see what happens. This is sending secret messages in practice — you need a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Remember: two digits for every letter (like 05, not 5). Use the same chart to encode a message.",
-      "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it - but nobody else can. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: a) Write the word smile in the number code",
-      "explanation": "What is a cipher? Plain text and ciphertext: A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can."
+      "explanation": "Welcome to Unit 9 of Year 3 Computing at Ehel Academy. This unit is all about secret messages - how we can hide the meaning of a message so that only the right person can read it. The big idea is the cipher: a set of rules for turning a normal message into a secret one, and back again."
     }
   ],
   "visualModels": [
@@ -210,7 +198,7 @@
       "outcomeId": "lo01",
       "title": "What is a cipher? Plain text and ciphertext",
       "modelType": "concept-model-1",
-      "purpose": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it -…",
+      "purpose": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it —…",
       "defaultNumber": null
     },
     {
@@ -319,7 +307,7 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: What is a cipher? Plain text and ciphertext",
-      "prompt": "Write true or false next to each one: a) Anyone can read plain text.",
+      "prompt": "Write true or false next to each one: a) Anyone can read plain text. b) Anyone can read ciphertext without the key. c) A cipher disguises a message.",
       "solution": "a) true; b) false; c) true."
     },
     {
@@ -367,14 +355,14 @@
     {
       "id": "p01",
       "level": "Warm-up",
-      "prompt": "Fill in the word. A",
+      "prompt": "Fill in the word. A ______ is a set of rules that turns a normal message into a secret one.",
       "answer": "cipher.",
       "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence."
     },
     {
       "id": "p02",
       "level": "Warm-up",
-      "prompt": "Write true or false next to each one: a) Anyone can read plain text.",
+      "prompt": "Write true or false next to each one: a) Anyone can read plain text. b) Anyone can read ciphertext without the key. c) A cipher disguises a message.",
       "answer": "a) true; b) false; c) true.",
       "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence."
     },
@@ -447,11 +435,10 @@
       "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "This code swaps each letter for a picture. Use the key to read and write secret words.",
+        "Key: e = triangle, m = square, o = circle, s = star, t = diamond, w = cross, y = heart",
         "a) Decode this secret word. Write the letters under the pictures.",
-        "square triangle triangle diamond -> ______________",
-        "b) Now draw the pictures to encode the word yes",
-        "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-        "Left: Letter; e; m; o; s; t; w; y"
+        "square triangle triangle diamond -> ______________ (hint: it starts with m)",
+        "b) Now draw the pictures to encode the word yes"
       ]
     },
     {
@@ -459,6 +446,7 @@
       "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Leo sent you a message in the letters-to-numbers code. Use the chart to read it. Read the digits two at a time.",
+        "Message: 08 05 12 12 15 -> ______________",
         "Code chart",
         "a = 01 b = 02 c = 03 d = 04 e = 05 f = 06 g = 07",
         "h = 08 i = 09 j = 10 k = 11 l = 12 m = 13",
@@ -675,7 +663,7 @@
       ],
       [
         "Plain text and ciphertext are different words for the same thing.",
-        "Not at all — people used codes long before computers. Everything in this unit is done with a pencil."
+        "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
       ],
       [
         "You need a computer to use a cipher.",
@@ -697,7 +685,7 @@
       "id": "fl01",
       "outcomeId": "lo01",
       "difficulty": "Round 1",
-      "prompt": "Fill in the word. A",
+      "prompt": "Fill in the word. A ______ is a set of rules that turns a normal message into a secret one.",
       "answer": "cipher.",
       "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "cipher."
@@ -706,7 +694,7 @@
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
-      "prompt": "Write true or false next to each one: a) Anyone can read plain text.",
+      "prompt": "Write true or false next to each one: a) Anyone can read plain text. b) Anyone can read ciphertext without the key. c) A cipher disguises a message.",
       "answer": "a) true; b) false; c) true.",
       "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "a) true; b) false; c) true."
@@ -784,7 +772,7 @@
       "outcomeId": "lo04",
       "difficulty": "Core",
       "context": "Community",
-      "prompt": "Fill in the word. A",
+      "prompt": "Fill in the word. A ______ is a set of rules that turns a normal message into a secret one.",
       "answer": "cipher.",
       "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "Check your reasoning against this: cipher."
@@ -874,7 +862,7 @@
         "options": [
           "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
           "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
-          "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+          "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
           "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
         ],
         "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
@@ -889,7 +877,7 @@
         "question": "Which of these describes “The flip-text cipher”?",
         "options": [
           "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
-          "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+          "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
           "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
           "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
         ],
@@ -907,11 +895,11 @@
           "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
           "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
           "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
-          "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+          "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
         ],
-        "answer": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+        "answer": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
         "hint": "Use the Unit 9 Computing Words reference.",
-        "explanation": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+        "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
       },
       {
         "id": "q04",
@@ -923,7 +911,7 @@
           "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
           "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
           "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-          "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+          "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
         ],
         "answer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
         "hint": "Use the Unit 9 Computing Words reference.",
@@ -939,7 +927,7 @@
           "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
           "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
           "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
-          "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+          "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
         ],
         "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
         "hint": "Use the Unit 9 Computing Words reference.",
@@ -1075,7 +1063,7 @@
             "choices": [
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
             "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
@@ -1088,7 +1076,7 @@
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
             ],
             "answer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
             "clue": "Use the Unit 9 Computing Words reference.",
@@ -1104,7 +1092,7 @@
             ],
             "answer": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Key means the chart that shows what each letter turns into."
+            "explanation": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
           },
           {
             "prompt": "What should you do when this happens: Only some of the word gets flipped.",
@@ -1116,7 +1104,7 @@
             ],
             "answer": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+            "explanation": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
           }
         ]
       },
@@ -1133,12 +1121,12 @@
             "choices": [
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
             "answer": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Plain text means the normal message that anyone can read."
+            "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…"
           },
           {
             "prompt": "Which of these describes “The reverse-alphabet code, and being a code-breaker”?",
@@ -1146,11 +1134,11 @@
               "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
             ],
             "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encode means to turn a normal message into a secret one."
+            "explanation": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…"
           },
           {
             "prompt": "What should you do when this happens: You need a computer to use a cipher.",
@@ -1162,7 +1150,7 @@
             ],
             "answer": "Not at all - people used codes long before computers. Everything in this unit is done with a pencil.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Network means computers joined together so they can share."
+            "explanation": "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
           },
           {
             "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
@@ -1189,14 +1177,14 @@
           {
             "prompt": "Which of these describes “Picture codes: swapping letters for symbols”?",
             "choices": [
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
-            "answer": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+            "answer": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+            "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
           },
           {
             "prompt": "What should you do when this happens: A cipher is the secret message.",
@@ -1208,7 +1196,7 @@
             ],
             "answer": "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Decode means to turn a secret message back into a normal one."
+            "explanation": "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
           },
           {
             "prompt": "What should you do when this happens: 05 and 5 are the same in the number code.",
@@ -1220,7 +1208,7 @@
             ],
             "answer": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Private means something kept safe, only for the right person to see."
+            "explanation": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back."
           },
           {
             "prompt": "Which computing word matches this meaning: The secret message that only makes sense if you know the cipher.?",
@@ -1250,7 +1238,7 @@
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
             ],
             "answer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
             "clue": "Use the Unit 9 Computing Words reference.",
@@ -1266,7 +1254,7 @@
             ],
             "answer": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Key means the chart that shows what each letter turns into."
+            "explanation": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
           },
           {
             "prompt": "What should you do when this happens: Only some of the word gets flipped.",
@@ -1278,14 +1266,14 @@
             ],
             "answer": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+            "explanation": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
           },
           {
             "prompt": "Which of these describes “What is a cipher? Plain text and ciphertext”?",
             "choices": [
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
             "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
@@ -1308,11 +1296,11 @@
               "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
             ],
             "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encode means to turn a normal message into a secret one."
+            "explanation": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…"
           },
           {
             "prompt": "What should you do when this happens: You need a computer to use a cipher.",
@@ -1324,7 +1312,7 @@
             ],
             "answer": "Not at all - people used codes long before computers. Everything in this unit is done with a pencil.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Network means computers joined together so they can share."
+            "explanation": "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
           },
           {
             "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
@@ -1343,12 +1331,12 @@
             "choices": [
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
             "answer": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Plain text means the normal message that anyone can read."
+            "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…"
           }
         ]
       },
@@ -1370,7 +1358,7 @@
             ],
             "answer": "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Decode means to turn a secret message back into a normal one."
+            "explanation": "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
           },
           {
             "prompt": "What should you do when this happens: 05 and 5 are the same in the number code.",
@@ -1382,7 +1370,7 @@
             ],
             "answer": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Private means something kept safe, only for the right person to see."
+            "explanation": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back."
           },
           {
             "prompt": "Which computing word matches this meaning: The secret message that only makes sense if you know the cipher.?",
@@ -1399,14 +1387,14 @@
           {
             "prompt": "Which of these describes “Picture codes: swapping letters for symbols”?",
             "choices": [
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
-            "answer": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+            "answer": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+            "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
           }
         ]
       },
@@ -1428,7 +1416,7 @@
             ],
             "answer": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Key means the chart that shows what each letter turns into."
+            "explanation": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
           },
           {
             "prompt": "What should you do when this happens: Only some of the word gets flipped.",
@@ -1440,14 +1428,14 @@
             ],
             "answer": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+            "explanation": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
           },
           {
             "prompt": "Which of these describes “What is a cipher? Plain text and ciphertext”?",
             "choices": [
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
             "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
@@ -1460,7 +1448,7 @@
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
             ],
             "answer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
             "clue": "Use the Unit 9 Computing Words reference.",
@@ -1486,7 +1474,7 @@
             ],
             "answer": "Not at all - people used codes long before computers. Everything in this unit is done with a pencil.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Network means computers joined together so they can share."
+            "explanation": "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
           },
           {
             "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
@@ -1505,12 +1493,12 @@
             "choices": [
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
             "answer": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Plain text means the normal message that anyone can read."
+            "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…"
           },
           {
             "prompt": "Which of these describes “The reverse-alphabet code, and being a code-breaker”?",
@@ -1518,11 +1506,11 @@
               "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
             ],
             "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encode means to turn a normal message into a secret one."
+            "explanation": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…"
           }
         ]
       },
@@ -1544,7 +1532,7 @@
             ],
             "answer": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Private means something kept safe, only for the right person to see."
+            "explanation": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back."
           },
           {
             "prompt": "Which computing word matches this meaning: The secret message that only makes sense if you know the cipher.?",
@@ -1561,14 +1549,14 @@
           {
             "prompt": "Which of these describes “Picture codes: swapping letters for symbols”?",
             "choices": [
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
-            "answer": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+            "answer": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+            "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
           },
           {
             "prompt": "What should you do when this happens: A cipher is the secret message.",
@@ -1580,7 +1568,7 @@
             ],
             "answer": "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Decode means to turn a secret message back into a normal one."
+            "explanation": "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
           }
         ]
       },
@@ -1602,14 +1590,14 @@
             ],
             "answer": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+            "explanation": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
           },
           {
             "prompt": "Which of these describes “What is a cipher? Plain text and ciphertext”?",
             "choices": [
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
             "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
@@ -1622,7 +1610,7 @@
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
             ],
             "answer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…",
             "clue": "Use the Unit 9 Computing Words reference.",
@@ -1638,7 +1626,7 @@
             ],
             "answer": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Key means the chart that shows what each letter turns into."
+            "explanation": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
           }
         ]
       },
@@ -1667,12 +1655,12 @@
             "choices": [
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
             "answer": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Plain text means the normal message that anyone can read."
+            "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…"
           },
           {
             "prompt": "Which of these describes “The reverse-alphabet code, and being a code-breaker”?",
@@ -1680,11 +1668,11 @@
               "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
             ],
             "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Encode means to turn a normal message into a secret one."
+            "explanation": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters…"
           },
           {
             "prompt": "What should you do when this happens: You need a computer to use a cipher.",
@@ -1696,7 +1684,7 @@
             ],
             "answer": "Not at all - people used codes long before computers. Everything in this unit is done with a pencil.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Network means computers joined together so they can share."
+            "explanation": "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
           }
         ]
       },
@@ -1723,14 +1711,14 @@
           {
             "prompt": "Which of these describes “Picture codes: swapping letters for symbols”?",
             "choices": [
-              "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+              "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
               "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is…",
               "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first…",
               "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the…"
             ],
-            "answer": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
+            "answer": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+            "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each…"
           },
           {
             "prompt": "What should you do when this happens: A cipher is the secret message.",
@@ -1742,7 +1730,7 @@
             ],
             "answer": "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Decode means to turn a secret message back into a normal one."
+            "explanation": "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
           },
           {
             "prompt": "What should you do when this happens: 05 and 5 are the same in the number code.",
@@ -1754,7 +1742,7 @@
             ],
             "answer": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back.",
             "clue": "Use the Unit 9 Computing Words reference.",
-            "explanation": "Private means something kept safe, only for the right person to see."
+            "explanation": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back."
           }
         ]
       }

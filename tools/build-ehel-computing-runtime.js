@@ -918,6 +918,18 @@ function buildGrade(grade) {
     let list = sectionBlocks(lesson, /learning objectives?|^objectives?$|what you will (?:be able to do|learn)|success criteria/i)
       .map((block) => tidy(block.text))
       .filter((text) => text.length > 18
+        // "These come straight from the textbook unit..." / "These are spoken,
+        // hands-on skills..." — a lead-in or explanatory note ABOUT the outcome
+        // list, not an outcome itself, sat in the same source block as the real
+        // objectives and was stored as one. Every outcome that begins this way
+        // across all 46 units is this kind of note (checked, none is a real
+        // outcome), and the self-assessment generator then prepends "I can " to
+        // it, so a survivor here ships as a nonsensical self-check line.
+        && !/^these\b/i.test(text)
+        // "Before this unit (from the syllabus), children should already..." /
+        // "Before starting, it helps if the child already knows..." — prior-
+        // knowledge assumed, not something taught in THIS unit.
+        && !/^before (this unit|starting)\b/i.test(text)
         && !/^(these come from|by the end|here is exactly|come back and tick|read them now|the unit's own|here is what|you will be able)/i.test(text)
         // Subunit headings inside the objectives list are signposts, not outcomes.
         && !/^(?:\d+\.\d+\s|(?:subunit|part|step|unit)\s+\d)/i.test(text))
@@ -1806,8 +1818,16 @@ function buildGrade(grade) {
     { match: /\bdatabase\b/i, name: "A simple database", url: "A spreadsheet in database layout, or LibreOffice Base", steps: ["Give every field a clear name and one kind of data.", "Enter one record per row.", "Sort on a field to put records in order.", "Filter or search to find the records that match a condition."], note: "A spreadsheet laid out with fields and records works as a database for this unit." },
   ];
 
+  // A single incidental mention ("you could also try this in a spreadsheet")
+  // is not the same as a unit that actually uses the tool — two Grade 4 units
+  // with no spreadsheet or database content anywhere in their own build
+  // (Scratch/micro:bit code examples only) advertised "A free spreadsheet"
+  // off exactly one passing word in the source guide. The genuinely
+  // data-focused units mention their tool 14-85 times; requiring more than
+  // one hit is a low bar that only a stray mention fails.
   function toolkitFor(text) {
-    return TOOLS.filter((tool) => tool.match.test(text)).map(({ match, ...tool }) => tool);
+    return TOOLS.filter((tool) => (text.match(new RegExp(tool.match.source, "gi")) || []).length > 1)
+      .map(({ match, ...tool }) => tool);
   }
 
   const ESAFETY_RULES = [
@@ -1893,6 +1913,23 @@ function buildGrade(grade) {
     concepts = uniqueBy(concepts, (concept) => concept.title.toLowerCase())
       .slice(0, 14)
       .map((concept, index) => ({ ...concept, id: `concept-${index + 1}-${slug(concept.title) || index + 1}` }));
+
+    // Everything below this point (explorations, workedExamples, visualModels,
+    // the commonMistakes/debugging fallback) reads concept.explanation/example
+    // to build ITS OWN text — so a Concept review applied only in the outer
+    // per-unit loop (after buildUnit returns) never reaches them: they had
+    // already captured the PRE-review wording. Apply Concept overrides here,
+    // before anything downstream reads `concepts`, so a corrected explanation
+    // or example actually propagates. applyScriptReview() below still applies
+    // the same "Concept" entries again on the fully-built unit — harmless
+    // (same fields, same values, so it is a no-op the second time) and kept so
+    // a concept added or renamed after this point is still covered.
+    {
+      const earlyConceptReviews = ((scriptReview[`grade-${grade}`] || {})[`unit-${unitMeta.unit}`] || {}).Concept || {};
+      for (const [itemId, fields] of Object.entries(earlyConceptReviews)) {
+        applyReviewFields({ concepts }, "Concept", itemId, fields, `grade ${grade} unit ${unitMeta.unit}:`);
+      }
+    }
 
     // ---- reference -------------------------------------------------------
     let termRows = dropHeaderRows(tableRows(referenceDoc, /keyword glossary|glossary|key (?:words|terms)/i));
@@ -2081,6 +2118,16 @@ function buildGrade(grade) {
         && !isDebugProse(item))
       .slice(0, 8);
     if (!debugging.length) debugging = GENERIC_DEBUGGING.map((item) => ({ ...item }));
+    // NOT unconditionally rebuilt from `debugging` — tried that (2026-09-17):
+    // debugging and commonMistakes are read from two different places in the
+    // source book (a "Common Misconceptions" narrative section vs a "Common
+    // Errors"/debugging table) via two independent extraction passes, and a
+    // spot check (grade-1 unit-1) found `debugging` carries the SAME class of
+    // symptom/fix misalignment commonMistakes does — assessment/games matching
+    // it proves nothing, since they are built FROM it. Swapping one unverified
+    // parse for another unverified parse is not a fix. Left as the original
+    // fallback: only fill the Quick Reference card from `debugging` when the
+    // book's own Common Misconceptions section gave nothing at all.
     if (!reference.commonMistakes.length) {
       reference.commonMistakes = debugging.slice(0, 6).map((bug) => [bug.symptom, `${bug.cause} ${bug.fix}`.trim()]);
     }
@@ -2400,7 +2447,15 @@ function buildGrade(grade) {
     //   answer      — what you should end up with
     //   explanation — the computing idea behind it
     const explorations = activities.slice(0, 6).map((activity, index) => {
-      const concept = concepts[index % Math.max(1, concepts.length)];
+      // Only a concept this exploration actually corresponds to — never wrap
+      // around with modulo. A unit with 5 concepts and 6 activities used to
+      // send explorations[5]'s context/answer/explanation back to concepts[0],
+      // silently reusing an unrelated concept's teaching on the sixth "Try it"
+      // card (title/prompt still came from the right activity, so only the
+      // reveal fields were wrong). The concept?.title fallbacks below already
+      // handle "no concept" honestly via the unit overview; index >= length is
+      // the same case as concepts.length === 0, not a reason to wrap.
+      const concept = index < concepts.length ? concepts[index] : undefined;
       const opening = String(concept?.explanation || overview).split("\n\n")[0];
       return {
         id: `explore-${index + 1}`,

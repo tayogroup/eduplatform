@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:55:53.860Z",
+  "generatedAt": "2026-09-17T20:45:48.823Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -14,7 +14,7 @@
     "unitId": "comp-g01-u04",
     "unitNo": 4,
     "unitTitle": "Be a Designer",
-    "unitOverview": "Welcome to Unit 4 of Year 1 Computing at Ehel Academy. The unit is called “Be a Designer”, but do not be fooled by the name — this is not a painting or drawing unit. It is a gentle first taste of coding. The big idea underneath the fun title is one simple sentence: when we change the steps, we change what happens. There are three small ideas in this unit, and you build on each other. Second, and most important, changing the steps changes the outcome: the word outcome simply means “what happens” or “the result”. A character can move in three ways we can change — how fast it goes (its speed), how far it goes (the number of steps), and which way it goes (the direction). Third, we can guess (predict) what a program will do just by looking at its blocks, and then run it to check if we were right.",
+    "unitOverview": "Welcome to Unit 4 of Year 1 Computing at Ehel Academy. The unit is called “Be a Designer”, but do not be fooled by the name — this is not a painting or drawing unit. It is a gentle first taste of coding. The big idea underneath the fun title is one simple sentence: when we change the steps, we change what happens. There are three small ideas in this unit, and they build on each other. First, a character can move in three ways we can change — how fast it goes (its speed), how far it goes (the number of steps), and which way it goes (the direction). Second, and most important, changing the steps changes the outcome: the word outcome simply means “what happens” or “the result”. Third, we can guess (predict) what a program will do just by looking at its blocks, and then run it to check if we were right.",
     "learningPath": [
       "Preview the goals, key words and the tools you will use",
       "Read the concept explainers and study the code examples",
@@ -38,20 +38,12 @@
         "text": "Know that algorithms can be recreated as code on computers."
       },
       {
-        "code": "1CT.05",
-        "text": "Know that an algorithm is a set of instructions to complete a task or to solve a problem."
-      },
-      {
-        "code": "1CT.06",
-        "text": "Know that the order of instructions is important when creating algorithms."
+        "code": "1CT.01",
+        "text": "Follow the steps in algorithms for everyday tasks."
       },
       {
         "code": "1P.05",
         "text": "Know how to run programs to test whether they produce the desired result."
-      },
-      {
-        "code": "1CT.01",
-        "text": "Follow the steps in algorithms for everyday tasks."
       }
     ],
     "objectiveMapping": {
@@ -83,9 +75,8 @@
     "poster": null
   },
   "outcomes": [
-    "These come straight from the textbook unit. By the end of the unit, the child should be able to:",
     "Know that an algorithm is a set of instructions (steps) in the right order.",
-    "Change an algorithm and understand that this changes the outcome (what happens) — a character can go faster or slower, further or less far, or a different way.",
+    "Change an algorithm and understand that this changes the outcome (what happens) - a character can go faster or slower, further or less far, or a different way.",
     "Create an algorithm as a program in ScratchJr by turning each step into a block of code, and run it.",
     "Predict (guess) what happens when a program runs, by looking at its blocks, and then check."
   ],
@@ -100,17 +91,6 @@
         "Tap the green flag to run it."
       ],
       "note": "Made for ages 5-7. No reading needed and no account to create."
-    },
-    {
-      "name": "Scratch",
-      "url": "scratch.mit.edu",
-      "steps": [
-        "Go to scratch.mit.edu and click Create.",
-        "Drag blocks from the palette on the left into the code area.",
-        "Make variables in the orange Variables section.",
-        "Click the green flag to run and the red circle to stop."
-      ],
-      "note": "Runs in a web browser. Free, with nothing to download."
     }
   ],
   "tutorPrompts": [],
@@ -158,6 +138,7 @@
       "language": "Scratch blocks",
       "intro": "",
       "lines": [
+        "Set Speed: fast (orange — now it is quick!)",
         "Move Right (11) (blue)",
         "End (red)"
       ],
@@ -206,9 +187,9 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Try it: Follow the Frog",
-      "context": "work through the steps below and see what happens. This is steps in order (what is an algorithm?) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Follow the Frog: work through the steps below and see what happens. This is steps in order (what is an algorithm?) in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Maya's frog is on stone 1. The step says: Move right 3. Circle the stone the frog lands on. Count 3 hops with your finger.",
-      "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word. Check what you noticed against that, and write down anything that differed.",
+      "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word. When we wash our hands, we do the steps in order — we do not dry our hands before we wash them! Steps in the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ]",
       "explanation": "Steps in order (what is an algorithm?): Make it a happy chant. Start with something warm and familiar."
@@ -218,43 +199,43 @@
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Try it: Which One is Faster?",
-      "context": "work through the steps below and see what happens. This is change the steps, change what happens in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Which One is Faster?: work through the steps below and see what happens. This is change the steps, change what happens in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "One is slow and one is fast. Circle the fast one.",
-      "answer": "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed in three ways: how fast (speed), how far (the number of steps), and which way (the direction). Check what you noticed against that, and write down anything that differed.",
+      "answer": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed in three ways: how fast (speed), how far (the number of steps), and which way (the direction). Everyone stands… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: [ ] a slow snail [ ] a fast hare",
-      "explanation": "Change the steps, change what happens: This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed in three ways: how fast (speed), how far (the number of steps), and which way (the direction)."
+      "explanation": "Change the steps, change what happens: Find one real example of change the steps, change what happens around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Try it: Which Frog Goes Further?",
-      "context": "work through the steps below and see what happens. This is turning steps into blocks (meet scratchjr) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Which Frog Goes Further?: work through the steps below and see what happens. This is turning steps into blocks (meet scratchjr) in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Both frogs start on the line. Frog A moves 3 steps. Frog B moves 6 steps. Circle the frog that goes further.",
-      "answer": "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one step. We can read the blocks to know what the character will do. Check what you noticed against that, and write down anything that differed.",
+      "answer": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one step. We can read the blocks to know what the character will do. First, unplugged, lay out your big paper… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Frog A: Move Right (3)",
-      "explanation": "Turning steps into blocks (meet ScratchJr): An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one step. We can read the blocks to know what the character will do."
+      "explanation": "Turning steps into blocks (meet ScratchJr): Find one real example of turning steps into blocks (meet ScratchJr) around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Try it: Match the Block",
-      "context": "work through the steps below and see what happens. This is change a block, change the outcome; and guess first in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Match the Block: work through the steps below and see what happens. This is change a block, change the outcome; and guess first in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "In ScratchJr you use picture blocks. Draw a line to match each block to what it does.",
-      "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And before we run it, we can predict: look at the blocks and guess what will happen. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And before we run it, we can predict: look at the blocks and guess what will happen. Go back to the Rabbit… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Change a block, change the outcome; and guess first: Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And before we run it, we can predict: look at the blocks and guess what will happen."
+      "explanation": "Change a block, change the outcome; and guess first: Find one real example of change a block, change the outcome; and guess first around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Explore",
       "title": "Try it: Guess What Happens",
-      "context": "work through the steps below and see what happens. This is be a program designer (the boat project) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Guess What Happens: work through the steps below and see what happens. This is be a program designer (the boat project) in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Look at the blocks for a fish. What will the fish do? Tick one box.",
       "answer": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
@@ -263,15 +244,15 @@
     },
     {
       "id": "explore-6",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Explore",
       "title": "Try it: Try it in ScratchJr!",
-      "context": "work through the steps below and see what happens. This is steps in order (what is an algorithm?) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "context": "Try it in ScratchJr!: work through the steps below and see what happens. This is be a designer in practice — you need a tablet with ScratchJr, and a computer or tablet with Scratch, plus paper and a pencil for planning.",
       "prompt": "Now make a character move.",
-      "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Compare what you built with the worked example, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Tap the + to start a new project.",
-      "explanation": "Steps in order (what is an algorithm?): Make it a happy chant. Start with something warm and familiar."
+      "explanation": "Welcome to Unit 4 of Year 1 Computing at Ehel Academy. The unit is called “Be a Designer”, but do not be fooled by the name - this is not a painting or drawing unit. It is a gentle first taste of coding. The big idea underneath the fun title is one simple sentence: when we change the steps, we change what happens."
     }
   ],
   "visualModels": [
@@ -280,7 +261,7 @@
       "outcomeId": "lo01",
       "title": "Steps in order (what is an algorithm?)",
       "modelType": "concept-model-1",
-      "purpose": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
+      "purpose": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word. When we wash our hands, we do the steps in order — we do not dry our…",
       "defaultNumber": null
     },
     {
@@ -309,7 +290,7 @@
     },
     {
       "id": "model-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "title": "Be a Program Designer (the Boat project)",
       "modelType": "concept-model-5",
       "purpose": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
@@ -371,7 +352,7 @@
     },
     {
       "id": "method-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Challenge",
       "title": "How to work with be a program designer (the boat project)",
       "example": "Do it yourself: be a Program Designer (the Boat project). Work through it slowly, then check what you did against the explanation above.",
@@ -418,7 +399,7 @@
     },
     {
       "id": "we05",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Intermediate",
       "title": "Worked example 5: Steps in order (what is an algorithm?)",
       "prompt": "Explain in your own words: Steps in order (what is an algorithm?).",
@@ -426,7 +407,7 @@
     },
     {
       "id": "we06",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Change the steps, change what happens",
       "prompt": "Explain in your own words: Change the steps, change what happens.",
@@ -744,7 +725,7 @@
       ],
       [
         "The order does not matter.",
-        "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block — it is never the character guessing."
+        "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly."
       ],
       [
         "The character can think for itself.",
@@ -796,7 +777,7 @@
     },
     {
       "id": "fl05",
-      "outcomeId": "lo05",
+      "outcomeId": "lo01",
       "difficulty": "Round 2",
       "prompt": "We change the speed from slow to fast. Circle what happens.",
       "answer": "it moves quicker (fast changes the speed, not the finishing place).",
@@ -805,7 +786,7 @@
     },
     {
       "id": "fl06",
-      "outcomeId": "lo01",
+      "outcomeId": "lo02",
       "difficulty": "Round 2",
       "prompt": "Put these blocks in order. Write 1, 2, 3 in the boxes.",
       "answer": "1 = Start on the Green Flag, 2 = Move Right, 3 = End (Stop). The yellow start block first, the red stop block last.",
@@ -937,14 +918,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Steps in order”?",
         "options": [
-          "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-          "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-          "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
-          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word."
+          "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+          "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+          "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
+          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…"
         ],
-        "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
+        "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word."
+        "explanation": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…"
       },
       {
         "id": "q02",
@@ -953,14 +934,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Change the steps, change what happens”?",
         "options": [
-          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-          "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-          "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-          "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+          "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+          "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+          "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
         ],
-        "answer": "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
+        "answer": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…"
+        "explanation": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…"
       },
       {
         "id": "q03",
@@ -969,14 +950,14 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Turning steps into blocks”?",
         "options": [
-          "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-          "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-          "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+          "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+          "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+          "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
         ],
-        "answer": "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+        "answer": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+        "explanation": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
       },
       {
         "id": "q04",
@@ -985,26 +966,26 @@
         "difficulty": "Basic",
         "question": "Which of these describes “Change a block, change the outcome; and guess first”?",
         "options": [
-          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-          "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
-          "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-          "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+          "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
+          "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+          "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
         ],
-        "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
+        "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
         "hint": "Use the Unit 4 Computing Words reference.",
         "explanation": "Change means to make it different."
       },
       {
         "id": "q05",
         "type": "Application",
-        "outcomeId": "lo05",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "Which of these describes “Be a Program Designer”?",
         "options": [
           "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
-          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-          "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-          "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+          "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+          "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+          "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
         ],
         "answer": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
         "hint": "Use the Unit 4 Computing Words reference.",
@@ -1013,7 +994,7 @@
       {
         "id": "q06",
         "type": "Application",
-        "outcomeId": "lo01",
+        "outcomeId": "lo02",
         "difficulty": "Core",
         "question": "What should you do when this happens: Fast means far.",
         "options": [
@@ -1029,7 +1010,7 @@
       {
         "id": "q07",
         "type": "Application",
-        "outcomeId": "lo02",
+        "outcomeId": "lo03",
         "difficulty": "Core",
         "question": "What should you do when this happens: A bigger speed number sends it further.",
         "options": [
@@ -1045,7 +1026,7 @@
       {
         "id": "q08",
         "type": "Application",
-        "outcomeId": "lo03",
+        "outcomeId": "lo04",
         "difficulty": "Core",
         "question": "What should you do when this happens: The order does not matter.",
         "options": [
@@ -1061,7 +1042,7 @@
       {
         "id": "q09",
         "type": "Reasoning",
-        "outcomeId": "lo04",
+        "outcomeId": "lo01",
         "difficulty": "Core",
         "question": "What should you do when this happens: The character can think for itself.",
         "options": [
@@ -1077,7 +1058,7 @@
       {
         "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo05",
+        "outcomeId": "lo02",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: Blocks work even with a gap between them.",
         "options": [
@@ -1093,7 +1074,7 @@
       {
         "id": "q11",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo03",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
         "options": [
@@ -1109,7 +1090,7 @@
       {
         "id": "q12",
         "type": "Reasoning",
-        "outcomeId": "lo02",
+        "outcomeId": "lo04",
         "difficulty": "Challenge",
         "question": "Which computing word matches this meaning: One thing you do. One instruction.?",
         "options": [
@@ -1138,24 +1119,24 @@
           {
             "prompt": "Which of these describes “Steps in order”?",
             "choices": [
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
+            "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+            "explanation": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…"
           },
           {
             "prompt": "Which of these describes “Change a block, change the outcome; and guess first”?",
             "choices": [
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
             ],
-            "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
+            "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Change means to make it different."
           },
@@ -1181,7 +1162,7 @@
             ],
             "answer": "Blocks must click together in a row like a jigsaw, or only the first one runs. Show a gap failing, then join them.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "ScratchJr means a free app where you join picture blocks to code."
+            "explanation": "Blocks must click together in a row like a jigsaw, or only the first one runs. Show a gap failing, then join them."
           }
         ]
       },
@@ -1196,26 +1177,26 @@
           {
             "prompt": "Which of these describes “Change the steps, change what happens”?",
             "choices": [
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
+            "answer": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Step means one thing you do. One instruction."
+            "explanation": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…"
           },
           {
             "prompt": "Which of these describes “Be a Program Designer”?",
             "choices": [
               "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
             ],
             "answer": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Speed means how fast or slow something moves."
+            "explanation": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project."
           },
           {
             "prompt": "What should you do when this happens: The order does not matter.",
@@ -1227,7 +1208,7 @@
             ],
             "answer": "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Run means to make the program go."
+            "explanation": "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly."
           },
           {
             "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
@@ -1254,14 +1235,14 @@
           {
             "prompt": "Which of these describes “Turning steps into blocks”?",
             "choices": [
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+            "answer": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Outcome means what happens. The result."
+            "explanation": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
           },
           {
             "prompt": "What should you do when this happens: Fast means far.",
@@ -1273,7 +1254,7 @@
             ],
             "answer": "This is the big one. A child thinks a fast character must also go a long way. Fast means quick; far means a long way. Show two characters that both…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Program means steps that a computer or tablet can follow."
+            "explanation": "This is the big one. A child thinks a fast character must also go a long way. Fast means quick; far means a long way. Show two characters that both…"
           },
           {
             "prompt": "What should you do when this happens: The character can think for itself.",
@@ -1285,7 +1266,7 @@
             ],
             "answer": "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block - it is never the character guessing.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Predict means to guess what will happen before you run it."
+            "explanation": "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block - it is never the character guessing."
           },
           {
             "prompt": "Which computing word matches this meaning: One thing you do. One instruction.?",
@@ -1312,12 +1293,12 @@
           {
             "prompt": "Which of these describes “Change a block, change the outcome; and guess first”?",
             "choices": [
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
             ],
-            "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
+            "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Change means to make it different."
           },
@@ -1343,19 +1324,19 @@
             ],
             "answer": "Blocks must click together in a row like a jigsaw, or only the first one runs. Show a gap failing, then join them.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "ScratchJr means a free app where you join picture blocks to code."
+            "explanation": "Blocks must click together in a row like a jigsaw, or only the first one runs. Show a gap failing, then join them."
           },
           {
             "prompt": "Which of these describes “Steps in order”?",
             "choices": [
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
+            "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+            "explanation": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…"
           }
         ]
       },
@@ -1371,13 +1352,13 @@
             "prompt": "Which of these describes “Be a Program Designer”?",
             "choices": [
               "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
             ],
             "answer": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Speed means how fast or slow something moves."
+            "explanation": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project."
           },
           {
             "prompt": "What should you do when this happens: The order does not matter.",
@@ -1389,7 +1370,7 @@
             ],
             "answer": "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Run means to make the program go."
+            "explanation": "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly."
           },
           {
             "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
@@ -1406,14 +1387,14 @@
           {
             "prompt": "Which of these describes “Change the steps, change what happens”?",
             "choices": [
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
+            "answer": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Step means one thing you do. One instruction."
+            "explanation": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…"
           }
         ]
       },
@@ -1435,7 +1416,7 @@
             ],
             "answer": "This is the big one. A child thinks a fast character must also go a long way. Fast means quick; far means a long way. Show two characters that both…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Program means steps that a computer or tablet can follow."
+            "explanation": "This is the big one. A child thinks a fast character must also go a long way. Fast means quick; far means a long way. Show two characters that both…"
           },
           {
             "prompt": "What should you do when this happens: The character can think for itself.",
@@ -1447,7 +1428,7 @@
             ],
             "answer": "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block - it is never the character guessing.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Predict means to guess what will happen before you run it."
+            "explanation": "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block - it is never the character guessing."
           },
           {
             "prompt": "Which computing word matches this meaning: One thing you do. One instruction.?",
@@ -1464,14 +1445,14 @@
           {
             "prompt": "Which of these describes “Turning steps into blocks”?",
             "choices": [
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+            "answer": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Outcome means what happens. The result."
+            "explanation": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
           }
         ]
       },
@@ -1505,29 +1486,29 @@
             ],
             "answer": "Blocks must click together in a row like a jigsaw, or only the first one runs. Show a gap failing, then join them.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "ScratchJr means a free app where you join picture blocks to code."
+            "explanation": "Blocks must click together in a row like a jigsaw, or only the first one runs. Show a gap failing, then join them."
           },
           {
             "prompt": "Which of these describes “Steps in order”?",
             "choices": [
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
+            "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+            "explanation": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…"
           },
           {
             "prompt": "Which of these describes “Change a block, change the outcome; and guess first”?",
             "choices": [
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
             ],
-            "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
+            "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Change means to make it different."
           }
@@ -1551,7 +1532,7 @@
             ],
             "answer": "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Run means to make the program go."
+            "explanation": "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly."
           },
           {
             "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
@@ -1568,26 +1549,26 @@
           {
             "prompt": "Which of these describes “Change the steps, change what happens”?",
             "choices": [
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
+            "answer": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Step means one thing you do. One instruction."
+            "explanation": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…"
           },
           {
             "prompt": "Which of these describes “Be a Program Designer”?",
             "choices": [
               "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
             ],
             "answer": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Speed means how fast or slow something moves."
+            "explanation": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project."
           }
         ]
       },
@@ -1609,7 +1590,7 @@
             ],
             "answer": "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block - it is never the character guessing.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Predict means to guess what will happen before you run it."
+            "explanation": "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block - it is never the character guessing."
           },
           {
             "prompt": "Which computing word matches this meaning: One thing you do. One instruction.?",
@@ -1626,14 +1607,14 @@
           {
             "prompt": "Which of these describes “Turning steps into blocks”?",
             "choices": [
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+            "answer": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Outcome means what happens. The result."
+            "explanation": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
           },
           {
             "prompt": "What should you do when this happens: Fast means far.",
@@ -1645,7 +1626,7 @@
             ],
             "answer": "This is the big one. A child thinks a fast character must also go a long way. Fast means quick; far means a long way. Show two characters that both…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Program means steps that a computer or tablet can follow."
+            "explanation": "This is the big one. A child thinks a fast character must also go a long way. Fast means quick; far means a long way. Show two characters that both…"
           }
         ]
       },
@@ -1667,29 +1648,29 @@
             ],
             "answer": "Blocks must click together in a row like a jigsaw, or only the first one runs. Show a gap failing, then join them.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "ScratchJr means a free app where you join picture blocks to code."
+            "explanation": "Blocks must click together in a row like a jigsaw, or only the first one runs. Show a gap failing, then join them."
           },
           {
             "prompt": "Which of these describes “Steps in order”?",
             "choices": [
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
+            "answer": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+            "explanation": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…"
           },
           {
             "prompt": "Which of these describes “Change a block, change the outcome; and guess first”?",
             "choices": [
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
             ],
-            "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…",
+            "answer": "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Change means to make it different."
           },
@@ -1730,26 +1711,26 @@
           {
             "prompt": "Which of these describes “Change the steps, change what happens”?",
             "choices": [
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
+            "answer": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Step means one thing you do. One instruction."
+            "explanation": "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…"
           },
           {
             "prompt": "Which of these describes “Be a Program Designer”?",
             "choices": [
               "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
             ],
             "answer": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Speed means how fast or slow something moves."
+            "explanation": "You build it, change it to see the outcome change, and predict along the way. This session flows straight into the Mini-Project."
           },
           {
             "prompt": "What should you do when this happens: The order does not matter.",
@@ -1761,7 +1742,7 @@
             ],
             "answer": "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Run means to make the program go."
+            "explanation": "The steps must be in the right order, and the yellow start block goes first. Point it out: shoes before socks looks silly."
           }
         ]
       },
@@ -1788,14 +1769,14 @@
           {
             "prompt": "Which of these describes “Turning steps into blocks”?",
             "choices": [
-              "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
-              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.",
-              "This is the heart of the unit. If we change a step, we change the outcome - the outcome just means “what happens”. A moving character can be changed…",
-              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes - just like changing a step on the floor. And…"
+              "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+              "An algorithm is a set of steps for doing a job, and the steps must be in the right order. We follow algorithms every day without knowing the word.…",
+              "This is the heart of the unit. If we change a step, we change the outcome — the outcome just means “what happens”. A moving character can be changed…",
+              "Now we put Session 2 and Session 3 together. When we change a block in our program, the outcome changes — just like changing a step on the floor. And…"
             ],
-            "answer": "An algorithm can become a program - steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
+            "answer": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Outcome means what happens. The result."
+            "explanation": "An algorithm can become a program — steps a tablet can follow. In ScratchJr we do not write words; we join coloured picture blocks. Each block is one…"
           },
           {
             "prompt": "What should you do when this happens: Fast means far.",
@@ -1807,7 +1788,7 @@
             ],
             "answer": "This is the big one. A child thinks a fast character must also go a long way. Fast means quick; far means a long way. Show two characters that both…",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Program means steps that a computer or tablet can follow."
+            "explanation": "This is the big one. A child thinks a fast character must also go a long way. Fast means quick; far means a long way. Show two characters that both…"
           },
           {
             "prompt": "What should you do when this happens: The character can think for itself.",
@@ -1819,17 +1800,16 @@
             ],
             "answer": "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block - it is never the character guessing.",
             "clue": "Use the Unit 4 Computing Words reference.",
-            "explanation": "Predict means to guess what will happen before you run it."
+            "explanation": "It cannot. It only does exactly what the blocks say, in order. If it does something odd, we changed a block - it is never the character guessing."
           }
         ]
       }
     ]
   },
   "selfAssessment": [
-    "I can these come straight from the textbook unit. By the end of the unit, the child should be able to:",
     "I can know that an algorithm is a set of instructions (steps) in the right order.",
+    "I can change an algorithm and understand that this changes the outcome (what happens) - a character can go faster or slower, further or less far, or a different way.",
     "I can change an algorithm and understand that this changes the outcome (what happens) — a character can go faster or slower, further or less far, or a different way.",
-    "I can create an algorithm as a program in ScratchJr by turning each step into a block of code, and run it.",
     "I can predict (guess) what happens when a program runs, by looking at its blocks, and then check."
   ]
 }

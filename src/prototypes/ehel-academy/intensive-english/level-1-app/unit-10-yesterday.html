@@ -1188,44 +1188,47 @@ input.typein.wrong { border-color: #c53030; }
     <section class="slide" data-say="Doing words with new past forms.">
       <div id="s4"></div>
     </section>
-    <section class="slide" data-say="Which word means this?">
+    <section class="slide" data-say="Seasons.">
       <div id="s5"></div>
     </section>
-    <section class="slide" data-say="-ed for the past: worked, played.">
+    <section class="slide" data-say="Which word means this?">
       <div id="s6"></div>
     </section>
-    <section class="slide" data-say="Went, had, saw: words that change.">
+    <section class="slide" data-say="-ed for the past: worked, played.">
       <div id="s7"></div>
     </section>
-    <section class="slide" data-say="Did you go? I didn't go..">
+    <section class="slide" data-say="Went, had, saw: words that change.">
       <div id="s8"></div>
     </section>
-    <section class="slide" data-say="Yesterday, today, a week ago.">
+    <section class="slide" data-say="Did you go? I didn't go..">
       <div id="s9"></div>
     </section>
-    <section class="slide" data-say="The Green Bag.">
+    <section class="slide" data-say="Yesterday, today, a week ago.">
       <div id="s10"></div>
     </section>
-    <section class="slide" data-say="Twelve Months.">
+    <section class="slide" data-say="The Green Bag.">
       <div id="s11"></div>
     </section>
-    <section class="slide" data-say="A Lost Bag Form.">
+    <section class="slide" data-say="Twelve Months.">
       <div id="s12"></div>
     </section>
-    <section class="slide" data-say="Questions. Write your answer first, then check the reviewed answer.">
+    <section class="slide" data-say="A Lost Bag Form.">
       <div id="s13"></div>
     </section>
-    <section class="slide" data-say="Say it out loud. Record yourself and listen back. Hearing your own voice is the fastest correction there is.">
+    <section class="slide" data-say="Questions. Write your answer first, then check the reviewed answer.">
       <div id="s14"></div>
     </section>
-    <section class="slide" data-say="Write it down. Your draft saves on this device as you type.">
+    <section class="slide" data-say="Say it out loud. Record yourself and listen back. Hearing your own voice is the fastest correction there is.">
       <div id="s15"></div>
     </section>
-    <section class="slide" data-say="Practice. 6 things to do, most of them out loud.">
+    <section class="slide" data-say="Write it down. Your draft saves on this device as you type.">
       <div id="s16"></div>
     </section>
-    <section class="slide" data-say="Check what you know. 12 questions. You can try again.">
+    <section class="slide" data-say="Practice. 6 things to do, most of them out loud.">
       <div id="s17"></div>
+    </section>
+    <section class="slide" data-say="Check what you know. 12 questions. You can try again.">
+      <div id="s18"></div>
     </section>
     <section class="slide" data-say="What can you do now? Answer honestly. Nobody else sees this — it is here so you can see what has moved and what has not.">
       <div id="summary"></div>
@@ -1276,7 +1279,14 @@ input.typein.wrong { border-color: #c53030; }
   "Practice: write. Check with the answers.",
   "Quiz: 12 questions. At the end, My progress."
  ],
- "functions": [],
+ "functions": [
+  "Say what you did, using -ed",
+  "Say what you did with the verbs that change: went, had, saw",
+  "Ask somebody what they did, and say what you did not do",
+  "Say when it happened: yesterday, last week, a week ago",
+  "Tell a short story about one past day",
+  "Say the months of the year"
+ ],
  "outcomes": [
   {
    "can": "I can say what I did: I worked. I played.",
@@ -1717,6 +1727,67 @@ input.typein.wrong { border-color: #c53030; }
      ],
      "starter": "I finished …",
      "pic": "🏁"
+    }
+   ]
+  },
+  {
+   "title": "Seasons",
+   "words": [
+    {
+     "w": "summer",
+     "pos": "noun",
+     "meaning": "The warm part of the year: June, July, August.",
+     "example": "In summer, the days are long.",
+     "sentences": [
+      "We go to the sea in summer.",
+      "Last summer was hot.",
+      "Summer comes after spring.",
+      "Is it hot here in summer?"
+     ],
+     "starter": "In summer, I …",
+     "pic": "☀️"
+    },
+    {
+     "w": "winter",
+     "pos": "noun",
+     "meaning": "The cold part of the year: December, January, February.",
+     "example": "In winter, I wear a coat.",
+     "sentences": [
+      "Winter is cold here.",
+      "We had snow last winter.",
+      "Winter comes after autumn.",
+      "Do you like winter?"
+     ],
+     "starter": "In winter, I …",
+     "pic": "❄️"
+    },
+    {
+     "w": "spring",
+     "pos": "noun",
+     "meaning": "The part of the year after winter: March, April, May.",
+     "example": "In spring, the trees are green.",
+     "sentences": [
+      "Spring comes after winter.",
+      "It rains a lot in spring.",
+      "We visited my aunt last spring.",
+      "Spring is a good time for a trip."
+     ],
+     "starter": "In spring, I …",
+     "pic": "🌷"
+    },
+    {
+     "w": "autumn",
+     "pos": "noun",
+     "meaning": "The part of the year after summer: September, October, November.",
+     "example": "In autumn, the leaves are brown.",
+     "sentences": [
+      "Autumn comes after summer.",
+      "School starts in autumn.",
+      "Last autumn was wet.",
+      "Autumn is my favourite time of year."
+     ],
+     "starter": "In autumn, I …",
+     "pic": "🍂"
     }
    ]
   }
@@ -3694,19 +3765,20 @@ input.typein.wrong { border-color: #c53030; }
   wordWalk(2, 's2', LESSON.groups[0]);
   wordWalk(3, 's3', LESSON.groups[1]);
   wordWalk(4, 's4', LESSON.groups[2]);
-  wordCheck(5, 's5', LESSON.groups.flatMap(g => g.words));
-  pattern(6, 's6', LESSON.patterns[0]);
-  pattern(7, 's7', LESSON.patterns[1]);
-  pattern(8, 's8', LESSON.patterns[2]);
-  pattern(9, 's9', LESSON.patterns[3]);
-  reading(10, 's10', LESSON.readings[0]);
-  reading(11, 's11', LESSON.readings[1]);
-  reading(12, 's12', LESSON.readings[2]);
-  questions(13, 's13', LESSON.questions);
-  speaking(14, 's14', LESSON.speaking);
-  writing(15, 's15', LESSON.writing);
-  practice(16, 's16', LESSON.practice);
-  quiz(17, 's17', LESSON.quiz);
+  wordWalk(5, 's5', LESSON.groups[3]);
+  wordCheck(6, 's6', LESSON.groups.flatMap(g => g.words));
+  pattern(7, 's7', LESSON.patterns[0]);
+  pattern(8, 's8', LESSON.patterns[1]);
+  pattern(9, 's9', LESSON.patterns[2]);
+  pattern(10, 's10', LESSON.patterns[3]);
+  reading(11, 's11', LESSON.readings[0]);
+  reading(12, 's12', LESSON.readings[1]);
+  reading(13, 's13', LESSON.readings[2]);
+  questions(14, 's14', LESSON.questions);
+  speaking(15, 's15', LESSON.speaking);
+  writing(16, 's16', LESSON.writing);
+  practice(17, 's17', LESSON.practice);
+  quiz(18, 's18', LESSON.quiz);
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);
 

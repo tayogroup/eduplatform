@@ -15,7 +15,12 @@ const path = require("path");
 const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
 const { speakableFrames, speakableWords } = require("./ehel-tts");
 
-const CATEGORIES = ["lecture", "readings", "grammar", "words", "wordSentences", "speaking"];
+// `slideLabels` is the odd one and says so: the other six are per-unit text the
+// SHELL speaks through voiceButton(), while slideLabels belongs to the
+// standalone build and is read off its built pages (see appSlideTexts below).
+// textsForUnit returns nothing for it, which is correct — there is no unit field
+// to read — so anything walking units alone simply never sees it.
+const CATEGORIES = ["lecture", "readings", "grammar", "words", "wordSentences", "speaking", "slideLabels"];
 
 function textsForUnit(unit, category) {
   switch (category) {
@@ -109,6 +114,53 @@ function clipsForUnit(unit, categories = CATEGORIES) {
   return out;
 }
 
+// The STANDALONE lesson build speaks its slide labels, and it does so on a
+// different path from everything above: deck.js has `if (speak)
+// say(slides[cur].dataset.say)`, which is the voice engine directly rather than
+// playClip(). It is narration all the same — on a real launch say() resolves to
+// quiz_tts.php, which proxies ElevenLabs, so a label with no clip is a paid call
+// every time a learner hears it.
+//
+// These are read from the BUILT PAGES, not re-derived from the unit JSON. The
+// labels are decided by build-lessons.py's steps_for(), and a second
+// implementation of that here is precisely the divergence that put an
+// ungenerated example sentence at the front of every word card until
+// 2026-09-17 — two definitions of one list, agreeing by coincidence until they
+// did not. The pages are the artifact; their data-say attributes are what is
+// actually spoken.
+const ATTR_ENTITIES = { "&quot;": '"', "&#39;": "'", "&apos;": "'", "&lt;": "<", "&gt;": ">", "&amp;": "&" };
+const unescapeAttr = (s) => String(s).replace(/&(?:quot|#39|apos|lt|gt|amp);/g, (m) => ATTR_ENTITIES[m]);
+
+function appSlideTexts(courseRoot, level) {
+  const dir = path.join(courseRoot, `level-${level}-app`);
+  const out = new Set();
+  if (!fs.existsSync(dir)) return out;
+  for (const file of fs.readdirSync(dir)) {
+    if (!file.endsWith(".html")) continue;
+    const html = fs.readFileSync(path.join(dir, file), "utf8");
+    for (const m of html.matchAll(/data-say="([^"]*)"/g)) {
+      // intensive.js is inlined verbatim into every page, so its own source
+      // line `data-say="' + esc(text) + '"` matches this regex. It is markup
+      // being written at run time, not markup.
+      if (m[1].includes("' + esc(")) continue;
+      const text = clean(unescapeAttr(m[1]));
+      if (text.length >= MIN_CHARS) out.add(text);
+    }
+  }
+  return out;
+}
+
+// Shaped like clipsForUnit's output so the generator can treat them alike.
+function appSlideClips(courseRoot, level) {
+  return [...appSlideTexts(courseRoot, level)].map((text) => ({
+    category: "slideLabels",
+    text,
+    source: text,
+    spoken: speakableWords(speakableFrames(text)),
+    hash: cyrb53(text),
+  }));
+}
+
 // Every hash one level needs. The uploader fans the flat local cache out into
 // the per-stage deploy tree with this, so a text shared by two levels is
 // uploaded under both.
@@ -126,6 +178,12 @@ function hashesForLevel(courseRoot, level, categories = CATEGORIES) {
     if (!/^unit-\d+\.json$/.test(file)) continue;
     const unit = JSON.parse(fs.readFileSync(path.join(unitDir, file), "utf8"));
     for (const clip of clipsForUnit(unit, categories)) out.add(clip.hash);
+  }
+  // The standalone build's slide labels, which live on its pages rather than in
+  // any unit. This is what makes them uploadable and — just as importantly —
+  // what stops the CDN pruner calling them unreachable and deleting them.
+  if (categories.includes("slideLabels")) {
+    for (const clip of appSlideClips(courseRoot, level)) out.add(clip.hash);
   }
   return out;
 }
@@ -147,4 +205,4 @@ function hashGradeMap(courseRoot, categories = CATEGORIES) {
   return map;
 }
 
-module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, speechForUnit, clipsForUnit, hashesForLevel, hashGradeMap };
+module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, speechForUnit, clipsForUnit, appSlideTexts, appSlideClips, hashesForLevel, hashGradeMap };

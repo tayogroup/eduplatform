@@ -138,6 +138,15 @@ function collect() {
         if (!byHash.has(clip.hash)) byHash.set(clip.hash, { ...clip, chars: clip.spoken.length });
       }
     }
+    // The standalone build's slide labels come from its built PAGES, not from
+    // any unit, so they sit outside the loop above. deck.js speaks them through
+    // say() rather than playClip(), which on a real launch is quiz_tts.php and
+    // therefore ElevenLabs — an ungenerated label is billed on every play.
+    if (catList.includes("slideLabels")) {
+      for (const clip of narration.appSlideClips(COURSE, level)) {
+        if (!byHash.has(clip.hash)) byHash.set(clip.hash, { ...clip, chars: clip.spoken.length });
+      }
+    }
   }
   return [...byHash.values()];
 }

@@ -85,6 +85,17 @@ $SUBJECTS = [
             2 => ['ehel-math-g02', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-2-lessons/index.html'],
             3 => ['ehel-math-g03', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-3-lessons/index.html'],
             4 => ['ehel-math-g04', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-4-lessons/index.html'],
+            // Grade 5 is a Grade 5-8 course routed away from the shell, which
+            // English's Grade 5 needed an owner decision for. It needs no design
+            // exception: unlike English's, this build is NOT the step-by-step
+            // deck. It is the upper-stage design already - a scrolling page of
+            // `<section class="step">` explorations - so the rule that the deck
+            // stops at Grade 4 is not in play. What IS in play is the same
+            // trade the note above describes: six strand lessons instead of the
+            // shell's eighteen term units. The remote is grade-5-v2, not
+            // grade-5-lessons, because that is the name its app.config.json has
+            // always carried.
+            5 => ['ehel-math-g05', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-5-v2/index.html'],
         ],
     ],
     'english' => [

@@ -1,0 +1,59 @@
+{
+  "_comment": "Stage 1's eight unclaimed CONTENT objectives, authored as concepts. Added 2026-09-17 with the Stages 1-4 re-point. Grade 1's six units are one per content sub-strand of the 2018 framework - Being Alive, Growing Plants, Ourselves, Materials, Pushes and Pulls, Sounds - and 0097 asks for four sub-strands they have no home for: physical change to a material, the Earth and its land and water, the Earth as a planet and the Sun as a star, and electricity and magnets. Every one of these joins the unit whose own subject already touches it, rather than a unit chosen for having room: soil and sunlight are already in Growing Plants, bending and floating are already in Materials, a magnet pushing and pulling without touching IS the subject of Pushes and Pulls, and the things that make sound in a Grade 1 home mostly run on electricity. With these eight, Stage 1 reaches all 35 of its objectives.",
+  "_vehicle": "concepts, appended to the unit's own array and rendered by the shell as 'The lesson'. At Stages 1-4 that section keeps BOTH designs - it is one of Science's four owner-approved exemptions, because the grid half carries the interactive WebGL models the deck deliberately does not - so an appended concept becomes one more grid card AND one more flat deck slide. Appended and never inserted, because the shell renders in array order. scienceDiagram(topic, index) takes index % set.length, so a concept past the end of the diagram set gets a recycled figure rather than crashing. Safe on a live course: complete('lesson') fires on a button press, not on a count of concepts, and complete() is add-only.",
+  "curriculumCode": "0097",
+  "stage": 1,
+  "source": "Authored 2026-09-17 against Cambridge Primary Science 0097 Stage 1. Written to the register of the existing Grade 1 concepts: short sentences, an object the child has in the house, and an example that asks them to go and do something.",
+  "minimumCovered": 8,
+  "_minimumCovered": "Objectives closed by these concepts. Coverage is a number that only goes up.",
+  "concepts": [
+    {
+      "id": "concept-1-you-can-change-the-shape",
+      "unit": 4,
+      "codes": ["1Cc.01"],
+      "title": "You Can Change the Shape",
+      "explanation": "You already know that a material can be hard or soft, bendy or stiff. Now try changing one with your own hands.\n\nPull a rubber band. It stretches — it gets longer and thinner. Let it go and it springs back.\n\nSqueeze a ball of dough. It squashes — it gets shorter and wider. It does not spring back.\n\nBend a plastic ruler a little way. It bends into a curve. Let go and it straightens again.\n\nTwist a wet cloth. It twists into a rope, and water runs out.\n\nStretch, squash, bend, twist. Four things you can do with your hands to change the shape of a material. The material is still the same material — the dough is still dough, the cloth is still cloth — but its shape is new.",
+      "example": "Find a rubber band, a piece of dough or wet soil, and a cloth. Stretch one, squash one, and twist one. Say which word matches what you did, and say whether it went back to how it was."
+    },
+    {
+      "id": "concept-1-floating-and-sinking",
+      "unit": 4,
+      "codes": ["1Pf.03"],
+      "title": "Floating and Sinking",
+      "explanation": "Fill a bowl with water and put things in it, one at a time. Something surprising happens.\n\nA stone goes straight to the bottom. We say it sinks.\n\nA leaf stays on top of the water. We say it floats.\n\nNow try more things. A metal spoon sinks. A plastic bottle top floats. A stick of wood floats. A coin sinks.\n\nSome big things float and some small things sink, so it is not about being big or small. A big log floats down a river, and a tiny nail sinks.\n\nWhen something floats, the water is pushing up on it and holding it there. When something sinks, the water cannot push up hard enough to hold it.",
+      "example": "Get a bowl of water and five safe things from around your home. Before each one, say whether you think it will float or sink. Then try it. How many did you guess right?"
+    },
+    {
+      "id": "concept-1-water-and-land",
+      "unit": 2,
+      "codes": ["1ESp.01", "1ESp.02"],
+      "title": "Water and Land",
+      "explanation": "Your plant grows in soil. Dig a little deeper and you will find something harder — small stones and rock.\n\nAll the land in the world is made of rock and soil, just like the ground under your plant. The soil is on the top, and rock is underneath it.\n\nBut land is not most of our world. If you could look at the whole Earth from far away, most of what you would see is water. The seas and oceans cover far more of the Earth than all the land put together.\n\nSo our world is mostly water, with land made of rock and soil in between.",
+      "example": "Dig a small hole in the ground with a spoon. Look at what comes out. Can you see soil? Can you find a stone? Now say which there is more of on Earth: land or water."
+    },
+    {
+      "id": "concept-1-our-planet-and-our-star",
+      "unit": 2,
+      "codes": ["1ESs.01", "1ESs.02"],
+      "title": "Our Planet and Our Star",
+      "explanation": "Your plant needs the Sun. Here is what the Sun really is.\n\nThe big round world we all live on is called Earth. Earth is a planet, and it is the planet we live on. Everybody you have ever met lives on Earth.\n\nThe Sun is not a planet. The Sun is a star — a huge ball of burning gas, very far away.\n\nThe Sun gives us two things. It gives us light, which is why the day is bright and the night is dark. And it gives us heat, which is why you feel warm standing in the sunshine and cooler in the shade.\n\nAt night you can see other stars, like tiny white dots. They are stars too, just like our Sun, but they are much, much further away.",
+      "example": "Stand in the sunshine, then step into the shade. Which one feels warmer? Then, at night, look up and count five stars. Our Sun is a star just like those."
+    },
+    {
+      "id": "concept-1-magnets-push-and-pull",
+      "unit": 5,
+      "codes": ["1Pe.02"],
+      "title": "Magnets Push and Pull",
+      "explanation": "Every push and pull you have tried so far needed you to touch the thing. A magnet does not.\n\nA magnet is a special piece of metal. Hold one near a nail and the nail jumps across the little gap and sticks to it. Nothing touched it. The magnet pulled it.\n\nTry the magnet on lots of things. It pulls a nail, a paper clip, a tin lid, the door of a fridge. It does nothing at all to wood, paper, plastic, cloth or your hand.\n\nNow take two magnets. Turn them one way and they pull together and snap shut. Turn one of them round and they push each other away — you can feel the push in your fingers, with a gap still between them.\n\nA magnet can push and it can pull, and it can do it without touching.",
+      "example": "Find a magnet, or use the ones on a fridge door. Try it on six things around your home. Make two groups: things the magnet pulls, and things it does not."
+    },
+    {
+      "id": "concept-1-things-that-need-electricity",
+      "unit": 6,
+      "codes": ["1Pe.01"],
+      "title": "Things That Need Electricity",
+      "explanation": "Think about the sounds in your home. A radio playing. A phone ringing. A fan humming.\n\nThose three cannot make a sound on their own. They need electricity.\n\nElectricity is a kind of power that comes along wires from the wall, or out of a battery inside. Without it, the radio is silent and the phone screen stays dark.\n\nSome things need electricity and some do not. A radio needs it. A drum does not — you make the sound yourself by hitting it. A torch needs a battery. A whistle needs only your breath.\n\nWhen something stops working, one good question is: has it got electricity?\n\nElectricity from the wall is strong and dangerous. Never put anything into a socket. That is a grown-up's job.",
+      "example": "Look around one room. Find three things that need electricity and three that do not. For each one that needs it, say whether it has a battery or a wire to the wall."
+    }
+  ]
+}

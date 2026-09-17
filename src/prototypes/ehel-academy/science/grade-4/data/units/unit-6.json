@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T20:09:49.873Z",
+  "generatedAt": "2026-09-17T20:40:40.729Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -33,9 +33,13 @@
       "4Pe.02",
       "4Pe.03",
       "4Pe.04",
-      "4TWSp.03",
       "4TWSa.01",
-      "4TWSc.06"
+      "4TWSa.02",
+      "4TWSc.06",
+      "4TWSc.07",
+      "4TWSm.03",
+      "4TWSp.03",
+      "4TWSp.05"
     ],
     "objectives": [
       {
@@ -63,22 +67,46 @@
         "text": "Know some materials are good electrical conductors, especially metals, and some are good electrical insulators."
       },
       {
-        "code": "4TWSp.03",
-        "strand": "Thinking and Working Scientifically",
-        "subStrand": "Scientific enquiry: purpose and planning",
-        "text": "Make a prediction describing some possible outcomes of an enquiry."
-      },
-      {
         "code": "4TWSa.01",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
         "text": "Identify whether results support, or do not support, a prediction."
       },
       {
+        "code": "4TWSa.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe simple patterns in results."
+      },
+      {
         "code": "4TWSc.06",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
         "text": "Carry out practical work safely."
+      },
+      {
+        "code": "4TWSc.07",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Use secondary information sources to research an answer to a question."
+      },
+      {
+        "code": "4TWSm.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Models and representations",
+        "text": "Draw a diagram to represent a real world situation and/or scientific idea."
+      },
+      {
+        "code": "4TWSp.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Make a prediction describing some possible outcomes of an enquiry."
+      },
+      {
+        "code": "4TWSp.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Identify risks and explain how to stay safe during practical work."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -981,6 +1009,45 @@
         "Switch"
       ],
       "modelAnswer": "Because a 1.5V battery gives a small, safe push, but wall sockets give a very high, dangerous voltage that can badly injure you."
+    },
+    {
+      "id": "4-enq-14",
+      "outcomeId": "lo09",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You are building a circuit with a cell, wires and a bulb. Name two risks in this work and the rule that deals with each, then say what you would do if a wire got hot.",
+      "keyIdeas": [
+        "Never use mains electricity from a wall socket - only a small cell",
+        "Do not join the two ends of the cell with just a wire",
+        "If a wire gets hot, disconnect the cell and tell an adult"
+      ],
+      "modelAnswer": "The first risk is mains electricity, and the rule is that I never put anything of mine into a wall socket - I use only a small 1.5 volt cell. The second is a short circuit: joining the two ends of the cell with only a wire makes the wire heat up fast, so every circuit I build has the bulb in the loop. If a wire got hot I would take the cell out of the holder first, not pull the wire, and then tell an adult. Identifying the risk is what tells you which rule you need."
+    },
+    {
+      "id": "4-enq-15",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You lit one bulb with one cell, then two cells, then three, and recorded the brightness as dim, bright, very bright. Then you added bulbs instead: one bulb bright, two bulbs dimmer, three dimmer still. Describe both patterns and say how they differ.",
+      "keyIdeas": [
+        "More cells means brighter",
+        "More bulbs in one loop means dimmer",
+        "One pattern rises, the other falls"
+      ],
+      "modelAnswer": "More cells made the bulb brighter each time, so that pattern rises as the number goes up. More bulbs in the same loop made every bulb dimmer, so that pattern falls as the number goes up. They differ in direction: adding cells adds push to the circuit, while adding bulbs shares the same push among more of them. Describing a pattern means saying which way it goes, and these two go opposite ways."
+    },
+    {
+      "id": "4-enq-16",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You want to know where the electricity in your town is actually generated, and you cannot go and look. How would you research it, and how would you check the answer is sound?",
+      "keyIdeas": [
+        "Ask at home or at school, look at a bill, read the utility's information",
+        "Look for two sources that agree",
+        "Prefer the organisation that does the generating"
+      ],
+      "modelAnswer": "I would start with an electricity bill or the power company's own information, ask an adult at home, and look it up in a book or a trusted website about my country's power. Then I would see whether two different sources say the same thing, and give most weight to the company that actually does the generating. Research is a real kind of enquiry, and checking one source against another is what stops it being a rumour."
     }
   ],
   "assessment": {

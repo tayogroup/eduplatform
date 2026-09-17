@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T20:09:49.572Z",
+  "generatedAt": "2026-09-17T20:40:40.529Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -30,9 +30,11 @@
     "stage": 3,
     "objectiveCodes": [
       "3Bs.03",
+      "3TWSa.01",
+      "3TWSa.04",
       "3TWSm.02",
       "3TWSp.03",
-      "3TWSa.01"
+      "3SIC.03"
     ],
     "objectives": [
       {
@@ -40,6 +42,18 @@
         "strand": "Biology",
         "subStrand": "Structure and function",
         "text": "Identify some of the important organs in humans (limited to brain, heart, stomach, intestine and lungs) and describe their functions."
+      },
+      {
+        "code": "3TWSa.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Identify whether results support, or do not support, a prediction."
+      },
+      {
+        "code": "3TWSa.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Present and interpret results using tables and bar charts."
       },
       {
         "code": "3TWSm.02",
@@ -54,10 +68,10 @@
         "text": "Make a prediction describing some possible outcomes of an enquiry."
       },
       {
-        "code": "3TWSa.01",
-        "strand": "Thinking and Working Scientifically",
-        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
-        "text": "Identify whether results support, or do not support, a prediction."
+        "code": "3SIC.03",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Know that everyone uses science and identify people who use science professionally."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -955,6 +969,32 @@
         "Pulse"
       ],
       "modelAnswer": "Any two: it holds you up and gives you shape; it protects soft organs; it lets you move at your joints."
+    },
+    {
+      "id": "3-enq-8",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You counted your pulse three times: sitting 80 beats a minute, after walking 100, after running 140. Say how you would set this out as a table and as a bar chart, and what the chart shows at a glance that the table does not.",
+      "keyIdeas": [
+        "Table: one column for the activity, one for beats per minute",
+        "Bar chart: one bar per activity, height is the beats",
+        "The chart shows the size of the jump"
+      ],
+      "modelAnswer": "The table has two columns, 'What I was doing' and 'Beats in one minute', with three rows. The bar chart has one bar for each activity and the height of the bar is the number of beats. The chart shows at a glance that running raised my pulse far more than walking did - the running bar is nearly twice the sitting bar - which you have to work out for yourself from the table."
+    },
+    {
+      "id": "3-enq-9",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You took your own pulse today. Name two people whose job is to measure things about the body, and say what they measure.",
+      "keyIdeas": [
+        "A nurse measures pulse, temperature and breathing",
+        "A doctor listens to the heart and lungs",
+        "Everyone uses science; some people use it at work"
+      ],
+      "modelAnswer": "A nurse measures your pulse, your temperature and how fast you breathe, and writes them down each time so changes show up. A doctor listens to the heart and the lungs to hear whether they are working properly. They are doing what you did with your pulse, with better instruments and more practice - which is what using science professionally means."
     }
   ],
   "assessment": {

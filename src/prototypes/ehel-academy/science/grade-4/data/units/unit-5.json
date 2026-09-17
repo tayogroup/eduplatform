@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T20:09:49.839Z",
+  "generatedAt": "2026-09-17T20:40:40.706Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -32,6 +32,8 @@
       "4Ps.01",
       "4Ps.02",
       "4Ps.03",
+      "4TWSa.03",
+      "4TWSc.03",
       "4TWSp.03"
     ],
     "objectives": [
@@ -52,6 +54,18 @@
         "strand": "Physics",
         "subStrand": "Light and sound",
         "text": "Describe how objects which are not light sources are seen."
+      },
+      {
+        "code": "4TWSa.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Make a conclusion from results and relate it to the scientific question being investigated."
+      },
+      {
+        "code": "4TWSc.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Choose equipment from a provided selection and use it appropriately."
       },
       {
         "code": "4TWSp.03",
@@ -966,6 +980,32 @@
         "Shadow"
       ],
       "modelAnswer": "Transparent (clear glass, water), translucent (thin curtain, frosted glass), and opaque (wood, metal)."
+    },
+    {
+      "id": "4-enq-12",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "On the table are a torch, a mirror, a sheet of white card, a sheet of black card, a plastic ruler and a glass of water. You want to show that light travels in straight lines. Which items do you choose, and why do you leave the others?",
+      "keyIdeas": [
+        "Torch and three cards with a hole punched in each",
+        "The mirror is for reflection, a different investigation",
+        "The glass of water bends light, which would spoil this test"
+      ],
+      "modelAnswer": "I choose the torch and the card, and I punch a hole in three pieces of card and line them up: the light only reaches the far side when all three holes are in a straight line. I leave the mirror, because that shows light bouncing rather than travelling straight, and I leave the glass of water, because water bends light and would make the beam come out somewhere I did not expect. Choosing equipment means knowing what each piece would do to your result."
+    },
+    {
+      "id": "4-enq-13",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Your question was: which materials let light through? Results: clear plastic - the torch beam passes and you can read through it; greaseproof paper - light passes but you cannot make out the words; card - nothing passes. Write the conclusion so that it answers the question.",
+      "keyIdeas": [
+        "Three groups, not two: transparent, translucent, opaque",
+        "Answer the question that was asked",
+        "Name the evidence for each group"
+      ],
+      "modelAnswer": "Materials do not simply let light through or not - there are three answers. Clear plastic is transparent, because the beam passed and I could read the words through it. Greaseproof paper is translucent, because light got through but the words did not. Card is opaque, because no light passed at all. The conclusion goes back to the question and gives the evidence for each group."
     }
   ],
   "assessment": {

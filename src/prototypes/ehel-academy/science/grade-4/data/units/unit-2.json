@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T20:09:49.734Z",
+  "generatedAt": "2026-09-17T20:40:40.633Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -29,16 +29,25 @@
     "code": "0097",
     "stage": 4,
     "objectiveCodes": [
+      "4Bp.03",
       "4Pf.01",
       "4Pf.02",
       "4Pf.03",
       "4Pf.04",
-      "4Bp.03",
+      "4TWSa.01",
+      "4TWSa.04",
       "4TWSm.02",
+      "4TWSp.01",
       "4TWSp.03",
-      "4TWSa.01"
+      "4SIC.05"
     ],
     "objectives": [
+      {
+        "code": "4Bp.03",
+        "strand": "Biology",
+        "subStrand": "Life processes",
+        "text": "Know that plants and animals need energy to grow, live and be healthy, and plants get their energy from light while animals get their energy from eating plants or other animals."
+      },
       {
         "code": "4Pf.01",
         "strand": "Physics",
@@ -64,10 +73,16 @@
         "text": "Know that not all energy is transferred from one object to another, but often some energy during a process can be transferred to the surrounding environment and this can be detected as sound, light or temperature increase."
       },
       {
-        "code": "4Bp.03",
-        "strand": "Biology",
-        "subStrand": "Life processes",
-        "text": "Know that plants and animals need energy to grow, live and be healthy, and plants get their energy from light while animals get their energy from eating plants or other animals."
+        "code": "4TWSa.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Identify whether results support, or do not support, a prediction."
+      },
+      {
+        "code": "4TWSa.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Present and interpret results using tables, bar charts and dot plots."
       },
       {
         "code": "4TWSm.02",
@@ -76,16 +91,22 @@
         "text": "Use models to show relationships, quantities or scale."
       },
       {
+        "code": "4TWSp.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Ask scientific questions that can be investigated."
+      },
+      {
         "code": "4TWSp.03",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Make a prediction describing some possible outcomes of an enquiry."
       },
       {
-        "code": "4TWSa.01",
-        "strand": "Thinking and Working Scientifically",
-        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
-        "text": "Identify whether results support, or do not support, a prediction."
+        "code": "4SIC.05",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Discuss how the use of science and technology can have positive and negative environmental effects on their local area."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -976,6 +997,46 @@
         "Energy source"
       ],
       "modelAnswer": "Because the Sun gives light and heat directly, and it is also the starting point for wind, for the growth of plants, and therefore for food. Most energy on Earth can be traced back to the Sun."
+    },
+    {
+      "id": "4-enq-3",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Turn this into a question you could actually investigate: 'solar energy is good'. Then say what you would measure.",
+      "keyIdeas": [
+        "'Good' cannot be measured; pick something that can",
+        "For example: does a solar lamp charge faster in direct sun than in shade?",
+        "Measure the time to charge, or how long it then lights"
+      ],
+      "modelAnswer": "'Solar energy is good' is an opinion, so nothing could settle it. A question I could investigate is: does a solar lamp charge faster in direct sunlight than in the shade? I would measure the time each one takes to charge fully, or how many hours it lights afterwards. A scientific question names something you can measure and says what would count as an answer."
+    },
+    {
+      "id": "4-enq-4",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You surveyed your home and found 6 devices using electrical energy, 3 using light, 2 using heat and 1 using movement. Say how you would show this as a table, as a bar chart and as a dot plot, and which one you would choose to convince your family to save energy.",
+      "keyIdeas": [
+        "Table: one row per form, one column for the count",
+        "Bar chart: one bar per form, height is the count",
+        "Dot plot: one dot per device above its form",
+        "The bar chart makes the biggest group obvious"
+      ],
+      "modelAnswer": "The table has a row for each form of energy and a column for how many devices. The bar chart has one bar per form with its height as the count. The dot plot puts one dot for each device above its form, so twelve dots in four stacks. I would use the bar chart to convince my family, because the electrical bar is twice the next one and that is visible in a second - and I would say that is where saving would matter most."
+    },
+    {
+      "id": "4-enq-5",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Charcoal and solar panels both give a family energy for cooking or light. Give one good effect and one harmful effect of each, for the area where you live.",
+      "keyIdeas": [
+        "Charcoal is cheap and works at night, but trees are cut and the smoke harms lungs",
+        "Solar is clean and free once bought, but it costs a lot at the start and gives nothing at night",
+        "Neither one is only good or only bad"
+      ],
+      "modelAnswer": "Charcoal is cheap, easy to buy in small amounts and burns whenever you need it - but making it means cutting trees, and the smoke in a closed kitchen harms the lungs of whoever cooks. A solar panel makes no smoke and costs nothing to run once you have it, and it can charge a lamp so a child can read at night - but it costs a lot to buy and it makes nothing on a dark evening. Science does not say one is simply good; it tells you what each one costs and who pays it."
     }
   ],
   "assessment": {

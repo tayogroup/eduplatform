@@ -45,10 +45,16 @@ const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 // the last thing you added cannot see that thing disappear.
 const TOPIC_FLOORS = {
   mathematics: 4191,
-  // Raised from 1254 on 2026-09-17 when six authored units were added to
-  // Stages 5 and 6. A floor set at what you had before the last thing you
-  // added is a formality.
-  science: 1376,
+  // Raised from 1254 to 1376 on 2026-09-17 when six authored units were added
+  // to Stages 5 and 6, then to 1394 the same day when eighteen authored
+  // concepts closed the Stage 1-4 content gap exposed by the 0846 -> 0097
+  // re-point. A floor set at what you had before the last thing you added is a
+  // formality. The 39 authored enquiry PROMPTS in the same change move this
+  // number by nothing, and that is correct rather than a miss: a reasoning
+  // prompt is not a topic a tutoring learner searches for, so the index does
+  // not extract one — which is worth knowing before reading a flat count as
+  // evidence that nothing shipped.
+  science: 1394,
   computing: 1895,
   "global-perspectives": 1273,
   english: 2165,

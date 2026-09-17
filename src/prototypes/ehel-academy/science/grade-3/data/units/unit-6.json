@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T20:09:49.662Z",
+  "generatedAt": "2026-09-17T20:40:40.582Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -32,9 +32,12 @@
       "3ESs.01",
       "3ESs.02",
       "3ESs.03",
+      "3TWSc.05",
       "3TWSm.01",
       "3TWSm.02",
-      "3TWSp.03"
+      "3TWSm.03",
+      "3TWSp.03",
+      "3SIC.01"
     ],
     "objectives": [
       {
@@ -56,6 +59,12 @@
         "text": "Describe the Earth, Sun and Moon as approximately spherical."
       },
       {
+        "code": "3TWSc.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Use secondary information sources to research an answer to a question."
+      },
+      {
         "code": "3TWSm.01",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Models and representations",
@@ -68,10 +77,22 @@
         "text": "Make and use physical models."
       },
       {
+        "code": "3TWSm.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Models and representations",
+        "text": "Draw a diagram to represent a real world situation and/or scientific idea."
+      },
+      {
         "code": "3TWSp.03",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Make a prediction describing some possible outcomes of an enquiry."
+      },
+      {
+        "code": "3SIC.01",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Talk about how some of the scientific knowledge and thinking now was different in the past."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -961,6 +982,45 @@
         "New Moon"
       ],
       "modelAnswer": "A lunar calendar follows the Moon, so a new month begins when the new crescent is sighted. Skywatchers watch the evening sky for the thin crescent."
+    },
+    {
+      "id": "3-enq-12",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You want to know how long the Moon takes to go all the way round the Earth, but you cannot watch every night for a month. Where would you research it, and how would you decide whether the answer is trustworthy?",
+      "keyIdeas": [
+        "A book, an encyclopaedia, a museum or a trusted website",
+        "Check whether two different sources agree",
+        "Compare it with the nights you did observe"
+      ],
+      "modelAnswer": "I would look it up in a science book, an encyclopaedia or a trusted website, and I would check a second source to see whether they give the same number. Then I would compare it with my own record: if I saw a full Moon and then a full Moon about four weeks later, the answer of roughly 29 days fits what I watched. Research is a real kind of enquiry, and checking it against something you observed yourself is what makes it safe to use."
+    },
+    {
+      "id": "3-enq-13",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Draw a diagram to show why we have day and night. Say which three things your diagram must show, and name one thing you should deliberately leave out.",
+      "keyIdeas": [
+        "The Sun, the Earth, and an arrow for the spin",
+        "Mark the lit side and the dark side",
+        "Leave out clouds, colours and the stars - they are not part of the idea"
+      ],
+      "modelAnswer": "My diagram needs the Sun on one side, the Earth as a circle, and an arrow showing which way the Earth spins, with the half facing the Sun shaded light and the other half dark - and a dot for where I live, so you can see it move from light to dark. I should leave out clouds, the colour of the sea and the stars, because they are not part of why day becomes night. A diagram keeps the parts that carry the idea and drops the rest."
+    },
+    {
+      "id": "3-enq-14",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "For a very long time most people were sure the Sun travelled round the Earth once a day. Looking at the sky, why was that a reasonable thing to think, and what do we say now?",
+      "keyIdeas": [
+        "The Sun really does appear to cross the sky",
+        "You cannot feel the Earth spinning",
+        "Now we say the Earth spins and the Sun stays still"
+      ],
+      "modelAnswer": "It was reasonable because that is exactly what it looks like: the Sun rises in the east, crosses the sky and sets in the west, and you cannot feel the ground moving under you at all. We now say the Earth is spinning and the Sun stays where it is, and the Sun only appears to move. Scientific thinking changed because people found better evidence, not because the old idea was silly."
     }
   ],
   "assessment": {

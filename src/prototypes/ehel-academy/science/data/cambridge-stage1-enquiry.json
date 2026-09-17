@@ -1,0 +1,81 @@
+{
+  "_comment": "Cambridge 0097's Thinking and Working Scientifically and Science in Context objectives for Stage 1 that no Grade 1 unit reached, authored as reasoning prompts. Added 2026-09-17 with the Stages 1-4 re-point: the shell course had been measured against the 2018 framework, which has far fewer of these, and 0097 asks for four TWS strands plus Science in Context from Stage 1 onwards. Every prompt is anchored to an investigation Grade 1 already runs. The register is a six-year-old's: one question, a concrete object they have handled, and a model answer of one or two sentences. TWS and SIC are not topics - they are how an investigation the unit ALREADY does is framed - so nothing new is being taught here, it is being asked for.",
+  "_vehicle": "reasoningPrompts. The builder appends these to the named unit's own array. At Stages 1-4 the section is deck-only, and shell/subjects/science.js :: renderExplainThinkingDeck renders one prompt per slide with the prompt, a textarea, the key ideas behind a disclosure and the model answer behind another. Checked before choosing it at these stages: the deck maps prompts to slides one for one, so appending adds slides rather than renumbering them; completion is stored by item id in progress.reasoning, so authored ids keep their own identity; and complete() in course-app.js is add-only, so a learner who finished four of four keeps the tick and meets the new prompts as further work.",
+  "curriculumCode": "0097",
+  "stage": 1,
+  "source": "Authored 2026-09-17 against Cambridge 0097 Stage 1, anchored to the investigations in Grade 1 units 1-6. Not extracted from a book: the Teacher's Resource frames these for a teacher to deliver aloud, and this course has no teacher in the room.",
+  "minimumCovered": 5,
+  "_minimumCovered": "One prompt per unclaimed Stage 1 TWS/SIC objective. Coverage is a number that only goes up.",
+  "prompts": [
+    {
+      "id": "1-enq-1",
+      "unit": 1,
+      "codes": ["1SIC.03"],
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "prompt": "A goat is sick. Who in your town knows how to help it get better, and how did they learn?",
+      "keyIdeas": [
+        "A vet is a doctor for animals",
+        "A farmer knows about animals too",
+        "They learned by looking carefully, like a scientist"
+      ],
+      "modelAnswer": "A vet is an animal doctor, and a farmer who keeps goats knows a lot too. They learned by watching animals carefully for a long time and finding out what makes them well again. That is science, and it is their job."
+    },
+    {
+      "id": "1-enq-2",
+      "unit": 2,
+      "codes": ["1TWSc.02"],
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "prompt": "You are growing a bean in a jar. Why must you use the jar and not a bowl with no sides, and why do you pour the water in slowly?",
+      "keyIdeas": [
+        "The jar holds the bean and the water together",
+        "You can see through the jar",
+        "Slow pouring does not wash the bean away"
+      ],
+      "modelAnswer": "The jar keeps the bean and the water in one place and you can see through the side to watch the root grow. Pouring slowly means the water does not push the bean out of its place. Using the right thing, the right way, is part of doing science well."
+    },
+    {
+      "id": "1-enq-3",
+      "unit": 2,
+      "codes": ["1TWSc.03"],
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "prompt": "Your bean shoot has grown. You have no ruler. How could you measure how tall it is using your hand or some paper clips?",
+      "keyIdeas": [
+        "Count how many paper clips tall it is",
+        "Count finger widths, always the same finger",
+        "Write the number in your plant diary"
+      ],
+      "modelAnswer": "I can lay paper clips end to end beside the shoot and count them, or count how many of my finger widths tall it is. I must use the same finger or the same paper clips every day, or the numbers will not match. Then I write the number in my plant diary."
+    },
+    {
+      "id": "1-enq-4",
+      "unit": 3,
+      "codes": ["1SIC.01"],
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "prompt": "Long ago, people did not know that washing your hands keeps you well. What do we know now that they did not?",
+      "keyIdeas": [
+        "Long ago people did not know about germs",
+        "Germs are too small to see",
+        "Now we know washing hands takes germs away"
+      ],
+      "modelAnswer": "Long ago nobody knew that tiny germs, too small to see, can make you ill. Now we know, so we wash our hands with soap before we eat. People learned this by looking very carefully, and what we know changed."
+    },
+    {
+      "id": "1-enq-5",
+      "unit": 6,
+      "codes": ["1SIC.02"],
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "prompt": "A drum makes a sound when you hit it. Use what you learned about shaking to explain why.",
+      "keyIdeas": [
+        "The drum skin shakes when you hit it",
+        "Shaking makes the sound",
+        "When the shaking stops, the sound stops"
+      ],
+      "modelAnswer": "When you hit the drum, the skin on top shakes very fast, and that shaking makes the sound you hear. If you hold the skin with your hand it cannot shake, so the sound stops. Science explains how the drum in your house works."
+    }
+  ]
+}

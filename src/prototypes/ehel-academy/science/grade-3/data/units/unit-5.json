@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T20:09:49.612Z",
+  "generatedAt": "2026-09-17T20:40:40.555Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -29,17 +29,37 @@
     "code": "0097",
     "stage": 3,
     "objectiveCodes": [
+      "3Pe.01",
+      "3Pe.02",
+      "3Pe.03",
       "3Pf.01",
       "3Pf.02",
       "3Pf.03",
       "3Pf.04",
-      "3Pe.01",
-      "3Pe.02",
-      "3Pe.03",
+      "3TWSa.01",
+      "3TWSc.03",
       "3TWSp.03",
-      "3TWSa.01"
+      "3SIC.02"
     ],
     "objectives": [
+      {
+        "code": "3Pe.01",
+        "strand": "Physics",
+        "subStrand": "Electricity and magnetism",
+        "text": "Describe magnets as having a north pole and a south pole."
+      },
+      {
+        "code": "3Pe.02",
+        "strand": "Physics",
+        "subStrand": "Electricity and magnetism",
+        "text": "Describe how magnets interact when near each other, using the terms repel and attract."
+      },
+      {
+        "code": "3Pe.03",
+        "strand": "Physics",
+        "subStrand": "Electricity and magnetism",
+        "text": "Investigate how some materials are magnetic but many are not."
+      },
       {
         "code": "3Pf.01",
         "strand": "Physics",
@@ -65,22 +85,16 @@
         "text": "Describe how smooth and rough surfaces can generate different amounts of friction."
       },
       {
-        "code": "3Pe.01",
-        "strand": "Physics",
-        "subStrand": "Electricity and magnetism",
-        "text": "Describe magnets as having a north pole and a south pole."
+        "code": "3TWSa.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Identify whether results support, or do not support, a prediction."
       },
       {
-        "code": "3Pe.02",
-        "strand": "Physics",
-        "subStrand": "Electricity and magnetism",
-        "text": "Describe how magnets interact when near each other, using the terms repel and attract."
-      },
-      {
-        "code": "3Pe.03",
-        "strand": "Physics",
-        "subStrand": "Electricity and magnetism",
-        "text": "Investigate how some materials are magnetic but many are not."
+        "code": "3TWSc.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Take measurements in standard units, describing the advantage of standard units over non-standard units."
       },
       {
         "code": "3TWSp.03",
@@ -89,10 +103,10 @@
         "text": "Make a prediction describing some possible outcomes of an enquiry."
       },
       {
-        "code": "3TWSa.01",
-        "strand": "Thinking and Working Scientifically",
-        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
-        "text": "Identify whether results support, or do not support, a prediction."
+        "code": "3SIC.02",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Talk about how science explains how objects they use, or know about, work."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -1020,6 +1034,32 @@
         "Magnetic"
       ],
       "modelAnswer": "Two like poles repel - they push each other away without touching."
+    },
+    {
+      "id": "3-enq-10",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You could describe how hard you pulled as 'quite hard', or you could measure it with a forcemeter as 3 Newtons. Give two things the Newton lets you do that 'quite hard' does not.",
+      "keyIdeas": [
+        "A standard unit means the same to everyone",
+        "You can compare two measurements exactly",
+        "Somebody else can repeat your work and check it"
+      ],
+      "modelAnswer": "First, 3 Newtons means the same thing to everybody, everywhere, while 'quite hard' means something different to me than to my father. Second, I can compare exactly: 3 Newtons against 5 Newtons tells me which pull was stronger and by how much, where 'quite hard' against 'very hard' does not. That is the advantage of a standard unit - it travels, and it can be checked."
+    },
+    {
+      "id": "3-enq-11",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A fridge door shuts with a soft thud and stays shut, and a bicycle stops when you squeeze the brake. Use forces to explain how each one works.",
+      "keyIdeas": [
+        "A magnet in the fridge door pulls on the steel frame",
+        "Magnetism works without touching",
+        "The brake block rubs the wheel, and friction slows it"
+      ],
+      "modelAnswer": "The fridge door has a magnet along its edge, and it pulls on the steel of the frame - a non-contact force, working across the last little gap, which is why the door pulls itself shut at the end. The brake works the other way: squeezing pushes a block against the moving wheel, and the rubbing is friction, a contact force that slows the wheel down. The same two ideas explain both objects."
     }
   ],
   "assessment": {

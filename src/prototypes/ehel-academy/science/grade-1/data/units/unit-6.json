@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T20:09:49.057Z",
+  "generatedAt": "2026-09-17T20:40:40.199Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -29,14 +29,28 @@
     "code": "0097",
     "stage": 1,
     "objectiveCodes": [
+      "1Bs.02",
+      "1Pe.01",
       "1Ps.01",
       "1Ps.02",
-      "1Bs.02",
-      "1TWSp.02",
       "1TWSa.01",
-      "1TWSc.04"
+      "1TWSc.04",
+      "1TWSp.02",
+      "1SIC.02"
     ],
     "objectives": [
+      {
+        "code": "1Bs.02",
+        "strand": "Biology",
+        "subStrand": "Structure and function",
+        "text": "Identify the senses (limited to sight, hearing, taste, smell and touch) and what they detect, linking each to the correct body part."
+      },
+      {
+        "code": "1Pe.01",
+        "strand": "Physics",
+        "subStrand": "Electricity and magnetism",
+        "text": "Identify things that require electricity to work."
+      },
       {
         "code": "1Ps.01",
         "strand": "Physics",
@@ -50,18 +64,6 @@
         "text": "Explore that as sound travels from a source it becomes quieter."
       },
       {
-        "code": "1Bs.02",
-        "strand": "Biology",
-        "subStrand": "Structure and function",
-        "text": "Identify the senses (limited to sight, hearing, taste, smell and touch) and what they detect, linking each to the correct body part."
-      },
-      {
-        "code": "1TWSp.02",
-        "strand": "Thinking and Working Scientifically",
-        "subStrand": "Scientific enquiry: purpose and planning",
-        "text": "Make predictions about what they think will happen."
-      },
-      {
         "code": "1TWSa.01",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
@@ -72,6 +74,18 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
         "text": "Follow instructions safely when doing practical work."
+      },
+      {
+        "code": "1TWSp.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Make predictions about what they think will happen."
+      },
+      {
+        "code": "1SIC.02",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Talk about how science explains how objects they use, or know about, work."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -132,6 +146,12 @@
       "title": "Sounds Travel, and We Keep Ears Safe",
       "explanation": "Sound has to travel to reach you. It moves through the air, from the thing that is shaking all the way to your ears.\n\nHere is how you can tell. Ask someone to clap from far across the room, then clap again standing close to you. The close clap sounds louder.\n\nThat is because sound gets weaker as it travels. The further a sound has to go, the quieter it is when it arrives. A sound made far away reaches you faint and small.\n\nNow the important part: looking after your ears. Your ears are delicate, and very loud sounds can hurt them. Once hearing is damaged, it does not always come back.\n\nSo keep loud noises away from your ears. Do not shout right into someone's ear, and do not let anyone shout into yours. If a sound is so loud that it hurts, cover your ears with your hands and move away from it.\n\nYour ears let you hear a bird singing, your mother's voice, and someone reciting beautifully. They are worth protecting.",
       "example": "Ask someone to clap far away and then close to you. Say which was louder and why. Then say one way you will keep your ears safe."
+    },
+    {
+      "id": "concept-1-things-that-need-electricity",
+      "title": "Things That Need Electricity",
+      "explanation": "Think about the sounds in your home. A radio playing. A phone ringing. A fan humming.\n\nThose three cannot make a sound on their own. They need electricity.\n\nElectricity is a kind of power that comes along wires from the wall, or out of a battery inside. Without it, the radio is silent and the phone screen stays dark.\n\nSome things need electricity and some do not. A radio needs it. A drum does not — you make the sound yourself by hitting it. A torch needs a battery. A whistle needs only your breath.\n\nWhen something stops working, one good question is: has it got electricity?\n\nElectricity from the wall is strong and dangerous. Never put anything into a socket. That is a grown-up's job.",
+      "example": "Look around one room. Find three things that need electricity and three that do not. For each one that needs it, say whether it has a battery or a wire to the wall."
     }
   ],
   "explorations": [
@@ -830,6 +850,19 @@
         "Ear"
       ],
       "modelAnswer": "You hear with your ears. You have two of them, one on each side of your head — and there is a good reason for that.\n\nTouch your ears now, one on each side.\n\nYour ears are shaped a little like small cups, and they catch sounds travelling through the air. Try cupping your hands behind your ears and listening. Sounds get a bit louder, because your hands are catching even more sound.\n\nNow here is why two ears are so useful. Close your eyes and ask someone to make a soft sound on your left side, then on your right side. Each time, point to where the sound came from.\n\nYou can do it because a sound from the left reaches your left ear a tiny bit sooner and a tiny bit louder. Your brain notices that difference and works out which direction the sound came from. Two ears help you find where a sound is.\n\nCover your ears with your hands and the sound becomes quiet and far away, because your hands are blocking it."
+    },
+    {
+      "id": "1-enq-5",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A drum makes a sound when you hit it. Use what you learned about shaking to explain why.",
+      "keyIdeas": [
+        "The drum skin shakes when you hit it",
+        "Shaking makes the sound",
+        "When the shaking stops, the sound stops"
+      ],
+      "modelAnswer": "When you hit the drum, the skin on top shakes very fast, and that shaking makes the sound you hear. If you hold the skin with your hand it cannot shake, so the sound stops. Science explains how the drum in your house works."
     }
   ],
   "assessment": {

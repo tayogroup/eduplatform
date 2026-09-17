@@ -73,18 +73,21 @@ const CAMBRIDGE_OBJECTIVES = {
   // the wording, reported zero, and 1TWSa.01 went down as a gap in a stage that
   // teaches it eighteen times. Probing a flattened unit finds the metalanguage,
   // not the teaching — read the fields the learner is actually shown.
-  "1-1": ["1Bp.01", "1Bp.02", "1Bp.03", "1TWSp.01", "1TWSp.02", "1TWSa.01", "1TWSc.01", "1SIC.04"],
-  "1-2": ["1Bs.01", "1Bp.03", "1TWSp.02", "1TWSa.01", "1TWSc.05"],
+  "1-1": ["1Bp.01", "1Bp.02", "1Bp.03", "1TWSa.01", "1TWSc.01", "1TWSp.01", "1TWSp.02",
+          "1SIC.03", "1SIC.04"],
+  "1-2": ["1Bp.03", "1Bs.01", "1ESp.01", "1ESp.02", "1ESs.01", "1ESs.02", "1TWSa.01", "1TWSc.02",
+          "1TWSc.03", "1TWSc.05", "1TWSp.02"],
   // 1Bs.02 (the five senses and what they detect) and 1Bs.03 replace what used
   // to be claimed here as 1Bh3 on "Staying Healthy and Clean". 0097 has no
   // Stage 1 health objective at all — it puts human health at 2Bp.02 and
   // 4Bp.04 — so the hygiene teaching in this unit is above-stage under the
   // current framework and is credited to the senses and body-parts objectives
   // the unit also covers.
-  "1-3": ["1Bs.02", "1Bs.03", "1Bp.02", "1Bp.04", "1TWSp.02", "1TWSa.01", "1TWSc.01"],
-  "1-4": ["1Cm.01", "1Cm.02", "1Cp.01", "1Cp.02", "1TWSp.02", "1TWSa.01", "1TWSc.01"],
-  "1-5": ["1Pf.01", "1Pf.02", "1TWSp.02", "1TWSa.01"],
-  "1-6": ["1Ps.01", "1Ps.02", "1Bs.02", "1TWSp.02", "1TWSa.01", "1TWSc.04"],
+  "1-3": ["1Bp.02", "1Bp.04", "1Bs.02", "1Bs.03", "1TWSa.01", "1TWSc.01", "1TWSp.02", "1SIC.01"],
+  "1-4": ["1Cc.01", "1Cm.01", "1Cm.02", "1Cp.01", "1Cp.02", "1Pf.03", "1TWSa.01", "1TWSc.01",
+          "1TWSp.02"],
+  "1-5": ["1Pe.02", "1Pf.01", "1Pf.02", "1TWSa.01", "1TWSp.02"],
+  "1-6": ["1Bs.02", "1Pe.01", "1Ps.01", "1Ps.02", "1TWSa.01", "1TWSc.04", "1TWSp.02", "1SIC.02"],
   // ── Stage 2 (0097) ──
   // The prediction pair is claimed per unit, from the explorations, not by rule:
   // 2TWSp.02 wherever an exploration's context or prompt asks for a prediction,
@@ -93,16 +96,18 @@ const CAMBRIDGE_OBJECTIVES = {
   // predictions and never judges them, so it claims 2TWSp.02 alone — which is
   // the distinction the old "it appears in 6 of 6 Stage 1 units but only 6 units
   // across Stages 2-8" note was reaching for and measured too coarsely.
-  "2-1": ["2Be.01", "2Be.02", "2Be.03", "2Bp.01", "2ESp.03", "2TWSp.01", "2TWSp.02", "2TWSc.01",
-          "2SIC.04"],
-  "2-2": ["2ESp.01", "2ESp.02", "2Cm.01", "2TWSp.01", "2TWSp.02", "2TWSa.01", "2TWSc.01"],
-  "2-3": ["2Cc.01", "2Cp.01", "2Cp.02", "2Cp.03", "2TWSp.02", "2TWSa.01", "2TWSc.04"],
+  "2-1": ["2Be.01", "2Be.02", "2Be.03", "2Bp.01", "2Bp.02", "2Bp.03", "2Bp.04", "2Bs.01",
+          "2Bs.02", "2ESp.03", "2TWSa.03", "2TWSc.01", "2TWSc.06", "2TWSp.01", "2TWSp.02",
+          "2SIC.03", "2SIC.04"],
+  "2-2": ["2Cm.01", "2ESp.01", "2ESp.02", "2TWSa.01", "2TWSc.01", "2TWSc.03", "2TWSp.01",
+          "2TWSp.02"],
+  "2-3": ["2Cc.01", "2Cp.01", "2Cp.02", "2Cp.03", "2Pf.02", "2TWSa.01", "2TWSc.04", "2TWSp.02"],
   "2-4": ["2Ps.01", "2Ps.02", "2TWSm.01", "2TWSp.02", "2TWSa.01"],
-  "2-5": ["2Pe.01", "2Pe.02", "2Pe.03", "2TWSc.04", "2SIC.02"],
+  "2-5": ["2Pe.01", "2Pe.02", "2Pe.03", "2TWSc.02", "2TWSc.04", "2TWSm.03", "2SIC.02"],
   // 2TWSa.02 on the shadow concept, which is about the pattern itself — shadows
   // "change in a pattern you can predict", and the seasons are named as the
   // same idea over a year.
-  "2-6": ["2ESs.01", "2TWSm.02", "2TWSp.02", "2TWSa.01", "2TWSa.02", "2SIC.01"],
+  "2-6": ["2ESs.01", "2TWSa.01", "2TWSa.02", "2TWSc.05", "2TWSm.02", "2TWSp.02", "2SIC.01"],
   // ── Stage 3 (0097) ──
   // 3TWSp.03 ("Make a prediction describing some possible outcomes of an
   // enquiry") is on all six units — every one of them asks for a prediction in
@@ -110,19 +115,21 @@ const CAMBRIDGE_OBJECTIVES = {
   // or do not support, a prediction") only on the three whose answer then asks.
   // 3TWSa.01 was recorded as a gap in a whole unreached sub-strand until the
   // explorations were read field by field.
-  "3-1": ["3Bp.01", "3Bp.02", "3Bp.03", "3Bs.01", "3TWSp.03", "3TWSc.01"],
-  "3-2": ["3Cm.01", "3Cm.02", "3Cp.01", "3Cp.02", "3Cp.03", "3Cp.04", "3Cc.01", "3TWSp.03",
-          "3TWSa.01"],
-  "3-3": ["3Ps.01", "3Ps.02", "3Ps.03", "3TWSp.03"],
+  "3-1": ["3Be.01", "3Bp.01", "3Bp.02", "3Bp.03", "3Bp.04", "3Bs.01", "3Bs.02", "3TWSc.01",
+          "3TWSc.04", "3TWSp.01", "3TWSp.03", "3SIC.04"],
+  "3-2": ["3Cc.01", "3Cm.01", "3Cm.02", "3Cp.01", "3Cp.02", "3Cp.03", "3Cp.04", "3ESp.01",
+          "3TWSa.01", "3TWSa.03", "3TWSc.02", "3TWSc.06", "3TWSp.02", "3TWSp.03", "3TWSp.04"],
+  "3-3": ["3Ps.01", "3Ps.02", "3Ps.03", "3TWSa.02", "3TWSp.03"],
   // 3Bs.03 (brain, heart, stomach, intestine and lungs) is what this unit is
   // for. What used to be claimed here was 0846's 3Bh5 on the concept "Your
   // Senses - How You Know the World"; 0097 puts the senses at Stage 1 (1Bs.02),
   // so that concept is now revision rather than new teaching, and the unit is
   // credited for the organs it actually names.
-  "3-4": ["3Bs.03", "3TWSm.02", "3TWSp.03", "3TWSa.01"],
-  "3-5": ["3Pf.01", "3Pf.02", "3Pf.03", "3Pf.04", "3Pe.01", "3Pe.02", "3Pe.03", "3TWSp.03",
-          "3TWSa.01"],
-  "3-6": ["3ESs.01", "3ESs.02", "3ESs.03", "3TWSm.01", "3TWSm.02", "3TWSp.03"],
+  "3-4": ["3Bs.03", "3TWSa.01", "3TWSa.04", "3TWSm.02", "3TWSp.03", "3SIC.03"],
+  "3-5": ["3Pe.01", "3Pe.02", "3Pe.03", "3Pf.01", "3Pf.02", "3Pf.03", "3Pf.04", "3TWSa.01",
+          "3TWSc.03", "3TWSp.03", "3SIC.02"],
+  "3-6": ["3ESs.01", "3ESs.02", "3ESs.03", "3TWSc.05", "3TWSm.01", "3TWSm.02", "3TWSm.03",
+          "3TWSp.03", "3SIC.01"],
   // ── Stage 4 (0097) ──
   // 4Bs.01-4Bs.03 are claimed on the CONCEPT_INSERTS clause in "Animals With
   // Backbones and Without", and this is the clearest case in Stages 1-4 of the
@@ -134,8 +141,8 @@ const CAMBRIDGE_OBJECTIVES = {
   // lungs (4Bs.03, protecting and supporting organs); and a muscle moves a bone
   // by contracting, can only pull, so muscles work in pairs, one contracting to
   // bend the arm while the other relaxes (4Bs.02, word for word).
-  "4-1": ["4Bs.01", "4Bs.02", "4Bs.03", "4Bs.04", "4Bs.05", "4TWSp.03", "4TWSa.01", "4TWSc.01",
-          "4TWSc.02"],
+  "4-1": ["4Be.03", "4Bp.01", "4Bp.02", "4Bp.04", "4Bs.01", "4Bs.02", "4Bs.03", "4Bs.04",
+          "4Bs.05", "4TWSa.01", "4TWSc.01", "4TWSc.02", "4TWSp.02", "4TWSp.03", "4SIC.04"],
   // The sound depth this unit's CONCEPT_INSERTS adds — decibels, travel through
   // solids and liquids, materials that stop sound, pitch as distinct from
   // loudness, changing pitch on an instrument — closed 0846's 4Ps1-4Ps5 and
@@ -146,12 +153,15 @@ const CAMBRIDGE_OBJECTIVES = {
   // over to it — but Stage 5's claim on 5Ps rests on Grade 5's own concept, not
   // on this text. `4Ps.01-03` at Stage 4 are LIGHT objectives and belong to unit
   // 5, which is where they are claimed.
-  "4-2": ["4Pf.01", "4Pf.02", "4Pf.03", "4Pf.04", "4Bp.03", "4TWSm.02", "4TWSp.03", "4TWSa.01"],
-  "4-3": ["4Cm.01", "4Cm.02", "4Cm.03", "4Cp.01", "4Cp.02", "4Cc.01", "4Cc.02", "4TWSm.02",
-          "4TWSp.03", "4TWSa.01"],
-  "4-4": ["4ESp.01", "4ESp.02", "4ESp.03", "4Be.01", "4Be.02", "4TWSm.01", "4TWSm.02"],
-  "4-5": ["4Ps.01", "4Ps.02", "4Ps.03", "4TWSp.03"],
-  "4-6": ["4Pe.01", "4Pe.02", "4Pe.03", "4Pe.04", "4TWSp.03", "4TWSa.01", "4TWSc.06"],
+  "4-2": ["4Bp.03", "4Pf.01", "4Pf.02", "4Pf.03", "4Pf.04", "4TWSa.01", "4TWSa.04", "4TWSm.02",
+          "4TWSp.01", "4TWSp.03", "4SIC.05"],
+  "4-3": ["4Cc.01", "4Cc.02", "4Cc.03", "4Cm.01", "4Cm.02", "4Cm.03", "4Cp.01", "4Cp.02",
+          "4TWSa.01", "4TWSc.04", "4TWSc.05", "4TWSc.08", "4TWSm.02", "4TWSp.03", "4TWSp.04"],
+  "4-4": ["4Be.01", "4Be.02", "4ESp.01", "4ESp.02", "4ESp.03", "4ESs.01", "4ESs.02", "4ESs.03",
+          "4ESs.04", "4TWSm.01", "4TWSm.02", "4SIC.01", "4SIC.02", "4SIC.03"],
+  "4-5": ["4Ps.01", "4Ps.02", "4Ps.03", "4TWSa.03", "4TWSc.03", "4TWSp.03"],
+  "4-6": ["4Pe.01", "4Pe.02", "4Pe.03", "4Pe.04", "4TWSa.01", "4TWSa.02", "4TWSc.06", "4TWSc.07",
+          "4TWSm.03", "4TWSp.03", "4TWSp.05"],
   // ── Stage 5 (0097) ──
   // RE-POINTED from 0846 to 0097 on 2026-09-17, and the codes below are not a
   // translation of the 0846 list above them — they are a fresh mapping, because
@@ -823,7 +833,7 @@ function applyConceptInserts(grade, unitNo, concepts) {
 // concepts, and complete() is add-only, so a learner who has marked the lesson
 // studied keeps the tick and meets the new concept as further reading.
 const CONCEPT_ADDITIONS = {};
-for (const stage of [5, 6, 7, 8]) {
+for (const stage of [1, 2, 3, 4, 5, 6, 7, 8]) {
   const file = path.join(sciRoot, "data", `cambridge-stage${stage}-concepts.json`);
   if (!fs.existsSync(file)) continue;
   const doc = JSON.parse(fs.readFileSync(file, "utf8"));
@@ -1527,7 +1537,7 @@ const misconceptionsWritten = {};
 // and nothing anywhere removes a section. A learner who finished six of six
 // keeps the tick and meets the new prompts as further work.
 const ENQUIRY_FIXTURES = {};
-for (const stage of [5, 6, 7, 8]) {
+for (const stage of [1, 2, 3, 4, 5, 6, 7, 8]) {
   const file = path.join(sciRoot, "data", `cambridge-stage${stage}-enquiry.json`);
   if (!fs.existsSync(file)) continue;
   const doc = JSON.parse(fs.readFileSync(file, "utf8"));

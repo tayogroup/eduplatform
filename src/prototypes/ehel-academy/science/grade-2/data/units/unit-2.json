@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T20:09:49.190Z",
+  "generatedAt": "2026-09-17T20:40:40.286Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -29,15 +29,22 @@
     "code": "0097",
     "stage": 2,
     "objectiveCodes": [
+      "2Cm.01",
       "2ESp.01",
       "2ESp.02",
-      "2Cm.01",
-      "2TWSp.01",
-      "2TWSp.02",
       "2TWSa.01",
-      "2TWSc.01"
+      "2TWSc.01",
+      "2TWSc.03",
+      "2TWSp.01",
+      "2TWSp.02"
     ],
     "objectives": [
+      {
+        "code": "2Cm.01",
+        "strand": "Chemistry",
+        "subStrand": "Materials and their structure",
+        "text": "Understand that some materials occur naturally and others are manufactured."
+      },
       {
         "code": "2ESp.01",
         "strand": "Earth and Space",
@@ -51,10 +58,22 @@
         "text": "Know rocks are extracted from the Earth in different ways, including from quarries, mines and riverbeds."
       },
       {
-        "code": "2Cm.01",
-        "strand": "Chemistry",
-        "subStrand": "Materials and their structure",
-        "text": "Understand that some materials occur naturally and others are manufactured."
+        "code": "2TWSa.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe what happened during an enquiry and if it matched their predictions."
+      },
+      {
+        "code": "2TWSc.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Sort and group objects, materials and living things based on observations of the similarities and differences between them."
+      },
+      {
+        "code": "2TWSc.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Take measurements in non-standard units."
       },
       {
         "code": "2TWSp.01",
@@ -67,18 +86,6 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Make predictions about what they think will happen."
-      },
-      {
-        "code": "2TWSa.01",
-        "strand": "Thinking and Working Scientifically",
-        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
-        "text": "Describe what happened during an enquiry and if it matched their predictions."
-      },
-      {
-        "code": "2TWSc.01",
-        "strand": "Thinking and Working Scientifically",
-        "subStrand": "Carrying out scientific enquiry",
-        "text": "Sort and group objects, materials and living things based on observations of the similarities and differences between them."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -938,6 +945,19 @@
         "Humus"
       ],
       "modelAnswer": "Sandy, clay, and loamy soil."
+    },
+    {
+      "id": "2-enq-2",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You want to record how big each of your three rocks is, and you have no ruler and no scales. How could you measure their size and their weight using only things in the house?",
+      "keyIdeas": [
+        "Line up paper clips or beans to measure length",
+        "Balance the rock against counted stones or spoons of sand",
+        "Use the same counting thing for every rock"
+      ],
+      "modelAnswer": "For size I can lay paper clips along the longest part of each rock and count them. For weight I can balance the rock on one side of a ruler over a pencil and count how many spoons of sand it takes on the other side. The important rule is to use the SAME paper clips and the same spoon for all three rocks, or I cannot compare the numbers."
     }
   ],
   "assessment": {

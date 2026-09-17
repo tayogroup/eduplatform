@@ -54,8 +54,72 @@ checking. Beyond "the code exists in this stage", it compares the objective
 **text** stored beside each code against the framework: a code stays valid
 while the text beside it goes stale, and the text is what a teacher reads. It
 also prints per-stage coverage, so a stage mapped to a fraction of its
-objectives is visible rather than passing as "all codes valid" — Stage 8
-currently references 26 of 70, Stage 4 18 of 34.
+objectives is visible rather than passing as "all codes valid".
+
+**The whole course is on ONE framework generation as of 2026-09-17**: Cambridge
+Primary Science **0097** at Stages 1-6 and Lower Secondary **0893** at 7-8,
+both published September 2020. It used to read `stage <= 6 ? "0846" : "0893"`
+on the strength of the 2018 document's title; the supplied Teacher's Resource 5
+cites 54 objective codes and all 54 are 0097's. That expression is written in
+FOUR places — the builder, this check, and twice in `check-science-content.mjs`
+— and all four must move together.
+
+Coverage after the re-point and the gap close, and **there is no Grade 9**:
+
+| stage | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| reached | 35 | 42 | 50 | 63 | 59 | 59 | 72 | 70 |
+| published | 35 | 44 | 51 | 63 | 59 | 59 | 72 | 70 |
+
+**Three objectives in the whole course are unreached, and each is recorded with
+a reason rather than left as a number.** 2Pf.01 and 2Pf.03 (forces changing
+movement) and 3ESp.02 (fossils) sit in the `_needsNewUnit` blocks of
+`data/cambridge-stage2-concepts.json` and `data/cambridge-stage3-concepts.json`.
+The cause is structural and worth understanding before anyone tries to close
+them: each grade's six units are **one per content sub-strand of the 2018
+framework**, so a sub-strand the 2020 revision added has no unit to sit in, and
+the only units with room are units the content does not belong in. All three are
+taught by the Grade 1-4 standalone lesson apps, which are organised by 0097's
+own sub-strands.
+
+**Four fixture seams close the rest, and each is gated in BOTH directions** —
+the fixture must reach a unit, and every objective a fixture row teaches must be
+claimed by that row's unit in `CAMBRIDGE_OBJECTIVES`. The second half is what
+stops an objective staying claimed after its teaching stops being delivered:
+
+| `science/data/…` | vehicle | stages |
+| --- | --- | --- |
+| `cambridge-stage{N}-enquiry.json` | `reasoningPrompts` — TWS and SIC | 1-8 |
+| `cambridge-stage{N}-concepts.json` | `concepts` — content, appended | 1-8 |
+| `cambridge-stage{N}-misconceptions.json` | `reference.commonMistakes` | 5-6 |
+| `cambridge-stage{N}-units.json` | whole authored units | 5-6 |
+
+Two things about the enquiry prompts are worth knowing before adding more.
+**They are appended, never inserted**, because the shell renders in array order
+and stores completion by item id in `progress.reasoning` — so authored ids keep
+`N-enq-M` and are never renumbered into the pack's `reasonNN`. And **a prompt
+cannot un-tick a finished section**: `complete()` in `course-app.js` is add-only
+(`if (!wasDone) progress.completed.push(section)`), so a learner who finished
+six of six keeps the tick and meets the new prompts as further work.
+
+**Claiming an objective plants its own evidence.** The builder writes the
+objective's wording into `cambridge.objectives[].text`, so grepping a built unit
+for the words an objective is about finds the claim restating itself. That cost
+six false claims at Stages 5-6 and fifteen at Stages 1-4 before the method
+changed: read the unit from `git show HEAD:` — before the claim — and exclude
+the `cambridge` key.
+
+**And a probe over a flattened unit finds the metalanguage, not the teaching.**
+An audit of all 51 Stage 1-4 TWS/SIC claims dropped `1TWSa.01` because it
+searched for "what happened|matched|as you predicted"; the course says *"compare
+it with the prediction you wrote before you started"*, in all six Stage 1 units,
+three explorations each. Read the fields a learner is shown — `exploration.context`,
+`.prompt`, `.answer` — rather than the concatenation of every string in the file.
+The same read found the other way round too: `3TWSa.03` (make a conclusion) is
+promised by Grade 3 Unit 2's outcome 7 and ticked in its self-assessment, and
+those two fields are the ONLY places a conclusion is mentioned in the unit — a
+citation with nothing behind it, so it was authored as a prompt rather than
+claimed.
 
 ### Reviewed Science scripts
 

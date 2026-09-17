@@ -148,7 +148,41 @@ const CAMBRIDGE_OBJECTIVES = {
   // Units 4 and 5 are light and shadows, which 0097 does not place at Stage 5 at
   // all — see CAMBRIDGE_ALIGNMENT_NOTES. They keep only the enquiry objectives
   // they genuinely meet.
-  "5-1": ["5Bp.02", "5Bp.04", "5TWSp.03", "5TWSp.04", "5TWSc.04", "5TWSm.02", "5TWSa.05"],
+  //
+  // SIX CODES WERE CLAIMED HERE AND HAVE BEEN DROPPED, and the reason is a trap
+  // worth stating because the mapping itself sets it. Claiming a code makes this
+  // builder write that objective's Cambridge wording into the unit's
+  // `cambridge.objectives[].text`. Grep the unit afterwards for the words the
+  // objective is about and they come back — so "Present and interpret results
+  // using tables, bar charts and line graphs" reads as evidence that the unit
+  // teaches bar charts, when it is the claim restating itself. The 0846
+  // objectives did the same thing before the re-point, so the contamination
+  // predates it.
+  //
+  // Verify a claim against the unit as it was BEFORE the claim, and classify
+  // every hit by whether it sits under the `cambridge` key. Done that way:
+  //
+  //   5TWSa.05 / 6TWSa.05  the ONLY chart text in either unit was the old
+  //                        objective's own wording. Nothing teaches a bar chart.
+  //   5TWSc.04             "decide when readings need repeating" was evidenced
+  //                        by "The repeating circle of stages from seed back to
+  //                        seed", and by "Repeat for every material", which is
+  //                        following a procedure rather than judging reliability.
+  //   6TWSp.05 on 6-1      "lowers the risk of heart disease" is a health risk,
+  //                        not a risk in planning practical work. Kept on 6-5,
+  //                        where a learner is asked what risk to avoid wiring a
+  //                        torch.
+  //   6Pf.05               floating and sinking: the only float/sink text in the
+  //                        forces unit is "you do not sink through [the chair]"
+  //                        (a normal force) and "the person floats down gently"
+  //                        (a parachutist under air resistance).
+  //   6Cp.03               zero occurrences of `thermal`, or of heat conducting,
+  //                        anywhere in the unit. It teaches ELECTRICAL
+  //                        conductors and the objective asks for both.
+  //
+  // The other 29 claims were audited the same way and every one is evidenced by
+  // real content.
+  "5-1": ["5Bp.02", "5Bp.04", "5TWSp.03", "5TWSp.04", "5TWSm.02"],
   // 5Be.02 is claimed on substance rather than wording: the unit teaches bright
   // petals and scent drawing pollinators in, and four dispersal mechanisms, which
   // is what "adapted to attract pollinators and promote seed dispersal" asks for.
@@ -161,7 +195,7 @@ const CAMBRIDGE_OBJECTIVES = {
   // taught; "expands when it solidifies" is not.
   "5-3": ["5Cm.01", "5Cp.01", "5Cp.02", "5Cc.01", "5Cc.02", "5Cc.03", "5ESc.01",
           "5ESp.02", "5TWSp.03", "5TWSp.04", "5TWSm.01", "5TWSm.02"],
-  "5-4": ["5TWSp.03", "5TWSc.04", "5TWSm.02"],
+  "5-4": ["5TWSp.03", "5TWSm.02"],
   "5-5": ["5TWSp.03", "5TWSm.02"],
   "5-6": ["5ESs.01", "5ESs.02", "5ESs.03", "5TWSm.02"],
   // ── Stage 6 (0097) ──
@@ -177,7 +211,7 @@ const CAMBRIDGE_OBJECTIVES = {
   // than a commission: Unit 1 teaches the human digestive system in full, and
   // 0097 places that at Stage 5 (5Bs.04), which Grade 5 does not teach. The
   // content exists in the course, one grade late.
-  "6-1": ["6Bs.01", "6Bs.02", "6TWSp.03", "6TWSp.05", "6TWSc.05", "6TWSm.02", "6TWSa.05"],
+  "6-1": ["6Bs.01", "6Bs.02", "6TWSp.03", "6TWSc.05", "6TWSm.02"],
   // 6Be.02 (toxic substances moving through a food chain) is NOT claimed: zero
   // hits for toxic, toxin, poison or pesticide anywhere in Grade 6. The unit's
   // "Human Impact" concept is about habitat loss, not bioaccumulation.
@@ -186,10 +220,10 @@ const CAMBRIDGE_OBJECTIVES = {
   // and separates non-dissolving solids by filtering, but never contrasts boiling
   // with evaporation, and never relates temperature to how much dissolves.
   "6-3": ["6Cc.01", "6Cc.04", "6Cc.05", "6TWSc.01", "6TWSm.02"],
-  "6-4": ["6Pf.01", "6Pf.02", "6Pf.03", "6Pf.04", "6Pf.05", "6TWSp.03", "6TWSc.05", "6TWSm.02"],
+  "6-4": ["6Pf.01", "6Pf.02", "6Pf.03", "6Pf.04", "6TWSp.03", "6TWSc.05", "6TWSm.02"],
   // 6Pe.02 (compare brightness in series AND parallel circuits) is not claimed —
   // `parallel` appears nowhere in Grade 6. The unit teaches series only.
-  "6-5": ["6Pe.01", "6Cp.03", "6TWSp.05", "6TWSc.01", "6TWSm.02"],
+  "6-5": ["6Pe.01", "6TWSp.05", "6TWSc.01", "6TWSm.02"],
   // ── Stage 7 (0893) ──
   "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01"],
   "7-2": ["7Cm.01", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01"],
@@ -1152,6 +1186,42 @@ const reviewPath = path.join(sciRoot, "data", "script-review.json");
 const scriptReview = fs.existsSync(reviewPath)
   ? (JSON.parse(fs.readFileSync(reviewPath, "utf8")).overrides || {})
   : {};
+
+// ── Cambridge's own misconceptions, put to the learner ───────────────────────
+// The Stages 1-4 standalone lesson apps answer these with a named step and gate
+// on it. The shell course has no steps, so the vehicle is the unit's own
+// "Common misconceptions" panel (reference.commonMistakes, rendered by
+// shell/subjects/science.js as "Many think / Actually"). The fixture is the one
+// definition: Cambridge's wording, the unit it belongs to, and an authored
+// learner-facing pair.
+//
+// Committed under science/data/ rather than derived from the extracted content
+// model, for the reason check-science-answer-keys.mjs already records: outputs/
+// is gitignored, so anything read from the model is absent on a fresh clone and
+// a gate reading it would pass having compared nothing.
+//
+// Stages 1-4 keep their own fixtures and their own gate; these two are read
+// here because at 5-6 there is nothing else to carry them.
+const MISCONCEPTION_FIXTURES = {};
+for (const stage of [5, 6]) {
+  const file = path.join(sciRoot, "data", `cambridge-stage${stage}-misconceptions.json`);
+  if (!fs.existsSync(file)) continue;
+  const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+  const byUnit = new Map();
+  for (const row of doc.misconceptions || []) {
+    if (!Array.isArray(row.learner) || row.learner.length !== 2) {
+      throw new Error(`cambridge-stage${stage}-misconceptions.json: ${row.id} has no two-part learner pair, so nothing could be shown to a child.`);
+    }
+    if (!byUnit.has(row.unit)) byUnit.set(row.unit, []);
+    byUnit.get(row.unit).push(row);
+  }
+  MISCONCEPTION_FIXTURES[stage] = { doc, byUnit };
+}
+// Counted as they are written, and checked against the fixture's own floor at
+// the end of the build. A fixture row that silently stops being delivered is the
+// failure this guards: the panel would simply be shorter, and no other check
+// reads it.
+const misconceptionsWritten = {};
 const reviewStats = { applied: 0, missed: [] };
 const tidiedExplanations = [];
 
@@ -2712,6 +2782,62 @@ function buildGrade(grade) {
     };
     const reference = referenceData(referenceDoc, lesson, experimentsDoc);
     if (override && override.misconceptions) reference.commonMistakes = override.misconceptions.map((pair) => pair.slice());
+    // Cambridge's named misconceptions go FIRST, then the pack-extracted ones
+    // that do not already say the same thing.
+    //
+    // Replacing the extracted set wholesale was the first attempt and it was
+    // wrong: Grade 5 Unit 1's five extracted pairs are sound teaching ("A
+    // dormant seed is dead" / "The seed is only resting, not dead") and it has
+    // two Cambridge rows, so replacing dropped five good pairs to show one. The
+    // extracted set is not parser noise here.
+    //
+    // It does need de-duplicating rather than concatenating. Unit 3's extracted
+    // pairs include the same four ideas as the fixture's - the white cloud, the
+    // dried puddle, dissolved sugar, gases not being matter - so a plain join
+    // showed the child each of them twice. Cambridge's wording wins those,
+    // because the extracted "right" column is sometimes a note ABOUT the error
+    // rather than a correction of it ("A dried puddle's water is destroyed" ->
+    // "It ignores that matter is not destroyed", which tells a ten-year-old
+    // nothing). Those are the ones de-duplication removes first.
+    const fixture = MISCONCEPTION_FIXTURES[grade];
+    if (fixture && fixture.byUnit.has(unitNo)) {
+      const rows = fixture.byUnit.get(unitNo).map((row) => row.learner.slice());
+      misconceptionsWritten[grade] = (misconceptionsWritten[grade] || 0) + rows.length;
+      // Overlap on the WRONG half: that is the claim being corrected, so two
+      // entries with the same wrong half are the same entry however differently
+      // the corrections are phrased.
+      //
+      // Which extracted pair a Cambridge row replaces is NAMED in the fixture's
+      // `supersedes`, not inferred from word overlap. Two fuzzy matchers were
+      // tried and both were wrong, in opposite directions, and I only found out
+      // by diffing the BUILT panels against HEAD:
+      //
+      //   share >= 0.5 of the SMALLER bag   merged four unrelated pairs, on the
+      //     words `from`, `only`, `thinking` and `always` - "All plants come
+      //     from seeds" was taken for "Plants eat food from the soil".
+      //   Jaccard >= 0.5 with a stop list   merged none of those, and stopped
+      //     catching the real ones: "The white cloud above a pot is water
+      //     vapour" scores 0.375 against "The white cloud above a boiling
+      //     kettle is the steam", which is the same misconception twice.
+      //
+      // There is no threshold between those two, because the signal is the
+      // TOPIC and a bag of words is not measuring topic. Naming them is cheap -
+      // five rows across two stages - and it fails loudly when the source pack
+      // changes underneath it, which a threshold cannot do.
+      const seen = new Set();
+      for (const row of fixture.byUnit.get(unitNo)) {
+        for (const target of row.supersedes || []) {
+          if (!reference.commonMistakes.some((pair) => pair[0] === target)) {
+            throw new Error(`Stage ${grade} unit ${unitNo}: ${row.id} supersedes "${target}", which is not in this unit's extracted misconceptions any more. The pack changed; re-read the panel and update the fixture.`);
+          }
+          seen.add(target);
+        }
+      }
+      for (const pair of reference.commonMistakes) {
+        if (!seen.has(pair[0])) rows.push(pair);
+      }
+      reference.commonMistakes = rows;
+    }
     if (override && override.connections) reference.connections = override.connections.map((c) => ({ ...c }));
     if (EXTRA_CONNECTIONS[`${grade}-${unitNo}`] && !reference.connections.length) reference.connections = EXTRA_CONNECTIONS[`${grade}-${unitNo}`];
     if (override && override.vocabulary) {
@@ -3168,6 +3294,25 @@ function buildGrade(grade) {
 
 const allWarnings = [];
 for (const grade of grades) allWarnings.push(...buildGrade(grade));
+// Every fixture row with a learner pair must have reached a unit. The failure
+// this catches is silent by nature: a row whose `unit` no longer exists, or a
+// unit that stopped being built, leaves a shorter panel and nothing else — the
+// content gate counts concepts and questions, not misconceptions, and the
+// objective gate reads codes. Mutation-tested by pointing a row at unit 99.
+for (const [stage, { doc }] of Object.entries(MISCONCEPTION_FIXTURES)) {
+  const want = (doc.misconceptions || []).length;
+  const floor = Number(doc.minimumCovered);
+  const got = misconceptionsWritten[stage] || 0;
+  if (got !== want) {
+    throw new Error(`Stage ${stage}: ${got} of ${want} Cambridge misconceptions reached a unit. A fixture row names a unit that was not built.`);
+  }
+  if (want < floor) {
+    throw new Error(`Stage ${stage}: the fixture carries ${want} misconceptions, below its recorded floor of ${floor}. Coverage is a number that only goes up.`);
+  }
+  console.log(`Stage ${stage}: ${got} Cambridge misconceptions delivered to the learner (floor ${floor}), `
+    + `${Object.keys(doc._excluded || {}).length - 1} recorded as having no unit to sit in.`);
+}
+
 console.log(`\nReviewer corrections applied: ${reviewStats.applied}`);
 console.log(`Removed sentences taken out: ${removedStats.length}${removedStats.length ? ` (${removedStats.join("; ")})` : ""}`);
 if (tidiedExplanations.length) {

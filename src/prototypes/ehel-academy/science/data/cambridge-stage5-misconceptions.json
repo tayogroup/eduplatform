@@ -1,0 +1,194 @@
+{
+  "_comment": "The misconceptions Cambridge names for Stage 5, from the 'Common misconceptions' table in each topic of the Teacher's Resource. Extracted positionally from the PDF's table cells rather than from the text stream: the tables are three columns and flat extraction runs one wrapped cell straight into the next. Each entry keeps Cambridge's own wording in `misconception` and `overcome`, and carries an authored `learner` pair - [what many think, what is really true] - which is what the unit's 'Common misconceptions' panel shows the child. The shell course renders this; there is no step to tag, unlike the Stages 1-4 standalone apps.",
+  "curriculumCode": "0097",
+  "stage": 5,
+  "source": "Cambridge Primary Science Teacher's Resource 5 (Cambridge University Press), Common misconceptions tables. 16 topics carry one, over 17 pages; page 12's table is the front-matter example and reprints page 25's row.",
+  "extracted": "2026-09-17",
+  "minimumCovered": 11,
+  "_minimumCovered": "The count with a `learner` pair and a unit to sit in. Coverage is a number that only goes up. It is 11 of 20 because nine of Cambridge's Stage 5 misconceptions are about topics this course does not teach - see _excluded.",
+  "_excluded": {
+    "_comment": "Cambridge names these for Stage 5 and the course has no unit that could answer them. They are recorded rather than dropped, because the absence is the finding: each one names a topic the Grade 5 course is missing, and the same gaps appear in the course manifest's derived `gaps` block. A misconception about sound is not deliverable in a course with no sound unit, and forcing it into an unrelated unit would be worse than leaving it open.",
+    "Sound can only travel through air": "0097 gives Stage 5 three sound objectives (5Ps.01-5Ps.03) and Grade 5 has no sound unit. Every occurrence of 'vibrate' in the grade is particles vibrating in a solid, and the single 'pitch' is 'pitch-black'.",
+    "Air pollution is only found in the air outside": "5ESp.03 (pollution). No occurrence of 'pollution' anywhere in Grade 5.",
+    "Digestion takes place only in the stomach": "5Bs.04 (the human digestive system). Grade 5 does not teach it; Grade 6 Unit 1 does, one stage late. This one becomes deliverable by moving that concept rather than by authoring anything.",
+    "A diet is when people eat less food in order to lose weight": "5Bp.01 (an adequate, balanced diet). Grade 5's only 'nutrient' text is about minerals in soil for plants.",
+    "If an object is at rest there are no forces acting on it": "5Pf.01-5Pf.03 (forces). Grade 5 has no forces unit; Grade 6 Unit 4 carries the Stage 6 forces objectives and answers the same idea at its own stage.",
+    "Gravity only works one way - the Earth attracts the Moon but the Moon does not attract the Earth": "5Pf.01-5Pf.03. No forces unit at Stage 5.",
+    "Friction only occurs between solid objects": "5Pf.01-5Pf.03. No forces unit at Stage 5; no occurrence of 'friction' in the grade.",
+    "All metals are magnetic": "5Pe.01-5Pe.03 (magnets and magnetic materials). No occurrence of 'magnet' anywhere in Grade 5.",
+    "An adaptation is something that a plant or animal decides to do": "5Be.01 and 5Be.03 (adaptation to climate; predator and prey). The word 'adapt' appears nowhere in Grade 5 - the pollination unit teaches the mechanisms without ever naming the concept, which is why 5Be.02 is claimed on substance and this row cannot be."
+  },
+  "misconceptions": [
+    {
+      "id": "5-m1",
+      "unit": 1,
+      "codes": [
+        "5Bp.02"
+      ],
+      "page": 25,
+      "misconception": "A life cycle ends when the plant or animal dies.",
+      "overcome": "Explain that a life cycle describes all the stages of growth and development a living thing goes through in its life, and that the cycle continues when new living things of that kind are born or grow. Although the life cycle of an individual ends when it dies, the life cycle of its kind carries on when new individuals are created and grow.",
+      "learner": [
+        "A plant's life cycle is finished once that plant dies.",
+        "The cycle carries on. One plant's own life ends, but the seeds it made grow into new plants, and those make seeds in their turn. That is why a life cycle is drawn as a circle rather than a line."
+      ]
+    },
+    {
+      "id": "5-m2",
+      "unit": 1,
+      "codes": [
+        "5Bp.02"
+      ],
+      "page": 25,
+      "misconception": "A life cycle always starts with an egg.",
+      "overcome": "Point out that drawing is a circle that has no beginning or end. Explain that the stages in a life cycle are repeated and there is no first or last stage.",
+      "learner": [
+        "Every life cycle begins with an egg.",
+        "A life cycle is a circle, so it has no first stage and no last one. A flowering plant's cycle has no egg in it at all: seed, seedling, grown plant, flower, and seeds again."
+      ]
+    },
+    {
+      "id": "5-m3",
+      "unit": 2,
+      "codes": [
+        "5Bp.03",
+        "5Be.02"
+      ],
+      "page": 31,
+      "misconception": "Bees obtain honey from flowers.",
+      "overcome": "Explain that flowers make a sugary substance called nectar. The bees feed on the nectar and use the sugars in the nectar to make honey.",
+      "learner": [
+        "Bees collect honey from inside flowers.",
+        "A flower makes a sweet liquid called nectar, not honey. Bees drink the nectar, carry it back to the hive, and turn its sugars into honey there."
+      ]
+    },
+    {
+      "id": "5-m4",
+      "unit": 2,
+      "codes": [
+        "5Bp.03"
+      ],
+      "page": 35,
+      "misconception": "Only fruits we eat have seeds.",
+      "overcome": "Show learners pictures or real life examples of seeds and fruits of plants that we do not eat.",
+      "learner": [
+        "Only the fruits we eat have seeds inside them.",
+        "Every fruit holds seeds, because holding seeds is what makes it a fruit. Many plants nobody eats still make fruits."
+      ]
+    },
+    {
+      "id": "5-m5",
+      "unit": 2,
+      "codes": [
+        "5Bp.03"
+      ],
+      "page": 35,
+      "misconception": "All fruits are edible.",
+      "overcome": "Remind learners that a fruit is the part of the plant that contains the seeds. Although we eat many fruits, such as oranges and apples, not all fruits are good for people and animals to eat.",
+      "learner": [
+        "If it is a fruit, you can eat it.",
+        "A fruit is simply the part of a plant that holds the seeds, and that is all it has to be. Some fruits are food and some would make a person or an animal ill."
+      ]
+    },
+    {
+      "id": "5-m6",
+      "unit": 3,
+      "codes": [
+        "5Cm.01"
+      ],
+      "page": 74,
+      "misconception": "Gases are not matter or do not exist because they are invisible.",
+      "overcome": "Tell the class that not all gases are invisible, although the gases they will learn about are all invisible. If possible, show the class a picture of bromine gas which is orange-brown or iodine gas which is purple. Activity 1: Where is the air? will also help learners to understand that gases take up space in the same way as solids and liquids and that this is a property of all matter.",
+      "learner": [
+        "Air is not really matter, because you cannot see it.",
+        "You cannot see it and it is still matter. Air takes up space, it has mass, and it is made of particles exactly as a solid or a liquid is. Not every gas is even invisible: bromine gas is orange-brown."
+      ],
+      "supersedes": [
+        "Gases are not real matter."
+      ]
+    },
+    {
+      "id": "5-m7",
+      "unit": 3,
+      "codes": [
+        "5Cp.02"
+      ],
+      "page": 80,
+      "misconception": "Steam is the white cloud of gas we see when water boils.",
+      "overcome": "Explain that when water boils it changes into an invisible gas called steam. Steam is heated water vapour. When the steam moves out of the spout of the kettle and rises into the air it cools down and changes back into a liquid. This is the cloud of condensing water vapour that we incorrectly call steam.",
+      "learner": [
+        "The white cloud above a boiling kettle is the steam.",
+        "Steam itself is an invisible gas. The white cloud is that gas cooling just after it leaves the spout and turning back into tiny drops of liquid water."
+      ],
+      "supersedes": [
+        "The white cloud above a pot is water vapour."
+      ]
+    },
+    {
+      "id": "5-m8",
+      "unit": 3,
+      "codes": [
+        "5Cp.02"
+      ],
+      "page": 80,
+      "misconception": "The bubbles in boiling water are made of air.",
+      "overcome": "One way we know that water is boiling when it forms bubbles of gas. Remind learners that boiling is a change of state - liquid turns to gas. So when water is the liquid, the gas formed must be water vapour, not air.",
+      "learner": [
+        "The bubbles in boiling water are bubbles of air.",
+        "Boiling turns a liquid into a gas, and the liquid here is water - so the bubbles are water vapour. The air was never what boiled."
+      ]
+    },
+    {
+      "id": "5-m9",
+      "unit": 3,
+      "codes": [
+        "5Cp.02"
+      ],
+      "page": 80,
+      "misconception": "Water always boils at the same temperature.",
+      "overcome": "When doing the activity Think like a scientist 3: Investigate the boiling point of water, learners will measure the boiling point. In most cases it will not be exactly 100 degrees Celsius, unless you are at sea level and using pure water. Explain that factors such as presence of dissolved substances in the water and the height above sea level change the boiling point of water by a few degrees.",
+      "learner": [
+        "Water always boils at exactly 100 degrees Celsius.",
+        "That is true only for pure water at sea level. Salt or sugar dissolved in the water, or being high up a mountain, shifts the boiling point by a few degrees - which is why a careful measurement rarely reads exactly 100."
+      ]
+    },
+    {
+      "id": "5-m10",
+      "unit": 3,
+      "codes": [
+        "5Cc.01",
+        "5ESc.01"
+      ],
+      "page": 86,
+      "misconception": "When water evaporates it disappears or ceases to exist.",
+      "overcome": "It is difficult to demonstrate that water does not disappear until learners know about condensation. Once learners have completed 'Think like a scientist 3: Make a model of the water cycle', you will be able to show learners that the evaporated water still exists because we can see it when it condenses back into droplets.",
+      "learner": [
+        "When a puddle dries up the water is gone.",
+        "It is still there, spread through the air as an invisible gas. Cool that air and the water comes back as droplets you can see - which is exactly how clouds and rain happen."
+      ],
+      "supersedes": [
+        "A dried puddle's water is destroyed."
+      ]
+    },
+    {
+      "id": "5-m11",
+      "unit": 3,
+      "codes": [
+        "5Cc.02",
+        "5Cc.03",
+        "5Cp.01"
+      ],
+      "page": 91,
+      "misconception": "The solid solute in a solution no longer exists when it dissolves because we can't see it.",
+      "overcome": "Ask a learner to taste the sugar solution. It tastes sweet which shows that the sugar (solute) is still there, even though we cannot see it.",
+      "learner": [
+        "Once sugar dissolves in water it has gone.",
+        "It is still in the water, in pieces far too small to see. You can taste that it is there - and if you let the water evaporate, the sugar is left behind."
+      ],
+      "supersedes": [
+        "Dissolved sugar has melted or gone."
+      ]
+    }
+  ],
+  "_supersedes": "Where a row names `supersedes`, those extracted pairs are dropped from the unit's panel because the Cambridge row says the same thing better. Named rather than matched on word overlap: two fuzzy matchers were tried and both were wrong, one merging unrelated pairs on the word 'from' and the other missing 'The white cloud above a pot is water vapour' against 'The white cloud above a boiling kettle is the steam'. A named target that no longer exists fails the build, which is the point - the pack is re-extracted from Word documents and an override that quietly stops applying would leave the duplicate on the child's screen."
+}

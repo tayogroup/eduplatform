@@ -114,7 +114,14 @@ function walk(dir, rel = "") {
 function buildList() {
   const list = [];
   for (const subject of subjectList) {
-    for (let g = 1; g <= 12; g += 1) {
+    // From 0, not 1. Intensive English's Intro level lives in `level-0/`, and
+    // under `g = 1` this loop never looked at it: the tool walked 70 files,
+    // uploaded the changed ones and reported success, with the whole of Intro
+    // silently absent. That is the same failure the note above this function
+    // already describes for `grade-${n}` — "walked nothing for such a course and
+    // reported success having uploaded zero unit files" — one level lower down.
+    // No subject has a `grade-0`, so starting at 0 is inert for every other one.
+    for (let g = 0; g <= 12; g += 1) {
       const dataDir = path.join(EHEL, subject, stageDirFor(subject, g), "data");
       if (!fs.existsSync(dataDir)) continue;
       const gg = String(g).padStart(2, "0");

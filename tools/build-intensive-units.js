@@ -23,6 +23,24 @@ const SRC = path.join(ROOT, "inputs", "ehel-english-intensive-source");
 const AUTHORED = path.join(SRC, "authored");
 const COURSE_ROOT = path.join(ROOT, "src", "prototypes", "ehel-academy", "intensive-english");
 
+// A level's folder, and the suffix its Moodle course key ends with.
+//
+// Every level from 0 to 3 lives in `level-${number}` and is keyed `l${nn}`, and
+// both of these return exactly that when the plan says nothing. The Phonics
+// level cannot: it sits BELOW Intro, so its number is -1, and `level--1` with a
+// key of `l-1` is what an administrator would read forever. It therefore
+// carries `dir: "level-phonics"` and `key: "lph"` in the plan, and these two
+// helpers are the only places that need to know.
+//
+// Numbers stay numbers. Ordering, comparison and every numeric loop in the
+// pipeline are untouched — only the two strings a person sees are overridden.
+const levelDir = (level) => level.dir || `level-${level.number}`;
+const levelKey = (level) => level.key || `l${String(level.number).padStart(2, "0")}`;
+const dirForNumber = (n) => {
+  const level = plan.levels.find((item) => item.number === n);
+  return level ? levelDir(level) : `level-${n}`;
+};
+
 const plan = JSON.parse(fs.readFileSync(path.join(SRC, "course-plan.json"), "utf8"));
 
 const VOICE = { provider: "ElevenLabs", voiceId: "XfNU2rGpBa01ckF309OY", model: "eleven_multilingual_v2" };
@@ -690,7 +708,25 @@ function buildUnit(authored) {
 // a warning rather than a failure, because some overlap is deliberate
 // progression and only a human can tell which.
 function warnPlanOverlap() {
-  const stop = new Set(["the", "and", "for", "with", "that", "this", "your", "not", "are", "how", "what", "when", "them", "they", "than", "into"]);
+  // This list was shorter than the card-title check's below, and the two are
+  // meant to encode the same idea: a word that appears in a pattern without
+  // carrying its meaning. `word` and `words` were already scaffolding there and
+  // not here, so the same pair of patterns could be reported by one check and
+  // ignored by the other.
+  //
+  // `sound`, `sounds` and `their` are the Phonics level's equivalent. Every one
+  // of its patterns is about a sound, so "i and p, and their sounds" matched
+  // "o, g and d, and their sounds" on nothing but scaffolding — different
+  // letters, reported as the same lesson. Adding Phonics took this list from 92
+  // entries to 166, and 48 of the 74 new ones were that exact shape.
+  //
+  // The point is that this is a list a HUMAN reads: the comment above says only
+  // a person can tell deliberate progression from a re-teach. A 166-line review
+  // list is not read, so noise here costs the whole check. A real re-teach still
+  // shares a content word — a grapheme, `vowel`, `split`, `blend` — and is still
+  // reported; that was mutation-tested rather than assumed.
+  const stop = new Set(["the", "and", "for", "with", "that", "this", "your", "not", "are", "how", "what", "when", "them", "they", "than", "into",
+    "word", "words", "sound", "sounds", "their"]);
   const keywords = (text) => new Set(String(text).toLowerCase().replace(/[^a-z ]/g, " ").split(/\s+/).filter((w) => w.length > 3 && !stop.has(w)));
   const all = [];
   for (const level of plan.levels) {
@@ -731,7 +767,7 @@ plan overlaps to review (${warnings.length}) — a pattern should be taught once
 // one that was.
 function checkVocabularyDuplication() {
   for (const level of plan.levels) {
-    const dir = path.join(COURSE_ROOT, `level-${level.number}`, "data", "units");
+    const dir = path.join(COURSE_ROOT, levelDir(level), "data", "units");
     if (!fs.existsSync(dir)) continue;
     const seen = new Map();
     const units = fs.readdirSync(dir).filter((n) => n.endsWith(".json"))
@@ -763,7 +799,7 @@ function checkPatternDuplication() {
   const keywords = (title) => new Set(String(title).toLowerCase().replace(/[^a-z ]/g, " ").split(/\s+/).filter((w) => w.length > 3 && !stop.has(w)));
   const contrasts = new Set();
   for (const level of plan.levels) {
-    const dir = path.join(COURSE_ROOT, `level-${level.number}`, "data", "units");
+    const dir = path.join(COURSE_ROOT, levelDir(level), "data", "units");
     if (!fs.existsSync(dir)) continue;
     const cards = [];
     for (const name of fs.readdirSync(dir).filter((n) => n.endsWith(".json"))) {
@@ -800,11 +836,11 @@ const built = [];
 for (const file of files) {
   const authored = JSON.parse(fs.readFileSync(path.join(AUTHORED, file), "utf8"));
   const unit = buildUnit(authored);
-  const dir = path.join(COURSE_ROOT, `level-${authored.level}`, "data", "units");
+  const dir = path.join(COURSE_ROOT, dirForNumber(authored.level), "data", "units");
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, `unit-${authored.unit}.json`), JSON.stringify(unit, null, 1), "utf8");
   built.push({ file, authored, unit });
-  console.log(`${file} -> level-${authored.level}/data/units/unit-${authored.unit}.json`);
+  console.log(`${file} -> ${dirForNumber(authored.level)}/data/units/unit-${authored.unit}.json`);
   console.log(`   CEFR ${unit.unit.cefr.band} · skills: ${unit.unit.cefr.skills.join(", ")}`);
   console.log(`   ${unit.dictionaryLinks.length} words · ${unit.grammar.length} patterns · ${unit.quizzes.length} quiz items · Cambridge ${unit.frameworks.cambridge.codes.length} codes (stages ${unit.frameworks.cambridge.stages.join(", ")})`);
 }
@@ -821,7 +857,7 @@ warnPlanOverlap();
 for (const level of plan.levels.filter((item) => item.eslFramework)) {
   const stages = level.cambridgeStages || [];
   const expected = [...eslIndex.values()].filter((objective) => stages.includes(objective.stage)).map((objective) => objective.code);
-  const dir = path.join(COURSE_ROOT, `level-${level.number}`, "data", "units");
+  const dir = path.join(COURSE_ROOT, levelDir(level), "data", "units");
   const onDisk = fs.existsSync(dir) ? fs.readdirSync(dir).filter((name) => /^unit-\d+\.json$/.test(name)) : [];
   const cited = new Set();
   for (const name of onDisk) {
@@ -872,7 +908,7 @@ console.log(`\n${built.length} unit(s) built, gate green.`);
 // unit of it existed. A learner would have been offered a course with nothing
 // in it. `plannedUnits` keeps the other number, which is worth having.
 const builtUnitCount = (level) => {
-  const dir = path.join(COURSE_ROOT, `level-${level.number}`, "data", "units");
+  const dir = path.join(COURSE_ROOT, levelDir(level), "data", "units");
   if (!fs.existsSync(dir)) return 0;
   return fs.readdirSync(dir).filter((name) => /^unit-\d+\.json$/.test(name)).length;
 };
@@ -889,7 +925,7 @@ const levelSummaries = plan.levels.map((level) => {
 
 for (const level of plan.levels) {
   if (!level.units.length) continue;
-  const dataDir = path.join(COURSE_ROOT, `level-${level.number}`, "data");
+  const dataDir = path.join(COURSE_ROOT, levelDir(level), "data");
   const unitsDir = path.join(dataDir, "units");
   fs.mkdirSync(unitsDir, { recursive: true });
   const onDisk = new Map();

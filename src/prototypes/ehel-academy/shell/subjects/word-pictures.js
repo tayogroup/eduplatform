@@ -1213,6 +1213,43 @@ GRADE_WORD_PICTURES.ien3 = {
   referee: "",         // 🧑🏾‍💼 is this unit's `consultant` (u14), and a job referee
                        // has no honest glyph the reader would read as one
 };
+// The Intro level (2026-09-17) — Pre-A1, below Cambridge 0057 Stage 1, for an
+// adult who may not read the Latin script at all. Its 308 words fell straight
+// through to the shared map, exactly as Level 3's did before ien3 existed, and
+// the audit found 13 glyphs shared inside a word group and 21 inside a unit.
+//
+// Every entry below is a BLANK, and that is the finding rather than a
+// shortcoming: at this band the words that collide are near-synonyms or the
+// verb beside the noun, and one emoji genuinely cannot tell them apart. A
+// single-person glyph does not distinguish `woman` from `mother` or `wife`;
+// 🍽️ does not distinguish `food` from `eat`; 🏠 does not distinguish `house`
+// from `home` from `live`. The concrete member of each pair keeps the picture
+// and the rest draw nothing, which is honest and leaves 173 of 308 words drawn.
+GRADE_WORD_PICTURES.ien0 = {
+  // --- the verb beside its own noun -----------------------------------------
+  count: "",           // `number` keeps 🔢
+  eat: "",             // `food` keeps 🍽️
+  wear: "",            // `shirt` keeps 👕
+  live: "",            // `house` keeps 🏠
+  hurt: "",            // `pain` keeps 🤕
+  // --- a relationship is not a person ---------------------------------------
+  // Unit 5 teaches man, woman, boy and girl in one group and mother, father,
+  // sister, brother, wife and husband in the next. The shared map draws the
+  // same four glyphs for both, so the second group said nothing the first had
+  // not. `family` keeps 👨🏾‍👩🏾‍👧🏾‍👦🏾, which is the one that is really about a family.
+  mother: "", father: "", sister: "", brother: "", wife: "", husband: "",
+  // --- the general word beside the particular one ---------------------------
+  clothes: "",         // `shirt` keeps 👕
+  drink: "",           // `cup` keeps 🥤
+  thirsty: "",         // also 🥤 in the shared map, in the same unit
+  home: "",            // `house` keeps 🏠
+  bedroom: "",         // `bed` keeps 🛏️
+  mistake: "",         // `wrong` keeps ❌
+  // --- one glyph for two moves ----------------------------------------------
+  goodbye: "",         // 👋🏾 is a wave, and `hello` is already waving beside it
+  spell: "", word: "", // `alphabet` keeps 🔤
+  again: "",           // `repeat` keeps 🔁
+};
 
 /**
  * The picture for a word, or "" when there is no honest one.

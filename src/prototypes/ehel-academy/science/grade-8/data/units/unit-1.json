@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.714Z",
+  "generatedAt": "2026-09-17T18:05:40.900Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -30,6 +30,7 @@
     "stage": 8,
     "objectiveCodes": [
       "8SIC.02",
+      "8TWSp.01",
       "8TWSp.04",
       "8Be.01",
       "8Be.02",
@@ -41,6 +42,12 @@
         "strand": "Science in Context",
         "subStrand": "Science in Context",
         "text": "Describe how science is applied across societies and industries, and in research."
+      },
+      {
+        "code": "8TWSp.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Identify whether a given hypothesis is testable."
       },
       {
         "code": "8TWSp.04",
@@ -959,6 +966,19 @@
         "Fertilisation"
       ],
       "modelAnswer": "An embryo (tiny young plant), a food store, and a protective seed coat."
+    },
+    {
+      "id": "8-enq-1",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Two statements about your germination jars: 'Seeds need light to germinate' and 'Plants prefer to be looked after'. Which is a testable hypothesis, and why is the other not?",
+      "keyIdeas": [
+        "The first names a condition you can change and an outcome you can count",
+        "'Prefer' describes a feeling and cannot be measured",
+        "A testable hypothesis is one that could be shown WRONG"
+      ],
+      "modelAnswer": "The first is testable: light is a condition I can change - jars in the dark against jars on a windowsill - and germination is something I can count. It could also be shown to be wrong, which is what makes it a hypothesis rather than a belief; in fact it IS wrong for most seeds, and the test is what reveals that. The second is not testable: 'prefer' describes a feeling, and there is no measurement of a plant's preference. I could measure growth instead, but that answers a different question from the one the sentence asks."
     }
   ],
   "assessment": {

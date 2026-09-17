@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.895Z",
+  "generatedAt": "2026-09-17T18:05:41.091Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -29,6 +29,7 @@
     "code": "0893",
     "stage": 8,
     "objectiveCodes": [
+      "8TWSp.02",
       "8TWSc.01",
       "8TWSc.07",
       "8SIC.02",
@@ -40,6 +41,12 @@
       "8ESc.03"
     ],
     "objectives": [
+      {
+        "code": "8TWSp.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Describe how scientific hypotheses can be supported or contradicted by evidence from an enquiry."
+      },
       {
         "code": "8TWSc.01",
         "strand": "Thinking and Working Scientifically",
@@ -980,6 +987,19 @@
         "Weathering"
       ],
       "modelAnswer": "Weathering is the breaking down of rock where it stands. Erosion is the carrying away of the broken pieces by water, wind, ice or gravity. Break first, then transport."
+    },
+    {
+      "id": "8-enq-13",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "The hypothesis is that a particular rock formed from layers of sediment. What evidence would support that, and what evidence would contradict it?",
+      "keyIdeas": [
+        "Support: visible layers, rounded grains, fossils",
+        "Contradict: interlocking crystals and no layering",
+        "Evidence must be able to go EITHER way"
+      ],
+      "modelAnswer": "Support would be visible layers or bands, grains rounded by being carried in water, and fossils, which almost never survive melting. Contradiction would be interlocking crystals with no layering at all - what you see in an igneous rock cooled from a melt - or the banded but crystalline look of a metamorphic rock. The hypothesis is worth having precisely because both answers are possible: an enquiry that could only ever agree with you is not testing anything."
     }
   ],
   "assessment": {

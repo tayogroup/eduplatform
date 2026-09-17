@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.654Z",
+  "generatedAt": "2026-09-17T18:05:40.835Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -33,8 +33,11 @@
       "7Cc.03",
       "7Cc.04",
       "7Cp.04",
+      "7TWSp.03",
       "7TWSc.05",
-      "7TWSc.07"
+      "7TWSc.07",
+      "7TWSa.02",
+      "7TWSa.05"
     ],
     "objectives": [
       {
@@ -62,6 +65,12 @@
         "text": "Use tests to identify hydrogen, carbon dioxide and oxygen gases."
       },
       {
+        "code": "7TWSp.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Make predictions of likely outcomes for a scientific enquiry based on scientific knowledge and understanding."
+      },
+      {
         "code": "7TWSc.05",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
@@ -72,6 +81,18 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
         "text": "Collect and record sufficient observations and/or measurements in an appropriate form."
+      },
+      {
+        "code": "7TWSa.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe trends and patterns in results, including identifying any anomalous results."
+      },
+      {
+        "code": "7TWSa.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Present and interpret observations and measurements appropriately."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -974,6 +995,45 @@
         "Rust"
       ],
       "modelAnswer": "The coast has warm, damp, salty air - plenty of water and oxygen, sped up by salt - while Garissa's air is dry, so much less rusting."
+    },
+    {
+      "id": "7-enq-9",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You are about to add magnesium to dilute acid. Predict what will happen, and justify the prediction from what you know rather than guessing.",
+      "keyIdeas": [
+        "Predict gas given off, the metal disappearing, the tube warming",
+        "Justify it from how reactive metals behave with acids",
+        "Name the gas expected, and how you would test for it"
+      ],
+      "modelAnswer": "I predict bubbles of gas on the magnesium, the ribbon shrinking and disappearing, and the tube feeling warmer. The justification is that magnesium is a reactive metal, and reactive metals react with dilute acids to give a salt and hydrogen. I expect the gas to be hydrogen, and I would test it with a lit splint and listen for a squeaky pop. That is a prediction from knowledge; a guess would be 'something will happen', with no reason behind it and nothing to check afterwards."
+    },
+    {
+      "id": "7-enq-10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Five metals are added to the same acid. Four react faster the more reactive they are. One metal known to be very reactive barely fizzes. Describe the trend and account for the odd result.",
+      "keyIdeas": [
+        "The trend: the more reactive the metal, the faster the reaction",
+        "The quiet one is an anomalous result",
+        "A likely cause: a dull oxide layer, or a mislabelled sample"
+      ],
+      "modelAnswer": "The trend is that the more reactive the metal, the faster the reaction - more bubbles, sooner, and more warmth. The metal that barely fizzed is anomalous, because the trend says it should have been among the fastest. The likeliest cause is a dull oxide layer on its surface, which must be scraped away before the acid can reach the metal beneath; it is also possible the sample was mislabelled. I would clean it and repeat rather than record the anomaly as a fact about the metal."
+    },
+    {
+      "id": "7-enq-11",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You timed how long each of five metals took to stop fizzing. How should those results be presented, and what should a reader be able to read off?",
+      "keyIdeas": [
+        "A bar chart - five separate metals, not a continuous scale",
+        "Order the bars by time, so the trend IS the shape",
+        "The reader should see the reactivity order at a glance"
+      ],
+      "modelAnswer": "A bar chart, because the five metals are separate categories rather than points on a continuous scale - there is nothing 'between' magnesium and zinc. One bar per metal, its height the time in seconds, and I would order them shortest to longest so that the reactivity order becomes the shape of the chart. A reader should then see which metal reacted fastest, roughly how much faster, and whether any metal breaks the pattern, without reading a single number."
     }
   ],
   "assessment": {

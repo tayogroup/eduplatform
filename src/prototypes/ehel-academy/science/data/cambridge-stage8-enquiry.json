@@ -1,0 +1,101 @@
+{
+  "_comment": "Cambridge 0893's Thinking and Working Scientifically and Science in Context objectives for Stage 8, authored as reasoning prompts. Same vehicle and reasoning as the Stage 5-7 fixtures. Two of Stage 8's demands have no ancestor anywhere earlier in the course and so are taught here rather than only assessed: 8TWSm.01/02 are about ANALOGY as a model (the word appears nowhere in Grade 8), and 8TWSa.03 asks for a conclusion that states its own limitations, where `conclusion` appears nowhere in Grades 5, 6, 7 or 8.",
+  "_vehicle": "reasoningPrompts, rendered as 'Explain Your Thinking' and marked by reasoningHits() against keyIdeas. complete() is add-only, so adding prompts cannot un-tick a finished section. Ids stay `8-enq-N`, because the shell stores completion by item id.",
+  "curriculumCode": "0893",
+  "stage": 8,
+  "source": "Authored 2026-09-17 against Cambridge Lower Secondary Science 0893 Stage 8, anchored to the investigations in Grade 8 units 1-9. No Teacher's Resource was supplied for this stage.",
+  "minimumCovered": 15,
+  "_minimumCovered": "One prompt per unclaimed Stage 8 TWS/SIC objective. Coverage is a number that only goes up.",
+  "prompts": [
+    {
+      "id": "8-enq-1", "unit": 1, "codes": ["8TWSp.01"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "Two statements about your germination jars: 'Seeds need light to germinate' and 'Plants prefer to be looked after'. Which is a testable hypothesis, and why is the other not?",
+      "keyIdeas": ["The first names a condition you can change and an outcome you can count", "'Prefer' describes a feeling and cannot be measured", "A testable hypothesis is one that could be shown WRONG"],
+      "modelAnswer": "The first is testable: light is a condition I can change - jars in the dark against jars on a windowsill - and germination is something I can count. It could also be shown to be wrong, which is what makes it a hypothesis rather than a belief; in fact it IS wrong for most seeds, and the test is what reveals that. The second is not testable: 'prefer' describes a feeling, and there is no measurement of a plant's preference. I could measure growth instead, but that answers a different question from the one the sentence asks."
+    },
+    {
+      "id": "8-enq-2", "unit": 2, "codes": ["8SIC.04"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "A single scientist announces a new finding about human fertility. Why is that not yet scientific knowledge, and what has to happen first?",
+      "keyIdeas": ["One person's result is a claim, not knowledge", "Peer review: other scientists examine the method before publication", "Others must repeat it and get the same result"],
+      "modelAnswer": "Because one person's result is a claim. Before it becomes knowledge it is written up with the method in full and sent to other scientists in the field, who read it looking for faults - that is peer review, and it happens before publication. Then others must repeat the work and get the same result; a finding nobody else can reproduce does not survive. Science advances through individuals having ideas and a community checking them, and the checking is the slower and the more important half."
+    },
+    {
+      "id": "8-enq-3", "unit": 3, "codes": ["8TWSc.03"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "Timing a trolley down a ramp you get 2.1 s, 2.2 s and 2.1 s. A classmate gets 1.8 s, 2.4 s and 2.0 s. Who needs more repeats, and how can you tell?",
+      "keyIdeas": ["Judge by the SPREAD of the repeats", "A tight spread means three is enough", "A wide spread points at the METHOD, not at luck"],
+      "modelAnswer": "The classmate does. My three readings span 0.1 s, tight enough that a fourth would almost certainly land in the same place, so three is sufficient. Theirs span 0.6 s, which is too wide to trust an average of three - the true value could be anywhere in that range. More repeats would narrow it, but a spread that wide usually points at the method rather than at luck: starting a timer by eye is the likely culprit, and a light gate would remove the cause instead of averaging over it."
+    },
+    {
+      "id": "8-enq-4", "unit": 3, "codes": ["8TWSa.01"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "You predicted the trolley would take half the time down a ramp twice as steep. It took about 0.7 of the time. Assess your prediction and explain why it came out that way.",
+      "keyIdeas": ["Partly accurate: the direction was right, the size was wrong", "I assumed a simple proportion", "The trolley accelerates, so distance depends on the SQUARE of the time"],
+      "modelAnswer": "The direction was right - steeper meant faster - but the size was wrong: I predicted half and got about seven tenths. The reason is that I assumed a simple proportion, that doubling the steepness would halve the time. It does not work that way, because the trolley accelerates: the distance covered depends on the square of the time, so halving the time would need four times the acceleration and not twice. The prediction failed on the mathematics, not on the physics of which way it would go."
+    },
+    {
+      "id": "8-enq-5", "unit": 3, "codes": ["8TWSa.02"], "outcomeId": "lo03", "difficulty": "Core",
+      "prompt": "Your trolley times at five ramp heights are 3.1, 2.6, 2.2, 3.4 and 1.7 seconds. Describe the trend, and say what you do about the odd value.",
+      "keyIdeas": ["The trend: the higher the ramp, the shorter the time", "3.4 s at the fourth height breaks it completely", "Repeat that height before deciding anything, and SHOW the anomaly"],
+      "modelAnswer": "The trend is that the higher the ramp, the shorter the time: 3.1, 2.6, 2.2 and then 1.7 at the highest. The fourth value, 3.4 s, breaks that pattern completely - it is longer than every reading except the lowest ramp - so it is anomalous. Something happened on that run: the trolley may have caught the edge, or the timer was started late. I would repeat that height several times before concluding anything, and I would plot the anomaly rather than quietly leave it out."
+    },
+    {
+      "id": "8-enq-6", "unit": 4, "codes": ["8TWSm.01"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "People describe the Periodic Table as 'like a street of houses, with families living together'. Explain what an analogy is, and how this one works as a model.",
+      "keyIdeas": ["An analogy explains the unfamiliar by something familiar", "Here the columns are families, and family members resemble each other", "It works because the two things share a STRUCTURE, not an appearance"],
+      "modelAnswer": "An analogy explains something unfamiliar by comparing it with something you already know. This one maps the table onto a street: each column is a family, and members of a family resemble one another - the Group 1 metals are all soft and reactive, the noble gases all unreactive. It works because the two things share a structure rather than an appearance: in both, position tells you about properties. That shared structure is what makes an analogy a model rather than just a pleasing phrase."
+    },
+    {
+      "id": "8-enq-7", "unit": 4, "codes": ["8TWSm.02"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "Use the street-and-families analogy to explain to a younger student why sodium and potassium behave alike while sodium and chlorine do not.",
+      "keyIdeas": ["Sodium and potassium share a column, so they are one family", "Chlorine lives in a different family further along", "Point at the part of the analogy that carries the explanation"],
+      "modelAnswer": "I would say: sodium and potassium live in the same house on the street - the same column, the same family - and members of a family behave alike, so both are soft metals that react hard with water. Chlorine lives much further along the street in a different family altogether, so there is no reason to expect it to behave like sodium, and it does not: it is a poisonous green gas. Using an analogy means pointing at the part of it that carries the explanation, and not stretching it further than it will go."
+    },
+    {
+      "id": "8-enq-8", "unit": 4, "codes": ["8SIC.01"], "outcomeId": "lo03", "difficulty": "Challenge",
+      "prompt": "Mendeleev left gaps in his table and predicted elements nobody had found. Why did that make the table more convincing rather than less?",
+      "keyIdeas": ["A gap is a prediction, and a prediction can FAIL", "Gallium and germanium were later found and matched", "A theory that risks being wrong and survives is stronger"],
+      "modelAnswer": "Because a gap is a prediction, and a prediction can fail. Mendeleev was not saying 'something is missing'; he was saying an element exists with roughly this mass and these properties - a claim anyone could have shown to be false. When gallium and germanium were found and matched, the table had survived a test it might have failed. A theory that takes that risk and comes through is far stronger than one that merely tidies up what is already known, and it took decades of other people's work to settle."
+    },
+    {
+      "id": "8-enq-9", "unit": 5, "codes": ["8TWSp.05"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "You are going to separate salt from water by evaporating it over a flame. Write a risk assessment: name each risk and how you would control it.",
+      "keyIdeas": ["Burns from the flame and from glassware that stays hot", "Spitting solution near the end, so eye protection", "Name the HARM and pair each with an action"],
+      "modelAnswer": "Risk one: burns from the flame and from hot glassware, which stays hot long after it looks cool - controlled by using tongs, standing the dish on a heatproof mat, and not touching it until it has cooled. Risk two: as the last of the water goes the solution spits - controlled by wearing eye protection, heating gently, and taking the flame away before the dish is quite dry. Risk three: loose hair or sleeves near a flame - controlled by tying hair back and rolling sleeves. A risk assessment names the harm, not just the hazard, and pairs each one with an action."
+    },
+    {
+      "id": "8-enq-10", "unit": 5, "codes": ["8TWSc.05"], "outcomeId": "lo02", "difficulty": "Core",
+      "prompt": "Halfway through the evaporation your partner leans across the flame to reach the tongs. What do you do, and what does this show about a risk assessment?",
+      "keyIdeas": ["Stop, and move the equipment rather than the person over the flame", "An assessment only works if it is still being followed", "Reassess when the work changes"],
+      "modelAnswer": "I would say stop, and move the tongs to their side of the bench rather than have anyone reach across a flame. What it shows is that an assessment written at the start is only useful if it is still being followed halfway through - most accidents happen in a moment nobody planned for. It also shows that an assessment should be revisited as the work changes: had the tongs been placed within reach at the start, the reaching-across risk would never have existed."
+    },
+    {
+      "id": "8-enq-11", "unit": 6, "codes": ["8TWSa.03"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "You measured the angle of reflection at five angles of incidence and they matched within two degrees each time. State your conclusion AND its limitations.",
+      "keyIdeas": ["Conclusion: the angle of reflection equals the angle of incidence", "Limitation: one flat mirror, five angles, two degrees of uncertainty", "A conclusion is only as wide as the evidence behind it"],
+      "modelAnswer": "I conclude that light reflects from a plane mirror at an angle equal to the angle at which it arrives, since all five pairs matched within two degrees. The limitations: I tested one flat mirror over five angles, so strictly I have shown it for that mirror across that range - not for curved mirrors, and not beyond the angles I used. And my protractor is good to about a degree, so a real difference smaller than that would be invisible to me. Stating those limits is part of the conclusion, not a weakening of it."
+    },
+    {
+      "id": "8-enq-12", "unit": 7, "codes": ["8TWSc.06"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "A drink's advertisement says it is 'scientifically proven to give you energy'. Evaluate that as a source, and say where you would look instead.",
+      "keyIdeas": ["An advertisement is biased by design - it exists to sell", "'Scientifically proven' names no study, sample or comparison", "Look for a source with no stake: a health body, a textbook"],
+      "modelAnswer": "An advertisement is biased by design: it is paid for by the seller and will mention nothing unhelpful, so it is a poor source however true its wording. 'Scientifically proven' names no study, no sample and nothing it was compared against, so there is nothing to check. Strictly it is not even false - sugar does release energy, and so does any food, which is what makes the claim useless. I would look at a national health body or a textbook instead, which has no stake in my buying the drink."
+    },
+    {
+      "id": "8-enq-13", "unit": 8, "codes": ["8TWSp.02"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "The hypothesis is that a particular rock formed from layers of sediment. What evidence would support that, and what evidence would contradict it?",
+      "keyIdeas": ["Support: visible layers, rounded grains, fossils", "Contradict: interlocking crystals and no layering", "Evidence must be able to go EITHER way"],
+      "modelAnswer": "Support would be visible layers or bands, grains rounded by being carried in water, and fossils, which almost never survive melting. Contradiction would be interlocking crystals with no layering at all - what you see in an igneous rock cooled from a melt - or the banded but crystalline look of a metamorphic rock. The hypothesis is worth having precisely because both answers are possible: an enquiry that could only ever agree with you is not testing anything."
+    },
+    {
+      "id": "8-enq-14", "unit": 9, "codes": ["8TWSa.04"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "You counted how many paper clips an electromagnet held at three different numbers of coil turns, once each. Evaluate the investigation and suggest two improvements.",
+      "keyIdeas": ["One trial per setting cannot separate a real difference from luck", "Paper clips are a coarse measure and vary between clips", "Repeat and average; and find a finer measure"],
+      "modelAnswer": "The weakness is that each setting was measured once, so I cannot tell a real difference from a lucky one. Counting paper clips is also coarse: one clip is a large step, and clips differ in mass and in how they hook together, so where the chain breaks is partly chance. I would repeat each setting at least three times and average, which shows whether the differences are real. And I would hang a small container and add sand until the load drops, because that measures the pull as a continuous quantity instead of in clip-sized jumps."
+    },
+    {
+      "id": "8-enq-15", "unit": 9, "codes": ["8SIC.03"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "A town must decide whether to run its new clinic's vaccine fridges from the grid or from solar panels with batteries. Evaluate the issue, and say what evidence would decide it.",
+      "keyIdeas": ["Reliability is the real question, because vaccines spoil if a fridge warms", "Grid: a strong supply, but this town has outages", "Deciding evidence: outage frequency, sunshine in the cloudiest month, cooling needed"],
+      "modelAnswer": "The scientific heart of this is not cost but reliability, because vaccines spoil if a fridge warms for even a few hours - so a strong supply that fails occasionally is worse than a weaker one that never does. The grid delivers plenty of power, but this town has outages. Solar needs no fuel and no line, yet it generates only in daylight and depends on batteries, which lose capacity over years. The evidence I would want: how often and for how long the grid actually fails here, how many hours of strong sun the town gets in its cloudiest month, and how much cooling the clinic needs. The best answer may well be both, with the grid as backup."
+    }
+  ]
+}

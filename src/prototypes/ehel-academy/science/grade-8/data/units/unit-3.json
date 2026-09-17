@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.771Z",
+  "generatedAt": "2026-09-17T18:05:40.957Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -33,7 +33,10 @@
       "8Pf.02",
       "8TWSm.03",
       "8TWSc.02",
-      "8TWSc.04"
+      "8TWSc.03",
+      "8TWSc.04",
+      "8TWSa.01",
+      "8TWSa.02"
     ],
     "objectives": [
       {
@@ -61,10 +64,28 @@
         "text": "Decide what equipment is required to carry out an investigation or experiment and use it appropriately."
       },
       {
+        "code": "8TWSc.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Evaluate whether measurements and observations have been repeated sufficiently to be reliable."
+      },
+      {
         "code": "8TWSc.04",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
         "text": "Take appropriately accurate and precise measurements, explaining why accuracy and precision are important."
+      },
+      {
+        "code": "8TWSa.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe the accuracy of predictions, based on results, and suggest why they were or were not accurate."
+      },
+      {
+        "code": "8TWSa.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe trends and patterns in results, including identifying any anomalous results."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending",
@@ -978,6 +999,45 @@
         "Distance"
       ],
       "modelAnswer": "A flat (horizontal) line means the distance is not changing while time goes on, so the object is stopped (not moving)."
+    },
+    {
+      "id": "8-enq-3",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Timing a trolley down a ramp you get 2.1 s, 2.2 s and 2.1 s. A classmate gets 1.8 s, 2.4 s and 2.0 s. Who needs more repeats, and how can you tell?",
+      "keyIdeas": [
+        "Judge by the SPREAD of the repeats",
+        "A tight spread means three is enough",
+        "A wide spread points at the METHOD, not at luck"
+      ],
+      "modelAnswer": "The classmate does. My three readings span 0.1 s, tight enough that a fourth would almost certainly land in the same place, so three is sufficient. Theirs span 0.6 s, which is too wide to trust an average of three - the true value could be anywhere in that range. More repeats would narrow it, but a spread that wide usually points at the method rather than at luck: starting a timer by eye is the likely culprit, and a light gate would remove the cause instead of averaging over it."
+    },
+    {
+      "id": "8-enq-4",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You predicted the trolley would take half the time down a ramp twice as steep. It took about 0.7 of the time. Assess your prediction and explain why it came out that way.",
+      "keyIdeas": [
+        "Partly accurate: the direction was right, the size was wrong",
+        "I assumed a simple proportion",
+        "The trolley accelerates, so distance depends on the SQUARE of the time"
+      ],
+      "modelAnswer": "The direction was right - steeper meant faster - but the size was wrong: I predicted half and got about seven tenths. The reason is that I assumed a simple proportion, that doubling the steepness would halve the time. It does not work that way, because the trolley accelerates: the distance covered depends on the square of the time, so halving the time would need four times the acceleration and not twice. The prediction failed on the mathematics, not on the physics of which way it would go."
+    },
+    {
+      "id": "8-enq-5",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Your trolley times at five ramp heights are 3.1, 2.6, 2.2, 3.4 and 1.7 seconds. Describe the trend, and say what you do about the odd value.",
+      "keyIdeas": [
+        "The trend: the higher the ramp, the shorter the time",
+        "3.4 s at the fourth height breaks it completely",
+        "Repeat that height before deciding anything, and SHOW the anomaly"
+      ],
+      "modelAnswer": "The trend is that the higher the ramp, the shorter the time: 3.1, 2.6, 2.2 and then 1.7 at the highest. The fourth value, 3.4 s, breaks that pattern completely - it is longer than every reading except the lowest ramp - so it is anomalous. Something happened on that run: the trolley may have caught the edge, or the timer was started late. I would repeat that height several times before concluding anything, and I would plot the anomaly rather than quietly leave it out."
     }
   ],
   "assessment": {

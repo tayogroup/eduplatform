@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.631Z",
+  "generatedAt": "2026-09-17T18:05:40.808Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -32,7 +32,9 @@
       "7Bs.01",
       "7Be.01",
       "7Be.02",
+      "7TWSp.01",
       "7TWSp.04",
+      "7TWSc.02",
       "7TWSa.03",
       "7SIC.02"
     ],
@@ -56,10 +58,22 @@
         "text": "Construct and interpret food chains and webs which include microorganisms as decomposers."
       },
       {
+        "code": "7TWSp.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Identify whether a given hypothesis is testable."
+      },
+      {
         "code": "7TWSp.04",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Plan a range of investigations of different types, while considering variables appropriately, and recognise that not all investigations can be fair tests."
+      },
+      {
+        "code": "7TWSc.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Decide what equipment is required to carry out an investigation or experiment and use it appropriately."
       },
       {
         "code": "7TWSa.03",
@@ -947,6 +961,32 @@
         "Protozoa"
       ],
       "modelAnswer": "Producer: makes its own food from sunlight. Consumer: gets energy by eating other organisms. Herbivore: eats only plants. Carnivore: eats only other animals."
+    },
+    {
+      "id": "7-enq-7",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Two statements: 'Bread goes mouldy faster in a warm place' and 'Mould is unpleasant'. Which is a testable hypothesis, and what makes the other untestable?",
+      "keyIdeas": [
+        "The first predicts something measurable - days to visible mould",
+        "The second is an opinion with nothing to measure",
+        "A testable hypothesis is one an experiment could show to be WRONG"
+      ],
+      "modelAnswer": "The first is testable: it predicts something measurable, the days until mould appears, and I can change the temperature and compare. The second is not a hypothesis at all but an opinion, and no measurement could settle it, because 'unpleasant' is not a property of the mould - it is a reaction in the person. The test of a hypothesis is whether an experiment could show it to be wrong. If nothing could, there is nothing to investigate."
+    },
+    {
+      "id": "7-enq-8",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You are going to compare how fast bread moulds at three temperatures. Decide what equipment you need, and say what each item is for.",
+      "keyIdeas": [
+        "Sealed bags or covered dishes - nothing escapes, nothing new lands",
+        "A thermometer in each place, because 'warm' is not a measurement",
+        "A ruler or squared grid, to measure the mould instead of judging it"
+      ],
+      "modelAnswer": "Sealed bags or covered dishes, so spores cannot escape into the room and nothing new can land on the bread - and once sealed they stay sealed. A thermometer in each place, because 'warm' and 'cool' are not measurements and I need the numbers I am claiming. A ruler or a squared transparent grid to measure the patch, so the result is a number rather than my impression. And identical bread from the same loaf, so temperature is the only thing differing."
     }
   ],
   "assessment": {

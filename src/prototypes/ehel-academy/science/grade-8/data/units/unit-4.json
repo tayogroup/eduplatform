@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:54:33.369Z",
+  "generatedAt": "2026-09-17T18:05:40.986Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -30,7 +30,10 @@
     "stage": 8,
     "objectiveCodes": [
       "8Cc.06",
-      "8TWSm.03"
+      "8TWSm.01",
+      "8TWSm.02",
+      "8TWSm.03",
+      "8SIC.01"
     ],
     "objectives": [
       {
@@ -40,10 +43,28 @@
         "text": "Understand that some substances are generally unreactive and can be described as inert."
       },
       {
+        "code": "8TWSm.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Models and representations",
+        "text": "Describe what an analogy is and how it can be used as a model."
+      },
+      {
+        "code": "8TWSm.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Models and representations",
+        "text": "Use an existing analogy for a purpose."
+      },
+      {
         "code": "8TWSm.03",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Models and representations",
         "text": "Use symbols and formulae to represent scientific ideas."
+      },
+      {
+        "code": "8SIC.01",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Discuss how scientific knowledge is developed through collective understanding and scrutiny over time."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending",
@@ -946,6 +967,45 @@
         "Non-metal"
       ],
       "modelAnswer": "CaCO3 has 1 calcium, 1 carbon and 3 oxygen atoms. That is 5 atoms in total."
+    },
+    {
+      "id": "8-enq-6",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "People describe the Periodic Table as 'like a street of houses, with families living together'. Explain what an analogy is, and how this one works as a model.",
+      "keyIdeas": [
+        "An analogy explains the unfamiliar by something familiar",
+        "Here the columns are families, and family members resemble each other",
+        "It works because the two things share a STRUCTURE, not an appearance"
+      ],
+      "modelAnswer": "An analogy explains something unfamiliar by comparing it with something you already know. This one maps the table onto a street: each column is a family, and members of a family resemble one another - the Group 1 metals are all soft and reactive, the noble gases all unreactive. It works because the two things share a structure rather than an appearance: in both, position tells you about properties. That shared structure is what makes an analogy a model rather than just a pleasing phrase."
+    },
+    {
+      "id": "8-enq-7",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Use the street-and-families analogy to explain to a younger student why sodium and potassium behave alike while sodium and chlorine do not.",
+      "keyIdeas": [
+        "Sodium and potassium share a column, so they are one family",
+        "Chlorine lives in a different family further along",
+        "Point at the part of the analogy that carries the explanation"
+      ],
+      "modelAnswer": "I would say: sodium and potassium live in the same house on the street - the same column, the same family - and members of a family behave alike, so both are soft metals that react hard with water. Chlorine lives much further along the street in a different family altogether, so there is no reason to expect it to behave like sodium, and it does not: it is a poisonous green gas. Using an analogy means pointing at the part of it that carries the explanation, and not stretching it further than it will go."
+    },
+    {
+      "id": "8-enq-8",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Mendeleev left gaps in his table and predicted elements nobody had found. Why did that make the table more convincing rather than less?",
+      "keyIdeas": [
+        "A gap is a prediction, and a prediction can FAIL",
+        "Gallium and germanium were later found and matched",
+        "A theory that risks being wrong and survives is stronger"
+      ],
+      "modelAnswer": "Because a gap is a prediction, and a prediction can fail. Mendeleev was not saying 'something is missing'; he was saying an element exists with roughly this mass and these properties - a claim anyone could have shown to be false. When gallium and germanium were found and matched, the table had survived a test it might have failed. A theory that takes that risk and comes through is far stronger than one that merely tidies up what is already known, and it took decades of other people's work to settle."
     }
   ],
   "assessment": {

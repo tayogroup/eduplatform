@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.583Z",
+  "generatedAt": "2026-09-17T18:05:40.756Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -36,7 +36,8 @@
       "7Cp.05",
       "7Cp.06",
       "7Cp.07",
-      "7TWSp.05"
+      "7TWSp.05",
+      "7TWSc.04"
     ],
     "objectives": [
       {
@@ -86,6 +87,12 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Know the meaning of hazard symbols, and consider them when planning practical work."
+      },
+      {
+        "code": "7TWSc.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Take appropriately accurate and precise measurements, explaining why accuracy and precision are important."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -966,6 +973,19 @@
         "Conductor"
       ],
       "modelAnswer": "Acid example: lemon or lime juice, or vinegar - it tastes sour. Alkali example: soapy water or baking soda solution - it feels soapy or slippery."
+    },
+    {
+      "id": "7-enq-5",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You are measuring the density of a stone. Explain the difference between an accurate measurement and a precise one, and why each matters here.",
+      "keyIdeas": [
+        "Accurate: close to the true value",
+        "Precise: repeated readings close to EACH OTHER",
+        "You can be precise and consistently wrong"
+      ],
+      "modelAnswer": "Accurate means close to the true value; precise means repeated readings agree closely with one another. They are not the same thing: a balance that has not been zeroed can read 24.1, 24.1, 24.1 grams - beautifully precise, and wrong every time. For density I divide mass by volume, so an error in either carries straight into the answer, and a small error in a small volume matters a great deal. That is why I zero the balance, read the cylinder at eye level, and repeat."
     }
   ],
   "assessment": {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:54:32.913Z",
+  "generatedAt": "2026-09-17T18:05:40.705Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -38,7 +38,8 @@
       "7ESs.02",
       "7ESs.03",
       "7TWSm.02",
-      "7TWSp.02"
+      "7TWSp.02",
+      "7TWSa.01"
     ],
     "objectives": [
       {
@@ -100,6 +101,12 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Describe how scientific hypotheses can be supported or contradicted by evidence from an enquiry."
+      },
+      {
+        "code": "7TWSa.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe the accuracy of predictions, based on results, and suggest why they were or were not accurate."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -989,6 +996,19 @@
         "Solar System"
       ],
       "modelAnswer": "The tides are caused mainly by the gravitational pull of the Moon (with a smaller pull from the Sun) drawing the ocean water into bulges. At new Moon and full Moon the Sun and Moon line up, so their pulls combine to give especially large spring tides."
+    },
+    {
+      "id": "7-enq-3",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You predicted a bag would weigh the same on the Moon as on Earth. The forcemeter reads about a sixth. Was the prediction accurate, and why did it fail?",
+      "keyIdeas": [
+        "Not accurate - it confused mass with weight",
+        "Mass is unchanged; weight is the pull of gravity",
+        "Say WHY it failed, not only that it did"
+      ],
+      "modelAnswer": "It was not accurate, and the reason is that I predicted about the wrong quantity. The bag's mass does not change, and that is probably what I had in mind, but a forcemeter measures weight, which is the pull of gravity on that mass. The Moon's gravity is about a sixth of Earth's, so the reading falls to about a sixth. The prediction failed through a confusion in my understanding rather than an error in the measurement - worth saying, because the two are put right in completely different ways."
     }
   ],
   "assessment": {

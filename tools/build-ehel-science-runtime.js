@@ -234,8 +234,8 @@ const CAMBRIDGE_OBJECTIVES = {
   "6-5": ["6Pe.01", "6TWSp.05", "6TWSc.01", "6TWSc.06", "6TWSa.04", "6TWSm.02",
           "6SIC.01", "6SIC.02"],
   // ── Stage 7 (0893) ──
-  "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01"],
-  "7-2": ["7Cm.01", "7Cm.02", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01"],
+  "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01", "7SIC.04"],
+  "7-2": ["7Cm.01", "7Cm.02", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01", "7TWSm.01"],
   // This unit was badly under-mapped, because its outcomes list is short and
   // misleading and I mapped from it. Its concepts are Gravity, Mass and Weight,
   // Calculating Weight, The Solar System, Movement in Space and The Tides — so
@@ -248,18 +248,22 @@ const CAMBRIDGE_OBJECTIVES = {
   // the tides concept: stores transferring into one another as an event runs,
   // and every transfer spilling some energy as heat too thinly spread to use.
   "7-3": ["7Pf.01", "7Pf.02", "7Pf.03", "7Pf.04", "7Cm.05", "7ESs.01", "7ESs.02",
-          "7ESs.03", "7TWSm.02", "7TWSp.02"],
-  "7-4": ["7Bp.01", "7Bp.02", "7Bp.03", "7Bp.04", "7TWSc.01"],
-  "7-5": ["7Cm.03", "7Cp.01", "7Cp.02", "7Cp.03", "7Cp.05", "7Cp.06", "7Cp.07", "7TWSp.05"],
-  "7-6": ["7Ps.01", "7Ps.02", "7ESp.01", "7ESp.02", "7ESs.04", "7TWSc.05"],
-  "7-7": ["7Bs.01", "7Be.01", "7Be.02", "7TWSp.04", "7TWSa.03", "7SIC.02"],
+          "7ESs.03", "7TWSm.02", "7TWSp.02", "7TWSa.01"],
+  "7-4": ["7Bp.01", "7Bp.02", "7Bp.03", "7Bp.04", "7TWSc.01", "7TWSc.06"],
+  "7-5": ["7Cm.03", "7Cp.01", "7Cp.02", "7Cp.03", "7Cp.05", "7Cp.06", "7Cp.07",
+          "7TWSp.05", "7TWSc.04"],
+  "7-6": ["7Ps.01", "7Ps.02", "7ESp.01", "7ESp.02", "7ESs.04", "7TWSc.05", "7SIC.05"],
+  "7-7": ["7Bs.01", "7Be.01", "7Be.02", "7TWSp.01", "7TWSp.04", "7TWSc.02",
+          "7TWSa.03", "7SIC.02"],
   // 7Cp.04 on the gas tests the unit teaches by name: "Carbon dioxide turns
   // limewater cloudy and can put out a burning splint. Oxygen will relight a
   // glowing splint." 7Cc.02 is NOT claimed — the unit names a precipitate as one
   // of the signs a reaction has happened, but never explains why one forms from
   // soluble reactants, which is what the objective asks for.
-  "7-8": ["7Cc.01", "7Cc.03", "7Cc.04", "7Cp.04", "7TWSc.05", "7TWSc.07"],
-  "7-9": ["7Pe.01", "7Pe.02", "7Pe.03", "7Pe.04", "7Pe.05"],
+  "7-8": ["7Cc.01", "7Cc.03", "7Cc.04", "7Cp.04", "7TWSp.03", "7TWSc.05", "7TWSc.07",
+          "7TWSa.02", "7TWSa.05"],
+  "7-9": ["7Pe.01", "7Pe.02", "7Pe.03", "7Pe.04", "7Pe.05", "7TWSc.03", "7TWSa.04",
+          "7SIC.03"],
   // ── Stage 8 (0893) ──
   // 8TWSp.04: the germination investigation is planned with variables controlled
   // explicitly — "Each jar changes only ONE condition… you keep everything the
@@ -269,12 +273,14 @@ const CAMBRIDGE_OBJECTIVES = {
   // with: habitats within an ecosystem, invasive species, and bioaccumulation up
   // a food chain. The unit's own subject — plant reproduction — is Stage 9 in
   // 0893, so before this it claimed almost nothing at its own stage.
-  "8-1": ["8SIC.02", "8TWSp.04", "8Be.01", "8Be.02", "8Be.03"],
-  "8-2": ["8Bp.01", "8Bp.03"],
-  "8-3": ["8Pf.01", "8Pf.02", "8TWSm.03", "8TWSc.02", "8TWSc.04"],
-  "8-4": ["8Cc.06", "8TWSm.03"],
-  "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.05", "8TWSp.03", "8TWSa.05"],
-  "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04"],
+  "8-1": ["8SIC.02", "8TWSp.01", "8TWSp.04", "8Be.01", "8Be.02", "8Be.03"],
+  "8-2": ["8Bp.01", "8Bp.03", "8SIC.04"],
+  "8-3": ["8Pf.01", "8Pf.02", "8TWSm.03", "8TWSc.02", "8TWSc.03", "8TWSc.04",
+          "8TWSa.01", "8TWSa.02"],
+  "8-4": ["8Cc.06", "8TWSm.01", "8TWSm.02", "8TWSm.03", "8SIC.01"],
+  "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.05", "8TWSp.03", "8TWSp.05", "8TWSc.05",
+          "8TWSa.05"],
+  "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04", "8TWSa.03"],
   // 8Bs.02-8Bs.04 are claimed on the passage CONCEPT_INSERTS continues concept 4
   // with: blood components, the alveolar structure that makes gas exchange
   // possible, and the diffusion of oxygen and carbon dioxide across it. 8Bs.01
@@ -284,7 +290,8 @@ const CAMBRIDGE_OBJECTIVES = {
   // digestion concept: hinge and ball-and-socket joints identified, and
   // antagonistic muscle pairs explained at a hinge — the elbow explicitly, and
   // the jaw the learner is chewing with.
-  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8Bs.01", "8Bs.02", "8Bs.03", "8Bs.04", "8TWSc.07", "8TWSa.05"],
+  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8Bs.01", "8Bs.02", "8Bs.03", "8Bs.04",
+          "8TWSc.06", "8TWSc.07", "8TWSa.05"],
   // 8ESs.01-8ESs.02 are claimed on the passage CONCEPT_INSERTS continues the
   // rock cycle concept with: asteroids as leftover rock smaller than any planet,
   // and a galaxy as stars, planetary systems and star-forming dust and gas. The
@@ -297,12 +304,14 @@ const CAMBRIDGE_OBJECTIVES = {
   // 8SIC.05 on the closing turn of the climate passage, which is a discussion of
   // exactly what the objective asks — burning carbon locked away for millions of
   // years changing the climate, not the weather.
-  "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02", "8SIC.05", "8ESs.01", "8ESs.02", "8ESc.01", "8ESc.02", "8ESc.03"],
+  "8-8": ["8TWSp.02", "8TWSc.01", "8TWSc.07", "8SIC.02", "8SIC.05", "8ESs.01", "8ESs.02",
+          "8ESc.01", "8ESc.02", "8ESc.03"],
   // Both Planet Earth objectives are claimed on passages CONCEPT_INSERTS adds:
   // 8ESp.01 on concept 6, which attributes the Earth's field to its moving iron
   // core, and 8ESp.02 on concept 2, which teaches renewable and non-renewable
   // resources at the stage that examines them.
-  "8-9": ["8Pe.01", "8Pe.02", "8Pe.03", "8ESp.01", "8ESp.02", "8TWSm.03", "8TWSc.02"],
+  "8-9": ["8Pe.01", "8Pe.02", "8Pe.03", "8ESp.01", "8ESp.02", "8TWSm.03", "8TWSc.02",
+          "8TWSa.04", "8SIC.03"],
 };
 
 // Where a unit teaches content its own stage does not carry, the mapping says so

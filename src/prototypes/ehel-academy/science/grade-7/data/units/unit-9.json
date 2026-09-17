@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.679Z",
+  "generatedAt": "2026-09-17T18:05:40.864Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -33,7 +33,10 @@
       "7Pe.02",
       "7Pe.03",
       "7Pe.04",
-      "7Pe.05"
+      "7Pe.05",
+      "7TWSc.03",
+      "7TWSa.04",
+      "7SIC.03"
     ],
     "objectives": [
       {
@@ -65,6 +68,24 @@
         "strand": "Physics",
         "subStrand": "Electricity and magnetism",
         "text": "Use diagrams and conventional symbols to represent, make and compare circuits that include cells, switches, lamps, buzzers and ammeters."
+      },
+      {
+        "code": "7TWSc.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Evaluate whether measurements and observations have been repeated sufficiently to be reliable."
+      },
+      {
+        "code": "7TWSa.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Evaluate experiments and investigations, and suggest improvements, explaining any proposed changes."
+      },
+      {
+        "code": "7SIC.03",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Evaluate issues which involve and/or require scientific understanding."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -947,6 +968,45 @@
         "Wire"
       ],
       "modelAnswer": "Current is measured in amps, symbol A."
+    },
+    {
+      "id": "7-enq-12",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You measured the current three times and got 0.24 A, 0.25 A, 0.24 A. Your partner measured once and got 0.31 A. Whose result is reliable, and how do you decide?",
+      "keyIdeas": [
+        "Judge by the SPREAD of the repeats",
+        "Three readings agreeing within 0.01 A are repeatable",
+        "One reading cannot be checked against anything"
+      ],
+      "modelAnswer": "Mine, and not because it is mine: three readings agreeing within 0.01 A show the measurement is repeatable, so a fourth would very likely land in the same place. A single reading cannot be checked against anything - 0.31 A might be correct, or the meter might have been misread, and one number gives no way to tell. Reliability is judged by how closely repeats agree, and three is usually enough when they agree that well."
+    },
+    {
+      "id": "7-enq-13",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "In your circuit investigation the readings drifted steadily downwards all afternoon. Evaluate the experiment and suggest an improvement, explaining why it would help.",
+      "keyIdeas": [
+        "The cell was running down as the work went on",
+        "Later readings had a weaker push behind them",
+        "Use a fixed power supply, or re-measure the first circuit at the end"
+      ],
+      "modelAnswer": "The weakness is that the cell was running down while I worked, so later readings were taken with less push behind them than earlier ones. That means part of the difference I recorded was the passing of time rather than the thing I was testing. I would use a mains power supply set to a fixed voltage, because it does not weaken. If none is available, I would re-measure my very first circuit at the end: if it now reads lower, I know the drift is the cell and I can say so."
+    },
+    {
+      "id": "7-enq-14",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A village is offered either a connection to the national grid or its own solar panels and batteries. Evaluate the issue using science, and say what evidence would decide it.",
+      "keyIdeas": [
+        "Weigh both sides rather than choosing one",
+        "Solar: no fuel, but storage and nothing at night",
+        "The deciding evidence: demand, sunshine hours, distance to the grid"
+      ],
+      "modelAnswer": "Both have a real case. The grid supplies power at any hour and carries a heavy load, but the village is far from it and the line would be long, costly and easily broken. Solar needs no fuel and no line, but generates only in daylight, so it leans on batteries, and batteries wear out and limit how much can be drawn at once. The evidence that would decide it: how much power the village actually needs and when, how many hours of strong sunshine it gets in its cloudiest month, and the distance to the nearest grid line. Evaluating an issue means naming what would change your mind, not picking a side first."
     }
   ],
   "assessment": {

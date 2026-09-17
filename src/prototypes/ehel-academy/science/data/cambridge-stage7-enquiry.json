@@ -1,0 +1,95 @@
+{
+  "_comment": "Cambridge 0893's Thinking and Working Scientifically and Science in Context objectives for Stage 7, authored as reasoning prompts. Same vehicle and reasoning as the Stage 5 and 6 fixtures. Lower Secondary raises the demand: 'is this hypothesis testable', 'evaluate sources and know some are biased', 'accuracy AND precision', 'evaluate an issue' - so these prompts carry more of the teaching than the primary ones, and several state the distinction the course never makes.",
+  "_vehicle": "reasoningPrompts, rendered as 'Explain Your Thinking' and marked by reasoningHits() against keyIdeas. complete() is add-only, so adding prompts cannot un-tick a finished section. Ids stay `7-enq-N`, because the shell stores completion by item id.",
+  "curriculumCode": "0893",
+  "stage": 7,
+  "source": "Authored 2026-09-17 against Cambridge Lower Secondary Science 0893 Stage 7, anchored to the investigations in Grade 7 units 1-9. No Teacher's Resource was supplied for this stage.",
+  "minimumCovered": 14,
+  "_minimumCovered": "One prompt per unclaimed Stage 7 TWS/SIC objective. Coverage is a number that only goes up.",
+  "prompts": [
+    {
+      "id": "7-enq-1", "unit": 1, "codes": ["7SIC.04"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "Robert Hooke saw cells in a slice of cork and gave them their name. Why was that not enough on its own to establish cell theory, and what did other scientists have to do?",
+      "keyIdeas": ["One observation by one person is a starting point, not a conclusion", "Others had to repeat it and extend it to living tissue", "Peer review: work is examined by scientists who did not do it"],
+      "modelAnswer": "Hooke's observation was a beginning, not a conclusion: he looked at one dead material, cork, through one early microscope. Cell theory needed others to repeat the work and extend it - to leaves, blood, skin - and to find cells in living tissue as well as dead. That checking by other scientists is what we now call peer review: before a claim is accepted it is examined by people who did not make it, and who have every reason to look for its faults."
+    },
+    {
+      "id": "7-enq-2", "unit": 2, "codes": ["7TWSm.01"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "The particle model draws atoms as small solid spheres. Give two strengths of that model and two things it gets wrong.",
+      "keyIdeas": ["Strength: it explains states, pressure and diffusion with one picture", "Strength: simple enough to draw and reason with", "Limitation: an atom is mostly empty space, and the model shows no charge"],
+      "modelAnswer": "Its strengths: it explains a great deal with one picture - why a gas can be squashed and a solid cannot, why a smell crosses a room, why heating melts a solid. And it is simple enough to draw, so you can reason with it on paper. Its limitations: an atom is not a solid ball but mostly empty space with a tiny nucleus; and the model shows no charge at all, so it cannot explain why atoms join together in the first place. A model is judged by what it lets you predict, not by whether it is a photograph."
+    },
+    {
+      "id": "7-enq-3", "unit": 3, "codes": ["7TWSa.01"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "You predicted a bag would weigh the same on the Moon as on Earth. The forcemeter reads about a sixth. Was the prediction accurate, and why did it fail?",
+      "keyIdeas": ["Not accurate - it confused mass with weight", "Mass is unchanged; weight is the pull of gravity", "Say WHY it failed, not only that it did"],
+      "modelAnswer": "It was not accurate, and the reason is that I predicted about the wrong quantity. The bag's mass does not change, and that is probably what I had in mind, but a forcemeter measures weight, which is the pull of gravity on that mass. The Moon's gravity is about a sixth of Earth's, so the reading falls to about a sixth. The prediction failed through a confusion in my understanding rather than an error in the measurement - worth saying, because the two are put right in completely different ways."
+    },
+    {
+      "id": "7-enq-4", "unit": 4, "codes": ["7TWSc.06"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "You are identifying an insect from photographs online, and two sources disagree about what it is. How do you judge which to trust, and how might a source be biased?",
+      "keyIdeas": ["Prefer the source that shows HOW it identified it", "A museum or university has less reason to mislead", "Bias: a source selling something, or with a view to promote"],
+      "modelAnswer": "I would prefer the source that shows its reasoning - the features it used, and a key I can follow myself - over one that simply gives a name. A museum, a university or a national wildlife body has less reason to mislead than a blog or a company. Bias does not have to mean lying: a pest-control firm's page about a beetle exists to sell a service, so it will dwell on the damage and not the ecology. Relevance matters too - a guide to European insects may not cover what I found here at all."
+    },
+    {
+      "id": "7-enq-5", "unit": 5, "codes": ["7TWSc.04"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "You are measuring the density of a stone. Explain the difference between an accurate measurement and a precise one, and why each matters here.",
+      "keyIdeas": ["Accurate: close to the true value", "Precise: repeated readings close to EACH OTHER", "You can be precise and consistently wrong"],
+      "modelAnswer": "Accurate means close to the true value; precise means repeated readings agree closely with one another. They are not the same thing: a balance that has not been zeroed can read 24.1, 24.1, 24.1 grams - beautifully precise, and wrong every time. For density I divide mass by volume, so an error in either carries straight into the answer, and a small error in a small volume matters a great deal. That is why I zero the balance, read the cylinder at eye level, and repeat."
+    },
+    {
+      "id": "7-enq-6", "unit": 6, "codes": ["7SIC.05"], "outcomeId": "lo03", "difficulty": "Challenge",
+      "prompt": "Burning fossil fuels released the energy that built modern industry. Explain the global environmental impact, and why it is global rather than local.",
+      "keyIdeas": ["Carbon dioxide traps heat in the atmosphere", "The atmosphere is one shared system", "The effects fall where the fuel was not burned"],
+      "modelAnswer": "Burning coal, oil and gas releases carbon dioxide, which traps heat in the atmosphere and raises average temperatures. The impact is global rather than local because the atmosphere is one connected system: gas released anywhere mixes everywhere within a year or two. That is what makes it so hard to settle - the countries that burned the most fuel are often not the ones now facing the worst drought or the highest seas, so the cost falls where the benefit did not."
+    },
+    {
+      "id": "7-enq-7", "unit": 7, "codes": ["7TWSp.01"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "Two statements: 'Bread goes mouldy faster in a warm place' and 'Mould is unpleasant'. Which is a testable hypothesis, and what makes the other untestable?",
+      "keyIdeas": ["The first predicts something measurable - days to visible mould", "The second is an opinion with nothing to measure", "A testable hypothesis is one an experiment could show to be WRONG"],
+      "modelAnswer": "The first is testable: it predicts something measurable, the days until mould appears, and I can change the temperature and compare. The second is not a hypothesis at all but an opinion, and no measurement could settle it, because 'unpleasant' is not a property of the mould - it is a reaction in the person. The test of a hypothesis is whether an experiment could show it to be wrong. If nothing could, there is nothing to investigate."
+    },
+    {
+      "id": "7-enq-8", "unit": 7, "codes": ["7TWSc.02"], "outcomeId": "lo02", "difficulty": "Core",
+      "prompt": "You are going to compare how fast bread moulds at three temperatures. Decide what equipment you need, and say what each item is for.",
+      "keyIdeas": ["Sealed bags or covered dishes - nothing escapes, nothing new lands", "A thermometer in each place, because 'warm' is not a measurement", "A ruler or squared grid, to measure the mould instead of judging it"],
+      "modelAnswer": "Sealed bags or covered dishes, so spores cannot escape into the room and nothing new can land on the bread - and once sealed they stay sealed. A thermometer in each place, because 'warm' and 'cool' are not measurements and I need the numbers I am claiming. A ruler or a squared transparent grid to measure the patch, so the result is a number rather than my impression. And identical bread from the same loaf, so temperature is the only thing differing."
+    },
+    {
+      "id": "7-enq-9", "unit": 8, "codes": ["7TWSp.03"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "You are about to add magnesium to dilute acid. Predict what will happen, and justify the prediction from what you know rather than guessing.",
+      "keyIdeas": ["Predict gas given off, the metal disappearing, the tube warming", "Justify it from how reactive metals behave with acids", "Name the gas expected, and how you would test for it"],
+      "modelAnswer": "I predict bubbles of gas on the magnesium, the ribbon shrinking and disappearing, and the tube feeling warmer. The justification is that magnesium is a reactive metal, and reactive metals react with dilute acids to give a salt and hydrogen. I expect the gas to be hydrogen, and I would test it with a lit splint and listen for a squeaky pop. That is a prediction from knowledge; a guess would be 'something will happen', with no reason behind it and nothing to check afterwards."
+    },
+    {
+      "id": "7-enq-10", "unit": 8, "codes": ["7TWSa.02"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "Five metals are added to the same acid. Four react faster the more reactive they are. One metal known to be very reactive barely fizzes. Describe the trend and account for the odd result.",
+      "keyIdeas": ["The trend: the more reactive the metal, the faster the reaction", "The quiet one is an anomalous result", "A likely cause: a dull oxide layer, or a mislabelled sample"],
+      "modelAnswer": "The trend is that the more reactive the metal, the faster the reaction - more bubbles, sooner, and more warmth. The metal that barely fizzed is anomalous, because the trend says it should have been among the fastest. The likeliest cause is a dull oxide layer on its surface, which must be scraped away before the acid can reach the metal beneath; it is also possible the sample was mislabelled. I would clean it and repeat rather than record the anomaly as a fact about the metal."
+    },
+    {
+      "id": "7-enq-11", "unit": 8, "codes": ["7TWSa.05"], "outcomeId": "lo03", "difficulty": "Core",
+      "prompt": "You timed how long each of five metals took to stop fizzing. How should those results be presented, and what should a reader be able to read off?",
+      "keyIdeas": ["A bar chart - five separate metals, not a continuous scale", "Order the bars by time, so the trend IS the shape", "The reader should see the reactivity order at a glance"],
+      "modelAnswer": "A bar chart, because the five metals are separate categories rather than points on a continuous scale - there is nothing 'between' magnesium and zinc. One bar per metal, its height the time in seconds, and I would order them shortest to longest so that the reactivity order becomes the shape of the chart. A reader should then see which metal reacted fastest, roughly how much faster, and whether any metal breaks the pattern, without reading a single number."
+    },
+    {
+      "id": "7-enq-12", "unit": 9, "codes": ["7TWSc.03"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "You measured the current three times and got 0.24 A, 0.25 A, 0.24 A. Your partner measured once and got 0.31 A. Whose result is reliable, and how do you decide?",
+      "keyIdeas": ["Judge by the SPREAD of the repeats", "Three readings agreeing within 0.01 A are repeatable", "One reading cannot be checked against anything"],
+      "modelAnswer": "Mine, and not because it is mine: three readings agreeing within 0.01 A show the measurement is repeatable, so a fourth would very likely land in the same place. A single reading cannot be checked against anything - 0.31 A might be correct, or the meter might have been misread, and one number gives no way to tell. Reliability is judged by how closely repeats agree, and three is usually enough when they agree that well."
+    },
+    {
+      "id": "7-enq-13", "unit": 9, "codes": ["7TWSa.04"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "In your circuit investigation the readings drifted steadily downwards all afternoon. Evaluate the experiment and suggest an improvement, explaining why it would help.",
+      "keyIdeas": ["The cell was running down as the work went on", "Later readings had a weaker push behind them", "Use a fixed power supply, or re-measure the first circuit at the end"],
+      "modelAnswer": "The weakness is that the cell was running down while I worked, so later readings were taken with less push behind them than earlier ones. That means part of the difference I recorded was the passing of time rather than the thing I was testing. I would use a mains power supply set to a fixed voltage, because it does not weaken. If none is available, I would re-measure my very first circuit at the end: if it now reads lower, I know the drift is the cell and I can say so."
+    },
+    {
+      "id": "7-enq-14", "unit": 9, "codes": ["7SIC.03"], "outcomeId": "lo03", "difficulty": "Challenge",
+      "prompt": "A village is offered either a connection to the national grid or its own solar panels and batteries. Evaluate the issue using science, and say what evidence would decide it.",
+      "keyIdeas": ["Weigh both sides rather than choosing one", "Solar: no fuel, but storage and nothing at night", "The deciding evidence: demand, sunshine hours, distance to the grid"],
+      "modelAnswer": "Both have a real case. The grid supplies power at any hour and carries a heavy load, but the village is far from it and the line would be long, costly and easily broken. Solar needs no fuel and no line, but generates only in daylight, so it leans on batteries, and batteries wear out and limit how much can be drawn at once. The evidence that would decide it: how much power the village actually needs and when, how many hours of strong sunshine it gets in its cloudiest month, and the distance to the nearest grid line. Evaluating an issue means naming what would change your mind, not picking a side first."
+    }
+  ]
+}

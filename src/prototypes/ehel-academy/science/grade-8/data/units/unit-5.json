@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.821Z",
+  "generatedAt": "2026-09-17T18:05:41.011Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -34,6 +34,8 @@
       "8Cp.02",
       "8Cc.05",
       "8TWSp.03",
+      "8TWSp.05",
+      "8TWSc.05",
       "8TWSa.05"
     ],
     "objectives": [
@@ -66,6 +68,18 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
         "text": "Make predictions of likely outcomes for a scientific enquiry based on scientific knowledge and understanding."
+      },
+      {
+        "code": "8TWSp.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Make risk assessments for practical work to identify and control risks."
+      },
+      {
+        "code": "8TWSc.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Carry out practical work safely, supported by risk assessments where appropriate."
       },
       {
         "code": "8TWSa.05",
@@ -980,6 +994,32 @@
         "Insoluble"
       ],
       "modelAnswer": "In filtration you pour the mixture through filter paper or cloth. The insoluble solid is too big to pass through and is trapped as the residue; the liquid passes through as the filtrate."
+    },
+    {
+      "id": "8-enq-9",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You are going to separate salt from water by evaporating it over a flame. Write a risk assessment: name each risk and how you would control it.",
+      "keyIdeas": [
+        "Burns from the flame and from glassware that stays hot",
+        "Spitting solution near the end, so eye protection",
+        "Name the HARM and pair each with an action"
+      ],
+      "modelAnswer": "Risk one: burns from the flame and from hot glassware, which stays hot long after it looks cool - controlled by using tongs, standing the dish on a heatproof mat, and not touching it until it has cooled. Risk two: as the last of the water goes the solution spits - controlled by wearing eye protection, heating gently, and taking the flame away before the dish is quite dry. Risk three: loose hair or sleeves near a flame - controlled by tying hair back and rolling sleeves. A risk assessment names the harm, not just the hazard, and pairs each one with an action."
+    },
+    {
+      "id": "8-enq-10",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Halfway through the evaporation your partner leans across the flame to reach the tongs. What do you do, and what does this show about a risk assessment?",
+      "keyIdeas": [
+        "Stop, and move the equipment rather than the person over the flame",
+        "An assessment only works if it is still being followed",
+        "Reassess when the work changes"
+      ],
+      "modelAnswer": "I would say stop, and move the tongs to their side of the bench rather than have anyone reach across a flame. What it shows is that an assessment written at the start is only useful if it is still being followed halfway through - most accidents happen in a moment nobody planned for. It also shows that an assessment should be revisited as the work changes: had the tongs been placed within reach at the start, the reaching-across risk would never have existed."
     }
   ],
   "assessment": {

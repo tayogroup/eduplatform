@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.741Z",
+  "generatedAt": "2026-09-17T18:05:40.927Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -30,7 +30,8 @@
     "stage": 8,
     "objectiveCodes": [
       "8Bp.01",
-      "8Bp.03"
+      "8Bp.03",
+      "8SIC.04"
     ],
     "objectives": [
       {
@@ -44,6 +45,12 @@
         "strand": "Biology",
         "subStrand": "Life processes",
         "text": "Discuss how human growth, development and health can be affected by lifestyle, including diet and smoking."
+      },
+      {
+        "code": "8SIC.04",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Describe how people develop and use scientific understanding as individuals and through collaboration, e.g. through peer-review."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending",
@@ -936,6 +943,19 @@
         "Uterus (womb)"
       ],
       "modelAnswer": "Correct order: zygote (the single cell at fertilisation), then embryo (first eight weeks, main parts forming), then fetus (from eight weeks until birth, clearly human and growing)."
+    },
+    {
+      "id": "8-enq-2",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A single scientist announces a new finding about human fertility. Why is that not yet scientific knowledge, and what has to happen first?",
+      "keyIdeas": [
+        "One person's result is a claim, not knowledge",
+        "Peer review: other scientists examine the method before publication",
+        "Others must repeat it and get the same result"
+      ],
+      "modelAnswer": "Because one person's result is a claim. Before it becomes knowledge it is written up with the method in full and sent to other scientists in the field, who read it looking for faults - that is peer review, and it happens before publication. Then others must repeat the work and get the same result; a finding nobody else can reproduce does not survive. Science advances through individuals having ideas and a community checking them, and the checking is the slower and the more important half."
     }
   ],
   "assessment": {

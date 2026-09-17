@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-03T12:36:47.920Z",
+  "generatedAt": "2026-09-17T18:05:41.116Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -35,7 +35,9 @@
       "8ESp.01",
       "8ESp.02",
       "8TWSm.03",
-      "8TWSc.02"
+      "8TWSc.02",
+      "8TWSa.04",
+      "8SIC.03"
     ],
     "objectives": [
       {
@@ -79,6 +81,18 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
         "text": "Decide what equipment is required to carry out an investigation or experiment and use it appropriately."
+      },
+      {
+        "code": "8TWSa.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Evaluate experiments and investigations, and suggest improvements, explaining any proposed changes."
+      },
+      {
+        "code": "8SIC.03",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Evaluate issues which involve and/or require scientific understanding."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending",
@@ -975,6 +989,32 @@
         "Insulator"
       ],
       "modelAnswer": "In a parallel circuit each branch gets the full voltage, so bulbs are bright, and each branch has its own loop, so one branch can fail without stopping the others."
+    },
+    {
+      "id": "8-enq-14",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You counted how many paper clips an electromagnet held at three different numbers of coil turns, once each. Evaluate the investigation and suggest two improvements.",
+      "keyIdeas": [
+        "One trial per setting cannot separate a real difference from luck",
+        "Paper clips are a coarse measure and vary between clips",
+        "Repeat and average; and find a finer measure"
+      ],
+      "modelAnswer": "The weakness is that each setting was measured once, so I cannot tell a real difference from a lucky one. Counting paper clips is also coarse: one clip is a large step, and clips differ in mass and in how they hook together, so where the chain breaks is partly chance. I would repeat each setting at least three times and average, which shows whether the differences are real. And I would hang a small container and add sand until the load drops, because that measures the pull as a continuous quantity instead of in clip-sized jumps."
+    },
+    {
+      "id": "8-enq-15",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A town must decide whether to run its new clinic's vaccine fridges from the grid or from solar panels with batteries. Evaluate the issue, and say what evidence would decide it.",
+      "keyIdeas": [
+        "Reliability is the real question, because vaccines spoil if a fridge warms",
+        "Grid: a strong supply, but this town has outages",
+        "Deciding evidence: outage frequency, sunshine in the cloudiest month, cooling needed"
+      ],
+      "modelAnswer": "The scientific heart of this is not cost but reliability, because vaccines spoil if a fridge warms for even a few hours - so a strong supply that fails occasionally is worse than a weaker one that never does. The grid delivers plenty of power, but this town has outages. Solar needs no fuel and no line, yet it generates only in daylight and depends on batteries, which lose capacity over years. The evidence I would want: how often and for how long the grid actually fails here, how many hours of strong sun the town gets in its cloudiest month, and how much cooling the clinic needs. The best answer may well be both, with the grid as backup."
     }
   ],
   "assessment": {

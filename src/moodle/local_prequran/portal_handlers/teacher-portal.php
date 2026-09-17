@@ -292,6 +292,10 @@ $quizbystudent = [];
 // no score and no pass flag, and quizCell() prints a coloured percentage pill
 // for everything it finds in the quiz list.
 $writtenbystudent = [];
+// What the child WROTE, beside how much of it they wrote. See
+// pqpr_drafts_from_state(): these rows carry words and a time and never a
+// mark, because nothing marked them.
+$draftsbystudent = [];
 // Stage capstones, per learner. Separate again from both indexes above: the
 // capstone is written work with no score at all, so it belongs beside neither
 // the quiz list nor the answered-counts list.
@@ -317,6 +321,11 @@ if ($progressrows) {
             $att['coursekey'] = $coursekey;
             $att['course'] = $course;
             $writtenbystudent[(int)$row->userid][] = $att;
+        }
+        foreach (pqpr_drafts_from_state($state, (string)$row->unit, (int)$row->timemodified) as $d) {
+            $d['coursekey'] = $coursekey;
+            $d['course'] = $course;
+            $draftsbystudent[(int)$row->userid][] = $d;
         }
         // The stage capstone, one per course. Keyed by course rather than
         // appended to a list: a learner has at most one capstone per subject,
@@ -348,6 +357,10 @@ foreach ($roster as $student) {
         'needs_support' => $summary['average_score'] !== null && $summary['average_score'] < PQPR_SUPPORT_THRESHOLD,
         'recent_quizzes' => array_slice($checkpoints, 0, 5),
         'recent_written' => array_slice($written, 0, 5),
+        // The writing itself, newest unit first. Three, not five: these are
+        // sentences rather than score pills and a roster row has to stay
+        // readable. The full set is on the learner's own state row.
+        'recent_writing' => array_slice(pqpr_sort_checkpoints($draftsbystudent[$studentid] ?? []), 0, 3),
         // Not sliced: a learner has one capstone per subject and at most a
         // handful of subjects run one, so the list is short by construction.
         // Truncation happens per stage, in pqpr_capstone_from_state().

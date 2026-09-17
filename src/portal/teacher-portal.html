@@ -52,6 +52,11 @@
   .capstone-stage p{margin:3px 0 0;font-size:12px;line-height:1.5;white-space:pre-wrap;max-width:62ch}
   a.btn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:6px 11px;background:var(--sky);color:var(--blue);text-decoration:none;font-weight:800;font-size:12px}
   a.btn:hover{border-color:var(--blue2);color:var(--blue2)}
+  .wrote-head{font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin:6px 0 2px}
+  .wrote-line{display:block;margin:0 0 4px;font-size:12.5px;line-height:1.45}
+  .wrote-line q{display:block;quotes:'\201C' '\201D'}
+  .wrote-line q:before{content:open-quote}
+  .wrote-line q:after{content:close-quote}
 </style>
 </head>
 <body>
@@ -214,6 +219,23 @@
   // No pill colour and no pass/fail: nothing scored these. It also measures
   // engagement rather than quality, so it says "answered", never "correct", and
   // it never feeds needs_support — that flag is a judgement about marked work.
+  // THE WRITING ITSELF, under the counts. A count says the child is working;
+  // the sentence is the only thing that can show a teacher they have
+  // misunderstood the question, which is why the course asked for one.
+  //
+  // No pill, no colour, no mark of any kind - nothing graded this and a
+  // decoration here would invent an assessment. The word count is the
+  // learner's own; the text is clamped server-side and escaped here.
+  function writingRows(s) {
+    const rows = s.recent_writing || [];
+    if (!rows.length) return "";
+    return `<div class="wrote-head muted">In their own words</div>`
+      + rows.map((d) =>
+        `<div class="wrote-line"><span class="muted">${esc(d.label || "Section")}`
+        + `${d.words ? esc(" · " + d.words + (Number(d.words) === 1 ? " word" : " words")) : ""}</span>`
+        + `<q>${esc(d.text || "")}${d.truncated ? "\u2026" : ""}</q></div>`).join("");
+  }
+
   function writtenCell(s) {
     const total = Number(s.questions_total) || 0;
     // A learner with a capstone but no quizzes has plainly done work, so the
@@ -225,7 +247,7 @@
       `<div class="quiz-line"><span class="pill">${esc((Number(a.answered) || 0) + " / " + (Number(a.total) || 0))}</span>`
       + `<span>${esc(a.label || "Section")}</span>`
       + `<span class="muted">${esc(a.course || "")}</span></div>`).join("");
-    return head + rows;
+    return head + rows + writingRows(s);
   }
 
   // What the child scored in the learner app: the headline, then the five most

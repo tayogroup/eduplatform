@@ -274,6 +274,79 @@ function pqpr_learning_day(int $userid): array {
  */
 const PQPR_NAMED_ATTEMPT_SECTIONS = ['quiz', 'reflect', 'assessment', 'challenge'];
 
+/**
+ * The WRITING itself inside one unit's reduced state, as flat display rows.
+ *
+ * pqpr_attempts_from_state() above reports how MANY answers a learner wrote.
+ * This reports WHAT they wrote. Both are needed and neither replaces the other:
+ * "4 of 6 answered" tells a parent their child is working; it cannot tell them
+ * the child has misunderstood the question, which is the thing a free-text
+ * answer is uniquely able to show and the whole reason the course asks for one.
+ *
+ * SAME RULE AS THE ROW SET ABOVE, and it matters more here: no `score`, no
+ * `passed`, no mark of any kind. A machine cannot judge this writing - that is
+ * why it is free text - and a portal that decorated it with a pill would be
+ * inventing an assessment out of a sentence nobody graded. These rows carry the
+ * words and the time, and nothing that looks like a verdict.
+ *
+ * THE TEXT IS CLAMPED HERE, not only where it is printed, because the ingest
+ * does NOT clamp it: externallib_progress stores `'text' => $ev['text'] ?? ''`
+ * raw, with no cap and no control-character strip, unlike every other text it
+ * accepts. So a state row can hold an arbitrarily long draft and this is the
+ * first place with a chance to bound it. Flagged rather than fixed at the
+ * ingest: clamping there would silently truncate writing learners have already
+ * done, across every subject, and that is a decision rather than a patch.
+ *
+ * Control characters go the same way they go in the tutoring sanitiser - a
+ * textarea's newlines included, since these rows are rendered inline.
+ */
+const PQPR_DRAFT_MAX_CHARS = 600;
+
+function pqpr_drafts_from_state(array $state, string $unit, int $unitupdated): array {
+    $out = [];
+    foreach ((array)($state['drafts'] ?? []) as $section => $draft) {
+        $section = (string)$section;
+        $draft = (array)$draft;
+        $text = $draft['text'] ?? '';
+        if (!is_scalar($text)) {
+            continue;
+        }
+        // Newlines included: these are rendered on one line beside a label.
+        $text = preg_replace('/[\x00-\x1f\x7f]+/u', ' ', (string)$text);
+        $text = trim(preg_replace('/\s+/u', ' ', (string)$text));
+        if ($text === '') {
+            continue;                       // an empty box is not a draft
+        }
+        $full = $text;
+        if (function_exists('mb_strlen') ? mb_strlen($text) > PQPR_DRAFT_MAX_CHARS
+                : strlen($text) > PQPR_DRAFT_MAX_CHARS) {
+            $text = (function_exists('mb_substr')
+                ? mb_substr($text, 0, PQPR_DRAFT_MAX_CHARS)
+                : substr($text, 0, PQPR_DRAFT_MAX_CHARS));
+        }
+        // The word count the client sent is what the learner's own screen
+        // showed them, so it is preferred; a row written before the client sent
+        // one falls back to counting the text we have.
+        $words = isset($draft['words']) && (int)$draft['words'] > 0
+            ? (int)$draft['words']
+            : count(array_filter(explode(' ', $full), static function ($w) { return $w !== ''; }));
+        $out[] = [
+            'unit' => $unit,
+            'section' => $section,
+            'label' => pqpr_unit_label($unit) . ' · ' . pqpr_section_label($section),
+            'text' => $text,
+            'truncated' => $text !== $full,
+            'words' => $words,
+            // `at` is the client's ISO stamp for the save; the row's own
+            // timemodified is when the server last touched the unit. Prefer the
+            // first and fall back, the way the rows above do.
+            'written_at' => is_scalar($draft['at'] ?? null) ? (string)$draft['at'] : '',
+            'unit_updated' => $unitupdated,
+        ];
+    }
+    return $out;
+}
+
 function pqpr_attempts_from_state(array $state, string $unit, int $unitupdated): array {
     $out = [];
     foreach ((array)($state['attempted'] ?? []) as $section => $counts) {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:16:49.065Z",
+  "generatedAt": "2026-09-17T17:48:56.896Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -33,8 +33,12 @@
       "6Pf.02",
       "6Pf.03",
       "6Pf.04",
+      "6TWSp.02",
       "6TWSp.03",
       "6TWSc.05",
+      "6TWSa.01",
+      "6TWSa.03",
+      "6TWSm.01",
       "6TWSm.02"
     ],
     "objectives": [
@@ -63,6 +67,12 @@
         "text": "Describe the effect of different forces on an object at rest and in motion."
       },
       {
+        "code": "6TWSp.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Know the features of the five main types of scientific enquiry."
+      },
+      {
         "code": "6TWSp.03",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Scientific enquiry: purpose and planning",
@@ -73,6 +83,24 @@
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
         "text": "Take appropriately accurate measurements."
+      },
+      {
+        "code": "6TWSa.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe the accuracy of predictions, based on results."
+      },
+      {
+        "code": "6TWSa.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Make a conclusion from results informed by scientific understanding."
+      },
+      {
+        "code": "6TWSm.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Models and representations",
+        "text": "Describe how a model can help us understand and describe scientific phenomena and ideas."
       },
       {
         "code": "6TWSm.02",
@@ -968,6 +996,58 @@
         "Water resistance"
       ],
       "modelAnswer": "A force can squeeze (compress), stretch, bend, or twist an object. For example, squeezing dough or stretching a rubber band changes its shape."
+    },
+    {
+      "id": "6-enq-13",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Testing which surface slows a toy car most is a fair test. Name a different kind of enquiry you could do about forces, and say how it differs.",
+      "keyIdeas": [
+        "A fair test changes one thing and measures the result",
+        "Pattern seeking looks for a relationship you cannot control",
+        "The question decides which enquiry to use"
+      ],
+      "modelAnswer": "The surface test is a fair test: I change the surface and measure the distance, keeping the car and the slope the same. Pattern seeking is different - I could measure how far many children can throw a ball and look for a relationship with their height, without being able to control anything about them. There is also sorting and classifying, observing over time, and research. The question I am asking is what decides which one fits."
+    },
+    {
+      "id": "6-enq-14",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You predicted the car would go furthest on glass, then wood, then carpet. It did go furthest on glass, but wood and carpet came out almost equal. How accurate was your prediction?",
+      "keyIdeas": [
+        "Partly accurate - the top of the order was right",
+        "The part that failed: wood and carpet did not separate",
+        "Say what the results showed, not just right or wrong"
+      ],
+      "modelAnswer": "Partly accurate. I was right that glass would be furthest, and right about the reason - the smoothest surface gives the least friction. I was wrong to expect a clear gap between wood and carpet; they came out almost equal, which suggests those two are closer in roughness than I thought, or that my measurements were not precise enough to separate them. Saying which part held and which did not is more useful than calling the whole prediction right or wrong."
+    },
+    {
+      "id": "6-enq-15",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Your car travelled 82 cm on glass, 45 cm on wood and 41 cm on carpet. Write a conclusion, and explain it using what you know about forces.",
+      "keyIdeas": [
+        "State what the results show",
+        "Smoother surface, less friction, further travel",
+        "Name friction as the force acting"
+      ],
+      "modelAnswer": "I conclude that the smoother the surface, the further the car travels: 82 cm on glass against 45 and 41 on the rougher surfaces. The reason is friction, a force acting between two surfaces that rub together and opposing the movement. A rougher surface produces more friction, so more of the car's movement is turned into heat and it stops sooner."
+    },
+    {
+      "id": "6-enq-16",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "We draw forces as arrows on a picture of an object. How does that model help us understand forces, and what does it leave out?",
+      "keyIdeas": [
+        "It makes an invisible force visible",
+        "Length shows size, direction shows which way",
+        "It leaves out the material, and how forces change over time"
+      ],
+      "modelAnswer": "A force is invisible, and the arrow model turns it into something you can see and compare: the direction shows which way it pushes or pulls, and the length shows how big it is, so you can tell at a glance whether the forces balance. What it leaves out is nearly everything else - it says nothing about what the object is made of, and it shows one frozen moment rather than how the forces change as the object moves. A model is useful because it leaves things out, and you have to know which things."
     }
   ],
   "assessment": {

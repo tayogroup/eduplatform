@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:16:49.098Z",
+  "generatedAt": "2026-09-17T17:48:56.994Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -32,7 +32,11 @@
       "6Pe.01",
       "6TWSp.05",
       "6TWSc.01",
-      "6TWSm.02"
+      "6TWSc.06",
+      "6TWSa.04",
+      "6TWSm.02",
+      "6SIC.01",
+      "6SIC.02"
     ],
     "objectives": [
       {
@@ -54,10 +58,34 @@
         "text": "Sort, group and classify objects, materials and living things through testing, observation and using secondary information."
       },
       {
+        "code": "6TWSc.06",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Carry out practical work safely."
+      },
+      {
+        "code": "6TWSa.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Suggest how an investigation could be improved and explain any proposed changes."
+      },
+      {
         "code": "6TWSm.02",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Models and representations",
         "text": "Use models, including diagrams, to represent and describe scientific phenomena and ideas."
+      },
+      {
+        "code": "6SIC.01",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Describe how scientific knowledge and understanding changes over time through the use of evidence gained by enquiry."
+      },
+      {
+        "code": "6SIC.02",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Describe how science is used in their local area."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -958,6 +986,58 @@
         "Battery"
       ],
       "modelAnswer": "Wet skin conducts far better than dry skin, and water may contain ions. Touching a switch with wet hands gives electricity an easy path through you, risking a dangerous shock."
+    },
+    {
+      "id": "6-enq-17",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You are testing which materials conduct electricity. Name two safety rules for this work, and give the reason for each.",
+      "keyIdeas": [
+        "Use cells, never the mains",
+        "Keep hands and materials dry, because water conducts",
+        "Disconnect the cell when you finish"
+      ],
+      "modelAnswer": "Use a cell or a battery and never a mains socket, because the mains carries enough current to stop your heart while a 1.5 V cell cannot. Keep your hands and the materials dry, because water conducts and would turn a safe test into an unsafe one. And disconnect the cell when you finish, so that nothing is left warming up in a closed circuit."
+    },
+    {
+      "id": "6-enq-18",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You tested ten materials in a circuit, and for three of them the lamp glowed very faintly. Suggest an improvement to the investigation and explain why it would help.",
+      "keyIdeas": [
+        "'Very faint' is a judgement by eye",
+        "Use the same fresh cell for every test",
+        "A meter gives a number where a dim lamp gives an opinion"
+      ],
+      "modelAnswer": "The trouble is that 'very faint' is a judgement by eye, and it shifts as the cell runs down - so a material tested last is being tested with a weaker push than one tested first. I would use a fresh cell and keep the same one for all ten tests. Better still I would put a meter in the circuit instead of the lamp, because a number separates a poor conductor from a non-conductor where a dim lamp only gives an opinion."
+    },
+    {
+      "id": "6-enq-19",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "People once thought electricity was a fluid that flowed like water. Why was that a reasonable idea, and what changed it?",
+      "keyIdeas": [
+        "It explained what they could observe",
+        "New experiments gave new evidence",
+        "We still use the word 'current'"
+      ],
+      "modelAnswer": "It was reasonable because it explained what people could see: something moves along a wire, more of it does more work, and it can be stored and let out again. The words we still use - current, flow - come from that idea. What changed it was evidence from new experiments showing that electricity is carried by tiny charged particles, which explains things a fluid cannot, such as why some materials carry it and others refuse. The old idea was not silly; it was the best fit for the evidence of its time."
+    },
+    {
+      "id": "6-enq-20",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Where near you is the difference between a conductor and an insulator being used on purpose?",
+      "keyIdeas": [
+        "Metal inside a wire, plastic around it",
+        "The handles of tools",
+        "Anyone wiring a house or fixing a phone"
+      ],
+      "modelAnswer": "Every wire in the building: metal inside because it conducts, plastic around it because it insulates and keeps the current from reaching your hand or the neighbouring wire. The same choice is in the handle of a screwdriver or a pair of pliers. Anyone wiring a house, fitting a solar panel or repairing a phone is making that decision constantly - which part must carry the current, and which part must refuse to."
     }
   ],
   "assessment": {

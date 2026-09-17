@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:16:49.037Z",
+  "generatedAt": "2026-09-17T17:48:56.860Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -32,7 +32,11 @@
       "6Cc.01",
       "6Cc.04",
       "6Cc.05",
+      "6TWSp.01",
       "6TWSc.01",
+      "6TWSc.03",
+      "6TWSc.08",
+      "6TWSa.02",
       "6TWSm.02"
     ],
     "objectives": [
@@ -55,10 +59,34 @@
         "text": "Observe and describe the evidence that a chemical reaction has taken place (limited to a gas being produced, colour change and change in temperature)."
       },
       {
+        "code": "6TWSp.01",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Ask scientific questions and select appropriate scientific enquiries to use."
+      },
+      {
         "code": "6TWSc.01",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
         "text": "Sort, group and classify objects, materials and living things through testing, observation and using secondary information."
+      },
+      {
+        "code": "6TWSc.03",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Choose equipment to carry out an investigation and use it appropriately."
+      },
+      {
+        "code": "6TWSc.08",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Collect and record observations and/or measurements in tables and diagrams appropriate to the type of scientific enquiry."
+      },
+      {
+        "code": "6TWSa.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Describe patterns in results, including identifying any anomalous results."
       },
       {
         "code": "6TWSm.02",
@@ -1001,6 +1029,58 @@
         "Solvent"
       ],
       "modelAnswer": "Heating the liquid, stirring it, and breaking the solid into smaller pieces."
+    },
+    {
+      "id": "6-enq-9",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A nail left outside has gone rusty and one kept indoors has not. Turn that into a scientific question, and say which kind of enquiry would answer it.",
+      "keyIdeas": [
+        "A question you can actually test",
+        "A fair test, changing one condition",
+        "Water is the thing you change"
+      ],
+      "modelAnswer": "The question is: does a nail need water in order to rust? A fair test answers it. I would set up identical nails in a dry sealed jar, in water, and in water that has been boiled and sealed to drive the air out, keeping everything else the same. Just looking at rusty nails is observing: it shows me that rust happens, but not what causes it."
+    },
+    {
+      "id": "6-enq-10",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You have to separate a mixture of sand, salt and water. Name the equipment you would choose, in order, and say what each piece does.",
+      "keyIdeas": [
+        "Funnel and filter paper, to hold back the sand",
+        "An evaporating dish, to recover the salt",
+        "Each piece does a job the other cannot"
+      ],
+      "modelAnswer": "First a funnel and filter paper, because sand does not dissolve and the paper holds it back while the salty water runs through. Then an evaporating dish left in a warm place, because the water evaporates and leaves the salt behind. A filter on its own would never separate the salt - it is dissolved, in pieces far too small for the paper - which is why both the choice and the order matter."
+    },
+    {
+      "id": "6-enq-11",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You are testing six changes and deciding whether each one is physical or chemical. Describe the table you would record in.",
+      "keyIdeas": [
+        "One row for each change",
+        "A column for what you observed and one for your decision",
+        "A column for the EVIDENCE, not just the answer"
+      ],
+      "modelAnswer": "One row for each of the six changes. A column naming the change, a column for what I observed - a gas given off, a colour change, a temperature change, a new smell - a column for my decision, physical or chemical, and a column for the evidence I decided on. That last column is the one that matters: without it the table records my opinion rather than my observation."
+    },
+    {
+      "id": "6-enq-12",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Five nails in water all rusted within three or four days. The sixth took eleven days. Describe the pattern, and say what you make of the odd one.",
+      "keyIdeas": [
+        "Five agree closely, one is far out",
+        "The sixth is an anomalous result",
+        "Look for a cause - do not simply ignore it"
+      ],
+      "modelAnswer": "Five of the six rusted within three or four days, which is a clear pattern. The sixth, at eleven days, is an anomalous result. I would look for a cause rather than ignore it: perhaps that nail was galvanised, or had oil on it, or its jar stood somewhere colder. Saying so is part of the result, because an anomaly is often the most interesting thing in a set of readings."
     }
   ],
   "assessment": {

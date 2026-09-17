@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T17:08:06.278Z",
+  "generatedAt": "2026-09-17T17:48:56.785Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -32,8 +32,12 @@
       "6Bs.01",
       "6Bs.02",
       "6TWSp.03",
+      "6TWSp.04",
+      "6TWSc.04",
       "6TWSc.05",
-      "6TWSm.02"
+      "6TWSa.05",
+      "6TWSm.02",
+      "6SIC.04"
     ],
     "objectives": [
       {
@@ -55,16 +59,40 @@
         "text": "Make predictions, referring to relevant scientific knowledge and understanding within familiar and unfamiliar contexts."
       },
       {
+        "code": "6TWSp.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: purpose and planning",
+        "text": "Plan fair test investigations, identifying the independent, dependent and control variables."
+      },
+      {
+        "code": "6TWSc.04",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Decide when observations and measurements need to be repeated to give more reliable data."
+      },
+      {
         "code": "6TWSc.05",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Carrying out scientific enquiry",
         "text": "Take appropriately accurate measurements."
       },
       {
+        "code": "6TWSa.05",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Scientific enquiry: analysis, evaluation and conclusions",
+        "text": "Present and interpret results using tables, bar charts, dot plots, line graphs and scatter graphs."
+      },
+      {
         "code": "6TWSm.02",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Models and representations",
         "text": "Use models, including diagrams, to represent and describe scientific phenomena and ideas."
+      },
+      {
+        "code": "6SIC.04",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Identify people who use science, including professionally, in their area and describe how they use science."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending",
@@ -973,6 +1001,58 @@
         "Pulse"
       ],
       "modelAnswer": "Any two: exercise makes the heart muscle stronger; it helps the heart pump more blood with each beat; it improves recovery time; it lowers the risk of heart disease."
+    },
+    {
+      "id": "6-enq-1",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You want to find out whether the kind of exercise changes how much your heart rate rises. Name the independent, dependent and control variables in your plan.",
+      "keyIdeas": [
+        "Independent: the thing you change - the exercise",
+        "Dependent: the thing you measure - heart rate",
+        "Control: everything kept the same - time, person, rest before"
+      ],
+      "modelAnswer": "The independent variable is the exercise I choose - walking, then jogging, then star jumps - because that is what I change on purpose. The dependent variable is the heart rate in beats per minute, because that is what I measure to see the effect. The control variables are everything I keep the same: the same person, the same one minute of exercise, the same rest before starting. If two of those changed at once I could not say which one caused the difference."
+    },
+    {
+      "id": "6-enq-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You count your pulse for 15 seconds and get 19 beats, then 22, then 20. Why does this need repeating, and what do you do with the three numbers?",
+      "keyIdeas": [
+        "The readings disagree, so one alone is unreliable",
+        "Counting a pulse is easy to lose track of",
+        "Take the average of the three"
+      ],
+      "modelAnswer": "The three readings disagree, and that disagreement is the signal to repeat - if one reading were enough they would all have matched. Counting a pulse is easy to lose track of, so a single count could be several beats out. I would use the average of the three, about 20 in 15 seconds and so 80 beats a minute, and I would write down that it is an average of three counts rather than one."
+    },
+    {
+      "id": "6-enq-3",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You measured your heart rate every minute for five minutes after running. Which chart shows this best, and what would its shape tell a reader?",
+      "keyIdeas": [
+        "A line graph, because time runs continuously",
+        "Time along the bottom, heart rate up the side",
+        "The falling line shows recovery"
+      ],
+      "modelAnswer": "A line graph, because these are measurements of one thing changing over time, and a line says that the values between my readings are real. Time goes along the bottom and heart rate up the side. The shape tells the story: a high point just after running, then a line falling steeply and flattening as the heart returns to its resting rate. A bar chart would hide that, because separate bars suggest five unconnected results."
+    },
+    {
+      "id": "6-enq-4",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Who near you measures a pulse or a breathing rate as part of their work, and what do they do with the number?",
+      "keyIdeas": [
+        "A nurse, doctor or clinic worker",
+        "A sports coach",
+        "They compare it with what is normal"
+      ],
+      "modelAnswer": "A nurse or clinic worker takes a pulse for almost every patient, because a rate that is too fast or too slow is a sign that something is wrong. They compare the number with the normal range for someone of that age, which is why the normal range has to be known in the first place. A sports coach uses the same measurement differently, timing how quickly a runner's heart returns to rest, because a faster recovery means fitter."
     }
   ],
   "assessment": {

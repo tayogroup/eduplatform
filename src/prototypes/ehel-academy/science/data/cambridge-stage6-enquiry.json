@@ -1,0 +1,131 @@
+{
+  "_comment": "Cambridge 0097's Thinking and Working Scientifically and Science in Context objectives for Stage 6, authored as reasoning prompts. Same shape, vehicle and reasoning as the Stage 5 fixture beside it: TWS and SIC are not topics, they are how an investigation the unit already runs is framed, so these need no new source material. Every prompt hangs off an investigation Grade 6 already has - the exercise and heart-rate measurements in Unit 1, the food web in Unit 2, rusting and separating mixtures in Unit 3, the friction test in Unit 4, the conductor test in Unit 5.",
+  "_vehicle": "reasoningPrompts, rendered by the shell as 'Explain Your Thinking' and MARKED by reasoningHits() against keyIdeas. Adding prompts cannot un-tick a section a learner has finished: complete() in course-app.js is add-only and nothing removes a section. Ids stay `6-enq-N` rather than being renumbered into the `reasonNN` sequence, because the shell stores completion by item id in progress.reasoning.",
+  "curriculumCode": "0097",
+  "stage": 6,
+  "source": "Authored 2026-09-17 against Cambridge 0097 Stage 6. Not extracted from the Teacher's Resource, whose versions of these are addressed to a teacher delivering them aloud; this course has no teacher in the room.",
+  "minimumCovered": 20,
+  "_minimumCovered": "One prompt per unclaimed Stage 6 TWS/SIC objective. Coverage is a number that only goes up.",
+  "prompts": [
+    {
+      "id": "6-enq-1", "unit": 1, "codes": ["6TWSp.04"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "You want to find out whether the kind of exercise changes how much your heart rate rises. Name the independent, dependent and control variables in your plan.",
+      "keyIdeas": ["Independent: the thing you change - the exercise", "Dependent: the thing you measure - heart rate", "Control: everything kept the same - time, person, rest before"],
+      "modelAnswer": "The independent variable is the exercise I choose - walking, then jogging, then star jumps - because that is what I change on purpose. The dependent variable is the heart rate in beats per minute, because that is what I measure to see the effect. The control variables are everything I keep the same: the same person, the same one minute of exercise, the same rest before starting. If two of those changed at once I could not say which one caused the difference."
+    },
+    {
+      "id": "6-enq-2", "unit": 1, "codes": ["6TWSc.04"], "outcomeId": "lo02", "difficulty": "Core",
+      "prompt": "You count your pulse for 15 seconds and get 19 beats, then 22, then 20. Why does this need repeating, and what do you do with the three numbers?",
+      "keyIdeas": ["The readings disagree, so one alone is unreliable", "Counting a pulse is easy to lose track of", "Take the average of the three"],
+      "modelAnswer": "The three readings disagree, and that disagreement is the signal to repeat - if one reading were enough they would all have matched. Counting a pulse is easy to lose track of, so a single count could be several beats out. I would use the average of the three, about 20 in 15 seconds and so 80 beats a minute, and I would write down that it is an average of three counts rather than one."
+    },
+    {
+      "id": "6-enq-3", "unit": 1, "codes": ["6TWSa.05"], "outcomeId": "lo03", "difficulty": "Challenge",
+      "prompt": "You measured your heart rate every minute for five minutes after running. Which chart shows this best, and what would its shape tell a reader?",
+      "keyIdeas": ["A line graph, because time runs continuously", "Time along the bottom, heart rate up the side", "The falling line shows recovery"],
+      "modelAnswer": "A line graph, because these are measurements of one thing changing over time, and a line says that the values between my readings are real. Time goes along the bottom and heart rate up the side. The shape tells the story: a high point just after running, then a line falling steeply and flattening as the heart returns to its resting rate. A bar chart would hide that, because separate bars suggest five unconnected results."
+    },
+    {
+      "id": "6-enq-4", "unit": 1, "codes": ["6SIC.04"], "outcomeId": "lo04", "difficulty": "Core",
+      "prompt": "Who near you measures a pulse or a breathing rate as part of their work, and what do they do with the number?",
+      "keyIdeas": ["A nurse, doctor or clinic worker", "A sports coach", "They compare it with what is normal"],
+      "modelAnswer": "A nurse or clinic worker takes a pulse for almost every patient, because a rate that is too fast or too slow is a sign that something is wrong. They compare the number with the normal range for someone of that age, which is why the normal range has to be known in the first place. A sports coach uses the same measurement differently, timing how quickly a runner's heart returns to rest, because a faster recovery means fitter."
+    },
+    {
+      "id": "6-enq-5", "unit": 2, "codes": ["6TWSc.02"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "Under a fallen log you find an earthworm, a millipede, a beetle and a fungus. Build a key of yes-or-no questions that would let a friend tell them apart.",
+      "keyIdeas": ["Each question has exactly two answers", "Use features you can see, such as legs", "Every question splits the group smaller"],
+      "modelAnswer": "Start with 'Is it an animal?' - the fungus answers no and is separated at once. Then 'Does it have legs?' separates the earthworm from the millipede and the beetle. Then 'Does it have more than eight legs?' separates the millipede from the beetle. It works because every question has exactly two answers, and each one cuts the group smaller until only one thing is left."
+    },
+    {
+      "id": "6-enq-6", "unit": 2, "codes": ["6TWSc.07"], "outcomeId": "lo02", "difficulty": "Core",
+      "prompt": "You want to know what a genet eats so you can place it in a food web, but you will never watch one hunting. Where do you look, and how do you choose what to use?",
+      "keyIdeas": ["Secondary sources: books, a wildlife organisation's pages", "Check more than one and see whether they agree", "Select only the evidence that answers your question"],
+      "modelAnswer": "Secondary sources - a wildlife book, an encyclopaedia, or the pages of a national park or wildlife organisation. I would read at least two, because if they agree I can be fairly confident, and if they disagree I know to look further. Then I would take only the part that answers my question, which is what it eats. A long passage about where genets live is interesting and is not evidence for the food web."
+    },
+    {
+      "id": "6-enq-7", "unit": 2, "codes": ["6SIC.03"], "outcomeId": "lo03", "difficulty": "Challenge",
+      "prompt": "Someone wants to clear every tree from a patch of land to plant maize. Use what you know about food chains to make a scientific point in that discussion.",
+      "keyIdeas": ["Producers are the base of every food chain", "Removing them removes the energy source", "The decomposers and the soil are affected too"],
+      "modelAnswer": "I would say that the trees are producers, and every food chain on that land begins with a producer capturing the Sun's energy. Take them away and the insects feeding on them go, then the birds and small animals that fed on the insects. I would add that the decomposers in the leaf litter go as well, and they are what returns nutrients to the soil the maize will need. That is a point supported by science rather than just a preference."
+    },
+    {
+      "id": "6-enq-8", "unit": 2, "codes": ["6SIC.05"], "outcomeId": "lo04", "difficulty": "Challenge",
+      "prompt": "Fertiliser helps a farmer grow more maize from the same field. Give one positive and one negative environmental effect, and say why both are true at once.",
+      "keyIdeas": ["Positive: more food from the same land", "Negative: it washes into rivers and starves the water of oxygen", "The same technology does both"],
+      "modelAnswer": "The positive effect is more food from the same piece of land, which means less woodland has to be cleared to feed the same number of people. The negative is that rain washes the fertiliser into streams, where it feeds so much algae that the water runs out of oxygen and the fish die. Both are true because fertiliser does exactly one thing - it feeds plants - and it does not stop doing that when it reaches the river."
+    },
+    {
+      "id": "6-enq-9", "unit": 3, "codes": ["6TWSp.01"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "A nail left outside has gone rusty and one kept indoors has not. Turn that into a scientific question, and say which kind of enquiry would answer it.",
+      "keyIdeas": ["A question you can actually test", "A fair test, changing one condition", "Water is the thing you change"],
+      "modelAnswer": "The question is: does a nail need water in order to rust? A fair test answers it. I would set up identical nails in a dry sealed jar, in water, and in water that has been boiled and sealed to drive the air out, keeping everything else the same. Just looking at rusty nails is observing: it shows me that rust happens, but not what causes it."
+    },
+    {
+      "id": "6-enq-10", "unit": 3, "codes": ["6TWSc.03"], "outcomeId": "lo02", "difficulty": "Core",
+      "prompt": "You have to separate a mixture of sand, salt and water. Name the equipment you would choose, in order, and say what each piece does.",
+      "keyIdeas": ["Funnel and filter paper, to hold back the sand", "An evaporating dish, to recover the salt", "Each piece does a job the other cannot"],
+      "modelAnswer": "First a funnel and filter paper, because sand does not dissolve and the paper holds it back while the salty water runs through. Then an evaporating dish left in a warm place, because the water evaporates and leaves the salt behind. A filter on its own would never separate the salt - it is dissolved, in pieces far too small for the paper - which is why both the choice and the order matter."
+    },
+    {
+      "id": "6-enq-11", "unit": 3, "codes": ["6TWSc.08"], "outcomeId": "lo03", "difficulty": "Core",
+      "prompt": "You are testing six changes and deciding whether each one is physical or chemical. Describe the table you would record in.",
+      "keyIdeas": ["One row for each change", "A column for what you observed and one for your decision", "A column for the EVIDENCE, not just the answer"],
+      "modelAnswer": "One row for each of the six changes. A column naming the change, a column for what I observed - a gas given off, a colour change, a temperature change, a new smell - a column for my decision, physical or chemical, and a column for the evidence I decided on. That last column is the one that matters: without it the table records my opinion rather than my observation."
+    },
+    {
+      "id": "6-enq-12", "unit": 3, "codes": ["6TWSa.02"], "outcomeId": "lo04", "difficulty": "Challenge",
+      "prompt": "Five nails in water all rusted within three or four days. The sixth took eleven days. Describe the pattern, and say what you make of the odd one.",
+      "keyIdeas": ["Five agree closely, one is far out", "The sixth is an anomalous result", "Look for a cause - do not simply ignore it"],
+      "modelAnswer": "Five of the six rusted within three or four days, which is a clear pattern. The sixth, at eleven days, is an anomalous result. I would look for a cause rather than ignore it: perhaps that nail was galvanised, or had oil on it, or its jar stood somewhere colder. Saying so is part of the result, because an anomaly is often the most interesting thing in a set of readings."
+    },
+    {
+      "id": "6-enq-13", "unit": 4, "codes": ["6TWSp.02"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "Testing which surface slows a toy car most is a fair test. Name a different kind of enquiry you could do about forces, and say how it differs.",
+      "keyIdeas": ["A fair test changes one thing and measures the result", "Pattern seeking looks for a relationship you cannot control", "The question decides which enquiry to use"],
+      "modelAnswer": "The surface test is a fair test: I change the surface and measure the distance, keeping the car and the slope the same. Pattern seeking is different - I could measure how far many children can throw a ball and look for a relationship with their height, without being able to control anything about them. There is also sorting and classifying, observing over time, and research. The question I am asking is what decides which one fits."
+    },
+    {
+      "id": "6-enq-14", "unit": 4, "codes": ["6TWSa.01"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "You predicted the car would go furthest on glass, then wood, then carpet. It did go furthest on glass, but wood and carpet came out almost equal. How accurate was your prediction?",
+      "keyIdeas": ["Partly accurate - the top of the order was right", "The part that failed: wood and carpet did not separate", "Say what the results showed, not just right or wrong"],
+      "modelAnswer": "Partly accurate. I was right that glass would be furthest, and right about the reason - the smoothest surface gives the least friction. I was wrong to expect a clear gap between wood and carpet; they came out almost equal, which suggests those two are closer in roughness than I thought, or that my measurements were not precise enough to separate them. Saying which part held and which did not is more useful than calling the whole prediction right or wrong."
+    },
+    {
+      "id": "6-enq-15", "unit": 4, "codes": ["6TWSa.03"], "outcomeId": "lo03", "difficulty": "Challenge",
+      "prompt": "Your car travelled 82 cm on glass, 45 cm on wood and 41 cm on carpet. Write a conclusion, and explain it using what you know about forces.",
+      "keyIdeas": ["State what the results show", "Smoother surface, less friction, further travel", "Name friction as the force acting"],
+      "modelAnswer": "I conclude that the smoother the surface, the further the car travels: 82 cm on glass against 45 and 41 on the rougher surfaces. The reason is friction, a force acting between two surfaces that rub together and opposing the movement. A rougher surface produces more friction, so more of the car's movement is turned into heat and it stops sooner."
+    },
+    {
+      "id": "6-enq-16", "unit": 4, "codes": ["6TWSm.01"], "outcomeId": "lo04", "difficulty": "Challenge",
+      "prompt": "We draw forces as arrows on a picture of an object. How does that model help us understand forces, and what does it leave out?",
+      "keyIdeas": ["It makes an invisible force visible", "Length shows size, direction shows which way", "It leaves out the material, and how forces change over time"],
+      "modelAnswer": "A force is invisible, and the arrow model turns it into something you can see and compare: the direction shows which way it pushes or pulls, and the length shows how big it is, so you can tell at a glance whether the forces balance. What it leaves out is nearly everything else - it says nothing about what the object is made of, and it shows one frozen moment rather than how the forces change as the object moves. A model is useful because it leaves things out, and you have to know which things."
+    },
+    {
+      "id": "6-enq-17", "unit": 5, "codes": ["6TWSc.06"], "outcomeId": "lo01", "difficulty": "Core",
+      "prompt": "You are testing which materials conduct electricity. Name two safety rules for this work, and give the reason for each.",
+      "keyIdeas": ["Use cells, never the mains", "Keep hands and materials dry, because water conducts", "Disconnect the cell when you finish"],
+      "modelAnswer": "Use a cell or a battery and never a mains socket, because the mains carries enough current to stop your heart while a 1.5 V cell cannot. Keep your hands and the materials dry, because water conducts and would turn a safe test into an unsafe one. And disconnect the cell when you finish, so that nothing is left warming up in a closed circuit."
+    },
+    {
+      "id": "6-enq-18", "unit": 5, "codes": ["6TWSa.04"], "outcomeId": "lo02", "difficulty": "Challenge",
+      "prompt": "You tested ten materials in a circuit, and for three of them the lamp glowed very faintly. Suggest an improvement to the investigation and explain why it would help.",
+      "keyIdeas": ["'Very faint' is a judgement by eye", "Use the same fresh cell for every test", "A meter gives a number where a dim lamp gives an opinion"],
+      "modelAnswer": "The trouble is that 'very faint' is a judgement by eye, and it shifts as the cell runs down - so a material tested last is being tested with a weaker push than one tested first. I would use a fresh cell and keep the same one for all ten tests. Better still I would put a meter in the circuit instead of the lamp, because a number separates a poor conductor from a non-conductor where a dim lamp only gives an opinion."
+    },
+    {
+      "id": "6-enq-19", "unit": 5, "codes": ["6SIC.01"], "outcomeId": "lo03", "difficulty": "Challenge",
+      "prompt": "People once thought electricity was a fluid that flowed like water. Why was that a reasonable idea, and what changed it?",
+      "keyIdeas": ["It explained what they could observe", "New experiments gave new evidence", "We still use the word 'current'"],
+      "modelAnswer": "It was reasonable because it explained what people could see: something moves along a wire, more of it does more work, and it can be stored and let out again. The words we still use - current, flow - come from that idea. What changed it was evidence from new experiments showing that electricity is carried by tiny charged particles, which explains things a fluid cannot, such as why some materials carry it and others refuse. The old idea was not silly; it was the best fit for the evidence of its time."
+    },
+    {
+      "id": "6-enq-20", "unit": 5, "codes": ["6SIC.02"], "outcomeId": "lo04", "difficulty": "Core",
+      "prompt": "Where near you is the difference between a conductor and an insulator being used on purpose?",
+      "keyIdeas": ["Metal inside a wire, plastic around it", "The handles of tools", "Anyone wiring a house or fixing a phone"],
+      "modelAnswer": "Every wire in the building: metal inside because it conducts, plastic around it because it insulates and keeps the current from reaching your hand or the neighbouring wire. The same choice is in the handle of a screwdriver or a pair of pliers. Anyone wiring a house, fitting a solar panel or repairing a phone is making that decision constantly - which part must carry the current, and which part must refuse to."
+    }
+  ]
+}

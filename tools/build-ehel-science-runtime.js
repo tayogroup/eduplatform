@@ -215,19 +215,24 @@ const CAMBRIDGE_OBJECTIVES = {
   // than a commission: Unit 1 teaches the human digestive system in full, and
   // 0097 places that at Stage 5 (5Bs.04), which Grade 5 does not teach. The
   // content exists in the course, one grade late.
-  "6-1": ["6Bs.01", "6Bs.02", "6TWSp.03", "6TWSc.05", "6TWSm.02"],
+  "6-1": ["6Bs.01", "6Bs.02", "6TWSp.03", "6TWSp.04", "6TWSc.04", "6TWSc.05",
+          "6TWSa.05", "6TWSm.02", "6SIC.04"],
   // 6Be.02 (toxic substances moving through a food chain) is NOT claimed: zero
   // hits for toxic, toxin, poison or pesticide anywhere in Grade 6. The unit's
   // "Human Impact" concept is about habitat loss, not bioaccumulation.
-  "6-2": ["6Be.01", "6Be.03", "6TWSp.03", "6TWSc.01", "6TWSm.02"],
+  "6-2": ["6Be.01", "6Be.03", "6TWSp.03", "6TWSc.01", "6TWSc.02", "6TWSc.07",
+          "6TWSm.02", "6SIC.03", "6SIC.05"],
   // 6Cc.02 and 6Cc.03 are not claimed. The unit says "boiling water into steam"
   // and separates non-dissolving solids by filtering, but never contrasts boiling
   // with evaporation, and never relates temperature to how much dissolves.
-  "6-3": ["6Cc.01", "6Cc.04", "6Cc.05", "6TWSc.01", "6TWSm.02"],
-  "6-4": ["6Pf.01", "6Pf.02", "6Pf.03", "6Pf.04", "6TWSp.03", "6TWSc.05", "6TWSm.02"],
+  "6-3": ["6Cc.01", "6Cc.04", "6Cc.05", "6TWSp.01", "6TWSc.01", "6TWSc.03",
+          "6TWSc.08", "6TWSa.02", "6TWSm.02"],
+  "6-4": ["6Pf.01", "6Pf.02", "6Pf.03", "6Pf.04", "6TWSp.02", "6TWSp.03", "6TWSc.05",
+          "6TWSa.01", "6TWSa.03", "6TWSm.01", "6TWSm.02"],
   // 6Pe.02 (compare brightness in series AND parallel circuits) is not claimed —
   // `parallel` appears nowhere in Grade 6. The unit teaches series only.
-  "6-5": ["6Pe.01", "6TWSp.05", "6TWSc.01", "6TWSm.02"],
+  "6-5": ["6Pe.01", "6TWSp.05", "6TWSc.01", "6TWSc.06", "6TWSa.04", "6TWSm.02",
+          "6SIC.01", "6SIC.02"],
   // ── Stage 7 (0893) ──
   "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01"],
   "7-2": ["7Cm.01", "7Cm.02", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01"],

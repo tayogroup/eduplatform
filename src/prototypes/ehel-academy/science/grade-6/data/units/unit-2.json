@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T16:16:49.005Z",
+  "generatedAt": "2026-09-17T17:48:56.819Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -33,7 +33,11 @@
       "6Be.03",
       "6TWSp.03",
       "6TWSc.01",
-      "6TWSm.02"
+      "6TWSc.02",
+      "6TWSc.07",
+      "6TWSm.02",
+      "6SIC.03",
+      "6SIC.05"
     ],
     "objectives": [
       {
@@ -61,10 +65,34 @@
         "text": "Sort, group and classify objects, materials and living things through testing, observation and using secondary information."
       },
       {
+        "code": "6TWSc.02",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Complete a key based on easily observed differences."
+      },
+      {
+        "code": "6TWSc.07",
+        "strand": "Thinking and Working Scientifically",
+        "subStrand": "Carrying out scientific enquiry",
+        "text": "Use a range of secondary information sources to research and select relevant evidence to answer questions."
+      },
+      {
         "code": "6TWSm.02",
         "strand": "Thinking and Working Scientifically",
         "subStrand": "Models and representations",
         "text": "Use models, including diagrams, to represent and describe scientific phenomena and ideas."
+      },
+      {
+        "code": "6SIC.03",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Use science to support points when discussing issues, situations or actions."
+      },
+      {
+        "code": "6SIC.05",
+        "strand": "Science in Context",
+        "subStrand": "Science in Context",
+        "text": "Discuss how the use of science and technology can have positive and negative environmental effects on their local area."
       }
     ],
     "alignmentStatus": "Proposed from unit outcomes — Cambridge sign-off pending"
@@ -968,6 +996,58 @@
         "Herbivore"
       ],
       "modelAnswer": "A food chain shows one line of feeding relationships (grass -> gazelle -> lion). A food web joins many food chains together to show all the feeding links in an ecosystem, giving a truer picture."
+    },
+    {
+      "id": "6-enq-5",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Under a fallen log you find an earthworm, a millipede, a beetle and a fungus. Build a key of yes-or-no questions that would let a friend tell them apart.",
+      "keyIdeas": [
+        "Each question has exactly two answers",
+        "Use features you can see, such as legs",
+        "Every question splits the group smaller"
+      ],
+      "modelAnswer": "Start with 'Is it an animal?' - the fungus answers no and is separated at once. Then 'Does it have legs?' separates the earthworm from the millipede and the beetle. Then 'Does it have more than eight legs?' separates the millipede from the beetle. It works because every question has exactly two answers, and each one cuts the group smaller until only one thing is left."
+    },
+    {
+      "id": "6-enq-6",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You want to know what a genet eats so you can place it in a food web, but you will never watch one hunting. Where do you look, and how do you choose what to use?",
+      "keyIdeas": [
+        "Secondary sources: books, a wildlife organisation's pages",
+        "Check more than one and see whether they agree",
+        "Select only the evidence that answers your question"
+      ],
+      "modelAnswer": "Secondary sources - a wildlife book, an encyclopaedia, or the pages of a national park or wildlife organisation. I would read at least two, because if they agree I can be fairly confident, and if they disagree I know to look further. Then I would take only the part that answers my question, which is what it eats. A long passage about where genets live is interesting and is not evidence for the food web."
+    },
+    {
+      "id": "6-enq-7",
+      "outcomeId": "lo03",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Someone wants to clear every tree from a patch of land to plant maize. Use what you know about food chains to make a scientific point in that discussion.",
+      "keyIdeas": [
+        "Producers are the base of every food chain",
+        "Removing them removes the energy source",
+        "The decomposers and the soil are affected too"
+      ],
+      "modelAnswer": "I would say that the trees are producers, and every food chain on that land begins with a producer capturing the Sun's energy. Take them away and the insects feeding on them go, then the birds and small animals that fed on the insects. I would add that the decomposers in the leaf litter go as well, and they are what returns nutrients to the soil the maize will need. That is a point supported by science rather than just a preference."
+    },
+    {
+      "id": "6-enq-8",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Fertiliser helps a farmer grow more maize from the same field. Give one positive and one negative environmental effect, and say why both are true at once.",
+      "keyIdeas": [
+        "Positive: more food from the same land",
+        "Negative: it washes into rivers and starves the water of oxygen",
+        "The same technology does both"
+      ],
+      "modelAnswer": "The positive effect is more food from the same piece of land, which means less woodland has to be cleared to feed the same number of people. The negative is that rain washes the fertiliser into streams, where it feeds so much algae that the water runs out of oxygen and the fish die. Both are true because fertiliser does exactly one thing - it feeds plants - and it does not stop doing that when it reaches the river."
     }
   ],
   "assessment": {

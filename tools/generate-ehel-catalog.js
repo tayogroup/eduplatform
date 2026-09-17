@@ -64,8 +64,18 @@ const INTENSIVE = {
   key: "intensive-eng",
   name: "Intensive English",
   subject: "English",
-  // Levels 3–5 are planned but unauthored; only levels with a manifest appear.
-  maxLevel: 5,
+  // The course ENDS at Level 3. Levels 4 (C1) and 5 (C2) were dropped by the
+  // owner on 2026-09-16 (`6c13be00a`; the reasoning is in the plan's
+  // `whyTheCourseStopsAtB1`), and Level 3 was authored the same day — so the
+  // note this replaced, "Levels 3–5 are planned but unauthored", was wrong in
+  // both directions by the time anyone read it again.
+  //
+  // The loop is still driven by `if (!manifest) continue`, which is what made
+  // that staleness harmless: Level 3 joined the catalogue the moment its
+  // manifest existed, without this number being touched. Kept at 3 so the
+  // ceiling states the decision rather than leaving room for levels that are
+  // not coming.
+  maxLevel: 3,
   categoryPath: ["Ehel Academy", "Languages", "Intensive English"],
 };
 

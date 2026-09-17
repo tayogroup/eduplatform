@@ -12796,13 +12796,87 @@ function renderComprehension() {
   return renderComprehensionClassic();
 }
 
+/* Cambridge's own tier, on the page that already shows every question.
+ *
+ * Every comprehension item in this course carries a `difficulty`, and for
+ * Grades 5-8 nothing had ever drawn one: a learner who could not get into the
+ * set met the same twelve questions and no other route through them. The
+ * standalone Grade 3-4 apps show six of twelve, so there the tier picks WHICH
+ * six; here every question in a section is on the page already, so the tier is
+ * a filter over what is drawn rather than a different selection.
+ *
+ * IT RENDERS ONLY WHERE THE TEXT TABS CANNOT ALREADY DO THE JOB, and that gate
+ * was rewritten after measuring rather than reasoned up front. The first version
+ * asked whether the UNIT spanned more than one tier, which is true nearly
+ * everywhere - and then Grade 7 Unit 1 drew the row over three tabs whose four
+ * questions were, respectively, all Foundation, all Core and all Stretch. The
+ * tabs WERE the tiers, so "Easier" selected exactly what "Meaning and structure"
+ * already selected: a second name for a control the page had.
+ *
+ * Measured across all 100 comprehension sections at Grades 5-8:
+ *
+ *     grade 5   18 sections    1 single-tier   17 MIXED
+ *     grade 6   26 sections   25 single-tier    1 mixed
+ *     grade 7   28 sections   28 single-tier    0 mixed
+ *     grade 8   28 sections   28 single-tier    0 mixed
+ *
+ * So the filter earns its place at Grade 5 and almost nowhere else, and the gate
+ * is "does any ONE section in this unit hold more than one tier". At Grades 7
+ * and 8 it therefore never draws - not because they lack differentiation, but
+ * because they already have it under better names: "Evidence, inference and
+ * viewpoint" tells a learner what the thinking is, which "Core" does not.
+ *
+ * Still data-gated rather than grade-gated: this function also serves a TUTORING
+ * learner at any grade, who gets the classic page everywhere, and Grades 1-2
+ * label every item one level. One question about the data answers all of it.
+ *
+ * The buttons say what a learner wants; the Cambridge rung rides in the title
+ * and the aria-label, because "Foundation" printed over a child's question
+ * labels the child rather than the question.
+ */
+const COMP_TIERS = [
+  { key: "all", label: "All", tier: "every tier" },
+  { key: "easier", label: "Easier", tier: "Foundation" },
+  { key: "core", label: "Core", tier: "Core" },
+  { key: "harder", label: "Harder", tier: "Stretch" },
+];
+
+function comprehensionTierOf(question) {
+  const d = String(question.difficulty || "").trim();
+  if (d === "Foundation") return "easier";
+  if (d === "Stretch" || d === "Challenge") return "harder";
+  return "core";           // Core, "Grade N core", and anything unlabelled
+}
+
 function renderComprehensionClassic() {
   const { $, $$ } = classicScope();
   const groups = [...new Set(course.comprehension.map((question) => question.section))];
   let active = groups[0];
+  let tier = "all";
+  /* A section whose questions are all one tier is already selected by its own
+     tab, so the row only appears where at least one section is genuinely mixed. */
+  const bySection = new Map();
+  course.comprehension.forEach((q) => {
+    const s = bySection.get(q.section) || new Set();
+    s.add(comprehensionTierOf(q));
+    bySection.set(q.section, s);
+  });
+  const anyMixed = [...bySection.values()].some((s) => s.size > 1);
+  const spread = new Set(course.comprehension.map(comprehensionTierOf));
+  const rungs = anyMixed ? COMP_TIERS.filter((t) => t.key === "all" || spread.has(t.key)) : [];
   const draw = () => {
-    const questions = course.comprehension.filter((question) => question.section === active);
-    $("#app").innerHTML = `${pageHeader("Think about the text", "Comprehension", "Write your answer first. Then reveal the reviewed guidance and improve your response.")}<div class="subtabs">${groups.map((group) => `<button class="subtab ${group === active ? "active" : ""}" data-group="${escapeHtml(group)}" type="button">${escapeHtml(group)}</button>`).join("")}</div><section class="panel"><div class="question-list">${questions.map((question) => `<div class="question"><label for="answer-${question.questionId}">${question.sequence}. ${escapeHtml(question.question)}</label><textarea id="answer-${question.questionId}" data-answer-input="${question.questionId}" placeholder="Write a complete answer…"></textarea><button class="button secondary" data-check-answer="${question.questionId}" type="button">Check guidance</button><div id="feedback-${question.questionId}" role="status" aria-live="polite" aria-atomic="true"></div></div>`).join("")}</div><button class="button primary" id="comprehension-done" type="button">Finish comprehension ${icon("check")}</button></section>`;
+    const inGroup = course.comprehension.filter((question) => question.section === active);
+    const questions = tier === "all" ? inGroup : inGroup.filter((q) => comprehensionTierOf(q) === tier);
+    const rungRow = rungs.length
+      ? `<div class="subtabs tier-row"><span class="tier-lead">Questions:</span>${rungs.map((t) => `<button class="subtab ${t.key === tier ? "active" : ""}" data-tier="${t.key}" type="button" title="Cambridge tier: ${escapeHtml(t.tier)}" aria-label="${escapeHtml(t.label)} questions, Cambridge tier ${escapeHtml(t.tier)}"${t.key === tier ? ' aria-current="true"' : ""}>${escapeHtml(t.label)}</button>`).join("")}</div>`
+      : "";
+    /* An empty result is said out loud. A section can hold no Stretch question
+       at all, and a silently empty list reads as the page being broken. */
+    const body = questions.length
+      ? `<div class="question-list">${questions.map((question) => `<div class="question"><label for="answer-${question.questionId}">${question.sequence}. ${escapeHtml(question.question)}</label><textarea id="answer-${question.questionId}" data-answer-input="${question.questionId}" placeholder="Write a complete answer…"></textarea><button class="button secondary" data-check-answer="${question.questionId}" type="button">Check guidance</button><div id="feedback-${question.questionId}" role="status" aria-live="polite" aria-atomic="true"></div></div>`).join("")}</div>`
+      : `<p class="feedback try">This text has no ${escapeHtml((rungs.find((t) => t.key === tier) || {}).label || "").toLowerCase()} questions. Try another text, or choose All.</p>`;
+    $("#app").innerHTML = `${pageHeader("Think about the text", "Comprehension", "Write your answer first. Then reveal the reviewed guidance and improve your response.")}<div class="subtabs">${groups.map((group) => `<button class="subtab ${group === active ? "active" : ""}" data-group="${escapeHtml(group)}" type="button">${escapeHtml(group)}</button>`).join("")}</div>${rungRow}<section class="panel">${body}<button class="button primary" id="comprehension-done" type="button">Finish comprehension ${icon("check")}</button></section>`;
+    $$('[data-tier]').forEach((button) => button.addEventListener("click", () => { tier = button.dataset.tier; draw(); }));
     $$('[data-group]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.group; draw(); showComprehensionGroupInDeck?.(active); }));
     $$('[data-check-answer]').forEach((button) => button.addEventListener("click", () => {
       const question = course.comprehension.find((item) => item.questionId === button.dataset.checkAnswer);

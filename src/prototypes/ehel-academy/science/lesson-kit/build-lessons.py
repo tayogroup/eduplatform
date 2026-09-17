@@ -392,6 +392,26 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
         for p in d["parts"]:
             if not (p.get("pic") and p.get("title") and p.get("say")):
                 sys.exit("REFUSED: %s has a part without a pic, a title and something to say" % where)
+        # A film is optional, but a film that is named and not shipped is a
+        # broken player on the lesson page, and the page cannot tell a child
+        # why. So the file has to be on disk NOW, beside the build, and it has
+        # to be listed in app.config.json :: extraPages or the deploy will not
+        # carry it. Both are checked here rather than left to the browser.
+        film = d.get("video")
+        if film:
+            if not film.get("src"):
+                sys.exit("REFUSED: %s has a video with no src" % where)
+            extra = set(CFG.get("extraPages") or [])
+            for key in ("src", "captions", "poster"):
+                rel = film.get(key)
+                if not rel:
+                    continue
+                if not os.path.isfile(os.path.join(APP, rel)):
+                    sys.exit("REFUSED: %s names %s %r and there is no such file in the app"
+                             % (where, key, rel))
+                if rel not in extra:
+                    sys.exit("REFUSED: %s names %s %r, which is not in app.config.json extraPages, "
+                             "so a deploy would not upload it" % (where, key, rel))
     elif kind == "words":
         if len(d["items"]) < 4:
             sys.exit("REFUSED: %s has fewer than 4 words" % where)

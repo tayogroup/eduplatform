@@ -1,0 +1,307 @@
+/* The 1280x720 stage for the science unit lecture video.
+ *
+ * Colours are the lesson's own light-mode tokens, copied from
+ * science/lesson-kit/lib/lesson.css, because the video plays inside the
+ * lesson page and a second palette would read as a different product. Type is
+ * the platform's own Atkinson Hyperlegible and Inter, embedded by the Python
+ * side from shared/fonts so a render never falls back to Arial.
+ *
+ * NOTHING HERE TRANSITIONS OR ANIMATES. Every moving value is written inline
+ * by the scene renderer as a pure function of t. A CSS transition would make
+ * a screenshotted frame depend on when the screenshot happened to be taken.
+ */
+
+:root {
+  --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82;
+  --line: #D6E3DE; --cell: #E4EEE9;
+  --accent: #F26B2A; --accent-soft: #FDE4D6;
+  --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+  --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { width: 1280px; height: 720px; overflow: hidden; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#film {
+  position: relative;
+  width: 1280px; height: 720px;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(900px 520px at 88% -8%, rgba(30, 140, 134, 0.10), transparent 62%),
+    radial-gradient(760px 480px at 4% 104%, rgba(242, 107, 42, 0.09), transparent 60%),
+    var(--ground);
+}
+
+/* ---- the top bar and the time rail --------------------------------- */
+.bar {
+  flex: 0 0 auto; height: 62px;
+  display: flex; align-items: center; gap: 14px;
+  padding: 0 34px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+.bar .mark {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--teal); color: #fff;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 19px;
+  display: grid; place-items: center;
+}
+.bar .brand {
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 15px;
+  letter-spacing: 0.02em; color: var(--ink);
+}
+.bar .brand b { font-weight: 400; color: var(--muted); margin-left: 8px; }
+.bar .brand b::before { content: "\00B7"; margin-right: 8px; }
+.bar .unit {
+  margin-left: auto;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 13px;
+  letter-spacing: 0.10em; text-transform: uppercase; color: var(--teal);
+}
+.rail { flex: 0 0 auto; height: 4px; background: var(--cell); }
+.rail i { display: block; height: 4px; background: var(--accent); }
+
+/* ---- the stage ------------------------------------------------------ */
+.stage {
+  position: relative; flex: 1 1 auto;
+  padding: 20px 46px 32px;
+  display: flex; flex-direction: column; min-height: 0;
+}
+.sceneh {
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 27px;
+  letter-spacing: -0.01em; margin-bottom: 12px; flex: 0 0 auto;
+}
+.eyebrow {
+  font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.10em; text-transform: uppercase; color: var(--teal);
+}
+.codes {
+  position: absolute; right: 46px; bottom: 5px;
+  display: flex; gap: 6px;
+}
+.codes span {
+  font-family: "Inter", sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 3px 9px; background: var(--card);
+}
+
+/* ---- the spoken line ------------------------------------------------ */
+.band {
+  flex: 0 0 auto; min-height: 96px;
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 46px 18px;
+  background: var(--teal-soft);
+  border-top: 1px solid var(--line);
+}
+.band .spk { font-size: 26px; flex: 0 0 auto; }
+.band p {
+  font-size: 25px; line-height: 1.32; font-weight: 700; color: #123C3A;
+  max-width: 1080px;
+}
+
+/* ---- the title card ------------------------------------------------- */
+.title { flex: 1 1 auto; display: flex; align-items: center; gap: 56px; padding-left: 40px; }
+.title .tfig { flex: 0 0 auto; width: 286px; height: 476px; display: grid; place-items: center; padding: 16px; }
+.title .tfig svg { height: 440px; width: auto; }
+.title h1 {
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 74px;
+  letter-spacing: -0.028em; line-height: 1.02; margin: 10px 0 18px;
+}
+.title .tsub { font-size: 26px; line-height: 1.42; color: var(--muted); }
+
+/* ---- a figure lifted from the lesson --------------------------------
+   .outline is the lesson's invisible hit shape on each tappable part - a
+   rect or an ellipse with no fill attribute, which defaults to BLACK. Without
+   this rule the skeleton renders as a solid silhouette, which is exactly what
+   the first render of this film produced. It is deliberately not scoped to a
+   wrapper class here, because every figure in this film is a lesson figure and
+   a scene that forgets the wrapper would draw the silhouette again. */
+.outline { fill: none; stroke: transparent; stroke-width: 3; }
+.figure svg { height: 100%; width: auto; display: block; }
+/* the lesson's own highlight language: gold while it is being named,
+   green once it has been (science.css :: .figure [data-part].found) */
+.figure [data-part].now .outline { stroke: var(--gold); stroke-width: 5; }
+.figure [data-part].had .outline { stroke: var(--good); stroke-width: 4; }
+.figure.lit [data-part]:not(.now) { opacity: 0.42; }
+
+/* The bones are cream (#E9E4D6) and the lesson leaves them on whatever the
+   page gives, which on a light card is cream on white. Stage 4's other two
+   figures carry their own dark backdrop - earthLayers #0B1D2C, ray #1B2A3A -
+   so a dark panel is the reading this artwork was drawn for. A framing choice
+   for the video; the lesson's own page is untouched. */
+.boneplate {
+  background: #1B2A3A;
+  border: 1px solid #294055;
+  border-radius: 22px;
+}
+
+/* ---- scene: the seven bones ----------------------------------------- */
+.bones { flex: 1 1 auto; display: flex; align-items: center; gap: 72px; padding-left: 14px; min-height: 0; }
+.bones .figure {
+  flex: 0 0 auto; height: 452px; width: 320px;
+  display: grid; place-items: center;
+  padding: 16px;
+}
+.bones .figure svg { height: 418px; }
+.blist { flex: 1 1 auto; }
+.blist ol { list-style: none; margin-top: 12px; }
+.blist li {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 27px; font-weight: 700; padding: 5px 0;
+}
+.blist li .tick {
+  width: 38px; height: 38px; flex: 0 0 auto; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: "Inter", sans-serif; font-size: 17px;
+  background: var(--cell); color: var(--muted);
+}
+.blist li.had .tick { background: var(--good-soft); color: var(--good); }
+.blist li.now { font-size: 33px; color: var(--accent); }
+.blist li.now .tick { background: var(--accent); color: #fff; }
+.bcount {
+  margin-top: 12px; font-family: "Inter", sans-serif; font-weight: 700;
+  font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+
+/* ---- scene: the four jobs ------------------------------------------- */
+.jobs { flex: 1 1 auto; display: flex; align-items: center; gap: 44px; min-height: 0; }
+.jobs .figure {
+  flex: 0 0 auto; height: 392px; width: 236px; display: grid; place-items: center;
+  padding: 14px;
+}
+.jobs .figure svg { height: 360px; }
+.jgrid {
+  flex: 1 1 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.card {
+  background: var(--card); border: 2px solid var(--line); border-radius: 18px;
+  padding: 14px 18px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.card.on { border-color: var(--teal); }
+.card .ic { font-size: 34px; flex: 0 0 auto; }
+.card b { font-family: "Inter", sans-serif; font-size: 23px; font-weight: 700; }
+.card i {
+  font-style: normal; font-size: 17px; color: var(--muted);
+  flex: 1 0 100%; padding-left: 48px; margin-top: -4px;
+}
+.alive {
+  grid-column: 1 / -1;
+  background: var(--accent-soft); border: 2px solid var(--accent); border-radius: 18px;
+  padding: 13px 18px; font-size: 20px; line-height: 1.35;
+}
+.alive b { font-family: "Inter", sans-serif; }
+
+/* ---- scene: the arm -------------------------------------------------- */
+.arm { flex: 1 1 auto; display: flex; align-items: center; gap: 40px; min-height: 0; }
+.armfig {
+  position: relative; flex: 0 0 auto; width: 664px; height: 442px;
+  background: #F3EFE6; border: 1px solid var(--line); border-radius: 22px;
+  display: grid; place-items: center; overflow: hidden;
+}
+/* fitted by HEIGHT: reframe() makes the drawing taller than it is wide-ish,
+   and a width-fitted svg would spill the extra headroom out of the panel */
+.armfig svg { height: 442px; width: auto; max-width: 100%; }
+.armside { flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; }
+.chip {
+  align-self: flex-start;
+  background: var(--accent); color: #fff; border-radius: 999px;
+  padding: 9px 20px; font-family: "Inter", sans-serif; font-weight: 700; font-size: 19px;
+}
+.meter {
+  background: var(--card); border: 2px solid var(--line); border-radius: 16px;
+  padding: 11px 15px;
+}
+.meter b {
+  font-family: "Inter", sans-serif; font-size: 18px; display: block; margin-bottom: 7px;
+}
+.meter .track { display: block; height: 12px; border-radius: 6px; background: var(--cell); overflow: hidden; }
+.meter .track i { display: block; height: 12px; border-radius: 6px; background: var(--muted); }
+.meter.bi .track i { background: #D9473F; }
+.meter.tri .track i { background: #E9744F; }
+.meter em {
+  font-style: normal; font-size: 15px; color: var(--muted);
+  font-family: "Inter", sans-serif; font-weight: 700;
+  display: block; margin-top: 6px; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.meter.on { border-color: var(--accent); }
+.meter.on em { color: var(--accent); }
+.banner {
+  margin-top: 6px; text-align: center;
+  background: var(--ink); color: #fff; border-radius: 16px;
+  padding: 16px 18px; line-height: 1.22;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 26px;
+}
+.enq { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+
+/* the compact pair of bars that replaces the two full meters wherever the
+   enquiry chain is on screen (see sceneArm) */
+.pairmeter {
+  background: var(--card); border: 2px solid var(--line); border-radius: 16px;
+  padding: 10px 14px; display: flex; flex-direction: column; gap: 8px;
+}
+.prow { display: flex; align-items: center; gap: 10px; }
+.prow b { font-family: "Inter", sans-serif; font-size: 15px; width: 58px; flex: 0 0 auto; }
+.prow .track { flex: 1 1 auto; height: 10px; border-radius: 5px; background: var(--cell); overflow: hidden; }
+.prow .track i { display: block; height: 10px; border-radius: 5px; background: var(--muted); }
+.prow.bi .track i { background: #D9473F; }
+.prow.tri .track i { background: #E9744F; }
+.prow em {
+  font-style: normal; font-size: 12px; color: var(--muted); width: 78px; flex: 0 0 auto;
+  font-family: "Inter", sans-serif; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; text-align: right;
+}
+.prow.on em { color: var(--accent); }
+.ecard { border-radius: 16px; padding: 9px 14px; border: 2px solid var(--line); background: var(--card); }
+.ecard b {
+  font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.10em; text-transform: uppercase; color: var(--muted);
+  display: block; margin-bottom: 3px;
+}
+.ecard p { font-size: 17px; line-height: 1.28; }
+.ecard.predict { border-color: var(--plum); }
+.ecard.predict b { color: var(--plum); }
+.ecard.result { border-color: var(--teal); }
+.ecard.result b { color: var(--teal); }
+.ecard.conclude { border-color: var(--good); background: var(--good-soft); }
+.ecard.conclude b { color: var(--good); }
+
+/* ---- scenes: movement, people, recap -------------------------------- */
+.rows { flex: 1 1 auto; display: grid; gap: 18px; align-content: center; min-height: 0; }
+.rows.two { grid-template-columns: 1fr 1fr; }
+/* three abreast: the card stacks so a short caption is not squeezed into
+   a third of the width beside a 46px picture */
+.rows.three { grid-template-columns: 1fr 1fr 1fr; }
+/* nowrap and a fresh flex on the caption are both required. The base .card is
+   `row wrap` with `i` at `flex: 1 0 100%`, which puts the caption on its own
+   line; turning the direction to column without clearing BOTH makes 100% mean
+   100% of the HEIGHT and wrap sends the caption into a second column, beside
+   the title instead of under it. That is what the first render did. */
+.rows.three .card {
+  flex-direction: column; flex-wrap: nowrap;
+  align-items: flex-start; justify-content: center; gap: 6px;
+}
+.rows.three .card i { flex: 0 0 auto; width: 100%; padding-left: 0; margin-top: 0; }
+.rows.four { grid-template-columns: 1fr 1fr; }
+.rows .card { padding: 22px 24px; }
+.rows .card .ic { font-size: 46px; }
+.rows .card b { font-size: 26px; }
+.rows .card i { font-size: 19px; padding-left: 60px; }
+.rows.recap .card { background: var(--teal-soft); border-color: var(--teal-soft); }
+.rows.recap .card.on { border-color: var(--teal); }
+.signoff {
+  grid-column: 1 / -1; text-align: center;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 34px;
+  color: var(--accent);
+}
+
+.ecard.question { border-color: var(--gold); }
+.ecard.question b { color: var(--gold); }

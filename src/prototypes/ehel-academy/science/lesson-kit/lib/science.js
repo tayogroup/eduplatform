@@ -2381,19 +2381,52 @@
   }
 
   /* ---- the unit lecture: the lesson told in parts, by the voice ----
-     No video exists for these lessons, and this says so on its face
-     rather than drawing an empty player. The voice reads each part when
-     the child arrives at it; Next part moves on; the last part finishes
-     the step. How far they got is reported in parts. */
+     The voice reads each part when the child arrives at it; Next part moves
+     on; the last part finishes the step. How far they got is reported in
+     parts.
+
+     A lesson MAY also carry a film (o.video, written by _shell.py from
+     LESSON["video"]). Where one exists it is drawn above the parts and the
+     parts become the way to go back over it a piece at a time; where none
+     exists every line below behaves exactly as it did before the film was
+     added, and the note says so on its face rather than drawing an empty
+     player. Most lessons have no film, so `film &&` guards every addition
+     rather than the old path being rewritten around it. */
   function lecture(o) {
     const el = o.el;
     const parts = o.parts || [];
-    let k = 0, furthest = 0;
+    const film = o.video || null;
+    let k = 0, furthest = 0, watched = false;
     const id = el.stage + "l";
+
+    /* The film is painted ONCE and then left alone. paint() below rewrites
+       the stage on every Next part, and a <video> inside that markup would be
+       torn out and rebuilt mid-play - the child would lose their place every
+       time they moved a part. So the film owns its own element outside the
+       repainted region. */
+    function filmHtml() {
+      if (!film) return "";
+      return '<div class="lec-film">' +
+        '<video id="' + id + 'v" controls playsinline preload="metadata"' +
+        (film.poster ? ' poster="' + esc(film.poster) + '"' : "") +
+        ' src="' + esc(film.src) + '">' +
+        /* Offered, NOT default. The film draws the spoken sentence into the
+           picture itself, so a caption track switched on by the browser
+           prints the same words a second time over the top of them - which
+           is what the first run in the page did. Keeping the track means a
+           learner or a teacher who wants the browser's own captions still
+           has them; making it default means everyone reads it twice. */
+        (film.captions ? '<track kind="captions" srclang="en" label="English" src="' + esc(film.captions) + '">' : "") +
+        "</video>" +
+        '<p class="lec-note">' + esc(film.note || "Watch the lesson, then go through it a part at a time below.") + "</p>" +
+        "</div>";
+    }
+
     function paint() {
       const p = parts[k];
       $(el.stage).className = "stagewide";
       $(el.stage).innerHTML =
+        (film ? filmHtml() : "") +
         '<div class="lec">' +
         '<p class="phase">Part ' + (k + 1) + " of " + parts.length + "</p>" +
         picHtml(p.pic, "pic lecpic") +
@@ -2404,27 +2437,67 @@
         (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : "") +
         '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? "Next part &#9654;" : "I heard it all &#10003;") + "</button>" +
         "</div>" +
-        '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>' +
+        (film ? "" : '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>') +
         "</div>";
       furthest = Math.max(furthest, k + 1);
-      reportAttempt(o.finish, furthest, parts.length, "parts");
-      $(el.score).textContent = furthest + " of " + parts.length + " parts heard";
+      report();
       $(id + "hear").addEventListener("click", () => say(p.title + ". " + p.say));
-      if (k > 0) $(id + "back").addEventListener("click", () => { k--; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
+      if (k > 0) $(id + "back").addEventListener("click", () => { k--; repaint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
       $(id + "next").addEventListener("click", () => {
-        if (k + 1 < parts.length) { k++; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
-        else {
-          $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
-          reportAttempt(o.finish, parts.length, parts.length, "parts");
-          finish(o.finish, o.done);
-        }
+        if (k + 1 < parts.length) { k++; repaint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
+        else done();
       });
+      if (film) wireFilm();
     }
+
+    /* Moving a part must not restart the film, so with a film on screen only
+       the .lec block is redrawn and the <video> element is carried across. */
+    function repaint() {
+      if (!film) return paint();
+      const v = $(id + "v");
+      const holder = v && v.parentNode;
+      if (holder) holder.removeChild(v);
+      paint();
+      const back = $(id + "v");
+      if (v && back && back.parentNode) back.parentNode.replaceChild(v, back);
+    }
+
+    function report() {
+      const n = watched ? parts.length : furthest;
+      reportAttempt(o.finish, n, parts.length, "parts");
+      $(el.score).textContent = watched
+        ? "Film watched · " + furthest + " of " + parts.length + " parts read"
+        : furthest + " of " + parts.length + " parts heard";
+    }
+
+    function done() {
+      $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+      reportAttempt(o.finish, parts.length, parts.length, "parts");
+      finish(o.finish, o.done);
+    }
+
+    function wireFilm() {
+      const v = $(id + "v");
+      if (!v || v.dataset.wired) return;
+      v.dataset.wired = "1";
+      /* the lesson's voice and the film's voice are the same person, so one
+         must stop when the other starts */
+      v.addEventListener("play", () => { try { VOICE.stop(); } catch (_) { /* nothing */ } });
+      /* Watching it through IS the step. The parts stay below to go back over,
+         but a child who has watched the whole lecture has done what the step
+         asks, and done() writes o.done - which _shell.py sets to the film's
+         own wording where a lesson has one. */
+      v.addEventListener("ended", () => { watched = true; report(); done(); });
+    }
+
     if (!parts.length) return;
     paint();
     /* The slide's own instruction is spoken on arrival; the first part
-       follows it rather than talking over it. */
-    ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+       follows it rather than talking over it. With a film on the page nothing
+       is spoken on arrival at all - the child is about to press play, and a
+       voice reading part one over the opening seconds is the same collision
+       wireFilm() guards against. */
+    if (!film) ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
   }
 
   /* ---- the science words: hear each one, then show you know them ----

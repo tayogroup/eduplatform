@@ -76,3 +76,66 @@ The apply step **merges** into the existing override file. It finds edits by dif
 
 Mathematics works the same way and is gated by `check:math`. The two courses share a UI, so they share the button shapes; Mathematics simply has no vocabulary word-cards.
 
+
+### Unit lecture films: the artwork is the lesson's, and a gate holds it there
+
+```bash
+T=tools/create-ehel-science-unit-lecture.js
+node $T --app src/prototypes/ehel-academy/science/grade-4-app --slug bones-and-muscles --dry        # characters + objective coverage, buys nothing
+node $T --app ... --slug ... --preview                                                              # one still per beat, buys nothing
+node $T --app ... --slug ... --calibrate                                                            # buys the 3 longest clips, reports the real speaking rate
+node $T --app ... --slug ...                                                                        # narrate, render, mux
+```
+
+The `lecture` step used to print "There is no video for this lesson yet." on
+its own face. Where a lesson names a film in `LESSON["video"]` it now draws a
+player above the parts, and where one does not, every line of `lecture()`
+behaves as it did — `film &&` guards every addition rather than the old path
+being rewritten around it. The first film is Grade 4 Lesson 1, Bones and
+Muscles; its storyboard, its README and the built file are in
+`grade-4-app/lecture-video/`.
+
+**The skeleton and the arm are sliced out of `lesson-kit/lib/science.js` at
+render time**, not copied into the renderer, so the child watches the same
+drawing they tap two steps later. `armSvg()` knows only three poses and a film
+needs the motion between them, so the tool adds `armSvgAt(b, tr)` from the same
+constants — and compares its three endpoints with `armSvg()`'s own output
+**character for character**, refusing the render on a mismatch. That check is
+the whole safety of the arrangement: redraw the lesson's arm without
+re-deriving the tween and the build stops rather than shipping a film of an arm
+that is no longer in the lesson. It is also why the film **reframes** two
+clipping faults in that artwork instead of fixing them — `armSvg`'s tendon
+label runs past its own viewBox and the bent arm's hand rotates to about y −55,
+both clipped in the lesson too. The viewBox and the drawing's own background
+rect grow together, so the picture is identical with more page beside it.
+
+**The animation is timed from the voice, not the other way round.** Every beat
+is narrated first, ffprobed, and the timeline is built from the measured
+lengths, so a bone lights up as it is named however long that clip turned out
+to be. Clips are cached by a hash of (voice, model, text) under
+`.cache/ehel-lecture-audio/`, so a visual change re-renders for nothing and only
+edited narration is re-bought — the three-card health rework and the whole
+layout pass cost nothing.
+
+**Cut the script before buying it.** `--calibrate` exists because the alternative
+is trimming against a guessed rate and re-buying at full price when the guess is
+wrong. Measured 2026-09-17, this voice and these settings: **15.92 characters a
+second**, against a 14.2 guess that had put the same script at 3:34 instead of
+2:55.
+
+Two things the tool cannot check, and one it now can:
+
+- `build-lessons.py` refuses a lesson naming a film that is not **both** on disk
+  and in `app.config.json :: extraPages` — a named-but-unshipped film is a
+  broken player on a lesson page and the page cannot tell a child why. Verified
+  by watching it refuse.
+- `deploy.mjs :: ctype()` learned `.mp4`, `.vtt`, `.jpg` and `.png`. A video
+  served as `text/html` does not play; the browser refuses it before the element
+  is ever asked to. Every other build is unaffected — the default is still
+  `text/html`, because every file this tool had ever shipped was a page.
+- **`--dry`'s objective listing proves a code is NAMED by a scene and no more**,
+  exactly as the root CLAUDE.md records for every other citation gate here. What
+  each scene actually delivers is written out in the film's own README, and
+  writing it out is what found the real gap: 4Bp.04 is "the importance of
+  movement in maintaining human HEALTH" and the scene only ever said muscles and
+  bones. It says heart now.

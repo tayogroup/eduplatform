@@ -187,6 +187,15 @@ def expand(n, lesson, code_text, finder, cfg, prev=None):
                {"parts": lecture},
                "That is the whole lesson in " + str(len(lecture)) + " parts. Now do it yourself.")
 
+    # A lesson MAY carry a film (LESSON["video"]). Almost none do, so the key is
+    # added only where one exists: a lesson without it serialises exactly the
+    # data it always did, and lecture() in science.js keeps its old behaviour.
+    film = lesson.get("video")
+    if film:
+        lec["data"]["video"] = film
+        lec["ask"] = "Watch the lesson. Then go back through it a part at a time below."
+        lec["done"] = "You have watched the whole lesson. Now do it yourself."
+
     wds = step("words", "Science words", "\U0001F524", "Science words", codes,
                "Tap each word to hear what it means and how to use it. Then show you know them.",
                explain(

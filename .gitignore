@@ -93,3 +93,10 @@ docs/marketing/*.mp4
 # discards the tally when it moves. Per-checkout scratch; committing one would
 # hand the next clone a tally naming rules it has never run.
 src/prototypes/ehel-academy/mathematics/lesson-app-tools/.rule-hits.json
+
+# create-ehel-science-unit-lecture.js caches each narration clip under a hash of
+# (voice, model, text), so re-rendering a film after a visual change buys
+# nothing and only edited narration is re-bought. Per-checkout, and it is paid
+# audio: committing it would put clips in git that the tool can re-derive from
+# the storyboard, and a stale one would be served in place of an edited line.
+.cache/

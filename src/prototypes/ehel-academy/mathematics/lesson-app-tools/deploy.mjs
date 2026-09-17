@@ -101,8 +101,16 @@ for (const [src, remote] of MODULES) {
   plan.push({ local: path.basename(src), remote, buf, sha1: sha1(buf) });
 }
 
+/* extraPages may carry media now (Science Grade 4's unit lecture film), and a
+   video served as text/html does not play - the browser refuses it before the
+   element is ever asked to. The default stays text/html because every page
+   this tool has ever shipped is one. */
 const ctype = (r) => (r.endsWith(".js") ? "text/javascript; charset=utf-8"
   : r.endsWith(".json") ? "application/json; charset=utf-8"
+  : r.endsWith(".mp4") ? "video/mp4"
+  : r.endsWith(".vtt") ? "text/vtt; charset=utf-8"
+  : r.endsWith(".jpg") || r.endsWith(".jpeg") ? "image/jpeg"
+  : r.endsWith(".png") ? "image/png"
   : "text/html; charset=utf-8");
 
 console.log("\n" + (UPLOAD ? "Uploading" : "PLAN (add --upload)") + " " +

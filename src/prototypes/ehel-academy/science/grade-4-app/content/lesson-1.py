@@ -212,6 +212,18 @@ LESSON["lecture"] = [
          "Today you find the bones, discover the four jobs, bend an arm to watch the muscle pair take turns, and label a diagram of the whole skeleton."),
 ]
 
+# The unit lecture film (tools/create-ehel-science-unit-lecture.js). Where a
+# lesson names one, the lecture step draws a player above the parts instead of
+# saying there is no video; build-lessons.py refuses a path that is not on disk
+# AND in app.config.json :: extraPages, so a named-but-unshipped film cannot
+# reach a learner as a broken player.
+LESSON["video"] = {
+    "src": "lecture-video/bones-and-muscles.mp4",
+    "captions": "lecture-video/bones-and-muscles.vtt",
+    "poster": "lecture-video/bones-and-muscles.jpg",
+    "note": "Three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("skeleton", "\U0001F9B4", "All the bones of a body, joined together.",
          ["Your skeleton holds you up.", "A skeleton has about two hundred bones."]),

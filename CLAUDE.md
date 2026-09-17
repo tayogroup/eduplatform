@@ -565,7 +565,7 @@ learned is below, and arrives when you are actually working in that area.
 | --- | --- | --- |
 | anything under `src/prototypes/ehel-academy/` | `src/prototypes/ehel-academy/CLAUDE.md` | Wehel and the contract that holds it (daily allowance, token backstop); the tutoring topic index and the derived topbar picker; the two progress stores; the five silent failures of the progress client; the shared subject-pipeline loop; `shell/learner-controls.js` |
 | English | `…/english/CLAUDE.md` | narration audio and its four blind checks; the frame-narration rule; the content gate; the four print paths; the illustrated picture books and their two gates; the CDN orphan pruner |
-| Science | `…/science/CLAUDE.md` | answer keys vs the booklet; the Cambridge objective gate; reviewed scripts; narration |
+| Science | `…/science/CLAUDE.md` | answer keys vs the booklet; the Cambridge objective gate; reviewed scripts; narration; the unit lecture films and the tool that renders them |
 | Computing | `…/computing/CLAUDE.md` | booklet answer keys; Stages 1-4 deck-only; reviewed scripts; narration; the word-picture map |
 | Global Perspectives | `…/global-perspectives/CLAUDE.md` | the two pack shapes; the unauthored Stages; assigned objective codes; reviewed scripts; narration; which subjects' clips git actually holds; the measured CDN cache-control table |
 | Mathematics | `…/mathematics/CLAUDE.md` | why `build:math` needs `--force`; answers checked by arithmetic; the 0096 framework hole |
@@ -576,6 +576,18 @@ learned is below, and arrives when you are actually working in that area.
 
 **Read on demand, loaded by nothing:**
 
+- [`src/prototypes/ehel-academy/science/grade-4-app/lecture-video/README.md`](src/prototypes/ehel-academy/science/grade-4-app/lecture-video/README.md)
+  — the **unit lecture films**: how one is storyboarded, narrated, rendered and
+  wired into a lesson page, and what each mode costs.
+  **Read it before running `tools/create-ehel-science-unit-lecture.js`**, which
+  bills per character — a script is about 2,700 of them, and the tool has free
+  modes (`--dry`, `--preview`, `--calibrate`) that exist precisely so nothing is
+  bought until the script and the layout are settled. It also carries the
+  decisions already taken (the dark theme, the silent title and end cards, the
+  leader line rather than a cartoon teacher) and the trap that the first film
+  was the EASY case: Lesson 1 had the lesson's own skeleton and arm to animate,
+  and most lessons have no figure, sim or scene at all. Measure what there is to
+  draw before promising a film like it.
 - [`docs/release-and-repo-history.md`](docs/release-and-repo-history.md) — the
   full 61KB account behind every rule in "Working in this shared checkout":
   the shared-index commit failures, the `git archive` release recipe and its

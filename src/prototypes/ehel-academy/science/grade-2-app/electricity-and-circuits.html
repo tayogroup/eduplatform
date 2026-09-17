@@ -1984,6 +1984,36 @@
                 }
               ],
               "why": "The loop has to be complete all the way round."
+            },
+            {
+              "ask": "Does electricity flow through plastic?",
+              "pic": "🧴",
+              "opts": [
+                {
+                  "t": "No",
+                  "ok": true
+                },
+                {
+                  "t": "Yes",
+                  "ok": false
+                }
+              ],
+              "why": "Plastic stops it, which is why it is wrapped round the outside of a wire."
+            },
+            {
+              "ask": "Must a circuit be a complete loop?",
+              "pic": "🔁",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "Break the loop anywhere and the lamp goes out."
             }
           ],
           "extension": [
@@ -2024,6 +2054,44 @@
                 }
               ],
               "why": "A switch is a gap you can open and close on purpose. Closed, the loop is whole; open, it is broken."
+            },
+            {
+              "ask": "Your circuit works. You swap the cell for a flat one. What happens and why?",
+              "pic": "❌",
+              "opts": [
+                {
+                  "t": "the lamp goes out, because a flat cell has no push left",
+                  "ok": true
+                },
+                {
+                  "t": "the lamp gets brighter",
+                  "ok": false
+                },
+                {
+                  "t": "nothing changes at all",
+                  "ok": false
+                }
+              ],
+              "why": "The loop is still complete. What is missing is the push, and that comes from the cell."
+            },
+            {
+              "ask": "Why does a torch have a switch instead of you taking the cell out each time?",
+              "pic": "🔋",
+              "opts": [
+                {
+                  "t": "a switch opens and closes the loop quickly, without taking it apart",
+                  "ok": true
+                },
+                {
+                  "t": "a switch makes more electricity",
+                  "ok": false
+                },
+                {
+                  "t": "the cell would wear out faster",
+                  "ok": false
+                }
+              ],
+              "why": "A switch is a gap you can open and close on purpose. That is all it is."
             }
           ]
         },
@@ -2678,6 +2746,36 @@
                 }
               ],
               "why": "Only a plug. Anything else is dangerous."
+            },
+            {
+              "ask": "Should electrical things be kept away from water?",
+              "pic": "💧",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "Water and electricity must stay apart."
+            },
+            {
+              "ask": "What does a cell give a circuit?",
+              "pic": "🔋",
+              "opts": [
+                {
+                  "t": "electricity",
+                  "ok": true
+                },
+                {
+                  "t": "light",
+                  "ok": false
+                }
+              ],
+              "why": "The cell gives the push; the lamp gives the light."
             }
           ],
           "extension": [
@@ -2718,6 +2816,44 @@
                 }
               ],
               "why": "That is what a diagram is for. A picture shows what a thing looks like; a diagram shows how it works."
+            },
+            {
+              "ask": "Two lamps in one loop are both dimmer than one lamp was. What does that tell you about the cell's push?",
+              "pic": "💡",
+              "opts": [
+                {
+                  "t": "there is only so much of it, and now it is shared",
+                  "ok": true
+                },
+                {
+                  "t": "the cell got weaker when you added a lamp",
+                  "ok": false
+                },
+                {
+                  "t": "the second lamp is broken",
+                  "ok": false
+                }
+              ],
+              "why": "The cell pushes just as hard. Each lamp simply gets a smaller share of it."
+            },
+            {
+              "ask": "A circuit diagram uses the same symbols everywhere in the world. Why is that worth having?",
+              "pic": "🌐",
+              "opts": [
+                {
+                  "t": "anybody can read the plan, whatever language they speak",
+                  "ok": true
+                },
+                {
+                  "t": "the symbols are quicker to draw",
+                  "ok": false
+                },
+                {
+                  "t": "it stops people copying",
+                  "ok": false
+                }
+              ],
+              "why": "A shared set of symbols is what lets one person's circuit be built by another."
             }
           ]
         },

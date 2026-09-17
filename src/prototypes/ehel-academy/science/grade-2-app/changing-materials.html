@@ -2035,6 +2035,36 @@
                 }
               ],
               "why": "Burning makes new materials that will not go back."
+            },
+            {
+              "ask": "Does ice melt into water?",
+              "pic": "🧊",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "Ice and water are the same material, warm or cold."
+            },
+            {
+              "ask": "Is burnt wood still wood?",
+              "pic": "🔥",
+              "opts": [
+                {
+                  "t": "No",
+                  "ok": true
+                },
+                {
+                  "t": "Yes",
+                  "ok": false
+                }
+              ],
+              "why": "Burning makes ash and smoke, which are new materials."
             }
           ],
           "extension": [
@@ -2075,6 +2105,44 @@
                 }
               ],
               "why": "Drying out is a change you can see, and it makes nothing new. Toasting the same slice would."
+            },
+            {
+              "ask": "You tear a sheet of paper into twenty pieces. Have you made a new material?",
+              "pic": "📄",
+              "opts": [
+                {
+                  "t": "no - twenty pieces of paper are still paper",
+                  "ok": true
+                },
+                {
+                  "t": "yes, because it looks different now",
+                  "ok": false
+                },
+                {
+                  "t": "yes, because you cannot put it back",
+                  "ok": false
+                }
+              ],
+              "why": "Not being able to undo something is not the test. Ask whether the material itself has changed."
+            },
+            {
+              "ask": "Milk left out for a week smells sour and goes lumpy. Same material, or new?",
+              "pic": "🥛",
+              "opts": [
+                {
+                  "t": "new - and no amount of cooling turns it back into fresh milk",
+                  "ok": true
+                },
+                {
+                  "t": "the same milk, only warmer",
+                  "ok": false
+                },
+                {
+                  "t": "the same milk, only older",
+                  "ok": false
+                }
+              ],
+              "why": "Souring makes new materials. That is why it cannot be undone, and why the smell changes."
             }
           ]
         },
@@ -2629,6 +2697,36 @@
                 }
               ],
               "why": "Cooking makes a new material that will not go back."
+            },
+            {
+              "ask": "Does cooking an egg make a new material?",
+              "pic": "🍳",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "A cooked egg will never go back to being raw."
+            },
+            {
+              "ask": "Who should handle a hot pan?",
+              "pic": "🧑",
+              "opts": [
+                {
+                  "t": "a grown-up",
+                  "ok": true
+                },
+                {
+                  "t": "you, carefully",
+                  "ok": false
+                }
+              ],
+              "why": "Heating is a grown-up's job in every experiment."
             }
           ],
           "extension": [
@@ -2669,6 +2767,44 @@
                 }
               ],
               "why": "Rust is a different material from the metal it came from. Like cooking, it does not go back."
+            },
+            {
+              "ask": "A candle is lit and gets shorter. Where has the wax gone?",
+              "pic": "🕯️",
+              "opts": [
+                {
+                  "t": "it burned into new materials that went off into the air",
+                  "ok": true
+                },
+                {
+                  "t": "it melted onto the table",
+                  "ok": false
+                },
+                {
+                  "t": "it shrank into itself",
+                  "ok": false
+                }
+              ],
+              "why": "Burning is not disappearing. The wax became something new that you cannot see."
+            },
+            {
+              "ask": "Wet clothes dry on a line. Is drying the same kind of change as toasting bread?",
+              "pic": "👕",
+              "opts": [
+                {
+                  "t": "no - drying makes nothing new, and toasting does",
+                  "ok": true
+                },
+                {
+                  "t": "yes, both make something new",
+                  "ok": false
+                },
+                {
+                  "t": "yes, both can be undone",
+                  "ok": false
+                }
+              ],
+              "why": "The water left the cloth and is still water. Toast is a material that was not there before."
             }
           ]
         }

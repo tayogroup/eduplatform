@@ -217,6 +217,8 @@ LESSON["words"] = [
          ["A scale model of the Solar System needs a whole field.", "The football and peppercorn are to scale."]),
     word("orbit", "\U0001F30E", "The path one thing takes as it goes round another.",
          ["The Earth's orbit round the Sun takes a year.", "The Moon is in orbit round the Earth."]),
+    word("spin", "\U0001F504", "To turn round on the spot.",
+         ["The Earth spins once a day.", "The Earth's spin is what makes day and night."]),
 ]
 
 LESSON["cando"] = [

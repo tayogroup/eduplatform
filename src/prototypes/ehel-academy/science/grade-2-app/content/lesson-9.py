@@ -287,6 +287,10 @@ LESSON["words"] = [
          ["The stones in the wall are rock.", "A pebble is a stone that water has made smooth."]),
     word("smooth", "\u270B", "Flat to touch, not bumpy. The opposite of rough.",
          ["A pebble is smooth.", "Rub it: smooth means your finger slides."]),
+    word("gravel", "\U0001FAA8", "Small broken pieces of rock.",
+         ["Gravel crunches under your feet.", "Gravel is rock broken into little stones."]),
+    word("rough", "\U0001F9F1", "Bumpy, not smooth.",
+         ["A rough rock feels bumpy.", "The pebble was smooth and the brick was rough."]),
 ]
 
 LESSON["cando"] = [

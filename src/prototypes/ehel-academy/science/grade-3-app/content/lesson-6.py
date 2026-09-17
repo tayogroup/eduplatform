@@ -213,6 +213,8 @@ LESSON["words"] = [
          ["The caterpillar eats the leaf.", "A caterpillar is a consumer: it eats a living thing."]),
     word("fall", "\U0001F342", "To move downwards, because gravity pulls.",
          ["The leaf falls to the ground.", "A fallen leaf feeds the animals in the soil."]),
+    word("dead", "\U0001F342", "Something that was alive and is not alive any more.",
+         ["A dead leaf falls in autumn.", "Tiny living things feed on dead plants."]),
 ]
 
 LESSON["cando"] = [

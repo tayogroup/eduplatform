@@ -244,6 +244,10 @@ LESSON["words"] = [
          ["Foil is made of aluminium.", "A magnet does nothing to aluminium."]),
     word("iron", "\U0001F529", "A strong metal that a magnet pulls.",
          ["An iron nail is magnetic.", "Steel is made from iron, so steel is magnetic too."]),
+    word("magnetism", "\u2728", "The force a magnet uses to pull or push, even without touching.",
+         ["Magnetism works through a sheet of paper.", "You cannot see magnetism, only what it does."]),
+    word("non-magnetic", "\U0001F9F4", "A material a magnet does nothing to.",
+         ["Plastic and copper are non-magnetic.", "The magnet left the non-magnetic spoon alone."]),
 ]
 
 LESSON["cando"] = [

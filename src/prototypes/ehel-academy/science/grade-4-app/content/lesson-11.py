@@ -232,6 +232,8 @@ LESSON["words"] = [
          ["A volcano lets magma out of the crust.", "Most volcanoes are along the edges of the plates."]),
     word("tsunami", "\U0001F30A", "A huge wave caused by an earthquake or an eruption under the sea.",
          ["An earthquake under the sea can start a tsunami.", "A tsunami is caused by the sea floor jolting."]),
+    word("centre", "\U0001F3AF", "The very middle of something.",
+         ["The core is at the centre of the Earth.", "Gravity pulls towards the centre of the Earth."]),
 ]
 
 LESSON["cando"] = [

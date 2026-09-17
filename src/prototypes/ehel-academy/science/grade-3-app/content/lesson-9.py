@@ -262,6 +262,8 @@ LESSON["words"] = [
          ["A rubber sole grips the floor.", "Friction gives a shoe its grip."]),
     word("iron", "\U0001F529", "A strong metal. It is one of the few metals a magnet pulls.",
          ["A nail is made of iron.", "Iron is magnetic; copper is not."]),
+    word("slippery", "\U0001F9CA", "A surface with very little friction, so things slide on it easily.",
+         ["Wet tiles are slippery.", "Ice is slippery because it is so smooth."]),
 ]
 
 LESSON["cando"] = [

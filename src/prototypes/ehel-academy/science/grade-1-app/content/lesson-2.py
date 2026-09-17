@@ -327,6 +327,10 @@ LESSON["words"] = [
          ["Today's practical is planting a bean.", "Wash your hands after a practical."]),
     word("model", "\U0001F30D", "A small copy of something, or a drawing of it, that helps you see how it works.",
          ["A globe is a model of Earth.", "We made a model of a plant out of paper."]),
+    word("magnifying glass", "\U0001F50D", "A lens that makes small things look bigger.",
+         ["Look at the seed with a magnifying glass.", "A magnifying glass shows the tiny hairs on a root."]),
+    word("label", "\U0001F3F7\uFE0F", "A word written on a picture to name one part of it.",
+         ["Put a label on each part of the plant.", "The diagram has five labels."]),
 ]
 
 LESSON["cando"] = [

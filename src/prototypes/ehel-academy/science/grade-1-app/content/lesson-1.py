@@ -331,6 +331,16 @@ LESSON["words"] = [
          ["An apple is a healthy snack.", "Running about keeps you healthy."]),
     word("unhealthy", "\U0001F370", "Not good for your body if you have a lot of it. A treat, not an every-day food.",
          ["Sweets are unhealthy if you eat a lot.", "One cake is fine; a cake every day is unhealthy."]),
+    word("water", "\U0001F4A7", "The liquid in seas, rivers and taps, that every living thing needs.",
+         ["A plant needs water to grow.", "You drink water every day."]),
+    word("air", "\U0001F32C\uFE0F", "The material all around us that we breathe.",
+         ["Air is all around you, even though you cannot see it.", "A fish takes air out of water with its gills."]),
+    word("breathe", "\U0001F443", "To take air in and let it out again.",
+         ["You breathe through your nose and mouth.", "A fish breathes with gills."]),
+    word("scientist", "\U0001F52C", "Somebody who finds things out by looking, testing and asking questions.",
+         ["A scientist writes down what she sees.", "You are being a scientist when you test something."]),
+    word("group", "\U0001F5C2\uFE0F", "Things put together because they are alike in some way.",
+         ["Put the leaves into groups by shape.", "Animals with feathers make one group."]),
 ]
 
 LESSON["cando"] = [

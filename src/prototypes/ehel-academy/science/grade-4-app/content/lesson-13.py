@@ -257,6 +257,22 @@ LESSON["words"] = [
          ["The dot plot showed a cluster at 2.1.", "Draw a dot plot of the drops."]),
     word("conclusion", "\U0001F4DD", "What the results tell you about the question you asked.",
          ["Our conclusion: bigger wings make a spinner fall more slowly.", "A conclusion comes from the results."]),
+    word("enquiry", "\U0001F50D", "The way you go about finding something out in science.",
+         ["A fair test is one kind of enquiry.", "Which enquiry suits this question?"]),
+    word("prediction", "\U0001F52E", "What you say will happen, before you test it.",
+         ["Write your prediction down first.", "The result matched my prediction."]),
+    word("pattern", "\U0001F4C8", "Something that repeats in your results, so you can say what usually happens.",
+         ["The chart showed a clear pattern.", "Bigger wings, slower fall - that is the pattern."]),
+    word("results", "\U0001F4CA", "What you observed or measured.",
+         ["Record your results in the table.", "Three drops gave three results."]),
+    word("equipment", "\U0001F9F0", "The tools you choose to do a job in science.",
+         ["Choose your equipment before you start.", "A stopwatch is the right equipment for timing."]),
+    word("measurement", "\U0001F4CF", "A number you read off a piece of equipment, with its unit.",
+         ["Take each measurement at eye level.", "Two measurements disagreed, so we repeated them."]),
+    word("classify", "\U0001F5C2\uFE0F", "To sort things into groups by what they are like.",
+         ["Classify the animals by their features.", "We classified the materials into conductors and insulators."]),
+    word("secondary source", "\U0001F4DA", "Something somebody else found out, that you look up rather than measure yourself.",
+         ["The fact card is a secondary source.", "A book is a secondary source; your own table is not."]),
 ]
 
 LESSON["cando"] = [

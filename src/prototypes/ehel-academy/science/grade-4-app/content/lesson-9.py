@@ -236,6 +236,8 @@ LESSON["words"] = [
          ["Evidence changed the idea of seeing.", "Scientists look for evidence."]),
     word("straight line", "\U0001F4D0", "The only path light travels along. It never bends round a corner.",
          ["Light travels in straight lines.", "A ray diagram draws light as straight lines."]),
+    word("shadow", "\U0001F464", "The dark shape where something blocks the light.",
+         ["A shadow falls behind the object.", "No light, no shadow."]),
 ]
 
 LESSON["cando"] = [

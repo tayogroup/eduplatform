@@ -272,6 +272,8 @@ LESSON["words"] = [
          ["I did some research in a book.", "Research is one of the five enquiries."]),
     word("classifying", "\U0001F5C2\uFE0F", "Sorting things into groups by what they are like.",
          ["Classifying means putting things into groups.", "We classified them as living, once alive or never alive."]),
+    word("identify", "\U0001F50E", "To recognise one thing and give it its name.",
+         ["Use the key to identify the animal.", "You identify a leaf by its shape."]),
 ]
 
 LESSON["cando"] = [

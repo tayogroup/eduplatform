@@ -214,6 +214,12 @@ LESSON["words"] = [
          ["A brick is a solid.", "The particles in a solid still vibrate on the spot."]),
     word("liquid", "\U0001F4A7", "A substance whose particles touch but can slide past each other, so it flows.",
          ["Water is a liquid.", "A liquid takes the shape of whatever holds it."]),
+    word("gas", "\U0001F4A8", "A material whose particles move fast and far apart, so it fills all the space it is in.",
+         ["Air is a gas.", "A gas spreads out to fill the whole balloon."]),
+    word("matter", "\u269B\uFE0F", "Everything that is made of particles. Solid, liquid and gas are its three states.",
+         ["All matter is made of particles.", "Heating matter makes its particles move more."]),
+    word("temperature", "\U0001F321\uFE0F", "How hot or cold something is, measured in degrees.",
+         ["Raise the temperature and the particles move faster.", "A thermometer measures temperature."]),
 ]
 
 LESSON["cando"] = [

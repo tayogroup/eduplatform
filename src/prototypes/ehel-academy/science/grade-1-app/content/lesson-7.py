@@ -288,6 +288,8 @@ LESSON["words"] = [
          ["Wood is non-magnetic.", "Kitchen foil is metal and still non-magnetic."]),
     word("mains", "\U0001F50C", "The strong electricity that comes into a building through wires, to the sockets in the wall.",
          ["A kettle uses mains electricity.", "Only a plug goes into the mains."]),
+    word("safe", "\u26A0\uFE0F", "Not able to hurt you.",
+         ["A battery circuit is safe to hold.", "Never put anything in a wall socket - that is not safe."]),
 ]
 
 LESSON["cando"] = [

@@ -240,6 +240,8 @@ LESSON["words"] = [
          ["Sand is insoluble in water.", "An insoluble solid can be caught in a filter."]),
     word("funnel", "\U0001F6B0", "A cone that guides a liquid into a narrow opening. It does not separate anything by itself.",
          ["A funnel holds the filter paper.", "A funnel only guides the liquid; the paper does the separating."]),
+    word("goggles", "\U0001F97D", "Clear glasses that protect your eyes in an experiment.",
+         ["Put your goggles on before you pour.", "Goggles keep splashes out of your eyes."]),
 ]
 
 LESSON["cando"] = [

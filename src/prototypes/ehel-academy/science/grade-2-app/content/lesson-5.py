@@ -258,6 +258,8 @@ LESSON["words"] = [
          ["Water is a liquid.", "Melted chocolate is a liquid."]),
     word("safe", "\u2705", "It will not hurt you. The opposite of dangerous.",
          ["Ask a grown-up before you go near anything hot, to stay safe.", "Oven gloves make it safe to hold a hot tray."]),
+    word("mixture", "\U0001F963", "Two or more materials put together that you can separate again.",
+         ["Sand and water make a mixture.", "In a mixture each material keeps its own properties."]),
 ]
 
 LESSON["cando"] = [

@@ -307,6 +307,12 @@ LESSON["words"] = [
          ["Pull the box towards you.", "The ball rolled towards the door."]),
     word("away", "\u2B05\uFE0F", "Moving further from something.",
          ["Push the box away from you.", "The ball rolled away from me."]),
+    word("shape", "\U0001F537", "The outline of an object.",
+         ["A push can change the shape of dough.", "Squashing changes an object's shape."]),
+    word("speed", "\U0001F4A8", "How fast something is moving.",
+         ["A push increases the speed of the ball.", "Friction takes the speed away."]),
+    word("slide", "\U0001F6F7", "To move across a surface while touching it.",
+         ["The box slides across the floor.", "It slides further on a smooth surface."]),
 ]
 
 LESSON["cando"] = [

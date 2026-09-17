@@ -263,6 +263,16 @@ LESSON["words"] = [
          ["Toothpaste with fluoride keeps teeth strong.", "Fluoride helps stop holes in teeth."]),
     word("gums", "\U0001F444", "The soft pink part of your mouth that teeth grow out of.",
          ["Brush your gums gently too.", "Healthy gums hold the teeth in place."]),
+    word("toothpaste", "\U0001FAA5", "What you put on a toothbrush to clean your teeth.",
+         ["Toothpaste has fluoride in it.", "Use a little toothpaste twice a day."]),
+    word("dentist", "\U0001F9B7", "The person who looks after your teeth.",
+         ["The dentist checks for holes in your teeth.", "Visit the dentist even when nothing hurts."]),
+    word("heart", "\u2764\uFE0F", "The part inside you that pumps blood round your body.",
+         ["Your heart beats faster when you run.", "The heart works all day and all night."]),
+    word("muscles", "\U0001F4AA", "The soft parts inside you that pull, so that you can move.",
+         ["Your muscles pull your bones.", "Muscles get stronger when you use them."]),
+    word("exercise", "\U0001F3C3", "Moving your body about, using your muscles.",
+         ["Running is exercise.", "Exercise every day keeps your heart strong."]),
 ]
 
 LESSON["cando"] = [

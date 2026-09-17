@@ -240,6 +240,12 @@ LESSON["words"] = [
          ["The lamp lights when the circuit is complete.", "One loose wire and the loop is not complete."]),
     word("flow", "\U0001F30A", "To move along, the way water moves along a pipe.",
          ["Electricity flows round the circuit.", "Electricity cannot flow across a gap."]),
+    word("electricity", "\u26A1", "What flows round a circuit and makes a lamp light.",
+         ["Electricity flows only round a complete circuit.", "A cell pushes the electricity round."]),
+    word("connection", "\U0001F517", "A place where two parts of a circuit join.",
+         ["Check every connection if the lamp will not light.", "A loose connection breaks the circuit."]),
+    word("mains electricity", "\U0001F50C", "The very powerful electricity in the sockets of a building.",
+         ["Mains electricity is far too strong to play with.", "A cell is safe; mains electricity is not."]),
 ]
 
 LESSON["cando"] = [

@@ -293,6 +293,12 @@ LESSON["words"] = [
          ["Record the length of the shadow each hour.", "Record it straight away, before you forget."]),
     word("measure", "\U0001F4CF", "To find out how big or how long something is.",
          ["Measure the shadow with your feet.", "Measure it the same way every time."]),
+    word("compare", "\u2696\uFE0F", "To look at two things and say how they are alike and different.",
+         ["Compare the morning shadow with the midday one.", "We compared two lengths."]),
+    word("results", "\U0001F4CA", "What you observed or measured.",
+         ["Record your results in the table.", "Our results showed the shadow was shortest at midday."]),
+    word("star", "\u2B50", "A huge burning ball in the sky, very far away.",
+         ["The Sun is our nearest star.", "Stars look tiny because they are so far away."]),
 ]
 
 LESSON["cando"] = [

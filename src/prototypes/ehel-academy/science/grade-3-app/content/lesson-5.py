@@ -208,6 +208,12 @@ LESSON["words"] = [
          ["A muscle pulls your bones.", "Your heart is a muscle that never stops."]),
     word("oxygen", "\U0001F32C\uFE0F", "The gas in the air that your body needs to stay alive.",
          ["Your lungs take oxygen out of the air.", "Oxygen is a gas, and plants make it."]),
+    word("breathe", "\U0001F32C\uFE0F", "To take air into your lungs and let it out again.",
+         ["You breathe faster when you run.", "Your lungs breathe in and out all day."]),
+    word("heartbeat", "\U0001F493", "One push of blood from your heart.",
+         ["Feel your heartbeat with two fingers.", "Your heartbeat speeds up when you run."]),
+    word("blood vessels", "\U0001FA78", "The tubes that carry blood round your body.",
+         ["Blood vessels reach every part of you.", "The heart pumps blood into the blood vessels."]),
 ]
 
 LESSON["cando"] = [

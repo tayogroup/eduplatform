@@ -298,6 +298,16 @@ LESSON["words"] = [
          ["A puppy's parents are two dogs.", "You get a mix of features from both parents."]),
     word("young", "\U0001F423", "An animal that has not been alive long. An animal's babies are its young.",
          ["A kitten is a young cat.", "A hen's young are called chicks."]),
+    word("bird", "\U0001F426", "An animal with feathers and a beak, that lays eggs.",
+         ["A bird has feathers, and most birds fly.", "A chick hatches from a bird's egg."]),
+    word("adult", "\U0001F9D1", "A living thing that is fully grown.",
+         ["A kitten grows into an adult cat.", "The adult looks after its young."]),
+    word("chick", "\U0001F423", "A young bird.",
+         ["A chick hatches out of an egg.", "The chick looks like a small hen."]),
+    word("cub", "\U0001F981", "A young lion, bear, wolf or tiger.",
+         ["A lion cub drinks its mother's milk.", "The cub will grow into an adult lion."]),
+    word("mammal", "\U0001F408", "An animal with fur or hair that feeds its young on milk.",
+         ["A cat is a mammal.", "Mammals have live babies instead of laying eggs."]),
 ]
 
 LESSON["cando"] = [

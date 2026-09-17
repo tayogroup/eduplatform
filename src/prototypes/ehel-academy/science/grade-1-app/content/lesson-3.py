@@ -362,6 +362,10 @@ LESSON["words"] = [
          ["Lina and Hana are twins.", "A brother and a sister can be twins."]),
     word("blonde", "\U0001F471", "Yellow hair.",
          ["Nora has blonde hair.", "Three children in the class are blonde."]),
+    word("body", "\U0001F9CD", "The whole of a person or an animal.",
+         ["Your senses tell you about the world around your body.", "Skin covers your whole body."]),
+    word("skin", "\u270B", "The covering over the outside of your body, that you feel with.",
+         ["Your skin feels hot and cold.", "Touch uses the skin on your fingers."]),
 ]
 
 LESSON["cando"] = [

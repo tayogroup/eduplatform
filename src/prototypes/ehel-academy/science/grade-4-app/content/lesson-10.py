@@ -294,6 +294,8 @@ LESSON["words"] = [
          ["The lamp lights when the circuit is complete.", "Two lamps on one cell are dimmer than one."]),
     word("series circuit", "\U0001F501", "A circuit where everything sits in one single loop, one after another.",
          ["In a series circuit the electricity has only one path.", "Add a lamp to a series circuit and both go dimmer."]),
+    word("metal", "\U0001F529", "A shiny, hard material that lets electricity and heat pass through it.",
+         ["Every metal we tested conducted.", "The wire inside is metal and the cover is plastic."]),
 ]
 
 LESSON["cando"] = [

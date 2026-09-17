@@ -238,6 +238,10 @@ LESSON["words"] = [
          ["A flower makes the seeds.", "The flower is one part of the plant, not the whole plant."]),
     word("seeds", "\U0001F330", "The small hard parts made in a flower. A new plant grows from a seed.",
          ["Seeds are made in the flower.", "A baby plant grows out of a seed."]),
+    word("shoot", "\U0001F331", "The growing end of a stem, where new leaves come from.",
+         ["A green shoot pushed up through the soil.", "The shoot grows towards the light."]),
+    word("survive", "\U0001F33F", "To stay alive.",
+         ["A plant needs water to survive.", "Nothing survives with no light at all."]),
 ]
 
 LESSON["cando"] = [

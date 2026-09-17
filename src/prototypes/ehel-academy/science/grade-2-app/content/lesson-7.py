@@ -256,6 +256,8 @@ LESSON["words"] = [
          ["The Sun is very bright.", "A torch is brighter than a candle."]),
     word("daylight", "\U0001F324\uFE0F", "The light we get from the Sun in the daytime.",
          ["In daylight you do not need a lamp.", "Daylight comes from the Sun, not from the sky itself."]),
+    word("dull", "\U0001FAA8", "Light does not bounce off it. The opposite of shiny.",
+         ["A dull surface does not reflect much light.", "The cloth was dull and the spoon was shiny."]),
 ]
 
 LESSON["cando"] = [

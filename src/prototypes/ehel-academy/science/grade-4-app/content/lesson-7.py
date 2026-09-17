@@ -229,6 +229,10 @@ LESSON["words"] = [
          ["A splash in the eye is a risk.", "Plan for every risk."]),
     word("goggles", "\U0001F97D", "Eye protection worn for practical work.",
          ["Goggles on before you pour.", "Goggles stop splashes."]),
+    word("freeze", "\u2744\uFE0F", "To change from a liquid to a solid as it cools.",
+         ["Water freezes into ice.", "Freezing is a physical change, so it can be undone."]),
+    word("property", "\U0001F4CB", "Something about a material you can test: how hard it is, whether it floats, whether it conducts.",
+         ["Each material keeps its own properties in a mixture.", "Rust has different properties from iron."]),
 ]
 
 LESSON["cando"] = [

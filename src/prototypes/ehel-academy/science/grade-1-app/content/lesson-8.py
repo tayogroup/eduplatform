@@ -329,6 +329,20 @@ LESSON["words"] = [
          ["Water freezes when it is very cold.", "The puddle froze overnight."]),
     word("science report", "📃", "What a scientist writes to tell other people what they found out.",
          ["We wrote a science report about the globe catches.", "A science report says what you did and what happened."]),
+    word("globe", "\U0001F310", "A ball-shaped model of the Earth.",
+         ["A globe shows that the Earth is a sphere.", "Turn the globe to find your country."]),
+    word("sunlight", "\u2600\uFE0F", "Light that comes from the Sun.",
+         ["Sunlight warms the ground.", "Plants need sunlight to grow."]),
+    word("Moon", "\U0001F319", "The large rocky ball that travels round the Earth.",
+         ["The Moon shines with light from the Sun.", "You can sometimes see the Moon in the daytime."]),
+    word("light", "\U0001F4A1", "What lets you see. It comes from the Sun, a lamp or a flame.",
+         ["The Sun gives us light.", "With no light at all you can see nothing."]),
+    word("land", "\U0001F3DE\uFE0F", "The rock and soil on the surface of the Earth.",
+         ["Land is the part of the Earth that is not sea.", "Plants grow in the soil on the land."]),
+    word("sea", "\U0001F30A", "A very large area of salty water.",
+         ["The sea covers most of the Earth.", "Sea water is salty, not fresh."]),
+    word("astronaut", "\U0001F680", "A person who travels out into space.",
+         ["An astronaut has walked on the Moon.", "Astronauts see the Earth as a ball."]),
 ]
 
 LESSON["cando"] = [

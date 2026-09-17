@@ -1181,6 +1181,199 @@ function loadSignoff() {
 }
 const SIGNOFF = loadSignoff();
 
+// ---------------------------------------------------------------------------
+// Authored units — closing a content gap the source pack cannot
+// ---------------------------------------------------------------------------
+// A stage can be missing a skill because the school's Word export never
+// covered it (Stage 5's Evaluation/Reflection/Collaboration/Communication,
+// confirmed absent 2026-08-11 — see global-perspectives/CLAUDE.md). No
+// extractor run can produce what nobody exported, so that gap is closed by
+// writing the unit, not by finding it. This directory is the one place in the
+// pipeline where that hand-written content lives — outside grade-*/data/
+// (generated, never edit) and outside the Word-derived content model, so
+// neither a content re-extraction nor a rebuild ever overwrites it. Same
+// pattern as script-review.json and objective-learner-text.json below: a
+// hand-maintained input under global-perspectives/data/, laid over the build.
+//
+// A file here supplies exactly the pieces buildUnit() would otherwise derive
+// from parsing a Word document (explainers, toolkit, activities, practice,
+// reflection, ...) in the SAME final shape those functions produce, so
+// buildAuthoredUnit() below only has to assemble the envelope — objective
+// resolution, outcomes and the assessment questions are the same generic
+// helpers every other unit uses, so an authored unit is graded, checked and
+// rendered identically to an extracted one.
+const AUTHORED_UNITS_DIR = path.join(COURSE_DIR, "data", "authored-units");
+
+function loadAuthoredUnits(year) {
+  const dir = path.join(AUTHORED_UNITS_DIR, `grade-${year}`);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir)
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => {
+      try {
+        return JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
+      } catch (error) {
+        console.error(`error: ${path.join(dir, f)} is not readable JSON — ${error.message}`);
+        process.exit(1);
+      }
+    })
+    .sort((a, b) => a.unitNo - b.unitNo);
+}
+
+function buildAuthoredUnit(authored, grade, framework) {
+  const objectives = objectivesForUnit({ skill: authored.skill, objectives: null }, grade.stage, framework);
+  const goals = authored.goals || { starting: [], developing: [], gettingBetter: [] };
+  const outcomes = buildOutcomes(goals, objectives, authored.explainers || []);
+  const practice = authored.practice || [];
+  const assessment = buildAssessment(practice, false);
+
+  return {
+    schemaVersion: "Ehel Global Perspectives Runtime v1.0",
+    generatedAt: new Date().toISOString(),
+    stage: { id: `s${pad2(grade.stage)}`, label: `Stage ${grade.stage}` },
+    subject: "Global Perspectives",
+    unit: {
+      unitId: `gp-g${pad2(grade.year)}-u${pad2(authored.unitNo)}`,
+      unitNo: authored.unitNo,
+      unitTitle: authored.unitTitle,
+      skill: authored.skill,
+      packShape: authored.packShape || "self-study",
+      unitOverview: authored.unitOverview || "",
+      learningPath: authored.learningPath || [],
+      reviewStatus: "Hand-authored - curriculum review required",
+    },
+    cambridge: {
+      level: grade.framework.level,
+      code: grade.framework.code,
+      stage: grade.stage,
+      objectives,
+    },
+    provenance: {
+      contentPackage: `Ehel-Academy-Global-Perspectives-Grade-${grade.year}-Content-Package`,
+      framework: `${grade.framework.level} ${grade.framework.code} - Stage ${grade.stage}`,
+      sourceArchive: "N/A - hand-authored",
+      sourceDocuments: [],
+      sourceBlockCount: 0,
+      packShape: authored.packShape || "self-study",
+      transformation: "Hand-authored to close a confirmed content gap: the school's Word source pack never "
+        + "exported this skill at this stage. Written to Cambridge's own printed Stage objectives, matching the "
+        + "structure and depth of the extracted self-study units.",
+      reviewStatus: "Hand-authored - curriculum review required",
+    },
+    outcomes,
+    explainers: authored.explainers || [],
+    bigIdeas: authored.bigIdeas || [],
+    models: authored.models || [],
+    tutorPrompts: authored.tutorPrompts || [],
+    speakingPrompts: authored.speakingPrompts || [],
+    teacherSessions: authored.teacherSessions || [],
+    reflectionPrompts: authored.reflectionPrompts || [],
+    goals,
+    toolkit: authored.toolkit || [],
+    checklists: authored.checklists || [],
+    challenge: authored.challenge || { intro: "", topics: [], checkpoints: [] },
+    activities: authored.activities || [],
+    grownUpGuide: null,
+    project: null,
+    practice,
+    reflection: authored.reflection || [],
+    reference: authored.reference || { vocabulary: [], mistakes: [] },
+    assessment,
+    selfAssessment: authored.selfAssessment && authored.selfAssessment.length
+      ? authored.selfAssessment
+      : outcomes.map((o, index) => ({ id: `self-${index + 1}`, statement: o.text })),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Unit supplements — adding a genuinely new skill-moment to a real unit
+// ---------------------------------------------------------------------------
+// Stages 1-3 resolve their objectives from evidence in the guide/activity/
+// practice text (objectivesFromGuide above), and for several units that text
+// never touches some sub-strands at all — the source guide says outright "this
+// project gently grows FOUR Global Perspectives skills", so nine of Stage 1's
+// eighteen, one of Stage 2's and three of Stage 3's had no evidence anywhere to
+// find, in any unit. That is a genuine content gap, not a matching gap: every
+// missing sub-strand already has a working pattern in GUIDED_SKILL_MAP (proven
+// by the sub-strands that DO match), so extending the regex would not help.
+//
+// A supplement file adds one small, real skill-moment to a specific existing
+// unit — a new explainer (a page in the Activity Sheet's own voice, since a
+// guided unit's activities ARE its explainers) plus the objective it evidences
+// — without touching grade-*/data/ (generated) or the Word-derived content
+// model. Same reasoning as authored-units above: this is additive content a
+// human should ideally have written into the source pack, closing a gap the
+// extractor cannot close by re-running.
+const UNIT_SUPPLEMENTS_DIR = path.join(COURSE_DIR, "data", "unit-supplements");
+
+function loadUnitSupplement(year, unitNo) {
+  const file = path.join(UNIT_SUPPLEMENTS_DIR, `grade-${year}`, `unit-${unitNo}.json`);
+  if (!fs.existsSync(file)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch (error) {
+    console.error(`error: ${file} is not readable JSON — ${error.message}`);
+    process.exit(1);
+  }
+}
+
+function applySupplement(built, supplement, framework, stage) {
+  if (!supplement) return 0;
+  let added = 0;
+  const stageObjectives = framework.objectivesByStage[String(stage)] || [];
+  const byCode = new Map(stageObjectives.map((o) => [o.code, o]));
+
+  for (const item of supplement.addExplainers || []) {
+    built.explainers.push({
+      id: `explain-${built.explainers.length + 1}`,
+      slug: slug(item.title).slice(0, 60),
+      title: item.title,
+      body: item.body,
+      bullets: item.bullets || [],
+      tables: item.tables || [],
+      isFrontMatter: false,
+    });
+    built.unit.learningPath.push(item.title);
+    added += 1;
+  }
+  for (const item of supplement.addActivities || []) {
+    built.activities.push({
+      id: `act-${built.activities.length + 1}`,
+      title: item.title,
+      label: item.label || item.title,
+      intro: item.intro || "",
+      steps: item.steps || [],
+      tables: item.tables || [],
+      boxes: item.boxes || [],
+    });
+    added += 1;
+  }
+  for (const item of supplement.addObjectives || []) {
+    const objective = byCode.get(item.code);
+    if (!objective) {
+      console.error(`error: ${built.unit.unitId} supplement claims ${item.code}, which is not a Stage ${stage} objective.`);
+      process.exit(1);
+    }
+    if (built.cambridge.objectives.some((o) => o.code === item.code)) continue; // already claimed — no duplicate
+    const learnerText = OBJECTIVE_LEARNER_TEXT[objective.code] || "";
+    const resolved = {
+      code: objective.code,
+      strand: objective.strand,
+      subStrand: objective.subStrand,
+      text: objective.text,
+      learnerText,
+      learnerTextSource: learnerText ? "Ehel Academy" : undefined,
+      evidence: item.evidence,
+    };
+    built.cambridge.objectives.push(resolved);
+    if (learnerText) {
+      built.outcomes.push({ id: `lo${pad2(built.outcomes.length + 1)}`, text: capitalise(learnerText.replace(/^i (?:am|can)\s+/i, "")) });
+    }
+    added += 1;
+  }
+  return added;
+}
+
 function guidedReviewStatus(unitId, objectives) {
   const approved = SIGNOFF?.claims?.[unitId];
   const produced = objectives.map((o) => o.code);
@@ -1277,6 +1470,7 @@ function main() {
   const review = loadReview();
   let unitsWritten = 0;
   let reviewApplied = 0;
+  let supplementsApplied = 0;
 
   for (const grade of model.grades) {
     if (requested.length && !requested.includes(grade.year)) continue;
@@ -1287,8 +1481,25 @@ function main() {
     const gradeDir = path.join(COURSE_DIR, `grade-${grade.year}`);
     const manifestUnits = [];
 
-    for (const unit of grade.units) {
-      const built = buildUnit(unit, grade, framework);
+    // Extracted units (from the Word packs) and authored units (hand-written
+    // to close a gap no export can fill — see buildAuthoredUnit above) are
+    // merged by unit number before writing, so a grade with e.g. two extracted
+    // units and four authored ones still ships six unit-N.json files in order.
+    const authoredUnits = loadAuthoredUnits(grade.year);
+    const authoredNos = new Set(authoredUnits.map((u) => u.unitNo));
+    const extractedClash = grade.units.filter((u) => authoredNos.has(u.unitNo));
+    if (extractedClash.length) {
+      console.error(`error: grade ${grade.year} has both an extracted and an authored unit-${extractedClash[0].unitNo} — `
+        + "remove one before building.");
+      process.exit(1);
+    }
+    const allUnits = [
+      ...grade.units.map((u) => ({ kind: "extracted", unit: u })),
+      ...authoredUnits.map((u) => ({ kind: "authored", unit: u })),
+    ].sort((a, b) => a.unit.unitNo - b.unit.unitNo);
+
+    for (const { kind, unit } of allUnits) {
+      const built = kind === "authored" ? buildAuthoredUnit(unit, grade, framework) : buildUnit(unit, grade, framework);
       // Reviewed corrections go on last, so they win over anything the builder
       // derived — that is the whole point of the review.
       reviewApplied += applyReview(
@@ -1297,6 +1508,7 @@ function main() {
         `grade-${grade.year}/unit-${unit.unitNo}`,
         staleOverrides,
       );
+      supplementsApplied += applySupplement(built, loadUnitSupplement(grade.year, unit.unitNo), framework, grade.stage);
       writeJson(path.join(gradeDir, "data", "units", `unit-${unit.unitNo}.json`), built);
       unitsWritten += 1;
       manifestUnits.push({
@@ -1305,7 +1517,7 @@ function main() {
         title: unit.unitTitle,
         skill: unit.skill || null,
         data: `./data/units/unit-${unit.unitNo}.json`,
-        sourceDocumentCount: unit.documents.length,
+        sourceDocumentCount: kind === "authored" ? 0 : unit.documents.length,
         objectiveCount: built.cambridge.objectives.length,
         reviewStatus: built.unit.reviewStatus,
       });
@@ -1368,6 +1580,9 @@ function main() {
   console.log(`\n${unitsWritten} unit file(s) written.`);
   if (Object.keys(review).length) {
     console.log(`Script review: ${reviewApplied} field(s) applied.`);
+  }
+  if (supplementsApplied) {
+    console.log(`Unit supplements: ${supplementsApplied} item(s) added.`);
   }
   if (staleOverrides.length) {
     // A stale override is review that is no longer reaching the content — the

@@ -405,3 +405,10 @@ body {
 .cs-sign {
   font-family: "Inter", sans-serif; font-size: 16px; font-weight: 700; color: var(--muted);
 }
+
+/* the leader line, appended over the whole frame after paint (scenes.js ::
+   drawLeader) - it joins two boxes that have no shared coordinate system */
+.leader {
+  position: absolute; inset: 0; width: 1280px; height: 720px;
+  z-index: 3; pointer-events: none;
+}

@@ -165,7 +165,13 @@
        Done on the markup because the figure is re-emitted every frame. */
     svg = svg.replace(/<g data-part="([a-z]+)"([^>]*)>/g, function (m, id, rest) {
       var cls = seen[id] ? (id === part ? "now" : "had") : "";
-      return '<g data-part="' + id + '"' + rest + ' class="' + cls + '">';
+      /* The pointer breathes. A marker that sits perfectly still on a held
+         shot reads as part of the drawing rather than as something placed on
+         it, which is the whole job it has. */
+      var st = id === part
+        ? ' style="filter:drop-shadow(0 0 ' + (4 + pulse * 7).toFixed(1) + 'px rgba(244,201,93,0.85))"'
+        : "";
+      return '<g data-part="' + id + '"' + rest + ' class="' + cls + '"' + st + ">";
     });
     svg = svg.replace(/class="outline"/g, 'class="outline"');
 
@@ -440,6 +446,48 @@
         draw(scene, beat, t, i) +
       "</main>" +
       band(beat, t);
+
+    if (scene.kind === "bones") drawLeader(film, t);
+  }
+
+  /* A line from the entry in the list to the bone it names.
+   *
+   * THE ONE THING IN THIS FILE THAT MEASURES. Everything else is a pure
+   * function of t written straight into markup, and this is not for want of
+   * trying: the bone lives inside an SVG viewBox and the list entry is HTML in
+   * normal flow, so the two have no shared geometry to compute a line from.
+   * Measuring after paint is the only honest way to join them. It stays
+   * deterministic - the same markup lays out the same way every time - so a
+   * frame is still reproducible, which is what the no-animation rule protects.
+   *
+   * It is drawn instead of a pointing character (owner, 2026-09-17). The line
+   * does the one thing a pointing hand would: it ties the word to the thing.
+   * A character would have added a second focal point carrying no information,
+   * and a face wins attention over a diagram every time.
+   */
+  function drawLeader(film, t) {
+    var bone = film.querySelector(".figure [data-part].now");
+    var item = film.querySelector(".blist li.now .tick");
+    if (!bone || !item) return;          /* the intro beat names no bone */
+    var b = bone.getBoundingClientRect(), n = item.getBoundingClientRect();
+    if (!b.width || !n.width) return;
+    /* from just left of the tick, to the near edge of the bone's own marker -
+       NOT into the middle of it, where the dot doubled up with the gold ring */
+    var x1 = n.left - 10, y1 = n.top + n.height / 2;
+    var x2 = b.right + 2, y2 = b.top + b.height / 2;
+    var mx = x1 - (x1 - x2) * 0.55;
+    var ns = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("class", "leader");
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.innerHTML =
+      '<path d="M' + x1.toFixed(1) + " " + y1.toFixed(1) +
+        " C" + mx.toFixed(1) + " " + y1.toFixed(1) +
+        " " + mx.toFixed(1) + " " + y2.toFixed(1) +
+        " " + x2.toFixed(1) + " " + y2.toFixed(1) +
+        '" fill="none" stroke="#F4C95D" stroke-width="2.4" stroke-linecap="round" opacity="0.88"/>' +
+      '<circle cx="' + x2.toFixed(1) + '" cy="' + y2.toFixed(1) + '" r="3.6" fill="#F4C95D"/>';
+    film.appendChild(svg);
   }
 
   window.EHEL_FILM = { frame: frame, total: TOTAL };

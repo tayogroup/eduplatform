@@ -86,6 +86,46 @@ rate. Measured on 2026-09-17 with this voice and these settings: **15.92
 characters a second**. A script trimmed against a guessed rate is re-bought at
 full price when the guess is wrong.
 
+## The leader line, and the character that was not built
+
+Owner asked on 2026-09-17 whether an animated cartoon teacher should float to
+the action and point at it. **Both were mocked up as stills and compared on the
+same frame** — the rib cage, 3 of 7 — before anything was decided, which is the
+only reason the answer is worth anything.
+
+What the character mockup showed, once it was drawn properly (the first attempt
+clipped it against the lower third, which would have been a layout bug of mine
+losing the argument rather than the idea losing on merit):
+
+- **The gesture was vague.** The arm pointed up-and-right and did not land on
+  the bone. Making it truly point needs an arm angle computed per bone from
+  measured geometry — the difference between a mascot that waves and a teacher
+  that points, and only the second earns its place.
+- **It was a second focal point**, and the one carrying no information. A face
+  wins attention over a diagram every time.
+- **It only fits here.** The bones scene is the one teaching scene with slack.
+  The two arm scenes are a 648px specimen card plus a full right column; health,
+  people and recap are wall-to-wall cards. Five of eight leave nowhere to stand.
+- **There is no character to draw.** The platform has no mascot art, and Wehel's
+  "Virtual teacher" is a persona toggle with no face. Inventing one makes it the
+  platform's teacher across 24 lesson builds by default — a brand decision, not
+  a video tweak.
+
+So the film draws a **leader line** instead: a curve from the entry in the list
+to the bone it names, ending at the near edge of the bone's own gold marker,
+with the marker breathing rather than sitting still. It does the one thing a
+pointing hand would — tie the word to the thing — in the gold language the
+lesson already owns, in about thirty lines.
+
+The character is parked for **Grades 1-2**, where a guide carries far more than
+it does at nine, and where it can be decided once for the whole set.
+
+`drawLeader` is **the one thing in the renderer that measures**, and not for
+want of trying: the bone is inside an SVG viewBox and the list entry is HTML in
+normal flow, so they share no geometry to compute a line from. It stays
+deterministic — the same markup lays out the same way every time — so a frame
+is still reproducible, which is what the no-animation rule exists to protect.
+
 ## What it covers
 
 All eight of Lesson 1's Cambridge 0097 Stage 4 objectives, and `--dry` prints

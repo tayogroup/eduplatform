@@ -135,6 +135,22 @@ at all. **`--preview` could not see them** — it shoots one still per beat — 
 it now shoots each card by name as well; that is worth knowing before trusting
 a preview sweep of anything that is not a beat.
 
+**The film points with a LINE, not with a character (owner, 2026-09-17).**
+Asked whether an animated cartoon teacher should float to the action and point
+at it; both were mocked up as stills on the same frame and compared before
+deciding. The character was a second focal point carrying no information, its
+gesture did not actually land on the bone, and five of the eight scenes leave
+nowhere for it to stand — the arm scenes and the three card scenes are full
+width. It also does not exist: the platform has no mascot art and Wehel's
+"Virtual teacher" is a persona toggle with no face, so inventing one makes it
+the platform's teacher across 24 builds by default. Parked for Grades 1-2.
+
+`drawLeader` draws the curve instead, list entry to bone, ending at the near
+edge of the bone's own gold marker. **It is the one thing in the renderer that
+MEASURES** — the bone is inside an SVG viewBox, the list entry is HTML in normal
+flow, and there is no shared geometry to compute a line from. Still
+deterministic, so a frame is still reproducible.
+
 **The animation is timed from the voice, not the other way round.** Every beat
 is narrated first, ffprobed, and the timeline is built from the measured
 lengths, so a bone lights up as it is named however long that clip turned out

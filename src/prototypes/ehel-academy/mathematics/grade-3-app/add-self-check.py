@@ -4,42 +4,60 @@
     python add-self-check.py            # report
     python add-self-check.py --write
 
-CAMBRIDGE WROTE THESE, not this tool. All 93 are lifted verbatim from the 19
-self-check pages of the Stage 3 Workbook and each carries the page it came
-from. A learner ticking one is answering Cambridge's own question about the
-lesson they have just done.
+CAMBRIDGE WROTE THESE, not this tool. All 94 are lifted from the 18 self-check
+pages of the Stage 3 Workbook and each carries the page it came from. A learner
+ticking one is answering Cambridge's own question about the lesson they have
+just done.
 
-FOUR FIGURES WERE REPORTED FOR THIS BEFORE THE RIGHT ONE, and the reasons are
-worth keeping because each is a different way of miscounting a book:
+THIS IS THE SECOND EXTRACTION. The first produced 93 statements and shipped
+none of them, which is the only reason none of the following reached a child.
+Every fault below was found by LISTING the 93 and reading them, not by any
+check - and the reading took minutes:
 
-    84   every numbered "I can" occurrence, duplicates included
-    31   a boundary regex that truncated most statements mid-phrase
-    75   missed the ones OCR had glued to their neighbours
-    95   correct; 93 usable
+  the filing      every statement was filed by the PAGE it sat on. A self-check
+                  page covers a whole UNIT and a unit spans several of these
+                  eight lessons, so Equal Parts opened with "a straight line is
+                  equivalent to 2 right angles" and Ask, Count, Chart carried
+                  the times tables. About fourteen were in the wrong lesson.
+  the debris      14 statements ended in the page's tick column - "...work out
+                  the change. 4 N", "...on a grid. p", "...of the shapes. -".
+  the glue        pairs run together: "...to multiply. 3 Icanrecallthe 1, 2..."
+  a truncation    "compare 3-digit numbers using the symbols < and", missing >
+  mojibake        "capacity using litres (\xa32)" - byte a3 where the book prints
+                  the litre symbol
+  the repeats     Cambridge revisits a statement in a later unit, so one lesson
+                  was offered "I can identify complements of 100" three times.
+  THE SCALE       reported as two points, and asserted in this docstring as a
+                  Stage 3 fact. The Workbook offers THREE, on all 18 pages. The
+                  third is "I can't do this yet." - its curly apostrophe put it
+                  outside the pattern that found the other two, and a wrong
+                  measurement then got written up as a finding about Cambridge.
 
-The OCR one is the trap to remember: the Workbook's capital I is read as a
-digit 1 in places, so "4 I can add pairs of multiples of 100" arrives as
-"4 1 can add pairs of multiples of 100" and every pattern anchored on "I can"
-walks straight past it. Normalising `\b1 can\b` recovered 20 statements.
+HOW THE FILING WORKS NOW. Each page names its unit, and the 18 unit titles were
+recovered from the Workbook, the Learner's Book and the Teacher's Guide together
+(every one corroborated 12 or more times). Five titles map to exactly one
+lesson. Three legitimately span two - Time and measurement, Shapes and angles,
+and Patterns place value and rounding - and there, and only there, the
+statement's own words decide: angle words to Measure It, direction words to Time
+and Direction, pattern words to Rows and Rules.
 
-A further 36 of the original count were the SCALE a child ticks - "I can do
-this" eighteen times, "I can do this, but I need to keep trying" eighteen
-times - which is metalanguage, not content.
-
-TWO POINTS, NOT THREE, and that is Stage 3 rather than a simplification. The
-Stage 2 Workbook offers a three-way scale; Stage 3 offers two tickable options
-and then a free-text line, "I need more help with:". The free-text half is not
-built: no standalone lesson build can take free text (measured: zero textareas
-across every grade-N app in every subject), and faking it with a third button
-would put words in a child's mouth. See docs/lesson-app-open-response-spec.md.
-
-TWO STATEMENTS WERE DROPPED rather than repaired. OCR destroyed the symbols in
-"I can explain and demonstrate that 9 3 = 6, whereas 3-9 = 6" and in a fraction
-statement that lost its numerator. Guessing the missing operators would put a
-sentence in Cambridge's mouth that Cambridge may not have written.
+FOUR STATEMENTS ARE DROPPED rather than repaired, because their mathematics did
+not survive the PDF. The Workbook sets fractions as stacked glyphs and the
+extractor loses them, so "I can understand that 3/4 is 3 parts of 4 equal parts"
+arrives as "that 2 is 3 parts of 4 equal parts" - wrong, and on a child's
+screen. Guessing the missing 3/4, the missing operator in "9 3 = 6" or the
+missing > would put a sentence in Cambridge's mouth. One repair IS made and it
+touches no mathematics: a parenthetical containing a damaged byte is DELETED,
+never reconstructed, which turns "litres (\xa32) and millilitres (ml)" into
+"litres and millilitres (ml)" with the unit still spelled out beside it.
 
 Marks are per learner and per lesson in localStorage, and they are NEVER a
 score: nothing is marked, nothing is reported, and no pass depends on them.
+
+The Workbook's fourth line, "I need more help with:", is free text and is not
+built. No standalone lesson build can take free text (measured: zero textareas
+across every grade-N app in every subject), and faking it with a button would
+put words in a child's mouth. See docs/lesson-app-open-response-spec.md.
 """
 import io, json, os, re, sys
 
@@ -52,122 +70,185 @@ for a in sys.argv[1:]:
 
 MARK = "ehel-g3-self-check"
 
-# Cambridge's own wording, from the Stage 3 Workbook self-check pages
+# Cambridge's own wording and Cambridge's own three points, from the Stage 3
+# Workbook self-check pages. Do not reduce this to two - see the docstring.
 SCALE = [("yes", "I can do this"),
-         ("trying", "I can do this, but I need to keep trying")]
+         ("trying", "I can do this, but I need to keep trying"),
+         ("notyet", "I can't do this yet")]
 
 # lesson -> [(statement, source page in the Workbook)]
 WORK = {
+ # from Units 2, 7, 14
  "adding-and-money": [
+  ("I can show that when numbers are added, their order can be changed but the total does not change", "p15"),
   ("I can identify complements of 100 from sets of numbers", "p15"),
+  ("I can add pairs of multiples of 100", "p15"),
   ("I can estimate to check the answers to addition and subtraction calculations", "p15"),
   ("I can add pairs of 2-digit numbers", "p15"),
-  ("I can take away a 2-digit number from a 2-digit number. 4", "p15"),
+  ("I can take away a 2-digit number from a 2-digit number", "p15"),
   ("I can work out the value of an unknown quantity in an addition calculation and in a subtraction calculation", "p43"),
+  ("I can add pairs of multiples of 10", "p43"),
+  ("I can add pairs of 2-digit and 3-digit numbers", "p43"),
+  ("I can take away a 2-digit number from a 3-digit number", "p43"),
   ("I can use money notation with a decimal point, knowing that, for example, $2.50 means 2 dollars and 50 cents", "p43"),
-  ("I can use notes and coins to pay for items and work out the change. 4 N", "p43"),
+  ("I can use notes and coins to pay for items and work out the change", "p43"),
+  ("I can add pairs of multiples of 10 and 100", "p80"),
   ("I can estimate to check the answers to addition calculations and subtraction calculations", "p80"),
-  ("I can use notes and coins to pay for items and work out the change. -", "p80"),
+  ("I can add pairs of 3-digit numbers", "p80"),
+  ("I can take away a 3-digit number from a 3-digit number", "p80"),
  ],
+ # from Units 4, 18
  "ask-count-chart": [
   ("I can organise information into a list, a table and a chart", "p25"),
   ("I can record data using a tally chart", "p25"),
   ("I can answer questions about a pictogram and a bar chart", "p25"),
   ("I can sort objects and shapes on a Carroll diagram", "p25"),
   ("I can answer questions about Venn diagrams and Carroll diagrams", "p25"),
-  ("I can interpret and explain the data presented in tables, bar charts and pictograms. d N", "p25"),
-  ("I can use known multiplication tables facts for the 2, 3, 4,5 and 10 times tables to help me to recall other times tables facts", "p31"),
-  ("I can choose suitable units to estimate and measure length", "p35"),
-  ("I can explain the result of multiplying a number by 10 and demonstrate using a place value chart", "p48"),
-  ("I can model decomposition to multiply. 3 Icanrecallthe 1, 2, 3,4,5, 6, 8,9 and 10 times tables, using known facts to recall others", "p54"),
-  ("I can read and use the information shown on a timetable", "p58"),
+  ("I can interpret and explain the data presented in tables, bar charts and pictograms", "p25"),
   ("I can sort objects and shapes in a Carroll diagram", "p98"),
-  ("I can interpret and explain the data presented in tables, bar charts and pictograms", "p98"),
   ("I can describe the chance of an event happening", "p98"),
-  ("I can describe the results of a chance experiment. p", "p98"),
+  ("I can describe the results of a chance experiment", "p98"),
  ],
+ # from Units 12, 17
  "equal-parts": [
-  ("I can understand that a straight line is equivalent to 2 right angles or a half turn", "p64"),
   ("I can understand and explain the relationship between the whole and the parts of fractions of shapes and objects", "p68"),
   ("I can understand and explain what each part of a fraction represents", "p68"),
-  ("I can understand that 2 is 3 parts of 4 equal parts", "p68"),
   ("I can understand and explain a fraction as being the numerator divided by the denominator", "p94"),
   ("I can use a diagram to show equivalent fractions", "p94"),
   ("I can add and subtract fractions with the same denominator and model them with a diagram", "p94"),
   ("I can estimate the answer when adding and subtracting fractions with the same denominator", "p94"),
   ("I can put a set of unit fractions in order", "p94"),
   ("I can compare and order fractions with the same denominator and different numerators", "p94"),
+  ("I can use the symbols < or > to compare and order values", "p94"),
  ],
+ # from Units 6, 10, 11, 15
  "measure-it": [
   ("I can estimate lengths in centimetres (cm), metres (m) and kilometres (km) before measuring", "p35"),
   ("I can convert between mm, cm, m and km", "p35"),
-  ("I can say what one division on a scale is worth. -", "p35"),
+  ("I can choose suitable units to estimate and measure length", "p35"),
+  ("I can say what one division on a scale is worth", "p35"),
   ("I can use scales to measure the mass of objects in kilograms (kg) and grams (g)", "p58"),
   ("I can estimate and measure mass accurately using grams (g) and kilograms (kg)", "p58"),
-  ("I can estimate and measure capacity using litres (£2) and millilitres (ml)", "p58"),
+  ("I can estimate and measure capacity using litres and millilitres (ml)", "p58"),
   ("I can read a scale to the nearest division or half-division", "p58"),
-  ("I can select and use measuring instruments for length, mass and capacity. -", "p58"),
+  ("I can select and use measuring instruments for length, mass and capacity", "p58"),
+  ("I can test whether an angle is equal to, bigger than or smaller than a right angle", "p64"),
   ("I can measure the perimeter of 2D shapes", "p84"),
   ("I can measure the area of a grid in square units", "p84"),
-  ("I can draw rectangles and measure the length of each side to find the perimeter. a", "p84"),
+  ("I can draw rectangles and measure the length of each side to find the perimeter", "p84"),
  ],
+ # from Units 5, 8, 9, 13, 16
  "rows-and-rules": [
-  ("I can add pairs of multiples of 100", "p15"),
   ("I can understand the inverse relationship between multiplication and division", "p31"),
   ("I can show that when numbers are multiplied their order can be changed without the answer changing", "p31"),
   ("I can model decomposing and regrouping with numbers to 20 to multiply", "p31"),
+  ("I can use known multiplication tables facts for the 2, 3, 4, 5 and 10 times tables to help me to recall other times tables facts", "p31"),
   ("I can find multiples of 2, 5 and 10 from a set of numbers past the tenth multiple", "p31"),
-  ("I can add pairs of multiples of 10", "p43"),
   ("I can identify the rule for sequences of numbers", "p48"),
+  ("I can continue a pattern of cubes that increases by 3 each time and explain the rule", "p48"),
   ("I can simplify a calculation to multiply by changing the order of the numbers I am multiplying", "p54"),
+  ("I can model decomposition to multiply", "p54"),
+  ("I can recall the 1, 2, 3, 4, 5, 6, 8, 9 and 10 times tables, using known facts to recall others", "p54"),
   ("I can recall division facts that are related to known multiplication facts", "p54"),
   ("I can estimate to check the answers to multiplication and division calculations", "p54"),
   ("I can multiply any 2-digit number by 2, 3, 4 and 5", "p54"),
   ("I can divide 2-digit numbers by 2, 3, 4 and 5 with no remainders", "p54"),
   ("I can extend number sequences and explain the rule", "p73"),
-  ("I can continue a pattern and explain the rule. N", "p73"),
-  ("I can add pairs of multiples of 10 and 100", "p80"),
+  ("I can continue a pattern and explain the rule", "p73"),
+  ("I know the 1, 2, 3, 4, 5, 6, 8, 9 and 10 times tables", "p90"),
+  ("I know division facts that are related to known multiplication facts", "p90"),
   ("I can estimate to check the answers to multiplication calculations and division calculations", "p90"),
-  ("I can divide 2-digit numbers by 2, 3, 4 and 5. -", "p90"),
+  ("I can divide 2-digit numbers by 2, 3, 4 and 5", "p90"),
  ],
+ # from Units 3, 11
  "shapes-and-symmetry": [
   ("I can classify 2D shapes and talk about their properties", "p21"),
   ("I can sort 3D shapes and talk about their properties", "p21"),
   ("I can identify regular and irregular polygons", "p21"),
+  ("I know the names of 2D and 3D shapes", "p21"),
   ("I can compare shapes and say what is the same and what is different about them", "p21"),
-  ("I can create 3D shapes from drawings of the shapes. -", "p21"),
+  ("I can create 3D shapes from drawings of the shapes", "p21"),
   ("I can see if a shape has more than 1 line of symmetry", "p64"),
   ("I can find shapes with horizontal and vertical lines of symmetry", "p64"),
   ("I can sketch the reflection of a shape in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape", "p64"),
-  ("I can test whether an angle is equal to, bigger than or smaller than a right angle", "p64"),
  ],
+ # from Units 6, 10, 11, 15
  "time-and-direction": [
   ("I can identify which units of time to use for different activities", "p35"),
   ("I can say the time accurately as minutes past the hour and write it in digital notation", "p35"),
-  ("I can continue a pattern of cubes that increases by 3 each time and explain the rule. -", "p48"),
-  ("I can follow and give instructions to make turns and movements on a grid. p", "p64"),
+  ("I can read and use the information shown on a timetable", "p58"),
+  ("I can understand that a straight line is equivalent to 2 right angles or a half turn", "p64"),
+  ("I can follow and give instructions to make turns and movements on a grid", "p64"),
   ("I can work out the interval (amount of time) between 2 given times", "p84"),
  ],
+ # from Units 1, 8, 13
  "up-to-a-thousand": [
   ("I can count on and back in 1s, 10s and 100s from any number up to 1000", "p9"),
   ("I can explain why a number is an odd or an even number", "p9"),
   ("I can read and write 3-digit numbers and show what each digit stands for", "p9"),
   ("I can explain the use of zero (0) as a placeholder in a 3-digit number", "p9"),
   ("I can make a good estimate of the number of objects in a group", "p9"),
-  ("I can show that when numbers are added, their order can be changed but the total does not change", "p15"),
-  ("I can add pairs of 2-digit and 3-digit numbers", "p43"),
-  ("I can take away a 2-digit number from a 3-digit number", "p43"),
-  ("I can compare 3-digit numbers using the symbols < and", "p48"),
+  ("I can explain the result of multiplying a number by 10 and demonstrate using a place value chart", "p48"),
+  ("I know what each digit means in 3-digit numbers", "p48"),
   ("I can order a set of 3-digit numbers on a number line", "p48"),
   ("I can round 3-digit numbers to the nearest 10 or 100", "p48"),
   ("I can compose and decompose 3-digit numbers to identify each place value position of the numbers", "p73"),
   ("I can decompose 3-digit numbers in different ways", "p73"),
   ("I can compare and order a set of 3-digit numbers", "p73"),
-  ("I can add pairs of 3-digit numbers", "p80"),
-  ("I can take away a 3-digit number from a 3-digit number", "p80"),
-  ("I can use the symbols < or > to compare and order values. p", "p94"),
  ],
 }
+
+# ---- audits ------------------------------------------------------------------
+# One rule per fault the first extraction shipped into this table. None of them
+# is clever; all of them would have fired, and none of them existed.
+DEBRIS = re.compile(r"\.\s*\S{1,3}$")            # "...the change. 4 N"
+GLUED = re.compile(r"[a-z]{2}(?:can|know)(?:the|[a-z]{4,})", re.I)   # "Icanrecallthe"
+DECIMAL_OK = re.compile(r"(?<=\d)\.(?=\d)")
+TIGHT_LIST = re.compile(r"\d,\d")                # "3,4,5"
+# a statement the PDF cut off ends on a word or symbol that cannot end a sentence
+# "for" and "from" are NOT in this list, and that is measured rather than
+# guessed: "show what each digit stands for" is a whole statement, and the
+# first version of this rule refused it. Checked against the final word of all
+# 94 - none of the words below ends a real one.
+DANGLING = re.compile(r"(?:\b(?:and|or|the|a|an|of|with|to|in|by|than|"
+                      r"between|into|using|that|is|are)|[<>+=-])$", re.I)
+
+if len(SCALE) != 3:
+    sys.exit("  REFUSED: the Stage 3 Workbook offers THREE points, not %d. This was "
+             "measured wrong once and written up as a fact about Cambridge - read "
+             "this file's docstring before changing it." % len(SCALE))
+
+_seen = {}
+for _les, _items in WORK.items():
+    for _t, _p in _items:
+        _where = "%s %s" % (_les, _p)
+        if not re.match(r"^I (can|know)\b", _t):
+            sys.exit("  REFUSED %s: does not open 'I can' or 'I know': %r" % (_where, _t))
+        if re.search(r"[^\x20-\x7e]", _t):
+            sys.exit("  REFUSED %s: a byte did not survive the PDF: %r"
+                     % (_where, re.findall(r"[^\x20-\x7e]", _t)))
+        if DEBRIS.search(_t):
+            sys.exit("  REFUSED %s: the page's tick column is still attached: %r"
+                     % (_where, _t[-24:]))
+        if DECIMAL_OK.sub("", _t).count(".") or _t.endswith("."):
+            sys.exit("  REFUSED %s: a full stop outside a decimal - two statements "
+                     "are probably glued: %r" % (_where, _t))
+        if GLUED.search(_t) or TIGHT_LIST.search(_t):
+            sys.exit("  REFUSED %s: a run lost its spaces: %r" % (_where, _t))
+        if len(_t) < 25 or DANGLING.search(_t):
+            # Length is the wrong instrument here and was tried first: the real
+            # truncation - "compare 3-digit numbers using the symbols < and" -
+            # is 52 characters and survived it. What a cut-off statement always
+            # does is end mid-clause, on a word or symbol that cannot finish a
+            # sentence.
+            sys.exit("  REFUSED %s: this stops mid-clause, so the PDF cut it: %r"
+                     % (_where, _t))
+        _k = (_les, re.sub(r"[^a-z0-9 ]", "", _t.lower()))
+        if _k in _seen:
+            sys.exit("  REFUSED %s: Cambridge revisits this in a later unit and it is "
+                     "already on %s - one lesson must not offer it twice: %r"
+                     % (_where, _seen[_k], _t))
+        _seen[_k] = _p
 
 
 HEAD = ("What I can do",

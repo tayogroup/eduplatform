@@ -20,7 +20,7 @@ const { speakableFrames, speakableWords } = require("./ehel-tts");
 // standalone build and is read off its built pages (see appSlideTexts below).
 // textsForUnit returns nothing for it, which is correct — there is no unit field
 // to read — so anything walking units alone simply never sees it.
-const CATEGORIES = ["lecture", "readings", "grammar", "words", "wordSentences", "speaking", "slideLabels"];
+const CATEGORIES = ["lecture", "readings", "grammar", "words", "wordSentences", "speaking", "slideLabels", "sectionIntros"];
 
 function textsForUnit(unit, category) {
   switch (category) {
@@ -161,6 +161,105 @@ function appSlideClips(courseRoot, level) {
   }));
 }
 
+// The SHELL course's thirteen section intros — `${title}. ${description}` for
+// each — read from shell/subjects/intensive-english-sections.js, which is also
+// what intensive-english.js renders. One definition, two consumers: the page
+// shows the string and this buys the clip, and neither retypes the other.
+//
+// That module is an ES module and this file is CommonJS, so it is evaluated
+// through a node subprocess rather than required. It is the pattern
+// intensive-english/lesson-kit/build-lessons.py already uses for
+// word-pictures.js, and it works for the same reason: the module has no imports
+// and touches no DOM, so node can evaluate it as-is. One spawn per level, and
+// the alternative — retyping thirteen headers here — is the exact defect this
+// whole arrangement exists to prevent.
+const SECTIONS_MODULE = path.join(__dirname, "..", "..", "src", "prototypes", "ehel-academy", "shell", "subjects", "intensive-english-sections.js");
+
+function sectionIntroTexts(contexts) {
+  if (!fs.existsSync(SECTIONS_MODULE) || !contexts.length) return [];
+  const url = "file:///" + SECTIONS_MODULE.replace(/\\/g, "/");
+  // Written to a .mjs file rather than passed with --input-type=module: that
+  // flag makes node warn about reparsing on every call, onto stderr, which
+  // buries the caller's own output.
+  const tmp = path.join(__dirname, `_sections.${process.pid}.tmp.mjs`);
+  const script = `import('${url}').then((m) => {`
+    + `const out = ${JSON.stringify(contexts)}.map((c) => m.introTextsForUnit(c));`
+    + `process.stdout.write(JSON.stringify(out));`
+    + `});`;
+  try {
+    fs.writeFileSync(tmp, script, "utf8");
+    // stderr is dropped, exactly as build-lessons.py drops it for the same
+    // module: intensive-english-sections.js is a .js file with `export` in a
+    // package that declares no "type", so node prints a
+    // MODULE_TYPELESS_PACKAGE_JSON warning on EVERY spawn. Left alone it lands
+    // in the middle of a generator's cost table or a pruner's delete list. A
+    // non-zero exit still throws, so a real failure is not being swallowed —
+    // only the notice about how node parsed a file it parsed correctly.
+    const raw = require("child_process").execFileSync(process.execPath, [tmp], {
+      encoding: "utf8",
+      maxBuffer: 32 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "ignore"],
+    });
+    return JSON.parse(raw);
+  } catch (exc) {
+    throw new Error(`could not evaluate intensive-english-sections.js (${exc.message})`);
+  } finally {
+    try { fs.unlinkSync(tmp); } catch (e) { /* the run already succeeded or failed on its own terms */ }
+  }
+}
+
+// One context per unit, in the shape the shared module names. The counts are
+// DERIVED from the unit rather than listed, because a unit that gains an
+// activity must change its clip — a frozen list is how the word cards came to
+// ask for audio nobody had bought.
+function sectionIntroClips(courseRoot, level) {
+  const unitDir = path.join(courseRoot, `level-${level}`, "data", "units");
+  if (!fs.existsSync(unitDir)) return [];
+  const manifestPath = path.join(courseRoot, `level-${level}`, "data", "course-manifest.json");
+  const manifest = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, "utf8")) : {};
+  const levelRow = (manifest.levels || []).find((row) => Number(row.number) === Number(level)) || {};
+  const dictFile = fs.readdirSync(path.join(courseRoot, `level-${level}`, "data"))
+    .find((f) => /^master-dictionary\./.test(f));
+  // `entryCount` is the field the app itself reads (`dictionary.entryCount`),
+  // so take that rather than counting `entries` — the two agree today and the
+  // app's choice is the one that must be mirrored if they ever stop.
+  const entryCount = dictFile
+    ? JSON.parse(fs.readFileSync(path.join(courseRoot, `level-${level}`, "data", dictFile), "utf8")).entryCount || 0
+    : 0;
+
+  const contexts = [];
+  for (const file of fs.readdirSync(unitDir).sort()) {
+    if (!/^unit-\d+\.json$/.test(file)) continue;
+    const unit = JSON.parse(fs.readFileSync(path.join(unitDir, file), "utf8"));
+    contexts.push({
+      levelLabel: levelRow.label || "",
+      levelEntryCount: entryCount,
+      unitNo: unit.unit.unitNo,
+      unitTitle: unit.unit.unitTitle,
+      unitOverview: unit.unit.unitOverview,
+      wordCount: (unit.dictionaryLinks || []).length,
+      activityCount: (unit.activities || []).length,
+      quizCount: (unit.quizzes || []).length,
+    });
+  }
+
+  const out = new Map();
+  for (const texts of sectionIntroTexts(contexts)) {
+    for (const raw of texts) {
+      const text = clean(raw);
+      if (text.length < MIN_CHARS || out.has(cyrb53(text))) continue;
+      out.set(cyrb53(text), {
+        category: "sectionIntros",
+        text,
+        source: text,
+        spoken: speakableWords(speakableFrames(text)),
+        hash: cyrb53(text),
+      });
+    }
+  }
+  return [...out.values()];
+}
+
 // Every hash one level needs. The uploader fans the flat local cache out into
 // the per-stage deploy tree with this, so a text shared by two levels is
 // uploaded under both.
@@ -185,6 +284,13 @@ function hashesForLevel(courseRoot, level, categories = CATEGORIES) {
   if (categories.includes("slideLabels")) {
     for (const clip of appSlideClips(courseRoot, level)) out.add(clip.hash);
   }
+  // The SHELL course's section intros, which live in the UI module rather than
+  // in any unit. Same reason as slideLabels above: this is what makes them
+  // upload, and what stops the CDN pruner calling them unreachable and deleting
+  // clips that were just bought.
+  if (categories.includes("sectionIntros")) {
+    for (const clip of sectionIntroClips(courseRoot, level)) out.add(clip.hash);
+  }
   return out;
 }
 
@@ -205,4 +311,4 @@ function hashGradeMap(courseRoot, categories = CATEGORIES) {
   return map;
 }
 
-module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, speechForUnit, clipsForUnit, appSlideTexts, appSlideClips, hashesForLevel, hashGradeMap };
+module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, speechForUnit, clipsForUnit, appSlideTexts, appSlideClips, sectionIntroClips, hashesForLevel, hashGradeMap };

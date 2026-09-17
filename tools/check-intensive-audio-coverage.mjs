@@ -42,6 +42,12 @@ const EXPECTED = new Map([
   ["item.displayWord", "words"],
   ["sentences[activeSentence]", "wordSentences"],
   ["task.instructionsAndModelLines", "speaking"],
+  // The section header's own Listen button, added 2026-09-17. Its text is
+  // `${title}. ${description}` composed by shell/subjects/intensive-english-sections.js,
+  // which is also what pageHeader renders — so this is the one call site whose
+  // string is not read off a unit field, and the narration lib evaluates that
+  // same module rather than restating it.
+  ["introNarration(intro)", "sectionIntros"],
 ]);
 
 const problems = [];

@@ -147,6 +147,14 @@ function collect() {
         if (!byHash.has(clip.hash)) byHash.set(clip.hash, { ...clip, chars: clip.spoken.length });
       }
     }
+    // The shell's section intros, composed from the same module the page
+    // renders (shell/subjects/intensive-english-sections.js) rather than from
+    // any unit field, so the clip bought is the string shown.
+    if (catList.includes("sectionIntros")) {
+      for (const clip of narration.sectionIntroClips(COURSE, level)) {
+        if (!byHash.has(clip.hash)) byHash.set(clip.hash, { ...clip, chars: clip.spoken.length });
+      }
+    }
   }
   return [...byHash.values()];
 }

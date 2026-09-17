@@ -23,6 +23,7 @@ import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
+import { sectionIntros, introNarration } from "./intensive-english-sections.js?v=sections-1";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher, PLATFORM_ORIGIN } from "../wehel.js?v=wehel-4";
 import { createGetHelp } from "../get-help.js?v=get-help-1";
 
@@ -211,8 +212,39 @@ function wehelOptions() {
   };
 }
 
+// Every section header, composed from ./intensive-english-sections.js so the
+// page and the narration pipeline read ONE set of strings. The thirteen call
+// sites below used to hold their own literals, which is the same shape as the
+// three defects found on 2026-09-17 — a string the page shows and a tool has to
+// know, written twice.
+//
+// The Listen button speaks `${title}. ${description}`. pageHeader has always
+// composed exactly that into `currentPageNarration` (course-app.js) and nothing
+// has ever read it: collectPageNarration prefers `#app`, which every render
+// populates, so the `if (!source)` fallback that returns it is unreachable. The
+// string was right and had no way out; this gives it one, and the clip is
+// pre-generated like every other Listen button rather than billed per play
+// through quiz_tts.php.
+function introHeader(key) {
+  const intro = sectionIntros({
+    levelLabel: course?.level?.label,
+    levelEntryCount: dictionary?.entryCount,
+    unitNo: course?.unit?.unitNo,
+    unitTitle: course?.unit?.unitTitle,
+    unitOverview: course?.unit?.unitOverview,
+    wordCount: (course?.dictionaryLinks || []).length,
+    activityCount: (course?.activities || []).length,
+    quizCount: (course?.quizzes || []).length,
+  })[key];
+  // `status` is undefined on the ten sections that do not set one, and an
+  // undefined argument takes pageHeader's own default ("Approved content") —
+  // which is what those ten rendered before this change.
+  return `${pageHeader(intro.kicker, intro.title, intro.description, intro.status)}
+    <div class="audio-actions section-intro-voice">${voiceButton(introNarration(intro), "Listen to this section")}</div>`;
+}
+
 function renderTutor() {
-  $("#app").innerHTML = `${pageHeader("Your AI English tutor", "Wehel Tutor", "Talk with Wehel Tutor in simple English. Ask about words, patterns, or practise a real conversation — by text or voice.", "Wehel Tutor · Ehel Academy AI")}
+  $("#app").innerHTML = `${introHeader("tutor")}
     <section class="panel" id="wehel-chat"></section>`;
   mountWehelChat({ container: $("#wehel-chat"), ...wehelOptions() });
 }
@@ -220,7 +252,7 @@ function renderTutor() {
 function renderOverview() {
   const path = String(course.unit.learningPath || "").split("\n").filter(Boolean);
   const skills = course.unit.cefr.skills || [];
-  $("#app").innerHTML = `${pageHeader(`${course.level.label} · Unit ${course.unit.unitNo}`, course.unit.unitTitle, String(course.unit.unitOverview).split(". ").slice(0, 2).join(". "))}
+  $("#app").innerHTML = `${introHeader("overview")}
     <div class="overview-grid">
       <div class="section-stack">
         <section class="unit-banner ien-banner">
@@ -269,7 +301,7 @@ function renderLecture() {
   // counts its entries, and the Teacher view really is awaiting sign-off.
   // "Pending" was a real caveat once too, and stopped being one when the clips
   // were generated, with nothing anywhere to notice that it had.
-  $("#app").innerHTML = `${pageHeader("Begin here", "The lesson", "Read it and listen to it. This explains all six — everything else in the unit practises what is here.")}
+  $("#app").innerHTML = `${introHeader("lecture")}
     <div class="lecture-layout">
       <section class="panel">
         <h2>${escapeHtml(course.unit.unitTitle)}</h2>
@@ -301,7 +333,7 @@ const dictionaryPicture = (item) => (item ? wordPicture(item.masterWord, `ien${l
 function renderDictionary() {
   const words = course.dictionaryLinks;
   if (!words.some((word) => word.vocabularyId === activeWordId)) activeWordId = words[0].vocabularyId;
-  $("#app").innerHTML = `${pageHeader("Words", "Word list", `${words.length} words for this unit, grouped by the sound or the job they do.`, `${dictionary.entryCount} entries in this level`)}
+  $("#app").innerHTML = `${introHeader("dictionary")}
     <div class="toolbar"><label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search" aria-label="Search words"></label><select id="group-filter" aria-label="Filter group"><option value="all">All groups</option>${course.vocabularyGroups.map((group) => `<option value="${escapeHtml(group.id)}">${escapeHtml(group.title)}</option>`).join("")}</select><span id="dictionary-count" class="status-chip">${words.length} words</span></div>
     <div class="dictionary-layout"><section class="panel word-list" id="word-list"></section><section class="panel word-card" id="word-card"></section></div>`;
 
@@ -459,7 +491,7 @@ function renderGrammar() {
 
 function renderReading() {
   let selected = course.readings[0].readingId;
-  $("#app").innerHTML = `${pageHeader("Reading", "Texts", "Read each one aloud, not silently. One of them is a real document you will have to fill in.")}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="reading-list" aria-label="Texts"></nav><article class="ebook-reader" id="reading-panel"></article></div>`;
+  $("#app").innerHTML = `${introHeader("reading")}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="reading-list" aria-label="Texts"></nav><article class="ebook-reader" id="reading-panel"></article></div>`;
   const draw = () => {
     const reading = course.readings.find((item) => item.readingId === selected);
     const index = course.readings.findIndex((item) => item.readingId === selected);
@@ -498,7 +530,7 @@ function renderComprehension() {
   let active = groups[0];
   const draw = () => {
     const questions = course.comprehension.filter((question) => question.section === active);
-    $("#app").innerHTML = `${pageHeader("Comprehension", "Questions", "Write your answer first, then check the reviewed answer.")}
+    $("#app").innerHTML = `${introHeader("comprehension")}
       <div class="subtabs">${groups.map((group) => `<button class="subtab ${group === active ? "active" : ""}" data-group="${escapeHtml(group)}" type="button">${escapeHtml(group)}</button>`).join("")}</div>
       <section class="panel"><div class="question-list">${questions.map((question) => `<div class="question"><label for="answer-${escapeHtml(question.questionId)}">${question.sequence}. ${escapeHtml(question.question)}</label><textarea id="answer-${escapeHtml(question.questionId)}" placeholder="Write your answer…"></textarea><button class="button secondary" data-check="${escapeHtml(question.questionId)}" type="button">Check</button><div id="feedback-${escapeHtml(question.questionId)}" role="status" aria-live="polite"></div></div>`).join("")}</div><button class="button primary" id="comprehension-done" type="button">Finish ${icon("check")}</button></section>`;
     $$("[data-group]").forEach((button) => button.addEventListener("click", () => { active = button.dataset.group; draw(); }));
@@ -516,7 +548,7 @@ function renderComprehension() {
 }
 
 function renderSpeaking() {
-  $("#app").innerHTML = `${pageHeader("Speaking", "Say it out loud", "Record yourself and listen back. Hearing your own voice is the fastest correction there is.")}
+  $("#app").innerHTML = `${introHeader("speaking")}
     <div class="task-grid">${course.speaking.map((task) => `
       <article class="panel task-card">
         <span class="eyebrow">${task.sequence} · ${escapeHtml(task.activityType)}</span>
@@ -569,7 +601,7 @@ function renderWriting() {
   const draw = () => {
     const task = course.writing.find((item) => item.writingId === active);
     const saved = progress.writing[active] || "";
-    $("#app").innerHTML = `${pageHeader("Writing", "Write it down", "Your draft saves on this device as you type.")}
+    $("#app").innerHTML = `${introHeader("writing")}
       <div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${escapeHtml(item.writingId)}" type="button">${item.sequence}</button>`).join("")}</div>
       <div class="task-grid">
         <section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions).replace(/\n/g, "<br>")}</p><details><summary>See a model</summary><pre class="document">${escapeHtml(task.modelText)}</pre></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter || "")}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start when you are ready"}</small></p></section>
@@ -599,7 +631,7 @@ function renderWriting() {
 }
 
 function renderActivities() {
-  $("#app").innerHTML = `${pageHeader("Practice", "Practice", `${course.activities.length} things to do, most of them out loud.`)}
+  $("#app").innerHTML = `${introHeader("activities")}
     <div class="task-grid">${course.activities.map((activity) => `<article class="panel task-card"><span class="eyebrow">${activity.sequence} · ${escapeHtml(activity.activityType)}</span><h3>${escapeHtml(activity.title)}</h3><p class="rule-box">${escapeHtml(activity.instructionsAndItems).replace(/\n/g, "<br>")}</p><textarea rows="3" placeholder="Your answers…" aria-label="Response for ${escapeHtml(activity.title)}"></textarea>${activity.answerSummary ? `<details><summary>Check yourself</summary><p class="rule-box">${escapeHtml(activity.answerSummary)}</p></details>` : ""}</article>`).join("")}</div>
     <p><button class="button primary" id="activities-done" type="button">Finish practice ${icon("check")}</button></p>`;
   $("#activities-done").addEventListener("click", () => complete("activities", "Practice complete."));
@@ -607,7 +639,7 @@ function renderActivities() {
 
 function renderQuiz() {
   quizIndex = 0; quizScore = 0; quizLocked = false;
-  $("#app").innerHTML = `${pageHeader("Quiz", "Check what you know", `${course.quizzes.length} questions. You can try again.`)}<section class="panel quiz-shell" id="quiz-shell"></section>`;
+  $("#app").innerHTML = `${introHeader("quiz")}<section class="panel quiz-shell" id="quiz-shell"></section>`;
   drawQuizQuestion();
 }
 
@@ -656,7 +688,7 @@ function renderAnswers() {
     ["Quiz", course.quizzes.map((item) => ({ title: item.question, body: `${item.correctAnswer}\n\n${item.explanation}` }))],
   ].filter(([, items]) => items.length);
 
-  $("#app").innerHTML = `${pageHeader("Answers", "Every answer, explained", "Nothing here is hidden from you. Try the exercise first — then open the section and check, and read why.")}
+  $("#app").innerHTML = `${introHeader("answers")}
     <section class="panel"><p>${icon("lightbulb")} <span class="status-note">Use this after you try, not instead of trying.</span> An answer you read before attempting teaches you nothing, and there is nobody else here to tell the difference.</p></section>
     <div class="section-stack">${groups.map(([label, items]) => `
       <section class="panel">
@@ -667,7 +699,7 @@ function renderAnswers() {
 }
 
 function renderReflect() {
-  $("#app").innerHTML = `${pageHeader("My progress", "What can you do now?", "Answer honestly. Nobody else sees this — it is here so you can see what has moved and what has not.")}
+  $("#app").innerHTML = `${introHeader("reflect")}
     <div class="toolbar">${cefrChip(course.unit.cefr.band)}</div>
     <section class="panel"><div class="self-list">${course.selfAssessment.map((item) => `<div class="self-row"><strong>${escapeHtml(item.statement)}</strong>${String(item.scale).split(" | ").map((choice) => `<button class="self-choice ${progress.self[item.selfAssessmentId] === choice ? "selected" : ""}" data-self="${escapeHtml(item.selfAssessmentId)}" data-choice="${escapeHtml(choice)}" type="button">${escapeHtml(choice)}</button>`).join("")}</div>`).join("")}</div><p><button class="button primary" id="reflection-done" type="button">Save ${icon("check")}</button></p></section>`;
   $$("[data-self]").forEach((button) => button.addEventListener("click", () => { progress.self[button.dataset.self] = button.dataset.choice; saveProgress(); renderReflect(); }));
@@ -679,7 +711,7 @@ function renderReflect() {
 
 function renderTeacher() {
   const assignment = course.assignments[0];
-  $("#app").innerHTML = `${pageHeader("Teacher view", `Unit ${course.unit.unitNo} teaching resources`, "Delivery, evidence and framework alignment.", "AI-assisted — sign-off pending")}
+  $("#app").innerHTML = `${introHeader("teacher")}
     <div class="section-stack">
       <section class="panel approval-banner"><h2>Framework alignment</h2><p>Targets CEFR <strong>${escapeHtml(course.unit.cefr.band)}</strong> across ${escapeHtml((course.unit.cefr.skills || []).join(", "))}. Carries ${course.frameworks.cambridge.codes.length} Cambridge objectives from stage ${course.frameworks.cambridge.stages.join(", ")}: ${escapeHtml(course.frameworks.cambridge.codes.join(", "))}.</p></section>
       ${assignment ? `<section class="panel teacher-banner"><h2>${escapeHtml(assignment.title)}</h2><p>${escapeHtml(assignment.instructions)}</p><p><strong>${assignment.marks} marks</strong> · ${escapeHtml(assignment.submissionType)}</p></section>` : ""}

@@ -477,7 +477,15 @@
     <div class="eqrow" id="dround16r" aria-live="polite"></div>
     <p class="said" id="dsaid16r" aria-live="polite"></p>
     <div class="note"><b>Round in one move, from the number you started with.</b> Rounding twice is the mistake worth guarding against, and 149 is the clearest case. To the nearest ten it is 150, and 150 to the nearest hundred is 200. But 149 to the nearest hundred is <b>100</b>, because its tens digit is 4. The first answer went through a number that was already not the original. The second reading of 5-or-more was made about a digit that rounding had put there. 3,449 does the same thing: 3,450 then 3,500, against a true answer of 3,400. <b>Exactly halfway goes up, and that is a convention rather than a fact.</b> 3,450 is the same distance from 3,400 as from 3,500, so nothing about the number decides it. Everybody agrees to go up, so everybody gets the same answer. <b>And a rounded number is not the number.</b> 27,849 people rounds to 28,000. That is a fair thing to print in a headline and the wrong thing to put on a ticket order. The whole point of rounding is that you have deliberately thrown some of the number away, so it is worth knowing how much. Here it is 151 people.</div>
-  </section>
+  
+      <!-- ehel-g5-spot -->
+      <div class="spot" data-spot="s21">
+        <p class="spot-lab">Spot the mistake</p>
+        <p class="spot-said">Your teacher says: 3.7 and 4.5 both round to 4 to the nearest whole number.</p>
+        <div class="spot-opts"></div>
+        <p class="spot-fb" role="status" aria-live="polite"></p>
+      </div>
+    </section>
 
   <!-- STEP 22 -->
   <section class="step" id="s22">
@@ -529,7 +537,15 @@
       <table class="plain" id="table18d"></table>
     </div>
     <div class="note"><b>Longer is not bigger.</b> 0.65 has more digits than 0.7 and is smaller. The comparison is decided in the <b>tenths</b> column and never gets as far as the hundredths. 7 tenths beats 6 tenths and the rest is not consulted. That is why the method is to line the points up and read from the <b>left</b>, stopping at the first column where the two differ. <b>The first difference really does settle it</b>, because one of any column beats every 9 you could write after it. 9 hundredths and 9 thousandths together come to 0.099, which is still short of a single tenth. <b>A zero at the end changes nothing; a zero in the middle changes everything.</b> 0.2, 0.20 and 0.200 are the same number. That is why money is written £0.70 rather than £0.7: two columns, because there are a hundred pence in a pound. But 3.04 and 3.4 are nowhere near each other. The zero is holding the tenths column empty, so 3.04 is barely past 3 while 3.4 is nearly halfway to 4. <b>And rounding works exactly as it did in Step 21.</b> Look at the next digit along and nothing else. To round 3.04 to one decimal place, read the hundredths digit, 4, and round down to 3.0.</div>
-  </section>
+  
+      <!-- ehel-g5-spot -->
+      <div class="spot" data-spot="s23">
+        <p class="spot-lab">Spot the mistake</p>
+        <p class="spot-said">Pia regroups 15.73 as 10 + 5.7 + 0.3.</p>
+        <div class="spot-opts"></div>
+        <p class="spot-fb" role="status" aria-live="polite"></p>
+      </div>
+    </section>
 
   <!-- STEP 24 -->
   <section class="step" id="s24">
@@ -553,7 +569,15 @@
       </div>
     </div>
     <div class="note"><b>&ldquo;Add a zero&rdquo; is a coincidence, not a rule.</b> It works for whole numbers because a whole number always has an empty ones column waiting once everything shifts left. A zero is what you write in an empty column. It fails for 3.5 because the digit moving into the ones column is the 5, and there is nothing left to fill. Say &ldquo;every digit moves one column&rdquo; and both cases come out right. <b>Dividing is the same move backwards.</b> By 10 is one column to the right, by 100 is two, by 1000 is three. Dividing by 10 three times in a row is exactly dividing by 1000. That is why the columns are worth thinking about rather than the zeros. <b>The point never moves.</b> It marks the boundary between the ones and the tenths. That boundary is a fact about the columns rather than about this number, so nothing you multiply by can shift it.</div>
-  </section>
+  
+      <!-- ehel-g5-spot -->
+      <div class="spot" data-spot="s24">
+        <p class="spot-lab">Spot the mistake</p>
+        <p class="spot-said">Guss sorts 62.5 into the group of numbers with 5 hundredths.</p>
+        <div class="spot-opts"></div>
+        <p class="spot-fb" role="status" aria-live="polite"></p>
+      </div>
+    </section>
 
   <!-- STEP 25 -->
   <section class="step" id="s25">
@@ -1183,6 +1207,43 @@
   paint();
 })();
 </script>
+<script>
+/* ehel-g5-spot - see add-spot-the-mistake.py.
+   Cambridge's own modelled errors, each inside the step that teaches the thing
+   it gets wrong. Its own script tag, for the same reason the self-check has
+   one: the page's existing closure owns every picker on the page. Nothing here
+   is scored - nothing on a Grade 5 page is. */
+(function () {
+  const ITEMS = { "s21": { opts: [{ t: "4.5 is halfway, and halfway rounds up to 5", ok: true }, { t: "3.7 rounds to 3, not 4", ok: false }, { t: "Both are right", ok: false }], why: "3.7 does round to 4. 4.5 sits exactly halfway between 4 and 5, and the rule is to round up, so it goes to 5.", p: "p99" }, "s23": { opts: [{ t: "Those parts add up to 16, not 15.73", ok: true }, { t: "She should have written 10 + 5 + 0.73", ok: false }, { t: "Nothing is wrong with her regrouping", ok: false }], why: "10 + 5.7 + 0.3 = 16.0. The place value parts of 15.73 are 10 + 5 + 0.7 + 0.03.", p: "p96" }, "s24": { opts: [{ t: "The 5 in 62.5 is 5 tenths", ok: true }, { t: "62.5 has no digits after the point", ok: false }, { t: "He is right, 5 is always hundredths", ok: false }], why: "The first place after the point is tenths and the second is hundredths. 62.5 is 62 and 5 tenths.", p: "p94" } };
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const shuf = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  document.querySelectorAll(".spot").forEach((host) => {
+    const it = ITEMS[host.dataset.spot];
+    if (!it) return;
+    const box = host.querySelector(".spot-opts");
+    box.innerHTML = shuf(it.opts.slice()).map((o) =>
+      '<button type="button" class="spot-opt" data-ok="' + (o.ok ? 1 : 0) + '">'
+      + esc(o.t) + "</button>").join("");
+    let live = true;
+    box.addEventListener("click", (e) => {
+      const b = e.target.closest(".spot-opt");
+      if (!b || !live) return;
+      live = false;
+      const ok = b.dataset.ok === "1";
+      box.querySelectorAll(".spot-opt").forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = host.querySelector(".spot-fb");
+      fb.className = "spot-fb " + (ok ? "good" : "bad");
+      fb.innerHTML = (ok ? "Yes. " : "Not quite. ") + esc(it.why)
+        + ' <span class="spot-src">Teacher\'s Guide ' + esc(it.p) + "</span>";
+    });
+  });
+})();
+</script>
+
 
 </body>
 </html>
@@ -1196,4 +1257,20 @@
     background: var(--card); color: var(--muted); cursor: pointer; }
   #sclist .sc-opt.on { background: var(--good-soft); border-color: var(--good);
     color: var(--good); font-weight: 600; }
+</style>
+<style>/* ehel-g5-spot - see add-spot-the-mistake.py */
+  .spot { margin: 16px 0 4px; padding: 13px 15px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--card); }
+  .spot-lab { margin: 0 0 6px; font-size: 12px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--muted); }
+  .spot-said { margin: 0 0 10px; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  .spot-opt { font: inherit; font-size: 14px; text-align: left; padding: 8px 13px;
+    margin: 0 8px 8px 0; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--ground); color: var(--ink); cursor: pointer; }
+  .spot-opt.right { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+  .spot-opt.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+  .spot-fb { margin: 4px 0 0; font-size: 14.5px; line-height: 1.5; min-height: 1px; }
+  .spot-fb.good { color: var(--good); }
+  .spot-fb.bad { color: var(--ink); }
+  .spot-src { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
 </style>

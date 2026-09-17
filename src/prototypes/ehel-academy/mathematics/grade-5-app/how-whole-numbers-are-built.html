@@ -524,7 +524,15 @@
       <table class="plain" id="table24o"></table>
     </div>
     <div class="note"><b>Operations of the same rank are done left to right, and that matters more than it looks.</b> 10 &minus; 2 &minus; 3 is 5 because you take 2 away and then 3. Working from the right instead would give 10 &minus; (2 &minus; 3), which is 11. 12 &divide; 4 &times; 3 is 9 for the same reason, where right-to-left would give 1. So the rule is really two rules: multiplication and division first, and then equal ranks in reading order. <b>Nothing here is a discovery.</b> Every one of these expressions could have been given the other meaning if people had agreed differently. The convention exists because an expression that means two things is useless. Halfway rounding both ways would be useless in exactly the same way. <b>And when the convention gives the wrong shape, brackets override it.</b> If you really do want the 3 + 4 done first, you write (3 + 4) &times; 5, and the brackets say so out loud. That is the next thing after this one in the Cambridge sequence. It is the only way to change the order rather than merely complain about it.</div>
-  </section>
+  
+      <!-- ehel-g5-spot -->
+      <div class="spot" data-spot="s16">
+        <p class="spot-lab">Spot the mistake</p>
+        <p class="spot-said">Pia works out 3 + 5 x 2 and writes 16.</p>
+        <div class="spot-opts"></div>
+        <p class="spot-fb" role="status" aria-live="polite"></p>
+      </div>
+    </section>
 
   <!-- STEP 17 -->
   <section class="step" id="s17">
@@ -614,7 +622,15 @@
       <table class="plain" id="table14d"></table>
     </div>
     <div class="note"><b>Three of the rules are really other rules wearing a hat.</b> 6 is just 2 and 3 together, because a number divisible by both is divisible by their product. 9's rule is the same digit-sum test as 3's, asking for a multiple of 9 instead of 3. So anything that passes 9 passes 3 as well, and never the other way round. And 8's rule is the last three digits for the same reason 4's is the last two. 1,000 is a multiple of 8 and 100 is a multiple of 4. Everything above those columns divides cleanly and can be ignored. <b>The digit-sum rules are the surprising ones, and there is a reason for them.</b> 10 leaves 1 when you divide by 9, and so do 100 and 1,000 and every power after them. So the only thing a number leaves over when divided by 9 is what its digits add up to. That is why adding them works. It is also why the same trick is no use at all for 4 or 8. <b>And then there is 7.</b> No rule for it is quicker than dividing. That is why the next step settles 2, 3 and 5 at a glance, and then has to work out 47 ÷ 7 by hand. 7,315 is the case to look at: nothing visible about it suggests 7 goes into it, and 7 &times; 1,045 = 7,315.</div>
-  </section>
+  
+      <!-- ehel-g5-spot -->
+      <div class="spot" data-spot="s19">
+        <p class="spot-lab">Spot the mistake</p>
+        <p class="spot-said">Banko says: every multiple of 4 is also a multiple of 8.</p>
+        <div class="spot-opts"></div>
+        <p class="spot-fb" role="status" aria-live="polite"></p>
+      </div>
+    </section>
 
   <!-- STEP 20 -->
   <section class="step" id="s20">
@@ -644,7 +660,15 @@
       <table class="plain" id="table12p"></table>
     </div>
     <div class="note"><b>Every whole number above 1 is one or the other.</b> Exactly two factors and it is <b>prime</b>. More than two and it is <b>composite</b>, meaning it can be put together by multiplying smaller numbers. 21 is 3 × 7, 49 is 7 &times; 7, and every number this sieve crosses out is one. <b>1 is the single exception</b>. That is why it sits dashed on the square rather than crossed out or shaded: with one factor it is neither. <b>Every other sequence in this lesson has a rule. This one has none.</b> The gaps go 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4. No pattern anybody has ever found, and that is not for want of looking. Three things are worth carrying away. <b>2 is the only even prime</b>. Every other even number can be shared into two equal piles, which is exactly what Step 15 was about. <b>A square number is never prime</b> once you are past 1. n × n always has n as a factor: 49 has 7, 100 has 10. And <b>the first number left standing after each crossing-out is the square of the next one to try</b>: 9, then 25, then 49. That is why 7 is where you can stop on a hundred square. The next try would be 11, and 11 &times; 11 = 121 is already past 100.</div>
-  </section>
+  
+      <!-- ehel-g5-spot -->
+      <div class="spot" data-spot="s20">
+        <p class="spot-lab">Spot the mistake</p>
+        <p class="spot-said">Banko says: 1 is a prime number, because you can only divide it by 1 and itself.</p>
+        <div class="spot-opts"></div>
+        <p class="spot-fb" role="status" aria-live="polite"></p>
+      </div>
+    </section>
     <!-- ehel-g5-self-check: Cambridge's own Stage 5 statements. A step in this page's
          own idiom, not a deck slide - Grade 5 keeps its design. -->
     <section class="step" id="selfcheck">
@@ -1150,6 +1174,43 @@
   paint();
 })();
 </script>
+<script>
+/* ehel-g5-spot - see add-spot-the-mistake.py.
+   Cambridge's own modelled errors, each inside the step that teaches the thing
+   it gets wrong. Its own script tag, for the same reason the self-check has
+   one: the page's existing closure owns every picker on the page. Nothing here
+   is scored - nothing on a Grade 5 page is. */
+(function () {
+  const ITEMS = { "s16": { opts: [{ t: "She added first, but multiplication comes first", ok: true }, { t: "She should have written 30", ok: false }, { t: "16 is right, you work left to right", ok: false }], why: "Multiplication and division come before addition and subtraction, so 5 x 2 = 10 first, then 3 + 10 = 13.", p: "p169" }, "s19": { opts: [{ t: "12 is a multiple of 4 and not of 8", ok: true }, { t: "He is right, 4 and 8 always go together", ok: false }, { t: "It is true only for even multiples", ok: false }], why: "It works the other way round: every multiple of 8 IS a multiple of 4, because 8 is made of two 4s. The reverse is not true.", p: "p159" }, "s20": { opts: [{ t: "1 and itself are the same number here, so it has one factor", ok: true }, { t: "1 is prime, he is right", ok: false }, { t: "1 is composite", ok: false }], why: "A prime number has exactly TWO different factors. 1 has only one, so it is neither prime nor composite.", p: "p160" } };
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const shuf = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  document.querySelectorAll(".spot").forEach((host) => {
+    const it = ITEMS[host.dataset.spot];
+    if (!it) return;
+    const box = host.querySelector(".spot-opts");
+    box.innerHTML = shuf(it.opts.slice()).map((o) =>
+      '<button type="button" class="spot-opt" data-ok="' + (o.ok ? 1 : 0) + '">'
+      + esc(o.t) + "</button>").join("");
+    let live = true;
+    box.addEventListener("click", (e) => {
+      const b = e.target.closest(".spot-opt");
+      if (!b || !live) return;
+      live = false;
+      const ok = b.dataset.ok === "1";
+      box.querySelectorAll(".spot-opt").forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = host.querySelector(".spot-fb");
+      fb.className = "spot-fb " + (ok ? "good" : "bad");
+      fb.innerHTML = (ok ? "Yes. " : "Not quite. ") + esc(it.why)
+        + ' <span class="spot-src">Teacher\'s Guide ' + esc(it.p) + "</span>";
+    });
+  });
+})();
+</script>
+
 
 </body>
 </html>
@@ -1163,4 +1224,20 @@
     background: var(--card); color: var(--muted); cursor: pointer; }
   #sclist .sc-opt.on { background: var(--good-soft); border-color: var(--good);
     color: var(--good); font-weight: 600; }
+</style>
+<style>/* ehel-g5-spot - see add-spot-the-mistake.py */
+  .spot { margin: 16px 0 4px; padding: 13px 15px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--card); }
+  .spot-lab { margin: 0 0 6px; font-size: 12px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--muted); }
+  .spot-said { margin: 0 0 10px; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  .spot-opt { font: inherit; font-size: 14px; text-align: left; padding: 8px 13px;
+    margin: 0 8px 8px 0; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--ground); color: var(--ink); cursor: pointer; }
+  .spot-opt.right { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+  .spot-opt.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+  .spot-fb { margin: 4px 0 0; font-size: 14.5px; line-height: 1.5; min-height: 1px; }
+  .spot-fb.good { color: var(--good); }
+  .spot-fb.bad { color: var(--ink); }
+  .spot-src { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
 </style>

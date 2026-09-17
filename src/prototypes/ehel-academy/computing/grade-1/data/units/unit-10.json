@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:20:42.806Z",
+  "generatedAt": "2026-09-17T09:16:55.239Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -27,7 +27,37 @@
   "cambridge": {
     "level": "Cambridge Primary Computing",
     "code": "0672",
-    "stage": 1
+    "stage": 1,
+    "objectives": [
+      {
+        "code": "1DC.01",
+        "text": "Know that some devices can connect to each other to make a network."
+      },
+      {
+        "code": "1DC.03",
+        "text": "Identify that some devices are connected by wires and that other devices are not."
+      },
+      {
+        "code": "1DC.02",
+        "text": "Know that the internet consists of many computers that are connected together around the world."
+      },
+      {
+        "code": "1DC.04",
+        "text": "Know that there are times when the internet is not available."
+      },
+      {
+        "code": "1CS.05",
+        "text": "Know that there are many everyday devices that use computers to control what they do."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "proposed",
+      "reviewed": false,
+      "method": "Inferred from the unit's title, outcomes, concept titles, methods and reference rules against the published objective texts. Cambridge prints no objective codes in these packs, so nothing here is extracted from an authority.",
+      "tool": "tools/map-ehel-computing-cambridge-objectives.mjs",
+      "requires": "Curriculum sign-off before this is presented as alignment to a school, a parent or a regulator.",
+      "note": "Objective codes/text are sourced from cambridge-computing-0059.json, the only framework file with real objective text. This unit's own cambridge.code field says \"0672\" (the shell course's enforced convention, see check-computing-content.mjs); the standalone lesson apps' own config calls the same Stage's objectives \"Cambridge Primary Computing 0059\". The two codes have not been reconciled — flagged, not resolved, by this tool."
+    }
   },
   "provenance": {
     "contentPackage": "Ehel-Academy-Computing-Grade-1-Content-Package",

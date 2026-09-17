@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:20:43.608Z",
+  "generatedAt": "2026-09-17T09:16:56.127Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -27,7 +27,41 @@
   "cambridge": {
     "level": "Cambridge Primary Computing",
     "code": "0672",
-    "stage": 5
+    "stage": 5,
+    "objectives": [
+      {
+        "code": "5CS.02",
+        "text": "Know that there are a range of storage devices that can be used within computer systems."
+      },
+      {
+        "code": "5CS.05",
+        "text": "Describe the input-process-output model and illustrate with examples relating to different devices, including control systems, printing and audio production."
+      },
+      {
+        "code": "5CS.03",
+        "text": "Know that computers represent data in binary (0,1)."
+      },
+      {
+        "code": "5CS.06",
+        "text": "Know that Artificial Intelligence (AI) is a simulation of human intelligence within computer systems."
+      },
+      {
+        "code": "5CS.01",
+        "text": "Describe the scale of the computing devices and mechanisms that are connected to the internet, either for data input or as actuators to make something happen, both in the home and globally."
+      },
+      {
+        "code": "5CS.07",
+        "text": "Know that AI is used within common productivity software, limited to predictive text or speech to text."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "proposed",
+      "reviewed": false,
+      "method": "Inferred from the unit's title, outcomes, concept titles, methods and reference rules against the published objective texts. Cambridge prints no objective codes in these packs, so nothing here is extracted from an authority.",
+      "tool": "tools/map-ehel-computing-cambridge-objectives.mjs",
+      "requires": "Curriculum sign-off before this is presented as alignment to a school, a parent or a regulator.",
+      "note": "Objective codes/text are sourced from cambridge-computing-0059.json, the only framework file with real objective text. This unit's own cambridge.code field says \"0672\" (the shell course's enforced convention, see check-computing-content.mjs); the standalone lesson apps' own config calls the same Stage's objectives \"Cambridge Primary Computing 0059\". The two codes have not been reconciled — flagged, not resolved, by this tool."
+    }
   },
   "provenance": {
     "contentPackage": "Ehel-Academy-Computing-Grade-5-Content-Package",

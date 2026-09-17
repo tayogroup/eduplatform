@@ -259,6 +259,24 @@ function applyReviewFields(unit, category, itemId, fields, label) {
   }
 }
 
+// The term a gloss defines: "Server means a computer that ...".
+  //
+  // SLASHES AND BRACKETS ARE PART OF THE TERM, and leaving them out is how five
+  // wrong explanations shipped at Stage 7. The three guards below all ask "is
+  // this explanation about the question it sits on", and all three begin by
+  // matching this. A class of [A-Za-z0-9 .'’-] cannot match "Debug / debugging",
+  // "Real / float" or "IDE (Integrated Development Environment)" - every
+  // Cambridge paired term and every initialism - so the guards saw no gloss and
+  // waved them through. "What is debugging?" was explained by defining a float.
+  //
+  // The full stop is deliberately NOT in the class. With it, the term runs past a
+  // sentence boundary and captures "Colour depth. More bits per pixel", which is
+  // the opening of a CORRECT explanation; the guard would then judge it stranded
+  // and replace it with the bare answer. Measured over all 935 Stage 5-8
+  // questions: this class keeps all 13 terms the old one matched, loses none, and
+  // newly catches exactly the 5 defects.
+  const GLOSS_TERM = /^([A-Za-z][A-Za-z0-9 ()\/'’-]{1,40}?) means /;
+
 // Which vocabulary word a generated quiz question is about, or "" if it is a
 // real question parsed out of the pack rather than one of the two padding
 // templates in assessmentData().
@@ -289,7 +307,7 @@ function rekeyPaddingOverrides(unit, byId) {
 
   const moves = new Map();
   for (const [itemId, fields] of Object.entries(byId)) {
-    const said = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(tidy(fields.explanation || ""));
+    const said = GLOSS_TERM.exec(tidy(fields.explanation || ""));
     const target = said ? byTerm.get(said[1].toLowerCase()) : undefined;
     if (target && target !== itemId) moves.set(itemId, target);
   }
@@ -321,7 +339,7 @@ function rekeyPaddingOverrides(unit, byId) {
   // Only the question and its own correct answer say what the question is about.
   const kept = {};
   for (const [itemId, fields] of Object.entries(rekeyed)) {
-    const said = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(tidy(fields.explanation || ""));
+    const said = GLOSS_TERM.exec(tidy(fields.explanation || ""));
     const question = questions.find((entry) => entry.id === itemId);
     const about = question
       ? `${question.question} ${question.answer}`.toLowerCase()
@@ -523,7 +541,7 @@ function oneAnswerPerQuestion(items = []) {
 // restores something true.
 function dropStrandedExplanations(questions = [], label = "") {
   for (const question of questions) {
-    const said = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(tidy(question.explanation || ""));
+    const said = GLOSS_TERM.exec(tidy(question.explanation || ""));
     if (!said) continue;
     const about = `${question.question} ${question.answer} ${(question.options || []).join(" ")}`.toLowerCase();
     if (about.includes(said[1].toLowerCase())) continue;

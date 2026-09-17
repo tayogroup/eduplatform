@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-03T14:07:57.795Z",
+  "generatedAt": "2026-09-17T09:16:56.167Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -27,7 +27,41 @@
   "cambridge": {
     "level": "Cambridge Primary Computing",
     "code": "0672",
-    "stage": 6
+    "stage": 6,
+    "objectives": [
+      {
+        "code": "6P.10",
+        "text": "Know how to test programs using a range of data."
+      },
+      {
+        "code": "6P.04",
+        "text": "Know how to develop block-based programs using data types, including Integer, Character and String."
+      },
+      {
+        "code": "6P.07",
+        "text": "Know how to develop prototypes of interfaces for programs, including suitable prompts for its users."
+      },
+      {
+        "code": "6CT.04",
+        "text": "Know that variables can be used in different algorithms."
+      },
+      {
+        "code": "6P.01",
+        "text": "Explain the use of constructs in programming, including sequence, selection and iteration."
+      },
+      {
+        "code": "6CT.05",
+        "text": "Know that the same sub-routine can be used multiple times in an algorithm."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "proposed",
+      "reviewed": false,
+      "method": "Inferred from the unit's title, outcomes, concept titles, methods and reference rules against the published objective texts. Cambridge prints no objective codes in these packs, so nothing here is extracted from an authority.",
+      "tool": "tools/map-ehel-computing-cambridge-objectives.mjs",
+      "requires": "Curriculum sign-off before this is presented as alignment to a school, a parent or a regulator.",
+      "note": "Objective codes/text are sourced from cambridge-computing-0059.json, the only framework file with real objective text. This unit's own cambridge.code field says \"0672\" (the shell course's enforced convention, see check-computing-content.mjs); the standalone lesson apps' own config calls the same Stage's objectives \"Cambridge Primary Computing 0059\". The two codes have not been reconciled — flagged, not resolved, by this tool."
+    }
   },
   "provenance": {
     "contentPackage": "Ehel-Academy-Computing-Grade-6-Content-Package",

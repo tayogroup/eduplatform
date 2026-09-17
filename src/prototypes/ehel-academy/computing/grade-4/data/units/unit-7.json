@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:20:43.342Z",
+  "generatedAt": "2026-09-17T09:16:55.850Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -27,7 +27,41 @@
   "cambridge": {
     "level": "Cambridge Primary Computing",
     "code": "0672",
-    "stage": 4
+    "stage": 4,
+    "objectives": [
+      {
+        "code": "4MD.07",
+        "text": "Identify data, records and fields within a data table."
+      },
+      {
+        "code": "4MD.06",
+        "text": "Know how to use a database to answer a single question."
+      },
+      {
+        "code": "4MD.03",
+        "text": "Identify the differences between data and information."
+      },
+      {
+        "code": "4MD.05",
+        "text": "Identify appropriate data types for a field within a data table."
+      },
+      {
+        "code": "4MD.01",
+        "text": "Understand the differences between physical (paper-based) and digital databases."
+      },
+      {
+        "code": "4P.02",
+        "text": "Know how to develop programs with repetition."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "proposed",
+      "reviewed": false,
+      "method": "Inferred from the unit's title, outcomes, concept titles, methods and reference rules against the published objective texts. Cambridge prints no objective codes in these packs, so nothing here is extracted from an authority.",
+      "tool": "tools/map-ehel-computing-cambridge-objectives.mjs",
+      "requires": "Curriculum sign-off before this is presented as alignment to a school, a parent or a regulator.",
+      "note": "Objective codes/text are sourced from cambridge-computing-0059.json, the only framework file with real objective text. This unit's own cambridge.code field says \"0672\" (the shell course's enforced convention, see check-computing-content.mjs); the standalone lesson apps' own config calls the same Stage's objectives \"Cambridge Primary Computing 0059\". The two codes have not been reconciled — flagged, not resolved, by this tool."
+    }
   },
   "provenance": {
     "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",

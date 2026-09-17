@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:20:43.129Z",
+  "generatedAt": "2026-09-17T09:16:55.603Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -27,7 +27,41 @@
   "cambridge": {
     "level": "Cambridge Primary Computing",
     "code": "0672",
-    "stage": 3
+    "stage": 3,
+    "objectives": [
+      {
+        "code": "3DC.03",
+        "text": "Understand the advantages and disadvantages of a network."
+      },
+      {
+        "code": "3DC.02",
+        "text": "Identify services that are available on familiar networks, including digital files, printed documents and the World Wide Web."
+      },
+      {
+        "code": "3DC.01",
+        "text": "Identify networked hardware in a familiar environment, including the school and home."
+      },
+      {
+        "code": "3MD.03",
+        "text": "Know how to record discrete and categorical data, using computing devices."
+      },
+      {
+        "code": "3CS.06",
+        "text": "Identify common 'Internet of Things' devices in a familiar environment."
+      },
+      {
+        "code": "3P.03",
+        "text": "Know how to create programs with more than one algorithm running at the same time."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "proposed",
+      "reviewed": false,
+      "method": "Inferred from the unit's title, outcomes, concept titles, methods and reference rules against the published objective texts. Cambridge prints no objective codes in these packs, so nothing here is extracted from an authority.",
+      "tool": "tools/map-ehel-computing-cambridge-objectives.mjs",
+      "requires": "Curriculum sign-off before this is presented as alignment to a school, a parent or a regulator.",
+      "note": "Objective codes/text are sourced from cambridge-computing-0059.json, the only framework file with real objective text. This unit's own cambridge.code field says \"0672\" (the shell course's enforced convention, see check-computing-content.mjs); the standalone lesson apps' own config calls the same Stage's objectives \"Cambridge Primary Computing 0059\". The two codes have not been reconciled — flagged, not resolved, by this tool."
+    }
   },
   "provenance": {
     "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",

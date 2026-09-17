@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:20:42.790Z",
+  "generatedAt": "2026-09-17T09:16:55.210Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -27,7 +27,41 @@
   "cambridge": {
     "level": "Cambridge Primary Computing",
     "code": "0672",
-    "stage": 1
+    "stage": 1,
+    "objectives": [
+      {
+        "code": "1P.03",
+        "text": "Predict what is likely to happen when programs are run."
+      },
+      {
+        "code": "1P.07",
+        "text": "Know that 'debugging' is the correction of errors in programs."
+      },
+      {
+        "code": "1P.05",
+        "text": "Know how to run programs to test whether they produce the desired result."
+      },
+      {
+        "code": "1P.06",
+        "text": "Identify why a program does not produce the desired result."
+      },
+      {
+        "code": "1CS.02",
+        "text": "Know that computers can run many different programs, including games, apps and document creation tools."
+      },
+      {
+        "code": "1P.04",
+        "text": "Know that programs can contain errors."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "proposed",
+      "reviewed": false,
+      "method": "Inferred from the unit's title, outcomes, concept titles, methods and reference rules against the published objective texts. Cambridge prints no objective codes in these packs, so nothing here is extracted from an authority.",
+      "tool": "tools/map-ehel-computing-cambridge-objectives.mjs",
+      "requires": "Curriculum sign-off before this is presented as alignment to a school, a parent or a regulator.",
+      "note": "Objective codes/text are sourced from cambridge-computing-0059.json, the only framework file with real objective text. This unit's own cambridge.code field says \"0672\" (the shell course's enforced convention, see check-computing-content.mjs); the standalone lesson apps' own config calls the same Stage's objectives \"Cambridge Primary Computing 0059\". The two codes have not been reconciled — flagged, not resolved, by this tool."
+    }
   },
   "provenance": {
     "contentPackage": "Ehel-Academy-Computing-Grade-1-Content-Package",
@@ -999,7 +1033,7 @@
         ],
         "answer": "No - we test all the time, after every little change. That is how a games developer catches errors early, while they are still easy to find.",
         "hint": "Use the Unit 9 Computing Words reference.",
-        "explanation": "Test / testing means trying your program to see if it works."
+        "explanation": "No - we test all the time, after every little change. That is how a games developer catches errors early, while they are still easy to find."
       },
       {
         "id": "q12",

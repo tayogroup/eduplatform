@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:20:43.311Z",
+  "generatedAt": "2026-09-17T09:16:55.819Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -27,7 +27,41 @@
   "cambridge": {
     "level": "Cambridge Primary Computing",
     "code": "0672",
-    "stage": 4
+    "stage": 4,
+    "objectives": [
+      {
+        "code": "4CS.06",
+        "text": "Describe the role of computer scientists in a range of industries."
+      },
+      {
+        "code": "4CS.07",
+        "text": "Identify the role of robots in service industries, including for delivery services, public transport and health care."
+      },
+      {
+        "code": "4CS.02",
+        "text": "Know the functions of application and systems software."
+      },
+      {
+        "code": "4CS.01",
+        "text": "Identify examples where a control system is used."
+      },
+      {
+        "code": "4CT.07",
+        "text": "Know how to use decomposition to break tasks into different parts, represented as algorithms."
+      },
+      {
+        "code": "4CS.05",
+        "text": "Identify that different types of file have different sizes, including text, audio, image, video and games."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "proposed",
+      "reviewed": false,
+      "method": "Inferred from the unit's title, outcomes, concept titles, methods and reference rules against the published objective texts. Cambridge prints no objective codes in these packs, so nothing here is extracted from an authority.",
+      "tool": "tools/map-ehel-computing-cambridge-objectives.mjs",
+      "requires": "Curriculum sign-off before this is presented as alignment to a school, a parent or a regulator.",
+      "note": "Objective codes/text are sourced from cambridge-computing-0059.json, the only framework file with real objective text. This unit's own cambridge.code field says \"0672\" (the shell course's enforced convention, see check-computing-content.mjs); the standalone lesson apps' own config calls the same Stage's objectives \"Cambridge Primary Computing 0059\". The two codes have not been reconciled — flagged, not resolved, by this tool."
+    }
   },
   "provenance": {
     "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",

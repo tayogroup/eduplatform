@@ -167,8 +167,8 @@ LESSON = {
                    "Burning makes new materials that will not go back."),
                  q("Does ice melt into water?", "\U0001F9CA", "Yes", ["No"],
                    "Ice and water are the same material, warm or cold."),
-                 q("Is burnt wood still wood?", "\U0001F525", "No", ["Yes"],
-                   "Burning makes ash and smoke, which are new materials."),
+                 q("Does a candle get shorter as it burns?", "\U0001F56F\uFE0F", "Yes", ["No"],
+                   "The wax burns away into new materials that go off into the air."),
               ],
               "extension": [
                  q("You mix flour and water into a dough. A new material, or a mixture?", "\U0001F35A", "a mixture - the flour and the water are both still in there", ["a new material, because it looks different", "neither of the two"],

@@ -275,7 +275,7 @@ LESSON = {
                  q("Do plants need light?", "☀️", "Yes", ["No"],
                    "You tested it. The plant in the dark cupboard went pale and droopy."),
                  q("Do plants need water?", "\U0001F4A7", "Yes", ["No"],
-                   "Water is one of the two things a plant must have."),
+                   "Water is one of the things a plant must have."),
                  q("Is a flower a part of a plant, or a whole plant?", "\U0001F337", "a part", ["a whole plant"],
                    "The flower is one part. The roots, stem and leaves are parts too."),
               ],
@@ -285,7 +285,7 @@ LESSON = {
                  q("Two plants get the same water and the same light. One grows in a tiny pot and one in a big pot. Is that a fair test of whether pot size matters?", "\U0001FAB4", "Yes, because only the pot is different", ["No, pots are never fair", "No, you must change the water too"],
                    "A fair test changes ONE thing. Here only the pot changes, so it is fair."),
                  q("You measure a seedling every day. It grows fast at first, then slowly. Is it still alive?", "\U0001F4CF", "yes - growing slowly is still growing", ["no, it has stopped", "only while it grows fast"],
-                   "Living things do not grow at the same speed all their lives. You did too."),
+                   "Living things do not grow at the same speed all their lives. You grew fastest when you were a baby."),
                  q("Why do gardeners push seeds down into the soil instead of leaving them on top?", "\U0001FAB4", "the soil holds water round the seed and keeps it safe", ["so the wind cannot see them", "seeds only grow underground"],
                    "A seed needs water to start growing, and soil holds the water right against it."),
               ]

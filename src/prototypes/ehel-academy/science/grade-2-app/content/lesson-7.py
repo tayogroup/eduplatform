@@ -162,8 +162,8 @@ LESSON = {
                    "A mirror only bounces light that came from somewhere else."),
                  q("Could you see a black cat in a room with no light?", "\U0001F408", "No", ["Yes"],
                    "With no light there is nothing to bounce off the cat into your eyes."),
-                 q("Do your eyes need light to work?", "\U0001F441\uFE0F", "Yes", ["No"],
-                   "Eyes do not make light. They only catch it."),
+                 q("Can light go round a corner on its own?", "\U0001F4D0", "No", ["Yes"],
+                   "Light travels in straight lines, so something has to send it round."),
               ],
               "extension": [
                  q("Why can you see a book, which makes no light of its own?", "\U0001F4D6", "light from a source bounces off it into your eye", ["your eyes send light onto the page", "paper makes a little light of its own"],

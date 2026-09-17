@@ -99,8 +99,8 @@ LESSON = {
                    "Every bird has two legs and two wings."),
                  q("Does a fish have legs?", "\U0001F41F", "No", ["Yes"],
                    "A fish has fins, not legs."),
-                 q("Does a snake have legs?", "\U0001F40D", "No", ["Yes"],
-                   "A snake has none at all, and it still moves perfectly well."),
+                 q("A kitten grows up to look like a...", "\U0001F408", "cat", ["bird"],
+                   "Young animals grow up to look like their parents."),
               ],
               "extension": [
                  q("Your grandmother is your father's mother. So where did your father's features come from?", "\U0001F46A", "a mix from HIS two parents", ["only from his mother", "he chose them himself"],

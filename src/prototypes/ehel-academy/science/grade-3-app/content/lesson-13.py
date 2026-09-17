@@ -129,8 +129,8 @@ LESSON = {
                    "The Earth, the Sun and the Moon are all spheres."),
                  q("Has anybody ever walked on the Moon?", "\U0001F45F", "Yes", ["No"],
                    "Astronauts have, and their footprints are still there."),
-                 q("Is the Sun bigger than the Moon?", "\u2600\uFE0F", "Yes", ["No"],
-                   "Enormously bigger. It only looks the same size because it is so far away."),
+                 q("Does the Moon really change shape?", "\U0001F313", "No", ["Yes"],
+                   "It is always a ball. We see different amounts of its lit side."),
               ],
               "extension": [
                  q("You look for the Moon at the same clock time each night for a week. Is it in the same place?", "\U0001F30C", "no - it has moved along its circle, so it is somewhere different", ["yes, exactly the same place every night", "it never moves at all"],

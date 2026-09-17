@@ -163,8 +163,8 @@ LESSON = {
               "support": [
                  q("Is friction a force?", "\U0001F9CA", "Yes", ["No"],
                    "Friction is the force between two surfaces that rub."),
-                 q("Is a push a force?", "\U0001F6D2", "Yes", ["No"],
-                   "A push is a force, and so is a pull."),
+                 q("Does a still ball start rolling on its own?", "⚽", "No", ["Yes"],
+                   "Something has to push it. Nothing starts moving by itself."),
                  q("Which way does a dropped ball fall?", "\U0001F34E", "down", ["up"],
                    "Gravity pulls it towards the centre of the Earth."),
                  q("Is carpet rougher than ice?", "\U0001F9F6", "Yes", ["No"],

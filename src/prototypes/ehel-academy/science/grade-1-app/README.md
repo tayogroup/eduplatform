@@ -8,10 +8,17 @@ activity JS and its own copy of the voice engine, bypassing
 [PROMPT.md](PROMPT.md).
 
 **The content is Cambridge Primary Science 0097, Stage 1 — all 35 learning
-objectives — and it is NOT the 0846 course under `science/grade-1/data`.**
-That course declares 0846, and its explorations read "follow the investigation
-plan in your experiments book". These lessons carry the experiment on the page.
-Nothing under `science/grade-1/` is read or written by this build.
+objectives — and it is NOT the six-unit course under `science/grade-1/data`.**
+That course's explorations read "follow the investigation plan in your
+experiments book". These lessons carry the experiment on the page. Nothing under
+`science/grade-1/` is read or written by this build.
+
+**The shell course declared 0846 until 2026-09-17 and now declares 0097 too**,
+so the two are no longer built to different frameworks — which removes one of
+the three reasons they are kept apart and none of the others. Its six units are
+one per content sub-strand of the 2018 framework, so it reaches 22 of the 35
+objectives this app covers in full; the partition is still six against eight,
+and the page design is still a slide deck rather than a lesson.
 
 | | |
 | --- | --- |
@@ -24,7 +31,8 @@ The framework file is `src/curriculum/cambridge-science-0097.json`, extracted
 from the published PDF by
 `tools/extract-cambridge-science-framework.py --code 0097` (a mode added for
 this build) and accepted by `npm run validate:frameworks`. The 0846 file stays
-because `science/grade-*/data` still declares it.
+even though no unit declares it any more: it is the 2018 document, and every
+Science coverage figure recorded before 2026-09-17 was measured against it.
 
 ## Build
 
@@ -53,8 +61,8 @@ byte-identical to the live pages apart from the generated-by comment.
 
 ## What a lesson is
 
-Eight lessons, organised by the framework's sub-strands (not by the six 0846
-units), 15 to 19 steps each plus the sticker shelf (8 to 12 of the lesson's own, plus the seven of the unit shell - see below):
+Eight lessons, organised by the framework's sub-strands (not by the shell
+course's six units), 15 to 19 steps each plus the sticker shelf (8 to 12 of the lesson's own, plus the seven of the unit shell - see below):
 
 | lesson | steps | objectives |
 | --- | --- | --- |
@@ -184,12 +192,20 @@ and English builds get it without a rebuild.
 ## Progress: `l01`..`l08`, and why not `u01`
 
 Written under `l01`..`l08` beneath the shell's own course key `ehel-sci-g01`.
-THE UNIT PROBLEM (see `wire-progress.py`) is sharper here than in Mathematics:
-these eight lessons are not merely a different grouping of the shell's six
-units, they are built to a different framework. Emitting `u01` would write
-"0846 unit 1, Being Alive, completed" into the gradebook on the strength of a
-0097 lesson. If the school ever adopts 0097 for the shell course, the mapping is
-one function in `wire-progress.py` and a curriculum decision.
+THE UNIT PROBLEM (see `wire-progress.py`) was sharper here than in Mathematics,
+because these eight lessons were not merely a different grouping of the shell's
+six units — they were built to a different framework, so emitting `u01` would
+have written "0846 unit 1, Being Alive, completed" into the gradebook on the
+strength of a 0097 lesson.
+
+**That half of the argument expired on 2026-09-17**, when the shell course was
+re-pointed to 0097 as well. The line the note ended on — "if the school ever
+adopts 0097 for the shell course, the mapping is one function in
+`wire-progress.py` and a curriculum decision" — has therefore come true, and the
+answer is still no: eight lessons and six units remain different partitions of
+0097, so `u01` would credit a whole unit for one lesson, and the shell course
+reaches 22 of the 35 objectives this app covers in full. The mapping stays
+unwritten, now on the partition argument alone rather than on two.
 
 ## Verification on 2026-09-10
 

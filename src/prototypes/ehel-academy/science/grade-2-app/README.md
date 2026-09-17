@@ -8,8 +8,13 @@ what will bite, and the progress namespace; read the
 records only what Grade 2 adds.
 
 **The content is Cambridge Primary Science 0097, Stage 2 — all 44 learning
-objectives — and, as with Grade 1, NOT the 0846 course under
-`science/grade-2/data`.** Stage 2 brings two sub-strands Stage 1 had none of:
+objectives — and, as with Grade 1, NOT the six-unit course under
+`science/grade-2/data`.** That course declared the 2018 framework (0846) until
+2026-09-17 and now declares 0097 too, so the two are no longer built to different
+frameworks — but its six units are one per content sub-strand of the 2018
+framework, so it reaches 29 of these 44 objectives, and progress still goes under
+`l01..lNN` rather than `u01..u06` because six units and these lessons are different
+partitions of 0097. Stage 2 brings two sub-strands Stage 1 had none of:
 *Models and representations* (a model shows an idea clearly; make and use one;
 a diagram is not a picture) and *Ecosystems* (habitats). It also adds three
 skills to Thinking and Working Scientifically: using a secondary source, spotting

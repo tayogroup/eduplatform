@@ -35,17 +35,22 @@ const CURRICULUM = path.join(ROOT, "src", "curriculum");
 // stage is a mapping pointed at the wrong document, which check 2 would then
 // "pass" against the wrong codes.
 //
-// Stages 5-6 were re-pointed from 0846 (the 2018 framework) to 0097 (the
-// current one, September 2020 / v3.0 February 2023) on 2026-09-17: the supplied
-// Teacher's Resource 5 cites 54 objective codes, all 54 of them 0097's and none
-// of them 0846's. Stages 1-4 stay on 0846 pending a separate re-mapping, so the
-// course currently spans three framework generations on purpose.
+// ALL SIX PRIMARY STAGES are on 0097 (September 2020 / v3.0 February 2023) as
+// of 2026-09-17, in two steps the same day. Stages 5-6 went first, on the
+// evidence that the supplied Teacher's Resource 5 cites 54 objective codes, all
+// 54 of them 0097's and none of them 0846's; Stages 1-4 followed, because a
+// course spanning two framework generations reports a coverage figure that
+// cannot be read as one number.
 //
-// This was one of FOUR copies of `stage <= 6 ? "0846" : "0893"` — the others in
-// build-ehel-science-runtime.js and two in check-science-content.mjs. Splitting
-// one condition into two wakes up whatever was equal to the old one, so all four
-// moved in the same change.
-const FRAMEWORK_FOR_STAGE = (stage) => (stage <= 4 ? "0846" : stage <= 6 ? "0097" : "0893");
+// 0846 stays in the frameworks list below, and must: it is the 2018 document,
+// still the right answer for anyone asking what the course was measured against
+// before today, and the file is the only record of it in the repo.
+//
+// `stage <= 6 ? "0097" : "0893"` is written in FOUR places — here,
+// build-ehel-science-runtime.js, and twice in check-science-content.mjs. All
+// four moved together both times, because splitting one condition into two
+// wakes up whatever was equal to the old one.
+const FRAMEWORK_FOR_STAGE = (stage) => (stage <= 6 ? "0097" : "0893");
 
 const frameworks = new Map();
 for (const code of ["0846", "0097", "0893"]) {

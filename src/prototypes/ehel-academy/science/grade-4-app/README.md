@@ -7,8 +7,13 @@ standalone build is, what will bite, and the progress namespace; the
 shell. This file records only what Grade 4 adds.
 
 **The content is Cambridge Primary Science 0097, Stage 4 — all 63 learning
-objectives — and, as with the earlier grades, NOT the 0846 course under
-`science/grade-4/data`.** Stage 4 is the last of the deck grades and the one
+objectives — and, as with the earlier grades, NOT the six-unit course under
+`science/grade-4/data`.** That course declared the 2018 framework (0846) until
+2026-09-17 and now declares 0097 too, so the two are no longer built to different
+frameworks — but its six units are one per content sub-strand of the 2018
+framework, so it reaches 36 of these 63 objectives, and progress still goes under
+`l01..lNN` rather than `u01..u06` because six units and these lessons are different
+partitions of 0097. Stage 4 is the last of the deck grades and the one
 where the framework starts asking for explanations rather than
 observations: the particle model, energy transfer, ray diagrams, the layers
 of the Earth, the spinning Earth. Its working-scientifically strand adds

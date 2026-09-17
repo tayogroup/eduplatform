@@ -7,8 +7,13 @@ what a standalone build is, what will bite, and the progress namespace; the
 shell. This file records only what Grade 3 adds.
 
 **The content is Cambridge Primary Science 0097, Stage 3 — all 51 learning
-objectives — and, as with the earlier grades, NOT the 0846 course under
-`science/grade-3/data`.** Stage 3 is where science stops being a set of
+objectives — and, as with the earlier grades, NOT the six-unit course under
+`science/grade-3/data`.** That course declared the 2018 framework (0846) until
+2026-09-17 and now declares 0097 too, so the two are no longer built to different
+frameworks — but its six units are one per content sub-strand of the 2018
+framework, so it reaches 30 of these 51 objectives, and progress still goes under
+`l01..lNN` rather than `u01..u06` because six units and these lessons are different
+partitions of 0097. Stage 3 is where science stops being a set of
 things to notice and becomes a set of things to DO: the five types of enquiry
 are named, measurements go into standard units, results go into bar charts,
 and an experiment ends with a conclusion. It also opens five topics the

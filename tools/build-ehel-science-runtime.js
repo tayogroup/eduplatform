@@ -50,68 +50,108 @@ function cambridgeFramework(code) {
 }
 
 const CAMBRIDGE_OBJECTIVES = {
-  // ── Stage 1 (0846) ──
-  // 1Ep3 and 1Eo5 are on every Stage 1 unit because every one of them runs the
-  // same exploration cycle: the prompt is literally "What do you predict will
-  // happen in <investigation>?" and the answer is "carry it out, record what you
-  // observe, and compare it with the prediction you wrote before you started".
-  // That is 1Ep3 "Make predictions" and 1Eo5 "Compare what happened with
-  // predictions", word for word, so claiming them six times is accurate rather
-  // than padding — leaving them off reported a whole sub-strand as untaught.
-  "1-1": ["1Bp1", "1Bp2", "1Bh5", "1Ep3", "1Eo1", "1Eo4", "1Eo5"],
-  "1-2": ["1Bp1", "1Bp4", "1Bp5", "1Bp6", "1Ep3", "1Eo1", "1Eo3", "1Eo5"],
-  // 1Bh3 on "Staying Healthy and Clean": "Your body also needs good food,
-  // clean water, plenty of sleep and lots of moving and playing to stay strong."
-  "1-3": ["1Bh1", "1Bh2", "1Bh3", "1Bh4", "1Cp1", "1Ep3", "1Eo4", "1Eo5"],
-  "1-4": ["1Cp1", "1Cp2", "1Cp3", "1Cp4", "1Ep3", "1Eo3", "1Eo4", "1Eo5"],
-  "1-5": ["1Pf1", "1Pf2", "1Pf3", "1Ep3", "1Eo1", "1Eo5"],
-  "1-6": ["1Ps1", "1Ps2", "1Ps3", "1Ep3", "1Eo4", "1Eo5"],
-  // ── Stage 2 (0846) ──
-  "2-1": ["2Be1", "2Be2", "2Be3", "2Eo2", "2Eo3", "2Eo5"],
-  "2-2": ["2Cp1", "2Cp2", "2Eo3", "2Eo6"],
-  "2-3": ["2Cc2", "2Cc3", "2Ep2", "2Ep5", "2Eo2"],
-  "2-4": ["2Pl1", "2Pl2", "2Pl3", "2Pb2", "2Eo2"],
-  "2-5": ["2Pm1", "2Pm2", "2Eo2"],
-  // 2Ep5 for the same reason 1Ep3 is claimed at Stage 1: this unit's explorations
-  // run the "What do you predict will happen in <investigation>?" cycle. That
-  // prompt is not universal — it appears in 6 of 6 Stage 1 units but only 6 units
-  // across Stages 2-8 — so it is claimed exactly where it is used, not by rule.
-  // 2Eo7 on the shadow concept, which is about the pattern itself — shadows
+  // ── Stage 1 (0097) ──
+  // THE STAGE 1-4 CODES BELOW ARE 0097's, from the 2026-09-17 re-point, and the
+  // per-unit comments that used to sit among them cited 0846 codes — 1Ep3,
+  // 1Eo5, 1Bh3, 2Ep5, 2Eo7, 3Bh5, 3Pf3, 4Bh1-4Bh4 — none of which appears in
+  // this table any more. A comment justifying a claim that is no longer made is
+  // worse than none, so they are rewritten here rather than left to rot. What
+  // each one said is kept where it is still true.
+  //
+  // 1TWSp.02 and 1TWSa.01 are on EVERY Stage 1 unit, and that is measured per
+  // exploration rather than by grepping the unit: all six units carry four
+  // explorations, three of which ask "What do you predict will happen in
+  // <investigation>?" and answer "carry it out, record exactly what you observe,
+  // and compare it with the prediction you wrote before you started". That is
+  // 1TWSp.02 "Make predictions about what they think will happen" and 1TWSa.01
+  // "Describe what happened during an enquiry and if it matched predictions",
+  // in substance, eighteen times per unit-set.
+  //
+  // MY OWN AUDIT DROPPED BOTH OF THEM, and the reason is worth keeping. It
+  // probed for `what happened|matched|as you predicted`; the course says
+  // "compare it with the prediction", so the probe missed the skill by missing
+  // the wording, reported zero, and 1TWSa.01 went down as a gap in a stage that
+  // teaches it eighteen times. Probing a flattened unit finds the metalanguage,
+  // not the teaching — read the fields the learner is actually shown.
+  "1-1": ["1Bp.01", "1Bp.02", "1Bp.03", "1TWSp.01", "1TWSp.02", "1TWSa.01", "1TWSc.01", "1SIC.04"],
+  "1-2": ["1Bs.01", "1Bp.03", "1TWSp.02", "1TWSa.01", "1TWSc.05"],
+  // 1Bs.02 (the five senses and what they detect) and 1Bs.03 replace what used
+  // to be claimed here as 1Bh3 on "Staying Healthy and Clean". 0097 has no
+  // Stage 1 health objective at all — it puts human health at 2Bp.02 and
+  // 4Bp.04 — so the hygiene teaching in this unit is above-stage under the
+  // current framework and is credited to the senses and body-parts objectives
+  // the unit also covers.
+  "1-3": ["1Bs.02", "1Bs.03", "1Bp.02", "1Bp.04", "1TWSp.02", "1TWSa.01", "1TWSc.01"],
+  "1-4": ["1Cm.01", "1Cm.02", "1Cp.01", "1Cp.02", "1TWSp.02", "1TWSa.01", "1TWSc.01"],
+  "1-5": ["1Pf.01", "1Pf.02", "1TWSp.02", "1TWSa.01"],
+  "1-6": ["1Ps.01", "1Ps.02", "1Bs.02", "1TWSp.02", "1TWSa.01", "1TWSc.04"],
+  // ── Stage 2 (0097) ──
+  // The prediction pair is claimed per unit, from the explorations, not by rule:
+  // 2TWSp.02 wherever an exploration's context or prompt asks for a prediction,
+  // 2TWSa.01 wherever its answer asks whether the result matched one. Unit 5
+  // (Electricity) asks for neither and claims neither. Unit 1 asks for four
+  // predictions and never judges them, so it claims 2TWSp.02 alone — which is
+  // the distinction the old "it appears in 6 of 6 Stage 1 units but only 6 units
+  // across Stages 2-8" note was reaching for and measured too coarsely.
+  "2-1": ["2Be.01", "2Be.02", "2Be.03", "2Bp.01", "2ESp.03", "2TWSp.01", "2TWSp.02", "2TWSc.01",
+          "2SIC.04"],
+  "2-2": ["2ESp.01", "2ESp.02", "2Cm.01", "2TWSp.01", "2TWSp.02", "2TWSa.01", "2TWSc.01"],
+  "2-3": ["2Cc.01", "2Cp.01", "2Cp.02", "2Cp.03", "2TWSp.02", "2TWSa.01", "2TWSc.04"],
+  "2-4": ["2Ps.01", "2Ps.02", "2TWSm.01", "2TWSp.02", "2TWSa.01"],
+  "2-5": ["2Pe.01", "2Pe.02", "2Pe.03", "2TWSc.04", "2SIC.02"],
+  // 2TWSa.02 on the shadow concept, which is about the pattern itself — shadows
   // "change in a pattern you can predict", and the seasons are named as the
   // same idea over a year.
-  "2-6": ["2Pb1", "2Pb2", "2Pl3", "2Ep5", "2Eo2", "2Eo3", "2Eo7"],
-  // ── Stage 3 (0846) ──
-  "3-1": ["3Bh1", "3Bh2", "3Bp2", "3Ep1", "3Eo4"],
-  "3-2": ["3Cp2", "3Ep2", "3Ep3", "3Eo2", "3Eo4"],
-  "3-3": ["3Cp1", "3Cp2", "3Ep2", "3Eo1", "3Eo4"],
-  // 3Bh5 on the concept titled "Your Senses - How You Know the World", which
-  // teaches the five senses as how the body gathers information.
-  "3-4": ["3Bh1", "3Bh3", "3Bh5", "3Eo2", "3Eo4"],
-  // 3Pf3 on the fourth job of a force in "What Is a Force?": "a force can
-  // change the shape of something - when you squeeze a ripe mango, your fingers
-  // press dents into it, and when you stretch a rubber band it grows longer."
-  "3-5": ["3Pf1", "3Pf2", "3Pf3", "3Pf4", "3Cp3", "3Ep3"],
-  "3-6": ["3Eo1", "3Eo2", "3Eo5"],
-  // ── Stage 4 (0846) ──
-  // 4Bh1 is claimed on the strength of "Animals With Backbones and Without",
-  // which has the learner feel their own spine, and the five vertebrate groups.
-  // 4Bh2-4Bh4 were not: the unit never covered how a skeleton supports or
-  // protects, or said anything about muscles. CONCEPT_INSERTS closes that —
-  // grep confirmed "skeleton"/"muscle" appeared nowhere in Grade 4 outside
-  // this concept's own backbone paragraph, so it is a real gap, not a stale
-  // record; every other Grade 4 unit was checked too, and their two or three
-  // incidental mentions (muscles needing energy in Unit 2, bone as an example
-  // solid in Unit 3) are not this content either.
-  "4-1": ["4Bh1", "4Bh2", "4Bh3", "4Bh4", "4Be1", "4Be2", "4Eo1"],
-  // 4Ps1-4Ps5 join them: the forms concept already taught vibration making
-  // sound and reaching the ear, and CONCEPT_INSERTS adds what was missing —
-  // decibels, travel through solids and liquids, materials that stop sound,
-  // pitch as distinct from loudness, and changing pitch on an instrument.
-  "4-2": ["4Be3", "4Ep1", "4Eo4", "4Ps1", "4Ps2", "4Ps3", "4Ps4", "4Ps5"],
-  "4-3": ["4Cs1", "4Cs2", "4Cs3", "4Cs4", "4Ep4", "4Eo4"],
-  "4-4": ["4Be1", "4Eo7"],
-  "4-5": ["4Ep2", "4Eo1"],
-  "4-6": ["4Pm1", "4Pm2", "4Pm3", "4Ep3", "4Eo1"],
+  "2-6": ["2ESs.01", "2TWSm.02", "2TWSp.02", "2TWSa.01", "2TWSa.02", "2SIC.01"],
+  // ── Stage 3 (0097) ──
+  // 3TWSp.03 ("Make a prediction describing some possible outcomes of an
+  // enquiry") is on all six units — every one of them asks for a prediction in
+  // at least one exploration — and 3TWSa.01 ("Identify whether results support,
+  // or do not support, a prediction") only on the three whose answer then asks.
+  // 3TWSa.01 was recorded as a gap in a whole unreached sub-strand until the
+  // explorations were read field by field.
+  "3-1": ["3Bp.01", "3Bp.02", "3Bp.03", "3Bs.01", "3TWSp.03", "3TWSc.01"],
+  "3-2": ["3Cm.01", "3Cm.02", "3Cp.01", "3Cp.02", "3Cp.03", "3Cp.04", "3Cc.01", "3TWSp.03",
+          "3TWSa.01"],
+  "3-3": ["3Ps.01", "3Ps.02", "3Ps.03", "3TWSp.03"],
+  // 3Bs.03 (brain, heart, stomach, intestine and lungs) is what this unit is
+  // for. What used to be claimed here was 0846's 3Bh5 on the concept "Your
+  // Senses - How You Know the World"; 0097 puts the senses at Stage 1 (1Bs.02),
+  // so that concept is now revision rather than new teaching, and the unit is
+  // credited for the organs it actually names.
+  "3-4": ["3Bs.03", "3TWSm.02", "3TWSp.03", "3TWSa.01"],
+  "3-5": ["3Pf.01", "3Pf.02", "3Pf.03", "3Pf.04", "3Pe.01", "3Pe.02", "3Pe.03", "3TWSp.03",
+          "3TWSa.01"],
+  "3-6": ["3ESs.01", "3ESs.02", "3ESs.03", "3TWSm.01", "3TWSm.02", "3TWSp.03"],
+  // ── Stage 4 (0097) ──
+  // 4Bs.01-4Bs.03 are claimed on the CONCEPT_INSERTS clause in "Animals With
+  // Backbones and Without", and this is the clearest case in Stages 1-4 of the
+  // re-point crediting teaching that already existed. The insert was written to
+  // close 0846's 4Bh2-4Bh4 and it says, in the learner's own text: the skeleton
+  // is the whole frame and the skull, ribs and the long bones of the arms and
+  // legs are part of it (4Bs.01, which asks for "some of" seven named bones);
+  // the skull is a hard case around the brain and the ribs guard the heart and
+  // lungs (4Bs.03, protecting and supporting organs); and a muscle moves a bone
+  // by contracting, can only pull, so muscles work in pairs, one contracting to
+  // bend the arm while the other relaxes (4Bs.02, word for word).
+  "4-1": ["4Bs.01", "4Bs.02", "4Bs.03", "4Bs.04", "4Bs.05", "4TWSp.03", "4TWSa.01", "4TWSc.01",
+          "4TWSc.02"],
+  // The sound depth this unit's CONCEPT_INSERTS adds — decibels, travel through
+  // solids and liquids, materials that stop sound, pitch as distinct from
+  // loudness, changing pitch on an instrument — closed 0846's 4Ps1-4Ps5 and
+  // closes NOTHING at Stage 4 under 0097, which has no sound sub-strand here:
+  // 0097 puts sound at Stage 1 (sources, getting quieter) and Stage 5 (5Ps.01-03,
+  // vibrating sources, pitch and volume, changing them). So it is above-stage
+  // teaching in Grade 4 and stays — the forms-of-energy concept hands straight
+  // over to it — but Stage 5's claim on 5Ps rests on Grade 5's own concept, not
+  // on this text. `4Ps.01-03` at Stage 4 are LIGHT objectives and belong to unit
+  // 5, which is where they are claimed.
+  "4-2": ["4Pf.01", "4Pf.02", "4Pf.03", "4Pf.04", "4Bp.03", "4TWSm.02", "4TWSp.03", "4TWSa.01"],
+  "4-3": ["4Cm.01", "4Cm.02", "4Cm.03", "4Cp.01", "4Cp.02", "4Cc.01", "4Cc.02", "4TWSm.02",
+          "4TWSp.03", "4TWSa.01"],
+  "4-4": ["4ESp.01", "4ESp.02", "4ESp.03", "4Be.01", "4Be.02", "4TWSm.01", "4TWSm.02"],
+  "4-5": ["4Ps.01", "4Ps.02", "4Ps.03", "4TWSp.03"],
+  "4-6": ["4Pe.01", "4Pe.02", "4Pe.03", "4Pe.04", "4TWSp.03", "4TWSa.01", "4TWSc.06"],
   // ── Stage 5 (0097) ──
   // RE-POINTED from 0846 to 0097 on 2026-09-17, and the codes below are not a
   // translation of the 0846 list above them — they are a fresh mapping, because
@@ -343,11 +383,22 @@ const CAMBRIDGE_OBJECTIVES = {
 // strand genuinely has nowhere to map, and a reader of the unit should be told
 // that instead of seeing a short list and assuming it is complete.
 const CAMBRIDGE_ALIGNMENT_NOTES = {
-  "3-3": "Light and shadow are not in 0846 Stage 3 — the framework carries light at Stage 2 (2Pl) and Stage 5 (5Pl) only. The material-property and enquiry objectives claimed here are met in full; the light content itself has no Stage 3 objective to map to.",
-  "3-6": "Earth, Sun and Moon are not in 0846 Stage 3 — the framework carries Earth and beyond at Stage 2 (2Pb) and Stage 5 (5Pb) only. Only the enquiry objectives this unit genuinely meets are claimed; its astronomy content has no Stage 3 objective to map to.",
-  "4-2": "Energy is not a sub-strand of 0846 Stage 4, or of any primary stage — the framework first treats it as \"energy in movement\" at Stage 6 (6Pf3). The sound, environmental and enquiry objectives claimed here are met in full; it is the unit's core energy content, which is most of it, that has no primary objective to map to.",
-  "4-4": "The Earth's structure, volcanoes and earthquakes are not in 0846 Stage 4 — the framework carries Earth and beyond at Stage 2 (2Pb) and Stage 5 (5Pb), and neither covers plate geology. The habitat and enquiry objectives claimed here are met in full.",
-  "4-5": "Light is not in 0846 Stage 4 — the framework carries light at Stage 2 (2Pl) and Stage 5 (5Pl). Only the enquiry objectives this unit genuinely meets are claimed; Stage 4 has no light or material-property objective for its content.",
+  // FIVE NOTES WERE DELETED HERE on 2026-09-17, when Stages 1-4 were re-pointed
+  // from the 2018 framework to 0097. They were "3-3", "3-6", "4-2", "4-4" and
+  // "4-5", and each said a version of "this content is not in 0846 at any
+  // primary stage" - about light at Stage 3, the Earth, Sun and Moon at Stage 3,
+  // energy at Stage 4, the Earth's structure at Stage 4, and light at Stage 4.
+  //
+  // Every one of those IS in 0097, at exactly the stage the course teaches it:
+  // 3Ps.01-03, 3ESs.01-03, 4Pf.01-04, 4ESp.01-03 and 4Ps.01-03, and the mapping
+  // now claims all fifteen. So the notes were not stale, they were wrong -
+  // content had been sitting in the course all along, taught at the stage the
+  // current framework places it, and recorded as unmappable for want of a code
+  // that existed in the document next to the one being consulted.
+  //
+  // Which is the argument for the re-point in one line: it did not lower these
+  // stages' figures for honesty's sake, it raised what they can legitimately
+  // claim.
   "8-1": "Plant reproduction is not in 0893 Stage 8 — the framework introduces fertilisation as the fusion of gametes at Stage 9 (9Bp.01), and Stages 7 and 8 carry no pollination, seed or germination objective. Only the application objective this unit meets is claimed; its subject matter is a stage ahead.",
   "8-2": "Human reproduction is not in 0893 Stage 8 — as with Unit 1, the framework places fertilisation at Stage 9 (9Bp.01) and carries no puberty or gestation objective at any Lower Secondary stage. The diet and lifestyle objectives claimed here are Stage 8 and are met in full.",
   "8-3": "Half of this unit is a stage ahead: speed and distance/time graphs are Stage 8 (8Pf.01, 8Pf.02) and are claimed, but density is Stage 9 (9Cp.02, and 9Pf.01 for floating and sinking). The unit teaches both together.",
@@ -2198,8 +2249,11 @@ function buildGrade(grade) {
   const stageId = `s${String(grade).padStart(2, "0")}`;
   const stageLabel = `Stage ${grade}`;
   const contentPackage = `Ehel-Academy-Science-Grade-${grade}-Content-Package`;
-  // Official Cambridge framework: Primary Science 0097 at Stages 5-6, 0846 at
-  // Stages 1-4, Lower Secondary Science 0893 (Stages 7-9).
+  // Official Cambridge framework: Primary Science 0097 (Stages 1-6), Lower
+  // Secondary Science 0893 (Stages 7-9). ONE framework generation, finally:
+  // 0097 and 0893 were both published in September 2020 and share their code
+  // format and their TWS and SIC strands, so a learner now crosses from
+  // `6Pf.05` to `7Pf.01` at the Stage 6/7 boundary instead of from `6Pf3`.
   //
   // This used to read `grade <= 6 ? "0846"`, on the argument that the framework
   // Cambridge publishes for these stages is titled "Cambridge Primary Science
@@ -2209,23 +2263,35 @@ function buildGrade(grade) {
   // 2023. The supplied Teacher's Resource 5 cites 54 objective codes and all 54
   // are 0097's; none is 0846's. See the note on CAMBRIDGE_OBJECTIVES "5-1".
   //
-  // STAGES 1-4 ARE DELIBERATELY LEFT ON 0846 and that is a known inconsistency,
-  // not an oversight: re-pointing them is a re-mapping of 24 units that the
-  // owner scoped separately (2026-09-17). It is worth doing — 0097 Stage 4 has
-  // 63 objectives against 0846's 34, and five of the six CAMBRIDGE_ALIGNMENT_NOTES
-  // for Stages 3-4 say some variant of "this content is not in 0846 at any
-  // primary stage", which 0097 very likely places. Until then the shell course
-  // spans three framework generations and this comment is the record of why.
+  // STAGES 1-4 FOLLOWED THE SAME DAY, on the owner's instruction, and the
+  // re-point RAISED what those stages can legitimately claim rather than only
+  // making them honest — which is the opposite of what it did at 5-6. Five of
+  // the six CAMBRIDGE_ALIGNMENT_NOTES for Stages 3-4 said a version of "this
+  // content is not in 0846 at any primary stage", about light at Stage 3, the
+  // Earth, Sun and Moon at Stage 3, energy at Stage 4, the Earth's structure at
+  // Stage 4 and light at Stage 4. 0097 has an objective for every one of them,
+  // at exactly the stage the course already teaches it (3Ps.01-03, 3ESs.01-03,
+  // 4Pf.01-04, 4ESp.01-03, 4Ps.01-03), so fifteen objectives' worth of teaching
+  // had been sitting in the course all along, recorded as unmappable for want of
+  // a code that existed in the document next to the one being consulted. Those
+  // notes are deleted and the codes are claimed.
+  //
+  // The denominators grew too — 0097 Stage 4 publishes 63 objectives against
+  // 0846's 34 — so the reported percentages FELL while the teaching credited
+  // rose. Both movements are real and they are not in tension: the course's six
+  // units per grade are one per content sub-strand of the 2018 framework, so
+  // what 0097 added in 2020 has no unit to sit in. The gap reasons say which
+  // sub-strands those are, and the standalone lesson apps under
+  // science/grade-N-app — organised by 0097's sub-strands, not by these units —
+  // are where a Grade 1-4 learner actually meets them.
   //
   // Splitting one condition into two wakes up whatever was equal to the old one
-  // (see CLAUDE.md). `grade <= 6 ? "0846" : "0893"` existed in THREE places, not
+  // (see CLAUDE.md). `grade <= 6 ? "0846" : "0893"` existed in FOUR places, not
   // the two that were obvious: here, check-science-cambridge-objectives.mjs, and
-  // check-science-content.mjs. All three are changed together.
-  const cambridge = grade <= 4
-    ? { level: "Cambridge Primary Science", code: "0846", stage: grade }
-    : grade <= 6
-      ? { level: "Cambridge Primary Science", code: "0097", stage: grade }
-      : { level: "Cambridge Lower Secondary Science", code: "0893", stage: grade };
+  // TWICE in check-science-content.mjs. All four moved together, both times.
+  const cambridge = grade <= 6
+    ? { level: "Cambridge Primary Science", code: "0097", stage: grade }
+    : { level: "Cambridge Lower Secondary Science", code: "0893", stage: grade };
   const cambridgeLabel = `${cambridge.level} ${cambridge.code} — Stage ${grade}`;
   const gradeDir = path.join(sciRoot, `grade-${grade}`);
   const unitDir = path.join(gradeDir, "data", "units");

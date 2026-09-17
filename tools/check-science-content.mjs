@@ -69,13 +69,14 @@ const walk = (value, visit) => {
 // part that does apply — is the declared syllabus coherent, and is the
 // alignment evidenced — belongs here, in science's own gate.
 //
-// Primary Science is 0846 at Stages 1-4 and 0097 at Stages 5-6; Lower Secondary
-// is 0893 (Stages 7-9). Stages 5-6 were re-pointed from the 2018 framework
-// (0846) to the current one (0097) on 2026-09-17 — the supplied Teacher's
-// Resource 5 cites 54 codes, all of them 0097's and none 0846's. ONE definition,
+// Primary Science is 0097 at Stages 1-6; Lower Secondary is 0893 (Stages 7-9).
+// Both were published in September 2020, so the whole course now measures
+// itself against one framework generation. The 2018 document (0846) is still
+// loaded below, because it is what every coverage figure before 2026-09-17 was
+// measured against and the file is the repo's only record of it. ONE definition,
 // used by both checks in this file: it was written out twice, which is two of the
-// four copies of this expression that the re-point had to find.
-const FRAMEWORK_FOR_STAGE = (stage) => (stage <= 4 ? "0846" : stage <= 6 ? "0097" : "0893");
+// four copies of this expression each re-point had to find.
+const FRAMEWORK_FOR_STAGE = (stage) => (stage <= 6 ? "0097" : "0893");
 const SCIENCE_CODES = ["0846", "0097", "0893"];
 const frameworkCache = new Map();
 function frameworkFor(code) {

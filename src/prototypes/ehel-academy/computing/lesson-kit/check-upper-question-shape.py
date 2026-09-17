@@ -47,8 +47,11 @@ STOP = set("the is are was were be to of in on at it that this these those and o
            "they them then than for with from as so do does did a an".split())
 
 
+# A TAG STARTS WITH A LETTER. Stripping every <...> blanked real content:
+# Stage 8 teaches pseudocode and comparison operators, so "<>", "<=", "<-"
+# are OPTIONS, and the naive strip turned an option into an empty string.
 def plain(h):
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]*>", " ", str(h or ""))).strip()
+    return re.sub(r"\s+", " ", re.sub(r"</?[a-zA-Z][^>]*>", " ", str(h or ""))).strip()
 
 
 def bag(s):

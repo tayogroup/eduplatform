@@ -40,6 +40,15 @@ text = text.replace(/(\d)\s*—\s*(\d)/g, (whole, a, b) => { count += 1; return 
 text = text.replace(/([+*/])\s*—\s*([+*/])/g, (whole, a, b) => { count += 1; return `${a} - ${b}`; });
 text = text.replace(/\+\s*and\s*—/g, () => { count += 1; return "+ and -"; });
 text = text.replace(/—\s*and\s*\+/g, () => { count += 1; return "- and +"; });
+// An em dash standing ALONE as a lettered option:
+//     "(a) + (b) — (c) = (d) *"
+// Neither rule above sees this - the dash touches no digit and no other
+// operator symbol, only its own option marker - so it survived the first run
+// of this script, and Stage 5 unit 1 taught the subtraction operator as an em
+// dash in three banks. An option whose whole text is a dash is never prose,
+// which is the same argument the two rules above rest on.
+text = text.replace(/(\([a-d]\)\s*)—(\s*(?:\([a-d]\)|"))/g,
+  (whole, before, after) => { count += 1; return `${before}-${after}`; });
 text = text.replace(/—\s*for subtraction/gi, () => { count += 1; return "- for subtraction"; });
 text = text.replace(/and\s*—\s*\(subtract\)/gi, () => { count += 1; return "and - (subtract)"; });
 

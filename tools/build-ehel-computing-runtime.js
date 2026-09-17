@@ -232,6 +232,27 @@ function applyReviewFields(unit, category, itemId, fields, label) {
     reviewStats.applied = appliedBefore;
     reviewStats.missed.push(`${label} ${category}/${itemId} (override drifted onto another question — ${selfAnswering ? "the question spells out its own answer" : "answer not among its options"})`);
   }
+  // A GENERATED VOCABULARY QUESTION'S OPTIONS ARE NOT WORDING. Both padding
+  // templates are built from the unit's own glossary as a [word, meaning]
+  // pair - the stem carries one side, the options are the other side plus
+  // three sibling entries - so they are right by construction. An override
+  // that replaces them has drifted off its slot, and because it supplies
+  // options AND answer together the pair stays self-consistent and the drift
+  // check above sees nothing wrong.
+  //
+  // Stage 6 unit 3 shipped two of these and a child could not get either
+  // right: "which computing word means Global Positioning System" keyed to
+  // "A smartphone" with no GPS among the options, and the packet question
+  // keyed to the definition of encryption. Found by reading the keys; no gate
+  // could see it.
+  const vocabStem = String((before && "question" in before) ? before.question : (target.question || ""));
+  const isGeneratedVocab = /^(Which computing word matches this meaning:|What does\s*[“"‘'])/i.test(vocabStem);
+  if (isMcq && isGeneratedVocab && ("options" in fields || "answer" in fields)) {
+    target.options = before.options;
+    if ("answer" in before) target.answer = before.answer;
+    reviewStats.applied = appliedBefore;
+    reviewStats.missed.push(`${label} ${category}/${itemId} (generated vocabulary question \u2014 its options and answer come from the glossary, not from a review row)`);
+  }
   if (category === "Concept" && explanationBefore !== null
     && String(target.explanation).length < 240 && explanationBefore.length >= 240) {
     target.explanation = explanationBefore;
@@ -348,7 +369,16 @@ function rekeyPaddingOverrides(unit, byId) {
       kept[itemId] = fields;
       continue;
     }
-    const { explanation, options, ...rest } = fields;
+    // THE STEM IS STRANDED TOO, and leaving it behind is worse than either
+    // field this already drops. A stranded row names a word with no question in
+    // this unit, so its QUESTION text describes that vanished word - and
+    // applying it puts one word's meaning on another word's options. Stage 6
+    // unit 3 shipped exactly that twice: the GPS and packet rows were correctly
+    // judged stranded, their explanations were dropped, and their stems landed
+    // on the smartphone and encryption questions. A child was asked which word
+    // means "Global Positioning System" and offered a smartphone, a desktop PC,
+    // a smart lightbulb and a printer, with no right answer among them.
+    const { explanation, options, question: strandedStem, ...rest } = fields;
     reviewStats.stranded.push(`${itemId} (“${said[1]}”)`);
     if (Object.keys(rest).length) kept[itemId] = rest;
   }

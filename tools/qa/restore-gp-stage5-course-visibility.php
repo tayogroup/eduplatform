@@ -34,6 +34,7 @@ function fail($msg) {
 if (!is_file(__DIR__ . '/config.php')) {
     fail("no config.php next to this script — run it FROM the Moodle docroot, not from a home directory");
 }
+define('CLI_SCRIPT', true);
 require(__DIR__ . '/config.php');
 require_once($CFG->libdir . '/moodlelib.php');
 
@@ -68,13 +69,16 @@ $update->visible = 1;
 $update->visibleold = 1;
 $DB->update_record('course', $update);
 
-// Moodle's own visibility-change event/cache-rebuild path, so the category
-// tree and navigation reflect this immediately rather than on next cron.
+// Refreshes the category tree and navigation immediately rather than on next
+// cron. A course_updated event was tried here too, for observers that react
+// to it — but this script's bootstrap (config.php + moodlelib.php only) never
+// loads course/lib.php, so mod_forum's observer crashed on the undefined
+// course_get_format() the first time this ran (2026-09-17, against course 71).
+// The $DB->update_record above had already landed by then, so the write was
+// never in question — only the notification was. Left out rather than fixed
+// by loading more of Moodle: this is a one-off DB fix, not something that
+// needs to look like a real visibility change to every observer.
 rebuild_course_cache($course->id, true);
-\core\event\course_updated::create(array(
-    'objectid' => $course->id,
-    'context' => \context_course::instance($course->id),
-))->trigger();
 
 $after = $DB->get_record('course', array('id' => $course->id));
 echo "\nUpdated. New state: visible={$after->visible}, visibleold={$after->visibleold}\n";

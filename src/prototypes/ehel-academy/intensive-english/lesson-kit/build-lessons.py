@@ -108,6 +108,45 @@ def word_pictures(words):
     return json.loads(raw.decode("utf-8"))
 
 
+# --- section intros ---------------------------------------------------------
+# The same thirteen section headers the SHELL course renders, from
+# shell/subjects/intensive-english-sections.js. That module is the single
+# definition: shell/subjects/intensive-english.js renders it, and
+# tools/lib/ehel-intensive-narration.js evaluates it to know which clips to buy.
+#
+# The standalone deck speaks eight of them. Its steps are finer-grained than the
+# shell's sections — one per word group, one per pattern, one per reading — so
+# those keep their own titles, and only the steps that ARE a whole shell section
+# take its intro. A word group is not a section and must not claim to be one.
+#
+# Because the strings come out identical to the shell's, the clips already exist:
+# a clip is named cyrb53(text), and this buys nothing new.
+#
+# Evaluated through node for the same reason word_pictures() above is, and with
+# the same stderr handling.
+def section_intros(context):
+    src = os.path.join(ACADEMY, "shell", "subjects", "intensive-english-sections.js").replace("\\", "/")
+    script = (
+        "import('file:///%s').then(m => {"
+        "  const intros = m.sectionIntros(%s);"
+        "  const out = {};"
+        "  for (const key of Object.keys(intros)) out[key] = m.introNarration(intros[key]);"
+        "  process.stdout.write(JSON.stringify(out));"
+        "});" % (src, json.dumps(context))
+    )
+    tmp = os.path.join(HERE, "_intros.tmp.mjs")
+    try:
+        with io.open(tmp, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(script)
+        raw = subprocess.check_output(["node", tmp], stderr=subprocess.DEVNULL)
+    except Exception as exc:                                   # noqa: BLE001
+        sys.exit("REFUSED: could not read intensive-english-sections.js through node (%s)" % exc)
+    finally:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+    return json.loads(raw.decode("utf-8"))
+
+
 # --- the unit, as the page needs it -----------------------------------------
 def clean(text):
     return re.sub(r"\s+", " ", (text or "")).strip()
@@ -243,10 +282,14 @@ def lesson_payload(unit, pictures):
 # (kind, title said on arrival, renderer call). One idea per screen, in the
 # order a learner meets them: what the unit is for, the lesson, the words, the
 # patterns, the texts, then producing language, then the check.
-def steps_for(data):
+# `intros` is the shell's section narration, keyed by section. A step that is a
+# whole shell section speaks that section's intro; a step finer than a section —
+# one word group, one pattern, one reading — keeps its own title, because the
+# intro would describe a page the learner is not on.
+def steps_for(data, intros):
     steps = []
-    steps.append(("Overview", "What this unit is for.", "unitOverview(%d, '%s')"))
-    steps.append(("The lesson", "The lesson. Listen, then read.", "lecture(%d, '%s')"))
+    steps.append(("Overview", intros["overview"], "unitOverview(%d, '%s')"))
+    steps.append(("The lesson", intros["lecture"], "lecture(%d, '%s')"))
     for n, g in enumerate(data["groups"]):
         steps.append((g["title"], g["title"] + ".", "wordWalk(%d, '%s', LESSON.groups[" + str(n) + "])"))
     if sum(len(g["words"]) for g in data["groups"]) >= 4:
@@ -256,15 +299,15 @@ def steps_for(data):
     for n, r in enumerate(data["readings"]):
         steps.append((r["title"], r["title"] + ".", "reading(%d, '%s', LESSON.readings[" + str(n) + "])"))
     if data["questions"]:
-        steps.append(("Questions", "Questions about the texts.", "questions(%d, '%s', LESSON.questions)"))
+        steps.append(("Questions", intros["comprehension"], "questions(%d, '%s', LESSON.questions)"))
     if data["speaking"]:
-        steps.append(("Say it out loud", "Say it out loud.", "speaking(%d, '%s', LESSON.speaking)"))
+        steps.append(("Say it out loud", intros["speaking"], "speaking(%d, '%s', LESSON.speaking)"))
     if data["writing"]:
-        steps.append(("Write it", "Write it yourself.", "writing(%d, '%s', LESSON.writing)"))
+        steps.append(("Write it", intros["writing"], "writing(%d, '%s', LESSON.writing)"))
     if data["practice"]:
-        steps.append(("Practice", "Practice, then check yourself.", "practice(%d, '%s', LESSON.practice)"))
+        steps.append(("Practice", intros["activities"], "practice(%d, '%s', LESSON.practice)"))
     if data["quiz"]:
-        steps.append(("Check what you know", "Check what you know.", "quiz(%d, '%s', LESSON.quiz)"))
+        steps.append(("Check what you know", intros["quiz"], "quiz(%d, '%s', LESSON.quiz)"))
     return steps
 
 
@@ -343,7 +386,21 @@ def build(unit_no):
     unit = load(os.path.join(DATA, "units", "unit-%d.json" % unit_no))
     words = [d["masterWord"] for d in unit["dictionaryLinks"]] + [d["displayWord"] for d in unit["dictionaryLinks"]]
     data = lesson_payload(unit, word_pictures(words))
-    steps = steps_for(data)
+    # The context the shared module names. Every count is DERIVED from this
+    # unit's own payload, never listed: the shell composes the same strings from
+    # the same numbers, so the two agree by construction and a unit that gains
+    # an activity moves both at once. A frozen count is how the word cards came
+    # to ask for audio nobody had bought.
+    intros = section_intros({
+        "levelLabel": data["levelLabel"],
+        "unitNo": data["unit"],
+        "unitTitle": data["title"],
+        "unitOverview": data["overview"],
+        "wordCount": sum(len(g["words"]) for g in data["groups"]),
+        "activityCount": len(data["practice"]),
+        "quizCount": len(data["quiz"]),
+    })
+    steps = steps_for(data, intros)
 
     slides, calls = [], []
     for i, (title, say, call) in enumerate(steps):
@@ -353,7 +410,10 @@ def build(unit_no):
             % (say.replace('"', "&quot;"), sid))
         calls.append("  " + (call % (i, sid)) + ";")
     # The last slide is the summary the lifted deck paints on arrival.
-    slides.append('    <section class="slide" data-say="What you can do now.">\n      <div id="summary"></div>\n    </section>\n')
+    # The summary slide IS the shell's "My progress" section, so it speaks that
+    # section's intro rather than a four-word label of its own.
+    slides.append('    <section class="slide" data-say="%s">\n      <div id="summary"></div>\n    </section>\n'
+                  % intros["reflect"].replace('"', "&quot;"))
 
     css = read_lib("lesson.css") + "\n" + read_lib("intensive.css")
     page = PAGE % {

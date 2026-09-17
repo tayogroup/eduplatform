@@ -899,6 +899,20 @@ input.typein.wrong { border-color: #c53030; }
      fallback is only for the instant before the first measurement. */
   body:has(#seb-session-bar) .w-dock,
   body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
+  /* AND THE SAME LIFT IN FOCUS MODE. The rule above is specificity (1,1,1)
+     (:has() takes the specificity of its most specific argument, and
+     #seb-session-bar is an id); the plain `.w-dock, .w-drawer` rule further
+     down that spends --wehel-foot-lift is (0,1,0), so with a session bar on
+     screen the footer lift was being thrown away entirely, not merely
+     outranked, and the dock sat back on top of Next - the exact bug fixed
+     below, returning in the one launch mode (focus mode: live class, exam)
+     that also happens to carry a session bar. Composes the two offsets
+     instead of letting one replace the other, and sits after the rule above
+     so it wins on source order at equal specificity. Found and fixed by a
+     peer session porting this to Grade 2 - see 81c06f0940. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer {
+    bottom: calc(var(--seb-lift, 78px) + var(--wehel-foot-lift, 0px)); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -1159,10 +1173,10 @@ input.typein.wrong { border-color: #c53030; }
   </header>
 
   <main class="deck" id="deck" tabindex="-1">
-    <section class="slide" data-say="What this unit is for.">
+    <section class="slide" data-say="Better, Worse, and What I Have To Do. Compare two choices and say which one is more useful. Say how a thing is done: more slowly, the most carefully">
       <div id="s0"></div>
     </section>
-    <section class="slide" data-say="The lesson. Listen, then read.">
+    <section class="slide" data-say="The lesson. Read it and listen to it. This explains all six — everything else in the unit practises what is here.">
       <div id="s1"></div>
     </section>
     <section class="slide" data-say="Comparing two choices.">
@@ -1201,22 +1215,22 @@ input.typein.wrong { border-color: #c53030; }
     <section class="slide" data-say="Study Room: Notice on the Door.">
       <div id="s13"></div>
     </section>
-    <section class="slide" data-say="Questions about the texts.">
+    <section class="slide" data-say="Questions. Write your answer first, then check the reviewed answer.">
       <div id="s14"></div>
     </section>
-    <section class="slide" data-say="Say it out loud.">
+    <section class="slide" data-say="Say it out loud. Record yourself and listen back. Hearing your own voice is the fastest correction there is.">
       <div id="s15"></div>
     </section>
-    <section class="slide" data-say="Write it yourself.">
+    <section class="slide" data-say="Write it down. Your draft saves on this device as you type.">
       <div id="s16"></div>
     </section>
-    <section class="slide" data-say="Practice, then check yourself.">
+    <section class="slide" data-say="Practice. 6 things to do, most of them out loud.">
       <div id="s17"></div>
     </section>
-    <section class="slide" data-say="Check what you know.">
+    <section class="slide" data-say="Check what you know. 12 questions. You can try again.">
       <div id="s18"></div>
     </section>
-    <section class="slide" data-say="What you can do now.">
+    <section class="slide" data-say="What can you do now? Answer honestly. Nobody else sees this — it is here so you can see what has moved and what has not.">
       <div id="summary"></div>
     </section>
   </main>

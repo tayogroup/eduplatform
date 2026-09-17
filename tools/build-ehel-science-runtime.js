@@ -95,9 +95,14 @@ const CAMBRIDGE_OBJECTIVES = {
   // ── Stage 4 (0846) ──
   // 4Bh1 is claimed on the strength of "Animals With Backbones and Without",
   // which has the learner feel their own spine, and the five vertebrate groups.
-  // 4Bh2 is not: the unit never covers how a skeleton supports or protects, and
-  // says nothing about muscles at all.
-  "4-1": ["4Bh1", "4Be1", "4Be2", "4Eo1"],
+  // 4Bh2-4Bh4 were not: the unit never covered how a skeleton supports or
+  // protects, or said anything about muscles. CONCEPT_INSERTS closes that —
+  // grep confirmed "skeleton"/"muscle" appeared nowhere in Grade 4 outside
+  // this concept's own backbone paragraph, so it is a real gap, not a stale
+  // record; every other Grade 4 unit was checked too, and their two or three
+  // incidental mentions (muscles needing energy in Unit 2, bone as an example
+  // solid in Unit 3) are not this content either.
+  "4-1": ["4Bh1", "4Bh2", "4Bh3", "4Bh4", "4Be1", "4Be2", "4Eo1"],
   // 4Ps1-4Ps5 join them: the forms concept already taught vibration making
   // sound and reaching the ear, and CONCEPT_INSERTS adds what was missing —
   // decibels, travel through solids and liquids, materials that stop sound,
@@ -273,6 +278,30 @@ const CAMBRIDGE_GAP_REASONS = {
 // it already uses, not an excuse to author Science content in the builder — a
 // whole missing topic (Stage 4 sound) is recorded as a commission instead.
 const CONCEPT_INSERTS = {
+  // 4Bh2-4Bh4 (skeleton growth and protection; muscles attach to bones;
+  // muscle contraction, in pairs) had no honest home anywhere in Grade 4 —
+  // checked, not assumed: grep for skeleton/muscle across all six units found
+  // nothing outside this concept's own backbone paragraph and two incidental,
+  // unrelated mentions elsewhere (Unit 2: "she needs energy in her muscles";
+  // Unit 3: bone listed as an example solid). This is the whole-missing-topic
+  // case the comment above warns against force-fitting — except it wasn't,
+  // once looked at the way the Grade 4 sound gap turned out not to be either.
+  //
+  // "Animals With Backbones and Without" already has the learner feel their
+  // own spine and states it "holds your body up" — 4Bh1's own claim, and the
+  // support half of 4Bh2. The insert continues that same paragraph, before it
+  // pivots to vertebrate/invertebrate classification, rather than interrupting
+  // the pivot: the rest of the skeleton beyond the spine, the protect half of
+  // 4Bh2 (skull around the brain, ribs around heart and lungs), that muscles
+  // attach to bones (4Bh3), and contraction plus antagonistic pairs (4Bh4) —
+  // closing on the same elbow-bend the learner can feel themselves, echoing
+  // the concept's own opening move of reaching behind their back to feel the
+  // backbone.
+  "4-1": [{
+    conceptId: "concept-3-animals-with-backbones-and-without",
+    after: "It is made of many small bones and it holds your body up.",
+    text: "\n\nYour backbone is only part of a much bigger frame called your skeleton, and every bone in your body is part of it: your skull, your ribs, and the long bones in your arms and legs are all bones too.\n\nYour skeleton does two more jobs besides holding you up. It grows as you grow, so your skeleton at ten years old is bigger than it was at five, and it keeps growing until you are an adult. It also protects the soft parts inside you: your skull is a hard case around your brain, and your ribs curve around your chest to guard your heart and lungs.\n\nBones cannot move by themselves. Muscles are attached to your bones, and a muscle moves a bone by contracting, which means it pulls tight and gets shorter. Feel the front of your upper arm while you bend your elbow, and you can feel a muscle bunch up as it shortens. A muscle can only pull, never push, so muscles work in pairs: one muscle contracts to bend your arm while the other relaxes, and then that second muscle contracts in turn to straighten your arm again.",
+  }],
   // The Grade 4 sound gap, and it was never as empty as the gap record said.
   // I recorded it as "no Year 4 pack contains a sound unit… the only sound
   // content is one glossary line", and that was wrong: the Energy unit's forms

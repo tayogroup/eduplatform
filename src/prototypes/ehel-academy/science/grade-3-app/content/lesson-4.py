@@ -139,7 +139,19 @@ LESSON = {
                  q("A drawing of the butterfly's life cycle with labels is...", "✏️", "a diagram", ["a physical model", "a photograph"], "Labels on a drawing: a diagram."),
                  q("A caterpillar and a butterfly. How many animals is that?", "\U0001F98B", "one animal, at two stages of its life", ["two different animals", "three, counting the egg as another one"],
                    "Some animals change shape completely as they grow, like a tadpole into a frog. It is one animal all the way through."),
-             ]},
+             ],
+              "support": [
+                 q("Does a tadpole have legs when it hatches?", "\U0001F438", "No", ["Yes"],
+                   "A tadpole hatches with a tail and no legs."),
+                 q("Is a diagram a kind of model?", "\U0001F4D0", "Yes", ["No"],
+                   "A diagram is a model drawn flat on paper."),
+              ],
+              "extension": [
+                 q("A caterpillar eats until it is many times its hatching size, then eats nothing at all inside the chrysalis. What was that food for?", "\U0001F37D\uFE0F", "building the butterfly's new body", ["keeping the chrysalis warm", "feeding the eggs it has already laid"],
+                   "Nothing feeds inside a chrysalis. Everything the butterfly is built from was eaten before it went in."),
+                 q("Why is a life-cycle diagram usually drawn as a circle rather than a line?", "\u267B\uFE0F", "because the cycle starts again with the next generation's eggs", ["because circles are easier to draw", "because the animal goes backwards at the end"],
+                   "A line has an end. A life cycle does not: the adult lays the eggs the cycle began with."),
+              ]},
              "You know how animals grow up.",
              mis=["4.2-m1"]),
 

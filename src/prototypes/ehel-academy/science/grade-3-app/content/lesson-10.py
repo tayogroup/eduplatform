@@ -159,7 +159,19 @@ LESSON = {
                    "A light MAKES a shadow, it does not show up one that was already there. Stand where no light reaches you and there is none."),
                  q("You turn a cup round in front of a torch. What happens to its shadow?", "\U0001F56F\uFE0F", "it changes shape as the cup turns", ["it stays the same shape", "it gets darker but keeps its shape"],
                    "A shadow is the shape of the thing as the light meets it. Turn the cup and the shape changes."),
-             ]},
+             ],
+              "support": [
+                 q("Does a torch make its own light?", "\U0001F4A1", "Yes", ["No"],
+                   "A torch is a light source. It makes light of its own."),
+                 q("Does a shadow need a light?", "\U0001F526", "Yes", ["No"],
+                   "No light, no shadow. A shadow is where light was blocked."),
+              ],
+              "extension": [
+                 q("Why does a shadow have a sharp edge on a sunny day and a soft one under a cloudy sky?", "\u2601\uFE0F", "one bright point makes a sharp edge; light from all over makes a soft one", ["clouds bend the light around the object", "shadows are always sharp, whatever the weather"],
+                   "A single small bright source casts one clean outline. Spread that light across the whole sky and the edge blurs away."),
+                 q("A goldfish in a glass bowl looks bigger than it is. What is the water doing to the light?", "\U0001F41F", "bending it as it passes from water to air", ["making the fish grow while you watch", "blocking some of the light"],
+                   "Light changes direction when it crosses from one clear material into another, and that can make things look larger."),
+              ]},
              "You know light and shadows.",
              mis=["3.1-m1", "3.1-m2", "3.1-m3", "3.2-m1"]),
 

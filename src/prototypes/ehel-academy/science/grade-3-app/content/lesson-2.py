@@ -133,7 +133,19 @@ LESSON = {
                    "A plant has roots, a stem, leaves AND a flower. The flower is one part of it."),
                  q("What is a flower FOR?", "\U0001F41D", "making seeds, so new plants can grow", ["looking pretty for people", "keeping the plant warm"],
                    "A flower's job is making seeds. People enjoying them is a lucky extra."),
-             ]},
+             ],
+              "support": [
+                 q("Does a plant grow well in a cold place?", "\u2744\uFE0F", "No", ["Yes"],
+                   "A plant needs the right warmth. In the cold it droops and stops growing."),
+                 q("Do plants need water?", "\U0001F4A7", "Yes", ["No"],
+                   "Water is one of the three things a plant must have."),
+              ],
+              "extension": [
+                 q("A plant gets water, light and warmth, but is planted in clean sand. Why might it still do badly?", "\U0001F3D6\uFE0F", "sand holds almost none of the goodness roots take up", ["sand is too heavy for roots", "it would do perfectly well"],
+                   "Roots take in water AND the minerals dissolved in soil. Clean sand has the water and very little else."),
+                 q("Why do many trees drop all their leaves for the winter?", "\U0001F342", "too little light and warmth to make food, and leaves lose water", ["the cold eats the leaves away", "they grow extra roots instead"],
+                   "A leaf costs a plant water all day. In a dark cold winter it cannot make enough food to be worth keeping."),
+              ]},
              "You know your plants.",
              mis=["1.2-m1", "1.2-m2", "1.2-m3", "1.2-m4"]),
 

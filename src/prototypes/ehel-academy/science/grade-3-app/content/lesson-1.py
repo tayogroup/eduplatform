@@ -174,7 +174,19 @@ LESSON = {
                  q("Making more of your own kind is called...", "\U0001F423", "reproduction", ["nutrition", "movement"], "Reproduction: eggs, babies, seeds."),
                  q("Amina says a flame is alive, because it moves and it grows.", "\U0001F525", "No. Moving is only one of the four life processes.", ["Yes, it moves and grows so it is alive", "Yes, but only while it is burning"],
                    "A flame does not feed, grow or make young ones. Check all four life processes, not just one of them."),
-             ]},
+             ],
+              "support": [
+                 q("Does a plant grow?", "\U0001F331", "Yes", ["No"],
+                   "Growing is one of the life processes, and plants do it."),
+                 q("Was a wooden spoon once alive?", "\U0001F944", "Yes", ["No"],
+                   "Wood came from a living tree."),
+              ],
+              "extension": [
+                 q("Yeast in bread dough bubbles and makes the dough rise. Is yeast alive?", "\U0001F35E", "Yes - it feeds, it makes gas, and it makes more yeast", ["No, it comes out of a packet as powder", "No, only the dough is changing"],
+                   "Yeast is a living thing, a tiny fungus. Warm water and a little sugar wake it up and it starts to feed."),
+                 q("A puppy grows and then stops. A tree keeps growing all its life. Are both growing things?", "\U0001F333", "Yes - growth is a life process in both, they just stop at different times", ["no, only the tree is really growing", "no, only the puppy is really growing"],
+                   "Growth counts whether it stops at a grown-up size or carries on. A tree has no final size."),
+              ]},
              "You know what living things do.",
              mis=["1.1-m1"]),
 

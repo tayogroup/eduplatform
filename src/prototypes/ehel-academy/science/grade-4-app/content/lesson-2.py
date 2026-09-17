@@ -117,7 +117,19 @@ LESSON = {
                    "A snail's shell goes with having no backbone, but a tortoise has both. The shell tells you nothing - look for the backbone."),
                  q("A snake has no legs at all. Vertebrate, or invertebrate?", "\U0001F40D", "a vertebrate - a long backbone of hundreds of bones", ["an invertebrate, because it has no legs", "an invertebrate, because it is so bendy"],
                    "Legs tell you nothing either. A snake's backbone has more bones in it than yours."),
-             ]},
+             ],
+              "support": [
+                 q("Does a bird have a backbone?", "\U0001F426", "Yes", ["No"],
+                   "Every bird has a backbone, so a bird is a vertebrate."),
+                 q("Is an insect's skeleton on the inside or the outside?", "\U0001F41C", "the outside", ["the inside"],
+                   "An insect's hard parts are on the outside. That kind of skeleton is called an exoskeleton."),
+              ],
+              "extension": [
+                 q("A key asks 'Does it have six legs?' and you answer no. What has that one question done for you?", "\U0001F511", "cut out every six-legged animal at a stroke", ["told you exactly what the animal is", "nothing until the very last question"],
+                   "Each yes-or-no throws away a whole set of animals. That is why a key beats looking at every creature in turn."),
+                 q("A jellyfish has no bones and no shell. So how does it keep its shape?", "\U0001F30A", "the water around it holds it up", ["it has tiny hidden bones", "it has no shape at all"],
+                   "Lifted out of the sea a jellyfish collapses. If the water does the job, an animal needs no hard parts."),
+              ]},
              "You know backbones and keys.",
              mis=["1.4-m1", "1.4-m2"]),
 

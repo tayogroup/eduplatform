@@ -1693,6 +1693,78 @@
               ],
               "why": "Cut to a measurement."
             }
+          ],
+          "support": [
+            {
+              "ask": "Which measures time, a stopwatch or a ruler?",
+              "pic": "⏱️",
+              "opts": [
+                {
+                  "t": "a stopwatch",
+                  "ok": true
+                },
+                {
+                  "t": "a ruler",
+                  "ok": false
+                }
+              ],
+              "why": "A stopwatch measures time, in seconds. A ruler measures length."
+            },
+            {
+              "ask": "Is a centimetre the same size for everyone?",
+              "pic": "📏",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "A centimetre is a standard unit, so it is the same for everybody."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "A stopwatch reads to a tenth of a second. Why would a clock showing only whole minutes be no use here?",
+              "pic": "⏰",
+              "opts": [
+                {
+                  "t": "the drops last about two seconds, so minutes could not tell them apart",
+                  "ok": true
+                },
+                {
+                  "t": "a stopwatch is simply easier to hold",
+                  "ok": false
+                },
+                {
+                  "t": "a clock would actually be more accurate",
+                  "ok": false
+                }
+              ],
+              "why": "Equipment has to be fine enough to show the difference you are looking for. Minutes cannot see two seconds."
+            },
+            {
+              "ask": "You have no tape measure, only a 50 cm ruler, and the drop height is 150 cm. What is the risk in laying the ruler down three times?",
+              "pic": "📐",
+              "opts": [
+                {
+                  "t": "every join can be slightly out, and three joins add up",
+                  "ok": true
+                },
+                {
+                  "t": "no risk at all - a ruler is a ruler",
+                  "ok": false
+                },
+                {
+                  "t": "the ruler would break",
+                  "ok": false
+                }
+              ],
+              "why": "Each time you move the ruler you can be a little out, and those little errors add rather than cancel."
+            }
           ]
         }
       },
@@ -2098,6 +2170,78 @@
                 }
               ],
               "why": "One dot per measurement."
+            }
+          ],
+          "support": [
+            {
+              "ask": "Did we change the drop height in our test?",
+              "pic": "📋",
+              "opts": [
+                {
+                  "t": "No",
+                  "ok": true
+                },
+                {
+                  "t": "Yes",
+                  "ok": false
+                }
+              ],
+              "why": "The height stayed the same. Only the size of the wings changed."
+            },
+            {
+              "ask": "Is a dot plot a kind of chart?",
+              "pic": "📊",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "A dot plot is a chart, and it is the one for repeated measurements of the same thing."
+            }
+          ],
+          "extension": [
+            {
+              "ask": "Another class repeats your whole test and reaches the same answer. What does that add?",
+              "pic": "👥",
+              "opts": [
+                {
+                  "t": "it makes the conclusion much safer to trust",
+                  "ok": true
+                },
+                {
+                  "t": "nothing, you knew the answer already",
+                  "ok": false
+                },
+                {
+                  "t": "it means your own test was wrong",
+                  "ok": false
+                }
+              ],
+              "why": "One group's result is evidence. Two groups agreeing independently is far stronger evidence."
+            },
+            {
+              "ask": "Your dot plot shows three dots close together. What would three dots spread far apart have told you?",
+              "pic": "🔢",
+              "opts": [
+                {
+                  "t": "that the measuring was unreliable, so the result is not to be trusted yet",
+                  "ok": true
+                },
+                {
+                  "t": "that the spinner fell faster",
+                  "ok": false
+                },
+                {
+                  "t": "nothing at all",
+                  "ok": false
+                }
+              ],
+              "why": "A tight cluster says your measurements agree with each other. A wide spread says find out why before concluding."
             }
           ]
         }

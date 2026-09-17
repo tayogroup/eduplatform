@@ -133,7 +133,19 @@ LESSON = {
                  q("A town builds wind turbines instead of burning coal. What is good about that for the environment?", "\U0001F32C\uFE0F", "less smoke and pollution in the air", ["more rubbish in the sea", "fewer trees can grow"], "Wind turbines make electricity without burning anything."),
                  q("Cars carry people quickly from place to place. What is one bad effect on the environment?", "\U0001F697", "their fumes pollute the air", ["the roads get longer", "the cars get heavier"], "Burning fuel makes fumes. A technology can help and harm."),
                  q("A new road is built across a field near your school. Which is a bad effect?", "\U0001F6A7", "animals lose their habitat", ["people get to school faster", "the shops get more customers"], "The other two are good effects. One change can have both."),
-             ]},
+             ],
+              "support": [
+                 q("Do solar panels need the Sun?", "\u2600\uFE0F", "Yes", ["No"],
+                   "A solar panel turns sunlight into electricity, so it needs the Sun."),
+                 q("Does burning coal make smoke?", "\U0001F3ED", "Yes", ["No"],
+                   "Burning coal puts smoke and pollution into the air."),
+              ],
+              "extension": [
+                 q("A wind turbine makes no smoke, and some people still do not want one near their house. Name a reason that is not about pollution.", "\U0001F32C\uFE0F", "the noise it makes, or how it looks on the skyline", ["there is no such reason", "it would use up all the wind"],
+                   "Weighing up a technology means listing every effect, not only the one you set out to fix."),
+                 q("Solar panels make no electricity at night. What does a town have to do about that?", "\U0001F319", "get its electricity another way at night, or store some from the day", ["go without electricity after dark", "nothing - panels work in the dark too"],
+                   "Every way of making electricity has a limit, which is why places rarely rely on only one."),
+              ]},
              "Science is used near you, and it can help or harm the environment."),
 
         step("questions", "Energy check", "✅", "Energy check", ["4Pf.01", "4Pf.02", "4Pf.03", "4Pf.04"],
@@ -151,7 +163,19 @@ LESSON = {
                  q("What does every movement need?", "\U0001F3C3\U0001F3FE", "energy", ["light", "sound"], "No energy, no action."),
                  q("Could you hold a handful of energy?", "\u26A1", "No - things HAVE energy, and it is not made of stuff", ["Yes, there is some in a battery", "Yes, with the right gloves"],
                    "You cannot put energy in a jar. You see what it does - movement, heat, light, sound - and that is how you know it is there."),
-             ]},
+             ],
+              "support": [
+                 q("Does a hot cup of tea have energy?", "\u2615", "Yes", ["No"],
+                   "Anything hot has energy, and so does anything moving."),
+                 q("Does your food give you energy?", "\U0001F34E", "Yes", ["No"],
+                   "The energy to run or kick a ball comes from what you eat."),
+              ],
+              "extension": [
+                 q("Two identical balls are dropped from the same height, one onto carpet and one onto tiles. Which bounces higher?", "\U0001F3C0", "the one on tiles - the carpet takes more of the energy as it squashes", ["the one on carpet", "both exactly the same"],
+                   "A soft surface takes a bigger share of the movement energy, so there is less left to bounce with."),
+                 q("A ball is held still, high above the floor. Does it have any energy before you let go?", "\U0001FA80", "yes - stored energy, simply because of how high it is", ["no, because it is not moving", "only once it hits the floor"],
+                   "Height is a store. Letting go turns that store into movement, which is why a higher drop bounces higher."),
+              ]},
              "You know where energy goes.",
              mis=["2.1-m1"]),
 

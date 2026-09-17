@@ -117,7 +117,19 @@ LESSON = {
                    "The arrow shows which way the food and its energy travel. Grass to mouse, mouse to owl."),
                  q("You wake up feeling full of energy. Did sleeping give you the energy?", "\U0001F634", "No. Sleep rests you; energy comes from food.", ["Yes, sleep gives you energy", "Yes, that is what sleep is for"],
                    "Sleep is important and it rests your body, but it gives you no energy. Energy comes from what you eat."),
-             ]},
+             ],
+              "support": [
+                 q("Does a rabbit make its own food?", "\U0001F407", "No", ["Yes"],
+                   "Only a plant can make its own food. A rabbit has to eat."),
+                 q("How many living things are in the chain pondweed, snail, frog?", "\U0001F40C", "three", ["two"],
+                   "Count the names: one plant and two animals that eat."),
+              ],
+              "extension": [
+                 q("A fox eats rabbits and also eats mice. Why is that safer than eating only one thing?", "\U0001F98A", "if the rabbits die out it can still eat mice", ["it makes no difference at all", "eating two things makes an animal weaker"],
+                   "An animal tied to one food goes hungry the moment that food fails. Two foods is two chances."),
+                 q("Where would you put a person in a food chain?", "\U0001F642", "as a consumer - a person eats plants and animals and makes no food", ["as a producer, because people grow crops", "outside every chain"],
+                   "Growing food is not the same as making it. A person still has to eat what a plant made."),
+              ]},
              "You know how a food chain works.",
              mis=["4.3-m1", "4.3-m2"]),
 

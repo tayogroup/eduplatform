@@ -159,7 +159,19 @@ LESSON = {
                    "Something always pushes back. A bicycle slows because the brakes push the wheels; a ball slows because the ground and the air push against it."),
                  q("What do grams and kilograms measure?", "\u2696\uFE0F", "mass - how much material a thing is made of", ["weight", "the pull of gravity"],
                    "Weight is the pull of gravity on a thing, and a forcemeter reads it in newtons. Grams and kilograms are mass."),
-             ]},
+             ],
+              "support": [
+                 q("Is friction a force?", "\U0001F9CA", "Yes", ["No"],
+                   "Friction is the force between two surfaces that rub."),
+                 q("Is a push a force?", "\U0001F6D2", "Yes", ["No"],
+                   "A push is a force, and so is a pull."),
+              ],
+              "extension": [
+                 q("A sledge slides easily on snow and hardly at all on grass. Which surface is doing more pushing back?", "\U0001F6F7", "the grass", ["the snow", "both exactly the same"],
+                   "More friction means more pushing back, and a shorter slide. Rough grass gives far more than smooth snow."),
+                 q("You hang a bag on a forcemeter on Earth, then on the Moon. What changes?", "\U0001F311", "the reading, because the Moon pulls more weakly", ["nothing at all", "the bag itself gets smaller"],
+                   "A forcemeter measures the PULL. Same bag, weaker pull, smaller number of newtons."),
+              ]},
              "You know your forces.",
              mis=["5.1-m1", "5.1-m2", "5.1-m3"]),
 

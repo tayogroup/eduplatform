@@ -118,7 +118,19 @@ LESSON = {
                    "Air is made of particles too, and they are far too big to fit in those gaps. In a solid the particles are touching."),
                  q("Is there water in every liquid?", "\U0001F6E2\uFE0F", "No - cooking oil and syrup have none in them", ["Yes, every liquid has water in it", "Yes, or it could not be poured"],
                    "Anything that flows and can be poured is a liquid. Some simply pour more slowly than others."),
-             ]},
+             ],
+              "support": [
+                 q("Are particles big enough to see?", "\U0001F50D", "No", ["Yes"],
+                   "Everything is made of particles far too small to see."),
+                 q("Does heating a solid make its particles move more or less?", "\U0001F525", "more", ["less"],
+                   "Heat gives particles energy, so they move more."),
+              ],
+              "extension": [
+                 q("A gas spreads out and fills a whole room. What must its particles be doing that a liquid's are not?", "\U0001F4A8", "moving fast and far apart, with big spaces between them", ["sitting perfectly still", "sliding past each other in neat rows"],
+                   "Solid, liquid and gas is one story about how far apart the particles are and how fast they move."),
+                 q("Why can you squash a gas into a smaller space, but hardly squash a liquid at all?", "\U0001F388", "a gas has big gaps between its particles and a liquid has almost none", ["liquids are heavier than gases", "you can squash both just the same"],
+                   "There is nothing in the gaps but space. A gas has plenty of it to give up; a liquid has next to none."),
+              ]},
              "You know the particle model.",
              mis=["3.1-m1", "3.2-m1"]),
 

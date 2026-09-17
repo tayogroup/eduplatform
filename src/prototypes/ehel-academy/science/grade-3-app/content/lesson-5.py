@@ -92,7 +92,19 @@ LESSON = {
                    "The stomach is one organ, higher up than most people think. Most of the room lower down is taken by the intestines."),
                  q("Is a lung just an empty bag of air?", "\u2764\uFE0F", "No. It is spongy, with blood all through it.", ["Yes, it fills and empties like a balloon", "Yes, it is hollow inside"],
                    "A lung is full of tiny spaces and packed with blood vessels. That is how oxygen gets out of the air and into your blood."),
-             ]},
+             ],
+              "support": [
+                 q("How many lungs do you have?", "\U0001FA7A", "two", ["one"],
+                   "Two lungs, one on each side of your heart."),
+                 q("Do your lungs help you breathe?", "\U0001F32C\uFE0F", "Yes", ["No"],
+                   "Lungs take the air in and let it out again."),
+              ],
+              "extension": [
+                 q("Your heart beats about a hundred thousand times a day and never takes a break. What does that tell you about heart muscle?", "\u2764\uFE0F", "it is built to work without ever resting for long", ["it is not really a muscle at all", "it rests for several hours each night"],
+                   "Your arm muscles tire in minutes. Heart muscle rests only in the tiny gap between one beat and the next."),
+                 q("Which organ could you not manage without for even a few minutes?", "\u23F1\uFE0F", "the heart, because the blood has to keep moving", ["the stomach", "the intestine"],
+                   "You can go days without food, so the stomach can wait. Blood stopping for even a few minutes cannot be waited out."),
+              ]},
              "You know your organs.",
              mis=["4.1-m1", "4.1-m2"]),
 

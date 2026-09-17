@@ -120,7 +120,19 @@ LESSON = {
                  q("\"Move the fish tank away from the sunny window.\" Which reason uses science?", "\U0001F41F", "the water would get too warm for the fish", ["the window looks better empty", "the fish get bored of the view"], "Warm water could harm the fish. A habitat has to stay right for what lives in it."),
                  q("\"Leave the woodlice under the log.\" Which reason uses science?", icon("woodlouse"), "woodlice need damp, dark places to survive", ["woodlice are too small to matter", "the log is heavy to lift"], "Woodlice are suited to damp, dark places. They dry out in the sun."),
                  q("\"A cactus is suited to the desert.\" Which evidence supports that?", "🌵", "it stores water in its thick stem and has spines", ["it is green, like most plants", "it grows slowly in a pot indoors"], "These features help it survive in the desert. That is the evidence."),
-             ]},
+             ],
+              "support": [
+                 q("Which is a science reason: 'I like frogs' or 'frogs need a pond to breed'?", "\U0001F438", "frogs need a pond to breed", ["I like frogs"],
+                   "A science reason says what a living thing needs. Liking something is a feeling, not evidence."),
+                 q("Is something you have counted or measured evidence?", "\U0001F4CA", "Yes", ["No"],
+                   "Numbers you collected yourself are evidence. An opinion is not."),
+              ],
+              "extension": [
+                 q("Someone says 'the old hedge should go, it looks untidy'. What would turn that into a science argument?", "\U0001F333", "evidence about what the hedge does - what lives in it, and what would be lost", ["saying it more firmly", "nothing, it is already science"],
+                   "An argument becomes science when there is evidence that could settle it either way."),
+                 q("The school plans to mow the wild grass strip short. What evidence would you collect BEFORE it happens?", "\U0001F52C", "count what lives in the strip now, so you can say what was lost", ["ask everyone whether they like long grass", "none - you can tell just by looking afterwards"],
+                   "Evidence gathered before a change is the only way to show afterwards what the change actually did."),
+              ]},
              "You backed up a point with science."),
 
         step("questions", "Habitat check", "✅", "Habitat check", ["4Be.01", "4Be.02"],
@@ -138,7 +150,19 @@ LESSON = {
                  q("Why would a fish not survive in a desert?", "\U0001F3DC️", "its gills need water to breathe", ["it would get too cold", "it would"], "No water, no breathing."),
                  q("Has a giraffe always had a long neck?", "\U0001F992", "No - animals change, very slowly, over a huge stretch of time", ["Yes, animals have always looked as they do now", "Yes, giraffes stretch their own necks"],
                    "A polar bear and a brown bear are close relatives and only one ended up white. Changes like that take hundreds of thousands of years."),
-             ]},
+             ],
+              "support": [
+                 q("Does a polar bear have thick fur?", "\u2744\uFE0F", "Yes", ["No"],
+                   "Thick fur over a layer of fat is what suits a polar bear to the Arctic."),
+                 q("Does a cactus grow where it is wet or where it is dry?", "\U0001F335", "where it is dry", ["where it is wet"],
+                   "A cactus is suited to the desert, and stores its own water."),
+              ],
+              "extension": [
+                 q("A seal in a zoo pool is fed and healthy. Is that pool its habitat?", "\U0001F4A7", "no - a habitat is the place it is suited to in the wild, and the pool is a copy of one", ["yes, a habitat is wherever an animal lives", "a zoo has no habitats in it"],
+                   "Copying a habitat keeps an animal alive. It is not the same as the place its features actually fit."),
+                 q("A giraffe's neck grew longer over a very long time. Did one giraffe stretch its own neck?", "\U0001F992", "no - the change happened slowly across a great many generations", ["yes, by reaching up for high leaves", "giraffes have always been exactly the same"],
+                   "Animals change over enormous stretches of time, not inside one lifetime."),
+              ]},
              "You know what suits an animal to its habitat.",
              mis=["4.4-m1"]),
 

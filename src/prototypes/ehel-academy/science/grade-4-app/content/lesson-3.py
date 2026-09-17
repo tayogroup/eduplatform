@@ -121,7 +121,19 @@ LESSON = {
                  q("What does a vaccine do?", "\U0001F489", "trains the body to fight a germ before it arrives", ["cures you once you are already ill", "makes your muscles stronger"], "It is given when you are well. It keeps you well."),
                  q("Can a puppy be vaccinated?", "\U0001F415", "yes, animals get infectious diseases too", ["no, only people can be vaccinated", "only cats, never dogs"], "Vets vaccinate animals."),
                  q("Why does moving every day help your heart?", "❤️", "the heart is a muscle, and it gets stronger with use", ["it does not help", "it makes the heart smaller"], "Use makes the heart stronger. Then it pumps more easily."),
-             ]},
+             ],
+              "support": [
+                 q("Should you take a medicine that was given to somebody else?", "\U0001F48A", "No", ["Yes"],
+                   "A medicine is measured for the person it was given to."),
+                 q("Can a person catch an illness from another person?", "\U0001F6B6", "Yes", ["No"],
+                   "Some illnesses pass from one living thing to another. Those are the infectious ones."),
+              ],
+              "extension": [
+                 q("Two people with the same illness are given different amounts of the same medicine. Why might that be right?", "\u2696\uFE0F", "the amount is measured for the size of the person", ["one of them has been given the wrong amount", "medicine amounts are always the same"],
+                   "A dose is worked out for the person taking it. That is why a grown-up reads the label rather than guessing."),
+                 q("Why do doctors test a new medicine on hundreds of people rather than on one?", "\U0001F465", "one person getting better could have happened anyway", ["so they can make more of it", "one person really is enough"],
+                   "One recovery is a story. Hundreds of them is a pattern, and a pattern is evidence you can act on."),
+              ]},
              "You know how to stay healthy."),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4Bp.01", "4Bp.02", "4Bp.04", "4SIC.03"],

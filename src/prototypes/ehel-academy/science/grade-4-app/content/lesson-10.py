@@ -112,7 +112,19 @@ LESSON = {
                  q("You want to test whether a spoon conducts. Which do you use?", "\U0001F944", "a circuit with a gap to put the spoon in", ["a magnet to see if the spoon sticks", "a ruler to measure the spoon"], "The lamp tells you."),
                  q("A wire in your cell circuit has a bare patch. Which do you cover it with?", "\U0001F50B", "plastic tape, an insulator", ["a strip of kitchen foil", "a coin pressed onto it"], "An insulator keeps the electricity in the wire. Only ever do this in a cell circuit: a damaged wire on anything that plugs into the wall is a job for a grown-up."),
                  q("You want to measure how long a wire is. Which do you use?", "\U0001F4CF", "a ruler, in centimetres", ["a cell", "a lamp"], "Length: a ruler."),
-             ]},
+             ],
+              "support": [
+                 q("Does a cell push the electricity round a circuit?", "\U0001F50B", "Yes", ["No"],
+                   "The cell is what pushes. The electricity is already in the wires waiting to be pushed."),
+                 q("Is plastic a conductor or an insulator?", "\U0001F50C", "an insulator", ["a conductor"],
+                   "Plastic does not let electricity through, which is why wires are covered in it."),
+              ],
+              "extension": [
+                 q("You want to test five materials. Why build ONE circuit with a gap rather than five separate circuits?", "\U0001F9EA", "one circuit keeps everything else the same, so only the material changes", ["five circuits would be much quicker", "it makes no difference either way"],
+                   "Choosing your equipment is part of making the test fair. Five circuits is five things that could differ."),
+                 q("Why would 'three finger-widths' not do for the wire length in your report?", "\U0001F4CF", "a finger width differs from person to person, so nobody could check your result", ["fingers are too short to measure with", "it would be perfectly fine"],
+                   "A measurement is only useful if someone else can repeat it and get the same number."),
+              ]},
              "The right equipment for the job."),
 
         step("context", "Electricians", "\U0001F9D1\U0001F3FE‍\U0001F527", "Circuit jobs", ["4SIC.04", "4Pe.04", "4Pe.02"],
@@ -150,7 +162,19 @@ LESSON = {
                    "Electricity does not have to come from the mains. A cell and a complete loop of wire are enough."),
                  q("Is the electricity in your class circuit the same as the electricity at home?", "\U0001F50C", "No - the mains push is hundreds of times bigger", ["Yes, electricity is all the same", "Yes, but the wires at home are thicker"],
                    "A cell gives a small, safe push. That is why a cell cannot hurt you and the mains can kill you."),
-             ]},
+             ],
+              "support": [
+                 q("Should a class circuit be powered from a wall socket?", "\u26A0\uFE0F", "No", ["Yes"],
+                   "Class circuits use a cell. A wall socket pushes hundreds of times harder and is not for experiments."),
+                 q("Is it safe to have water standing near an electrical circuit?", "\U0001F6B0", "No", ["Yes"],
+                   "Everyday water lets electricity through, so keep it well away."),
+              ],
+              "extension": [
+                 q("Why is a wire getting hot a warning sign rather than a sign the circuit is working well?", "\U0001F525", "heat means energy is leaking where it should not, and it can start a fire", ["a hot wire means plenty of electricity is flowing", "wires are meant to get hot"],
+                   "The circuit's job is to light the lamp. Anything warming up on the way is energy going somewhere useless."),
+                 q("Perfectly pure water is an insulator. So why are wet hands dangerous near electricity?", "\U0001F9E4", "the water on your hands is not pure, and what is dissolved in it conducts", ["then wet hands are not dangerous after all", "pure water is the dangerous kind"],
+                   "Nothing you meet day to day is pure water. It is what is dissolved in it that lets electricity through."),
+              ]},
              "You know the risks, and how to stay safe with electricity.",
              mis=["6.1-m2", "6.3-m1"]),
 
@@ -171,7 +195,19 @@ LESSON = {
                    "The electricity is inside the copper wire all along. What the cell gives it is the push."),
                  q("Why must the wire run all the way back to the cell?", "\U0001F501", "so there is a complete loop for the cell to push round", ["so the lamp does not get too bright", "so the electricity has somewhere to rest"],
                    "The path has to go from one end of the cell to the other. Stop it at the lamp and nothing moves at all."),
-             ]},
+             ],
+              "support": [
+                 q("Does a circuit have to be a complete loop?", "\U0001F501", "Yes", ["No"],
+                   "The loop must run all the way round and back to the cell."),
+                 q("Is a steel key a conductor?", "\U0001F511", "Yes", ["No"],
+                   "Steel is a metal, and metals let electricity through."),
+              ],
+              "extension": [
+                 q("One lamp on a cell is bright; two lamps on the same cell are both dim. What is the cell doing differently?", "\U0001F4A1", "nothing different - the same push is now shared between two lamps", ["working harder for two lamps", "sending out half as much electricity"],
+                   "The cell's push is fixed. Add another lamp and each one gets a smaller share of it."),
+                 q("A switch is turned off. Is the electricity still in the wires?", "\U0001F518", "yes - the switch opens the loop, it does not empty the wires", ["no, it drains away out of the wires", "no, the cell takes it back in"],
+                   "The electricity is in the circuit all along and the cell pushes it round. A switch only breaks the loop."),
+              ]},
              "You know your circuits.",
              mis=["6.1-m1", "6.1-m3"]),
 

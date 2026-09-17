@@ -68,7 +68,19 @@ LESSON = {
                  q("To make sure every drop is from the same height, use...", "\U0001F4CF", "a tape measure, in centimetres", ["a stopwatch, in seconds", "a hand lens, to look closely"], "Length: a tape measure."),
                  q("Why use seconds and centimetres rather than counting or hand spans?", "\U0001F4CF", "they are the same for everyone, so results can be compared", ["they sound more scientific", "they give bigger numbers"], "Standard units."),
                  q("To make the two spinners' wings exactly the sizes you planned, use...", "✂️", "a ruler and scissors", ["a stopwatch", "a magnet"], "Cut to a measurement."),
-             ]},
+             ],
+              "support": [
+                 q("Which measures time, a stopwatch or a ruler?", "\u23F1\uFE0F", "a stopwatch", ["a ruler"],
+                   "A stopwatch measures time, in seconds. A ruler measures length."),
+                 q("Is a centimetre the same size for everyone?", "\U0001F4CF", "Yes", ["No"],
+                   "A centimetre is a standard unit, so it is the same for everybody."),
+              ],
+              "extension": [
+                 q("A stopwatch reads to a tenth of a second. Why would a clock showing only whole minutes be no use here?", "\u23F0", "the drops last about two seconds, so minutes could not tell them apart", ["a stopwatch is simply easier to hold", "a clock would actually be more accurate"],
+                   "Equipment has to be fine enough to show the difference you are looking for. Minutes cannot see two seconds."),
+                 q("You have no tape measure, only a 50 cm ruler, and the drop height is 150 cm. What is the risk in laying the ruler down three times?", "\U0001F4D0", "every join can be slightly out, and three joins add up", ["no risk at all - a ruler is a ruler", "the ruler would break"],
+                   "Each time you move the ruler you can be a little out, and those little errors add rather than cancel."),
+              ]},
              "A stopwatch in seconds, a tape measure in centimetres."),
 
         step("experiment", "Drop them three times each", "⏱️", "Three drops each", ["4TWSc.04", "4TWSp.03", "4TWSa.01", "4TWSa.03"],
@@ -154,7 +166,19 @@ LESSON = {
                  q("Why drop each spinner three times?", "\U0001F522", "repeats show which numbers to trust", ["to use up the paper", "one drop is not allowed"], "Reliable data."),
                  q("Why time it in seconds?", "⏱️", "a standard unit everyone can compare", ["seconds are fast", "it is easier to say"], "Standard units."),
                  q("Which chart shows repeated measurements of the same thing?", "\U0001F4CA", "a dot plot", ["a map", "a pie"], "One dot per measurement."),
-             ]},
+             ],
+              "support": [
+                 q("Did we change the drop height in our test?", "\U0001F4CB", "No", ["Yes"],
+                   "The height stayed the same. Only the size of the wings changed."),
+                 q("Is a dot plot a kind of chart?", "\U0001F4CA", "Yes", ["No"],
+                   "A dot plot is a chart, and it is the one for repeated measurements of the same thing."),
+              ],
+              "extension": [
+                 q("Another class repeats your whole test and reaches the same answer. What does that add?", "\U0001F465", "it makes the conclusion much safer to trust", ["nothing, you knew the answer already", "it means your own test was wrong"],
+                   "One group's result is evidence. Two groups agreeing independently is far stronger evidence."),
+                 q("Your dot plot shows three dots close together. What would three dots spread far apart have told you?", "\U0001F522", "that the measuring was unreliable, so the result is not to be trusted yet", ["that the spinner fell faster", "nothing at all"],
+                   "A tight cluster says your measurements agree with each other. A wide spread says find out why before concluding."),
+              ]},
              "You know how to run a fair test."),
 
         step("quiz", "Show what you know", "⭐", "Star scientist", ["4TWSp.02", "4TWSp.04", "4TWSc.04", "4TWSa.04", "4TWSa.03"],

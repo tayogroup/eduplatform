@@ -141,7 +141,19 @@ LESSON = {
                  q("Why can you see nothing in a totally dark room?", "\U0001F311", "no light reaches your eye", ["your eyes are closed", "the room is too big"], "No light in, no seeing."),
                  q("Can you see your face in still, clear water?", "\U0001F4A7", "Yes - light reflects off far more things than mirrors", ["No, only a mirror reflects light", "No, because water is see-through"],
                    "A window, a polished spoon and still water all reflect light. A mirror is simply the best at it."),
-             ]},
+             ],
+              "support": [
+                 q("Is the Sun a light source?", "\u2600\uFE0F", "Yes", ["No"],
+                   "The Sun makes its own light, so it is a light source."),
+                 q("Can light bend round a corner by itself?", "\U0001F4D0", "No", ["Yes"],
+                   "Light travels in straight lines, which is why you cannot see round a corner."),
+              ],
+              "extension": [
+                 q("You hold a mirror to see round a corner, and light still travels only in straight lines. How does that work?", "\U0001FA9E", "a straight line to the mirror, then a new straight line to your eye", ["the mirror bends the light round the corner", "the mirror makes light of its own"],
+                   "A reflection is two straight lines with a turn at the mirror. Light never curves."),
+                 q("A torch looks bright close up and dim from across the playground. Is it making less light?", "\U0001F56F\uFE0F", "no - the same light is spread over a far bigger area by the time it reaches you", ["yes, a torch makes less light further away", "the air uses the light up on the way"],
+                   "The torch has not changed at all. What has changed is how much of its light lands in your eye."),
+              ]},
              "You know how light travels and how you see.",
              mis=["5.3-m1", "5.1-m1"]),
 

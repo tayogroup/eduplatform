@@ -119,7 +119,19 @@ LESSON = {
                    "Your bones are far bigger than they were when you were a baby, so they have grown - and growing is a life process."),
                  q("Layla says a skeleton is only there to hold you up. Is she right?", "\U0001F480", "Only partly - it also protects you, and it lets you move", ["Yes, holding you up is all it does", "No, protecting you is its only job"],
                    "Three jobs, not one: support, protection - the skull round your brain, the ribs round your heart - and movement, because muscles pull on bones."),
-             ]},
+             ],
+              "support": [
+                 q("Do you have more than one rib?", "\U0001F9B4", "Yes", ["No"],
+                   "The rib cage is built from many ribs, in pairs down your chest."),
+                 q("Is a muscle soft or hard?", "\U0001F4AA", "soft", ["hard"],
+                   "Muscle is the soft part. Bone is the hard part underneath it."),
+              ],
+              "extension": [
+                 q("A baby is born with about 300 bones and you have about 206. Where did the others go?", "\U0001F476", "some of them joined together as the skeleton grew", ["babies lose bones as they crawl", "the count was simply wrong"],
+                   "Bones are living. Some start as separate pieces and fuse into one as a child grows."),
+                 q("Your skull is one hard case with no joint in it. Why is that right for the brain and wrong for your arm?", "\U0001F9E0", "a joint is for bending, and the brain needs a box rather than movement", ["the skull should have a joint too", "the arm should be a box as well"],
+                   "Where a part must move you need a joint. Where a part must be protected you want no gap at all."),
+              ]},
              "You know your bones and muscles.",
              mis=["1.1-m1", "1.2-m1"]),
 

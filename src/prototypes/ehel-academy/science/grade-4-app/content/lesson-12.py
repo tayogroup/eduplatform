@@ -123,7 +123,19 @@ LESSON = {
                  q("A ball of ice that grows a tail near the Sun is...", "✨", "a comet", ["an asteroid", "a planet"], "Ice and dust."),
                  q("Does the Earth make its own light?", "\U0001F30E", "No - it only reflects the light of the Sun", ["Yes, that is why it glows when seen from space", "Yes, its hot core makes the light"],
                    "A photograph from space shows HALF the Earth lit and half of it dark. If it made its own light, all of it would glow."),
-             ]},
+             ],
+              "support": [
+                 q("Does the Moon go round the Earth or round the Sun?", "\U0001F319", "round the Earth", ["round the Sun"],
+                   "The Moon circles the Earth, while the Earth circles the Sun."),
+                 q("Is the Earth a planet?", "\U0001F30E", "Yes", ["No"],
+                   "The Earth is the third planet out from the Sun."),
+              ],
+              "extension": [
+                 q("Mercury is nearest the Sun and Jupiter is far out. Which takes longer to go round the Sun once?", "\U0001FA90", "Jupiter, because its circle round the Sun is far bigger", ["Mercury, because it is smaller", "they take exactly the same time"],
+                   "A bigger circle is a longer journey. Mercury goes round in 88 days; Jupiter takes almost twelve years."),
+                 q("A book draws the planets close together in a row. What does the football model get right that the book does not?", "\U0001F52D", "the enormous distances, compared with how small the planets are", ["the colours of the planets", "how fast each planet travels"],
+                   "A page is far too small for the real distances, so almost every picture squeezes them. Stepping out 25 metres does not."),
+              ]},
              "You know your Solar System.",
              mis=["5.4-m1"]),
 

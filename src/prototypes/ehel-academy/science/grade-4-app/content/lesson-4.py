@@ -117,7 +117,19 @@ LESSON = {
                  q("Why do you need to eat?", "\U0001F37D️", "for the energy to grow, move and stay healthy", ["to keep your teeth busy all day", "you do not need to eat at all"], "Food is your energy."),
                  q("In grass \u2192 zebra \u2192 lion, what is the arrow really showing?", "\u27A1\uFE0F", "which way the energy travels", ["which animal is the bigger of the two", "which animal came first"],
                    "Living things eat in order to GET energy, so the arrow follows the energy: from the thing eaten to the eater."),
-             ]},
+             ],
+              "support": [
+                 q("Where does a cow get its energy?", "\U0001F404", "from the plants it eats", ["straight from the Sun"],
+                   "A cow is a herbivore. The plants caught the Sun's energy first, and the cow eats the plants."),
+                 q("Does a fox hunt other animals?", "\u26A1", "Yes", ["No"],
+                   "A fox hunts, so it is a predator. The animals it hunts are its prey."),
+              ],
+              "extension": [
+                 q("Why is there far more grass in a field than there are foxes?", "\U0001F33E", "energy is lost at every step, so each level up can feed fewer", ["foxes hardly eat anything", "grass grows faster than foxes can run"],
+                   "Only a little of the energy at one step reaches the next. A chain therefore narrows sharply towards the top."),
+                 q("The rabbits eat the grass and the grass grows back. Why does that matter to the fox?", "\U0001F331", "the chain keeps running, because the plant renews itself from light", ["it does not matter to the fox at all", "it means the fox can eat grass too"],
+                   "A food chain only keeps going because the producer at the bottom keeps making new food out of sunlight."),
+              ]},
              "You know where energy for life comes from.",
              mis=["2.4-m1"]),
 

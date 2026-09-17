@@ -115,7 +115,19 @@ LESSON = {
                  q("A snake's dry scales make it a...", "\U0001F40D", "reptile", ["fish", "amphibian"], "Dry, scaly skin."),
                  q("Is a spider an insect?", "\U0001F577\uFE0F", "No. Count the legs: a spider has eight.", ["Yes, it is small with lots of legs", "Yes, all small crawling animals are insects"],
                    "An insect has six legs and three body parts. A spider has eight legs, and its group is called the arachnids."),
-             ]},
+             ],
+              "support": [
+                 q("Does a bird have feathers?", "\U0001F426", "Yes", ["No"],
+                   "Feathers are what make an animal a bird."),
+                 q("Is a snake a reptile?", "\U0001F40D", "Yes", ["No"],
+                   "Dry scales and eggs laid on land make a snake a reptile."),
+              ],
+              "extension": [
+                 q("Why is 'lives in water' a poor way to sort animals into groups?", "\U0001F30A", "animals from several different groups live in water", ["no animals really live in water", "it is the best way there is"],
+                   "Fish, amphibians, mammals and reptiles all have members living in water. Features sort animals; where they live does not."),
+                 q("A new animal is found with a beak, feathers and no teeth. What can you say straight away?", "\U0001F423", "it is a bird, and it will lay eggs", ["it is a reptile, because it has no teeth", "nothing at all until you see it move"],
+                   "That is exactly what a group is for. Three features, and you already know a great deal about an animal nobody has studied."),
+              ]},
              "You can put animals in their groups.",
              mis=["4.2-m2"]),
 

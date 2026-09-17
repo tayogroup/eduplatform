@@ -131,7 +131,19 @@ LESSON = {
                    "The air is as much part of the planet as the rock is. Gravity holds it in place."),
                  q("How long ago did the animal in a fossil live?", "\U0001F995", "millions of years ago", ["a few years ago", "about a hundred years ago"],
                    "The animals in fossils are nothing like the ones alive now, and they were buried for a very long time."),
-             ]},
+             ],
+              "support": [
+                 q("Do we dig metal out of the ground?", "\u26CF\uFE0F", "Yes", ["No"],
+                   "Metal is dug out of the ground inside rocks, and then separated from them."),
+                 q("Is a fossil found in rock?", "\U0001F41A", "Yes", ["No"],
+                   "A fossil is a shape left in rock."),
+              ],
+              "extension": [
+                 q("Coal burns and gives heat. Where did that energy come from originally?", "\U0001F332", "sunlight caught by plants that lived long ago", ["the heat of the rock underground", "the mining machinery that dug it out"],
+                   "Coal is the squashed remains of ancient forests. Burning it lets go of sunlight those plants caught long ago."),
+                 q("Oil took millions of years to form underground. Why can we not simply make more of it?", "\U0001F6E2\uFE0F", "nothing can make it in a human lifetime - it took millions of years", ["we can, in a factory", "there is an endless amount down there"],
+                   "Some of what the Earth gives us is replaced far more slowly than we use it. That is why people look for other ways."),
+              ]},
              "You know where things come from.",
              mis=["2.5-m1", "2.5-m2", "4.4-m1"]),
 

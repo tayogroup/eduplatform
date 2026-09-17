@@ -135,7 +135,19 @@ LESSON = {
                    "The Hawaiian volcanoes pour out lava so runny that it flows away flat and wide. The shape depends on the lava."),
                  q("How does a tsunami start?", "\U0001F30A", "an earthquake or an eruption under the sea", ["a very strong wind", "the tide going out too far"],
                    "The sea floor jolts, and that push sends a huge wave across the ocean. A tsunami is caused BY an earthquake, not separate from one."),
-             ]},
+             ],
+              "support": [
+                 q("Is the Earth's core hot or cold?", "\U0001F321\uFE0F", "hot", ["cold"],
+                   "The core is the hottest part of the Earth, and mostly metal."),
+                 q("Do we live on the inside or the outside of the Earth?", "\U0001F30D", "the outside", ["the inside"],
+                   "We live on the crust, the thin layer on the outside."),
+              ],
+              "extension": [
+                 q("The plates move about as fast as your fingernails grow. How can anything that slow build a mountain?", "\u26F0\uFE0F", "it has been going on for millions of years", ["it cannot - mountains rise in a day", "the plates speed up from time to time"],
+                   "A tiny movement does enormous work if you give it long enough. Geology is mostly a story about time."),
+                 q("An earthquake happens with no volcano anywhere near. Is that possible?", "\U0001F30B", "yes - an earthquake needs a break in the crust, not melted rock", ["no, every earthquake comes from a volcano", "only under the sea"],
+                   "They share a cause, breaks in the crust, and neither one needs the other to be there."),
+              ]},
              "You know what is under your feet.",
              mis=["4.2-m1", "4.3-m1"]),
 

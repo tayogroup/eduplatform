@@ -131,7 +131,19 @@ LESSON = {
                    "Look at one grain through a magnifying glass and it keeps its own shape. A heap of solids can pour, and every piece is still a solid."),
                  q("Is all gas dangerous?", "\U0001F4A8", "No. Oxygen is a gas, and you are breathing it now.", ["Yes, every gas is dangerous", "Yes, unless you cannot smell it"],
                    "'Gas' names the one that burns in a cooker AND the oxygen that keeps you alive. Some gases are dangerous and some are not."),
-             ]},
+             ],
+              "support": [
+                 q("Is air a gas?", "\U0001F388", "Yes", ["No"],
+                   "Air is a gas, and it spreads out to fill whatever it is in."),
+                 q("Which is a solid, water or ice?", "\U0001F9CA", "ice", ["water"],
+                   "Ice keeps its own shape, so it is a solid."),
+              ],
+              "extension": [
+                 q("You read a measuring jug by looking down into it from above. Why is that the wrong way?", "\U0001F441\uFE0F", "a scale has to be read at eye level, or the number looks bigger or smaller than it is", ["the jug has to be empty first", "you should read it from underneath"],
+                   "Choosing the right equipment is only half of it. A jug read from the wrong angle gives a wrong number every time."),
+                 q("You need to measure exactly 50 millilitres of water. Why will a drinking cup not do?", "\U0001F964", "a cup has no marks on it, so you could only guess", ["a cup is always too small", "water cannot be poured into a cup"],
+                   "Choosing equipment means choosing something that MEASURES. A container with no scale tells you nothing."),
+              ]},
              "The right tool for the measurement, and a standard unit to measure in.",
              mis=["2.1-m1", "2.1-m2"]),
 

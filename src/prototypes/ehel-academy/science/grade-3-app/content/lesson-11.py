@@ -146,7 +146,19 @@ LESSON = {
                    "Bring a labelled bar magnet up to a round one and you can find its north end and its south end."),
                  q("Are all metals magnetic?", "\U0001F9F2", "No. Only a few, like iron and steel.", ["Yes, all metals are magnetic", "Yes, if they are shiny"],
                    "Test an aluminium can, a copper coin and a gold ring: the magnet ignores all three."),
-             ]},
+             ],
+              "support": [
+                 q("Is steel magnetic?", "\U0001F9F2", "Yes", ["No"],
+                   "Steel is magnetic, which is why a scrapyard magnet can lift a car."),
+                 q("Does a magnet have to touch a paperclip to pull it?", "\U0001F4CE", "No", ["Yes"],
+                   "A magnet pulls across a small gap, without touching at all."),
+              ],
+              "extension": [
+                 q("Two magnets lie on a table with north facing north, and you let go. Which one moves?", "\U0001F4A5", "both - each one pushes the other away", ["only the stronger one", "neither, they stay where they are"],
+                   "A push between two magnets acts on both of them, not just on the one you happened to let go of."),
+                 q("You test four objects with a magnet and it picks up two. What have you found out about the other two?", "\U0001F50D", "only that they are not iron or steel, and nothing else", ["that they must all be plastic", "that they are lighter than the first two"],
+                   "A magnet answers one question and no others. Two things can both be non-magnetic and have nothing else in common."),
+              ]},
              "You know your magnets.",
              mis=["5.4-m1", "5.5-m1"]),
 

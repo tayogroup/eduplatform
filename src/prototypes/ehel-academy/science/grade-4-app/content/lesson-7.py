@@ -137,7 +137,19 @@ LESSON = {
                  q("Which of these cannot be undone?", "↩️", "baking a cake", ["melting chocolate", "freezing water"], "New substances were made."),
                  q("You melt a square of chocolate. Is it still chocolate?", "\U0001F36B", "Yes - melting changes the form, not the substance", ["No, heating always makes a new substance", "No, it is a different material now"],
                    "It still tastes of chocolate, and it sets back into chocolate as it cools."),
-             ]},
+             ],
+              "support": [
+                 q("Can you freeze water and then melt it again?", "\U0001F9CA", "Yes", ["No"],
+                   "Freezing and melting make nothing new, so they go both ways."),
+                 q("Does toast turn back into bread as it cools?", "\u2697\uFE0F", "No", ["Yes"],
+                   "Toasting made new substances. Letting it cool changes none of them back."),
+              ],
+              "extension": [
+                 q("Iron rusts in damp air and hardly at all in dry air. What does that tell you the reaction needs?", "\U0001F529", "water, as well as the iron and the air", ["only the air", "nothing - rust simply appears in time"],
+                   "A reaction needs every one of its ingredients. Take one away and it does not happen."),
+                 q("Vinegar and bicarbonate react straight away at room temperature, with no heating at all. What does that show?", "\U0001F9C2", "a chemical reaction does not have to be started by heat", ["they must have been warmed without you noticing", "every reaction needs heat, so this is not one"],
+                   "Heat speeds many reactions up and is needed by some. Plenty of others, like this one, happen cold."),
+              ]},
              "You know changes and reactions.",
              mis=["3.3-m1", "3.4-m1"]),
 

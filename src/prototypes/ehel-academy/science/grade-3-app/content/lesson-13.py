@@ -121,7 +121,19 @@ LESSON = {
                    "Look for a pale Moon in a blue sky. It is there far more often than people notice."),
                  q("The Moon looks like a thin crescent tonight. Has it changed shape?", "\U0001F311", "No. It is always a ball; we see only the lit part.", ["Yes, the Moon changes shape each week", "Yes, the Earth's shadow cuts it"],
                    "How much of the lit half faces us changes. In a daytime crescent you can often make out the dark part too."),
-             ]},
+             ],
+              "support": [
+                 q("Is the Moon nearer to us than the Sun?", "\U0001F319", "Yes", ["No"],
+                   "The Moon is far closer. The Sun only looks that size because it is enormous and very far away."),
+                 q("Is the Earth a sphere?", "\u26AA", "Yes", ["No"],
+                   "The Earth, the Sun and the Moon are all spheres."),
+              ],
+              "extension": [
+                 q("You look for the Moon at the same clock time each night for a week. Is it in the same place?", "\U0001F30C", "no - it has moved along its circle, so it is somewhere different", ["yes, exactly the same place every night", "it never moves at all"],
+                   "The Moon is travelling round us all the while. Where it sits at eight o'clock tonight is not where it sat last night."),
+                 q("Astronauts left footprints on the Moon fifty years ago and they are still there. Why?", "\U0001F45F", "there is no wind or rain on the Moon to wear them away", ["the dust there is unusually sticky", "somebody looks after them"],
+                   "Footprints on Earth are washed and blown away. The Moon has no air and no weather, so nothing disturbs them."),
+              ]},
              "You know your Moon.",
              mis=["6.1-m1", "6.1-m2", "6.2-m1", "6.3-m1"]),
 

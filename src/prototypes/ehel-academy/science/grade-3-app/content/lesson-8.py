@@ -142,7 +142,19 @@ LESSON = {
                    "A filter catches pieces you can see. Dissolved salt goes straight through - but let the water dry and the salt is left behind."),
                  q("The water in the glass looks perfectly clear. Is it safe to drink?", "\U0001F6B0", "Not necessarily. Some things in water are too small to see.", ["Yes, clear water is always safe", "Yes, if it has no smell"],
                    "Tiny living things can live in water that looks clean, and some make people ill. Only drink water a grown-up says is safe."),
-             ]},
+             ],
+              "support": [
+                 q("Is sand and water a mixture?", "\U0001F3D6\uFE0F", "Yes", ["No"],
+                   "Two materials together that you can separate again."),
+                 q("Does a magnet pick up iron?", "\U0001F9F2", "Yes", ["No"],
+                   "Iron is magnetic, which is how you can pull it out of sand."),
+              ],
+              "extension": [
+                 q("Salt and sugar are both stirred into the same water and both disappear. Can a filter or a magnet separate them?", "\U0001F9C2", "neither one - both are dissolved, so both go wherever the water goes", ["yes, a filter takes the salt out", "yes, a magnet takes the sugar out"],
+                   "Separating needs a difference you can use. Two dissolved solids in one glass of water beat every tool on the tray."),
+                 q("Flour will not go through a sieve that rice passes through easily. Why not?", "\U0001F35A", "the sieve is chosen for the size you want to keep back", ["flour is heavier than rice", "flour dissolves in the air"],
+                   "A sieve separates by size, so the holes have to suit the job. Different holes, different separation."),
+              ]},
              "You know your mixtures.",
              mis=["2.2-m1", "2.3-m1", "2.4-m1", "2.4-m2"]),
 

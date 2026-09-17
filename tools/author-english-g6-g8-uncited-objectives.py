@@ -92,8 +92,13 @@ CLOSURES = {
     "6SLg.04": (A, 6, 3,
                 "Bring quieter voices into a discussion on purpose.",
                 "Speaking 7: Make Room for Another Voice",
+                # NO BLANKS IN A LINE THE LEARNER SAYS ALOUD. These were written
+                # with "___" for a name, and narration() correctly read that as a
+                # gap to fill: the emitted script opened "Fill in the blank: What
+                # do you think, ...?" for an invitation a child is meant to speak.
+                # The transform is right; the source was wrong.
                 "In this unit’s wildlife discussion, give yourself one extra job: bring somebody else "
-                "in. Use three invitations — “What do you think, ___?”, “We have not heard from ___ "
+                "in. Use three invitations — “What do you think?”, “We have not heard from you "
                 "yet”, “Can you add to that?” — and count how many times you use them. Afterwards say "
                 "who spoke most, who spoke least, and whether your invitations changed that.",
                 "Accept an honest count and a named effect. Chairing is a skill, not a personality."),
@@ -133,8 +138,13 @@ CLOSURES = {
     "6Ww.04": (A, 6, 6,
                "Spell homophones and commonly confused words correctly in your own writing.",
                "Activities 7: The Pairs That Catch People Out",
-               "Learn these four pairs: aloud / allowed, past / passed, advice / advise, desert / "
-               "dessert. For each pair write one sentence that uses BOTH words correctly, so the "
+               # "and", never "/". The slash rule reads a list of three or more
+               # alternatives as a comma list, so "aloud / allowed, past / passed"
+               # was narrated "aloud, allowed, past, passed" - eight words in a row
+               # with nothing to say which pairs with which, which is the whole
+               # activity. Heard aloud, "and" is what keeps a pair a pair.
+               "Learn these four pairs: aloud and allowed, past and passed, advice and advise, "
+               "desert and dessert. For each pair write one sentence that uses BOTH words correctly, so the "
                "difference is visible in the sentence itself. Then look back at your own writing from "
                "this unit and check every one you used.",
                "aloud = out loud, allowed = permitted; past = time gone, passed = the verb; advice = "

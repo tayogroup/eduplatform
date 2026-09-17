@@ -2089,6 +2089,36 @@
                 }
               ],
               "why": "No light, no shadow. A shadow is where light was blocked."
+            },
+            {
+              "ask": "Can you see a clear picture through frosted glass?",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"9\" y=\"7\" width=\"46\" height=\"48\" rx=\"3\" fill=\"#7A5A3A\"/><rect x=\"13\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"13\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><path d=\"M16 26 L26 14 M36 26 L44 16 M16 47 L24 37\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\".85\"/><rect x=\"5\" y=\"54\" width=\"54\" height=\"5\" rx=\"2\" fill=\"#5E432A\"/></svg>",
+              "opts": [
+                {
+                  "t": "No",
+                  "ok": true
+                },
+                {
+                  "t": "Yes",
+                  "ok": false
+                }
+              ],
+              "why": "Light gets through, but all scrambled. That is what translucent means."
+            },
+            {
+              "ask": "Does a shadow have any colour?",
+              "pic": "🌑",
+              "opts": [
+                {
+                  "t": "No",
+                  "ok": true
+                },
+                {
+                  "t": "Yes",
+                  "ok": false
+                }
+              ],
+              "why": "A shadow is just a dark shape. It carries no colour and no detail."
             }
           ],
           "extension": [
@@ -2129,6 +2159,44 @@
                 }
               ],
               "why": "Light changes direction when it crosses from one clear material into another, and that can make things look larger."
+            },
+            {
+              "ask": "A tree's shadow falls right across a garden in the evening and is short at midday. What is changing?",
+              "pic": "🌳",
+              "opts": [
+                {
+                  "t": "how high the Sun is in the sky",
+                  "ok": true
+                },
+                {
+                  "t": "how tall the tree is",
+                  "ok": false
+                },
+                {
+                  "t": "how dark the garden is",
+                  "ok": false
+                }
+              ],
+              "why": "The tree does not change. A low Sun throws a long shadow and a high one throws a short one."
+            },
+            {
+              "ask": "Why can you read through a clean glass window but not through tracing paper?",
+              "pic": "<svg class=\"ico\" viewBox=\"0 0 64 64\" width=\"1em\" height=\"1em\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align:-0.125em\"><rect x=\"9\" y=\"7\" width=\"46\" height=\"48\" rx=\"3\" fill=\"#7A5A3A\"/><rect x=\"13\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"11\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"13\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><rect x=\"33\" y=\"32\" width=\"18\" height=\"19\" fill=\"#BFE3F5\"/><path d=\"M16 26 L26 14 M36 26 L44 16 M16 47 L24 37\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\".85\"/><rect x=\"5\" y=\"54\" width=\"54\" height=\"5\" rx=\"2\" fill=\"#5E432A\"/></svg>",
+              "opts": [
+                {
+                  "t": "glass lets light through in straight lines and tracing paper scatters it",
+                  "ok": true
+                },
+                {
+                  "t": "tracing paper blocks all the light",
+                  "ok": false
+                },
+                {
+                  "t": "glass is thinner",
+                  "ok": false
+                }
+              ],
+              "why": "Translucent means the light gets through but arrives all mixed up, so no clear picture forms."
             }
           ]
         },
@@ -2796,6 +2864,36 @@
                 }
               ],
               "why": "The object blocks the light, so the shadow is on the far side."
+            },
+            {
+              "ask": "Is tracing paper transparent, translucent or opaque?",
+              "pic": "📄",
+              "opts": [
+                {
+                  "t": "translucent",
+                  "ok": true
+                },
+                {
+                  "t": "transparent",
+                  "ok": false
+                }
+              ],
+              "why": "Light gets through, but you cannot see a clear picture."
+            },
+            {
+              "ask": "Do you need a light to see anything at all?",
+              "pic": "💡",
+              "opts": [
+                {
+                  "t": "Yes",
+                  "ok": true
+                },
+                {
+                  "t": "No",
+                  "ok": false
+                }
+              ],
+              "why": "With no light reaching your eyes there is nothing to see."
             }
           ],
           "extension": [
@@ -2836,6 +2934,44 @@
                 }
               ],
               "why": "Translucent is a third answer between transparent and opaque: the light gets through but its picture is broken up."
+            },
+            {
+              "ask": "You are in a dark room and somebody strikes a match across it. Trace what happened for you to see it.",
+              "pic": "🕯️",
+              "opts": [
+                {
+                  "t": "light left the match, travelled in a straight line, and went into your eye",
+                  "ok": true
+                },
+                {
+                  "t": "your eyes sent out a beam and found the match",
+                  "ok": false
+                },
+                {
+                  "t": "the darkness moved aside",
+                  "ok": false
+                }
+              ],
+              "why": "Seeing is always light arriving at your eye, never anything leaving it."
+            },
+            {
+              "ask": "A shadow puppet is made bigger by moving it towards the lamp. Why does that work?",
+              "pic": "🎭",
+              "opts": [
+                {
+                  "t": "closer to the light, it blocks a wider spread of the beam",
+                  "ok": true
+                },
+                {
+                  "t": "it grows as it warms up",
+                  "ok": false
+                },
+                {
+                  "t": "it should get smaller, not bigger",
+                  "ok": false
+                }
+              ],
+              "why": "The nearer the object is to the source, the more of the light it stands in the way of."
             }
           ]
         },

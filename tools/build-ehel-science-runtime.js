@@ -182,7 +182,7 @@ const CAMBRIDGE_OBJECTIVES = {
   //
   // The other 29 claims were audited the same way and every one is evidenced by
   // real content.
-  "5-1": ["5Bp.02", "5Bp.04", "5TWSp.01", "5TWSp.03", "5TWSp.04", "5TWSc.04",
+  "5-1": ["5Bs.01", "5Bp.02", "5Bp.04", "5TWSp.01", "5TWSp.03", "5TWSp.04", "5TWSc.04",
           "5TWSa.01", "5TWSa.03", "5TWSm.02"],
   // 5Be.02 is claimed on substance rather than wording: the unit teaches bright
   // petals and scent drawing pollinators in, and four dispersal mechanisms, which
@@ -190,14 +190,14 @@ const CAMBRIDGE_OBJECTIVES = {
   // Worth knowing that the word `adapt` appears NOWHERE in Grade 5 — so the
   // learner meets the mechanism and never the concept's name. 5Be.01 and 5Be.03
   // are not claimed for that same reason plus no content at all.
-  "5-2": ["5Bs.02", "5Bs.03", "5Bp.02", "5Bp.03", "5Be.02", "5TWSp.03", "5TWSc.02",
-          "5TWSc.03", "5TWSc.06", "5TWSm.02", "5SIC.04"],
+  "5-2": ["5Bs.02", "5Bs.03", "5Bp.02", "5Bp.03", "5Be.01", "5Be.02", "5TWSp.03",
+          "5TWSc.02", "5TWSc.03", "5TWSc.06", "5TWSm.02", "5SIC.04"],
   // 5Cp.02 is claimed on three of its four clauses — melting point, freezing at
   // 0 degrees and water's ability to dissolve a range of substances are all
   // taught; "expands when it solidifies" is not.
-  "5-3": ["5Cm.01", "5Cp.01", "5Cp.02", "5Cc.01", "5Cc.02", "5Cc.03", "5ESc.01",
-          "5ESp.02", "5TWSp.03", "5TWSp.04", "5TWSc.05", "5TWSc.08", "5TWSa.02",
-          "5TWSa.05", "5TWSm.01", "5TWSm.02"],
+  "5-3": ["5Cm.01", "5Cm.02", "5Cp.01", "5Cp.02", "5Cc.01", "5Cc.02", "5Cc.03",
+          "5ESc.01", "5ESp.01", "5ESp.02", "5ESp.03", "5TWSp.03", "5TWSp.04",
+          "5TWSc.05", "5TWSc.08", "5TWSa.02", "5TWSa.05", "5TWSm.01", "5TWSm.02"],
   "5-4": ["5TWSp.02", "5TWSp.03", "5TWSc.01", "5TWSa.04", "5TWSm.02"],
   "5-5": ["5TWSp.03", "5TWSp.05", "5TWSm.02", "5SIC.02"],
   "5-6": ["5ESs.01", "5ESs.02", "5ESs.03", "5TWSc.07", "5TWSm.02", "5SIC.01",
@@ -215,24 +215,24 @@ const CAMBRIDGE_OBJECTIVES = {
   // than a commission: Unit 1 teaches the human digestive system in full, and
   // 0097 places that at Stage 5 (5Bs.04), which Grade 5 does not teach. The
   // content exists in the course, one grade late.
-  "6-1": ["6Bs.01", "6Bs.02", "6TWSp.03", "6TWSp.04", "6TWSc.04", "6TWSc.05",
-          "6TWSa.05", "6TWSm.02", "6SIC.04"],
+  "6-1": ["6Bs.01", "6Bs.02", "6Bp.02", "6Bp.03", "6Bp.04", "6TWSp.03", "6TWSp.04",
+          "6TWSc.04", "6TWSc.05", "6TWSa.05", "6TWSm.02", "6SIC.04"],
   // 6Be.02 (toxic substances moving through a food chain) is NOT claimed: zero
   // hits for toxic, toxin, poison or pesticide anywhere in Grade 6. The unit's
   // "Human Impact" concept is about habitat loss, not bioaccumulation.
-  "6-2": ["6Be.01", "6Be.03", "6TWSp.03", "6TWSc.01", "6TWSc.02", "6TWSc.07",
+  "6-2": ["6Be.01", "6Be.02", "6Be.03", "6TWSp.03", "6TWSc.01", "6TWSc.02", "6TWSc.07",
           "6TWSm.02", "6SIC.03", "6SIC.05"],
   // 6Cc.02 and 6Cc.03 are not claimed. The unit says "boiling water into steam"
   // and separates non-dissolving solids by filtering, but never contrasts boiling
   // with evaporation, and never relates temperature to how much dissolves.
-  "6-3": ["6Cc.01", "6Cc.04", "6Cc.05", "6TWSp.01", "6TWSc.01", "6TWSc.03",
-          "6TWSc.08", "6TWSa.02", "6TWSm.02"],
-  "6-4": ["6Pf.01", "6Pf.02", "6Pf.03", "6Pf.04", "6TWSp.02", "6TWSp.03", "6TWSc.05",
-          "6TWSa.01", "6TWSa.03", "6TWSm.01", "6TWSm.02"],
+  "6-3": ["6Cp.01", "6Cp.02", "6Cc.01", "6Cc.02", "6Cc.03", "6Cc.04", "6Cc.05",
+          "6TWSp.01", "6TWSc.01", "6TWSc.03", "6TWSc.08", "6TWSa.02", "6TWSm.02"],
+  "6-4": ["6Pf.01", "6Pf.02", "6Pf.03", "6Pf.04", "6Pf.05", "6TWSp.02", "6TWSp.03",
+          "6TWSc.05", "6TWSa.01", "6TWSa.03", "6TWSm.01", "6TWSm.02"],
   // 6Pe.02 (compare brightness in series AND parallel circuits) is not claimed —
   // `parallel` appears nowhere in Grade 6. The unit teaches series only.
-  "6-5": ["6Pe.01", "6TWSp.05", "6TWSc.01", "6TWSc.06", "6TWSa.04", "6TWSm.02",
-          "6SIC.01", "6SIC.02"],
+  "6-5": ["6Cp.03", "6Pe.01", "6Pe.02", "6TWSp.05", "6TWSc.01", "6TWSc.06",
+          "6TWSa.04", "6TWSm.02", "6SIC.01", "6SIC.02"],
   // ── Stage 7 (0893) ──
   "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01", "7SIC.04"],
   "7-2": ["7Cm.01", "7Cm.02", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01", "7TWSm.01"],
@@ -729,6 +729,66 @@ function applyConceptInserts(grade, unitNo, concepts) {
     next[index] = { ...current[index], explanation: explanation.replace(insert.after, `${insert.after}${insert.text}`) };
     return next;
   }, concepts);
+}
+
+// ── Whole concepts the pack never contained ──────────────────────────────────
+// CONCEPT_INSERTS adds a CLAUSE to a concept that exists, and its own comment
+// forbids using it for more: "a whole missing topic is recorded as a commission
+// instead". This is the mechanism for the commission, and it is deliberately a
+// separate one, read from a committed fixture rather than written in the
+// builder, for the reason the misconception and enquiry fixtures are:
+// src/curriculum and outputs/ aside, content the course teaches should be
+// readable as content, not buried in a tool.
+//
+// It APPENDS, never reorders or replaces. Two reasons. The pack's own concepts
+// are what the source documents say and are not mine to rearrange; and the
+// shell renders concepts in array order, so inserting one in the middle would
+// move every concept after it — the lesson deck's slide numbers would shift
+// under any learner mid-unit.
+//
+// Safe to add to a live course, checked in the source before a word was
+// authored: `complete("lesson", …)` fires on a button press, not on a count of
+// concepts, and complete() is add-only, so a learner who has marked the lesson
+// studied keeps the tick and meets the new concept as further reading.
+const CONCEPT_ADDITIONS = {};
+for (const stage of [5, 6, 7, 8]) {
+  const file = path.join(sciRoot, "data", `cambridge-stage${stage}-concepts.json`);
+  if (!fs.existsSync(file)) continue;
+  const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+  const byUnit = new Map();
+  const ids = new Set();
+  for (const row of doc.concepts || []) {
+    for (const field of ["id", "title", "explanation", "example"]) {
+      if (!row[field]) throw new Error(`cambridge-stage${stage}-concepts.json: a row is missing ${field}.`);
+    }
+    // check-science-content.mjs refuses an explanation under 300 characters as
+    // too short to teach a concept unaided. Fail here instead, where the
+    // message can say which row.
+    if (row.explanation.length < 300) {
+      throw new Error(`cambridge-stage${stage}-concepts.json: ${row.id}'s explanation is ${row.explanation.length} characters. The content gate refuses anything under 300 as too short to teach unaided.`);
+    }
+    if (ids.has(row.id)) throw new Error(`cambridge-stage${stage}-concepts.json: duplicate id ${row.id}`);
+    ids.add(row.id);
+    if (!byUnit.has(row.unit)) byUnit.set(row.unit, []);
+    byUnit.get(row.unit).push(row);
+  }
+  CONCEPT_ADDITIONS[stage] = { doc, byUnit };
+}
+const conceptsAdded = {};
+
+function applyConceptAdditions(grade, unitNo, concepts) {
+  const add = CONCEPT_ADDITIONS[grade];
+  if (!add || !add.byUnit.has(unitNo)) return concepts;
+  const rows = add.byUnit.get(unitNo);
+  for (const row of rows) {
+    if (concepts.some((c) => c.id === row.id)) {
+      throw new Error(`Grade ${grade} Unit ${unitNo}: the pack now contains a concept with id ${row.id}, so the authored one would be a duplicate. Re-read the unit and retire the fixture row.`);
+    }
+  }
+  conceptsAdded[grade] = (conceptsAdded[grade] || 0) + rows.length;
+  return [...concepts, ...rows.map((row) => ({
+    id: row.id, title: row.title, explanation: row.explanation, example: row.example,
+  }))];
 }
 
 function stageCoverage(grade, code, builtUnits) {
@@ -3380,6 +3440,9 @@ function buildGrade(grade) {
     // with the teaching absent. Running last makes the reviewer's prose the base
     // and checks the anchor against the text that actually ships.
     runtime.concepts = applyConceptInserts(grade, unitMeta.unit, runtime.concepts);
+    // Additions run AFTER inserts, so an insert's anchor is only ever looked for
+    // in the pack's own prose and can never match text this build just authored.
+    runtime.concepts = applyConceptAdditions(grade, unitMeta.unit, runtime.concepts);
     // Last of all, so it sees the text that ships — reviewed prose and inserts
     // included — and before the capstone samples this unit's questions.
     stripRemovedSentences(runtime, `grade ${grade} unit ${unitMeta.unit}`);
@@ -3554,6 +3617,38 @@ for (const [stage, { doc, byUnit }] of Object.entries(ENQUIRY_FIXTURES)) {
   }
   const codes = new Set((doc.prompts || []).flatMap((r) => r.codes || []));
   console.log(`Stage ${stage}: ${got} enquiry prompts delivered (floor ${floor}), closing ${codes.size} TWS/SIC objective(s).`);
+}
+
+// And for the authored concepts. Same two halves as the enquiry check: every row
+// must have reached a unit, and every objective a concept teaches must be
+// claimed by that concept's unit. The second half is what keeps a topic from
+// being taught with nothing citing it, or — the worse way round — an objective
+// staying claimed after its concept stopped being delivered.
+for (const [stage, { doc, byUnit }] of Object.entries(CONCEPT_ADDITIONS)) {
+  const want = (doc.concepts || []).length;
+  const got = conceptsAdded[stage] || 0;
+  if (got !== want) {
+    throw new Error(`Stage ${stage}: ${got} of ${want} authored concepts reached a unit. A fixture row names a unit that was not built.`);
+  }
+  for (const [unitNo, rows] of byUnit.entries()) {
+    const claimed = new Set(CAMBRIDGE_OBJECTIVES[`${stage}-${unitNo}`] || []);
+    for (const row of rows) {
+      for (const code of row.codes || []) {
+        if (!claimed.has(code)) {
+          throw new Error(`Stage ${stage} unit ${unitNo}: authored concept ${row.id} teaches ${code}, but unit ${unitNo} does not claim it. Add it to CAMBRIDGE_OBJECTIVES["${stage}-${unitNo}"] or move the concept.`);
+        }
+      }
+    }
+  }
+  const codes = new Set((doc.concepts || []).flatMap((r) => r.codes || []));
+  const floor = Number(doc.minimumCovered);
+  if (codes.size < floor) {
+    throw new Error(`Stage ${stage}: the authored concepts close ${codes.size} objectives, below the recorded floor of ${floor}. Coverage is a number that only goes up.`);
+  }
+  const chars = (doc.concepts || []).reduce((n, r) => n + r.explanation.length, 0);
+  console.log(`Stage ${stage}: ${got} authored concept(s) added, closing ${codes.size} objective(s) (floor ${floor}), `
+    + `${chars.toLocaleString("en-GB")} characters of teaching. `
+    + `${Object.keys(doc._needsNewUnit || {}).length - 1} gap(s) recorded as needing a unit of their own.`);
 }
 
 console.log(`\nReviewer corrections applied: ${reviewStats.applied}`);

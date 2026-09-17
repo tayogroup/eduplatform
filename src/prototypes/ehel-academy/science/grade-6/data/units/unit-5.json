@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-17T17:48:56.994Z",
+  "generatedAt": "2026-09-17T18:24:41.617Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -29,7 +29,9 @@
     "code": "0097",
     "stage": 6,
     "objectiveCodes": [
+      "6Cp.03",
       "6Pe.01",
+      "6Pe.02",
       "6TWSp.05",
       "6TWSc.01",
       "6TWSc.06",
@@ -40,10 +42,22 @@
     ],
     "objectives": [
       {
+        "code": "6Cp.03",
+        "strand": "Chemistry",
+        "subStrand": "Properties of materials",
+        "text": "Understand that electrical conductivity and thermal conductivity are properties of a substance."
+      },
+      {
         "code": "6Pe.01",
         "strand": "Physics",
         "subStrand": "Electricity and magnetism",
         "text": "Use diagrams and conventional symbols to represent, make and compare circuits that include cells, switches, lamps and buzzers."
+      },
+      {
+        "code": "6Pe.02",
+        "strand": "Physics",
+        "subStrand": "Electricity and magnetism",
+        "text": "Make simple circuits and compare the brightness of lamps in series and parallel circuits."
       },
       {
         "code": "6TWSp.05",
@@ -154,6 +168,18 @@
       "title": "Why Metal Tools Conduct and Plastic Handles Protect",
       "explanation": "Now let us connect the science to real life. Have you noticed that a good pair of pliers, a screwdriver, or a knife has a metal working part but a plastic or rubber handle? This is not just for comfort. The metal part conducts, and the plastic handle insulates. If the tool ever touched a live wire, the insulating handle would stop the electricity from travelling up into the person's hand. The handle is a deliberate safety barrier, designed using exactly the science you are learning.\n\nThe same thinking explains why the people who repair power lines wear thick rubber gloves and rubber boots. Rubber is an excellent insulator, so it blocks any electricity from flowing through the worker's body into the ground. It also explains why you must never poke a metal object such as a knife, fork, nail, or wire into a wall socket. Metal conducts beautifully, and mains electricity is powerful. A metal object in a socket would carry that dangerous electricity straight into your hand. Understanding conductors and insulators is therefore not only clever — it is life-saving.\n\nDid You Know? Birds can sit safely on a single high power line without being hurt, because they are only touching one wire and electricity has no complete path through them to the ground. If the bird touched two wires at once, it would be a very different and dangerous story.",
       "example": "Think about the everyday tools around a Somali home. A cooking pot is metal so that heat passes into the food, but a good pot has a handle wrapped in wood or plastic so your hand is not burned — the same partnership of conductor and insulator, this time for heat rather than electricity. Metals tend to carry both heat and electricity well, while plastic, wood and rubber block both. This is a useful pattern to remember: the materials that make good electrical insulators usually make good heat insulators too, which is why the plastic handle on a tool protects you in more ways than one. Nature and good design both reward us for understanding which materials let energy through and which hold it back."
+    },
+    {
+      "id": "concept-7-the-same-metals-carry-heat",
+      "title": "The Same Metals Carry Heat",
+      "explanation": "You have sorted materials into conductors and insulators by whether they let electricity through. Now try the same materials with something else entirely: heat. The answer is that the sorting comes out almost the same, and that is not a coincidence.\n\nStand a metal spoon and a wooden spoon in a mug of hot water and come back in two minutes. The metal handle is hot to hold and the wooden one is barely warm. Heat has travelled up the metal and has hardly moved through the wood. A material that carries heat well is a thermal conductor; one that does not is a thermal insulator. Metals are good thermal conductors. Wood, plastic, cloth, air and water are poor ones.\n\nThat is the same list as for electricity, and the reason is that in a metal some electrons are not tied to any one atom and are free to move through the whole piece. Push them with a cell and you get an electric current. Warm one end and those same loose electrons carry the energy along as they move, which is why the far end heats up so quickly. In wood or plastic nothing is free to travel, so neither electricity nor heat gets far.\n\nBoth kinds of conductivity are properties of the substance, like its melting point: copper conducts heat and electricity well wherever you find it, and being told a material is copper tells you both. That is why the two words get used together, and why it is worth naming which one you mean.\n\nIt also explains a great deal of ordinary equipment. A cooking pot is metal so the heat reaches the food, with a wooden or plastic handle so it does not reach your hand. The two materials are chosen for opposite reasons in the same object.",
+      "example": "A metal teaspoon and a plastic one are stood in the same mug of hot water for two minutes. The metal one cannot be held comfortably; the plastic one can. The water was the same temperature for both, so the difference is entirely in what the spoon is made of."
+    },
+    {
+      "id": "concept-7-series-and-parallel",
+      "title": "Two Ways to Wire Two Lamps",
+      "explanation": "Everything you have built so far has been a series circuit: one loop, with the cell and every component on it, so the same current passes through each in turn. Add a second lamp to a series circuit and both lamps go dim, because that one current now has two lamps to push through instead of one. Unscrew either lamp and the other goes out - the loop is broken and nothing can flow anywhere.\n\nThere is another way to wire them. In a parallel circuit the current leaves the cell and the path SPLITS, one branch through each lamp, and the branches join again before returning. Now each lamp has its own route back to the cell. Two consequences follow, and they are what makes parallel worth knowing.\n\nThe first is brightness. Each lamp in a parallel circuit gets the cell's full push, so both are as bright as a single lamp on its own - much brighter than the same two lamps in series. The cell pays for this by supplying more current altogether and running down faster.\n\nThe second is independence. Unscrew one lamp in a parallel circuit and the other stays lit, because its own branch is untouched. That is why a house is wired in parallel: a room's light failing does not darken the rest of the house, and each lamp receives the full mains voltage rather than a share of it. String lights of the old kind were wired in series, which is why one dead bulb used to put out the whole string.\n\nSo the choice is a real engineering decision. Series is simpler and uses less wire, and everything on it shares one current and one fate. Parallel costs more wire and gives every component full brightness and a life of its own.",
+      "example": "Two identical lamps are wired in series with one cell, and both glow faintly. The same two lamps and the same cell are rewired in parallel, and both glow brightly. Unscrewing one now leaves the other burning - in the series circuit it had put both out."
     }
   ],
   "explorations": [

@@ -45,7 +45,15 @@ const FILM_CSS = path.join(__dirname, "lib/ehel-science-lecture-film.css");
    English lecture builder uses, so one course does not sound like another */
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const MODEL_ID = "eleven_multilingual_v2";
-const VOICE_SETTINGS = { stability: 0.52, similarity_boost: 0.82, style: 0.24, use_speaker_boost: true };
+/* Slower and more measured than the English lecture builder's settings, on the
+   owner's ear (2026-09-17): "the narration is a little fast, make it teacher
+   like". speed is ElevenLabs' own rate control (0.7-1.2, 1.0 = as recorded);
+   a steadier `stability` and a lower `style` take the performance out of it, so
+   it reads as somebody explaining rather than somebody narrating. */
+const VOICE_SETTINGS = {
+  stability: 0.60, similarity_boost: 0.82, style: 0.18,
+  use_speaker_boost: true, speed: 0.88
+};
 
 const FPS = 30;
 const W = 1280, H = 720;
@@ -60,7 +68,7 @@ const OPEN_HOLD = 3.6, END_HOLD = 5.0;
    clip, so this number never reaches a rendered frame; it exists so the
    script can be cut to length before any of it is bought. Set from a
    --calibrate run against this voice and these settings. */
-const CHARS_PER_SECOND = 15.92;   /* measured 2026-09-17, this voice, these settings */
+const CHARS_PER_SECOND = 13.96;   /* measured 2026-09-17 at speed 0.88 - re-measure after ANY voice-settings change */
 
 /* ---------------------------------------------------------------- args --- */
 function arg(name, fallback) {
@@ -157,8 +165,16 @@ function artModule(art) {
 }
 
 /* --------------------------------------------------------------- audio --- */
+/* The cache key covers the VOICE SETTINGS as well as the text, and that is not
+   defensive: without them, changing the speed or the stability reuses every
+   cached clip and the change silently does nothing at all. The settings are the
+   whole point of a re-buy, so they belong in the key that decides whether to
+   buy. Found on the run that slowed the narration down - the first attempt
+   reported "0 to buy" and would have re-rendered the identical audio. */
 function clipPath(cacheDir, text) {
-  const h = crypto.createHash("sha1").update(`${VOICE_ID}|${MODEL_ID}|${text}`).digest("hex").slice(0, 16);
+  const voice = JSON.stringify(VOICE_SETTINGS);
+  const h = crypto.createHash("sha1")
+    .update(`${VOICE_ID}|${MODEL_ID}|${voice}|${text}`).digest("hex").slice(0, 16);
   return path.join(cacheDir, `${h}.mp3`);
 }
 

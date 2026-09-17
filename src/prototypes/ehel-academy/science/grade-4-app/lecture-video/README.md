@@ -82,9 +82,24 @@ re-renders for nothing and only edited narration is re-bought.
 **Cut the script before buying it, not after.** `--dry` reports the character
 count, `--calibrate` buys the three longest clips and reports what the voice
 actually does with them, and `--preview` renders a still per beat from that
-rate. Measured on 2026-09-17 with this voice and these settings: **15.92
-characters a second**. A script trimmed against a guessed rate is re-bought at
-full price when the guess is wrong.
+rate. **13.96 characters a second**, measured 2026-09-17 at `speed: 0.88`.
+A script trimmed against a guessed rate is re-bought at full price when the
+guess is wrong — and the rate belongs to the SETTINGS, so re-measure after any
+change to them.
+
+**THE CACHE KEY COVERS THE VOICE SETTINGS, and that is load-bearing.** It used
+to be `(voice, model, text)` only. The owner asked for a slower, more
+teacher-like read on 2026-09-17; the settings were changed, and the very next
+run reported **"0 clips to buy"** and would have re-rendered byte-identical
+audio under a claim that it had slowed down. The settings are the whole reason
+for a re-buy, so they belong in the key that decides whether to buy. The tell
+was the count: a settings change that costs nothing has not happened.
+
+**The delivery, and what it costs.** `speed` is ElevenLabs' own rate control
+(0.7-1.2, 1.0 = as recorded) at **0.88**; `stability` 0.60 and `style` 0.18 take
+the performance out of it, so it reads as somebody explaining rather than
+somebody narrating. Slower means longer: the film went from 3:10 to 3:35, and
+the owner took that trade deliberately rather than shortening the script.
 
 ## The leader line, and the character that was not built
 

@@ -161,9 +161,18 @@ layout pass cost nothing.
 
 **Cut the script before buying it.** `--calibrate` exists because the alternative
 is trimming against a guessed rate and re-buying at full price when the guess is
-wrong. Measured 2026-09-17, this voice and these settings: **15.92 characters a
-second**, against a 14.2 guess that had put the same script at 3:34 instead of
-2:55.
+wrong. The rate belongs to the SETTINGS and must be re-measured after any change
+to them: 15.92 characters a second at the English builder's settings, **13.96 at
+`speed: 0.88`**, against a 14.2 guess that had put the same script at 3:34
+instead of 2:55.
+
+**The clip cache is keyed on the VOICE SETTINGS as well as the text.** It was
+`(voice, model, text)` until 2026-09-17, when the owner asked for a slower,
+more teacher-like read: the settings were changed and the next run reported
+**"0 clips to buy"**, which would have re-rendered byte-identical audio under a
+claim that it had slowed down. The settings are the whole reason for a re-buy,
+so they belong in the key that decides whether to buy — and the tell is the
+count, because a settings change that costs nothing has not happened.
 
 Two things the tool cannot check, and one it now can:
 

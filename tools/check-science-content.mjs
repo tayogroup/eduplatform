@@ -69,7 +69,14 @@ const walk = (value, visit) => {
 // part that does apply — is the declared syllabus coherent, and is the
 // alignment evidenced — belongs here, in science's own gate.
 //
-// Primary Science is 0846 (Stages 1-6); Lower Secondary is 0893 (Stages 7-9).
+// Primary Science is 0846 at Stages 1-4 and 0097 at Stages 5-6; Lower Secondary
+// is 0893 (Stages 7-9). Stages 5-6 were re-pointed from the 2018 framework
+// (0846) to the current one (0097) on 2026-09-17 — the supplied Teacher's
+// Resource 5 cites 54 codes, all of them 0097's and none 0846's. ONE definition,
+// used by both checks in this file: it was written out twice, which is two of the
+// four copies of this expression that the re-point had to find.
+const FRAMEWORK_FOR_STAGE = (stage) => (stage <= 4 ? "0846" : stage <= 6 ? "0097" : "0893");
+const SCIENCE_CODES = ["0846", "0097", "0893"];
 const frameworkCache = new Map();
 function frameworkFor(code) {
   if (!frameworkCache.has(code)) {
@@ -85,7 +92,7 @@ function checkCambridge(label, gradeDir, unit) {
   const camb = unit.cambridge;
   if (!camb || !camb.code) { fail(label, "no cambridge block — the unit declares no syllabus"); return; }
   const grade = Number(gradeDir.split("-")[1]);
-  const expected = grade <= 6 ? "0846" : "0893";
+  const expected = FRAMEWORK_FOR_STAGE(grade);
   if (String(camb.code) !== expected) fail(label, `declares code ${camb.code} but Stage ${grade} belongs to ${expected}`);
   if (Number(camb.stage) !== grade) fail(label, `declares Stage ${camb.stage} but sits in ${gradeDir}`);
 
@@ -188,11 +195,11 @@ for (const gradeDir of gradeDirs) {
       if (TEACHER_REQUIRED.test(text)) fail(label, `text requires a teacher with no solo path: "${text.slice(0, 90)}"`);
     });
 
-    if (unit.cambridge?.code && !["0846", "0893"].includes(String(unit.cambridge.code))) {
-      fail(label, `unexpected Cambridge code ${unit.cambridge.code} (expected 0846 for stages 1-6, 0893 for 7-9)`);
+    if (unit.cambridge?.code && !SCIENCE_CODES.includes(String(unit.cambridge.code))) {
+      fail(label, `unexpected Cambridge code ${unit.cambridge.code} (expected 0846 for stages 1-4, 0097 for 5-6, 0893 for 7-9)`);
     }
     const stage = Number(unit.cambridge?.stage);
-    const expected = stage <= 6 ? "0846" : "0893";
+    const expected = FRAMEWORK_FOR_STAGE(stage);
     if (unit.cambridge?.code && String(unit.cambridge.code) !== expected) {
       fail(label, `stage ${stage} declares framework ${unit.cambridge.code}, expected ${expected}`);
     }

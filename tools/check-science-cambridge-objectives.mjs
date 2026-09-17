@@ -31,13 +31,24 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SCI = path.join(ROOT, "src", "prototypes", "ehel-academy", "science");
 const CURRICULUM = path.join(ROOT, "src", "curriculum");
 
-// Cambridge Primary Science 0846 covers Stages 1-6; Lower Secondary 0893
-// covers 7-9. A unit naming the other one for its stage is a mapping pointed at
-// the wrong document, which check 2 would then "pass" against the wrong codes.
-const FRAMEWORK_FOR_STAGE = (stage) => (stage <= 6 ? "0846" : "0893");
+// Which framework each stage belongs to. A unit naming the other one for its
+// stage is a mapping pointed at the wrong document, which check 2 would then
+// "pass" against the wrong codes.
+//
+// Stages 5-6 were re-pointed from 0846 (the 2018 framework) to 0097 (the
+// current one, September 2020 / v3.0 February 2023) on 2026-09-17: the supplied
+// Teacher's Resource 5 cites 54 objective codes, all 54 of them 0097's and none
+// of them 0846's. Stages 1-4 stay on 0846 pending a separate re-mapping, so the
+// course currently spans three framework generations on purpose.
+//
+// This was one of FOUR copies of `stage <= 6 ? "0846" : "0893"` — the others in
+// build-ehel-science-runtime.js and two in check-science-content.mjs. Splitting
+// one condition into two wakes up whatever was equal to the old one, so all four
+// moved in the same change.
+const FRAMEWORK_FOR_STAGE = (stage) => (stage <= 4 ? "0846" : stage <= 6 ? "0097" : "0893");
 
 const frameworks = new Map();
-for (const code of ["0846", "0893"]) {
+for (const code of ["0846", "0097", "0893"]) {
   const file = path.join(CURRICULUM, `cambridge-science-${code}.json`);
   if (!fs.existsSync(file)) {
     console.error(`✗ science cambridge: ${path.relative(ROOT, file)} is missing — the mapping cannot be checked against anything.`);

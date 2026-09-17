@@ -112,19 +112,84 @@ const CAMBRIDGE_OBJECTIVES = {
   "4-4": ["4Be1", "4Eo7"],
   "4-5": ["4Ep2", "4Eo1"],
   "4-6": ["4Pm1", "4Pm2", "4Pm3", "4Ep3", "4Eo1"],
-  // ── Stage 5 (0846) ──
-  "5-1": ["5Bp1", "5Bp2", "5Bp4", "5Bp7", "5Ep4", "5Eo2", "5Eo4"],
-  "5-2": ["5Bp2", "5Bp3", "5Bp5", "5Bp6", "5Bp7", "5Ep3", "5Eo1"],
-  "5-3": ["5Cs1", "5Cs2", "5Cs3", "5Cs4", "5Ep4", "5Ep6"],
-  "5-4": ["5Pl1", "5Pl6", "5Pl7", "5Pl8", "5Eo1"],
-  "5-5": ["5Pl1", "5Pl2", "5Pl3", "5Pl5", "5Ep3", "5Eo1"],
-  "5-6": ["5Pb1", "5Pb2", "5Pb3", "5Eo1"],
-  // ── Stage 6 (0846) ──
-  "6-1": ["6Bh1", "6Bh2", "6Bh3", "6Bh4", "6Ep4", "6Eo1", "6Eo3"],
-  "6-2": ["6Be1", "6Be2", "6Be3", "6Be4", "6Be5", "6Be6"],
-  "6-3": ["6Cc1", "6Cc2", "6Cc3", "6Cc4", "6Cc5", "6Ep6"],
-  "6-4": ["6Pf1", "6Pf2", "6Pf3", "6Pf4", "6Eo1"],
-  "6-5": ["6Pm1", "6Pm2", "6Pm3", "6Pm4", "6Pm5"],
+  // ── Stage 5 (0097) ──
+  // RE-POINTED from 0846 to 0097 on 2026-09-17, and the codes below are not a
+  // translation of the 0846 list above them — they are a fresh mapping, because
+  // the two frameworks disagree about which stage teaches what.
+  //
+  // 0846 is the 2018 framework (`0846_Primary_Science_Curriculum_Framework_2018`,
+  // 38 objectives at Stage 5, codes like `5Bp1`). 0097 is the current one
+  // (September 2020, version 3.0 February 2023, 59 objectives, codes like
+  // `5Bp.01`). The evidence that 0097 is the right one is not a preference:
+  //
+  //   - the Cambridge Primary Science Teacher's Resource 5 supplied for this
+  //     course cites 54 distinct objective codes, and ALL 54 exist in 0097 while
+  //     NONE exists in 0846;
+  //   - Stages 7-8 of this same course already run on 0893, the September 2020
+  //     Lower Secondary framework, whose dotted codes and TWS/SIC strands are
+  //     0097's and not 0846's. On 0846 a learner crossed from `6Pf3` to
+  //     `7Pf.01` — between two framework generations — at the Stage 6/7 boundary;
+  //   - the Grades 1-4 standalone lesson apps are mapped to 0097 and reach all
+  //     35/44/51/63 of it.
+  //
+  // WHAT THE RE-POINT REVEALED, and it is the reason this list is short. The
+  // content did not change; the denominator was wrong. Stage 5 claimed 27 of
+  // 0846's 38 (71%) and claims 23 of 0097's 59 (39%). The difference is not
+  // mapping slack — it is content that does not exist, measured by grepping the
+  // grade's own text for the word each objective cannot be taught without:
+  // forces, sound and magnetism (9 objectives) have no unit, and digestion, a
+  // balanced diet, climate adaptation, predator/prey, the atmosphere, pollution
+  // and non-flowering plants have no trace. The enquiry strand is thinner still:
+  // `conclusion` appears NOWHERE in Grade 5 or 6, nor does `anomalous`,
+  // `identification key` or `secondary source`, and `independent variable`
+  // appears once in eleven units. Those gaps are recorded in
+  // CAMBRIDGE_GAP_REASONS below, as commissions rather than force-fitted codes.
+  //
+  // Units 4 and 5 are light and shadows, which 0097 does not place at Stage 5 at
+  // all — see CAMBRIDGE_ALIGNMENT_NOTES. They keep only the enquiry objectives
+  // they genuinely meet.
+  "5-1": ["5Bp.02", "5Bp.04", "5TWSp.03", "5TWSp.04", "5TWSc.04", "5TWSm.02", "5TWSa.05"],
+  // 5Be.02 is claimed on substance rather than wording: the unit teaches bright
+  // petals and scent drawing pollinators in, and four dispersal mechanisms, which
+  // is what "adapted to attract pollinators and promote seed dispersal" asks for.
+  // Worth knowing that the word `adapt` appears NOWHERE in Grade 5 — so the
+  // learner meets the mechanism and never the concept's name. 5Be.01 and 5Be.03
+  // are not claimed for that same reason plus no content at all.
+  "5-2": ["5Bs.02", "5Bs.03", "5Bp.02", "5Bp.03", "5Be.02", "5TWSp.03", "5TWSm.02"],
+  // 5Cp.02 is claimed on three of its four clauses — melting point, freezing at
+  // 0 degrees and water's ability to dissolve a range of substances are all
+  // taught; "expands when it solidifies" is not.
+  "5-3": ["5Cm.01", "5Cp.01", "5Cp.02", "5Cc.01", "5Cc.02", "5Cc.03", "5ESc.01",
+          "5ESp.02", "5TWSp.03", "5TWSp.04", "5TWSm.01", "5TWSm.02"],
+  "5-4": ["5TWSp.03", "5TWSc.04", "5TWSm.02"],
+  "5-5": ["5TWSp.03", "5TWSm.02"],
+  "5-6": ["5ESs.01", "5ESs.02", "5ESs.03", "5TWSm.02"],
+  // ── Stage 6 (0097) ──
+  // Re-pointed with Stage 5, for the same reasons. 28 of 0846's 40 (70%) becomes
+  // 21 of 0097's 59 (36%). The whole Earth-and-space strand is missing content —
+  // rock classification, fossils, soil types, soil composition and the rock
+  // cycle, plus the Solar System and the Moon's monthly cycle, seven objectives
+  // with no trace — as are puberty, the reproductive system, disease and
+  // infection, hygiene, body defences, toxins moving through a food chain,
+  // mirrors, refraction and parallel circuits.
+  //
+  // One gap is cheaper than it looks and is recorded as a sequencing note rather
+  // than a commission: Unit 1 teaches the human digestive system in full, and
+  // 0097 places that at Stage 5 (5Bs.04), which Grade 5 does not teach. The
+  // content exists in the course, one grade late.
+  "6-1": ["6Bs.01", "6Bs.02", "6TWSp.03", "6TWSp.05", "6TWSc.05", "6TWSm.02", "6TWSa.05"],
+  // 6Be.02 (toxic substances moving through a food chain) is NOT claimed: zero
+  // hits for toxic, toxin, poison or pesticide anywhere in Grade 6. The unit's
+  // "Human Impact" concept is about habitat loss, not bioaccumulation.
+  "6-2": ["6Be.01", "6Be.03", "6TWSp.03", "6TWSc.01", "6TWSm.02"],
+  // 6Cc.02 and 6Cc.03 are not claimed. The unit says "boiling water into steam"
+  // and separates non-dissolving solids by filtering, but never contrasts boiling
+  // with evaporation, and never relates temperature to how much dissolves.
+  "6-3": ["6Cc.01", "6Cc.04", "6Cc.05", "6TWSc.01", "6TWSm.02"],
+  "6-4": ["6Pf.01", "6Pf.02", "6Pf.03", "6Pf.04", "6Pf.05", "6TWSp.03", "6TWSc.05", "6TWSm.02"],
+  // 6Pe.02 (compare brightness in series AND parallel circuits) is not claimed —
+  // `parallel` appears nowhere in Grade 6. The unit teaches series only.
+  "6-5": ["6Pe.01", "6Cp.03", "6TWSp.05", "6TWSc.01", "6TWSm.02"],
   // ── Stage 7 (0893) ──
   "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01"],
   "7-2": ["7Cm.01", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01"],
@@ -216,6 +281,14 @@ const CAMBRIDGE_ALIGNMENT_NOTES = {
   "8-7": "The nutrition half of this unit maps to Stage 8 in full (8Bp.01-8Bp.03), but digestion does not: 0893 carries no objective for mechanical or chemical digestion, enzymes or absorption at Stage 7, 8 or 9.",
   "8-8": "Rocks and the rock cycle are not in 0893 at any stage — Lower Secondary treats geology as plate tectonics at Stage 7 (7ESp.01, 7ESp.02), and rock types, weathering, erosion and fossils appear nowhere in Stages 7-9. Only the enquiry and application objectives this unit genuinely meets are claimed.",
   "8-9": "The magnetism half of this unit is Stage 8 and is claimed in full (8Pe.01-8Pe.03). Current, voltage and resistance are Stage 9 (9Pe.02, 9Pe.03), as is the motor effect, so the electricity half is a stage ahead.",
+  // Added 2026-09-17 with the 0846 -> 0097 re-point. Under the 2018 framework
+  // Stage 5 carried a light sub-strand (5Pl1-5Pl8) and these two units mapped
+  // into it; 0097 does not place light at Stage 5 at all, so both units are
+  // teaching earlier stages' content and one Stage 6 objective each.
+  "5-4": "Light is not in 0097 Stage 5 — the current framework carries light sources at Stage 2 (2Ps.01), transparent/translucent/opaque and shadows at Stage 3 (3Ps.01-3Ps.03), straight-line travel, ray diagrams, reflection and how we see non-luminous objects at Stage 4 (4Ps.01-4Ps.03), and reflection from a plane mirror plus refraction at Stage 6 (6Ps.01, 6Ps.02). Stage 5's own Ps sub-strand is SOUND, which this grade does not teach. Only the enquiry objectives this unit genuinely meets are claimed; its subject matter is taught by the Grade 3 and Grade 4 standalone lesson apps at the stages 0097 assigns it.",
+  "5-5": "Shadows are not in 0097 Stage 5 — they are 3Ps.02 and 3Ps.03, and the moving-Sun content is 4ESs.01. As with Unit 4, only the enquiry objectives are claimed. The shadow investigation itself is sound work for the enquiry strand, which is why 5TWSp.03 is claimed rather than nothing.",
+  "5-6": "This unit's astronomy is split across stages by 0097. The Earth's orbit, the tilt and the seasons, and satellites are Stage 5 and are claimed in full (5ESs.01-5ESs.03). Day and night from the Earth's spin is Stage 4 (4ESs.01), and the Moon's phases are Stage 6 (6ESs.02) — which Grade 6 does not teach either, so that content is in the course at the wrong stage rather than missing.",
+  "6-1": "The digestion concept in this unit is a Stage 5 objective under 0097 (5Bs.04, the human digestive system and the functions of its organs), and Grade 5 does not teach it. The circulatory and respiratory objectives claimed here are Stage 6 and are met in full. This is a sequencing gap rather than a content one: moving that concept to Grade 5 would close 5Bs.04 without authoring anything.",
 };
 
 // Resolve a unit's codes against the framework, and refuse the build if one is
@@ -1780,15 +1853,34 @@ function buildGrade(grade) {
   const stageId = `s${String(grade).padStart(2, "0")}`;
   const stageLabel = `Stage ${grade}`;
   const contentPackage = `Ehel-Academy-Science-Grade-${grade}-Content-Package`;
-  // Official Cambridge framework: Primary Science 0846 (Stages 1-6),
-  // Lower Secondary Science 0893 (Stages 7-9). The primary code was previously
-  // recorded as 0097; the curriculum framework Cambridge publishes for these
-  // stages is titled "Cambridge Primary Science 0846 Curriculum Framework",
-  // and it is the document these mappings validate against
-  // (src/curriculum/cambridge-science-0846.json).
-  const cambridge = grade <= 6
+  // Official Cambridge framework: Primary Science 0097 at Stages 5-6, 0846 at
+  // Stages 1-4, Lower Secondary Science 0893 (Stages 7-9).
+  //
+  // This used to read `grade <= 6 ? "0846"`, on the argument that the framework
+  // Cambridge publishes for these stages is titled "Cambridge Primary Science
+  // 0846 Curriculum Framework". That title is true of the 2018 document and says
+  // nothing about which framework is current — both PDFs are in src/curriculum,
+  // 0846 published 2018 and 0097 published September 2020, version 3.0 February
+  // 2023. The supplied Teacher's Resource 5 cites 54 objective codes and all 54
+  // are 0097's; none is 0846's. See the note on CAMBRIDGE_OBJECTIVES "5-1".
+  //
+  // STAGES 1-4 ARE DELIBERATELY LEFT ON 0846 and that is a known inconsistency,
+  // not an oversight: re-pointing them is a re-mapping of 24 units that the
+  // owner scoped separately (2026-09-17). It is worth doing — 0097 Stage 4 has
+  // 63 objectives against 0846's 34, and five of the six CAMBRIDGE_ALIGNMENT_NOTES
+  // for Stages 3-4 say some variant of "this content is not in 0846 at any
+  // primary stage", which 0097 very likely places. Until then the shell course
+  // spans three framework generations and this comment is the record of why.
+  //
+  // Splitting one condition into two wakes up whatever was equal to the old one
+  // (see CLAUDE.md). `grade <= 6 ? "0846" : "0893"` existed in THREE places, not
+  // the two that were obvious: here, check-science-cambridge-objectives.mjs, and
+  // check-science-content.mjs. All three are changed together.
+  const cambridge = grade <= 4
     ? { level: "Cambridge Primary Science", code: "0846", stage: grade }
-    : { level: "Cambridge Lower Secondary Science", code: "0893", stage: grade };
+    : grade <= 6
+      ? { level: "Cambridge Primary Science", code: "0097", stage: grade }
+      : { level: "Cambridge Lower Secondary Science", code: "0893", stage: grade };
   const cambridgeLabel = `${cambridge.level} ${cambridge.code} — Stage ${grade}`;
   const gradeDir = path.join(sciRoot, `grade-${grade}`);
   const unitDir = path.join(gradeDir, "data", "units");

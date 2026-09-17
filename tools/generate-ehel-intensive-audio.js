@@ -51,7 +51,13 @@ loadDotEnv();
 const args = process.argv.slice(2);
 const cats = args.filter((a) => ALL_CATS.includes(a));
 const catList = cats.length ? cats : ALL_CATS;
-const levels = args.filter((a) => /^[1-5]$/.test(a)).map(Number);
+// `[1-5]` was written when the levels were 1 to 5. The Intro level is level 0,
+// and under that regex "0" was not a level argument at all: it was ignored, the
+// list fell through to EVERY built level, and the run silently widened instead
+// of narrowing. That is the same failure the comment below describes, reached
+// from the other side — so the digit test is now any digit, and an argument
+// that names a level which does not exist is refused rather than dropped.
+const levels = args.filter((a) => /^\d$/.test(a)).map(Number);
 // The default used to be the literal [1, 2], written when those were the only
 // levels. Level 3 shipped on 2026-09-16 and a bare run silently narrated two
 // thirds of the course — no error, just a category table that never mentioned
@@ -64,6 +70,11 @@ const builtLevels = () => fs.readdirSync(COURSE)
   .map((m) => Number(m[1]))
   .sort((a, b) => a - b);
 const levelList = levels.length ? levels : builtLevels();
+const unknownLevels = levelList.filter((n) => !builtLevels().includes(n));
+if (unknownLevels.length) {
+  console.error(`No such level: ${unknownLevels.join(", ")}. Built: ${builtLevels().join(", ")}.`);
+  process.exit(1);
+}
 const dry = args.includes("--dry");
 const force = args.includes("--force");
 const budgetArg = args.indexOf("--budget");

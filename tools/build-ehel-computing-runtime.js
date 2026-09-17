@@ -94,6 +94,14 @@ const scriptReview = fs.existsSync(reviewPath)
   ? (JSON.parse(fs.readFileSync(reviewPath, "utf8")).overrides || {})
   : {};
 const reviewStats = { applied: 0, missed: [], rekeyed: [], stranded: [], refusedSteps: [], answerKeyPrefixes: [], restatedAnswers: [] };
+const REVIEW_COMMON = new Set(["when", "this", "that", "with", "from", "your", "they",
+  "then", "than", "what", "which", "have", "been", "will", "would", "could",
+  "should", "into", "over", "under", "each", "only", "also", "some", "more",
+  "most", "such", "does", "done", "make", "made", "used", "using", "uses",
+  "like", "just", "very", "even", "much", "many", "both", "same", "other",
+  "because", "after", "before", "here", "there", "these", "those", "them",
+  "were", "was", "are", "not", "but", "and", "the", "for"]);
+
 const practiceStats = { unaligned: [] };
 
 // Where each exported category's fields live inside a built unit. Returns the
@@ -155,6 +163,20 @@ function applyReviewFields(unit, category, itemId, fields, label) {
   // learner checking their work is marked wrong whatever they pick. Snapshot
   // the shape, and roll the whole item back if the answer stops being offered.
   const isMcq = Array.isArray(target.options) && typeof target.answer === "string";
+  // OPEN-ANSWER ITEMS DRIFT TOO, and nothing used to check them. Practice,
+  // Fluency and Real Problem items have an `answer` and no `options`, so isMcq
+  // is false and the rollback below never ran for them - while review rows are
+  // keyed by position exactly as they are for MCQs.
+  //
+  // Stage 5 unit 1 asked "On the micro:bit, reset the count to zero when
+  // shaken" and its row answered "Use a 'when this sprite clicked' block" - a
+  // Scratch answer on a micro:bit question. The builder had already derived the
+  // right one from the section's aligned, lettered key run.
+  const isOpenAnswer = !isMcq && typeof target.answer === "string"
+    && typeof target.prompt === "string" && "answer" in fields;
+  const promptBefore = typeof target.prompt === "string" ? String(target.prompt) : null;
+  const openBefore = isOpenAnswer ? String(target.answer) : null;
+
   // Every field the override touches, not just the answer triple. Restoring
   // only options and answer left a drifted explanation applied over a question
   // it was never about — the row was refused and half of it landed anyway.
@@ -252,6 +274,59 @@ function applyReviewFields(unit, category, itemId, fields, label) {
     if ("answer" in before) target.answer = before.answer;
     reviewStats.applied = appliedBefore;
     reviewStats.missed.push(`${label} ${category}/${itemId} (generated vocabulary question \u2014 its options and answer come from the glossary, not from a review row)`);
+  }
+  // Only one-sided: refuse a drifted answer when the builder already had a
+  // better one. A reworded answer still talks about its own question, so this
+  // never touches a genuine review edit; and where the builder had nothing on
+  // topic either, the row stands, because it cannot be worse than nothing.
+  // A PROMPT-ONLY ROW RENAMES THE QUESTION. Stage 7 unit 2's rp04 row carried
+  // a prompt and no answer, so it retitled the item "D2 - Scroll your name,
+  // then show a duck" over D4's answer about music.play(music.BADDY). The
+  // answer is the half the build derived from the source; the stem is the half
+  // that says which question this is, so a row that changes it has drifted.
+  if (!isMcq && promptBefore !== null && "prompt" in fields && !("answer" in fields)
+      && typeof target.answer === "string") {
+    const pw = (t) => new Set((String(t || "").toLowerCase().match(/[a-z0-9_]{4,}/g) || [])
+      .filter((x) => !REVIEW_COMMON.has(x)));
+    const shares = (a, b) => {
+      const A = pw(a), B = pw(b);
+      if (!A.size || !B.size) return true;
+      for (const x of A) for (const y of B) {
+        if (x === y) return true;
+        if (x.length >= 5 && y.length >= 5 && x.slice(0, 5) === y.slice(0, 5)) return true;
+      }
+      return false;
+    };
+    if (shares(promptBefore, target.answer) && !shares(target.prompt, target.answer)) {
+      target.prompt = promptBefore;
+      reviewStats.applied = appliedBefore;
+      reviewStats.missed.push(`${label} ${category}/${itemId} (override renames the question away from its own answer)`);
+    }
+  }
+  if (isOpenAnswer && openBefore) {
+    // Common words are not evidence of topic. Without this the guard matched
+    // "when" in both "reset the count when shaken" and "when this sprite
+    // clicked" and concluded the Scratch answer was about the micro:bit
+    // question - which is the one case it exists to catch.
+    const COMMON = REVIEW_COMMON;
+    const words = (text) => new Set((String(text || "").toLowerCase()
+      .match(/[a-z0-9_]{4,}/g) || []).filter((w) => !COMMON.has(w)));
+    const about = (text) => {
+      const a = words(text);
+      const p = words(target.prompt);
+      if (!a.size || !p.size) return true;
+      for (const w of a) {
+        if (p.has(w)) return true;
+        for (const q of p) if (w.length >= 5 && q.length >= 5 && w.slice(0, 5) === q.slice(0, 5)) return true;
+      }
+      return false;
+    };
+    if (about(openBefore) && !about(target.answer)) {
+      target.answer = openBefore;
+      if ("errorFeedback" in fields) target.errorFeedback = `Check your reasoning against this: ${openBefore}`;
+      reviewStats.applied = appliedBefore;
+      reviewStats.missed.push(`${label} ${category}/${itemId} (override answers a different question \u2014 the built answer is about this prompt and the reviewed one is not)`);
+    }
   }
   if (category === "Concept" && explanationBefore !== null
     && String(target.explanation).length < 240 && explanationBefore.length >= 240) {
@@ -1299,7 +1374,7 @@ function buildGrade(grade) {
         }
         return out;
       };
-      const tasks = groupByLabel(taskLines);
+      let tasks = groupByLabel(taskLines);
       // The books head their answer keys two ways round — "Answer Key - Section
       // A (Multiple Choice)" and "Section A: Answer Key" — so match a heading
       // that names both, in either order. Matching only the first form left
@@ -1313,11 +1388,24 @@ function buildGrade(grade) {
         ? namedKeys
         : practiceDoc.blocks.filter((block) => block.content_kind !== "Heading"
           && namesThisSection(block.section) && afterKeys(block));
-      const keys = groupByLabel(keySection.map((block) => tidy(block.text))
+      let keys = groupByLabel(keySection.map((block) => tidy(block.text))
         .filter((text) => text.length > 1 && !/^Section\s+[A-F]\b/i.test(text)));
       // Keys are labelled ("3." or "C3."), so match a task to its key by that
       // label rather than by index — a stray instruction line in either run
       // would otherwise shift every answer after it by one.
+      // A key run whose numbers RESTART has been concatenated from two
+      // sections, and the second owns every number the first never reached - so
+      // no collision exists for the ambiguity guard to catch. Measured in Stage
+      // 7 unit 5: 1,2,3,4,5 then 1,2,...,10, and a bits-ordering question was
+      // answered with a NOT gate truth table. Cut at the restart.
+      let highest = 0;
+      for (let i = 0; i < keys.length; i += 1) {
+        const restartMatch = LABEL.exec(keys[i]);
+        if (!restartMatch) continue;
+        const n = Number(restartMatch[1]);
+        if (n <= highest) { keys = keys.slice(0, i); break; }
+        highest = n;
+      }
       const keyByNumber = new Map();
       // TWO KEYS CLAIMING ONE NUMBER CANNOT BOTH BE THIS QUESTION'S, and the
       // last one written used to win silently. LABEL strips an optional section
@@ -1363,6 +1451,34 @@ function buildGrade(grade) {
       // trustworthy when the two runs are the same length. One stray line in
       // either run shifts every answer after it onto the wrong question, which
       // is worse for a learner checking their work than no answer at all.
+      // A section's own instruction line ("Each program has exactly one error.
+      // Find it...") is addressed to the learner about the section, not a task
+      // in it - but the parser counts it as one, and the run is then exactly one
+      // longer than its keys with every real task sitting one key late. Stage 7
+      // unit 1 answered `Print("Hello world")` with "Missing comma", which
+      // belongs to the item after it.
+      //
+      // Only dropped when shifting demonstrably lines the runs up better, scored
+      // by how many task/key pairs share a content word. A section that is
+      // genuinely one task longer than its keys scores no better shifted, so
+      // nothing is dropped and the placeholder stands.
+      if (tasks.length === keys.length + 1 && keys.length >= 2) {
+        const sig = (text) => new Set((String(text || "").toLowerCase()
+          .match(/[a-z0-9_]{4,}/g) || []).filter((w) => !REVIEW_COMMON.has(w)));
+        const pairScore = (offset) => {
+          let hits = 0;
+          for (let i = 0; i < keys.length; i += 1) {
+            const a = sig(tasks[i + offset]);
+            const b = sig(keys[i]);
+            for (const w of a) if (b.has(w)) { hits += 1; break; }
+          }
+          return hits;
+        };
+        if (pairScore(1) > pairScore(0)) {
+          practiceStats.unaligned.push(`g${grade}/unit-${practiceDoc.unit} ${name}: dropped a leading instruction line that was counted as a question`);
+          tasks = tasks.slice(1);
+        }
+      }
       const aligned = keys.length === tasks.length;
       if (!aligned && !keyByNumber.size && keys.length) {
         practiceStats.unaligned.push(`g${grade}/unit-${practiceDoc.unit} ${name}: ${tasks.length} questions vs ${keys.length} key lines`);
@@ -1373,7 +1489,17 @@ function buildGrade(grade) {
         // tidy() collapses whitespace, which would fold a program back onto one
         // line, so a grouped prompt keeps its own line breaks.
         const stem = numbered ? prompt.slice(numbered[0].length).trim() : prompt;
-        const answer = keyByNumber.get(number) || (aligned ? tidy(keys[index] || "") : "");
+        // An UNNUMBERED task only has a guessed position, and a guess may not
+        // be used as a label unless the two runs are the same length. Stage 8
+        // unit 2's "Find and Fix the Mistake" parses 6 tasks against 5 keys -
+        // its first "task" is the section's own instruction line - so every
+        // real task sat one key late: "Meant to total profit F3 to F6:
+        // =SUM(F3-F6)" was answered about brackets and multiplication order.
+        // Where the counts disagree the run has a stray line in it and the
+        // placeholder is the honest answer.
+        const byLabel = numbered || tasks.length === keys.length
+          ? keyByNumber.get(number) : undefined;
+        const answer = byLabel || (aligned ? tidy(keys[index] || "") : "");
         if (!stem || stem.length < 12) return;
         items.push({
           id: `p${String(items.length + 1).padStart(2, "0")}`,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:33:43.021Z",
+  "generatedAt": "2026-09-17T10:55:55.001Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -769,9 +769,9 @@
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     },
     {
-      "id": "p48",
+      "id": "p49",
       "level": "Extension",
-      "prompt": "Each program below has one or more bugs. Find them, then write the corrected program. Check your work against the Answer Key.",
+      "prompt": "Should show a happy face and scroll 'Hello' when button A is pressed\nMicroPython code\nfrom microbit import *\nwhile True:\nif button_b.is_pressed():\ndisplay.show(Image.happy)\ndisplay.scroll(Hello)",
       "answer": "Three bugs. Change button_b to button_a; change Image.happy to Image.HAPPY (capitals); and put quotation marks around Hello so it becomes 'Hello'.",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     },
@@ -1379,7 +1379,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "D2 — Scroll your name, then show a duck",
+      "prompt": "Play the Baddy tune when the logo is touched\nMicroPython code\nfrom microbit import *\nimport ____\nwhile True:\nif pin_logo.____():\nmusic.play(music.____)",
       "answer": "import music and if pin_logo.is_touched(): and music.play(music.BADDY)",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: import music and if pin_logo.is_touched(): and music.play(music.BADDY)"

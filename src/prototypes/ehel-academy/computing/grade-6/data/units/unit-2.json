@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:33:42.904Z",
+  "generatedAt": "2026-09-17T10:55:54.881Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -599,6 +599,13 @@
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
+      "answer": "(b) The asterisk * means multiply; / means divide.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
       "id": "p16",
       "level": "Core",
       "prompt": "In your own words, what is the difference between discrete and continuous data? Give an example of each.",
@@ -657,29 +664,22 @@
     {
       "id": "p32",
       "level": "Extension",
-      "prompt": "These tasks ask you to design, not just remember. Write or sketch your answers.",
+      "prompt": "Design a database table to store information about five countries. Write down at least four sensible field names and the data type for each field. (Hint: think about the Oman example - country name, size, population, language, currency.)",
       "answer": "Sensible fields: CountryName (text/string), Size_km2 (integer), Population (integer), Language (text), Currency (text/string). A primary key such as CountryID (integer) is a bonus.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
       "id": "p33",
       "level": "Extension",
-      "prompt": "Design a database table to store information about five countries. Write down at least four sensible field names and the data type for each field. (Hint: think about the Oman example - country name, size, population, language, currency.)",
+      "prompt": "Design a form to collect the height of every learner in your class for the school photo. Write the question, say what unit and precision you will accept, and say what validation rule you would use so only sensible answers are entered.",
       "answer": "Question: 'What is your height in centimetres, to one decimal place, for example 142.5?' Unit: centimetres. Precision: one decimal place. Validation rule: allow a decimal number between about 100 and 200 only (using Data > Validity in Calc), so words and silly numbers are refused.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
       "id": "p34",
       "level": "Extension",
-      "prompt": "Design a form to collect the height of every learner in your class for the school photo. Write the question, say what unit and precision you will accept, and say what validation rule you would use so only sensible answers are entered.",
-      "answer": "Sensible fields: ItemName (text), Price (currency or integer), NumberInStock (integer), OnSale (Yes/No / Boolean). A primary key such as ItemID (integer) is a good extra.",
-      "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
-    },
-    {
-      "id": "p35",
-      "level": "Extension",
       "prompt": "Design a database table for Aunt Amara's shop stock. Include a field for the item name, the price, the number in stock, and whether the item is on sale. Give the data type for each field.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "Sensible fields: ItemName (text), Price (currency or integer), NumberInStock (integer), OnSale (Yes/No / Boolean). A primary key such as ItemID (integer) is a good extra.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     }
   ],

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-09-17T10:33:42.997Z",
+  "generatedAt": "2026-09-17T10:55:54.975Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -751,57 +751,57 @@
     {
       "id": "p31",
       "level": "Challenge",
-      "prompt": "Each program has a blank shown as ______. Write the code that belongs in the blank.",
+      "prompt": "Display a message\nFill the blank so it prints the message:\n______(\"I love learning Python\")",
       "answer": "print -> print(\"I love learning Python\")",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
     },
     {
-      "id": "p33",
+      "id": "p32",
       "level": "Challenge",
       "prompt": "Store then show a name\nFill the blank so it shows the stored name:\nname = \"Zane\"\nprint(\"Hello\", ______)",
       "answer": "name -> print(\"Hello\", name). Do not put quotes around name, or it prints the word 'name'.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
     },
     {
-      "id": "p34",
+      "id": "p33",
       "level": "Challenge",
       "prompt": "Cast an input for maths\nFill the blank so age + 1 works:\nage = ______(input(\"Enter your age: \"))\nprint(\"Next year you will be\", age + 1)",
       "answer": "int -> age = int(input(\"Enter your age: \")). This lets age + 1 work as a number.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
     },
     {
-      "id": "p35",
+      "id": "p34",
       "level": "Challenge",
       "prompt": "Area of a square\nFill the blank with the correct operator:\nlength = int(input(\"Enter the length: \"))\narea = length ______ length\nprint(\"The area is\", area)",
       "answer": "* -> area = length * length. The star means multiply.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
     },
     {
-      "id": "p37",
+      "id": "p36",
       "level": "Extension",
       "prompt": "Each program has exactly one error. Find it, name it, and write the corrected line.",
-      "answer": "Case error. Print has a capital P. Corrected: print(\"Hello world\")",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
+    },
+    {
+      "id": "p37",
+      "level": "Extension",
+      "prompt": "Print(\"Hello world\")",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
     },
     {
       "id": "p38",
       "level": "Extension",
-      "prompt": "Print(\"Hello world\")",
-      "answer": "Missing comma. There is no comma between the text and the calculation. Corrected: print(\"The total is\", 7 + 3) (this displays: The total is 10)",
+      "prompt": "print(\"The total is\" 7 + 3)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
     },
     {
       "id": "p39",
       "level": "Extension",
-      "prompt": "print(\"The total is\" 7 + 3)",
-      "answer": "Variable name mismatch. Line 1 defines name, but line 2 uses names. Corrected line 2: print(\"The name you entered was\", name)",
-      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
-    },
-    {
-      "id": "p40",
-      "level": "Extension",
       "prompt": "name = input(\"Enter a name\")",
-      "answer": "Inputs not cast. Both inputs are strings, so + joins them (50 and 100 give 50100). Corrected: num1 = int(input(\"Enter the first number: \")) and num2 = int(input(\"Enter the second number: \")).",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
     }
   ],
@@ -1360,7 +1360,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Each program has a blank shown as ______. Write the code that belongs in the blank.",
+      "prompt": "Display a message\nFill the blank so it prints the message:\n______(\"I love learning Python\")",
       "answer": "print -> print(\"I love learning Python\")",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: print -> print(\"I love learning Python\")"
@@ -1370,50 +1370,50 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "Display a message\nFill the blank so it prints the message:\n______(\"I love learning Python\")",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
-      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
-    },
-    {
-      "id": "rp03",
-      "outcomeId": "lo03",
-      "difficulty": "Core",
-      "context": "Market",
       "prompt": "Store then show a name\nFill the blank so it shows the stored name:\nname = \"Zane\"\nprint(\"Hello\", ______)",
       "answer": "name -> print(\"Hello\", name). Do not put quotes around name, or it prints the word 'name'.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: name -> print(\"Hello\", name). Do not put quotes around name, or it prints the word 'name'."
     },
     {
-      "id": "rp04",
-      "outcomeId": "lo04",
-      "difficulty": "Challenge",
-      "context": "Community",
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
       "prompt": "Cast an input for maths\nFill the blank so age + 1 works:\nage = ______(input(\"Enter your age: \"))\nprint(\"Next year you will be\", age + 1)",
       "answer": "int -> age = int(input(\"Enter your age: \")). This lets age + 1 work as a number.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: int -> age = int(input(\"Enter your age: \")). This lets age + 1 work as a number."
     },
     {
-      "id": "rp05",
-      "outcomeId": "lo05",
+      "id": "rp04",
+      "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "context": "Travel",
+      "context": "Community",
       "prompt": "Area of a square\nFill the blank with the correct operator:\nlength = int(input(\"Enter the length: \"))\narea = length ______ length\nprint(\"The area is\", area)",
       "answer": "* -> area = length * length. The star means multiply.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: * -> area = length * length. The star means multiply."
     },
     {
-      "id": "rp06",
-      "outcomeId": "lo06",
+      "id": "rp05",
+      "outcomeId": "lo05",
       "difficulty": "Challenge",
-      "context": "Health",
+      "context": "Travel",
       "prompt": "A condition\nFill the blank so 'You passed' shows for 50 or more:\nscore = int(input(\"Enter your score: \"))\nif score ______ 50:\nprint(\"You passed\")\nelse:\nprint(\"Try again\")",
       "answer": ">= -> if score >= 50. Greater-than-or-equal-to means 50 counts as a pass.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: >= -> if score >= 50. Greater-than-or-equal-to means 50 counts as a pass."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "Each program has exactly one error. Find it, name it, and write the corrected line.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
     }
   ],
   "reasoningPrompts": [

@@ -438,6 +438,7 @@
   </header>
   <nav class="steps-nav" aria-label="Steps in this lesson">
     <a href="#s28"><b>28</b> Real life</a>
+    <a href="#selfcheck"><b>&#10003;</b> What I can do</a>
   </nav>
   <!-- STEP 28 -->
   <section class="step" id="s28">
@@ -480,6 +481,14 @@
     </div>
     <div class="note"><b>Count the hops, not the terms.</b> To get from the 1st term to the 8th you use the rule 7 times. Writing the sequence out is never wrong, but "start + 7 × step" gets there faster.</div>
   </section>
+    <!-- ehel-g5-self-check: Cambridge's own Stage 5 statements. A step in this page's
+         own idiom, not a deck slide - Grade 5 keeps its design. -->
+    <section class="step" id="selfcheck">
+      <div class="step-head"><span class="step-num">Check</span><h2>What I can do</h2></div>
+      <p class="intro">Cambridge asks these about this lesson. Tick the ones that are true for you. Nothing here is marked and nobody is told &mdash; it is for you.</p>
+      <div id="sclist"></div>
+    </section>
+  
 
 </div>
 
@@ -738,5 +747,56 @@
 
 })();
 </script>
+<script>
+/* ehel-g5-self-check - see add-self-check.py.
+   Its own script tag rather than a line inside the page's existing IIFE: that
+   closure owns every picker on the page, and threading an unrelated widget
+   through it would put this one edit inside the thing most likely to be edited
+   next. Nothing here is a score - no mark, no report, no pass depends on it. */
+(function () {
+  const KEY = "ehel-g5-sc-real-life";
+  const ITEMS = [{ t: "I can apply skills of rounding and calculating to problems", p: "W p54" }, { t: "I can decide whether to work mentally, with jottings or using a formal method", p: "W p23" }, { t: "I can estimate and multiply whole numbers up to 1000 by 1-digit or 2-digit whole numbers", p: "W p85" }, { t: "I can estimate and divide whole numbers up to 1000 by 1-digit whole numbers", p: "W p85" }];
+  const SCALE = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I can't do this yet"]];
+  const host = document.getElementById("sclist");
+  if (!host) return;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } };
+  const save = (m) => { try { localStorage.setItem(KEY, JSON.stringify(m)); } catch (e) {} };
+  function paint() {
+    const marks = load();
+    host.innerHTML = ITEMS.map((it, i) =>
+      '<div class="sc-row"><p class="sc-say">' + esc(it.t)
+      + ' <span class="sc-src">' + esc(it.p) + '</span></p>'
+      + SCALE.map(([v, label]) =>
+          '<button type="button" class="sc-opt' + (marks[i] === v ? " on" : "")
+          + '" data-i="' + i + '" data-v="' + v + '" aria-pressed="'
+          + (marks[i] === v) + '">' + esc(label) + "</button>").join("")
+      + "</div>").join("");
+  }
+  host.addEventListener("click", (e) => {
+    const b = e.target.closest(".sc-opt");
+    if (!b) return;
+    const marks = load(), i = Number(b.dataset.i);
+    /* tapping the same one again clears it: a child who changes their mind must
+       be able to say nothing, not only swap to another answer */
+    marks[i] = marks[i] === b.dataset.v ? "" : b.dataset.v;
+    save(marks);
+    paint();
+  });
+  paint();
+})();
+</script>
+
 </body>
 </html>
+<style>/* ehel-g5-self-check - see add-self-check.py */
+  #sclist { margin-top: 6px; }
+  #sclist .sc-row { padding: 11px 0; border-top: 1px solid var(--line); }
+  #sclist .sc-say { margin: 0 0 7px; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  #sclist .sc-src { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  #sclist .sc-opt { font: inherit; font-size: 13px; padding: 6px 12px; margin: 0 7px 7px 0;
+    border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--muted); cursor: pointer; }
+  #sclist .sc-opt.on { background: var(--good-soft); border-color: var(--good);
+    color: var(--good); font-weight: 600; }
+</style>

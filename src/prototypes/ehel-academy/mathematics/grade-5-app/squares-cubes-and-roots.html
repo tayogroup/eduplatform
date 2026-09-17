@@ -444,6 +444,7 @@
     <a href="#s5"><b>5</b> Cube numbers</a>
     <a href="#s6"><b>6</b> Cube roots</a>
     <a href="#s7"><b>7</b> Triangular numbers</a>
+    <a href="#selfcheck"><b>&#10003;</b> What I can do</a>
   </nav>
   <!-- STEP 1 -->
   <section class="step" id="s1">
@@ -609,6 +610,14 @@
     </div>
     <div class="note"><b>Two triangles make a rectangle, and two triangles in a row make a square.</b> A triangle of 4 rows and an upside-down copy fit into a 4 by 5 rectangle of 20 dots. So one triangle is 20 ÷ 2 = 10. That is where rows × (rows + 1) ÷ 2 comes from. It works however many rows you have, without adding a single one of them up. The other pairing is a surprise. Add two triangular numbers that sit NEXT to each other in the list, 6 + 10, and you get 16, a square number. Every neighbouring pair does it, which is why the last column of the table is full of squares.</div>
   </section>
+    <!-- ehel-g5-self-check: Cambridge's own Stage 5 statements. A step in this page's
+         own idiom, not a deck slide - Grade 5 keeps its design. -->
+    <section class="step" id="selfcheck">
+      <div class="step-head"><span class="step-num">Check</span><h2>What I can do</h2></div>
+      <p class="intro">Cambridge asks these about this lesson. Tick the ones that are true for you. Nothing here is marked and nobody is told &mdash; it is for you.</p>
+      <div id="sclist"></div>
+    </section>
+  
 
 </div>
 
@@ -1008,5 +1017,56 @@
 
 })();
 </script>
+<script>
+/* ehel-g5-self-check - see add-self-check.py.
+   Its own script tag rather than a line inside the page's existing IIFE: that
+   closure owns every picker on the page, and threading an unrelated widget
+   through it would put this one edit inside the thing most likely to be edited
+   next. Nothing here is a score - no mark, no report, no pass depends on it. */
+(function () {
+  const KEY = "ehel-g5-sc-squares-cubes-and-roots";
+  const ITEMS = [{ t: "I can find a square number as the result of multiplying a number by itself", p: "G p154" }, { t: "I can explain that square numbers can be represented as square arrays with the same number of rows and columns", p: "G p154" }, { t: "I can explain the link between the sum of consecutive odd numbers, starting from 1, and square numbers", p: "G p154" }, { t: "I can explain why a number is not square", p: "G p154" }, { t: "I can explain that triangular numbers can be represented as a triangular pattern of counters where the rows increase by 1 each time", p: "G p156" }, { t: "I can build a triangular number, and build the next triangular number from the previous one", p: "G p156" }, { t: "I can explain the link between the sum of consecutive numbers, starting from 1, and triangular numbers", p: "G p156" }];
+  const SCALE = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I can't do this yet"]];
+  const host = document.getElementById("sclist");
+  if (!host) return;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } };
+  const save = (m) => { try { localStorage.setItem(KEY, JSON.stringify(m)); } catch (e) {} };
+  function paint() {
+    const marks = load();
+    host.innerHTML = ITEMS.map((it, i) =>
+      '<div class="sc-row"><p class="sc-say">' + esc(it.t)
+      + ' <span class="sc-src">' + esc(it.p) + '</span></p>'
+      + SCALE.map(([v, label]) =>
+          '<button type="button" class="sc-opt' + (marks[i] === v ? " on" : "")
+          + '" data-i="' + i + '" data-v="' + v + '" aria-pressed="'
+          + (marks[i] === v) + '">' + esc(label) + "</button>").join("")
+      + "</div>").join("");
+  }
+  host.addEventListener("click", (e) => {
+    const b = e.target.closest(".sc-opt");
+    if (!b) return;
+    const marks = load(), i = Number(b.dataset.i);
+    /* tapping the same one again clears it: a child who changes their mind must
+       be able to say nothing, not only swap to another answer */
+    marks[i] = marks[i] === b.dataset.v ? "" : b.dataset.v;
+    save(marks);
+    paint();
+  });
+  paint();
+})();
+</script>
+
 </body>
 </html>
+<style>/* ehel-g5-self-check - see add-self-check.py */
+  #sclist { margin-top: 6px; }
+  #sclist .sc-row { padding: 11px 0; border-top: 1px solid var(--line); }
+  #sclist .sc-say { margin: 0 0 7px; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  #sclist .sc-src { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  #sclist .sc-opt { font: inherit; font-size: 13px; padding: 6px 12px; margin: 0 7px 7px 0;
+    border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--muted); cursor: pointer; }
+  #sclist .sc-opt.on { background: var(--good-soft); border-color: var(--good);
+    color: var(--good); font-weight: 600; }
+</style>

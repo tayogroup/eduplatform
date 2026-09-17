@@ -444,6 +444,7 @@
     <a href="#s25"><b>25</b> Fractions</a>
     <a href="#s26"><b>26</b> Percentages</a>
     <a href="#s27"><b>27</b> Part to part, part to whole</a>
+    <a href="#selfcheck"><b>&#10003;</b> What I can do</a>
   </nav>
   <!-- STEP 21 -->
   <section class="step" id="s21">
@@ -630,6 +631,14 @@
     </div>
     <div class="note"><b>The commonest mistake is reading a ratio as a fraction.</b> 3 : 2 does not mean 3/2, and it does not mean three out of two, which is not a thing. Both of its numbers are <b>parts</b>, and the whole is what you get by adding them. 3 + 2 = 5, so the proportion is three out of five. The colon and the fraction bar look similar and mean quite different things. <b>A ratio simplifies exactly like a fraction, though.</b> 6 : 4 is the same mix as 3 : 2. Doubling both parts changes how many counters are on the table, not how they are shared. That is the same argument Step 25 made about 3/4 and 6/8. <b>And a proportion is the one you can turn into a percentage</b>, because a percentage compares part to whole too. A ratio cannot be a percentage on its own; you have to find the whole first.</div>
   </section>
+    <!-- ehel-g5-self-check: Cambridge's own Stage 5 statements. A step in this page's
+         own idiom, not a deck slide - Grade 5 keeps its design. -->
+    <section class="step" id="selfcheck">
+      <div class="step-head"><span class="step-num">Check</span><h2>What I can do</h2></div>
+      <p class="intro">Cambridge asks these about this lesson. Tick the ones that are true for you. Nothing here is marked and nobody is told &mdash; it is for you.</p>
+      <div id="sclist"></div>
+    </section>
+  
 
 </div>
 
@@ -1135,5 +1144,56 @@
 
 })();
 </script>
+<script>
+/* ehel-g5-self-check - see add-self-check.py.
+   Its own script tag rather than a line inside the page's existing IIFE: that
+   closure owns every picker on the page, and threading an unrelated widget
+   through it would put this one edit inside the thing most likely to be edited
+   next. Nothing here is a score - no mark, no report, no pass depends on it. */
+(function () {
+  const KEY = "ehel-g5-sc-past-the-whole-numbers";
+  const ITEMS = [{ t: "I can explain the values of digits in numerals where digits are repeated, for example the first digit 1 in 102.14 represents 1 hundred, whereas the second digit 1 represents 1 tenth", p: "W p43" }, { t: "I can decompose numbers into the related place value numbers, including decimals, for example 20.56 = 20 + 0 + 0.5 + 0.06", p: "W p43" }, { t: "I can multiply and divide whole numbers by 10, 100 and 1000 and explain the answers using place value", p: "W p10" }, { t: "I can position positive and negative numbers around zero, recognising that negative numbers are to the left of zero on a number line", p: "W p10" }, { t: "I can round numbers with one decimal place to the nearest whole number", p: "W p85" }, { t: "I can add or subtract numbers with one or two decimal places", p: "W p85" }, { t: "I can estimate and add or subtract fractions with the same denominators that are multiples of each other", p: "W p38" }, { t: "I can add fractions where denominators are multiples of each other", p: "G p90" }, { t: "I can subtract fractions where denominators are multiples of each other", p: "G p90" }, { t: "I can describe a ratio or proportion in words, as a fraction or a percentage", p: "W p43" }];
+  const SCALE = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I can't do this yet"]];
+  const host = document.getElementById("sclist");
+  if (!host) return;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } };
+  const save = (m) => { try { localStorage.setItem(KEY, JSON.stringify(m)); } catch (e) {} };
+  function paint() {
+    const marks = load();
+    host.innerHTML = ITEMS.map((it, i) =>
+      '<div class="sc-row"><p class="sc-say">' + esc(it.t)
+      + ' <span class="sc-src">' + esc(it.p) + '</span></p>'
+      + SCALE.map(([v, label]) =>
+          '<button type="button" class="sc-opt' + (marks[i] === v ? " on" : "")
+          + '" data-i="' + i + '" data-v="' + v + '" aria-pressed="'
+          + (marks[i] === v) + '">' + esc(label) + "</button>").join("")
+      + "</div>").join("");
+  }
+  host.addEventListener("click", (e) => {
+    const b = e.target.closest(".sc-opt");
+    if (!b) return;
+    const marks = load(), i = Number(b.dataset.i);
+    /* tapping the same one again clears it: a child who changes their mind must
+       be able to say nothing, not only swap to another answer */
+    marks[i] = marks[i] === b.dataset.v ? "" : b.dataset.v;
+    save(marks);
+    paint();
+  });
+  paint();
+})();
+</script>
+
 </body>
 </html>
+<style>/* ehel-g5-self-check - see add-self-check.py */
+  #sclist { margin-top: 6px; }
+  #sclist .sc-row { padding: 11px 0; border-top: 1px solid var(--line); }
+  #sclist .sc-say { margin: 0 0 7px; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  #sclist .sc-src { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  #sclist .sc-opt { font: inherit; font-size: 13px; padding: 6px 12px; margin: 0 7px 7px 0;
+    border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--muted); cursor: pointer; }
+  #sclist .sc-opt.on { background: var(--good-soft); border-color: var(--good);
+    color: var(--good); font-weight: 600; }
+</style>

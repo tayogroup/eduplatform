@@ -444,6 +444,7 @@
     <a href="#s18"><b>18</b> What two numbers share</a>
     <a href="#s19"><b>19</b> Divisibility rules</a>
     <a href="#s20"><b>20</b> Prime numbers</a>
+    <a href="#selfcheck"><b>&#10003;</b> What I can do</a>
   </nav>
   <!-- STEP 14 -->
   <section class="step" id="s14">
@@ -644,6 +645,14 @@
     </div>
     <div class="note"><b>Every whole number above 1 is one or the other.</b> Exactly two factors and it is <b>prime</b>. More than two and it is <b>composite</b>, meaning it can be put together by multiplying smaller numbers. 21 is 3 × 7, 49 is 7 &times; 7, and every number this sieve crosses out is one. <b>1 is the single exception</b>. That is why it sits dashed on the square rather than crossed out or shaded: with one factor it is neither. <b>Every other sequence in this lesson has a rule. This one has none.</b> The gaps go 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4. No pattern anybody has ever found, and that is not for want of looking. Three things are worth carrying away. <b>2 is the only even prime</b>. Every other even number can be shared into two equal piles, which is exactly what Step 15 was about. <b>A square number is never prime</b> once you are past 1. n × n always has n as a factor: 49 has 7, 100 has 10. And <b>the first number left standing after each crossing-out is the square of the next one to try</b>: 9, then 25, then 49. That is why 7 is where you can stop on a hundred square. The next try would be 11, and 11 &times; 11 = 121 is already past 100.</div>
   </section>
+    <!-- ehel-g5-self-check: Cambridge's own Stage 5 statements. A step in this page's
+         own idiom, not a deck slide - Grade 5 keeps its design. -->
+    <section class="step" id="selfcheck">
+      <div class="step-head"><span class="step-num">Check</span><h2>What I can do</h2></div>
+      <p class="intro">Cambridge asks these about this lesson. Tick the ones that are true for you. Nothing here is marked and nobody is told &mdash; it is for you.</p>
+      <div id="sclist"></div>
+    </section>
+  
 
 </div>
 
@@ -1102,5 +1111,56 @@
 
 })();
 </script>
+<script>
+/* ehel-g5-self-check - see add-self-check.py.
+   Its own script tag rather than a line inside the page's existing IIFE: that
+   closure owns every picker on the page, and threading an unrelated widget
+   through it would put this one edit inside the thing most likely to be edited
+   next. Nothing here is a score - no mark, no report, no pass depends on it. */
+(function () {
+  const KEY = "ehel-g5-sc-how-whole-numbers-are-built";
+  const ITEMS = [{ t: "I can use the order of operations correctly to carry out calculations where there are no brackets", p: "W p54" }, { t: "I can recognise and use symbols or shapes to represent unknown quantities", p: "W p85" }, { t: "I can use related facts and inverse operations to help with some missing number problems", p: "W p23" }, { t: "I can use the laws of arithmetic to help me simplify calculations", p: "W p23" }, { t: "I can use a test of divisibility to recognise numbers that are divisible by 4", p: "G p159" }, { t: "I can explain why multiples of 8 are also multiples of 4", p: "G p159" }, { t: "I can explain why a number is not divisible by 4 or by 8", p: "G p159" }, { t: "I can explain what a prime number is", p: "G p161" }, { t: "I can explain why a number is an example of a prime number", p: "G p161" }, { t: "I can use a 100 grid and the sieve of Eratosthenes to find all the prime numbers to 100", p: "G p161" }];
+  const SCALE = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I can't do this yet"]];
+  const host = document.getElementById("sclist");
+  if (!host) return;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } };
+  const save = (m) => { try { localStorage.setItem(KEY, JSON.stringify(m)); } catch (e) {} };
+  function paint() {
+    const marks = load();
+    host.innerHTML = ITEMS.map((it, i) =>
+      '<div class="sc-row"><p class="sc-say">' + esc(it.t)
+      + ' <span class="sc-src">' + esc(it.p) + '</span></p>'
+      + SCALE.map(([v, label]) =>
+          '<button type="button" class="sc-opt' + (marks[i] === v ? " on" : "")
+          + '" data-i="' + i + '" data-v="' + v + '" aria-pressed="'
+          + (marks[i] === v) + '">' + esc(label) + "</button>").join("")
+      + "</div>").join("");
+  }
+  host.addEventListener("click", (e) => {
+    const b = e.target.closest(".sc-opt");
+    if (!b) return;
+    const marks = load(), i = Number(b.dataset.i);
+    /* tapping the same one again clears it: a child who changes their mind must
+       be able to say nothing, not only swap to another answer */
+    marks[i] = marks[i] === b.dataset.v ? "" : b.dataset.v;
+    save(marks);
+    paint();
+  });
+  paint();
+})();
+</script>
+
 </body>
 </html>
+<style>/* ehel-g5-self-check - see add-self-check.py */
+  #sclist { margin-top: 6px; }
+  #sclist .sc-row { padding: 11px 0; border-top: 1px solid var(--line); }
+  #sclist .sc-say { margin: 0 0 7px; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  #sclist .sc-src { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  #sclist .sc-opt { font: inherit; font-size: 13px; padding: 6px 12px; margin: 0 7px 7px 0;
+    border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--muted); cursor: pointer; }
+  #sclist .sc-opt.on { background: var(--good-soft); border-color: var(--good);
+    color: var(--good); font-weight: 600; }
+</style>

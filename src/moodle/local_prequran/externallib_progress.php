@@ -47,6 +47,15 @@ class local_prequran_progress_external extends external_api {
      * read whole on every request. See case 'draft.saved'. */
     const MAX_DRAFT_CHARS = 20000;
 
+    /** Most draft sections stored for one unit. Measured before it was
+     * chosen: the widest English unit authors 8 writing and answer
+     * sections and the median is 6, so this is five times the real
+     * maximum. It does not bound a prolific learner - it bounds a client
+     * inventing section keys, which is the only way the map can grow
+     * without limit, since $ev['section'] is used as the key unchecked.
+     * See cap_drafts(). */
+    const MAX_DRAFT_SECTIONS = 40;
+
     const MAX_TUTORING_SESSIONS = 20;
 
     /**
@@ -71,6 +80,57 @@ class local_prequran_progress_external extends external_api {
      * character: mb_substr counts characters, substr counts bytes, so the
      * fallback is only reached on a build without mbstring.
      */
+    /**
+     * Keep one unit's draft map within MAX_DRAFT_SECTIONS.
+     *
+     * Two rules, and both exist so this cannot cost a learner live work:
+     *
+     *  - UPDATING an existing section never evicts anything. A learner editing
+     *    the same eight drafts all term never reaches this code, whatever the
+     *    cap is, because the map does not grow.
+     *  - A NEW section on a full map evicts the OLDEST by `at`, never the
+     *    incoming one. Refusing the incoming would throw away the writing the
+     *    learner is doing right now, which is the worst of the available
+     *    failures; and on a map only a runaway client can have filled, the
+     *    oldest invented key is the least costly thing to lose.
+     *
+     * An entry with no `at` sorts oldest: it predates the timestamp being sent,
+     * so it is the least recently confirmed.
+     *
+     * Eviction is RECORDED on the unit state rather than done quietly, for the
+     * same reason truncation is: nothing downstream may present a trimmed map
+     * as the whole of what a child wrote.
+     */
+    private static function cap_drafts(array $drafts, string $incoming): array {
+        // A FAST PATH, not a second guard, and it is worth saying so: this
+        // condition is extensionally EQUAL to the loop's own break below, so
+        // deleting it changes no output and a mutation of it survives by
+        // design. What it buys is that the ordinary save - every save a real
+        // learner ever makes - returns without building the sort order.
+        if (count($drafts) <= self::MAX_DRAFT_SECTIONS) {
+            return [$drafts, 0];
+        }
+        $order = [];
+        foreach ($drafts as $section => $d) {
+            // the incoming section is never a candidate for eviction
+            if ((string)$section === $incoming) {
+                continue;
+            }
+            $order[(string)$section] = is_array($d) && is_scalar($d['at'] ?? null)
+                ? (string)$d['at'] : '';
+        }
+        asort($order);                       // oldest (and missing) first
+        $evicted = 0;
+        foreach (array_keys($order) as $section) {
+            if (count($drafts) <= self::MAX_DRAFT_SECTIONS) {
+                break;
+            }
+            unset($drafts[$section]);
+            $evicted++;
+        }
+        return [$drafts, $evicted];
+    }
+
     private static function clamp_draft_text($raw): array {
         $text = is_scalar($raw) ? (string)$raw : '';
         $len = function_exists('mb_strlen') ? mb_strlen($text) : strlen($text);
@@ -426,6 +486,10 @@ class local_prequran_progress_external extends external_api {
                     'at' => $ev['at'] ?? null,
                     'truncated' => $draftcut,
                 ];
+                [$drafts, $evicted] = self::cap_drafts($drafts, (string)($ev['section'] ?? '_'));
+                if ($evicted > 0) {
+                    $state['draftsEvicted'] = (int)($state['draftsEvicted'] ?? 0) + $evicted;
+                }
                 break;
             case 'tutoring.session':
                 // A finished help session of the tutoring-support category —

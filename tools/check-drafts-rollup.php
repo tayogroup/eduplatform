@@ -61,6 +61,16 @@ $clampsrc = str_replace(['private static function clamp_draft_text', 'self::MAX_
                         ['function clamp_draft_text', 'MAX_DRAFT_CHARS'], $clampsrc);
 eval($clampsrc);
 
+if (!preg_match('/const MAX_DRAFT_SECTIONS = (\d+);/', $ing, $ms)) {
+    fwrite(STDERR, "extract failed: MAX_DRAFT_SECTIONS not found in the ingest\n");
+    exit(2);
+}
+define('MAX_DRAFT_SECTIONS', (int)$ms[1]);
+$capsrc = extract_fn($ing, 'cap_drafts');
+$capsrc = str_replace(['private static function cap_drafts', 'self::MAX_DRAFT_SECTIONS'],
+                      ['function cap_drafts', 'MAX_DRAFT_SECTIONS'], $capsrc);
+eval($capsrc);
+
 $fails = 0;
 function ok(string $label, bool $cond, $detail = null) {
     global $fails;
@@ -160,6 +170,52 @@ $r = pqpr_drafts_from_state(['drafts' => [
     'a' => ['text' => 'short enough to fit the display clamp', 'truncated' => true],
 ]], 'u01', 0);
 ok('the reader honours the stored flag', ($r[0]['truncated'] ?? false) === true);
+
+echo "\nHow MANY drafts one unit may hold — bounded without losing live work:\n";
+// Measured before it was chosen: the widest English unit authors 8 draft
+// sections, median 6. Same both-ends rule as the character cap: a section cap
+// of 5 would delete real writing, one of 100000 would bound nothing.
+ok('the section cap clears the widest real unit', MAX_DRAFT_SECTIONS >= 16, MAX_DRAFT_SECTIONS);
+ok('and still bounds the row', MAX_DRAFT_SECTIONS <= 200, MAX_DRAFT_SECTIONS);
+
+$full = [];
+for ($i = 0; $i < MAX_DRAFT_SECTIONS; $i++) {
+    $full["s{$i}"] = ['text' => 'x', 'at' => sprintf('2026-01-%02dT00:00:00Z', ($i % 28) + 1)];
+}
+[$kept, $ev] = cap_drafts($full, 's0');
+ok('a map exactly at the cap is untouched', $ev === 0 && count($kept) === MAX_DRAFT_SECTIONS, $ev);
+
+// UPDATING an existing section must never evict, whatever the cap is.
+$upd = $full; $upd['s3'] = ['text' => 'edited', 'at' => '2030-01-01T00:00:00Z'];
+[$kept, $ev] = cap_drafts($upd, 's3');
+ok('editing an existing draft never evicts', $ev === 0 && count($kept) === MAX_DRAFT_SECTIONS, $ev);
+
+// A NEW section on a full map: the incoming survives, the OLDEST goes.
+$over = $full;
+$over['brand-new'] = ['text' => 'the writing being done right now', 'at' => '2030-06-01T00:00:00Z'];
+[$kept, $ev] = cap_drafts($over, 'brand-new');
+ok('one over the cap evicts exactly one', $ev === 1, $ev);
+ok('the learner\'s incoming draft is never the one dropped', isset($kept['brand-new']));
+// THE GUARD, ACTUALLY EXERCISED. Above, the incoming draft carries the newest
+// timestamp, so it survives eviction whether or not the guard protecting it
+// exists - mutation found the assertion above passed with that guard deleted.
+// A client that sends no `at` sorts OLDEST, which is the only case where the
+// guard is what saves the writing a child is doing right now.
+$beingtyped = $full;
+$beingtyped['being-typed'] = ['text' => 'the words the child is writing now'];
+[$kept2, $ev2] = cap_drafts($beingtyped, 'being-typed');
+ok('an untimestamped INCOMING draft is still never evicted',
+    isset($kept2['being-typed']), array_keys($kept2));
+ok('something else went instead', $ev2 === 1 && count($kept2) === MAX_DRAFT_SECTIONS, $ev2);
+ok('the oldest is what goes', !isset($kept['s0']), array_keys($kept));
+ok('and the map is back at the cap', count($kept) === MAX_DRAFT_SECTIONS, count($kept));
+
+// An entry with no timestamp predates the stamp being sent, so it sorts oldest.
+$noat = $full; unset($noat['s0']);
+$noat['ancient'] = ['text' => 'no at field'];
+$noat['brand-new'] = ['text' => 'now', 'at' => '2030-06-01T00:00:00Z'];
+[$kept, $ev] = cap_drafts($noat, 'brand-new');
+ok('an entry with no timestamp is evicted first', !isset($kept['ancient']), array_keys($kept));
 
 echo "\n" . ($fails ? "{$fails} FAILURE(S)\n" : "all checks passed\n");
 exit($fails ? 1 : 0);

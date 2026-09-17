@@ -286,18 +286,37 @@ def lesson_payload(unit, pictures):
 # whole shell section speaks that section's intro; a step finer than a section —
 # one word group, one pattern, one reading — keeps its own title, because the
 # intro would describe a page the learner is not on.
+def spoken(title):
+    """A title as a spoken label: end it with a full stop unless it has its own.
+
+    A title is not a sentence, so the deck adds the full stop that tells the
+    voice to stop. But many titles are questions — "What is your name?", "Same
+    or different?", "Thirteen or thirty?" — and appending to those produced
+    "What is your name?." Across the four levels 44 slide labels carried a
+    doubled mark, 24 of them in Intro, and they were about to be recorded that
+    way. This is the same guard `introNarration` already applies in
+    shell/subjects/intensive-english-sections.js.
+
+    Levels 1 to 3 keep their current labels until they are next rebuilt, because
+    their clips are recorded against the old text; a rebuild there changes 20
+    hashes and needs those 20 clips re-recorded and the old ones pruned.
+    """
+    title = str(title).strip()
+    return title if title[-1:] in ".?!" else title + "."
+
+
 def steps_for(data, intros):
     steps = []
     steps.append(("Overview", intros["overview"], "unitOverview(%d, '%s')"))
     steps.append(("The lesson", intros["lecture"], "lecture(%d, '%s')"))
     for n, g in enumerate(data["groups"]):
-        steps.append((g["title"], g["title"] + ".", "wordWalk(%d, '%s', LESSON.groups[" + str(n) + "])"))
+        steps.append((g["title"], spoken(g["title"]), "wordWalk(%d, '%s', LESSON.groups[" + str(n) + "])"))
     if sum(len(g["words"]) for g in data["groups"]) >= 4:
         steps.append(("Which word?", "Which word means this?", "wordCheck(%d, '%s', LESSON.groups.flatMap(g => g.words))"))
     for n, p in enumerate(data["patterns"]):
-        steps.append((p["title"], p["title"] + ".", "pattern(%d, '%s', LESSON.patterns[" + str(n) + "])"))
+        steps.append((p["title"], spoken(p["title"]), "pattern(%d, '%s', LESSON.patterns[" + str(n) + "])"))
     for n, r in enumerate(data["readings"]):
-        steps.append((r["title"], r["title"] + ".", "reading(%d, '%s', LESSON.readings[" + str(n) + "])"))
+        steps.append((r["title"], spoken(r["title"]), "reading(%d, '%s', LESSON.readings[" + str(n) + "])"))
     if data["questions"]:
         steps.append(("Questions", intros["comprehension"], "questions(%d, '%s', LESSON.questions)"))
     if data["speaking"]:

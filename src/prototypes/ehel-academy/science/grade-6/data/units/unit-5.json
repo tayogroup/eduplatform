@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:02:44.023Z",
+  "generatedAt": "2026-09-18T08:12:32.112Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -1064,6 +1064,32 @@
         "Anyone wiring a house or fixing a phone"
       ],
       "modelAnswer": "Every wire in the building: metal inside because it conducts, plastic around it because it insulates and keeps the current from reaching your hand or the neighbouring wire. The same choice is in the handle of a screwdriver or a pair of pliers. Anyone wiring a house, fitting a solar panel or repairing a phone is making that decision constantly - which part must carry the current, and which part must refuse to."
+    },
+    {
+      "id": "6-enq-29",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You are told a mystery material conducts electricity well. Without testing it, predict whether it will also conduct heat well, and explain why the same substance behaves the same way for both.",
+      "keyIdeas": [
+        "A good electrical conductor is very likely a good thermal conductor too",
+        "In a metal, loose electrons carry both electric current and heat energy",
+        "Electrical and thermal conductivity are both properties of the same substance"
+      ],
+      "modelAnswer": "I would predict it also conducts heat well - it is almost certainly a metal. In a metal, some electrons are not tied to one atom and are free to move through the whole piece; push them with a cell and you get an electric current, but warm one end and those same loose electrons carry the heat energy along too. Electrical and thermal conductivity are two properties of the same substance for the same underlying reason, which is why they are usually found together."
+    },
+    {
+      "id": "6-enq-31",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "You already built a series circuit with two lamps and saw both glow dimly. Now wire the SAME two lamps and cell in parallel instead, and compare. What do you predict will happen to the brightness, and what happens if you unscrew one lamp?",
+      "keyIdeas": [
+        "In parallel, each lamp gets the cell's full push and glows brighter",
+        "Unscrewing one lamp in parallel leaves the other lit - it has its own branch",
+        "In series, unscrewing either lamp breaks the one loop and both go out"
+      ],
+      "modelAnswer": "In parallel, both lamps should glow brighter than they did in series, because each one now gets the cell's full push along its own branch rather than sharing one current with the other lamp. Unscrewing one lamp in the parallel circuit leaves the other one lit, because its branch is untouched - which is completely different from the series circuit, where unscrewing either lamp breaks the one loop and both go dark. Building both and comparing them directly is the only way to see that the same two lamps and the same cell can behave in two very different ways, depending only on how they are wired."
     }
   ],
   "assessment": {

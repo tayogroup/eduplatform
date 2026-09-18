@@ -4,8 +4,8 @@
   "curriculumCode": "0097",
   "stage": 6,
   "source": "Authored 2026-09-17 against Cambridge 0097 Stage 6. Not extracted from the Teacher's Resource, whose versions of these are addressed to a teacher delivering them aloud; this course has no teacher in the room.",
-  "minimumCovered": 20,
-  "_minimumCovered": "One prompt per unclaimed Stage 6 TWS/SIC objective. Coverage is a number that only goes up.",
+  "minimumCovered": 31,
+  "_minimumCovered": "One prompt per unclaimed Stage 6 TWS/SIC objective, plus eleven added 2026-09-18 for content objectives delivered ONLY by the concepts fixture, with no exploration, quiz item or reasoning prompt behind them at all: 6Bp.02, 6Bp.03, 6Bp.04, 6Be.02, 6Cc.02, 6Cc.03, 6Cp.01, 6Cp.02, 6Cp.03, 6Pf.05 and 6Pe.02. Coverage is a number that only goes up.",
   "prompts": [
     {
       "id": "6-enq-1", "unit": 1, "codes": ["6TWSp.04"], "outcomeId": "lo01", "difficulty": "Challenge",
@@ -126,6 +126,72 @@
       "prompt": "Where near you is the difference between a conductor and an insulator being used on purpose?",
       "keyIdeas": ["Metal inside a wire, plastic around it", "The handles of tools", "Anyone wiring a house or fixing a phone"],
       "modelAnswer": "Every wire in the building: metal inside because it conducts, plastic around it because it insulates and keeps the current from reaching your hand or the neighbouring wire. The same choice is in the handle of a screwdriver or a pair of pliers. Anyone wiring a house, fitting a solar panel or repairing a phone is making that decision constantly - which part must carry the current, and which part must refuse to."
+    },
+    {
+      "id": "6-enq-21", "unit": 1, "codes": ["6Bp.02"], "outcomeId": "lo07", "difficulty": "Core",
+      "prompt": "A cold, athlete's foot, and malaria are three different illnesses. Match each one to the KIND of germ that causes it: a virus, a fungus, or a parasite.",
+      "keyIdeas": ["A cold is caused by a virus", "Athlete's foot is caused by a fungus", "Malaria is caused by a parasite, carried by a mosquito"],
+      "modelAnswer": "A cold is caused by a virus, which copies itself inside your own cells. Athlete's foot is caused by a fungus, which grows on the skin. Malaria is caused by a parasite - a larger organism that lives inside the body - and in this case it is carried from person to person by a mosquito. Different kinds of germ, different diseases, and knowing which kind you are dealing with matters for how it spreads and how it is treated."
+    },
+    {
+      "id": "6-enq-22", "unit": 1, "codes": ["6Bp.03"], "outcomeId": "lo07", "difficulty": "Challenge",
+      "prompt": "A family boils their drinking water and sleeps under nets every night, and their children still catch colds at school. Does this mean the hygiene measures failed? Explain.",
+      "keyIdeas": ["Boiling blocks the water route; nets block the mosquito route", "A cold travels in droplets from another person, a different route entirely", "Each hygiene measure only blocks the route it is meant for"],
+      "modelAnswer": "No, the hygiene measures did not fail - they were never protecting against colds in the first place. Boiling water kills germs that travel in water, and a net stops the mosquito that carries malaria; neither one has anything to do with a cold, which travels in droplets from another child's cough or sneeze a metre away. Good hygiene works by matching the measure to the route the germ actually uses, not by making a person generally 'germ-proof'."
+    },
+    {
+      "id": "6-enq-23", "unit": 1, "codes": ["6Bp.04"], "outcomeId": "lo07", "difficulty": "Core",
+      "prompt": "Your skin is unbroken and you have just swallowed some food with a few germs on it. Name two defences your body already has against those germs, without you doing anything.",
+      "keyIdeas": ["Unbroken skin is a barrier that keeps germs out", "Stomach acid is strong enough to kill most swallowed germs", "Mucus in the nose and airways traps germs and dust"],
+      "modelAnswer": "My unbroken skin is already a barrier keeping germs from getting inside at all, and the acid in my stomach is strong enough to kill most of what I have just swallowed. My nose and airways are also lined with sticky mucus that traps germs before they get further in. These defences work every day without me noticing, which is exactly why I am not ill more often."
+    },
+    {
+      "id": "6-enq-24", "unit": 2, "codes": ["6Be.02"], "outcomeId": "lo08", "difficulty": "Challenge",
+      "prompt": "A pesticide sprayed on a field is far too weak to harm the algae in a nearby lake. Ten years later, the lake's fish eagles are struggling to raise chicks. Explain how a chemical too weak to harm algae ends up harming the top predator.",
+      "keyIdeas": ["The poison is not broken down and stays in each animal's body", "Each animal along the chain keeps everything its food had collected", "The dose gets more concentrated at every step - bioaccumulation"],
+      "modelAnswer": "The poison is not broken down in the body, so it stays there for life instead of passing out as waste. A small fish eats thousands of algae and keeps the tiny dose from every single one; a bigger fish eats many small fish and keeps all of theirs; a fish eagle eats many bigger fish. At each step the animal keeps everything its food had collected, so the dose multiplies every time it moves up the chain - which is why the fish eagle, at the very top, ends up carrying the most concentrated dose of all, even though it never went near the field."
+    },
+    {
+      "id": "6-enq-25", "unit": 3, "codes": ["6Cc.02"], "outcomeId": "lo06", "difficulty": "Challenge",
+      "prompt": "Cold water and hot water each have as much sugar stirred in as will dissolve. The hot water takes far more sugar before it stops. Use the particle model to explain why.",
+      "keyIdeas": ["Warmer water particles move faster", "Faster particles knock sugar particles loose more often - faster dissolving", "Faster particles spread further apart, leaving more room for sugar particles"],
+      "modelAnswer": "In the hot water, the particles are moving faster, so they collide with the sugar more often and more heftily, knocking its particles loose more quickly - that explains why it dissolves sugar FASTER. The fast-moving particles also spread further apart as they move, which leaves more gaps for sugar particles to fit into - that explains why hot water can hold MORE sugar before it is saturated. Both effects come from the same cause: heat makes the water particles move faster."
+    },
+    {
+      "id": "6-enq-26", "unit": 3, "codes": ["6Cc.03"], "outcomeId": "lo05", "difficulty": "Core",
+      "prompt": "A puddle dries up on a cool, cloudy morning with no fire in sight. A pan of water on the stove suddenly starts bubbling hard at one exact temperature. Which is evaporation and which is boiling, and how do you know?",
+      "keyIdeas": ["The puddle is evaporation - happens at any temperature, only at the surface", "The pan is boiling - happens throughout the liquid, at one fixed temperature", "Bubbles forming deep in the liquid are the sign of boiling, not evaporation"],
+      "modelAnswer": "The puddle is evaporating: it is turning to gas at an ordinary cool temperature, and only at its surface, which is why it takes hours rather than happening all at once. The pan is boiling: bubbles are forming right through the water, not just at the top, and that only happens once the water reaches one exact temperature - 100 degrees Celsius for pure water. The give-away is the bubbles appearing deep in the liquid, which evaporation never produces."
+    },
+    {
+      "id": "6-enq-27", "unit": 3, "codes": ["6Cp.01"], "outcomeId": "lo07", "difficulty": "Challenge",
+      "prompt": "You are given an unlabelled silvery metal block. You heat it and it melts at exactly 1538 degrees Celsius. Using what you know about iron, gold and oxygen, what is the block most likely made of, and why can you tell from the melting point alone?",
+      "keyIdeas": ["Iron melts at about 1538 degrees Celsius", "The temperature a substance melts at is a fixed property of that substance", "A melting point can identify a substance the way a fingerprint identifies a person"],
+      "modelAnswer": "It is almost certainly iron, because iron melts at about 1538 degrees Celsius - and that number belongs to iron the way its colour or its being magnetic does, not to the size of the block or how it was heated. Gold melts far lower, at about 1064 degrees, and oxygen at minus 219, so neither one fits. Because every substance has its own melting and boiling point, measuring one is a genuine way to work out what an unknown substance is."
+    },
+    {
+      "id": "6-enq-28", "unit": 3, "codes": ["6Cp.02"], "outcomeId": "lo05", "difficulty": "Core",
+      "prompt": "A hard-pumped football is weighed, then some air is let out and it is weighed again. The second reading is lower. Explain what this shows about air, using the word 'mass'.",
+      "keyIdeas": ["The ball is lighter because gas actually left it", "A gas is made of particles, and every particle has mass", "This shows a gas has mass, even though it feels like nothing"],
+      "modelAnswer": "The ball is lighter the second time because real matter - the air - has left it, and that matter had mass. A gas is made of particles just like a solid or a liquid, and every particle has mass; there are just far fewer of them packed into the same space, which is why air feels like nothing. The football experiment proves a gas has mass you can actually measure, even though you cannot see it or feel its weight by hand."
+    },
+    {
+      "id": "6-enq-29", "unit": 5, "codes": ["6Cp.03"], "outcomeId": "lo01", "difficulty": "Challenge",
+      "prompt": "You are told a mystery material conducts electricity well. Without testing it, predict whether it will also conduct heat well, and explain why the same substance behaves the same way for both.",
+      "keyIdeas": ["A good electrical conductor is very likely a good thermal conductor too", "In a metal, loose electrons carry both electric current and heat energy", "Electrical and thermal conductivity are both properties of the same substance"],
+      "modelAnswer": "I would predict it also conducts heat well - it is almost certainly a metal. In a metal, some electrons are not tied to one atom and are free to move through the whole piece; push them with a cell and you get an electric current, but warm one end and those same loose electrons carry the heat energy along too. Electrical and thermal conductivity are two properties of the same substance for the same underlying reason, which is why they are usually found together."
+    },
+    {
+      "id": "6-enq-30", "unit": 4, "codes": ["6Pf.05"], "outcomeId": "lo03", "difficulty": "Challenge",
+      "prompt": "A solid ball of clay sinks. The same clay, pressed into a wide shallow dish shape, floats. Explain why, using the words 'mass' and 'upthrust'.",
+      "keyIdeas": ["The mass of the clay has not changed", "The dish shape shoves aside far more water than the ball did", "More water displaced means more upthrust, until it equals the clay's weight"],
+      "modelAnswer": "The mass of the clay is exactly the same in both shapes, so mass alone cannot be the reason. What changed is how much water each shape shoves aside: the compact ball displaces only a small volume of water, giving a small upthrust that is nowhere near enough to hold up its weight, while the wide dish shape displaces a much larger volume, so the upthrust grows until it equals the clay's weight and it floats. Floating is a comparison between weight and upthrust, and shape is what decides how much upthrust a given amount of material can get."
+    },
+    {
+      "id": "6-enq-31", "unit": 5, "codes": ["6Pe.02"], "outcomeId": "lo05", "difficulty": "Challenge",
+      "prompt": "You already built a series circuit with two lamps and saw both glow dimly. Now wire the SAME two lamps and cell in parallel instead, and compare. What do you predict will happen to the brightness, and what happens if you unscrew one lamp?",
+      "keyIdeas": ["In parallel, each lamp gets the cell's full push and glows brighter", "Unscrewing one lamp in parallel leaves the other lit - it has its own branch", "In series, unscrewing either lamp breaks the one loop and both go out"],
+      "modelAnswer": "In parallel, both lamps should glow brighter than they did in series, because each one now gets the cell's full push along its own branch rather than sharing one current with the other lamp. Unscrewing one lamp in the parallel circuit leaves the other one lit, because its branch is untouched - which is completely different from the series circuit, where unscrewing either lamp breaks the one loop and both go dark. Building both and comparing them directly is the only way to see that the same two lamps and the same cell can behave in two very different ways, depending only on how they are wired."
     }
   ]
 }

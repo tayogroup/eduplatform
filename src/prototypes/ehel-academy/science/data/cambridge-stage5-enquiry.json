@@ -4,8 +4,8 @@
   "curriculumCode": "0097",
   "stage": 5,
   "source": "Authored 2026-09-17 against Cambridge 0097 Stage 5, anchored to the investigations in Grade 5 units 1-6. Not extracted from a book: the Teacher's Resource frames these for the teacher to deliver aloud, and this course has no teacher in the room.",
-  "minimumCovered": 24,
-  "_minimumCovered": "One prompt per unclaimed Stage 5 TWS/SIC objective, plus three added 2026-09-18 for objectives that were cited but never actually asked of a learner: 5TWSm.01 (the particle model was taught as plain fact, never framed as a model with limits) and 5Ps.01/5Ps.03 (the sound concept added to Unit 4 was prose only - no exploration, quiz item or reasoning prompt ever asked a learner to investigate vibration, pitch or volume). Coverage is a number that only goes up.",
+  "minimumCovered": 30,
+  "_minimumCovered": "One prompt per unclaimed Stage 5 TWS/SIC objective, plus three added 2026-09-18 for objectives that were cited but never actually asked of a learner: 5TWSm.01 (the particle model was taught as plain fact, never framed as a model with limits) and 5Ps.01/5Ps.03 (the sound concept added to Unit 4 was prose only - no exploration, quiz item or reasoning prompt ever asked a learner to investigate vibration, pitch or volume). A further six were added the same day for content objectives delivered ONLY by the concepts fixture, with no exploration, quiz item or reasoning prompt behind them at all: 5Bs.01, 5Be.01, 5Be.03, 5Cm.02/5ESp.01 (one prompt, one shared concept), 5ESp.03 and 5Ps.02. Coverage is a number that only goes up.",
   "prompts": [
     {
       "id": "5-enq-1", "unit": 1, "codes": ["5TWSp.01"], "outcomeId": "lo01", "difficulty": "Challenge",
@@ -150,6 +150,42 @@
       "prompt": "Using the same rubber band stretched between two fingers, plan two separate tests: one to make the sound LOUDER without changing its note, and one to make the note HIGHER without changing how loud it is.",
       "keyIdeas": ["Pluck harder for louder, without changing the band's length or tightness", "Stretch the band tighter, or shorten it, for a higher note", "Loudness and pitch are changed by different things"],
       "modelAnswer": "To make it louder, I pluck the band harder without changing anything else, which gives a bigger vibration and a louder sound at the same note. To make the note higher, I stretch the band tighter or press a finger partway along to shorten it, which makes it vibrate faster without changing how hard I pluck. Testing one change at a time is how I know loudness and pitch are controlled by different things."
+    },
+    {
+      "id": "5-enq-25", "unit": 1, "codes": ["5Bs.01"], "outcomeId": "lo07", "difficulty": "Core",
+      "prompt": "A fern, a pine tree and a hibiscus all reproduce, but not all of them make seeds inside a flower. Sort the three by how each one actually reproduces.",
+      "keyIdeas": ["Hibiscus flowers and makes seeds inside a fruit", "Pine makes seeds too, but in a cone, with no flower", "Fern makes no seeds at all - it uses spores instead"],
+      "modelAnswer": "The hibiscus flowers and makes its seeds inside a fruit, the ordinary way most plants around us reproduce. The pine also makes seeds, but in a cone rather than a flower, with the seeds sitting bare on the scales. The fern makes no seeds at all - it reproduces using spores, tiny cases far simpler than a seed, released from the underside of its leaves. Three plants, three different routes to the next generation."
+    },
+    {
+      "id": "5-enq-26", "unit": 2, "codes": ["5Be.01"], "outcomeId": "lo07", "difficulty": "Core",
+      "prompt": "An animal has thick fur, small rounded ears, and fat stored under its skin. Is it built for a hot place or a cold one, and how do you know?",
+      "keyIdeas": ["Small ears lose less heat; thick fur traps warm air", "Fat stored under the skin is insulation", "Match each feature to the problem it solves"],
+      "modelAnswer": "It is built for a cold place. Small, rounded ears lose far less heat than large ones, thick fur traps a layer of warm air next to the skin, and fat under the skin adds another layer of insulation. Every one of those features solves the same problem: staying warm when the surroundings are trying to cool the animal down. A hot-place animal would show the opposite pattern - large ears, thin fur, little fat."
+    },
+    {
+      "id": "5-enq-27", "unit": 2, "codes": ["5Be.03"], "outcomeId": "lo01", "difficulty": "Core",
+      "prompt": "Look only at an animal's eyes: a hyena has two forward-facing eyes; a warthog has two eyes on the sides of its head. Which one is more likely to be the hunter, and which the hunted?",
+      "keyIdeas": ["Forward-facing eyes judge distance for a pounce - a hunter", "Side-facing eyes see almost all the way round - spotting danger early", "Eye position matches the animal's job, hunter or hunted"],
+      "modelAnswer": "The hyena, with forward-facing eyes, is built to hunt: both eyes looking the same way let it judge distance accurately for a chase or a pounce. The warthog's side-facing eyes give it an almost all-round view without turning its head, which matters far more for spotting a predator early than for judging distance. Eye position is not decoration - it answers the question of whether an animal's life depends on catching something or on seeing danger coming."
+    },
+    {
+      "id": "5-enq-28", "unit": 3, "codes": ["5Cm.02", "5ESp.01"], "outcomeId": "lo01", "difficulty": "Core",
+      "prompt": "Name the gas: it is what a plant takes in to make its food, and it is what you breathe out. Then say what the layer of air wrapped around the whole Earth is called, and name its two main gases.",
+      "keyIdeas": ["The gas is carbon dioxide", "The layer of air around the Earth is the atmosphere", "The atmosphere is mostly nitrogen, with a smaller amount of oxygen"],
+      "modelAnswer": "The gas is carbon dioxide - plants take it in to make food, and you breathe it out as a waste product. The layer of air wrapped around the whole Earth is called the atmosphere, and it is a mixture of gases rather than one substance: mostly nitrogen, with a smaller amount of oxygen and only a very small amount of carbon dioxide. Even though air feels like nothing, naming its gases shows it is real matter with its own composition."
+    },
+    {
+      "id": "5-enq-29", "unit": 3, "codes": ["5ESp.03"], "outcomeId": "lo08", "difficulty": "Challenge",
+      "prompt": "A river runs past a farm. Rain falling into it has picked up natural minerals from the rock for thousands of years. This year the farmer starts washing spray cans out in the river. Which of these counts as pollution, and why?",
+      "keyIdeas": ["Minerals from rock washing in naturally is not pollution", "Chemicals from the spray cans added by a person are pollution", "Pollution is substances added BY PEOPLE that harm the environment"],
+      "modelAnswer": "The natural minerals are not pollution - they have always washed in from the rock, and the river's living things are adapted to them. Washing the spray cans in the river is pollution, because a person is adding substances that were not there before, in a way that can harm fish and plants downstream. The test is not whether the water changes at all, but whether people caused the harmful change."
+    },
+    {
+      "id": "5-enq-30", "unit": 4, "codes": ["5Ps.02"], "outcomeId": "lo01", "difficulty": "Core",
+      "prompt": "Describe a mosquito's whine and a lion's roar using BOTH words, pitch and volume - not just one of them.",
+      "keyIdeas": ["Pitch and volume are two separate properties", "A mosquito's whine: high pitch, quiet", "A lion's roar: low pitch, loud"],
+      "modelAnswer": "A mosquito's whine is high-pitched and quiet - it vibrates very fast, but the vibration is small. A lion's roar is low-pitched and loud - it vibrates much more slowly, but the vibration is huge. Using both words together, rather than just one, is what actually describes a sound completely, because pitch and volume can change independently of each other."
     }
   ]
 }

@@ -38,6 +38,9 @@ for (const file of fs.readdirSync(dir).filter((f) => /^unit-\d+\.json$/.test(f))
   const unit = JSON.parse(fs.readFileSync(path.join(dir, file), "utf8"));
   for (const c of narration.clipsForUnit(unit)) clips.push({ ...c, unit: unit.unit.unitNo });
 }
+// The section intros and the standalone app's slide labels are spoken too.
+for (const c of narration.sectionIntroClips(COURSE, -1)) clips.push({ ...c, unit: 0 });
+for (const c of narration.appSlideClips(COURSE, -1)) clips.push({ ...c, unit: c.unit || 0 });
 if (!clips.length) { console.error("no Phonics clips found — refusing to report a clean run"); process.exit(2); }
 
 const sentences = (t) => String(t).split(/(?<=[.!?])\s+|\n+/).map((s) => s.trim()).filter(Boolean);
@@ -87,7 +90,8 @@ for (const c of clips) {
   // A word card's `source` is its generated spoken form ("A, as in wait."),
   // not text anybody wrote, so there is no author's capital to question.
   for (const s of c.category === "words" ? [] : shown) {
-    if (!/(?:^|[\s(])(?!I\b)[A-Z](?=[.,;:!?)]|\s|$)/.test(s) || /^(?:A|I) [a-z]/.test(s)) continue;
+    // "A pin", "I am", and a title's article ("A Hot Day.") are words, not letters.
+    if (!/(?:^|[\s(])(?!I\b)[A-Z](?=[.,;:!?)]|\s|$)/.test(s) || /^(?:A|I) [A-Za-z]/.test(s)) continue;
     if (DELIBERATE_CAPITALS.some((re) => re.test(s))) continue;
     // "S. A. C. K." splits into four one-letter sentences; each is part of the
     // spelled word, which DELIBERATE_CAPITALS already names.
@@ -102,10 +106,29 @@ for (const c of clips) {
   for (const s of said) {
     const rest = s.replace(/\b(?:[Ss]ays?|[Ll]ong) [A-Za-z]+/g, "");
     if (/\b(?:letters|spelling|spelled|spelt|written|write it|Before (?:eh|ih))\b/i.test(s)
-        && [...spokenSounds].some((v) => new RegExp(`\\b${v}\\b`).test(rest) && !/^(?:or|ear|air|ow|oy|ar|th|ee)$/.test(v))) {
+        // `A` is both the long-a sound and the letter NAME the transform writes
+        // when it spells ("A gap E and A Y"), so it cannot tell which it is here.
+        && [...spokenSounds].some((v) => new RegExp(`\\b${v}\\b`).test(rest) && !/^(?:or|ear|air|ow|oy|ar|th|ee|A)$/.test(v))) {
       note("SPELLING", c, s);
     }
   }
+}
+
+// SHORT_I: the short i said anywhere but inside a blend. No spelling makes this
+// voice say it alone — `ih`, `ih!`, `ɪ`, `ii` all came back "I" — and the
+// recorded Unit 3 intro said "Eye and poo. New sounds. Eye. Pooh." for "i and p".
+// Inside a blend it works ("puh, ih, nnn" -> "pu-i-n-n"), so a lone `ih` is one
+// whose neighbours are not both sounds; each is voiced through a word instead
+// ("the sound in pin") by a PHRASE in the lib.
+const soundTokens = new Set([...SOUND.values(), "sss", "mmm", "nnn", "rrr", "shh"].map((s) => s.toLowerCase()));
+for (const c of clips) {
+  const toks = c.spoken.split(/[\s,.;:!?()]+/).filter(Boolean);
+  toks.forEach((t, i) => {
+    if (t.toLowerCase() !== "ih") return;
+    const before = (toks[i - 1] || "").toLowerCase(), after = (toks[i + 1] || "").toLowerCase();
+    if (soundTokens.has(before) && soundTokens.has(after)) return;
+    note("SHORT_I", c, c.spoken.slice(Math.max(0, c.spoken.search(/\bih\b/) - 40), c.spoken.search(/\bih\b/) + 50));
+  });
 }
 
 // STALE: a PHRASE whose source text no clip contains. It rewrites nothing, and
@@ -118,7 +141,7 @@ for (const [from] of PHRASES) {
 const changed = clips.filter((c) => c.spoken !== c.source && c.category !== "words");
 console.log(`Phonics narration: ${clips.length} clips, ${changed.length} whose spoken form differs from the page, ` +
             `${clips.filter((c) => c.category === "words").length} word cards`);
-for (const kind of ["COLLAPSE", "CAPITAL", "SPELLING", "STALE"]) {
+for (const kind of ["COLLAPSE", "CAPITAL", "SPELLING", "SHORT_I", "STALE"]) {
   const f = findings.filter((x) => x.kind === kind);
   console.log(`\n${kind}: ${f.length}`);
   for (const x of f) console.log(`  U${String(x.unit).padStart(2)} ${x.category.padEnd(13)} ${x.detail.slice(0, 150)}`);

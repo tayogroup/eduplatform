@@ -160,12 +160,16 @@ function clipsForUnit(unit, categories = CATEGORIES) {
 const ATTR_ENTITIES = { "&quot;": '"', "&#39;": "'", "&apos;": "'", "&lt;": "<", "&gt;": ">", "&amp;": "&" };
 const unescapeAttr = (s) => String(s).replace(/&(?:quot|#39|apos|lt|gt|amp);/g, (m) => ATTR_ENTITIES[m]);
 
-function appSlideTexts(courseRoot, level) {
+// Each label, with the unit of the first page that carries it (pages walked in
+// sorted order, so the choice is stable; the hub is unit 0). The unit matters
+// only to the Phonics level, whose units 15-20 say a grapheme by its letters.
+function appSlideEntries(courseRoot, level) {
   const dir = path.join(courseRoot, `${levelDir(level, courseRoot)}-app`);
-  const out = new Set();
+  const out = new Map();
   if (!fs.existsSync(dir)) return out;
-  for (const file of fs.readdirSync(dir)) {
+  for (const file of fs.readdirSync(dir).sort()) {
     if (!file.endsWith(".html")) continue;
+    const unitNo = Number((file.match(/^unit-(\d+)-/) || [])[1]) || 0;
     const html = fs.readFileSync(path.join(dir, file), "utf8");
     for (const m of html.matchAll(/data-say="([^"]*)"/g)) {
       // intensive.js is inlined verbatim into every page, so its own source
@@ -173,20 +177,29 @@ function appSlideTexts(courseRoot, level) {
       // being written at run time, not markup.
       if (m[1].includes("' + esc(")) continue;
       const text = clean(unescapeAttr(m[1]));
-      if (text.length >= MIN_CHARS) out.add(text);
+      if (text.length >= MIN_CHARS && !out.has(text)) out.set(text, unitNo);
     }
   }
   return out;
 }
 
+function appSlideTexts(courseRoot, level) {
+  return new Set(appSlideEntries(courseRoot, level).keys());
+}
+
 // Shaped like clipsForUnit's output so the generator can treat them alike.
+// The Phonics level's labels carry the units' own notation ("s - a - t", "ai,
+// ay or a_e"), so they take the same spoken form as the units do — the deck
+// would otherwise read them out by letter NAME.
 function appSlideClips(courseRoot, level) {
-  return [...appSlideTexts(courseRoot, level)].map((text) => ({
+  const phonics = Number(level) === -1;
+  return [...appSlideEntries(courseRoot, level)].map(([text, unit]) => ({
     category: "slideLabels",
     text,
     source: text,
-    spoken: speakableWords(speakableFrames(text)),
+    spoken: speakableWords(speakableFrames(phonics ? speakablePhonics(text, { spelling: unit >= 15 }) : text)),
     hash: cyrb53(text),
+    unit,
   }));
 }
 

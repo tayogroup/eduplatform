@@ -59,7 +59,33 @@ if not os.path.isfile(CFG_PATH):
 CFG = json.load(io.open(CFG_PATH, encoding="utf-8"))
 
 LEVEL = int(CFG["level"])
-DATA = os.path.join(ACADEMY, "intensive-english", "level-%d" % LEVEL, "data")
+
+def level_folder(number):
+    """(folder name, level id) for a level NUMBER, found by its own manifest.
+
+    `level-%d` was right while every level was `level-N`. The Phonics level is
+    -1 and lives in `level-phonics`, so the folder is the one whose
+    data/course-manifest.json says so - the same discovery
+    tools/lib/ehel-intensive-levels.js does for the Node tools.
+    """
+    root = os.path.join(ACADEMY, "intensive-english")
+    for name in sorted(os.listdir(root)):
+        manifest = os.path.join(root, name, "data", "course-manifest.json")
+        if not (name.startswith("level-") and os.path.isfile(manifest)):
+            continue
+        with io.open(manifest, encoding="utf-8") as fh:
+            level = json.load(fh).get("level") or {}
+        if level.get("number") == number:
+            return name, level.get("id") or ("l%d" % number)
+    sys.exit("REFUSED: no Intensive English level numbered %d" % number)
+
+
+LEVEL_DIR, LEVEL_ID = level_folder(LEVEL)
+DATA = os.path.join(ACADEMY, "intensive-english", LEVEL_DIR, "data")
+# The word-picture key: `ien` + the id after its `l` (`l0` -> ien0, `lph` ->
+# ienph). Formatting the number gave `ien-1` for Phonics, which is not a key,
+# so the SHARED map answered and put back the pictures `ienph` blanks.
+PICTURE_KEY = "ien" + LEVEL_ID[1:]
 if not os.path.isdir(DATA):
     sys.exit("REFUSED: no course data at %s" % DATA)
 
@@ -86,9 +112,9 @@ def word_pictures(words):
     script = (
         "import('file:///%s').then(m => {"
         "  const out = {};"
-        "  for (const w of %s) out[w] = m.wordPicture(w, 'ien%d') || '';"
+        "  for (const w of %s) out[w] = m.wordPicture(w, '%s') || '';"
         "  process.stdout.write(JSON.stringify(out));"
-        "});" % (src, json.dumps(sorted(set(words))), LEVEL)
+        "});" % (src, json.dumps(sorted(set(words))), PICTURE_KEY)
     )
     # Written to a .mjs file rather than passed with --input-type=module: the
     # flag makes node warn about reparsing on every call, onto stderr, which

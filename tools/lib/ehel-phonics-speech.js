@@ -248,6 +248,20 @@ const PHRASES = [
   ["The i has a dot.", "The I has a dot."],
   ["Pin has i.", "Pin has the sound in it."],
   ["pin has i.", "pin has the sound in it."],
+  // ...and in LISTS, which the recorded audio proved: Unit 3's own intro came
+  // back "Eye and poo. New sounds. Eye. Pooh." for "i and p. New sounds: i, p."
+  // The audit's SHORT_I check finds every lone `ih`; each one is here.
+  ["i and p.", "the sound in pin, and puh."],
+  ["New sounds: i, p.", "New sounds: the sound in pin, and puh."],
+  ["The new sounds: i, p.", "The new sounds: the sound in pin, and puh."],
+  ["Joining i, p into words.", "Joining the sound in pin and puh into words."],
+  ["Writing words with i, p.", "Writing words with the sound in pin and puh."],
+  ["each sound. i p Say", "each sound. The sound in pin. puh. Say"],
+  ["Trace the letter i.", "Trace this letter."],
+  ["Not o then i.", "Not aw, then the sound in pin."],
+  // Unit 10 writes the qu sound as `kw`, which the voice spells "K-W" (measured);
+  // `kwah` is what it says as the sound, and between it and `zz` the i blends.
+  ["Quiz. kw. i. zzz.", "Quiz. kwah. ih. zz."],
   // the five vowels are introduced as LETTERS, a set to count
   ["count what you know. a. e. i. o. u.", "count what you know. A. E. I. O. U."],
   ["Say them with me. a. e. i. o. u.", "Say them with me. A. E. I. O. U."],
@@ -270,6 +284,9 @@ const PHRASES = [
   ["It is i in its own name.", "It is I in its own name."],
   ["It is o in its own name.", "It is O in its own name."],
   ["Say oo, short, as in foot.", "Say it short, as in foot."],
+  // Unit 8's title names LETTER PAIRS ("Double Letters: ..."), so its spellings
+  // are said by their letters; the unit then teaches what each pair sounds like.
+  ["Double Letters: ck ll ff ss", "Double Letters: C K, L L, F F, S S"],
   // Book A title lists where two letters share a sound and the title says
   // "sounds": the shared sound IS the lesson (c and k, z and zz, ir and er)
   ["m, c, k", "mmm, kuh, kuh"],

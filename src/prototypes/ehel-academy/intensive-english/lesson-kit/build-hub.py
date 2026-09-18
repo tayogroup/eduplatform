@@ -31,7 +31,28 @@ else:
     OUT = os.path.abspath(os.path.join(HERE, "..", "level-1-app"))
 CFG = json.load(io.open(os.path.join(OUT, "app.config.json"), encoding="utf-8"))
 LEVEL = int(CFG["level"])
-DATA = os.path.join(ACADEMY, "intensive-english", "level-%d" % LEVEL, "data")
+
+def level_folder(number):
+    """(folder name, level id) for a level NUMBER, found by its own manifest.
+
+    `level-%d` was right while every level was `level-N`. The Phonics level is
+    -1 and lives in `level-phonics`, so the folder is the one whose
+    data/course-manifest.json says so - the same discovery
+    tools/lib/ehel-intensive-levels.js does for the Node tools.
+    """
+    root = os.path.join(ACADEMY, "intensive-english")
+    for name in sorted(os.listdir(root)):
+        manifest = os.path.join(root, name, "data", "course-manifest.json")
+        if not (name.startswith("level-") and os.path.isfile(manifest)):
+            continue
+        with io.open(manifest, encoding="utf-8") as fh:
+            level = json.load(fh).get("level") or {}
+        if level.get("number") == number:
+            return name, level.get("id") or ("l%d" % number)
+    sys.exit("REFUSED: no Intensive English level numbered %d" % number)
+
+
+DATA = os.path.join(ACADEMY, "intensive-english", level_folder(LEVEL)[0], "data")
 MANIFEST = json.load(io.open(os.path.join(DATA, "course-manifest.json"), encoding="utf-8"))
 
 

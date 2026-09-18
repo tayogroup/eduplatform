@@ -228,6 +228,62 @@ function addArtCourses(courses, categorySet) {
   }
 }
 
+// The restructured Intensive English programme (owner, 2026-09-18), built as
+// standalone pages only, like Art & Design: its source of truth is each level
+// build's app.config.json (written by intensive-english/program/kit/
+// build_program.py), whose units ARE the lessons. Each level is its own course,
+// keyed ehel-intensive-eng-l10..l15: Moodle launches only keys shaped
+// ehel-<slug>-lNN, and the live course keeps l00-l03 for its learners. `stage`
+// is the key's number, not the CEFR ladder, because the cohort generator keys
+// intensive courses by stage and must not merge these with the live levels.
+// Their own category, so an operator never sees two different courses that
+// are both "Level 1" side by side.
+const PROGRAMME = {
+  dir: path.join("intensive-english", "program"),
+  levels: ["letters", "starter", "level-1", "level-2", "level-3", "level-4"],
+  categoryPath: ["Ehel Academy", "Languages", "Intensive English Programme"],
+};
+
+function addIntensiveProgrammeCourses(courses, categorySet) {
+  const planFile = path.join(ROOT, "inputs", "ehel-english-intensive-source", "program", "program-plan.json");
+  if (!fs.existsSync(planFile)) return;
+  const plan = JSON.parse(fs.readFileSync(planFile, "utf8"));
+  for (const id of PROGRAMME.levels) {
+    const file = path.join(EHEL, PROGRAMME.dir, "app", id, "app.config.json");
+    if (!fs.existsSync(file)) continue;
+    const cfg = JSON.parse(fs.readFileSync(file, "utf8"));
+    const level = plan.levels.find((l) => l.id === id);
+    const idnumber = cfg.courseKey;
+    const m = /^ehel-intensive-eng-l(\d{2})$/.exec(idnumber || "");
+    if (!m || !level) throw new Error(`programme ${id}: courseKey ${idnumber} or plan level missing`);
+    if (withdrawn[idnumber]) {
+      withdrawnNotes.push(`${idnumber} (${withdrawn[idnumber].reason || "withdrawn"})`);
+      continue;
+    }
+    const categoryPath = PROGRAMME.categoryPath;
+    categorySet.set(categoryPath.join(" / "), { name: categoryPath[categoryPath.length - 1], path: categoryPath });
+    const units = cfg.lessons.map((l) => ({ number: l.unit, idnumber: `${idnumber}-u${pad2(l.unit)}`, title: l.title, termId: null }));
+    const label = level.name.replace(/\s+—\s+/, ": ");
+    // "Pre-A1" is one band: only an en dash ("A1–A2") joins two
+    const cefr = level.cefr && level.cefr !== "Literacy" ? level.cefr.split(/\s*–\s*/) : [];
+    courses.push({
+      idnumber,
+      subject: INTENSIVE.subject,
+      subjectKey: INTENSIVE.key,
+      stage: Number(m[1]),
+      level: "Intensive English",
+      cambridgeCode: "",
+      cefr,
+      fullname: `Ehel Intensive English — ${label}`,
+      shortname: idnumber.toUpperCase(),
+      categoryPath,
+      summary: `${level.summary} ${units.length} lessons.`,
+      unitCount: units.length,
+      units,
+    });
+  }
+}
+
 function buildCatalog() {
   const courses = [];
   const categorySet = new Map(); // path-string → {name, path[]}
@@ -275,6 +331,7 @@ function buildCatalog() {
   }
 
   addIntensiveCourses(courses, categorySet);
+  addIntensiveProgrammeCourses(courses, categorySet);
   addArtCourses(courses, categorySet);
 
   courses.sort((a, b) => a.idnumber.localeCompare(b.idnumber));

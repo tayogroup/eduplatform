@@ -151,6 +151,17 @@ $SUBJECTS = [
             1 => ['ehel-intensive-eng-l01', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-1-v2/index.html'],
             2 => ['ehel-intensive-eng-l02', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-2-v2/index.html'],
             3 => ['ehel-intensive-eng-l03', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-3-v2/index.html'],
+            // The restructured programme (owner, 2026-09-18): one course per
+            // level, keyed l10-l15 because Moodle launches only ehel-<slug>-lNN,
+            // built by intensive-english/program/kit. The rows above stay: the
+            // live course keeps its learners. `--grade 12` routes the programme's
+            // Level 1, never the live Level 1.
+            10 => ['ehel-intensive-eng-l10', RP_HOST . 'Ehel%20Primary/app/intensive-english/programme/letters/index.html'],
+            11 => ['ehel-intensive-eng-l11', RP_HOST . 'Ehel%20Primary/app/intensive-english/programme/starter/index.html'],
+            12 => ['ehel-intensive-eng-l12', RP_HOST . 'Ehel%20Primary/app/intensive-english/programme/level-1/index.html'],
+            13 => ['ehel-intensive-eng-l13', RP_HOST . 'Ehel%20Primary/app/intensive-english/programme/level-2/index.html'],
+            14 => ['ehel-intensive-eng-l14', RP_HOST . 'Ehel%20Primary/app/intensive-english/programme/level-3/index.html'],
+            15 => ['ehel-intensive-eng-l15', RP_HOST . 'Ehel%20Primary/app/intensive-english/programme/level-4/index.html'],
         ],
     ],
     'science' => [

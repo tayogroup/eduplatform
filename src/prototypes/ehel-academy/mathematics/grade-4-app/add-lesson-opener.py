@@ -28,12 +28,13 @@ draws a player only where `LESSON["video"]` names one, and every lesson this
 tool touches has none. The step still exists and still finishes: it is
 Science's own no-film fallback ("Read aloud by the lesson's voice. There is
 no video for this lesson yet."), turned into a short narrated walkthrough in
-`parts`, not a blank step. shape-and-measures.html is EXCLUDED from this
-tool's WORK dict entirely - it already carries a real lecture film wired in
-by a concurrent session today, with its own bar and its own coordination;
-inserting a second, empty "Unit lecture" step above that would either
-duplicate or fight it. Revisit it on its own once that film's own step
-shape is decided.
+`parts`, not a blank step. shape-and-measures.html HAS a film, and
+since 2026-09-18 its Unit lecture step plays it (owner: "attach the lecture
+video to the unit"): a "video" entry in WORK sends lessonLecture() to
+lessonFilm(), which draws the player, marks the step done when the film
+ends, and pauses it when the learner leaves the step. The film used to sit
+in a bar above the deck; that bar is gone, so the film appears once. It was
+excluded here until its step shape was decided, and this is the shape.
 
 MATH WORDS SUPERSEDES THE STICKER-SHELF GLOSSARY. add-vocabulary.py's
 static list (term, one-line definition) was this build's first, thinner
@@ -161,7 +162,34 @@ WORK = {
    ("duration", "⏱️", "How long something lasts, found by working out the time between a start and an end.", ["Work out the duration of the bus journey."]),
   ],
  },
- "shape-and-measures": None,
+ "shape-and-measures": {
+  "about": [
+   "Count the faces, edges and vertices of a solid.",
+   "Match a net to the solid it folds into.",
+   "Find every line of symmetry, and reflect a shape in a mirror line.",
+   "Name angles as acute, right or obtuse, and estimate them against a right angle.",
+   "Fit shapes together, and say which ones leave no gaps.",
+   "Find area and perimeter, by counting and by using length and width.",
+   "Estimate the area of an odd shape, and read a scale between its marks.",
+  ],
+  # This lesson HAS a film, so its Unit lecture step plays it in place of the
+  # narrated walkthrough - lessonFilm() below, and the docstring.
+  "parts": [],
+  "video": {
+   "src": "lecture-video/shape-and-measures.5a6a619a.mp4",
+   "poster": "lecture-video/shape-and-measures.29644ff7.jpg",
+   "vtt": "lecture-video/shape-and-measures.vtt",
+   "note": "The whole lesson in about six minutes. When the film ends, this step is done.",
+  },
+  "words": [
+   ("face", "🎲", "A flat surface on a 3D shape. A cube has 6 faces.", ["A dice is a cube, so it has 6 faces."]),
+   ("edge", "📏", "A line where two faces of a 3D shape meet.", ["Run your finger along one edge of a box."]),
+   ("vertex", "📍", "A corner, where edges meet. The plural is vertices.", ["A cube has 8 vertices."]),
+   ("area", "🔳", "How much flat space a shape covers, measured in square units.", ["The rectangle has an area of 15 squares."]),
+   ("acute angle", "✂️", "An angle smaller than a right angle (less than 90 degrees).", ["Scissors opened a little make an acute angle."]),
+   ("obtuse angle", "📖", "An angle bigger than a right angle but smaller than a straight line (between 90 and 180 degrees).", ["A book opened wide makes an obtuse angle."]),
+  ],
+ },
  "where-things-are": {
   "about": [
    "Use all eight compass points to give and follow directions.",
@@ -224,6 +252,9 @@ CSS = """<style>/* %s - see add-lesson-opener.py */
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
     width: 100%%; max-width: 640px; }
   .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
@@ -282,7 +313,25 @@ def js_functions():
     });
   }
 
+  /* A lesson WITH a film plays it here, as Science's lecture() does where
+     LESSON["video"] names one, and the step is done when the film ends. Leaving
+     the step pauses it: show() only swaps the active class, so a hidden slide
+     would otherwise go on talking under the next step. */
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -453,6 +502,10 @@ for f in pages:
     about_li = data["about"]
     about_say = "By the end of this lesson you will be able to: " + "; ".join(
         t.rstrip(".").lower() if i > 0 else t.rstrip(".") for i, t in enumerate(about_li)) + "."
+    lec_say = ("Watch the lesson film. When it ends, this step is done." if data.get("video")
+               else "Watch the lesson told in parts, by the voice.")
+    video_js = ("" if not data.get("video") else ", video: { " + ", ".join(
+        "%s: %s" % (k, jlit(data["video"][k])) for k in ("src", "poster", "vtt", "note")) + " }")
     parts_js = ", ".join("{ title: %s, say: %s }" % (jlit(t), jlit(sy)) for t, sy in data["parts"])
     words_js = ", ".join(
         "{ w: %s, pic: %s, meaning: %s, uses: [%s] }"
@@ -468,9 +521,9 @@ for f in pages:
         '      <div class="stage" id="stageOvw"></div>\n'
         '    </section>\n'
         '    <!-- STEP 0b: unit lecture -->\n'
-        '    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">\n'
+        '    <section class="slide" data-say=%s>\n'
         '      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>\n'
-        '      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>\n'
+        '      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">%s</span></div>\n'
         '      <div class="stage" id="stageLec"></div>\n'
         '    </section>\n'
         '    <!-- STEP 0c: math words -->\n'
@@ -479,7 +532,7 @@ for f in pages:
         '      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>\n'
         '      <div class="stage" id="stageMw"></div>\n'
         '    </section>\n'
-        '    ' % (jlit(about_say), esc(about_say))
+        '    ' % (jlit(about_say), esc(about_say), jlit(lec_say), esc(lec_say))
     )
     m2 = re.search(r'(<div class="deck" id="deck" role="main">\s*)', out)
     out = out[:m2.end()] + new_slides + out[m2.end():]
@@ -496,7 +549,7 @@ for f in pages:
     calls = (
         "\n  lessonAbout({ stage: 'stageOvw', about: [" + ", ".join(jlit(t) for t in about_li)
         + "], finish: 0, done: %s });\n" % jlit("Let's begin.")
-        + "  lessonLecture({ stage: 'stageLec', parts: [" + parts_js + "], finish: 1, done: %s });\n"
+        + "  lessonLecture({ stage: 'stageLec', parts: [" + parts_js + "]" + video_js + ", finish: 1, done: %s });\n"
           % jlit("You have heard the whole lesson. Now do it yourself.")
         + "  lessonWords({ stage: 'stageMw', words: [" + words_js + "], finish: 2, done: %s });\n"
           % jlit("You know the math words of this lesson.")

@@ -308,7 +308,8 @@ degrees (90°, 35°, 130°) and the narration says "exactly ninety degrees". The
 lesson never teaches degrees — every "degree" in `shape-and-measures.html` is an
 SSML `styledegree` attribute or a code comment — and no Stage 4 or 5 objective in
 0096 mentions them. It is not wrong, so it was not changed in a fix pass, but it
-teaches a unit the lesson does not. An owner's call.
+teaches a unit the lesson does not. **Owner, 2026-09-18: leave the film as it
+is.** The degree labels stay.
 
 ## The fix pass, 2026-09-18
 
@@ -357,7 +358,8 @@ properly costs time, and cutting to three minutes would mean teaching some of
 them only by citation again. The lesson's own title offers the obvious seam:
 **Shape** (solids, nets, symmetry, reflection, angles, tessellation) and
 **Measures** (area, perimeter, compound, irregular, scale), as two films of
-about three minutes each. That is an owner's call, not taken here.
+about three minutes each. **Owner, 2026-09-18: keep it as ONE film. Do not
+split or re-cut it.**
 
 ## The animation pass, 2026-09-18
 
@@ -401,7 +403,7 @@ not hash, so adding one costs nothing.
 - The estimate beat printed "45°" beside "about half a right angle", which
   makes estimating look like reading a number. It now shows ½ against a
   dashed right angle, and no number. The other angles keep their degree
-  labels: whether the film shows degrees at all is still an owner's call (see
+  labels, by the owner's decision on 2026-09-18 to leave the film as it is (see
   above).
 
 **Checked by looking, at every cue, before rendering.** `--preview` takes one

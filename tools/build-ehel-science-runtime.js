@@ -595,6 +595,53 @@ const CAMBRIDGE_GAP_REASONS = {
 // it already uses, not an excuse to author Science content in the builder — a
 // whole missing topic (Stage 4 sound) is recorded as a commission instead.
 const CONCEPT_INSERTS = {
+  // 3Bs.01 (part of a plant, limited to root/stem/leaf/flower and their
+  // functions) was cited on this concept, and the shoot's own function was
+  // never named — checked before writing this: "stem" appears nowhere in the
+  // unit outside the citation. The concept already narrates the shoot pushing
+  // upward and opening the first leaves, so the insert names what that shoot
+  // becomes rather than opening a new idea.
+  "3-1": [{
+    conceptId: "concept-4-seeds-and-germination-new-life-begins",
+    after: "After the root, a shoot pushes upward toward the light, and it opens the plant's first tiny leaves.",
+    text: " That shoot is the beginning of the STEM, and the stem keeps two jobs for the whole life of the plant: it holds the leaves and flowers up where they can reach the light, and it carries water up from the roots to the leaves, and the food the leaves make back down to the rest of the plant.",
+  }],
+  // 4Pe.03 ("changing the number OR TYPE of components") was cited on this
+  // concept, and "type" of component never appeared outside the citation —
+  // "number" of cells and bulbs is taught in real depth two concepts later.
+  // The concept already lists what different components DO (bulb makes
+  // light, motor makes movement, kettle makes heat, speaker makes sound); the
+  // insert is the one sentence that turns that list into the missing half of
+  // the objective, naming type rather than only number.
+  "4-6": [{
+    conceptId: "concept-1-what-is-electricity",
+    after: "it carries energy from one place, such as a battery or a power station, and delivers it to wherever we want a job done.",
+    text: "\n\nChanging how many cells or bulbs are in a circuit is not the only way to change what it does — changing the TYPE of component matters just as much. Swap the bulb for a small motor and the circuit no longer glows, it spins something instead. Swap it for a buzzer and it makes a sound instead of either. The cell and the wires can stay exactly the same; it is the type of component in the circuit that decides whether the electricity ends up as light, movement or sound.",
+  }],
+  // 5ESs.01 says Earth's orbit is a slight ellipse, travelled anticlockwise,
+  // once a year — this concept taught only the duration. Checked before
+  // writing this: neither "ellipse" nor "anticlockwise" (nor "clockwise")
+  // appears anywhere else in the unit. The insert goes where the concept
+  // first states there IS an orbit, before it moves on to the calendar
+  // arithmetic of the extra quarter-day, so the shape and direction are
+  // established before the unit uses them.
+  "5-6": [{
+    conceptId: "concept-3-the-year-earth-s-journey-around-the-sun",
+    after: "So Earth is doing two movements at the same time: it is rotating (spinning once a day) and orbiting (circling the Sun once a year).",
+    text: " That orbit is not a perfect circle - it is a very slightly stretched circle called an ellipse, though on any diagram small enough to draw it looks almost perfectly round. Looked at from above Earth's North Pole, Earth travels ANTICLOCKWISE around the Sun, which is simply the direction it happens to go - the same direction every planet in the Solar System orbits.",
+  }],
+  // 7Bs.05 (cells grouped into tissues, organs and organ systems) was cited
+  // on this concept, and neither "tissue", "organ" nor "organ system" ever
+  // appeared outside the citation — checked before writing this; the unit's
+  // own quiz answer said only "a group of similar cells working together is
+  // called a tissue", with nothing above tissue in the ladder. The concept
+  // has just finished naming four specialised CELLS; the insert takes the
+  // next, unstated step of the same ladder rather than opening a new one.
+  "7-1": [{
+    conceptId: "concept-6-specialised-cells-built-for-the-job",
+    after: "Ciliated cells in the lining of your windpipe have tiny hairs that wave together to sweep dust and mucus up and out of your lungs, helping to keep you healthy.",
+    text: "\n\nNone of these cells works alone. A group of similar specialised cells working together on the same job is called a TISSUE - muscle cells make muscle tissue, and ciliated cells like the ones above make up the lining tissue of your airway. Different tissues then combine to form an ORGAN, a structure built to do a bigger job: your heart is an organ made of muscle tissue, nerve tissue and blood-vessel tissue, all working together to pump blood. And organs themselves combine into an ORGAN SYSTEM: your heart, blood and blood vessels together make up the circulatory system. Cell, tissue, organ, organ system - each level is built from the level below it.",
+  }],
   // 4Bh2-4Bh4 (skeleton growth and protection; muscles attach to bones;
   // muscle contraction, in pairs) had no honest home anywhere in Grade 4 —
   // checked, not assumed: grep for skeleton/muscle across all six units found

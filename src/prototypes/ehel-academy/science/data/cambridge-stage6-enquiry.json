@@ -4,8 +4,8 @@
   "curriculumCode": "0097",
   "stage": 6,
   "source": "Authored 2026-09-17 against Cambridge 0097 Stage 6. Not extracted from the Teacher's Resource, whose versions of these are addressed to a teacher delivering them aloud; this course has no teacher in the room.",
-  "minimumCovered": 31,
-  "_minimumCovered": "One prompt per unclaimed Stage 6 TWS/SIC objective, plus eleven added 2026-09-18 for content objectives delivered ONLY by the concepts fixture, with no exploration, quiz item or reasoning prompt behind them at all: 6Bp.02, 6Bp.03, 6Bp.04, 6Be.02, 6Cc.02, 6Cc.03, 6Cp.01, 6Cp.02, 6Cp.03, 6Pf.05 and 6Pe.02. Coverage is a number that only goes up.",
+  "minimumCovered": 32,
+  "_minimumCovered": "One prompt per unclaimed Stage 6 TWS/SIC objective, plus eleven added 2026-09-18 for content objectives delivered ONLY by the concepts fixture, with no exploration, quiz item or reasoning prompt behind them at all: 6Bp.02, 6Bp.03, 6Bp.04, 6Be.02, 6Cc.02, 6Cc.03, 6Cp.01, 6Cp.02, 6Cp.03, 6Pf.05 and 6Pe.02. A twelfth was added the same day for a thinly-taught objective: 6TWSp.05 (naming a risk), noticeably thinner in Unit 5 than its Stage 5 twin - the unit's only 'risk' content was an instructional Safety First note the material tells the learner, never a risk the learner is asked to identify themselves. Coverage is a number that only goes up.",
   "prompts": [
     {
       "id": "6-enq-1", "unit": 1, "codes": ["6TWSp.04"], "outcomeId": "lo01", "difficulty": "Challenge",
@@ -192,6 +192,12 @@
       "prompt": "You already built a series circuit with two lamps and saw both glow dimly. Now wire the SAME two lamps and cell in parallel instead, and compare. What do you predict will happen to the brightness, and what happens if you unscrew one lamp?",
       "keyIdeas": ["In parallel, each lamp gets the cell's full push and glows brighter", "Unscrewing one lamp in parallel leaves the other lit - it has its own branch", "In series, unscrewing either lamp breaks the one loop and both go out"],
       "modelAnswer": "In parallel, both lamps should glow brighter than they did in series, because each one now gets the cell's full push along its own branch rather than sharing one current with the other lamp. Unscrewing one lamp in the parallel circuit leaves the other one lit, because its branch is untouched - which is completely different from the series circuit, where unscrewing either lamp breaks the one loop and both go dark. Building both and comparing them directly is the only way to see that the same two lamps and the same cell can behave in two very different ways, depending only on how they are wired."
+    },
+    {
+      "id": "6-enq-32", "unit": 5, "codes": ["6TWSp.05"], "outcomeId": "lo07", "difficulty": "Core",
+      "prompt": "Before you test ten household objects to see which conduct electricity, name one risk of doing this test and how you would reduce it.",
+      "keyIdeas": ["Testing with mains electricity is dangerous - use only a battery and bulb", "Handling sharp or breakable objects could cut you while testing", "Naming a risk first lets you plan around it before you start"],
+      "modelAnswer": "The main risk is testing with the wrong kind of electricity - mains electricity from a wall socket is dangerous and must never be used for a home experiment, so I would use only a battery and a bulb, which give a low, safe voltage. A smaller risk is handling sharp metal objects like scissors or a nail, which I would hold carefully by an insulated part rather than the metal. Naming a risk before I start is what lets me plan around it, rather than finding out about it partway through the test."
     }
   ]
 }

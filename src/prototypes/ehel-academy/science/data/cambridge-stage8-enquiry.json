@@ -4,8 +4,8 @@
   "curriculumCode": "0893",
   "stage": 8,
   "source": "Authored 2026-09-17 against Cambridge Lower Secondary Science 0893 Stage 8, anchored to the investigations in Grade 8 units 1-9. No Teacher's Resource was supplied for this stage.",
-  "minimumCovered": 15,
-  "_minimumCovered": "One prompt per unclaimed Stage 8 TWS/SIC objective. Coverage is a number that only goes up.",
+  "minimumCovered": 18,
+  "_minimumCovered": "One prompt per unclaimed Stage 8 TWS/SIC objective, plus three added 2026-09-18 for content objectives sitting in a unit whose own outcomes never mention them, with no self-assessment or quiz item behind them: 8Be.01, 8Be.02/8Be.03 (Unit 1 - ecosystems, bioaccumulation and invasive species, appended to a plant-reproduction unit) and 8ESp.02 (Unit 9 - renewable/non-renewable resources, appended to an electricity unit). Coverage is a number that only goes up.",
   "prompts": [
     {
       "id": "8-enq-1", "unit": 1, "codes": ["8TWSp.01"], "outcomeId": "lo01", "difficulty": "Challenge",
@@ -96,6 +96,24 @@
       "prompt": "A town must decide whether to run its new clinic's vaccine fridges from the grid or from solar panels with batteries. Evaluate the issue, and say what evidence would decide it.",
       "keyIdeas": ["Reliability is the real question, because vaccines spoil if a fridge warms", "Grid: a strong supply, but this town has outages", "Deciding evidence: outage frequency, sunshine in the cloudiest month, cooling needed"],
       "modelAnswer": "The scientific heart of this is not cost but reliability, because vaccines spoil if a fridge warms for even a few hours - so a strong supply that fails occasionally is worse than a weaker one that never does. The grid delivers plenty of power, but this town has outages. Solar needs no fuel and no line, yet it generates only in daylight and depends on batteries, which lose capacity over years. The evidence I would want: how often and for how long the grid actually fails here, how many hours of strong sun the town gets in its cloudiest month, and how much cooling the clinic needs. The best answer may well be both, with the grid as backup."
+    },
+    {
+      "id": "8-enq-16", "unit": 1, "codes": ["8Be.01"], "outcomeId": "lo10", "difficulty": "Core",
+      "prompt": "Name three different habitats you might find within a single savanna ecosystem, and explain the difference between a habitat and an ecosystem.",
+      "keyIdeas": ["A habitat is one place with its own conditions - shade under a tree, a riverbank, thorn scrub", "An ecosystem is the whole area, with all its habitats, soil, water and weather, grouped together", "One ecosystem can hold many different habitats"],
+      "modelAnswer": "Within one savanna ecosystem you might find the shade under an acacia tree, the open dry grassland, and a seasonal riverbank - three different habitats, each with its own conditions. A habitat is one particular place with its own conditions that a species can live in; an ecosystem is the wider area - all those habitats together with the soil, water, air and weather they share. So a habitat sits inside an ecosystem, and one ecosystem is usually made up of several habitats side by side."
+    },
+    {
+      "id": "8-enq-17", "unit": 1, "codes": ["8Be.02", "8Be.03"], "outcomeId": "lo10", "difficulty": "Challenge",
+      "prompt": "Prosopis was planted along the Horn of Africa to hold back the desert, and pesticide sprayed on nearby farms has been measured building up in fish further down a river. Explain how EACH of these harms an ecosystem, even though neither one is a natural part of it.",
+      "keyIdeas": ["Prosopis is an invasive species - it crowds out native plants for light, water and soil", "A pesticide is toxic and is not broken down, so it stays in a body and builds up - bioaccumulation", "Both harm an ecosystem by disrupting it from outside, in different ways"],
+      "modelAnswer": "Prosopis is an invasive species: introduced to a new place with none of the pests or diseases that kept it in check at home, it spreads unchecked and crowds out native plants for light, water and soil, so the animals that depended on those plants lose their food too. The pesticide harms the ecosystem differently: it is toxic and is not broken down by a living body, so each animal that eats it keeps the dose, and the amount builds up more and more at each step of the food chain - this is bioaccumulation, and it means an animal far from the farm, at the top of the chain, can end up carrying the heaviest dose of all. Different mechanisms, but both are examples of an ecosystem being disrupted from outside."
+    },
+    {
+      "id": "8-enq-18", "unit": 9, "codes": ["8ESp.02"], "outcomeId": "lo01", "difficulty": "Core",
+      "prompt": "Name one renewable and one non-renewable resource used to generate electricity, and explain the key difference between them.",
+      "keyIdeas": ["Renewable: wind, tidal, solar - nature replaces it about as fast as it is used", "Non-renewable: coal, oil, natural gas - took millions of years to form, gone once burned", "The difference is whether the resource can be replaced at anything like the speed it is used"],
+      "modelAnswer": "A solar panel uses a renewable resource - sunlight - because nature replaces it every single day and using it does not use it up. A power station burning coal uses a non-renewable resource, because coal took millions of years to form underground and once it is burned it is gone for good. The real difference is not how the electricity is generated but whether the resource behind it can be replaced at anything like the speed people use it."
     }
   ]
 }

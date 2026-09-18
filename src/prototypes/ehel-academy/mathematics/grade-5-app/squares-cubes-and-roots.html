@@ -435,6 +435,8 @@
       <p class="lede">Build a square out of dots and watch it grow by odd numbers, test whether a number is square, undo a square to get its root, stack a cube and take it apart again, and build a triangle of dots.</p>
     </div>
     <div class="hero-mini" aria-hidden="true" id="heroMini"></div>
+  
+    <div class="top-actions"></div>
   </header>
       <!-- ehel-g5-search: search this grade's lesson content. The field sits with
          the step list because that is this page's table of contents. -->
@@ -1249,4 +1251,219 @@
   .ls-snip mark { background: var(--accent-soft); color: var(--accent);
     padding: 0 2px; border-radius: 3px; }
   .ls-none { font-size: 14px; color: var(--muted); }
+
+
+  .hero { position: relative; }
+  .top-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: flex-end; margin-top: 4px; }
+  .top-actions button { font: inherit; font-size: 13.5px; font-weight: 700;
+    padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--card, #fff); color: var(--ink); cursor: pointer; }
 </style>
+
+<!-- WIRE-JS-START ehel-g5-platform -->
+<script type="module">
+  /* Hand-raise, class chat, Wehel - see wire-platform.py. No deck exists here,
+     so this mounts the same singletons G1-4 mount, without a deck-header
+     home for them: placeLearnerControls() falls back to .top-actions when
+     there is no .gc-top, which is always true on this build. */
+  import { mountLearnerControls } from "./learner-controls.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
+  import { escapeHtml } from "./course-shell.js";
+  import "./seb-session.js";
+
+  const q = new URLSearchParams(location.search);
+  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
+
+  let toastEl = null;
+  function toast(message) {
+    if (toastEl) toastEl.remove();
+    toastEl = document.createElement("div");
+    toastEl.className = "w-toast";
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
+  }
+
+  try {
+    mountLearnerControls({
+      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
+      progressUnit: "l01",
+    });
+  } catch (e) { console.error("learner controls:", e); }
+
+  if (launchToken) {
+    const dock = document.createElement("button");
+    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
+    const drawer = document.createElement("div");
+    drawer.className = "w-drawer"; drawer.hidden = true;
+    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
+    let panel = null;
+    function open() {
+      drawer.hidden = false; dock.hidden = true;
+      if (panel) return;
+      try {
+        panel = mountWehelChat({
+          container: drawer.querySelector(".w-drawer-body"),
+          meta: {
+            subject: "mathematics", subjectLabel: "Mathematics", grade: 5,
+            unitNo: 1, unitTitle: "Squares, Cubes and Roots",
+            learnerCategory: q.get("category") || "",
+          },
+          store: {},
+          ui: { escapeHtml, toast },
+          tutorLabel: "Wehel Tutor",
+          placeholder: "Ask about Squares, Cubes and Roots\u2026",
+          quickPrompts: [
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
+            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
+          ],
+        });
+      } catch (e) {
+        console.error("wehel:", e);
+        drawer.hidden = true; dock.hidden = false;
+        toast("Wehel is not available on this page.");
+      }
+    }
+    function close() { drawer.hidden = true; dock.hidden = false; }
+    dock.addEventListener("click", open);
+    drawer.querySelector("button").addEventListener("click", close);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
+    document.body.append(dock, drawer);
+
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  }
+</script>
+<!-- WIRE-JS-END ehel-g5-platform -->
+
+<script type="module">
+  /* Progress reporting for a page with no deck and no check - see
+     wire-platform.py. "Section reached" replaces "step finished": an
+     IntersectionObserver marks a step section seen the first time any part
+     of it enters the viewport, and unit.completed fires once every
+     section has been seen, the same rule every other grade's last finish()
+     closes the unit with. */
+  import { createProgressClient } from "./progress-client.js";
+
+  const q = new URLSearchParams(location.search);
+  const endpoint = (q.get("pwsEndpoint") || "").trim();
+  const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+
+  const COURSE = "ehel-math-g05";
+  const UNIT = "l01";
+  const STUDENT = q.get("studentid") || "local";
+
+  const ws = createProgressClient({
+    course: COURSE, student: STUDENT,
+    backend: endpoint ? "remote" : "local",
+    endpoint: endpoint || undefined,
+    token: token || undefined,
+    onAuthLost: () => notice("Your session has expired. Your work is saved on this device \u2014 open the lesson again from your class page."),
+    onDeliveryFailing: () => notice(navigator.onLine
+      ? "Your work is saved here, but it is not reaching your school right now."
+      : "You are offline. Your work is saved here and will be sent when you are back."),
+    onDeliveryRecovered: () => clearNotice(),
+  });
+
+  const emit = (e) => { try { ws.emit(e); } catch (_) { /* never break the lesson */ } };
+
+  let noticeEl = null;
+  function notice(text) {
+    if (!noticeEl) {
+      noticeEl = document.createElement("p");
+      noticeEl.className = "progress-notice";
+      noticeEl.setAttribute("role", "status");
+      document.querySelector(".wrap")?.prepend(noticeEl);
+    }
+    noticeEl.textContent = text;
+  }
+  function clearNotice() { if (noticeEl) { noticeEl.remove(); noticeEl = null; } }
+
+  const sections = [...document.querySelectorAll("section.step")];
+  const STEPS = Math.max(1, sections.length);
+  const sectionId = (i) => "step-" + String(i + 1).padStart(2, "0");
+  const labelOf = (i) => (sections[i]?.querySelector("h2, h3")?.textContent || "").trim() || sectionId(i);
+
+  const doneIds = new Set();
+  let unitSent = false;
+
+  /* NOT SENT UNTIL THE BASELINE HAS LANDED. progress.summary REPLACES the
+     unit's sectionsDone rather than merging into it (the same contract every
+     other grade's wire-progress.py relies on), so a report sent before
+     hydrate() resolves would tell the server "only the section just seen is
+     done" and erase a completed lesson's record the moment it is reopened -
+     the exact failure the shared progress-client.js docs warn a new
+     session's first event can cause. Measured locally hydrate() resolves
+     near-instantly (backend "local" just reads localStorage), which hid this
+     the first time it was tested; a real launch's network round trip would
+     not be as forgiving, so this waits regardless of how fast hydrate looks
+     in a browser with nothing else to do. */
+  let ready = false;
+  let pendingIndex = null;
+
+  function report(i) {
+    const ev = {
+      type: "progress.summary", unit: UNIT,
+      sectionsDone: [...doneIds],
+      resume: sectionId(i), resumeLabel: labelOf(i),
+      xp: doneIds.size,
+    };
+    emit(ev);
+    if (doneIds.size >= STEPS && !unitSent) {
+      unitSent = true;
+      emit({ type: "unit.completed", unit: UNIT });
+    }
+  }
+
+  function markSeen(i) {
+    const id = sectionId(i);
+    if (doneIds.has(id)) return;
+    doneIds.add(id);
+    if (ready) report(i);
+    else pendingIndex = i;             /* flushed once hydrate has landed */
+  }
+
+  /* Seen once, reported once - a section scrolled past twice (a learner
+     re-reading) must not re-fire and must not un-finish the unit. threshold
+     0 fires the instant any pixel is visible, which matches "reached" rather
+     than "read": a section a learner scrolls straight past still counts, the
+     same honesty a step's finish() has always had - a tap counts the moment
+     it happens, not after a dwell time nothing here can honestly measure.
+     Observing starts immediately, before hydrate resolves, because the
+     FIRST section is often already on screen at load and markSeen() queues
+     rather than sends - nothing is lost by starting early, only reported
+     early. */
+  if ("IntersectionObserver" in window && sections.length) {
+    const io = new IntersectionObserver((entries) => {
+      for (const en of entries) {
+        if (!en.isIntersecting) continue;
+        markSeen(sections.indexOf(en.target));
+      }
+    }, { threshold: 0 });
+    sections.forEach((s) => io.observe(s));
+  }
+
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (u) {
+        const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : [])
+          .map((id) => { const m = /^step-(\d{2})$/.exec(String(id || "")); return m ? Number(m[1]) - 1 : -1; })
+          .filter((i) => i >= 0);
+        for (const i of doneIdx) doneIds.add(sectionId(i));
+      }
+    } catch (_) { /* never break the lesson - proceed with whatever was seen locally */ }
+    ready = true;
+    if (pendingIndex !== null) report(pendingIndex);
+  })();
+</script>

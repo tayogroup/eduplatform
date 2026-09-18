@@ -631,3 +631,24 @@
     padding: 0 2px; border-radius: 3px; }
   .ls-none { font-size: 14px; color: var(--muted); }
 </style>
+
+<script>/* ehel-g5-hub-launch-passthrough - see wire-platform.py
+   Every lesson link is written statically ("squares-cubes-and-roots.html?from=g5"),
+   so a real launch's pwsToken/pwsEndpoint/studentid/category - present on THIS
+   page's own URL - would otherwise be dropped the moment a learner clicks into
+   a lesson, and every control wire-platform.py just added would find no launch
+   token and stay silent. Runs once, merges rather than overwrites: from=g5 is
+   kept, the launch params are added beside it. */
+  (function () {
+    var carry = ["pwsToken", "pwsEndpoint", "studentid", "category"];
+    var src = new URLSearchParams(location.search);
+    var extra = [];
+    carry.forEach(function (k) { if (src.get(k)) extra.push(k + "=" + encodeURIComponent(src.get(k))); });
+    if (!extra.length) return;
+    document.querySelectorAll("a.lesson[href]").forEach(function (a) {
+      var url = new URL(a.getAttribute("href"), location.href);
+      carry.forEach(function (k) { if (src.get(k)) url.searchParams.set(k, src.get(k)); });
+      a.setAttribute("href", url.pathname.split("/").pop() + "?" + url.searchParams.toString());
+    });
+  })();
+</script>

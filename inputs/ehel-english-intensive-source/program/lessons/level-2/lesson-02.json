@@ -67,14 +67,14 @@
     ["Kwame", "It's great. But the front door of the building is strange. I can't open it from the inside."],
     ["Mei", "Oh, it's easy. Press the white button, then pull the door. Don't push it."],
     ["Kwame", "Sorry, which button do you mean? The big one?"],
-    ["Mei", "No, the small white one, next to the door. And at night, lock it. Twist the key two times."],
-    ["Kwame", "Press the button, then pull. At night, twist the key two times. That's clear. Thanks!"],
+    ["Mei", "No, the small white one, next to the door. And at night, lock it. Twist the key twice."],
+    ["Kwame", "Press the button, then pull. At night, twist the key twice. That's clear. Thanks!"],
     ["Mei", "You're welcome. Would you like to come for dinner on Friday? My sister is a great cook."],
     ["Kwame", "I'd love to, thank you. You like cooking too, don't you?"]
    ],
    "questions": [
     {"q": "What does Kwame want to drink?", "a": "some water", "wrong": ["a coffee", "a cup of tea"], "why": "Kwame says: Just some water, please."},
-    {"q": "How do you open the front door from the inside?", "a": "Press the white button, then pull the door.", "wrong": ["Push the door hard.", "Twist the key two times."], "why": "Mei says: Press the white button, then pull the door. Don't push it."},
+    {"q": "How do you open the front door from the inside?", "a": "Press the white button, then pull the door.", "wrong": ["Push the door hard.", "Twist the key twice."], "why": "Mei says: Press the white button, then pull the door. Don't push it."},
     {"q": "What does Mei invite Kwame to?", "a": "dinner on Friday", "wrong": ["lunch on Saturday", "a party at work"], "why": "Mei says: Would you like to come for dinner on Friday?"}
    ]
   },
@@ -100,7 +100,7 @@
     {"w": "lovely", "pos": "adjective", "meaning": "Very nice, or very beautiful. People in Britain say it a lot.", "example": "Thank you for a lovely evening."},
     {"w": "tidy", "pos": "adjective", "meaning": "With everything in the right place.", "example": "Your kitchen is always so tidy!"},
     {"w": "press", "pos": "verb", "meaning": "To push something with your finger.", "example": "Press the green button to start."},
-    {"w": "twist", "pos": "verb", "meaning": "To turn something with your hand, like a key or the top of a bottle.", "example": "Twist the key two times to lock the door."},
+    {"w": "twist", "pos": "verb", "meaning": "To turn something with your hand, like a key or the top of a bottle.", "example": "Twist the key twice to lock the door."},
     {"w": "lock", "pos": "verb", "meaning": "To close a door with a key, so nobody can open it.", "example": "Please lock the door when you leave."},
     {"w": "meaning", "pos": "noun", "meaning": "What a word or a sentence says. Also, what someone wants to say.", "example": "What's the meaning of this word?"},
     {"w": "clear", "pos": "adjective", "meaning": "Easy to understand, or easy to see.", "example": "Your instructions are very clear. Thank you."},
@@ -130,7 +130,7 @@
  "grammar": {
   "spot": {
    "instructions": "Look at these sentences from the conversation. Two offer or invite. Three tell Kwame what to do.",
-   "examples": ["Would you like a cold drink, or a coffee?", "Would you like to come for dinner on Friday?", "Press the white button, then pull the door.", "Don't push it.", "Twist the key two times."],
+   "examples": ["Would you like a cold drink, or a coffee?", "Would you like to come for dinner on Friday?", "Press the white button, then pull the door.", "Don't push it.", "Twist the key twice."],
    "question": "Which sentence offers a thing, and which invites Kwame to do something? What comes after to? How do the instructions start?",
    "answer": "Would you like + a thing offers: a cold drink. Would you like to + a verb invites: to come. The instructions start with a verb: press, pull, twist. Don't + a verb says what not to do: Don't push it."
   },
@@ -210,7 +210,7 @@
   },
   "model": {
    "title": "An invitation, a yes and a no",
-   "body": "1. THE INVITATION\nHi Tomasz,\nWould you like to come for lunch at my flat on Sunday? Come at one o'clock. There's soup and fresh bread. My address is Flat 3, 14 Park Road. Please reply by Friday.\nMei\n2. A YES\nHi Mei,\nThank you for the invitation! I'd love to come. Can I bring anything?\nTomasz\n3. A NO\nHi Mei,\nThank you for the invitation. Unfortunately, I can't come on Sunday. I have to work all day. Would you like to meet for coffee next week?\nOmar"
+   "body": "1. THE INVITATION\nHi Tomasz,\nWould you like to come for lunch at my flat on Sunday? Come at one o'clock. There's soup and fresh bread. My address is Flat 3, 14 Park Road. Please reply by Friday.\nMei\n2. A YES\nHi Mei,\nThank you for the invitation! I'd love to come. Can I bring anything?\nTomasz\n3. A NO\nHi Mei,\nThank you for the invitation. Unfortunately, I can't come on Sunday. I have to work all day. Would you like to meet for coffee next week?\nTomasz"
   },
   "write": {
    "task": "Write an invitation to a colleague or a friend: for lunch, dinner or a coffee. Say the day, the time and the place. Then write two short replies: one to say yes, and one to say no.",
@@ -290,7 +290,7 @@
    {"q": "Don't ___ the door. Pull it.", "options": ["push", "pushing", "to push"], "a": "push", "why": "Don't + a verb, with no to.", "from": "this lesson"},
    {"q": "It's cold today, ___ ?", "options": ["isn't it", "is it", "doesn't it"], "a": "isn't it", "why": "It's cold has no not, so the tag has not: isn't it?", "from": "this lesson", "mode": "type"},
    {"q": "You boil water in a ___ .", "options": ["kettle", "jug", "tray"], "a": "kettle", "why": "A kettle is a machine that boils water.", "from": "this lesson"},
-   {"q": "A friend invites you to dinner, but you are busy. How do you start your reply?", "options": ["Unfortunately, I can't come.", "I'd love to come.", "Yes, please."], "a": "Unfortunately, I can't come.", "why": "Unfortunately comes before bad news, like a no.", "from": "this lesson"},
+   {"q": "A friend invites you to dinner, but you are busy. How do you start your reply?", "options": ["Unfortunately, I can't come.", "Great, see you then!", "Yes, please."], "a": "Unfortunately, I can't come.", "why": "Unfortunately comes before bad news, like a no.", "from": "this lesson"},
    {"q": "You don't understand an instruction. What do you say?", "options": ["Sorry, what do you mean?", "That's clear, thanks.", "Here you are."], "a": "Sorry, what do you mean?", "why": "This asks the person to explain again.", "from": "this lesson"},
    {"q": "Mei ___ start work at eight. It's a rule.", "options": ["has to", "have to", "don't have to"], "a": "has to", "why": "Mei is she, so has to. A rule means there is no choice.", "from": "Lesson 1"},
    {"q": "Sorry, I'm busy. I ___ a report for my manager.", "options": ["am writing", "write", "writes"], "a": "am writing", "why": "Now: am + -ing.", "from": "Lesson 1"},

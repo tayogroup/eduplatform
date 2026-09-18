@@ -604,6 +604,12 @@
   /* 9 — compass buttons */
   .choice.dir { min-width: 54px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; font-weight: 600; }
 
+  /* unit lecture film */
+  .lecture-film { margin: 0 0 16px; }
+  .lecture-film video { width: 100%; display: block; border-radius: 20px; background: #000;
+    box-shadow: var(--shadow); aspect-ratio: 16 / 9; }
+  .lecture-film .lec-note { margin: 8px 2px 0; font-size: 13px; color: var(--muted); }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -905,6 +911,13 @@
     </div>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
+
+  <div class="lecture-film">
+    <video controls playsinline preload="metadata" poster="lecture-video/shape-and-measures.jpg" src="lecture-video/shape-and-measures.mp4">
+      <track kind="captions" srclang="en" label="English" src="lecture-video/shape-and-measures.vtt">
+    </video>
+    <p class="lec-note">Watch the lesson, then go through it a part at a time below.</p>
+  </div>
 
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">

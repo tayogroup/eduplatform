@@ -319,7 +319,7 @@ LESSON["lecture"] = LESSON["lecture"] + [
 
 # The unit lecture film (2026-09-18, owner: "do the same" as the Grade 4
 # Maths film). It plays in this lesson's own Unit lecture step, above the parts,
-# so no step moves. Made by tools/create-ehel-computing-unit-lecture.js from
+# so no step moves. Made by tools/create-ehel-unit-lecture.js from
 # lecture-video/computers-everywhere.json; see lecture-video/README.md. The
 # names are content hashes, so a re-render gets new ones and must be re-listed
 # here and in app.config.json extraPages.

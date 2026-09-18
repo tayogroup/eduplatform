@@ -9,8 +9,8 @@ step moves and a learner's saved record still lines up with the dots.
 | | |
 | --- | --- |
 | storyboard | `computers-everywhere.json`: 9 chapters, 40 beats, 2,459 characters |
-| tool | `tools/create-ehel-computing-unit-lecture.js` |
-| pictures | `tools/lib/ehel-computing-lecture-scenes.js` and `ehel-computing-lecture-film.css` |
+| tool | `tools/create-ehel-unit-lecture.js`, the tool for a film in any subject (it began as this film's) |
+| pictures | `tools/lib/ehel-computing-lecture-scenes.js`, named by the storyboard's `renderer`, between the shared `ehel-film-engine-head.js` and `-tail.js`, over `ehel-film-base.css` |
 | film | `computers-everywhere.16b93198.mp4`: 1280x720, 30 fps, 3:13 (192.53 s), 12.6 MB |
 | captions | `computers-everywhere.8d4a4942.vtt`: 40 cues, offered and off by default (the film draws each sentence itself) |
 | poster | `computers-everywhere.c2a3425a.jpg` |
@@ -26,15 +26,39 @@ render since has bought nothing.
 ## Rendering it, and what each mode costs
 
 The tool is the maths film's tool, which is the science film's; read
-`science/grade-4-app/lecture-video/README.md` first. **A real render buys
-narration from ElevenLabs, per character.** Every other mode is free:
+`science/grade-4-app/lecture-video/README.md` first. **`--narrate` and a
+render buy narration from ElevenLabs, per character.** Every other mode is
+free:
 
 ```bash
-node tools/create-ehel-computing-unit-lecture.js --dry       # cost, coverage, estimated length
-node tools/create-ehel-computing-unit-lecture.js --preview   # one still per beat, nothing bought
-node tools/create-ehel-computing-unit-lecture.js --draft     # the whole film in the free OS voice
-node tools/create-ehel-computing-unit-lecture.js             # buys what is not cached, renders
+T="node tools/create-ehel-unit-lecture.js --app src/prototypes/ehel-academy/computing/grade-1-app --slug computers-everywhere"
+$T --dry            # cost, coverage, length (measured once the clips are cached)
+$T --preview        # one still per beat and both cards
+$T --sample apps    # a frame 0.75 s after every spoken cue, as contact sheets (no ids: every chapter)
+$T --draft          # the whole film in the free OS voice
+$T --narrate        # BUYS the narration, then stops
+$T --workers 5      # BUYS what is not cached, renders; frames drawn by 5 browsers at once
 ```
+
+**The order that buys once and renders once** (the tool's header has it in
+full): preview and sample until the pictures are right; ask the owner; then
+`--narrate`; then `--sample` again, which now runs on the MEASURED timeline;
+then render once. This film was the lesson: it was checked on the estimate,
+rendered, found wrong on the real timing, and rendered again.
+
+The tool became subject-neutral on 2026-09-18, and nothing about this film
+changed. Its engine (the timeline, the cues, the chrome, the caption band, the
+two cards) moved into `ehel-film-engine-head.js` and `-tail.js`. The pictures
+stayed in `ehel-computing-lecture-scenes.js`. 59 frames spread across the whole
+film came out byte-identical before and after the split.
+
+A five-browser render of this film took 6 minutes: 4 drawing frames, 2
+encoding. The one-browser render took 19. Compared frame by frame, 5,629 of
+5,776 frames were identical. The other 147 differed only at text edges, by
+at most 2,129 pixels. Drawn again in fresh browsers, those frames came out
+identical every time, and the SHIPPED one-browser render has such frames too.
+So it is Chromium's text antialiasing drifting over a long run, not the
+parallel drawing. The live film was not replaced; it is the one below.
 
 Three things are different from the maths tool:
 

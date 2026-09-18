@@ -102,7 +102,7 @@ it on `ONLEAVE`. Without the key every line of `lecture()`
 draws and reports what it always did. `build-lessons.py` refuses a film whose
 files are not on disk or not in `extraPages`, and refuses any file named
 `.draft.` (the free OS voice). The film itself is made by
-`tools/create-ehel-computing-unit-lecture.js`; see
+`tools/create-ehel-unit-lecture.js`, the film tool for any subject; see
 `../grade-1-app/lecture-video/README.md`, the first one.
 
 Scenes: `dress`, `sandwich`, `teeth`, `handwash`, `tower`, `plant`, `catfeed`,

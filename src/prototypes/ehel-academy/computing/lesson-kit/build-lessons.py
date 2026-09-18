@@ -948,7 +948,7 @@ def check_step(n, k, s, codes, libs):
         # in app.config.json :: extraPages, or the deploy will not carry it -
         # the Science kit's rule, word for word. One rule of this kit's own: a
         # film named ".draft." is the free OS voice that
-        # tools/create-ehel-computing-unit-lecture.js --draft renders for
+        # tools/create-ehel-unit-lecture.js --draft renders for
         # checking the timing, and it must never reach a child.
         film = d.get("video")
         if film:

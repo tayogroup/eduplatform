@@ -588,6 +588,15 @@ learned is below, and arrives when you are actually working in that area.
   was the EASY case: Lesson 1 had the lesson's own skeleton and arm to animate,
   and most lessons have no figure, sim or scene at all. Measure what there is to
   draw before promising a film like it.
+  **A NEW film, in any subject, is made with `tools/create-ehel-unit-lecture.js`**
+  (2026-09-18). The storyboard names its pictures file, and the timeline, cues,
+  captions and cards are shared. The Bones and Muscles and Shape and Measures
+  films keep their own tools. The tool's header has the order that buys
+  narration once and renders once: `--narrate`, then `--sample` on the MEASURED
+  timeline, then render. The first Computing film checked on the estimate and
+  rendered twice. `--workers` draws frames in several browsers, about 5 times
+  faster. [`computing/grade-1-app/lecture-video/README.md`](src/prototypes/ehel-academy/computing/grade-1-app/lecture-video/README.md)
+  is the worked example.
 - [`docs/release-and-repo-history.md`](docs/release-and-repo-history.md) — the
   full 61KB account behind every rule in "Working in this shared checkout":
   the shared-index commit failures, the `git archive` release recipe and its

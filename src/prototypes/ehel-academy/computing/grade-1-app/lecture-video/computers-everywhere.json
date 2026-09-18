@@ -1,5 +1,5 @@
 {
-  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 8 Computers Everywhere. Rendered by tools/create-ehel-computing-unit-lecture.js with the scenes in tools/lib/ehel-computing-lecture-scenes.js. Every beat is one narration clip; art.at names the phrases a picture waits for, and the scenes refuse to load if a phrase is not in its beat's say. Written for a Grade 1 child: short sentences, the lesson's own words (program, app, input, output, control, robot), the lesson's own examples (Grandma's call, the lions, the six programs, the eight devices, the hidden computers, the robots and the bicycle). Read README.md in this folder before rendering without --dry, --preview or --draft: a real render buys narration.",
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 8 Computers Everywhere. Rendered by tools/create-ehel-unit-lecture.js with the scenes named in renderer below. Every beat is one narration clip; art.at names the phrases a picture waits for, and the scenes refuse to load if a phrase is not in its beat's say. Written for a Grade 1 child: short sentences, the lesson's own words (program, app, input, output, control, robot), the lesson's own examples (Grandma's call, the lions, the six programs, the eight devices, the hidden computers, the robots and the bicycle). Read README.md in this folder before rendering without --dry, --preview or --draft: a real render buys narration.",
   "slug": "computers-everywhere",
   "lesson": 8,
   "grade": 1,
@@ -7,6 +7,7 @@
   "title": "Computers Everywhere",
   "subtitle": "Grade 1 Computing",
   "framework": "Cambridge Primary Computing 0059",
+  "renderer": { "scenes": "tools/lib/ehel-computing-lecture-scenes.js" },
   "objectives": [
     ["1CS.01", "Know that there are a range of computer systems with different functions, including communication, entertainment, creativity, research and for controlling other technology."],
     ["1CS.02", "Know that computers can run many different programs, including games, apps and document creation tools."],

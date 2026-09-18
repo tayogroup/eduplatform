@@ -1,14 +1,15 @@
-/* The 1280x720 stage for the Computing unit lecture films.
+/* The 1280x720 stage shared by the unit lecture films of every subject
+ * (tools/create-ehel-unit-lecture.js; a storyboard may add its own sheet in
+ * renderer.styles). It was the Computing film's until 2026-09-18.
  *
  * DARK, like the science and maths films. Every token below is the one the
- * Computing lesson pages themselves render in: computing/lesson-kit/lib/
- * lesson.css forces the Wehel design language's dark block (:root,
- * :root:not([data-theme="light"]), :root[data-theme="dark"] { --ground:
- * #0B1D2C; ... }), the same palette the science and maths builds use. The
- * machines are drawn in the colours of the kit's own hardware drawings
- * (computing.js FIGURES: a #2B5673 body, #93AABE edges, a #0B1D2C screen,
- * #B9C8D6 for light plastic), so a tablet in the film is the tablet in the
- * lesson.
+ * standalone lesson pages render in: each kit's lib/lesson.css forces the
+ * Wehel design language's dark block (:root, :root:not([data-theme="light"]),
+ * :root[data-theme="dark"] { --ground: #0B1D2C; ... }), the same palette in
+ * Science, Mathematics and Computing. The Computing machines are drawn in the
+ * colours of that kit's own hardware drawings (computing.js FIGURES: a #2B5673
+ * body, #93AABE edges, a #0B1D2C screen, #B9C8D6 for light plastic), so a
+ * tablet in the film is the tablet in the lesson.
  *
  * NOTHING HERE TRANSITIONS OR ANIMATES. Every moving value is written inline
  * by the scene renderer as a pure function of t.

@@ -283,6 +283,10 @@ def check_lesson(level, les, d):
     need(rd.get("placeholder") or (rd.get("text") and rd.get("questions")), "reading: a placeholder until the book arrives, or a text with questions")
     q = (d.get("review") or {}).get("quiz") or []
     need(len(q) >= 8, "review.quiz: at least 8 items")
+    try:
+        earlier_lessons(level, les, d)
+    except ValueError as x:
+        e.append(str(x))
     for item in (g.get("practice") or []) + q:
         need(item.get("a") in (item.get("options") or []), "item %r: the answer must be one of its options" % item.get("q"))
     for item in (conv.get("questions") or []) + (rw.get("gist") or []) + (rw.get("detail") or []):
@@ -290,7 +294,36 @@ def check_lesson(level, les, d):
     return e
 
 
+def earlier_lessons(level, les, d):
+    """review.earlierLessons holds bare numbers. In a level's Lesson 1 they are the
+    PREVIOUS level's lessons (the brief: "revise the previous level's last
+    lessons"); anywhere else they are earlier lessons of this level. Resolved here,
+    once, so nothing downstream has to guess which level a number meant."""
+    nums = (d.get("review") or {}).get("earlierLessons") or []
+    k = ORDER.index(level["id"])
+    if les["number"] == 1:
+        prev = LEVELS[ORDER[k - 1]] if k > 0 and LEVELS[ORDER[k - 1]].get("kind") == "unit" else None
+        if nums and not prev:
+            raise ValueError("review.earlierLessons: the first lesson of the first level has no earlier lessons")
+        where, allowed = prev, {x["number"] for _, _, x in plan_lessons(prev)} if prev else set()
+    else:
+        where, allowed = level, set(range(1, les["number"]))
+    bad = [n for n in nums if n not in allowed]
+    if bad:
+        raise ValueError("review.earlierLessons %s: not earlier lessons of %s" % (bad, where["name"] if where else "any level"))
+    titles = {x["number"]: x["title"] for _, _, x in plan_lessons(where)} if where else {}
+    return [{"level": where["id"], "levelName": where["name"], "lesson": n, "title": titles[n]} for n in nums]
+
+
 # --- pictures -------------------------------------------------------------------
+PICTURE_FIX = load(os.path.join(HERE, "pictures.json")) if os.path.isfile(os.path.join(HERE, "pictures.json")) else {}
+
+
+def picture_overrides(level_id):
+    """This program's own corrections to the shared picture map (pictures.json)."""
+    return PICTURE_FIX.get(level_id, {})
+
+
 def pictures(words, key):
     src = os.path.join(ACADEMY, "shell", "subjects", "word-pictures.js").replace("\\", "/")
     script = ("import('file:///%s').then(m => { const out = {}; for (const w of %s) out[w] = m.wordPicture(w, '%s') || ''; "
@@ -429,8 +462,9 @@ def build_lesson(level, pi, part, les, d, nxt):
     key = level["pictureKey"]
     items = d["listen"]["words"]["items"] + d["readWrite"]["words"]["items"]
     pics = pictures([w["w"] for w in items], key)
+    fix = picture_overrides(level["id"])
     for w in items:
-        w["pic"] = pics.get(w["w"], "")
+        w["pic"] = fix[w["w"]] if w["w"] in fix else pics.get(w["w"], "")
     G, S = steps_for(d, level)
     names = {s["key"]: s["name"] for s in PLAN["sections"]}
     days = level["schedule"]["daysPerLesson"]
@@ -441,6 +475,7 @@ def build_lesson(level, pi, part, les, d, nxt):
         "sectionNames": names, "next": nxt,
         "readerSpec": level["reader"][0].upper() + level["reader"][1:] + ", linked to “" + d["title"] + "”",
         "teacher": (d.get("teacher") or {}).get("liveClass"),
+        "earlier": earlier_lessons(level, les, d),
     })
     return write_page(level, les, d, G, S, data)
 

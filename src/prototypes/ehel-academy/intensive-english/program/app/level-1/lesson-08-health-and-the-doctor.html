@@ -1044,6 +1044,11 @@ a.lcard:hover { border-color: var(--teal); }
 .mini.letterpick { font-size: 28px; min-width: 56px; min-height: 56px; font-weight: 800; }
 /* a "done" label is a sentence ("I have said them all"): let it wrap inside the button */
 .big.done { height: auto; min-height: 64px; padding: 10px 22px; font-size: 24px; line-height: 1.2; }
+
+/* A document (a form, a label, a notice) is a piece of paper in both themes.
+   intensive.css gives it a fixed pale background and no text colour, so in
+   dark mode it inherited the light ink and could not be read. */
+.reading.document, .reading.document p, .reading.document b, .reading.document strong { color: #1B2A2F; }
 </style>
 
 <a class="skip" href="#deck">Skip to the lesson</a>
@@ -1648,7 +1653,7 @@ a.lcard:hover { border-color: var(--teal); }
      "pos": "noun",
      "meaning": "A time to see a doctor. You ask for it first.",
      "example": "I'd like to make an appointment.",
-     "pic": "📅"
+     "pic": ""
     },
     {
      "w": "clinic",
@@ -1676,7 +1681,7 @@ a.lcard:hover { border-color: var(--teal); }
      "pos": "noun",
      "meaning": "A doctor for your teeth.",
      "example": "I've got an appointment at the dentist on Friday.",
-     "pic": "🧑🏾‍⚕️"
+     "pic": "🦷"
     },
     {
      "w": "chemist",
@@ -1973,7 +1978,27 @@ a.lcard:hover { border-color: var(--teal); }
   "reading": "Section 5 · Reading & comprehension"
  },
  "next": "the Part 2 review & check (2 days), then Lesson 9 · Clothes and buying things",
- "readerSpec": "An A1 story or article of 200–400 words, linked to “Health and the doctor”"
+ "readerSpec": "An A1 story or article of 200–400 words, linked to “Health and the doctor”",
+ "earlier": [
+  {
+   "level": "level-1",
+   "levelName": "Level 1 — Everyday English",
+   "lesson": 5,
+   "title": "Money and shopping"
+  },
+  {
+   "level": "level-1",
+   "levelName": "Level 1 — Everyday English",
+   "lesson": 6,
+   "title": "My day, my week"
+  },
+  {
+   "level": "level-1",
+   "levelName": "Level 1 — Everyday English",
+   "lesson": 7,
+   "title": "Food and cooking"
+  }
+ ]
 };
   const GROUPS = [{"key": "start", "name": "Start"}, {"key": "listen", "name": "Section 1 · Listen & speak"}, {"key": "grammar", "name": "Section 2 · Grammar in use"}, {"key": "readWrite", "name": "Section 3 · Read & write"}, {"key": "task", "name": "Section 4 · Real-life task"}, {"key": "reading", "name": "Section 5 · Reading & comprehension"}, {"key": "review", "name": "Review & check"}];
   const STEPS = [{"g": 0, "t": "What this lesson is about"}, {"g": 0, "t": "Unit lecture"}, {"g": 1, "t": "Warm-up"}, {"g": 1, "t": "Listen: At the chemist"}, {"g": 1, "t": "Key phrases"}, {"g": 1, "t": "Words: The body and feeling ill"}, {"g": 1, "t": "Sound: hurt and heart"}, {"g": 1, "t": "Say it"}, {"g": 2, "t": "Spot the pattern"}, {"g": 2, "t": "The rule"}, {"g": 2, "t": "Practice"}, {"g": 2, "t": "Your turn"}, {"g": 3, "t": "Read: A medicine label"}, {"g": 3, "t": "Read for detail"}, {"g": 3, "t": "Words: At the clinic and the chemist"}, {"g": 3, "t": "Model: A note for the doctor"}, {"g": 3, "t": "Write"}, {"g": 4, "t": "Task card: Make an appointment"}, {"g": 4, "t": "Prepare"}, {"g": 4, "t": "Do it"}, {"g": 4, "t": "Compare with the model"}, {"g": 4, "t": "Can-do check"}, {"g": 5, "t": "Before you read"}, {"g": 5, "t": "Read the book"}, {"g": 5, "t": "Comprehension questions"}, {"g": 5, "t": "Talk or write about it"}, {"g": 6, "t": "Word review"}, {"g": 6, "t": "Quiz"}, {"g": 6, "t": "What I can do now"}];
@@ -3014,7 +3039,7 @@ a.lcard:hover { border-color: var(--teal); }
       '<p class="prompt" id="' + id + '-q"></p><div class="options" id="' + id + '-opts"></div>' +
       '<p class="feedback" id="' + id + '-fb" role="status" aria-live="polite"></p><p class="count" id="' + id + '-count"></p>' +
       '<div class="actions" id="' + id + '-again" hidden><button type="button" class="big small ghost">Try again</button></div>');
-    const same = (x, y) => { const t = (s) => String(s).trim().toLowerCase().replace(/[.!?,;:]+$/, "").replace(/\s+/g, " "); return t(x) === t(y); };
+    const same = (x, y) => normal(x) === normal(y);
     function settle(ok) {
       if (ok) right += 1;
       $(id + "-fb").textContent = (ok ? "Yes. " : "") + (items[at].why || "");
@@ -3031,7 +3056,10 @@ a.lcard:hover { border-color: var(--teal); }
     }
     function draw() {
       const it = items[at];
-      const opts = it.options ? it.options.slice() : shuffle([it.a].concat(it.wrong || []));
+      /* always shuffled: an author writes the right answer first more often
+         than not (the pilot did, every time), so the written order teaches
+         nothing except "tap the first one" */
+      const opts = shuffle(it.options ? it.options : [it.a].concat(it.wrong || []));
       $(id + "-q").textContent = it.q;
       $(id + "-count").textContent = "Question " + (at + 1) + " of " + items.length + (it.from && it.from !== "this lesson" ? " · from " + it.from : "");
       if (it.mode === "type") {
@@ -3061,6 +3089,13 @@ a.lcard:hover { border-color: var(--teal); }
     }
     $(id + "-again").querySelector("button").addEventListener("click", () => { at = 0; right = 0; $(id + "-again").hidden = true; $(id + "-fb").textContent = ""; draw(); });
     draw();
+  }
+
+  /* a typed answer, compared as a person would read it: a phone keyboard types
+     a curly apostrophe (don’t), and a full stop at the end is not an error */
+  function normal(s) {
+    return String(s).trim().toLowerCase().replace(/[‘’ʼ`]/g, "'").replace(/[“”]/g, '"')
+      .replace(/[.!?,;:]+$/, "").replace(/\s+/g, " ");
   }
 
   /* a box whose text stays on this device */
@@ -3253,8 +3288,12 @@ a.lcard:hover { border-color: var(--teal); }
   };
 
   /* ================= Section 3 · Read & write ========================== */
+  /* A plan line can name two texts ("a price list and a receipt") and the format
+     has one body, so writers join them with a divider line (---, - - - -). Each
+     part is its own card, the way the learner meets them in life. */
   const docHTML = (t) => '<p class="eyebrow">' + esc(t.type) + "</p><h3>" + esc(t.title) + "</h3>" +
-    '<div class="reading' + (t.document ? " document" : "") + '">' + para(t.body) + "</div>";
+    String(t.body || "").split(/\n\s*(?:[-–—=_*~]\s*){3,}\n/).map((part) =>
+      '<div class="reading' + (t.document ? " document" : "") + '">' + para(part) + "</div>").join("");
   P.readGist = function (i, id) {
     const el = $(id), rw = LESSON.readWrite;
     el.innerHTML = stepHead(i) + "<h2>Read for the main idea</h2>" +
@@ -3687,7 +3726,7 @@ a.lcard:hover { border-color: var(--teal); }
     const go = () => {
       if (box.disabled) return;
       const want = wordOf(ws[at]);
-      const ok = box.value.trim().toLowerCase() === want.toLowerCase();
+      const ok = normal(box.value) === normal(want);
       box.disabled = true; $(id + "-ok").disabled = true; box.classList.add(ok ? "right" : "wrong");
       if (ok) right++;
       $(id + "-fb").textContent = ok ? "Yes: " + want + "." : "It is " + want + ".";

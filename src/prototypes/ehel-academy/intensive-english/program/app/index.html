@@ -1044,6 +1044,11 @@ a.lcard:hover { border-color: var(--teal); }
 .mini.letterpick { font-size: 28px; min-width: 56px; min-height: 56px; font-weight: 800; }
 /* a "done" label is a sentence ("I have said them all"): let it wrap inside the button */
 .big.done { height: auto; min-height: 64px; padding: 10px 22px; font-size: 24px; line-height: 1.2; }
+
+/* A document (a form, a label, a notice) is a piece of paper in both themes.
+   intensive.css gives it a fixed pale background and no text colour, so in
+   dark mode it inherited the light ink and could not be read. */
+.reading.document, .reading.document p, .reading.document b, .reading.document strong { color: #1B2A2F; }
 </style>
 <div class="pg">
   
@@ -1052,8 +1057,8 @@ a.lcard:hover { border-color: var(--teal); }
 <div class="checkcard">Find my level: the placement test comes here.</div>
 <div class="levels">
 <a href="letters/index.html"><span class="cefr">Literacy</span><b>Letters &amp; Sounds</b><small>alongside Starter &middot; 14 built of 12</small></a>
-<a href="starter/index.html"><span class="cefr">Pre-A1</span><b>Starter — First Steps</b><small>weeks 1–7 &middot; 0 built of 10</small></a>
-<a href="level-1/index.html"><span class="cefr">A1</span><b>Level 1 — Everyday English</b><small>weeks 7–18 &middot; 1 built of 12</small></a>
+<a href="starter/index.html"><span class="cefr">Pre-A1</span><b>Starter — First Steps</b><small>weeks 1–7 &middot; 10 built of 10</small></a>
+<a href="level-1/index.html"><span class="cefr">A1</span><b>Level 1 — Everyday English</b><small>weeks 7–18 &middot; 12 built of 12</small></a>
 <a href="level-2/index.html"><span class="cefr">A2</span><b>Level 2 — Getting Things Done</b><small>weeks 18–29 &middot; 0 built of 12</small></a>
 <a href="level-3/index.html"><span class="cefr">B1</span><b>Level 3 — Independent English</b><small>weeks 29–40 &middot; 0 built of 12</small></a>
 <a href="level-4/index.html"><span class="cefr">B2</span><b>Level 4 — Advanced</b><small>weeks 40–48 &middot; 0 built of 12</small></a>

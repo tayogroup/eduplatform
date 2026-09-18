@@ -194,3 +194,8 @@ a.lcard:hover { border-color: var(--teal); }
 .mini.letterpick { font-size: 28px; min-width: 56px; min-height: 56px; font-weight: 800; }
 /* a "done" label is a sentence ("I have said them all"): let it wrap inside the button */
 .big.done { height: auto; min-height: 64px; padding: 10px 22px; font-size: 24px; line-height: 1.2; }
+
+/* A document (a form, a label, a notice) is a piece of paper in both themes.
+   intensive.css gives it a fixed pale background and no text colour, so in
+   dark mode it inherited the light ink and could not be read. */
+.reading.document, .reading.document p, .reading.document b, .reading.document strong { color: #1B2A2F; }

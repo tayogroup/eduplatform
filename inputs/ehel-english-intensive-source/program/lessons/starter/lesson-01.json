@@ -1,0 +1,278 @@
+{
+ "schema": "ehel-intensive-lesson/1",
+ "level": "starter",
+ "lesson": 1,
+ "title": "Hello",
+ "cando": "greet people, say and spell your name, and ask for someone’s name",
+ "cefr": "Pre-A1",
+ "status": "draft",
+ "sources": ["In 1", "In 3", "L1 1"],
+ "about": {
+  "text": "In this lesson you meet new people. You say hello and spell your name. You ask: What's your name?",
+  "goals": [
+   "Say hello and goodbye.",
+   "Say your name: I am Mei. My name is Mei.",
+   "Ask: What's your name?",
+   "Spell your name: M-E-I.",
+   "Write your name on a list."
+  ]
+ },
+ "unitLecture": {
+  "chapters": [
+   {
+    "for": "listen",
+    "title": "Two people meet",
+    "text": "Two people meet at work.\nThey say hello.\nThey say: My name is Tomasz.\nThey ask: What's your name?\nThen they say: Nice to meet you.\nAt the end, they say goodbye."
+   },
+   {
+    "for": "grammar",
+    "title": "I am, my name is",
+    "text": "Say your name in two ways.\nI am Mei. My name is Mei.\nI and am go together.\nMy name and is go together.\nTo ask, say: What is your name?\nSay please when you ask for something.\nSay thank you when you get it."
+   },
+   {
+    "for": "readWrite",
+    "title": "A class list",
+    "text": "Next, you read a class list.\nFind the names on it.\nWrite your name on the list.\nUse capital letters: MEI.\nThen copy your name two times."
+   },
+   {
+    "for": "task",
+    "title": "Meet a classmate",
+    "text": "Then you meet a new classmate.\nSay hello and your name.\nSpell your name: A-N-A.\nThen ask: What's your name?"
+   },
+   {
+    "for": "reading",
+    "title": "The book",
+    "text": "Last, you read a short story.\nPeople meet and say hello.\nRead it two times."
+   }
+  ]
+ },
+ "listen": {
+  "warmup": {
+   "picture": "👋",
+   "prompt": "You meet a new person. What do you say?",
+   "choices": ["Hello.", "Hi.", "Good morning."],
+   "note": "There is no wrong answer. All three are good. Hi is short and friendly."
+  },
+  "conversation": {
+   "title": "Two people meet",
+   "setting": "It is Mei's first day at work. She meets Tomasz in the lift.",
+   "lines": [
+    ["Tomasz", "Hello. Are you new?"],
+    ["Mei", "Yes, I am. Hello."],
+    ["Tomasz", "My name is Tomasz. What's your name?"],
+    ["Mei", "I am Mei."],
+    ["Tomasz", "Sorry? May?"],
+    ["Mei", "No. Mei. M-E-I."],
+    ["Tomasz", "Mei. Nice to meet you."],
+    ["Mei", "Nice to meet you. How do you spell Tomasz?"],
+    ["Tomasz", "T-O-M-A-S-Z."],
+    ["Mei", "Thank you, Tomasz."],
+    ["Tomasz", "This is my floor. Goodbye, Mei!"],
+    ["Mei", "Goodbye!"]
+   ],
+   "questions": [
+    {"q": "Who is new at work?", "a": "Mei", "wrong": ["Tomasz", "Ana"], "why": "Tomasz asks: Are you new? Mei says yes."},
+    {"q": "How do you spell her name?", "a": "M-E-I", "wrong": ["M-A-Y", "M-E-Y"], "why": "Mei says: No. Mei. M-E-I."},
+    {"q": "What does Tomasz say at the end?", "a": "Goodbye, Mei!", "wrong": ["Hello, Mei!", "Nice to meet you."], "why": "At the end, Tomasz says goodbye."}
+   ]
+  },
+  "phrases": [
+   {"text": "Hello.", "use": "When you meet a person."},
+   {"text": "My name is Tomasz.", "use": "Saying your name."},
+   {"text": "What's your name?", "use": "Asking a name."},
+   {"text": "Sorry?", "use": "When you do not hear."},
+   {"text": "How do you spell it?", "use": "Asking for the letters of a name."},
+   {"text": "Nice to meet you.", "use": "To a new person."},
+   {"text": "Goodbye.", "use": "When you go."}
+  ],
+  "words": {
+   "title": "Saying hello",
+   "items": [
+    {"w": "hello", "pos": "interjection", "meaning": "Say it when you meet a person.", "example": "Hello. I am Mei."},
+    {"w": "hi", "pos": "interjection", "meaning": "A short, friendly hello.", "example": "Hi, Priya! Come in."},
+    {"w": "goodbye", "pos": "interjection", "meaning": "You say it when you go.", "example": "Goodbye! See you tomorrow."},
+    {"w": "nice to meet you", "pos": "phrase", "meaning": "You say it to a new person.", "example": "Hello, Samir. Nice to meet you."},
+    {"w": "please", "pos": "adverb", "meaning": "Say it when you ask for something.", "example": "A coffee, please."},
+    {"w": "thank you", "pos": "interjection", "meaning": "Say it when a person helps you.", "example": "Thank you for the coffee."},
+    {"w": "sorry", "pos": "interjection", "meaning": "Say it for a mistake. Say it when you do not hear.", "example": "Sorry, I am late."},
+    {"w": "yes", "pos": "adverb", "meaning": "The answer when something is right.", "example": "Are you Mei? Yes, I am."},
+    {"w": "no", "pos": "adverb", "meaning": "The answer when something is not right.", "example": "Is your name May? No, it is Mei."},
+    {"w": "spell", "pos": "verb", "meaning": "Say the letters, one by one.", "example": "Please spell your family name."}
+   ]
+  },
+  "sound": {
+   "title": "hello and goodbye",
+   "explain": "Hello and goodbye have two parts. The second part is strong: he-LLO, good-BYE. Listen, then say each group.",
+   "groups": ["hello · hotel · again", "goodbye · today · okay"],
+   "lines": ["Hello. My name is Mei.", "Goodbye, Tomasz!", "Hello, Omar. Goodbye, Omar."]
+  },
+  "sayIt": {
+   "instructions": "Say Mei's lines. Record yourself. Then listen. Is your name clear?",
+   "lines": [
+    "I am Mei.",
+    "No. Mei. M-E-I.",
+    "Nice to meet you. How do you spell Tomasz?",
+    "Thank you, Tomasz."
+   ]
+  }
+ },
+ "grammar": {
+  "spot": {
+   "instructions": "Look at these lines from the conversation. Look at am and is.",
+   "examples": ["My name is Tomasz.", "I am Mei.", "What's your name?", "Yes, I am."],
+   "question": "Which word comes after I? Which word comes after my name?",
+   "answer": "After I: am. I am Mei. After my name: is. My name is Tomasz. What's is short for What is."
+  },
+  "rules": [
+   {
+    "title": "I am, my name is",
+    "rule": [
+     "I am + your name: I am Mei.",
+     "My name is + your name: My name is Mei.",
+     "Ask: What is your name? Short: What's your name?",
+     "Yes, I am. No, I am not.",
+     "A coffee, please. Thank you. Sorry, I am late."
+    ],
+    "mistake": "Not: My name Mei. Say: My name is Mei."
+   }
+  ],
+  "practice": [
+   {"q": "I ___ Tomasz.", "options": ["is", "am", "are"], "a": "am", "why": "I goes with am: I am Tomasz."},
+   {"q": "My name ___ Mei.", "options": ["is", "am", "I"], "a": "is", "why": "My name goes with is."},
+   {"q": "What is your ___ ?", "options": ["hello", "spell", "name"], "a": "name", "why": "What is your name? asks for a name.", "mode": "type"},
+   {"q": "Are you Mei? ___ , I am.", "options": ["No", "Yes", "Sorry"], "a": "Yes", "why": "Yes, I am. No goes with I am not."},
+   {"q": "Are you Ana? No, I am ___ .", "options": ["not", "no", "yes"], "a": "not", "why": "No, I am not. Not comes after am."},
+   {"q": "A coffee, ___ .", "options": ["sorry", "goodbye", "please"], "a": "please", "why": "Say please when you ask for something.", "mode": "type"},
+   {"q": "Tomasz gives Mei a coffee. Mei says: ___", "options": ["Thank you.", "Please.", "Sorry."], "a": "Thank you.", "why": "Say thank you when you get something."},
+   {"q": "You are late for work. You say: ___ , I am late.", "options": ["Thank you", "Sorry", "Please"], "a": "Sorry", "why": "Say sorry for a mistake."},
+   {"q": "You meet a new person. Nice to ___ you.", "options": ["spell", "meet", "name"], "a": "meet", "why": "Say it to a new person.", "mode": "type"},
+   {"q": "How do you ___ your name? M-E-I.", "options": ["meet", "please", "spell"], "a": "spell", "why": "Spell: say the letters, one by one."}
+  ],
+  "yourTurn": {
+   "prompt": "You meet a new person at work. Say hello and your name. Ask their name.",
+   "starters": ["Hello. My name is …", "I am …", "What's your name?", "Nice to meet you."],
+   "model": "Hello. My name is Amina. I am new here. What's your name? Nice to meet you."
+  }
+ },
+ "readWrite": {
+  "text": {
+   "title": "Class list",
+   "type": "Class list",
+   "document": true,
+   "body": "EVENING ENGLISH · CLASS 2\nTeacher: Lena Brown\n\nFirst name · FAMILY NAME\n1. Ana · GARCIA\n2. Kwame · MENSAH\n3. Mei · CHEN\n4. Omar · HASSAN\n5. Priya · SHARMA\n6. Tomasz · NOWAK\n\nNew in the class?\nWrite your name here.\nPlease use capital letters.\n\nFIRST NAME: ____________\nFAMILY NAME: ____________"
+  },
+  "gist": [
+   {"q": "What is this?", "a": "a list of people in a class", "wrong": ["a list of prices", "a list of phone numbers"], "why": "It is a list of the class."},
+   {"q": "You are new in the class. What do you do?", "a": "write your name", "wrong": ["say the alphabet", "call the teacher"], "why": "It says: New in the class? Write your name here."}
+  ],
+  "detail": [
+   {"q": "What is Mei's family name?", "a": "CHEN", "wrong": ["NOWAK", "GARCIA"], "why": "The list says: Mei · CHEN."},
+   {"q": "NOWAK is a family name. What is the first name?", "a": "Tomasz", "wrong": ["Omar", "Kwame"], "why": "The list says: Tomasz · NOWAK."},
+   {"q": "Who is the teacher?", "a": "Lena Brown", "wrong": ["Priya Sharma", "Ana Garcia"], "why": "It says: Teacher: Lena Brown."},
+   {"q": "How do you write your name here?", "a": "in capital letters", "wrong": ["in small letters", "one letter only"], "why": "It says: Please use capital letters."}
+  ],
+  "words": {
+   "title": "Your name",
+   "items": [
+    {"w": "name", "pos": "noun", "meaning": "What people call you: Ana, Omar, Mei.", "example": "Please write your name here."},
+    {"w": "alphabet", "pos": "noun", "meaning": "All the letters, from A to Z.", "example": "I know the English alphabet."},
+    {"w": "letter", "pos": "noun", "meaning": "Part of the alphabet: A, B, C.", "example": "Mei has three letters: M-E-I."},
+    {"w": "write", "pos": "verb", "meaning": "Put words on paper, with a pen.", "example": "Write your name on the list."},
+    {"w": "copy", "pos": "verb", "meaning": "Look at words and write them again.", "example": "Copy your name from your card."},
+    {"w": "class", "pos": "noun", "meaning": "A group of people. They learn together.", "example": "My English class is in Room 4."}
+   ]
+  },
+  "model": {
+   "title": "Amina's name on the list",
+   "body": "New in the class?\nWrite your name here.\nPlease use capital letters.\n\nFIRST NAME: AMINA\nFAMILY NAME: YUSUF\n\nCopy your name two times:\nAmina Yusuf\nAmina Yusuf"
+  },
+  "write": {
+   "task": "Write your name on the class list. Copy the model. Use your first name and family name. Then copy your name two times.",
+   "starter": "FIRST NAME: …",
+   "checklist": [
+    "My first name is on the list.",
+    "My family name is on the list.",
+    "They are in capital letters.",
+    "I copy my name two times."
+   ]
+  }
+ },
+ "task": {
+  "card": {
+   "title": "Meet a new classmate",
+   "situation": "It is your first English class. A new person sits next to you.",
+   "goal": "Say hello and your name. Spell your name. Ask their name."
+  },
+  "prepare": {
+   "phrases": [
+    "Hello. My name is …",
+    "A-N-A. Ana.",
+    "Sorry? How do you spell it?",
+    "What's your name?",
+    "Nice to meet you.",
+    "Goodbye!"
+   ],
+   "notes": "Write your name. Then write the letters: A-N-A. Say them slowly."
+  },
+  "doIt": {
+   "liveClass": "In the live class, meet two classmates. Say hello. Say and spell your name. Ask their names.",
+   "wehel": "You are my new classmate. Say hello to me. Ask my name. Ask me to spell it. Then say your name and spell it. Use very short, simple English."
+  },
+  "model": {
+   "title": "Meeting a classmate",
+   "lines": [
+    ["Omar", "Hello. Are you new?"],
+    ["You", "Yes, I am. Hello."],
+    ["Omar", "I am Omar. What's your name?"],
+    ["You", "My name is Amina."],
+    ["Omar", "Sorry? How do you spell it?"],
+    ["You", "A-M-I-N-A."],
+    ["Omar", "A-M-I-N-A. Thank you."],
+    ["You", "How do you spell Omar?"],
+    ["Omar", "O-M-A-R."],
+    ["You", "Nice to meet you, Omar."],
+    ["Omar", "Nice to meet you too."]
+   ],
+   "compare": [
+    "I say hello.",
+    "I say my name.",
+    "I spell my name, letter by letter.",
+    "I ask: What's your name?"
+   ]
+  },
+  "canDo": [
+   "I can say hello and goodbye.",
+   "I can say my name.",
+   "I can spell my name.",
+   "I can ask: What's your name?",
+   "I can write and copy my name."
+  ]
+ },
+ "reading": {
+  "placeholder": true,
+  "before": "Look at the first picture. Who are the people? What do they say?",
+  "talk": "Who is in the story? Write their names. Then say hello to Wehel. Spell your name."
+ },
+ "review": {
+  "earlierLessons": [],
+  "quiz": [
+   {"q": "My ___ is Kwame.", "options": ["am", "name", "spell"], "a": "name", "why": "My name is + your name.", "from": "this lesson", "mode": "type"},
+   {"q": "___ am Carlos.", "options": ["My", "Name", "I"], "a": "I", "why": "I goes with am: I am Carlos.", "from": "this lesson"},
+   {"q": "What is your name? ___ name is Lena.", "options": ["My", "Your", "I"], "a": "My", "why": "Your own name: say my.", "from": "this lesson"},
+   {"q": "You meet a new person. You say: ___", "options": ["Goodbye.", "Nice to meet you.", "Sorry?"], "a": "Nice to meet you.", "why": "Say it to a new person.", "from": "this lesson"},
+   {"q": "You go home from work. You say: ___", "options": ["Goodbye!", "Hello!", "Nice to meet you."], "a": "Goodbye!", "why": "Say goodbye when you go.", "from": "this lesson"},
+   {"q": "Are you Omar? No, I ___ .", "options": ["no am", "am not", "not am"], "a": "am not", "why": "Say: No, I am not.", "from": "this lesson"},
+   {"q": "You want a pen. You say: A pen, ___ .", "options": ["sorry", "hello", "please"], "a": "please", "why": "Say please when you ask for something.", "from": "this lesson"},
+   {"q": "You do not hear a name. You say: ___", "options": ["Thank you.", "Sorry?", "Goodbye."], "a": "Sorry?", "why": "Sorry? means: please say it again.", "from": "this lesson"},
+   {"q": "How do you spell Mei?", "options": ["M-A-Y", "M-I-E", "M-E-I"], "a": "M-E-I", "why": "Mei says: M-E-I.", "from": "this lesson"},
+   {"q": "A, B, C … Z is the ___ .", "options": ["alphabet", "class", "letter"], "a": "alphabet", "why": "The alphabet is all the letters.", "from": "this lesson", "mode": "type"}
+  ]
+ },
+ "teacher": {
+  "liveClass": [
+   "Day 1: hello and goodbye round the class. Then the lift conversation in pairs, with new names.",
+   "Day 2: the task. Each learner meets two classmates. They say and spell their names.",
+   "Day 3: talk about the book. Then a spelling game. One learner spells a name. The others write it."
+  ]
+ }
+}

@@ -76,14 +76,21 @@ No narration has been recorded for the program yet. Every line goes to the devic
 
 `voice.js` only uses the paid endpoint on port 4287 or when the page has a `pwsEndpoint` launch parameter. Conversations play as one SSML utterance, with a pause and a pitch change between speakers.
 
+## Pictures
+
+A word card's picture comes from the shared map (`shell/subjects/word-pictures.js`, by the level's `pictureKey`), which also serves the live course and is not edited from here. `pictures.json` holds this program's corrections per level; an empty string removes a picture. A picture is removed when it shows another sense ("back" drew a return arrow, "letter" an envelope), or when two words in one set or one level would share a glyph and so teach neither. Audit every level's words before its lessons ship.
+
 ## Status (2026-09-18)
 
-- **Built:** Level 1 · Lesson 8 · Health and the doctor, as the pilot. It was driven in the browser at desktop and phone size: the menu, section jumps, questions, the toolbox, saved progress, and Continue on the level page.
-- **Every other lesson:** listed on its level home as "in preparation".
+- **Built:**
+  - Letters & Sounds: 12 lessons and Bridge A and B.
+  - Starter: all 10 lessons.
+  - Level 1: all 12 lessons, including the pilot (Lesson 8).
+  - Every page was loaded and finished its set-up. The pilot, a Starter lesson and a two-document Level 1 lesson were driven at phone size.
+- **Written by agents from a brief:** Starter and Level 1. Each lesson passes `--check`, and an audit covering the word plan, length bands, item counts, UK spelling and typed-answer length. Starter 2 and 9 and Level 1 Lessons 3 and 11 were also read through.
+- **In preparation:** Levels 2, 3 and 4. Level 5 is an outline only.
 - **Not done:**
-  - authoring the other lessons
-  - the Letters & Sounds renderers (Hear it · See & write it · Read it · Check)
-  - narration
+  - narration, including re-recording the Letters & Sounds lectures (their text was corrected)
   - the shared platform wiring (launch parameters, progress to Moodle, class controls, Wehel)
   - new course keys, mapping old unit ids to new lesson ids, the catalogue
   - deploy and routing

@@ -101,7 +101,7 @@ const CAMBRIDGE_OBJECTIVES = {
           "2SIC.03", "2SIC.04"],
   "2-2": ["2Cm.01", "2ESp.01", "2ESp.02", "2TWSa.01", "2TWSc.01", "2TWSc.03", "2TWSp.01",
           "2TWSp.02"],
-  "2-3": ["2Cc.01", "2Cp.01", "2Cp.02", "2Cp.03", "2Pf.02", "2TWSa.01", "2TWSc.04", "2TWSp.02"],
+  "2-3": ["2Cc.01", "2Cp.01", "2Cp.02", "2Cp.03", "2Pf.01", "2Pf.02", "2Pf.03", "2TWSa.01", "2TWSc.04", "2TWSp.02"],
   "2-4": ["2Ps.01", "2Ps.02", "2TWSm.01", "2TWSp.02", "2TWSa.01"],
   "2-5": ["2Pe.01", "2Pe.02", "2Pe.03", "2TWSc.02", "2TWSc.04", "2TWSm.03", "2SIC.02"],
   // 2TWSa.02 on the shadow concept, which is about the pattern itself — shadows
@@ -115,7 +115,7 @@ const CAMBRIDGE_OBJECTIVES = {
   // or do not support, a prediction") only on the three whose answer then asks.
   // 3TWSa.01 was recorded as a gap in a whole unreached sub-strand until the
   // explorations were read field by field.
-  "3-1": ["3Be.01", "3Bp.01", "3Bp.02", "3Bp.03", "3Bp.04", "3Bs.01", "3Bs.02", "3TWSc.01",
+  "3-1": ["3Be.01", "3Bp.01", "3Bp.02", "3Bp.03", "3Bp.04", "3Bs.01", "3Bs.02", "3ESp.02", "3TWSc.01",
           "3TWSc.04", "3TWSp.01", "3TWSp.03", "3SIC.04"],
   "3-2": ["3Cc.01", "3Cm.01", "3Cm.02", "3Cp.01", "3Cp.02", "3Cp.03", "3Cp.04", "3ESp.01",
           "3TWSa.01", "3TWSa.03", "3TWSc.02", "3TWSc.06", "3TWSp.02", "3TWSp.03", "3TWSp.04"],
@@ -605,6 +605,22 @@ const CONCEPT_INSERTS = {
     conceptId: "concept-4-seeds-and-germination-new-life-begins",
     after: "After the root, a shoot pushes upward toward the light, and it opens the plant's first tiny leaves.",
     text: " That shoot is the beginning of the STEM, and the stem keeps two jobs for the whole life of the plant: it holds the leaves and flowers up where they can reach the light, and it carries water up from the roots to the leaves, and the food the leaves make back down to the rest of the plant.",
+  }, {
+    // 3ESp.02 (fossils are impressions or remains of things that were once
+    // alive) was recorded in cambridge-stage3-concepts.json's _needsNewUnit as
+    // having no home — "fossils need rock, and Grade 3 has no rocks unit,"
+    // rejecting Unit 2 (Mixing Materials) as a placement chosen for having
+    // room. That reasoning never considered THIS concept, because it is read
+    // as a rocks/Earth-science objective rather than what its own wording
+    // actually is: a question about whether something counts as dead or
+    // never-alive. Unit 1 spends its whole opening concept on exactly that
+    // three-way sort, and closes its never-alive paragraph on "a rock has
+    // always been a rock" — which is precisely the sentence a fossil
+    // contradicts. Anchored there rather than force-fitted into rock content
+    // this course does not teach at this stage.
+    conceptId: "concept-1-the-three-groups-living-dead-and-never-alive",
+    after: "This is the difference many children find trickiest: dead is not the same as never-alive. Dead things had a life once; never-alive things never did.",
+    text: "\n\nHere is a case that surprises almost everyone, because it seems to break the rule. Dig into certain rocks and you can find the shape of a shell, a leaf, or even a bone, pressed into the stone itself, or turned to stone entirely. This is called a fossil — the impression or the actual remains of something that was once alive, left behind a very, very long time ago. Touch a fossil and it feels exactly like ordinary rock. But it did not start as rock: it started as a living thing, so a fossil belongs with the DEAD group, not the never-alive one. It is simply the oldest kind of dead there is. Finding a fossil means finding proof that something now turned to stone once did the same seven jobs of life as the goat outside your door.",
   }],
   // 4Pe.03 ("changing the number OR TYPE of components") was cited on this
   // concept, and "type" of component never appeared outside the citation —

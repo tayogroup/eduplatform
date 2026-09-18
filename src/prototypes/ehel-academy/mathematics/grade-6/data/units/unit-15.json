@@ -341,6 +341,7 @@
       "id": "we01",
       "outcomeId": "lo01",
       "difficulty": "Basic",
+      "twm": "classifying",
       "title": "Classify the data",
       "prompt": "Classify each as categorical (C), discrete (D) or continuous (Con): (a) number of siblings, (b) favourite sport, (c) height in cm, (d) a bus route number.",
       "solution": "(a) A whole-number count, so discrete. (b) Sorted into groups, so categorical. (c) A measurement that can take any value, so continuous. (d) A number used only as a label — you cannot average bus routes — so categorical. The test each time is: can I sensibly add or measure it?"
@@ -381,6 +382,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
+      "twm": "convincing",
       "title": "Compare two data sets",
       "prompt": "Class A scores 75, 80, 85, 90, 95. Class B scores 70, 75, 85, 95, 100. Which class did better, and which was more consistent?",
       "solution": "Both classes have the same mean: Class A totals 425 ÷ 5 = 85, and Class B totals 425 ÷ 5 = 85. So on average they performed equally. Now the ranges: Class A is 95 − 75 = 20; Class B is 100 − 70 = 30. Class A has the smaller range, so Class A was more consistent, even though the averages are equal."
@@ -397,6 +399,7 @@
       "id": "we08",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
+      "twm": "critiquing",
       "title": "Spot the misleading graph",
       "prompt": "Two bar charts show the same data: Team A 85 points, Team B 82 points. Chart X has a scale from 0 to 100; Chart Y has a scale from 80 to 90. Which makes the gap look bigger, what is the true difference, and which is more honest?",
       "solution": "Chart Y makes the gap look bigger, because its stretched scale starting at 80 exaggerates a small difference. The true difference is 85 − 82 = 3 points. Chart X, whose scale starts at 0, is more honest. Someone might use Chart Y to make a small lead look impressive."

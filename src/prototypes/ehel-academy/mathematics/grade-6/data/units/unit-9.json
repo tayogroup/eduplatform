@@ -332,6 +332,7 @@
       "id": "we01",
       "outcomeId": "lo01",
       "difficulty": "Basic",
+      "twm": "critiquing",
       "title": "A probability from a bag",
       "prompt": "A bag contains 5 red beads, 3 blue beads and 2 green beads. One bead is drawn at random. Find P(red), P(blue) and P(not green).",
       "solution": "First find the total: 5 + 3 + 2 = 10 beads. P(red) = 5/10 = 1/2. P(blue) = 3/10. For P(not green), use the complement: P(green) = 2/10 = 1/5, so P(not green) = 1 − 1/5 = 4/5. Notice we could also add red and blue directly: 5/10 + 3/10 = 8/10 = 4/5, which agrees — a good check."
@@ -364,6 +365,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
+      "twm": "critiquing",
       "title": "Experimental probability",
       "prompt": "Maryam rolls a die 60 times. The number 2 comes up 12 times. Compare the experimental probability of rolling a 2 with the theoretical probability.",
       "solution": "Experimental probability = 12/60 = 1/5 = 20%. Theoretical probability = 1/6 ≈ 16.7%. They are close but not equal. The difference is due to random variation, and with more rolls the experimental value would drift nearer to 1/6."
@@ -380,6 +382,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
+      "twm": "convincing",
       "title": "Is the game fair?",
       "prompt": "In a spinner game, Aisha wins on red and Ibrahim wins on blue. The spinner has 8 equal sections: 3 red, 3 blue and 2 yellow (yellow means no one wins). Is the game fair?",
       "solution": "P(red) = 3/8 and P(blue) = 3/8. Because both players have the same probability of 3/8, the game is fair, even though the 2 yellow sections mean neither player wins on a quarter of the spins."
@@ -388,6 +391,7 @@
       "id": "we08",
       "outcomeId": "lo03",
       "difficulty": "Intermediate",
+      "twm": "characterising",
       "title": "Choosing from survey data",
       "prompt": "In a survey of 200 students, 60 chose science and 40 chose English as their favourite subject. What is the probability a randomly chosen student prefers science or English?",
       "solution": "Favourable = 60 + 40 = 100 students out of 200. P(science or English) = 100/200 = 1/2 = 50%. Because these choices cannot both be a single student's favourite, we simply add them."

@@ -325,6 +325,7 @@
       "id": "we01",
       "outcomeId": "lo01",
       "difficulty": "Basic",
+      "twm": "convincing",
       "title": "Count faces, edges and vertices",
       "prompt": "A triangular prism is used as a tent shape. How many faces, edges and vertices does it have, and does it satisfy Euler's rule?",
       "solution": "A triangular prism has 2 triangular faces plus 3 rectangular faces, giving 5 faces. It has 9 edges (3 around each triangle makes 6, plus 3 joining them). It has 6 vertices (3 at each triangular end). Check Euler: V − E + F = 6 − 9 + 5 = 2. Correct, so our counting is right."
@@ -333,6 +334,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
+      "twm": "classifying",
       "title": "Identify a net",
       "prompt": "Hassan has a flat pattern made of 1 square and 4 identical triangles, one triangle joined to each side of the square. What solid does it fold into?",
       "solution": "The square becomes the base and the four triangles fold up to meet at a single point, so this is the net of a square-based pyramid. Its 4 triangular faces meet at one apex above the square base."
@@ -365,6 +367,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
+      "twm": "characterising",
       "title": "Volume of a cube",
       "prompt": "A storage cube has edges of 5 cm. Find its volume, and also its surface area, and explain why the units differ.",
       "solution": "Volume = edge³ = 5 × 5 × 5 = 125 cm³ (cubic units, because it fills space). Surface area = 6 × edge² = 6 × 25 = 150 cm² (square units, because it covers the outside). Volume uses cubic units and surface area uses square units — always keep them separate."
@@ -381,6 +384,7 @@
       "id": "we08",
       "outcomeId": "lo02",
       "difficulty": "Intermediate",
+      "twm": "classifying",
       "title": "A painted-cube puzzle",
       "prompt": "A 3 × 3 × 3 cube (27 small cubes) is painted red on the outside, then split apart. How many small cubes have exactly 2 red faces?",
       "solution": "Cubes with exactly 2 red faces sit along the edges of the big cube but are not corners. Each of the 12 edges of a cube has one such middle cube, so there are 12 small cubes with exactly 2 red faces. (For the record: 8 corners have 3 faces, 6 face-centres have 1 face, and 1 hidden centre has 0 — and 8 + 12 + 6 + 1 = 27.)"

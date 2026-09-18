@@ -339,6 +339,7 @@
       "id": "we01",
       "outcomeId": "lo01",
       "difficulty": "Basic",
+      "twm": "generalising",
       "title": "Continue a sequence and find its rule",
       "prompt": "For the sequence 7, 12, 17, 22 …, find the next term, the term-to-term rule, and the nth term rule.",
       "solution": "The gap between terms is 5 each time (12 − 7 = 5, 17 − 12 = 5), so the term-to-term rule is add 5 and the next term is 22 + 5 = 27. For the nth term rule, the common difference is 5, so it contains 5n. But 5 × 1 = 5, which is 2 less than the first term 7, so we add 2: the rule is nth term = 5n + 2. Check: position 3 gives 5 × 3 + 2 = 17. Correct."
@@ -387,6 +388,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
+      "twm": "characterising",
       "title": "Counting all factors",
       "prompt": "How many factors does 36 have?",
       "solution": "Work in pairs: 1 × 36, 2 × 18, 3 × 12, 4 × 9, 6 × 6. The 6 repeats itself, so we count it once. The factors are 1, 2, 3, 4, 6, 9, 12, 18, 36 — that is 9 factors. (Square numbers always have an odd number of factors, because one factor pairs with itself.)"
@@ -411,6 +413,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
+      "twm": "generalising",
       "title": "Complete the differences between consecutive squares…",
       "prompt": "Complete the differences between consecutive squares: 3² − 2² = ___, 4² − 3² = ___, 5² − 4² = ___. What do you notice?",
       "solution": "5, 7, 9 — the differences are consecutive odd numbers."
@@ -427,6 +430,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
+      "twm": "specialising",
       "title": "Find two consecutive square numbers that differ by 17",
       "prompt": "Find two consecutive square numbers that differ by 17.",
       "solution": "The difference between consecutive squares n² and (n + 1)² is 2n + 1. Setting 2n + 1 = 17 gives n = 8, so the two consecutive square numbers are 8² = 64 and 9² = 81 (81 − 64 = 17)."

@@ -903,10 +903,28 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Convert between 24-hour time and 12-hour time; read a real bus timetable or tv guide written in 24-hour time; work out how long a journey or a programme lasts.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Convert between 24-hour time and 12-hour time; read a real bus timetable or tv guide written in 24-hour time; work out how long a journey or a programme lasts.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 units of time -->
     <section class="slide" data-say="Sixty seconds make a minute, sixty minutes make an hour. Pick a unit and see how the smaller ones group together inside it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every unit of time is made of a fixed number of smaller units.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>60 seconds make a minute, 60 minutes make an hour and 24 hours make a day.</s><s>So 3 minutes is 3 lots of 60 seconds, which is 180 seconds.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Time does not go in tens or hundreds.</s><s>An hour is 60 minutes, not 100.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a unit and see how many of the smaller unit fit inside it.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>How long is that?</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>How long is that?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Every unit of time is made of a fixed number of smaller ones. <b>Group them</b> and you can swap between the two.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A clock with hands, and a real bus timetable or TV guide printed in 24-hour time. Converting a real 24-hour time into the 12-hour time you say out loud is the whole of this lesson.</p></details>
       <div class="stage">
@@ -924,7 +942,7 @@
     <!-- 2 clocks -->
     
 <section class="slide" data-twm="generalising" data-say="Swapping between units works both ways. Multiply to go to the smaller unit and divide to go back." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To change to a smaller unit, multiply.</s><s>To change back to a bigger unit, divide.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>4 hours is 4 times 60, which is 240 minutes.</s><s>180 minutes is 180 divided by 60, which is 3 hours.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Going to a bigger unit always gives a smaller number, because each unit holds more.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask whether you are going to a smaller or a bigger unit before you choose.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">2</span><h2>Swapping units, both ways</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Swapping units, both ways</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay1">Going to the <b>smaller</b> unit you <b>multiply</b>, because there are more of them. Going back to the bigger one you <b>divide</b>. It is the same fact used two ways.</span></div>
       <div class="stage">
         <p class="qstem" id="tmq1"></p>
@@ -937,7 +955,7 @@
 
     
 <section class="slide" data-twm="characterising" data-say="One moment can be written three ways. On a clock face, as a twelve hour time, or as a twenty four hour time. The am or pm tells you which half of the day it is." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>One moment can be shown on a clock face, as a 12 hour time, or as a 24 hour time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Twenty past three in the afternoon is 3:20 pm in 12 hour time, and 15:20 in 24 hour time.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Without am or pm, a 12 hour time could be morning or afternoon.</s><s>A 24 hour time never needs them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press plus 1 hour a few times and watch all three change together.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">3</span><h2>Three ways to say one time</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Three ways to say one time</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A clock face, a <b>12-hour</b> time with am or pm, and a <b>24-hour</b> time. One moment, three ways of writing it.</span></div>
       <div class="stage">
         <div class="clockrow">
@@ -960,7 +978,7 @@
     <!-- 3 timetable -->
     
 <section class="slide" data-say="Now read the clock with nothing to help you. The short hand gives the hour and the long hand gives the minutes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The short hand gives the hour and the long hand gives the minutes, five for every number.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The short hand is between 4 and 5, and the long hand points at the 8.</s><s>The hour is 4, the one it has passed, and 8 fives are 40.</s><s>So it is 4:40.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read the hour the short hand has passed, not the one it is heading for.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find the hour first, then count the minutes in fives.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">4</span><h2>Read the clock</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Read the clock</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay2">No numbers written out this time. The <b>short</b> hand gives the hour &mdash; the one it has <b>passed</b>, not the one it is heading for &mdash; and the <b>long</b> hand gives the minutes, five for every number.</span></div>
       <div class="stage">
         <svg class="clock" id="tmclock2" viewBox="0 0 200 200" role="img" aria-label="A clock face showing a time to read"></svg>
@@ -974,7 +992,7 @@
 
     
 <section class="slide" data-twm="characterising" data-say="Twenty four hour time never needs am or pm, because every hour of the day has its own number." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>In 24 hour time, morning hours stay the same and afternoon hours have 12 added.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>9:15 am is 09:15.</s><s>3:30 pm is 15:30, because 3 add 12 is 15.</s><s>Midnight is 00:00 and midday is 12:00.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>12:20 am is just after midnight, so it is 00:20.</s><s>It is not 12:20, and it is never 24:20.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask am or pm first, then decide whether to add 12.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">5</span><h2>Writing it in 24-hour</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Writing it in 24-hour</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay3">In <b>24-hour</b> time nothing is written twice, so no am or pm is needed. Morning hours stay as they are and afternoon hours have <b>12 added</b> &mdash; and midnight and midday are the two you have to learn.</span></div>
       <div class="stage">
         <p class="qstem" id="tmq3"></p>
@@ -987,7 +1005,7 @@
 
     
 <section class="slide" data-say="A timetable reads down for one bus and across for one stop. Find the bus that gets you there in time." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A timetable reads down a column for one bus and across a row for one stop.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Follow the first bus down its column to see when it reaches each stop.</s><s>Read along the library row to see when every bus gets there.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Keep your finger on one row or one column.</s><s>It is easy to slip onto the next line.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find your stop first, then read along its row.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">6</span><h2>Reading a timetable</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Reading a timetable</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Read <b>down</b> a column to follow one bus, and <b>across</b> a row to compare the same stop. Times are in 24-hour.</span></div>
       <div class="stage">
         <div class="ttwrap"><table class="tt" id="tt3"></table></div>
@@ -999,7 +1017,7 @@
     <!-- 4 intervals -->
     
 <section class="slide" data-twm="specialising" data-say="A timetable is only useful if you can work out which one to catch. Read across to your stop and pick the last one that gets you there in time." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Catch the last bus that still gets you there in time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Buses reach the library at 09:05, 09:25 and 09:45, and you must be there by 09:30.</s><s>The 09:45 is too late, so you catch the one that arrives at 09:25.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The earliest bus also gets you there, but you would wait for ages.</s><s>The latest one that is still in time is the one to catch.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Cross out the buses that arrive too late, then pick the latest one left.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">7</span><h2>Which one do you catch?</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Which one do you catch?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay4">Find your stop&rsquo;s <b>row</b>, then look along it for the <b>last</b> bus that still gets you there in time. The latest one is the answer, because any earlier one means waiting about.</span></div>
       <div class="stage">
         <div class="ttwrap"><table class="tt" id="tmtt4"></table></div>
@@ -1013,7 +1031,7 @@
 
     
 <section class="slide" data-twm="specialising" data-say="To find how long something lasted, count on from the start to the finish." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To find how long something lasted, count on from the start to the finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>From 10:40 to 12:15.</s><s>Count on 20 minutes to 11:00, then 1 hour to 12:00, then 15 minutes to 12:15.</s><s>That is 1 hour and 35 minutes.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not take the times away like ordinary numbers.</s><s>An hour is 60 minutes, not 100.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count on to the next whole hour, then the whole hours, then the minutes left.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">8</span><h2>How long between?</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>How long between?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Count on from the start to the end. Do the <b>whole units</b> first, then the rest.</span></div>
       <div class="stage">
         <div class="chips" id="pick4"></div>
@@ -1029,7 +1047,7 @@
     <!-- 5 check -->
     
 <section class="slide" data-say="Counting days past the end of a month means knowing how many days that month has." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When you add days past the end of a month, you need to know how many days that month has.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>28 April add 9 days.</s><s>April has 30 days, so 2 days take you to 30 April and 7 days are left over.</s><s>That makes 7 May.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is no 37 April.</s><s>Once you pass the last day of a month, you move into the next month.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Use up the days left in this month first, then carry on into the next one.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>Over the end of the month</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Over the end of the month</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay5">Adding days is easy until you run off the end of the month. Use up the days that are <b>left</b> in this month first, and only what is over goes into the next one.</span></div>
       <div class="stage">
         <p class="qstem" id="tmq5"></p>
@@ -1043,7 +1061,7 @@
 
     
 <section class="slide" data-say="Months and years are units of time too, and the gaps between them are counted the same way." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Months and years are counted the same way as hours and minutes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>From March 2024 to January 2026.</s><s>Two whole years is 24 months, but January is two months before March, so it is 24 take away 2, which is 22 months.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count the whole years first and the leftover months after.</s><s>Mixing them up gives the wrong answer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count the whole years, then add or take away the extra months.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">10</span><h2>Months and years apart</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Months and years apart</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay6">Gaps are not only hours and minutes. <b>Months</b> and <b>years</b> are counted the same way &mdash; and to cross from one year into another, count the whole years first and the leftover months after.</span></div>
       <div class="stage">
         <p class="qstem" id="tmq6"></p>
@@ -1057,7 +1075,7 @@
 
 <!-- 11  Spot the mistake  (Stage 4 Teacher's Guide / Ready to Go) -->
     <section class="slide" data-twm="critiquing improving" data-say="Read what the child said. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Finding a mistake is a different job from getting the answer right.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what the child said.</s><s>Work it out yourself first.</s><s>Then say what went wrong, not just that it is wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>These are real mistakes that real children make.</s><s>If you have made one of them, you are in good company.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>See if you can catch each one.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">11</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG"></span></div>
       <div id="smG"><span id="clG"></span></div>
       <div class="choices" id="chG"></div>
@@ -1066,7 +1084,7 @@
     </section>
     <!-- 12  Support and Challenge  (Stage 3 Teacher's Guide) -->
     <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">12</span><h2>Try this one</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Try this one</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG4"></span></div>
       <div id="tierG"></div>
       <div class="choices" id="chG4"></div>
@@ -1075,7 +1093,7 @@
     </section>
     <!-- 13  Story problems  (Cambridge Stage 4 word-problem shape) -->
     <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">16</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG4"></span></div>
       <div id="wpG4"></div>
       <div class="choices" id="chWpG4"></div>
@@ -1112,7 +1130,6 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
       <div id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
       </div>
     </section>
@@ -2254,7 +2271,7 @@
     $("task1").textContent = seen1.size >= 3
       ? "You have converted " + seen1.size + " of the 5."
       : "Try at least three of the five pairs.";
-    if (seen1.size >= 3) finish(0, "");
+    if (seen1.size >= 3) finish(3, "");
   }
   $("pick1").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-i]"); if (!b) return;
@@ -2339,7 +2356,7 @@
                        : "Going to a <b>smaller</b> unit always gives a <b>bigger</b> number.");
     $("tmfb1").className = "fb " + (ok ? "good" : "bad");
     say($("tmfb1").textContent);
-    if (tm1right >= 5 && Object.keys(tm1seen).length >= 3) finish(1, "You can swap units both ways!");
+    if (tm1right >= 5 && Object.keys(tm1seen).length >= 3) finish(4, "You can swap units both ways!");
     setTimeout(() => { tm1 = tmNew1(); tm1lock = false; tmPaint1(); }, 2400);
   });
   tm1 = tmNew1(); tmPaint1();
@@ -2382,7 +2399,7 @@
       $("fb2").className = "fb good";
       if (hit2 <= tgt2) { hit2 = tgt2 + 1; say(to12(t2) + " is the same moment as " + to24(t2)); }
       if (tgt2 < TARGETS2.length - 1) { tgt2++; later(() => { $("fb2").className = "fb"; drawClock(); }, 1400); }
-      if (hit2 >= 3) finish(2, "");
+      if (hit2 >= 3) finish(5, "");
     } else {
       $("fb2").className = "fb";
       $("fb2").textContent = "";
@@ -2458,7 +2475,7 @@
       "The <b>short</b> hand is the hour and it counts the number it has <b>gone past</b>.";
     $("tmfb2").className = "fb " + (ok ? "good" : "bad");
     say($("tmfb2").textContent);
-    if (tm2right >= 5) finish(3, "You can read a clock face!");
+    if (tm2right >= 5) finish(6, "You can read a clock face!");
     setTimeout(() => { tm2 = tmNew2(); tm2lock = false; tmPaint2(); }, 2400);
   });
   tm2 = tmNew2(); tmPaint2();
@@ -2514,7 +2531,7 @@
       "24-hour time runs <b>00:00 to 23:59</b>, so there is no 24 and no need for am or pm.";
     $("tmfb3").className = "fb " + (ok ? "good" : "bad");
     say($("tmfb3").textContent);
-    if (tm3right >= 5 && Object.keys(tm3seen).length >= 4) finish(4, "You can write any time in 24-hour!");
+    if (tm3right >= 5 && Object.keys(tm3seen).length >= 4) finish(7, "You can write any time in 24-hour!");
     setTimeout(() => { tm3 = tmNew3(); tm3lock = false; tmPaint3(); }, 2600);
   });
   tm3 = tmNew3(); tmPaint3();
@@ -2556,7 +2573,7 @@
     $("fb3").textContent = (ok ? cheer() + " " : "Not that one. ") + Q3[q3].why;
     $("fb3").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : Q3[q3].why);
-    if (right3 >= 2) finish(5, "");
+    if (right3 >= 2) finish(8, "");
     q3 = (q3 + 1) % Q3.length;
     setTimeout(paint3, 2600);
   });
@@ -2616,7 +2633,7 @@
       "An earlier bus would get you there too &mdash; but you would be <b>waiting about</b>, so the latest one that makes it is the answer.";
     $("tmfb4").className = "fb " + (ok ? "good" : "bad");
     say($("tmfb4").textContent);
-    if (tm4right >= 4) finish(6, "You can choose the right bus from a timetable!");
+    if (tm4right >= 4) finish(9, "You can choose the right bus from a timetable!");
     setTimeout(() => { tm4 = tmNew4(); tm4lock = false; tmPaint4(); }, 3000);
   });
   tm4 = tmNew4(); tmPaint4();
@@ -2672,7 +2689,7 @@
   });
   $("new4").addEventListener("click", () => {
     iv4 = newInterval(); done4++; paint4();
-    if (done4 >= 3) finish(7, "");
+    if (done4 >= 3) finish(10, "");
     say($("fb4").textContent);
   });
   paint4();
@@ -2721,7 +2738,7 @@
       "Use up what is <b>left</b> in the month first &mdash; only what is over goes into the next one.";
     $("tmfb5").className = "fb " + (ok ? "good" : "bad");
     say($("tmfb5").textContent);
-    if (tm5right >= 4) finish(8, "You can count days over the end of a month!");
+    if (tm5right >= 4) finish(11, "You can count days over the end of a month!");
     setTimeout(() => { tm5 = tmNew5(); tm5lock = false; tmPaint5(); }, 2800);
   });
   tm5 = tmNew5(); tmPaint5();
@@ -2779,7 +2796,7 @@
       "Count the <b>whole years</b> first and deal with the leftover months after &mdash; the same order as hours and then minutes.";
     $("tmfb6").className = "fb " + (ok ? "good" : "bad");
     say($("tmfb6").textContent);
-    if (tm6right >= 4 && Object.keys(tm6seen).length >= 2) finish(9, "You can find a gap in months and years!");
+    if (tm6right >= 4 && Object.keys(tm6seen).length >= 2) finish(12, "You can find a gap in months and years!");
     setTimeout(() => { tm6 = tmNew6(); tm6lock = false; tmPaint6(); }, 2800);
   });
   tm6 = tmNew6(); tmPaint6();
@@ -2808,7 +2825,7 @@
       $("stem5").textContent = "That is all of them.";
       $("choices5").innerHTML = "";
       $("score5").textContent = right5 + " out of " + Q5.length + " right.";
-      if (right5 >= 11) finish(13, "");
+      if (right5 >= 11) finish(16, "");
       else retryCheck($("fb5"), $("choices5"), right5, Q5.length, 11, function () { c5 = 0; right5 = 0; round5(); });
       return;
     }
@@ -2833,7 +2850,7 @@
   round5();
 
   /* ---- 6: stickers ---- */
-  const STICKERS = [["📏", "How long is that?"], ["🔁", "Swapping units, both ways"], ["🕰️", "Three ways to say one time"], ["🕐", "Read the clock"], ["🌃", "Writing it in 24-hour"], ["🚌", "Reading a timetable"], ["🚏", "Which one do you catch?"], ["⏱️", "How long between?"], ["📆", "Over the end of the month"], ["🗓️", "Months and years apart"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["📋", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], ["📏", "How long is that?"], ["🔁", "Swapping units, both ways"], ["🕰️", "Three ways to say one time"], ["🕐", "Read the clock"], ["🌃", "Writing it in 24-hour"], ["🚌", "Reading a timetable"], ["🚏", "Which one do you catch?"], ["⏱️", "How long between?"], ["📆", "Over the end of the month"], ["🗓️", "Months and years apart"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -3144,23 +3161,132 @@
   })();
 
 
-  /* ==== ehel-g4-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "24-hour time", d: "A way of writing time from 00:00 to 23:59 with no a.m. or p.m. needed." }, { w: "12-hour time", d: "A way of writing time from 1 to 12 with a.m. or p.m. added to say which half of the day." }, { w: "a.m.", d: "Before midday - from midnight up to, but not including, 12 noon." }, { w: "p.m.", d: "After midday - from 12 noon up to, but not including, midnight." }, { w: "duration", d: "How long something lasts, found by working out the time between a start and an end." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g4-lesson-opener: three shared step functions, modelled on Science's grade-4-app
+     (unitOverview / lecture / scienceWords) but rebuilt in THIS build's own
+     idiom - data-say for arrival narration (show() already speaks it), plain
+     finish(i, msg), no ONSHOW/ONLEAVE/reportAttempt. See this tool's own
+     docstring for exactly what was and was not ported.
+     esc() IS OWN, not shared - every add-*.py tool in this build defines its
+     own local const esc inside its own IIFE rather than relying on one global
+     copy (checked: five separate definitions already exist in this exact
+     file), so a bare function here calling a page-global esc() that does not
+     exist threw ReferenceError the moment it ran and silently halted this
+     script block, including show(0, false) two lines later - caught only by
+     checking the rendered DOM, not by any console output, since a module-
+     scoped throw here left nothing in this browser's console either. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Convert between 24-hour time and 12-hour time.", "Read a real bus timetable or TV guide written in 24-hour time.", "Work out how long a journey or a programme lasts."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "24-hour and 12-hour time", say: "24-hour time runs from 00:00 to 23:59 with no a.m. or p.m. needed. To change 15:45 to 12-hour time, take 12 off the hours: 3:45, and since it is after midday, that is 3:45 p.m." }, { title: "Reading a timetable", say: "A real timetable is written in 24-hour time. Converting it into the 12-hour time you say out loud is the whole of this lesson." }, { title: "Working out duration", say: "Duration is how long something lasts, found by working out the time between a start and an end." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "24-hour time", pic: "🕕", meaning: "A way of writing time from 00:00 to 23:59 with no a.m. or p.m. needed.", uses: ["The train timetable is written in 24-hour time."] }, { w: "12-hour time", pic: "🕒", meaning: "A way of writing time from 1 to 12 with a.m. or p.m. added to say which half of the day.", uses: ["Change 15:45 into 12-hour time."] }, { w: "a.m.", pic: "🌅", meaning: "Before midday - from midnight up to, but not including, 12 noon.", uses: ["7:30 a.m. is early in the morning."] }, { w: "p.m.", pic: "🌇", meaning: "After midday - from 12 noon up to, but not including, midnight.", uses: ["3:45 p.m. is in the afternoon."] }, { w: "duration", pic: "⏱️", meaning: "How long something lasts, found by working out the time between a start and an end.", uses: ["Work out the duration of the bus journey."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -4077,12 +4203,45 @@
 <style>/* ehel-g4-story - see add-story-problems.py */
   #fbWpG4 { margin-top: 4px; }
 </style>
-<style>/* ehel-g4-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g4-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

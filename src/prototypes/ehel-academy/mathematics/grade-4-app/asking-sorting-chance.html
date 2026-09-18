@@ -936,10 +936,28 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Sort information using a Venn diagram and a Carroll diagram; say whether an event is impossible, unlikely, likely or certain; choose the right kind of chart for a set of data.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Sort information using a Venn diagram and a Carroll diagram; say whether an event is impossible, unlikely, likely or certain; choose the right kind of chart for a set of data.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 planning -->
     <section class="slide" data-twm="characterising" data-say="Before you collect anything, decide what would answer your question. Some answers are groups you can name, and some are numbers you can count." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Before you collect any data, decide what would answer your question.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>What colour do we like best is answered with groups you can name, like red or blue.</s><s>How many brothers and sisters do we have is answered with numbers you count.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Numbers cannot answer a question about names, and names cannot answer a question about numbers.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a question, then decide whether its answers are names or numbers.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>What would answer it?</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>What would answer it?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Pick a question, then decide what to collect. Some answers are <b>groups you can name</b>. Some are <b>numbers you can count</b>.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Paper for a Venn or Carroll diagram, and a coin or spinner for a chance experiment. Sorting real answers into two overlapping circles is what makes a Venn diagram mean something, rather than a shape already filled in.</p></details>
       <div class="stage">
@@ -955,7 +973,7 @@
     <!-- 2 tally -->
     
 <section class="slide" data-say="Twenty two children answer one at a time. Each answer is a tally mark, and every fifth mark is a gate." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A tally records answers one at a time, and every fifth mark crosses the other four like a gate.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>22 children answer.</s><s>Four gates make 20, and 2 more marks make 22.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Mark each answer as it comes.</s><s>Trying to count them all at the end is how answers get lost.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next child and make one mark for each answer.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">2</span><h2>Tally, then count</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Tally, then count</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Twenty-two children answer one at a time. Mark each one, and cross the gate on every <b>fifth</b>. Then count the gates.</span></div>
       <div class="stage">
         <div class="ttable" id="tally2"></div>
@@ -973,7 +991,7 @@
     <!-- 3 representations -->
     
 <section class="slide" data-twm="critiquing improving" data-say="The same twenty two answers, drawn three ways. Each picture is good at showing something different." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The same data can be drawn in different ways, and each way is good at something different.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A bar chart makes it easy to compare groups at a glance.</s><s>A pictogram uses a key, so one picture can stand for 2 children.</s><s>A dot plot puts one dot for each answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read the key of a pictogram before you count.</s><s>If one picture stands for 2 children, 4 pictures mean 8 children.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look at each picture in turn and say what it shows best.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">3</span><h2>One set, three pictures</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>One set, three pictures</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">The same 22 answers, drawn three ways. Each one is <b>good at something different</b>.</span></div>
       <div class="stage">
         <div class="chips" id="pickRep"></div>
@@ -987,7 +1005,7 @@
     <!-- 4 venn and carroll -->
     
 <section class="slide" data-twm="classifying" data-say="Two questions at once. A Venn diagram uses hoops that overlap. A Carroll diagram uses four boxes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Venn and Carroll diagrams sort things by two questions at once.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Is it even, and is it more than 10?</s><s>12 is both, so it goes in the overlap of the two hoops.</s><s>7 is neither, so it goes outside both hoops.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A number that answers yes to both questions belongs in the overlap, not in just one hoop.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask both questions about the number, then put it in its place.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">4</span><h2>Sorting two ways at once</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Sorting two ways at once</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Sort 1 to 20 by <b>two</b> questions at once: is it even, and is it more than 10? A <b>Venn diagram</b> overlaps two hoops. A <b>Carroll diagram</b> uses four boxes.</span></div>
       <div class="stage">
         <div class="chips" id="pickSort"></div>
@@ -1001,7 +1019,7 @@
     <!-- 5 interpret -->
     
 <section class="slide" data-twm="critiquing improving" data-say="Every chart is good at one job. Choose the one that does the job the question needs." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every chart is good at one job, so choose the one that does the job you need.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To count cars as they pass, use a tally chart.</s><s>To see at a glance which fruit is most popular, use a bar chart.</s><s>To sort by two questions at once, use a Carroll diagram or a Venn diagram.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Any chart can show some data, but the wrong one hides the answer.</s><s>A tally chart does not show at a glance which is biggest, and a bar chart cannot sort by two questions.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read what the child wants to show, then think which chart does exactly that.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">5</span><h2>Which chart would you choose?</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Which chart would you choose?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="nssay1">Every chart is good at <b>one job</b>. Read what the child wants to show, then choose the chart that does that job.</span></div>
       <div class="stage">
         <p class="qstem" id="nsq1"></p>
@@ -1013,7 +1031,7 @@
 
     
 <section class="slide" data-say="Two classes, the same question, the same number of children. Look for what is the same and what is different." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Comparing two sets of data means looking for what is the same and what is different.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Classes 4A and 4B both have 22 children.</s><s>In each class, 4 children come by car.</s><s>But walking is most common in 4A, and the bus is most common in 4B.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The same total does not mean the same answers.</s><s>Look at every group, not just the total.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find one thing that is the same in both classes and one thing that is different.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">6</span><h2>Two classes, one question</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Two classes, one question</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Both classes have <b>22</b> children and answered the same question. What is the <b>same</b>, and what is <b>different</b>?</span></div>
       <div class="stage">
         <div class="twoup" id="two5" aria-hidden="true"></div>
@@ -1027,7 +1045,7 @@
     <!-- 6 chance words -->
     
 <section class="slide" data-twm="classifying" data-say="Some things cannot happen, some are sure to. Most sit somewhere in between." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some things cannot happen and some are sure to.</s><s>Most sit somewhere in between.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Rolling a 7 on an ordinary dice is impossible.</s><s>The sun rising tomorrow is certain.</s><s>Rolling a 6 is possible but unlikely.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Something unlikely can still happen.</s><s>It just does not happen very often.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Put each event on the line, from impossible to certain.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">7</span><h2>Impossible to certain</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Impossible to certain</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Some things <b>cannot</b> happen and some are <b>sure</b> to. Most sit somewhere in between. Put each one on the line.</span></div>
       <div class="stage">
         <div class="chanceline" id="cl6" aria-hidden="true"></div>
@@ -1041,7 +1059,7 @@
     <!-- 7 experiment -->
     
 <section class="slide" data-twm="classifying" data-say="Impossible, maybe, likely or certain. Think about what could happen, and how often." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Impossible means it can never happen.</s><s>Maybe means it might or might not.</s><s>Likely means it will probably happen.</s><s>Certain means it will happen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa rolling a 7 on an ordinary dice is impossible.</s><s>Hodan tossing heads is maybe.</s><s>Picking a red sock from 9 red and 1 blue is likely.</s><s>The sun rising tomorrow is certain.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Likely is not the same as certain.</s><s>Even when nearly all the socks are red, the blue one could still come out.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask yourself, could it happen, and how often would it happen, then choose the word.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">8</span><h2>Maybe, likely or certain?</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Maybe, likely or certain?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="nssay2"><b>Impossible</b>: it can never happen. <b>Maybe</b>: it might, or might not. <b>Likely</b>: it will probably happen. <b>Certain</b>: it will happen.</span></div>
       <div class="stage">
         <p class="qstem" id="nsq2"></p>
@@ -1052,7 +1070,7 @@
     </section>
 
 <section class="slide" data-twm="specialising" data-say="Spin it ten times and the counts are lumpy. Spin it a thousand times and they even out." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A chance experiment gives lumpy results after a few tries, and more even results after many.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The spinner has four equal parts, so each part should come up about a quarter of the time.</s><s>After 10 spins one colour might come up 5 times.</s><s>After 1000 spins each colour comes up close to 250 times.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A few spins are not enough to tell whether a spinner is fair.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Spin it 10 times, then 1000 times, and compare the counts.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>Spin it, and spin it again</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Spin it, and spin it again</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Four equal parts, so each <b>should</b> come up a quarter of the time. A few spins are lumpy. <b>Many</b> spins even out.</span></div>
       <div class="stage">
         <svg class="spinner" id="sp7" viewBox="0 0 160 160" role="img" aria-label="A spinner with four equal parts"></svg>
@@ -1072,7 +1090,7 @@
     
 <!-- 10  Support and Challenge  (Stage 3 Teacher's Guide) -->
     <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">10</span><h2>Try this one</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Try this one</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG4"></span></div>
       <div id="tierG"></div>
       <div class="choices" id="chG4"></div>
@@ -1081,7 +1099,7 @@
     </section>
     <!-- 11  Story problems  (Cambridge Stage 4 word-problem shape) -->
     <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">11</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG4"></span></div>
       <div id="wpG4"></div>
       <div class="choices" id="chWpG4"></div>
@@ -1118,7 +1136,6 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
       <div id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
       </div>
     </section>
@@ -2270,7 +2287,7 @@
     $("fb1").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : $("fb1").textContent);
     $("task1").textContent = "Answered " + got1 + " of " + QS1.length;
-    if (got1 >= 3) finish(0, "");
+    if (got1 >= 3) finish(3, "");
   });
   paint1();
 
@@ -2300,7 +2317,7 @@
       : n2 < QUEUE.length ? n2 + " of " + QUEUE.length + " children have answered."
       : "All " + QUEUE.length + " have answered. The frequencies add to " + n2 + ".";
     $("task2").textContent = "Every fifth mark is drawn across the gate, so you can count in fives.";
-    if (n2 === QUEUE.length) finish(1, "");
+    if (n2 === QUEUE.length) finish(4, "");
   }
   $("one2").addEventListener("click", () => { if (n2 < QUEUE.length) { n2++; paint2(); say(QUEUE[n2 - 1]); } });
   $("all2").addEventListener("click", () => { n2 = QUEUE.length; paint2(); say("All twenty two have answered."); });
@@ -2351,7 +2368,7 @@
     rep3 = Number(b.dataset.i);
     [...$("pickRep").children].forEach((c, i) => c.classList.toggle("on", i === rep3));
     paint3(); say(REPS[rep3] + ". " + $("fb3").textContent);
-    if (rep3 === REPS.length - 1) finish(2, "");
+    if (rep3 === REPS.length - 1) finish(5, "");
   });
   paint3();
 
@@ -2394,7 +2411,7 @@
     }
     $("sort4").innerHTML = h;
     $("task4").textContent = "Both diagrams sort the same 20 numbers · " + bucket.map((b) => b.length).join(" + ") + " = " + NUMS.length;
-    if (sort4 === 1) finish(3, "");
+    if (sort4 === 1) finish(6, "");
   }
   $("pickSort").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-i]"); if (!b) return;
@@ -2440,7 +2457,7 @@
     $("nsfb1").textContent = (ok ? cheer() + " " : it.o[0] + ". ") + it.why;
     $("nsfb1").className = "fb " + (ok ? "good" : "bad");
     say($("nsfb1").textContent);
-    if (ns1right >= 4) finish(4, "You can choose the right chart!");
+    if (ns1right >= 4) finish(7, "You can choose the right chart!");
     setTimeout(() => { ns1 = nsDeal(NS_JOBS, ns1); ns1lock = false; nsPaint1(); }, 3000);
   });
   ns1 = nsDeal(NS_JOBS, -1); nsPaint1();
@@ -2472,7 +2489,7 @@
       $("stem5").textContent = "That is all three.";
       $("choices5").innerHTML = "";
       $("task5").textContent = right5 + " of " + Q5.length + " right.";
-      if (right5 >= 2) finish(5, "");
+      if (right5 >= 2) finish(8, "");
       return;
     }
     $("stem5").textContent = Q5[c5].q;
@@ -2514,7 +2531,7 @@
       $("ev6").textContent = "That is all of them.";
       $("words6").innerHTML = "";
       $("task6").textContent = right6 + " of " + EV6.length + " right.";
-      if (right6 >= 4) finish(6, "");
+      if (right6 >= 4) finish(9, "");
       return;
     }
     $("ev6").textContent = EV6[e6].e;
@@ -2563,7 +2580,7 @@
     $("nsfb2").textContent = (ok ? cheer() + " " : "It is " + it.a + ". ") + it.why;
     $("nsfb2").className = "fb " + (ok ? "good" : "bad");
     say($("nsfb2").textContent);
-    if (ns2right >= 4) finish(7, "You can say how likely something is!");
+    if (ns2right >= 4) finish(10, "You can say how likely something is!");
     setTimeout(() => { ns2 = nsDeal(NS_EVENTS, ns2); ns2lock = false; nsPaint2(); }, 3000);
   });
   ns2 = nsDeal(NS_EVENTS, -1); nsPaint2();
@@ -2599,7 +2616,7 @@
     $("task7").textContent = n >= 1000
       ? "With a thousand spins the four bars are nearly level — that is what more trials buys you."
       : "Now try more spins and watch the bars even out.";
-    if (n >= 1000) finish(8, "");
+    if (n >= 1000) finish(11, "");
     say(fmt(n) + " spins.");
   }
   document.querySelectorAll('#deck [data-n]').forEach((b) => b.addEventListener("click", () => spin(Number(b.dataset.n))));
@@ -2627,7 +2644,7 @@
       $("stem8").textContent = "That is all of them.";
       $("choices8").innerHTML = "";
       $("score8").textContent = right8 + " out of " + Q8.length + " right.";
-      if (right8 >= 8) finish(11, "");
+      if (right8 >= 8) finish(14, "");
       else retryCheck($("fb8"), $("choices8"), right8, Q8.length, 8, function () { c8 = 0; right8 = 0; round8(); });
       return;
     }
@@ -2651,7 +2668,7 @@
   round8();
 
   /* ---- 9: stickers ---- */
-  const STICKERS = [["❓", "What would answer it?"], ["✏️", "Tally, then count"], ["📊", "One set, three pictures"], ["⭕", "Sorting two ways at once"], ["📈", "Which chart would you choose?"], ["🔍", "Two classes, one question"], ["🎲", "Impossible to certain"], ["☔", "Maybe, likely or certain?"], ["🌀", "Spin it, and spin it again"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["📋", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], ["❓", "What would answer it?"], ["✏️", "Tally, then count"], ["📊", "One set, three pictures"], ["⭕", "Sorting two ways at once"], ["📈", "Which chart would you choose?"], ["🔍", "Two classes, one question"], ["🎲", "Impossible to certain"], ["☔", "Maybe, likely or certain?"], ["🌀", "Spin it, and spin it again"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -2903,23 +2920,132 @@
   })();
 
 
-  /* ==== ehel-g4-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "Venn diagram", d: "Overlapping circles that sort things by which properties they share." }, { w: "Carroll diagram", d: "A grid that sorts things into boxes by two properties at once, such as odd/even and more/less than 10." }, { w: "certain", d: "Sure to happen - there is no other possibility." }, { w: "likely", d: "More probable to happen than not, but not certain." }, { w: "impossible", d: "Cannot happen at all." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g4-lesson-opener: three shared step functions, modelled on Science's grade-4-app
+     (unitOverview / lecture / scienceWords) but rebuilt in THIS build's own
+     idiom - data-say for arrival narration (show() already speaks it), plain
+     finish(i, msg), no ONSHOW/ONLEAVE/reportAttempt. See this tool's own
+     docstring for exactly what was and was not ported.
+     esc() IS OWN, not shared - every add-*.py tool in this build defines its
+     own local const esc inside its own IIFE rather than relying on one global
+     copy (checked: five separate definitions already exist in this exact
+     file), so a bare function here calling a page-global esc() that does not
+     exist threw ReferenceError the moment it ran and silently halted this
+     script block, including show(0, false) two lines later - caught only by
+     checking the rendered DOM, not by any console output, since a module-
+     scoped throw here left nothing in this browser's console either. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Sort information using a Venn diagram and a Carroll diagram.", "Say whether an event is impossible, unlikely, likely or certain.", "Choose the right kind of chart for a set of data."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Venn and Carroll diagrams", say: "A Venn diagram sorts things by which properties they share, using overlapping circles. A Carroll diagram sorts the same kind of information into a grid using yes and no." }, { title: "Chance", say: "Every event sits somewhere between impossible and certain. A fair coin landing heads is neither - it is an even chance, equally likely either way." }, { title: "Choosing a chart", say: "A bar model shows each group as a length, so sizes can be compared at a glance - the same job a bar chart does, in a different shape." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "Venn diagram", pic: "⭕", meaning: "Overlapping circles that sort things by which properties they share.", uses: ["Use a Venn diagram to sort even numbers and multiples of 3."] }, { w: "Carroll diagram", pic: "🔲", meaning: "A grid that sorts things into boxes by two properties at once, such as odd/even and more/less than 10.", uses: ["Use a Carroll diagram to sort the numbers."] }, { w: "certain", pic: "✅", meaning: "Sure to happen - there is no other possibility.", uses: ["It is certain that the sun will rise tomorrow."] }, { w: "likely", pic: "🌤️", meaning: "More probable to happen than not, but not certain.", uses: ["It is likely to rain in April."] }, { w: "impossible", pic: "🚫", meaning: "Cannot happen at all.", uses: ["Rolling a 7 on a normal dice is impossible."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3833,12 +3959,45 @@
 <style>/* ehel-g4-story - see add-story-problems.py */
   #fbWpG4 { margin-top: 4px; }
 </style>
-<style>/* ehel-g4-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g4-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

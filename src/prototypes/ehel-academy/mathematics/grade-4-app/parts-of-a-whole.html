@@ -915,10 +915,28 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Compare fractions with different denominators, such as three eighths and one half; convert between fractions and percentages; find a fraction of an amount by sharing it into equal groups.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Compare fractions with different denominators, such as three eighths and one half; convert between fractions and percentages; find a fraction of an amount by sharing it into equal groups.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 more parts, smaller parts -->
     <section class="slide" data-twm="generalising" data-say="The whole stays the same size. Cut it into more pieces and every piece has to get smaller." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The whole never changes size.</s><s>Cut it into more equal parts and each part must get smaller.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A bar cut into 2 equal parts gives halves.</s><s>Cut the same bar into 4 and each part is a quarter, half the size of a half.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A bigger bottom number does not mean a bigger piece.</s><s>One eighth is smaller than one quarter.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Cut the bar into more parts and compare one part of each.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>More parts, smaller parts</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>More parts, smaller parts</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">The whole never changes. Cut it into <b>more</b> pieces and each piece must get <b>smaller</b>.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A paper circle or strip to fold or cut into eighths, and about 20 beans or buttons to share into equal groups. Folding a strip into eighths is what makes three eighths a real, comparable amount next to a half, not just two fractions on a page.</p></details>
       <div class="stage">
@@ -937,7 +955,7 @@
     <!-- 2 a fraction is a division -->
     
 <section class="slide" data-twm="characterising" data-say="Share the cakes out fairly. The fraction each child gets is simply the cakes divided by the children." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sharing is dividing, and a fraction is a way of writing the answer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>3 cakes shared between 4 children.</s><s>Each child gets 3 divided by 4, which is three quarters of a cake.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The number of cakes goes on the top and the number of children on the bottom, not the other way round.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Share the cakes, then say how much one child gets as a fraction.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">2</span><h2>A fraction is a division</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>A fraction is a division</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Share the cakes <b>fairly</b>. What each child gets is the cakes <b>divided by</b> the children — and that is exactly what the fraction says.</span></div>
       <div class="stage">
         <div class="chips" id="pickCakes"></div>
@@ -954,7 +972,7 @@
     <!-- 3 a fraction of an amount -->
     
 <section class="slide" data-say="A unit fraction tells you how many equal groups to make. One of those groups is the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A unit fraction tells you how many equal groups to make.</s><s>One group is the answer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One fifth of 20.</s><s>Make 5 equal groups from 20, and each group has 4.</s><s>So one fifth of 20 is 4.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>One fifth of 20 is not 5.</s><s>The 5 says how many groups to make.</s><s>The answer is how many are in one group.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Divide by the bottom number to find one group.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">3</span><h2>A fraction of an amount</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>A fraction of an amount</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">A <b>unit fraction</b> is an instruction: make that many <b>equal groups</b>, then take <b>one</b> of them.</span></div>
       <div class="stage">
         <div class="chips" id="pickUnit"></div>
@@ -971,7 +989,7 @@
     <!-- 4 equivalent fractions -->
     
 <section class="slide" data-say="One quarter of 24 means share 24 into 4 equal groups. The answer is what is in one group." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A unit fraction of an amount means share the amount into that many equal groups.</s><s>The answer is one group.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Amina has 30 mangoes and gives one fifth of them away.</s><s>Share 30 into 5 equal groups, and each group holds 6.</s><s>So she gives away 6 mangoes.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The bottom number is how many groups, not the answer.</s><s>One fifth of 30 is not 5, and it is not 25, which is what she keeps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find the whole, divide it by the bottom number, and that is one part.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">4</span><h2>Fractions of amounts, in real life</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Fractions of amounts, in real life</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="nfsay1">A unit fraction of an amount: make that many <b>equal groups</b>, and the answer is what is in <b>one</b> of them.</span></div>
       <div class="stage">
         <p class="qstem" id="nfq1"></p>
@@ -984,7 +1002,7 @@
 
     
 <section class="slide" data-twm="specialising" data-say="Two fractions can look completely different and still be worth exactly the same." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Two fractions can look different and still be worth exactly the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One half and two quarters cover the same length of bar.</s><s>So do one half and four eighths.</s><s>They are equivalent fractions.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Bigger numbers do not mean a bigger fraction.</s><s>Four eighths is not more than one half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Line the two bars up and see whether they end in the same place.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">5</span><h2>Same value, different name</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Same value, different name</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Two fractions can look different and be worth <b>exactly the same</b>. Line them up and see.</span></div>
       <div class="stage">
         <div class="chips" id="pickEq"></div>
@@ -999,7 +1017,7 @@
     <!-- 5 percentages -->
     
 <section class="slide" data-say="A percentage is simply how many parts in every hundred. The sign per cent means out of a hundred." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A percentage is how many parts in every hundred.</s><s>Per cent means out of a hundred.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Shade 25 of the 100 squares and you have shaded 25 per cent.</s><s>That is the same amount as one quarter of the grid.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>25 per cent is not 25 things.</s><s>It is 25 out of every hundred.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Shade the squares you are asked for and read the percentage.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">6</span><h2>Out of a hundred</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Out of a hundred</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">A <b>percentage</b> is how many parts in every <b>hundred</b>. The sign <b>%</b> is just shorthand for &ldquo;out of a hundred&rdquo;.</span></div>
       <div class="stage">
         <label class="lab" for="pct5">Shade <span id="pctLab5">25</span> of the 100 squares</label>
@@ -1016,7 +1034,7 @@
     <!-- 6 comparing -->
     
 <section class="slide" data-twm="characterising" data-say="To compare two fractions, give them the same bottom number first. Then you are only comparing the top ones." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To compare two fractions, give them the same bottom number first.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Three quarters or five eighths?</s><s>Three quarters is the same as six eighths, and six eighths is more than five eighths.</s><s>So three quarters is bigger.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not compare the bottom numbers on their own.</s><s>Eighths are smaller pieces, so you need to know how many of them there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Change one fraction so both have the same bottom number, then compare the tops.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">7</span><h2>Which is bigger?</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Which is bigger?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Give them the <b>same bottom number</b> first. Then you are only comparing the top ones. Choose <b>&gt;</b>, <b>&lt;</b> or <b>=</b>.</span></div>
       <div class="stage">
         <div class="cmp" id="cmp6" aria-hidden="true"></div>
@@ -1030,7 +1048,7 @@
     <!-- 7 adding and subtracting -->
     
 <section class="slide" data-twm="characterising" data-say="To put fractions in order, give them all the same bottom number, and then the top numbers put them in order for you." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To put fractions in order, give them all the same bottom number first.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One quarter, one half and five eighths.</s><s>In eighths they are two eighths, four eighths and five eighths.</s><s>Now the tops say the order: one quarter, then one half, then five eighths.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not order them by the bottom numbers.</s><s>A bigger bottom number means smaller pieces, so one eighth is smaller than one half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Choose a bottom number that all the fractions can be changed into, then compare the tops.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">8</span><h2>Fractions in order</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Fractions in order</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="nfsay2">Give every fraction the <b>same bottom number</b>. Then the top numbers tell you the order, smallest first.</span></div>
       <div class="stage">
         <p class="qstem" id="nfq2"></p>
@@ -1042,7 +1060,7 @@
     </section>
 
 <section class="slide" data-say="When the bottom numbers match, you are counting the same kind of piece. Guess first, then work it out." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When the bottom numbers match, the pieces are the same size, so you just count them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Two fifths add one fifth is three fifths.</s><s>Four sevenths take away one seventh is three sevenths.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Never add the bottom numbers.</s><s>The pieces are still fifths, so the bottom number stays 5.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Estimate first, more or less than a whole, then count the pieces.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>Adding and taking away</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Adding and taking away</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Same bottom number means the pieces are the <b>same size</b>, so you just count them. <b>Estimate first</b>, then work it out.</span></div>
       <div class="stage">
         <p class="qstem" id="sum7"></p>
@@ -1060,7 +1078,7 @@
     
 <!-- 10  Spot the mistake  (Stage 4 Teacher's Guide / Ready to Go) -->
     <section class="slide" data-twm="critiquing improving" data-say="Read what the child said. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Finding a mistake is a different job from getting the answer right.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what the child said.</s><s>Work it out yourself first.</s><s>Then say what went wrong, not just that it is wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>These are real mistakes that real children make.</s><s>If you have made one of them, you are in good company.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>See if you can catch each one.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">10</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG"></span></div>
       <div id="smG"><span id="clG"></span></div>
       <div class="choices" id="chG"></div>
@@ -1069,7 +1087,7 @@
     </section>
     <!-- 11  Support and Challenge  (Stage 3 Teacher's Guide) -->
     <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">11</span><h2>Try this one</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Try this one</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG4"></span></div>
       <div id="tierG"></div>
       <div class="choices" id="chG4"></div>
@@ -1078,7 +1096,7 @@
     </section>
     <!-- 12  Story problems  (Cambridge Stage 4 word-problem shape) -->
     <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">12</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG4"></span></div>
       <div id="wpG4"></div>
       <div class="choices" id="chWpG4"></div>
@@ -1115,7 +1133,6 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
       <div id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
       </div>
     </section>
@@ -2245,7 +2262,7 @@
     $("fb1").innerHTML = p1 === 2 ? "Two parts, and each one is half the bar — the biggest a part can be here."
       : frac(1, p1) + " is smaller than " + frac(1, p1 - 1) + ", because the same bar was cut into one more piece.";
     $("task1").textContent = "Sizes tried: " + sizes.length + " of 11";
-    if (sizes.length >= 5) finish(0, "");
+    if (sizes.length >= 5) finish(3, "");
   }
   $("parts1").addEventListener("input", (e) => { p1 = Number(e.target.value); paint1(); });
   paint1();
@@ -2281,7 +2298,7 @@
     ]);
     $("fb2").innerHTML = "The shaded slices are one child's share: " + frac(cakes2, kids2) + " of a cake.";
     $("task2").textContent = "The top number is what you shared. The bottom number is how many ways.";
-    if (cakes2 === 3) finish(1, "");
+    if (cakes2 === 3) finish(4, "");
   }
   $("pickCakes").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-c]"); if (!b) return;
@@ -2316,7 +2333,7 @@
     ]);
     $("fb3").innerHTML = "The shaded group is " + frac(1, u3) + " of " + amount + ", which is <b>" + m3 + "</b>.";
     $("task3").textContent = "The bottom number tells you how many groups to make.";
-    if (m3 !== 5 || u3 !== 4) finish(2, "");
+    if (m3 !== 5 || u3 !== 4) finish(5, "");
   }
   $("pickUnit").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-k]"); if (!b) return;
@@ -2374,7 +2391,7 @@
       " means " + nf1.d + " equal groups, and each group holds " + nf1.each + ".";
     $("nffb1").className = "fb " + (ok ? "good" : "bad");
     say($("nffb1").textContent);
-    if (nf1right >= 4) finish(3, "You can find a fraction of an amount!");
+    if (nf1right >= 4) finish(6, "You can find a fraction of an amount!");
     setTimeout(() => { nf1 = nfNew1(); nf1lock = false; nfPaint1(); }, 2600);
   });
   nf1 = nfNew1(); nfPaint1();
@@ -2402,7 +2419,7 @@
     ]);
     $("fb4").innerHTML = "All " + fam.length + " of these are <b>equivalent</b> — different names for the same amount.";
     $("task4").textContent = "Multiply top and bottom by the same number and the value cannot change.";
-    if (eq4 > 0) finish(4, "");
+    if (eq4 > 0) finish(7, "");
   }
   $("pickEq").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-i]"); if (!b) return;
@@ -2433,7 +2450,7 @@
       : n5 === 100 ? "Every square shaded — the whole thing, <b>100%</b>."
       : "<b>" + n5 + "%</b> of the square is shaded, and " + (100 - n5) + "% is not.";
     $("task5").textContent = "Try 50, then 25, then 10 — the ones worth knowing by heart.";
-    if (n5 !== 25) finish(5, "");
+    if (n5 !== 25) finish(8, "");
   }
   $("pct5").addEventListener("input", (e) => { n5 = Number(e.target.value); paint5(); });
   paint5();
@@ -2453,7 +2470,7 @@
       $("signs6").innerHTML = "";
       $("work6").innerHTML = "";
       $("task6").textContent = right6 + " of " + PAIRS.length + " right.";
-      if (right6 >= 6) finish(6, "");
+      if (right6 >= 6) finish(9, "");
       return;
     }
     const [A, B] = PAIRS[c6];
@@ -2530,7 +2547,7 @@
       as.map((a) => a[0]).join(", ") + ", so the order is " + nf2.set.map((f) => nfSay(f[0], f[1])).join(", then ") + ".";
     $("nffb2").className = "fb " + (ok ? "good" : "bad");
     say($("nffb2").textContent);
-    if (nf2right >= 4) finish(7, "You can put fractions in order!");
+    if (nf2right >= 4) finish(10, "You can put fractions in order!");
     setTimeout(() => { nf2 = nfNew2(); nf2lock = false; nfPaint2(); }, 3000);
   });
   nf2 = nfNew2(); nfPaint2();
@@ -2580,7 +2597,7 @@
       BANDS.filter((x) => x[0] === s7.band)[0][1] + ".";
     $("fb7").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : $("fb7").textContent);
-    if (done7 >= 3) finish(8, "");
+    if (done7 >= 3) finish(11, "");
   });
   $("new7").addEventListener("click", () => { s7 = newSum(); paint7(); });
   s7 = newSum(); paint7();
@@ -2606,7 +2623,7 @@
       $("stem8").textContent = "That is all of them.";
       $("choices8").innerHTML = "";
       $("score8").textContent = right8 + " out of " + Q8.length + " right.";
-      if (right8 >= 8) finish(12, "");
+      if (right8 >= 8) finish(15, "");
       else retryCheck($("fb8"), $("choices8"), right8, Q8.length, 8, function () { c8 = 0; right8 = 0; round8(); });
       return;
     }
@@ -2630,7 +2647,7 @@
   round8();
 
   /* ---- 9: stickers ---- */
-  const STICKERS = [["🍰", "More parts, smaller parts"], ["➗", "A fraction is a division"], ["🍪", "A fraction of an amount"], ["🍬", "Fractions of amounts, in real life"], ["🏷️", "Same value, different name"], ["💯", "Out of a hundred"], ["⚖️", "Which is bigger?"], ["📶", "Fractions in order"], ["➕", "Adding and taking away"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["📋", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], ["🍰", "More parts, smaller parts"], ["➗", "A fraction is a division"], ["🍪", "A fraction of an amount"], ["🍬", "Fractions of amounts, in real life"], ["🏷️", "Same value, different name"], ["💯", "Out of a hundred"], ["⚖️", "Which is bigger?"], ["📶", "Fractions in order"], ["➕", "Adding and taking away"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -2941,23 +2958,132 @@
   })();
 
 
-  /* ==== ehel-g4-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "fraction", d: "A part of a whole, written as one number over another, such as 3/8." }, { w: "numerator", d: "The top number in a fraction - how many parts you have." }, { w: "denominator", d: "The bottom number in a fraction - how many equal parts the whole was split into." }, { w: "percentage", d: "A number out of 100, written with a % sign." }, { w: "equivalent", d: "Equal in value, even when written differently - 1/2 and 2/4 are equivalent fractions." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g4-lesson-opener: three shared step functions, modelled on Science's grade-4-app
+     (unitOverview / lecture / scienceWords) but rebuilt in THIS build's own
+     idiom - data-say for arrival narration (show() already speaks it), plain
+     finish(i, msg), no ONSHOW/ONLEAVE/reportAttempt. See this tool's own
+     docstring for exactly what was and was not ported.
+     esc() IS OWN, not shared - every add-*.py tool in this build defines its
+     own local const esc inside its own IIFE rather than relying on one global
+     copy (checked: five separate definitions already exist in this exact
+     file), so a bare function here calling a page-global esc() that does not
+     exist threw ReferenceError the moment it ran and silently halted this
+     script block, including show(0, false) two lines later - caught only by
+     checking the rendered DOM, not by any console output, since a module-
+     scoped throw here left nothing in this browser's console either. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Compare fractions with different denominators, such as three eighths and one half.", "Convert between fractions and percentages.", "Find a fraction of an amount by sharing it into equal groups."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Fractions of a whole", say: "A fraction is a part of a whole, written as one number over another. Folding a strip into eighths is what makes three eighths a real, comparable amount next to a half." }, { title: "Fractions and percentages", say: "Per cent means out of 100. A quarter of 100 is 25, so one quarter is the same as 25%." }, { title: "Sharing to find a fraction", say: "To find a quarter of 20, share the 20 into four equal groups and count how many are in one group." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "fraction", pic: "🍕", meaning: "A part of a whole, written as one number over another, such as 3/8.", uses: ["Shade three eighths of the circle to show the fraction."] }, { w: "numerator", pic: "⬆️", meaning: "The top number in a fraction - how many parts you have.", uses: ["In 3/8, the numerator is 3."] }, { w: "denominator", pic: "⬇️", meaning: "The bottom number in a fraction - how many equal parts the whole was split into.", uses: ["In 3/8, the denominator is 8."] }, { w: "percentage", pic: "💯", meaning: "A number out of 100, written with a % sign.", uses: ["25% means 25 out of every 100."] }, { w: "equivalent", pic: "⚖️", meaning: "Equal in value, even when written differently - 1/2 and 2/4 are equivalent fractions.", uses: ["1/2 and 2/4 are equivalent fractions."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3882,12 +4008,45 @@
 <style>/* ehel-g4-story - see add-story-problems.py */
   #fbWpG4 { margin-top: 4px; }
 </style>
-<style>/* ehel-g4-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g4-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

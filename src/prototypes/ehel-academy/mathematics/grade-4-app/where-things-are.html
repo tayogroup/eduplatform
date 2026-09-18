@@ -909,10 +909,28 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Use all eight compass points to give and follow directions; plot and read coordinates on a grid; describe a quarter turn as a right angle.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Use all eight compass points to give and follow directions; plot and read coordinates on a grid; describe a quarter turn as a right angle.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 faces of a solid -->
     <section class="slide" data-say="North, east, south and west. A quarter turn takes you to the next one round." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The four compass points go round in order: north, east, south and west.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Face north and make a quarter turn clockwise, and you face east.</s><s>Another quarter turn and you face south.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Clockwise goes north, east, south, west.</s><s>Anticlockwise goes the other way: north, west, south, east.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say the four points in order, then make each turn one step at a time.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Facing and turning</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Facing and turning</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay1">The four <b>cardinal</b> points go round in order: north, east, south, west. A <b>quarter turn</b> clockwise takes you to the next one.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Squared paper for a coordinate grid, and room to stand and point using all eight compass directions. Walking along one direction and then up to reach a point is what makes a coordinate a route rather than two numbers in brackets.</p></details>
       <div class="stage">
@@ -927,7 +945,7 @@
 
     
 <section class="slide" data-twm="characterising" data-say="Between every two cardinal points there is one more, and its name is both of theirs joined together." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Between each pair of compass points sits another point, named by joining the two.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Between north and east is north-east, written NE.</s><s>Between south and west is south-west, written SW.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>North or south always comes first.</s><s>We say north-east, never east-north.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Name the two points on either side, then join their names.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">2</span><h2>The eight points</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>The eight points</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay2">Between each pair sits an <b>ordinal</b> point, and its name is simply both names joined: north and east make <b>north-east</b>, written <b>NE</b>.</span></div>
       <div class="stage">
         <svg class="grid8" id="wrose2" viewBox="0 0 260 200" role="img" aria-label="A compass with eight points"></svg>
@@ -941,7 +959,7 @@
 
     
 <section class="slide" data-twm="specialising" data-say="North, east, south and west, and the four in between. Follow the instructions and see where you land." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The eight compass points tell you which way to move.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Start in the middle and move one square north-west.</s><s>You land on the square that is up and to the left.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A move north-east goes up and to the right at the same time.</s><s>It lands on the corner square, not the one above.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Follow the direction, then tap the square you land on.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">3</span><h2>Which way from here?</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Which way from here?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Four <b>cardinal</b> points, and four <b>ordinal</b> ones in between. Follow the instruction and see where you land.</span></div>
       <div class="stage">
         <svg class="grid8" id="map9" viewBox="0 0 260 260" role="img" aria-label="A map grid with a compass"></svg>
@@ -956,7 +974,7 @@
     <!-- 10 check -->
     
 <section class="slide" data-say="A route is several moves one after another. Do them in order and see where you land." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A route is several moves, done one after another.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>From a square, go 3 east and then 2 north.</s><s>You end up 3 squares to the right and 2 squares up from where you started.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do the moves in order.</s><s>Only the east move changes the column, and only the north move changes the row.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Do the first move, then the second, then tap the square you land on.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">4</span><h2>Following a route</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Following a route</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay3">A route is moves <b>one after another</b>. Do the first, then the second, then tap the square you land on.</span></div>
       <div class="stage">
         <svg class="grid8" id="wmap3" viewBox="0 0 260 260" role="img" aria-label="A grid with a starting dot"></svg>
@@ -969,7 +987,7 @@
 
     
 <section class="slide" data-twm="characterising" data-say="Coordinates. Go along the bottom first, then up. Tap the point I ask for." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Coordinates give the position of a point on a grid, along first and then up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The point 4, 2 is 4 along the bottom and 2 up.</s><s>Start at zero, go along 4, then go up 2.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Always go along first.</s><s>Going up first lands you on a different point.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Start at zero, go along, then up, then tap the point.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">5</span><h2>Coordinates</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Coordinates</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d11_say11">Go <b>along</b> first, then <b>up</b>. Tap the point.</span></div>
       <div class="stage">
         <svg class="coords" id="d11_coords11" viewBox="0 0 260 260" role="img" aria-label="Coordinate grid"></svg>
@@ -981,7 +999,7 @@
     <!-- 12 check -->
     
 <section class="slide" data-twm="characterising" data-say="Coordinates always go along first and then up. Swapping them gives a different place altogether." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>In a pair of coordinates, the first number is along and the second is up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>2, 6 is 2 along and 6 up.</s><s>6, 2 is 6 along and 2 up.</s><s>They are two different places.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Swapping the numbers moves the point.</s><s>2, 6 and 6, 2 are not the same place.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say along first, then up, every time you read a pair.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">6</span><h2>Along first, then up</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Along first, then up</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay4">The first number is <b>along</b>, the second is <b>up</b>. Swap them and you are somewhere else entirely. Tap the point the label names.</span></div>
       <div class="stage">
         <svg class="coords" id="wxy4" viewBox="0 0 260 260" role="img" aria-label="A coordinate grid with two points"></svg>
@@ -994,7 +1012,7 @@
 
     
 <section class="slide" data-say="Every corner of a shape has its own pair of coordinates." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every corner of a shape on a grid has its own pair of coordinates.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A rectangle has corners at 1, 1 and 4, 3.</s><s>Its other two corners are 4, 1 and 1, 3, because each corner takes its along from one corner and its up from the other.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read each corner for itself, along from the bottom and up from the side.</s><s>Do not copy another corner.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Put your finger on the circled corner and read along first, then up.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">7</span><h2>The corners of a shape</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>The corners of a shape</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay5">A shape sits on the grid and <b>every corner</b> has its own pair. Read the circled one: along first, then up.</span></div>
       <div class="stage">
         <svg class="coords" id="wxy5" viewBox="0 0 260 260" role="img" aria-label="A rectangle drawn on a coordinate grid"></svg>
@@ -1008,7 +1026,7 @@
 
     
 <section class="slide" data-twm="specialising" data-say="Every square of the shape has a partner the same distance on the other side of the mirror line." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every square of a shape has a partner the same distance away on the other side of the mirror line.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A square 3 away from the line on the left has its partner 3 away on the right.</s><s>A square 1 away has its partner 1 away.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A reflection flips the shape over the line.</s><s>It does not slide it across unchanged.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take each square in turn, count to the line, and count the same on the other side.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">8</span><h2>Reflect it in the mirror</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Reflect it in the mirror</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Each square has a partner the <b>same distance</b> on the other side of the mirror line. Tap the squares to build the reflection.</span></div>
       <div class="stage">
         <div class="chips" id="pickRef"></div>
@@ -1026,7 +1044,7 @@
     <!-- 5 combining and tessellating -->
     
 <section class="slide" data-twm="specialising" data-say="When the mirror sits on the edge of the shape, the reflection touches it and the whole thing doubles." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When the mirror line runs along the edge of a shape, the reflection touches the shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A square right against the mirror has no distance to cross, so its partner sits right beside it on the other side.</s><s>The whole picture doubles.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not leave a gap.</s><s>There is no gap between the shape and the mirror, so there is none in the reflection.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Start with the squares that touch the mirror, then do the rest.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>When the mirror is the edge</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>When the mirror is the edge</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay6">Here the mirror line runs along the <b>edge</b> of the shape. Nothing has any distance to cross, so the reflection <b>touches</b> the original and the whole picture doubles.</span></div>
       <div class="stage">
         <svg class="grid8" id="wmir6" viewBox="0 0 260 260" role="img" aria-label="A shape with a mirror line along its edge"></svg>
@@ -1039,7 +1057,7 @@
 
 <!-- 10  Spot the mistake  (Stage 4 Teacher's Guide / Ready to Go) -->
     <section class="slide" data-twm="critiquing improving" data-say="Read what the child said. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Finding a mistake is a different job from getting the answer right.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what the child said.</s><s>Work it out yourself first.</s><s>Then say what went wrong, not just that it is wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>These are real mistakes that real children make.</s><s>If you have made one of them, you are in good company.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>See if you can catch each one.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">10</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG"></span></div>
       <div id="smG"><span id="clG"></span></div>
       <div class="choices" id="chG"></div>
@@ -1048,7 +1066,7 @@
     </section>
     <!-- 11  Support and Challenge  (Stage 3 Teacher's Guide) -->
     <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">11</span><h2>Try this one</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Try this one</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayG4"></span></div>
       <div id="tierG"></div>
       <div class="choices" id="chG4"></div>
@@ -1057,7 +1075,7 @@
     </section>
     <!-- 12  Story problems  (Cambridge Stage 4 word-problem shape) -->
     <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">12</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG4"></span></div>
       <div id="wpG4"></div>
       <div class="choices" id="chWpG4"></div>
@@ -1094,7 +1112,6 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
       <div id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
       </div>
     </section>
@@ -2253,7 +2270,7 @@
       "The four points go round in order, so each quarter turn moves you on one.";
     $("wfb1").className = "fb " + (ok ? "good" : "bad");
     say($("wfb1").textContent);
-    if (w1right >= 4) finish(0, "You can turn and say which way you face!");
+    if (w1right >= 4) finish(3, "You can turn and say which way you face!");
     setTimeout(() => { w1 = wNew1(); w1lock = false; wPaint1(); }, 1900);
   });
   w1 = wNew1(); wPaint1();
@@ -2294,7 +2311,7 @@
       "The in-between points are the <b>ordinal</b> ones, and their names are both cardinals joined.";
     $("wfb2").className = "fb " + (ok ? "good" : "bad");
     say($("wfb2").textContent);
-    if (w2right >= 4) finish(1, "You know all eight points!");
+    if (w2right >= 4) finish(4, "You know all eight points!");
     setTimeout(() => { w2 = wNew2(); w2lock = false; wPaint2(); }, 1900);
   });
   w2 = wNew2(); wPaint2();
@@ -2342,7 +2359,7 @@
     $("fb9").innerHTML = (ok ? cheer() + " " : "It was " + DIRNAME[to9.k] + ". ") + "North is up the grid.";
     $("fb9").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : "It was " + DIRNAME[to9.k]);
-    if (right9 >= 3) finish(2, "");
+    if (right9 >= 3) finish(5, "");
     setTimeout(() => { from9 = to9.to.slice(); nextMove(); }, 2400);
   });
   nextMove();
@@ -2390,7 +2407,7 @@
       : "Not there. The route ends at column " + w3.e[0] + ", row " + w3.e[1] + ".";
     $("wfb3").className = "fb " + (ok ? "good" : "bad");
     say($("wfb3").textContent);
-    if (w3right >= 3) finish(3, "You can follow a route!");
+    if (w3right >= 3) finish(6, "You can follow a route!");
     setTimeout(() => { w3 = wNew3(); w3lock = false; wPaint3(); }, 2100);
   });
   w3 = wNew3(); wPaint3();
@@ -2416,7 +2433,7 @@
     d11_drawGrid([{ x: d11_target11.x, y: d11_target11.y, cls: "good" }].concat(ok ? [] : [{ x, y, cls: "oops" }]));
     if (ok) d11_right11++;
     $("d11_fb11").className = "fb " + (ok ? "good" : "bad"); $("d11_fb11").textContent = (ok ? cheer() + " " : "You tapped (" + x + ", " + y + "). ") + "(" + d11_target11.x + ", " + d11_target11.y + ") is " + d11_target11.x + " along and " + d11_target11.y + " up."; say((ok ? cheer() : "Not quite.") + " " + d11_target11.x + " along, " + d11_target11.y + " up");
-    if (d11_right11 >= 4) finish(4, "Coordinates: well done!"); later(d11_ask11, 2200);
+    if (d11_right11 >= 4) finish(7, "Coordinates: well done!"); later(d11_ask11, 2200);
   }
   $("d11_coords11").addEventListener("click", (e) => d11_pick11(e.target.closest(".pt")));
   $("d11_coords11").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); d11_pick11(e.target.closest(".pt")); } });
@@ -2466,7 +2483,7 @@
     $("wfb4").innerHTML = (ok ? cheer() + " " : "Not that one. ") + "Along the bottom first, then up the side.";
     $("wfb4").className = "fb " + (ok ? "good" : "bad");
     say($("wfb4").textContent);
-    if (w4right >= 4) finish(5, "You read coordinates the right way round!");
+    if (w4right >= 4) finish(8, "You read coordinates the right way round!");
     setTimeout(() => { w4 = wNew4(); w4lock = false; wPaint4(); }, 2000);
   });
   w4 = wNew4(); wPaint4();
@@ -2523,7 +2540,7 @@
     $("wfb5").innerHTML = (ok ? cheer() + " " : "It is (" + c[0] + ", " + c[1] + "). ") + "Along the bottom, then up the side.";
     $("wfb5").className = "fb " + (ok ? "good" : "bad");
     say($("wfb5").textContent);
-    if (w5right >= 4) finish(6, "You can read every corner!");
+    if (w5right >= 4) finish(9, "You can read every corner!");
     setTimeout(() => { w5 = wNew5(); w5lock = false; wPaint5(); }, 2100);
   });
   w5 = wNew5(); wPaint5();
@@ -2564,7 +2581,7 @@
     $("fb4").className = "fb " + (done ? "good" : "");
     $("task4").textContent = R.axis === "V" ? "The mirror runs top to bottom, so left and right swap over."
       : "The mirror runs left to right, so up and down swap over.";
-    if (done) finish(7, "");
+    if (done) finish(10, "");
   }
   $("ref4").addEventListener("click", (e) => {
     const c = e.target.closest("rect.cell"); if (!c) return;
@@ -2634,7 +2651,7 @@
       $("wfb6").innerHTML = cheer() + " With the mirror on the edge, nothing has a gap to cross, so the reflection sits right against the shape.";
       $("wfb6").className = "fb good";
       say($("wfb6").textContent);
-      finish(8, "You reflected it against its own edge!");
+      finish(11, "You reflected it against its own edge!");
       setTimeout(() => { w6 = wNew6(); w6lock = false; $("wfb6").textContent = ""; $("wfb6").className = "fb"; wPaint6(); }, 2600);
     } else {
       $("wfb6").textContent = "";
@@ -2661,7 +2678,7 @@
       $("stem10").textContent = "That is all of them.";
       $("choices10").innerHTML = "";
       $("score10").textContent = right10 + " out of " + Q10.length + " right.";
-      if (right10 >= 6) finish(12, "");
+      if (right10 >= 6) finish(15, "");
       else retryCheck($("fb10"), $("choices10"), right10, Q10.length, 6, function () { c10 = 0; right10 = 0; round10(); });
       return;
     }
@@ -2685,7 +2702,7 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["🔄", "Facing and turning"], ["↗️", "The eight points"], ["📍", "Which way from here?"], ["🚶", "Following a route"], ["🗺️", "Coordinates"], ["↕️", "Along first, then up"], ["◻️", "The corners of a shape"], ["↔️", "Reflect it in the mirror"], ["🦋", "When the mirror is the edge"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["📋", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], ["🔄", "Facing and turning"], ["↗️", "The eight points"], ["📍", "Which way from here?"], ["🚶", "Following a route"], ["🗺️", "Coordinates"], ["↕️", "Along first, then up"], ["◻️", "The corners of a shape"], ["↔️", "Reflect it in the mirror"], ["🦋", "When the mirror is the edge"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -2996,23 +3013,132 @@
   })();
 
 
-  /* ==== ehel-g4-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "coordinates", d: "A pair of numbers, such as (3, 2), that says exactly where a point is on a grid." }, { w: "compass point", d: "One of the directions on a compass, such as north, south-east or west." }, { w: "clockwise", d: "Turning the same way the hands of a clock move." }, { w: "anticlockwise", d: "Turning the opposite way to the hands of a clock." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g4-lesson-opener: three shared step functions, modelled on Science's grade-4-app
+     (unitOverview / lecture / scienceWords) but rebuilt in THIS build's own
+     idiom - data-say for arrival narration (show() already speaks it), plain
+     finish(i, msg), no ONSHOW/ONLEAVE/reportAttempt. See this tool's own
+     docstring for exactly what was and was not ported.
+     esc() IS OWN, not shared - every add-*.py tool in this build defines its
+     own local const esc inside its own IIFE rather than relying on one global
+     copy (checked: five separate definitions already exist in this exact
+     file), so a bare function here calling a page-global esc() that does not
+     exist threw ReferenceError the moment it ran and silently halted this
+     script block, including show(0, false) two lines later - caught only by
+     checking the rendered DOM, not by any console output, since a module-
+     scoped throw here left nothing in this browser's console either. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Use all eight compass points to give and follow directions.", "Plot and read coordinates on a grid.", "Describe a quarter turn as a right angle."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Compass points", say: "There are eight main compass points. Facing east and turning a quarter turn anticlockwise - against the way clock hands go - takes you back to north." }, { title: "Coordinates", say: "A coordinate is a route, not just two numbers in brackets: walk along the first number, then up the second, to reach the point." }, { title: "Turns and angles", say: "A quarter turn is the same as a right angle - 90 degrees, exactly a quarter of a full turn." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "coordinates", pic: "📍", meaning: "A pair of numbers, such as (3, 2), that says exactly where a point is on a grid.", uses: ["Plot the coordinates (3, 2) on the grid."] }, { w: "compass point", pic: "🔻", meaning: "One of the directions on a compass, such as north, south-east or west.", uses: ["Name the compass point opposite south."] }, { w: "clockwise", pic: "↻", meaning: "Turning the same way the hands of a clock move.", uses: ["Turn the shape 90 degrees clockwise."] }, { w: "anticlockwise", pic: "↺", meaning: "Turning the opposite way to the hands of a clock.", uses: ["A quarter turn anticlockwise from east lands on north."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3904,12 +4030,45 @@
 <style>/* ehel-g4-story - see add-story-problems.py */
   #fbWpG4 { margin-top: 4px; }
 </style>
-<style>/* ehel-g4-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g4-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

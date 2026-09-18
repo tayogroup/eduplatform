@@ -438,6 +438,8 @@
   
     <div class="top-actions"></div>
   </header>
+  <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>About 30 small cubes or counters to build a physical square (4 rows of 4) and then a solid cube (a 3 by 3 by 3 stack), plus squared paper for drawing the growing L shapes. Stacking a real cube is what makes cubing a number mean something more than a repeated multiplication.</p></details>
+  <details class="tiers"><summary>Support and challenge</summary><div class="tier"><b>An easier way in</b><p>If the L shapes are confusing, go back to counting the WHOLE square each time rather than just the new dots: 9, then 16, then 25. Once the totals feel secure, come back and count only the new dots that were added.</p></div><div class="tier"><b>A harder challenge</b><p>A square number is never one more than a multiple of 4, except 1 itself — 4²=16, 5²=25, 6²=36. Pick five square numbers and check whether that rule holds. Can you see why it must, from the odd-number L shapes?</p></div></details>
       <!-- ehel-g5-search: search this grade's lesson content. The field sits with
          the step list because that is this page's table of contents. -->
     <div class="lsearch">
@@ -1467,3 +1469,33 @@
     if (pendingIndex !== null) report(pendingIndex);
   })();
 </script>
+
+<style>/* ehel-g5-materials-note - see add-materials-note.py */
+  .kit { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-g5-differentiation - see add-differentiation.py */
+  .tiers { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .tiers[open] { padding-bottom: 12px; }
+  .tiers > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .tiers > summary::-webkit-details-marker { display: none; }
+  .tiers > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .tiers[open] > summary::after { content: "\2013"; }
+  .tiers .tier { margin: 10px 0 0; }
+  .tiers .tier:first-child { margin-top: 0; }
+  .tiers .tier b { display: block; font-size: 12px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--teal); margin: 0 0 3px; }
+  .tiers .tier p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>

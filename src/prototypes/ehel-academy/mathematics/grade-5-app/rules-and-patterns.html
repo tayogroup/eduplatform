@@ -438,6 +438,8 @@
   
     <div class="top-actions"></div>
   </header>
+  <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Matchsticks, toothpicks or straws to build the first few terms of a growing pattern by hand, and squared paper to record how many are used each time. Building pattern 1, 2 and 3 for real is what makes the jump to pattern 10 a rule rather than a guess.</p></details>
+  <details class="tiers"><summary>Support and challenge</summary><div class="tier"><b>An easier way in</b><p>Make a table with two columns, Pattern number and How many, and fill in only the patterns you can actually build and count — 1, 2, 3. Look at how much the second column grows each time before trying to jump ahead to pattern 10.</p></div><div class="tier"><b>A harder challenge</b><p>Every pattern in this lesson grows by the same amount each time. Invent your own pattern that grows by a DIFFERENT amount each step — for example, add 1 more than last time. Can you still find a rule for the 10th term?</p></div></details>
       <!-- ehel-g5-search: search this grade's lesson content. The field sits with
          the step list because that is this page's table of contents. -->
     <div class="lsearch">
@@ -1381,3 +1383,33 @@
     if (pendingIndex !== null) report(pendingIndex);
   })();
 </script>
+
+<style>/* ehel-g5-materials-note - see add-materials-note.py */
+  .kit { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-g5-differentiation - see add-differentiation.py */
+  .tiers { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .tiers[open] { padding-bottom: 12px; }
+  .tiers > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .tiers > summary::-webkit-details-marker { display: none; }
+  .tiers > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .tiers[open] > summary::after { content: "\2013"; }
+  .tiers .tier { margin: 10px 0 0; }
+  .tiers .tier:first-child { margin-top: 0; }
+  .tiers .tier b { display: block; font-size: 12px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--teal); margin: 0 0 3px; }
+  .tiers .tier p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>

@@ -438,6 +438,7 @@
   
     <div class="top-actions"></div>
   </header>
+  <details class="tiers"><summary>Support and challenge</summary><div class="tier"><b>An easier way in</b><p>Before choosing an answer, underline the question being asked and circle every number in the story. Say the story back in your own words, leaving the numbers out, so you are sure what is actually happening before you calculate.</p></div><div class="tier"><b>A harder challenge</b><p>Pick any problem from this lesson and change one number in it, so the story still makes sense but the answer changes. Work out your own new answer — does the SAME method from the original problem still get you there?</p></div></details>
       <!-- ehel-g5-search: search this grade's lesson content. The field sits with
          the step list because that is this page's table of contents. -->
     <div class="lsearch">
@@ -1128,3 +1129,20 @@
     if (pendingIndex !== null) report(pendingIndex);
   })();
 </script>
+
+<style>/* ehel-g5-differentiation - see add-differentiation.py */
+  .tiers { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .tiers[open] { padding-bottom: 12px; }
+  .tiers > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .tiers > summary::-webkit-details-marker { display: none; }
+  .tiers > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .tiers[open] > summary::after { content: "\2013"; }
+  .tiers .tier { margin: 10px 0 0; }
+  .tiers .tier:first-child { margin-top: 0; }
+  .tiers .tier b { display: block; font-size: 12px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--teal); margin: 0 0 3px; }
+  .tiers .tier p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>

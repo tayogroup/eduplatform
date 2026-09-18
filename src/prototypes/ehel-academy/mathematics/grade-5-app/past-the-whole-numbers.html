@@ -438,6 +438,8 @@
   
     <div class="top-actions"></div>
   </header>
+  <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A number line marked in tenths and hundredths (or a metre ruler, read as a decimal number line) for placing and rounding decimals. Pointing to where 3.7 actually sits is what makes rounding a matter of nearness rather than a rule about the digit after the point.</p></details>
+  <details class="tiers"><summary>Support and challenge</summary><div class="tier"><b>An easier way in</b><p>Before rounding a decimal, mark it on a number line between its two nearest whole numbers first — 3.7 goes between 3 and 4. Look at which one it sits closer to before deciding which way to round.</p></div><div class="tier"><b>A harder challenge</b><p>Find a decimal that rounds to 6 at the nearest whole number, to 6.0 at the nearest tenth, AND to 6.00 at the nearest hundredth, all at once. How many different decimals could you have picked?</p></div></details>
       <!-- ehel-g5-search: search this grade's lesson content. The field sits with
          the step list because that is this page's table of contents. -->
     <div class="lsearch">
@@ -1602,3 +1604,33 @@
     if (pendingIndex !== null) report(pendingIndex);
   })();
 </script>
+
+<style>/* ehel-g5-materials-note - see add-materials-note.py */
+  .kit { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-g5-differentiation - see add-differentiation.py */
+  .tiers { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .tiers[open] { padding-bottom: 12px; }
+  .tiers > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .tiers > summary::-webkit-details-marker { display: none; }
+  .tiers > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .tiers[open] > summary::after { content: "\2013"; }
+  .tiers .tier { margin: 10px 0 0; }
+  .tiers .tier:first-child { margin-top: 0; }
+  .tiers .tier b { display: block; font-size: 12px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--teal); margin: 0 0 3px; }
+  .tiers .tier p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>

@@ -438,6 +438,8 @@
   
     <div class="top-actions"></div>
   </header>
+  <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A place-value grid (or squared paper ruled into columns) for writing big numbers digit by digit, and a calculator for checking multiplication and division by hand first. Seeing a digit sit in its own column is what stops &quot;the value of a digit&quot; being an abstract rule.</p></details>
+  <details class="tiers"><summary>Support and challenge</summary><div class="tier"><b>An easier way in</b><p>Before working with a big number, write it into a place-value grid one digit per box, labelling each column (ones, tens, hundreds...) as you go. Point to the digit you are asked about and read its column's label out loud before answering.</p></div><div class="tier"><b>A harder challenge</b><p>Take any 4-digit number and rearrange its digits to make the biggest possible number, then the smallest. What is the difference between them? Try it with a different starting number — does the same column always end up mattering most?</p></div></details>
       <!-- ehel-g5-search: search this grade's lesson content. The field sits with
          the step list because that is this page's table of contents. -->
     <div class="lsearch">
@@ -1569,3 +1571,33 @@
     if (pendingIndex !== null) report(pendingIndex);
   })();
 </script>
+
+<style>/* ehel-g5-materials-note - see add-materials-note.py */
+  .kit { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-g5-differentiation - see add-differentiation.py */
+  .tiers { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .tiers[open] { padding-bottom: 12px; }
+  .tiers > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .tiers > summary::-webkit-details-marker { display: none; }
+  .tiers > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .tiers[open] > summary::after { content: "\2013"; }
+  .tiers .tier { margin: 10px 0 0; }
+  .tiers .tier:first-child { margin-top: 0; }
+  .tiers .tier b { display: block; font-size: 12px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--teal); margin: 0 0 3px; }
+  .tiers .tier p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>

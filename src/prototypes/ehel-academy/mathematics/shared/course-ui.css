@@ -56,6 +56,24 @@
 .term-table { width: 100%; border-collapse: collapse; }
 .term-table th, .term-table td { padding: 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .term-table th { color: var(--muted); font-size: 13px; text-transform: uppercase; }
+/* Quick Reference page - restored 2026-09-18, see shell/subjects/mathematics.js ::
+   renderReference. Copied from science/shared/course-ui.css so the panel matches
+   its sibling subjects' styling exactly rather than rendering unstyled. */
+.panel-sub { margin: -6px 0 14px; color: var(--muted); font-size: 14px; }
+.misconception-panel { border-left: 5px solid #e5493f; }
+.misconception { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+.misc-wrong, .misc-right { padding: 12px; border-radius: 9px; }
+.misc-wrong { background: #fdeceb; }
+.misc-right { background: #e9f7ef; }
+.misc-wrong p, .misc-right p { margin: 6px 0 0; font-size: 14px; line-height: 1.5; }
+.misc-tag { font-size: 14px; font-weight: var(--weight-medium); letter-spacing: .02em; color: #b3392f; }
+.misc-tag.ok { color: #1f7a4d; }
+.connection-panel { border-left: 5px solid var(--teal); }
+.connection-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.connection { padding: 13px 15px; border: 1px solid var(--line); border-radius: 9px; background: #f6fbfa; }
+.connection strong { display: block; color: var(--teal-dark); margin-bottom: 4px; font-size: 14px; }
+.connection span { color: #40616f; font-size: 14px; line-height: 1.5; }
+@media (max-width: 720px) { .misconception, .connection-list { grid-template-columns: 1fr; } }
 .ai-conversation { min-height: 260px; max-height: 430px; overflow-y: auto; display: grid; align-content: start; gap: 12px; padding: 4px; }
 .ai-message { max-width: 82%; padding: 12px 14px; border-radius: 10px; background: #eef3f8; }
 .ai-message.user { margin-left: auto; background: var(--teal); color: white; }

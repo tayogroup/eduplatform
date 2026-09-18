@@ -110,6 +110,10 @@ const sections = [
   ["method", "list-checks", "Learn the Method"],
   ["examples", "copy-check", "Worked Examples"],
   ["guided", "lightbulb", "Guided Practice"],
+  // Restored 2026-09-18 - see renderReference()'s own comment for why it was
+  // gone and what "restoring it" had to mean. Same position and icon as
+  // science.js's identical section, so the two subjects read the same way.
+  ["reference", "book-a", "Quick Reference"],
   ["activities", "blocks", "Activities"],
   ["games", "gamepad-2", "Games"],
   ["fluency", "star", "Math Fluency"],
@@ -1842,14 +1846,50 @@ function drawCapstoneQuizQuestion() {
   }));
 }
 
-// No renderReference here, unlike science.js and computing.js. Mathematics has
-// no "reference" section in its nav and never registered the route, so the
-// function was unreachable: 8 lines of a Quick Reference page no learner could
-// open, and a complete("reference") that could not fire. The unit data it read
-// is still used — course.reference.terms builds the Math Words & Symbols page
-// and course.reference.rules backs the AI tutor's replies — so only the
-// orphaned page went. Restoring the page is a product decision: add "reference"
-// to the nav sections and the routes map together, never the function alone.
+// RESTORED 2026-09-18, both halves together as the comment this replaces said
+// to: "reference" is back in the nav sections array above AND in the routes
+// map below, not just this function alone - that was exactly the bug that
+// made the original unreachable (2026-08-02, 49cdc6fc36), and re-adding only
+// the function would recreate it.
+//
+// Copied from science.js's own renderReference() rather than the deleted
+// original: it guards commonMistakes/connections/rules as optional ((ref.x ||
+// []).length), which the original did not, and gives misconceptions the
+// wrong/right two-column treatment used elsewhere rather than a bare table.
+// Mathematics has no `connections` field on any unit (verified against the
+// live schema - outcomes/concepts/explorations/visualModels/methods/
+// workedExamples/practice/activities/fluency/realProblems/reasoningPrompts/
+// assessment/games/selfAssessment/reference.rules/reference.terms/
+// reference.commonMistakes, no more), so that section renders empty on every
+// unit today - left in rather than stripped out, because the guard already
+// handles its absence correctly and a future unit gaining the field needs no
+// second change here.
+//
+// THE REASON THIS WAS WORTH DOING: course.reference.commonMistakes holds real,
+// Cambridge-sourced misconception pairs - 82/79/71/78 of them on Grades 5-8
+// alone - that existed in the data and were shown to no learner, while Science
+// and Computing render the identical field. Restoring the page is what makes
+// that content reachable; the data itself needed no change.
+function renderReference() {
+  const ref = course.reference;
+  const terms = ref.terms.map(([term, meaning]) => `<tr><td><strong>${escapeHtml(term)}</strong></td><td>${escapeHtml(meaning)}</td></tr>`).join("");
+  const misconceptions = (ref.commonMistakes || []).length
+    ? `<section class="panel misconception-panel"><h2>Common misconceptions</h2><p class="panel-sub">What learners often think — and what is really true.</p>${ref.commonMistakes.map(([wrong, right]) => `<div class="misconception"><div class="misc-wrong"><span class="misc-tag">✗ Many think</span><p>${escapeHtml(wrong)}</p></div><div class="misc-right"><span class="misc-tag ok">✓ Actually</span><p>${escapeHtml(right)}</p></div></div>`).join("")}</section>`
+    : "";
+  const connections = (ref.connections || []).length
+    ? `<section class="panel connection-panel"><h2>How this connects</h2><p class="panel-sub">Where else you meet these ideas.</p><div class="connection-list">${ref.connections.map((c) => `<article class="connection"><strong>${escapeHtml(c.area)}</strong><span>${escapeHtml(c.text)}</span></article>`).join("")}</div></section>`
+    : "";
+  const rules = (ref.rules || []).length
+    ? `<div class="reference-grid">${ref.rules.map((rule) => `<article class="panel rule-card"><h2>${escapeHtml(rule.title)}</h2><p>${escapeHtml(rule.text)}</p></article>`).join("")}</div>`
+    : "";
+  $("#app").innerHTML = `${pageHeader("Keep beside you", "Quick reference", `Key words, common misconceptions and connections for Unit ${course.unit.unitNo}.`)}
+    ${rules}
+    ${misconceptions}
+    ${connections}
+    <section class="panel" style="margin-top:18px"><h2>Vocabulary</h2><table class="term-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>${terms}</tbody></table></section>
+    <p><button class="button primary" id="reference-done" type="button">Reference reviewed ✓</button></p>`;
+  $("#reference-done").addEventListener("click", () => complete("reference", "Reference reviewed."));
+}
 
 function buildTutorReply(message) {
   const lower = message.toLowerCase();
@@ -1987,7 +2027,8 @@ const config = {
     })),
     lesson: renderLesson, ai: renderAI, words: renderMathWords,
     explore: renderExploreConcept, visuals: renderVisualModels, method: renderLearnMethod,
-    examples: renderExamples, guided: renderPractice, activities: renderActivities, games: renderGames,
+    examples: renderExamples, guided: renderPractice, reference: renderReference,
+    activities: renderActivities, games: renderGames,
     fluency: renderFluency, problems: renderRealProblems, explain: renderExplainThinking,
     challenge: renderAssessment, capstone: renderGradeCapstone, capstonequiz: renderCapstoneQuiz,
     live: renderLiveClass, progress: renderReflect,

@@ -1012,6 +1012,38 @@ a.lcard:hover { border-color: var(--teal); }
 .levels .cefr { font-size: 13px; font-weight: 800; color: var(--gold); letter-spacing: .06em; }
 .levels b { display: block; font-size: 20px; margin: 4px 0; }
 .levels small { color: var(--muted); font-size: 15px; }
+
+/* ---- Letters & Sounds: sound tiles, the tracing pad, blending ---- */
+.soundtiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 10px; margin: 8px 0 14px; }
+.soundtile {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 10px;
+  border-radius: 16px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+  font: inherit; cursor: pointer; text-align: center;
+}
+.soundtile:hover { border-color: var(--teal); }
+.soundtile:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.soundtile .g { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 40px; line-height: 1.1; }
+.soundtile .about { font-size: 14px; color: var(--muted); line-height: 1.3; }
+.tracebox {
+  position: relative; width: 100%; max-width: 640px; aspect-ratio: 640 / 280; margin: 10px 0 4px;
+  border: 3px dashed var(--line); border-radius: 18px; background: var(--card); overflow: hidden; touch-action: none;
+}
+.tracebox .ghostglyph {
+  position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; user-select: none; white-space: nowrap;
+  font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif; font-size: clamp(90px, 22vw, 180px); line-height: 1; color: var(--line);
+}
+.tracebox canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
+.blendrow { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.blendpart {
+  min-width: 72px; padding: 10px 14px; border-radius: 16px; background: var(--teal-soft); color: var(--ink); text-align: center;
+  font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 40px;
+}
+.bigread p { font-size: 28px; line-height: 1.5; margin: 0 0 6px; }
+.opt.picopt { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.opt.picopt .pic { font-size: 44px; line-height: 1; }
+.mini.letterpick { font-size: 28px; min-width: 56px; min-height: 56px; font-weight: 800; }
+/* a "done" label is a sentence ("I have said them all"): let it wrap inside the button */
+.big.done { height: auto; min-height: 64px; padding: 10px 22px; font-size: 24px; line-height: 1.2; }
 </style>
 <div class="pg">
   <div class="pg-top"><a class="back" href="../index.html">&#9664; Intensive English</a></div>
@@ -1020,36 +1052,40 @@ a.lcard:hover { border-color: var(--teal); }
 <div class="hub-facts"><span>Literacy</span><span>12 lessons</span><span>alongside Starter</span><span>about 30 hours</span></div>
 <a class="continue" id="continue" hidden href="#"></a>
 <section class="part"><h2>Part 1 · First sounds and letters</h2><div class="lessons">
-<div class="lcard"><span class="n">1</span><span><b>Sounds in words; holding a pen</b><span class="cd">You will be able to hear the sounds in a word, and hold a pen to make lines and circles.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">2</span><span><b>s a t n i p</b><span class="cd">You will be able to read and write your first words.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">3</span><span><b>o g d m c k</b><span class="cd">You will be able to read and write words with six more letters.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">4</span><span><b>r e u h b l f</b><span class="cd">You will be able to read and write words with seven more letters.</span><span class="soon">In preparation</span></span></div>
+<a class="lcard built" href="lesson-01-sounds-in-words-holding-a-pen.html"><span class="n">1</span><span><b>Sounds in words; holding a pen</b><span class="cd">You will be able to hear the sounds in a word, and hold a pen to make lines and circles.</span><span class="pips" data-pips="1"></span></span></a>
+<a class="lcard built" href="lesson-02-s-a-t-n-i-p.html"><span class="n">2</span><span><b>s a t n i p</b><span class="cd">You will be able to read and write your first words.</span><span class="pips" data-pips="2"></span></span></a>
+<a class="lcard built" href="lesson-03-o-g-d-m-c-k.html"><span class="n">3</span><span><b>o g d m c k</b><span class="cd">You will be able to read and write words with six more letters.</span><span class="pips" data-pips="3"></span></span></a>
+<a class="lcard built" href="lesson-04-r-e-u-h-b-l-f.html"><span class="n">4</span><span><b>r e u h b l f</b><span class="cd">You will be able to read and write words with seven more letters.</span><span class="pips" data-pips="4"></span></span></a>
 </div><div class="checkcard">Then: Part 1 check</div></section>
 <section class="part"><h2>Part 2 · All the letters</h2><div class="lessons">
-<div class="lcard"><span class="n">5</span><span><b>ck ll ff ss · j v w x · y z qu</b><span class="cd">You will be able to read every single letter of the alphabet.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">6</span><span><b>Letter names; spelling your name</b><span class="cd">You will be able to say the 26 letter names and spell your name aloud.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">7</span><span><b>Two consonants together</b><span class="cd">You will be able to read words with two consonants side by side.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">8</span><span><b>ng nk th sh ch</b><span class="cd">You will be able to read five pairs of letters that make one sound.</span><span class="soon">In preparation</span></span></div>
+<a class="lcard built" href="lesson-05-ck-ll-ff-ss-j-v-w-x-y-z-qu.html"><span class="n">5</span><span><b>ck ll ff ss · j v w x · y z qu</b><span class="cd">You will be able to read every single letter of the alphabet.</span><span class="pips" data-pips="5"></span></span></a>
+<a class="lcard built" href="lesson-06-letter-names-spelling-your-name.html"><span class="n">6</span><span><b>Letter names; spelling your name</b><span class="cd">You will be able to say the 26 letter names and spell your name aloud.</span><span class="pips" data-pips="6"></span></span></a>
+<a class="lcard built" href="lesson-07-two-consonants-together.html"><span class="n">7</span><span><b>Two consonants together</b><span class="cd">You will be able to read words with two consonants side by side.</span><span class="pips" data-pips="7"></span></span></a>
+<a class="lcard built" href="lesson-08-ng-nk-th-sh-ch.html"><span class="n">8</span><span><b>ng nk th sh ch</b><span class="cd">You will be able to read five pairs of letters that make one sound.</span><span class="pips" data-pips="8"></span></span></a>
 </div><div class="checkcard">Then: Part 2 check</div></section>
 <section class="part"><h2>Part 3 · Long sounds and whole sentences</h2><div class="lessons">
-<div class="lcard"><span class="n">9</span><span><b>Long vowels: ai ee ie oa oo</b><span class="cd">You will be able to read long vowel sounds written with two letters.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">10</span><span><b>ar or ir er ow oi ear air · ur aw ore ou oy</b><span class="cd">You will be able to read the vowel sounds that are neither short nor long.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">11</span><span><b>One sound, other spellings</b><span class="cd">You will be able to read a sound that has more than one spelling.</span><span class="soon">In preparation</span></span></div>
-<div class="lcard"><span class="n">12</span><span><b>ph and wh, soft c and g; a whole sentence</b><span class="cd">You will be able to read a whole sentence, including the common words phonics cannot sound out.</span><span class="soon">In preparation</span></span></div>
+<a class="lcard built" href="lesson-09-long-vowels-ai-ee-ie-oa-oo.html"><span class="n">9</span><span><b>Long vowels: ai ee ie oa oo</b><span class="cd">You will be able to read long vowel sounds written with two letters.</span><span class="pips" data-pips="9"></span></span></a>
+<a class="lcard built" href="lesson-10-ar-or-ir-er-ow-oi-ear-air-ur-aw-ore-ou-oy.html"><span class="n">10</span><span><b>ar or ir er ow oi ear air · ur aw ore ou oy</b><span class="cd">You will be able to read the vowel sounds that are neither short nor long.</span><span class="pips" data-pips="10"></span></span></a>
+<a class="lcard built" href="lesson-11-one-sound-other-spellings.html"><span class="n">11</span><span><b>One sound, other spellings</b><span class="cd">You will be able to read a sound that has more than one spelling.</span><span class="pips" data-pips="11"></span></span></a>
+<a class="lcard built" href="lesson-12-ph-and-wh-soft-c-and-g-a-whole-sentence.html"><span class="n">12</span><span><b>ph and wh, soft c and g; a whole sentence</b><span class="cd">You will be able to read a whole sentence, including the common words phonics cannot sound out.</span><span class="pips" data-pips="12"></span></span></a>
 </div><div class="checkcard">Then: Reading check</div></section>
+<section class="part"><h2>Bridge lessons</h2><p class="hub-note" style="margin-top:0">For learners who already read another language in these letters. They can take these two instead of the twelve lessons.</p><div class="lessons">
+<a class="lcard built" href="bridge-a-english-letters-different-sounds.html"><span class="n">A</span><span><b>English letters, different sounds</b><span class="cd">For learners who already read another language written in Latin letters, such as Somali: letter names versus sounds, the five short vowels, and th, sh and ch.</span><span class="pips" data-pips="A"></span></span></a>
+<a class="lcard built" href="bridge-b-one-sound-many-spellings.html"><span class="n">B</span><span><b>One sound, many spellings</b><span class="cd">ai, a_e and ay; ee and ea; ie, i_e and igh; oa, o_e and ow.</span><span class="pips" data-pips="B"></span></span></a>
+</div></section>
 <section class="hub-tools"><h2 class="eyebrow">Level tools</h2><ul><li>Sound chart</li><li>Letter chart</li><li>Handwriting</li><li>My recordings</li><li>Bridge lessons</li></ul></section>
 <p class="hub-note">Reading check: 10 regular words, 5 common irregular words and one sentence, read aloud.</p>
 </div>
 <script>
 (function () {
-  const HUB = {"level": "letters", "lessons": []};
+  const HUB = {"level": "letters", "lessons": [{"n": 1, "file": "lesson-01-sounds-in-words-holding-a-pen.html", "groups": [[2, 3], [4, 5], [6], [7, 8, 9]]}, {"n": 2, "file": "lesson-02-s-a-t-n-i-p.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": 3, "file": "lesson-03-o-g-d-m-c-k.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": 4, "file": "lesson-04-r-e-u-h-b-l-f.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": 5, "file": "lesson-05-ck-ll-ff-ss-j-v-w-x-y-z-qu.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": 6, "file": "lesson-06-letter-names-spelling-your-name.html", "groups": [[2, 3], [4, 5], [6, 7], [8, 9, 10]]}, {"n": 7, "file": "lesson-07-two-consonants-together.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": 8, "file": "lesson-08-ng-nk-th-sh-ch.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": 9, "file": "lesson-09-long-vowels-ai-ee-ie-oa-oo.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": 10, "file": "lesson-10-ar-or-ir-er-ow-oi-ear-air-ur-aw-ore-ou-oy.html", "groups": [[2, 3], [4, 5], [6, 7, 8], [9, 10, 11]]}, {"n": 11, "file": "lesson-11-one-sound-other-spellings.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": 12, "file": "lesson-12-ph-and-wh-soft-c-and-g-a-whole-sentence.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14]]}, {"n": "A", "file": "bridge-a-english-letters-different-sounds.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}, {"n": "B", "file": "bridge-b-one-sound-many-spellings.html", "groups": [[2, 3], [4, 5], [6, 7, 8, 9], [10, 11, 12]]}]};
   const get = (k) => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (_) { return null; } };
   const last = HUB.level ? get("iep:" + HUB.level + ":last") : null;
   const c = document.getElementById("continue");
   if (c && last && last.file) {
     c.hidden = false;
     c.href = last.file + "#step-" + (Number(last.step) + 1);
-    c.innerHTML = "<small>Continue</small><b>Lesson " + last.lesson + " · " + String(last.title).replace(/</g, "&lt;") + "</b><br>" + String(last.stepTitle || "").replace(/</g, "&lt;");
+    c.innerHTML = "<small>Continue</small><b>" + String(last.label || "Lesson " + last.lesson).replace(/</g, "&lt;") + " · " + String(last.title).replace(/</g, "&lt;") + "</b><br>" + String(last.stepTitle || "").replace(/</g, "&lt;");
   }
   (HUB.lessons || []).forEach((l) => {
     const done = new Set(get("iep:" + HUB.level + ":" + l.n + ":done") || []);

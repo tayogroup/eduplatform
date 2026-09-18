@@ -58,6 +58,147 @@ DAY_PLANS = {
 }
 
 
+# --- Letters & Sounds -------------------------------------------------------------
+# A literacy lesson is Start, four groups and the summary. Its middle steps are
+# LIT_STEPS unless the lesson file lists its own `steps` (the hand-written
+# lessons 1, 6 and 12); each step names a renderer and the block it reads.
+LIT_GROUPS = ["Start", "Hear it", "See & write it", "Read it", "Check"]
+LIT_STEPS = [
+    ["Hear it", "Listen to the sounds", "P.hearSounds", "hear.sounds"],
+    ["Hear it", "Find the sound", "P.findSound", "hear.find"],
+    ["See & write it", "See and write the letters", "P.seeLetters", "seeWrite.letters"],
+    ["See & write it", "Copy the words", "P.copyWords", "seeWrite.copy"],
+    ["Read it", "Blend the sounds", "P.blend", "read.blend"],
+    ["Read it", "Read the words", "P.readWords", "read.words"],
+    ["Read it", "Tricky words", "P.tricky", "read.tricky"],
+    ["Read it", "Read a short text", "P.reader", "read.reader"],
+    ["Check", "Read aloud", "P.readAloud", "check.readAloud"],
+    ["Check", "Write what you hear", "P.dictation", "check.dictation"],
+]
+LIT_CALLS = {"P.note", "P.hearSounds", "P.findSound", "P.countSounds", "P.seeLetters", "P.copyWords",
+             "P.blend", "P.readWords", "P.tricky", "P.reader", "P.readAloud", "P.dictation"}
+LIT_DAY_PLAN = [
+    "Session 1: What this lesson is about, the Unit lecture, then Hear it.",
+    "Session 2: See & write it. Write each letter on paper as well as on the screen.",
+    "Session 3: Read it, then Check. Read the short text out loud to someone.",
+]
+LIT_TIME = "This lesson is one day of study, about 2 hours. Take it in three short sessions, with a break between them."
+# The Phonics level's recordings, reached from app/letters/ in a local build.
+# Deploying the strand re-points this at the CDN's per-level folder.
+TTS = os.path.join(ACADEMY, "intensive-english", "media", "audio", "tts")
+MEDIA_DEV = "../../../media/audio/tts"
+
+
+def cyrb53(text, seed=0):
+    """The course's clip name: lib/program.js :: cyrb53, over UTF-16 code units
+    exactly as String.charCodeAt reads them."""
+    m = 0xFFFFFFFF
+    h1, h2 = (0xDEADBEEF ^ seed) & m, (0x41C6CE57 ^ seed) & m
+    raw = text.encode("utf-16-le")
+    for k in range(0, len(raw), 2):
+        ch = raw[k] | (raw[k + 1] << 8)
+        h1 = ((h1 ^ ch) * 2654435761) & m
+        h2 = ((h2 ^ ch) * 1597334677) & m
+    h1 = (((h1 ^ (h1 >> 16)) * 2246822507) & m) ^ (((h2 ^ (h2 >> 13)) * 3266489909) & m)
+    h2 = (((h2 ^ (h2 >> 16)) * 2246822507) & m) ^ (((h1 ^ (h1 >> 13)) * 3266489909) & m)
+    return format(4294967296 * (2097151 & h2) + h1, "x")
+
+
+def clip_key(text):
+    return cyrb53(re.sub(r"\s+", " ", text).strip())
+
+
+def recorded_clips(d):
+    """Keys of every string in the lesson that has a recording on disk. The page
+    requests these and nothing else (see program.js :: clipFor)."""
+    found = set()
+
+    def walk(v):
+        if isinstance(v, dict):
+            for x in v.values():
+                walk(x)
+        elif isinstance(v, list):
+            for x in v:
+                walk(x)
+        elif isinstance(v, str) and v.strip():
+            k = clip_key(v)
+            if os.path.isfile(os.path.join(TTS, k + ".mp3")):
+                found.add(k)
+    walk(d)
+    return sorted(found)
+
+
+def at_path(d, path):
+    v = d
+    for k in path.split("."):
+        v = v.get(k) if isinstance(v, dict) else None
+    return v
+
+
+def block_items(v):
+    if v is None:
+        return []
+    if isinstance(v, list):
+        return v
+    return v.get("items") or ([v] if v.get("text") else [])
+
+
+def lit_steps(d):
+    """The lesson's middle steps. A default step whose block is empty is left
+    out (a lesson with no tricky words has no Tricky words step); a step the
+    lesson lists itself must have something to show, and the check says so."""
+    own = d.get("steps")
+    rows = own if own else LIT_STEPS
+    out = []
+    for g, t, call, path in rows:
+        items = block_items(at_path(d, path))
+        if not items and not own:
+            continue
+        if call == "P.reader" and (at_path(d, path) or {}).get("title"):
+            t = "Read: " + at_path(d, path)["title"]
+        out.append([g, t, call, path])
+    return out
+
+
+def check_literacy(level, les, d):
+    e = []
+    need = lambda cond, msg: None if cond else e.append(msg)
+    need(d.get("schema") == "ehel-intensive-literacy/1", "schema must be ehel-intensive-literacy/1")
+    need(d.get("level") == level["id"] and d.get("lesson") == les["number"], "level/lesson do not match the file's place in the plan")
+    need(d.get("title") == les["title"], "title %r differs from the plan's %r" % (d.get("title"), les["title"]))
+    a = d.get("about") or {}
+    need(a.get("text") and 2 <= len(a.get("goals") or []) <= 6, "about: text and 2-6 goals")
+    ch = (d.get("unitLecture") or {}).get("chapters") or []
+    need(ch and all(c.get("title") and c.get("text") for c in ch), "unitLecture: at least one chapter, each with a title and text")
+    need(3 <= len(d.get("canDo") or []) <= 6, "canDo: 3-6")
+    steps = lit_steps(d)
+    for g in LIT_GROUPS[1:]:
+        need(any(s[0] == g for s in steps), "no step in %s" % g)
+    for g, t, call, path in steps:
+        where = "step %r (%s)" % (t, path)
+        need(g in LIT_GROUPS[1:], "%s: unknown group %r" % (where, g))
+        need(call in LIT_CALLS, "%s: unknown renderer %r" % (where, call))
+        items = block_items(at_path(d, path))
+        need(items, "%s: nothing to show" % where)
+        for it in items:
+            if call == "P.hearSounds":
+                need(isinstance(it, dict) and it.get("g") and it.get("spoken"), "%s: a sound needs g and spoken" % where)
+            elif call == "P.findSound":
+                ok = isinstance(it, dict) and it.get("spoken") and it.get("a") and len(it.get("wrong") or []) >= 2 and it.get("a") not in it.get("wrong")
+                need(ok, "%s: a question needs spoken, a, and 2 wrong options that differ from a" % where)
+            elif call == "P.countSounds":
+                need(isinstance(it, dict) and it.get("word") and it.get("n") in (1, 2, 3, 4, 5) and it.get("spoken"), "%s: an item needs word, n (1-5) and spoken" % where)
+            elif call == "P.blend":
+                need(isinstance(it, dict) and it.get("parts") and it.get("word") and it.get("spoken"), "%s: a blend needs parts, word and spoken" % where)
+            elif call in ("P.reader", "P.note"):
+                need(isinstance(it, dict) and it.get("text"), "%s: needs text" % where)
+            elif call == "P.seeLetters":
+                need(isinstance(it, str) or (isinstance(it, dict) and it.get("g")), "%s: a letter is a string or {g, spoken}" % where)
+            else:
+                need(isinstance(it, str) or (isinstance(it, dict) and it.get("w")), "%s: a word is a string or {w, spoken}" % where)
+    return e
+
+
 def load(path):
     with io.open(path, encoding="utf-8") as fh:
         return json.load(fh)
@@ -86,10 +227,18 @@ def plan_lessons(level):
 
 
 def lesson_file(les):
+    if isinstance(les["number"], str):            # a Bridge lesson: A, B
+        return "%s.html" % slug(les["title"])       # the title starts "Bridge A"
     return "lesson-%02d-%s.html" % (les["number"], slug(les["title"]))
 
 
+def lesson_label(les):
+    return "Lesson %d" % les["number"] if isinstance(les["number"], int) else les["title"].split(" · ")[0]
+
+
 def authored_path(level_id, n):
+    if isinstance(n, str):
+        return os.path.join(LESSONS, level_id, "bridge-%s.json" % n.lower())
     return os.path.join(LESSONS, level_id, "lesson-%02d.json" % n)
 
 
@@ -214,7 +363,7 @@ PAGE = """<!doctype html>
     </div>
   </div>
   <header class="pg-head">
-    <p class="eyebrow">Ehel Academy &middot; %(levelName)s &middot; Lesson %(n)d &middot; %(cefr)s</p>
+    <p class="eyebrow">Ehel Academy &middot; %(levelName)s &middot; %(label)s &middot; %(cefr)s</p>
     <h1>%(title)s</h1>
     <p class="cando">You will be able to %(cando)s.</p>
   </header>
@@ -250,7 +399,7 @@ PAGE = """<!doctype html>
   window.__ehelPainting = true;
 
   /* ==================================================================
-     %(title)s - %(levelName)s, Lesson %(n)d.
+     %(title)s - %(levelName)s, %(label)s.
 
      GENERATED by intensive-english/program/kit/build_program.py from
      inputs/ehel-english-intensive-source/program. Do not hand-edit: fix
@@ -287,12 +436,33 @@ def build_lesson(level, pi, part, les, d, nxt):
     days = level["schedule"]["daysPerLesson"]
     data = dict(d)
     data.update({
-        "file": lesson_file(les), "hub": "index.html", "levelShort": level["tab"].split(" · ")[0],
+        "file": lesson_file(les), "label": lesson_label(les), "hub": "index.html", "levelShort": level["tab"].split(" · ")[0],
         "levelName": level["name"], "days": str(days), "dayPlan": DAY_PLANS[days],
         "sectionNames": names, "next": nxt,
         "readerSpec": level["reader"][0].upper() + level["reader"][1:] + ", linked to “" + d["title"] + "”",
         "teacher": (d.get("teacher") or {}).get("liveClass"),
     })
+    return write_page(level, les, d, G, S, data)
+
+
+def build_literacy(level, pi, part, les, d, nxt, chart):
+    G = [{"key": "g%d" % k, "name": name} for k, name in enumerate(LIT_GROUPS)]
+    S = [{"g": 0, "t": "What this lesson is about", "call": "P.about"}, {"g": 0, "t": "Unit lecture", "call": "P.lecture"}]
+    for g, t, call, path in lit_steps(d):
+        S.append({"g": LIT_GROUPS.index(g), "t": t, "call": call + ":" + path})
+    S.append({"g": len(LIT_GROUPS) - 1, "t": "What I can do now", "call": None})   # the deck's last slide: paintStickers()
+    data = dict(d)
+    data.update({
+        "kind": "literacy", "file": lesson_file(les), "label": lesson_label(les), "hub": "index.html", "levelShort": level["tab"],
+        "levelName": level["name"], "days": "1", "timeNote": LIT_TIME, "dayPlan": LIT_DAY_PLAN, "next": nxt,
+        "media": MEDIA_DEV, "clips": recorded_clips(d),
+        # a bridge is for readers of another language: it shows the whole chart
+        "chart": [c for c in chart if not isinstance(les["number"], int) or c["lesson"] <= les["number"]],
+    })
+    return write_page(level, les, d, G, S, data)
+
+
+def write_page(level, les, d, G, S, data):
     slides, calls = [], []
     for i, s in enumerate(S):
         if s["call"] is None:
@@ -304,7 +474,7 @@ def build_lesson(level, pi, part, les, d, nxt):
         calls.append("  %s(%d, %s%s);" % (fn, i, json.dumps(sid), (", " + json.dumps(arg)) if arg else ""))
     css = read(os.path.join(OLDLIB, "lesson.css")) + "\n" + read(os.path.join(OLDLIB, "intensive.css")) + "\n" + read(os.path.join(LIB, "program.css"))
     page = PAGE % {
-        "title": d["title"], "levelShort": data["levelShort"], "levelName": level["name"], "n": les["number"], "cefr": d.get("cefr") or level["cefr"],
+        "title": d["title"], "levelShort": data["levelShort"], "levelName": level["name"], "label": lesson_label(les), "cefr": d.get("cefr") or level["cefr"],
         "cando": les["cando"], "css": css, "slides": "".join(slides),
         "data": json.dumps(data, ensure_ascii=False, indent=1),
         "groups": json.dumps(G, ensure_ascii=False), "steps": json.dumps([{"g": s["g"], "t": s["t"]} for s in S], ensure_ascii=False),
@@ -341,7 +511,7 @@ HUB = """<!doctype html>
   if (c && last && last.file) {
     c.hidden = false;
     c.href = last.file + "#step-" + (Number(last.step) + 1);
-    c.innerHTML = "<small>Continue</small><b>Lesson " + last.lesson + " · " + String(last.title).replace(/</g, "&lt;") + "</b><br>" + String(last.stepTitle || "").replace(/</g, "&lt;");
+    c.innerHTML = "<small>Continue</small><b>" + String(last.label || "Lesson " + last.lesson).replace(/</g, "&lt;") + " · " + String(last.title).replace(/</g, "&lt;") + "</b><br>" + String(last.stepTitle || "").replace(/</g, "&lt;");
   }
   (HUB.lessons || []).forEach((l) => {
     const done = new Set(get("iep:" + HUB.level + ":" + l.n + ":done") || []);
@@ -394,6 +564,15 @@ def build_hub(level, built):
             else:
                 body.append('<div class="lcard">%s</div>' % inner)
         body.append('</div><div class="checkcard">Then: %s</div></section>' % esc(part["check"]))
+    if level.get("bridge"):
+        body.append('<section class="part"><h2>Bridge lessons</h2><p class="hub-note" style="margin-top:0">For learners who already read another language in these letters. They can take these two instead of the twelve lessons.</p><div class="lessons">')
+        for k, br in zip("AB", level["bridge"]):
+            b = by_n.get(k)
+            inner = '<span class="n">%s</span><span><b>%s</b><span class="cd">%s</span>%s</span>' % (
+                k, esc(br["title"].split(" · ", 1)[-1]), esc(br["text"]),
+                ('<span class="pips" data-pips="%s"></span>' % k) if b else '<span class="soon">In preparation</span>')
+            body.append(('<a class="lcard built" href="%s">%s</a>' % (b["file"], inner)) if b else '<div class="lcard">%s</div>' % inner)
+        body.append("</div></section>")
     body.append('<section class="hub-tools"><h2 class="eyebrow">Level tools</h2><ul>%s</ul></section>' % "".join("<li>%s</li>" % esc(t) for t in level["tools"]))
     if level.get("note"):
         body.append('<p class="hub-note">%s</p>' % esc(level["note"]))
@@ -427,6 +606,19 @@ def build_home(counts):
         fh.write(html)
 
 
+def sound_chart(work):
+    """Every Letters & Sounds lesson's sound tiles, in order: each page shows
+    the ones up to and including its own."""
+    chart = []
+    for level, pi, part, les, d, nxt in work:
+        if level.get("kind") != "literacy" or not isinstance(les["number"], int):
+            continue
+        tiles = [t for t in block_items(at_path(d, "hear.sounds")) if isinstance(t, dict) and t.get("g") and t.get("spoken")]
+        if tiles and not d.get("chartSkip"):
+            chart.append({"lesson": les["number"], "title": les["title"], "sounds": [{"g": t["g"], "spoken": t["spoken"]} for t in tiles]})
+    return chart
+
+
 def main():
     problems, work = [], []
     for lid in ORDER:
@@ -437,7 +629,7 @@ def main():
             if not os.path.isfile(path):
                 continue
             d = load(path)
-            errs = check_lesson(level, les, d)
+            errs = (check_literacy if level.get("kind") == "literacy" else check_lesson)(level, les, d)
             problems += ["%s lesson %d: %s" % (lid, les["number"], x) for x in errs]
             if k + 1 < len(flat):
                 n2 = flat[k + 1][2]
@@ -445,6 +637,15 @@ def main():
             else:
                 nxt = "the %s" % part["check"]
             work.append((level, pi, part, les, d, nxt))
+        # the Bridge lessons (Letters & Sounds): outside the numbered path
+        for k, br in zip("AB", level.get("bridge") or []):
+            path = authored_path(lid, k)
+            if not os.path.isfile(path):
+                continue
+            d = load(path)
+            les = {"number": k, "title": br["title"], "cando": d.get("cando") or ""}
+            problems += ["%s bridge %s: %s" % (lid, k, x) for x in check_literacy(level, les, d)]
+            work.append((level, None, None, les, d, "back to the level page"))
     print("checked %d authored lesson(s)" % len(work))
     if problems:
         print("\n".join("  FAIL " + p for p in problems))
@@ -453,9 +654,14 @@ def main():
         print("  all checks passed")
         return
     built = {}
+    chart = sound_chart(work)
     for level, pi, part, les, d, nxt in work:
-        built.setdefault(level["id"], []).append(build_lesson(level, pi, part, les, d, nxt))
-        print("  built %s · lesson %d · %s" % (level["id"], les["number"], lesson_file(les)))
+        if level.get("kind") == "literacy":
+            page = build_literacy(level, pi, part, les, d, nxt, chart)
+        else:
+            page = build_lesson(level, pi, part, les, d, nxt)
+        built.setdefault(level["id"], []).append(page)
+        print("  built %s · %s · %s" % (level["id"], lesson_label(les), lesson_file(les)))
     for lid in ORDER:
         build_hub(LEVELS[lid], built.get(lid, []))
     build_home({k: len(v) for k, v in built.items()})

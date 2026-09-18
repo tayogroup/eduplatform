@@ -1,0 +1,417 @@
+{
+ "schema": "ehel-intensive-literacy/1",
+ "level": "letters",
+ "lesson": 1,
+ "title": "Sounds in words; holding a pen",
+ "cando": "hear the sounds in a word, and hold a pen to make lines and circles",
+ "cefr": "Literacy",
+ "status": "authored",
+ "sources": [
+  "Ph 1",
+  "In 2"
+ ],
+ "about": {
+  "text": "In this lesson you use your ears and a pen. You hear words that end the same and words that start the same. You count the sounds in a word. Then you draw lines and circles, from left to right.",
+  "goals": [
+   "Hear when two words end the same",
+   "Hear when two words start the same",
+   "Count the sounds in a short word",
+   "Hold a pen and make a line and a circle",
+   "Write on a line, from left to right"
+  ]
+ },
+ "unitLecture": {
+  "chapters": [
+   {
+    "title": "Listening to the sounds in words",
+    "text": "Hello. This is Lesson 1 of Letters & Sounds.\nThere are no letters in this part. Only your ears.\nReading starts with hearing. Not with letters.\nFirst, words that end the same.\nListen. Man. Pan.\nMan. Pan. The end is the same.\nWe say they rhyme.\nListen again. Pin. Chin. They rhyme.\nNow two that do not. Man. Cup.\nMan. Cup. Not the same at the end.\nSay with me. Man, pan. Rhyme.\nNow the start of a word.\nListen. Sun. Sit.\nSun. Sit. The first sound is the same.\nSss. Both start with sss.\nListen. Top. Tap. Both start with t.\nNow the hardest part today. Counting.\nEvery word is made of small sounds.\nListen to the word cat.\nC. A. T. Three sounds.\nHold up a finger for each one. C. A. T.\nThree fingers. Three sounds.\nNow the word up. U. P. Two sounds.\nTwo fingers. Two sounds.\nDo this many times. It gets easier.\nWhen you can hear the sounds, you can read."
+   },
+   {
+    "title": "Lines and circles",
+    "text": "In this part we use a pen.\nYou do not need the letter names today.\nA letter is a shape. You can copy a shape.\nEvery letter is made of two things.\nLines and circles. That is all.\nLook at l. That is one line.\nLook at o. That is one circle.\nLook at b. That is a line and a circle.\nNow, English is written left to right.\nStart on the left. Go to the right.\nThe letters sit on a line.\nSome letters go under the line.\nThey are g, j, p, q and y.\nNow the hard part. Some shapes look the same.\nLook at b and d. The circle moves.\nIn b, the line is first. Then the circle.\nIn d, the circle is first. Then the line.\nLook at p and q. It is the same problem.\nLook at m and n. Count the humps.\nm has two humps. n has one hump.\nDo not hurry. Copy each shape slowly.\nA slow letter you can read beats a fast one you cannot."
+   }
+  ]
+ },
+ "steps": [
+  [
+   "Hear it",
+   "Words that rhyme",
+   "P.findSound",
+   "hear.rhyme"
+  ],
+  [
+   "Hear it",
+   "Words that start the same",
+   "P.findSound",
+   "hear.start"
+  ],
+  [
+   "See & write it",
+   "Hold the pen",
+   "P.note",
+   "seeWrite.pen"
+  ],
+  [
+   "See & write it",
+   "Lines and circles",
+   "P.seeLetters",
+   "seeWrite.shapes"
+  ],
+  [
+   "Read it",
+   "Count the sounds",
+   "P.countSounds",
+   "read.count"
+  ],
+  [
+   "Check",
+   "Start and end",
+   "P.findSound",
+   "check.listen"
+  ],
+  [
+   "Check",
+   "Copy a row of shapes",
+   "P.copyWords",
+   "check.copyShapes"
+  ]
+ ],
+ "hear": {
+  "rhyme": {
+   "title": "Words that rhyme",
+   "lead": "Tap Hear it. Which word ends the same? Tap its picture.",
+   "items": [
+    {
+     "q": "Which one rhymes with man?",
+     "spoken": "Which one rhymes with man? pan, cup, or sun?",
+     "a": "pan",
+     "wrong": [
+      "cup",
+      "sun"
+     ],
+     "why": "man, pan: the end is the same.",
+     "pics": {
+      "pan": "🍳",
+      "cup": "☕",
+      "sun": "☀️"
+     }
+    },
+    {
+     "q": "Which one rhymes with cat?",
+     "spoken": "Which one rhymes with cat? hat, bus, or pen?",
+     "a": "hat",
+     "wrong": [
+      "bus",
+      "pen"
+     ],
+     "why": "cat, hat: the end is the same.",
+     "pics": {
+      "hat": "🎩",
+      "bus": "🚌",
+      "pen": "🖊️"
+     }
+    },
+    {
+     "q": "Which one rhymes with sun?",
+     "spoken": "Which one rhymes with sun? run, bag, or cat?",
+     "a": "run",
+     "wrong": [
+      "bag",
+      "cat"
+     ],
+     "why": "sun, run: the end is the same.",
+     "pics": {
+      "run": "🏃",
+      "bag": "👜",
+      "cat": "🐈"
+     }
+    },
+    {
+     "q": "Which one rhymes with bell?",
+     "spoken": "Which one rhymes with bell? shell, box, or car?",
+     "a": "shell",
+     "wrong": [
+      "box",
+      "car"
+     ],
+     "why": "bell, shell: the end is the same.",
+     "pics": {
+      "shell": "🐚",
+      "box": "📦",
+      "car": "🚗"
+     }
+    },
+    {
+     "q": "Which one rhymes with car?",
+     "spoken": "Which one rhymes with car? star, bus, or cup?",
+     "a": "star",
+     "wrong": [
+      "bus",
+      "cup"
+     ],
+     "why": "car, star: the end is the same.",
+     "pics": {
+      "star": "⭐",
+      "bus": "🚌",
+      "cup": "☕"
+     }
+    }
+   ]
+  },
+  "start": {
+   "title": "Words that start the same",
+   "lead": "Tap Hear it. Which word starts with the same sound? Tap its picture.",
+   "items": [
+    {
+     "q": "Which one starts like sun?",
+     "spoken": "Which one starts like sun? sock, cup, or map?",
+     "a": "sock",
+     "wrong": [
+      "cup",
+      "map"
+     ],
+     "why": "sun, sock: both start with sss.",
+     "pics": {
+      "sock": "🧦",
+      "cup": "☕",
+      "map": "🗺️"
+     }
+    },
+    {
+     "q": "Which one starts like bus?",
+     "spoken": "Which one starts like bus? bag, sun, or hat?",
+     "a": "bag",
+     "wrong": [
+      "sun",
+      "hat"
+     ],
+     "why": "bus, bag: both start with b.",
+     "pics": {
+      "bag": "👜",
+      "sun": "☀️",
+      "hat": "🎩"
+     }
+    },
+    {
+     "q": "Which one starts like map?",
+     "spoken": "Which one starts like map? milk, pen, or car?",
+     "a": "milk",
+     "wrong": [
+      "pen",
+      "car"
+     ],
+     "why": "map, milk: both start with m.",
+     "pics": {
+      "milk": "🥛",
+      "pen": "🖊️",
+      "car": "🚗"
+     }
+    },
+    {
+     "q": "Which one starts like top?",
+     "spoken": "Which one starts like top? tea, box, or fish?",
+     "a": "tea",
+     "wrong": [
+      "box",
+      "fish"
+     ],
+     "why": "top, tea: both start with t.",
+     "pics": {
+      "tea": "🍵",
+      "box": "📦",
+      "fish": "🐟"
+     }
+    },
+    {
+     "q": "Which one starts like fish?",
+     "spoken": "Which one starts like fish? foot, bed, or cat?",
+     "a": "foot",
+     "wrong": [
+      "bed",
+      "cat"
+     ],
+     "why": "fish, foot: both start with f.",
+     "pics": {
+      "foot": "🦶",
+      "bed": "🛏️",
+      "cat": "🐈"
+     }
+    },
+    {
+     "q": "Which one starts like dog?",
+     "spoken": "Which one starts like dog? door, sun, or pen?",
+     "a": "door",
+     "wrong": [
+      "sun",
+      "pen"
+     ],
+     "why": "dog, door: both start with d.",
+     "pics": {
+      "door": "🚪",
+      "sun": "☀️",
+      "pen": "🖊️"
+     }
+    }
+   ]
+  }
+ },
+ "seeWrite": {
+  "pen": {
+   "title": "Hold the pen",
+   "lead": "Listen. Then try it with a real pen and paper.",
+   "pic": "✍️",
+   "done": "I have tried it",
+   "text": "Hold the pen between your thumb and your first finger.\nLet it rest on your middle finger.\nHold it near the point, but not too tight.\nPut the paper straight in front of you.\nStart on the left. Go to the right."
+  },
+  "shapes": {
+   "title": "Lines and circles",
+   "lead": "Tap a shape. Trace it with your finger, pen or mouse. Then draw it on paper, from left to right.",
+   "items": [
+    "|",
+    "—",
+    "○",
+    "l",
+    "o",
+    "b",
+    "d",
+    "m",
+    "n"
+   ]
+  }
+ },
+ "read": {
+  "count": {
+   "title": "Count the sounds",
+   "lead": "Listen to the word. Hold up a finger for each sound. How many sounds? Tap the number.",
+   "items": [
+    {
+     "word": "up",
+     "n": 2,
+     "pic": "⬆️",
+     "spoken": "uh, puh"
+    },
+    {
+     "word": "cat",
+     "n": 3,
+     "pic": "🐈",
+     "spoken": "kuh, ah, tuh"
+    },
+    {
+     "word": "sun",
+     "n": 3,
+     "pic": "☀️",
+     "spoken": "sss, uh, nnn"
+    },
+    {
+     "word": "egg",
+     "n": 2,
+     "pic": "🥚",
+     "spoken": "eh, guh"
+    },
+    {
+     "word": "bus",
+     "n": 3,
+     "pic": "🚌",
+     "spoken": "buh, uh, sss"
+    },
+    {
+     "word": "stop",
+     "n": 4,
+     "pic": "🛑",
+     "spoken": "sss, tuh, aw, puh"
+    },
+    {
+     "word": "milk",
+     "n": 4,
+     "pic": "🥛",
+     "spoken": "mmm, ih, luh, kuh"
+    }
+   ]
+  }
+ },
+ "check": {
+  "listen": {
+   "title": "Start and end",
+   "lead": "Tap Hear it, then tap the picture.",
+   "items": [
+    {
+     "q": "Which one starts like bus?",
+     "spoken": "Which one starts like bus? bed, cup, or sun?",
+     "a": "bed",
+     "wrong": [
+      "cup",
+      "sun"
+     ],
+     "why": "bus, bed: both start with b.",
+     "pics": {
+      "bed": "🛏️",
+      "cup": "☕",
+      "sun": "☀️"
+     }
+    },
+    {
+     "q": "Which one starts like cat?",
+     "spoken": "Which one starts like cat? car, pen, or fish?",
+     "a": "car",
+     "wrong": [
+      "pen",
+      "fish"
+     ],
+     "why": "cat, car: both start with k.",
+     "pics": {
+      "car": "🚗",
+      "pen": "🖊️",
+      "fish": "🐟"
+     }
+    },
+    {
+     "q": "Which one rhymes with hat?",
+     "spoken": "Which one rhymes with hat? cat, bus, or egg?",
+     "a": "cat",
+     "wrong": [
+      "bus",
+      "egg"
+     ],
+     "why": "hat, cat: the end is the same.",
+     "pics": {
+      "cat": "🐈",
+      "bus": "🚌",
+      "egg": "🥚"
+     }
+    },
+    {
+     "q": "Which one starts like man?",
+     "spoken": "Which one starts like man? moon, sock, or door?",
+     "a": "moon",
+     "wrong": [
+      "sock",
+      "door"
+     ],
+     "why": "man, moon: both start with m.",
+     "pics": {
+      "moon": "🌙",
+      "sock": "🧦",
+      "door": "🚪"
+     }
+    }
+   ]
+  },
+  "copyShapes": {
+   "title": "Copy a row of shapes",
+   "lead": "Copy each row on paper, from left to right. Or trace it here.",
+   "silent": true,
+   "items": [
+    "| | | |",
+    "○ ○ ○ ○",
+    "l o l o",
+    "b d b d"
+   ]
+  }
+ },
+ "canDo": [
+  "I can hear when two words rhyme.",
+  "I can hear when two words start the same.",
+  "I can count the sounds in a short word.",
+  "I can hold a pen and draw lines and circles."
+ ]
+}

@@ -2,6 +2,8 @@
 
 The owner decided on 2026-09-18 to go live with new course keys. The live course (l00–l03, lph) and its learners stay as they are.
 
+**Steps 0–5 were run on 2026-09-18.** What each step proved is in the Status section of `README.md`. Steps 6 and 7 are the owner's. A re-run is safe: the uploaders skip what is already on storage, and the routing report says "already pointed at its build".
+
 Run the steps in this order. Each one says who runs it.
 - Deploys are run by the owner in Windows PowerShell 5.1, from `C:\Users\inawa\documents\eduplatform`. The auto-mode classifier refuses deploy commands from Claude.
 - Server steps are run on the Moodle box in cPanel Terminal, in the K-12 docroot `/home/ehelacad/quraantest.academy`. It hosts nine Moodles, so identify it by its database, never by wwwroot.

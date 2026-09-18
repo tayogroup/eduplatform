@@ -108,6 +108,10 @@ Each level is its own Moodle course (owner, 2026-09-18: new course keys, and the
 
 ## Status (2026-09-18)
 
+- **Live and routed, 2026-09-18.** The six levels are the Moodle courses `ehel-intensive-eng-l10`–`l15`. Each opens its app at `app/intensive-english/programme/<level>/`. The steps are in `GO-LIVE.md`.
+  - Media: 5,170 clips in g10–g15, plus the 64 reused Phonics clips in g10. `check-clips-on-storage.mjs` passes: 5,401 references, 0 missing.
+  - Apps: 108 files, each read back from storage. One lesson per level was opened on the CDN; it rendered and played its clip from its own folder.
+  - Catalogue `catalog-00ad6c1958.json`, synced into Moodle. Routing applied: 36 overrides, read back clean.
 - **Built, all 72 lessons:**
   - Letters & Sounds: 12 lessons, plus Bridge A and B
   - Starter: 10 lessons
@@ -121,9 +125,7 @@ Each level is its own Moodle course (owner, 2026-09-18: new course keys, and the
 - **Browser:** every page loads and finishes its set-up.
 - **Pictures:** audited per level (see Pictures above).
 - **Not done:**
-  - narration, including re-recording the Letters & Sounds lectures (their text was corrected)
-  - the shared platform wiring (launch parameters, progress to Moodle, class controls, Wehel)
-  - new course keys, mapping old unit ids to new lesson ids, the catalogue
   - the Section 5 books, which the owner will supply
-  - deploy and routing
-- The live course is untouched.
+  - a test launch from Moodle as a learner (`GO-LIVE.md` step 7), and enrolment (step 6); both are the owner's
+  - the programme home and the Level 5 placeholder, which are not deployed (`GO-LIVE.md` step 2)
+- The original course (l00–l03, lph) is untouched and keeps its learners.

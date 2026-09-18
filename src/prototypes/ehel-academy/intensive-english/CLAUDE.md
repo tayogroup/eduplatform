@@ -5,9 +5,9 @@
   Cross-cutting rules stay in the root CLAUDE.md.
 -->
 
-## The restructured program is being built in `program/` (owner, 2026-09-18)
+## The restructured program in `program/` (owner, 2026-09-18): LIVE and routed
 
-The owner replaced the course's design on 2026-09-18.
+The owner replaced the course's design on 2026-09-18. The same day it went live as six NEW Moodle courses, `ehel-intensive-eng-l10`–`l15`, beside the original course. Its apps are at `app/intensive-english/programme/<level>/`, and its media is in g10–g15. The runbook, with what was verified, is `program/kit/GO-LIVE.md`.
 
 - **Audience:** working adults and general learners.
 - **Design principle:** general-purpose language learning. The Cambridge objective contract described below no longer decides what goes into a lesson.
@@ -21,7 +21,7 @@ The plan is `inputs/ehel-english-intensive-source/program/program-plan.json`. Th
 python program/kit/build_program.py --check   # then without --check to build program/app
 ```
 
-Everything below describes the LIVE course, which stays as it is until the new program is ready to replace it. Build the new program only in `program/`. Nothing there touches `level-N/` or `level-N-app/`.
+Everything below describes the ORIGINAL course (l00–l03, lph), which stays live for its learners. Build the new program only in `program/`. Nothing there touches `level-N/` or `level-N-app/`.
 
 ## Intensive English Level 1 is built on Cambridge 0057 (2026-09-11)
 

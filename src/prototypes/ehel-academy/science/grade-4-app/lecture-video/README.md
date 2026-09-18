@@ -174,3 +174,19 @@ the page cannot tell a child why.
 `deploy.mjs :: ctype()` learned `.mp4`, `.vtt`, `.jpg` and `.png` for this. A
 video served as `text/html` does not play; the browser refuses it before the
 element is ever asked to.
+
+## Two voices at once, fixed 2026-09-18
+
+Pressing "Next part", "Last part" or "Listen" while the film played read that
+part aloud OVER the film: the lesson's voice and the film's are the same voice,
+and `lecture()` stopped the lesson's voice when the film started but never the
+film when the lesson spoke. `quiet()` in `lesson-kit/lib/science.js` now pauses
+the film first. It was found by playing the Computing kit's first film
+(Computers Everywhere) in its page, and it applied here unchanged.
+
+Checked by rebuilding all four Science grades in scratch. In Grade 4, every page
+differs from HEAD only by that change. In Grades 1-3, a build on HEAD's kit and
+a build on the new kit differ only by that change. Those committed pages were
+last built before the kit got its film player, so they differ from HEAD by that
+too, and nothing else. In the page: a part read aloud pauses the film, the same
+`<video>` keeps its place, and pressing play stops the lesson's voice.

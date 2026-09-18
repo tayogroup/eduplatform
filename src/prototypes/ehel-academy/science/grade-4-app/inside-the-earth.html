@@ -8044,13 +8044,24 @@
         "</div>";
       furthest = Math.max(furthest, k + 1);
       report();
-      $(id + "hear").addEventListener("click", () => say(p.title + ". " + p.say));
-      if (k > 0) $(id + "back").addEventListener("click", () => { k--; repaint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
+      $(id + "hear").addEventListener("click", () => { quiet(); say(p.title + ". " + p.say); });
+      if (k > 0) $(id + "back").addEventListener("click", () => { k--; repaint(); quiet(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
       $(id + "next").addEventListener("click", () => {
-        if (k + 1 < parts.length) { k++; repaint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
+        if (k + 1 < parts.length) { k++; repaint(); quiet(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
         else done();
       });
       if (film) wireFilm();
+    }
+
+    /* A part read aloud pauses the film, as the film starting stops the
+       lesson's voice (wireFilm): the two are the same voice, and without this
+       pressing Next part mid-film had both talking at once. Found by playing
+       the Computing kit's first film in its page (2026-09-18); this lecture()
+       had the same gap. Nothing, without a film. */
+    function quiet() {
+      if (!film) return;
+      const v = $(id + "v");
+      if (v && !v.paused) v.pause();
     }
 
     /* Moving a part must not restart the film, so with a film on screen only

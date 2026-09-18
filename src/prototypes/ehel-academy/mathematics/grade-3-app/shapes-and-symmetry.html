@@ -928,6 +928,7 @@
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>Naming flat shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Count the sides. What is this shape called?</span></div>
+      <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A small mirror, paper shapes to fold and scissors, and a ruler marked in centimetres. Folding a shape to find its line of symmetry, and measuring right round its edge, are both things a hand does better than a tap.</p></details>
       <div class="stage">
         <svg class="gsvg" id="g1" viewBox="0 0 300 200" role="img" aria-label="a flat shape"></svg>
         <div class="choices" id="ch1"></div>
@@ -1999,6 +2000,77 @@
       fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
     });
   })();
+
+  /* ---- ehel-spiral: the warm-up's second question, drawn from lessons already
+     FINISHED - see add-spiral-warmup.py. Not a step: no sticker, no dot, no
+     score, no finish(). */
+  const SPIRAL = [
+    { from: "l01", q: "Which number is bigger: 348 or 438?", opts: [348, 438, 384], a: 438, why: "4 hundreds is more than 3 hundreds, so 438 is the bigger number." },
+    { from: "l01", q: "What is the value of the 6 in 462?", opts: [6, 60, 600], a: 60, why: "The 6 is in the tens column, so it is worth 6 tens, which is 60." },
+    { from: "l01", q: "How many hundreds are in 700?", opts: [7, 70, 700], a: 7, why: "700 is 7 hundreds, with no tens or ones left over." },
+    { from: "l02", q: "What is 300 add 400?", opts: [700, 300, 340], a: 700, why: "3 hundreds and 4 hundreds make 7 hundreds, which is 700." },
+    { from: "l02", q: "You have 500 shillings and spend 150. How much is left?", opts: [350, 450, 650], a: 350, why: "500 take away 150 is 350." },
+    { from: "l02", q: "Which makes 250 shillings: two 100s and a 50, or three 50s?", opts: ["two 100s and a 50", "three 50s", "the same"], a: "two 100s and a 50", why: "Two 100s make 200, plus a 50 makes 250. Three 50s make only 150." },
+    { from: "l03", q: "How many is 4 rows of 5?", opts: [20, 9, 45], a: 20, why: "4 rows of 5 is 4 times 5, which is 20." },
+    { from: "l03", q: "Share 12 into groups of 3. How many groups?", opts: [4, 3, 9], a: 4, why: "12 shared into groups of 3 makes 4 groups." },
+    { from: "l03", q: "What is 6 times 10?", opts: [60, 16, 600], a: 60, why: "6 times 10 is 60 - put a zero after the 6." },
+    { from: "l04", q: "A shape is cut into 5 equal pieces. What is one piece called?", opts: ["a fifth", "a quarter", "a half"], a: "a fifth", why: "5 equal parts are called fifths." },
+    { from: "l04", q: "Share 10 sweets equally among 5 people. How many does each person get?", opts: [2, 5, 10], a: 2, why: "10 shared equally among 5 people is 2 each." },
+    { from: "l04", q: "Which is bigger, a half or a quarter of the same whole?", opts: ["a half", "a quarter", "they are the same"], a: "a half", why: "Cutting something into only 2 parts makes each part bigger than cutting it into 4." },
+    { from: "l05", q: "How many sides does a hexagon have?", opts: [6, 5, 8], a: 6, why: "A hexagon has 6 straight sides." },
+    { from: "l05", q: "How many lines of symmetry does a square have?", opts: [4, 1, 2], a: 4, why: "A square can be folded in half four different ways and match exactly each time." },
+    { from: "l05", q: "A rectangle has sides 5 cm and 3 cm. What is the distance all the way round it?", opts: [16, 8, 15], a: 16, why: "5 add 3 add 5 add 3 is 16 - add all four sides to find the perimeter." },
+    { from: "l06", q: "Which unit would you use to measure how heavy an apple is?", opts: ["grams", "centimetres", "litres"], a: "grams", why: "Weight is measured in grams or kilograms, not length or capacity units." },
+    { from: "l06", q: "A jug shows 300 ml of water. You pour in 200 ml more. How much is in the jug now?", opts: [500, 100, 600], a: 500, why: "300 and 200 more makes 500 millilitres." },
+    { from: "l06", q: "You compare an angle to a right angle and it opens wider. Is it smaller, the same, or bigger than a right angle?", opts: ["bigger", "smaller", "the same"], a: "bigger", why: "An angle that opens wider than a right angle's corner is bigger than it." },
+    { from: "l07", q: "The clock shows 20 minutes past 3. In how many minutes will it be half past 3?", opts: [10, 20, 5], a: 10, why: "Half past 3 is 30 minutes past. From 20 minutes past to 30 minutes past is 10 minutes." },
+    { from: "l07", q: "You face north and turn to face east. Which way did you turn?", opts: ["a quarter turn clockwise", "a quarter turn anticlockwise", "a half turn"], a: "a quarter turn clockwise", why: "North to east is one quarter turn in the clockwise direction." },
+    { from: "l07", q: "A film starts at 4:15 and lasts 45 minutes. What time does it finish?", opts: ["5:00", "4:45", "5:15"], a: "5:00", why: "45 minutes after 4:15 is 5:00." },
+    { from: "l08", q: "A tally shows one bundle of five and 3 more marks. How many is that?", opts: [8, 7, 53], a: 8, why: "A bundle of five plus 3 more is 8." },
+    { from: "l08", q: "A bar chart shows 6 for red and 4 for blue. How many more chose red?", opts: [2, 10, 4], a: 2, why: "6 take away 4 is 2, so 2 more people chose red." },
+    { from: "l08", q: "Which is more likely: a red ball from a bag of 9 red and 1 blue, or a fair coin landing heads?", opts: ["the red ball", "the coin landing heads", "they are the same"], a: "the red ball", why: "9 out of 10 balls are red, which is more likely than a fair coin's 1 out of 2 chance." }
+  ];
+  const SPIRAL_TITLES = { l01: "Up to a Thousand", l02: "Adding, Taking Away and Money", l03: "Rows and Rules", l04: "Equal Parts", l05: "Shapes and Symmetry", l06: "Measure It", l07: "Time and Direction", l08: "Ask, Count and Chart" };
+  /* Called from the page's hydrate block with the whole course record. Until it
+     answers there is no spiral question, which is also what a child on their
+     first lesson correctly sees. */
+  window.__ehelSpiral = function (units, here) {
+    const w = document.getElementById("ehWarm");
+    if (!w || w.querySelector(".eh-spiral")) return;          /* once only */
+    const pool = SPIRAL.filter(function (it) {
+      const u = units && units[it.from];
+      return it.from !== here && u && u.completed === true;
+    });
+    if (!pool.length) return;
+    const it = pool[Math.floor(Math.random() * pool.length)];
+    const box = document.createElement("div");
+    box.className = "eh-spiral";
+    box.innerHTML = '<p class="eh-warm-h">And one from before</p>'
+      + '<div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button>'
+      + '<span class="eh-spiral-q"></span></div>'
+      + '<div class="choices eh-spiral-ch"></div>'
+      + '<p class="fb" role="status" aria-live="polite"></p>';
+    box.querySelector(".eh-spiral-q").textContent = it.q;
+    /* bound here, not by the page-wide .speak wiring, which ran at load */
+    box.querySelector(".speak").addEventListener("click", function () { say(it.q); });
+    const ch = box.querySelector(".eh-spiral-ch"), fb = box.querySelector(".fb");
+    ch.innerHTML = shuffle(it.opts.slice()).map(function (o) {
+      return '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>";
+    }).join("");
+    ch.addEventListener("click", function (e) {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(it.a);
+      ch.querySelectorAll(".choice").forEach(function (c) {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(it.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + it.why
+        + " That was in " + SPIRAL_TITLES[it.from] + ".";
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+    w.appendChild(box);
+  };
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
@@ -3270,6 +3342,10 @@
     try {
       const doc = await ws.hydrate();
       const u = doc && doc.units && doc.units[UNIT];
+      /* ehel-spiral: the whole record, not this unit - a child at the top of
+         a later lesson with earlier ones behind them has no `u` yet. */
+      try { if (window.__ehelSpiral) window.__ehelSpiral(doc && doc.units, UNIT); }
+      catch (_) { /* never break the lesson */ }
       if (!u) return;
       if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
       if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
@@ -3502,4 +3578,23 @@
 <style>/* ehel-g3-tiers - see add-differentiation.py */
   #scT { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
     color: var(--muted, #666); }
+</style>
+
+<style>/* ehel-materials-note - see add-materials-note.py */
+  .kit { margin: 10px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-spiral - see add-spiral-warmup.py */
+  .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
+  .eh-spiral .eh-spiral-ch { margin-top: 12px; }
 </style>
